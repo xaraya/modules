@@ -186,6 +186,24 @@ function categories_userapi_leftjoin($args)
             }
         }
     }
+    if (isset($basecid)) {
+        if (is_numeric($basecid)) {
+            $where[] = $leftjoin['basecid'] . ' = ' . $basecid;
+        } elseif (is_array($basecid) && count($basecid) > 0) {
+            $seenbasecid = array();
+            foreach ($basecid as $id) {
+                if (empty($id) || !is_numeric($id)) continue;
+                $seenbasecid[$id] = 1;
+            }
+            if (count($seenbasecid) == 1) {
+                $basecids = array_keys($seenbasecid);
+                $where[] = $leftjoin['basecid'] . ' = ' . $basecids[0];
+            } elseif (count($seenbasecid) > 1) {
+                $basecids = join(', ', array_keys($seenbasecid));
+                $where[] = $leftjoin['basecid'] . ' IN (' . $basecids . ')';
+            }
+        }
+    }
     if (count($cids) > 0) {
         if ($andcids) {
             // select only the 1-2-4 combination, not the 2-1-4, 4-2-1, etc.
