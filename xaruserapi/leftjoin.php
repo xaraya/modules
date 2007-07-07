@@ -131,7 +131,7 @@ function categories_userapi_leftjoin($args)
     }
 
     // Add available columns in the categories table
-    $columns = array('category_id','item_id','module_id','itemtype');
+    $columns = array('category_id','item_id','module_id','itemtype','basecategory');
     foreach ($columns as $column) {
         $leftjoin[$column] = $linktable . '.' . $column;
     }
@@ -188,7 +188,7 @@ function categories_userapi_leftjoin($args)
     }
     if (isset($basecid)) {
         if (is_numeric($basecid)) {
-            $where[] = $leftjoin['basecid'] . ' = ' . $basecid;
+            $where[] = $leftjoin['basecategory'] . ' = ' . $basecid;
         } elseif (is_array($basecid) && count($basecid) > 0) {
             $seenbasecid = array();
             foreach ($basecid as $id) {
@@ -197,10 +197,10 @@ function categories_userapi_leftjoin($args)
             }
             if (count($seenbasecid) == 1) {
                 $basecids = array_keys($seenbasecid);
-                $where[] = $leftjoin['basecid'] . ' = ' . $basecids[0];
+                $where[] = $leftjoin['basecategory'] . ' = ' . $basecids[0];
             } elseif (count($seenbasecid) > 1) {
                 $basecids = join(', ', array_keys($seenbasecid));
-                $where[] = $leftjoin['basecid'] . ' IN (' . $basecids . ')';
+                $where[] = $leftjoin['basecategory'] . ' IN (' . $basecids . ')';
             }
         }
     }
