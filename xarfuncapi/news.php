@@ -11,12 +11,24 @@ function xarpages_funcapi_news($args)
     $ptid = $args['current_page']['dd']['pubtype'];
     $ptids = array($ptid);
 
+    // Get the details of the publication type (defaults etc.)
+    $pubtype = xarModAPIFunc('articles', 'user', 'getpubtypes', array('ptid' => $ptid));
+    $settings = unserialize(xarModGetVar('articles', 'settings.' . $ptid));
+
+    //echo "<pre>"; var_dump($settings); echo "</pre>";
+    //echo "<pre>"; var_dump($pubtype); echo "</pre>";
+
     // Parameter to allow selection of only front page articles. Limit to frontpage if true.
     xarVarFetch('frontpage', 'bool', $frontpage, false, XARVAR_NOT_REQUIRED);
 
-    // For the pager
+    // For the pager (which is a TODO item anyway)
+    // Set the max items to be four times the items per page, within a window of 100 to 1000
+    $numitems_factor = 4;
+    $numitems_min = 100;
+    $numitems_max = 1000;
+    $max_numitems = ($settings['itemsperpage'] < ($numitems_min/$numitems_factor) ? $numitems_min : ($settings['itemsperpage'] > ($numitems_max/$numitems_factor) ? $numitems_max : $settings['itemsperpage'] * $numitems_factor));
     xarVarFetch('startnum', 'int:1', $startnum, 1, XARVAR_NOT_REQUIRED);
-    xarVarFetch('numitems', 'int:1:100', $numitems, 20, XARVAR_NOT_REQUIRED);
+    xarVarFetch('numitems', 'int:1:' . $max_numitems, $numitems, $settings['itemsperpage'], XARVAR_NOT_REQUIRED);
 
     // An individual item has been selected
     xarVarFetch('aid', 'id', $aid, 0, XARVAR_NOT_REQUIRED);
@@ -26,8 +38,8 @@ function xarpages_funcapi_news($args)
     // A group of categories selected: cids=N[]
     xarVarFetch('cids', 'list:id', $cids, array(), XARVAR_NOT_REQUIRED);
 
-    // TODO: full this in from a parameter.
-    $sort = '';
+    // TODO: allow override using a parameter.
+    $sort = $settings['defaultsort'];
 
     // Put all the category ids into the cids array.
     if (!empty($cid) && !in_array($cid, $cids)) array_push($cids, $cid);
@@ -188,6 +200,7 @@ function xarpages_funcapi_news($args)
     // Return the list of articles.
     $args['article'] = $article;
     $args['articles'] = $articles;
+    $args['pubtype'] = $pubtype;
     $args['pubtypes'] = $pubtypes;
     
     return $args;
