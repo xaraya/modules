@@ -26,6 +26,7 @@ class CategoryPickerProperty extends DataProperty
         parent::__construct($descriptor);
 
         $this->filepath   = 'modules/categories/xarproperties';
+        $this->tplmodule = 'categories';
     }
 
     public function checkInput($name = '', $value = null)

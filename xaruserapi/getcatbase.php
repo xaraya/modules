@@ -23,10 +23,7 @@ function categories_userapi_getcatbase($args)
 
     $xartable = xarDB::getTables();
     $q = new xarQuery('SELECT', $xartable['categories_basecategories']);
-    if (!empty($module)) {
-        $info = xarMod::getBaseInfo($module);
-        $q->eq('module_id',$info['systemid']);
-    }
+    if (!empty($module)) $q->eq('module_id',xarMod::getID($module));
     if (!empty($itemtype)) $q->eq('itemtype',$itemtype);
     if (!empty($id)) $q->eq('id',$id);
     if (!empty($name)) $q->eq('name',$name);

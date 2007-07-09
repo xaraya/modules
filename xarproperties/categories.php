@@ -58,8 +58,9 @@ class CategoriesProperty extends SelectProperty
     public $desc       = 'Categories';
     public $reqmodules = array('categories');
 
-    public $baselist    = array();
+    public $baselist   = array();
     public $cidlist    = array();
+    public $showbase   = true;
 
     function __construct(ObjectDescriptor $descriptor)
     {
@@ -169,7 +170,7 @@ class CategoriesProperty extends SelectProperty
             unset($data['module']);
         }
 
-if (empty($data['itemtype'])) {
+		if (empty($data['itemtype'])) {
             $data['categories_localitemtype'] = 0;
         } else {
             $data['categories_localitemtype'] = $data['itemtype'];
@@ -281,6 +282,7 @@ if (empty($data['itemtype'])) {
         }
 
         if (isset($data['validation'])) $this->parseValidation($data['validation']);
+        if (empty($data['showbase'])) $data['showbase'] = $this->showbase;
 
         if (!isset($data['name'])) $data['name'] = "dd_" . $this->id;
 
@@ -351,6 +353,10 @@ if (empty($data['itemtype'])) {
                 }
                 if ($option_type == 'bases') {
                     $this->baselist = array_merge($this->baselist, explode(',', $option_value));
+                }
+                // FIXME: should this be a validation option?
+                if ($option_type == 'showbase') {
+                    $this->showbase = $option_value;
                 }
             }
         }
