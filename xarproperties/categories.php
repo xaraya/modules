@@ -283,6 +283,9 @@ class CategoriesProperty extends SelectProperty
 
         if (isset($data['validation'])) $this->parseValidation($data['validation']);
         if (empty($data['showbase'])) $data['showbase'] = $this->showbase;
+        if ($data['showbase']) {
+            $data['basecats'] = xarModAPIFunc('categories','user','getallcatbases',array('module' => $data['categories_localmodule'], 'itemtype' => $data['categories_localitemtype']));
+		}
 
         if (!isset($data['name'])) $data['name'] = "dd_" . $this->id;
 
