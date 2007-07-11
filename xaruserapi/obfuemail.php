@@ -18,6 +18,7 @@
  * @author Jo Dalle Nogare
  * @param $email email address to be encoded
  * @$param $text optional text string to be displayed in email link
+ * @$param $image optional boolean to display email image, false by default
  * @return array $maildata with values of
  *    $$maildata['encoded'] the encoded email
  *    $$maildata['text'] the text displayed, defaults to 'email us' if null passed in
@@ -44,8 +45,14 @@ extract($args);
     }else{
         $maildata['text']=$text;
     }
+    if (isset($image) && TRUE==$image) {
+       $img = xarTplGetImage('email.gif','sitecontact');
+       $maildata['link']= "<a href=\"mailto:{$maildata['encoded']}\"><img src=\"{$img}\" alt=\"Email\" />&#160;".$maildata['text'] . "</a>";
+    }else {
+        $maildata['link']= "<a href=\"mailto:{$maildata['encoded']}\">" .$imgsrc.$maildata['text'] . "</a>";
+    }
 
-    $maildata['link']= "<a href=\"mailto:{$maildata['encoded']}\">" . $maildata['text'] . "</a>";
+
     return $maildata;
 }
 ?>
