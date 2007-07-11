@@ -25,22 +25,27 @@
  */
 function sitecontact_userapi_obfuemail($args)
 {
-    extract($args);
+extract($args);
 
     if (!isset($email) || empty($email)) {return;}
-
-    /* Initialise the array that will hold the returned data*/
-    $maildata = array();
-    $encoded = bin2hex($email);
-    $encoded = chunk_split($encoded, 2, '%');
-    $encoded = '%' . substr($encoded, 0, strlen($encoded) - 1);
-    $maildata['encoded']=$encoded;
+    if (!isset($text) || empty($text)) {$text = $email;}
+    if (!isset($usejs)) $usejs = FALSE;
+    if ($usejs) {
+       $maildata['link']=createMailto($email);
+    }else {
+        $maildata = array();
+        $encoded = bin2hex($email);
+        $encoded = chunk_split($encoded, 2, '%');
+        $encoded = '%' . substr($encoded, 0, strlen($encoded) - 1);
+        $maildata['encoded']=$encoded;
+    }
     if (!isset($text) || empty($text)) {
         $maildata['text']=xarML('email us');
     }else{
         $maildata['text']=$text;
     }
-    $maildata['link']= "<a href=\"mailto:" . $maildata['encoded'] . "\">" . $maildata['text'] . "</a>";
+
+    $maildata['link']= "<a href=\"mailto:{$maildata['encoded']}\">" . $maildata['text'] . "</a>";
     return $maildata;
 }
 ?>
