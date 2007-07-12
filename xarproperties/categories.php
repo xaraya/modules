@@ -282,7 +282,7 @@ class CategoriesProperty extends SelectProperty
         }
 
         if (isset($data['validation'])) $this->parseValidation($data['validation']);
-        if (empty($data['showbase'])) $data['showbase'] = $this->showbase;
+        if (!isset($data['showbase'])) $data['showbase'] = $this->showbase;
 
         if (!isset($data['name'])) $data['name'] = "dd_" . $this->id;
 
@@ -296,6 +296,7 @@ class CategoriesProperty extends SelectProperty
 
         if (empty($data['value'])) {
             if (empty($this->value)) {
+				$data['value'] = array();
                 $links = xarModAPIFunc('categories', 'user', 'getlinkages',
                                        array('items' => array($data['categories_itemid']),
                                              'itemtype' => $data['categories_localitemtype'],
@@ -304,8 +305,7 @@ class CategoriesProperty extends SelectProperty
                 if (!empty($links) && is_array($links) && count($links) > 0) {
 					foreach ($links as $link)
 						foreach ($link as $row) {
-							$data['value'][] = $row['category_id'];
-							if ($data['showbase']) $data['basecat'][] = $row['basecategory'];
+							$data['value'][] = $row;
 						}
                 } else {
                     $data['value'] = array();
@@ -319,8 +319,8 @@ class CategoriesProperty extends SelectProperty
         }
         $temparray = array();
         foreach ($data['value'] as $category) {
-            $this->value = $category;
-            $temparray[] = $this->getOption();
+            $this->value = $category['category_id'];
+            $temparray[] = array_merge($category,array('value' => $this->getOption()));
         }
         $data['value'] = $temparray;
         return parent::showOutput($data);
@@ -368,4 +368,3 @@ class CategoriesProperty extends SelectProperty
 }
 
 ?>
-
