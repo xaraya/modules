@@ -296,15 +296,16 @@ class CategoriesProperty extends SelectProperty
 
         if (empty($data['value'])) {
             if (empty($this->value)) {
-                $links = xarModAPIFunc('categories', 'user', 'getlinks',
-                                       array('iids' => array($data['categories_itemid']),
+				$data['value'] = array();
+                $links = xarModAPIFunc('categories', 'user', 'getlinkages',
+                                       array('items' => array($data['categories_itemid']),
                                              'itemtype' => $data['categories_localitemtype'],
-                                             'modid' => xarMod::getID($data['categories_localmodule']),
-                                             'reverse' => 0));
+                                             'module' => $data['categories_localmodule'],
+                                             ));
                 if (!empty($links) && is_array($links) && count($links) > 0) {
-                    $data['value'] = array_keys($links);
-			        if ($data['showbase'])
-						foreach ($links as $link) $data['bascat'] = $link['basecategory'];
+                	foreach ($links as $link) array_merge($data['value'],$link);
+//                    $data['value'] = $links;
+//die(var_dump($links));
                 } else {
                     $data['value'] = array();
                 }
@@ -317,8 +318,8 @@ class CategoriesProperty extends SelectProperty
         }
         $temparray = array();
         foreach ($data['value'] as $category) {
-            $this->value = $category;
-            $temparray[] = $this->getOption();
+            $this->value = $category['category_id'];
+            $temparray[] = merge_array($category,array('value' => $this->getOption()));
         }
         $data['value'] = $temparray;
         return parent::showOutput($data);
