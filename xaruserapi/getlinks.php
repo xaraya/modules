@@ -64,7 +64,6 @@ function categories_userapi_getlinks($args)
 
     // Makes the linkages array to be returned
     $answer = array();
-
     for(; !$result->EOF; $result->MoveNext())
     {
         $fields = $result->fields;

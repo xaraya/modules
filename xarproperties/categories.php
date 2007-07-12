@@ -296,15 +296,17 @@ class CategoriesProperty extends SelectProperty
 
         if (empty($data['value'])) {
             if (empty($this->value)) {
-                $links = xarModAPIFunc('categories', 'user', 'getlinks',
-                                       array('iids' => array($data['categories_itemid']),
+                $links = xarModAPIFunc('categories', 'user', 'getlinkages',
+                                       array('items' => array($data['categories_itemid']),
                                              'itemtype' => $data['categories_localitemtype'],
-                                             'modid' => xarMod::getID($data['categories_localmodule']),
-                                             'reverse' => 0));
+                                             'module' => $data['categories_localmodule'],
+                                             ));
                 if (!empty($links) && is_array($links) && count($links) > 0) {
-                    $data['value'] = array_keys($links);
-			        if ($data['showbase'])
-						foreach ($links as $link) $data['bascat'] = $link['basecategory'];
+					foreach ($links as $link)
+						foreach ($link as $row) {
+							$data['value'][] = $row['category_id'];
+							if ($data['showbase']) $data['basecat'][] = $row['basecategory'];
+						}
                 } else {
                     $data['value'] = array();
                 }
@@ -366,3 +368,4 @@ class CategoriesProperty extends SelectProperty
 }
 
 ?>
+
