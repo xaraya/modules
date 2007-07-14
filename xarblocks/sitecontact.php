@@ -152,7 +152,7 @@ function sitecontact_sitecontactblock_display($blockinfo)
 
     $properties = null;
         $withupload = (int) false;
-            if (xarModIsAvailable('dynamicdata')) {
+            if (xarModIsHooked('dynamicdata','sitecontact',$formdata['scid'])) {
                 // get the Dynamic Object defined for this module
                 $object =  xarModAPIFunc('dynamicdata','user','getobject',
                 array('module' =>'sitecontact',

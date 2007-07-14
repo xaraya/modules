@@ -1,3 +1,9 @@
+Version 1.0.2 Jul 2007
+- Added formcaptcha support
+- various bugs
+- admin custom page display for items
+- waiting content block
+
 Version 1.0.1 18 Aug 2006
 - New sitecontact block
 - Updated menuing in form response management

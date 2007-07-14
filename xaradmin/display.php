@@ -99,13 +99,25 @@ function sitecontact_admin_display($args)
     $item['itemtype'] = $item['scid'];
     $hooks = xarModCallHooks('item','display',$scrid,$item);
 
+   if (!empty($formtype['sctypename'])){
+        $template = 'display-' . $formtype['sctypename'];
+      } else {
+        $template =  'display';
+    }
+
+
     if (empty($hooks)) {
         $data['hookoutput'] = '';
     } else {
         $data['hookoutput'] = $hooks;
-    }        
-
+    }
+    $templatedata = xarTplModule('sitecontact', 'admin', $template, $data);
     xarTplSetPageTitle(xarVarPrepForDisplay($data['formname']));
-    return $data;
+    if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
+        xarErrorHandled();
+        $templatedata = xarTplModule('sitecontact', 'admin', 'display', $data);
+    }
+
+   return $templatedata;
 }
 ?>

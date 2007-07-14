@@ -62,6 +62,21 @@ function sitecontact_adminapi_create($args)
     if (!isset($responsetime) || empty($responsetime)) {
         $responsetime = time();
     }
+    
+    /* get the Dynamic Object defined for this module (and itemtype, if relevant) */
+    $object = xarModAPIFunc('dynamicdata','user','getobject',
+                             array('module' => 'sitecontact',
+                                   'itemtype' => $scid));
+    if (!isset($object)) return;  /* throw back */
+    $objectid=$object->objectid;      
+
+    /*we just want a copy of data - don't need to save it in a table yet */
+    if (isset($object) && !empty($object->objectid)) {
+        /* check the input values for this object and do ....what here? */
+        $isvalid = $object->checkInput();         
+        // $dditems =& $object->getProperties();
+        $dditems = $object->properties;
+    }
 
     // Get database setup
     $dbconn =& xarDBGetConn();

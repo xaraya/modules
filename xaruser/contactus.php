@@ -40,7 +40,9 @@ function sitecontact_user_contactus($args)
     if (!xarVarFetch('permissioncheck', 'checkbox', $permissioncheck, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('permission',   'checkbox', $permission, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('termslink',    'str:1:',   $termslink, '', XARVAR_NOT_REQUIRED)) return;
-
+    //formcapcha variables
+    if (!xarVarFetch('antiselect', 'int:0:', $antiselect, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('antiword', 'str:1', $antiword, '', XARVAR_NOT_REQUIRED)) {return;}
     /* Confirm authorisation code. */
     if (!xarSecConfirmAuthKey()) return;
 
@@ -85,6 +87,45 @@ function sitecontact_user_contactus($args)
            }
     }
     $useantibot=$soptions['useantibot'];
+
+  //this is to be moved to a hook
+  //the original code logic copied in here, but needs a bit of a change later
+    $badcaptcha = 0;
+    if (xarModIsAvailable('formcaptcha') && xarModGetVar('formcaptcha','usecaptcha') == true && $useantibot) {
+        include_once 'modules/formcaptcha/xaruser/anticonfig.php'; // get rid of this - move to modvars
+        $cas_antiselect = intval($antiselect);
+        $cas_antiword = $antiword;
+        $cas_textcount = count($cas_text);
+        // Copy the first element to a new last element
+        $cas_text[] = $cas_text[0];
+        // Set the first element to invalid
+        $cas_text[0] = "* * * INVALID * * *";
+        //Determine the correct word
+        $cas_antispam = $cas_text[$cas_antiselect];
+        if ($cas_antispam != $cas_antiword) {
+            $badcaptcha =1;
+            $casmsg = xarModGetVar('formcaptcha','antierror');
+        } else {
+            $badcaptcha = 0;
+            $casmsg ='';
+        }
+
+        if ($badcaptcha ==1) {
+            $args['company'] = $company;
+                $args['scid']   = $scid;
+                $args['scform'] = $scform;
+                $args['usermessage'] = $usermessage;
+                $args['sctypename'] = $sctypename;
+                $args['requesttext'] = $requesttext;
+                $args['antibotinvalid'] = TRUE;
+                $args['botreset']=true;
+                $args['userreferer']= $userreferer; //don't loose our original referer
+                $args['casmsg']=$casmsg;
+                return xarModFunc('sitecontact', 'user', 'main', $args);
+        }
+        $args['botreset']=false; // switch used for referer mainly in main function
+    }
+        
 
     if (xarModIsAvailable('formantibot') && $useantibot) {
         if (!xarVarFetch('antibotcode',  'str:6:10', $antibotcode, '', XARVAR_NOT_REQUIRED) ||
@@ -179,7 +220,7 @@ function sitecontact_user_contactus($args)
     $withupload = isset($withupload)? $withupload :(int) false;
     $dditems=array();
     $propdata=array();
-    if (xarModIsAvailable('dynamicdata')) {
+    if (xarModIsHooked('dynamicdata','sitecontact',$data['scid'])) {
         /* get the Dynamic Object defined for this module (and itemtype, if relevant) */
         $object = xarModAPIFunc('dynamicdata','user','getobject',
                 array('module' => 'sitecontact',
@@ -280,9 +321,9 @@ function sitecontact_user_contactus($args)
     }
 
     /* Security Check - caused some problems here with anon browsing and cachemanager
-            * should be ok now - review
-            * if(!xarSecurityCheck('ReadSiteContact')) return;
-           */
+     * should be ok now - review
+     * if(!xarSecurityCheck('ReadSiteContact')) return;
+     */
 
     $notetouser = $formdata['notetouser'];
     if (!isset($notetouser)){
@@ -344,9 +385,9 @@ function sitecontact_user_contactus($args)
     $subject = $requesttext;
 
     /* comments in emails is a problem - set it manually for this module
-              let's make it contingent on the mail module var - as that is what
-             seems intuitively the correct thing
-            */
+       let's make it contingent on the mail module var - as that is what
+       seems intuitively the correct thing
+    */
 
     $themecomments = xarModGetVar('themes','ShowTemplates');
     $mailcomments = xarModGetVar('mail','ShowTemplates');
@@ -489,7 +530,7 @@ function sitecontact_user_contactus($args)
                              'todaydate'   => $todaydate,
                              'useripaddress' => $useripaddress,
                              'propdata'    => $propdata,
-                              'dditems'    => $dditems,                             
+                             'dditems'     => $dditems,                             
                              'userreferer' => $userreferer);
 
     /* Let's do admin text message */

@@ -50,8 +50,12 @@ function sitecontact_userapi_getitemlinks($args)
     $sctypes = xarModAPIFunc('sitecontact','user','getcontacttypes');
 
     if ($count) {
-            $typecount = xarModAPIFunc('sitecontact','user','countitems');
-
+        if (isset($status)) {
+            $typecount = xarModAPIFunc('sitecontact','user','countresponseitems',
+                                     array('status' => $status));
+        } else {
+            $typecount = xarModAPIFunc('sitecontact','user','countresponseitems');
+        }
     }
 
     $scformlinks = array();
@@ -60,7 +64,7 @@ function sitecontact_userapi_getitemlinks($args)
         if (!xarSecurityCheck('ViewSiteContact',0,'ContactForm', "$sctype[scid]:All:All")) {
             continue;
         }
-        if ($all || (isset($typecount[$id]) && $typecount[$id] > 0)) {
+        if ($all || (isset($typecount[$sctype['scid']]) && $typecount[$sctype['scid']] > 0)) {
              $item['sctypename'] = $sctype['sctypename'];
              $item['scid'] = $sctype['scid'];
              if (isset($scid) && $scid == $id) {
@@ -68,8 +72,8 @@ function sitecontact_userapi_getitemlinks($args)
              } else {
                  $item['sclink'] = xarModURL('sitecontact','admin',$func,array('scid' => $sctype['scid']));
              }
-             if ($count && isset($typecount[$id])) {
-                 $item['sccount'] = $typecount[$id];
+             if ($count && isset($typecount[$sctype['scid']])) {
+                 $item['sccount'] = $typecount[$sctype['scid']];
              } else {
                  $item['sccount'] = 0;
              }

@@ -114,7 +114,7 @@
                <xar:mlstring>Use form anti-bot captcha by default?</xar:mlstring>
             </label>
             <xar:if condition="!xarModIsAvailable('formantibot')">
-            <p class="xar-error"><xar:mlstring>You must install the FormAntiBot module for this Anti-Bot CAPTCHA to work.</xar:mlstring></p>
+            <p class="xar-error"><xar:mlstring>You must install the FormCaptcha or FormAntiBot module for this Anti-Bot CAPTCHA to work.</xar:mlstring></p>
             </xar:if>
 
         </div>

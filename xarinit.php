@@ -3,7 +3,7 @@
  * Initialize the SiteContact Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -163,10 +163,8 @@ Administrator
 
 
      // Enable dynamicdata hooks for sitecontact forms
-    if (xarModIsAvailable('dynamicdata')) {
         xarModAPIFunc('modules','admin','enablehooks',
                        array('callerModName' => 'sitecontact', 'hookModName' => 'dynamicdata'));
-    }
 
 
 
@@ -199,9 +197,9 @@ Administrator
     xarRegisterMask('ViewSiteContact', 'All', 'sitecontact', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
     xarRegisterMask('ReadSiteContact', 'All', 'sitecontact', 'Item', 'All:All:All', 'ACCESS_READ');
     xarRegisterMask('SubmitSiteContact', 'All', 'sitecontact', 'Item', 'All:All:All', 'ACCESS_COMMENT'); //required where saving forms is done
-    xarRegisterMask('EditSiteContact', 'All', 'sitecontact', 'Item', 'All:All:All', 'ACCESS_EDIT');//Do we need these?!
-    xarRegisterMask('AddSiteContact', 'All', 'sitecontact', 'Item', 'All:All:All', 'ACCESS_ADD');//Do we need these?!
-    xarRegisterMask('DeleteSiteContact', 'All', 'sitecontact', 'Item', 'All:All:All', 'ACCESS_DELETE');//Do we need these?!
+    xarRegisterMask('EditSiteContact', 'All', 'sitecontact', 'Item', 'All:All:All', 'ACCESS_EDIT');
+    xarRegisterMask('AddSiteContact', 'All', 'sitecontact', 'Item', 'All:All:All', 'ACCESS_ADD');
+    xarRegisterMask('DeleteSiteContact', 'All', 'sitecontact', 'Item', 'All:All:All', 'ACCESS_DELETE');
     xarRegisterMask('AdminSiteContact', 'All', 'sitecontact', 'Item', 'All:All:All', 'ACCESS_ADMIN');
     // Initialisation successful
 
@@ -341,10 +339,8 @@ function sitecontact_upgrade($oldversion)
             if (!$result) {return;}
 
             /* Enable dynamicdata hooks for sitecontact forms - now a dependency */
-            if (xarModIsAvailable('dynamicdata')) {
-               xarModAPIFunc('modules','admin','enablehooks',
+           xarModAPIFunc('modules','admin','enablehooks',
                    array('callerModName' => 'sitecontact', 'hookModName' => 'dynamicdata'));
-           }
            return sitecontact_upgrade('0.5.0'); // Go direct to 0.5.0 to skip the intermediary release
            break;
         case '0.4.1': //0.4.1 users missed an intermediary release and the function changes. Take them back
@@ -404,8 +400,12 @@ function sitecontact_upgrade($oldversion)
            if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
                         array('modName' => 'sitecontact',
                               'blockType' => 'sitecontact'))) return;
-       case '1.0.1': //current version
-
+       case '1.0.1':
+           if (!xarModRegisterHook('item', 'waitingcontent', 'GUI',
+                           'sitecontact', 'admin', 'waitingcontent')) {
+                return false;
+           }
+       case '1.0.2'://current version
              break;
     }
     // Update successful
@@ -463,13 +463,13 @@ function sitecontact_delete()
     if (!xarModAPIFunc('blocks', 'admin', 'unregister_block_type',
                  array('modName' => 'sitecontact',
                        'blockType' => 'sitecontact'))) return;
-/*
+
     // Remove module hooks
-    if (!xarModUnregisterHook('item', 'usermenu', 'GUI',
-            'sitecontact', 'user', 'usermenu')) {
+    if (!xarModUnregisterHook('item', 'waitingcontent', 'GUI',
+            'sitecontact', 'user', 'waitingcontent')) {
         return false;
     }
-*/
+
     xarRemoveMasks('sitecontact');
     xarRemoveInstances('sitecontact');
 

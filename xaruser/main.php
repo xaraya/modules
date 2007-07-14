@@ -35,28 +35,29 @@ function sitecontact_user_main($args)
     if(!xarVarFetch('botreset',   'bool',   $botreset,     false, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('scid',       'int:1:', $scid,       $defaultformid, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('userreferer', 'str:1:', $userreferer, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('casmsg', 'str:1', $casmsg, '', XARVAR_NOT_REQUIRED)) {return;} //formcaptcha
 
     $formdata=array();
     if (isset($sctypename) && trim($sctypename) !=''){
         $sctypename=trim($sctypename);
     }
     if (isset($scform) && (trim($scform) !='')) { //provide alternate entry name
-        $sctypename=trim($scform);
+      $sctypename=trim($scform);
     }
 
     //Have we got a form that is available and active?
     if (isset($sctypename) && trim($sctypename) !='') {
-        $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('sctypename'=> $sctypename));
+       $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('sctypename'=> $sctypename));
     }elseif (isset($scid) && is_int($scid)) {
-        $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $scid));
+       $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $scid));
     } else {
         $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $defaultformid));
     }
 
     //Have we got an active form
     if (!is_array($formdata)) { //exists but not active
-        //fallback to default form again
-        $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $defaultformid));
+      //fallback to default form again
+      $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $defaultformid));
     }
     $formdata=$formdata[0];
 
@@ -65,12 +66,19 @@ function sitecontact_user_main($args)
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
-
+    $scid = $formdata['scid'];
+    //now we have a form id - check the user has access
+    if (!xarSecurityCheck('ViewSitecontact',0,'ContactForm',"$scid:All:All"))
+    
+    
     // Set up defaults returned from any invalid captcha input
     // TODO - set this up for DD fields as well
     $data['company'] = $company;
     $data['usermessage'] = $usermessage;
     $data['antibotinvalid'] =$antibotinvalid;
+  //formcaptcha
+    $data['casmsg']= isset($casmsg)?$casmsg:'';
+
     /* Security Check */
     if(!xarSecurityCheck('ViewSiteContact')) return;
 
@@ -105,8 +113,8 @@ function sitecontact_user_main($args)
     $usehtmlemail = $formdata['usehtmlemail'];
     $allowcopy    = $formdata['allowcopy'];
 
-    $data['customtitle'] = xarVarPrepHTMLDisplay($customtitle);
-    $data['customtext']  = xarVarPrepHTMLDisplay($customtext);
+    $data['customtitle']=xarVarPrepHTMLDisplay($customtitle);
+    $data['customtext'] = xarVarPrepHTMLDisplay($customtext);
 
     $data['usehtmlemail'] = $usehtmlemail;
     $data['allowcopy'] = $allowcopy;
@@ -154,7 +162,7 @@ function sitecontact_user_main($args)
 
     $properties = null;
         $withupload = (int) false;
-            if (xarModIsAvailable('dynamicdata')) {
+            if (xarModIsHooked('dynamicdata','sitecontact',$formdata['scid'])) {
                 // get the Dynamic Object defined for this module
                 $object =  xarModAPIFunc('dynamicdata','user','getobject',
                 array('module' =>'sitecontact',

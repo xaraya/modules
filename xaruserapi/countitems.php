@@ -20,12 +20,16 @@
  * @return number of items held by this module
  * @raise DATABASE_ERROR
  */
-function sitecontact_userapi_countitems()
+function sitecontact_userapi_countitems($args)
 {
+    extract($args);
+
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
+    
     $sitecontactTable = $xartable['sitecontact'];
-    $query = "SELECT COUNT(1)
+
+ $query = "SELECT COUNT(1)
             FROM $sitecontactTable";
 
     $result = &$dbconn->Execute($query,array());

@@ -140,7 +140,7 @@
                 </xar:if>
             </div>
 
-            <xar:if  condition="xarModIsAvailable('dynamicdata') and xarModIsHooked('dynamicdata','sitecontact',$scid) and $showdd" >
+            <xar:if  condition="xarModIsHooked('dynamicdata','sitecontact',$scid) and $showdd" >
                 <xar:data-getitem name="$properties" module="sitecontact" itemtype="$scid" itemid="$scid" />
                 <xar:if condition="isset($properties) and count($properties) gt 0">
                     <xar:foreach in="$properties" key="$name">

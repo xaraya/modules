@@ -61,10 +61,10 @@ function sitecontact_admin_managesctypes()
     if (!isset($scid) && $action =='view') {
          xarSessionSetVar('statusmsg','');
     }
-    
+    $numitems = xarModAPIFunc('sitecontact','user','countitems');
     // Add a pager for forms
     $data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('sitecontact','user','countitems'),
+        $numitems,
         xarModURL('sitecontact', 'admin', 'managesctypes', array('action'=>$action, 'startnum' => '%%')),
         xarModGetVar('sitecontact', 'itemsperpage'));
 
@@ -165,6 +165,7 @@ function sitecontact_admin_managesctypes()
                 return true;
           }
         }
+
     }
 
 
