@@ -81,10 +81,11 @@ function articles_userapi_get($args)
         if (isset($where))
             $args['where'] = $where;
         $arts = xarModApiFunc('articles','user','getall', $args );
-        if (!empty($arts))
-            return current($arts);
-        else
+        if (!empty($arts)) {
+            return reset($arts);
+        } else {
             return false;
+        }
     }
 
 // TODO: put all this in dynamic data and retrieve everything via there (including hooked stuff)
