@@ -7,7 +7,7 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Comments Module
+ * @subpackage comments
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
@@ -35,7 +35,7 @@ function comments_userapi_getoptions()
     // dependant on the user being logged in.):
     // Get/Post->[user_defined->]admin_defined
 
-    if (isset($depth)) {
+    if (!empty($depth)) {
         if ($depth == 0) {
             $settings['depth'] = 1;
         } else {
@@ -43,47 +43,43 @@ function comments_userapi_getoptions()
         }
     } else {
         if (xarUserIsLoggedIn()) {
-            // Grab user's depth setting.
             $settings['depth'] = xarModGetUserVar('comments','depth');
         } else {
             $settings['depth'] = xarModGetVar('comments','depth');
         }
     }
-
-    if (isset($render) && !empty($render)) {
+   
+    if (!empty($render)) {
         $settings['render'] = $render;
     } else {
         if (xarUserIsLoggedIn()) {
-            // Grab user's depth setting.
             $settings['render'] = xarModGetUserVar('comments','render');
         } else {
             $settings['render'] = xarModGetVar('comments','render');
         }
     }
 
-    if (isset($order) && !empty($order)) {
+    if (!empty($order)) {
         $settings['order'] = $order;
     } else {
         if (xarUserIsLoggedIn()) {
-            // Grab user's depth setting.
             $settings['order'] = xarModGetUserVar('comments','order');
         } else {
             $settings['order'] = xarModGetVar('comments','order');
         }
     }
 
-    if (isset($sortby) && !empty($sortby)) {
+    if (!empty($sortby)) {
         $settings['sortby'] = $sortby;
     } else {
         if (xarUserIsLoggedIn()) {
-            // Grab user's depth setting.
             $settings['sortby'] = xarModGetUserVar('comments','sortby');
         } else {
             $settings['sortby'] = xarModGetVar('comments','sortby');
         }
     }
 
-    if (!isset($settings['depth']) || $settings['depth'] > (_COM_MAX_DEPTH - 1)) {
+    if ($settings['depth'] > (_COM_MAX_DEPTH - 1)) {
         $settings['depth'] = (_COM_MAX_DEPTH - 1);
     }
 
@@ -101,5 +97,4 @@ function comments_userapi_getoptions()
 
     return $settings;
 }
-
 ?>
