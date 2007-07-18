@@ -231,22 +231,27 @@ div.ievents-search-box {
     border-bottom: 1px solid #ffffff;
 }
 div.ievents-search-box-bottom {
-   padding-top: 0.7em;
+    padding-top: 0.7em;
 }
-table.simple-search tr td,
-table.daterange-group tr td {
+div.ievents-search table tr td,
+div.ievents-search table tr td {
     vertical-align: bottom;
     padding-right: 1em;
 }
-table.simple-search tr td input,
-table.simple-search tr td select,
-table.simple-search tr td label,
-table.daterange-group tr td div.ievents-date-parts-all,
-table.daterange-group tr td select#group,
-table.daterange-group tr td label {
+
+div.ievents-search-simple table tr td input,
+div.ievents-search-simple table tr td select,
+div.ievents-search-simple table tr td label,
+div.ievents-search-box-first table tr td div.ievents-date-parts-all,
+div.ievents-search-box-first table tr td select#group,
+div.ievents-search-box-first table tr td label {
     clear: both;
     display: block;
 }
 span.ievents-date-divider {
     margin: 0 0.5em;
+}
+
+div.ievents-search-advanced table {
+    border: none;
 }

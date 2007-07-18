@@ -1,57 +1,84 @@
-<div class="ievents-jump-menu">
+<div class="ievents-search">
+<div class="ievents-search-inner">
+    <h1>Search Events</h1>
+    <xar:comment>
+    <p class="search-option">Simple Search?</p>
+    <p class="search-option">Advanced Search?</p>
+    </xar:comment>
     <form method="get" action="#xarModURL('ievents','user','view')#">
-        <p>
-            <span class="ievents-date-parts">
-                <xar:data-input name="startday" id="startday" type="6" validation="$lists['daynum']" value="$startday" />
-                <xar:data-input name="startmonth" id="startmonth" type="6" validation="$lists['monthshort']" value="$startmonth" />
-                <xar:data-input name="startyear" id="startyear" type="6" validation="$lists['yearnum']" value="$startyear" />
-            </span>
-            <xar:mlstring> to </xar:mlstring>
-            <span class="ievents-date-parts">
-                <xar:data-input name="endday" id="endday" type="6" validation="$lists['daynum']" value="$endday" />
-                <xar:data-input name="endmonth" id="endmonth" type="6" validation="$lists['monthlong']" value="$endmonth" />
-                <xar:data-input name="endyear" id="endyear" type="6" validation="$lists['yearnum']" value="$endyear" />
-            </span>
+    
+    <div class="ievents-search-simple">
+        <table>
+            <tr>
+                <xar:if condition="!empty($q_fields)">
+                    <td>
+                        <label for="q" id="q_label"><xar:mlstring>Search:</xar:mlstring></label>
+                        <input type="text" name="q" id="q" value="#xarVarPrepForDisplay($q)#" />
+                    </td>
+                </xar:if>
+                <td>
+                    <label for="daterangelist" id="daterange_label"><xar:mlstring>Date Range:</xar:mlstring></label>
+                    <xar:set name="daterangelist">#xarModAPIfunc('ievents','user','params',array('name'=&gt;'daterangelist'))#</xar:set>
+                    <xar:data-input name="range" id="daterange" type="6" validation="$daterangelist" value="" />
+                </td>
+                <td>
+                    <label for="cid" id="calendar_label"><xar:mlstring>Calendar:</xar:mlstring></label>
+                    <xar:set name="calendarlist">#xarModAPIfunc('ievents','user','list_calendars',array('readable'=&gt;true,'mandatory'=&gt;false))#</xar:set>
+                    <xar:if condition="!empty($calendarlist) and count($calendarlist) gt 1">
+                        <xar:data-input name="cid" id="calendar" type="6" validation="$calendarlist" value="$cid" />
+                    </xar:if>
+                </td>
+                <td><input type="submit" value="#xarML('Find Events')#" /></td>
+            </tr> 
+        </table>
+    </div>
 
-            <xar:mlstring> or </xar:mlstring>
+    <xar:comment>Begin Advanced Search Section</xar:comment>
+    <div class="ievents-search-advanced">
+        <div class="ievents-search-box-first">
+            <table>
+                <tr>
+                    <td class="daterange-cell">
+                        <label for="startday"><xar:mlstring>Search over a date range:</xar:mlstring></label>
+                        <div class="ievents-date-parts-all">
+                            <span class="ievents-date-parts">
+                                <xar:data-input name="startday" id="startday" type="6" validation="$lists['daynum']" value="$startday" />
+                                <xar:data-input name="startmonth" id="startmonth" type="6" validation="$lists['monthshort']" value="$startmonth" />
+                                <xar:data-input name="startyear" id="startyear" type="6" validation="$lists['yearnum']" value="$startyear" />
+                            </span>
+                            <span class="ievents-date-divider"><xar:mlstring> to </xar:mlstring></span>
+                            <span class="ievents-date-parts">
+                                <xar:data-input name="endday" id="endday" type="6" validation="$lists['daynum']" value="$endday" />
+                                <xar:data-input name="endmonth" id="endmonth" type="6" validation="$lists['monthlong']" value="$endmonth" />
+                                <xar:data-input name="endyear" id="endyear" type="6" validation="$lists['yearnum']" value="$endyear" />
+                            </span>
+                        </div>
+                    </td>
+                    <td class="groupby-cell">
+                        <label for="group">Group by:</label>
+                        <xar:set name="grouplist">#xarModAPIfunc('ievents','user','params',array('name'=&gt;'grouplist'))#</xar:set>
+                        <xar:data-input name="group" id="group" type="6" validation="$grouplist" value="$group" />
+                    </td>
+                </tr>
+            </table>
+        </div>
 
-            <xar:set name="daterangelist">#xarModAPIfunc('ievents','user','params',array('name'=&gt;'daterangelist'))#</xar:set>
-            <xar:data-input name="range" id="daterange" type="6" validation="$daterangelist" value="" />
+        <xar:comment>TODO: only include these three hidden values if short URLs are not being used</xar:comment>
+        <input type="hidden" name="module" value="ievents" />
+        <input type="hidden" name="type" value="user" />
+        <input type="hidden" name="func" value="view" />
 
-            <br />
-
-            <xar:set name="calendarlist">#xarModAPIfunc('ievents','user','list_calendars',array('mandatory'=&gt;false))#</xar:set>
-            <xar:if condition="!empty($calendarlist) && count($calendarlist) gt 1">
-                <xar:data-input name="cid" id="calendar" type="6" validation="$calendarlist" value="$cid" />
-            </xar:if>
-
-            <xar:comment>TODO: only include these three hidden values if short URLs are not being used</xar:comment>
-            <input type="hidden" name="module" value="ievents" />
-            <input type="hidden" name="type" value="user" />
-            <input type="hidden" name="func" value="view" />
-
-            <xar:comment>Reset a few values if the jump menu is used</xar:comment>
-            <xar:if condition="!empty($startnum)">
-                <input type="hidden" name="startnum" value="1" />
-            </xar:if>
-            <xar:if condition="!empty($numitems) && $numitems ne $default_numitems">
-                <input type="hidden" name="numitems" value="#$numitems#" />
-            </xar:if>
-
-            <xar:set name="grouplist">array(
-                'none' => xarML('No group'),
-                'day' => xarML('Daily'),
-                'week' => xarML('Weekly'),
-                'month' => xarML('Monthly'),
-                'year' => xarML('Annual'),
-            )</xar:set>
-            <xar:data-input name="group" id="group" type="6" validation="$grouplist" value="$group" />
-
-            <input type="submit" value="#xarML('Go')#" />
-        </p>
+        <xar:comment>Reset a few values if the jump menu is used</xar:comment>
+        <xar:if condition="!empty($startnum)">
+            <input type="hidden" name="startnum" value="1" />
+        </xar:if>
+        <xar:if condition="!empty($numitems) && $numitems ne $default_numitems">
+            <input type="hidden" name="numitems" value="#$numitems#" />
+        </xar:if>
 
         <xar:comment>The categories are optional</xar:comment>
         <xar:if condition="!empty($categories.basecats)">
+        <div class="ievents-search-box">
             <p>
                 <label for="catids_0" id="catids_0_label"><xar:mlstring>Categories:</xar:mlstring></label>
                 <xar:loop name="$categories['basecats']" id="basecats">
@@ -76,7 +103,9 @@
                         </select>
                     </xar:if>
                 </xar:loop>
-            
+            </p> 
+
+            <p>
                 <span id="crule_1_wrapper">
                     <xar:if condition="$crule eq 'or'">
                         <input type="radio" name="crule" id="crule_1" value="or" checked="checked" />
@@ -95,15 +124,16 @@
                     <label for="crule_2" id="crule_2_label"><xar:mlstring>Match <em>all</em> selected categories</xar:mlstring></label>
                 </span>
             </p>
+        </div>
         </xar:if>
 
-        <xar:comment>Keyword search is optional</xar:comment>
-        <xar:if condition="!empty($q_fields)">
-            <p>
-                <label for="q" id="q_label"><xar:mlstring>Search:</xar:mlstring></label>
-                <input type="text" name="q" id="q" value="#xarVarPrepForDisplay($q)#" />
-                <input type="submit" value="#xarML('Go')#" />
+        <div class="ievents-search-box-bottom">
+            <p class="adv-submit">
+                <input type="submit" value="#xarML('Find Events')#" />
             </p>
-        </xar:if>
+        </div>
+        <xar:comment>End Advanced Search section</xar:comment>
+    </div>
     </form>
+</div>
 </div>

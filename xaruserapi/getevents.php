@@ -36,8 +36,8 @@ function ievents_userapi_getevents($args)
 
     static $static_object = NULL;
 
-    list($module, $modid, $itemtype, $q_fields, $group_prefixes, $address_format) =
-        xarModAPIfunc('ievents', 'user', 'params', array('names' => 'module,modid,itemtype_events,q_fields,group_prefixes,address_format'));
+    list($module, $modid, $itemtype, $q_fields, $group_prefixes, $address_format, $default_listing_sort) =
+        xarModAPIfunc('ievents', 'user', 'params', array('names' => 'module,modid,itemtype_events,q_fields,group_prefixes,address_format,default_listing_sort'));
 
     // Default return value (array or 0, depending on whether doing a count).
     if (empty($docount)) {
@@ -231,7 +231,7 @@ function ievents_userapi_getevents($args)
         // TODO: create 'sort' by combining some easier-to-handle parameters.
         // Note also that some property names do not match the table column names.
         // TODO: validate the sort columns.
-        if (empty($sort)) $sort = 'startdate DESC';
+        if (empty($sort)) $sort = $default_listing_sort;
         $params['sort'] = $sort;
 
         // startnum and numitems (used by the pager)

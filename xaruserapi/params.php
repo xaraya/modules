@@ -52,7 +52,7 @@ function ievents_userapi_params($args)
         // Default start and end dates, in 'strtotime' format.
         // TODO: allow a default 'daterange' name instead.
         $params['default_startdate'] = 'now';
-        $params['default_enddate'] = '+1 month';
+        $params['default_enddate'] = '+6 months';
 
         // Output transform fields.
         // Only these fields will be passed through the output transform.
@@ -84,8 +84,17 @@ function ievents_userapi_params($args)
         // Options are: none or '', day, week, month, year
         $params['default_group'] = 'week';
 
+        // The complete list of options for grouping.
+        $params['grouplist'] = array(
+            'none' => xarML('No group'),
+            'day' => xarML('Daily'),
+            'week' => xarML('Weekly'),
+            'month' => xarML('Monthly'),
+            'year' => xarML('Annual'),
+        );
+
         // Default date range for calendar subscriptions.
-        $params['cal_subscribe_range'] = 'next2months';
+        $params['cal_subscribe_range'] = 'window2months';
         $params['cal_subscribe_numitems'] = 100;
 
         // Format of the full address.
@@ -94,8 +103,16 @@ function ievents_userapi_params($args)
         // {NL} is a forced line break (will always appear)
         $params['address_format'] = '{location_venue}{LB}{location_address}{LB}{location_postcode}{LB}{location_country}';
 
-        // The prefixes of properties that will be grouped into arrays
+        // The prefixes of properties that will be grouped into arrays for ease
+        // of use in the templates.
         $params['group_prefixes'] = 'location,contact';
+
+        // Default listing sort order
+        $params['default_listing_sort'] = 'start_date ASC';
+        $params['listing_sort_options'] = array(
+            'startdate ASC' => 'Date (earliest first)',
+            'startdate DESC' => 'Date (latest first)',
+        );
 
         // Date range list, used to provide a handy set of date ranges in various places
         $params['daterangelist'] = array(
@@ -114,6 +131,14 @@ function ievents_userapi_params($args)
         // Maximum category depth shown in the jump menu.
         // 1 is just a single level (the root cat, shown as an option group, and one level below that)
         $params['max_cat_depth'] = 2;
+
+        // The various display formats.
+        // Each of these maps to different summary and display templates.
+        $params['default_display_format'] = 'list';
+        $params['display_formats'] = array(
+            'list' => xarML('Listings'),
+            'cal' => xarML('Calendar'),
+        );
     }
 
     if (!empty($name)) {

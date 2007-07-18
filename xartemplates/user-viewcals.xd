@@ -2,10 +2,11 @@
 <xar:style file="ievents" scope="module" />
 
 <div class="ievents-view-calendars">
+    <xar:comment>TODO: this is too crude - there may only be one calendar in the system, so 'show all' makes no sense</xar:comment>
     <xar:if condition="count($calendars) gt 1">
         <h1><xar:mlstring>Calendar List</xar:mlstring></h1>
     <xar:else />
-        <h1><xar:mlstring>View Calendar</xar:mlstring> (<a href="#xarModURL('ievents','user','viewcals')#"><xar:mlstring>View All</xar:mlstring></a>)</h1>
+        <h1><xar:mlstring>View Calendar</xar:mlstring> (<a href="#xarModURL('ievents','user','viewcals')#"><xar:mlstring>Show All</xar:mlstring></a>)</h1>
     </xar:if>
 
     <xar:comment>Get standard quick-jump list of date ranges</xar:comment>
@@ -47,7 +48,7 @@
                         <strong><xar:mlstring>Subscribe:</xar:mlstring></strong>
                         <xar:loop name="$export_handlers">
                             <xar:if condition="$loop:index gt 0"> | </xar:if>
-                            <a href="#xarModURL('ievents','user','view',array('export'=&gt;$loop:key,'numitems'=&gt;$cal_subscribe_numitems,'range'=&gt;$cal_subscribe_range))#" title="#$loop:item.long#" class="ievents-export-#$loop:item.class#">#$loop:item.short#</a>
+                            <a href="#xarModURL('ievents','user','view',array('format'=&gt;$loop:key,'numitems'=&gt;$cal_subscribe_numitems,'range'=&gt;$cal_subscribe_range))#" title="#$loop:item.long#" class="ievents-export-#$loop:item.class#">#$loop:item.short#</a>
                         </xar:loop>
                     </dd>
                 </xar:if>
@@ -99,7 +100,7 @@
                         <strong><xar:mlstring>Subscribe:</xar:mlstring></strong>
                         <xar:loop name="$export_handlers">
                             <xar:if condition="$loop:index gt 0"> | </xar:if>
-                            <a href="#xarModURL('ievents','user','view',array('export'=&gt;$loop:key,'numitems'=&gt;$cal_subscribe_numitems,'cid'=&gt;$loop:calloop:key,'range'=&gt;$cal_subscribe_range))#" title="#$loop:item.long#" class="ievents-export-#$loop:item.class#">#$loop:item.short#</a>
+                            <a href="#xarModURL('ievents','user','view',array('format'=&gt;$loop:key,'numitems'=&gt;$cal_subscribe_numitems,'cid'=&gt;$loop:calloop:key,'range'=&gt;$cal_subscribe_range))#" title="#$loop:item.long#" class="ievents-export-#$loop:item.class#">#$loop:item.short#</a>
                         </xar:loop>
                     </dd>
                 </xar:if>

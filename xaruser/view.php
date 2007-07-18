@@ -10,9 +10,10 @@
  * actually need a way to get the next and previous events in a listing
  * even from within the display function]
  *
- * @todo Transform hooks on the HTML fields (
- * @todo Support calendar_id as an input parameter
- * @todo Support [multiple] categories
+ * @todo Transform hooks on the HTML fields
+ * @todo Support different display formats (list, calendar, etc)
+ * @todo Provide next/previous day/week/month/year/goup links for the template (for any view)
+ * @todo Create a textual description of the search that has been performed
  */
 
 function ievents_user_view($args)
@@ -25,11 +26,13 @@ function ievents_user_view($args)
     // Get module parameters
     list(
         $module, $default_numitems, $max_numitems, $default_startdate, $default_enddate, $startdayofweek,
-        $html_fields, $itemtype_events, $year_range_min, $year_range_max, $q_fields, $default_group
+        $html_fields, $itemtype_events, $year_range_min, $year_range_max, $q_fields, $default_group,
+        $default_display_format, $display_formats
     ) = xarModAPIfunc('ievents', 'user', 'params',
         array(
             'names' => 'module,default_numitems,max_numitems,default_startdate,default_enddate,startdayofweek,'
-            . 'html_fields,itemtype_events,year_range_min,year_range_max,q_fields,default_group'
+            . 'html_fields,itemtype_events,year_range_min,year_range_max,q_fields,default_group,'
+            . 'default_display_format,display_formats'
         )
     );
 
@@ -38,7 +41,19 @@ function ievents_user_view($args)
     if (!xarVarFetch('numitems', 'int:1:' . $max_numitems, $numitems, $default_numitems, XARVAR_NOT_REQUIRED)) return;
 
     // TODO: sorting and ordering flags and parameters
-    // ...
+
+    // Get the display format.
+    // The possible display formats are any from a set list, plus the export formats.
+    $export_object = xarModAPIfunc('ievents', 'export', 'new_export');
+    if (!empty($export_object) && is_array($export_object->handlers)) {
+        $export_handlers = $export_object->handlers;
+        $export_formats = array_keys($export_handlers);
+    } else {
+        $export_handlers = array();
+        $export_formats = array();
+    }
+    $valid_formats = array_merge($export_formats, $display_formats);
+    xarVarFetch('format', 'enum:' . implode(':', $valid_formats), $format, $default_display_format, XARVAR_NOT_REQUIRED);
 
     //
     // Various start/end date selection 
@@ -479,12 +494,16 @@ function ievents_user_view($args)
     // The url params would be slightly different to the event params (no unix timestamps
     // for a start, and possibly different category parameter formats).
     $url_params = array(
-        'numitems' => $numitems,
         'startnum' => '%%',
         'startdate' => $startdate,
         'enddate' => $enddate,
-        'group' => $group,
     );
+
+    // Include some items only if not the default (to try and keep URLs shorter).
+    if ($numitems != $default_numitems) $url_params['numitems'] = $numitems;
+    if ($group != $default_group) $url_params['group'] = $group;
+    if ($format != $default_display_format) $url_params['format'] = $format;
+
 
     // Add the categories selection in if available.
     if (!empty($cats)) $url_params['cats'] = $cats;
@@ -588,23 +607,16 @@ function ievents_user_view($args)
     //echo "<pre>"; var_dump($categories); echo "</pre>";
 
 
-    // Get details of exports available.
-    $export_object = xarModAPIfunc('ievents', 'export', 'new_export');
-    if (!empty($export_object)) {
-        $export_handlers = $export_object->handlers;
-
+    // Perform an export if required.
+    if (!empty($export_formats)) {
         // Check if the user has asked for an export.
-        xarVarFetch('export', 'enum:' . implode(':', array_keys($export_handlers)), $export, '', XARVAR_NOT_REQUIRED);
-
-        if (!empty($export) && $export != 'rss') {
+        if (in_array($format, $export_formats) && $format != 'rss') {
             // Set the export handler.
-            $export_object->set_handler($export);
+            $export_object->set_handler($format);
 
             // Stream the export (or redirect to an error page)
             return $export_object->stream_export($events);
         }
-    } else {
-        $export_handlers = array();
     }
 
 
@@ -665,13 +677,13 @@ function ievents_user_view($args)
         'cid',
 
         // Other
-        'hooks', 'q', 'q_fields', 'export_handlers'
+        'hooks', 'q', 'q_fields', 'export_handlers', 'format'
     );
     //echo "<pre>"; var_dump($bl_data); echo "</pre>";
     //echo "ustartdate=$ustartdate (" . date('Y-m-d', $ustartdate) . ") uenddate=$uenddate (" . date('Y-m-d', $uenddate) . ")<br />";
 
-    // RSS
-    if ($export == 'rss' && xarThemeIsAvailable('rss')) xarTplSetThemeName('rss');
+    // RSS - switch to the RSS theme if the format is RSS
+    if ($format == 'rss' && xarThemeIsAvailable('rss')) xarTplSetThemeName('rss');
 
     return $bl_data;
 }

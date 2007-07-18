@@ -49,10 +49,10 @@ class ievents_exportapi_export_master
     function ievents_exportapi_export_master($args)
     {
         // If the RSS theme is available, then add it to the list of handlers
+        // TODO: check if this is the right place.
         if (xarThemeIsAvailable('rss')) {
             $this->handlers += array('rss' => array('short' => 'RSS', 'long' => 'RSS', 'class' => '', 'extension' => 'xml'));
         }
-
         
         return $this;
     }
