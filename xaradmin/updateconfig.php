@@ -21,44 +21,50 @@ function comments_admin_updateconfig()
     if (!xarSecConfirmAuthKey()) return;
     if (!xarSecurityCheck('Comments-Admin')) return;
 
-    if (!xarVarFetch('editstamp','int:1',$editstamp,0,XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('xar_wrap','checkbox', $xar_wrap, false,XARVAR_NOT_REQUIRED)) return;
+
+    if (!xarVarFetch('showoptions', 'checkbox', $showoptions, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('postanon', 'checkbox', $postanon, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('depth', 'int:1:', $depth, _COM_MAX_DEPTH, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('render', 'str:1:', $render, _COM_VIEW_THREADED, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sortby', 'str:1:', $sortby, _COM_SORTBY_THREAD, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('order', 'str:1:', $order, _COM_SORT_ASC, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('editstamp','checkbox',$editstamp,0,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('wrap','checkbox', $wrap, false,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('authorize', 'checkbox', $authorize, false, XARVAR_NOT_REQUIRED)) return;
+    
     if (!xarVarFetch('numstats', 'int', $numstats, 100, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('rssnumitems', 'int', $rssnumitems, 25, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('showtitle', 'checkbox', $showtitle, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('showoptions', 'checkbox', $showoptions, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('xar_postanon', 'checkbox', $xar_postanon, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('xar_useblacklist', 'checkbox', $xar_useblacklist, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('xar_depth', 'str:1:', $xar_depth, _COM_MAX_DEPTH, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('xar_render', 'str:1:', $xar_render, _COM_VIEW_THREADED, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('xar_sortby', 'str:1:', $xar_sortby, _COM_SORTBY_THREAD, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('xar_order', 'str:1:', $xar_order, _COM_SORT_ASC, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('xar_authorize', 'checkbox', $xar_authorize, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('allowhookoverride', 'checkbox', $allowhookoverride, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('usersetrendering', 'checkbox', $usersetrendering, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('useblacklist', 'checkbox', $xar_useblacklist, false, XARVAR_NOT_REQUIRED)) return;
+    
 
-    xarModSetVar('comments', 'AllowPostAsAnon', $xar_postanon);
-    xarModSetVar('comments', 'AuthorizeComments', $xar_authorize);
-    xarModSetVar('comments', 'depth', $xar_depth);
-    xarModSetVar('comments', 'render', $xar_render);
-    xarModSetVar('comments', 'sortby', $xar_sortby);
-    xarModSetVar('comments', 'order', $xar_order);
+    xarModSetVar('comments', 'AllowPostAsAnon', $postanon);
+    xarModSetVar('comments', 'AuthorizeComments', $authorize); 
+    xarModSetVar('comments', 'depth', $depth);
+    xarModSetVar('comments', 'render', $render);
+    xarModSetVar('comments', 'sortby', $sortby);
+    xarModSetVar('comments', 'order', $order);
     xarModSetVar('comments', 'editstamp', $editstamp);
-    xarModSetVar('comments', 'wrap', $xar_wrap);
+    xarModSetVar('comments', 'wrap', $wrap);
+    xarModSetVar('comments', 'showoptions', $showoptions);
+    
     xarModSetVar('comments', 'numstats', $numstats);
     xarModSetVar('comments', 'rssnumitems', $rssnumitems);
     xarModSetVar('comments', 'showtitle', $showtitle);
-    xarModSetVar('comments', 'showoptions', $showoptions);
-    xarModSetVar('comments', 'useblacklist', $xar_useblacklist);
+    xarModSetVar('comments', 'useblacklist', $useblacklist);
     xarModSetVar('comments','usersetrendering',$usersetrendering);
+    xarModSetVar('comments', 'allowhookoverride', $allowhookoverride);
     xarModCallHooks('module', 'updateconfig', 'comments', array('module' => 'comments'));
     /* Blacklist feed unavailable
-    xarModSetVar('comments', 'useblacklist', $xar_useblacklist);
+    xarModSetVar('comments', 'useblacklist', $useblacklist);
     if ($xar_useblacklist == true){
         if (!xarModAPIFunc('comments', 'admin', 'import_blacklist')) return;
     }
     */
      if ($usersetrendering == true) {
-     //check and hook Comments to roles if not already hooked
+         //check and hook Comments to roles if not already hooked
          if (!xarModIsHooked('comments', 'roles')) {
              xarModAPIFunc('modules','admin','enablehooks',
                                  array('callerModName' => 'roles',
@@ -67,7 +73,7 @@ function comments_admin_updateconfig()
 
      } else {
        if (xarModIsHooked('comments', 'roles')) {
-        //unhook Comments from roles
+             //unhook Comments from roles
              xarModAPIFunc('modules','admin','disablehooks',
                                  array('callerModName' => 'roles',
                                        'hookModName' => 'comments'));

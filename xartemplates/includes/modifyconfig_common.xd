@@ -1,13 +1,12 @@
 <div class="xar-form-input-wrapper">
-    <label for="xar_depth" class="xar-form-label" title="#xarML('The rendering depth to be used as default')#">
+    <label for="depth" class="xar-form-label" title="#xarML('The rendering depth to be used as default')#">
         <xar:mlstring>
             Default Rendering Depth
         </xar:mlstring>
     </label>
-    <xar:set name="$depth">#xarModGetVar('comments','depth')#</xar:set>
     <xar:set name="$max_depth">_COM_MAX_DEPTH - 1</xar:set>
 
-    <select name="xar_depth" id="xar_depth">
+    <select name="depth" id="depth">
         <xar:for start="$i = 1" test="$i le $max_depth" iter="$i++">
             <xar:if condition="$i eq $depth">
                 <option value="#$i#" selected="selected">#$i#</option>
@@ -18,13 +17,12 @@
     </select>
 </div>
 <div class="xar-form-input-wrapper">
-    <label for="xar_render" class="xar-form-label" title="#xarML('The rendering style to be used as default.')#">
+    <label for="render" class="xar-form-label" title="#xarML('The rendering style to be used as default.')#">
         <xar:mlstring>
             Default Rendering Style
         </xar:mlstring>
     </label>
-    <xar:set name="$render">#xarModGetVar('comments','render')#</xar:set>
-    <select name="xar_render" id="xar_render">
+    <select name="render" id="render">
         <xar:if condition="$render eq 'nested'">
             <option value="nested" selected="selected"><xar:mlstring>Nested</xar:mlstring></option>
         <xar:else />
@@ -48,13 +46,12 @@
     </select>
 </div>
 <div class="xar-form-input-wrapper">
-    <label for="xar_sortby" class="xar-form-label" title="#xarML('The sorting mode to be used as default.')#">
+    <label for="sortby" class="xar-form-label" title="#xarML('The sorting mode to be used as default.')#">
         <xar:mlstring>
             Default Sorting Mode
         </xar:mlstring>
     </label>
-    <xar:set name="$sortby">#xarModGetVar('comments','sortby')#</xar:set>
-    <select name="xar_sortby" id="xar_sortby">
+    <select name="sortby" id="sortby">
         <xar:if condition="$sortby eq 1">
             <option value="1" selected="selected"><xar:mlstring>Author</xar:mlstring></option>
         <xar:else />
@@ -81,13 +78,12 @@
     </select>
 </div>
 <div class="xar-form-input-wrapper">
-    <label for="xar_order" class="xar-form-label" title="#xarML('The sorting order to be used as default.')#">
+    <label for="order" class="xar-form-label" title="#xarML('The sorting order to be used as default.')#">
        <xar:mlstring>
             Default Sorting Order
        </xar:mlstring>
     </label>
-    <xar:set name="$order">#xarModGetVar('comments','order')#</xar:set>
-    <select name="xar_order" id="xar_order">
+    <select name="order" id="order">
         <xar:if condition="$order eq 1">
             <option value="1" selected="selected"><xar:mlstring>Ascending</xar:mlstring></option>
         <xar:else />
@@ -125,28 +121,38 @@
     </select>
 </div>
 <div class="xar-form-input-wrapper-after">
-    <xar:set name="$postanon">#xarModGetVar('comments','AllowPostAsAnon')#</xar:set>
     <xar:if condition="$postanon eq 1">
-        <input type="checkbox" name="xar_postanon" id="xar_postanon" checked="checked" />
+        <input type="checkbox" name="postanon" id="postanon" checked="checked" />
     <xar:else />
-        <input type="checkbox" name="xar_postanon" id="xar_postanon" />
+        <input type="checkbox" name="postanon" id="postanon" />
     </xar:if>
-    <label for="xar_postanon" title="#xarML('Admin will see the name of who posted.')#">
+    <label for="postanon" title="#xarML('Admin will see the name of who posted.')#">
         <xar:mlstring>
             Allow anonymous posting
         </xar:mlstring>
     </label>
 </div>
 <div class="xar-form-input-wrapper-after">
-    <xar:set name="$wrap">#xarModGetVar('comments','wrap')#</xar:set>
     <xar:if condition="!empty($wrap)">
-        <input type="checkbox" name="xar_wrap" id="xar_wrap" value="1" checked="checked" />
+        <input type="checkbox" name="wrap" id="wrap" value="1" checked="checked" />
     <xar:else/>
-        <input type="checkbox" name="xar_wrap" id="xar_wrap" value="1" />
+        <input type="checkbox" name="wrap" id="wrap" value="1" />
     </xar:if>
-    <label for="xar_wrap" title="#xarML('Long strings will be wrapped, including URLS when checked')#">
+    <label for="wrap" title="#xarML('Long strings will be wrapped, including URLS when checked')#">
         <xar:mlstring>
             Wrap Long Entries
+        </xar:mlstring>
+    </label>
+</div>
+<div class="xar-form-input-wrapper-after">
+    <xar:if condition="!empty($showoptions)">
+        <input type="checkbox" name="showoptions" id="showoptions" value="1" checked="checked" />
+    <xar:else/>
+        <input type="checkbox" name="showoptions" id="showoptions" value="1" />
+    </xar:if>
+    <label for="showoptions" title="#xarML('Show rendering options for comments')#">
+        <xar:mlstring>
+            Show Rendering Options   
         </xar:mlstring>
     </label>
 </div>

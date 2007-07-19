@@ -16,12 +16,10 @@ include_once('modules/comments/xarincludes/defines.php');
  */
 function comments_admin_modifyconfig()
 {
-    $editstamp=xarModGetVar('comments','editstamp');
-    $output['editstamp']       = !isset($editstamp) ? 1 :$editstamp;
-
     if(!xarSecurityCheck('Comments-Admin')) return;
     $numstats       = xarModGetVar('comments','numstats');
     $rssnumitems    = xarModGetVar('comments','rssnumitems');
+    
     if (empty($rssnumitems)) {
         xarModSetVar('comments', 'rssnumitems', 25);
     }
@@ -36,9 +34,18 @@ function comments_admin_modifyconfig()
         xarModSetVar('comments','usersetrendering',false);
     }
 
-    $output['authid'] = xarSecGenAuthKey();
-    $output['hooks'] = xarModCallHooks('module', 'modifyconfig', 'comments',
+    $data['authid'] = xarSecGenAuthKey();
+    $data['hooks'] = xarModCallHooks('module', 'modifyconfig', 'comments',
                                        array('module' => 'comments'));
-    return $output;
+
+    $data['depth'] = xarModGetVar('comments','depth');
+    $data['render'] = xarModGetVar('comments','render');
+    $data['sortby'] = xarModGetVar('comments','sortby');
+    $data['order'] = xarModGetVar('comments','order');
+    $data['postanon'] = xarModGetVar('comments','AllowPostAsAnon');
+    $data['showoptions'] = xarModGetVar('comments','showoptions');
+    $data['editstamp'] = xarModGetVar('comments','editstamp');
+
+    return $data;
 }
 ?>

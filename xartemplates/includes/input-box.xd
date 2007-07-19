@@ -2,7 +2,7 @@
 <script type="text/javascript" src="modules/base/xartemplates/includes/submitonce.js"></script>
 <xar:sec mask="Comments-Reply" catch="false">
   <h3>#$header['input-title']#</h3> 
-  <form action="#$receipt['post_url']#" method="post" name="post" id="post" onSubmit="submitonce(this)" #$hooks['formaction']# >
+  <form action="#$receipt['post_url']#" method="post" name="post" id="post" onsubmit="submitonce(this)" #$hooks['formaction']# >
     <div class="xar-ib-wrapper xar-accent-outline">
       <xar:if condition="$hooks['formdisplay'] ne ''">
         <div class="xar-ib-actionpanel xar-accent">
@@ -31,7 +31,7 @@
                   </xar:mlstring>
                 </a> ] 
               </xar:if>
-              <xar:if condition="xarModGetVar('comments','AllowPostAsAnon') eq '1'">
+              <xar:if condition="$package['settings']['AllowPostAsAnon']">
                 <xar:if condition="isset($package['postanon']) and $package['postanon'] eq '1'">
                   <input type="checkbox" name="package[postanon]" id="package-postanon" checked="checked" /> 
                 <xar:else />
@@ -108,7 +108,7 @@
                   </xar:mlstring>
                 </a> ] 
               </xar:if>
-              <xar:if condition="xarModGetVar('comments','AllowPostAsAnon') eq '1'">
+              <xar:if condition="$package['settings']['AllowPostAsAnon']">
                 <xar:if condition="isset($package['postanon']) and $package['postanon'] eq '1'">
                   <input type="checkbox" name="package[postanon]" id="package-postanon" checked="checked" /> 
                 <xar:else />

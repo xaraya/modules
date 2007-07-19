@@ -7,7 +7,7 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Comments Module
+ * @subpackage comments
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
@@ -20,10 +20,11 @@
  * @param    integer    $args['itemtype']           the item type
  * @param    string     $args['objectid']           the item id
  * @param    string     $args['returnurl']          the url to return to
+ * @param    integer    $args['depth']              depth of comment thread to display
  * @param    integer    [$args['selected_cid']]     optional: the cid of the comment to view (only for displaying single comments)
  * @param    integer    [$args['thread']]           optional: display the entire thread following cid
  * @param    integer    [$args['preview']]          optional: an array containing a single (preview) comment used with adding/editing comments
- * @return  array      returns whatever needs to be parsed by the BlockLayout engine
+ * @return   array      returns whatever needs to be parsed by the BlockLayout engine
  */
 function comments_user_display($args)
 {
@@ -53,15 +54,6 @@ function comments_user_display($args)
     $package  = xarRequestGetVar('package');
     $receipt  = xarRequestGetVar('receipt');
 
-    $package['settings'] = xarModAPIFunc('comments','user','getoptions');
-
-    // FIXME: clean up return url handling
-
-    $settings_uri = "&amp;depth={$package['settings']['depth']}"
-        . "&amp;order={$package['settings']['order']}"
-        . "&amp;sortby={$package['settings']['sortby']}"
-        . "&amp;render={$package['settings']['render']}";
-
     // Fetch the module ID
     if (isset($args['modid'])) {
         $header['modid'] = $args['modid'];
@@ -83,6 +75,7 @@ function comments_user_display($args)
         $args['modid'] = $modid;
         $header['modid'] = $modid;
     }
+    $header['modname'] = xarModGetNameFromID($header['modid']);
 
     // Fetch the itemtype
     if (isset($args['itemtype'])) {
@@ -97,6 +90,16 @@ function comments_user_display($args)
         $args['itemtype'] = $itemtype;
         $header['itemtype'] = $itemtype;
     }
+
+    
+    $package['settings'] = xarModAPIFunc('comments','user','getoptions',$header);
+
+    // FIXME: clean up return url handling
+
+    $settings_uri = "&amp;depth={$package['settings']['depth']}"
+        . "&amp;order={$package['settings']['order']}"
+        . "&amp;sortby={$package['settings']['sortby']}"
+        . "&amp;render={$package['settings']['render']}";
 
     // Fetch the object ID
     if (isset($args['objectid'])) {

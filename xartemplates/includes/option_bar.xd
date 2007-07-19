@@ -4,14 +4,13 @@
             Note: Comments are owned by the poster. We are not responsible for their content.
         </xar:mlstring>
     </p>
-    <xar:set name="$showoptions">#xarModGetVar('comments','showoptions')#</xar:set>
-    <xar:if condition="empty($showoptions)">
+    <xar:if condition="!empty($package['settings']['showoption'])">
         <xar:if condition="xarModIsHooked('comments','roles', 0) and xarUserIsLoggedIn()">
             <p class="xar-cm-note xar-sub">
                 <xar:mlstring>
                     Change Your Comments Rendering Settings 
                 </xar:mlstring>
-                <a href="#xarModUrl('roles', 'user', 'account')#">
+                <a href="#xarModURL('roles', 'user', 'account')#">
                     <xar:mlstring>
                         here
                     </xar:mlstring>

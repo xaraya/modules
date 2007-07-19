@@ -22,79 +22,36 @@
  * @access public
  * @returns array list of viewing options (depth, render style, order, and sortby)
  */
-function comments_userapi_getoptions()
+function comments_userapi_getoptions($args)
 {
-    if (!xarVarFetch('depth', 'int', $depth, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('render', 'str', $render, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('order', 'int', $order, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sortby', 'int', $sortby, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('depth', 'int', $settings['depth'], NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('render', 'str', $settings['render'], NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('order', 'int', $settings['order'], NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sortby', 'int', $settings['sortby'], NULL, XARVAR_NOT_REQUIRED)) return;
 
-    // if one of the settings configured, the all should be.
-    // Order of precedence for determining which
-    // settings to use.  (User_Defined is (obviously)
-    // dependant on the user being logged in.):
-    // Get/Post->[user_defined->]admin_defined
-
-    if (!empty($depth)) {
-        if ($depth == 0) {
-            $settings['depth'] = 1;
-        } else {
-            $settings['depth'] = $depth;
+    // if one of the settings is configured, then all should be.
+    // Render settings
+    foreach ($settings as $k => $v) {
+        if (!is_null($v)) continue;
+        if (xarUserIsLoggedIn() && xarModGetVar('comments','setuserrendering')) {
+            $settings[$k] = xarModGetUserVar('comments',$k);
+            continue;
         }
-    } else {
-        if (xarUserIsLoggedIn()) {
-            $settings['depth'] = xarModGetUserVar('comments','depth');
-        } else {
-            $settings['depth'] = xarModGetVar('comments','depth');
+        
+        $hookedvar = xarModGetVar($args['modname'],$k . '.' .$args['itemtype']);
+        if (!empty($hookedvar)) {
+            $settings[$k] = $hookedvar;
+            continue;
         }
-    }
-   
-    if (!empty($render)) {
-        $settings['render'] = $render;
-    } else {
-        if (xarUserIsLoggedIn()) {
-            $settings['render'] = xarModGetUserVar('comments','render');
-        } else {
-            $settings['render'] = xarModGetVar('comments','render');
-        }
+        $settings[$k] = xarModGetVar('comments',$k);
     }
 
-    if (!empty($order)) {
-        $settings['order'] = $order;
-    } else {
-        if (xarUserIsLoggedIn()) {
-            $settings['order'] = xarModGetUserVar('comments','order');
-        } else {
-            $settings['order'] = xarModGetVar('comments','order');
-        }
-    }
+    $showoptions = xarModGetVar($args['modname'], 'showoptions' . '.' .$args['itemtype']);
+    $anonpost = xarModGetVar($args['modname'], 'AllowPostAsAnon' . '.' .$args['itemtype']);
+    $settings['showoptions'] = !is_null($showoptions) ? $showoptions : xarModGetVar('comments','showoptions');
+    $settings['AllowPostAsAnon'] = !is_null($anonpost) ? $anonpost : xarModGetVar('comments','AllowPostAsAnon');
 
-    if (!empty($sortby)) {
-        $settings['sortby'] = $sortby;
-    } else {
-        if (xarUserIsLoggedIn()) {
-            $settings['sortby'] = xarModGetUserVar('comments','sortby');
-        } else {
-            $settings['sortby'] = xarModGetVar('comments','sortby');
-        }
-    }
-
-    if ($settings['depth'] > (_COM_MAX_DEPTH - 1)) {
-        $settings['depth'] = (_COM_MAX_DEPTH - 1);
-    }
-
-    if (empty($settings['render'])) {
-        $settings['render'] = _COM_VIEW_THREADED;
-    }
-
-    if (empty($settings['order'])) {
-        $settings['order'] = _COM_SORT_ASC;
-    }
-
-    if (empty($settings['sortby'])) {
-        $settings['sortby'] = _COM_SORTBY_THREAD;
-    }
-
+    //die(var_dump($settings));
     return $settings;
 }
 ?>

@@ -323,7 +323,7 @@ function comments_upgrade($oldversion)
                 $result->Close();
             }
 
-// TODO: any other modules where we need to insert the right itemtype here ?
+            // TODO: any other modules where we need to insert the right itemtype here ?
 
             // add an index for the xar_itemtype column
             $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_comments_itemtype',
@@ -353,6 +353,16 @@ function comments_upgrade($oldversion)
             $result =& $dbconn->Execute($query);
             if (!$result)
                 return;
+        case '1.3.0':
+            if (!xarModRegisterHook('module', 'modifyconfig', 'GUI',
+                                    'comments', 'admin', 'modifyconfighook')) {
+                return false;
+            }
+            if (!xarModRegisterHook('module', 'updateconfig', 'API',
+                                    'comments', 'admin', 'updateconfighook')) {
+                return false;
+            }
+            xarModSetVar('comments', 'allowhookoverride', false);
         case '2.0':
             // Code to upgrade from version 2.0 goes here
             // fall through to the next upgrade

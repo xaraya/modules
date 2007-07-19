@@ -15,7 +15,7 @@
  */
 $modversion['name'] = 'comments';
 $modversion['id'] = '14';
-$modversion['version'] = '1.3.0';
+$modversion['version'] = '1.3.1';
 $modversion['displayname']    = 'Comments';
 $modversion['description'] = 'Allows users to post comments on items';
 $modversion['credits'] = 'xardocs/credits.txt';
