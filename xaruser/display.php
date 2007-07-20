@@ -121,12 +121,12 @@ function comments_user_display($args)
         $args['selected_cid'] = $selected_cid;
         $header['selected_cid'] = $selected_cid;
     }
-	if (!isset($args['thread'])) {
+    if (!isset($args['thread'])) {
         xarVarFetch('thread', 'isset', $thread, NULL, XARVAR_NOT_REQUIRED);
     }
-	if (isset($thread) & $thread==1) {
-	    $header['cid'] = $cid;
-	}
+    if (isset($thread) & $thread==1) {
+        $header['cid'] = $cid;
+    }
 
     if (!xarModLoad('comments','renderer')) {
         $msg = xarML('Unable to load #(1) #(2)', 'comments', 'renderer');
@@ -240,6 +240,24 @@ function comments_user_display($args)
 
     $hooks = xarModAPIFunc('comments','user','formhooks');
 
+ 
+    //die(var_dump($package['comments']));
+   /* print 'NOW  ' . date(DATE_RFC822) . "<br />\n";
+    print 'POST ' . date(DATE_RFC822,$package['comments'][0]['xar_date']) . "<br />\n";
+    $end = $package['comments'][0]['xar_date'] + (5 * 60);
+    print 'ENDR ' . $end . "<br />\n";
+    print 'END  ' . date(DATE_RFC822,$end) . "<br />\n";
+    
+    if (time() >= $end) {
+        print 'DONE';
+    } else {
+        print 'NOT';
+    }
+    
+    die();
+*/
+    //if (time() - ($package['comments']['xar_date'] - ($package['settings']['edittimelimit'] * 60))) {
+    //}
     $output['hooks']   = $hooks;
     $output['header']  = $header;
     $output['package'] = $package;

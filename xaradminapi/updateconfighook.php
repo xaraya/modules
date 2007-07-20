@@ -49,6 +49,7 @@ function comments_adminapi_updateconfighook($args)
     if (!xarVarFetch('order', 'str:1:', $order, _COM_SORT_ASC, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('editstamp','checkbox',$editstamp,0,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('wrap','checkbox', $wrap, false,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('edittimelimit', 'str:1:', $edittimelimit, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('authorize', 'checkbox', $authorize, false, XARVAR_NOT_REQUIRED)) return;
 
     $itemtype = 0;
@@ -56,6 +57,7 @@ function comments_adminapi_updateconfighook($args)
         $itemtype = $extrainfo['itemtype']; 
     }
 
+    xarModSetVar($modname, 'edittimelimit.' . $itemtype, $edittimelimit);
     xarModSetVar($modname, 'AllowPostAsAnon.' . $itemtype, $postanon);
     xarModSetVar($modname, 'AuthorizeComments.' . $itemtype, $authorize); 
     xarModSetVar($modname, 'depth.' . $itemtype, $depth);

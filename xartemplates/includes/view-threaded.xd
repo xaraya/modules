@@ -65,7 +65,8 @@
                     </xar:sec>
                     <xar:if condition="xarUserIsLoggedIn()">
                         <xar:if condition="xarSecurityCheck('Comments-Edit',0,'',$header['modid'].':'.$header['objectid'].':'.$loop:item['xar_cid']) or $loop:item['xar_uid'] eq $package['uid']">
-                            <form action="#xarModUrl('comments', 'user', 'modify')#" method="post" class="xar-cm-actions">
+                             <xar:if condition="empty($package['settings']['edittimelimit']) or (time() le ($loop:item['xar_date'] + ($package['settings']['edittimelimit'] * 60)) or xarSecurityCheck('Comments-Admin))">
+                            <form action="#xarModURL('comments', 'user', 'modify')#" method="post" class="xar-cm-actions">
                                 <div>
                                     <input type="hidden" name="header[modid]" value="#$header['modid']#" />
                                     <input type="hidden" name="header[itemtype]" value="#$header['itemtype']#" />
@@ -77,6 +78,7 @@
                                     <input type="submit" name="submit-modify#$loop:item['xar_cid']#" id="submit" value="#xarML('Modify')#" /> 
                                 </div>
                             </form>
+                            </xar:if>
                         </xar:if>
                     </xar:if>
                     <xar:sec catch="false" mask="Comments-Delete" instance="$header[modid]:$header[objectid]:$loop:item[xar_cid]">
@@ -195,7 +197,8 @@
                     </xar:sec>
                     <xar:if condition="xarUserIsLoggedIn()">
                         <xar:if condition="xarSecurityCheck('Comments-Edit',0,'',$header['modid'].':'.$header['objectid'].':'.$loop:item['xar_cid']) or $loop:item['xar_uid'] eq $package['uid']">
-                            <form action="#xarModUrl('comments', 'user', 'modify')#" method="post" class="xar-cm-actions">
+                            <xar:if condition="empty($package['settings']['edittimelimit']) or (time() le ($loop:item['xar_date'] + ($package['settings']['edittimelimit'] * 60)))">
+                            <form action="#xarModURL('comments', 'user', 'modify')#" method="post" class="xar-cm-actions">
                                 <div>
                                     <input type="hidden" name="header[modid]" value="#$header['modid']#" />
                                     <input type="hidden" name="header[itemtype]" value="#$header['itemtype']#" />
@@ -207,6 +210,7 @@
                                     <input type="submit" name="submit-modify#$loop:item['xar_cid']#" id="submit" value="#xarML('Modify')#" /> 
                                 </div>
                             </form>
+                            </xar:if>
                         </xar:if>
                     </xar:if>
                     <xar:sec catch="false" mask="Comments-Delete" instance="$header[modid]:$header[objectid]:$loop:item[xar_cid]">

@@ -120,6 +120,15 @@
     </xar:if>
     </select>
 </div>
+<div class="xar-form-input-wrapper">
+    <label for="editstamp" class="xar-form-label" title="#xarML('Length of time a user can edit their own comments')#">
+        <xar:mlstring>
+            Edit time limit
+        </xar:mlstring>
+    </label>
+    <input type="text" name="edittimelimit" id="edittimelimit" class="xar-form-textshort" value="#$edittimelimit#" />
+    <span><xar:mlstring>(In Minutes)</xar:mlstring></span>
+</div>
 <div class="xar-form-input-wrapper-after">
     <xar:if condition="$postanon eq 1">
         <input type="checkbox" name="postanon" id="postanon" checked="checked" />

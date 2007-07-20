@@ -28,6 +28,8 @@ function comments_userapi_getoptions($args)
     if (!xarVarFetch('render', 'str', $settings['render'], NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('order', 'int', $settings['order'], NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sortby', 'int', $settings['sortby'], NULL, XARVAR_NOT_REQUIRED)) return;
+    
+    $args['modname'] = xarModGetNameFromID($args['modid']);
 
     // if one of the settings is configured, then all should be.
     // Render settings
@@ -48,8 +50,10 @@ function comments_userapi_getoptions($args)
 
     $showoptions = xarModGetVar($args['modname'], 'showoptions' . '.' .$args['itemtype']);
     $anonpost = xarModGetVar($args['modname'], 'AllowPostAsAnon' . '.' .$args['itemtype']);
+    $edittimelimit = xarModGetVar($args['modname'], 'edittimelimit' . '.' .$args['itemtype']);
     $settings['showoptions'] = !is_null($showoptions) ? $showoptions : xarModGetVar('comments','showoptions');
     $settings['AllowPostAsAnon'] = !is_null($anonpost) ? $anonpost : xarModGetVar('comments','AllowPostAsAnon');
+    $settings['edittimelimit'] = !is_null($edittimelimit) ? $edittimelimit : xarModGetVar('comments','edittimelimit');
 
     //die(var_dump($settings));
     return $settings;

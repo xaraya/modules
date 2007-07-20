@@ -60,7 +60,9 @@ function comments_admin_modifyconfighook($args)
         $data['postanon'] = xarModGetVar('comments','AllowPostAsAnon');
         $data['wrap'] = xarModGetVar('comments','wrap');
         $data['showoptions'] = xarModGetVar('comments','showoptions');
+        $data['edittimelimit'] = xarModGetVar('comments','edittimelimit');
     } else {
+        $data['edittimelimit'] = xarModGetVar($modname,'edittimelimit.' . $itemtype);
         $data['depth'] = xarModGetVar($modname,'depth.' . $itemtype);
         $data['render'] = xarModGetVar($modname,'render.' . $itemtype);
         $data['sortby'] = xarModGetVar($modname,'sortby.' . $itemtype);

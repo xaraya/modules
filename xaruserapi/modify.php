@@ -7,7 +7,7 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Comments Module
+ * @subpackage comments
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
@@ -23,7 +23,7 @@ function comments_userapi_modify($args)
 
     extract($args);
 
-    $msg = xarML('Missing or Invalid Parameters: ');;
+    $msg = xarML('Missing or Invalid Parameters: ');
     $error = FALSE;
 
     if (!isset($title)) {

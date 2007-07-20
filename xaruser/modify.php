@@ -16,6 +16,7 @@
  * 1. user is the owner of the comment, or
  * 2. user has a minimum of moderator permissions for the
  *    specified comment
+ * 3. we haven't reached the edit time limit if it is set
  *
  * @author Carl P. Corliss (aka rabbitt)
  * @access private
@@ -35,6 +36,10 @@ function comments_user_modify()
     }
 
     $comments = xarModAPIFunc('comments','user','get_one', array('cid' => $header['cid']));
+    
+    /*if (empty($package['settings']['edittimelimit']) or (time() <= ($comments[0]['xar_date'] + ($package['settings']['edittimelimit'] * 60)))) {
+       return;
+    }*/
     $author_id = $comments[0]['xar_uid'];
 
     if ($author_id != xarUserGetVar('uid')) {
@@ -77,6 +82,8 @@ function comments_user_modify()
                                       'decoded' => $url);
     }
 
+    $package['settings'] = xarModAPIFunc('comments','user','getoptions',$header);
+
     switch (strtolower($receipt['action'])) {
         case 'submit':
             if (empty($package['title'])) {
@@ -93,6 +100,11 @@ function comments_user_modify()
             // call transform input hooks
             // should we look at the title as well?
             $package['transform'] = array('text');
+            
+            if (empty($package['settings']['edittimelimit']) 
+               or (time() <= ($package['comments'][0]['xar_date'] + ($package['settings']['edittimelimit'] * 60)))
+               or xarSecurityCheck('Comments-Admin')) {
+       
             $package = xarModCallHooks('item', 'transform-input', 0, $package,
                                        'comments', 0);
             xarModAPIFunc('comments','user','modify',
@@ -101,7 +113,7 @@ function comments_user_modify()
                                               'title'    => $package['title'],
                                               'postanon' => $package['postanon'],
                                               'authorid' => $author_id));
-
+            }
             xarResponseRedirect($receipt['returnurl']['decoded']);
             return true;
         case 'modify':
@@ -122,6 +134,7 @@ function comments_user_modify()
             $package['title']                   = $comments[0]['xar_title'];
             $package['text']                    = $comments[0]['xar_text'];
             $package['comments'][0]['xar_cid']  = $header['cid'];
+
             $receipt['action']                  = 'modify';
 
             $output['header']                   = $header;

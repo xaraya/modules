@@ -363,6 +363,7 @@ function comments_upgrade($oldversion)
                 return false;
             }
             xarModSetVar('comments', 'allowhookoverride', false);
+            xarModSetVar('comments', 'edittimelimit', 0);
         case '2.0':
             // Code to upgrade from version 2.0 goes here
             // fall through to the next upgrade

@@ -30,6 +30,7 @@ function comments_admin_updateconfig()
     if (!xarVarFetch('order', 'str:1:', $order, _COM_SORT_ASC, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('editstamp','checkbox',$editstamp,0,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('wrap','checkbox', $wrap, false,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('edittimelimit','str:1:', $edittimelimit, '',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('authorize', 'checkbox', $authorize, false, XARVAR_NOT_REQUIRED)) return;
     
     if (!xarVarFetch('numstats', 'int', $numstats, 100, XARVAR_NOT_REQUIRED)) return;
@@ -39,7 +40,7 @@ function comments_admin_updateconfig()
     if (!xarVarFetch('usersetrendering', 'checkbox', $usersetrendering, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('useblacklist', 'checkbox', $xar_useblacklist, false, XARVAR_NOT_REQUIRED)) return;
     
-
+    xarModSetVar('comments', 'edittimelimit', $edittimelimit);
     xarModSetVar('comments', 'AllowPostAsAnon', $postanon);
     xarModSetVar('comments', 'AuthorizeComments', $authorize); 
     xarModSetVar('comments', 'depth', $depth);

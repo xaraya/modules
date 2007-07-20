@@ -38,6 +38,7 @@ function comments_admin_modifyconfig()
     $data['hooks'] = xarModCallHooks('module', 'modifyconfig', 'comments',
                                        array('module' => 'comments'));
 
+    $data['edittimelimit'] = xarModGetVar('comments','edittimelimit');
     $data['depth'] = xarModGetVar('comments','depth');
     $data['render'] = xarModGetVar('comments','render');
     $data['sortby'] = xarModGetVar('comments','sortby');
