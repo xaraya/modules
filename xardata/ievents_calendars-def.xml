@@ -58,6 +58,16 @@
       <order>50</order>
       <validation></validation>
     </property>
+    <property name="image_name">
+      <id>125</id>
+      <label>Image Name</label>
+      <type>textbox</type>
+      <default>cal-logo.gif</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>30</order>
+      <validation>0:60</validation>
+    </property>
     <property name="event_header">
       <id>125</id>
       <label>Event Header</label>

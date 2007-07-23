@@ -66,6 +66,7 @@ function ievents_userapi_params($args)
 
         // See notes above. We are probably going to go with this one.
         $params['html_fields'] = 'description,contact_details';
+        $params['text_fields'] = 'summary,location_address';
 
         // Summary max words (for text fields in summary mode).
         // This is really a display thing, and deserves to live in the templates.

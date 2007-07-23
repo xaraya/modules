@@ -28,8 +28,8 @@ function ievents_adminapi_modify($args)
     if (empty($cid)) $cid = 0;
 
     // Fetch all the config items we need at once.
-    list($module, $modid, $itemtype_events, $itemtype_calendars, $maxcats) =
-        xarModAPIfunc('ievents', 'user', 'params', array('names' => 'module,modid,itemtype_events,itemtype_calendars,maxcats'));
+    list($module, $modid, $itemtype_events, $itemtype_calendars, $maxcats, $html_fields, $text_fields) =
+        xarModAPIfunc('ievents', 'user', 'params', array('names' => 'module,modid,itemtype_events,itemtype_calendars,maxcats,html_fields,text_fields'));
 
     // Set up initial data for passing to the template.
     $data = array();
@@ -196,6 +196,31 @@ function ievents_adminapi_modify($args)
 
             // Here we should have the calendar ID, whether creating or updating.
             if (empty($cid)) $cid = $object->properties['calendar_id']->getValue();
+
+            // Transform any HTML fields on the way in.
+            $html_fields = explode(',', $html_fields);
+            foreach($html_fields as $html_field) {
+                if (!empty($object->properties[$html_field])) {
+                    $object->properties[$html_field]->setValue(
+                        xarModAPIfunc('ievents','user','transform',
+                            array('html' => $object->properties[$html_field]->GetValue())
+                        )
+                    );
+                }
+            }
+
+            // Transform any text fields.
+            // TODO: do the same transform in the view page
+            $text_fields = explode(',', $text_fields);
+            foreach($text_fields as $text_field) {
+                if (!empty($object->properties[$text_field])) {
+                    $object->properties[$text_field]->setValue(
+                        xarModAPIfunc('ievents','user','transform',
+                            array('text' => $object->properties[$text_field]->GetValue())
+                        )
+                    );
+                }
+            }
 
 
             // If we still don't have a calendar ID, then see if the user has a

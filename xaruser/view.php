@@ -53,6 +53,8 @@ function ievents_user_view($args)
         $export_formats = array();
     }
     $valid_formats = array_merge($export_formats, $display_formats);
+    // Include the rss format if the theme is available.
+    if (xarThemeIsAvailable('rss')) $valid_formats[] = 'rss';
     xarVarFetch('format', 'enum:' . implode(':', $valid_formats), $format, $default_display_format, XARVAR_NOT_REQUIRED);
 
     //
@@ -384,7 +386,7 @@ function ievents_user_view($args)
     //echo "<pre>"; var_dump($events); echo "</pre>";
 
     //
-    // TODO: If the user has selected a specific event, then
+    // If the user has selected a specific event, then
     // we need to work out where it appears in the list, and also
     // provide some next/previous links (the links would contain
     // the event IDs, as well as the startnum value).
@@ -610,7 +612,7 @@ function ievents_user_view($args)
     // Perform an export if required.
     if (!empty($export_formats)) {
         // Check if the user has asked for an export.
-        if (in_array($format, $export_formats) && $format != 'rss') {
+        if (in_array($format, $export_formats)) {
             // Set the export handler.
             $export_object->set_handler($format);
 

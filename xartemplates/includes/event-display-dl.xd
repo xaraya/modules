@@ -38,6 +38,15 @@
         <a href="#xarModURL('ievents','user','viewcals',array('cid'=&gt;$calendar.cid))#">
             #xarVarPrepForDisplay($calendar.long_name)#
         </a>
+
+        <xar:if condition="!empty($calendar.image_name)">
+            <xar:set name="image_source">#xarTplGetImage($calendar.image_name)#</xar:set>
+            <xar:if condition="!empty($image_source)">
+                <a href="#xarModURL('ievents','user','viewcals',array('cid'=&gt;$calendar.cid))#">
+                    <img src="#xarVarPrepForDisplay($image_source)#" alt="#xarVarPrepForDisplay($calendar.long_name)#" class="ievents-cal-logo" />
+                </a>
+            </xar:if>
+        </xar:if>
     </p>
     <xar:if condition="!empty($event.cost)">
         <p><strong><xar:mlstring>Cost:</xar:mlstring></strong> #xarVarPrepForDisplay($event.cost)#</p>
@@ -141,12 +150,12 @@
         <p>
             <xar:loop name="$export_handlers">
                 <xar:if condition="$loop:index gt 0"> | </xar:if>
-                <a href="#xarModURL('ievents','user','view',array('format'=&gt;$loop:key,'eid'=&gt;$event.eid))#" title="#$loop:item.long#" class="ievents-export-#$loop:item.class#">#$loop:item.short#</a>
+                <a href="#xarModURL('ievents','user','view',array('format'=&gt;$loop:key,'eid'=&gt;$event.eid))#" title="#$loop:item.desc#" class="ievents-export-#$loop:item.class#">#$loop:item.short#</a>
             </xar:loop>
         </p>
     </dd>
 </xar:if>
 
-<xar:if condition="!empty($calendar.event_header)">
+<xar:if condition="!empty($calendar.event_footer)">
     <dd class="ievents-event-calfooter">#$calendar.event_footer#</dd>
 </xar:if>

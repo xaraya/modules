@@ -21,10 +21,18 @@ class ievents_exportapi_export_master
     var $handler = NULL;
     var $handler_name = NULL;
 
-    // The supported handlers
+    // The supported handlers.
+    // TODO: initialise this information in the constructor, then proper
+    // translations can be applied.
     var $handlers = array(
-        'iCal' => array('short' => 'iCal', 'long' => 'iCalendar', 'class' => 'ical', 'extension' => 'ics'),
-        'vCal' => array('short' => 'vCal', 'long' => 'vCalendar', 'class' => 'vcal', 'extension' => 'vcs'),
+        'iCal' => array(
+            'short' => 'iCal', 'long' => 'iCalendar', 'class' => 'ical', 'extension' => 'ics',
+            'desc' => 'iCalendar format for MS Outlook and other iCal readers',
+        ),
+        'vCal' => array(
+            'short' => 'vCal', 'long' => 'vCalendar', 'class' => 'vcal', 'extension' => 'vcs',
+            'desc' => 'vCalendar format for older applications',
+        ),
         //'pilot_csv' => array('short' => 'Pilot CSV', 'long' => 'Palm Pilot CSV', 'class' => 'pilotcsv', 'extension' => 'csv'),
         //'pilot_text' => array('short' => 'Pilot CSV', 'long' => 'Palm Pilot text', 'class' => 'pilottext', 'extension' => 'txt'),
     );
@@ -36,23 +44,20 @@ class ievents_exportapi_export_master
 
     // TODO: these two needed, or leave in the handler?
     var $line_ending = "\r\n";
-    var $content_type = '';
+    var $mime_type = 'application/octet-stream';
 
     // Error and status conditions
     var $error_message = '';
     var $error_code = 0;
-
-    // TODO: get the module version into here
-    var $product_id = '-//XarayaIEvents-UnknownVersion';
 
     // Constructor
     function ievents_exportapi_export_master($args)
     {
         // If the RSS theme is available, then add it to the list of handlers
         // TODO: check if this is the right place.
-        if (xarThemeIsAvailable('rss')) {
-            $this->handlers += array('rss' => array('short' => 'RSS', 'long' => 'RSS', 'class' => '', 'extension' => 'xml'));
-        }
+        //if (xarThemeIsAvailable('rss')) {
+        //    $this->handlers += array('rss' => array('short' => 'RSS', 'long' => 'RSS', 'class' => '', 'extension' => 'xml'));
+        //}
         
         return $this;
     }
@@ -104,12 +109,13 @@ class ievents_exportapi_export_master
     // Stream the export to the output and exit.
     // TODO: check we have events and data is valid.
     // TODO: redirect to an error page if we encounter problems (check before sending the headers).
-    function stream_export($events)
+    function stream_export($events, $file = NULL)
     {
         // Send the headers.
-        $file = $this->handler_name . '.' . $this->handler->file_extension;
+        if (!isset($file)) $file = $this->handler_name . 'export.' . $this->handler->file_extension;
 
-        header ('Content-Type: ' . $this->handler->content_type);
+        //header ('Content-Type: application/octet-stream');
+        header ('Content-Type: ' . $this->handler->mime_type);
         header ('Content-Disposition: attachment; filename="' . $file .  '"');
         header ('Pragma: no-cache');
         header ('Cache-Control: no-cache');
@@ -138,7 +144,7 @@ class ievents_exportapi_handler_master
     var $product_id = '';
 
     var $line_ending = "\r\n";
-    var $content_type = 'text/calendar';
+    var $mime_type = 'text/plain';
     var $file_extension = 'txt';
 
     var $output_encoding = 'utf8';

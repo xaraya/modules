@@ -15,7 +15,7 @@ function ievents_exportapi_new_vcal($args)
 class ievents_exportapi_handler_vcal extends ievents_exportapi_handler_ical
 {
     // Definitions (generally read-only).
-    var $content_type = 'text/vcalendar';
+    var $mime_type = 'text/x-vCalendar';
     var $file_extension = 'vcs';
     var $cal_version = '1.0';
 

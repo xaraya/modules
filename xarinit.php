@@ -186,6 +186,15 @@ function ievents_init()
             'query' => 'SELECT DISTINCT eid FROM ' . $eventstable . ' ORDER BY eid',
             'limit' => 50
         ),
+        // We don't actually want a query here, we just want a box, but that 
+        // is not supported by Xaraya. Setting the limit to zero helps by forcing
+        // the box to appear instead of the query drop-down. We select from any
+        // table that has at least one row.
+        array (
+            'header' => 'Owner ID',
+            'query' => 'SELECT \'All\' FROM ' . $xartable['modules'],
+            'limit' => 0
+        ),
     );
     // This function is a misnomer. It actually defines a _component_
     xarDefineInstance(

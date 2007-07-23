@@ -5,7 +5,7 @@
     - $group - optional, passed in when grouping events ('day', 'week', 'month', 'year')
 </xar:comment>
 
-<xar:set name="summary_max_words">100</xar:set>
+<xar:set name="summary_max_words">#xarModAPIfunc('ievents','user','params',array('name'=&gt;'summary_max_words'))#</xar:set>
 
 <xar:if condition="!isset($group)">
     <xar:set name="group">''</xar:set>
@@ -14,6 +14,20 @@
 <xar:set name="dates">#xarModAPIfunc('ievents','user','format_datetime',array('event'=&gt;$event))#</xar:set>
 
 <dt class="ievents-event" id="event-summary-#$event.eid#">
+    <xar:comment>Display the calendar name or logo</xar:comment>
+    <span style="float: right;">
+        <xar:if condition="!empty($calendar.image_name)">
+            <xar:set name="image_source">#xarTplGetImage($calendar.image_name)#</xar:set>
+            <a href="#xarModURL('ievents','user','viewcals',array('cid'=&gt;$calendar.cid))#">
+                <xar:if condition="!empty($image_source)">
+                    <img src="#xarVarPrepForDisplay($image_source)#" alt="#xarVarPrepForDisplay($calendar.long_name)#" class="ievents-cal-logo" />
+                <xar:else />
+                    #xarVarPrepForDisplay($calendar.long_name)#
+                </xar:if>
+            </a>
+        </xar:if>
+    </span>
+
     <xar:if condition="$group eq 'day'">
         <xar:comment>Display only the time if grouping by day</xar:comment>
         <strong>#$dates.short.time# </strong><a href="#$event.detail_url#" class="title">#xarVarPrepForDisplay($event.title)#</a>

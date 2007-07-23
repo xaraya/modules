@@ -13,12 +13,15 @@ function ievents_exportapi_new_ical($args)
 class ievents_exportapi_handler_ical extends ievents_exportapi_handler_master
 {
     // Definitions (generally read-only).
-    var $content_type = 'text/calendar';
+    var $mime_type = 'text/calendar';
     var $file_extension = 'ics';
     var $cal_version = '2.0';
     var $max_line_length = 75;
 
     var $type = 'ical';
+
+    // TODO: get the module version into here
+    var $product_id = '-//XarayaIEvents-UnknownVersion';
 
     // Constructor
     function ievents_exportapi_handler_ical($args)

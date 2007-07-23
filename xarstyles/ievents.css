@@ -36,13 +36,20 @@ div.ievents-view dl.ievents-events dt {
 div.ievents-view dl.ievents-events dd {
 	margin-left: 12em;
 }
-div.ievents-view dl.ievents-events dt strong {
-	width: 12em;
-	display: block;
-	float: left;
-}
 div.ievents-view dl.ievents-events dt span.ievents-time {
 	padding-left: 12em;
+}
+
+/* Give each event lising some left margin to put the dates */
+div.ievents-view dl.ievents-events dt {
+	margin-left: 12em;
+}
+/* Then position the dates within the dt margin */
+div.ievents-view dl.ievents-events dt strong {
+    width: 12em; /* Allow the date to wrap */
+    display: block;
+    position: absolute;
+    left: 0;
 }
 
 /* Grouping lists */
@@ -188,6 +195,11 @@ dl.ievents-event {
 	border: none;
 }
 
+dd.ievents-event-summary img {
+    vertical-align: top;
+	padding-left: 1em;
+}
+
 /* Flags wrapper */
 span.ievents-flags-wrapper {
 }
@@ -209,49 +221,62 @@ span.ievents-flags-wrapper span.ievents-provisional {
 }
 
 /* Search Styles */
-div.ievents-search {
-    padding: 1px;
+
+/* The search box and the table cell it is in should take up whatever space is left */
+div.ievents-search table input#q {
+    width: 94%;
+	margin-right: 4%;
 }
-div.ievents-search-inner {
-    margin: 1em;
-}
-div.ievents-search input#q {
-    width: 20em;
-}
-div.ievents-search-simple {
-    padding-bottom: 0.7em;
-}
-div.ievents-search-box-first {
-    padding: 0.7em 0;
-    border-bottom: 1px solid #ffffff;
-    border-top: 1px solid #ffffff;
-}
-div.ievents-search-box {
-    padding: 0.7em 0;
-    border-bottom: 1px solid #ffffff;
-}
-div.ievents-search-box-bottom {
-    padding-top: 0.7em;
-}
-div.ievents-search table tr td,
-div.ievents-search table tr td {
-    vertical-align: bottom;
-    padding-right: 1em;
+div.ievents-search td#ievents-td-q {
+    width: 100%;
 }
 
-div.ievents-search-simple table tr td input,
-div.ievents-search-simple table tr td select,
-div.ievents-search-simple table tr td label,
-div.ievents-search-box-first table tr td div.ievents-date-parts-all,
-div.ievents-search-box-first table tr td select#group,
-div.ievents-search-box-first table tr td label {
+/* Make table cell alignment explicit */
+div.ievents-search table tr th,
+div.ievents-search table tr td {
+    vertical-align: bottom;
+	text-align: left;
+}
+
+/* Some padding on the form items */
+div.ievents-search table select {
+    margin-right: 0.25em;
+}
+
+div.ievents-search table tr td label {
     clear: both;
     display: block;
 }
+
 span.ievents-date-divider {
     margin: 0 0.5em;
 }
 
-div.ievents-search-advanced table {
+div.ievents-search-simple table {
     border: none;
+	width: 98%;
+}
+div.ievents-search table, div.ievents-search td, div.ievents-search th {
+    border: none;
+}
+
+/* Links to export functions */
+
+a.ievents-export-rss {
+	padding-left: 22px;
+	background-image: url(../xarimages/icon-rss.gif);
+	background-repeat: no-repeat;
+	background-position: center left;
+}
+a.ievents-export-ical {
+	padding-left: 22px;
+	background-image: url(../xarimages/icon-date.gif);
+	background-repeat: no-repeat;
+	background-position: center left;
+}
+a.ievents-export-vcal {
+	padding-left: 22px;
+	background-image: url(../xarimages/icon-date.gif);
+	background-repeat: no-repeat;
+	background-position: center left;
 }

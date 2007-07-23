@@ -40,11 +40,16 @@ function ievents_userapi_transform($args)
     // Convert newline/carriage return pairs to newlines
     $text_in = str_replace(array("\n\r", "\r\n"), "\n", $text_in);
 
-    // Check if we need to limit the work count.
+    // Check if we need to limit the word count.
     if (!empty($maxwords) && is_numeric($maxwords) && $maxwords > 0 && str_word_count($text_in) > $maxwords) $reduce_words = true;
 
     if ((!empty($format) && $format == 'text') || !empty($reduce_words)) {
         // Transform to text - strip out HTML
+        // Convert breaks and paragraphs to single and double newlines.
+        // TODO: ensure all other block-level tags result in appropriate newlines
+        // perhaps using the same methods that would apply to e-mail conversion.
+        $text_in = preg_replace('#<br */>(?=\w*[^\n])#i', "\n", $text_in);
+        $text_in = preg_replace('#</p>(?=\w*[^\n])#i', "</p>\n\n", $text_in);
         $text_in = strip_tags($text_in);
         // TODO: get the system charset, and ensure html_entity_decode is aware of it.
         // (although UTF-8 is only supported from PHP5 anyway)
