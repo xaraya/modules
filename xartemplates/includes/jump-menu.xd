@@ -5,13 +5,13 @@
     <xar:if condition="xarThemeIsAvailable('rss') or !empty($export_handlers)">
         <p>
             <xar:if condition="xarThemeIsAvailable('rss')">
-                <a href="#xarServerGetCurrentURL(array('startnum'=&gt;NULL,'numitems'=&gt;NULL,'format'=&gt;'rss'))#" class="ievents-export-rss" title="#xarML('RSS feed for these events')#">RSS</a>
+                <a href="#xarModURL('ievents','user','view',array_merge($feed_params,array('format'=&gt;'rss')))#" class="ievents-export-rss" title="#xarML('RSS feed for these events')#">RSS</a>
             </xar:if>
 
             <xar:if condition="!empty($export_handlers)">
                 <xar:loop name="$export_handlers">
                     <xar:if condition="$loop:index gt 0 or xarThemeIsAvailable('rss')"> | </xar:if>
-                    <a href="#xarModURL('ievents','user','view',array_merge($url_params,array('format'=&gt;$loop:key)))#" title="#$loop:item.desc#" class="ievents-export-#$loop:item.class#">#$loop:item.short#</a>
+                    <a href="#xarModURL('ievents','user','view',array_merge($feed_params,array('format'=&gt;$loop:key)))#" title="#$loop:item.desc#" class="ievents-export-#$loop:item.class#">#$loop:item.short#</a>
                 </xar:loop>
             </xar:if>
         </p>

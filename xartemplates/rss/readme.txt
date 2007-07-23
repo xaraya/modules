@@ -1,0 +1,1 @@
+Copy the contents of this directory to themes/rss/modules/ievents/

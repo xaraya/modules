@@ -14,6 +14,7 @@
  * @todo Support different display formats (list, calendar, etc)
  * @todo Provide next/previous day/week/month/year/goup links for the template (for any view)
  * @todo Create a textual description of the search that has been performed
+ * @todo Pass a 'feed_params' base url to the templates, containing relevant parameters to base a feed off (relative dates, no grouping etc) [half done]
  */
 
 function ievents_user_view($args)
@@ -496,16 +497,15 @@ function ievents_user_view($args)
     // The url params would be slightly different to the event params (no unix timestamps
     // for a start, and possibly different category parameter formats).
     $url_params = array(
-        'startnum' => '%%',
         'startdate' => $startdate,
         'enddate' => $enddate,
     );
 
     // Include some items only if not the default (to try and keep URLs shorter).
+    if ($startnum != 1) $url_params['startnum'] = $startnum;
     if ($numitems != $default_numitems) $url_params['numitems'] = $numitems;
     if ($group != $default_group) $url_params['group'] = $group;
     if ($format != $default_display_format) $url_params['format'] = $format;
-
 
     // Add the categories selection in if available.
     if (!empty($cats)) $url_params['cats'] = $cats;
@@ -517,8 +517,20 @@ function ievents_user_view($args)
 
     // The pager is a block of HTML
     $pager = xarTplGetPager($startnum, $total_events,
-        xarModURL('ievents', 'user', 'view', $url_params), $numitems
+        xarModURL('ievents', 'user', 'view', array_merge($url_params, array('startnum' => '%%'))), $numitems
     );
+
+    //
+    // Create a 'feed_params' array containing the pertinent details for a feed URL to this page.
+    //
+    $feed_params = array();
+    if (!empty($cats)) $feed_params['cats'] = $cats;
+    if (!empty($cid)) $feed_params['calendar_id'] = $cid;
+    if (!empty($q) && !empty($q_fields)) $feed_params['q'] = $q;
+    // TODO: include some more intelligently-selected relative dates
+    $feed_params['range'] = 'next6months';
+
+
 
     //
     // Perform grouping of events if required.
@@ -664,6 +676,7 @@ function ievents_user_view($args)
         // Navigation within the matched event list
         'next_event', 'prev_event',
         'eid', 'event', 'page_position', 'list_position', 'total_events',
+        'feed_params',
 
         // Pager
         'pager', 'url_params',
