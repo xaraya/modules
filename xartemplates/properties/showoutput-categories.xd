@@ -1,12 +1,24 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:if condition="$layout eq 'default' OR $layout eq 'horizontal' OR empty($layout)">
-        <xar:foreach in="$value" value="$categoryvalue">
-            #$categoryvalue#&#160;
+        <xar:foreach in="$value" value="$category">
+            <xar:if condition="!$showbase">
+                <xar:if condition="$category['category_id'] ne $category['basecategory']">
+                    #$categoryvalue#&#160;
+                </xar:if>
+            <xar:else />
+                #$categoryvalue#&#160;
+            </xar:if>
         </xar:foreach>
     <xar:else />
-        <xar:foreach in="$value" value="$categoryvalue">
-            #$categoryvalue#<br />
+        <xar:foreach in="$value" value="$category">
+            <xar:if condition="!$showbase">
+                <xar:if condition="$category['category_id'] ne $category['basecategory']">
+                    #$category['value']#<br />
+                </xar:if>
+            <xar:else />
+                #$category['value']#<br />
+            </xar:if>
         </xar:foreach>
     </xar:if>
 </xar:template>

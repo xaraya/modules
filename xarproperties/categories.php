@@ -188,6 +188,11 @@ class CategoriesProperty extends SelectProperty
             // right now works for 1 basecat
             $data['basecids'] = $this->baselist;
         }
+
+        // sort the base categories
+        // TODO: make the sorting changeable
+        sort($data['basecids']);
+
         $filter = array(
             'getchildren' => true,
             'maxdepth' => isset($data['maxdepth'])?$data['maxdepth']:null,
@@ -235,16 +240,17 @@ class CategoriesProperty extends SelectProperty
 
         if (empty($data['value'])) {
             if (empty($this->value)) {
-                $links = xarModAPIFunc('categories', 'user', 'getlinks',
-                                       array('iids' => array($data['categories_itemid']),
+
+                $links = xarModAPIFunc('categories', 'user', 'getlinkage',
+                                       array('itemid' => $data['categories_itemid'],
                                              'itemtype' => $data['categories_localitemtype'],
-                                             'modid' => xarMod::getID($data['categories_localmodule']),
-                                             'reverse' => 0));
-                if (!empty($links) && is_array($links) && count($links) > 0) {
-                    $data['value'] = array_keys($links);
-                } else {
-                    $data['value'] = array();
-                }
+                                             'module' => $data['categories_localmodule'],
+                                          	));
+				$catlink = array();
+				foreach ($links as $link) $catlink[$link['basecategory']] = $link['category_id'];
+				$data['value'] = array();
+	            foreach ($data['basecids'] as $basecid)
+					$data['value'][] = isset($catlink[$basecid]) ? $catlink[$basecid]: 0;
             } else {
                 if (!is_array($this->value)) $this->value = array($this->value);
                 $data['value'] = $this->value;
@@ -282,7 +288,7 @@ class CategoriesProperty extends SelectProperty
         }
 
         if (isset($data['validation'])) $this->parseValidation($data['validation']);
-        if (empty($data['showbase'])) $data['showbase'] = $this->showbase;
+        if (!isset($data['showbase'])) $data['showbase'] = $this->showbase;
 
         if (!isset($data['name'])) $data['name'] = "dd_" . $this->id;
 
@@ -303,9 +309,10 @@ class CategoriesProperty extends SelectProperty
                                              'module' => $data['categories_localmodule'],
                                              ));
                 if (!empty($links) && is_array($links) && count($links) > 0) {
-                	foreach ($links as $link) array_merge($data['value'],$link);
-//                    $data['value'] = $links;
-//die(var_dump($links));
+					foreach ($links as $link)
+						foreach ($link as $row) {
+							$data['value'][] = $row;
+						}
                 } else {
                     $data['value'] = array();
                 }
@@ -319,7 +326,7 @@ class CategoriesProperty extends SelectProperty
         $temparray = array();
         foreach ($data['value'] as $category) {
             $this->value = $category['category_id'];
-            $temparray[] = merge_array($category,array('value' => $this->getOption()));
+            $temparray[] = array_merge($category,array('value' => $this->getOption()));
         }
         $data['value'] = $temparray;
         return parent::showOutput($data);

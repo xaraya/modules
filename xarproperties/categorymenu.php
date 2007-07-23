@@ -25,25 +25,31 @@ class CategoryMenuProperty extends CategoryTreeProperty
     {
         if(!xarVarFetch('activetab',    'isset', $data['activetab'],    0, XARVAR_NOT_REQUIRED)) {return;}
 
-        if (!isset($parent)) $parent = 0;
-        if (!isset($levels)) $levels = 1;
+        if (!isset($data['parent'])) $data['parent'] = 0;
+        if (!isset($data['levels'])) $data['levels'] = 1;
         // Could also do this using getchildren, although then we get more data we don't really need
 
-        xarMod::loadDbInfo('categories');
-        $xartable = xarDB::getTables();
-        sys::import('modules.roles.class.xarQuery');
-        $q = new xarQuery('SELECT',$xartable['categories']);
-        $q->addfield('id');
-        $q->addfield('parent_id');
-        $q->eq('parent_id',0);
-        if (!$q->run()) return;
-
-        $trees = array();
-        foreach ($q->output() as $entry) {
-            $node = new CategoryTreeNode($entry['id']);
+        if ($data['parent']) {
+            $node = new CategoryTreeNode($data['parent']);
             $tree = new CategoryTree($node);
-            $trees[] = $node->breadthfirstenumeration(0);
+            $trees = $node->breadthfirstenumeration($data['levels']);
+            $trees = array_shift($trees);
+            $data['layout'] = 'tree';
+        } else {
+        	// the top level of categories need not have a common parent
+			xarMod::loadDbInfo('categories');
+			$xartable = xarDB::getTables();
+			sys::import('modules.roles.class.xarQuery');
+			$q = new xarQuery('SELECT',$xartable['categories']);
+			$q->addfield('id');
+			$q->addfield('name');
+			$q->addfield('parent_id');
+			$q->eq('parent_id',$data['parent']);
+			if (!$q->run()) return;
+            $trees = $q->output();
+            $data['layout'] = 'toplevel';
         }
+
         $data['tabs'] = $trees;
         return parent::showInput($data);
     }
