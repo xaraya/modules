@@ -189,6 +189,7 @@ class CategoriesProperty extends SelectProperty
             $data['basecids'] = $this->baselist;
         }
 
+        if (!is_array($data['basecids'])) $data['basecids'] = array();
         // sort the base categories
         // TODO: make the sorting changeable
         sort($data['basecids']);
