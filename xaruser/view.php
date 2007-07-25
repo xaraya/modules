@@ -509,7 +509,7 @@ function ievents_user_view($args)
 
     // Add the categories selection in if available.
     if (!empty($cats)) $url_params['cats'] = $cats;
-    if (!empty($cid)) $url_params['calendar_id'] = $cid;
+    if (!empty($cid)) $url_params['cid'] = $cid;
     if (!empty($q) && !empty($q_fields)) $event_params['q'] = $q;
     
     // Count of all matching events.
@@ -525,7 +525,7 @@ function ievents_user_view($args)
     //
     $feed_params = array();
     if (!empty($cats)) $feed_params['cats'] = $cats;
-    if (!empty($cid)) $feed_params['calendar_id'] = $cid;
+    if (!empty($cid)) $feed_params['cid'] = $cid;
     if (!empty($q) && !empty($q_fields)) $feed_params['q'] = $q;
     // TODO: include some more intelligently-selected relative dates
     $feed_params['range'] = 'next6months';

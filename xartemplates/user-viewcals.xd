@@ -2,12 +2,20 @@
 <xar:style file="ievents" scope="module" />
 
 <div class="ievents-view-calendars">
-    <xar:comment>TODO: this is too crude - there may only be one calendar in the system, so 'show all' makes no sense</xar:comment>
-    <xar:if condition="count($calendars) gt 1">
-        <h1><xar:mlstring>Calendar List</xar:mlstring></h1>
-    <xar:else />
-        <h1><xar:mlstring>View Calendar</xar:mlstring> (<a href="#xarModURL('ievents','user','viewcals')#"><xar:mlstring>Show All</xar:mlstring></a>)</h1>
-    </xar:if>
+    <h1>
+        <xar:if condition="count($calendars) eq count($all_calendars)">
+            <xar:mlstring>All Calendars</xar:mlstring>
+        <xar:else />
+            <xar:if condition="count(calendars) eq 1">
+                <xar:mlstring>View Calendar</xar:mlstring>
+            <xar:else />
+                <xar:mlstring>View Calendars</xar:mlstring>
+            </xar:if>
+            <xar:if condition="count($all_calendars) gt 1">
+                (<a href="#xarModURL('ievents','user','viewcals')#"><xar:mlstring>Show all calendars</xar:mlstring></a>)
+            </xar:if>
+        </xar:if>
+    </h1>
 
     <xar:comment>Get standard quick-jump list of date ranges</xar:comment>
     <xar:set name="daterangelist">#xarModAPIfunc('ievents','user','params',array('name'=&gt;'daterangelist'))#</xar:set>

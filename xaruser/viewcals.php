@@ -50,6 +50,9 @@ function ievents_user_viewcals($args)
         'status' => $status
     );
 
+    // Get all calendars.
+    $all_calendars = xarModAPIfunc('ievents', 'user', 'getcalendars', $params);
+
     // Limit to a specific calendar if requested
     if (!empty($cid)) $params['cid'] = $cid;
     if (!empty($name)) $params['name'] = $name;
@@ -58,6 +61,7 @@ function ievents_user_viewcals($args)
     $calendars = xarModAPIfunc('ievents', 'user', 'getcalendars', $params);
 
     $return = array(
+        'all_calendars' => $all_calendars,
         'calendars' => $calendars,
         'cal_subscribe_range' => $cal_subscribe_range,
         'export_handlers' => $export_handlers,

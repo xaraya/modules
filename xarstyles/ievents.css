@@ -43,13 +43,14 @@ div.ievents-view dl.ievents-events dt span.ievents-time {
 /* Give each event lising some left margin to put the dates */
 div.ievents-view dl.ievents-events dt {
 	margin-left: 12em;
+	position: relative;
 }
 /* Then position the dates within the dt margin */
 div.ievents-view dl.ievents-events dt strong {
     width: 12em; /* Allow the date to wrap */
     display: block;
     position: absolute;
-    left: 0;
+    left: -12em;
 }
 
 /* Grouping lists */
@@ -152,6 +153,9 @@ div.ievents-view-calendars dl dt {
 	border-bottom: 2px solid #dddddd;
 	margin-top: 2em;
 	clear: both;
+}
+div.ievents-view-calendars dl dd {
+	margin: 0.5em 0;
 }
 
 /* Mini admin menu */
