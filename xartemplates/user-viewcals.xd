@@ -6,7 +6,7 @@
         <xar:if condition="count($calendars) eq count($all_calendars)">
             <xar:mlstring>All Calendars</xar:mlstring>
         <xar:else />
-            <xar:if condition="count(calendars) eq 1">
+            <xar:if condition="count($calendars) eq 1">
                 <xar:mlstring>View Calendar</xar:mlstring>
             <xar:else />
                 <xar:mlstring>View Calendars</xar:mlstring>
