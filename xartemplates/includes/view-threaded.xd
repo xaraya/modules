@@ -4,9 +4,44 @@
     <label class="xar-tr-date"><xar:mlstring>Date-Time</xar:mlstring></label>
 </div>
 
+
 <xar:loop name="$package['comments']">
     <xar:if condition="(($loop:index + 1) % 2)">
-
+        <div class="xar-tr-wrapper">
+            <span class="xar-tr-title">
+                <xar:foreach in="$loop:item['xar_map']" value="$map">
+                    <img class="xar-tr-image" height="21" src="#$map#" width="9" alt="" />
+                </xar:foreach>
+                <xar:if condition="$loop:item['xar_branchout'] eq 0">
+                   <xar:comment> CHECKME: no text or buttons in search results </xar:comment>
+                  <xar:if condition="isset($loop:item['xar_text'])">
+                    <a href="#" id="collapser" name="collapser" onclick="document.getElementById('#$loop:item['xar_cid']#').style.display = (document.getElementById('#$loop:item['xar_cid']#').style.display == 'block') ? 'none' : 'block'; return false;" title="#xarML('Toggle the full view of comment..')#">
+                        #$loop:item['xar_title']#
+                    </a>
+                  <xar:elseif condition="!empty($receipt['directurl'])"/>
+                      <a href="#xarModURL('comments','user','display',array('cid' => $loop:item['xar_cid']))#"> #$loop:item['xar_title']# </a>
+                  <xar:else/>
+                      <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[itemtype]=#$header['itemtype']#&amp;header[objectid]=#$header['objectid']#&amp;header[selected_cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['xar_title']# </a>
+                  </xar:if>
+                <xar:else />
+                    <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[itemtype]=#$header['itemtype']#&amp;header[objectid]=#$header['objectid']#&amp;header[branchout]=1&amp;header[cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#">
+                        #$loop:item['xar_title']# #$loop:item['thread_text']#
+                    </a>
+                </xar:if>
+            </span>
+            <span class="xar-tr-author">
+                <xar:if condition="$loop:item['xar_postanon'] eq 0 and strtolower($loop:item['xar_author']) ne 'anonymous'">
+                    #$loop:item['xar_author']#
+                <xar:else />
+                    <xar:mlstring>
+                        Anonymous
+                    </xar:mlstring>
+                </xar:if>
+            </span>
+            <span class="xar-tr-date">
+                #xarLocaleFormatDate("%B %d, %Y %I:%M %p",$loop:item['xar_date'])#
+            </span>
+        </div>
       <xar:comment> CHECKME: no text or buttons in search results </xar:comment>
       <xar:if condition="isset($loop:item['xar_text'])">
         <div class="xar-tr-collapsed" id="#$loop:item['xar_cid']#">
@@ -14,9 +49,9 @@
                 <xar:set name="item">#$loop:item#</xar:set>
                 <xar:template file="action_buttons" />
 
-<xar:comment> FIXME: $package['transformed-text'] vs. $loop:item['xar_text'] can't be right here </xar:comment>
+                <xar:comment> FIXME: $package['transformed-text'] vs. $loop:item['xar_text'] can't be right here </xar:comment>
                 <xar:if condition="isset($package['transformed-text'])">
-                    #$package['transformed-text']# 
+                    #$package['transformed-text']#
                     <p>
                         <a href="#xarModURL('comments','user','display',array('cid' => $loop:item['xar_cid']))#" title="#xarML('Permalink')#" rel="bookmark">
                             #
@@ -29,7 +64,7 @@
                             #
                         </a>
                     </p>
-<xar:comment> FIXME: nested if's don't seem right here </xar:comment>
+                    <xar:comment> FIXME: nested if's don't seem right here </xar:comment>
                     <xar:if condition="isset($loop:item['xar_branchout']) and $loop:item['xar_branchout'] eq 1">
                         <br />
                         <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[itemtype]=#$header['itemtype']#&amp;header[objectid]=#$header['objectid']#&amp;header[branchout]=1&amp;header[cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['nested_text']# </a>&nbsp;
@@ -74,7 +109,7 @@
                     <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[itemtype]=#$header['itemtype']#&amp;header[objectid]=#$header['objectid']#&amp;header[branchout]=1&amp;header[cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['xar_title']# #$loop:item['thread_text']#</a>
                 </xar:if>
             </span>
-            
+
             <span class="xar-tr-author">
                 <xar:if condition="$loop:item['xar_postanon'] eq 0 and strtolower($loop:item['xar_author']) ne 'anonymous'">
                     #$loop:item['xar_author']#
@@ -84,7 +119,7 @@
                     </xar:mlstring>
                 </xar:if>
             </span>
-            
+
             <span class="xar-tr-date">
                 #xarLocaleFormatDate("%B %d, %Y %I:%M %p",$loop:item['xar_date'])#
             </span>
