@@ -39,6 +39,10 @@
  *               ...
  *               'modid' => 'xar_categories_linkage.xar_modid')
  * @todo think about qstr() and bindvars here, this function return a string, so it's a bit harder
+ * @todo any reason why the main join table cannot be an INNER JOIN, even if just for neatness?
+ *
+ * IMPORTANT NOTE: MySQL does not use indexes properly using the Celko model and BETWEEN. Do not
+ * be tempted to replace the <= and >= conditions with BETWEEN.
  */
 function categories_userapi_leftjoin($args)
 {
@@ -56,34 +60,30 @@ function categories_userapi_leftjoin($args)
 
     // Optional argument
     if (!empty($catid)) {
-        if (strpos($catid,' ')) {
-            $cids = explode(' ',$catid);
+        if (strpos($catid, ' ')) {
+            $cids = explode(' ', $catid);
             $andcids = true;
-        } elseif (strpos($catid,'+')) {
-            $cids = explode('+',$catid);
+        } elseif (strpos($catid, '+')) {
+            $cids = explode('+', $catid);
             $andcids = true;
-        } elseif (strpos($catid,'-')) {
-            $cids = explode('-',$catid);
+        } elseif (strpos($catid, '-')) {
+            $cids = explode('-', $catid);
             $andcids = false;
         } else {
             $cids = array($catid);
             $andcids = false;
         }
     }
-    if (!isset($cids)) {
-        $cids = array();
-    }
-    if (!isset($iids)) {
-        $iids = array();
-    }
-    if (!isset($andcids)) {
-        $andcids = false;
-    }
+
+    if (!isset($cids)) $cids = array();
+    if (!isset($iids)) $iids = array();
+    if (!isset($andcids)) $andcids = false;
 
     // Security check
     if (!xarSecurityCheck('ViewCategoryLink')) return;
 
-/*
+    // TODO: do something with this or remove it. ***
+    /*
     if (count($cids) > 0) {
         if (count($iids) > 0) {
             foreach ($cids as $cid) {
@@ -104,9 +104,9 @@ function categories_userapi_leftjoin($args)
     } else {
         if(!xarSecurityCheck('ViewCategoryLink',1,'Link',"$modid:All:All:All")) return;
     }
-*/
+    */
 
-    // dummy cids array when we're going for x categories at a time
+    // Dummy cids array when we're going for x categories at a time
     if (isset($groupcids) && count($cids) == 0) {
         $andcids = true;
         $isdummy = 1;
@@ -117,20 +117,21 @@ function categories_userapi_leftjoin($args)
         $isdummy = 0;
     }
 
-/*
-if (!empty($catfilter) && (count($cids) < 2 || $andcids)) {
-    foreach ($catfilter as $cat) {
-        if (!in_array($cat,$cids)) {
-            $cids[] = (int) $cat;
+    // TODO: do something with this or remove it. ***
+    /*
+    if (!empty($catfilter) && (count($cids) < 2 || $andcids)) {
+        foreach ($catfilter as $cat) {
+            if (!in_array($cat,$cids)) {
+                $cids[] = (int) $cat;
+            }
         }
+        sort($cids, SORT_NUMERIC);
+        $andcids = true;
     }
-    sort($cids, SORT_NUMERIC);
-    $andcids = true;
-}
-*/
+    */
 
     // trick : cids = array(_NN) corresponds to cidtree = NN
-    if (count($cids) == 1 && preg_match('/^_(\d+)$/',$cids[0],$matches)) {
+    if (count($cids) == 1 && preg_match('/^_(\d+)$/', $cids[0], $matches)) {
         $cidtree = $matches[1];
         $cids = array();
     }
@@ -142,7 +143,7 @@ if (!empty($catfilter) && (count($cids) < 2 || $andcids)) {
 
     $leftjoin = array();
 
-    // create list of tables we'll be left joining for AND
+    // Create list of tables we'll be left joining for AND
     if (count($cids) > 0 && $andcids) {
         $catlinks = array();
         for ($i = 0; $i < count($cids); $i++) {
@@ -154,12 +155,15 @@ if (!empty($catfilter) && (count($cids) < 2 || $andcids)) {
     }
 
     // Add available columns in the categories table
-    $columns = array('cid','iid','modid','itemtype');
+    $columns = array('cid', 'iid', 'modid', 'itemtype');
     foreach ($columns as $column) {
         $leftjoin[$column] = $linktable . '.xar_' . $column;
     }
 
+    $where = array();
+
     // Specify LEFT JOIN ... ON ... [WHERE ...] parts
+    //$leftjoin['more'] = ' ';
     if (count($cids) > 0 && $andcids) {
         $leftjoin['table'] = $categorieslinkagetable . ' ' . $catlinks[0];
         $leftjoin['more'] = ' ';
@@ -170,7 +174,8 @@ if (!empty($catfilter) && (count($cids) < 2 || $andcids)) {
                 ' LEFT JOIN ' . $categorieslinkagetable . ' ' . $catlinks[$i]
                     . ' ON ' . $leftjoin['iid'] . ' = ' . $catlinks[$i] . '.xar_iid'
                     . ' AND ' . $leftjoin['modid'] . ' = ' . $catlinks[$i] . '.xar_modid ';
-            // Note: only for non-0 itemtypes here
+
+            // Note: only for non-zero itemtypes here
             if (!empty($itemtype)) {
                 $leftjoin['more'] .= ' AND ' . $leftjoin['itemtype'] . ' = '
                     . $catlinks[$i] . '.xar_itemtype ';
@@ -179,24 +184,33 @@ if (!empty($catfilter) && (count($cids) < 2 || $andcids)) {
         }
     } elseif (!empty($cidtree)) {
         $leftjoin['table'] = $categorieslinkagetable;
-        $cidtree_cat = xarModAPIFunc('categories','user','getcatinfo',array('cid' => $cidtree));
-        if (($cidtree_cat['left'] + 1) != $cidtree_cat['right']) {
-            $leftjoin['more'] = ' LEFT JOIN ' . $categoriestable
-                . ' ON ' . $categoriestable . '.xar_cid = ' .  $leftjoin['cid'] . ' ';
+        $cat = xarModAPIFunc('categories', 'user', 'getcatinfo', array('cid' => $cidtree));
+
+        if (($cat['left'] + 1) != $cat['right']) {
+            // Always use an INNER JOIN if limiting the whole query to a tree.
+            // It is equivalent to using a LEFT JOIN and then putting conditions
+            // into the WHERE-clause (but this is more efficient, noticable with
+            // large tables).
+            $leftjoin['more'] = ' INNER JOIN ' . $categoriestable
+                . ' ON ' . $categoriestable . '.xar_cid = ' .  $leftjoin['cid']
+                . ' AND ' . $categoriestable . '.xar_left >= ' . $cat['left']
+                . ' AND ' . $categoriestable . '.xar_left <= ' . $cat['right'];
         } else {
-            $leftjoin['more'] = '';
+            $where[] = $categorieslinkagetable . '.xar_cid = ' . $cidtree;
+            $leftjoin['more'] = ' ';
         }
     } else {
         $leftjoin['table'] = $categorieslinkagetable;
-        $leftjoin['more'] = '';
+        $leftjoin['more'] = ' ';
     }
+
     $leftjoin['field'] = $leftjoin['iid'];
 
-    // Specify the WHERE part
-    $where = array();
+    // Specify the WHERE part (some parts already defined further up though)
     if (!empty($modid) && is_numeric($modid)) {
         $where[] = $leftjoin['modid'] . ' = ' . $modid;
     }
+
     // Note : do not default to 0 here, because we want to be able to do things across item types
     if (isset($itemtype)) {
         if (is_numeric($itemtype)) {
@@ -216,9 +230,12 @@ if (!empty($catfilter) && (count($cids) < 2 || $andcids)) {
             }
         }
     }
+
     if (count($cids) > 0) {
         if ($andcids) {
-            // select only the 1-2-4 combination, not the 2-1-4, 4-2-1, etc.
+            // The categories are to be ANDed - we want to select items that
+            // have ALL the specified categories.
+            // Select only the 1-2-4 combination, not the 2-1-4, 4-2-1, etc.
             if ($isdummy) {
                 $oldcid = '';
                 foreach ($leftjoin['cids'] as $cid) {
@@ -227,23 +244,24 @@ if (!empty($catfilter) && (count($cids) < 2 || $andcids)) {
                     }
                     $oldcid = $cid;
                 }
-            // select the categories you wanted
+            // Select the categories you wanted
             } else {
                 for ($i = 0; $i < count($cids); $i++) {
                     if (is_numeric($cids[$i])) {
                         $where[] = $catlinks[$i] . '.xar_cid = ' . $cids[$i];
-                    } elseif (preg_match('/^_(\d+)$/',$cids[$i],$matches)) {
+                    } elseif (preg_match('/^_(\d+)$/', $cids[$i], $matches)) {
                         $tmpcid = $matches[1];
-                        $cat = xarModAPIFunc('categories','user','getcatinfo',Array('cid' => $tmpcid));
+                        $cat = xarModAPIFunc('categories', 'user', 'getcatinfo', array('cid' => $tmpcid));
                         // We want to avoid bringing in this new table if we can.
                         // If the tree we are checking contains just one category (it is a leaf node)
                         // then don't left join to the categories table.
                         if (!empty($cat)) {
                             if (($cat['left'] + 1) != $cat['right']) {
-                                $leftjoin['more'] .= ' LEFT JOIN ' . $categoriestable . ' cattab' . $i
-                                    . ' ON cattab' . $i . '.xar_cid = ' .  $catlinks[$i] . '.xar_cid ';
-                                $where[] = 'cattab' . $i . '.xar_left >= ' . $cat['left'];
-                                $where[] = 'cattab' . $i . '.xar_left <= ' . $cat['right'];
+                                // Use 'INNER JOIN' since we are limiting the categories to a single tree.
+                                $leftjoin['more'] .= ' INNER JOIN ' . $categoriestable . ' cattab' . $i
+                                    . ' ON cattab' . $i . '.xar_cid = ' .  $catlinks[$i] . '.xar_cid '
+                                    . ' AND cattab' . $i . '.xar_left >= ' . $cat['left']
+                                    . ' AND cattab' . $i . '.xar_left <= ' . $cat['right'];
                             } else {
                                 $where[] = $catlinks[$i] . '.xar_cid = ' . $tmpcid;
                             }
@@ -253,53 +271,47 @@ if (!empty($catfilter) && (count($cids) < 2 || $andcids)) {
                     }
                 }
             }
-            // include all cids here
-            $leftjoin['cid'] = join(', ',$leftjoin['cids']);
+
+            // Include all cids here
+            $leftjoin['cid'] = join(', ', $leftjoin['cids']);
         } else {
+            // The categories are ORed, i.e. select items with ANY of the categories.
             $orcids = array();
             $tmpwhere = array();
             for ($i = 0; $i < count($cids); $i++) {
                 if (is_numeric($cids[$i])) {
                     $orcids[] = $cids[$i];
-                } elseif (preg_match('/^_(\d+)$/',$cids[$i],$matches)) {
+                } elseif (preg_match('/^_(\d+)$/', $cids[$i], $matches)) {
                     $tmpcid = $matches[1];
-                    $cat = xarModAPIFunc('categories','user','getcatinfo',Array('cid' => $tmpcid));
+                    $cat = xarModAPIFunc('categories', 'user', 'getcatinfo', array('cid' => $tmpcid));
                     if (!empty($cat)) {
                         // Only bring in the categories table if the category in our tree has any descendants.
                         if (($cat['left'] + 1) != $cat['right']) {
+                            // Use 'LEFT [OUTER] JOIN' since we are ORing the categories.
                             $leftjoin['more'] .= ' LEFT JOIN ' . $categoriestable . ' cattab' . $i
-                                . ' ON cattab' . $i . '.xar_cid = ' .  $leftjoin['cid'];
-                            $tmpwhere[] = '(cattab' . $i . '.xar_left >= ' . $cat['left']
-                                . ' AND '
-                                . 'cattab' . $i . '.xar_left <= ' . $cat['right'] . ')';
+                                . ' ON cattab' . $i . '.xar_cid = ' .  $leftjoin['cid']
+                                . ' AND cattab' . $i . '.xar_left >= ' . $cat['left']
+                                . ' AND cattab' . $i . '.xar_left <= ' . $cat['right'];
                         } else {
-                            $tmpwhere[] = '(' . $catlinks[$i] . '.xar_cid = ' . $tmpcid;
+                            // FIXME: something not quite right here.
+                            // This handles _N-M, where M is a leaf node.
+                            // What exactly is that supposed to mean?
+                            if (!empty($catlinks[$i])) $tmpwhere[] = $catlinks[$i] . '.xar_cid = ' . $tmpcid;
                         }
                     }
                 }
             }
+
             if (count($orcids) == 1) {
                 $tmpwhere[] = $leftjoin['cid'] . ' = ' . $orcids[0];
             } elseif (count($orcids) > 1) {
                 $allcids = join(', ', $orcids);
                 $tmpwhere[] = $leftjoin['cid'] . ' IN (' . $allcids . ')';
             }
+
             if (count($tmpwhere) > 0) {
                 $where[] = '(' . join(' OR ', $tmpwhere) . ')';
             }
-        }
-    }
-
-    if (!empty($cidtree)) {
-        if (empty($cidtree_cat)) {
-            $cidtree_cat = xarModAPIFunc('categories','user','getcatinfo',array('cid' => $cidtree));
-        }
-        // Only bring in the categories table if the category in our tree has any descendants.
-        if (!empty($cidtree_cat) && ($cidtree_cat['left'] + 1) != $cidtree_cat['right']) {
-            $where[] = $categoriestable . '.xar_left >= ' . $cidtree_cat['left'];
-            $where[] = $categoriestable . '.xar_left <= ' . $cidtree_cat['right'];
-        } else {
-            $where[] = $categorieslinkagetable . '.xar_cid = ' . $cidtree;
         }
     }
 
