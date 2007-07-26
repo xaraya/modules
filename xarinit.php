@@ -148,6 +148,8 @@ function comments_init()
     xarModSetVar('comments','CollapsedBranches',serialize(array()));
     xarModSetVar('comments','editstamp',1);
     xarModSetVar('comments','usersetrendering',false);
+    xarModSetVar('comments', 'allowhookoverride', false);
+    xarModSetVar('comments', 'edittimelimit', 0);
 
     // display hook
     if (!xarModRegisterHook('item', 'display', 'GUI','comments', 'user', 'display'))
@@ -165,7 +167,14 @@ function comments_init()
     if (!xarModRegisterHook('module', 'remove', 'API','comments', 'admin', 'remove_module'))
         return false;
 
-
+    if (!xarModRegisterHook('module', 'modifyconfig', 'GUI',
+                            'comments', 'admin', 'modifyconfighook')) {
+        return false;
+    }
+    if (!xarModRegisterHook('module', 'updateconfig', 'API',
+                            'comments', 'admin', 'updateconfighook')) {
+        return false;
+    }
     /**
      * Define instances for this module
      * Format is
