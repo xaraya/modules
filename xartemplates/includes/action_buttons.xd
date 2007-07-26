@@ -6,11 +6,11 @@
                 <input type="hidden" name="header[modid]" value="#$header['modid']#" />
                 <input type="hidden" name="header[itemtype]" value="#$header['itemtype']#" />
                 <input type="hidden" name="header[objectid]" value="#$header['objectid']#" />
-                <input type="hidden" name="header[pid]" value="#$xar_cid#" />
+                <input type="hidden" name="header[pid]" value="#$item['xar_cid']#" />
                 <input type="hidden" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#" />
                 <input type="hidden" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#" />
                 <input type="hidden" name="receipt[action]" value="reply" />
-                <input type="submit" name="submit" id="submit-reply#$xar_cid#" value="#xarML('Reply')#" />
+                <input type="submit" name="submit" id="submit-reply#$item['xar_cid']#" value="#xarML('Reply')#" />
             </div>
         </form>
     </xar:sec>

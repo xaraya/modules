@@ -93,7 +93,7 @@
                             </xar:mlstring>
                         </option>
                     </xar:if>
-<!-- thinking about omitting this setting from the theme - i caanot believe that anyone would miss this option in RL -->
+                    <xar:comment> thinking about omitting this setting from the theme - i caanot believe that anyone would miss this option in RL</xar:comment>
                     <xar:if condition="$package['settings']['render'] eq 'nocomments'">
                         <option value="nocomments" selected="selected">
                             <xar:mlstring>

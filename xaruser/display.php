@@ -91,7 +91,7 @@ function comments_user_display($args)
         $header['itemtype'] = $itemtype;
     }
 
-    
+
     $package['settings'] = xarModAPIFunc('comments','user','getoptions',$header);
 
     // FIXME: clean up return url handling
@@ -124,7 +124,7 @@ function comments_user_display($args)
     if (!isset($args['thread'])) {
         xarVarFetch('thread', 'isset', $thread, NULL, XARVAR_NOT_REQUIRED);
     }
-    if (isset($thread) & $thread==1) {
+    if (isset($thread) && $thread == 1) {
         $header['cid'] = $cid;
     }
 
@@ -133,6 +133,7 @@ function comments_user_display($args)
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException($msg));
         return;
     }
+
 
     if (!isset($header['selected_cid']) || isset($thread)) {
         $package['comments'] = xarModAPIFunc('comments','user','get_multiple',$header);
@@ -153,6 +154,7 @@ function comments_user_display($args)
             $header['objectid'] = $package['comments'][0]['xar_objectid'];
         }
     }
+
 
     $package['comments'] = comments_renderer_array_prune_excessdepth(
         array(
@@ -180,6 +182,7 @@ function comments_user_display($args)
             $package['comments'][$key] = xarModCallHooks('item', 'transform', $comment['xar_cid'], $comment, 'comments');
         }
     }
+
     $header['input-title']            = xarML('Post a new comment');
 
     $package['settings']['max_depth'] = _COM_MAX_DEPTH;
@@ -240,22 +243,6 @@ function comments_user_display($args)
 
     $hooks = xarModAPIFunc('comments','user','formhooks');
 
- 
-    //die(var_dump($package['comments']));
-   /* print 'NOW  ' . date(DATE_RFC822) . "<br />\n";
-    print 'POST ' . date(DATE_RFC822,$package['comments'][0]['xar_date']) . "<br />\n";
-    $end = $package['comments'][0]['xar_date'] + (5 * 60);
-    print 'ENDR ' . $end . "<br />\n";
-    print 'END  ' . date(DATE_RFC822,$end) . "<br />\n";
-    
-    if (time() >= $end) {
-        print 'DONE';
-    } else {
-        print 'NOT';
-    }
-    
-    die();
-*/
     //if (time() - ($package['comments']['xar_date'] - ($package['settings']['edittimelimit'] * 60))) {
     //}
     $output['hooks']   = $hooks;

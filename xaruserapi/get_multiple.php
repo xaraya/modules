@@ -169,8 +169,6 @@ function comments_userapi_get_multiple($args)
     // add it to the array we will return
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
-        // FIXME Delete after date testing
-        // $row['xar_date'] = xarLocaleFormatDate("%B %d, %Y %I:%M %p",$row['xar_datetime']);
         $row['xar_date'] = $row['xar_datetime'];
         $row['xar_author'] = xarUserGetVar('name',$row['xar_author']);
         comments_renderer_wrap_words($row['xar_text'],80);
