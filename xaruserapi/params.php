@@ -109,7 +109,7 @@ function ievents_userapi_params($args)
         $params['group_prefixes'] = 'location,contact';
 
         // Default listing sort order
-        $params['default_listing_sort'] = 'start_date ASC';
+        $params['default_listing_sort'] = 'startdate ASC';
         $params['listing_sort_options'] = array(
             'startdate ASC' => 'Date (earliest first)',
             'startdate DESC' => 'Date (latest first)',
