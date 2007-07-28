@@ -85,13 +85,15 @@ function comments_userapi_get_multiple($args)
     // initialize the commentlist array
     $commentlist = array();
 
+    // Get the field names and LEFT JOIN ... ON ... parts from users
+    $usersdef = xarModAPIFunc('roles','user','leftjoin');
     // if the depth is zero then we
     // only want one comment
     $sql = "SELECT  $ctable[title] AS xar_title,
                     $ctable[cdate] AS xar_datetime,
                     $ctable[hostname] AS xar_hostname,
                     $ctable[comment] AS xar_text,
-                    $ctable[author] AS xar_author,
+                    $usersdef[name] AS xar_author,
                     $ctable[author] AS xar_uid,
                     $ctable[cid] AS xar_cid,
                     $ctable[pid] AS xar_pid,
@@ -99,7 +101,8 @@ function comments_userapi_get_multiple($args)
                     $ctable[left] AS xar_left,
                     $ctable[right] AS xar_right,
                     $ctable[postanon] AS xar_postanon
-              FROM  $xartable[comments]
+              FROM  $xartable[comments] LEFT JOIN $usersdef[table]
+                ON  $usersdef[field] = $ctable[author]
              WHERE  $ctable[modid]=?
                AND  $ctable[status]=?";
     $bindvars = array();
@@ -170,7 +173,6 @@ function comments_userapi_get_multiple($args)
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
         $row['xar_date'] = $row['xar_datetime'];
-        $row['xar_author'] = xarUserGetVar('name',$row['xar_author']);
         comments_renderer_wrap_words($row['xar_text'],80);
         $commentlist[] = $row;
         $result->MoveNext();
