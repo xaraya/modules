@@ -7,7 +7,7 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Comments Module
+ * @subpackage comments
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
@@ -50,5 +50,4 @@ define('_COM_MAX_DEPTH', 10);
 define('_COM_STATUS_OFF', 1);
 define('_COM_STATUS_ON', 2);
 define('_COM_STATUS_ROOT_NODE', 3);
-
 ?>
