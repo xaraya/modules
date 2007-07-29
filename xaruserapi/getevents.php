@@ -194,13 +194,13 @@ function ievents_userapi_getevents($args)
     // Categories search
     // If a single catid, pass that in.
     // TODO: validate it.
-    if (xarVarValidate('id', $catid, true)) $params['catid'] = $catid;
+    if (xarVarValidate('regexp:/_{0,1}[0-9]+/', $catid, true)) $params['catid'] = $catid;
 
     // If an array of catids, pass them in
     // Allow 'OR' logic, using '-' as the joiner.
     // TODO: validate the catids values (must all be numeric)
     // TODO: force the query into GROUP BY or DISTINCT mode with multiple categories.
-    if (xarVarValidate('list:id', $catids, true)) {
+    if (xarVarValidate('list:regexp:/_{0,1}[0-9]+/', $catids, true)) {
         if (!xarVarValidate('pre:lower:passthru:enum:and:or', $crule, true)) $crule = 'and';
         $params['catid'] = implode((($crule == 'or') ? '-' : '+'), $catids);
     }

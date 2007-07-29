@@ -278,24 +278,24 @@ function ievents_user_view($args)
     // The 'cats' format will be used in the default URL (for pagers etc.)
 
     // Start by fetching page parameters.
-    xarVarFetch('catid', 'id', $catid, 0, XARVAR_NOT_REQUIRED);
+    xarVarFetch('catid', 'regexp:/_{0,1}[0-9]+/', $catid, 0, XARVAR_NOT_REQUIRED);
     if (!empty($catid)) $catids = array($catid);
 
     // Category joining rule.
     xarVarFetch('crule', 'pre:lower:passthru:enum:and:or', $crule, 'and', XARVAR_NOT_REQUIRED);
 
     // List of catids[]
-    xarVarFetch('catids', 'list:id', $catids, array(), XARVAR_NOT_REQUIRED);
+    xarVarFetch('catids', 'list:regexp:/_{0,1}[0-9]+/', $catids, array(), XARVAR_NOT_REQUIRED);
 
     // Everything in a single string.
     // N+M+..
     // Chose a joiner of ' ' or '+' because some servers convert all '+' chars in the URL to ' '.
-    xarVarFetch('cats', 'strlist: +:id', $cats1, '', XARVAR_NOT_REQUIRED);
+    xarVarFetch('cats', 'strlist: +:regexp:/_{0,1}[0-9]+/', $cats1, '', XARVAR_NOT_REQUIRED);
     if (!empty($cats1)) {
         $catids = explode(' ', $cats1);
         $crule = 'and';
     } else {
-        xarVarFetch('cats', 'strlist:-:id', $cats2, '', XARVAR_NOT_REQUIRED);
+        xarVarFetch('cats', 'strlist:-:regexp:/_{0,1}[0-9]+/', $cats2, '', XARVAR_NOT_REQUIRED);
         if (!empty($cats2)) {
             $catids = explode('-', $cats2);
             $crule = 'or';

@@ -81,7 +81,6 @@ class ievents_exportapi_export_master
         // Set some default values.
         $this->handler_name = $handler_name;
         $this->handler->file_extension = $this->handlers[$handler_name]['extension'];
-        $this->handler->product_id = $this->product_id;
         $this->handler->input_encoding = $this->input_encoding;
         $this->handler->output_encoding = $this->output_encoding;
         $this->handler->categories = xarModAPIfunc('ievents', 'user', 'getallcategories');
