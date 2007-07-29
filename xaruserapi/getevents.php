@@ -36,8 +36,8 @@ function ievents_userapi_getevents($args)
 
     static $static_object = NULL;
 
-    list($module, $modid, $itemtype, $q_fields, $group_prefixes, $address_format, $default_listing_sort) =
-        xarModAPIfunc('ievents', 'user', 'params', array('names' => 'module,modid,itemtype_events,q_fields,group_prefixes,address_format,default_listing_sort'));
+    list($module, $modid, $itemtype, $q_fields, $group_prefixes, $address_format, $default_listing_sort, $category_tree_search) =
+        xarModAPIfunc('ievents', 'user', 'params', array('names' => 'module,modid,itemtype_events,q_fields,group_prefixes,address_format,default_listing_sort,category_tree_search'));
 
     // Default return value (array or 0, depending on whether doing a count).
     if (empty($docount)) {
@@ -202,6 +202,15 @@ function ievents_userapi_getevents($args)
     // TODO: force the query into GROUP BY or DISTINCT mode with multiple categories.
     if (xarVarValidate('list:regexp:/_{0,1}[0-9]+/', $catids, true)) {
         if (!xarVarValidate('pre:lower:passthru:enum:and:or', $crule, true)) $crule = 'and';
+
+        // If the tree search flag us set, then prefix each category ID
+        // with a '_' to force the search to include sub-categories (descendants).
+        if (!empty($category_tree_search)) {
+            foreach($catids as $key1 => $value1) {
+                if (preg_match('/^[0-9]+$/', $value1)) $catids[$key1] = '_' . $value1;
+            }
+        }
+
         $params['catid'] = implode((($crule == 'or') ? '-' : '+'), $catids);
     }
 

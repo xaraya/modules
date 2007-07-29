@@ -140,6 +140,10 @@ function ievents_userapi_params($args)
             'list' => xarML('Listings'),
             'cal' => xarML('Calendar'),
         );
+
+        // If true, then all category searches are performed
+        // as a tree search (i.e. selected category and all descendants).
+        $params['category_tree_search'] = true;
     }
 
     if (!empty($name)) {
