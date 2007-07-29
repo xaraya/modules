@@ -6,6 +6,7 @@ function categories_userapi_getlinkage($args)
 
     // Requires: module, itemtype, itemid (but not validated)
 
+    if (!isset($itemid)) return array();
     if (empty($module)) {
         $module = xarModGetName();
     }

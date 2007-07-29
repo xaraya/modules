@@ -235,7 +235,7 @@ class CategoriesProperty extends SelectProperty
         } elseif (isset($this->_itemid)) {
             $data['categories_itemid'] = $this->_itemid;
         } else {
-            $data['categories_itemid'] = 0;
+            $data['categories_itemid'] = null;
         }
 
         if (empty($data['value'])) {
