@@ -8,6 +8,16 @@
   <config></config>
   <isalias>1</isalias>
   <properties>
+    <property name="intro_text">
+      <id>157</id>
+      <label>Intro Text</label>
+      <type>xartinymce</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>10</order>
+      <validation></validation>
+    </property>
     <property name="list_text">
       <id>57</id>
       <label>List Text</label>
@@ -15,7 +25,17 @@
       <default></default>
       <source>dynamic_data</source>
       <status>1</status>
-      <order>1</order>
+      <order>20</order>
+      <validation></validation>
+    </property>
+    <property name="item_text">
+      <id>63</id>
+      <label>Item Text</label>
+      <type>xartinymce</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>30</order>
       <validation></validation>
     </property>
     <property name="menu_title">
@@ -25,7 +45,7 @@
       <default></default>
       <source>dynamic_data</source>
       <status>1</status>
-      <order>2</order>
+      <order>40</order>
       <validation></validation>
     </property>
     <property name="page_title">
@@ -35,7 +55,7 @@
       <default></default>
       <source>dynamic_data</source>
       <status>1</status>
-      <order>3</order>
+      <order>50</order>
       <validation></validation>
     </property>
     <property name="pubtype">
@@ -45,18 +65,8 @@
       <default></default>
       <source>dynamic_data</source>
       <status>1</status>
-      <order>6</order>
+      <order>60</order>
       <validation>articles</validation>
-    </property>
-    <property name="item_text">
-      <id>63</id>
-      <label>Item Text</label>
-      <type>xartinymce</type>
-      <default></default>
-      <source>dynamic_data</source>
-      <status>1</status>
-      <order>7</order>
-      <validation></validation>
     </property>
     <property name="mandatory_cat">
       <id>65</id>
@@ -65,7 +75,7 @@
       <default></default>
       <source>dynamic_data</source>
       <status>1</status>
-      <order>8</order>
+      <order>70</order>
       <validation></validation>
     </property>
   </properties>
