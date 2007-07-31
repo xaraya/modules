@@ -3,25 +3,32 @@
 function xarpages_funcapi_news($args)
 {
     // The articles publication type is required, and is selected by the page.
-    // Only one publication type is allowed per page.
-    // TODO: support multiple publication types.
-    if (empty($args['current_page']['dd']['pubtype'])) {
-        return $args;
-    }
+    if (empty($args['current_page']['dd']['pubtype'])) return $args;
+
+    // There may be multiple publication types, as a commad-separated list.
+    // The articles API can accept such a list directly.
     $ptid = $args['current_page']['dd']['pubtype'];
-    $ptids = array($ptid);
+    $ptids = explode(',', $ptid);
 
     // Get the details of the publication type (defaults etc.)
-    // TODO: get the global settings if using multiple publication types.
-    $pubtype = xarModAPIFunc('articles', 'user', 'getpubtypes', array('ptid' => $ptid));
-    $settings = unserialize(xarModGetVar('articles', 'settings.' . $ptid));
+
+    // We get the first pubtype for historical reasons (DEPRECATED).
+    $pubtype = xarModAPIFunc('articles', 'user', 'getpubtypes', array('ptid' => $ptids[0]));
+
+    // Get the global settings if using multiple publication types, otherwise fetch
+    // settings for the single selected publication type.
+    if (count($ptids) > 1) {
+        $settings = unserialize(xarModGetVar('articles', 'settings'));
+    } else {
+        $settings = unserialize(xarModGetVar('articles', 'settings.' . $ptid));
+    }
 
     // Parameter to allow selection of only front page articles. Limit to frontpage if true.
     xarVarFetch('frontpage', 'bool', $frontpage, false, XARVAR_NOT_REQUIRED);
 
     // For the pager.
     // Set the max items to be four times the items per page, within a window of 100 to 1000
-    // TODO: make this configurable.
+    // TODO: make this configurable, but these seem reasonable limuts for now.
     $max_numitems_factor = 4;
     $max_numitems_floor = 100;
     $max_numitems_ceiling = 1000;
@@ -31,11 +38,12 @@ function xarpages_funcapi_news($args)
     xarVarFetch('numitems', 'int:1:' . $max_numitems, $numitems, $settings['itemsperpage'], XARVAR_NOT_REQUIRED);
 
     // An individual item has been selected
+    // TODO: support selection by name, though this may not be unique enough.
     xarVarFetch('aid', 'id', $aid, 0, XARVAR_NOT_REQUIRED);
 
-    // TODO: support trees using the _N format
+    // TODO: support some fancy category joining.
     // A single category selected: cid=N
-    xarVarFetch('cid', 'id', $cid, 0, XARVAR_NOT_REQUIRED);
+    xarVarFetch('cid', 'id', $cid, '', XARVAR_NOT_REQUIRED);
     // A group of categories selected: cids=N[]
     xarVarFetch('cids', 'list:id', $cids, array(), XARVAR_NOT_REQUIRED);
 
@@ -49,17 +57,19 @@ function xarpages_funcapi_news($args)
     }
 
     // TODO: allow override using a parameter.
+    // General sort methods will be what articles supports (practically just date and title)
     $sort = $settings['defaultsort'];
     
     // Set the URL Params array.
-    $url_params = array(
-        'startnum' => $startnum,
-        'numitems' => $numitems,
-        'q' => $q,
-        'cid' => $cid,
-        'cids' => $cids,
-        'aid' => $aid,
-    );
+    $url_params = array();
+
+    // Add in some (i.e. all) optional values if they are not set to their defaults.
+    if ($startnum > 1) $url_params['startnum'] = $startnum;
+    if ($numitems != $settings['itemsperpage']) $url_params['numitems'] = $numitems;
+    if (!empty($q)) $url_params['q'] = $q;
+    if (!empty($cid)) $url_params['cid'] = $cid;
+    if (!empty($cids)) $url_params['cids'] = $cids;
+    if (!empty($aid)) $url_params['aid'] = $aid;
 
     // Put all the category ids into the cids array.
     if (!empty($cid) && !in_array($cid, $cids)) array_push($cids, $cid);
@@ -83,8 +93,6 @@ function xarpages_funcapi_news($args)
     // TODO: define select base categories, used to provide links or drop-down lists of categories for the user to select.
 
     // We should have a list of categories now.
-    // TODO: filter out any not under the root categories for this page - perhaps?
-    //var_dump($cids);
 
     // Categories are always ANDed.
     $andcids = true;
@@ -104,7 +112,13 @@ function xarpages_funcapi_news($args)
 
     // Get details for all pubtypes
     $pubtypes = xarModAPIFunc('articles', 'user', 'getpubtypes');
-    //echo "<pre>"; var_dump($pubtypes); echo "</pre>";
+
+    // TODO: Force all categories to be tree-selects.
+    // (This appears not to work in the articles getall() API - though it ought to)
+    $select_cids = array();
+    foreach($cids as $cid_value) {
+        $select_cids = preg_replace('/(?<!_)([0-9]+)/', '_$1', $cid_value);
+    }
 
     $article_select = array(
         'startnum' => $startnum,
@@ -117,7 +131,7 @@ function xarpages_funcapi_news($args)
         //'extra' => $extra,
         //'where' => $where_string,
         //'wheredd' => $wheredd_string,
-        'ptids' => $ptids,
+        //'ptids' => $ptids,
         'ptid' => $ptid,
         'enddate' => $enddate,
         'fields' => array(
@@ -128,17 +142,12 @@ function xarpages_funcapi_news($args)
     );
 
     $articles = xarModAPIFunc('articles', 'user', 'getall', $article_select);
-    //echo "<pre>"; print_r($article_select); echo "</pre>";
 
     // Set the Pager
-    $count = xarModAPIFunc('articles', 'user', 'countitems', $article_select);
-    $url_params['startnum'] = '%%';
-    $pager_url_params = array_merge($url_params, array('pid' => $args['current_page']['pid']));
-    $current_page = xarModURL('xarpages', 'user', 'display', $pager_url_params);
-    $pager = xarTplGetPager($startnum, $count, $current_page, $numitems);
-    $url_params['startnum'] = 1;
-    $bl_data['pager'] = $pager;
-    $bl_data['search_count'] = $count;
+    $search_count = xarModAPIFunc('articles', 'user', 'countitems', $article_select);
+    $pager_url_params = array_merge($url_params, array('pid' => $args['current_page']['pid'], 'startnum' => '%%'));
+    $pager_base_url = xarModURL('xarpages', 'user', 'display', $pager_url_params);
+    $pager = xarTplGetPager($startnum, $search_count, $pager_base_url, $numitems);
 
     // If an individual article has been selected, then get that separately.
     $article = array();
@@ -149,7 +158,7 @@ function xarpages_funcapi_news($args)
         $article = xarModAPIFunc('articles', 'user', 'get', $single_article_select);
 
         // Do transform hooks.
-        // TODO: transform some dynamic data fields too?
+        // TODO: transform some dynamic data fields too? Make configurable.
         $article['transform'] = array();
         $article['transform'][] = 'summary';
         $article['transform'][] = 'body';
@@ -235,21 +244,22 @@ function xarpages_funcapi_news($args)
         // TODO: apply required transform hooks to summaries.
     }
 
-    // TODO: an archive by date
+    // TODO: an archive by date - do the summaries here, but only if requested (by parameter or page flag)
     // TODO: handle categories: default, user-selected
 
     // Return the list of articles.
     $args['article'] = $article;
     $args['articles'] = $articles;
-    $args['pubtype'] = $pubtype;
+    $args['pubtype'] = $pubtype; // Deprecated
     $args['pubtypes'] = $pubtypes;
 
     // Return data for template use
     $args['extra'] = array(
         'url_params' => $url_params,
-        'bl_data' => $bl_data,
+        'pager' => $pager,
+        'search_count' => $search_count,
     );
-    
+
     return $args;
 }
 

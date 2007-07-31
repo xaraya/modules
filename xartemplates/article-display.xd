@@ -8,7 +8,6 @@
     <div class="news-header">
         <xar:template file="news-nextprev" />
 
-        <h1>News Item (#xarLocaleGetFormattedDate('short',$pubdate)#)</h1>
         <h3>
             <xar:comment>Add an edit link if we have the privileges</xar:comment>
             <xar:if condition="#xarSecurityCheck('EditArticles',0,'Article',$pubtypeid.'::' . $authorid . ':' . $aid)#">
@@ -28,6 +27,8 @@
     <xar:elseif condition="!empty($summary)" />
         <div class="news-body">#$summary#</div>
     </xar:if>
+
+    <xar:template file="news-nextprev" />
 </div>
 
 <xar:set name="dummy">#xarTplSetPageTitle($title)#</xar:set>

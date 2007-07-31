@@ -6,10 +6,15 @@
 </xar:comment>
 
 <div class="news-item-news">
+    <xar:template file="news-nextprev" />
     <div class="news-header">
-        <xar:template file="news-nextprev" />
+        <h1>
+            <xar:ml>
+                <xar:mlstring>News Item - #(1)</xar:mlstring>
+                <xar:mlvar>#xarLocaleGetFormattedDate('short',$pubdate)#</xar:mlvar>
+            </xar:ml>
+        </h1>
 
-        <h1>News Item (#xarLocaleGetFormattedDate('short',$pubdate)#)</h1>
         <h3>
             <xar:comment>Add an edit link if we have the privileges</xar:comment>
             <xar:if condition="#xarSecurityCheck('EditArticles',0,'Article',$pubtypeid.'::' . $authorid . ':' . $aid)#">
