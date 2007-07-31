@@ -1,6 +1,7 @@
 <?php
 function calendar_adminapi_getmenulinks()
 {
+    $menulinks = array();
     if (xarSecurityCheck('AdminCalendar',0)) {
         $menulinks[] = array('url'   => xarModURL('calendar',
                                                   'admin',
@@ -32,9 +33,6 @@ function calendar_adminapi_getmenulinks()
             'label'=>xarML('View Queue')
             );
         */
-    }
-    if (empty($menulinks)){
-        $menulinks = '';
     }
 
     return $menulinks;

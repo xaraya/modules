@@ -1,7 +1,7 @@
 <items>
   <calendar_event itemid="1">
     <id>1</id>
-    <type>0</type>
+    <itemtype>0</itemtype>
     <name>Important meeting</name>
     <description></description>
     <start>1170324000</start>
@@ -16,7 +16,7 @@
   </calendar_event>
   <calendar_event itemid="2">
     <id>2</id>
-    <type>0</type>
+    <itemtype>0</itemtype>
     <name>Very important meeting</name>
     <description></description>
     <start>1170338400</start>
@@ -31,7 +31,7 @@
   </calendar_event>
   <calendar_event itemid="3">
     <id>3</id>
-    <type>0</type>
+    <itemtype>0</itemtype>
     <name>Extremely important meeting</name>
     <description></description>
     <start>1170339600</start>
@@ -46,7 +46,7 @@
   </calendar_event>
   <calendar_event itemid="4">
     <id>4</id>
-    <type>0</type>
+    <itemtype>0</itemtype>
     <name>Dinner with the boss</name>
     <description></description>
     <start>1170363600</start>
@@ -61,7 +61,7 @@
   </calendar_event>
   <calendar_event itemid="5">
     <id>5</id>
-    <type>0</type>
+    <itemtype>0</itemtype>
     <name>Holidays!</name>
     <description></description>
     <start>1170669600</start>
@@ -76,7 +76,7 @@
   </calendar_event>
   <calendar_event itemid="6">
     <id>6</id>
-    <type>0</type>
+    <itemtype>0</itemtype>
     <name>Anniversary!</name>
     <description></description>
     <start>1171533600</start>
@@ -91,7 +91,7 @@
   </calendar_event>
   <calendar_event itemid="7">
     <id>7</id>
-    <type>0</type>
+    <itemtype>0</itemtype>
     <name>Business Trip</name>
     <description></description>
     <start>1171879200</start>

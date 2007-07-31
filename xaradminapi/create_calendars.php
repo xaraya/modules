@@ -33,7 +33,7 @@ function calendar_adminapi_create_calendars($args)
         $mod_id = xarModGetIDFromName($module[0]);
     }
     if (!isset($role_id)) {
-        $role_id = xarSession::getVar('uid');
+        $role_id = xarSession::getVar('role_id');
     }
 
     // Load up database details.
