@@ -3,7 +3,7 @@
  * Newsletter
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @link http://wwwk.schwabfoundation.org
  *
  * @subpackage newsletter module
