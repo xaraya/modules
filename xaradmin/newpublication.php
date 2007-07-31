@@ -21,10 +21,11 @@ function newsletter_admin_newpublication()
 {
     // Security check
     if(!xarSecurityCheck('AddNewsletter')) return;
-
-    // Get the admin menu
-    //$data = xarModAPIFunc('newsletter', 'admin', 'menu');
     $data = array();
+    if (!xarVarFetch('func', 'str', $data['page'],  'main', XARVAR_NOT_REQUIRED)) return;
+
+    // Get the admin edit menu
+    $data['menu'] = xarModAPIFunc('newsletter', 'admin', 'configmenu');
     // Get current user
     $data['loggeduser'] = xarModAPIFunc('newsletter',
                                         'user',

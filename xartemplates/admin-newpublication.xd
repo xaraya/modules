@@ -5,6 +5,7 @@
     </span>
 </div>
 <div class="xar-mod-body">
+<xar:template file="navtab" type="module" />
     <h2><xar:mlstring>New Publication</xar:mlstring></h2>
     <form name="post" id="post" action="&xar-modurl-newsletter-admin-createpublication;" method="post" enctype="application/x-www-form-urlencoded">
         <fieldset>

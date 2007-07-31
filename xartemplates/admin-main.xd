@@ -1,213 +1,220 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
-	<span class="xar-mod-title">
-		<xar:mlstring>Newsletter Administration</xar:mlstring>
-	</span>
+    <span class="xar-mod-title">
+        <xar:mlstring>Newsletter Administration</xar:mlstring>
+    </span>
 </div>
 <div class="xar-mod-body">
-	<img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
-	<h2>
-		<xar:mlstring>Overview</xar:mlstring>
-	</h2>
-	<h3>
-		<xar:mlstring>What is it?</xar:mlstring>
-	</h3>
-	<p>
-		<xar:mlstring>The Newsletter module allows an individual or organization to compile and 
-		distribute news and research updates to interested parties via email. This module gives 
-		writers, editors and publishers a comprehensive process to easily assemble the stories 
-		for an newsletter and subsequently publish the information to a subscription base.</xar:mlstring>
-	</p>
-	<p>
-		<xar:mlstring>This module was originally created for the</xar:mlstring>
-		&nbsp;<a href="http://www.schwabfoundation.org">Charles and Helen Schwab Foundation</a>
-		&nbsp;<xar:mlstring>to distribute weekly updates on the program and research 
-		areas relevant to the foundation's learning differences and human services programs 
-		and initiatives.</xar:mlstring>
-	</p>
-	<h3>
-		<xar:mlstring>How to use it?</xar:mlstring>
-	</h3>
-	<p>
-		<b><xar:mlstring>Note:</xar:mlstring></b>&nbsp;&nbsp;<xar:mlstring>If you have not yet configured the module, 
-		please do so.</xar:mlstring>
-	</p>
-	<p>
-		<xar:ml>	
-			<xar:mlstring><a href="#(1)">Click here to configure the Newsletter module.</a></xar:mlstring>
-		    <xar:mlvar>#xarModURL('newsletter', 'admin', 'configdesc')#</xar:mlvar>
-		</xar:ml>
-	</p>
-	<h4>
-		<xar:mlstring>Default Groups</xar:mlstring>
-	</h4>
-	<p>
-		<xar:mlstring>As a user of the Newsletter module, you will be added to either the 
-		publisher, editor or writer group.  Once the module administrator has added you to 
-		one of these groups, you will be able to create content for a publication.</xar:mlstring>
-	</p>
-	<p>
-		<xar:mlstring>The default roles and responsibilities:</xar:mlstring>
-		<ul>
-			<li><xar:mlstring><b>Publisher</b></xar:mlstring></li>
-			<xar:mlstring>Can create, edit and delete stories, issues, publications 
-			and subscriptions.  Can publish issues.  Can modify the configuration 
-			of the module.</xar:mlstring>
-			<li><xar:mlstring><b>Editor</b></xar:mlstring></li>
-			<xar:mlstring>Can create, edit and delete stories or issues.  Cannot 
-			publish issues.</xar:mlstring>
-			<li><xar:mlstring><b>Writer</b></xar:mlstring></li>
-			<xar:mlstring>Can add, edit or delete stories.  Cannot publish issues.</xar:mlstring>
-		</ul>
-	</p>
-	<h4>
-		<xar:mlstring>Publication Items</xar:mlstring>
-	</h4>
-	<p>
-		<xar:mlstring>A publication is the top-level wrapper for each issue and sets 
-		default information for each issue and story within the issue.</xar:mlstring>
-	</p>
-	<p>
-		<xar:mlstring>A publication will contain the following items:</xar:mlstring>
-		<ul>
-			<li><xar:mlstring><b>Disclaimer</b></xar:mlstring></li>
-			<xar:mlstring>Each publication should have a disclaimer or confidentiality clause.  
-			Once a disclaimer is created, it can be used by multiple publications.</xar:mlstring>
-			<li><xar:mlstring><b>Issue</b></xar:mlstring></li>
-			<xar:mlstring>An issue contains the news and research updates that have been 
-			compiled as stories.  Once the issue is ready to be published, the issue will be 
-			sent to the subscription base.  After an issue has been published, it can be view 
-			by non-registered users from the Newsletter information block.</xar:mlstring>
-			<li><xar:mlstring><b>Story</b></xar:mlstring></li>
-			<xar:mlstring>Each issue will have multiple stories relating to the news and 
-			research updates that will be presented to the subscription base.</xar:mlstring> 
-		</ul>
-	</p>
-	<p>
-		<xar:mlstring>The following is an example of a publication:</xar:mlstring>
-	</p>
-	<p>
-		<table class="xar-fullwidth" />
-			<tr>
-				<th colspan="3"><xar:mlstring>Homelessness Update</xar:mlstring></th>
-				<th class="xar-align-center"><xar:mlstring>Publication</xar:mlstring></th>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2"><xar:mlstring>June 2003</xar:mlstring></td>
-				<td class="xar-align-center"><xar:mlstring>issue</xar:mlstring></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td><xar:mlstring>Mayor to Approve Housing Law</xar:mlstring></td>
-				<td><xar:mlstring>story</xar:mlstring></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td><xar:mlstring>County Asked to Increase Homeless Aid</xar:mlstring></td>
-				<td><xar:mlstring>story</xar:mlstring></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td colspan="2"><xar:mlstring>July 2003</xar:mlstring></td>
-				<td class="xar-align-center"><xar:mlstring>issue</xar:mlstring></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td><xar:mlstring>Council Approves Cash for Housing</xar:mlstring></td>
-				<td><xar:mlstring>story</xar:mlstring></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td><xar:mlstring>Shaky Housing Plans</xar:mlstring></td>
-				<td><xar:mlstring>story</xar:mlstring></td>
-			</tr>
-		</table>
-	</p>
-	<h4>
-		<xar:mlstring>Steps to publish your first issue:</xar:mlstring>
-	</h4>
-	<p>
-		<ol>
-			<li><xar:mlstring>Modify the configuration (publisher)</xar:mlstring></li>
-			<xar:mlstring>The admin or publisher should first update the module's 
-			configuration within the Newsletter <i>modify configuration</i> before 
-			publishing an issue.  If the Newsletter information block has been added, 
-			then the <i>Publisher or Company Name</i> and <i>Information</i> fields will 
-			be displayed within the information block.  <i>Information</i> should contain 
-			a general description about the publications that are available to the subscription 
-			base.</xar:mlstring>
-			<li><xar:mlstring>Edit your signature (publisher, editor, writer)</xar:mlstring></li>
-			<xar:mlstring>Add a signature block if you wish to include a signature in each issue. 
-			 Do not include a user name in your signature block as this will be automatically 
-			 included in the template.  By default, the signature block will be displayed after 
-			 your user name.</xar:mlstring>
-			<li><xar:mlstring>Modify the publication templates (publisher)</xar:mlstring></li>
-			<xar:mlstring>Each publication can have it's own HTML and text email template.  
-			To create a new template, you will need to copy one of the existing templates and 
-			modify the template for the desired appearance.  A README file is included in the 
-			templates directory with the necessary information on creating a new template.</xar:mlstring> 
-			<xar:mlstring>The default templates are located the directory 
-			<i>"modules/newsletter/templates"</i></xar:mlstring>
-			<xar:mlstring>The default templates are:</xar:mlstring>
-			<ul>
-				<li><xar:mlstring>publication-template-html.xd - default HTML template</xar:mlstring></li>
-				<li><xar:mlstring>publication-template-text.xd - default text template</xar:mlstring></li>
-			</ul>
-			<xar:mlstring>Once a new template has been created, assign this template when you create the publication.  When previewing an issue, the HTML publication template will be used to display the issue.</xar:mlstring>
-			<li><xar:mlstring>Select "Publish Issue" from the Newsletter user menu.</xar:mlstring>
-			<xar:mlstring>Either create a new publication or choose a publication that already 
-			exists. (publisher)</xar:mlstring></li>
-			<li><xar:mlstring>Create an issue (publisher, editor)</xar:mlstring></li>
-			<li><xar:mlstring>Create stories (publisher, editor, writer)</xar:mlstring></li>
-			<xar:mlstring>You can continue adding stories to the issue until you have finished 
-			and are ready to publish the issue.</xar:mlstring>
-			<li><xar:mlstring>Preview the issue (publisher, editor, writer)</xar:mlstring></li>
-			<xar:mlstring>Select an issue to preview.  The publication's HTML template will be 
-			used to display the issue.</xar:mlstring>
-			<li><xar:mlstring>Publish the issue (publisher)</xar:mlstring></li>
-			<xar:mlstring>Select an issue to publish.  The issue will be sent to the subscription base.  After an issue has been published, it is viewable to non-registered users from within the Newsletter information block as an archive of past issues.</xar:mlstring>
-		</ol>
-		<xar:mlstring>To publish another issue, repeat steps 4-8. </xar:mlstring>
-	</p>
-	<h4>
-		<xar:mlstring>Subscriptions</xar:mlstring>
-	</h4>
-	<p>
-		<xar:mlstring>Normally, a user cannot subscribe to a publication unless they are a 
-		registered user on your site.  If the Newsletter information block has been added, 
-		then a registered user will be able to subscribe to a publication and modify their 
-		subscriptions.</xar:mlstring>
-	</p>
-	<p>
-		<xar:mlstring>If you wish to add a subscription that is not a registered user, 
-		then you can add a subscription from the <i>add subscription</i> menu.  You will 
-		need to provide a user name and email address.  This provides an alternative way 
-		of adding subscriptions to a publication for users that are not registered.</xar:mlstring>
-	</p>
+    <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
+    <h2>
+        <xar:mlstring>Overview</xar:mlstring>
+    </h2>
+    <h3>
+        <xar:mlstring>What is it?</xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>The Newsletter module allows an individual or organization to compile and
+        distribute news and research updates to interested parties via email. This module gives
+        writers, editors and publishers a comprehensive process to easily assemble the stories
+        for an newsletter and subsequently publish the information to a subscription base.</xar:mlstring>
+    </p>
+    <p>
+        <xar:mlstring>This module was originally created for the</xar:mlstring>
+        &nbsp;<a href="http://www.schwabfoundation.org">Charles and Helen Schwab Foundation</a>
+        &nbsp;<xar:mlstring>to distribute weekly updates on the program and research
+        areas relevant to the foundation's learning differences and human services programs
+        and initiatives.</xar:mlstring>
+    </p>
+    <h3>
+        <xar:mlstring>How to use it?</xar:mlstring>
+    </h3>
+    <p>
+        <b><xar:mlstring>Note:</xar:mlstring></b>&nbsp;&nbsp;<xar:mlstring>If you have not yet configured the module,
+        please do so.</xar:mlstring>
+    </p>
+    <p>
+        <xar:ml>
+            <xar:mlstring><a href="#(1)">Click here to configure the Newsletter module.</a></xar:mlstring>
+            <xar:mlvar>#xarModURL('newsletter', 'admin', 'configdesc')#</xar:mlvar>
+        </xar:ml>
+    </p>
     <h4>
-    	<xar:mlstring>Newsletter Main Menu</xar:mlstring>
+        <xar:mlstring>Default Groups</xar:mlstring>
     </h4>
     <p>
-    	<xar:mlstring>From the main menu, you have the following choices based on your 
-    	privileges:</xar:mlstring>
+        <xar:mlstring>As a user of the Newsletter module, you will be added to either the
+        publisher, editor or writer group.  Once the module administrator has added you to
+        one of these groups, you will be able to create content for a publication.</xar:mlstring>
+    </p>
+    <p>
+        <xar:mlstring>The default roles and responsibilities:</xar:mlstring>
         <ul>
-        	<li><xar:mlstring>Publish Issue - Create a new issue for publication</xar:mlstring></li>
+            <li><xar:mlstring><b>Publisher</b></xar:mlstring></li>
+            <xar:mlstring>Can create, edit and delete stories, issues, publications
+            and subscriptions.  Can publish issues.  Can modify the configuration
+            of the module.</xar:mlstring>
+            <li><xar:mlstring><b>Editor</b></xar:mlstring></li>
+            <xar:mlstring>Can create, edit and delete stories or issues.  Cannot
+            publish issues.</xar:mlstring>
+            <li><xar:mlstring><b>Writer</b></xar:mlstring></li>
+            <xar:mlstring>Can add, edit or delete stories.  Cannot publish issues.</xar:mlstring>
+        </ul>
+    </p>
+    <h4>
+        <xar:mlstring>Publication Items</xar:mlstring>
+    </h4>
+    <p>
+        <xar:mlstring>A publication is the top-level wrapper for each issue and sets
+        default information for each issue and story within the issue.</xar:mlstring>
+    </p>
+    <p>
+        <xar:mlstring>A publication will contain the following items:</xar:mlstring>
+        <ul>
+            <li><xar:mlstring><b>Disclaimer</b></xar:mlstring></li>
+            <xar:mlstring>Each publication should have a disclaimer or confidentiality clause.
+            Once a disclaimer is created, it can be used by multiple publications.</xar:mlstring>
+            <li><xar:mlstring><b>Issue</b></xar:mlstring></li>
+            <xar:mlstring>An issue contains the news and research updates that have been
+            compiled as stories.  Once the issue is ready to be published, the issue will be
+            sent to the subscription base.  After an issue has been published, it can be view
+            by non-registered users from the Newsletter information block.</xar:mlstring>
+            <li><xar:mlstring><b>Story</b></xar:mlstring></li>
+            <xar:mlstring>Each issue will have multiple stories relating to the news and
+            research updates that will be presented to the subscription base.</xar:mlstring>
+        </ul>
+    </p>
+    <p>
+        <xar:mlstring>The following is an example of a publication:</xar:mlstring>
+    </p>
+    <p>
+        <table class="xar-fullwidth" />
+            <tr>
+                <th colspan="3"><xar:mlstring>Homelessness Update</xar:mlstring></th>
+                <th class="xar-align-center"><xar:mlstring>Publication</xar:mlstring></th>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2"><xar:mlstring>June 2003</xar:mlstring></td>
+                <td class="xar-align-center"><xar:mlstring>issue</xar:mlstring></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td><xar:mlstring>Mayor to Approve Housing Law</xar:mlstring></td>
+                <td><xar:mlstring>story</xar:mlstring></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td><xar:mlstring>County Asked to Increase Homeless Aid</xar:mlstring></td>
+                <td><xar:mlstring>story</xar:mlstring></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2"><xar:mlstring>July 2003</xar:mlstring></td>
+                <td class="xar-align-center"><xar:mlstring>issue</xar:mlstring></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td><xar:mlstring>Council Approves Cash for Housing</xar:mlstring></td>
+                <td><xar:mlstring>story</xar:mlstring></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td><xar:mlstring>Shaky Housing Plans</xar:mlstring></td>
+                <td><xar:mlstring>story</xar:mlstring></td>
+            </tr>
+        </table>
+    </p>
+    <h4>
+        <xar:mlstring>Create a publication</xar:mlstring>
+    </h4>
+    <p>
+    <xar:mlstring>Once you have configured your categories, you can add a publication type. Go to the create publication page to do so</xar:mlstring>
+    <br />
+    <a href="#xarModURL('newsletter','admin','newpublication')#"><xar:mlstring>Create a publication type</xar:mlstring></a>
+    <h4>
+        <xar:mlstring>Steps to publish your first issue:</xar:mlstring>
+    </h4>
+    <p>
+        <ol>
+            <li><xar:mlstring>Modify the configuration (publisher)</xar:mlstring></li>
+            <xar:mlstring>The admin or publisher should first update the module's
+            configuration within the Newsletter <i>modify configuration</i> before
+            publishing an issue.  If the Newsletter information block has been added,
+            then the <i>Publisher or Company Name</i> and <i>Information</i> fields will
+            be displayed within the information block.  <i>Information</i> should contain
+            a general description about the publications that are available to the subscription
+            base.</xar:mlstring>
+            <li><xar:mlstring>Edit your signature (publisher, editor, writer)</xar:mlstring></li>
+            <xar:mlstring>Add a signature block if you wish to include a signature in each issue.
+             Do not include a user name in your signature block as this will be automatically
+             included in the template.  By default, the signature block will be displayed after
+             your user name.</xar:mlstring>
+            <li><xar:mlstring>Modify the publication templates (publisher)</xar:mlstring></li>
+            <xar:mlstring>Each publication can have it's own HTML and text email template.
+            To create a new template, you will need to copy one of the existing templates and
+            modify the template for the desired appearance.  A README file is included in the
+            templates directory with the necessary information on creating a new template.</xar:mlstring>
+            <xar:mlstring>The default templates are located the directory
+            <i>"modules/newsletter/templates"</i></xar:mlstring>
+            <xar:mlstring>The default templates are:</xar:mlstring>
+            <ul>
+                <li><xar:mlstring>publication-template-html.xd - default HTML template</xar:mlstring></li>
+                <li><xar:mlstring>publication-template-text.xd - default text template</xar:mlstring></li>
+            </ul>
+            <xar:mlstring>Once a new template has been created, assign this template when you create the publication.  When previewing an issue, the HTML publication template will be used to display the issue.</xar:mlstring>
+            <li><xar:mlstring>Select "Publish Issue" from the Newsletter user menu.</xar:mlstring>
+            <xar:mlstring>Either create a new publication or choose a publication that already
+            exists. (publisher)</xar:mlstring></li>
+            <li><xar:mlstring>Create an issue (publisher, editor)</xar:mlstring></li>
+            <li><xar:mlstring>Create stories (publisher, editor, writer)</xar:mlstring></li>
+            <xar:mlstring>You can continue adding stories to the issue until you have finished
+            and are ready to publish the issue.</xar:mlstring>
+            <li><xar:mlstring>Preview the issue (publisher, editor, writer)</xar:mlstring></li>
+            <xar:mlstring>Select an issue to preview.  The publication's HTML template will be
+            used to display the issue.</xar:mlstring>
+            <li><xar:mlstring>Publish the issue (publisher)</xar:mlstring></li>
+            <xar:mlstring>Select an issue to publish.  The issue will be sent to the subscription base.  After an issue has been published, it is viewable to non-registered users from within the Newsletter information block as an archive of past issues.</xar:mlstring>
+        </ol>
+        <xar:mlstring>To publish another issue, repeat steps 4-8. </xar:mlstring>
+    </p>
+    <h4>
+        <xar:mlstring>Subscriptions</xar:mlstring>
+    </h4>
+    <p>
+        <xar:mlstring>Normally, a user cannot subscribe to a publication unless they are a
+        registered user on your site.  If the Newsletter information block has been added,
+        then a registered user will be able to subscribe to a publication and modify their
+        subscriptions.</xar:mlstring>
+    </p>
+    <p>
+        <xar:mlstring>If you wish to add a subscription that is not a registered user,
+        then you can add a subscription from the <i>add subscription</i> menu.  You will
+        need to provide a user name and email address.  This provides an alternative way
+        of adding subscriptions to a publication for users that are not registered.</xar:mlstring>
+    </p>
+    <h4>
+        <xar:mlstring>Newsletter Main Menu</xar:mlstring>
+    </h4>
+    <p>
+        <xar:mlstring>From the main menu, you have the following choices based on your
+        privileges:</xar:mlstring>
+        <ul>
+            <li><xar:mlstring>Publish Issue - Create a new issue for publication</xar:mlstring></li>
             <li><xar:mlstring>Edit Issues - Edit your publications, issues, stories, disclaimers and signature block.</xar:mlstring></li>
             <li><xar:mlstring>Edit Subscriptions - Search, add and edit subscriptions of a publication.</xar:mlstring></li>
             <li><xar:mlstring>Modify Config - Administrative menu to modify the module configuration.</xar:mlstring></li>
         </ul>
      </p>
      <h3>
-     	<xar:mlstring>Content Fields</xar:mlstring>
+        <xar:mlstring>Content Fields</xar:mlstring>
      </h3>
      <p>
      <h4>
-     	<xar:mlstring>Publication</xar:mlstring>
+        <xar:mlstring>Publication</xar:mlstring>
      </h4>
      </p>
      <p>

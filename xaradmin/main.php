@@ -34,5 +34,4 @@ function newsletter_admin_main()
     // Return the template variables defined in this function
     return $data;
 }
-
 ?>

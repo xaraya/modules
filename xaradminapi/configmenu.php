@@ -55,6 +55,13 @@ function newsletter_adminapi_configmenu()
 
         $menulinks[] = Array('url'   => xarModURL('newsletter',
                                                   'admin',
+                                                  'newpublication'),
+                              'page'  => 'newpublication',
+                              'title' => xarML('Create a Newsletter Publication'),
+                              'label' => xarML('Create Newsletter'));
+
+        $menulinks[] = Array('url'   => xarModURL('newsletter',
+                                                  'admin',
                                                   'modifynewsletter'),
                               'page'  => 'modifynewsletter',
                               'title' => xarML('Modify the configuration for a newsletter'),
