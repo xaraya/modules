@@ -19,6 +19,7 @@
 
 function foo_userapi_getmenulinks()
 {
+    $menulinks = array();
 
     if (xarSecurityCheck('ViewFoo',0)) {
         $menulinks[] = array('url'   => xarModURL('foo',
@@ -28,9 +29,6 @@ function foo_userapi_getmenulinks()
                               'label' => xarML(''));
     }
 
-    if (empty($menulinks)){
-        $menulinks = '';
-    }
     return $menulinks;
 }
 

@@ -46,11 +46,8 @@
                     <input type="text" name="itemsperpage" id="itemsperpage" value="#xarModGetVar('foo','itemsperpage')#" maxlength="3" class="xar-form-textshort" />
                 </div>
                 <div class="xar-form-input-wrapper-after">
-                    <xar:if condition="xarModGetVar('foo', 'supportshorturls')">
-                        <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
-                        <xar:else />
-                        <input type="checkbox" name="shorturls" id="shorturls" value="1" />
-                    </xar:if>
+                    <xar:set name="checked">xarModGetVar('foo','SupportShortURLs')</xar:set>
+                    <xar:data-input type="checkbox" name="shorturls" id="shorturls" checked="$checked" />
                     <label for="shorturls" title="#xarML('Enable short URLs for Foo module')#">
                         <xar:mlstring>
                             Enable Short URLs
