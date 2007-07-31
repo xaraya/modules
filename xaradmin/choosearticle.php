@@ -46,8 +46,8 @@ function newsletter_admin_choosearticle()
     xarVarFetch('status', 'int:0:', $vars['status'], NULL, XARVAR_NOT_REQUIRED);
     xarVarFetch('articleid', 'int', $vars['articleid'], NULL, XARVAR_NOT_REQUIRED);
     xarVarFetch('id', 'id', $data['id'], NULL, XARVAR_NOT_REQUIRED);
-
-    xarVarFetch('notNew', 'string', $data['notNew'], NULL, XARVAR_NOT_REQUIRED);
+    //MichelV: string -> str::
+    xarVarFetch('notNew', 'str::', $data['notNew'], NULL, XARVAR_NOT_REQUIRED);
 
     $data['canUseArticles']=true;
 
@@ -140,7 +140,7 @@ function newsletter_admin_choosearticle()
     $data['pubtypeid'] =$vars['pubtypeid'];
 
     // Generate a one-time authorisation code for this operation
-//    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSecGenAuthKey();
 
     echo xarTplModule('newsletter','admin','choosearticle', $data,NULL);
     exit();
