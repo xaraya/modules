@@ -16,24 +16,20 @@
             <xar:set name="description">$node->description</xar:set>
             <xar:set name="level">$node->getLevel()</xar:set>
             <xar:if condition="$class == 'xar-accent'">
-                <xar:set name="class">"xar-normal"</xar:set>
+                <xar:set name="class">"xar-norm"</xar:set>
             <xar:else />
                 <xar:set name="class">"xar-accent"</xar:set>
             </xar:if>
-            <tr>
-                <td class="#$class#" style="text-align: left; margin-left: 5px">
-                <!--
-                    <xar:set name="subdata">array('map' => $map)</xar:set>
-                    <xar:template file="connectors" subdata="$subdata" />
-                     -->
+            <tr class="#$class#">
+                <td style="text-align: left; margin-left: 5px">
                     <xar:for start="$i = 1" test="$i le $level" iter="$i++">
                         <img src="#xarTplGetImage('blank.png','categories')#" />
                     </xar:for>
                    #$name#
                 </td>
-                <td class="#$class#" style="text-align: left; margin-left: 5px;">#$description#</td>
-                <td class="#$class#"><xar:if condition="empty($image)">&#160;<xar:else />#$image#</xar:if></td>
-                <td class="#$class#" style="text-align: center;">
+                <td style="text-align: left; margin-left: 5px;">#$description#</td>
+                <td><xar:if condition="empty($image)">&#160;<xar:else />#$image#</xar:if></td>
+                <td style="text-align: center;">
                     <a href="#xarModURL('categories', 'admin', 'modifycat', array('cid' => $cid))#">
                         <xar:mlstring>Modify</xar:mlstring>
                     </a>

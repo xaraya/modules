@@ -30,7 +30,6 @@ function categories_admin_viewcats()
     }
 
     if (!$useJSdisplay) {
-
         $data['options'] = $categories;
         return xarTplModule('categories','admin','viewcats-render',$data);
 

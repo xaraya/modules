@@ -44,7 +44,6 @@ class CategoryPickerProperty extends DataProperty
         if (!xarVarFetch($name . '_categories_basecatitemtype', 'array', $baseitemtype, array(), XARVAR_DONT_REUSE)) return;
         if (!xarVarFetch($name . '_categorypicker_localmodule', 'str', $localmodule, xarModGetName(), XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch($name . '_categorypicker_localitemtype', 'int', $localitemtype, 0, XARVAR_NOT_REQUIRED)) return;
-        $info = xarMod::getBaseInfo($localmodule);
 
         xarMod::loadDbInfo('categories');
         $xartable = xarDB::getTables();
@@ -162,13 +161,6 @@ class CategoryPickerProperty extends DataProperty
         }
         unset($item);
 
-        if(xarSecurityCheck('AddCategories',0)) {
-            $newcat = xarML('new');
-        } else {
-            $newcat = '';
-        }
-
-        $data['newcat'] = $newcat;
         $data['items'] = $items;
         $data['module'] = 'categories';
 

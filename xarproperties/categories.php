@@ -188,6 +188,11 @@ class CategoriesProperty extends SelectProperty
             // right now works for 1 basecat
             $data['basecids'] = $this->baselist;
         }
+
+        // sort the base categories
+        // TODO: make the sorting changeable
+        if (is_array($data['basecids'])) sort($data['basecids']);
+
         $filter = array(
             'getchildren' => true,
             'maxdepth' => isset($data['maxdepth'])?$data['maxdepth']:null,
@@ -230,21 +235,22 @@ class CategoriesProperty extends SelectProperty
         } elseif (isset($this->_itemid)) {
             $data['categories_itemid'] = $this->_itemid;
         } else {
-            $data['categories_itemid'] = 0;
+            $data['categories_itemid'] = null;
         }
 
         if (empty($data['value'])) {
             if (empty($this->value)) {
-                $links = xarModAPIFunc('categories', 'user', 'getlinks',
-                                       array('iids' => array($data['categories_itemid']),
+
+                $links = xarModAPIFunc('categories', 'user', 'getlinkage',
+                                       array('itemid' => $data['categories_itemid'],
                                              'itemtype' => $data['categories_localitemtype'],
-                                             'modid' => xarMod::getID($data['categories_localmodule']),
-                                             'reverse' => 0));
-                if (!empty($links) && is_array($links) && count($links) > 0) {
-                    $data['value'] = array_keys($links);
-                } else {
-                    $data['value'] = array();
-                }
+                                             'module' => $data['categories_localmodule'],
+                                          	));
+				$catlink = array();
+				foreach ($links as $link) $catlink[$link['basecategory']] = $link['category_id'];
+				$data['value'] = array();
+	            foreach ($data['basecids'] as $basecid)
+					$data['value'][] = isset($catlink[$basecid]) ? $catlink[$basecid]: 0;
             } else {
                 if (!is_array($this->value)) $this->value = array($this->value);
                 $data['value'] = $this->value;
