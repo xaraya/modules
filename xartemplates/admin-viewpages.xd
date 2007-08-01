@@ -5,6 +5,35 @@
 <div class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
     <h2><xar:mlstring>View Pages</xar:mlstring></h2>
+
+    <xar:set name="root_pages">#xarModAPIfunc('xarpages', 'user', 'getpages', array('parent'=&gt;0))#</xar:set>
+    <xar:if condition="!empty($root_pages)">
+        <xar:set name="method">'get'</xar:set>
+        <form method="#$get#" action="#xarModURL('xarpages','admin','viewpages')#">
+            <div>
+                <xar:if condition="$method eq 'get'">
+                    <input name="module" type="hidden" value="xarpages" />
+                    <input name="type" type="hidden" value="admin" />
+                    <input name="func" type="hidden" value="viewpages" />
+                </xar:if>
+
+                <label for="contains"><xar:mlstring>Select tree:</xar:mlstring></label>
+
+                <select name="contains" id="contains">
+                    <option value="0"><xar:mlstring>-- All --</xar:mlstring></option>
+                    <xar:loop name="$root_pages">
+                        <xar:if condition="$loop:item.pid eq $contains">
+                            <option value="#$loop:item.pid#" selected="selected">[#$loop:item.pid#] #xarVarPrepForDisplay($loop:item.name)# (#xarVarPrepForDisplay($loop:item.pagetype.name)#)</option>
+                        <xar:else />
+                            <option value="#$loop:item.pid#">[#$loop:item.pid#] #xarVarPrepForDisplay($loop:item.name)# (#xarVarPrepForDisplay($loop:item.pagetype.name)#)</option>
+                        </xar:if>
+                    </xar:loop>
+                </select>
+                <input type="submit" value="#xarML('Refresh')#" />
+            </div>
+        </form>
+    </xar:if>
+
     <xar:if condition="empty($pages)">
          <xar:mlstring>NO PAGES DEFINED</xar:mlstring>
     <xar:else />

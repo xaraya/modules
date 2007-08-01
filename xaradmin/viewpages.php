@@ -22,17 +22,22 @@ function xarpages_admin_viewpages()
         return false;
     }
 
+    // Accept a parameter to allow selection of a single tree.
+    xarVarFetch('contains', 'id', $contains, 0, XARVAR_NOT_REQUIRED);
+
     $data = xarModAPIFunc(
         'xarpages', 'user', 'getpagestree',
-        array('key' => 'index', 'dd_flag' => false)
+        array('key' => 'index', 'dd_flag' => false, 'tree_contains_pid' => $contains)
     );
 
     if (empty($data['pages'])) {
         // TODO: pass to template.
-        return $data;//xarML('NO PAGES DEFINED');
+        return $data; //xarML('NO PAGES DEFINED');
     } else {
         $data['pages'] = xarModAPIfunc('xarpages', 'tree', 'array_maptree', $data['pages']);
     }
+
+    $data['contains'] = $contains;
 
     // Check modify and delete privileges on each page.
     // ModeratePage - allows overview
