@@ -1,5 +1,7 @@
 <?php
 
+// See xarpages/xardocs/news.txt for further details
+
 function xarpages_funcapi_news($args)
 {
     // The articles publication type is required, and is selected by the page.
@@ -56,6 +58,17 @@ function xarpages_funcapi_news($args)
         $q_array = explode(' ', $q);
     }
 
+
+    // Transform hook details.
+    // Start with some defaults, and allow an override.
+
+    // Transform hook fields on summaries.
+    $transform_fields_summary = array('summary', 'body', 'notes');
+
+    // Transform hook fields on details.
+    $transform_fields_detail = array('summary', 'body', 'notes');
+
+    
     // TODO: allow override using a parameter.
     // General sort methods will be what articles supports (practically just date and title)
     $sort = $settings['defaultsort'];
@@ -70,6 +83,11 @@ function xarpages_funcapi_news($args)
     if (!empty($cid)) $url_params['cid'] = $cid;
     if (!empty($cids)) $url_params['cids'] = $cids;
     if (!empty($aid)) $url_params['aid'] = $aid;
+
+    // This flag is set, and passed into the template, if the user is doing any
+    // kind of searching, i.e. is not on the first page, is selecting a category
+    // or search terms etc.
+    $searching_flag = (empty($url_params) ? false : true);
 
     // Put all the category ids into the cids array.
     if (!empty($cid) && !in_array($cid, $cids)) array_push($cids, $cid);
@@ -159,89 +177,101 @@ function xarpages_funcapi_news($args)
 
         // Do transform hooks.
         // TODO: transform some dynamic data fields too? Make configurable.
-        $article['transform'] = array();
-        $article['transform'][] = 'summary';
-        $article['transform'][] = 'body';
-        $article['transform'][] = 'notes';
-        $article['itemtype'] = $article['pubtypeid'];
-        $article['itemid'] = $article['aid'];
-        $article = xarModCallHooks('item', 'transform', $article['aid'], $article, 'articles');
+        // If the article does not exist, then skip this section.
+        if (!empty($article)) {
+            // Only do the transform if there are some fields we want to transform.
+            if (!empty($transform_fields_detail)) {
+                $article['transform'] = $transform_fields_detail;
+                $article['itemtype'] = $article['pubtypeid'];
+                $article['itemid'] = $article['aid'];
+                $article = xarModCallHooks('item', 'transform', $article['aid'], $article, 'articles');
+            }
 
-        // If the article is in the list of articles, then we can provide links
-        // to next/previous and other articles.
-        $i = 0;
-        foreach($articles as $item) {
-            if ($item['aid'] == $aid) {
-                // This is the one.
-                // Easiest way is to fetch three articles and get their IDs.
+            // If the article is in the list of articles, then we can provide links
+            // to next/previous and other articles.
+            $i = 0;
+            foreach($articles as $item) {
+                if ($item['aid'] == $aid) {
+                    // This is the one.
+                    // Easiest way is to fetch three articles and get their IDs.
 
-                // Determine this article ID in the complete list.
-                $article_number = $startnum + $i;
+                    // Determine this article ID in the complete list.
+                    $article_number = $startnum + $i;
 
-                $range_article_select = $article_select;
+                    $range_article_select = $article_select;
 
-                // We could be right at the start, or part way through, or right at the end.
-                if ($article_number == 1) {
-                    // We are right at the start, so only fetch the next item.
-                    $range_article_select['startnum'] = 1;
-                    $range_article_select['numitems'] = 2;
-                } else {
-                    // Not at the start, so fetch previous/current/next items
-                    $range_article_select['startnum'] = $article_number - 1;
-                    $range_article_select['numitems'] = 3;
-                }
-                // Fetch the range of articles either side of the current article.
-                $range_articles = xarModAPIFunc('articles', 'user', 'getall', $range_article_select);
-
-                // Only one article available.
-                if (count($range_articles) <= 1) {
-                    // No next or previous.
-                    $next_article = array();
-                    $next_url = '';
-                    $prev_article = array();
-                    $prev_url = '';
-                } elseif (count($range_articles) == 2) {
+                    // We could be right at the start, or part way through, or right at the end.
                     if ($article_number == 1) {
-                        // No previous (next only)
-                        $next_startnum = $startnum;
-                        if (($i + 1) == $numitems) $next_startnum = $startnum + $numitems;
-                        $next_article = array_pop($range_articles);
-                        $next_url = xarServerGetCurrentURL(array('aid'=>$next_article['aid'], 'startnum' => $next_startnum));
-                        $prev_article = array();
-                        $prev_url = '';
+                        // We are right at the start, so only fetch the next item.
+                        $range_article_select['startnum'] = 1;
+                        $range_article_select['numitems'] = 2;
                     } else {
-                        // No next (previous only)
+                        // Not at the start, so fetch previous/current/next items
+                        $range_article_select['startnum'] = $article_number - 1;
+                        $range_article_select['numitems'] = 3;
+                    }
+                    // Fetch the range of articles either side of the current article.
+                    $range_articles = xarModAPIFunc('articles', 'user', 'getall', $range_article_select);
+
+                    // Only one article available.
+                    if (count($range_articles) <= 1) {
+                        // No next or previous.
                         $next_article = array();
                         $next_url = '';
+                        $prev_article = array();
+                        $prev_url = '';
+                    } elseif (count($range_articles) == 2) {
+                        if ($article_number == 1) {
+                            // No previous (next only)
+                            $next_startnum = $startnum;
+                            if (($i + 1) == $numitems) $next_startnum = $startnum + $numitems;
+                            $next_article = array_pop($range_articles);
+                            $next_url = xarServerGetCurrentURL(array('aid'=>$next_article['aid'], 'startnum' => $next_startnum));
+                            $prev_article = array();
+                            $prev_url = '';
+                        } else {
+                            // No next (previous only)
+                            $next_article = array();
+                            $next_url = '';
+                            $prev_startnum = $startnum;
+                            if ($i == 0) $prev_startnum = $startnum - $numitems;
+                            $prev_article = array_shift($range_articles);
+                            $prev_url = xarServerGetCurrentURL(array('aid'=>$prev_article['aid'], 'startnum' => $prev_startnum));
+                        }
+                    } elseif (count($range_articles) >= 3) {
+                        // Both next and previous
+                        $next_startnum = $startnum;
                         $prev_startnum = $startnum;
+                        if (($i + 1) == $numitems) $next_startnum = $startnum + $numitems;
                         if ($i == 0) $prev_startnum = $startnum - $numitems;
+                        $next_article = array_pop($range_articles);
+                        $next_url = xarServerGetCurrentURL(array('aid'=>$next_article['aid'], 'startnum' => $next_startnum));
                         $prev_article = array_shift($range_articles);
                         $prev_url = xarServerGetCurrentURL(array('aid'=>$prev_article['aid'], 'startnum' => $prev_startnum));
                     }
-                } elseif (count($range_articles) >= 3) {
-                    // Both next and previous
-                    $next_startnum = $startnum;
-                    $prev_startnum = $startnum;
-                    if (($i + 1) == $numitems) $next_startnum = $startnum + $numitems;
-                    if ($i == 0) $prev_startnum = $startnum - $numitems;
-                    $next_article = array_pop($range_articles);
-                    $next_url = xarServerGetCurrentURL(array('aid'=>$next_article['aid'], 'startnum' => $next_startnum));
-                    $prev_article = array_shift($range_articles);
-                    $prev_url = xarServerGetCurrentURL(array('aid'=>$prev_article['aid'], 'startnum' => $prev_startnum));
+
+                    $article['next_article'] = $next_article;
+                    $article['next_url'] = $next_url;
+                    $article['prev_article'] = $prev_article;
+                    $article['prev_url'] = $prev_url;
+
+                    break;
                 }
-
-                $article['next_article'] = $next_article;
-                $article['next_url'] = $next_url;
-                $article['prev_article'] = $prev_article;
-                $article['prev_url'] = $prev_url;
-
-                break;
+                $i += 1;
             }
-            $i += 1;
         }
     } else {
         // Summary listing.
-        // TODO: apply required transform hooks to summaries.
+        // Apply required transform hooks to summaries.
+        // Only do the transform if there are some fields we want to transform.
+        if (!empty($transform_fields_summary)) {
+            foreach($articles as $t_key => $t_article) {
+                $t_article['transform'] = $transform_fields_summary;
+                $t_article['itemtype'] = $article['pubtypeid'];
+                $t_article['itemid'] = $article['aid'];
+                $articles[$t_key] = xarModCallHooks('item', 'transform', $t_article['aid'], $t_article, 'articles');
+            }
+        }
     }
 
     // TODO: an archive by date - do the summaries here, but only if requested (by parameter or page flag)
@@ -258,9 +288,18 @@ function xarpages_funcapi_news($args)
         'url_params' => $url_params,
         'pager' => $pager,
         'search_count' => $search_count,
+        'searching_flag' => $searching_flag,
+        'aid' => $aid,
     );
 
     return $args;
+}
+
+// Get counts of articles for each year and month to enable
+// and arthive menu to be provided.
+
+function xarpages_funcapi_news_archive($args)
+{
 }
 
 ?>
