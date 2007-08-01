@@ -93,7 +93,7 @@ function comments_user_display($args)
 
 
     $package['settings'] = xarModAPIFunc('comments','user','getoptions',$header);
-
+    $package['settings']['max_depth'] = _COM_MAX_DEPTH;
     // FIXME: clean up return url handling
 
     $settings_uri = "&amp;depth={$package['settings']['depth']}"
@@ -135,8 +135,10 @@ function comments_user_display($args)
     }
 
 
+    $header = array_merge($header,$package['settings']);
     if (!isset($header['selected_cid']) || isset($thread)) {
         $package['comments'] = xarModAPIFunc('comments','user','get_multiple',$header);
+
         if (count($package['comments']) > 1) {
             $package['comments'] = comments_renderer_array_sort(
                 $package['comments'],
@@ -185,7 +187,6 @@ function comments_user_display($args)
 
     $header['input-title']            = xarML('Post a new comment');
 
-    $package['settings']['max_depth'] = _COM_MAX_DEPTH;
     $package['uid']                   = xarUserGetVar('uid');
     $package['uname']                 = xarUserGetVar('uname');
     $package['name']                  = xarUserGetVar('name');

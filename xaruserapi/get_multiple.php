@@ -24,9 +24,11 @@
  * @param integer    $modid     the id of the module that these nodes belong to
  * @param integer    $itemtype  the item type that these nodes belong to
  * @param integer    $objectid  (optional) the id of the item that these nodes belong to
- * @param integer    $cid       (optional) the id of a comment
+ * @param integer    $cid       (optional) the id of node to query (defaults to a root node)
  * @param integer    $status    (optional) only pull comments with this status
  * @param integer    $author    (optional) only pull comments by this author
+ * @param bool       $onlydepth (optional) only get comments at this depth
+ * @param integer    $depth     (optional) only get comments down to this depth
  * @param boolean    $reverse   (optional) reverse sort order from the database
  * @returns array     an array of comments or an empty array if no comments
  *                   found for the particular modid/objectid pair, or raise an
@@ -45,6 +47,9 @@ function comments_userapi_get_multiple($args)
         return false;
     }
 
+    if (!isset($itemtype)) {
+        $itemtype = 0;
+    }
     if ( (!isset($objectid) || empty($objectid)) && !isset($author) ) {
         $msg = xarML('Invalid #(1) [#(2)] for #(3) function #(4)() in module #(5)',
                                  'objectid', $objectid, 'userapi', 'get_multiple', 'comments');
@@ -57,12 +62,11 @@ function comments_userapi_get_multiple($args)
     }
 
     if (!isset($cid) || !is_numeric($cid)) {
-        $cid = 0;
-    } else {
-        $nodelr = xarModAPIFunc('comments',
-                                'user',
-                                'get_node_lrvalues',
-                                 array('cid' => $cid));
+        $root = xarModAPIFunc('comments', 'user','get_node_root',
+                       array('modid' => $modid,
+                             'itemtype' => $itemtype,
+                             'objectid' => $objectid));
+        $cid = $root['xar_cid'];
     }
 
     // Optional argument for Pager -
@@ -87,10 +91,40 @@ function comments_userapi_get_multiple($args)
 
     // Get the field names and LEFT JOIN ... ON ... parts from users
     $usersdef = xarModAPIFunc('roles','user','leftjoin');
+
+    $sql = "SELECT node.xar_cid,
+                   node.xar_title,
+                   node.xar_date,
+                   node.xar_hostname,
+                   node.xar_text,
+                   $usersdef[name] AS xar_author,
+                   node.xar_author AS xar_uid,
+                   node.xar_pid,
+                   node.xar_status,
+                   node.xar_left,
+                   node.xar_right,
+                   node.xar_anonpost AS xar_postanon,
+                   (COUNT(parent.xar_cid) - 1) AS depth
+            FROM $xartable[comments] AS top
+            JOIN $xartable[comments] AS node ON node.xar_left BETWEEN top.xar_left AND top.xar_right
+            AND top.xar_modid = node.xar_modid
+            AND top.xar_itemtype = node.xar_itemtype
+            AND top.xar_objectid = node.xar_objectid
+            AND top.xar_cid = ?
+            JOIN $xartable[comments] AS parent
+            ON node.xar_left BETWEEN parent.xar_left AND parent.xar_right
+            AND parent.xar_modid = node.xar_modid
+            AND parent.xar_itemtype = node.xar_itemtype
+            AND parent.xar_objectid = node.xar_objectid
+            AND node.xar_pid != 0
+            AND node.xar_status = ?
+            LEFT JOIN $usersdef[table] ON  $usersdef[field] = node.xar_author
+            GROUP BY node.xar_cid";
     // if the depth is zero then we
     // only want one comment
+    /*
     $sql = "SELECT  $ctable[title] AS xar_title,
-                    $ctable[cdate] AS xar_datetime,
+                    $ctable[cdate] AS xar_date,
                     $ctable[hostname] AS xar_hostname,
                     $ctable[comment] AS xar_text,
                     $usersdef[name] AS xar_author,
@@ -106,42 +140,36 @@ function comments_userapi_get_multiple($args)
              WHERE  $ctable[modid]=?
                AND  $ctable[status]=?";
     $bindvars = array();
-    $bindvars[] = (int) $modid;
+    */
+
+    $bindvars[] = (int) $cid;
     $bindvars[] = (int) $status;
 
-    if (isset($itemtype) && is_numeric($itemtype)) {
-        $sql .= " AND $ctable[itemtype]=?";
-        $bindvars[] = (int) $itemtype;
-    }
-
-    if (isset($objectid) && !empty($objectid)) {
-        $sql .= " AND $ctable[objectid]=?";
-        $bindvars[] = (string) $objectid; // yes, this is a string in the table
-    }
 
     if (isset($author) && $author > 0) {
         $sql .= " AND $ctable[author] = ?";
         $bindvars[] = (int) $author;
     }
 
-    if ($cid > 0) {
-        $sql .= " AND ($ctable[left] >= ?";
-        $sql .= " AND  $ctable[right] <= ?)";
-        $bindvars[] = (int) $nodelr['xar_left'];
-        $bindvars[] = (int) $nodelr['xar_right'];
+    if (isset($depth)) {
+        if (isset($onlydepth) && $onlydepth) {
+            $sql .= " HAVING depth = ?";
+        } else {
+            $sql .= " HAVING depth <= ?";
+        }
+        $bindvars[] = $depth;
     }
-
     if (!empty($reverse)) {
-        $sql .= " ORDER BY $ctable[right] DESC";
+        $sql .= " ORDER BY node.xar_right DESC";
     } else {
-        $sql .= " ORDER BY $ctable[left]";
+        $sql .= " ORDER BY node.xar_left";
     }
 
-// cfr. xarcachemanager - this approach might change later
+    // cfr. xarcachemanager - this approach might change later
     $expire = xarModGetVar('comments','cache.userapi.get_multiple');
 
     //Add select limit for modules that call this function and need Pager
-    if (isset($numitems) && is_numeric($numitems)) {
+    if (isset($numitems)) {
         if (!empty($expire)){
             $result =& $dbconn->CacheSelectLimit($expire, $sql, $numitems, $startnum-1,$bindvars);
         } else {
@@ -154,6 +182,7 @@ function comments_userapi_get_multiple($args)
             $result =& $dbconn->Execute($query,$bindvars);
         }
     }
+
     if (!$result) return;
 
     // if we have nothing to return
@@ -172,7 +201,7 @@ function comments_userapi_get_multiple($args)
     // add it to the array we will return
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
-        $row['xar_date'] = $row['xar_datetime'];
+        // @todo either put this in a template, or make it conditional via parameter (modvar isn't enough)
         comments_renderer_wrap_words($row['xar_text'],80);
         $commentlist[] = $row;
         $result->MoveNext();
@@ -187,5 +216,4 @@ function comments_userapi_get_multiple($args)
 
     return $commentlist;
 }
-
 ?>
