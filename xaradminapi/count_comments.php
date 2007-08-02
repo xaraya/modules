@@ -50,7 +50,7 @@ function comments_adminapi_count_comments( $args )
                     return;
                 }
 
-                $where_type = "$ctable[objectid] = '$objectid' AND ";
+                $where_type .= "$ctable[objectid] = '$objectid' AND ";
 
                 // Allow the switch to fall through if type == object because
                 // we need modid for object in addition to objectid
@@ -71,8 +71,6 @@ function comments_adminapi_count_comments( $args )
                 break;
 
             default:
-            case 'all':
-                $where_type = "1";
         }
     }
     if (empty($status) || !eregi('^(all|inactive|active)$',$status)) {
@@ -87,14 +85,11 @@ function comments_adminapi_count_comments( $args )
             case 'inactive':
                 $where_status = "$ctable[status] = ". _COM_STATUS_OFF;
                 break;
-            default:
-            case 'active':
-                $where_status = "$ctable[status] != ". _COM_STATUS_ROOT_NODE;
         }
     }
     $query = "SELECT COUNT($ctable[cid])
                 FROM $xartable[comments]
-               WHERE $where_type
+               WHERE xar_pid !=0 $where_type AND
                  AND $where_status";
     $result =& $dbconn->Execute($query);
     if (!$result)

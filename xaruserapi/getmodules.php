@@ -3,11 +3,11 @@
  * Comments module - Allows users to post comments on items
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Comments Module
+ * @subpackage comments
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
@@ -22,10 +22,8 @@
  */
 function comments_userapi_getmodules($args)
 {
-    // Get arguments from argument array
     extract($args);
 
-    // Security check
     if (!xarSecurityCheck('Comments-Read')) return;
 
     if (empty($status)) {
@@ -48,7 +46,7 @@ function comments_userapi_getmodules($args)
             break;
         default:
         case 'all':
-            $where_status = "$ctable[status] != ". _COM_STATUS_ROOT_NODE;
+            $where_status = 1;
     }
     if (!empty($modid)) {
         $where_mod = " AND $ctable[modid] = $modid";
@@ -62,7 +60,7 @@ function comments_userapi_getmodules($args)
     // Get items
     $sql = "SELECT $ctable[modid], $ctable[itemtype], COUNT(*), COUNT(DISTINCT $ctable[objectid])
             FROM $commentstable
-            WHERE $where_status $where_mod
+            WHERE xar_pid !=0 AND $where_status $where_mod
             GROUP BY $ctable[modid], $ctable[itemtype]";
 
     $result = $dbconn->Execute($sql);

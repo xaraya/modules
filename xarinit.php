@@ -193,7 +193,7 @@ function comments_init()
 
     $query3 = "SELECT DISTINCT $cctable[cid]
                           FROM $ctable
-                         WHERE $cctable[status] != '"._COM_STATUS_ROOT_NODE."'";
+                         WHERE $cctable[pid] != '0'";
     $instances = array(
                         array('header' => 'Module ID:',
                                 'query' => $query1,
