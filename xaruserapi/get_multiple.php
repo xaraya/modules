@@ -159,7 +159,7 @@ function comments_userapi_get_multiple($args)
         }
         $bindvars[] = $depth;
     }
-    if (!empty($reverse)) {
+    if (!isset($order) || $order == _COM_SORT_DESC) {
         $sql .= " ORDER BY node.xar_right DESC";
     } else {
         $sql .= " ORDER BY node.xar_left";
