@@ -37,13 +37,25 @@
             if (isset($args['parent_id'])) $this->parentindices[$args['id']] = $id;
 
             // do the Celko dance and update all the left/right values
-            return xarModAPIFunc('categories','admin','updatecelkolinks',array('cid' => $id));
+            return xarModAPIFunc('categories','admin','updatecelkolinks',array('cid' => $id, 'type' => 'create'));
         }
 
         function updateItem(Array $args = array())
         {
+            $id = isset($args['itemid']) ? $args['itemid'] : $this->itemid;
+            $this->getItem(array('itemid' => $id));
+            $old_parentid = $this->properties['cat_parent']->value;
             $id = parent::updateItem($args);
-            return xarModAPIFunc('categories','admin','updatecelkolinks',array('cid' => $id));
+
+            list($isvalid,$new_parentid) = $this->properties['cat_parent']->fetchValue();
+            // CHECKME: do we need to bail if isvalid not true?
+
+            // only update Celko if the parent has changed
+            if (($old_parentid - $new_parentid) != 0) {
+				return xarModAPIFunc('categories','admin','updatecelkolinks',array('cid' => $id));
+            } else {
+				return true;
+            }
         }
     }
 ?>
