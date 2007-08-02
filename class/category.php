@@ -45,6 +45,7 @@
             $id = isset($args['itemid']) ? $args['itemid'] : $this->itemid;
             $this->getItem(array('itemid' => $id));
             $old_parentid = $this->properties['cat_parent']->value;
+		    $isvalid = $this->checkInput();
             $id = parent::updateItem($args);
 
             list($isvalid,$new_parentid) = $this->properties['cat_parent']->fetchValue();
