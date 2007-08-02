@@ -3,11 +3,11 @@
  * Comments module - Allows users to post comments on items
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Comments Module
+ * @subpackage comments
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
@@ -36,15 +36,14 @@ function comments_userapi_get_childcountlist($args)
     $xartable =& xarDBGetTables();
     $ctable = &$xartable['comments_column'];
 
-    $bind = array((int)$left, (int)$right, _COM_STATUS_ON, (int)$modid, (int)$objectid, (int)$itemtype);
+    $bind = array((int)$modid, (int)$objectid, (int)$itemtype, (int)$modid, (int)$objectid, (int)$itemtype, (int)$left, (int)$right, _COM_STATUS_ON);
 
     $sql = "SELECT P1.xar_cid, COUNT(P2.xar_cid) AS numitems"
-        . " FROM $xartable[comments] AS P1, $xartable[comments] AS P2"
+        . " FROM (SELECT * FROM $xartable[comments] WHERE xar_modid = ? AND xar_objectid = ? AND xar_itemtype = ?) AS P1, (SELECT * FROM $xartable[comments] WHERE xar_modid = ? AND xar_objectid = ? AND xar_itemtype = ?) AS P2"
         . " WHERE P1.xar_modid = P2.xar_modid AND P1.xar_itemtype = P2.xar_itemtype AND P1.xar_objectid = P2.xar_objectid"
         . " AND P2.xar_left >= P1.xar_left AND P2.xar_left <= P1.xar_right"
         . " AND P1.xar_left >= ? AND P1.xar_right <= ?"
         . " AND P2.xar_status = ?"
-        . " AND P1.xar_modid = ? AND P1.xar_objectid = ? AND P1.xar_itemtype = ?"
         . " GROUP BY P1.xar_cid";
 
     $result =& $dbconn->Execute($sql, $bind);
@@ -63,5 +62,4 @@ function comments_userapi_get_childcountlist($args)
 
     return $count;
 }
-
 ?>
