@@ -3,11 +3,11 @@
  * Comments module - Allows users to post comments on items
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Comments Module
+ * @subpackage comments
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
@@ -21,8 +21,7 @@
  * @param $args['status'] optional status to count: ALL (minus root nodes), ACTIVE, INACTIVE
  * @param $args['numitems'] optional number of items to return
  * @param $args['startnum'] optional start at this number (1-based)
- * @returns array
- * @return $array[$itemid] = $numcomments;
+ * @return array $array[$itemid] = $numcomments;
  */
 function comments_userapi_getitems($args)
 {
@@ -57,7 +56,6 @@ function comments_userapi_getitems($args)
     }
     $status = strtolower($status);
 
-    // Security check
     if (!isset($mask)){
         $mask = 'Comments-Read';
     }
@@ -77,8 +75,6 @@ function comments_userapi_getitems($args)
             $where_status = "$ctable[status] = ". _COM_STATUS_OFF;
             break;
         default:
-        case 'all':
-            $where_status = "$ctable[status] != ". _COM_STATUS_ROOT_NODE;
     }
 
     // Get items
@@ -87,7 +83,7 @@ function comments_userapi_getitems($args)
                 FROM $commentstable
                WHERE $ctable[modid] = ?
                  AND $ctable[itemtype] = ?
-                 AND $where_status ";
+                 AND xar_pid != 0 AND $where_status ";
     $bindvars[] = (int) $modid; $bindvars[] = (int) $itemtype;
     if (isset($itemids) && count($itemids) > 0) {
         $bindmarkers = '?' . str_repeat(',?', count($itemids)-1);

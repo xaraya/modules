@@ -44,6 +44,7 @@ function comments_userapi_get_childcountlist($args)
         . " AND P2.xar_left >= P1.xar_left AND P2.xar_left <= P1.xar_right"
         . " AND P1.xar_left >= ? AND P1.xar_right <= ?"
         . " AND P2.xar_status = ?"
+        . " AND P2.xar_pid != 0"
         . " GROUP BY P1.xar_cid";
 
     $result =& $dbconn->Execute($sql, $bind);

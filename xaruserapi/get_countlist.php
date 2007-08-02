@@ -59,6 +59,7 @@ function comments_userapi_get_countlist($args)
               FROM  $xartable[comments]
              WHERE  $ctable[modid]=$modid
                AND  $ctable[objectid] IN ('" . join("', '",$objectids) . "')
+               AND  xar_pid != 0
                AND  $ctable[status]="._COM_STATUS_ON;
 
     if (isset($itemtype) && is_numeric($itemtype)) {
@@ -68,7 +69,7 @@ function comments_userapi_get_countlist($args)
     if (!empty($startdate) && is_numeric($startdate)) {
         $sql .= " AND $ctable[cdate]>=$startdate";
     }
- 
+
     $sql .= " GROUP BY  $ctable[objectid]";
 
     $result =& $dbconn->Execute($sql);

@@ -48,6 +48,7 @@ function comments_userapi_search($args)
                     $ctable[objectid] as xar_objectid
               FROM  $xartable[comments]
              WHERE  $ctable[status]= ?
+               AND  xar_pid != 0
                AND  (";
 
     if (isset($title)) {
@@ -122,7 +123,5 @@ function comments_userapi_search($args)
     comments_renderer_array_maptree($commentlist);
 
     return $commentlist;
-
 }
-
 ?>

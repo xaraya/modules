@@ -67,5 +67,4 @@ function comments_userapi_get_module_lrvalues( $args )
 
     return $lrvalues;
 }
-
 ?>

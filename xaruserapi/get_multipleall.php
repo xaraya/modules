@@ -3,11 +3,11 @@
  * Comments module - Allows users to post comments on items
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Comments Module
+ * @subpackage comments
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
@@ -54,7 +54,7 @@ function comments_userapi_get_multipleall($args)
                       $ctable[itemtype] AS xar_itemtype,
                       $ctable[objectid] AS xar_objectid
                 FROM  $xartable[comments]
-               WHERE  $ctable[status]="._COM_STATUS_ON." ";
+               WHERE  xar_pid != 0  AND $ctable[status]="._COM_STATUS_ON." ";
 
     if (count($modarray) > 0 && $modarray[0] != 'all' ) {
         $where = array();
@@ -90,8 +90,6 @@ function comments_userapi_get_multipleall($args)
 
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
-        // FIXME delete after date output testing
-        // $row['xar_date'] = xarLocaleFormatDate("%B %d, %Y %I:%M %p",$row['xar_datetime']);
         $row['xar_date'] = $row['xar_datetime'];
         $row['xar_author'] = xarUserGetVar('name',$row['xar_author']);
         $commentlist[] = $row;
@@ -101,5 +99,4 @@ function comments_userapi_get_multipleall($args)
 
     return $commentlist;
 }
-
 ?>

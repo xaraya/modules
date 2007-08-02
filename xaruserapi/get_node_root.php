@@ -3,11 +3,11 @@
  * Comments module - Allows users to post comments on items
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Comments Module
+ * @subpackage comments
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
@@ -20,10 +20,10 @@
  * @param    integer     modid      The module that comment is attached to
  * @param    integer     objectid   The particular object within that module
  * @param    integer     itemtype   The itemtype of that object
- * @returns  array an array containing the left and right values or an
+ * @return  array an array containing the left and right values or an
  *                 empty array if the comment_id specified doesn't exist
  */
-function comments_userapi_get_node_root( $args )
+function comments_userapi_get_node_root($args)
 {
 
     extract ($args);
@@ -61,9 +61,9 @@ function comments_userapi_get_node_root( $args )
              WHERE  $ctable[modid]=?
                AND  $ctable[itemtype]=?
                AND  $ctable[objectid]=?
-               AND  $ctable[status]=?";
+               AND  $ctable[pid]=?";
     // objectid is still a string for now
-    $bindvars = array((int) $modid, (int) $itemtype, (string) $objectid, (int) _COM_STATUS_ROOT_NODE);
+    $bindvars = array((int) $modid, (int) $itemtype, (string) $objectid, (int) 0);
 
     $result =& $dbconn->Execute($sql,$bindvars);
 
@@ -83,5 +83,4 @@ function comments_userapi_get_node_root( $args )
 
     return $node;
 }
-
 ?>

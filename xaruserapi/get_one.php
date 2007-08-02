@@ -3,24 +3,25 @@
  * Comments module - Allows users to post comments on items
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Comments Module
+ * @subpackage comments
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
+
 /**
  * Get a single comment.
  *
  * @author   Carl P. Corliss (aka rabbitt)
  * @access   public
  * @param    integer    $args['cid']       the id of a comment
- * @returns  array   an array containing the sole comment that was requested
-                     or an empty array if no comment found
+ * @return   array   an array containing the sole comment that was requested
+ *                   or an empty array if no comment found
  */
-function comments_userapi_get_one( $args )
+function comments_userapi_get_one($args)
 {
 
     extract($args);
@@ -60,6 +61,7 @@ function comments_userapi_get_one( $args )
                     $ctable[objectid] AS xar_objectid
               FROM  $xartable[comments]
              WHERE  $ctable[cid]=$cid
+               AND  xar_pid != 0
                AND  $ctable[status]="._COM_STATUS_ON;
 
     $result =& $dbconn->Execute($sql);
@@ -81,8 +83,6 @@ function comments_userapi_get_one( $args )
     // add it to the array we will return
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
-        // FIXME delete after date output testing
-        // $row['xar_date'] = xarLocaleFormatDate("%B %d, %Y %I:%M %p",$row['xar_datetime']);
         $row['xar_date'] = $row['xar_datetime'];
         $row['xar_author'] = xarUserGetVar('name',$row['xar_author']);
         comments_renderer_wrap_words($row['xar_text'],80);
@@ -102,5 +102,4 @@ function comments_userapi_get_one( $args )
 
     return $commentlist;
 }
-
 ?>

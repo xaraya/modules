@@ -3,11 +3,11 @@
  * Comments module - Allows users to post comments on items
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Comments Module
+ * @subpackage comments
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
@@ -61,7 +61,7 @@ function comments_userapi_get_author_count($args)
     $sql = "SELECT  COUNT($ctable[cid]) as numitems
               FROM  $xartable[comments]
              WHERE  $ctable[author]=? AND $ctable[modid]=?
-               AND  $ctable[status]=?";
+               AND  AND xar_pid != 0 AND $ctable[status]=?";
     $bindvars = array((int) $author, (int) $modid, (int) $status);
 
     if (isset($itemtype) && is_numeric($itemtype)) {

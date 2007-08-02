@@ -3,11 +3,11 @@
  * Comments module - Allows users to post comments on items
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Comments Module
+ * @subpackage comments
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
@@ -54,7 +54,7 @@ function comments_userapi_add_rootnode( $args )
 
     $commenttable = $xartable['comments'];
 
-    // Each (modid + itemtype + objectid) has its own Celko tree now,
+    // Each (modid + itemtype + objectid) has its own Celko tree,
     // so we start over from 0 for the left and right positions
     $maxright = 0;
 
@@ -63,9 +63,6 @@ function comments_userapi_add_rootnode( $args )
     $right = $maxright + 2;
     $cdate = time();
 
-    // Get next ID in table.  For databases like MySQL, this value will
-    // be zero but the auto_increment type on the column will create
-    // the correct value.
     $nextId = $dbconn->GenId($commenttable);
 
     $sql = "INSERT INTO $xartable[comments]
@@ -82,7 +79,7 @@ function comments_userapi_add_rootnode( $args )
                        1,
                        $left,
                        $right,
-                       _COM_STATUS_ROOT_NODE,
+                       _COM_STATUS_ON,
                        $objectid,
                        $modid,
                        $itemtype,
@@ -100,5 +97,4 @@ function comments_userapi_add_rootnode( $args )
 
     return $id;
 }
-
 ?>
