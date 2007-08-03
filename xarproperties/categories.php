@@ -98,14 +98,24 @@ class CategoriesProperty extends SelectProperty
                                     'itemtype' => $itemtype,
                                     'modid' => $info['systemid']));
         }
+
         if (count($categories) > 0) {
+            $checkcats= array();
+            foreach ($categories as $category) {
+                $validcat = xarModAPIFunc('categories','user','getcatinfo',array('cid'=>$category));
+                if ($validcat) {
+                     $checkcats[]=$category;
+                }
+            }
+
             $result = xarModAPIFunc('categories', 'admin', 'linkcat',
-                                array('cids'  => $categories,
-                                      'iids'  => array($itemid),
-                                      'itemtype' => $itemtype,
-                                      'modid' => $info['systemid'],
-                                      'basecids'  => $basecats,
-                                      'clean_first' => true));
+                                  array('cids'  => $checkcats,
+                                        'iids'  => array($itemid),
+                                        'itemtype' => $itemtype,
+                                        'modid' => $info['systemid'],
+                                        'basecids'  => $basecats,
+                                        'clean_first' => true));
+
         }
         return true;
     }
@@ -170,7 +180,7 @@ class CategoriesProperty extends SelectProperty
             unset($data['module']);
         }
 
-		if (empty($data['itemtype'])) {
+        if (empty($data['itemtype'])) {
             $data['categories_localitemtype'] = 0;
         } else {
             $data['categories_localitemtype'] = $data['itemtype'];
@@ -245,12 +255,12 @@ class CategoriesProperty extends SelectProperty
                                        array('itemid' => $data['categories_itemid'],
                                              'itemtype' => $data['categories_localitemtype'],
                                              'module' => $data['categories_localmodule'],
-                                          	));
-				$catlink = array();
-				foreach ($links as $link) $catlink[$link['basecategory']] = $link['category_id'];
-				$data['value'] = array();
-	            foreach ($data['basecids'] as $basecid)
-					$data['value'][] = isset($catlink[$basecid]) ? $catlink[$basecid]: 0;
+                                              ));
+                $catlink = array();
+                foreach ($links as $link) $catlink[$link['basecategory']] = $link['category_id'];
+                $data['value'] = array();
+                foreach ($data['basecids'] as $basecid)
+                    $data['value'][] = isset($catlink[$basecid]) ? $catlink[$basecid]: 0;
             } else {
                 if (!is_array($this->value)) $this->value = array($this->value);
                 $data['value'] = $this->value;
@@ -302,17 +312,17 @@ class CategoriesProperty extends SelectProperty
 
         if (empty($data['value'])) {
             if (empty($this->value)) {
-				$data['value'] = array();
+                $data['value'] = array();
                 $links = xarModAPIFunc('categories', 'user', 'getlinkages',
                                        array('items' => array($data['categories_itemid']),
                                              'itemtype' => $data['categories_localitemtype'],
                                              'module' => $data['categories_localmodule'],
                                              ));
                 if (!empty($links) && is_array($links) && count($links) > 0) {
-					foreach ($links as $link)
-						foreach ($link as $row) {
-							$data['value'][] = $row;
-						}
+                    foreach ($links as $link)
+                        foreach ($link as $row) {
+                            $data['value'][] = $row;
+                        }
                 } else {
                     $data['value'] = array();
                 }
