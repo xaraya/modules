@@ -223,7 +223,7 @@
                 <label for="tinybrowsers" class="xar-form-label" title="#xarML('Select which browsers to use WYSIWYG - msie,gecko,opera,safari')#">
                        <xar:mlstring>Use for browsers:</xar:mlstring>
                 </label>
-                <input type="text" name="tinybrowsers" id="tinybrowsers" value="#$tinybrowsers#" size="20" maxlength="20" />
+                <input type="text" name="tinybrowsers" id="tinybrowsers" value="#$tinybrowsers#" size="40" maxlength="60" />
                 <xar:mlstring>No spaces eg msie,gecko,opera,safari. Defaults to all.</xar:mlstring>
             </div>
 
