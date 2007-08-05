@@ -17,76 +17,94 @@
  * @param int   $args['cid'] id of category to get info, or
  * @param array $args['cids'] array of category ids to get info
  * @return array Category info array, or array of cat info arrays, false on failure
+ * @todo Fetch dynamic data for the categories where hooks are in place
  */
 function categories_userapi_getcatinfo($args)
 {
     extract($args);
 
+    // Field names (for the database and return element keys).
+    static $s_fields = array('cid', 'name', 'description', 'image', 'parent', 'left', 'right');
+
+    // Cache categories as we fetch them.
+    // TODO: when categories is one big class, then cacheing can be shared between all APIs.
+    static $s_cache = array();
+
+    // User function for setting all elements of an array NULL
+    static $s_func_null_array = NULL;
+
+    if (!isset($s_func_null_array)) $s_func_null_array = create_function('&$a', '$a = NULL;');
+
+    // TODO: additional validation - cid should be an ID and cids an array of IDs.
     if (!isset($cid) && !isset($cids)) {
-       xarSessionSetVar('errormsg', xarML('Bad arguments for API function'));
-       return false;
+        return false;
     }
+
+    // If a single category, then return the cached value.
+    if (!empty($cid) && isset($s_cache[$cid])) return $s_cache[$cid];
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
     $categoriestable = $xartable['categories'];
 
-    // TODO: simplify api by always using cids, if one cat, only 1 element in the array
-    $SQLquery = "SELECT xar_cid,
-                        xar_name,
-                        xar_description,
-                        xar_image,
-                        xar_parent,
-                        xar_left,
-                        xar_right
-                   FROM $categoriestable ";
+    $SQLquery = 'SELECT xar_cid, xar_name, xar_description, xar_image, xar_parent, xar_left, xar_right'
+        . ' FROM ' . $categoriestable;
     if (isset($cid)) {
-        $SQLquery .= "WHERE xar_cid = ?";
-        $bindvars = array($cid);
+        $SQLquery .= ' WHERE xar_cid = ?';
+        $bindvars = array((int)$cid);
     } else {
-        $bindmarkers = '?' . str_repeat(',?',count($cids)-1);
-        $SQLquery .= "WHERE xar_cid IN ($bindmarkers)";
+        // Remove any cached categories from the query.
+        // This may (with luck) result in nothing to query at all.
+        // Start by creating a placeholder array(cid1 => NULL, cid2 => NULL, etc).
+        $info = array_flip($cids);
+        array_walk($info, $s_func_null_array);
+
+        foreach($cids as $ckey => $ccid) {
+            if (isset($s_cache[$ccid])) {
+                $info[$ccid] = $s_cache[$ccid];
+                unset($cids[$ckey]);
+            }
+        }
+
+        // If all required categories were cached then return the cached array now.
+        if (count($cids) == 0) return $info;
+
+        $SQLquery .= ' WHERE xar_cid IN (?' . str_repeat(',?', count($cids)-1) . ')';
         $bindvars = $cids;
     }
 
-    $result = $dbconn->Execute($SQLquery,$bindvars);
+    $result = $dbconn->Execute($SQLquery, $bindvars);
     if (!$result) return;
 
-    if ($result->EOF) {
-        xarSessionSetVar('errormsg', xarML('Unknown Category'));
-        return false;
-    }
-
     if (isset($cid)) {
+        // Return if no category found.
+        if ($result->EOF) return false;
+
         list($cid, $name, $description, $image, $parent, $left, $right) = $result->fields;
-        $info = Array(
-                      "cid"         => $cid,
-                      "name"        => $name,
-                      "description" => $description,
-                      "image"       => $image,
-                      "parent"      => $parent,
-                      "left"        => $left,
-                      "right"       => $right
-                     );
-        return $info;
+        $info = compact($s_fields);
+
+        // Cache the category if not already.
+        if (empty($s_cache[$cid])) $s_cache[$cid] = $info;
     } else {
-        $info = array();
+        // Even if no rows were found, we want to continue here because the
+        // info array may already populated with cached categories.
         while (!$result->EOF) {
             list($cid, $name, $description, $image, $parent, $left, $right) = $result->fields;
-            $info[$cid] = Array(
-                                "cid"         => $cid,
-                                "name"        => $name,
-                                "description" => $description,
-                                "image"       => $image,
-                                "parent"      => $parent,
-                                "left"        => $left,
-                                "right"       => $right
-                               );
+            $info[$cid] = compact($s_fields);
+
+            // Cache the category if not already.
+            if (empty($s_cache[$cid])) $s_cache[$cid] = $info[$cid];
+
             $result->MoveNext();
         }
-        return $info;
+
+        // Remove any NULL value categories from the results.
+        // These will be categories that didn't exist in the database.
+        $info = array_filter($info);
     }
+
+    return $info;
 }
 
 ?>
