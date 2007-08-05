@@ -40,163 +40,123 @@ function categories_userapi_getcat($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
-    if (!isset($return_itself)) {
-        $return_itself = false;
-    }
+    // Set some defaults.
+    if (!isset($return_itself)) $return_itself = false;
+    if (empty($indexby)) $indexby = 'default';
+    if (!isset($getchildren)) $getchildren = false;
+    if (!isset($getparents)) $getparents = false;
 
-    if (empty($indexby)) {$indexby = 'default';}
-
-    if (!isset($getchildren)) {
-        $getchildren = false;
-    }
-    if (!isset($getparents)) {
-        $getparents = false;
-    }
     if (!isset($start)) {
         $start = 0;
-    }
-    elseif (!is_numeric($start)) {
-        xarSessionSetVar('errormsg', xarML('Bad numeric arguments for API function'));
+    } elseif (!is_numeric($start)) {
         return false;
     } else {
-        //The pager starts counting from 1
-        //SelectLimit starts from 0
+        // The pager starts counting from 1
+        // SelectLimit starts from 0
         $start--;
     }
+
     if (!isset($count)) {
         $count = 0;
-    }
-    elseif (!is_numeric($count)) {
-        xarSessionSetVar('errormsg', xarML('Bad numeric arguments for API function'));
+    } elseif (!is_numeric($count)) {
         return false;
     }
 
     $categoriestable = $xartable['categories'];
     $bindvars = array();
-    $SQLquery = "SELECT
-                        COUNT(P2.xar_cid) AS indent,
-                        P1.xar_cid,
-                        P1.xar_name,
-                        P1.xar_description,
-                        P1.xar_image,
-                        P1.xar_parent,
-                        P1.xar_left,
-                        P1.xar_right
-                   FROM $categoriestable P1,
-                        $categoriestable P2
-                  WHERE P1.xar_left
-                     >= P2.xar_left
-                    AND P1.xar_left
-                     <= P2.xar_right";
-/* this is terribly slow, at least for MySQL 3.23.49-nt
-                  WHERE P1.xar_left
-                BETWEEN P2.xar_left AND
-                        P2.xar_right";
-*/
-    if (isset($cid) && !is_array($cid) && $cid != false)
-    {
-        if ($getchildren || $getparents)
-        {
+    $SQLquery = 'SELECT'
+        . ' COUNT(p2.xar_cid) AS indent,'
+        . ' p1.xar_cid, p1.xar_name, p1.xar_description, p1.xar_image, p1.xar_parent, p1.xar_left, p1.xar_right'
+        . ' FROM ' . $categoriestable . ' AS p1'
+        . ' INNER JOIN ' . $categoriestable . ' AS p2'
+        . ' ON p1.xar_left >= p2.xar_left AND p1.xar_left <= p2.xar_right';
+
+    // WHERE-clauses, all to be joined using AND
+    $where = array();
+
+    if (isset($cid) && !is_array($cid) && $cid != false) {
+        if ($getchildren || $getparents) {
+            $where1 = array();
+
             // We have the category ID but we need
             // to know its left and right values
-            $cat = xarModAPIFunc('categories','user','getcatinfo',Array('cid' => $cid));
-            if ($cat == false) {
-                xarSessionSetVar('errormsg', xarML('Category does not exist'));
-                return Array();
-            }
+            $cat = xarModAPIFunc('categories', 'user', 'getcatinfo', array('cid' => $cid));
+            if ($cat == false) return array();
 
-            // If not returning itself we need to take the appropriate
-            // left values
-            if ($return_itself)
-            {
+            // If not returning itself we need to take the appropriate left values
+            if ($return_itself) {
                 $return_child_left = $cat['left'];
                 $return_parent_left = $cat['left'];
-            }
-            else
-            {
+            } else {
                 $return_child_left = $cat['left'] + 1;
                 $return_parent_left = $cat['left'] - 1;
             }
 
-            // Introducing an AND operator in the WHERE clause
-            $SQLquery .= ' AND (';
-        }
+            if ($getchildren) {
+                $where1[] = '(p1.xar_left >= ? AND p1.xar_left <= ?)';
+                $bindvars[] = (int)$return_child_left;
+                $bindvars[] = (int)$cat['right'];
+            }
 
-        if ($getchildren)
-        {
-            $SQLquery .= "(P1.xar_left BETWEEN ? AND ?)";
-            $bindvars[] = $return_child_left; $bindvars[] = $cat['right'];
-        }
+            if ($getparents) {
+                $where1[] = '(? >= p1.xar_left AND ? <= p1.xar_right)';
+                // Same value bound twice.
+                $bindvars[] = (int)$return_parent_left;
+                $bindvars[] = (int)$return_parent_left;
+            }
 
-        if ($getparents && $getchildren)
-        {
-               $SQLquery .= " OR ";
-        }
-
-        if ($getparents)
-        {
-             $SQLquery .= "( ? BETWEEN P1.xar_left AND P1.xar_right)";
-            $bindvars[] = $return_parent_left;
-        }
-
-        if ($getchildren || $getparents)
-        {
-            // Closing the AND operator
-            $SQLquery .= ' )';
-        }
-        else
-        {// !(isset($getchildren)) && !(isset($getparents))
+            $where[] = '(' . implode(' OR ', $where1) . ')';
+        } else {
+            // !(isset($getchildren)) && !(isset($getparents))
             // Return ONLY the info about the category with the given CID
-            $SQLquery .= " AND (P1.xar_cid = ?) ";
-            $bindvars[] = $cid;
+            $where[] = 'p1.xar_cid = ?';
+            $bindvars[] = (int)$cid;
         }
-
     }
 
     if (isset($eid) && !is_array($eid) && $eid != false) {
-       $ecat = xarModAPIFunc('categories', 'user', 'getcatinfo', Array('cid' => $eid));
-       if ($ecat == false) {
-           xarSessionSetVar('errormsg', xarML('That category does not exist'));
-           return Array();
-       }
-       //$SQLquery .= " AND P1.xar_left
-       //               NOT BETWEEN ? AND ? ";
-       $SQLquery .= " AND (P1.xar_left < ? OR P1.xar_left > ?)";
-       $bindvars[] = $ecat['left']; $bindvars[] = $ecat['right'];
+        $ecat = xarModAPIFunc('categories', 'user', 'getcatinfo', array('cid' => $eid));
+        if ($ecat == false) return array();
+
+        // Equivalent to NOT BETWEEN
+        $where[] = '(p1.xar_left < ? OR p1.xar_left > ?)';
+        $bindvars[] = (int)$ecat['left'];
+        $bindvars[] = (int)$ecat['right'];
     }
 
+    if (!empty($where)) $SQLquery .= ' WHERE ' . implode(' AND ', $where);
+
     // Have to specify all selected attributes in GROUP BY
-    $SQLquery .= " GROUP BY P1.xar_cid, P1.xar_name, P1.xar_description, P1.xar_image, P1.xar_parent, P1.xar_left, P1.xar_right ";
+    $SQLquery .= ' GROUP BY p1.xar_cid, p1.xar_name, p1.xar_description, p1.xar_image, p1.xar_parent, p1.xar_left, p1.xar_right ';
 
     $having = array();
-    // Postgre doesnt accept the output name ('indent' here) as a parameter in the where/having clauses
-    // Bug #620
+
+    // Bug #620: Postgres doesn't support column aliases in HAVING or ORDER BY clauses
     if (isset($minimum_depth) && is_numeric($minimum_depth)) {
-        $having[] = "COUNT(P2.xar_cid) >= ?";
+        $having[] = 'COUNT(p2.xar_cid) >= ?';
         $bindvars[] = $minimum_depth;
     }
     if (isset($maximum_depth) && is_numeric($maximum_depth)) {
-        $having[] = "COUNT(P2.xar_cid) < ?";
+        $having[] = 'COUNT(p2.xar_cid) < ?';
         $bindvars[] = $maximum_depth;
     }
     if (count($having) > 0) {
-// TODO: make sure this is supported by all DBs we want
-        $SQLquery .= " HAVING " . join(' AND ', $having);
+        $SQLquery .= ' HAVING ' . join(' AND ', $having);
     }
 
-    $SQLquery .= " ORDER BY P1.xar_left";
+    $SQLquery .= ' ORDER BY p1.xar_left';
 
-// cfr. xarcachemanager - this approach might change later
-    $expire = xarModGetVar('categories','cache.userapi.getcat');
+    // cfr. xarcachemanager - this approach might change later
+    $expire = xarModGetVar('categories', 'cache.userapi.getcat');
     if (is_numeric($count) && $count > 0 && is_numeric($start) && $start > -1) {
         if (!empty($expire)){
-            $result = $dbconn->CacheSelectLimit($expire,$SQLquery, $count, $start, $bindvars);
+            $result = $dbconn->CacheSelectLimit($expire, $SQLquery, $count, $start, $bindvars);
         } else {
             $result = $dbconn->SelectLimit($SQLquery, $count, $start, $bindvars);
         }
     } else {
         if (!empty($expire)){
-            $result = $dbconn->CacheExecute($expire,$SQLquery,$bindvars);
+            $result = $dbconn->CacheExecute($expire, $SQLquery, $bindvars);
         } else {
             $result = $dbconn->Execute($SQLquery, $bindvars);
         }
@@ -205,30 +165,19 @@ function categories_userapi_getcat($args)
     if (!$result) return;
 
     if ($result->EOF) {
-        //It?s ok.. no category found
-        // The user doesn?t need to be informed, he will see it....
-//        xarSessionSetVar('statusmsg', xarML('No category found'));
-        return Array();
+        // No category found
+        return array();
     }
 
-    $categories = Array();
+    $categories = array();
 
     $index = -1;
     while (!$result->EOF) {
-        list($indentation,
-                $cid,
-                $name,
-                $description,
-                $image,
-                $parent,
-                $left,
-                $right
-               ) = $result->fields;
+        list($indentation, $cid, $name, $description, $image, $parent, $left, $right) = $result->fields;
         $result->MoveNext();
 
-        if (!xarSecurityCheck('ViewCategories',0,'Category',"$name:$cid")) {
-             continue;
-        }
+        // If no privileges to view, then skip this category.
+        if (!xarSecurityCheck('ViewCategories', 0, 'Category', "$name:$cid")) continue;
 
         if ($indexby == 'cid') {
             $index = $cid;
@@ -236,16 +185,7 @@ function categories_userapi_getcat($args)
             $index++;
         }
 
-        $categories[$index] = Array(
-            'indentation' => $indentation,
-            'cid'         => $cid,
-            'name'        => $name,
-            'description' => $description,
-            'image'       => $image,
-            'parent'      => $parent,
-            'left'        => $left,
-            'right'       => $right
-        );
+        $categories[$index] = compact('indentation', 'cid', 'name', 'description', 'image', 'parent', 'left', 'right');
     }
     $result->Close();
 
