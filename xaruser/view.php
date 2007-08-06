@@ -187,67 +187,11 @@ function ievents_user_view($args)
 
     // Textual ranges
     if (!empty($range)) {
-        // TODO: put these range functions into an API so they can be used in display functions
+        $urange = xarModAPIfunc('ievents', 'user', 'daterange2dates', array('range' => $range));
 
-        // Find the first day of the current week
-        $daystostartweek = date('w', time()) - $startdayofweek;
-        if ($daystostartweek < 0) $daystostartweek += 7;
-        // Get the period start date (unix timestamp) by counting back the appropriate number of days
-        $thisweekstart = strtotime("-$daystostartweek days", strtotime(date('Y-m-d', time())));
-
-        // Find the start of the current month
-        $thismonthstart = strtotime(date('Ym', time()) . '01');
-
-        // Find the start of the current year
-        $thisyearstart = strtotime(date('Y', time()) . '0101');
-
-        // Set the date ranges.
-        switch($range) {
-            case 'yesterday':
-            case 'today':
-            case 'tomorrow':
-                $ustartdate = strtotime($range);
-                $uenddate = strtotime($range);
-                break;
-            case 'lastweek':
-                $ustartdate = strtotime('-1 week', $thisweekstart);;
-                $uenddate = strtotime('-1 day', $thisweekstart);
-                break;
-            case 'thisweek':
-            case 'week':
-                $ustartdate = $thisweekstart;
-                $uenddate = strtotime('-1 second', strtotime('+1 week', $thisweekstart));
-                break;
-            case 'nextweek':
-                $ustartdate = strtotime('+1 week', $thisweekstart);
-                $uenddate = strtotime('-1 second', strtotime('+2 weeks', $thisweekstart));
-                break;
-            case 'lastmonth':
-                $ustartdate = strtotime('-1 month', $thismonthstart);
-                $uenddate = strtotime('-1 second', $thismonthstart);
-                break;
-            case 'thismonth':
-            case 'month':
-                $ustartdate = $thismonthstart;
-                $uenddate = strtotime('-1 second', strtotime('+1 month', $thismonthstart));
-                break;
-            case 'nextmonth':
-                $ustartdate = strtotime('+1 month', $thismonthstart);
-                $uenddate = strtotime('-1 second', strtotime('+2 months', $thismonthstart));
-                break;
-            case 'lastyear':
-                $ustartdate = strtotime('-1 year', $thisyearstart);
-                $uenddate = strtotime('-1 second', $thisyearstart);
-                break;
-            case 'thisyear':
-            case 'year':
-                $ustartdate = $thisyearstart;
-                $uenddate = strtotime('-1 second', strtotime('+1 year', $thisyearstart));
-                break;
-            case 'nextyear':
-                $ustartdate = strtotime('+1 year', $thisyearstart);
-                $uenddate = strtotime('-1 second', strtotime('+2 years', $thisyearstart));
-                break;
+        if (!empty($urange)) {
+            $ustartdate = $urange['startdate'];
+            $uenddate = $urange['enddate'];
         }
     }
 

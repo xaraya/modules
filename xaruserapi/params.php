@@ -53,6 +53,7 @@ function ievents_userapi_params($args)
         // TODO: allow a default 'daterange' name instead.
         $params['default_startdate'] = 'now';
         $params['default_enddate'] = '+6 months';
+        $params['default_daterange'] = '+6 months';
 
         // Output transform fields.
         // Only these fields will be passed through the output transform.
@@ -117,11 +118,11 @@ function ievents_userapi_params($args)
 
         // Date range list, used to provide a handy set of date ranges in various places
         $params['daterangelist'] = array(
-            '' => xarML('-- Preset range --'),
+            '' => xarML('-- Date range --'),
             'next4weeks' => xarML('Next four weeks'),
             'next6months' => xarML('Next six months'),
-            'thisyear' => xarML('This year'),
-            'nextyear' => xarML('Next year'),
+            'thisyear' => xarML('This year (Jan-Dec)'),
+            'nextyear' => xarML('Next year (Jan-Dec)'),
             'thismonth' => xarML('This month'),
             'nextmonth' => xarML('Next month'),
             'thisweek' => xarML('This week'),
