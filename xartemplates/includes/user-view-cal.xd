@@ -1,0 +1,42 @@
+
+<xar:comment>
+    View template for event list calendar view.
+</xar:comment>
+
+<xar:style file="ievents" scope="module" />
+
+<div class="ievents-view">
+    <xar:comment><xar:template file="admin-mini" /></xar:comment>
+
+    <xar:if condition="!empty($eid) and !empty($event)">
+        <xar:comment>An individual event was chosen</xar:comment>
+
+        <xar:template file="event-nextprev" />
+
+        <dl class="ievents-event">
+            <xar:template file="event-display-dl" subdata="array('event'=&gt;$event,'calendar'=&gt;$calendars[$event.calendar_id],'categories'=&gt;$categories,'export_handlers'=&gt;$export_handlers)" />
+            <xar:if condition="!empty($hooks)">
+                <dd class="ievents-hooks">
+                    <xar:foreach in="$hooks" key="$hookmodule">
+                        <xar:if condition="trim($hooks[$hookmodule]) ne ''">
+                            <div class="ievents-hooks-#$hookmodule#">#$hooks[$hookmodule]#</div>
+                        </xar:if>
+                    </xar:foreach>
+                </dd>
+            </xar:if>
+        </dl>
+
+        <xar:template file="event-nextprev" />
+
+    <xar:else />
+        <xar:template file="jump-menu" />
+        <xar:template file="cal-pager" />
+
+        <xar:if condition="!empty($cal)">
+            <xar:set name="cal_output">#$cal->display()#</xar:set>
+            <div class="ievents-view-cal">#$cal_output#</div>
+        </xar:if>
+
+        <xar:template file="cal-pager" />
+    </xar:if>
+</div>

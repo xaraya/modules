@@ -25,17 +25,15 @@ function ievents_user_view($args)
     if (!xarSecurityCheck('OverviewIEvent')) return;
 
     // Get module parameters
-    list(
-        $module, $default_numitems, $max_numitems, $default_startdate, $default_enddate, $startdayofweek,
-        $html_fields, $itemtype_events, $year_range_min, $year_range_max, $q_fields, $default_group,
-        $default_display_format, $display_formats
-    ) = xarModAPIfunc('ievents', 'user', 'params',
+    extract(xarModAPIfunc('ievents', 'user', 'params',
         array(
-            'names' => 'module,default_numitems,max_numitems,default_startdate,default_enddate,startdayofweek,'
-            . 'html_fields,itemtype_events,year_range_min,year_range_max,q_fields,default_group,'
-            . 'default_display_format,display_formats'
+            'knames' => 'module,default_numitems,max_numitems,default_startdate,'
+                . 'default_enddate,startdayofweek,'
+                . 'html_fields,itemtype_events,year_range_min,'
+                . 'year_range_max,q_fields,default_group,'
+                . 'default_display_format,display_formats,locale'
         )
-    );
+    ));
 
     // Get the user parameters.
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
@@ -53,10 +51,15 @@ function ievents_user_view($args)
         $export_handlers = array();
         $export_formats = array();
     }
-    $valid_formats = array_merge($export_formats, $display_formats);
+    $valid_formats = $display_formats;
+    foreach($export_handlers as $export_handler_key => $export_handler) {
+        $valid_formats[$export_handler_key] = $export_handler_key;
+    }
+    //$valid_formats = array_merge($export_formats, $display_formats);
     // Include the rss format if the theme is available.
-    if (xarThemeIsAvailable('rss')) $valid_formats[] = 'rss';
-    xarVarFetch('format', 'enum:' . implode(':', $valid_formats), $format, $default_display_format, XARVAR_NOT_REQUIRED);
+    if (xarThemeIsAvailable('rss')) $valid_formats['rss'] = 'RSS';
+    xarVarFetch('format', 'enum:' . implode(':', array_keys($valid_formats)), $format, $default_display_format, XARVAR_NOT_REQUIRED);
+
 
     //
     // Various start/end date selection 
@@ -79,44 +82,71 @@ function ievents_user_view($args)
     xarVarFetch('endday', 'pre:num:passthru:str:1:2', $endday, '', XARVAR_NOT_REQUIRED);
 
     // The startdate and enddate can be passed in YYYYMMDD format.
-    xarVarFetch('startdate', 'pre:num:passthru:str:8:8', $startdate, '', XARVAR_NOT_REQUIRED);
-    xarVarFetch('enddate', 'pre:num:passthru:str:8:8', $enddate, '', XARVAR_NOT_REQUIRED);
-
-    // A combination of keywords and values can go into 'range'.
-    // This allows values such as 'next7days' and 'next12months'.
-    // We don't do anything similar for past dates, as we are dealing primarily with
-    // future events in this module.
-    xarVarFetch('range', 'regexp:/^next[0-9]{1,3}(days|weeks|months|years)$/', $range, '', XARVAR_NOT_REQUIRED);
-    if (!empty($range)) {
-        $datenumber = preg_replace('/[^0-9]/', '', $range);
-        $datetype = preg_replace('/^next[0-9]+/', '', $range);
-        $startdate = date('Ymd');
+    xarVarFetch('startdate', 'pre:num:passthru:regexp:/([0-9]{4}|[0-9]{6}|[0-9]{8})/', $startdate, '', XARVAR_NOT_REQUIRED);
+    xarVarFetch('enddate', 'pre:num:passthru:regexp:/([0-9]{4}|[0-9]{6}|[0-9]{8})/', $enddate, '', XARVAR_NOT_REQUIRED);
+    
+    // Check the start date individual components.
+    // Input can consist of year, year/month or year/month/day
+    if ($startdate == '' && !empty($startyear)) {
+        if (!empty($startmonth)) {
+            // Pad the month out to two characters.
+            $startmonth = str_pad($startmonth, 2, '0', STR_PAD_LEFT);
+            if (!empty($startday)) {
+                // Year month and day
+                $startday = str_pad($startday, 2, '0', STR_PAD_LEFT);
+                $startdate = "${startyear}${startmonth}${startday}";
+            } else {
+                // Just year and month
+                $startdate = "${startyear}${startmonth}";
+            }
+        } else {
+            // Just the year
+            $startdate = "${startyear}";
+        }
     }
-    // Unset the range, so it can be evaluated through a different set of rules below.
-    unset($range);
 
-    // Window range.
-    // e.g. 'window2months' will be the current date plus or minus two months.
-    xarVarFetch('range', 'regexp:/^window[0-9]{1,3}(days|weeks|months|years)$/', $range, '', XARVAR_NOT_REQUIRED);
-    if (!empty($range)) {
-        $windowsize = preg_replace('/[^0-9]/', '', $range);
-        $datenumber = $windowsize * 2;
-        $datetype = preg_replace('/^window[0-9]+/', '', $range);
-        $startdate = date('Ymd', strtotime("-${windowsize} ${datetype}"));
+    // Check the end date individual components.
+    if ($enddate == '' && !empty($endyear)) {
+        if (!empty($endmonth)) {
+            $endmonth = str_pad($endmonth, 2, '0', STR_PAD_LEFT);
+            if (!empty($endday)) {
+                // Year month and day
+                $endday = str_pad($endday, 2, '0', STR_PAD_LEFT);
+                $enddate = "${endyear}${endmonth}${endday}";
+            } else {
+                // Just year and month
+                $enddate = "${endyear}${endmonth}";
+            }
+        } else {
+            // Just the year
+            $enddate = "${endyear}";
+        }
     }
-    // Unset the range, so it can be evaluated through a different set of rules below.
-    unset($range);
+
+    // If the startdate or enddate strings are set, then convert them into unix timestamps
+    if (!empty($startdate)) {
+        $urange = xarModAPIfunc('ievents', 'user', 'daterange2dates', array('sstartdate' => $startdate));
+        if (!empty($urange)) {
+            $ustartdate = $urange['startdate'];
+        } else {
+            // The startdate is invalid, since it could not be converted.
+            $startdate = '';
+        }
+    }
+
+    if (!empty($enddate)) {
+        $urange = xarModAPIfunc('ievents', 'user', 'daterange2dates', array('senddate' => $enddate));
+        if (!empty($urange)) {
+            $uenddate = $urange['enddate'];
+        } else {
+            // The enddate is invalid, since it could not be converted.
+            $enddate = '';
+        }
+    }
 
     // These two parameters handle "next N days/weeks/months/years" date selection.
-    // TODO: provide a combined version of this, usable through a single drop-down list.
     xarVarFetch('datenumber', 'int:0:365', $datenumber, 0, XARVAR_NOT_REQUIRED);
     xarVarFetch('datetype', 'pre:lower:passthru:enum:days:weeks:months:years', $datetype, '', XARVAR_NOT_REQUIRED);
-
-    // Another way of selecting a date, using a text token
-    xarVarFetch('range', 'pre:lower:passthru:enum:today:tomorrow:yesterday'
-        . ':thisweek:week:nextweek:lastweek:thismonth:month:nextmonth:lastmonth'
-        . ':thisyear:year:nextyear:lastyear', $range, '', XARVAR_NOT_REQUIRED
-    );
 
     // Grouping of listed items.
     // Grouping should affect the sorting too, since grouping my a time period
@@ -143,63 +173,21 @@ function ievents_user_view($args)
     // Any time component is irrelevant and will be stripped off later.
     //
 
-    // Check the start date individual components.
-    // Input can consist of year, year/month or year/month/day
-    if (empty($startdate) && !empty($startyear)) {
-        if (!empty($startmonth)) {
-            // Pad the month out to two characters.
-            $startmonth = str_pad($startmonth, 2, '0', STR_PAD_LEFT);
-            if (!empty($startday)) {
-                // Year month and day
-                $startday = str_pad($startday, 2, '0', STR_PAD_LEFT);
-                $startdate = "${startyear}${startmonth}${startday}";
-            } else {
-                // Just year and month (pick first day of the month)
-                $startdate = "${startyear}${startmonth}01";
-            }
-        } else {
-            // Just the year (pick first day of the year)
-            $startdate = "${startyear}0101";
-        }
-    }
-
-    // Check the end date individual components.
-    if (empty($enddate) && !empty($endyear)) {
-        if (!empty($endmonth)) {
-            $endmonth = str_pad($endmonth, 2, '0', STR_PAD_LEFT);
-            if (!empty($endday)) {
-                // Year month and day
-                $endday = str_pad($endday, 2, '0', STR_PAD_LEFT);
-                $enddate = "${endyear}${endmonth}${endday}";
-            } else {
-                // Just year and month (pick last day of the month)
-                $enddate = "${endyear}${endmonth}" . date('d', mktime(0, 0, 0, ($endmonth + 1), 0, $endyear));
-            }
-        } else {
-            // Just the year (pick last day of the year - 1231 == 31 December)
-            $enddate = "${endyear}1231";
-        }
-    }
-
-    // If the start and end date strings have got this far, then treat them as valid dates.
-    if (!empty($startdate)) $ustartdate = strtotime($startdate);
-    if (!empty($enddate)) $uenddate = strtotime($enddate);
-
-    // Textual ranges
+    // Textual ranges override any other values.
+    xarVarFetch('range', 'str', $range, '', XARVAR_NOT_REQUIRED);
     if (!empty($range)) {
         $urange = xarModAPIfunc('ievents', 'user', 'daterange2dates', array('range' => $range));
-
         if (!empty($urange)) {
             $ustartdate = $urange['startdate'];
             $uenddate = $urange['enddate'];
         }
     }
 
-    // Validate the start and end date, and default if not valid (in YYYYMMDD format).
-    if (!empty($startdate) && !checkdate(substr($startdate,2,2), substr($startdate,4,2), substr($startdate,0,4))) $startdate = '';
-    if (!empty($enddate) && !checkdate(substr($enddate,2,2), substr($enddate,4,2), substr($enddate,0,4))) $enddate = '';
+    // Check the simple/advanced search form flag.
+    xarVarFetch('advanced', 'str:1:1', $advanced, '', XARVAR_NOT_REQUIRED);
 
-    // The user hay have selected a date range measured in other units (days, weeks, months)
+    // The user may have selected a date range measured in other units (days, weeks, months)
+    // TODO: deprecate these, in preference to the single 'range' string.
     if (!empty($datenumber) && !empty($datetype)) {
         // Set the end date to the start date plus any number of days, weeks, months or years.
         $uenddate = strtotime("+$datenumber $datetype", $ustartdate);
@@ -207,8 +195,65 @@ function ievents_user_view($args)
 
     // Now we have a start and end date, we should make sure they are the right way around.
     if ($uenddate < $ustartdate) {
-        // End date is earlier, so default it to startdate plus one month.
-        $uenddate = strtotime('+1 month', $ustartdate);
+        // End date is earlier, so swap them around.
+        list($uenddate, $ustartdate) = array($ustartdate, $uenddate);
+    }
+
+    // Links to other views of the calendar.
+    // These are not links as such, but different starting dates for each view.
+    $cal_links = array();
+    $cal_links_labels = array();
+
+    // If a calendar view, then get the dates into the right groupings.
+    // i.e. for a month-view calendar, a full month only is displayed.
+    if ($format == 'cal') {
+        switch($group) {
+            case 'year':
+                $ustartdate = strtotime(date('Y', $ustartdate) . '0101');
+                $uenddate = strtotime('+1 year -1 day', $ustartdate);
+                $cal_links_labels['this_view'] = date('Y', $ustartdate);
+                break;
+
+            case 'month':
+                $ustartdate = strtotime(date('Ym', $ustartdate) . '01');
+                $uenddate = strtotime('+1 month -1 day', $ustartdate);
+                $cal_links_labels['this_view'] = $locale['months']['long'][(date('m', $ustartdate) + 11) % 12 + 1] . ' ' . date('Y', $ustartdate);
+                break;
+
+            case 'week':
+                // Get the start and end dates to the start and end of the week.
+                $daystostartweek = date('w', $ustartdate) - $startdayofweek;
+                if ($daystostartweek < 0) $daystostartweek += 7;
+                $ustartdate = strtotime("-$daystostartweek days", $ustartdate);
+                $uenddate = strtotime('+7 days', $ustartdate);
+                $cal_links_labels['this_view'] = xarML('Week start #(1)', xarLocaleGetFormattedDate('long', $ustartdate));
+                break;
+
+            default:
+                // Default to a single day.
+                $uenddate = $ustartdate;
+                $cal_links_labels['this_view'] = $locale['days']['long'][date('w', $ustartdate)]
+                    . ' ' . xarLocaleGetFormattedDate('long', $ustartdate);
+                break;
+        }
+
+        $cal_links['next_year'] = date('Y', strtotime('+1 year', $ustartdate));
+        $cal_links['prev_year'] = date('Y', strtotime('-1 year', $ustartdate));
+        $cal_links['next_month'] = date('Ym', strtotime('+1 month', $ustartdate));
+        $cal_links['prev_month'] = date('Ym', strtotime('-1 month', $ustartdate));
+        $cal_links['next_week'] = date('Ymd', strtotime('+1 week', $ustartdate));
+        $cal_links['prev_week'] = date('Ymd', strtotime('-1 week', $ustartdate));
+        $cal_links['next_day'] = date('Ymd', strtotime('+1 day', $ustartdate));
+        $cal_links['prev_day'] = date('Ymd', strtotime('-1 day', $ustartdate));
+
+        $cal_links_labels['next_year'] = date('Y', strtotime('+1 year', $ustartdate));
+        $cal_links_labels['prev_year'] = date('Y', strtotime('-1 year', $ustartdate));
+        $cal_links_labels['next_month'] = $locale['months']['long'][(date('m', strtotime('+1 month', $ustartdate)) + 11) % 12 + 1];
+        $cal_links_labels['prev_month'] = $locale['months']['long'][(date('m', strtotime('-1 month', $ustartdate)) + 11) % 12 + 1];
+        $cal_links_labels['next_week'] = xarLocaleGetFormattedDate('medium', strtotime('+1 week', $ustartdate));
+        $cal_links_labels['prev_week'] = xarLocaleGetFormattedDate('medium', strtotime('-1 week', $ustartdate));;
+        $cal_links_labels['next_day'] = $locale['days']['long'][(date('w', strtotime('+1 day', $ustartdate)) + 7) % 7];
+        $cal_links_labels['prev_day'] = $locale['days']['long'][(date('w', strtotime('-1 day', $ustartdate)) + 7) % 7];
     }
 
     // Categories
@@ -245,6 +290,7 @@ function ievents_user_view($args)
             $crule = 'or';
         }
     }
+
     // Now recreate missing page parameters.
     if (!empty($catids)) {
         // Select the first item only.
@@ -450,11 +496,18 @@ function ievents_user_view($args)
     if ($numitems != $default_numitems) $url_params['numitems'] = $numitems;
     if ($group != $default_group) $url_params['group'] = $group;
     if ($format != $default_display_format) $url_params['format'] = $format;
+    if (!empty($advanced)) $url_params['advanced'] = 'y';
 
     // Add the categories selection in if available.
     if (!empty($cats)) $url_params['cats'] = $cats;
     if (!empty($cid)) $url_params['cid'] = $cid;
     if (!empty($q) && !empty($q_fields)) $event_params['q'] = $q;
+
+    // If calendar view, then default to maximum number of events, starting at number 1
+    if ($format == 'cal') {
+        $event_params['startnum'] = 1;
+        $event_params['numitems'] = $max_numitems;
+    }
     
     // Count of all matching events.
     $total_events = xarModAPIFunc('ievents', 'user', 'countevents', $event_params);
@@ -473,7 +526,6 @@ function ievents_user_view($args)
     if (!empty($q) && !empty($q_fields)) $feed_params['q'] = $q;
     // TODO: include some more intelligently-selected relative dates
     $feed_params['range'] = 'next6months';
-
 
 
     //
@@ -509,6 +561,41 @@ function ievents_user_view($args)
             // Add this event key to the list.
             $groups[$periodnumber]['events'][] = $eventkey;
         }
+    }
+
+    // If calendar view, then create a calendar object.
+    // TODO: give the object a name in a better namespace.
+    if ($format == 'cal') {
+        include_once(dirname(__FILE__) . '/../xarincludes/calendar.inc.php');
+        $cal = new calendar;
+
+        // Set the format.
+        // TODO: include daily.
+        switch($group) {
+            case 'year':
+                $cal->calFormat = 'fullYear';
+                break;
+            case 'month':
+                $cal->calFormat = 'largeMonth';
+                break;
+            case 'week':
+                $cal->calFormat = 'weekly';
+                break;
+        }
+        $cal->displayPrevNext = false;
+        $cal->displayEvents = true;
+        $cal->startingDOW = $startdayofweek;
+        $cal->showWeek = false;
+        $cal->calMonth = date('m', $ustartdate);
+        $cal->calYear = date('Y', $ustartdate);
+        $cal->outputFormat = 'return';
+        // Add the events
+        // TODO: move this markup to the templates.
+        foreach($events as $eventkey => $eventvalue) {
+            $cal->addEvent($eventvalue['startdate'], '<a href="' . $eventvalue['detail_url'] . '">' . xarVarPrepForDisplay($eventvalue['title']) . '</a>');
+        }
+    } else {
+        $cal = NULL;
     }
 
     // Get a list of calendars the user has access to.
@@ -636,10 +723,9 @@ function ievents_user_view($args)
         'cid',
 
         // Other
-        'hooks', 'q', 'q_fields', 'export_handlers', 'format'
+        'hooks', 'q', 'q_fields', 'export_handlers', 'format',
+        'cal_links', 'cal_links_labels', 'cal', 'advanced'
     );
-    //echo "<pre>"; var_dump($bl_data); echo "</pre>";
-    //echo "ustartdate=$ustartdate (" . date('Y-m-d', $ustartdate) . ") uenddate=$uenddate (" . date('Y-m-d', $uenddate) . ")<br />";
 
     // RSS - switch to the RSS theme if the format is RSS
     if ($format == 'rss' && xarThemeIsAvailable('rss')) xarTplSetThemeName('rss');

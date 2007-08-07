@@ -17,10 +17,6 @@
         </p>
     </xar:if>
 
-    <xar:comment>
-    <p class="search-option">Simple Search?</p>
-    <p class="search-option">Advanced Search?</p>
-    </xar:comment>
     <form method="get" action="#xarModURL('ievents','user','view')#">
     
     <div class="ievents-search-simple">
@@ -47,27 +43,51 @@
                 <td><input type="submit" value="#xarML('Find Events')#" /></td>
             </tr> 
         </table>
+
+        <xar:comment>
+            Use javascript to enable and disable the advanced search options as it is clicked.
+            This checkbox ensures it is tracked from page to page.
+        </xar:comment>
+        <xar:if condition="empty($advanced)">
+            <input type="checkbox" name="advanced" id="advanced" value="y" />
+        <xar:else />
+            <input type="checkbox" name="advanced" id="advanced" value="y" checked="checked" />
+        </xar:if>
+        <label for="advanced"><xar:mlstring>Advanced search options</xar:mlstring></label>
     </div>
 
     <xar:comment>Begin Advanced Search Section</xar:comment>
-    <div class="ievents-search-advanced">
+    <xar:if condition="!empty($advanced)">
+        <xar:set name="adv_form_class">'ievents-search-advanced'</xar:set>
+    <xar:else />
+        <xar:set name="adv_form_class">'ievents-search-advanced ievents-search-advanced-hidden'</xar:set>
+    </xar:if>
+
+    <div class="#$adv_form_class#">
         <div class="ievents-search-box-first">
             <table>
                 <tr>
                     <td class="daterange-cell">
-                        <label for="startday"><xar:mlstring>Search over a date range:</xar:mlstring></label>
+                        <xar:comment>If showing a calendar view, then make this a single-ended date</xar:comment>
+                        <xar:if condition="$format eq 'cal'">
+                            <label for="startday"><xar:mlstring>Jump to date:</xar:mlstring></label>
+                        <xar:else />
+                            <label for="startday"><xar:mlstring>Search over a date range:</xar:mlstring></label>
+                        </xar:if>
                         <div class="ievents-date-parts-all">
                             <span class="ievents-date-parts">
                                 <xar:data-input name="startday" id="startday" type="6" validation="$lists['daynum']" value="$startday" />
                                 <xar:data-input name="startmonth" id="startmonth" type="6" validation="$lists['monthshort']" value="$startmonth" />
                                 <xar:data-input name="startyear" id="startyear" type="6" validation="$lists['yearnum']" value="$startyear" />
                             </span>
-                            <span class="ievents-date-divider"><xar:mlstring> to </xar:mlstring></span>
-                            <span class="ievents-date-parts">
-                                <xar:data-input name="endday" id="endday" type="6" validation="$lists['daynum']" value="$endday" />
-                                <xar:data-input name="endmonth" id="endmonth" type="6" validation="$lists['monthlong']" value="$endmonth" />
-                                <xar:data-input name="endyear" id="endyear" type="6" validation="$lists['yearnum']" value="$endyear" />
-                            </span>
+                            <xar:if condition="$format ne 'cal'">
+                                <span class="ievents-date-divider"><xar:mlstring> to </xar:mlstring></span>
+                                <span class="ievents-date-parts">
+                                    <xar:data-input name="endday" id="endday" type="6" validation="$lists['daynum']" value="$endday" />
+                                    <xar:data-input name="endmonth" id="endmonth" type="6" validation="$lists['monthlong']" value="$endmonth" />
+                                    <xar:data-input name="endyear" id="endyear" type="6" validation="$lists['yearnum']" value="$endyear" />
+                                </span>
+                            </xar:if>
                         </div>
                     </td>
                     <td class="groupby-cell">
@@ -90,6 +110,9 @@
         </xar:if>
         <xar:if condition="!empty($numitems) && $numitems ne $default_numitems">
             <input type="hidden" name="numitems" value="#$numitems#" />
+        </xar:if>
+        <xar:if condition="!empty($format)">
+            <input type="hidden" name="format" value="#$format#" />
         </xar:if>
 
         <xar:comment>The categories are optional</xar:comment>

@@ -3,6 +3,12 @@
 /**
  * Convert a 'daterange' string into a pair of dates.
  * @param range string The 'daterange' string, in any one of a number of possible formats
+ * @param datetype string
+ * @param datenumber integer
+ * @param startdate integer
+ * @param enddate integer
+ * @param sstartdate string YYYY, YYYYMM or YYYYMMDD
+ * @param senddate string YYYY, YYYYMM or YYYYMMDD
  * @returns array
  *
  * Return elements:
@@ -19,13 +25,13 @@ function ievents_userapi_daterange2dates($args)
     $return = array();
 
     if (!isset($range) || !is_string($range)) {
-        return $return;
+        //return $return; // Other valid combinations now TODO: define them all.
     }
 
     // Get module parameters
-    list($startdayofweek) = xarModAPIfunc('ievents', 'user', 'params',
-        array('names' => 'startdayofweek')
-    );
+    extract(xarModAPIfunc('ievents', 'user', 'params',
+        array('knames' => 'startdayofweek')
+    ));
 
     // Some handy definitions.
 
@@ -33,7 +39,7 @@ function ievents_userapi_daterange2dates($args)
     $today = strtotime(date('Y-m-d'));
 
     // The first day of the current week
-    $daystostartweek = date('w', time()) - $startdayofweek;
+    $daystostartweek = date('w', $today) - $startdayofweek;
     if ($daystostartweek < 0) $daystostartweek += 7;
     // Get the period start date (unix timestamp) by counting back the appropriate number of days
     $thisweekstart = strtotime("-$daystostartweek days", $today);
@@ -44,24 +50,58 @@ function ievents_userapi_daterange2dates($args)
     // The start of the current year
     $thisyearstart = strtotime(date('Y', $today) . '0101');
 
+    // The start and end dates may have been passed in as a strings.
+    // Convert them into dates if so (from YYYY, YYYYMM or YYYYMMDD)
+    if (isset($sstartdate) && is_string($sstartdate) && preg_match('/([0-9]{4}|[0-9]{6}|[0-9]{8})/', $sstartdate)) {
+        $y = substr($sstartdate, 0, 4);
+        if (strlen($sstartdate) >= 6) $m = substr($sstartdate, 4, 2); else $m = '01';
+        if (strlen($sstartdate) == 8) $d = substr($sstartdate, 6, 2); else $d = '01';
+
+        if (checkdate($m, $d, $y)) $startdate = strtotime("$y-$m-$d");
+    }
+
+    if (isset($senddate) && is_string($senddate) && preg_match('/([0-9]{4}|[0-9]{6}|[0-9]{8})/', $senddate)) {
+        $y = substr($senddate, 0, 4);
+        if (strlen($senddate) >= 6) $m = substr($senddate, 4, 2); else $m = '01';
+        if (strlen($senddate) == 8) $d = substr($senddate, 6, 2); else $d = '01';
+
+        if (checkdate($m, $d, $y)) {
+            // We need the end of the month or year, if the day is not specified.
+            if (strlen($senddate) == 8) $enddate = strtotime("$y-$m-$d");
+            elseif (strlen($senddate) == 6) $enddate = strtotime("$y-$m-$d +1 month -1 day");
+            elseif (strlen($senddate) == 4) $enddate = strtotime("$y-$m-$d +1 year -1 day");
+        }
+    }
 
     // Next N units (days, weeks, months or years), starting today.
     // e.g. next2months next7days next1year
-    if (!isset($startdate) && preg_match('/^next[0-9]{1,3}(day|days|week|weeks|month|months|year|years)$/', $range)) {
+    if (isset($range) && preg_match('/^next[0-9]{1,3}(day|days|week|weeks|month|months|year|years)$/', $range)) {
         $datenumber = preg_replace('/[^0-9]/', '', $range);
         $datetype = rtrim(preg_replace('/^next[0-9]+/', '', $range), 's') . 's';
+    }
+
+    // Window of N units around the start date.
+    // e.g. 'window2months' will be the current date plus or minus two months.
+    if (isset($range) && preg_match('/^window[0-9]{1,3}(day|days|week|weeks|month|months|year|years)$/', $range)) {
+        $windowsize = preg_replace('/[^0-9]/', '', $range);
+        $datenumber = $windowsize * 2;
+        $datetype = rtrim(preg_replace('/^window[0-9]+/', '', $range), 's') . 's';
+        $startdate = strtotime("-${windowsize} ${datetype}", $today);
     }
 
 
     // User requested the 'datetype' and 'datenumber' pair.
     if (isset($datenumber) && isset($datetype)) {
-        $startdate = $today;
-        $enddate = strtotime("+$datenumber $datetype", $startdate);
+        if (xarVarValidate('int:1:365', $datenumber, true)
+        && xarVarValidate('pre:lower:passthru:enum:days:weeks:months:years', $datetype, true)) {
+            if (!isset($startdate)) $startdate = $today;
+            $enddate = strtotime("+$datenumber $datetype", $startdate);
+        }
     }
 
 
     // Check a few other formats
-    if (!isset($startdate)) {
+    if (isset($range) && !isset($startdate)) {
         switch($range) {
             case 'yesterday':
             case 'today':

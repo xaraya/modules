@@ -3,9 +3,13 @@
 /**
  * Fetch the global parameters and settings for the module.
  * @param name string The name of an individual parameter to return
+ * @param names string or array List of parameters to return as a numeric keyed array
+ * @param knames string or array List of paremeters to return as a name keyed array
  *
  * @todo Some of these parameters may have user overrides, and may
  * ultimately be stored as module variables.
+ * - Use 'names' with list() to assign values to variables.
+ * - Use 'knames' with extract() to create variables.
  */
 
 function ievents_userapi_params($args)
@@ -25,7 +29,7 @@ function ievents_userapi_params($args)
         // Time quanta.
         // The smallest chunk of time dealt with (minutes).
         // Make sure it is divisible into 60 by a whole number.
-        // Range is 0 to 60, where '0' disables the quantisation feature.
+        // Range is 0 to 60 (e.g. 5, 10, 15, 20, 30), where '0' disables the quantisation feature.
         $params['quanta'] = 15;
 
         // The maximum number of categories that can be added to an event.
@@ -36,6 +40,7 @@ function ievents_userapi_params($args)
         $params['itemtype_calendars'] = 2;
 
         $module = 'ievents';
+
         $params['module'] = $module;
         $params['modid'] = xarModGetIDFromName($module);
 
@@ -53,7 +58,7 @@ function ievents_userapi_params($args)
         // TODO: allow a default 'daterange' name instead.
         $params['default_startdate'] = 'now';
         $params['default_enddate'] = '+6 months';
-        $params['default_daterange'] = '+6 months';
+        $params['default_daterange'] = 'next6months';
 
         // Output transform fields.
         // Only these fields will be passed through the output transform.
@@ -96,7 +101,7 @@ function ievents_userapi_params($args)
         );
 
         // Default date range for calendar subscriptions.
-        $params['cal_subscribe_range'] = 'window2months';
+        $params['cal_subscribe_range'] = 'window4months';
         $params['cal_subscribe_numitems'] = 100;
 
         // Format of the full address.
@@ -145,6 +150,30 @@ function ievents_userapi_params($args)
         // If true, then all category searches are performed
         // as a tree search (i.e. selected category and all descendants).
         $params['category_tree_search'] = true;
+
+        // Get locale data, so we can get month and day names.
+        $localeData = xarMLSLoadLocaleData();
+        $params['locale'] = array(
+            'months' => array('short' => array(), 'long' => array()),
+            'days' => array('short' => array(), 'long' => array()),
+        );
+
+        // Months are 1-indexed.
+        for($i = 1; $i <= 12; $i+=1) {
+            $params['locale']['months']['short'][$i] = $localeData["/dateSymbols/months/${i}/short"];
+            $params['locale']['months']['long'][$i] = $localeData["/dateSymbols/months/${i}/full"];
+        }
+
+        // Days are zero-indexed. They will be rotated so the start day of the week comes first. Sunday is zero.
+        for($i = 1; $i <= 7; $i+=1) {
+            $params['locale']['days']['short'][($i+$params['startdayofweek']+6) % 7] =
+                $localeData["/dateSymbols/weekdays/" . (($i+$params['startdayofweek']+6) % 7 + 1) . "/short"];
+            $params['locale']['days']['long'][($i+$params['startdayofweek']+6) % 7] =
+                $localeData["/dateSymbols/weekdays/" . (($i+$params['startdayofweek']+6) % 7 + 1) . "/full"];
+        }
+
+        //var_dump($localeData);
+        //var_dump($params['locale']['days']['long']);
     }
 
     if (!empty($name)) {
@@ -154,15 +183,24 @@ function ievents_userapi_params($args)
         } else {
             $return = NULL;
         }
-    } elseif (!empty($names)) {
+    } elseif (!empty($names) || !empty($knames)) {
         // Multiple names as a comma-separated list
         $return = array();
+
+        if (!empty($knames)) $names = $knames;
 
         if (is_string($names)) $names = explode(',', $names);
 
         // Loop for each name and look up its value.
         foreach($names as $name) {
-            $return[] = ievents_userapi_params(array('name' => $name));
+            // Trim in case there are spaces in the list.
+            $name = trim($name);
+
+            if (!empty($knames)) {
+                $return[$name] = ievents_userapi_params(array('name' => $name));
+            } else {
+                $return[] = ievents_userapi_params(array('name' => $name));
+            }
         }
     } else {
         // Return all parameters

@@ -284,3 +284,22 @@ a.ievents-export-vcal {
 	background-repeat: no-repeat;
 	background-position: center left;
 }
+
+/* Selectors for the calendar view */
+
+div.ievents-view table {
+    border-collapse: collapse;
+}
+div.ievents-view-cal td {
+    border-color: #666666;
+}
+div.ievents-view-cal table {
+    border-color: #666666;
+}
+
+/* Simple/advanced search form classes */
+/* Hide the search form visuals but it still operates as normal */
+div.ievents-search-advanced-hidden {
+    display: none;
+}
+
