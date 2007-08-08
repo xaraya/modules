@@ -149,8 +149,6 @@ class ievents_exportapi_handler_master
     var $output_encoding = 'utf8';
     var $input_encoding = 'utf8';
 
-    var $file_extension = 'txt';
-
     var $categories = array();
 
     // Constructor.
