@@ -108,7 +108,11 @@ class phpOpenTracker_Container {
           $container['host'] = phpOpenTracker_Parser::hostname($container['host']);
         }
 
-        $container['user_agent_orig'] = isset($parameters['user_agent']) ? $parameters['user_agent'] : $_SERVER['HTTP_USER_AGENT'];
+        /* Fix for bug 5305 by StEgo */
+        $useragent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : "";
+        $container['user_agent_orig'] = isset($parameters['user_agent']) ? $parameters['user_agent'] : $useragent;
+        // original line
+        // $container['user_agent_orig'] = isset($parameters['user_agent']) ? $parameters['user_agent'] : $_SERVER['HTTP_USER_AGENT'];
 
         if ($config['group_user_agents']) {
           $container = array_merge(
