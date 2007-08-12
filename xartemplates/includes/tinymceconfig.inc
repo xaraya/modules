@@ -139,7 +139,7 @@
     //FILEBROWSER only settings - you MUST set this correctly
     $cfg['filebrowser_dir']= '/var/uploads/'; //Filebrowser will look for images here and create allowed types directories
 
-    $cfg['Enabled'] = 1 ; // 1 - on, 0 off Set this to enable or disable Filebrowser upload and browse facility. If disabled filebrowser appears but a disabled message is shown
+    $cfg['Enabled'] = 0 ; // 1 - on, 0 off Set this to enable or disable Filebrowser upload and browse facility. If disabled filebrowser appears but a disabled message is shown
 
     // Configurations below can be left at default
     //Types of media users can 'browse' - remove type to prevent browsing of that type. Do not change names unless you know what you are doing. You can remo
