@@ -7,7 +7,7 @@ function xarpages_funcapi_news($args)
     // The articles publication type is required, and is selected by the page.
     if (empty($args['current_page']['dd']['pubtype'])) return $args;
 
-    // There may be multiple publication types, as a commad-separated list.
+    // There may be multiple publication types, as a comma-separated list.
     // The articles API can accept such a list directly.
     $ptid = $args['current_page']['dd']['pubtype'];
     $ptids = explode(',', $ptid);
@@ -28,6 +28,19 @@ function xarpages_funcapi_news($args)
     // Parameter to allow selection of only front page articles. Limit to frontpage if true.
     xarVarFetch('frontpage', 'bool', $frontpage, false, XARVAR_NOT_REQUIRED);
 
+    // Set the archive view.
+    xarVarFetch('archive', 'str', $archive, '', XARVAR_NOT_REQUIRED);
+    if (!empty($archive)) {
+        // Add in an '-' characters if they have been left out.
+        if (preg_match('/^\d{6}$/', $archive)) $archive = substr($archive, 0, 4) . '-' . substr($archive, 4, 2);
+        if (preg_match('/^\d{8}$/', $archive)) $archive = substr($archive, 0, 4) . '-' . substr($archive, 4, 2) . '-' . substr($archive, 6, 2);
+
+        // Check the format passed in. YYYY, YYYY-MM or YYYY-MM-DD, defaulting to this month if invalid.
+        // TODO: check valid ranges have been supplied, i.e. that the result is possibly a valid date.
+        if (!preg_match('/^\d{4}(|-\d{2}|-\d{2}-\d{2})$/', $archive)) $archive = date('Y-m');
+    }
+
+
     // For the pager.
     // Set the max items to be four times the items per page, within a window of 100 to 1000
     // TODO: make this configurable, but these seem reasonable limuts for now.
@@ -45,9 +58,19 @@ function xarpages_funcapi_news($args)
 
     // TODO: support some fancy category joining.
     // A single category selected: cid=N
-    xarVarFetch('cid', 'id', $cid, '', XARVAR_NOT_REQUIRED);
-    // A group of categories selected: cids=N[]
-    xarVarFetch('cids', 'list:id', $cids, array(), XARVAR_NOT_REQUIRED);
+    xarVarFetch('cid', 'regexp:/_?\d+/', $cid, '', XARVAR_NOT_REQUIRED);
+    // A group of categories selected, e.g. cids[]=N or cids[]=_M
+    xarVarFetch('cids', 'list:regexp:/_?\d+/', $cids, array(), XARVAR_NOT_REQUIRED);
+
+    // All the categories rolled into one paramater, e.g. cats=_1+3 cats=4-5
+    xarVarFetch('cats', 'str', $cats, '', XARVAR_NOT_REQUIRED);
+
+    if (!empty($cats)) {
+        if (xarVarValidate('strlist:+ -:regexp:/_?\d+/', $cats, true)) {
+            $cats_array = preg_split('/[+ -]+/', $cats);
+            $cids = array_merge($cids, $cats_array);
+        }
+    }
 
     // Keyword search
     xarVarFetch('q', 'pre:trim:passthru:strlist: ,;:pre:lower:trim:passthru:str', $q, NULL, XARVAR_NOT_REQUIRED);
@@ -58,7 +81,6 @@ function xarpages_funcapi_news($args)
         $q_array = explode(' ', $q);
     }
 
-
     // Transform hook details.
     // Start with some defaults, and allow an override.
 
@@ -67,12 +89,14 @@ function xarpages_funcapi_news($args)
 
     // Transform hook fields on details.
     $transform_fields_detail = array('summary', 'body', 'notes');
-
     
     // TODO: allow override using a parameter.
     // General sort methods will be what articles supports (practically just date and title)
     $sort = $settings['defaultsort'];
     
+    // Put all the category ids into the cids array.
+    if (!empty($cid) && !in_array($cid, $cids)) array_push($cids, $cid);
+
     // Set the URL Params array.
     $url_params = array();
 
@@ -80,7 +104,6 @@ function xarpages_funcapi_news($args)
     if ($startnum > 1) $url_params['startnum'] = $startnum;
     if ($numitems != $settings['itemsperpage']) $url_params['numitems'] = $numitems;
     if (!empty($q)) $url_params['q'] = $q;
-    if (!empty($cid)) $url_params['cid'] = $cid;
     if (!empty($cids)) $url_params['cids'] = $cids;
     if (!empty($aid)) $url_params['aid'] = $aid;
 
@@ -89,22 +112,20 @@ function xarpages_funcapi_news($args)
     // or search terms etc.
     $searching_flag = (empty($url_params) ? false : true);
 
-    // Put all the category ids into the cids array.
-    if (!empty($cid) && !in_array($cid, $cids)) array_push($cids, $cid);
-    
     // The page may have one (or more?) forced categories.
     // This means no matter what additional category the user selects,
     // this category will always be included.
     if (!empty($args['current_page']['dd']['mandatory_cat'])) {
         $mandatory_cat = $args['current_page']['dd']['mandatory_cat'];
         // It should be a comma-separated list
-        if (xarVarValidate('strlist:,:id', $mandatory_cat, true)) {
+        if (xarVarValidate('strlist:,:regexp:/_?\d+/', $mandatory_cat, true)) {
             $mandatory_cats = explode(',', $mandatory_cat);
-            foreach($mandatory_cats as $mandatory_cat) {
-                array_push($cids, (int)$mandatory_cat);
-            }
+            $cids = array_merge($cids, $mandatory_cats);
         }
     }
+
+    // Strip out any duplicate cids
+    $cids = array_unique($cids);
 
     // TODO: define base categories and use them for validation, as well as selection.
 
@@ -113,6 +134,7 @@ function xarpages_funcapi_news($args)
     // We should have a list of categories now.
 
     // Categories are always ANDed.
+    // TODO: provide OR method too.
     $andcids = true;
 
     // Set the statuses.
@@ -126,17 +148,10 @@ function xarpages_funcapi_news($args)
     // Don't display future items.
     // TODO: perhaps allow administrators to see more.
     // Take us to the end of today, as an end date.
-    $enddate = strtotime(strftime('%d-%b-%Y') . ' +1 day');
+    $enddate = strtotime('+1 day -1 second', time());
 
     // Get details for all pubtypes
     $pubtypes = xarModAPIFunc('articles', 'user', 'getpubtypes');
-
-    // TODO: Force all categories to be tree-selects.
-    // (This appears not to work in the articles getall() API - though it ought to)
-    $select_cids = array();
-    foreach($cids as $cid_value) {
-        $select_cids = preg_replace('/(?<!_)([0-9]+)/', '_$1', $cid_value);
-    }
 
     $article_select = array(
         'startnum' => $startnum,
@@ -149,9 +164,9 @@ function xarpages_funcapi_news($args)
         //'extra' => $extra,
         //'where' => $where_string,
         //'wheredd' => $wheredd_string,
-        //'ptids' => $ptids,
-        'ptid' => $ptid,
+        'ptid' => $ptids, // Pass in an array
         'enddate' => $enddate,
+        'pubdate' => $archive,
         'fields' => array(
             'title', 'aid', 'title', 'summary', 'authorid',
             'pubdate', 'pubtypeid', 'notes', 'status', 'body',
@@ -267,15 +282,25 @@ function xarpages_funcapi_news($args)
         if (!empty($transform_fields_summary)) {
             foreach($articles as $t_key => $t_article) {
                 $t_article['transform'] = $transform_fields_summary;
-                $t_article['itemtype'] = $article['pubtypeid'];
-                $t_article['itemid'] = $article['aid'];
+                $t_article['itemtype'] = $t_article['pubtypeid'];
+                $t_article['itemid'] = $t_article['aid'];
                 $articles[$t_key] = xarModCallHooks('item', 'transform', $t_article['aid'], $t_article, 'articles');
             }
         }
     }
 
-    // TODO: an archive by date - do the summaries here, but only if requested (by parameter or page flag)
-    // TODO: handle categories: default, user-selected
+    // An archive by date - do the summaries here, but only if requested (by parameter or page flag)
+    if (!empty($archive)) {
+        $month_select = $article_select;
+        unset($month_select['pubdate']);
+        $month_counts = xarModAPIFunc('articles', 'user', 'getmonthcount', $month_select);
+        //var_dump($month_counts);
+        // TODO: Sum up counts by year
+        // TODO: split up date for display as a title
+        // TODO: group years and months for display in a grid
+        // TODO: split up months and years for display as titles, possible as full names.
+    }
+
 
     // Return the list of articles.
     $args['article'] = $article;

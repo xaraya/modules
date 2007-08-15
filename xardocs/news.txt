@@ -56,3 +56,16 @@ Various settings, such as the default number of items per page, come from the ar
 publication type settings. If multiple publication types are listed for a page, then
 articles global settings are used instead.
 
+Archives
+========
+
+The archive mode is triggered with the parameter 'archive'.
+
+If set to 'YYYY' then just articles for that year are displayed.
+If set to 'YYYY-MM' then articles for that month are displayed.
+The 'YYYY-MM-DD' format is supported too, but there will be no links on the archive map
+with a resolution anything less than a month.
+Any other value, e.g. 'show' will trigger the archive map, and limit articles to the
+current year and month.
+The '-' can be left out.
+
