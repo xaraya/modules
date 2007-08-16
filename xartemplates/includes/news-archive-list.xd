@@ -1,0 +1,52 @@
+<xar:comment>
+    Display a table or list of years and months for the the article/news archive.
+</xar:comment>
+
+<xar:if condition="!empty($extra.archive)">
+    <h2>
+        <xar:mlstring>Monthly Archive </xar:mlstring>
+        <xar:if condition="!empty($extra.archive.year)and empty($extra.archive.month)">
+            (#$extra.archive.year#)
+        </xar:if>
+        <xar:if condition="!empty($extra.archive.year)and !empty($extra.archive.month)">
+            (#xarLocaleFormatDate('%B',strtotime('2000-'. $extra.archive.month .'-01'))# #$extra.archive.year#)
+        </xar:if>
+    </h2>
+    <table>
+        <xar:comment>Create column headings</xar:comment>
+        <th scope="col"><a href="#xarServerGetCurrentURL(array('archive'=&gt;NULL,'startnum'=&gt;NULL))#" title="#xarML('View latest')#"><xar:mlstring>Year</xar:mlstring></a></th>
+        <xar:for start="$i=1" test="$i<=12" iter="$i=$i+1">
+            <th scope="col">#xarLocaleFormatDate('%b',strtotime('2000-'.$i.'-01'))#</th>
+        </xar:for>
+
+        <xar:loop name="$extra.archive.years" id="years">
+            <xar:if condition="$loop:years:key eq $extra.archive.year and empty($extra.archive.month)">
+                <xar:set name="year_class">'current'</xar:set>
+            <xar:else />
+                <xar:set name="year_class">''</xar:set>
+            </xar:if>
+
+            <tr class="#$year_class#">
+                <xar:comment>The year link</xar:comment>
+                <th scope="row">
+                    #$loop:years:key# <a href="#xarServerGetCurrentURL(array('archive'=&gt;$loop:years:item.archive,'startnum'=&gt;NULL))#">(#$loop:years:item.count#)</a>
+                </th>
+
+                <xar:comment>The month links</xar:comment>
+                <xar:loop name="$loop:years:item.months">
+                    <xar:if condition="$loop:years:key eq $extra.archive.year and $loop:key eq $extra.archive.month">
+                        <xar:set name="month_class">'current'</xar:set>
+                    <xar:else />
+                        <xar:set name="month_class">''</xar:set>
+                    </xar:if>
+
+                    <td class="#$month_class#">
+                        <xar:if condition="!empty($loop:item)">
+                            <a href="#xarServerGetCurrentURL(array('archive'=&gt;$loop:item.archive,'startnum'=&gt;NULL))#">#$loop:item.count#</a>
+                        </xar:if>
+                    </td>
+                </xar:loop>
+            </tr>
+        </xar:loop>
+    </table>
+</xar:if>

@@ -106,6 +106,7 @@ function xarpages_funcapi_news($args)
     if (!empty($q)) $url_params['q'] = $q;
     if (!empty($cids)) $url_params['cids'] = $cids;
     if (!empty($aid)) $url_params['aid'] = $aid;
+    if (!empty($archive)) $url_params['archive'] = $archive;
 
     // This flag is set, and passed into the template, if the user is doing any
     // kind of searching, i.e. is not on the first page, is selecting a category
@@ -294,11 +295,42 @@ function xarpages_funcapi_news($args)
         $month_select = $article_select;
         unset($month_select['pubdate']);
         $month_counts = xarModAPIFunc('articles', 'user', 'getmonthcount', $month_select);
-        //var_dump($month_counts);
-        // TODO: Sum up counts by year
-        // TODO: split up date for display as a title
-        // TODO: group years and months for display in a grid
-        // TODO: split up months and years for display as titles, possible as full names.
+
+        // DONE: Sum up counts by year
+        // DONE: split up date for display as a title
+        // DONE: group years and months for display in a grid
+        // DONE: split up months and years for display as titles, possible as full names.
+
+        // Now scan the archive and build up several arrays.
+        $archive_data = array();
+        $archive_data['year'] = (int)substr($archive, 0, 4);
+        $archive_data['month'] = (int)(substr($archive . '00000000', 5, 2));
+        $archive_data['day'] = (int)(substr($archive . '00000000', 8, 2));
+
+        $archive_data['years'] = array();
+
+        foreach($month_counts as $month_key => $month_count) {
+            $loop_year = (int)substr($month_key, 0, 4);
+            $loop_month = (int)substr($month_key, 5, 2);
+
+            if (!isset($archive_data['years'][$loop_year])) {
+                $archive_data['years'][$loop_year]['count'] = 0;
+                $archive_data['years'][$loop_year]['archive'] = sprintf('%04d', $loop_year);
+                $archive_data['years'][$loop_year]['months'] = array();
+
+                // Fill in the months so we have an empty framework.
+                for($i=1; $i<=12; $i++) $archive_data['years'][$loop_year]['months'][$i] = array();
+            }
+
+            $archive_data['years'][$loop_year]['months'][$loop_month]['count'] = $month_count;
+            $archive_data['years'][$loop_year]['months'][$loop_month]['archive'] = sprintf('%04d-%02d', $loop_year, $loop_month);;
+            $archive_data['years'][$loop_year]['count'] += $month_count;
+        }
+
+        // Finally make sure the latest year comes first.
+        krsort($archive_data['years'], SORT_STRING);
+    } else {
+        $archive_data = array();
     }
 
 
@@ -315,6 +347,7 @@ function xarpages_funcapi_news($args)
         'search_count' => $search_count,
         'searching_flag' => $searching_flag,
         'aid' => $aid,
+        'archive' => $archive_data,
     );
 
     return $args;
