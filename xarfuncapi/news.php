@@ -92,7 +92,7 @@ function xarpages_funcapi_news($args)
     
     // TODO: allow override using a parameter.
     // General sort methods will be what articles supports (practically just date and title)
-    $sort = $settings['defaultsort'];
+    $sort = (isset($settings['defaultsort']) ? $settings['defaultsort'] : '');
     
     // Put all the category ids into the cids array.
     if (!empty($cid) && !in_array($cid, $cids)) array_push($cids, $cid);

@@ -13,17 +13,17 @@
     text is displayed (so the user sees intro text *or* listings, but never
     both). Adapt this template to do that.
 </xar:comment>
-<xar:if condition="(empty($extra.searching_flag) and !empty($current_page.dd.intro_text)) or (empty($article) and empty($articles))">
+<xar:if condition="!empty($current_page.dd.intro_text) and (empty($extra.searching_flag) or (empty($article) and empty($articles)))">
     <div class="xarpages-intro-text">#$current_page.dd.intro_text#</div>
-</xar:if>
-
-<xar:comment>Archive table - the user has elected to view an archive</xar:comment>
-<xar:if condition="!empty($extra.archive)">
-    <div class="xarpages-archive-list"><xar:template file="news-archive-list" /></div>
 </xar:if>
 
 <xar:comment>List of items</xar:comment>
 <xar:if condition="empty($extra.aid)">
+    <xar:comment>Archive table - the user has elected to view an archive (only show on the overview)</xar:comment>
+    <xar:if condition="!empty($extra.archive)">
+        <div class="xarpages-archive-list"><xar:template file="news-archive-list" /></div>
+    </xar:if>
+
     <xar:comment>Different text for the summary as for an individual item?</xar:comment>
     <xar:if condition="isset($current_page.dd.list_text)">
         <div class="xarpages-list-text">#$current_page.dd.list_text#</div>
