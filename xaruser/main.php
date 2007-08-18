@@ -1,6 +1,6 @@
 <?php
 
-require_once('modules/sitesearch/xarclass/xapian.php');
+include_once('modules/sitesearch/xarclass/xapian.php');
 
 /**
     Main Search Function
@@ -8,38 +8,36 @@ require_once('modules/sitesearch/xarclass/xapian.php');
 function sitesearch_user_main()
 {
     if( !extension_loaded('xapian') ) {
-        $msg = "SiteSearch requires PHP4.3.0+ with the Xapian php extension";
+        $msg = "SiteSearch requires PHP5+ with the Xapian php extension";
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'XAR_PHP_EXCEPTION', $msg);
         return false;
     }
-
+    
     if( !xarVarFetch('keywords', 'str', $keywords, '') ){ return false; }
     if( !xarVarFetch('startnum', 'int', $startNum, 1) ){ return false; }
     if( !xarVarFetch('database', 'str', $database, null, XARVAR_NOT_REQUIRED) ){ return false; }
     if( !xarVarFetch('prefixes', 'array', $prefixes, null, XARVAR_NOT_REQUIRED) ){ return false; }
-
+        
     $databases = null;
     if( !empty($database) )
         $databases[]['database_name'] = $database;
 
-    $engine = new xapian($databases);
-
+    $engine = new xapian_engine($databases);
+    
     // If we have keywords let do the search
     if( !empty($keywords) )
     {
         xarModAPILoad('sitesearch', 'user');
-        $itemsPerPage  = xarModGetVar('sitesearch', 'itemsperpage');
-        if( empty($itemsPerPage) ){ $itemsPerPage = 10; }
 
         // Perform the search
         $start_time = microtime(true);
-        $result = $engine->search($keywords, $startNum - 1,$itemsPerPage);
+        $result = $engine->search($keywords, $startNum-1);
         $end_time = microtime(true);
-
+        
         // Retreive details
         $totalPages   = $engine->get_doc_count();
         $totalMatches = $engine->get_num_matches();
-
+        xarLogMessage("SS: Found $totalPages documents with $totalMatches matches");
         $hlbeg = xarModGetVar('sitesearch', 'HLBeg');
         $hlend = xarModGetVar('sitesearch', 'HLEnd');
 
@@ -49,16 +47,17 @@ function sitesearch_user_main()
         // Setup the Pager
         $url = xarModURL('sitesearch', 'user', 'main',
             array(
-                'startnum'   => '%%',
+                'startnum'   => '%%', 
                 'keywords'   => $keywords,
                 'database'   => $database
             )
         );
-
+        $itemsPerPage  = xarModGetVar('sitesearch', 'itemsperpage');
+        if( empty($itemsPerPage) ){ $itemsPerPage = 10; } 
         $data['pager'] = xarTplGetPager( $startNum, $totalMatches, $url, $itemsPerPage );
-
+        
         // Prepare vars for template
-        $data['results']      = $engine->results;
+        $data['results']      = $engine->results;        
         $data['totalMatches'] = $totalMatches;
         $data['searchTime']   = number_format($end_time - $start_time, 4);
         $data['firstRow']     = $startNum;
@@ -67,7 +66,7 @@ function sitesearch_user_main()
     }
 
     $data['totalPages'] = $engine->get_doc_count();
-
+    
     $data['keywords'] = htmlentities($keywords);
     $data['database'] = isset($database) ? $database : '';
     $data['databases'] = $engine->get_limits();

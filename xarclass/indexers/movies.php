@@ -8,15 +8,8 @@ include_once("modules/sitesearch/xarclass/indexer.php");
 
 class movies_indexer extends indexer 
 {
-
-    function movies_indexer($args=null)
-    {
-        $this->name = "movies";
-        
-        parent::indexer();
+    var $name = 'movies';
     
-    }
-
     /**
         Query the DB and setup the record set
     */
@@ -45,7 +38,7 @@ class movies_indexer extends indexer
         if( !empty($long_summary) ){ $summary = $long_summary; }
         else { $summary = $short_summary; }
 
-        $document = new_document();
+        $document = new XapianDocument();
         
         $this->index_text($title, $document, $weight=3);
         $this->index_text($summary, $document, $weight=2);
@@ -54,14 +47,13 @@ class movies_indexer extends indexer
             Add values to documents for use in displaying search results
         */
         $i = 0;
-        document_add_value($document, $i++, $id);
-        document_add_value($document, $i++, $title);
-        document_add_value($document, $i++, substr(strip_tags(trim($summary)), 0, 255));
-        document_add_value($document, $i++, 'HTML');
-        document_add_value($document, $i, $url);        
+        $document->add_value($i++, $id);
+        $document->add_value($i++, $title);
+        $document->add_value($i++, substr(strip_tags(trim($summary)), 0, 255));
+        $document->add_value($i++, 'HTML');
+        $document->add_value($i, $url);        
         
-        writabledatabase_replace_document($this->database, $id, $document);
-        
+        $this->database->replace_document((int) $id, $document);
         return $document;    
     }
 }

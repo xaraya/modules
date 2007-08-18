@@ -7,13 +7,6 @@ class sitesearch_engine
     */
     var $keywords;
     
-    /**
-        Constructs the SiteSearch engine
-    */
-    function sitesearch_engine()
-    {
-    
-    }
     
     /**
         Perform search
@@ -21,14 +14,13 @@ class sitesearch_engine
     function search($keywords)
     {
         $this->log_search($keywords);
-    
         return true;
     }
     
     /**
         Log a search query
     */
-    function log_search($keywords)
+    private function log_search($keywords)
     {
         $dbconn =& xarDBGetConn();
         $xartable =& xarDBGetTables();

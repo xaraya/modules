@@ -2,61 +2,37 @@
 
 include_once('modules/sitesearch/xarclass/engine.php');
 
-if( !extension_loaded('xapian') )
-{
-    dl("xapian.so");
-}
+include_once('modules/sitesearch/xarclass/libXapian.php');
 
-class xapian extends sitesearch_engine
+class xapian_engine extends sitesearch_engine
 {
-    /**
-
-    */
     var $base = 'var/sitesearch/';
 
-    /**
-        Holds a xapian database object or a collection of them
-    */
+    //    Holds a xapian database object or a collection of them
     var $databases;
 
-    /**
-
-    */
     var $result_set;
 
-    /**
-        Contains search results ready for output
-    */
+    //Contains search results ready for output
     var $results;
 
-    /**
-        Contains number of search results
-    */
+    //  Contains number of search results
     var $num_results;
 
-    /**
-        Constructs the Xapian search engine
-    */
-    function xapian($dbs=null)
+    // Constructs the Xapian search engine
+    function __construct($dbs=null)
     {
+        $this->databases = new XapianDatabase();
         $db_path = xarModGetVar('sitesearch', 'database_path');
-
-        if( is_null($dbs) )
+        
+        if( is_null($dbs) ) 
             $dbs = $this->get_limits();
 
         foreach( $dbs as $db )
         {
             $path = $db_path . $db['database_name'];
             if( file_exists($path) )
-            {
-                if( empty($this->databases) )   {
-                    xarLogMessage("SS: New DB $path");
-                    $this->databases = new_database($path);
-                } else {
-                    xarLogMessage("SS: New DB $path");
-                    database_add_database($this->databases, new_database($path));
-                }
-            }
+                $this->databases->add_database(new XapianDatabase($path));
         }
     }
 
@@ -65,83 +41,88 @@ class xapian extends sitesearch_engine
     */
     function search($keywords, $start=0, $num=10)
     {
-        if( is_null($this->databases) ){ return false; }
+        xarLogMessage("SS: search started");
+        if( is_null($this->databases) )
+            return false; 
+            
+
         $this->keywords = $keywords; // cached the keywords for later use
-        xarLogMessage("SS: keywords entered: $keywords");
         parent::search($keywords);
 
-        /*
-            Use Xapian's Query Parser Class to parse the users keywords
-            We still need to work on the options as there are tons of options
-        */
-        $stemmer = new_stem ("english");
-        $query_parser = new_queryparser();
+        // Configure the stemmer
+        // @todo: make this follow the site language? what if site is NL and content is EN? or vice versa?
+        $stemmer = new  XapianStem ("none");
 
-        // Set the stemmer and turn on the stemming strategy
-        queryparser_set_stemmer ($query_parser, $stemmer);
-        queryparser_set_stemming_strategy ($query_parser, STEM_ALL);
-        queryparser_set_database($query_parser, $this->databases);
-        queryparser_set_default_op($query_parser, OP_ELITE_SET );
-        $query = queryparser_parse_query($query_parser, $keywords, FLAG_WILDCARD);
-        //var_dump($query); die();
+        // Configure the query parser
+        $qp      = new XapianQueryParser();
+        
+        $qp->set_stemmer($stemmer);
+        $qp->set_stemming_strategy(XapianQueryParser::STEM_ALL);
+        $qp->set_database($this->databases);
+        $qp->set_default_op(XapianQuery::OP_ELITE_SET);
+        
+        $query = $qp->parse_query($keywords,XapianQueryParser::FLAG_WILDCARD|XapianQueryParser::FLAG_PARTIAL);
 
         // Enquire object is used to actually perform the query
         // the query parser object returned
-        $enq = new_enquire( $this->databases );
-        enquire_set_query( $enq, $query );
+        $enq = new XapianEnquire($this->databases);
+        $enq->set_query($query);
 
         /*
             Get the next set of records
         */
-        $this->result_set = enquire_get_mset( $enq, $start, $num,2*$num);
-        $this->process_result_set($num);
+        $this->result_set = $enq->get_mset($start, $num);
+        xarLogMessage("SS: Resultset: " . $this->result_set->size());
+        
+        $this->process_result_set();
+
         return true;
     }
 
     /**
         Process search results into a usable form
     */
-    function process_result_set($num=10)
+    function process_result_set()
     {
         if( is_null($this->databases) ){ return false; }
         $words = str_word_count($this->keywords, 1);
 
         $i = 0;
         $this->results = array();
-        $item = mset_begin( $this->result_set );
-        while ( !msetiterator_equals($item, mset_end($this->result_set)) )
+        
+        $item = $this->result_set->begin();
+
+        while( !$item->equals($this->result_set->end()))  
         {
-            $document = msetiterator_get_document( $item );
+            $document = $item->get_document();
 
             // Get the url and make a smaller display friendly url so that it does
             // screw up our layout.
             // NOTE: May want to make this configure via admin interface
-            $url = document_get_value( $document, 4 );
-            //xarLogMessage("SS: found URL $url");
+            $url = $document->get_value(4);
             $display_url = substr($url, 0, 75);
 
             // Highlight individual words
-            $text = document_get_value( $document, 2 );
+            $text = $document->get_value(2);
             foreach( $words as $word )
             {
                 $text = $this->highlight($text, $word);
             }
 
-        	$this->results[$i] = array(
-        	   'text'        => $text,
-        	   'url'         => $url,
-        	   'display_url' => $display_url,
-        	   'title'       => document_get_value( $document, 1 ),
-        	   'relevancy'   => msetiterator_get_percent( $item )
-        	);
+            $this->results[$i] = array(
+               'text'        => $text,
+               'url'         => $url,
+               'display_url' => $display_url,
+               'title'       => $document->get_value(1),
+               'relevancy'   => $item->get_percent()
+            );
 
-        	// Get the next document
-            msetiterator_next($item);
+            // Get the next document
+            $item->next();
             $i++;
-            if($i >= $num) break;
         }
 
-        $this->num_results = min($num,mset_size($this->result_set));
+        $this->num_results = $this->result_set->size();
 
         return true;
     }
@@ -152,7 +133,7 @@ class xapian extends sitesearch_engine
     function get_num_matches()
     {
         if( is_null($this->databases) ){ return 0; }
-        return mset_get_matches_estimated($this->result_set);
+        return $this->result_set->get_matches_estimated();
     }
 
     /**
@@ -161,7 +142,7 @@ class xapian extends sitesearch_engine
     function get_doc_count()
     {
         if( is_resource($this->databases) )
-            return database_get_doccount($this->databases);
+            return $this->databases->get_doccount();
         else
             return 0;
     }

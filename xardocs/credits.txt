@@ -1,4 +1,4 @@
 
-SiteSearch is an interface to mnoGoSearch (http://www.mnogosearch.org/).
+SiteSearch is an interface to the xapian search engine
 
 Thanks to baraboom for the help on the SiteSearch docs.

@@ -1,12 +1,5 @@
 <?php
-
-if( !extension_loaded('xapian') ) 
-{
-    dl("xapian.so");
-}
-
 include_once('modules/sitesearch/xarclass/xapian.php');
-//define('XAPIAN_PREFER_FLINT', true);
 
 /*
 
@@ -28,7 +21,7 @@ function sitesearch_admin_indexer($args)
         
     $data = array();
     
-    $engine = new xapian(array());
+    $engine = new xapian_engine(array());
     $data['databases'] = $engine->get_limits();
 
     return xarTplModule('sitesearch', 'admin', 'index', $data);

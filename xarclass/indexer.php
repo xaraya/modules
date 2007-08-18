@@ -1,67 +1,34 @@
 <?php
 
-class indexer
+abstract class indexer
 {
-    /**
-        Name of the indexer
-    */
-    var $name = 'unknown';
+    var $name = 'unknown';         // name of the indexer
+    var $base = 'var/sitesearch/'; // base directory
 
-    /**
-        Base dir
-    */
-    var $base;
+    var $db_conn;           // xaraya db connection
+    var $record_set;        // holds the dataset
 
-    /**
-        The main xaraya DB connection used to get the data.
-    */
-    var $db_conn;
 
-    /**
-        Holds data set
-    */
-    var $record_set;
+    var $database;          // xapian database object to write to
+    var $stemmer;           // xapian stemmer object
 
-    /**
-        The Xapian database to write to.
-    */
-    var $database;
-
-    /**
-        The Xapian Stemmer Object.
-    */
-    var $stemmer;
-
-    /**
-
-    */
     var $args;
     var $mappings;
 
-    /**
-        The main DB indexer
-    */
-    function indexer($args=null)
+    function __construct($args=null)
     {
-        $this->base = 'var/sitesearch/';
-
-        $db_args = array(
-            'databaseType' => 'mysql',
-            'databaseHost' => '',
-            'databaseName' => '',
-            'userName' => '',
-            'password' => ''
-        );
+        if(isset($args['database_name'])) $this->name = $args['database_name'];
+        
         $this->db_conn =& xarDBNewConn();
 
         $db_path = xarModGetVar('sitesearch', 'database_path');
         if( file_exists($db_path) )
         {
             if( file_exists($db_path . "{$this->name}/db_lock") ){ unlink($db_path . "{$this->name}/db_lock"); }
-            $this->database = new_writabledatabase($db_path . $this->name, DB_CREATE_OR_OPEN);
+            $this->database = new XapianWritableDatabase($db_path . $this->name, Xapian::DB_CREATE_OR_OPEN);
         }
 
-        $this->stemmer = new_stem("english");
+        $this->stemmer = new XapianStem("english");
         /*
         $this->mappings = array(
             0 => 'id',
@@ -72,15 +39,10 @@ class indexer
         );*/
     }
 
-    /**
-        Query the DB and setup the record set
-    */
-    function get_items()
-    {
-
-        return true;
-    }
-
+    // Gettting the content items for a certain indexer must be implemented by our descendents
+    abstract function get_items();
+    //abstract function make_entry($fields);
+    
     function process()
     {
         $i = 0;
@@ -100,7 +62,7 @@ class indexer
     /**
         Indexes the text for searching
     */
-    function index_text(&$text, &$document, $weight, $prefix=null)
+    function index_text(&$text, XapianDocument &$document, $weight, $prefix=null)
     {
         $words = split(" ", strip_tags($text));
         $pos = 0;
@@ -108,34 +70,33 @@ class indexer
         for( $i = 0; $i < $len; $i++ )
         {
             $word = strtolower(trim($words[$i]));
-            // from what I've seem there are no words more than 50 chars
+            // from what I've seen there are no words more than 50 chars
             //  Also remember terms MUST be under 255 chars other wise the BTREE can not handle it.
             //  There may be a xapian imposed limit of 252 so that would be the better value to use to.
             if( !empty($word) && strlen($word) < 50 )
             {
                 ++$pos;
-                if( !empty($prefix) ){ document_add_posting($document, "$prefix$word", $pos, $weight); }
-                document_add_posting($document, $word, $pos, $weight);
-                $cleaned_word = stem_stem_word($this->stemmer, $word);
+                // Add an occurance of $word at $pos in $document
+                if( !empty($prefix) ) 
+                { 
+                    $document->add_posting("$prefix$word", $pos, $weight); 
+                }
+                $document->add_posting($word, $pos, $weight);
+                $cleaned_word = $this->stemmer->apply($word);
                 if( $word != $cleaned_word )
                 {
-                    if( !empty($prefix) ){
-                        document_add_posting($document, "$prefix$cleaned_word", $pos, $weight);
+                    if( !empty($prefix) )
+                    {
+                        $document->add_posting("$prefix$cleaned_word", $pos, $weight);
                     }
-                    document_add_posting($document, $cleaned_word, $pos, $weight);
+                    $document->add_posting($cleaned_word, $pos, $weight);
                 }
             }
         }
+        xarLogMessage("SS: doc now has :" . $document->termlist_count() ." terms");
     }
 
-    function make_entry($fields)
-    {
-        return false;
-    }
 
-    /**
-
-    */
     function indexer_control()
     {
         $text =

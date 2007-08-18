@@ -1,30 +1,20 @@
 <?php
 
-/**
-
-
-*/
 include_once("modules/sitesearch/xarclass/indexer.php");
 
 class articles_indexer extends indexer 
 {
+    var $name = 'articles';
+    var $db_fields = array (
+            'xar_aid' => 'id',
+            'xar_title' => 'title',
+            'xar_summary' => 'summary',
+            'xar_pubtypeid' => 'ptid'
+            );
     
-    var $db_fields = array(
-        'xar_aid' => 'id',
-        'xar_title' => 'title',
-        'xar_summary' => 'summary',
-        'xar_pubtypeid' => 'ptid'
-    );
-    
-    
-    function articles_indexer($args=null)
+    function __construct(Array $args = null)
     {
-        if( isset($args['database_name']) )
-            $this->name = $args['database_name'];        
-        else 
-            $this->name = "articles";
-
-        parent::indexer();    
+        parent::__construct($args);    
 
         if( isset($args['args']) )
             $this->args = $args['args'];
@@ -60,7 +50,7 @@ class articles_indexer extends indexer
                             $where[] = " xar_pubtypeid = $ptid ";
                             
                             break;                
-                        }	
+                        }    
                     }
                 }                
             }
@@ -122,11 +112,11 @@ class articles_indexer extends indexer
             if( isset($$x_fields[$key]) ){ $$x_fields[$key] .= " " . $field; }
             else {$$x_fields[$key] = $field; }
         }
-        
+
         // Cleans the summary
         $summary = html_entity_decode(strip_tags(trim($summary)));
 
-        $document = new_document();        
+        $document = new XapianDocument();        
         $this->index_text($title, $document, $weight=3);
         $this->index_text($summary, $document, $weight=2);
         if( !empty($cid) )
@@ -139,15 +129,15 @@ class articles_indexer extends indexer
             Add values to documents for use in displaying search results
         */
         $i = 0;
-        document_add_value($document, $i++, $id);
-        document_add_value($document, $i++, $title);
-        document_add_value($document, $i++, substr($summary, 0, 255));
-        document_add_value($document, $i++, 'HTML');
+        $document->add_value($i++, $id);
+        $document->add_value($i++, $title);
+        $document->add_value($i++, substr($summary, 0, 255));
+        $document->add_value($i++, 'HTML');
         $url = xarModURL('articles', 'user', 'display', array('aid' => $id, 'ptid' => $ptid));
-        document_add_value($document, $i, $url);        
-        
-        writabledatabase_replace_document($this->database, $id, $document);
-        
+        $document->add_value($i, $url);        
+
+        $this->database->replace_document((int) $id, $document);
+      
         return $document;    
     }    
 }
