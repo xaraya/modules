@@ -177,6 +177,31 @@ function xarpages_funcapi_news($args)
 
     $articles = xarModAPIFunc('articles', 'user', 'getall', $article_select);
 
+    // Get the details of all the categories selected in these articles.
+    // Gather a list of unique category IDs.
+    $all_cat_cids = array();
+    foreach($articles as $cid_article) {
+        if (is_array($cid_article['cids'])) {
+            $all_cat_cids = array_merge($all_cat_cids, $cid_article['cids']);
+        }
+    }
+    // Now fetch the category details.
+    if (!empty($all_cat_cids)) {
+        $all_cat_cids = array_unique($all_cat_cids);
+        $all_cats = xarModAPIfunc('categories', 'user', 'getcatinfo', array('cids' => $all_cat_cids));
+
+        // Distribute the category details back to the items.
+        foreach($articles as $cid_article_key => $cid_article) {
+            if (is_array($cid_article['cids'])) {
+                foreach($cid_article['cids'] as $article_cid) {
+                    $articles[$cid_article_key]['categories'][$article_cid] = $all_cats[$article_cid];
+                }
+            }
+        }
+    } else {
+        $all_cats = array();
+    }
+
     // Set the Pager
     $search_count = xarModAPIFunc('articles', 'user', 'countitems', $article_select);
     $pager_url_params = array_merge($url_params, array('pid' => $args['current_page']['pid'], 'startnum' => '%%'));
@@ -293,13 +318,16 @@ function xarpages_funcapi_news($args)
     // An archive by date - do the summaries here, but only if requested (by parameter or page flag)
     if (!empty($archive)) {
         $month_select = $article_select;
+
         unset($month_select['pubdate']);
         $month_counts = xarModAPIFunc('articles', 'user', 'getmonthcount', $month_select);
 
         // DONE: Sum up counts by year
         // DONE: split up date for display as a title
         // DONE: group years and months for display in a grid
-        // DONE: split up months and years for display as titles, possible as full names.
+        // DONE: split up months and years for display as titles, possibly as full names.
+        // TODO: if the year and month chosen is not in the retrieved list, then change the date.
+        // (not sure how to do that, without going back and retrieving all articles again)
 
         // Now scan the archive and build up several arrays.
         $archive_data = array();
@@ -348,16 +376,10 @@ function xarpages_funcapi_news($args)
         'searching_flag' => $searching_flag,
         'aid' => $aid,
         'archive' => $archive_data,
+        'categories' => $all_cats,
     );
 
     return $args;
-}
-
-// Get counts of articles for each year and month to enable
-// and arthive menu to be provided.
-
-function xarpages_funcapi_news_archive($args)
-{
 }
 
 ?>
