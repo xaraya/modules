@@ -82,6 +82,12 @@ function categories_userapi_getcatinfo($args)
         if ($result->EOF) return false;
 
         list($cid, $name, $description, $image, $parent, $left, $right) = $result->fields;
+
+        $cid = (int)$cid;
+        $parent = (int)$parent;
+        $left = (int)$left;
+        $right = (int)$right;
+
         $info = compact($s_fields);
 
         // Cache the category if not already.
@@ -91,6 +97,12 @@ function categories_userapi_getcatinfo($args)
         // info array may already populated with cached categories.
         while (!$result->EOF) {
             list($cid, $name, $description, $image, $parent, $left, $right) = $result->fields;
+
+            $cid = (int)$cid;
+            $parent = (int)$parent;
+            $left = (int)$left;
+            $right = (int)$right;
+
             $info[$cid] = compact($s_fields);
 
             // Cache the category if not already.
