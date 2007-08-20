@@ -1,12 +1,19 @@
 
-<xar:comment><xar:set name="dummy">#xarTplSetPageTitle('News items')#</xar:set></xar:comment>
+<xar:if condition="!empty($current_page.dd.page_title)">
+    <xar:set name="dummy">#xarTplSetPageTitle($current_page.dd.page_title)#</xar:set>
+<xar:else />
+    <xar:set name="dummy">#xarTplSetPageTitle($current_page.desc)#</xar:set>
+</xar:if>
+
+<xar:comment>Change this from 'article' to some other prefix to use a different set of template prefixes</xar:comment>
+<xar:set name="template_prefix">'article'</xar:set>
 
 <xar:comment>
     The following line caches the URL of the current index page.
     It should be referenced in the rss theme page template (example below)
     to provide a link to the index page of the feed, rather than a link
     to the home page of the site.
-    <link>#xarVarGetCached('themes','rss_channel_link')#</link>
+    <link>#xarVarGetCached('themes', 'rss_channel_link')#</link>
 </xar:comment>
 <xar:set name="dummy">#xarVarSetCached('themes','rss_channel_link',xarServerGetCurrentURL(array('theme'=&gt;NULL)))#</xar:set>
 
@@ -15,7 +22,7 @@
     <xar:comment>Different text for the summary as for an individual item?</xar:comment>
         <xar:comment>Loop through the articles to display the summary, calling up a template for format it</xar:comment>
         <xar:loop name="$articles">
-            <xar:set name="summary">#xarTplModule('xarpages', 'article', 'summary', array_merge($loop:item, $current_page), $pubtypes[$loop:item.pubtypeid]['name'])#</xar:set>
+            <xar:set name="summary">#xarTplModule('xarpages', $template_prefix, 'summary', array_merge($loop:item, $current_page), $pubtypes[$loop:item.pubtypeid]['name'])#</xar:set>
             #$summary#
         </xar:loop>
 </xar:if>
@@ -23,7 +30,7 @@
 <xar:comment>Individual item</xar:comment>
 <xar:if condition="!empty($article)">
     <xar:comment>Different text for the summary as for an individual item?</xar:comment>
-        <xar:set name="summary">#xarTplModule('xarpages', 'article', 'summary', $article, $pubtypes[$article.pubtypeid]['name'])#</xar:set>
+        <xar:set name="summary">#xarTplModule('xarpages', $template_prefix, 'summary', $article, $pubtypes[$article.pubtypeid]['name'])#</xar:set>
         #$summary#
 </xar:if>
 
