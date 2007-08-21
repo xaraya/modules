@@ -15,7 +15,7 @@
     to the home page of the site.
     <link>#xarVarGetCached('themes', 'rss_channel_link')#</link>
 </xar:comment>
-<xar:set name="dummy">#xarVarSetCached('themes','rss_channel_link',xarServerGetCurrentURL(array('theme'=&gt;NULL)))#</xar:set>
+<xar:set name="dummy">#xarVarSetCached('themes','rss_channel_link',xarServerGetCurrentURL(array('theme'=&gt;NULL,'startnum'=&gt;NULL)))#</xar:set>
 
 <xar:comment>List of items</xar:comment>
 <xar:if condition="empty($article)">

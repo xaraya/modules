@@ -73,7 +73,7 @@ function xarpages_funcapi_news($args)
     }
 
     // Keyword search
-    xarVarFetch('q', 'pre:trim:passthru:strlist: ,;:pre:lower:trim:passthru:str', $q, NULL, XARVAR_NOT_REQUIRED);
+    xarVarFetch('q', 'pre:trim:passthru:strlist: ,;:pre:lower:trim:passthru:str', $q, '', XARVAR_NOT_REQUIRED);
     // Clean up the keywords
     if (!empty($q)) {
         $q = trim(preg_replace('/[^a-z0-9 .,:;@#-]/', '', strtolower($q)));
@@ -376,7 +376,9 @@ function xarpages_funcapi_news($args)
         'searching_flag' => $searching_flag,
         'aid' => $aid,
         'archive' => $archive_data,
-        'categories' => $all_cats,
+        'categories' => $all_cats, // All categories in the articles
+        'q' => $q,
+        'cids' => $cids, // Categories selected by the user
     );
 
     return $args;
