@@ -181,7 +181,7 @@ function xarpages_funcapi_news($args)
     // Gather a list of unique category IDs.
     $all_cat_cids = array();
     foreach($articles as $cid_article) {
-        if (is_array($cid_article['cids'])) {
+        if (!empty($cid_article['cids']) && is_array($cid_article['cids'])) {
             $all_cat_cids = array_merge($all_cat_cids, $cid_article['cids']);
         }
     }
@@ -192,7 +192,7 @@ function xarpages_funcapi_news($args)
 
         // Distribute the category details back to the items.
         foreach($articles as $cid_article_key => $cid_article) {
-            if (is_array($cid_article['cids'])) {
+            if (!empty($cid_article['cids']) && is_array($cid_article['cids'])) {
                 foreach($cid_article['cids'] as $article_cid) {
                     $articles[$cid_article_key]['categories'][$article_cid] = $all_cats[$article_cid];
                 }
