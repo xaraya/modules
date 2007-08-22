@@ -9,6 +9,15 @@
         var fieldDescription = Array("Your Email","Your message", "Your Name", "Anti-Bot Code");
     //-->
     </script>
+<xar:elseif condition="$useantibot and (xarModGetVar('formcaptcha','usecaptcha') eq true)" />
+   <script type="text/javascript">
+    <!--
+        // Enter name of mandatory fields
+        var fieldRequired = Array("useremail", "usermessage","username","antiword");
+        // Enter field description to appear in the dialog box
+        var fieldDescription = Array("Your Email","Your message", "Your Name", "Captcha Anti Spam code");
+    //-->
+    </script>
 <xar:else />
     <script type="text/javascript">
     <!--
@@ -217,7 +226,29 @@
                 </div>
             </xar:if>
         </fieldset>
-
+         <xar:comment>Anti spam formcaptcha code</xar:comment>
+         <xar:if condition="$useantibot eq '1' and xarModIsAvailable('formcaptcha') and xarModGetVar('formcaptcha','usecaptcha') eq true">
+                <div class="xar-form-input-wrapper">
+                    <xar:set name="dumdum">require('modules/formcaptcha/xaruser/anticonfig.php');</xar:set>
+                    <xar:set name="cas_textcount">count($cas_text )</xar:set>
+                    <label class="xar-form-label">#$cas_fieldTitle#</label>
+                    <xar:set name="cas_antiselect">rand(1, $cas_textcount)</xar:set>
+                    <div class="xar-form-container-after">
+                        <input type="text" name="antiword" id="antiword" size="30" maxlength="10">
+                        <xar:set name="rndnum">rand(1,35565 )</xar:set>
+                        <xar:set name="imgurl">#xarModURL('formcaptcha','user','antispam',array('antiselect'=>$cas_antiselect,'rnd'=>$rndnum))#</xar:set>
+                        <br />#$cas_hintText#
+                        <xar:if condition="isset($casmsg)">
+                            <br /><span class="xar-error" style="color:red">#$casmsg#</span>
+                           </xar:if>
+                        <br />
+                        <img class="antibot" src="#xarModURL('formcaptcha','user','antispam',
+                            array('antiselect'=>$cas_antiselect,'rnd'=>$rndnum))#" />
+                        <input type="hidden" name="antiselect" id="antiselect" value="#$cas_antiselect#" />
+                    </div>
+                </div>
+            </xar:if>
+            <xar:comment>End Anti spam code</xar:comment>
         <fieldset>
            <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="useripaddress" value="#$useripaddress#" />
