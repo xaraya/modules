@@ -78,11 +78,7 @@
                         </xar:mlstring>
                     </span>
                 </label>
-                <xar:if condition="!empty($showtitle)">
-                  <input type="checkbox" name="showtitle" id="showtitle" value="1" checked="checked" />
-                <xar:else/>
-                  <input type="checkbox" name="showtitle" id="showtitle" value="1" />
-                </xar:if>
+                <xar:data-input name="showtitle" checked="showtitle" />
             </p>
         </fieldset>
             <xar:if condition="!empty($hooks)">

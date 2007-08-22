@@ -193,6 +193,8 @@ class CategoriesProperty extends SelectProperty
             $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => $data['categories_localmodule'], 'itemtype' => $data['categories_localitemtype']));
             $data['basecids'] = array();
             foreach ($basecats as $basecat) $data['basecids'][] = $basecat['category_id'];
+        } elseif ($this->baselist == 'none') {
+            $data['basecids'] = array();
         } else {
             // still todo: display manually entered basecat trees
             // right now works for 1 basecat
