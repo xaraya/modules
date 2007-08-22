@@ -40,7 +40,7 @@ function newsletter_userapi_getissuefordisplay($args)
     // initialize array
     $issue = array();
 
-    // The API function is called.  The arguments to the function are passed in
+    // The API function is called to get the basic info on the issue
     $issue = xarModAPIFunc('newsletter',
                            'user',
                            'getissue',

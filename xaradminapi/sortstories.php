@@ -16,9 +16,9 @@
  * @author Richard Cave
  * @param $args an array of arguments
  * @param $args['stories'] array of stories
- * @returns array of sorted topics
+ * @return array of sorted topics
  */
-function newsletter_adminapi_sortstories ($args)
+function newsletter_adminapi_sortstories($args)
 {
     // Get arguments
     extract($args);
@@ -72,7 +72,7 @@ function newsletter_adminapi_sortstories ($args)
  * @param a multi-dimensional array
  * @param b multi-dimensional array
  * @return array
- * @returns sorted array
+ * @return sorted array
  */
 function newsletter_adminapi__compare($a, $b)
 {
@@ -80,7 +80,7 @@ function newsletter_adminapi__compare($a, $b)
 }
 
 /**
- * Comparision function for sorting by 'leftcid' and 'storyDate'
+ * Comparison function for sorting by 'leftcid' and 'storyDate'
  *
  * @private
  * @author Richard Cave
@@ -88,7 +88,7 @@ function newsletter_adminapi__compare($a, $b)
  * @param a multi-dimensional array
  * @param b multi-dimensional array
  * @return array
- * @returns sorted array
+ * @return sorted array
  */
 function newsletter_adminapi__comparerecords($i, $a, $b)
 {

@@ -17,7 +17,7 @@
  * @param $args an array of arguments
  * @param $args['numitems'] the number of items to retrieve (default -1 = all)
  * @param $args['startnum'] start with this item number (default 1)
- * @param $args['phase'] type of item to retreive (ie 'story', 'publcation', etc.)
+ * @param $args['phase'] type of item to retreive (ie 'story', 'publication', 'topic', etc.)
  * @param $args['display'] display 'published' or 'unpublished' stories/issues
  * @param $args['owner'] get stories/issues for this owner (1 = true, 0 = false)
  * @param $args['sortby'] sort by 'title', 'category', 'publication', 'date' or 'owner'

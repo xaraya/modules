@@ -39,8 +39,6 @@
  */
 function newsletter_admin_createstory()
 {
-
-
     // Get parameters from the input
     if (!xarVarFetch('ownerId', 'id', $ownerId)) {
         xarErrorFree();
