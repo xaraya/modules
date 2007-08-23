@@ -38,7 +38,7 @@ function comments_userapi_get_multiple($args)
 {
 
     extract($args);
-
+    if (!isset($cid) || !is_numeric($cid)) {
     if ( !isset($modid) || empty($modid) ) {
         $msg = xarML('Invalid #(1) [#(2)] for #(3) function #(4)() in module #(5)',
                                  'modid', $modid, 'userapi', 'get_multiple', 'comments');
@@ -61,12 +61,9 @@ function comments_userapi_get_multiple($args)
             $objectid = 0;
     }
 
-    if (!isset($cid) || !is_numeric($cid)) {
-        $root = xarModAPIFunc('comments', 'user','get_node_root',
-                       array('modid' => $modid,
-                             'itemtype' => $itemtype,
-                             'objectid' => $objectid));
-        $cid = $root['xar_cid'];
+    $root = xarModAPIFunc('comments', 'user','get_node_root',$args);
+    $cid = $root['xar_cid'];
+
     }
 
     // Optional argument for Pager -
@@ -76,9 +73,6 @@ function comments_userapi_get_multiple($args)
     }
     if (!isset($numitems)) {
         $numitems = -1;
-    }
-    if (!isset($status) || empty($status)) {
-        $status = _COM_STATUS_ON;
     }
 
     $dbconn =& xarDBGetConn();
@@ -117,11 +111,9 @@ function comments_userapi_get_multiple($args)
             AND parent.xar_itemtype = node.xar_itemtype
             AND parent.xar_objectid = node.xar_objectid
             AND node.xar_pid != 0
-            AND node.xar_status = ?
+
             LEFT JOIN $usersdef[table] ON  $usersdef[field] = node.xar_author
             GROUP BY node.xar_cid";
-    // if the depth is zero then we
-    // only want one comment
     /*
     $sql = "SELECT  $ctable[title] AS xar_title,
                     $ctable[cdate] AS xar_date,
@@ -143,8 +135,11 @@ function comments_userapi_get_multiple($args)
     */
 
     $bindvars[] = (int) $cid;
-    $bindvars[] = (int) $status;
 
+    if (isset($status)) {
+        $sql .= " AND node.xar_status = ?";
+        $bindvars[] = (int) $status;
+    }
 
     if (isset($author) && $author > 0) {
         $sql .= " AND $ctable[author] = ?";
@@ -203,6 +198,7 @@ function comments_userapi_get_multiple($args)
         $row = $result->GetRowAssoc(false);
         // @todo either put this in a template, or make it conditional via parameter (modvar isn't enough)
         comments_renderer_wrap_words($row['xar_text'],80);
+
         $commentlist[] = $row;
         $result->MoveNext();
     }

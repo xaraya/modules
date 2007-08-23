@@ -37,14 +37,14 @@ function comments_userapi_get_node_lrvalues( $args )
 
     $ctable = &$xartable['comments_column'];
 
-    $sql = "SELECT  $ctable[left], $ctable[right]
+    $sql = "SELECT  $ctable[left], $ctable[right],$ctable[modid],$ctable[itemtype],
+                    $ctable[objectid]
               FROM  $xartable[comments]
              WHERE  $ctable[cid]=$cid";
 
     $result =& $dbconn->Execute($sql);
 
-    if(!$result)
-        return;
+    if(!$result) return;
 
     if (!$result->EOF) {
         $lrvalues = $result->GetRowAssoc(false);
@@ -56,5 +56,4 @@ function comments_userapi_get_node_lrvalues( $args )
 
     return $lrvalues;
 }
-
 ?>

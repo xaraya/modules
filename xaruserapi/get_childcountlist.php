@@ -36,14 +36,15 @@ function comments_userapi_get_childcountlist($args)
     $xartable =& xarDBGetTables();
     $ctable = &$xartable['comments_column'];
 
-    $bind = array((int)$modid, (int)$objectid, (int)$itemtype, (int)$modid, (int)$objectid, (int)$itemtype, (int)$left, (int)$right, _COM_STATUS_ON);
+    if (!isset($status)) $status = _COM_STATUS_ON;
+    $bind = array((int)$modid, (int)$objectid, (int)$itemtype, (int)$modid, (int)$objectid, (int)$itemtype, (int)$left, (int)$right, $status);
 
     $sql = "SELECT P1.xar_cid, COUNT(P2.xar_cid) AS numitems"
         . " FROM (SELECT * FROM $xartable[comments] WHERE xar_modid = ? AND xar_objectid = ? AND xar_itemtype = ?) AS P1, (SELECT * FROM $xartable[comments] WHERE xar_modid = ? AND xar_objectid = ? AND xar_itemtype = ?) AS P2"
         . " WHERE P1.xar_modid = P2.xar_modid AND P1.xar_itemtype = P2.xar_itemtype AND P1.xar_objectid = P2.xar_objectid"
         . " AND P2.xar_left >= P1.xar_left AND P2.xar_left <= P1.xar_right"
         . " AND P1.xar_left >= ? AND P1.xar_right <= ?"
-        . " AND P2.xar_status = ?"
+        . " AND P2.xar_status >= ?"
         . " AND P2.xar_pid != 0"
         . " GROUP BY P1.xar_cid";
 

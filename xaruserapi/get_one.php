@@ -42,8 +42,6 @@ function comments_userapi_get_one($args)
     // initialize the commentlist array
     $commentlist = array();
 
-    // if the depth is zero then we
-    // only want one comment
     $sql = "SELECT  $ctable[title] AS xar_title,
                     $ctable[cdate] AS xar_datetime,
                     $ctable[hostname] AS xar_hostname,
@@ -60,11 +58,11 @@ function comments_userapi_get_one($args)
                     $ctable[itemtype] AS xar_itemtype,
                     $ctable[objectid] AS xar_objectid
               FROM  $xartable[comments]
-             WHERE  $ctable[cid]=$cid
-               AND  xar_pid != 0
-               AND  $ctable[status]="._COM_STATUS_ON;
+             WHERE  $ctable[cid]=?
+               AND  xar_pid !=?
+               AND  $ctable[status]=?";
 
-    $result =& $dbconn->Execute($sql);
+    $result =& $dbconn->Execute($sql,array((int)$cid, 0, _COM_STATUS_ON));
     if(!$result) return;
 
     // if we have nothing to return
