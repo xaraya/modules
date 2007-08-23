@@ -151,6 +151,18 @@ function comments_init()
     xarModSetVar('comments', 'allowhookoverride', false);
     xarModSetVar('comments', 'edittimelimit', 0);
 
+    if (!xarModRegisterHook('item', 'new', 'GUI', 'comments', 'admin', 'newhook'))
+        return false;
+
+    if (!xarModRegisterHook('item', 'create', 'API', 'comments', 'admin', 'createhook'))
+        return false;
+
+    if (!xarModRegisterHook('item', 'modify', 'GUI', 'comments', 'admin', 'modifyhook'))
+        return false;
+
+    if (!xarModRegisterHook('item', 'update', 'API', 'comments', 'admin', 'updatehook'))
+        return false;
+
     // display hook
     if (!xarModRegisterHook('item', 'display', 'GUI','comments', 'user', 'display'))
         return false;
@@ -363,16 +375,28 @@ function comments_upgrade($oldversion)
             if (!$result)
                 return;
         case '1.3.0':
-            if (!xarModRegisterHook('module', 'modifyconfig', 'GUI',
-                                    'comments', 'admin', 'modifyconfighook')) {
+            if (!xarModRegisterHook('module', 'modifyconfig', 'GUI', 'comments', 'admin', 'modifyconfighook')) {
                 return false;
             }
-            if (!xarModRegisterHook('module', 'updateconfig', 'API',
-                                    'comments', 'admin', 'updateconfighook')) {
+            if (!xarModRegisterHook('module', 'updateconfig', 'API', 'comments', 'admin', 'updateconfighook')) {
                 return false;
             }
             xarModSetVar('comments', 'allowhookoverride', false);
             xarModSetVar('comments', 'edittimelimit', 0);
+        case '1.3.1':
+            if (!xarModRegisterHook('item', 'new', 'GUI', 'comments', 'admin', 'newhook')) {
+                return false;
+            }
+            if (!xarModRegisterHook('item', 'create', 'API', 'comments', 'admin', 'createhook')) {
+                return false;
+            }
+            if (!xarModRegisterHook('item', 'modify', 'GUI', 'comments', 'admin', 'modifyhook')) {
+                return false;
+            }
+            if (!xarModRegisterHook('item', 'update', 'API', 'comments', 'admin', 'updatehook')) {
+                return false;
+            }
+
         case '2.0':
             // Code to upgrade from version 2.0 goes here
             // fall through to the next upgrade
