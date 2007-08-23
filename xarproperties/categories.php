@@ -190,10 +190,12 @@ class CategoriesProperty extends SelectProperty
         if (isset($data['bases'])) $this->baselist = $data['bases'];
 
         if (empty($this->baselist)) {
+        	// this means 'All'
             $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => $data['categories_localmodule'], 'itemtype' => $data['categories_localitemtype']));
             $data['basecids'] = array();
             foreach ($basecats as $basecat) $data['basecids'][] = $basecat['category_id'];
         } elseif ($this->baselist == 'none') {
+        	// this means 'None'
             $data['basecids'] = array();
         } else {
             // still todo: display manually entered basecat trees
