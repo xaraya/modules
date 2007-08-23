@@ -11,7 +11,7 @@
 <xar:sec mask="EditArticles" catch="false">
 <div>
   <dl class="xar-tabs">
-    <dt class="help" title="Choose an action to perform">
+    <dt class="help" title="#xarML('Choose an action to perform')#">
       <xar:mlstring>Actions:</xar:mlstring>
     </dt>
 

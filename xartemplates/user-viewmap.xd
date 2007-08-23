@@ -13,7 +13,7 @@
             <xar:foreach in="$catfilter" key="$cid">
                 &#160;#$catfilter[$cid]#
             </xar:foreach>
-            &#160; <input type="submit" name="go" value="Go" />
+            &#160; <input type="submit" name="go" value="#xarML('Go')#" />
         </div>
     </form>
     <xar:foreach in="$cattree" value="$childcats">

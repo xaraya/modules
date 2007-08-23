@@ -1,9 +1,7 @@
 <xar:style scope="module" module="base" file="navtabs" />
 <dl class="xar-tabs">
     <dt class="help" title="#xarML('Click on a tab to display articles from that publication type')#">
-        <xar:mlstring>
-            Status 
-        </xar:mlstring>
+        <xar:mlstring>Status</xar:mlstring>
         : 
     </dt>
     <xar:foreach in="$statusfilters" value="$statusfilter">

@@ -83,11 +83,15 @@
     </label> <select name="featuredaid" id="featuredaid#$blockid#" size="1"> 
         <xar:if condition="empty($featuredaid)">
             <option value="" selected="selected">
-                --- choose an article to be featured --- 
+                <xar:mlstring>
+                    --- choose an article to be featured --- 
+                </xar:mlstring>
             </option>
             <xar:else />
             <option value="">
-                --- choose an article to be featured --- 
+                <xar:mlstring>            
+                    --- choose an article to be featured --- 
+                </xar:mlstring>
             </option>
         </xar:if>
         <xar:foreach in="$filtereditems" value="$filtereditem">

@@ -2,10 +2,8 @@
     <xar:style scope="module" module="base" file="navtabs" />
     <dl class="xar-tabs">
         <dt class="help">
-            <xar:mlstring>
-                Options 
-            </xar:mlstring>
-            : 
+            <xar:mlstring>Options</xar:mlstring>
+            :
         </dt>
         <xar:if condition="!empty($maplink)">
             <dd>
@@ -16,10 +14,8 @@
         </xar:if>
         <xar:if condition="!empty($submitlink)">
             <dd>
-                <a href="#$submitlink#" title="Submit Article">
-                    <xar:mlstring>
-                        Contribute 
-                    </xar:mlstring>
+                <a href="#$submitlink#" title="#xarML('Submit Article')#">
+                    <xar:mlstring>Contribute</xar:mlstring>
                 </a>
             </dd>
         </xar:if>

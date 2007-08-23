@@ -1,13 +1,12 @@
 <xar:style scope="module" module="base" file="navtabs" />
 <dl class="xar-tabs">
     <dt class="help" title="#xarML('Click on a tab to explore further')#">
-        <xar:mlstring>
-            Options 
-        </xar:mlstring>
+        <xar:mlstring>Options</xar:mlstring> 
         : 
     </dt>
     <dd>
-        <a href="#xarModURL('articles','user','viewmap',array('by' => 'pub','ptid' => $ptid))#">
+        <a href="#xarModURL('articles','user','viewmap',array('by' => 'pub','ptid' => $ptid))#" 
+           title="#xarML('Show article map by publication type')#">
             <xar:mlstring>
                 Article Map by Publication Type 
             </xar:mlstring>
@@ -15,7 +14,8 @@
     </dd>
     <xar:if condition="count($catfilter) eq 2">
         <dd>
-            <a href="#xarModURL('articles','user','viewmap',array('by' => 'grid'))#">
+            <a href="#xarModURL('articles','user','viewmap',array('by' => 'grid'))#"
+               title="#xarML('Show article map by grid')#">
                 <xar:mlstring>
                     Article Map by Grid 
                 </xar:mlstring>
@@ -24,7 +24,7 @@
     </xar:if>
     <xar:if condition="!empty($viewlink)">
         <dd>
-            <a href="#$viewlink#">
+            <a href="#$viewlink#" title="#xarML('Back to last selection')#">
                 #$viewlabel# 
             </a>
         </dd>
@@ -32,7 +32,7 @@
     <xar:if condition="!empty($archivelink)">
         <xar:if condition="!empty($archivelink)">
             <dd>
-                <a href="#$archivelink#">
+                <a href="#$archivelink#" title="#xarML('Show archive')#">
                     #$archivelabel# 
                 </a>
             </dd>

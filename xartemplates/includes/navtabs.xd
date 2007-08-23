@@ -1,9 +1,7 @@
 <xar:style scope="module" module="base" file="navtabs" />
 <dl class="xar-tabs">
-    <dt class="help">
-        <xar:mlstring>
-            Select Publication 
-        </xar:mlstring>
+    <dt class="help" title="#xarML('Choose a publication')#">
+        <xar:mlstring>Select Publication</xar:mlstring>
         : 
     </dt>
     <xar:foreach in="$pubfilters" value="$pubfilter">

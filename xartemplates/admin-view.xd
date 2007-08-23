@@ -148,8 +148,7 @@
                     <p>
                         <label for="status">
                             <xar:mlstring>
-                                Change checked article status to
-                            </xar:mlstring>
+                                Change checked article status to</xar:mlstring>
                             :</label>&nbsp;
                         <select name="status" id="status">
                         <xar:if condition="xarSecurityCheck('DeleteArticles',0,'Article',$ptid.':All:All:All')">
