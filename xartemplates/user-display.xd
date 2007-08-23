@@ -40,7 +40,9 @@
                     <xar:mlstring>There are no comments attached to this item.</xar:mlstring>
                 </p>
             <xar:if condition="!isset($header['selected_cid'])">
-                <xar:template file="input-box" type="module" />
+                <xar:if condition="$package['settings']['rootstatus'] ne _COM_STATUS_LOCKED">
+                    <xar:template file="input-box" type="module" />
+                </xar:if>
             <xar:elseif condition="!empty($header['objectlink']) and !empty($header['objecttitle'])"/>
                 <p>
                     <xar:mlstring>Return to</xar:mlstring>
@@ -59,7 +61,9 @@
                 <xar:template file="view-flat" type="module" />
             </xar:if>
             <xar:if condition="!isset($header['selected_cid'])">
-                <xar:template file="input-box" type="module" />
+                <xar:if condition="$package['settings']['rootstatus'] ne _COM_STATUS_LOCKED">
+                    <xar:template file="input-box" type="module" />
+                </xar:if>
             <xar:elseif condition="!empty($header['objectlink']) and !empty($header['objecttitle'])"/>
                 <p>
                     <xar:mlstring>Return to</xar:mlstring>

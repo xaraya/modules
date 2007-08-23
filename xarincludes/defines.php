@@ -49,4 +49,5 @@ define('_COM_MAX_DEPTH', 10);
 // Status of comment nodes
 define('_COM_STATUS_OFF', 1);
 define('_COM_STATUS_ON', 2);
+define('_COM_STATUS_LOCKED', 4);
 ?>

@@ -137,8 +137,20 @@ function comments_user_display($args)
 
     $header = array_merge($header,$package['settings']);
     if (!isset($header['selected_cid']) || isset($thread)) {
-        $package['comments'] = xarModAPIFunc('comments','user','get_multiple',$header);
 
+        $rootnode = xarModAPIFunc('comments','user','get_node_root',$header);
+        if (empty($rootnode)) {
+            $package['comments'] = array();
+        } else {
+            $rootstatus = $rootnode['xar_status'];
+
+            if ($rootstatus == _COM_STATUS_OFF) {
+                // @todo avoid the querying if we're not going to allow comments at all
+                $package['settings']['render'] = 'nocomments';
+            }
+            $package['settings']['rootstatus'] = $rootstatus;
+            $package['comments'] = xarModAPIFunc('comments','user','get_multiple',array('cid' => $rootnode['xar_cid']));
+        }
         if (count($package['comments']) > 1) {
             $package['comments'] = comments_renderer_array_sort(
                 $package['comments'],

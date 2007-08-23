@@ -1,5 +1,6 @@
 <!-- actions buttons -->
 <xar:if condition="!isset($receipt['action']) or ($receipt['action'] ne 'reply' and $receipt['action'] ne 'modify')">
+    <xar:if condition="$item['xar_status'] ne _COM_STATUS_LOCKED">
     <xar:sec catch="false" mask="Comments-Reply" instance="$header[modid]:$header[objectid]:ALL">
         <form action="#xarModURL('comments', 'user', 'reply')#" method="post" class="xar-cm-actions">
             <div>
@@ -14,20 +15,21 @@
             </div>
         </form>
     </xar:sec>
+    </xar:if>
     <xar:if condition="xarUserIsLoggedIn()">
         <xar:if condition="xarSecurityCheck('Comments-Edit',0,'',$header['modid'].':'.$header['objectid'].':'.$item['xar_cid']) or $item['xar_uid'] eq $package['uid']">
              <xar:if condition="empty($package['settings']['edittimelimit']) or (time() le ($item['xar_date'] + ($package['settings']['edittimelimit'] * 60)) or xarSecurityCheck('Comments-Admin'))">
             <form action="#xarModURL('comments', 'user', 'modify')#" method="post" class="xar-cm-actions">
                 <div>
-                
+
                     <input type="hidden" name="header[modid]" value="#$header['modid']#" />
                     <input type="hidden" name="header[itemtype]" value="#$header['itemtype']#" />
                     <input type="hidden" name="header[objectid]" value="#$header['objectid']#" />
                     <input type="hidden" name="header[cid]" value="#$item['xar_cid']#" />
                     <input type="hidden" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#" />
                     <input type="hidden" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#" />
-                    <input type="hidden" name="receipt[action]" value="modify" /> 
-                    <input type="submit" name="submit-modify#$item['xar_cid']#" id="submit" value="#xarML('Modify')#" /> 
+                    <input type="hidden" name="receipt[action]" value="modify" />
+                    <input type="submit" name="submit-modify#$item['xar_cid']#" id="submit" value="#xarML('Modify')#" />
                 </div>
             </form>
             </xar:if>
@@ -44,8 +46,30 @@
                 <input type="hidden" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#" />
                 <input type="hidden" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#" />
                 <input type="hidden" name="receipt[action]" value="confirm-delete" />
-                <input type="submit" name="submit" id="submit-delete#$item['xar_cid']#" value="#xarML('Delete')#" /> 
+                <input type="submit" name="submit" id="submit-delete#$item['xar_cid']#" value="#xarML('Delete')#" />
             </div>
         </form>
     </xar:sec>
+    <xar:sec catch="false" mask="Comments-Moderator" instance="$header[modid]:$header[objectid]:$item[xar_cid]">
+        <form action="#xarModURL('comments', 'user', 'setstatus')#" method="post" class="xar-cm-actions">
+            <div>
+                <input type="hidden" name="header[modid]" value="#$header['modid']#" />
+                <input type="hidden" name="header[itemtype]" value="#$header['itemtype']#" />
+                <input type="hidden" name="header[objectid]" value="#$header['objectid']#" />
+                <input type="hidden" name="header[cid]" value="#$item['xar_cid']#" />
+                <input type="hidden" name="header[pid]" value="#$item['xar_pid']#" />
+                <input type="hidden" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#" />
+                <input type="hidden" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#" />
+
+                <xar:if condition="$item['xar_status'] eq _COM_STATUS_LOCKED">
+                    <input type="submit" name="submit" id="submit-unlock#$item['xar_cid']#" value="#xarML('Unlock')#" />
+                    <input type="hidden" name="receipt[action]" value="unlock" />
+                <xar:else />
+                    <input type="submit" name="submit" id="submit-lock#$item['xar_cid']#" value="#xarML('Lock')#" />
+                    <input type="hidden" name="receipt[action]" value="lock" />
+                </xar:if>
+            </div>
+        </form>
+    </xar:sec>
+
 </xar:if>

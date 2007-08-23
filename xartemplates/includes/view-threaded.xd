@@ -17,7 +17,7 @@
                 <img class="xar-tr-image" height="21" src="#$map#" width="9" alt="" />
             </xar:foreach>
 
-            <xar:if condition="$loop:item['xar_branchout'] eq 0">
+            <xar:if condition="!$loop:item['xar_branchout']">
                 <xar:comment> CHECKME: no text or buttons in search results </xar:comment>
                 <xar:if condition="isset($loop:item['xar_text'])">
                     <a href="#" id="collapser" name="collapser" onclick="document.getElementById('#$loop:item['xar_cid']#').style.display = (document.getElementById('#$loop:item['xar_cid']#').style.display == 'block') ? 'none' : 'block'; return false;" title="#xarML('Toggle the full view of comment..')#">
@@ -49,33 +49,31 @@
     </div>
 
     <xar:comment> CHECKME: no text or buttons in search results </xar:comment>
+
     <xar:if condition="isset($loop:item['xar_text'])">
+
         <div class="xar-tr-collapsed" id="#$loop:item['xar_cid']#">
             <div class="xar-accent-outline">
                 <xar:set name="item">#$loop:item#</xar:set>
                 <xar:template file="action_buttons" />
 
                 <xar:comment> FIXME: $package['transformed-text'] vs. $loop:item['xar_text'] can't be right here </xar:comment>
-                <xar:if condition="isset($package['transformed-text'])">
+                <xar:if condition="!empty($package['transformed-text'])">
                     #$package['transformed-text']#
-                    <p>
-                        <a href="#xarModURL('comments','user','display',array('cid' => $loop:item['xar_cid']))#" title="#xarML('Permalink')#" rel="bookmark">
-                            #
-                        </a>
-                    </p>
-                    <xar:else />
+
+                <xar:else />
                     #$loop:item['xar_text']#
+                </xar:if>
                     <p>
                         <a href="#xarModURL('comments','user','display',array('cid' => $loop:item['xar_cid']))#" title="#xarML('Permalink')#" rel="bookmark">
                             #
                         </a>
                     </p>
                     <xar:comment> FIXME: nested if's don't seem right here </xar:comment>
-                    <xar:if condition="isset($loop:item['xar_branchout']) and $loop:item['xar_branchout'] eq 1">
+                    <xar:if condition="isset($loop:item['xar_branchout']) and $loop:item['xar_branchout']">
                         <br />
                         <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[itemtype]=#$header['itemtype']#&amp;header[objectid]=#$header['objectid']#&amp;header[branchout]=1&amp;header[cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['nested_text']# </a>&nbsp;
                     </xar:if>
-                </xar:if>
                 <!-- show changelog -->
                 <xar:sec mask="Comments-Moderator" catch="false">
                 <xar:if condition="xarModIsHooked('changelog','comments')">
