@@ -1,0 +1,7 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-form-input-wrapper">
+    <label for="commentstatus" class="xar-form-label" title="#xarML('Comment status on this item')#">
+        <xar:mlstring>Comment Status</xar:mlstring>:
+    </label>
+    <xar:data-input type="dropdown" name="commentstatus" id="commentstatus" value="$commentstatus" validation="$commentoptions" />
+</div>
