@@ -56,7 +56,7 @@ function comments_userapi_get_node_root($args)
     $ctable = &$xartable['comments_column'];
     // grab the root node's id, left and right values
     // based on the objectid/modid pair
-    $sql = "SELECT  $ctable[cid], $ctable[left], $ctable[right]
+    $sql = "SELECT  $ctable[cid], $ctable[left], $ctable[right],$ctable[status]
               FROM  $xartable[comments]
              WHERE  $ctable[modid]=?
                AND  $ctable[itemtype]=?

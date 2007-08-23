@@ -14,15 +14,16 @@
 /**
  * Creates a root node for the specified objectid/modid
  *
- * @author   Carl P. Corliss (aka rabbitt)
- * @access   private
- * @param    integer     modid      The module that comment is attached to
- * @param    integer     objectid   The particular object within that module
- * @param    integer     itemtype   The itemtype of that object
- * @returns  integer     the id of the node that was created so it can be used as a parent id
+ * @author  Carl P. Corliss (aka rabbitt)
+ * @access  private
+ * @param   integer modid      The module that comment is attached to
+ * @param   integer objectid   The particular object within that module
+ * @param   integer itemtype   The itemtype of that object
+ * @param   integer status     set the status for the root node (defaults to _COM_STATUS_ON)
+ * @return  integer the id of the node that was created so it can be used as a parent id
  * @todo get rid of this notion of root node ?
  */
-function comments_userapi_add_rootnode( $args )
+function comments_userapi_add_rootnode($args)
 {
 
     extract ($args);
@@ -47,6 +48,10 @@ function comments_userapi_add_rootnode( $args )
 
     if (empty($itemtype)) {
         $itemtype = 0;
+    }
+
+    if (!isset($status)) {
+        $status = _COM_STATUS_ON;
     }
 
     $dbconn =& xarDBGetConn();
@@ -79,7 +84,7 @@ function comments_userapi_add_rootnode( $args )
                        1,
                        $left,
                        $right,
-                       _COM_STATUS_ON,
+                       $status,
                        $objectid,
                        $modid,
                        $itemtype,
