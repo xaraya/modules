@@ -95,7 +95,7 @@ function newsletter_userapi_getissuefordisplay($args)
     }
 
     // Get topics for issue - these are the stories
-    // associated with issue
+    // associated with issue. Topics are sorted by their order number in the db
     $topics = xarModAPIFunc('newsletter',
                             'user',
                             'get',
