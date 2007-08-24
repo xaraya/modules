@@ -28,7 +28,14 @@ function comments_userapi_getoptions($args)
     if (!xarVarFetch('render', 'str', $settings['render'], NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('order', 'int', $settings['order'], NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sortby', 'int', $settings['sortby'], NULL, XARVAR_NOT_REQUIRED)) return;
-    
+
+    if (!isset($args['modid'])) {
+        $args['modid'] = 14;
+    }
+
+    if (!isset($args['itemtype'])) {
+        $args['itemtype'] = 0;
+    }
     $args['modname'] = xarModGetNameFromID($args['modid']);
 
     // if one of the settings is configured, then all should be.
@@ -39,7 +46,7 @@ function comments_userapi_getoptions($args)
             $settings[$k] = xarModGetUserVar('comments',$k);
             continue;
         }
-        
+
         $hookedvar = xarModGetVar($args['modname'],$k . '.' .$args['itemtype']);
         if (!empty($hookedvar)) {
             $settings[$k] = $hookedvar;
