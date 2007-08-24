@@ -24,6 +24,7 @@ function newsletter_admin_previewissue($args)
     extract ($args);
 
     // Security check
+    // MichelV: maybe this should be higher as we assume a normal reader can now preview the issue
     if(!xarSecurityCheck('ReadNewsletter')) return;
 
     // Get parameters from the input
