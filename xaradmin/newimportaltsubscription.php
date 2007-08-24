@@ -15,7 +15,7 @@
  *
  * @public
  * @author Richard Cave
- * @param string func
+ * @param string func What function are we in? Used by the menu
  * @return array $data
  */
 function newsletter_admin_newimportaltsubscription()
@@ -24,19 +24,18 @@ function newsletter_admin_newimportaltsubscription()
     // Get the admin edit menu
     $data['menu'] = xarModApiFunc('newsletter', 'admin', 'subscriptionmenu');
 
-    // Options label
-    // $data['importbutton'] = xarVarPrepForDisplay(xarML('Import Subscriptions'));
-
     // Set startnum to display all publications
     $startnum = 1;
 
-    // The user API function is called.
+    // The user API function is called to get all publications
+    // We use a very high number of items, to make sure we get all. MichelV: itemsperpage is not set in modifyconfig
     $publications = xarModAPIFunc('newsletter',
                                   'user',
                                   'get',
                                   array('startnum' => $startnum,
-                                        'numitems' => xarModGetVar('newsletter',
-                                                                  'itemsperpage'),
+                                        //'numitems' => xarModGetVar('newsletter',
+                                        //                          'itemsperpage'),
+                                        'numitems' => 200,
                                         'phase' => 'publication',
                                         'sortby' => 'title'));
 

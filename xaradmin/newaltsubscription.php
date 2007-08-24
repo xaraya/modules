@@ -9,20 +9,18 @@
  *
  * @subpackage newsletter module
  * @author Richard Cave <rcave@xaraya.com>
-*/
-
+ */
 
 /**
  * Add a single alternative subscription for a publication
  *
  * @public
  * @author Richard Cave
- * @param string func
+ * @param string func What function are we in currently. Used by the menu.
  * @return array $data
  */
 function newsletter_admin_newaltsubscription()
 {
-
     if (!xarVarFetch('func', 'str', $data['page'],  'main', XARVAR_NOT_REQUIRED)) return;
 
     // Get the admin subscription menu
@@ -30,17 +28,15 @@ function newsletter_admin_newaltsubscription()
 
     // Options label
     $data['publishername'] = xarModGetVar('newsletter', 'publishername');
-    // $data['subscribebutton'] = xarVarPrepForDisplay(xarML('Add Subscription'));
 
-    // Set startnum to display all publications
-    $startnum = 1;
-
-    // The user API function is called.
+    // The user API function is called to get all publications
+    // We set a very high number of items to make sure we get all.
     $publications = xarModAPIFunc('newsletter',
                                   'user',
                                   'get',
                                   array('phase' => 'publication',
-                                        'sortby' => 'title'));
+                                        'sortby' => 'title',
+                                        'numitems' => 200));
 
     // Check for exceptions
     if (!isset($publications) && xarCurrentErrorType() != XAR_NO_EXCEPTION)

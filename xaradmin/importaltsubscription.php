@@ -15,10 +15,10 @@
  *
  * @public
  * @author Richard Cave
- * @param 'import' the CSV separate import
- * @param 'delim' the delimitor (assuming ',')
- * @param 'pids' the publication ids
- * @param 'htmlmail' send mail html or text (0 = text, 1 = html)
+ * @param string 'import' the CSV separate import
+ * @param string 'delim' the delimitor (assuming ',')
+ * @param array  'pids' the publication ids
+ * @param int    'htmlmail' send mail html or text (0 = text, 1 = html)
  * @return array $data
  */
 function newsletter_admin_importaltsubscription()
