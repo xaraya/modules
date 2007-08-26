@@ -34,13 +34,13 @@
                 <xar:set name="extrainfo">array('module' => 'comments', 'cid' => 0, 'extra' => $header['modid'].'-'.$header['itemtype'].'-'.$header['objectid'])</xar:set>
                 <xar:module main="false" module="pubsub" func="displayicon" extrainfo="$extrainfo" layout="text" />
             </xar:if>
-        </xar:comment>
+        </xar:comment>)
         <xar:if condition="$number_of_comments eq 0">
                 <p>
                     <xar:mlstring>There are no comments attached to this item.</xar:mlstring>
                 </p>
             <xar:if condition="!isset($header['selected_cid'])">
-                <xar:if condition="$package['settings']['rootstatus'] ne _COM_STATUS_LOCKED">
+                <xar:if condition="!isset($package['settings']['rootstatus']) || $package['settings']['rootstatus'] ne _COM_STATUS_LOCKED">
                     <xar:template file="input-box" type="module" />
                 </xar:if>
             <xar:elseif condition="!empty($header['objectlink']) and !empty($header['objecttitle'])"/>
