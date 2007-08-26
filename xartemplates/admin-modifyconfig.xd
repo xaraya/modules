@@ -11,22 +11,9 @@
 
 
 <dl class="xar-tabs">
-    <dt class="help" title="Choose a set of configuration options">
+    <dt class="help" title="#xarML('Choose a set of configuration options')#">
         <xar:mlstring>Actions</xar:mlstring> : 
     </dt>
-    <xar:if condition="$tab eq 'locales'">
-        <dd class="active">
-            <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'locales'))#" class="active">
-                <xar:mlstring>Languages and Locales</xar:mlstring>
-            </a>
-        </dd>    
-    <xar:else />
-        <dd>
-            <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'locales'))#">    
-                <xar:mlstring>Languages and Locales</xar:mlstring>
-            </a>
-        </dd>    
-    </xar:if>
     <xar:if condition="$tab eq 'display'">
         <dd class="active">
             <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'display'))#" class="active">
@@ -55,30 +42,9 @@
     </xar:if>
     </dl>
 
-    <xar:comment> ----------------- Begin Locale Options ------------------- </xar:comment>
-    <xar:if condition="$tab eq 'locales'">
-        <!-- Initialization of some information -->
-        <xar:set name="mlsmode">#xarConfigGetVar('Site.MLS.MLSMode')#</xar:set>
-        <xar:set name="single_checked">''</xar:set>
-        <xar:if condition="$mlsmode == 'SINGLE'"><xar:set name="single_checked">'CHECKED'</xar:set></xar:if>
-        <xar:set name="boxed_checked">''</xar:set>
-        <xar:if condition="$mlsmode == 'BOXED'"><xar:set name="boxed_checked">'CHECKED'</xar:set></xar:if>
-        <xar:set name="unboxed_checked">''</xar:set>
-        <xar:if condition="$mlsmode == 'UNBOXED'"><xar:set name="unboxed_checked">'CHECKED'</xar:set></xar:if>
-
-        <form action="#xarModUrl('translations', 'admin', 'updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
-            <input type="hidden" name="authid" id="authid" value="#$authid#" />
-            <input type="hidden" name="tab" id="tab" value="#$tab#" />
-
-            <xar:template file="modifyconfig-locales" module="base" type="module"/>
-
-            <div style="clear: both; padding-top: 10px;">
-                <input type="submit" value="#$updatelabel#" />
-            </div>
-        </form>
     
     <xar:comment> ----------------- Begin Display Options ------------------- </xar:comment>
-    <xar:elseif condition="$tab eq 'display'" />
+    <xar:if condition="$tab eq 'display'">
         <form action="&xar-modurl-translations-admin-updateconfig;" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
             <fieldset>
                 <legend><xar:mlstring>Display during translation</xar:mlstring></legend>
@@ -95,7 +61,7 @@
                     </xar:if>
                     <label for="showcontext" title="#xarML('Show a bit of context for the translation. This could be helpfull for determining the exact translation')#">
                         <xar:mlstring>Show a context</xar:mlstring>
-                    </label>:
+                    </label>
              </div>
              <div class="xar-form-input-wrapper">
                 <label for="maxreferences" class="xar-form-label" title="#xarML('References per translation string')#">

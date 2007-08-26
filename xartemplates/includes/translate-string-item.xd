@@ -2,18 +2,18 @@
  <tr>
   <td class="xar-alt">
     <xar:if condition="strlen($translation) eq 0">
-      <label for="tid#$tid#"><span class="xar-error">#$string#</span></label>
+      <label id="lbltid#$tid#" for="tid#$tid#"><span class="xar-error">#$string#</span></label>
     <xar:else />
-      <label for="tid#$tid#">#$string#</label>
+      <label id="lbltid#$tid#" for="tid#$tid#">#$string#</label>
     </xar:if>
   </td>
  </tr>
  <tr>
    <td>
     <xar:if condition="strlen($string) gt 80">
-    <textarea name="tid#$tid#" id="tid#$tid#" rows="4" cols="80">#$translation#</textarea>
+    <textarea name="tid#$tid#" id="tid#$tid#" rows="4" cols="60" onchange="tidchange(this);">#$translation#</textarea>
     <xar:else />
-    <input type="text" name="tid#$tid#" id="tid#$tid#" value="#$translation#" size="80" />
+    <input type="text" name="tid#$tid#" id="tid#$tid#" value="#$translation#" onchange="tidchange(this);" size="80" />
     </xar:if>
    </td>
  </tr>

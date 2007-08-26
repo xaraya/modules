@@ -206,9 +206,9 @@ class XMLTranslationsSkelsGenerator
         //Allow html tags
         $translation = htmlspecialchars($translation);
         $string = htmlspecialchars($string);
-        fwrite($this->fp, "\t<entry>\n");
-        fwrite($this->fp, "\t\t<string>".$string."</string>\n");
-        fwrite($this->fp, "\t\t<translation>".$translation."</translation>\n");
+        fwrite($this->fp, "<entry>");
+        fwrite($this->fp, "<string>".$string."</string>");
+        fwrite($this->fp, "<translation>".$translation."</translation>");
         if (xarModGetVar('translations', 'maxreferences')) {
             fwrite($this->fp, "\t\t<references>\n");
             foreach($references as $reference) {
@@ -216,7 +216,7 @@ class XMLTranslationsSkelsGenerator
             }
             fwrite($this->fp, "\t\t</references>\n");
         }
-        fwrite($this->fp, "\t</entry>\n");
+        fwrite($this->fp, "</entry>\n");
     }
 
     function addKeyEntry($key, $references, $translation = '')
@@ -224,9 +224,9 @@ class XMLTranslationsSkelsGenerator
         // translation is already encoded in utf-8
         //$translation = utf8_encode($translation);
 
-        fwrite($this->fp, "\t<keyEntry>\n");
-        fwrite($this->fp, "\t\t<key>".$key."</key>\n");
-        fwrite($this->fp, "\t\t<translation>".$translation."</translation>\n");
+        fwrite($this->fp, "<keyEntry>");
+        fwrite($this->fp, "<key>".$key."</key>");
+        fwrite($this->fp, "<translation>".$translation."</translation>");
         if (xarModGetVar('translations', 'maxreferences')) {
             fwrite($this->fp, "\t\t<references>\n");
             foreach($references as $reference) {

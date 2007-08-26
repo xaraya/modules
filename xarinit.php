@@ -43,7 +43,10 @@ function translations_upgrade($oldversion)
             xarModSetVar('translations', 'maxcodelines', 5);
         case '0.1.1':
             xarRegisterMask('ReadTranslations', 'All', 'translations', 'All', 'All', 'ACCESS_READ');
+            xarModSetVar('translations', 'maxreferences', 0);
         case '0.1.2':
+            xarModSetVar('translations', 'maxreferences', 0);
+        case '0.1.3':
     }
     return true;
 }

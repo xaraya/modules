@@ -50,7 +50,6 @@
                     #xarConfigGetVar('Site.MLS.TranslationsBackend')#
                 </a>
             </span>
-</xar:comment>
             <br/>
             <xar:mlstring>Release Backend</xar:mlstring>:
             <span class="xar-title">
@@ -58,12 +57,13 @@
                     #xarModGetVar('translations', 'release_backend_type')#
                 </a>
             </span>
+</xar:comment>
         </td>
 
         <td width="45%" valign="top">
             <xar:mlstring>Site Display Locale</xar:mlstring>:
             <span class="xar-title">
-                <a href="#xarModURL('base','admin','modifyconfig')#">
+                <a href="#xarModURL('base','admin','modifyconfig', array('tab' => 'locales'))#">
                     #xarConfigGetVar('Site.MLS.DefaultLocale')#
                 </a>
             </span>
@@ -71,7 +71,7 @@
             <br/>
             <xar:mlstring>MLS Mode</xar:mlstring>:
             <span class="xar-title">
-                <a href="#xarModURL('translations','admin','modifyconfig')#">
+                <a href="#xarModURL('base','admin','modifyconfig', array('tab' => 'locales'))#">
                     #xarConfigGetVar('Site.MLS.MLSMode')#
                 </a>
             </span>

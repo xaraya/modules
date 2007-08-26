@@ -1,7 +1,7 @@
 <?php
 $modversion['name'] = 'Translations';
 $modversion['id'] = '77';
-$modversion['version'] = '0.1.2';
+$modversion['version'] = '0.1.3';
 $modversion['displayname']    = xarML('Translations');
 $modversion['description'] = 'Translations handling';
 $modversion['credits'] = 'docs/credits.txt';

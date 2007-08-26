@@ -3,7 +3,7 @@
     <xar:mlstring>Choose which entries you want to translate from the list below.</xar:mlstring>
   </p>
 
-    <form method="post" action="&xar-modurl-translations-admin-translate_subtype;">
+    <form name="trabar" id="trabar" method="post" action="&xar-modurl-translations-admin-translate_subtype;" onchange="this.submit();">
     <input type="hidden" name="dnType" value="#$dnType#"/>
     <input type="hidden" name="dnName" value="#$dnName#"/>
     <input type="hidden" name="extid" value="#$extid#"/>
@@ -42,8 +42,21 @@
         </xar:if>
     </xar:for>
     </select>
-    <input type="submit" value="#xarML('Select')#"  />
+    <input name="sbt" id="sbt" type="submit" value="#xarML('Select')#"  />
     </form>
+    
+    <script type="text/javascript">
+        function tidchange(tid)
+        {
+            if (document.forms.trabar) {
+                document.forms.trabar.elements.defaultcontext.disabled = true;
+                document.forms.trabar.elements.sbt.disabled = true;
+                document.getElementById("lbl"+tid.id).style.color="DarkBlue";
+                document.getElementById("lbl"+tid.id).firstChild.style.color="DarkGreen";
+            }
+        }
+    </script>
+
 <xar:else />
   <p>
     <xar:mlstring>There are no entries to translate.</xar:mlstring>
