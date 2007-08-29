@@ -13,24 +13,24 @@
 /**
  * Update a publication
  * @public
- * @param 'ownerId' the id of the publication owner (uid in roles)
- * @param 'categoryId' the category id of the publiction
- * @param 'altcids' array of alternate category ids for the publication
- * @param 'title' the title of the publication
- * @param 'disclaimerId' disclaimer id for the publication
- * @param 'editdisclaimer' new or edit of the disclaimer for the publication
- * @param 'altcids' array of alternate category ids for the publication
- * @param 'templateHTML' the HTML template for the publication
- * @param 'templateText' the text template for the publication
- * @param 'logo' the logo of the publication
- * @param 'linkExpiration' default number of days before a story link expires
- * @param 'linkRegistration' default text for link registration
- * @param 'introduction' introduction of the publication
- * @param 'description' description of the publication (used on subscription page)
- * @param 'private' publication is open for subscription or private
- * @param 'subject' email subject (title) for an issue
- * @param 'fromname' publication email from name (default = owner name)
- * @param 'fromemail' publication email from address (default = owner email)
+ * @param int    'ownerId' the id of the publication owner (uid in roles)
+ * @param int    'categoryId' the category id of the publication
+ * @param array  'altcids' array of alternate category ids for the publication
+ * @param string 'title' the title of the publication
+ * @param int    'disclaimerId' disclaimer id for the publication
+ * @param string 'editdisclaimer' new or edit of the disclaimer for the publication
+ * @param array  'altcids' array of alternate category ids for the publication
+ * @param string 'templateHTML' the HTML template for the publication
+ * @param string 'templateText' the text template for the publication
+ * @param string 'logo' the logo of the publication
+ * @param int    'linkExpiration' default number of days before a story link expires
+ * @param string 'linkRegistration' default text for link registration
+ * @param string 'introduction' introduction of the publication
+ * @param string 'description' description of the publication (used on subscription page)
+ * @param int    'private' publication is open for subscription or private
+ * @param string 'subject' email subject (title) for an issue
+ * @param string 'fromname' publication email from name (default = owner name)
+ * @param string 'fromemail' publication email from address (default = owner email)
  * @author Richard Cave
  * @return bool true on success, false on failure
  */
@@ -160,7 +160,7 @@ function newsletter_admin_updatepublication()
         }
     }
 
-    // Call API function
+    // Call API function to update the publication
     if(!xarModAPIFunc('newsletter',
                       'admin',
                       'updatepublication',
