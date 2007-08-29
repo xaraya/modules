@@ -62,22 +62,41 @@ function newsletter_admin_createaltsubscription()
         // No validation - assume this email address is correct
         $valid = true;
     }
-
-    if ($valid) {
+    $role = xarModApiFunc('roles','user','get',array('email'=>$email));
+    if (empty($role['uid'])) {
+        $subscriptiontype = 'alt';
+    } else {
+        $subscriptiontype = 'role id';
+    }
+    if($valid) {
         foreach ($pids as $pid) {
             // Call create subscription function API
-            $item =xarModAPIFunc('newsletter',
-                                 'admin',
-                                 'createaltsubscription',
-                                  array('name' => $name,
-                                        'email' => $email,
-                                        'pid' => $pid,
-                                        'htmlmail' => $htmlmail));
+            if (empty($role['uid'])) {
+                $item =xarModAPIFunc('newsletter',
+                                     'admin',
+                                     'createaltsubscription',
+                                      array('name' => $name,
+                                            'email' => $email,
+                                            'pid' => $pid,
+                                            'htmlmail' => $htmlmail));
 
-            if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
-                return; // throw back
+                if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
+                    return; // throw back
+                }
+            } else {
+                // Call create subscription function API
+                $subscriptionId = xarModAPIFunc('newsletter',
+                                     'admin',
+                                     'createsubscription',
+                                      array('uid' => $role['uid'],
+                                            'pid' => $pid,
+                                            'htmlmail' => $htmlmail));
+
+                if (!$subscriptionId) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
+                    return; // throw back
+                }
+
             }
-
             xarSessionSetVar('statusmsg', xarML('Subscription Created'));
         }
 
@@ -121,18 +140,13 @@ function newsletter_admin_createaltsubscription()
     }
 }
 
-
 /**
  * Check if an email address is valid
  *
  * @private
  * @author Richard Cave
- * @param 'name' the name of the new subscription
- * @param 'email' the email address of the new subscription
- * @param 'pids' the publication ids
- * @param 'htmlmail' send mail html or text (0 = text, 1 = html)
- * @returns bool
- * @return true on success, false on failure
+ * @param string 'email' the email address to test
+ * @return bool true on success, false on failure
  */
 function newsletter_admin__checkemail($email)
 {

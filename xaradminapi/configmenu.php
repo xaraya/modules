@@ -14,8 +14,7 @@
  * generate the common admin menu configuration
  *
  * @author Richard Cave
- * @returns array
- * @return $menu
+ * @return array $menu
  */
 function newsletter_adminapi_configmenu()
 {
@@ -52,6 +51,13 @@ function newsletter_adminapi_configmenu()
                               'page'  => 'viewusers',
                               'title' => xarML('Modify the users the module'),
                               'label' => xarML('Modify Users'));
+
+        $menulinks[] = Array('url'   => xarModURL('newsletter',
+                                                  'admin',
+                                                  'viewpublication'),
+                              'page'  => 'viewpublication',
+                              'title' => xarML('View all Newsletter Publications'),
+                              'label' => xarML('View Publications'));
 
         $menulinks[] = Array('url'   => xarModURL('newsletter',
                                                   'admin',

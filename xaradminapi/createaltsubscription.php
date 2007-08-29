@@ -19,8 +19,7 @@
  * @param $args['email'] the email address of the new subscription
  * @param $args['pid'] publication id
  * @param $args['htmlmail'] send mail in html or text format (1 = html, 0 = text)
- * @returns int
- * @return true on success, false on failure
+ * @return int The subscription id
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_createaltsubscription($args)

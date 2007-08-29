@@ -120,28 +120,48 @@ function newsletter_admin_importaltsubscription()
                 if (!isset($publication) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
                     return; // throw back
 
-                // Call create subscription function API
-                $subscriptionId = xarModAPIFunc('newsletter',
-                                     'admin',
-                                     'createaltsubscription',
-                                      array('name' => $name,
-                                            'email' => $email,
-                                            'pid' => $pid,
-                                            'htmlmail' => $htmlmail));
+                // See if there is a role associated with the email address
+                $role = xarModApiFunc('roles','user','get',array('email'=>$email));
+                if(empty($role['uid'])) {
 
+                    // Call create subscription function API
+                    $subscriptionId = xarModAPIFunc('newsletter',
+                                         'admin',
+                                         'createaltsubscription',
+                                          array('name' => $name,
+                                                'email' => $email,
+                                                'pid' => $pid,
+                                                'htmlmail' => $htmlmail));
+                } else {
+                    // Call create subscription function API
+                    // MichelV: this generated a true: bool and interfers with below
+                    $subscriptionId = xarModAPIFunc('newsletter',
+                                         'admin',
+                                         'createsubscription',
+                                          array('uid' => $role['uid'],
+                                                'pid' => $pid,
+                                                'htmlmail' => $htmlmail));
+                }
                 // Check if valid subscription
                 if ($subscriptionId) {
                     $imports_valid[$idx]['name'] = trim($name);
                     $imports_valid[$idx]['email'] = trim($email);
-                    $imports_valid[$idx]['id'] = $subscriptionId;
+
                     $imports_valid[$idx]['publication'] = $publication['title'];
 
                     // Create url titles
                     $imports_valid[$idx]['edittitle'] = xarML('Edit');
                     $imports_valid[$idx]['deletetitle'] = xarML('Delete');
-
+                    // If we have an integer, then the subscription in an alt subscription.
+                    if (is_int($subscriptionId)) {
+                        $imports_valid[$idx]['id'] = $subscriptionId;
+                        $is_alt = true;
+                    } else {
+                        $imports_valid[$idx]['id'] = 0;
+                        $is_alt = false;
+                    }
                     // Create edit url
-                    if(xarSecurityCheck('EditNewsletter', 0)) {
+                    if((xarSecurityCheck('EditNewsletter', 0)) && $is_alt) {
                         $imports_valid[$idx]['editurl'] = xarModURL('newsletter',
                                                                     'admin',
                                                                     'modifyaltsubscription',
@@ -151,7 +171,7 @@ function newsletter_admin_importaltsubscription()
                     }
 
                     // Create delete url
-                    if(xarSecurityCheck('DeleteNewsletter', 0)) {
+                    if((xarSecurityCheck('DeleteNewsletter', 0)) && $is_alt) {
                         $imports_valid[$idx]['deleteurl'] = xarModURL('newsletter',
                                                                       'admin',
                                                                       'deletealtsubscription',

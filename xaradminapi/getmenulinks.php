@@ -19,12 +19,18 @@
 function newsletter_adminapi_getmenulinks()
 {
     $menulinks = array();
-     if(xarSecurityCheck('AdminNewsletter', 0)) {
+    if(xarSecurityCheck('AdminNewsletter', 0)) {
 
         $menulinks[] = Array('url'   => xarModURL('newsletter','admin','overview'),
                              'title' => xarML('Newsletter overview'),
                              'label' => xarML('Overview'));
-        }
+
+        $menulinks[] = Array('url'   => xarModURL('newsletter',
+                                                  'admin',
+                                                  'viewpublication'),
+                              'title' => xarML('View all Newsletter Publications'),
+                              'label' => xarML('View Publications'));
+    }
 
     if(xarSecurityCheck('EditNewsletter', 0)) {
 

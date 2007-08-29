@@ -11,15 +11,14 @@
  * @author Richard Cave <rcave@xaraya.com>
  */
 /**
- * Create a subscription
+ * Create a subscription based on the user id (role within Xaraya).
  *
  * @author Richard Cave
- * @param $args an array of arguments
- * @param $args['uid'] user id
- * @param $args['pid'] publication id
- * @param $args['htmlmail'] send mail in html or text format (1 = html, 0 = text)
- * @returns int
- * @return true on success, false on failure
+ * @param array $args an array of arguments
+ * @param int $args['uid'] user id
+ * @param int $args['pid'] publication id
+ * @param int $args['htmlmail'] send mail in html or text format (1 = html, 0 = text)
+ * @return bool true on success, false on failure
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function newsletter_adminapi_createsubscription($args)

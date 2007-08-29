@@ -183,7 +183,7 @@ function newsletter_admin_updatepublication()
                             'fromemail' => $fromemail))) {
         return; // throw back
     }
-    xarSessionSetVar('statusmsg', xarML('Newsletter Story Update'));
+    xarSessionSetVar('statusmsg', xarML('Newsletter Publication Updated'));
 
     // Redirect
     xarResponseRedirect(xarModURL('newsletter', 'admin', 'viewpublication'));
