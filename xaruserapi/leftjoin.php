@@ -76,7 +76,13 @@ function categories_userapi_leftjoin($args)
         }
     }
 
-    if (!isset($cids)) $cids = array();
+    if (!isset($cids)) {
+        $cids = array();
+    } else {
+        // Make sure the cids have continuous keys - we rely on that later.
+        $cids = array_values($cids);
+    }
+
     if (!isset($iids)) $iids = array();
     if (!isset($andcids)) $andcids = false;
 
@@ -93,7 +99,7 @@ function categories_userapi_leftjoin($args)
     }
 
     // trick : cids = array(_NN) corresponds to cidtree = NN
-    if (count($cids) == 1 && preg_match('/^_(\d+)$/', $cids[0], $matches)) {
+    if (count($cids) == 1 && preg_match('/^_(\d+)$/', reset($cids), $matches)) {
         $cidtree = $matches[1];
         $cids = array();
     }
