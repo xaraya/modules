@@ -1,0 +1,36 @@
+<xar:comment>
+    Initialise the jquery-calendar widget.
+    See http://marcgrabanski.com/code/jquery-calendar/ for details of this plugin
+</xar:comment>
+
+<xar:comment>
+    Make sure jQuery is going to be loaded.
+    Do this through another template that can keep track of status,
+    and perhaps be used to switch between different versions and allow
+    global options to be introduced.
+</xar:comment>
+
+<xar:template file="jquery" module="jquery" />
+
+<xar:comment>
+    Load the stylesheet.
+</xar:comment>
+
+<xar:style file='jquery-calendar' scope="module" module="jquery" />
+
+<xar:comment>
+    Load the javascript.
+</xar:comment>
+
+<xar:base-include-javascript filename="jquery-calendar.pack.js" module="jquery" />
+
+<xar:comment>
+    Some custom initialisation.
+    If static, this could be put into an external JS script.
+    If dynamic, then some inline javascript, as below, is ideal.
+</xar:comment>
+
+<xar:comment>
+<xar:base-include-javascript type="code" code="jpopUpCal.autoPopUp = 'button';" />
+</xar:comment>
+

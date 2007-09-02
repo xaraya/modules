@@ -1,0 +1,119 @@
+	.gvContainer{
+		width:445px;
+		height:356px;
+		border:1px solid #000;
+		background:#ccc;
+		overflow:hidden;
+		border-width:0px 1px 0px 1px;
+		position:relative;
+	}
+	.gvContainer .gvHolder{
+		position:absolute;
+		top:0;
+		left:0;
+		margin-left:0;
+		margin-top:0;
+	}
+	.gvHeader{
+		width:445px;
+		background:#666;
+		color:#fff;
+		font:bold 11px Geneva, Arial, Helvetica, sans-serif;
+		border:1px solid #000;
+		border-width:1px 1px 0px 1px;
+		height:20px;
+		position:relative;
+	}
+	.gvFooter{
+		width:445px;
+		background:#666;
+		color:#fff;
+		font:bold 11px Geneva, Arial, Helvetica, sans-serif;
+		border:1px solid #000;
+		border-width:0px 1px 1px 1px;
+		height:20px;
+		text-align:center;
+	}
+	.gvFooter .gvLinks{
+		padding:0px auto;
+		padding-top:3px;
+	}
+	.gvFooter a{
+		padding:0 10px;
+		width:15px;
+		background:#CCCCCC;
+		color:#666666;
+	}
+	.gvFooter a:hover{
+		background:#fff;
+		color:#666666;
+	}
+	.gvHeader strong{
+		padding-left:10px;
+		font:bold 11px/20px Geneva, Arial, Helvetica, sans-serif;
+	}
+	.gvHeader a.gvFullSizeText{
+		position:absolute;
+		right:0;
+		top:0;
+		display:none;
+		font:bold 10px/20px Verdana, Arial, Helvetica, sans-serif;
+		color:#fff;
+		width:120px;
+		text-align:right;
+		padding-right:5px;
+	}
+	.gvContainer .gvItem{
+		width:85px;
+		text-align:center;
+		vertical-align:middle;
+		height:85px;
+		position:relative;
+		float:left;
+		border:1px solid #000;
+		margin:1px;
+		overflow:hidden;
+	}
+	.gvContainer .gvItem .gvOpen{
+		position:absolute;
+		top:0;
+		left:0;
+		height:15px;
+		width:85px;
+		font:bold 8px/15px Verdana, Arial, Helvetica, sans-serif;
+		color:#666;
+		background:#ffffff;
+		border-bottom:1px solid #000;
+		text-align:right;
+		text-transform:uppercase;
+	}
+	.gvContainer .gvItem img{
+		position:absolute;
+		top:0;
+		left:0;
+		padding:0;
+		margin:0;
+		margin-left:0;
+		margin-top:0;border:none;
+	}
+	.gvImgContainer{
+		position:absolute;
+		top:0;
+		left:0;
+		width:445px;
+		height:356px;
+		display:none;
+		overflow:hidden;
+		background:#fff;
+	}
+	.gvImgContainer img{border:none;padding:0;margin:0;}
+	.gvLoader{
+		background:url(../img/loadingAnimation.gif);
+		width:208px;
+		height:13px;
+		position:absolute;
+		left:50%;
+		top:50%;
+		margin-left:-104px;
+		margin-top:-6px;
+	}

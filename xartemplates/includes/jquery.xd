@@ -1,0 +1,5 @@
+<xar:comment>
+    Load up the jquery library, and apply any global options.
+</xar:comment>
+
+<xar:base-include-javascript filename="jquery.pack.js" module="jquery" />

@@ -1,0 +1,75 @@
+<div style="margin-bottom: 10em;">
+
+    <h1 class="xar-mod-head">
+        <xar:mlstring>jQuery demo page</xar:mlstring>
+    </h1>
+
+    <h2><xar:mlstring>Calendar - jquery-calendar</xar:mlstring></h2>
+
+    <p><xar:mlstring>Basic calendar pop-up</xar:mlstring></p>
+
+    <xar:template file="jquery-calendar" module="jquery" />
+    <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('#jquery-calendar-item').calendar();});" />
+
+    <form>
+        <input type="text" id="jquery-calendar-item" /><br />
+    </form>
+
+    <h2><xar:mlstring>Calendar - datePicker</xar:mlstring></h2>
+
+    <p><xar:mlstring>Advanced calendar, supporting i18n formats, defaults, linked 'range' dates, plus lots of other options.</xar:mlstring></p>
+
+    <xar:template file="jquery.datePicker" module="jquery" />
+    <xar:base-include-javascript type="code" code="jQuery(function(){jQuery('#datePickerItem').datePicker();});" />
+
+    <form>
+        <input type="text" id="datePickerItem" />
+    </form>
+
+    <xar:comment>The datePicker seems to use a float that needs to be cleared</xar:comment>
+    <div style="clear: both;"></div>
+
+    <h2><xar:mlstring>Gallery - jqGalView</xar:mlstring></h2>
+
+    <xar:template file="jqGalView" module="jquery" />
+
+    <xar:set name="jqGalView_openme"><xar:mlstring>Open Me</xar:mlstring></xar:set>
+    <xar:set name="jqGalView_return"><xar:mlstring>Return</xar:mlstring></xar:set>
+    <xar:set name="jqGalView_noshowfull"><xar:mlstring>No showing in full</xar:mlstring></xar:set>
+
+    <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('ul.gal').jqGalView({appendTo:'#jqGalViewHolder',openTxt:'$jqGalView_openme', backTxt:'$jqGalView_return', goFullSizeTxt:'$jqGalView_noshowfull'});});" />
+
+    <p id="jqGalViewHolder">
+    <ul class="gal" title="#xarML('My Gallery')#">
+        <li><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image4.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image4.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image4.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image4.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image4.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image4.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image4.thumbnail.jpg"/></li>
+    </ul>
+    </p>
+
+</div>

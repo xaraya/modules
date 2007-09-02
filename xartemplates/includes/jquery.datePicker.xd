@@ -1,0 +1,34 @@
+<xar:comment>
+    Initialise the jquery.datePicker widget.
+    See http://jquery.com/plugins/project/datepicker for details of this plugin
+</xar:comment>
+
+<xar:comment>
+    Make sure jQuery is going to be loaded.
+</xar:comment>
+
+<xar:template file="jquery" module="jquery" />
+
+<xar:comment>
+    Required stylesheet.
+</xar:comment>
+<xar:style file='datePicker' scope="module" module="jquery" />
+
+<xar:comment>
+    TODO: plug required by IE to stop calenders slipping under form items.
+    Not sure how to support this at present.
+    <!--[if IE]><script type="text/javascript" src="jquery.bgiframe.js"></script><![endif]-->
+</xar:comment>
+
+<xar:comment>
+    Two other plugins are required.
+</xar:comment>
+
+<xar:base-include-javascript filename="date.js" module="jquery" />
+<xar:base-include-javascript filename="jquery.dimensions.js" module="jquery" />
+
+<xar:comment>
+    Load the javascript for the datePicker.
+</xar:comment>
+
+<xar:base-include-javascript filename="jquery.datePicker.js" module="jquery" />

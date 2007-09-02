@@ -1,0 +1,30 @@
+<xar:comment>
+    Initialise the jqGalView gallery widget.
+    See http://benjaminsterling.com/2007/08/24/jquery-jqgalview-photo-gallery for details of this plugin
+</xar:comment>
+
+<xar:comment>
+    Make sure jQuery is going to be loaded.
+</xar:comment>
+
+<xar:template file="jquery" module="jquery" />
+
+<xar:comment>
+    Required stylesheet.
+</xar:comment>
+
+<xar:style file='jqGalView' scope="module" module="jquery" />
+
+<xar:comment>
+    Other required plugins.
+</xar:comment>
+
+<xar:base-include-javascript filename="jquery.easing.js" module="jquery" />
+
+<xar:comment>
+    Load the main plugin.
+</xar:comment>
+
+<xar:base-include-javascript filename="jqGalView.js" module="jquery" />
+
+
