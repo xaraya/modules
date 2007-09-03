@@ -90,9 +90,9 @@ function xarpages_funcapi_news($args)
     // Transform hook fields on details.
     $transform_fields_detail = array('summary', 'body', 'notes');
     
-    // TODO: allow override using a parameter.
     // General sort methods will be what articles supports (practically just date and title)
-    $sort = (isset($settings['defaultsort']) ? $settings['defaultsort'] : '');
+    xarVarFetch('sort', 'str', $sort, '', XARVAR_NOT_REQUIRED);
+    if (empty($sort)) $sort = (isset($settings['defaultsort']) ? $settings['defaultsort'] : '');
     
     // Put all the category ids into the cids array.
     if (!empty($cid) && !in_array($cid, $cids)) array_push($cids, $cid);
@@ -228,6 +228,65 @@ function xarpages_funcapi_news($args)
                 $article = xarModCallHooks('item', 'transform', $article['aid'], $article, 'articles');
             }
 
+            // Fetch keywords and articles related by keyword.
+            // CHECKME: does xarModIsHooked accept an array of ptids?
+            if (xarModIsHooked('keywords', 'articles', $ptids)) {
+                $keyword_words = xarModAPIfunc(
+                    'keywords', 'user', 'getwords',
+                    array('itemid' => $aid, 'modid' => xarModGetIDFromName('articles'), 'itemtype' => $ptids)
+                );
+                //var_dump($keyword_words);
+
+                if (!empty($keyword_words)) {
+                    $keywords = array();
+                    $word_ids = array();
+                    $keyword_index = array();
+
+                    // TODO: safety check for cases where articles etc don't exist
+                    foreach($keyword_words as $keyword_word) {
+                        // Get the item IDs that share this module's keywords
+                        $keyword_items = xarModAPIfunc(
+                            'keywords', 'user', 'getitems',
+                            array('keyword' => $keyword_word, 'modid' => xarModGetIDFromName('articles'), 'itemtype' => $ptids)
+                        );
+                        if (!empty($keyword_items)) {
+                            $keywords[$keyword_word] = $keyword_items;
+                            foreach($keyword_items as $key => $keyword_item) {
+                                // Add the item ID to the list for fetching the articles.
+                                $word_ids[$keyword_item['itemid']] = $keyword_item['itemid'];
+                                // Index this item so we know where to put the article details.
+                                $keyword_index[$keyword_item['itemid']][] =& $keywords[$keyword_word][$key];
+                            }
+                        }
+                    }
+
+                    // Now we have a list of article IDs.
+                    // Fetch the titles for these articles and group them by keyword.
+                    if (!empty($word_ids)) {
+                        $word_ids = array_values($word_ids);
+
+                        // If we have keywords, go grab the articles - just need titles.
+                        $keyword_articles = xarModAPIfunc(
+                            'articles', 'user', 'getall',
+                            array('aids' => $word_ids, 'status' => $status, 'fields' => array('aid','title'), 'enddate' => time())
+                        );
+
+                        foreach($keyword_articles as $key => $keyword_article) {
+                            // Merge the article item in with the keyword details.
+                            if (isset($keyword_index[$keyword_article['aid']])) {
+                                foreach($keyword_index[$keyword_article['aid']] as $keyX => $dummy) {
+                                    $keyword_index[$keyword_article['aid']][$keyX] += $keyword_article;
+                                }
+                            }
+                        }
+
+                        // Put the keywords list onto the article.
+                        $article['keywords'] = $keywords;
+                    }
+
+                }
+            }
+
             // If the article is in the list of articles, then we can provide links
             // to next/previous and other articles.
             $i = 0;
@@ -235,6 +294,11 @@ function xarpages_funcapi_news($args)
                 if ($item['aid'] == $aid) {
                     // This is the one.
                     // Easiest way is to fetch three articles and get their IDs.
+
+                    // Copy the expanded categories in, if available.
+                    if (!empty($item['categories'])) {
+                        $article['categories'] = $item['categories'];
+                    }
 
                     // Determine this article ID in the complete list.
                     $article_number = $startnum + $i;
@@ -328,6 +392,7 @@ function xarpages_funcapi_news($args)
         // DONE: split up months and years for display as titles, possibly as full names.
         // TODO: if the year and month chosen is not in the retrieved list, then change the date.
         // (not sure how to do that, without going back and retrieving all articles again)
+        // TODO: Archive by a field other than publication dates
 
         // Now scan the archive and build up several arrays.
         $archive_data = array();
