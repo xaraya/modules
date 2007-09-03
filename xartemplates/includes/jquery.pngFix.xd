@@ -1,0 +1,25 @@
+<xar:comment>
+    Initialise the jquery.pngfix tool.
+    Just include this script and PNG transparency will be fixed for IE5.5 and IE6
+    See http://jquery.com/plugins/project/pngFix.
+</xar:comment>
+
+<xar:comment>
+    Make sure jQuery is going to be loaded.
+</xar:comment>
+
+<xar:template file="jquery" module="jquery" />
+
+<xar:comment>
+    Load the main plugin javascript.
+</xar:comment>
+
+<xar:base-include-javascript filename="jquery.pngFix.js" module="jquery" />
+
+<xar:comment>
+    Set up a 'ready' function so PNGs are fixed automatically.
+    By default this fixes all PNGs in the body, but can be narrowed down
+    if there is a desire to not fix some PNGs.
+</xar:comment>
+
+<xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('body').pngFix();});" />

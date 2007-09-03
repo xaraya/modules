@@ -72,4 +72,31 @@
     </ul>
     </p>
 
+    <h2><xar:mlstring>pngFix</xar:mlstring></h2>
+
+    <p><xar:mlstring>Fixes transparency of PNGs in IE5.5 and IE6</xar:mlstring></p>
+
+    <xar:template file="jquery.pngFix" module="jquery" />
+
+    <p style="background-color: #ffcccc;"><img src="modules/jquery/xarimages/pngtest.png" width="173" height="173" alt="This is the alt-Text" /></p>
+
+    <h2><xar:mlstring>jCarouselLite</xar:mlstring></h2>
+
+    <xar:template file="jquery.jcarousellite" module="jquery" />
+
+    <xar:base-include-javascript type="code" code="jQuery(function() {jQuery('.carousel-lite').jCarouselLite({btnNext: '.jCarouselLite-next', btnPrev: '.jCarouselLite-prev', visible: 2});});" />
+
+    <div class="carousel-lite" style="border: 3px solid #dddddd; text-align: right;">
+        <a href="#" class="jCarouselLite-prev" style="float: left;">Prev</a>
+        <a href="#" class="jCarouselLite-next">Next</a>
+        <div class="jCarouselLite">
+            <ul>
+                <li><img src="modules/jquery/xarimages/gallery/image1.jpg" alt="" height="200"></li>
+                <li><img src="modules/jquery/xarimages/gallery/image2.jpg" alt="" height="200"></li>
+                <li><img src="modules/jquery/xarimages/gallery/image3.jpg" alt="" height="200"></li>
+                <li><img src="modules/jquery/xarimages/gallery/image4.jpg" alt="" height="200"></li>
+            </ul>
+        </div>
+        <div class="clear"></div>   
+    </div>
 </div>

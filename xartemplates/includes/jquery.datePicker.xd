@@ -15,10 +15,12 @@
 <xar:style file='datePicker' scope="module" module="jquery" />
 
 <xar:comment>
-    TODO: plug required by IE to stop calenders slipping under form items.
-    Not sure how to support this at present.
+    Plugin required by IE to stop calenders slipping under form items.
+    Not sure how to support this at present, but it does no harm to load it always.
     <!--[if IE]><script type="text/javascript" src="jquery.bgiframe.js"></script><![endif]-->
 </xar:comment>
+
+<xar:base-include-javascript filename="jquery.bgiframe.js" module="jquery" />
 
 <xar:comment>
     Two other plugins are required.
