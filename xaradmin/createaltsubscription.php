@@ -92,7 +92,7 @@ function newsletter_admin_createaltsubscription()
                                             'pid' => $pid,
                                             'htmlmail' => $htmlmail));
 
-                if (!$subscriptionId) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
+                if ((!$subscriptionId) && (xarCurrentErrorType() != XAR_NO_EXCEPTION)) {
                     return; // throw back
                 }
 

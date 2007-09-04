@@ -52,6 +52,4 @@ function newsletter_admin_newimportaltsubscription()
     // Return the template variables defined in this function
     return $data;
 }
-
-
 ?>
