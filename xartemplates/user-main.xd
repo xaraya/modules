@@ -78,9 +78,12 @@
 
     <xar:template file="jquery.pngFix" module="jquery" />
 
-    <p style="background-color: #ffcccc;"><img src="modules/jquery/xarimages/pngtest.png" width="173" height="173" alt="This is the alt-Text" /></p>
+    <p style="background-color: #ffcccc;">
+        <img src="modules/jquery/xarimages/pngtest.png" width="173" height="173" alt="This is the alt-Text" />
+        <img src="modules/jquery/xarimages/pngtest-alpha.png" width="173" height="173" alt="This is the alt-Text" />
+    </p>
 
-    <h2><xar:mlstring>jCarouselLite</xar:mlstring></h2>
+    <h2><xar:mlstring>jCarouselLite - little brother to jCarousel</xar:mlstring></h2>
 
     <xar:template file="jquery.jcarousellite" module="jquery" />
 
@@ -99,4 +102,16 @@
         </div>
         <div class="clear"></div>   
     </div>
+
+    <h2><xar:mlstring>ability - a simple style switcher</xar:mlstring></h2>
+
+    <p>
+        <xar:mlstring>Switch font sizes and stylesheets (for high contrast).
+        Not too keen on the way this one works, as it disabled all other stylesheets to put the hight contract one in, which is a bit drastic.</xar:mlstring>
+    </p>
+
+    <xar:template file="jquery.ability" module="jquery" />
+
+    <div id="accessibility"></div>
+
 </div>

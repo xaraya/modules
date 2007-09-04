@@ -3,3 +3,11 @@
 </xar:comment>
 
 <xar:base-include-javascript filename="jquery.pack.js" module="jquery" />
+
+<xar:comment>
+    Include a few common plugins by default.
+</xar:comment>
+
+<xar:base-include-javascript filename="date.js" module="jquery" />
+<xar:base-include-javascript filename="jquery.dimensions.js" module="jquery" />
+<xar:base-include-javascript filename="jquery.easing.js" module="jquery" />
