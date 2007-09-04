@@ -30,7 +30,7 @@ function addressbook_userapi_getDetailValues($args)
     extract($args);
 
     $invalid = array();
-    if (!isset($id)) { $invalid[] = 'id'; }
+    if (!isset($id) || empty($id)) { $invalid[] = 'id'; }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
                      join(', ',$invalid), 'getDetailValues', 'addressbook');

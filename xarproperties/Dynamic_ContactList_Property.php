@@ -75,7 +75,7 @@ class Dynamic_ContactList_Property extends Dynamic_Select_Property
 
             $displayName = '';
             if(!empty($item['company'])) {
-                $displayName .= xarVarPrepHTMLDisplay($item['company'])."<br>";
+                $displayName .= xarVarPrepForDisplay($item['company'])."<br>";
             }
             if ((!empty($item['fname']) && !empty($item['lname'])) ||
                 (!empty($item['fname']) || !empty($item['lname']))) {
@@ -83,15 +83,15 @@ class Dynamic_ContactList_Property extends Dynamic_Select_Property
                     if (!empty($prefixes) && $item['prefix'] > 0) {
                         $displayName .= $prefixes[$item['prefix']-1]['name'].' ';
                     }
-                    $displayName .= xarVarPrepHTMLDisplay($item['fname']).' '.xarVarPrepHTMLDisplay($item['lname']);
+                    $displayName .= xarVarPrepForDisplay($item['fname']).' '.xarVarPrepForDisplay($item['lname']);
                 } else {
                     if (!empty($item['lname'])) {
-                        $displayName .= xarVarPrepHTMLDisplay($item['lname']).', ';
+                        $displayName .= xarVarPrepForDisplay($item['lname']).', ';
                     }
                     if (!empty($prefixes) && $item['prefix'] > 0) {
                         $displayName .= $prefixes[$item['prefix']-1]['name'].' ';
                     }
-                    $displayName .= xarVarPrepHTMLDisplay($item['fname']);
+                    $displayName .= xarVarPrepForDisplay($item['fname']);
                 }
             }
             $data['displayName'] = $displayName;
@@ -163,10 +163,19 @@ class Dynamic_ContactList_Property extends Dynamic_Select_Property
         $data=array();
         $data['value'] = $this->value;
         // get the option corresponding to this value
-        $item = xarModAPIFunc('addressbook', 'user', 'getDetailValues', array('id' => $this->value));
+        $item = array();
+        if (is_int($this->value)) {
+            $item = xarModAPIFunc('addressbook', 'user', 'getDetailValues', array('id' => $this->value));
+        }
+        if (empty($item)) {
+            $item['address_1']='';
+            $item['address_2']='';
+            $item['zip']='';
+            $item['city']='';
+        }
         $displayCompany = '';
         if(!empty($item['company'])) {
-            $displayCompany = xarVarPrepHTMLDisplay($item['company']);
+            $displayCompany = xarVarPrepForDisplay($item['company']);
         }
         $displayName ='';
         if ((!empty($item['fname']) && !empty($item['lname'])) || (!empty($item['fname']) || !empty($item['lname']))) {
@@ -174,22 +183,22 @@ class Dynamic_ContactList_Property extends Dynamic_Select_Property
                 if (!empty($prefixes) && $item['prefix'] > 0) {
                     $displayName .= $prefixes[$item['prefix']-1]['name'].' ';
                 }
-                $displayName .= xarVarPrepHTMLDisplay($item['fname']).' '.xarVarPrepHTMLDisplay($item['lname']);
+                $displayName .= xarVarPrepForDisplay($item['fname']).' '.xarVarPrepForDisplay($item['lname']);
             } else {
                 if (!empty($item['lname'])) {
-                    $displayName .= xarVarPrepHTMLDisplay($item['lname']).', ';
+                    $displayName .= xarVarPrepForDisplay($item['lname']).', ';
                 }
                 if (!empty($prefixes) && $item['prefix'] > 0) {
                     $displayName .= $prefixes[$item['prefix']-1]['name'].' ';
                 }
-                $displayName .= xarVarPrepHTMLDisplay($item['fname']);
+                $displayName .= xarVarPrepForDisplay($item['fname']);
             }
         }
 
         $result = $displayName;
         // only apply xarVarPrepForDisplay on strings, not arrays et al.
         if (!empty($result) && is_string($result)) {
-            $result = xarVarPrepHTMLDisplay($result);
+            $result = xarVarPrepForDisplay($result);
         }
 
         $data['option'] = array('id' => $this->value,
