@@ -1,0 +1,19 @@
+ul.fontsize, ul.switcher {
+	margin-right: 20px;
+	margin-top: 4px;
+	display: block;
+}
+
+ul.fontsize li, ul.switcher li {
+	float: left;
+	margin-right: 10px;
+	border: 2px solid #000;
+	padding: 2px;
+	text-align: center;
+	background: none;
+}
+
+ul.fontsize li a, ul.switcher li a {
+	color: #000;
+	padding: 0 1em;
+}
