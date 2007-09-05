@@ -34,3 +34,12 @@
 </xar:comment>
 
 <xar:base-include-javascript filename="jquery.datePicker.js" module="jquery" />
+
+
+<xar:comment>
+    Set the selectors to apply the pop-ups to.
+</xar:comment>
+
+<xar:if condition="!empty($selector)">
+    <xar:base-include-javascript type="code" code="jQuery(function(){jQuery('$selector').datePicker();});" />
+</xar:if>

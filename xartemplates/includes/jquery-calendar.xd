@@ -34,3 +34,10 @@
 <xar:base-include-javascript type="code" code="jpopUpCal.autoPopUp = 'button';" />
 </xar:comment>
 
+<xar:comment>
+    Set the selectors to apply the pop-ups to.
+</xar:comment>
+
+<xar:if condition="!empty($selector)">
+    <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').calendar();});" />
+</xar:if>

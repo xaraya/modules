@@ -1,0 +1,29 @@
+<xar:comment>
+    Make sure jQuery is going to be loaded.
+</xar:comment>
+
+<xar:template file="jquery" module="jquery" />
+
+<xar:comment>
+    Other required plugins.
+</xar:comment>
+
+<xar:base-include-javascript filename="jquery.dimensions.js" module="jquery" />
+<xar:base-include-javascript filename="center.js" module="jquery" />
+
+<xar:comment>
+    The main plugin.
+</xar:comment>
+
+<xar:base-include-javascript filename="image-viewer.js" module="jquery" />
+
+<xar:style file='image-viewer' scope="module" module="jquery" />
+
+<xar:comment>
+    Set the selectors to apply the pop-ups to.
+</xar:comment>
+
+<xar:if condition="!empty($selector)">
+    <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').ImageViewer();});" />
+</xar:if>
+

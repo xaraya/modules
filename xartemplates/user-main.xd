@@ -4,27 +4,24 @@
         <xar:mlstring>jQuery demo page</xar:mlstring>
     </h1>
 
+    <p><xar:mlstring>Note: the Xaraya_Classic theme causes most of these plugins to fail one way or another.
+    We don't know where the fault lies, but it is something to bear in mind when trying this demo out.</xar:mlstring></p>
+
     <h2><xar:mlstring>Calendar - jquery-calendar</xar:mlstring></h2>
 
     <p><xar:mlstring>Basic calendar pop-up</xar:mlstring></p>
 
-    <xar:template file="jquery-calendar" module="jquery" />
-    <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('#jquery-calendar-item').calendar();});" />
+    <xar:template file="jquery-calendar" module="jquery" subdata="array('selector'=&gt;'#jquery-calendar-item')" />
 
-    <form>
-        <input type="text" id="jquery-calendar-item" /><br />
-    </form>
+    <form><input type="text" id="jquery-calendar-item" /></form>
 
     <h2><xar:mlstring>Calendar - datePicker</xar:mlstring></h2>
 
     <p><xar:mlstring>Advanced calendar, supporting i18n formats, defaults, linked 'range' dates, plus lots of other options.</xar:mlstring></p>
 
-    <xar:template file="jquery.datePicker" module="jquery" />
-    <xar:base-include-javascript type="code" code="jQuery(function(){jQuery('#datePickerItem').datePicker();});" />
+    <xar:template file="jquery.datePicker" module="jquery" subdata="array('selector'=&gt;'#datePickerItem')" />
 
-    <form>
-        <input type="text" id="datePickerItem" />
-    </form>
+    <form><input type="text" id="datePickerItem" /></form>
 
     <xar:comment>The datePicker seems to use a float that needs to be cleared</xar:comment>
     <div style="clear: both;"></div>
@@ -37,6 +34,7 @@
     <xar:set name="jqGalView_return"><xar:mlstring>Return</xar:mlstring></xar:set>
     <xar:set name="jqGalView_noshowfull"><xar:mlstring>No showing in full</xar:mlstring></xar:set>
 
+    <xar:comment>TODO: support passing all these parameters into the jqGalView template as subdata</xar:comment>
     <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('ul.gal').jqGalView({appendTo:'#jqGalViewHolder',openTxt:'$jqGalView_openme', backTxt:'$jqGalView_return', goFullSizeTxt:'$jqGalView_noshowfull'});});" />
 
     <p id="jqGalViewHolder">
@@ -87,6 +85,7 @@
 
     <xar:template file="jquery.jcarousellite" module="jquery" />
 
+    <xar:comment>TODO: support passing all these parameters into the jquery.jcarousellite template as subdata</xar:comment>
     <xar:base-include-javascript type="code" code="jQuery(function() {jQuery('.carousel-lite').jCarouselLite({btnNext: '.jCarouselLite-next', btnPrev: '.jCarouselLite-prev', visible: 2});});" />
 
     <div class="carousel-lite" style="border: 3px solid #dddddd; text-align: right;">
@@ -113,5 +112,16 @@
     <xar:template file="jquery.ability" module="jquery" />
 
     <div id="accessibility"></div>
+
+    <h2><xar:mlstring>image-viewer - a simple modal image viewer</xar:mlstring></h2>
+
+    <xar:template file="image-viewer" module="jquery" subdata="array('selector'=&gt;'#image-viewer-images')" />
+
+    <ul id="image-viewer-images">
+        <li><a href="modules/jquery/xarimages/gallery/image1.jpg"><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg" alt="Utrecht"></a></li>
+        <li><a href="modules/jquery/xarimages/gallery/image2.jpg"><img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg" alt="Rotterdam"></a></li>
+        <li><a href="modules/jquery/xarimages/gallery/image3.jpg"><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg" alt="Berger Zoo"></a></li>
+        <li><a href="modules/jquery/xarimages/gallery/image4.jpg"><img src="modules/jquery/xarimages/gallery/image4.thumbnail.jpg" alt="Claudia"></a></li>
+    </ul>
 
 </div>

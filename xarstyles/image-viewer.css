@@ -1,0 +1,38 @@
+#image-viewer-loading {
+	background: url(loading.gif) no-repeat;
+
+	width: 24px;
+	height: 24px;
+
+	text-indent: -10000px;
+}
+
+#image-viewer {
+	background: #fafafa url(close.gif) no-repeat right top;
+	border: 1px solid #ccc;
+	padding: 20px;
+
+	max-width: 900px;
+}
+
+#image-viewer h2, #image-viewer p {
+	margin: 0 0 10px 0;
+}
+
+#image-viewer ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+#image-viewer ul li {
+	display: inline;
+}
+
+#image-viewer ul li:after {
+	content: " | ";
+}
+
+#image-viewer ul li:last-child:after {
+	content: "";
+}
