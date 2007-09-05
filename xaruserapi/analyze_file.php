@@ -47,8 +47,15 @@ function mime_userapi_analyze_file( $args )
             return $ftype;
         }
     }
+    /* MichelV: For PHP5 we could use the following:
+    // PHP5 approach from http://www.jellyandcustard.com/2006/01/19/php-mime-types-and-fileinfo/
+    $fi = new finfo(FILEINFO_MIME);
+    $mime_type = $fi->buffer(file_get_contents($fileName));
+    if (isset($mime_type) && strlen($mime_type)) {
+        return $mime_type;
+    }*/
 
-            //try to use if disponible pecl fileinfo extension
+    //try to use if disponible pecl fileinfo extension
     if(extension_loaded('fileinfo')) {
         $res = finfo_open(FILEINFO_MIME);
         $mime_type = finfo_file($res, $fileName);
