@@ -10,19 +10,16 @@
  * @subpackage mime
  * @author Carl P. Corliss
  */
-
  /**
   *  Get all mime types
   *
   *  @author Carl P. Corliss
   *  @access public
   *  @param  integer    typeName  the Name of the mime type to lookup (optional)
-  *  returns array      An array of (typeId, typeName) or an empty array
+  *  @return array      An array of (typeId, typeName) or an empty array
   */
-
 function mime_userapi_add_type( $args )
 {
-
     extract( $args );
 
     // Get database setup
@@ -57,5 +54,4 @@ function mime_userapi_add_type( $args )
         return $dbconn->PO_Insert_ID($type_table, 'xar_mime_type_id');
     }
 }
-
 ?>

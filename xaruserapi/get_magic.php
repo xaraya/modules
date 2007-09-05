@@ -17,12 +17,11 @@
   *  @access public
   *  @param  integer    matgicId     the magicId of the magic # to lookup   (optional)
   *  @param  string     magicValue   the magic value of the magic # to lookup (optional)
-  *  returns array      An array of (subtypeid, magicId, magic, offset, length) or an empty array
+  *  @return array      An array of (subtypeid, magicId, magic, offset, length) or an empty array
   */
 
 function mime_userapi_get_magic( $args )
 {
-
     extract($args);
 
     if (!isset($magicId) && !isseT($magicValue)) {

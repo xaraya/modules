@@ -1,55 +1,51 @@
 <?php
-/*
- *
+/**
  * Mime Module
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @package modules
+ * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage mime
  * @author Carl P. Corliss
  */
-
 /**
  *  Imports the mimelist array and adds it to the database
  *
  *  @author  Carl P. Corliss
  *  @access  public
  *  @param   array      $mimeList   List of mimetypes with their extensions (if any) and magics (if any)
- *  @returns boolean    true if successful importing into database, false otherwise.
+ *  @return  boolean    true if successful importing into database, false otherwise.
  */
-
 xarModAPILoad('mime','user');
- 
-function mime_userapi_import_mimelist( $args ) 
+
+function mime_userapi_import_mimelist( $args )
 {
- 
     extract($args);
 
     $descriptions = array();
 
     foreach($mimeList as $mimeTypeText => $mimeInfo) {
-        /* 
+        /*
             start off processing the mimetype and mimesubtype
             if niether of those exist, create them :)
         */
         $mimeType = explode('/', $mimeTypeText);
-        
+
         $typeInfo = xarModAPIFunc('mime','user','get_type', array('typeName' => $mimeType[0]));
         if (!isset($typeInfo['typeId'])) {
             $typeId = xarModAPIFunc('mime','user','add_type', array('typeName' => $mimeType[0]));
         } else {
             $typeId =& $typeInfo['typeId'];
         }
-        
+
         $subtypeInfo = xarModAPIFunc('mime', 'user', 'get_subtype', array('subtypeName' => $mimeType[1]));
         if (!isset($subtypeInfo['subtypeId'])) {
             $subtypeId = xarModAPIFunc(
-                'mime', 'user', 'add_subtype', 
+                'mime', 'user', 'add_subtype',
                 array(
-                    'subtypeName'   => $mimeType[1], 
+                    'subtypeName'   => $mimeType[1],
                     'typeId'        => $typeId,
                     'subtypeDesc'   => (isset($mimeInfo['description']) ? $mimeInfo['description'] : NULL)
                 )
@@ -57,13 +53,13 @@ function mime_userapi_import_mimelist( $args )
         } else {
             $subtypeId =& $subtypeInfo['subtypeId'];
         }
-        
+
         if (isset($mimeInfo['extensions']) && count($mimeInfo['extensions'])) {
             foreach($mimeInfo['extensions'] as $extension) {
-                $extensionInfo = xarModAPIFunc('mime', 'user', 'get_extension', 
+                $extensionInfo = xarModAPIFunc('mime', 'user', 'get_extension',
                                                 array('extensionName' => $extension));
                 if (!isset($extensionInfo['extensionId'])) {
-                    $extensionId = xarModAPIFunc('mime','user','add_extension', 
+                    $extensionId = xarModAPIFunc('mime','user','add_extension',
                                    array('subtypeId'     => $subtypeId,
                                          'extensionName' => $extension));
                 } else {
@@ -71,10 +67,10 @@ function mime_userapi_import_mimelist( $args )
                 }
             }
         }
-        
+
         if (isset($mimeInfo['needles']) && count($mimeInfo['needles'])) {
             foreach($mimeInfo['needles'] as $magicNumber => $magicInfo) {
-                $info = xarModAPIFunc('mime', 'user', 'get_magic', 
+                $info = xarModAPIFunc('mime', 'user', 'get_magic',
                                             array('magicValue' => $magicNumber));
                 if (!isset($info['magicId'])) {
                     $magicId = xarModAPIFunc('mime', 'user', 'add_magic',
@@ -87,10 +83,8 @@ function mime_userapi_import_mimelist( $args )
                 }
             }
         }
-        
+
     }
-    
     return TRUE;
-} 
-  
+}
 ?>

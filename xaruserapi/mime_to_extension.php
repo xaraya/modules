@@ -23,7 +23,6 @@
  */
 function mime_userapi_mime_to_extension( $args )
 {
-
     extract($args);
 
     if (!isset($mime_type) || empty($mime_type)) {

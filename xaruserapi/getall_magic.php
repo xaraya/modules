@@ -18,10 +18,8 @@
   *  @param  integer    subtypeId   the magicId of the magic # to lookup   (optional)788888888888888888888890
   *  returns array      An array of (subtypeid, magicId, magic, offset, length) or an empty array
   */
-
 function mime_userapi_getall_magic( $args )
 {
-
     extract($args);
 
     if (isset($subtypeId)) {
@@ -75,5 +73,4 @@ function mime_userapi_getall_magic( $args )
 
     return $subtypeInfo;
 }
-
 ?>

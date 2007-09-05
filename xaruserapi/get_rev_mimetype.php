@@ -15,13 +15,11 @@
   *
   *  @author Carl P. Corliss
   *  @access public
-  *  @param  string     the mime type we want to lookup id's for
-  *  returns array      An array of (subtypeId, subtypeName) or an empty array
+  *  @param  string   the mime type we want to lookup id's for
+  *  @return array    An array of (subtypeId, subtypeName) or an empty array
   */
-
 function mime_userapi_get_rev_mimetype( $args )
 {
-
     extract($args);
 
     if (empty($mimeType)) {
@@ -49,5 +47,4 @@ function mime_userapi_get_rev_mimetype( $args )
     }
 
 }
-
 ?>

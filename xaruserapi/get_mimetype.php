@@ -17,12 +17,10 @@
   *  @access public
   *  @param  integer    subtypeId   the subtypeID of the mime subtype to lookup (optional)
   *  @param  integer    subtypeName the Name of the mime sub type to lookup (optional)
-  *  returns array      An array of (subtypeId, subtypeName) or an empty array
+  *  @return array      An array of (subtypeId, subtypeName) or an empty array
   */
-
 function mime_userapi_get_mimetype( $args )
 {
-
     extract($args);
 
     if (!isset($subtypeId) && !isset($subtypeName)) {
@@ -62,5 +60,4 @@ function mime_userapi_get_mimetype( $args )
 
     return $row['mimetype'] . '/' . $row['mimesubtype'];
 }
-
 ?>

@@ -20,9 +20,8 @@
  * @param   string mimeType     The mime type to find a correlating image for
  * @param   string fileSuffix   Image file suffix list (default: '.png')
  * @param   string defaultBase  Default file base name (default: 'default')
- * @returns string
+ * @return  string
  */
-
 function mime_userapi_get_mime_image( $args )
 {
     extract($args);
@@ -71,5 +70,4 @@ function mime_userapi_get_mime_image( $args )
     // We also have 'imageFile' set, which could be a useful (alternative) return value.
     return $imageURI;
 }
-
 ?>
