@@ -303,3 +303,43 @@ div.ievents-search-advanced-hidden {
     display: none;
 }
 
+/* Styles for the calendar views */
+
+/* Calendar views: common */
+
+div.ievents-cal-wrapper {
+	vertical-align: top;
+}
+
+/* Calendar views: large monthly */
+
+div.ievents-cal-wrapper table {
+	width: 100%;
+	margin: 1em 0;
+	border-collapse: collapse;
+	border: 1px solid #666666;
+}
+div.ievents-cal-wrapper td, div.ievents-cal-wrapper th {
+	width: 14%;
+	padding: 0;
+	border: 1px solid #aaaaaa;
+	background-color: #ffffff;
+}
+div.ievents-cal-wrapper td {
+	height: 8em;
+	text-align: left;
+	vertical-align: top
+}
+div.ievents-cal-wrapper td.ievents-weekend {
+	background-color: #cceecc;
+	filter: alpha(opacity=70);
+	-moz-opacity: 70%;
+}
+div.ievents-cal-wrapper td.ievents-today {
+	background-color: #ffdddd;
+}
+div.ievents-cal-wrapper th {
+	text-align: center;
+}
+
+

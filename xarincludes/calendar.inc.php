@@ -159,12 +159,6 @@ class calendar {
     */
     var $backgroundImageRepeat;
     /*
-    Define the large format calendars element variables.  These can be used if you
-    want to define your own CSS stylesheets for the calendar.
-    */
-    var $largeFormatID;
-    var $largeFormatClass;
-    /*
     Declare a boolean variable to determine weather the week numbers are displayed
     for the large month calendar.
     */
@@ -587,6 +581,7 @@ class calendar {
         return $output;
     } //End function showSmallMonth()
 
+
     /*
     This function for the class will display a month in large format. The inputs
     to the function are as follows:
@@ -597,190 +592,98 @@ class calendar {
 
     */
     function showLargeMonth($m, $y, $np) {
-        //Calculate the number of days in the month
-        $days = date('t',mktime(0,0,0,$m, 1, $y));
-        //Calculate the day of the week that the month starts on
-        $startDay = date('w',mktime(0,0,0,$m, 1, $y)) - $this->startingDOW;
-        //set the column offset for the starting day of the week.
-        $offset = "";
+        // Calculate the number of days in the month
+        $days = date('t', mktime(0, 0, 0, $m, 1, $y));
+
+        // Calculate the day of the week that the month starts on
+        $startDay = date('w', mktime(0, 0, 0, $m, 1, $y)) - $this->startingDOW;
+
+        // Set the column offset for the starting day of the week.
+        $offset = array();
         if ($startDay > 0) {
-            $offset .= "        <td width=\"14%\" colspan=\"".$startDay."\">&nbsp;</td>\n";
+            $offset[] = '<td colspan="' . $startDay . '" class="ievents-spacer">&nbsp;</td>';
         } else if ($startDay == -1) {
-            $offset .= "        <td width=\"14%\" colspan=\"6\">&nbsp;</td>\n";
+            $offset[] = '<td colspan="6" class="ievents-spacer">&nbsp;</td>';
             $startDay = 6;
         }
-        if ($this->displayPrevNext) {
-            $headerHeight = "128px";
-        } else {
-            $headerHeight = "30px";
-        }
-        //Get the textual representation of the month
+
+        // Get the textual representation of the month
+        // TODO: get this from the Xaraya ML system.
         $month = $this->getMonth($m, $y);
-        //Calculate the previous month and year for the header link.
-        if (($m - 1) == 0) {
-            $prevMonth = 12;
-            $prevYear = $y - 1;
-        } else {
-            $prevMonth = $m - 1;
-            $prevYear = $y;
-        }
-        //Calculate the next month and year for the header link.
-        if (($m + 1) == 13) {
-            $nextMonth = 1;
-            $nextYear = $y + 1;
-        } else {
-            $nextMonth = $m + 1;
-            $nextYear = $y;
-        }
-        //Set default arrows to use if no images are defined.
-        $prevArrow = "<<";
-        $nextArrow = ">>";
-        //If images were set for the previous month and next month links, set the images.
-        if (isset($this->largeFormatPrevArrow)) {
-            $prevArrow = "<img src=\"".$this->largeFormatPrevArrow."\" border=\"0\" align=\"top\">";
-        }
-        if (isset($this->largeFormatNextArrow)) {
-            $nextArrow = "<img src=\"".$this->largeFormatNextArrow."\" border=\"0\" align=\"top\">";
-        }
+
+        // FIXME: We don't want to be messing with get requests here.
         if ($this->passGetRequests) {
             $get = $this->addGetRequests();
         } else {
-            $get = "";
+            $get = '';
         }
-        //If chosen, prepare the links for the previous month and next month
-        if ($np) {
-            $prevLink = "<a href='".$_SERVER['PHP_SELF']."?mon=".$prevMonth."&yr=".$prevYear."&fmt=largeMonth".$get."' style=\"text-decoration: none;\">".$prevArrow."</a> &nbsp;";
-            $nextLink = " &nbsp;<a href='".$_SERVER['PHP_SELF']."?mon=".$nextMonth."&yr=".$nextYear."&fmt=largeMonth".$get."' style=\"text-decoration: none;\">".$nextArrow."</a>";
-        } else {
-            $prevLink = "";
-            $nextLink = "";
-        }
-        //Get the currrent date to display if the month showing is the current month.
-        if (mktime(0, 0, 0, date("m"), 1, date("Y")) == mktime(0, 0, 0, $m, 1, $y)) {
-            $day = date("j");
+
+        // Get the currrent date to display if the month showing is the current month.
+        if (mktime(0, 0, 0, date('m'), 1, date('Y')) == mktime(0, 0, 0, $m, 1, $y)) {
+            $day = date('j');
         } else {
             $day = 0;
         }
-        //Define the table elements for the calendar.
-        $largeCalendarID = "";
-        $largeCalendarClass = "";
-        if (isset($this->largeFormatID)) {
-            $largeCalendarID = " id=\"".$this->largeFormatID."\"";
-        }
-        if (isset($this->largeFormatClass)) {
-            $largeCalendarClass = " class=\"".$this->largeFormatClass."\"";
-        }
-        //Set some default attributes for the size of the calendar
-        $background = "";
-        $backgroundRepeat = "";
-        $width = "100%";
-        $height = "";
-        $heightCalCell = " height: ".$this->largeCellHeight.";";
-        /*
-        Check if there is a background image set for the calendar.  If so, reset
-        the calendar width and height to the width and height of the image.  Also,
-        clearing the cell height will allow the browser to automatically size the
-        height of the cells since the total table height is pre-defined.
-        */
-        if (isset($this->backgroundLargeFormatImage)) {
-            if (isset($this->backgroundImageRepeat)) {
-                $backgroundRepeat = " background-repeat: ".$this->backgroundImageRepeat.";";
-            }
-            $background = " background-image: url('".$this->backgroundLargeFormatImage."');".$backgroundRepeat;
-            $size = getimagesize($this->backgroundLargeFormatImage);
-            $width = $size[0]."px";
-            $height = " height: ".$size[1]."px;";
-            $heightCalCell = "";
-        }
-        //Set default attributes
 
-        //Create the header
-        $output = "<div style=\"vertical-align: top;\">";
-        $output .= "<table".$largeCalendarClass.$largeCalendarID." border=\"1\" cellspacing=\"0\" cellpadding=\"0\" align=\"".$this->largeFormatAlign."\" style=\"width: ".$width.";".$height.$background."\">\n";
-/*
-        $output .= "    <tr>\n";
-        $output .= "        <td colspan=\"7\" style=\"text-align: center;\">\n";
-        $output .= "<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\" style=\"width: 100%;\">\n";
-        $output .= "    <tr>\n";
-        $output .= "        <td style=\"width: 10%; text-align: left; vertical-align: top;\">\n";
-        if ($this->displayPrevNext) {
-            $output .= $this->showSmallMonth($prevMonth, $prevYear, false);
-        }
-        $output .= "        </td>\n";
-        $output .= "        <td style=\"width: 80%; text-align: center; vertical-align: middle;\">\n";
-        $output .= "            <span style=\"font-size: 30px; font-weight: bold; color: ".$this->colorLargeFormatHeaderText.";\">".$prevLink.$month."&nbsp;".$y.$nextLink."</span>\n";
-        $output .= "        </td>\n";
-        $output .= "        <td style=\"width: 10%; text-align: right; vertical-align: top;\">\n";
-        if ($this->displayPrevNext) {
-            $output .= $this->showSmallMonth($nextMonth, $nextYear, false);
-        }
-        $output .= "        </td>\n";
-        $output .= "    </tr>\n";
-        $output .= "</table>";
-        $output .= "        </td>\n";
-        $output .= "    </tr>\n";
-*/
-        $output .= "    <tr style=\"color: ".$this->colorLargeFormatDayOfWeek."; font-weight: bold;\">\n";
+        // Set default attributes
+
+        // Create the header
+        $output = array();
+
+        // No classes needed for te table, as we can select it in a wrapper.
+        $output[] = '<table>';
+
+        $output[] = '<tr>';
         //now create the weekday headers
         for ($i = 1; $i < 8; $i++) {
-            $output .= "        <td style=\"width: 14%; text-align: center;\">".$this->getDOW($i)."</td>\n";
+            $output[] = '<th>' . $this->getDOW($i) . '</th>';
         }
-        /*
-        if ($this->startingDOW == 0) {
-            $output .= "        <td style=\"width: 14%; text-align: center;\">".$this->getDOW(1)."</td>\n";
-        }
-        $output .= "        <td style=\"width: 14%; text-align: center;\">".$this->getDOW(2)."</td>\n";
-        $output .= "        <td style=\"width: 14%; text-align: center;\">".$this->getDOW(3)."</td>\n";
-        $output .= "        <td style=\"width: 14%; text-align: center;\">".$this->getDOW(4)."</td>\n";
-        $output .= "        <td style=\"width: 14%; text-align: center;\">".$this->getDOW(5)."</td>\n";
-        $output .= "        <td style=\"width: 14%; text-align: center;\">".$this->getDOW(6)."</td>\n";
-        $output .= "        <td style=\"width: 14%; text-align: center;\">".$this->getDOW(7)."</td>\n";
-        if ($this->startingDOW == 1) {
-            $output .= "        <td style=\"width: 14%; text-align: center;\">".$this->getDOW(1)."</td>\n";
-        }
-        */
-        $output .= "    </tr>\n";
-        $output .= "    <tr>\n";
+        $output[] = '</tr>';
+
+        $output[] = '<tr>';
+
         //Now generate the calendar
         for($i=1; $i<=$days; $i++){
             $date = mktime(0, 0, 0, $m, $i, $y);
-            if ((date("w",$date) == "0") || (date("w",$date) == "6") && isset($this->colorLargeFormatWeekendHighlight)) {
-                $bgcolor = " background-color: ".$this->colorLargeFormatWeekendHighlight."; filter: alpha(opacity=70); -moz-opacity: 70%;";
+
+            // Set the class for the table cells.
+            $classes = array();
+
+            // Highlight weekends.
+            if ((date('w', $date) == '0') || (date('w', $date) == '6')) $classes[] = 'ievents-weekend';
+
+            // Highlight today.
+            if ($i == $day) $classes[] = 'ievents-today';
+
+            $output = array_merge($output, $offset);
+
+            if (!empty($classes)) {
+                $output[] = '<td class="' . implode(' ', $classes) . '">' . $this->getEvents($date, 'largeMonth') . '</td>';
             } else {
-                $bgcolor = "";
+                $output[] = '<td>' . $this->getEvents($date, 'largeMonth') . '</td>';
             }
-            if ($i == $day && $this->showToday) {
-                $output .= $offset."        <td style=\"width: 14%;".$heightCalCell." vertical-align: top; text-align: left;".$bgcolor." color: ".$this->colorLargeFormatDateHighlight."; font-weight: bold;\">".$this->getEvents($date, "largeMonth", true)."</td>\n";
-            } else {
-                $output .= $offset."        <td style=\"width: 14%;".$heightCalCell." vertical-align: top; text-align: left;".$bgcolor."\">".$this->getEvents($date, "largeMonth")."</td>\n";
-            }
-            $offset = "";
+
+            $offset = array();
             $startDay ++;
             if ($startDay == 7) {
-                $output .= "    </tr>\n";
-                $output .= "    <tr>\n";
+                $output[] = '</tr>';
+                $output[] = '<tr>';
                 $startDay = 0;
             }
         }
+
         if ($startDay > 0) {
-            $output .= "        <td colspan=\"".(7 - $startDay)."\" style=\"width: 14%;".$heightCalCell."\">&nbsp;</td>\n";
+            $output[] = '<td colspan="' . (7 - $startDay) . '" class="ievents-spacer">&nbsp;</td>';
         }
-        $output .= "    </tr>\n";
-        $output .= "</table>\n";
-        $output .= "</div>";
-        //Now output the calendar
-        return $output;
-    } //End function showLargeMonth()
 
-    /*
-    This function for the class will display a month in large format. The inputs
-    to the function are as follows:
+        $output[] = '</tr>';
+        $output[] = '</table>';
 
-    $m - Month to display.
-    $y - Year to display.
-    $np - A boolean value indicating weather to display the links for the previous and next months.
+        // Return the calendar markup.
+        return implode("\n", $output) . "\n";
+    } // End function showLargeMonth()
 
-    */
+
     function showFullYear($y, $np = false) {
         //Get the previous and next years for the year selection links.
         $prevYear = $y - 1;

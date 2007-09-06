@@ -34,7 +34,7 @@
 
         <xar:if condition="!empty($cal)">
             <xar:set name="cal_output">#$cal->display()#</xar:set>
-            <div class="ievents-view-cal">#$cal_output#</div>
+            <div class="ievents-cal-wrapper">#$cal_output#</div>
         </xar:if>
 
         <xar:template file="cal-pager" />
