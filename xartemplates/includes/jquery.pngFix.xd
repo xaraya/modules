@@ -22,4 +22,8 @@
     if there is a desire to not fix some PNGs.
 </xar:comment>
 
-<xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('body').pngFix();});" />
+<xar:if condition="!empty($selector)">
+    <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').pngFix();});" />
+<xar:else />
+    <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('body').pngFix();});" />
+</xar:if>

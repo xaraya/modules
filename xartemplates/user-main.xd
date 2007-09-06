@@ -1,4 +1,7 @@
-<div style="margin-bottom: 10em;">
+
+<xar:style file='jquery-demos' scope="module" module="jquery" />
+
+<div class="jquery-demos">
 
     <h1 class="xar-mod-head">
         <xar:mlstring>jQuery demo page</xar:mlstring>
@@ -123,5 +126,21 @@
         <li><a href="modules/jquery/xarimages/gallery/image3.jpg"><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg" alt="Berger Zoo"></a></li>
         <li><a href="modules/jquery/xarimages/gallery/image4.jpg"><img src="modules/jquery/xarimages/gallery/image4.thumbnail.jpg" alt="Claudia"></a></li>
     </ul>
+
+    <h2><xar:mlstring>jquery.tooltip - flexible tooltips</xar:mlstring></h2>
+
+    <p>
+        <xar:mlstring>Tooltips all work from the title attribute.</xar:mlstring>
+    </p>
+
+    <xar:template file="jquery.tooltip" module="jquery" subdata="array('selector'=&gt;'#tooltip-set1 *')"/>
+
+    <div id="tooltip-set1">
+		<a title="A tooltip with default settings. The href is displayed below the title." href="http://google.co.uk">Link to google</a>
+		<br />
+		<label title="A label with a title and default settings, no href here" for="text1">Input something please!</label>
+		<br />
+		<input title="Note that the tooltip disappears when clicking the input element" type="text" value="Test" name="action" id="text1"/>
+	</div>
 
 </div>

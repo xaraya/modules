@@ -1,0 +1,40 @@
+<xar:comment>
+    Initialise the jqGalView gallery widget.
+    See http://benjaminsterling.com/2007/08/24/jquery-jqgalview-photo-gallery for details of this plugin
+</xar:comment>
+
+<xar:comment>
+    Make sure jQuery is going to be loaded.
+</xar:comment>
+
+<xar:template file="jquery" module="jquery" />
+
+<xar:comment>
+    Required stylesheet.
+</xar:comment>
+
+<xar:comment><xar:style file='TBC' scope="module" module="jquery" /></xar:comment>
+
+<xar:comment>
+    Other required plugins.
+</xar:comment>
+
+<xar:base-include-javascript filename="jquery.bgiframe.js" module="jquery" />
+<xar:base-include-javascript filename="jquery.dimensions.js" module="jquery" />
+<xar:template file="jquery.pngFix" module="jquery" />
+
+<xar:comment>
+    Required stylesheets.
+</xar:comment>
+
+<xar:style file='jquery.tooltip' scope="module" module="jquery" />
+
+<xar:comment>
+    Main plugin.
+</xar:comment>
+
+<xar:base-include-javascript filename="jquery.tooltip.pack.js" module="jquery" />
+
+<xar:if condition="!empty($selector)">
+    <xar:base-include-javascript type="code" code="jQuery(function(){jQuery('$selector').Tooltip();});" />
+</xar:if>
