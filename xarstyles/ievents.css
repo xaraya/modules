@@ -318,12 +318,15 @@ div.ievents-cal-wrapper table {
 	margin: 1em 0;
 	border-collapse: collapse;
 	border: 1px solid #666666;
+	font-size: 12px;
 }
 div.ievents-cal-wrapper td, div.ievents-cal-wrapper th {
 	width: 14%;
 	padding: 0;
+	margin: 0;
 	border: 1px solid #aaaaaa;
 	background-color: #ffffff;
+	font-size: 12px;
 }
 div.ievents-cal-wrapper td {
 	height: 8em;
@@ -331,7 +334,7 @@ div.ievents-cal-wrapper td {
 	vertical-align: top;
 }
 div.ievents-cal-wrapper td div.ievents-day-wrapper {
-    padding: 0.25em;
+    /*padding: 0.25em;*/
     font-size: 12px;
     width: 100%;
     height: 8em;
