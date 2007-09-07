@@ -311,7 +311,7 @@ div.ievents-cal-wrapper {
 	vertical-align: top;
 }
 
-/* Calendar views: large monthly */
+/* Calendar views: large monthly TODO: limit these to a month view, somehow. */
 
 div.ievents-cal-wrapper table {
 	width: 100%;
@@ -328,8 +328,25 @@ div.ievents-cal-wrapper td, div.ievents-cal-wrapper th {
 div.ievents-cal-wrapper td {
 	height: 8em;
 	text-align: left;
-	vertical-align: top
+	vertical-align: top;
 }
+div.ievents-cal-wrapper td div.ievents-day-wrapper {
+    padding: 0.25em;
+    font-size: 12px;
+    width: 100%;
+    height: 8em;
+    overflow: auto;
+}
+
+div.ievents-cal-wrapper td div.ievents-day-number {
+	font-size: 18px;
+	font-weight: bold;
+}
+div.ievents-cal-wrapper td div.ievents-day-number span.ievents-week-number {
+    font-size: 10px;
+	color: #aaaaaa;
+}
+
 div.ievents-cal-wrapper td.ievents-weekend {
 	background-color: #cceecc;
 	filter: alpha(opacity=70);
@@ -341,5 +358,3 @@ div.ievents-cal-wrapper td.ievents-today {
 div.ievents-cal-wrapper th {
 	text-align: center;
 }
-
-
