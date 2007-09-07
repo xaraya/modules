@@ -32,9 +32,9 @@ function categories_userapi_countitems($args)
 
     if($dbconn->databaseType == 'sqlite') {
         $sql = 'SELECT COUNT(*)
-                FROM (SELECT DISTINCT ' . $categoriesdef['iid'];
+                FROM (SELECT DISTINCT ' . $categoriesdef['item_id'];
     } else {
-        $sql = 'SELECT COUNT(DISTINCT ' . $categoriesdef['iid'] . ')';
+        $sql = 'SELECT COUNT(DISTINCT ' . $categoriesdef['item_id'] . ')';
     }
     $sql .= ' FROM ' . $categoriesdef['table'];
     $sql .= $categoriesdef['more'];
