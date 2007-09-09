@@ -88,6 +88,7 @@ function categories_adminapi_updatecelkolinks($args)
 
             $result = $dbconn->Execute($SQLquery);
             if (!$result) return;
+        }
 	}
     return true;
 }
