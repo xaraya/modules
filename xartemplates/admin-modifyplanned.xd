@@ -17,9 +17,8 @@
         <span class="xar-mod-title">#$menutitle#</span>
     </div>
     <div class="xar-courses-contents">
-        <h2>#$coursedata['number']# #$coursedata['name']#</h2><br />
-        <form method="post" action="&xar-modurl-courses-admin-updateplanned;"
-              onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+         <h2>#$coursedata['number']# #$coursedata['name']#</h2><br />
+         <form method="post" action="&xar-modurl-courses-admin-updateplanned;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
                <fieldset>
                     <legend>
                         <strong><xar:mlstring>The occurence</xar:mlstring></strong>
@@ -54,15 +53,15 @@
                             <xar:mlstring>Year for this occurence</xar:mlstring>
                             </span>
                         </label>
-                            <select name="year">
+                        <select name="year">
                             <xar:loop name="$years">
                                 <xar:if condition="$loop:item['yearid'] eq $planneddata.courseyear">
-                                    <option value="#$loop:item['yearid']#" selected=selected>#$loop:item['year']#</option>
+                                    <option value="#$loop:item['yearid']#" selected="selected">#$loop:item['year']#</option>
                                 <xar:else />
                                     <option value="#$loop:item['yearid']#">#$loop:item['year']#</option>
                                 </xar:if>
                             </xar:loop>
-                            </select>
+                        </select>
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="startdate" class="required xar-form-label">
@@ -264,9 +263,9 @@
                             <xar:mlstring>Course materials</xar:mlstring>
                             </span>
                         </label>
-                        <textareaname="material" id="material" wrap="virtual" rows="10" cols="40">#$planneddata['material']#</textarea>
-                        <xar:if condition="!empty($invalid['costs'])">
-                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid material description</xar:mlstring></span>
+                        <textarea name="material" id="material" wrap="virtual" rows="10" cols="40">#$planneddata['material']#</textarea>
+                        <xar:if condition="!empty($invalid['material'])">
+                            <span style="color: red"><xar:mlstring>ERROR! This is not a valid materials description</xar:mlstring></span>
                         </xar:if>
                     </div>
                     <div class="xar-form-input-wrapper">
@@ -357,19 +356,19 @@
                          #xarlocalegetformatteddate('medium',$planneddata['last_modified'])#
                     </div>
                </fieldset>
-              <xar:if condition="!empty($hooks)">
-                <fieldset>
-                    <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
-                        <xar:foreach in="$hooks" key="$hookmodule">
-                        #$hooks[$hookmodule]#
-                       </xar:foreach>
-                </fieldset>
-              </xar:if>
-            <div class="xar-form-input-wrapper-after">
-                <input type="hidden" name="planningid" id="planningid" value="#$planningid#" />
-                <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <input type="submit" value="#$updatebutton#" />
-            </div>
-        </form>
+               <xar:if condition="!empty($hooks)">
+                   <fieldset>
+                        <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                            <xar:foreach in="$hooks" key="$hookmodule">
+                            #$hooks[$hookmodule]#
+                           </xar:foreach>
+                   </fieldset>
+               </xar:if>
+              <div class="xar-form-input-wrapper-after">
+                   <input type="hidden" name="planningid" id="planningid" value="#$planningid#" />
+                   <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                   <input type="submit" value="#$updatebutton#" />
+              </div>
+         </form>
     </div>
 </div>
