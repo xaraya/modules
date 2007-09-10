@@ -132,6 +132,8 @@ function ratings_user_display($args)
         } else {
             // no rating for anonymous users here
             $data['rated'] = true;
+            // bug 5482 Always set the authid, but only a true one if security is met
+            $data['authid'] = 0;
         }
     } elseif ($seclevel == 'medium') {
         // Check to see if user has already voted
@@ -152,7 +154,6 @@ function ratings_user_display($args)
     } // No check for low
 
     // module name is mandatory here, because this is displayed via hooks (= from within another module)
-
     // set an authid, but only if the current user can rate the item
     if (xarSecurityCheck('CommentRatings', 0, 'Item', "$modname:$itemtype:$objectid")) {
         $data['authid'] = xarSecGenAuthKey('ratings');
