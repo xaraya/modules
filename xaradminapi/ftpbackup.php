@@ -1,7 +1,7 @@
 <?php
 /**
  * @package modules
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2005-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -57,6 +57,7 @@ function sitetools_adminapi_ftpbackup($args)
     ftp_chdir($conn,$ftpdir);
 
     if(!ftp_put($conn,$ftpdir.$bkname,$bkfilename,FTP_ASCII)) {
+        xarLogMessage('SITETOOLS: FTP_put failed, backup not transferred');
         return false;
     }
 

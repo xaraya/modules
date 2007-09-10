@@ -3,7 +3,7 @@
  * Site Tools Initialization
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -259,7 +259,7 @@ function sitetools_upgrade($oldversion)
             xarModSetVar('sitetools','colnumber',3);
             xarModSetVar('sitetools','defaultbktype','complete');
         case '0.2':
-        case '0.2.0':        
+        case '0.2.0':
             xarModSetVar('sitetools','useftpbackup', false);
             xarModSetVar('sitetools','ftpserver', '');
             xarModSetVar('sitetools','ftpuser', '');

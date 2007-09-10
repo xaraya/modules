@@ -3,7 +3,7 @@
  * Site Tools Template Cache Management
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -23,7 +23,7 @@ function sitetools_admin_deletecache($args)
     if (!xarVarFetch('delrss', 'checkbox', $delrss, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('delado', 'checkbox', $delado, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('deltempl', 'checkbox', $deltempl, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return; 
+    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
     /* Security check - important to do this as early as possible */
     if (!xarSecurityCheck('DeleteSiteTools')) {
@@ -59,7 +59,7 @@ function sitetools_admin_deletecache($args)
          * Get site folder name
          */
         $adopath = xarModGetVar('sitetools','adocachepath');
-      
+
         $var = is_dir($adopath);
         if ($var) {
             if (!is_writable($adopath)) {
@@ -88,7 +88,7 @@ function sitetools_admin_deletecache($args)
                 $data['delfin']    = true;
             }
         }
-     }  
+     }
      if ($delrss==1) {
         /* delete all rss cache files */
         /* Get site folder name */
