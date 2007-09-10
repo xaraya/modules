@@ -164,7 +164,7 @@ class Dynamic_ContactList_Property extends Dynamic_Select_Property
         $data['value'] = $this->value;
         // get the option corresponding to this value
         $item = array();
-        if (is_int($this->value)) {
+        if (!empty($this->value)) {
             $item = xarModAPIFunc('addressbook', 'user', 'getDetailValues', array('id' => $this->value));
         }
         if (empty($item)) {
