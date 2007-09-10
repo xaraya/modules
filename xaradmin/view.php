@@ -129,5 +129,4 @@ function ratings_admin_view()
 
     return $data;
 }
-
 ?>

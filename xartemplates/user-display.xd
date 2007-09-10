@@ -1,46 +1,53 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:mlstring>Ratings</xar:mlstring>
-    <xar:if condition="$style eq 'percentage'">
-       #$rating# %
-    <xar:elseif condition="$style eq 'outoffive'" />
-       #$rating#/5
-    <xar:elseif condition="$style eq 'outoffivestars'" />
-       <xar:for start="$i = 0" test="$i lt $intrating" iter="$i++">
-           <img src="modules/ratings/xarimages/star.gif" alt="star" />
-       </xar:for>
-       <xar:if condition="$fracrating ge 5">
-           <img src="modules/ratings/xarimages/halfstar.gif" alt="half star" />       
-       </xar:if>
-    <xar:elseif condition="$style eq 'outoften'" />
-       #$rating#/10
-    <xar:elseif condition="$style eq 'outoftenstars'" />
-       <xar:for start="$i = 0" test="$i lt $intrating" iter="$i++">
-           <img src="modules/ratings/xarimages/star.gif" alt="star" />
-       </xar:for>
-       <xar:if condition="$fracrating ge 5">
-           <img src="modules/ratings/xarimages/halfstar.gif" alt="half star" />       
-       </xar:if>
-    <xar:elseif condition="$style eq 'customised'" />
-           <xar:if condition="$rating gt 80">
-               <strong><xar:mlstring>Excellent</xar:mlstring></strong>
-           <xar:elseif condition="$rating gt 60"/>
-               <strong><xar:mlstring>Good</xar:mlstring></strong>
-           <xar:elseif condition="$rating gt 40"/>
-               <strong><xar:mlstring>Average</xar:mlstring></strong>
-           <xar:elseif condition="$rating gt 20"/>
-               <strong><xar:mlstring>Bad</xar:mlstring></strong>
-           <xar:else />
-               <strong><xar:mlstring>Very Bad</xar:mlstring></strong>
-           </xar:if>
+<xar:if condition="$style eq 'percentage'">
+   #$rating# %
+<xar:elseif condition="$style eq 'outoffive'" />
+   #$rating#/5
+<xar:elseif condition="$style eq 'outoffivestars'" />
+   <xar:for start="$i = 0" test="$i lt $intrating" iter="$i++">
+       <img src="modules/ratings/xarimages/star.gif" alt="star" />
+   </xar:for>
+   <xar:if condition="$fracrating ge 5">
+       <img src="modules/ratings/xarimages/halfstar.gif" alt="half star" />
+   </xar:if>
+<xar:elseif condition="$style eq 'outoften'" />
+   #$rating#/10
+<xar:elseif condition="$style eq 'outoftenstars'" />
+   <xar:for start="$i = 0" test="$i lt $intrating" iter="$i++">
+       <img src="modules/ratings/xarimages/star.gif" alt="star" />
+   </xar:for>
+   <xar:if condition="$fracrating ge 5">
+       <img src="modules/ratings/xarimages/halfstar.gif" alt="half star" />
+   </xar:if>
+<xar:elseif condition="$style eq 'customised'" />
+    <xar:if condition="$rating gt 80">
+       <strong><xar:mlstring>Excellent</xar:mlstring></strong>
+    <xar:elseif condition="$rating gt 60"/>
+       <strong><xar:mlstring>Good</xar:mlstring></strong>
+    <xar:elseif condition="$rating gt 40"/>
+       <strong><xar:mlstring>Average</xar:mlstring></strong>
+    <xar:elseif condition="$rating gt 20"/>
+       <strong><xar:mlstring>Bad</xar:mlstring></strong>
+    <xar:else />
+       <strong><xar:mlstring>Very Bad</xar:mlstring></strong>
     </xar:if>
-    <xar:if condition="empty($rated)">
-        <xar:if condition="xarSecurityCheck('CommentRatings',0)">
-          <form method="post" action="&xar-modurl-ratings-user-rate;" id="post" enctype="application/x-www-form-urlencoded" >
-             <input type="submit" value="#xarML('Rate this Item')#"  />
+</xar:if>
+<xar:if condition = "!empty($numratings)">
+   <xar:ml>
+        <xar:mlstring>Number of ratings: #(1)</xar:mlstring>
+        <xar:mlvar>#$numratings#</xar:mlvar>
+   </xar:ml>
+</xar:if>
 
-           <xar:if condition="$style eq 'percentage'">
+<xar:if condition="empty($rated)">
+    <xar:if condition="xarSecurityCheck('CommentRatings',0)">
+        <form method="post" action="&xar-modurl-ratings-user-rate;" id="post" enctype="application/x-www-form-urlencoded" >
+            <input type="submit" value="#xarML('Rate this Item')#"  />
+
+            <xar:if condition="$style eq 'percentage'">
               <input type="text" name="rating" id="rating" value="" size="3" maxlength="3" /> %
-           <xar:elseif condition="$style eq 'outoffive'" />
+            <xar:elseif condition="$style eq 'outoffive'" />
               <select name="rating" id="rating" size="1">
                  <option value="0">0</option>
                  <option value="20">1</option>
@@ -49,17 +56,17 @@
                  <option value="80">4</option>
                  <option value="100">5</option>
               </select>
-           <xar:elseif condition="$style eq 'outoffivestars'" />
-              <select name="rating" id="rating" size="1">
-                 <option value="0">0</option>
-                 <option value="20">1</option>
-                 <option value="40">2</option>
-                 <option value="60" selected="selected">3</option>
-                 <option value="80">4</option>
-                 <option value="100">5</option>
-              </select>
+            <xar:elseif condition="$style eq 'outoffivestars'" />
+                <select name="rating" id="rating" size="1">
+                    <option value="0">0</option>
+                    <option value="20">1</option>
+                    <option value="40">2</option>
+                    <option value="60" selected="selected">3</option>
+                    <option value="80">4</option>
+                    <option value="100">5</option>
+                </select>
 
-           <xar:elseif condition="$style eq 'outoften'" />
+            <xar:elseif condition="$style eq 'outoften'" />
               <select name="rating" id="rating" size="1">
                  <option value="0">0</option>
                  <option value="10">1</option>
@@ -73,7 +80,7 @@
                  <option value="90">9</option>
                  <option value="100">10</option>
               </select>
-           <xar:elseif condition="$style eq 'outoftenstars'" />
+            <xar:elseif condition="$style eq 'outoftenstars'" />
               <select name="rating" id="rating" size="1">
                  <option value="0">0</option>
                  <option value="10">1</option>
@@ -87,7 +94,7 @@
                  <option value="90">9</option>
                  <option value="100">10</option>
               </select>
-           <xar:elseif condition="$style eq 'customised'" />
+            <xar:elseif condition="$style eq 'customised'" />
               <select name="rating" id="rating" size="1">
                  <option value="90"><xar:mlstring>Excellent</xar:mlstring></option>
                  <option value="70"><xar:mlstring>Good</xar:mlstring></option>
@@ -95,14 +102,13 @@
                  <option value="30"><xar:mlstring>Bad</xar:mlstring></option>
                  <option value="10"><xar:mlstring>Very Bad</xar:mlstring></option>
               </select>
-           </xar:if>
+            </xar:if>
 
-              <input type="hidden" name="returnurl" id="returnurl" value="#$returnurl#" />
-              <input type="hidden" name="modname" id="modname" value="#$modname#" />
-              <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
-              <input type="hidden" name="objectid" id="objectid" value="#$objectid#" />
-              <input type="hidden" name="authid" id="authid" value="#$authid#" />
-
-           </form>
-        </xar:if>
+            <input type="hidden" name="returnurl" id="returnurl" value="#$returnurl#" />
+            <input type="hidden" name="modname" id="modname" value="#$modname#" />
+            <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
+            <input type="hidden" name="objectid" id="objectid" value="#$objectid#" />
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        </form>
     </xar:if>
+</xar:if>

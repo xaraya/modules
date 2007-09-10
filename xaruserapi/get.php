@@ -63,6 +63,8 @@ function ratings_userapi_get($args)
     if (!$result) return;
     $rating = $result->fields[0];
     $result->close();
+    // Return the rating as a single number.
+    // Bug 6160 requests an array with the rating and the numrating, solved by using getitems function
     return $rating;
 }
 ?>

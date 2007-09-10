@@ -17,7 +17,7 @@
  * @param $args['extrainfo'] URL to return to if user chooses to rate
  * @param $args['style'] style to display this rating in (optional)
  * @param $args['itemtype'] item type
- * @return output with rating information
+ * @return array output with rating information $numratings, $rating, $rated, $authid
  */
 function ratings_user_display($args)
 {
@@ -63,11 +63,24 @@ function ratings_user_display($args)
     $data['itemtype'] = $itemtype;
 
     // Run API function
-    $data['rating'] = xarModAPIFunc('ratings',
+    // Bug 6160 Use getitems at first, then get if we get weird results
+    $rating = xarModAPIFunc('ratings',
+                           'user',
+                           'getitems',
+                           $args);
+    // Select the way to get the rating
+    if (count($rating == 1)) {
+        $key_id = array_keys($rating);
+        $data['rating'] = $rating[$key_id[0]]['rating'];
+        $data['numratings'] = $rating[$key_id[0]]['numratings'];
+    } else {
+        // Use old fashioned way
+        $data['rating'] = xarModAPIFunc('ratings',
                            'user',
                            'get',
                            $args);
-
+        $data['numratings'] = '';
+    }
     if (isset($data['rating'])) {
         // Set the cached variable if requested
         if (xarVarIsCached('Hooks.ratings','save') &&
