@@ -3,7 +3,7 @@
  * Logconfig initialization functions
  *
  * @package modules
- * @copyright (C) 2003-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -16,15 +16,13 @@
  */
 function logconfig_admin_update($args)
 {
-    list($itemid,
-         $objectid,
-         $itemtype,
-         $preview) = xarVarCleanFromInput('itemid',
-                                          'objectid',
-                                          'itemtype',
-                                          'preview');
-
+    // Get parameters from whatever input we need.
     extract($args);
+
+    if (!xarVarFetch('itemid',   'id', $itemid,  $itemid,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('objectid', 'id', $objectid,    $objectid,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itemtype', 'id', $itemtype,    $itemtype,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('preview',  'string',  $preview, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
         $itemid = $objectid;

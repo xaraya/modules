@@ -3,7 +3,7 @@
  * Logconfig initialization functions
  *
  * @package modules
- * @copyright (C) 2003-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -17,7 +17,7 @@
 function logconfig_admin_modify($args)
 {
     extract($args);
-  
+
     if (!xarVarFetch('itemid',   'id',   $itemid)) return;
     if (!xarVarFetch('objectid', 'id',     $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemtype', 'id',     $itemtype, $itemtype, XARVAR_NOT_REQUIRED)) return;

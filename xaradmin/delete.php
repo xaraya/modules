@@ -3,7 +3,7 @@
  * Logconfig initialization functions
  *
  * @package modules
- * @copyright (C) 2003-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,24 +12,19 @@
  * @author Logconfig module development team
  */
 /**
- * delete an item
+ * delete a logger
  * @param 'itemid' the id of the item to be deleted
  * @param 'confirm' confirm that this item can be deleted
  */
 function logconfig_admin_delete($args)
 {
-    // Get parameters from whatever input we need.  All arguments to this
-    // function should be obtained from xarVarCleanFromInput(), getting them
-    // from other places such as the environment is not allowed, as that makes
-    // assumptions that will not hold in future versions of Xaraya
-    list($itemid,
-         $objectid,
-         $confirm,
-         $itemtype) = xarVarCleanFromInput('itemid',
-                                                                       'objectid',
-                                                                       'confirm',
-                                                                       'itemtype');
+    // Get parameters from whatever input we need.
     extract($args);
+
+    if (!xarVarFetch('itemid',   'id', $itemid,  $itemid,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('objectid', 'id', $objectid,    $objectid,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itemtype', 'id', $itemtype,    $itemtype,    XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm',  'string',  $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
         $itemid = $objectid;
