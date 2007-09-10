@@ -13,6 +13,7 @@
  */
 /**
  * initialise the ratings module
+ * @return bool true for the successfull install
  */
 function ratings_init()
 {
@@ -194,8 +195,7 @@ function ratings_delete()
     }
 
     // Delete module variables
-    xarModDelVar('ratings', 'defaultstyle');
-    xarModDelVar('ratings', 'seclevel');
+    xarModDelAllVars('ratings');
 
     // Get database information
     $dbconn =& xarDBGetConn();
@@ -215,5 +215,4 @@ function ratings_delete()
     // Deletion successful
     return true;
 }
-
 ?>
