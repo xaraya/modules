@@ -42,34 +42,34 @@
 
     <p id="jqGalViewHolder">
     <ul class="gal" title="#xarML('My Gallery')#">
-        <li><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image4.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image4.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image4.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image4.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image4.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image4.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg"/></li>
-        <li><img src="modules/jquery/xarimages/gallery/image4.thumbnail.jpg"/></li>
+        <li><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image4.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image4.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image4.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image4.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image4.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image4.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg" /></li>
+        <li><img src="modules/jquery/xarimages/gallery/image4.thumbnail.jpg" /></li>
     </ul>
     </p>
 
@@ -96,10 +96,10 @@
         <a href="#" class="jCarouselLite-next">Next</a>
         <div class="jCarouselLite">
             <ul>
-                <li><img src="modules/jquery/xarimages/gallery/image1.jpg" alt="" height="200"></li>
-                <li><img src="modules/jquery/xarimages/gallery/image2.jpg" alt="" height="200"></li>
-                <li><img src="modules/jquery/xarimages/gallery/image3.jpg" alt="" height="200"></li>
-                <li><img src="modules/jquery/xarimages/gallery/image4.jpg" alt="" height="200"></li>
+                <li><img src="modules/jquery/xarimages/gallery/image1.jpg" alt="" height="200" /></li>
+                <li><img src="modules/jquery/xarimages/gallery/image2.jpg" alt="" height="200" /></li>
+                <li><img src="modules/jquery/xarimages/gallery/image3.jpg" alt="" height="200" /></li>
+                <li><img src="modules/jquery/xarimages/gallery/image4.jpg" alt="" height="200" /></li>
             </ul>
         </div>
         <div class="clear"></div>   
@@ -121,10 +121,10 @@
     <xar:template file="image-viewer" module="jquery" subdata="array('selector'=&gt;'#image-viewer-images')" />
 
     <ul id="image-viewer-images">
-        <li><a href="modules/jquery/xarimages/gallery/image1.jpg"><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg" alt="Utrecht"></a></li>
-        <li><a href="modules/jquery/xarimages/gallery/image2.jpg"><img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg" alt="Rotterdam"></a></li>
-        <li><a href="modules/jquery/xarimages/gallery/image3.jpg"><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg" alt="Berger Zoo"></a></li>
-        <li><a href="modules/jquery/xarimages/gallery/image4.jpg"><img src="modules/jquery/xarimages/gallery/image4.thumbnail.jpg" alt="Claudia"></a></li>
+        <li><a href="modules/jquery/xarimages/gallery/image1.jpg"><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg" alt="Utrecht" /></a></li>
+        <li><a href="modules/jquery/xarimages/gallery/image2.jpg"><img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg" alt="Rotterdam" /></a></li>
+        <li><a href="modules/jquery/xarimages/gallery/image3.jpg"><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg" alt="Berger Zoo" /></a></li>
+        <li><a href="modules/jquery/xarimages/gallery/image4.jpg"><img src="modules/jquery/xarimages/gallery/image4.thumbnail.jpg" alt="Claudia" /></a></li>
     </ul>
 
     <h2><xar:mlstring>jquery.tooltip - flexible tooltips</xar:mlstring></h2>
@@ -143,4 +143,15 @@
 		<input title="Note that the tooltip disappears when clicking the input element" type="text" value="Test" name="action" id="text1"/>
 	</div>
 
+    <h2><xar:mlstring>jquery.cluetip - more flexible tooltips</xar:mlstring></h2>
+
+    <p id="cluetip-abstract">
+        <xar:mlstring>This plugin can pull popups from external pages, attributes or other elements on the page.</xar:mlstring>
+    </p>
+
+    <xar:template file="jquery.cluetip" module="jquery" subdata="array('selector'=&gt;'a.cluetip-basic-ajax','options'=&gt;'sticky: true')"/>
+    <xar:template file="jquery.cluetip" module="jquery" subdata="array('selector'=&gt;'a.cluetip-basic-local','options'=&gt;'local: true')"/>
+
+    <p><a class="cluetip-basic-ajax" href="modules/jquery/xarhtml/cluetip-ajax.html" rel="modules/jquery/xarhtml/cluetip-ajax.html">Simple example - external file</a></p>
+    <p><a class="cluetip-basic-local" href="#cluetip-abstract" rel="#cluetip-abstract">Simple example - internal block</a></p>
 </div>

@@ -1,0 +1,40 @@
+<xar:comment>
+    Initialise the jquery.cluetip tool.
+    See http://plugins.learningjquery.com/cluetip/demo/ for details of this plugin
+</xar:comment>
+
+<xar:comment>
+    Make sure jQuery is going to be loaded.
+</xar:comment>
+
+<xar:template file="jquery" module="jquery" />
+
+<xar:comment>
+    Required stylesheet.
+</xar:comment>
+<xar:style file='jquery.cluetip' scope="module" module="jquery" />
+
+<xar:comment>
+    Load dependant plugins.
+</xar:comment>
+
+<xar:base-include-javascript filename="jquery.dimensions.js" module="jquery" />
+<xar:base-include-javascript filename="jquery.hoverIntent.js" module="jquery" />
+
+<xar:comment>
+    Load the main javascript class.
+</xar:comment>
+
+<xar:base-include-javascript filename="jquery.cluetip.js" module="jquery" />
+
+<xar:comment>
+    TODO: Initialise.
+</xar:comment>
+
+<xar:if condition="!empty($selector)">
+    <xar:if condition="!empty($options)">
+        <xar:base-include-javascript type="code" code="jQuery(function(){jQuery('$selector').cluetip({ $options });});" />
+    <xar:else />
+        <xar:base-include-javascript type="code" code="jQuery(function(){jQuery('$selector').cluetip();});" />
+    </xar:if>
+</xar:if>
