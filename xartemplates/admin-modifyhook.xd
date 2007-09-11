@@ -37,7 +37,7 @@
                             <td align ="center">
                                 <select ondblclick="opt.transferRight()" multiple="multiple" size="10" name="list1" id="list1"> 
                                     <xar:foreach in="$wordlist" value="$item1">
-                                        <option name="wordlist" value="#$item1#">#$item1#</option>
+                                        <option value="#$item1#">#$item1#</option>
                                     </xar:foreach>
                                 </select> 
                             </td>
