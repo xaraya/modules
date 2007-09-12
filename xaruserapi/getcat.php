@@ -84,10 +84,8 @@ function categories_userapi_getcat($args)
                         P1.xar_right
                    FROM $categoriestable P1,
                         $categoriestable P2
-                  WHERE P1.xar_left
-                     >= P2.xar_left
-                    AND P1.xar_left
-                     <= P2.xar_right";
+                  WHERE P1.xar_left  >= P2.xar_left
+                    AND P1.xar_left  <= P2.xar_right";
 /* this is terribly slow, at least for MySQL 3.23.49-nt
                   WHERE P1.xar_left
                 BETWEEN P2.xar_left AND
@@ -147,6 +145,7 @@ function categories_userapi_getcat($args)
         else
         {// !(isset($getchildren)) && !(isset($getparents))
             // Return ONLY the info about the category with the given CID
+            //@todo: if we know this early, put it in front, so we limit the records early on
             $SQLquery .= " AND (P1.xar_cid = ?) ";
             $bindvars[] = $cid;
         }

@@ -48,11 +48,10 @@ function categories_userapi_countcats($args)
         $sql = "SELECT COUNT(P2.xar_cid) AS childnum
                   FROM $categoriestable AS P1,
                        $categoriestable AS P2
-                 WHERE P2.xar_left
-                    >= P1.xar_left
-                   AND P2.xar_left
-                    <= P1.xar_right
-                   AND P1.xar_cid = ?";
+                 WHERE P1.xar_cid = ?
+                   AND P2.xar_left >= P1.xar_left
+                   AND P2.xar_left <= P1.xar_right";
+
         $bindvars[] = $cid;
 /* this is terribly slow, at least for MySQL 3.23.49-nt
                BETWEEN P1.xar_left AND

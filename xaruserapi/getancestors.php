@@ -84,20 +84,17 @@ function categories_userapi_getancestors($args)
                             P1.xar_right
                        FROM '.$categoriestable.' AS P1,
                             '.$categoriestable.' AS P2
-                      WHERE P2.xar_left
-                         >= P1.xar_left
-                        AND P2.xar_left
-                         <= P1.xar_right';
-
-        // xar VarPrepForStore() only helps us if the cid is enclosed
-        // in single quotes, i.e. is a string. We have already checked
-        // it is numeric further up, so we don't need a further check.
-
+                      WHERE ';
+        // Do the most restrictive clause first, this helps mysql's tiny brain
         if (count($dbcids) > 1) {
-            $SQLquery .= ' AND P2.xar_cid in (' . implode(', ', $dbcids) . ')';
+            //@todo: bind variables!
+            $SQLquery .= 'P2.xar_cid in (' . implode(', ', $dbcids) . ')';
         } else {
-            $SQLquery .= ' AND P2.xar_cid = ' . $dbcids[0];
+            //@todo: bind variable!
+            $SQLquery .= 'P2.xar_cid = ' . $dbcids[0];
         }
+        $SQLquery .= ' AND P2.xar_left >= P1.xar_left
+                       AND P2.xar_left <= P1.xar_right';
 
         // This order retrieved the oldest ancestor first.
         //$SQLquery .= ' ORDER BY P1.xar_left';

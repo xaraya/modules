@@ -49,16 +49,14 @@ function categories_userapi_getparents($args)
                         P1.xar_right
                    FROM $categoriestable AS P1,
                         $categoriestable AS P2
-                  WHERE P2.xar_left
-                     >= P1.xar_left
-                    AND P2.xar_left
-                     <= P1.xar_right";
+                  WHERE P2.xar_cid = ? 
+                    AND P2.xar_left >= P1.xar_left
+                    AND P2.xar_left <= P1.xar_right";
 /* this is terribly slow, at least for MySQL 3.23.49-nt
                   WHERE P2.xar_left
                 BETWEEN P1.xar_left AND
                         P1.xar_right";
 */
-    $SQLquery .= " AND P2.xar_cid = ?";
     $SQLquery .= " ORDER BY P1.xar_left";
 
     $result = $dbconn->Execute($SQLquery,array($cid));
