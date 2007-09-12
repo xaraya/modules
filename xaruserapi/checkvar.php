@@ -135,7 +135,10 @@ function registration_userapi_checkvar($args)
         default:
             $email = $var;
             if (empty($email)){
-                $invalid = xarML('You must provide a valid email address to continue.');
+                $requirevalidation = xarModGetVar('registration', 'requirevalidation');
+                if ($requirevalidation) { 
+                    $invalid = xarML('You must provide a valid email address to continue.');
+                }
             } else {
                 //use the roles validatevar function - no need to duplicate
                 $emailcheck = xarModAPIFunc('roles', 'user', 'validatevar',

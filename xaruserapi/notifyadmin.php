@@ -17,7 +17,7 @@
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
  * @param admin email - the email of administrator to receive the notification
  * @param admin name - the name of the administrator(optional)
- * @param userrealname - the real name of the user (optional) - may not be set, or empty
+ * @param userrealname - the display name of the user (optional) - may not be set, or empty
  * @param username - the username of the user
  * @param useremail - the email of the user
  * @param terms - agreement to user terms (optional) - may not be activated

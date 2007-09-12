@@ -192,7 +192,7 @@ function registration_user_register()
             // check username
             $invalid['username'] = xarModApiFunc('registration','user','checkvar', array('type'=>'username', 'var'=>$username));
 
-            // check real name
+            // check display name
             $invalid['realname'] = xarModApiFunc('registration','user','checkvar', array('type'=>'realname', 'var'=>$realname));
 
             // check email
