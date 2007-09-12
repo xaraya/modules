@@ -3,13 +3,16 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Categories Module
  * @link http://xaraya.com/index.php/release/147.html
  * @author Categories module development team
+ */
+/**
+ * @return int count
  */
 function categories_userapi_countitems_deprecated($args)
 {
@@ -37,8 +40,13 @@ function categories_userapi_countitems_deprecated($args)
         // Get number of links with those categories in cids
         // TODO: make sure this is SQL standard
         //$sql = "SELECT DISTINCT COUNT(xar_iid)
+        if($dbconn->databaseType == 'sqlite') {
+        $sql = "SELECT COUNT(*)
+                FROM (SELECT DISTINCT xar_iid  FROM $categorieslinkagetable "; //unbalanced
+        }else{
         $sql = "SELECT COUNT(DISTINCT xar_iid)
                 FROM $categorieslinkagetable ";
+        }
         if (isset($table) && isset($field) && isset($where)) {
             $sql .= "LEFT JOIN $table ON $field = xar_iid;";
         }
@@ -52,7 +60,8 @@ function categories_userapi_countitems_deprecated($args)
         if (isset($table) && isset($field) && isset($where)) {
             $sql .= " AND $where ";
         }
-
+        // Balance parentheses
+       if($dbconn->databaseType == 'sqlite') $sql .=')';
         $result = $dbconn->Execute($sql,$bindvars);
         if (!$result) return;
 

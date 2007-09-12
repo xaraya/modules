@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -31,8 +31,7 @@
  * @param $args['size'] optional size of the select field (default empty)
  * @param $args['name_prefix'] optional prefix for the select field name (default empty)
  *
- * @returns string
- * @return select box for categories :
+ * @return string select box for categories :
  *
  * &lt;select name="cids[]"&gt; (or &lt;select name="cids[]" multiple&gt;)
  * &lt;option value="123"&gt;&nbsp;&nbsp;--+&nbsp;My Cat 123

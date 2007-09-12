@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -18,7 +18,7 @@
  * @author  Jim McDonald, Fl?vio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
  * @access  public
  * @param   none
- * @return  true on success or void or false on failure
+ * @return  bool true on success or void or false on failure
  * @throws  'DATABASE_ERROR'
  * @todo    nothing
 */
@@ -147,7 +147,7 @@ function categories_init()
     // Set up module variables
 //    xarModSetVar('categories', 'bold', 0);
     xarModSetVar('categories', 'catsperpage', 40);
-
+    xarModSetVar('categories', 'usename', false);
     // when a new module item is being specified
     if (!xarModRegisterHook('item', 'new', 'GUI',
                            'categories', 'admin', 'newhook')) {
@@ -205,6 +205,9 @@ function categories_init()
                       array(),
                       'categories_userapi_filtertag');
 
+    xarTplRegisterTag('categories', 'categories-catinfo', array(),
+                      'categories_userapi_getcatinfotag');
+            // fall through to the next upgrade
     /*********************************************************************
     * Define instances for this module
     * Format is
@@ -280,7 +283,7 @@ function categories_init()
  *
  * @author  Jim McDonald, Fl?vio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
  * @access  public
- * @param   $oldVersion
+ * @param   string $oldVersion
  * @return  true on success or false on failure
  * @throws  no exceptions
  * @todo    nothing
@@ -446,9 +449,11 @@ function categories_upgrade($oldversion)
             // fall through to the next upgrade
 
         case '2.3.2':
-
+            xarTplRegisterTag('categories', 'categories-catinfo', array(),
+                      'categories_userapi_getcatinfotag');
             // fall through to the next upgrade
-
+        case '2.3.3':
+            // fall through to the next upgrade
         case '2.5.0':
             // Code to upgrade from version 2.5 goes here
             break;
@@ -514,7 +519,7 @@ function categories_delete()
 
     xarTplUnregisterTag('categories-navigation');
     xarTplUnregisterTag('categories-filter');
-
+    xarTplUnregisterTag('categories-catinfo');
     /**
      * Remove instances and masks
      */

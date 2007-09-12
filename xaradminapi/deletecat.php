@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -61,7 +61,7 @@ function categories_adminapi_deletecat($args)
 
     // Security check
     // Don?t check by name anything! That?s evil... Unique ID is the way to go.
-    if(!xarSecurityCheck('DeleteCategories',1,'category',"All:$cid")) return;
+    if(!xarSecurityCheck('DeleteCategories',1,'Category',"All:$cid")) return;
 
     // Get database setup
     $dbconn =& xarDBGetConn();

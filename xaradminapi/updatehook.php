@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -15,11 +15,10 @@
  * update linkage for an item - hook for ('item','update','API')
  * Needs $extrainfo['cids'] from arguments, or 'cids' from input
  *
- * @param $args['objectid'] ID of the object
- * @param $args['extrainfo'] extra information
- * @returns bool
- * @return true on success, false on failure
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @param int $args['objectid'] ID of the object
+ * @param array $args['extrainfo'] extra information
+ * @return array extrainfo
+ * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function categories_adminapi_updatehook($args)
 {

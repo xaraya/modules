@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -31,7 +31,7 @@
  *       @param $args['rightorleft'] Where the new category should be: RIGHT or LEFT
  *
  *  -- OUTPUT --
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
 
  */
 function categories_adminapi_updatecat($args)
@@ -99,7 +99,7 @@ function categories_adminapi_updatecat($args)
        }
 
        // Security check
-        if(!xarSecurityCheck('EditCategories',1,'All',"All:$cid")) return;
+        if(!xarSecurityCheck('EditCategories',1,'Category',"All:$cid")) return;
 
        // Find the needed variables for moving things...
        $point_of_insertion =
@@ -197,7 +197,6 @@ function categories_adminapi_updatecat($args)
     $args['itemtype'] = 0;
     $args['itemid'] = $cid;
     xarModCallHooks('item', 'update', $cid, $args);
-
 
     return true;
 }

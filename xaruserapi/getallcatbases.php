@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -25,9 +25,8 @@
  * @param $args['format'] return format: 'cids', 'tree' or 'flat' (default 'flat').
  * @param $args['order'] columns to order by (optional)
  * @return array Array with list of category bases
- */
-/**
- * NOTE:
+ *
+ * @todo:
  * This function is over-complicated at the moment as it uses module
  * variables to store its info. It will be greatly implified when the
  * data is moved to a table of its own.

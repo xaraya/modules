@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,6 +13,9 @@
  */
 /**
  * Check category links for orphans
+ * @param int modid The module ID
+ * @param int itemtype The id for the itemtype
+ * @return array returns the data for the template
  */
 function categories_admin_checklinks()
 {

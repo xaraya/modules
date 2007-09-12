@@ -79,6 +79,19 @@
                 </label>
 
             </div>
+           <div class="xar-form-input-wrapper-after">
+              <xar:if condition="$usenameinstead eq 1">
+                  <input type="checkbox" name="usenameinstead" id="usenameinstead" value="1" checked="checked" />
+                <xar:else/>
+                  <input type="checkbox" name="usenameinstead" id="usenameinstead" value="1" />
+                </xar:if>
+                <label for="showtitle" title="#xarML('Use Category Name for display if Description is empty?')#">
+                        <xar:mlstring>
+                            Use Category Name for display if Description is empty?
+                        </xar:mlstring>
+                </label>
+
+            </div>
         </fieldset>
             <xar:if condition="!empty($hooks)">
                 <fieldset >

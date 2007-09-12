@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -17,8 +17,7 @@
  * @param $args['andcids'] true means AND-ing categories listed in cids
  * @param $args['modid'] module?s ID
  * @param $args['itemtype'] item type
- * @returns int
- * @return number of items
+ * @return int number of items
  */
 function categories_userapi_countitems($args)
 {

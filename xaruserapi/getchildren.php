@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -17,7 +17,6 @@
  * @param $args['cid'] id of category to get children for, or
  * @param $args['cids'] array of category ids to get children for
  * @param $args['return_itself'] =Boolean= return the cid itself (default false)
- * @returns array
  * @return array of category info arrays, false on failure
  */
 function categories_userapi_getchildren($args)

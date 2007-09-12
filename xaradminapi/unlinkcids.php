@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,9 +13,9 @@
  */
 /**
  * Delete all links for a specific module, itemtype and list of cids (e.g. orphan links)
- * @param $args['modid'] ID of the module
- * @param $args['itemtype'] item type
- * @param $args['cids'] array of category ids
+ * @param int $args['modid'] ID of the module
+ * @param int $args['itemtype'] item type
+ * @param array $args['cids'] array of category ids
  */
 function categories_adminapi_unlinkcids($args)
 {

@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -17,8 +17,7 @@
  * @param $args['module'] the name of the module (will be optional)
  * @param $args['modid'] the ID of the module (will be optional)
  * @param $args['itemtype'] the ID of the itemtype (optional)
- * @returns int
- * @return number of categories
+ * @return int number of categories
  */
 function categories_userapi_countcatbases($args)
 {

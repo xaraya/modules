@@ -6,12 +6,13 @@
         <xar:set name="$position">2</xar:set>
     </xar:if>
 </xar:if>
+
 <xar:if condition="count($categories) eq 0">
     <input type="hidden" name="moving[#$cid#]" id="moving_#$cid#" value="false" />
     <input type="hidden" name="refcid[#$cid#]" id="refcid_#$cid#" value="#$refcid#" />
     <input type="hidden" name="position[#$cid#]" id="position_#$cid#" value="#$position#" />
     <input type="hidden" name="catexists[#$cid#]" id="catexists_#$cid#" value="false" />
-    <xar:else />
+<xar:else />
     <div class="xar-form-input-wrapper">
         <input type="hidden" name="moving[#$cid#]" id="moving_#$cid#" value="true" />
         <input type="hidden" name="catexists[#$cid#]" id="catexists_#$cid#" value="true" />
@@ -32,6 +33,7 @@
             </xar:for>
         </select>
     </div>
+
     <xar:comment>The position needs to be set after categories select because There is no position which we can have a selected category that will work in all cases</xar:comment>
     <div class="xar-form-input-wrapper">
         <label for="position[#$cid#]" class="xar-form-label help" title="#xarML('Position of this category.')#">
@@ -42,7 +44,7 @@
                 <option value="1" selected="selected">
                     <xar:mlstring>Right before, in the same level</xar:mlstring>
                 </option>
-                <xar:else />
+            <xar:else />
                 <option value="1">
                     <xar:mlstring>Right before, in the same level</xar:mlstring>
                 </option>
@@ -51,7 +53,7 @@
                 <option value="2" selected="selected">
                     <xar:mlstring>Right after, in the same level</xar:mlstring>
                 </option>
-                <xar:else />
+            <xar:else />
                 <option value="2">
                     <xar:mlstring>Right after, in the same level</xar:mlstring>
                 </option>
@@ -60,7 +62,7 @@
                 <option value="4" selected="selected">
                     <xar:mlstring>The first child category</xar:mlstring>
                 </option>
-                <xar:else />
+            <xar:else />
                 <option value="4">
                     <xar:mlstring>The first child category</xar:mlstring>
                 </option>
@@ -69,11 +71,13 @@
                 <option value="3" selected="selected">
                     <xar:mlstring>The last child category</xar:mlstring>
                 </option>
-                <xar:else />
+            <xar:else />
                 <option value="3">
                     <xar:mlstring>The last child category</xar:mlstring>
                 </option>
             </xar:if>
         </select>
+        <div style="clear: both;"></div>
     </div>
 </xar:if>
+

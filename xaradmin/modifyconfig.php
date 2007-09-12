@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -57,6 +57,7 @@ function categories_admin_modifyconfig()
             if (!empty($data['showtitle'])) {
                 $data['showtitle'] = 1;
             }
+            $data['usenameinstead'] = xarModGetVar('categories','usename')== true ? 1 : 0;
 
             return xarTplModule('categories','admin','config',$data);
             break;
@@ -64,9 +65,11 @@ function categories_admin_modifyconfig()
         case 'update':
             if (!xarVarFetch('catsperpage', 'int:1:1000', $catsperpage, 10, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('useJSdisplay', 'bool', $useJSdisplay)) return;
+            if (!xarVarFetch('usenameinstead', 'bool', $usenameinstead)) return;
             if (!xarSecConfirmAuthKey()) return;
             xarModSetVar('categories','catsperpage', $catsperpage);
             xarModSetVar('categories','useJSdisplay', $useJSdisplay);
+            xarModSetVar('categories','usename', $usenameinstead);
             if (!xarVarFetch('numstats', 'int', $numstats, 100, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('showtitle', 'checkbox', $showtitle, false, XARVAR_NOT_REQUIRED)) return;
             xarModSetVar('categories', 'numstats', $numstats);

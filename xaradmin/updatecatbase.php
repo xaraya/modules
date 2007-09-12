@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,7 +12,8 @@
  * @author Categories module development team
  */
 /**
- * udpate the base category from categories_admin_modifycatbase
+ * update the base category from categories_admin_modifycatbase
+ * @return bool true
  */
 function categories_admin_updatecatbase()
 {

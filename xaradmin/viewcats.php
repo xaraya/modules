@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -17,6 +17,7 @@
  * @param pagerstart
  * @param catsperpage
  * @param useJSdisplay
+ * @todo MichelV: do we need the reference creations in here?
  */
 function categories_admin_viewcats()
 {
@@ -27,7 +28,7 @@ function categories_admin_viewcats()
     // Security check
     if(!xarSecurityCheck('ReadCategories')) return;
 
-    $data = Array ();
+    $data = array();
     $data['reloadlabel'] = xarML('Reload');
 
     // Add pager
@@ -101,10 +102,6 @@ function categories_admin_viewcats()
         return xarTplModule('categories','admin','viewcats-render',$data);
 
     } else {
-        //$code = '<script src="modules/categories/xarincludes/HTML_TreeMenu-1.1.5/treemenu.js" language="JavaScript" type="text/javascript"></script>';
-        //xarTplAddJavaScriptCode('head', 'categories', $code);
-
-//        if (!xarModLoad('categories','/xarincludes/HTML_TreeMenu-1.1.5/treemenu.php')) die('problems loading tree');
         include ('modules/categories/xarincludes/HTML_TreeMenu-1.1.5/treemenu.php');
 
         // Create the presentation class
