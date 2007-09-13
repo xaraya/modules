@@ -588,11 +588,24 @@ function ievents_user_view($args)
         $cal->showWeek = false;
         $cal->calMonth = date('m', $ustartdate);
         $cal->calYear = date('Y', $ustartdate);
-        $cal->outputFormat = 'return';
+
+        // Pass the locale data in.
+        $cal->dayNames = $locale['days']['long'];
+        $cal->dayNamesShort = $locale['days']['short'];
+
+        $cal->monthNames = $locale['months']['long'];
+        $cal->monthNamesShort = $locale['months']['short'];
+
         // Add the events
         // TODO: move this markup to the templates.
         foreach($events as $eventkey => $eventvalue) {
-            $cal->addEvent($eventvalue['startdate'], '<a href="' . $eventvalue['detail_url'] . '">' . xarVarPrepForDisplay($eventvalue['title']) . '</a>');
+            //$cal->addEvent($eventvalue['startdate'], '<a href="' . $eventvalue['detail_url'] . '">' . xarVarPrepForDisplay($eventvalue['title']) . '</a>');
+            $cal->addEvent(
+                $eventvalue['startdate'],
+                $eventvalue['title'],
+                $eventvalue['detail_url'],
+                $eventvalue['allday']
+            );
         }
     } else {
         $cal = NULL;

@@ -174,6 +174,7 @@ function ievents_userapi_params($args)
 
         //var_dump($localeData);
         //var_dump($params['locale']['days']['long']);
+        //var_dump($params['locale']['months']['long']);
     }
 
     if (!empty($name)) {
