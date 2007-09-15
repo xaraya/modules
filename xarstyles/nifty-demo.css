@@ -1,0 +1,33 @@
+
+/* Float all the paragraphs */
+
+#nifty-demo {
+	padding: 1em 0;
+}
+
+#nifty-demo div {
+	padding: 0;
+	margin: 0;
+	width: 30%;
+	margin-right: 6px;
+	float: left;
+}
+
+#nifty-demo #nifty-demo-1 {
+	background-color: #33aa33;
+}
+
+#nifty-demo #nifty-demo-2 {
+	background-image: url('../xarimages/gallery/image2.jpg');
+}
+
+#nifty-demo #nifty-demo-3 {
+	background-color: #3333aa;
+}
+
+#nifty-demo div p {
+	padding: 0.6em 1em;
+	margin: 0;
+	color: #ffffff;
+	font-weight: bold;
+}

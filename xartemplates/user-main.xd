@@ -165,4 +165,28 @@
             <xar:mlstring>Simple example - internal block</xar:mlstring>
         </a>
     </p>
+
+    
+    <h2><xar:mlstring>nifty - port of the popular nifty corners cube</xar:mlstring></h2>
+
+    <p>
+        <xar:mlstring>Provides corners on blocks without images and same-height blocks.</xar:mlstring>
+    </p>
+
+    <xar:template file="nifty" module="jquery" subdata="array('selector'=&gt;'#nifty-demo div','options'=&gt;'same-height transparent')"/>
+    <xar:style file='nifty-demo' scope="module" module="jquery" />
+
+    <div id="nifty-demo">
+        <div id="nifty-demo-1">
+            <p>Curved corners - very nice.</p>
+            <p>The same-height option is useful to make the blocks equal height.
+            It does not yet work properly in IE6, and could do with retriggering after the window has been resized.</p>
+        </div>
+        <div id="nifty-demo-2">
+            <p>Curved corners - very nice.</p>
+            <p>Background images are not a problem either - just set the 'transparent' option.</p>
+        </div>
+        <div id="nifty-demo-3"><p>Curved corners - very nice.</p></div>
+        <div style="clear: both;"></div>
+    </div>
 </div>
