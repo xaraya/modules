@@ -2,10 +2,10 @@
 /* Float all the paragraphs */
 
 #nifty-demo {
-	padding: 1em 0;
+	margin: 1em 0;
 }
 
-#nifty-demo div {
+#nifty-demo div.rounded {
 	padding: 0;
 	margin: 0;
 	width: 30%;
