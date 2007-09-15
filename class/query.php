@@ -7,7 +7,7 @@
 class Query
 {
 
-    public $version = "3.1";
+    public $version = "3.2";
     public $key;
     public $type;
     public $tables;
@@ -32,6 +32,7 @@ class Query
     public $bindstring;
     public $limits = 1;
     public $uniqueselect = false;
+    public $starttime;
 
 // Flags
 // Set to true to use binding variables supported by some dbs
@@ -41,7 +42,7 @@ class Query
 // Use JOIN...ON.. syntax (automatic for left or right joins)
     public $on_syntax = false;
 // Before each statement executed, echo the SQL statement
-    public $debug = false;
+    public $debugflag = false;
 // Operator syntax
     public $eqoperator = '=';
     public $neoperator = '!=';
@@ -56,6 +57,13 @@ class Query
 //---------------------------------------------------------
     function __construct($type='SELECT',$tables='',$fields='')
     {
+        if (xarModVars::get('query','debugmode')) {
+        	$this->debugusers = array_keys(unserialize(xarModVars::get('query', 'debugusers')));
+        	$this->debugflag = xarModVars::get('query','debugmode') && in_array(xarUserGetVar('uname'),$this->debugusers);
+			$this->starttime = microtime(true);
+        } else {
+        	$this->debugflag = false;
+        }
         if (in_array($type,array("SELECT","INSERT","UPDATE","DELETE","DROP"))) $this->type = $type;
         else {
             throw new ForbiddenOperationException($type,'This operation is not supported yet. "#(1)"');
@@ -85,9 +93,11 @@ class Query
 
     function run($statement='',$display=1)
     {
+        if ($this->debugflag) $querystart = microtime(true);
+
         if (!isset($this->dbconn)) $this->dbconn = xarDB::getConn();
         $this->setstatement($statement);
-        if ($this->debug) $this->qecho();
+
         if ($this->type != 'SELECT') {
             if ($this->usebinding  && !$this->israwstatement) {
                 $result = $this->dbconn->Execute($this->statement,$this->bindvars);
@@ -96,7 +106,6 @@ class Query
                 $result = $this->dbconn->Execute($this->statement);
             }
             if(!$result) return;
-//            $this->rows = $result;
             return true;
         }
         if($this->rowstodo != 0 && $this->limits == 1) {
@@ -116,7 +125,7 @@ class Query
                 $result = $this->dbconn->Execute($this->statement);
             }
         }
-//            $this->rows = $result->getRecordCount();
+        if ($this->debugflag) $loopstart = microtime(true);
         if (!$result) return;
         $this->result =& $result;
 
@@ -165,6 +174,13 @@ class Query
                     $result->MoveNext();
                 }
             }
+        }
+        if ($this->debugflag) {
+        	$assembletime = $querystart - $this->starttime;
+        	$querytime = $loopstart - $querystart;
+        	$looptime = microtime(true) - $loopstart;
+        	echo $this->qecho($statement);echo "<br />";
+			echo "Assemble: " . $assembletime . "    Query: " . $querytime . "   Loops: " . $looptime . "<br />";
         }
         return true;
     }
@@ -1351,9 +1367,10 @@ class Query
         if (empty($x)) $this->dbconn = xarDB::getConn();
         else $this->dbconn = $x;
     }
-    function qecho()
+    function qecho($statement='')
     {
-        echo $this->tostring();
+        if (empty($statement)) echo $this->tostring();
+        else echo $statement;
     }
     function sessiongetvar($x)
     {
