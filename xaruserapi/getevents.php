@@ -244,34 +244,37 @@ function julian_userapi_getevents($args)
         if (xarSecurityCheck('ReadJulian', 0, 'Item', "$eID:$eOrganizer:$eCalendarID:All")) {
             $eEnd = array();
 
-            // Convert the duration into hours
+            // Convert the duration into hours and seconds (UNIX)
             if (preg_match('/^\d*:\d*$/', $eDuration)) {
                 $eDurationSplit = explode(':', $eDuration);
                 $eDurationHours = $eDurationSplit[0] + ($eDurationSplit[1]/60);
+                $eDurationUnix = $eDurationSplit[0]*3600 + ($eDurationSplit[1]*60);
             } else {
                 $eDurationHours = 0;
+                $eDurationUnix = 0;
             }
             
             // Change date formats from UNIX timestamp to something readable.
             // TODO: why do we need all this display stuff in here?
             // TODO: the time format should be configurable, to allow the use of 24-hour clock format.
             if ($eStart['timestamp'] == 0 || empty($eStart['timestamp'])) {
+                $eStart['unixtime'] = 0;
                 $eStart['mon'] = "";
                 $eStart['day'] = "";
                 $eStart['year'] = "";
                 $eStart['linkdate'] = '';
                 $eStart['viewdate'] = '';
-				$eStart['displaytime'] =  '';
+                $eStart['displaytime'] =  '';
             } else {
-                $eStart['linkdate'] = date('Ymd', strtotime($eStart['timestamp']));
-                $eStart['viewdate'] = date($dateformat, strtotime($eStart['timestamp']));
-				$eStart['displaytime'] = date($timeformat, strtotime($eStart['timestamp']));
-				$eStart['starthours'] = date('H', strtotime($eStart['timestamp'])) + (date('i', strtotime($eStart['timestamp']))/60);
                 $eStart['unixtime'] = strtotime($eStart['timestamp']);
+                $eStart['linkdate'] = date('Ymd', $eStart['unixtime']);
+                $eStart['viewdate'] = date($dateformat, $eStart['unixtime']);
+                $eStart['displaytime'] = date($timeformat, $eStart['unixtime']);
+                $eStart['starthours'] = date('H', $eStart['unixtime']) + (date('i', $eStart['unixtime'])/60);
 
-                $eEnd['viewdate'] = date($dateformat, strtotime($eStart['timestamp'] . '+' . $eDurationHours . ' hours'));
-                $eEnd['displaytime'] = date($timeformat, strtotime($eStart['timestamp'] . '+' . $eDurationHours . ' hours'));
-                $eEnd['unixtime'] = strtotime($eStart['timestamp']);
+                $eEnd['unixtime'] = $eStart['unixtime'] + $eDurationUnix;
+                $eEnd['viewdate'] = date($dateformat, $eEnd['unixtime']);
+                $eEnd['displaytime'] = date($timeformat, $eEnd['unixtime']);
             }
 
             if ($eRecur['timestamp'] == 0 || empty($eRecur['timestamp'])) {
@@ -281,8 +284,9 @@ function julian_userapi_getevents($args)
                 $eRecur['linkdate'] = '';
                 $eRecur['viewdate'] = '';
             } else {
-                $eRecur['linkdate'] = date('Ymd', strtotime($eRecur['timestamp']));
-                $eRecur['viewdate'] = date($dateformat, strtotime($eRecur['timestamp']));
+                $eRecur['unixtime'] = strtotime($eRecur['timestamp']);
+                $eRecur['linkdate'] = date('Ymd', $eRecur['unixtime']);
+                $eRecur['viewdate'] = date($dateformat, $eRecur['unixtime']);
             }
 
             $items[] = array(
@@ -419,12 +423,14 @@ function julian_userapi_getevents($args)
         if (!empty($itemlinks['description'])) {
             $eEnd = array();
 
-            // Convert the duration into hours
+            // Convert the duration into hours nad seconds (UNIX))
             if (preg_match('/^\d*:\d*$/', $eDuration)) {
                 $eDurationSplit = explode(':', $eDuration);
                 $eDurationHours = $eDurationSplit[0] + ($eDurationSplit[1]/60);
+                $eDurationUnix = $eDurationSplit[0]*3600 + ($eDurationSplit[1]*60);
             } else {
                 $eDurationHours = 0;
+                $eDurationUnix = 0;
             }
             
             // Change date formats to configured types
@@ -434,14 +440,15 @@ function julian_userapi_getevents($args)
                 $eStart['year'] = '';
                 $eStart['linkdate'] = '';
                 $eStart['viewdate'] = '';
-				$eStart['displaytime'] = '';
+                $eStart['displaytime'] = '';
             } else {
-                $eStart['linkdate'] = date("Ymd", strtotime($eStart['timestamp']));
-                $eStart['viewdate'] = date($dateformat, strtotime($eStart['timestamp']));
                 $eStart['unixtime'] = strtotime($eStart['timestamp']);
+                $eStart['linkdate'] = date("Ymd", $eStart['unixtime']);
+                $eStart['viewdate'] = date($dateformat, $eStart['unixtime']);
 
-                $eEnd['viewdate'] = date($dateformat, strtotime($eStart['timestamp'] . '+' . $eDurationHours . ' hours'));
-                $eEnd['displaytime'] = date($timeformat, strtotime($eStart['timestamp'] . '+' . $eDurationHours . ' hours'));
+                $eEnd['unixtime'] = $eStart['unixtime'] + $eDurationUnix;
+                $eEnd['viewdate'] = date($dateformat, $eEnd['unixtime']);
+                $eEnd['displaytime'] = date($timeformat, $eEnd['unixtime']);
             }
 
             if ($eRrule ==0) {
@@ -451,8 +458,9 @@ function julian_userapi_getevents($args)
                 $eRecur['linkdate'] = '';
                 $eRecur['viewdate'] = '';
             } else {
-                $eRecur['linkdate'] = date('Ymd', strtotime($eRecurUntil['timestamp']));
-                $eRecur['viewdate'] = date($dateformat, strtotime($eRecurUntil['timestamp']));
+                $eRecur['unixtime'] = strtotime($eRecur['timestamp']);
+                $eRecur['linkdate'] = date('Ymd', $eRecur['unixtime']);
+                $eRecur['viewdate'] = date($dateformat, $eRecur['unixtime']);
             }
 
             $items[] = array(
@@ -553,8 +561,8 @@ function julian_userapi_getevents_datecompare($x, $y)
 /**
  * TODO: PB.Create an separate event for every recursive event
  */
-function julian_userapi_getrecur($start_date, $recur_freq, $rrule = null, $recur_count = null, $recur_freq = null, $recur_until = null) {
-
+function julian_userapi_getrecur($start_date, $recur_freq, $rrule = null, $recur_count = null, $recur_freq = null, $recur_until = null)
+{
     //Number of recursive events to fetch
     $recur_no = 10;
     

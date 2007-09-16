@@ -87,8 +87,10 @@ function julian_user_viewevent()
     $dateformat_created = $dateformat . ' ' . $timeformat;
 
     // Don't like this here
-    if (!isset($bl_data['recur_until']) || is_numeric($bl_data['recur_until']) || strpos($bl_data['recur_until'], '0000')!== false) {
-        $bl_data['recur_until'] = 'recur_until';
+    if (!isset($bl_data['eRecur']['timestamp']) || 
+        is_numeric($bl_data['eRecur']['timestamp']) || 
+        strpos($bl_data['eRecur']['timestamp'], '0000')!== false) {
+            $bl_data['recur_until'] = 'recur_until';
     }
 
     $bl_data['event_id'] = $bl_data['event_id'];
@@ -132,15 +134,26 @@ function julian_user_viewevent()
         list($hours,$minutes) = explode(":",$bl_data['duration']);
         $duration = xarML(
             'from #(1) to #(2)',
-            date("g:i A", strtotime($bl_data['dtstart'])),
-            date("g:i A", strtotime("+" . $hours . " hours " . $minutes . " minutes", strtotime($bl_data['dtstart'])))
+            date("g:i A", $bl_data['dtstart']['unixtime']),
+            date("g:i A", strtotime("+" . $hours . " hours " . $minutes . " minutes", $bl_data['dtstart']['unixtime']))
         );
     }
+
+    //Localise day names
+    $day_array = array(
+        "1" => xarML('Sunday'),
+        "2" => xarML('Monday'),
+        "3" => xarML('Tuesday'),
+        "4" => xarML('Wednesday'),
+        "5" => xarML('Thursday'),
+        "6" => xarML('Friday'),
+        "7" => xarML('Saturday')
+     );
 
     //Checking if we are viewing a reoccuring event
     if ($bl_data['recur_freq']) {
         $recur_count = $bl_data['recur_count'];
-        $rrule = $bl_data['rrule'];
+        $rrule = $bl_data['eRrule'];
         $recur_interval = $bl_data['recur_interval'];
         $intervals = array(
             "1" => xarML('Day(s)'),
@@ -148,17 +161,8 @@ function julian_user_viewevent()
             "3" => xarML('Month(s)'),
             "4" => xarML('Year(s)')
         );
-        $day_array = array(
-            "1" => xarML('Sunday'),
-            "2" => xarML('Monday'),
-            "3" => xarML('Tuesday'),
-            "4" => xarML('Wednesday'),
-            "5" => xarML('Thursday'),
-            "6" => xarML('Friday'),
-            "7" => xarML('Saturday')
-        );
         //build the effective date string
-        $eff =xarML('effective #(1)', date("$dateformat", strtotime($bl_data['dtstart'])));
+        $eff =xarML('effective #(1)', date("$dateformat", $bl_data['dtstart']['unixtime']));
 
         //start the time string
         //Build the strings to describe the repeating event.
@@ -168,7 +172,7 @@ function julian_user_viewevent()
                 'Occurs every #(1) #(2) on #(3) #(4)',
                 $bl_data['recur_freq'],
                 $intervals[$rrule],
-                date('l', strtotime($bl_data['dtstart'])),
+                date('l', $bl_data['dtstart']['unixtime']),
                 $eff
             );
         } else {
@@ -193,20 +197,20 @@ function julian_user_viewevent()
 
         //add the end date if one exists
         //TODO: MichelV move this to template
-        if ($bl_data['recur_until'] != '' && $bl_data['recur_until'] != 'recur_until') {
-            $time = xarML('#(1) until #(2)', $time, date("$dateformat", strtotime($bl_data['recur_until'])));
+        if ($bl_data['recur_until']['timestamp'] != '' && $bl_data['recur_until'] != 'recur_until') {
+            $time = xarML('#(1) until #(2)', $time, date("$dateformat", $bl_data['recur_until']['unixtime']));
         }
 
         // if the duration has not been set and this is not an all day event, add the start time to the string
         // FIXME: dreaded strcmp! Too late in the day to work out what this one does.
-        $duration= strcmp($duration,"") ? $duration:($bl_data['isallday']?'':"&#160;".xarML('at #(1)',date("g:i A",strtotime($bl_data['dtstart']))));
+        $duration= strcmp($duration,"") ? $duration:($bl_data['isallday']?'':"&#160;".xarML('at #(1)',date("g:i A",$bl_data['dtstart']['unixtime'])));
         $bl_data['time'] = $time;
 
         // If there is no duration and this is not an all day event, show the time at the front.
     } else if (!$bl_data['isallday'] && !strcmp($duration,'')) {
-        $bl_data['time'] = date("g:i A l, $dateformat", strtotime($bl_data['dtstart']));
+        $bl_data['time'] = date("g:i A l, $dateformat", $bl_data['dtstart']['unixtime']);
     } else {
-        $bl_data['time'] = date("l, $dateformat", strtotime($bl_data['dtstart']));
+        $bl_data['time'] =  $day_array[date("w", $bl_data['dtstart']['unixtime'])+1] . " " . $bl_data['dtstart']['viewdate'];
     }
     $bl_data['cal_date'] = $cal_date;
     $bl_data['duration'] = $duration;

@@ -113,6 +113,7 @@ function julian_user_modifyhook($args)
     // $item['event_starttime'] = date("g:i A",$event_startdate);
     $hour = date("h",strtotime($item['event_starttime'])); //12 hour format
     $ampm = !strcmp(date("a",strtotime($item['event_starttime'])),"am")?0:1;
+    $hour24 = date("H",strtotime($item['event_starttime'])); //24 hour format
     $minute = date("i",strtotime($item['event_starttime']));
 
     // If there is not a duration, set dur_hours and dur_minutes.
@@ -181,7 +182,16 @@ function julian_user_modifyhook($args)
             $start_hour_options.= " SELECTED";
         $start_hour_options.='>'.$j.'</option>';
     }
+    $start_hour24_options = '';
+    for($i = 1;$i <= 24; $i++) {
+        $j = str_pad($i,2,"0",STR_PAD_LEFT);
+        $start_hour24_options.='<option value="'.$i.'"';
+        if ($i == $hour24)
+            $start_hour24_options.= " SELECTED";
+        $start_hour24_options.='>'.$j.'</option>';
+    }
     $data['start_hour_options'] = $start_hour_options;
+    $data['start_hour24_options'] = $start_hour24_options;
 
     // Building duration minute options
     // Get the interval

@@ -47,22 +47,23 @@ function julian_user_edit()
     $event_endyear='';
     $event_endmonth='';
     $event_endday='';
-    if($item['recur_until']) {
+    if($item['eRecur']['timestamp']) {
        // End date and time
        // determine the end date for a recurring event
        // TODO: With the new get.php this should be rewritten
-       list($event_endyear,$event_endmonth,$event_endday) = explode("-",$item['recur_until']);
+       list($event_endyear,$event_endmonth,$event_endday) = explode("-",$item['eRecur']['timestamp']);
     }
     $data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
 
-    // TODO: The time format needs to take into account whether we are using 12- or 24-hour clock.
-    // The US is the main user of 12 hour, while 24-hour is used over much of the rest of the world.
     // Date time from item
     // setting start date time variables
-    $hour = date("h", strtotime($item['dtstart'])); //12 hour format
-    $ampm = !strcmp(date("a",strtotime($item['dtstart'])),"am") ? 0:1;
-    $minute = date("i",strtotime($item['dtstart']));
-    list($year,$month,$day) = explode("-",date("Y-m-d",strtotime($item['dtstart'])));
+    $hour = date("h", $item['dtstart']['unixtime']); //12 hour format
+    $ampm = !strcmp(date("a", $item['dtstart']['unixtime']),"am") ? 0:1;
+    $hour24 = date("H", $item['dtstart']['unixtime']); //24 hour format
+    $minute = date("i", $item['dtstart']['unixtime']);
+    $year = date("Y", $item['dtstart']['unixtime']);
+    $month = date("m", $item['dtstart']['unixtime']);
+    $day = date("d", $item['dtstart']['unixtime']);
     //set the start date parts in the data array
     $data['todays_month'] = $month;
     $data['todays_year'] = $year;
@@ -103,8 +104,9 @@ function julian_user_edit()
     $data['event_day'] = $day;
     $data['event_year'] = $year;
     $data['event_desc'] = xarVarPrepForDisplay($item['description']);
-    $data['event_allday'] = $item['isallday'];
+    $data['event_allday'] = $item['eIsallday'];
     $data['event_starttimeh'] = $hour;
+    $data['event_starttimeh24'] = $hour24;
     $data['event_starttimem'] = $minute;
     $data['event_startampm'] = $ampm;
     $data['event_dur_hours'] = $dur_hours;
@@ -187,7 +189,16 @@ function julian_user_edit()
             $start_hour_options.= " SELECTED";
         $start_hour_options.='>'.$j.'</option>';
     }
+    $start_hour24_options = '';
+    for($i = 1;$i <= 24; $i++) {
+        $j = str_pad($i,2,"0",STR_PAD_LEFT);
+        $start_hour24_options.='<option value="'.$i.'"';
+        if ($i == $hour24)
+            $start_hour24_options.= " SELECTED";
+        $start_hour24_options.='>'.$j.'</option>';
+    }
     $data['start_hour_options'] = $start_hour_options;
+    $data['start_hour24_options'] = $start_hour24_options;
 
     // Building duration minute options
     // Get the interval
@@ -291,7 +302,7 @@ function julian_user_edit()
     $data['allday_checked'][0] = '';
     $data['allday_checked'][1] = 'checked';
     $data['timeddisabled'] = '';
-    if ($item['isallday'] == 1) {
+    if ($item['eIsallday'] == 1) {
         $data['allday_checked'][0] = 'checked';
         $data['allday_checked'][1] = '';
         $data['timeddisabled'] = 'disabled';

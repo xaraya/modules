@@ -13,6 +13,7 @@
  */
 /**
  * Delete an event
+ * @deprecated, replaced since April 2007 by julian-admin-delete() 
  * This function takes the delete command, checks the privilege of the current user and,
    if passed, passes the delete command to the API.
  *
@@ -23,37 +24,6 @@
  */
 function julian_admin_deleteevent($args)
 {
-    extract($args);
-
-    if (!xarVarFetch('event_id', 'id',    $event_id)) return;
-    if (!xarVarFetch('objectid', 'id',    $objectid, NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('cal_date', 'isset', $cal_date)) return;
-
-    if (!empty($objectid)) {
-        $event_id = $objectid;
-    }
-
-    // Get item
-    $item = xarModAPIFunc('julian',
-        'user',
-        'get',
-        array('event_id' => $event_id));
-    // Check for exceptions
-    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-
-    if (!xarSecurityCheck('DeleteJulian', 1, 'Item', "$event_id:$item[organizer]:$item[calendar_id]:All")) {
-        return;
-    }
-    if (!xarSecConfirmAuthKey()) return;
-
-    if (!xarModAPIFunc('julian',
-            'admin',
-            'deleteevent',
-            array('event_id' => $event_id))) {
-        return; // throw back
-    }
-    xarResponseRedirect(xarModURL('julian', 'user', 'month',array('cal_date'=>$cal_date)));
-    // Return
-    return true;
+    return xarModFunc('julian', 'admin', 'delete', $args);
 }
 ?>

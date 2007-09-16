@@ -39,6 +39,10 @@ function julian_userapi_get($args)
     // Take the first one.
     // TODO: raise an error if more than one event matched.
     $item = reset($items);
+    
+//    $item['recur_until']    = $item['eRecur']['timestamp'];
+    $item['isallday']       = $item['eIsallday']; //used in templates
+    $item['rrule']          = $item['eRrule'];  
 
     $item['color'] = xarModAPIFunc('julian', 'user', 'getcolor', array('category' => $item['categories']));
     return $item;

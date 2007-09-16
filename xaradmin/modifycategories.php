@@ -115,7 +115,9 @@ function julian_admin_modifycategories()
                                                             'multiple' => 0,
                                                             'name_prefix' => 'new_',
                                                             'return_itself' => true,
-                                                            'select_itself' => true));
+                                                            'select_itself' => true,
+                                                            'modid' => xarModGetIDFromName('julian'),
+                                                            'modtype' => 'All'));  
 //                                                            'values' => &$seencid));
 
     return $data;

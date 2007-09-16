@@ -42,17 +42,18 @@ function julian_adminapi_update($args)
     // Get the existing item
     $item = xarModAPIFunc('julian', 'user', 'get', array('event_id' => $event_id));
 
-    // Check for exceptions
+    // Check for exceptions, i.e. updating a non existing event
     // The returned item will be NULL if there was an error.
     // CHECKME: not sure what the exception check is all about
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // Security checks
-    // FIXME: organizer, calendar_id and catid are not checked and may not even be set.
-    // It is likely they come from the existing item.
     // FIXME: support multiple categories
-    if (!xarSecurityCheck('EditJulian', 1, 'Item', "$event_id:$organizer:$calendar_id:$catid")) return;
-    if (!xarSecurityCheck('EditJulian', 1, 'Item', "$event_id:$organizer:$calendar_id:$catid")) return;
+    
+    if (!xarSecurityCheck('EditJulian', 1, 'Item', "$event_id:" 
+                                                    . $item['organizer'] . ":" 
+                                                    . $item['calendar_id'] . ":" 
+                                                    . $item['categories'])) return;
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
