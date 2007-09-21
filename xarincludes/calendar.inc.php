@@ -78,6 +78,10 @@ class calendar {
     // Events on each day, indexed as 'YYYYMMDD'
     var $day_events = array();
 
+    // Links to events for any given day.
+    // Only days that have events will be included.
+    var $day_urls = array();
+
     /*
     Declare a variable indicating the day of the week that the calendar starts on.
     0 = Sunday
@@ -257,20 +261,25 @@ class calendar {
         // * URL for the day
         // TODO: build a hash table of dates for easy lookup when displaying.
     */
-    function addEvent($date, $title, $url = '', $allday = true) {
+    function addEvent($date, $title, $url = '', $allday = true, $day_url = '') {
         $event_details = array();
 
         // Add the event to the array.
         $event_details['date'] = $date;
         $event_details['event'] = $title;
         $event_details['url'] = $url;
-        $event_details['allday'] = empty($allday) ? false : true;
-
-        // Add the event to the day_events array.
-        $this->day_events[date('Ymd', $date)][] = $event_details;
+        $event_details['allday'] = (empty($allday) ? false : true);
 
         // Add the event to the overall array.
         $this->events[] = $event_details;
+
+        // Add the event to the day_events array also.
+        $this->day_events[date('Ymd', $date)][] = $event_details;
+
+        // if there is a URL supplied for the day, then add that to our list.
+        if (!empty($day_url) && empty($this->day_urls[date('Ymd', $date)])) {
+            $this->day_urls[date('Ymd', $date)] = $day_url;
+        }
     }
 
     /*
@@ -281,6 +290,9 @@ class calendar {
     function getEvents($date, $cal, $highlightDate = false) {
         // Set a boolean variable to determine weather events were displayed or not.
         $displayed = false;
+
+        //
+        $day_text_key = date('Ymd', $date);
 
         // Clear an events variable based on the calendar format.
         switch ($cal) {
@@ -299,7 +311,14 @@ class calendar {
                 // TODO: if there are any events displayed, then the day number should be a
                 // hyperlink to a summary of that day (or the single event if there is only one event)
                 $events = '<div class="ievents-day-wrapper">';
-                $events .= '<div class="ievents-day-number">' . date('j', $date);
+                $events .= '<div class="ievents-day-number">';
+
+                // If there is a URL for the day, then wrap the day number in that URL.
+                if (!empty($this->day_urls[$day_text_key])) {
+                    $events .= '<a href="' . $this->day_urls[$day_text_key] . '" rel="#ievents-day-' . $day_text_key . '" title="Events Today">' . date('j', $date) . '</a>';
+                } else {
+                    $events .= date('j', $date);
+                }
 
                 // At the start of each week, display the week number.
                 if (date('w', $date) == $this->startingDOW) {
@@ -322,10 +341,9 @@ class calendar {
         // Check if any events are defined.
         if (isset($this->events) && $this->displayEvents) {
             // Cycle through the events that are defined.
-            $events_key = date('Ymd', $date);
-            if (isset($this->day_events[$events_key])) {
-                $events .= '<ul>';
-                foreach($this->day_events[$events_key] as $event) {
+            if (isset($this->day_events[$day_text_key])) {
+                $events .= '<div id="ievents-day-' . $day_text_key . '"><ul>';
+                foreach($this->day_events[$day_text_key] as $event) {
                     // An event was found so determine the calendar format we need to display.
                     switch ($cal) {
                         /*case 'smallMonth':
@@ -355,7 +373,7 @@ class calendar {
                             break;
                     }
                 }
-                $events .= '</ul>';
+                $events .= '</ul></div>';
             }
         }
 
@@ -835,7 +853,7 @@ class calendar {
     // TODO: don't die - just return the details to the caller through a return status and property.
     */
     function displayError($error) {
-        $output = "<table border=\"1\" cellspacing=\"0\" cellpadding=\"5\" align=\"left\">\n";
+        $output = "<table>\n";
         $output .= "    <tr>\n";
         $output .= "        <td style=\"text-align: center;\">\n";
         $output .= "        The clendar class has generated the following error:<br />\n";

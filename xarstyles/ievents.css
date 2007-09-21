@@ -341,6 +341,15 @@ div.ievents-cal-wrapper td div.ievents-day-wrapper {
     overflow: auto;
 }
 
+div.ievents-cal-wrapper td div.ievents-day-wrapper ul {
+    margin: 0.25em;
+	padding: 0;
+}
+div.ievents-cal-wrapper td div.ievents-day-wrapper ul li {
+	padding-bottom: 0.25em;
+	border-top: 1px dotted #999999;
+}
+
 div.ievents-cal-wrapper td div.ievents-day-number {
 	font-size: 18px;
 	font-weight: bold;
@@ -360,4 +369,9 @@ div.ievents-cal-wrapper td.ievents-today {
 }
 div.ievents-cal-wrapper th {
 	text-align: center;
+}
+
+/* Tidy up the cluetips a little, protecting it from the main theme */
+div#cluetip-outer {
+	text-align: left;
 }

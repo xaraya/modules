@@ -1,7 +1,13 @@
 
 <xar:comment>
     View template for event list calendar view.
+    Includes a cluetip if the jQuery module is available, which pops up the details
+    for a day if the mouse hovers over the day number.
 </xar:comment>
+
+<xar:if condition="xarModIsAvailable('jquery')">
+<xar:template file="jquery.cluetip" module="jquery" subdata="array('selector'=&gt;'div.ievents-day-number a','options'=&gt;'sticky: true, local: true, hideLocal: false')"/>
+</xar:if>
 
 <xar:style file="ievents" scope="module" />
 
