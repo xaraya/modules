@@ -16,8 +16,6 @@
  * where the user is taken next.
  *
  * TODO: secure pages (can this be done by chaining functions?)
- * TODO: put in some debug stuff
- * TODO: write a guide!
  * TODO: test out the custom format stuff (for both forms and properties)
  *
  * Notes on user navigation (the basic concepts):
@@ -109,7 +107,7 @@ function xarpages_funcapi_multiform($args)
         // Next page in the sequence.
         $next_page_pid = $page_sequence[$current_index+1];
     } else {
-        // We are already on the last page. Nowhere further to go.
+        // We are already on the last page. No-where further to go.
         $next_page_pid = 0;
     }
 
@@ -153,20 +151,31 @@ function xarpages_funcapi_multiform($args)
         $redirect_reason = 'cancel';
     }
 
-    // Check the expiry
-    if (!empty($timeout_seconds) && !empty($session_vars['expires']) && $session_vars['expires'] <= time()) {
+    // Check the expiry.
+    // Only raise this as an error if we are not already on the first page.
+    // This prevents coming back on a second day from launching the user directly into
+    // the 'timeout' error page.
+    if (!empty($timeout_seconds) && !empty($session_vars['session_key']) && !empty($session_vars['expires']) && $session_vars['expires'] <= time()) {
         // We have expired.
-        // Set this to be the last page, then go to the master page.
         $last_page_flag = true;
+        if ($current_page['pid'] == $entry_page_pid || $current_page['pid'] == $master_page['pid']) {
+            // We are right at the start, so silently reset the session (no need to raise an error)
+            // and go to the first page.
+            // Set the redirect_url rather than the redirect_pid, so we can ensure the session
+            // key is not added to the redirect.
+            $redirect_url = xarModURL('xarpages', 'user', 'display', array('pid' => $current_page['pid']), false);
+        } else {
+        // Set this to be the last page, then go to the master page.
         $redirect_pid = $master_page['pid'];
         $redirect_reason = 'timeout';
+    }
     }
 
     //
     // Processing will vary depending on what type of page we are on.
     //
 
-    if (!empty($redirect_pid)) {
+    if (!empty($redirect_pid) || !empty($redirect_url)) {
         // Skip everything if we are already redirecting.
     } elseif ($current_page['pagetype']['name'] == 'multiform') {
         // Most processing happens on the 'multiform' page type.
@@ -619,7 +628,8 @@ function xarpages_funcapi_multiform($args)
         // We must include the session key if it is set, otherwise the page
         // at the other end will fail its session check.
         $redirect_args = array('pid' => $redirect_pid);
-        if (!empty($session_key)) $redirect_args[$multiform_key_name] = $session_key;
+        // Don't include the session key if there is a redirect reason.
+        if (!empty($session_key) && empty($redirect_reason)) $redirect_args[$multiform_key_name] = $session_key;
         if (!empty($redirect_reason)) $redirect_args['reason'] = $redirect_reason;
 
         // Strictly, when we do a redirect, we should not be encoding the URL (so we don't).
