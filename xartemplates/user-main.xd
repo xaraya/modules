@@ -190,4 +190,20 @@
         <div style="clear: both;"></div>
     </div>
 
+    <h2><xar:mlstring>thickbox - the classic utility providing modal image display</xar:mlstring></h2>
+    <xar:template file="thickbox" module="jquery" />
+
+    <p><a href="modules/jquery/xarimages/gallery/image1.jpg" title="#xarML('Demo 1 - single image')#" class="thickbox"><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg" alt="Single Image" /></a></p>
+
+    <p>
+        <a href="modules/jquery/xarimages/gallery/image1.jpg" title="#xarML('Demo 2 - multiple images')#" class="thickbox" rel="gallery-thickbox-2"><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg" alt="Image 1" /></a>
+        <a href="modules/jquery/xarimages/gallery/image2.jpg" title="#xarML('Demo 2 - multiple images')#" class="thickbox" rel="gallery-thickbox-2"><img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg" alt="Image 2" /></a>
+        <a href="modules/jquery/xarimages/gallery/image3.jpg" title="#xarML('Demo 2 - multiple images')#" class="thickbox" rel="gallery-thickbox-2"><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg" alt="Image 3" /></a>
+    </p>
+
+    <p>
+        <a href="modules/jquery/xarhtml/thickbox-ajax.html?placeValuesBeforeTB_=savedValues&amp;TB_iframe=true&amp;height=300&amp;width=400&amp;modal=true" title="Model iFrame (complete web page)" class="thickbox">
+            <xar:mlstring>Open iFrame Modal</xar:mlstring>
+        </a>
+    </p>
 </div>

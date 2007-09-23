@@ -1,0 +1,26 @@
+<xar:comment>
+    Initialise the thickbox tool.
+    See http://jquery.com/demo/thickbox/ for details of this plugin
+</xar:comment>
+
+<xar:comment>
+    Make sure jQuery is going to be loaded.
+</xar:comment>
+
+<xar:template file="jquery" module="jquery" />
+
+<xar:comment>
+    Required stylesheet.
+</xar:comment>
+<xar:style file='thickbox' scope="module" module="jquery" />
+
+<xar:comment>Path to the loading animation image - template over-ridable</xar:comment>
+
+<xar:set name="tb_pathToImage">#xarTplGetImage('loadingAnimation.gif','jquery')#</xar:set>
+<xar:base-include-javascript type="code" code="var tb_pathToImage = '$tb_pathToImage';" />
+
+<xar:comment>
+    Load the main javascript class.
+</xar:comment>
+
+<xar:base-include-javascript filename="thickbox-compressed.js" module="jquery" />
