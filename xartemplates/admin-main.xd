@@ -9,12 +9,12 @@
     <xar:template file="admin-menu" />
 
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <h3>What is it?</h3>
+    <h3><xar:mlstring>What is it?</xar:mlstring></h3>
     <p>
-        <xar:mlstring>Help Desk is system which enables system admin support to its users though a web based interface.  It allows admin to track the progress of tickets.</xar:mlstring>
+        <xar:mlstring>Help Desk is system which enables system admin support to its users though a web based interface. It allows admin to track the progress of tickets.</xar:mlstring>
     </p>
 
-    <h3>How to use it?</h3>
+    <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
     <p>
         <xar:mlstring>From the menu, you have three choices.  "Overview", "View Items", and "Modify Configuration".</xar:mlstring>
         <ul>
@@ -23,35 +23,35 @@
             <li><xar:mlstring>Modify Configuration -- Allows you to set certain configuration routines.</xar:mlstring></li>
         </ul>
     </p>
-    <h3>Important Setup Instructions!</h3>
-    <p>
+    <h3><xar:mlstring>Important Setup Instructions!</xar:mlstring></h3>
+    <p><xar:mlstring>
         There are currently two ways to setup the Help Desk module. The easy way which sets just about everything
         up for you using a simple wizard. Then there is the hard way, which is not recommend unless you know
-        what you are doing.
+        what you are doing.</xar:mlstring>
     </p>
-    <h4>Easy Setup</h4>
+    <h4><xar:mlstring>Easy Setup</xar:mlstring></h4>
     <p>
-        <a href="&xar-modurl-helpdesk-admin-setup_security;">The Security Setup Wizard</a>
+        <a href="&xar-modurl-helpdesk-admin-setup_security;"><xar:mlstring>The Security Setup Wizard</xar:mlstring></a>
     </p>
-    <h4>Hard Setup</h4>
+    <h4><xar:mlstring>Hard Setup</xar:mlstring></h4>
     <p>
-        Helpdesk Techs have chagned since using the security module.  Techs need to be set as a default group in the security module for helpdesk tickets with Overview thru Write privileges.
+        <xar:mlstring>Helpdesk Techs have changed since using the security module.  Techs need to be set as a default group in the security module for helpdesk tickets with Overview thru Write privileges.</xar:mlstring>
     </p>
 
-    <p>Once you create a "Techs" group in the roles module, goto AdminMenu -> Security -> Modify Hook Settings</p>
+    <p><xar:mlstring>Once you create a "Techs" group in the roles module, goto AdminMenu -> Security -> Modify Hook Settings</xar:mlstring></p>
 
-    <p>Select helpdesk - 1 and click the reload button.  More options should then appear.</p>
+    <p><xar:mlstring>Select helpdesk - 1 and click the reload button.  More options should then appear.</xar:mlstring></p>
 
-    <p>The security module is a Unix style privilege system for xaraya based items, except that security has different levels and more of them.  In security you have three types of "groups", User(just you), Groups(roles based group), and World(everyone).</p>
+    <p><xar:mlstring>The security module is a Unix style privilege system for xaraya based items, except that security has different levels and more of them.  In security you have three types of "groups", User(just you), Groups(roles based group), and World(everyone).</xar:mlstring></p>
 
-    <p>When an item is created,  every group the user is in a set of privileges is created unless one of the groups is in the modules exclude list. It is recommended that you add the "Users" group to this list.</p>
+    <p><xar:mlstring>When an item is created,  every group the user is in a set of privileges is created unless one of the groups is in the modules exclude list. It is recommended that you add the "Users" group to this list.</xar:mlstring></p>
 
-    <p>It is recommended to have the "Default Group Level" set to 60 for the helpdesk module, but you may decide to use a different value once you get the hang how that works.</p>
+    <p><xar:mlstring>It is recommended to have the "Default Group Level" set to 60 for the helpdesk module, but you may decide to use a different value once you get the hang how that works.</xar:mlstring></p>
 
-    <p>In the Security field set give the "User" column Overview thru Manage access by checking the check boxes.  Then Add your helpdesk techs group and give them Overview thru Write. Then give World nothing at all.  This will make it so that User can and techs can see and write to the ticket and no one else can see it.</p>
+    <p><xar:mlstring>In the Security field set give the "User" column Overview thru Manage access by checking the check boxes.  Then Add your helpdesk techs group and give them Overview thru Write. Then give World nothing at all.  This will make it so that User can and techs can see and write to the ticket and no one else can see it.</xar:mlstring></p>
 
-    <p>The Security module does make the Help Desk a little more complicated to get setup at first, but it expands the capabilities of the helpdesk.  It allows you to define who should be able to see tickets once they are created w/o modifing code.  <xar:comment>One thing you can do is have different companies(a roles group), having your users in the various companies. Then you set it so that the group can modify/comment on the ticket which maybe useful in some cases.</xar:comment>  Help Desk now has a very flexible security system.</p>
-
+    <p><xar:mlstring>The Security module does make the Help Desk a little more complicated to get setup at first, but it expands the capabilities of the helpdesk.  It allows you to define who should be able to see tickets once they are created w/o modifing code. Help Desk now has a very flexible security system.</xar:mlstring></p>
+       <xar:comment>One thing you can do is have different companies(a roles group), having your users in the various companies. Then you set it so that the group can modify/comment on the ticket which maybe useful in some cases.</xar:comment>
     <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
     <p><xar:mlstring>There are no included blocks</xar:mlstring></p>
 
