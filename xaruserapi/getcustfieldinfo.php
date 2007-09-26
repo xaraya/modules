@@ -11,10 +11,9 @@
  * @author Garrett Hunter <garrett@blacktower.com>
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
-
 /**
  * Retrieves all custom field information from database
- * takes multiple flags which retrun varying amounts of data
+ * takes multiple flags which return varying amounts of data
  *
  * _AB_CUST_UDCOLNAMESONLY
  * _AB_CUST_ALLFIELDINFO

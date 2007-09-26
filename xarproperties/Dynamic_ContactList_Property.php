@@ -177,6 +177,9 @@ class Dynamic_ContactList_Property extends Dynamic_Select_Property
             $item['address_2']='';
             $item['zip']='';
             $item['city']='';
+            $item['title']='';
+            $item['lname']='';
+            $item['fname']='';
         }
         $displayCompany = '';
         if(!empty($item['company'])) {
