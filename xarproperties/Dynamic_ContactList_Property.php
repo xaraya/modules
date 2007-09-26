@@ -153,7 +153,12 @@ class Dynamic_ContactList_Property extends Dynamic_Select_Property
 
         return xarTplProperty('addressbook', 'contactlist', 'showinput', $data);
     }
-
+    /**
+     * Generate the data for the template
+     * @param array args
+     * @return array with fname, lname, title, name (=displayname), company and all address info
+     * @todo MichelV: do we want to return more?
+     */
     function showOutput($args = array())
     {
         extract($args);
@@ -204,6 +209,9 @@ class Dynamic_ContactList_Property extends Dynamic_Select_Property
         $data['option'] = array('id' => $this->value,
                                 'name' => $result,
                                 'company' => $displayCompany,
+                                'title' => xarVarPrepForDisplay($item['title']),
+                                'lname' => xarVarPrepForDisplay($item['lname']),
+                                'fname' => xarVarPrepForDisplay($item['fname']),
                                 'address_1' => xarVarPrepForDisplay($item['address_1']),
                                 'address_2' => xarVarPrepForDisplay($item['address_2']),
                                 'zip' => xarVarPrepForDisplay($item['zip']),
