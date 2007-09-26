@@ -1,3 +1,7 @@
+Version 1.0.3 Sept 2007 - 2skies.com
+- minor upgrade to remove block instances and block security checks
+- now handled from xarigami core
+
 Version 1.0.2 Jul 2007
 - Added formcaptcha support
 - various bugs

@@ -49,8 +49,6 @@ function sitecontact_sitecontactblock_info()
  */
 function sitecontact_sitecontactblock_display($blockinfo)
 {
-    // Security check
-    if (!xarSecurityCheck('ReadBlock', 0, 'Block', 'sitecontact:sitecontact:' . $blockinfo['name'])) {return;}
 
     // Get variables from content block
     if (is_string($blockinfo['content'])) {
