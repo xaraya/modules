@@ -1,5 +1,24 @@
 <?php
-
+/**
+ * Categories module
+ *
+ * @package modules
+ * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Categories Module
+ * @link http://xaraya.com/index.php/release/147.html
+ * @author Categories module development team
+ */
+/**
+ * Delete a category
+ *
+ * This function also shows a count on the number of child categories of the current category
+ * @param id cid
+ * @param str confirm OPTIONAL
+ * @return bool
+ */
 function categories_admin_deletecat()
 {
     if (!xarVarFetch('cid','int:1:',$cid)) return;
