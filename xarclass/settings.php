@@ -92,7 +92,7 @@ class SecuritySettings
     {
         $this->exclude_groups = $array_params['exclude_groups'];
 
-        if( !is_null($array_params['owner']) )
+        if( isset($array_params['owner']) )
         {
             $this->owner_table = @$array_params['owner']['table'];
             $this->owner_column = @$array_params['owner']['column'];
