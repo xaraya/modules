@@ -175,6 +175,15 @@ function ievents_userapi_params($args)
         //var_dump($localeData);
         //var_dump($params['locale']['days']['long']);
         //var_dump($params['locale']['months']['long']);
+
+        // The columns used for the fulltext index.
+        // It is a requirement for searches to include all the fulltext columns in order for the index to work.
+        $params['fulltext_columns'] = array('summary', 'description', 'location_address', 'contact_details');
+
+        // Determine whether fulltext search is supported.
+        // The mode can be 'TRUE', 'FALSE' or 'AUTO'.
+        $fulltext_mode = xarModGetVar($module, 'fulltext_search');
+        $params['fulltext_mode'] = (empty($fulltext_mode) ? false : true);
     }
 
     if (!empty($name)) {
