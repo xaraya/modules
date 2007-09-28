@@ -53,6 +53,9 @@ function simplepie_userapi_newfeed($args)
     if (method_exists($pie, 'enable_xmldump')) $pie->enable_xmldump(false);
     if (method_exists($pie, 'enable_xml_dump')) $pie->enable_xml_dump(false);
 
+    // Do not try to change the order of the feed.
+    if (method_exists($pie, 'enable_order_by_date')) $pie->enable_order_by_date(false);
+
     return $pie;
 }
 
