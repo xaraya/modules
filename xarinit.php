@@ -112,7 +112,7 @@ function ievents_init()
         'contact_email' => array('type' => 'varchar', 'size' => 200),
         'contact_phone' => array('type' => 'varchar', 'size' => 60),
         'contact_details' => array('type' => 'text'),
-        'cost' => array('type' => 'text'),
+        'cost' => array('type' => 'varchar', 'size' => 255),
     );
 
     // Create the calendar table.
@@ -158,9 +158,16 @@ function ievents_init()
     // FULLTEXT indexes for MySQL only, since xarDBCreateIndex() does not support full text indexes
     if (preg_match('/^mysql/', $dbconn->databaseType)) {
         $fulltext_columns = array('summary', 'description', 'location_address', 'contact_details');
-        foreach($fulltext_columns as $fulltext_column) {
-            $query = "ALTER TABLE ${eventstable} ADD FULLTEXT (${fulltext_column})";
-            $result =& $dbconn->Execute($query);
+        $query = "ALTER TABLE ${eventstable} ADD FULLTEXT (" . implode(', ', $fulltext_columns) . ")";
+
+        // Try creating the fulltext index, but don't affect the overall result if it failed.
+        $fulltext_result = $dbconn->Execute($query);
+
+        // Store the result, so we know if we can do fulltext searches.
+        if (!empty($fulltext_result)) {
+            xarModSetVar($module, 'fulltext_search', '1');
+        } else {
+            xarModSetVar($module, 'fulltext_search', '0');
         }
     }
 
@@ -285,11 +292,11 @@ function ievents_init()
     // prefixes, the data files should be modified by hand and imported.
     $objectid = xarModAPIFunc(
         'dynamicdata', 'util', 'import',
-        array('file' => 'modules/ievents/xardata/ievents_calendars-def.xml', 'keepitemid' => false)
+        array('file' => 'modules/' .$module. '/xardata/' .$module. '_calendars-def.xml', 'keepitemid' => false)
     );
     $objectid = xarModAPIFunc(
         'dynamicdata', 'util', 'import',
-        array('file' => 'modules/ievents/xardata/ievents_events-def.xml', 'keepitemid' => false)
+        array('file' => 'modules/' .$module. '/xardata/' .$module. '_events-def.xml', 'keepitemid' => false)
     );
 
     // Initialisation successful.
