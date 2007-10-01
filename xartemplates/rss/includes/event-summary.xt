@@ -16,7 +16,7 @@
 <item>
     <title>#xarVarPrepForDisplay($event.title)#</title>
     <link>#xarServerGetCurrentURL(array('eid'=&gt;$event.eid,'format'=&gt;null))#</link>
-    <pubDate>#xarLocaleFormatUTCDate('%a, %d %b %Y %H:%M:%S %z',$event.startdate)#</pubDate>
+    <pubDate>#xarLocaleFormatDate('%a, %d %b %Y %H:%M:%S %z',$event.startdate)#</pubDate>
     <description>#xarVarPrepForDisplay(xarModAPIfunc('ievents','user','transform', array('text'=&gt;$event.summary,'maxwords'=&gt;1000)))#</description>
     <guid isPermaLink="true">#xarModURL('ievents','user','view',array('eid'=&gt;$event.eid))#</guid>
     <xar:loop name="$event.catids">
