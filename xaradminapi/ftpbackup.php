@@ -54,7 +54,9 @@ function sitetools_adminapi_ftpbackup($args)
         return false;
     }
     // Go to the path we want
-    ftp_chdir($conn,$ftpdir);
+    if(!empty($ftpdir)) {
+        ftp_chdir($conn,$ftpdir);
+    }
 
     if(!ftp_put($conn,$ftpdir.$bkname,$bkfilename,FTP_ASCII)) {
         xarLogMessage('SITETOOLS: FTP_put failed, backup not transferred');
