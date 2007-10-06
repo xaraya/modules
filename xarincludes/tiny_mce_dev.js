@@ -1,5 +1,5 @@
 /**
- * $Id: tiny_mce_dev.js 162 2007-01-03 16:16:52Z spocke $
+ * $Id: tiny_mce_dev.js 229 2007-02-27 13:00:23Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2007, Moxiecode Systems AB, All rights reserved.
@@ -37,5 +37,4 @@ include('classes/TinyMCE_Event.class.js');
 include('classes/TinyMCE_ForceParagraphs.class.js');
 include('classes/TinyMCE_Layer.class.js');
 include('classes/TinyMCE_Menu.class.js');
-include('classes/TinyMCE_Compatibility.class.js');
 include('classes/TinyMCE_Debug.class.js');

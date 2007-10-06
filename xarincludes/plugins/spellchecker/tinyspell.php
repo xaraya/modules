@@ -11,7 +11,7 @@
 	// Ignore the Notice errors for now.
 	error_reporting(E_ALL ^ E_NOTICE);
 
-	require_once("config.php");
+	require_once("./config.php");
 
 	$id = sanitize($_POST['id'], "loose");
 
@@ -33,14 +33,14 @@
 
 	// Get input parameters.
 
-	$check = urldecode($_REQUEST['check']);
-	$cmd = sanitize($_REQUEST['cmd']);
-	$lang = sanitize($_REQUEST['lang'], "strict");
-	$mode = sanitize($_REQUEST['mode'], "strict");
-	$spelling = sanitize($_REQUEST['spelling'], "strict");
-	$jargon = sanitize($_REQUEST['jargon'], "strict");
-	$encoding = sanitize($_REQUEST['encoding'], "strict");
-	$sg = sanitize($_REQUEST['sg'], "bool");
+	$check = urldecode(getRequestParam('check'));
+	$cmd = sanitize(getRequestParam('cmd'));
+	$lang = sanitize(getRequestParam('lang'), "strict");
+	$mode = sanitize(getRequestParam('mode'), "strict");
+	$spelling = sanitize(getRequestParam('spelling'), "strict");
+	$jargon = sanitize(getRequestParam('jargon'), "strict");
+	$encoding = sanitize(getRequestParam('encoding'), "strict");
+	$sg = sanitize(getRequestParam('sg'), "bool");
 	$words = array();
 
 	$validRequest = true;
@@ -68,10 +68,12 @@
 			case "strict":
 				$str = preg_replace("/[^a-zA-Z0-9_\-]/i", "", $str);
 			break;
+
 			case "loose":
 				$str = preg_replace("/</i", "&gt;", $str);
 				$str = preg_replace("/>/i", "&lt;", $str);
 			break;
+
 			case "bool":
 				if ($str == "true" || $str == true)
 					$str = true;
@@ -81,6 +83,28 @@
 		}
 
 		return $str;
+	}
+
+	function getRequestParam($name, $default_value = false) {
+		if (!isset($_REQUEST[$name]))
+			return $default_value;
+
+		if (!isset($_GLOBALS['magic_quotes_gpc']))
+			$_GLOBALS['magic_quotes_gpc'] = ini_get("magic_quotes_gpc");
+
+		if (isset($_GLOBALS['magic_quotes_gpc'])) {
+			if (is_array($_REQUEST[$name])) {
+				$newarray = array();
+
+				foreach($_REQUEST[$name] as $name => $value)
+					$newarray[stripslashes($name)] = stripslashes($value);
+
+				return $newarray;
+			}
+			return stripslashes($_REQUEST[$name]);
+		}
+
+		return $_REQUEST[$name];
 	}
 
 	$result = array();
@@ -124,16 +148,19 @@
 
 			echo $body;
 		break;
-		case "xmlerror";
+
+		case "xmlerror":
 			header('Content-type: text/xml; charset=utf-8');
 			$body  = '<?xml version="1.0" encoding="utf-8" ?>';
 			$body .= "\n";
 			$body .= '<res id="' . $id . '" cmd="'. $cmd .'" error="true" msg="'. implode(" ", $tinyspell->errorMsg) .'" />';
 			echo $body;
 		break;
+
 		case "html":
 			var_dump($result);
 		break;
+
 		case "htmlerror":
 			echo "Error";
 		break;

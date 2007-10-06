@@ -14,7 +14,7 @@
 
 $modversion['name'] = 'tinymce';
 $modversion['id'] = '63';
-$modversion['version'] = '1.1.4';
+$modversion['version'] = '1.1.5';
 $modversion['displayname']    = xarML('XarTinyMCE');
 $modversion['description'] = 'Integration of TinyMCE, a fast and configurable wysiwyg editor for Xaraya';
 $modversion['credits'] = 'xardocs/credits.txt';

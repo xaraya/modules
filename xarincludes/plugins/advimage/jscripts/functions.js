@@ -239,8 +239,12 @@ function setAttrib(elm, attrib, value) {
 			attrib = "className";
 
 		eval('elm.' + attrib + "=value;");
-	} else
+	} else {
+		if (attrib == 'class')
+			elm.className = '';
+
 		elm.removeAttribute(attrib);
+	}
 }
 
 function makeAttrib(attrib, value) {
@@ -280,16 +284,7 @@ function insertAction() {
 	}
 
 	if (tinyMCE.getParam("accessibility_warnings")) {
-		if (formObj.alt.value == "") {
-			var answer = confirm(tinyMCE.getLang('lang_advimage_missing_alt', '', true));
-			if (answer == true) {
-				formObj.alt.value = " ";
-			}
-		} else {
-			var answer = true;
-		}
-
-		if (!answer)
+		if (formObj.alt.value == "" && !confirm(tinyMCE.getLang('lang_advimage_missing_alt', '', true)))
 			return;
 	}
 
@@ -483,18 +478,18 @@ function showPreviewImage(src, start) {
 	if (src == "")
 		elm.innerHTML = "";
 	else
-		elm.innerHTML = '<img id="previewImg" src="' + src + '" border="0" onload="updateImageData();" onerror="resetImageData();" />'
+		elm.innerHTML = '<img id="previewImg" src="' + src + '" border="0" onload="updateImageData(' + start + ');" onerror="resetImageData();" />'
 }
 
-function updateImageData() {
+function updateImageData(start) {
 	var formObj = document.forms[0];
 
 	preloadImg = document.getElementById('previewImg');
 
-	if (formObj.width.value == "")
+	if (!start && formObj.width.value == "")
 		formObj.width.value = preloadImg.width;
 
-	if (formObj.height.value == "")
+	if (!start && formObj.height.value == "")
 		formObj.height.value = preloadImg.height;
 
 	updateStyle();
