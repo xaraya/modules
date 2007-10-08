@@ -210,9 +210,11 @@ function articles_admin_new($args)
 
     if (!empty($ptid)) {
         $template = $pubtypes[$ptid]['name'];
+        xarTplSetPageTitle(xarML('New #(1)', $pubtypes[$ptid]['descr']));
     } else {
 // TODO: allow templates per category ?
        $template = null;
+       xarTplSetPageTitle(xarML('New'));
     }
 
     return xarTplModule('articles', 'admin', 'new', $data, $template);

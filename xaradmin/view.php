@@ -331,9 +331,11 @@ function articles_admin_view($args)
 
     if (!empty($ptid)) {
         $template = $pubtypes[$ptid]['name'];
+        xarTplSetPageTitle(xarML('View #(1)', $pubtypes[$ptid]['descr']));
     } else {
 // TODO: allow templates per category ?
        $template = null;
+       xarTplSetPageTitle(xarML('View'));
     }
 
     return xarTplModule('articles', 'admin', 'view', $data, $template);

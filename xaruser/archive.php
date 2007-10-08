@@ -353,7 +353,7 @@ function articles_user_archive($args)
     xarVarSetCached('Blocks.categories','itemtype',$ptid);
     if (!empty($ptid) && !empty($pubtypes[$ptid]['descr'])) {
         xarVarSetCached('Blocks.categories','title',$pubtypes[$ptid]['descr']);
-        xarTplSetPageTitle(xarML('Archive'), $pubtypes[$ptid]['descr']);
+        xarTplSetPageTitle(xarML('Archive of #(1)', $pubtypes[$ptid]['descr']));
     } else {
         xarTplSetPageTitle(xarML('Archive'));
     }
