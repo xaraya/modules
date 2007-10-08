@@ -43,8 +43,8 @@ To INSTALL and get started:
 4. Clear your xaraya and also your browser cache before using.
 
 5. For filebrowsing with FileBrowser or image management with the ibrowser and imanager plugin,
-   copy the tinymceconfig.inc file in tinymce/xartemplates/includes/tinymceconfig.inc
-   to your installation var/tinymce/tinymceconfig.inc (create the directory if it doesn't exist)
+   copy the tinymceconfig.inc.php file in tinymce/xartemplates/includes/tinymceconfig.inc.php
+   to your installation var/tinymce/tinymceconfig.inc.php (create the directory if it doesn't exist)
    Make sure you update the file paths and any other relevant variables.
 
 Please read the Overview Documentation in the TinyMCE administration area for more detail.
@@ -62,8 +62,8 @@ When you are ready to upgrade your tinymce files:
    replace with the upgraded module and files. There have been major
    changes in the file directory tree so please ensure you remove the old module.
    
-2. Copy the tinymceconfig.inc file in tinymce/xartemplates/includes/tinymceconfig.inc
-   to your installation var/tinymce/tinymceconfig.inc (create the directory if it doesn't exist)
+2. Copy the tinymceconfig.inc.php file in tinymce/xartemplates/includes/tinymceconfig.inc.php
+   to your installation var/tinymce/tinymceconfig.inc.php (create the directory if it doesn't exist)
    Make sure you update the file paths.
 
 3. Go to your Administration -> Modules ->View All
@@ -79,12 +79,12 @@ When you are ready to upgrade your tinymce files:
 
 MAJOR CHANGES
 *************
-Version 1.1.0 has unified and futher enhanced configuration file 'tinymceconfig.inc' that replaces
+Version 1.1.0 has unified and futher enhanced configuration file 'tinymceconfig.inc.php' that replaces
 the ibrowserconfig.inc and imanagerconfig.inc files. It is used for the new filebrowser, ibrowser and imanager.
 It should be located in var/tinymce directory instead of the var/ibrowser directory.
 Please make sure you update this file. Also check new additional blockformats for the drop down selection format list.
 
-Version 1.0.4 has unified configuration file 'tinymceconfig.inc' that replaces
+Version 1.0.4 has unified configuration file 'tinymceconfig.inc.php' that replaces
 the ibrowserconfig.inc and imanagerconfig.inc files. It should be located in var/tinymce directory
 instead of the var/ibrowser directory. Please make sure you update this file.
 
@@ -105,8 +105,8 @@ IMAGE BROWSER (IBROWSER), IMAGE MANAGER (IMANAGER), FILEBROWSER and  SECURITY
 Filebrowser now comes as a general file and image browser integrated into xartinymce.
 The updated xartinymce ibrowser and image manager plugin can be downloaded at http://xaraya.com/~jojodee.
 
-Please make sure you copy the NEW tinymceconfig.inc file in
-modules/tinymce/xartemplates/includes/tinymceconfig.inc to your
+Please make sure you copy the NEW tinymceconfig.inc.php file in
+modules/tinymce/xartemplates/includes/tinymceconfig.inc.php to your
 var/tinymce/ directory and update the configuration settings there.
 
 THERE IS A NEW FILEBROWSER/IBROWSER/IMANAGER CONFIGURATION FILE - Please update your old one.

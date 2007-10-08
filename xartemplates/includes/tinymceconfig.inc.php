@@ -24,7 +24,7 @@
     *
     * INSTRUCTIONS: The main configuration file for the xarTinyMCE ibrowser, imanager and filebrowser
     *
-    * 1. Copy this file to var/tinymce/tinymceconfig.inc
+    * 1. Copy this file to var/tinymce/tinymceconfig.inc.php
     * 2. Please make sure you check all configurations settings
     * 3. Update the configurations especially:
     *     - $cfg['thumbs'] - set your sizes for image uploads and uncomment where necessary
