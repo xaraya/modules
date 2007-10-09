@@ -50,12 +50,17 @@ function ebulletin_userapi_getall($args)
         , xar_startday
         , xar_endday
         , xar_theme
+        , xar_scheduler
         FROM $pubtable\n";
     $bindvars = array();
     if (isset($public)) {
         $query .= "WHERE xar_public = ?\n";
         $bindvars[] = ($public) ? 1 : 0;
-    }
+    } elseif (isset($scheduler)) {
+        $query .= "WHERE xar_scheduler>= ?\n";
+        $bindvars[] = ($scheduler) ? $scheduler : 999;
+	}
+	    
     $query .= "ORDER BY xar_$order $sort\n";
 
     // execute query
@@ -69,7 +74,7 @@ function ebulletin_userapi_getall($args)
         // get params
         list(
             $id, $template, $name, $description, $public, $from, $fromname, $replyto,
-            $replytoname, $subject, $html, $startday, $endday, $theme
+            $replytoname, $subject, $html, $startday, $endday, $theme, $scheduler
         ) = $result->fields;
 
         // security check
@@ -91,6 +96,7 @@ function ebulletin_userapi_getall($args)
                 'startday'      => $startday,
                 'endday'        => $endday,
                 'theme'         => $theme,
+                'scheduler'     => $scheduler,
             );
 
             // add to publications array

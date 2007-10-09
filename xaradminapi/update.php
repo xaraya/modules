@@ -23,6 +23,7 @@
  * @param  $args['subject'] the subject of the item to be created
  * @param  $args['body'] the body of the item to be created
  * @param  $args['range'] the range of the item to be created
+ * @param  $args['scheduler'] scheduler options the item to be created
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function ebulletin_adminapi_update($args)
@@ -58,6 +59,9 @@ function ebulletin_adminapi_update($args)
     }
     if (isset($defaulttheme) && !is_string($defaulttheme)) {
         $invalid[] = 'defaulttheme';
+    }
+    if (!isset($scheduler) || !is_numeric($scheduler)) {
+        $invalid[] = 'scheduler';
     }
 
     // throw error if bad data
@@ -102,11 +106,12 @@ function ebulletin_adminapi_update($args)
             xar_html        = ?,
             xar_startday    = ?,
             xar_endday      = ?,
-            xar_theme       = ?
+            xar_theme       = ?,
+            xar_scheduler   = ?
         WHERE xar_id = ?";
     $bindvars = array(
         $template, $name, $description, $public, $from, $fromname, $replyto, $replytoname,
-        $subject, $html, $startday, $endday, $defaulttheme, $id
+        $subject, $html, $startday, $endday, $defaulttheme, $scheduler, $id
     );
     $result = $dbconn->Execute($query, $bindvars);
 

@@ -52,6 +52,7 @@ function ebulletin_userapi_get($args)
         , xar_startday
         , xar_endday
         , xar_theme
+        , xar_scheduler
         FROM $pubstable WHERE xar_id = ?";
     $result = $dbconn->Execute($query, array($id));
     if (!$result) return;
@@ -67,7 +68,7 @@ function ebulletin_userapi_get($args)
     // retrieve params for this publication
     list(
         $id, $template, $name, $description, $public, $from, $fromname, $replyto, $replytoname,
-        $subject, $html, $startday, $endday, $theme
+        $subject, $html, $startday, $endday, $theme, $scheduler
     ) = $result->fields;
 
     $result->Close();
@@ -91,6 +92,7 @@ function ebulletin_userapi_get($args)
         'startday'      => $startday,
         'endday'        => $endday,
         'theme'         => $theme,
+        'scheduler'     => $scheduler,
     );
 
     // success

@@ -7,7 +7,7 @@
     <form method="post" action="&xar-modurl-ebulletin-admin-update;">
 
         <fieldset>
-            <legend><xar:mlstring>Display Options</xar:mlstring></legend>
+            <legend><xar:mlstring>General Options</xar:mlstring></legend>
 
             <div class="xar-form-input-wrapper">
                 <label for="name"  class="xar-form-label" title="#xarML('Name')#">
@@ -39,6 +39,46 @@
                     <input type="checkbox" name="public" id="public" value="1" />
                 </xar:if>
             </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="scheduler"  class="xar-form-label" title="#xarML('Scheduler options')#">
+			        <xar:mlstring>Schedule automatic execution:</xar:mlstring>
+				</label>
+				<xar:if condition="xarModIsAvailable('scheduler')">
+					<xar:if condition="$scheduler eq 0">
+						<input type="radio" name="scheduler" id="sch-none" value="0" checked="checked" />
+					<xar:else />
+	    				<input type="radio" name="scheduler" id="sch-none" value="0" checked="checked" />
+					</xar:if>
+					<label for="sch-none"  class="xar-form-label" title="#xarML('None')#">
+					    <xar:mlstring>None</xar:mlstring>
+					</label>
+					<xar:if condition="$scheduler eq 1">
+						<input type="radio" name="scheduler" id="sch-issue" checked="checked" value="1" />
+					<xar:else />
+						<input type="radio" name="scheduler" id="sch-issue" value="1" />
+					</xar:if>
+	                <label for="sch-issue"  class="xar-form-label" title="#xarML('Issue only')#">
+				        <xar:mlstring>Issue</xar:mlstring>
+					</label>
+					<xar:if condition="$scheduler eq 2">
+						<input type="radio" name="scheduler" id="sch-publish" checked="checked" value="2" />
+					<xar:else />
+						<input type="radio" name="scheduler" id="sch-publish" value="2" />
+					</xar:if>
+					<label for="sch-publish"  class="xar-form-label" title="#xarML('Publish only')#">
+					    <xar:mlstring>Publish</xar:mlstring>
+					</label>
+					<xar:if condition="$scheduler eq 3">
+						<input type="radio" name="scheduler" id="sch-isspub" checked="checked" value="3" />
+					<xar:else />
+						<input type="radio" name="scheduler" id="sch-isspub" value="3" />
+					</xar:if>
+					<label for="sch-isspub"  class="xar-form-label" title="#xarML('Issue and publish')#">
+					    <xar:mlstring>Issue and publish</xar:mlstring>
+					</label>
+				</div>
+			</xar:if>
 
         </fieldset>
         <fieldset>

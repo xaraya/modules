@@ -37,6 +37,7 @@ function ebulletin_admin_modify($args)
     if (!xarVarFetch('startday', 'int:1', $startday, $startday, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('endday', 'int:1', $endday, $endday, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('defaulttheme', 'str:1', $defaulttheme, $defaulttheme, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('scheduler', 'int:1', $scheduler, $scheduler, XARVAR_NOT_REQUIRED)) return;
 
     // make sure we have an ID
     if (!empty($objectid)) $id = $objectid;
@@ -62,6 +63,7 @@ function ebulletin_admin_modify($args)
     if (!isset($startday))     $startday = $pub['startday'];
     if (!isset($endday))       $endday = $pub['endday'];
     if (!isset($defaulttheme)) $defaulttheme = $pub['theme'];
+    if (!isset($scheduler))    $scheduler= $pub['scheduler'];
 
     // get other vars
     $authid = xarSecGenAuthKey();
@@ -88,6 +90,7 @@ function ebulletin_admin_modify($args)
     $data['startday']     = $startday;
     $data['endday']       = $endday;
     $data['defaulttheme'] = $defaulttheme;
+    $data['scheduler']    = $scheduler;
 
     // set other vars
     $data['authid']    = $authid;

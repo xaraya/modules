@@ -79,6 +79,16 @@
         </li>
     </ol>
 
+    <h3><xar:mlstring>Scheduler support</xar:mlstring></h3>
+	<p><xar:mlstring>You can schedule the automatic creation of new issues and their publication by installing the scheduler module.</xar:mlstring></p>
+	<p><xar:mlstring>When the scheduler module is installed, you can configure each publication to create and publish new issues in the publication options page.</xar:mlstring>
+	</p>
+	<p><xar:mlstring>Once the appropriate option is selected, you need to schedule the execution of the appropriate function in the scheduler module config page. Three scheduler functions are supplied:</xar:mlstring>
+	<ul><li><xar:mlstring>createissues: this function creates new issues for each publication that is enabled to be automatically published</xar:mlstring></li>
+	<li><xar:mlstring>publishissues: this function publishes all unpublished issues of each publication that is enabled to be automatically published</xar:mlstring></li>
+	<li><xar:mlstring>createandpublishissues: this function creates new issues and publishes them for each publication that is enabled to be automatically published</xar:mlstring></li>
+	</ul>
+
     <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
     <ul>
         <li><xar:mlstring><code>ebulletin/subscription</code> - Allow users to subscribe or unsubscribe from a block instead of going to eBulletin's main page.</xar:mlstring></li>

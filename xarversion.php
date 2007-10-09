@@ -13,7 +13,7 @@
 */
 $modversion['name']           = 'eBulletin';
 $modversion['id']             = '557';
-$modversion['version']        = '1.2.0';
+$modversion['version']        = '1.2.1';
 $modversion['displayname']    = xarML('eBulletin');
 $modversion['description']    = 'Electronic bulletins based on site content';
 $modversion['credits']        = 'xardocs/credits.txt';

@@ -6,7 +6,7 @@
 
     <form method="post" action="&xar-modurl-ebulletin-admin-create;">
         <fieldset>
-            <legend><xar:mlstring>Display Options</xar:mlstring></legend>
+            <legend><xar:mlstring>General Options</xar:mlstring></legend>
 
             <div class="xar-form-input-wrapper">
                 <label for="name"  class="xar-form-label" title="#xarML('Name')#">
@@ -37,6 +37,28 @@
                 <xar:else />
                     <input type="checkbox" name="public" id="public" value="1" />
                 </xar:if>
+            </div>
+
+            <div class="xar-form-input-wrapper">
+                <label for="scheduler"  class="xar-form-label" title="#xarML('Scheduler options')#">
+                    <xar:mlstring>Schedule automatic execution:</xar:mlstring>
+                </label>
+                    <input type="radio" name="scheduler" id="sch-none" value="0" checked="checked" />
+                <label for="sch-none"  class="xar-form-label" title="#xarML('None')#">
+                    <xar:mlstring>None</xar:mlstring>
+                </label>
+                    <input type="radio" name="scheduler" id="sch-issue" value="1" />
+                <label for="sch-issue"  class="xar-form-label" title="#xarML('Issue only')#">
+                    <xar:mlstring>Issue</xar:mlstring>
+                </label>
+                    <input type="radio" name="scheduler" id="sch-publish" value="2" />
+                <label for="sch-publish"  class="xar-form-label" title="#xarML('Publish only')#">
+                    <xar:mlstring>Publish</xar:mlstring>
+                </label>
+                    <input type="radio" name="scheduler" id="sch-isspub" value="3" />
+                <label for="sch-isspub"  class="xar-form-label" title="#xarML('Issue and publish')#">
+                    <xar:mlstring>Issue and publish</xar:mlstring>
+                </label>
             </div>
 
         </fieldset>

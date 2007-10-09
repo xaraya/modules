@@ -33,7 +33,7 @@ function ebulletin_userapi_getallissues($args)
     if (empty($order))     $order = 'date';
     if (empty($sort))      $sort = 'DESC';
     if (empty($pid))       $pid = '';
-    if (empty($published)) $published = null;
+    if (!isset($published)) $published = null;
 
     // validate vars
     $invalid = array();

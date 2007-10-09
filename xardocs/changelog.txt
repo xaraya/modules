@@ -34,3 +34,11 @@ Version 0.9.7 2005-11-21
 
 Version 0.9.5 2005-11-09
     - first release
+
+Version 1.2.1 2007-10-09 (andream - andrea@andreamoro.net)
+    - adding scheduler support for creating issues and publishing issues
+	  Database change: added scheduler column to ebulletin table)
+	  Templates modified: 
+	  admin-modify.xd
+	  admin-new.xd
+

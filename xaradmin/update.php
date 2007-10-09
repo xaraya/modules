@@ -21,13 +21,12 @@
  * @param  $ 'subject' the subject of the publication
  * @param  $ 'body' the body of the publication
  * @param  $ 'range' the range of the publication
+ * @param  $ 'scheduler' scheduler options of the publication
  */
 function ebulletin_admin_update($args)
 {
     // security check
     if (!xarSecConfirmAuthKey()) return;
-
-    extract($args);
 
     // get HTTP vars
     if (!xarVarFetch('id', 'id', $id, $id, XARVAR_NOT_REQUIRED)) return;
@@ -46,6 +45,7 @@ function ebulletin_admin_update($args)
     if (!xarVarFetch('startday', 'int', $startday, $startday, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('endday', 'int', $endday, $endday, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('defaulttheme', 'str:1:', $defaulttheme, $defaulttheme, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('scheduler', 'int:1', $scheduler, $scheduler, XARVAR_NOT_REQUIRED)) return;
 
     // Argument check
     $invalid = array();
@@ -94,6 +94,7 @@ function ebulletin_admin_update($args)
     $data['startday']     = $startday;
     $data['endday']       = $endday;
     $data['defaulttheme'] = $defaulttheme;
+    $data['scheduler']    = $scheduler;
 
     // check if we have any errors
     if (count($invalid) > 0) {

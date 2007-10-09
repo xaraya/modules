@@ -158,8 +158,13 @@ function ebulletin_init()
     xarRegisterMask('DeleteeBulletin', 'All', 'ebulletin', 'Publication', 'All:All', 'ACCESS_DELETE');
     xarRegisterMask('AdmineBulletin',  'All', 'ebulletin', 'Publication', 'All:All', 'ACCESS_ADMIN');
 
+    // add changes for 1.2.1 
+	if (!ebulletin_upgrade('1.2.0')) {
+	    return;
+    }
+
     // success
-    return true;
+	return true;
 }
 
 /**
@@ -229,12 +234,12 @@ function ebulletin_upgrade($oldversion)
         xarModSetVar('ebulletin', 'msglimit', '');
         xarModSetVar('ebulletin', 'msgunit', 'hour');
 
-    case '1.1.0':
-        // changes after 1.1.0 here
-        // LOTS of stuff should go here.......
     case '1.2.0':
-        // changes after 1.2.0 here
-        // TBD
+        // create new column
+        $result = $datadict->ChangeTable(
+            $ebulletintable, 'xar_scheduler I1 DEFAULT 0'
+        );
+        if (!$result) {return;}
     }
     return true;
 }
