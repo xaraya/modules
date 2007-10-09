@@ -10,10 +10,10 @@
  <xar:template type="module" file="admin-menu" />
 
     <h2>
-    <xar:ml>
-    <xar:mlstring>Manage Sitecontact Forms : #(1)</xar:mlstring>
-    <xar:mlvar>#$managetype#</xar:mlvar>
-    </xar:ml>
+        <xar:ml>
+            <xar:mlstring>Manage Sitecontact Forms : #(1)</xar:mlstring>
+            <xar:mlvar>#$managetype#</xar:mlvar>
+        </xar:ml>
     </h2>
 
 <xar:if condition="isset($action) and $action eq 'new'">
@@ -162,10 +162,10 @@
    <fieldset>
     <legend><xar:mlstring>Form User Email Options</xar:mlstring></legend>
         <div class="xar-form-input-wrapper">
-         <label for="optiontext" class="xar-form-label" title="#xarML('Subject and optional email address per line. Form : Subject[semicolon]email[comma]')#">
+            <label for="optiontext" class="xar-form-label" title="#xarML('Subject and optional email address per line. Form : Subject[semicolon]email[comma]')#">
                  <xar:mlstring>Options for subject with optional alternative email address:</xar:mlstring>
-         </label>
-         <textarea name="optiontext" id="optiontext" rows="10" cols="50">#$item.optiontext#</textarea>
+             </label>
+             <textarea name="optiontext" id="optiontext" rows="10" cols="50">#$item.optiontext#</textarea>
         </div>
 
         <div class="xar-form-input-wrapper-after">
@@ -246,7 +246,6 @@
         </div>
     </fieldset>
     </form>
-</div>
 
 <xar:comment> ****** MODIFY SITECONTACT FORM ****** </xar:comment>
 <xar:elseif condition="isset($action) and $action eq 'modify'" />
@@ -257,7 +256,7 @@
     <fieldset>
     <legend><xar:mlstring>Sitecontact Form Defaults</xar:mlstring></legend>
 
-     <div class="xar-form-input-wrapper">
+        <div class="xar-form-input-wrapper">
             <label for="scid" class="xar-form-label" title="#xarML('Form ID.')#">
                     <xar:mlstring>
                         Site Contact Form ID
@@ -408,15 +407,15 @@
    <fieldset>
     <legend><xar:mlstring>Form User Email Options</xar:mlstring></legend>
         <div class="xar-form-input-wrapper">
-         <label for="optiontext" class="xar-form-label" title="#xarML('Subject and optional email address per line. Form : Subject[semicolon]email[comma]')#">
-                 <xar:mlstring>Options for subject with optional alternative email address:</xar:mlstring>
-         </label>
-         <textarea name="optiontext" id="optiontext" rows="10" cols="50">#$item.optiontext#</textarea>
+             <label for="optiontext" class="xar-form-label" title="#xarML('Subject and optional email address per line. Form : Subject[semicolon]email[comma]')#">
+                  <xar:mlstring>Options for subject with optional alternative email address:</xar:mlstring>
+             </label>
+             <textarea name="optiontext" id="optiontext" rows="10" cols="50">#$item.optiontext#</textarea>
         </div>
 
         <div class="xar-form-input-wrapper-after">
             <xar:mlstring>Each line above should be entered with the semicolon and comma: </xar:mlstring>
-           <strong><xar:mlstring>subject;optional-email,</xar:mlstring></strong><br />
+            <strong><xar:mlstring>subject;optional-email,</xar:mlstring></strong><br />
             <xar:mlstring>The optional email and semicolon can be omitted but must have comma to separate each line.</xar:mlstring>
        </div>
 
@@ -464,17 +463,14 @@
         </div>
 
        <div  class="xar-form-input-wrapper-after">
-
-        <xar:mlstring>You can use the following variables in your email:</xar:mlstring>
+           <xar:mlstring>You can use the following variables in your email:</xar:mlstring>
        </div>
        <div  class="xar-form-input-wrapper-after">
-
-        %%useremail%%    &nbsp;&nbsp;<xar:mlstring>User email</xar:mlstring><br />
-         %%username%%     &nbsp;&nbsp;<xar:mlstring>User name</xar:mlstring><br />
-         %%requesttext%%  &nbsp;&nbsp;<xar:mlstring>Subject from drop down list</xar:mlstring><br />
-         %%company%%  &nbsp;&nbsp;<xar:mlstring>Organization</xar:mlstring><br />
-         </div>
-
+           %%useremail%%    &nbsp;&nbsp;<xar:mlstring>User email</xar:mlstring><br />
+            %%username%%     &nbsp;&nbsp;<xar:mlstring>User name</xar:mlstring><br />
+            %%requesttext%%  &nbsp;&nbsp;<xar:mlstring>Subject from drop down list</xar:mlstring><br />
+            %%company%%  &nbsp;&nbsp;<xar:mlstring>Organization</xar:mlstring><br />
+       </div>
     </fieldset>
 
     <fieldset>
@@ -495,7 +491,7 @@
         </div>
     </fieldset>
     </form>
-</div>
+
 
  <xar:comment> ****** DELETE SITECONTACT FORM ****** </xar:comment>
 <xar:elseif condition="isset($action) and $action eq 'delete'" />
@@ -509,8 +505,8 @@
                 <xar:mlstring>Sitecontact Form ID</xar:mlstring>
             </label>
               #$item.scid#
-        </div>
-       <div class="xar-form-input-wrapper">
+         </div>
+         <div class="xar-form-input-wrapper">
             <label for="sctypename" class="xar-form-label" title="#xarML('Name for the form - reference only.')#">
                     <xar:mlstring>
                         Form reference name
@@ -529,22 +525,22 @@
         <p class="xar-form-input-wrapper-after">
             <xar:mlstring>Note: any responses saved for this form will also be deleted.</xar:mlstring>
         </p>
-   </fieldset>
+    </fieldset>
     <fieldset>
         <div class="xar-form-input-wrapper-after">
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <input type="hidden" name="scid" id="scid" value="#$item.scid#" />
-        <xar:set name="$updatebutton"><xar:mlstring>Delete</xar:mlstring></xar:set>
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="scid" id="scid" value="#$item.scid#" />
+            <xar:set name="$updatebutton"><xar:mlstring>Delete</xar:mlstring></xar:set>
                 <input type="submit" value="#$updatebutton#" />
 
-        <span style="float:right;">
-           <a href="#$sctypelink#"><xar:mlstring>Back to SiteContact Forms List</xar:mlstring></a>
-        </span>
+            <span style="float:right;">
+                <a href="#$sctypelink#"><xar:mlstring>Back to SiteContact Forms List</xar:mlstring></a>
+            </span>
         </div>
     </fieldset>
     </form>
 
-</div>
+
 
 
 
@@ -553,9 +549,9 @@
     <xar:template type="module" file="admin-submenu" />
     <h3>
     <xar:ml>
-    <xar:mlstring>Form #(1): #(2)</xar:mlstring>
-    <xar:mlvar>#$item.scid#</xar:mlvar>
-    <xar:mlvar>#$item.sctypename#</xar:mlvar>
+        <xar:mlstring>Form #(1): #(2)</xar:mlstring>
+        <xar:mlvar>#$item.scid#</xar:mlvar>
+        <xar:mlvar>#$item.sctypename#</xar:mlvar>
     </xar:ml>
     </h3>
 <hr>
@@ -630,7 +626,7 @@
                 </label>
                 <input type="text" name="company" id="company" size="40" value="" maxlength="128"  />
             </div>
-           <xar:if condition="$item.allowccs">
+            <xar:if condition="$item.allowccs">
                 <div class="xar-form-input-wrapper">
                     <xar:data-label label="CC Recipients" for="ccrecipients" />
                     <xar:data-input type="textbox" name="ccrecipients" id="ccrecipients" size="150" value=""/>
@@ -709,13 +705,13 @@
                 </xar:if>
             </xar:if>
             <xar:if condition="$item.useantibot AND xarModIsAvailable('formantibot')">
-            <div class="xar-form-input-wrapper-after">
-                <p class="xar-error"><xar:mlstring>Anti-Bot CAPTCHA will be inserted here in your form</xar:mlstring></p>
-            </div>
+                <div class="xar-form-input-wrapper-after">
+                    <p class="xar-error"><xar:mlstring>Anti-Bot CAPTCHA will be inserted here in your form</xar:mlstring></p>
+                </div>
             <xar:elseif condition="$item.useantibot" />
-            <div class="xar-form-input-wrapper-after">
-              <p class="xar-error"><xar:mlstring>You must install the FormCaptcha or Formantibot module to use Anti-Bot CAPTCHA</xar:mlstring></p>
-            </div>
+                <div class="xar-form-input-wrapper-after">
+                    <p class="xar-error"><xar:mlstring>You must install the FormCaptcha or Formantibot module to use Anti-Bot CAPTCHA</xar:mlstring></p>
+                </div>
             </xar:if>
            </fieldset>
 
@@ -767,12 +763,10 @@
             <xar:else />
                 <xar:mlstring>Preview</xar:mlstring>
             </xar:if>
-
         </td>
     </tr>
     </xar:foreach>
 </table>
 #$pager#
 </xar:if>
-
 </div>

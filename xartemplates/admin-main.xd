@@ -183,6 +183,8 @@
        <li><xar:mlstring><strong>Sitecontact Block</strong>: allows choice of one of the active forms for display in a block on your site.
        The block requires at least Read level (ReadBlock) privileges for viewing, and is privilege aware using Block privileges.
        This means you can selectively apply privileges for the given block by creating a Blocks module privilege on the Sitecontact block.</xar:mlstring></li>
+       <li><xar:mlstring><strong>Waiting Content Block</strong>: This is strictly not a sitecontact block but Sitecontact provides the code for
+           the Base Waiting Content block so you can use it to see latest submitted responses.</xar:mlstring></li>
     </ul>
     <h2>
         <xar:mlstring>Further Information</xar:mlstring>

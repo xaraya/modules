@@ -20,7 +20,7 @@
             <a href="&xar-modurl-sitecontact-admin-managesctypes;&amp;scid=#$scid#&amp;action=modify" >
                 <xar:mlstring>Edit Contact Form</xar:mlstring>
             </a>
-
+        </dd>
         <xar:if condition="$activetab eq 'managesctypes' and $action eq 'preview'">
             <xar:set name="tabclass">'active'</xar:set>
         <xar:else />
