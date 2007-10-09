@@ -9,7 +9,7 @@
  *
  * @subpackage SiteContact Module
  * @link http://xaraya.com/index.php/release/890.html
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 /**
  * Get all response items

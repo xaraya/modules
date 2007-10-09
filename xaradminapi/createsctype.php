@@ -9,7 +9,7 @@
  *
  * @subpackage SiteContact Module
  * @link http://xaraya.com/index.php/release/890.html
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 
 function sitecontact_adminapi_createsctype($args)
@@ -116,7 +116,7 @@ function sitecontact_adminapi_createsctype($args)
               xar_notetouser,
               xar_allowcopy,
               xar_usehtmlemail,
-   	          xar_scdefaultemail,
+              xar_scdefaultemail,
               xar_scdefaultname,
               xar_scactive,
               xar_savedata,

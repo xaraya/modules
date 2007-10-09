@@ -9,13 +9,13 @@
  *
  * @subpackage SiteContact Module
  * @link http://xaraya.com/index.php/release/890.html
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 
 /**
  * This is a standard function to update the configuration parameters of the
  * module given the information passed back by the modification form
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 function sitecontact_admin_updateconfig()
 {

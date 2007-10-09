@@ -9,14 +9,14 @@
  *
  * @subpackage SiteContact Module
  * @link http://xaraya.com/index.php/release/890.html
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 
 /**
  * extract function and arguments from short URLs for this module, and pass
  * them back to xarGetRequestInfo()
  *
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  * @param  $params array containing the different elements of the virtual path
  * @returns array
  * @return array containing func the function to be called and args the query

@@ -9,7 +9,7 @@
  *
  * @subpackage SiteContact Module
  * @link http://xaraya.com/index.php/release/890.html
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 /**
  * view responses
@@ -124,6 +124,7 @@ function sitecontact_admin_view($args)
     $data['viewtitle'] = xarML('View');
   
     $data['responses'] = $responses;
+    $data['totalresponses'] = $totalresponses;
     } else {
         $data['responses']='';
     }

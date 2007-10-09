@@ -9,7 +9,7 @@
  *
  * @subpackage SiteContact Module
  * @link http://xaraya.com/index.php/release/890.html
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 /**
  * Utility function to retrieve the list of item types of this module (if any)
@@ -30,6 +30,7 @@ function sitecontact_userapi_getitemtypes($args)
                                 'url'   => xarModURL('sitecontact','user','view',array('scid' => $contacttype['scid']))
                                );
    }
+
    return $itemtypes;
 }
 ?>

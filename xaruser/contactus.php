@@ -9,11 +9,11 @@
  *
  * @subpackage SiteContact Module
  * @link http://xaraya.com/index.php/release/890.html
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 /**
  * @ Function: contactus
- * @ Author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @ Author Jo Dalle Nogare <icedlava@2skies.com>
  * @ Param username, useremail, requesttext,company, usermessage,useripaddress,userreferer,altmail
   */
 function sitecontact_user_contactus($args)
