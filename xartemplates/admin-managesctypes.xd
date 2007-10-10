@@ -722,7 +722,7 @@
                     <xar:foreach in="$properties" key="$name">
                     <xar:if condition="!in_array($name,$defaultarray)">
                     <div class="xar-form-input-wrapper">
-                        <label for="$properties[$name]" class="xar-form-label"  title="#$properties[$name]#">
+                        <label for="$properties[$name]" class="xar-form-label"  title="#$properties[$name]-&gt;label#">
                                 <xar:data-label property="$properties[$name]" label="id" />
                         </label>
                         <xar:data-input property="$properties[$name]" />
