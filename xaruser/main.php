@@ -212,13 +212,16 @@ function sitecontact_user_main($args)
         array('id','scid','username','useremail','requesttext','company','usermessage',
               'useripaddress','userreferer','sendcopy','permission','bccrecipients','ccrecipients','responsetime');
 
+    $data = array_merge($data,xarModAPIFunc('sitecontact','workflow','skyquote'));
     $templatedata = xarTplModule('sitecontact', 'user', $template, $data);
 
     if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
         xarErrorHandled();
         $templatedata = xarTplModule('sitecontact', 'user', 'main', $data);
     }
-
+//    echo $template;exit;
+//    xarModVars::set('sitecontact','workflow','skyquote');
+//    sys::import('modules.sitecontact.xardata.'. xarModVars::get('sitecontact','workflow'));
    return $templatedata;
 }
 ?>

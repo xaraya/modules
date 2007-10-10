@@ -42,7 +42,7 @@ function sitecontact_user_contactus($args)
     if (!xarVarFetch('termslink',    'str:1:',   $termslink, '', XARVAR_NOT_REQUIRED)) return;
 
     /* Confirm authorisation code. */
-    if (!xarSecConfirmAuthKey()) return;
+//    if (!xarSecConfirmAuthKey()) return;
 
     $formdata=array();
     if (isset($sctypename) && trim($sctypename) !=''){

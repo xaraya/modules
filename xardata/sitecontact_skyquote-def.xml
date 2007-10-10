@@ -17,7 +17,7 @@
       <source>dynamic_data</source>
       <status>34</status>
       <order>1</order>
-      <validation>One Way;Round Trip;Multi Leg</validation>
+      <validation>One Way;Round Trip;Multi City</validation>
     </property>
     <property name="origin">
       <id>97</id>
@@ -41,7 +41,7 @@
     </property>
     <property name="multi_leg_1">
       <id>99</id>
-      <label>Multi Leg 1</label>
+      <label>Multi City 1</label>
       <type>textbox</type>
       <default></default>
       <source>dynamic_data</source>
@@ -51,7 +51,7 @@
     </property>
     <property name="multi_leg_2">
       <id>100</id>
-      <label>Multi Leg 2</label>
+      <label>Multi City 2</label>
       <type>textbox</type>
       <default></default>
       <source>dynamic_data</source>
@@ -61,7 +61,7 @@
     </property>
     <property name="multi_leg_3">
       <id>101</id>
-      <label>Multi Leg 3</label>
+      <label>Multi City 3</label>
       <type>textbox</type>
       <default></default>
       <source>dynamic_data</source>
