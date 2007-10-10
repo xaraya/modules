@@ -3,7 +3,7 @@
  * Decode short urls
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -26,8 +26,8 @@ function sitecontact_userapi_decode_shorturl($params)
 {
     /* Initialise the argument list we will return */
     $args = array();
-    $aliasisset = xarModGetVar('sitecontact', 'useModuleAlias');
-    $aliasname = xarModGetVar('sitecontact','aliasname');
+    $aliasisset = xarModVars::get('sitecontact', 'useModuleAlias');
+    $aliasname = xarModVars::get('sitecontact','aliasname');
 
     if (($aliasisset) && isset($aliasname)) {
         $usealias   = true;
@@ -36,7 +36,7 @@ function sitecontact_userapi_decode_shorturl($params)
     }
     $module = 'sitecontact';
     if ($params[0] != $module) { /* it's possibly some type of alias */
-        $aliasname = xarModGetVar('sitecontact','aliasname');
+        $aliasname = xarModVars::get('sitecontact','aliasname');
     }
     if ((strtolower($params[0]) == 'sitecontact') || (strtolower($params[0] == $aliasname))) {
         array_shift($params);

@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
 <script type="text/javascript">
@@ -264,10 +265,10 @@
        </div>
        <div  class="xar-form-input-wrapper-after">
 
-         %%useremail%%    &nbsp;&nbsp;<xar:mlstring>User email</xar:mlstring><br />
-         %%username%%     &nbsp;&nbsp;<xar:mlstring>User name</xar:mlstring><br />
-         %%requesttext%%  &nbsp;&nbsp;<xar:mlstring>Subject from drop down list</xar:mlstring><br />
-         %%company%%  &nbsp;&nbsp;<xar:mlstring>Organization</xar:mlstring><br />
+         %%useremail%%    &#160;&#160;<xar:mlstring>User email</xar:mlstring><br />
+         %%username%%     &#160;&#160;<xar:mlstring>User name</xar:mlstring><br />
+         %%requesttext%%  &#160;&#160;<xar:mlstring>Subject from drop down list</xar:mlstring><br />
+         %%company%%  &#160;&#160;<xar:mlstring>Organization</xar:mlstring><br />
          </div>
 
     </fieldset>
@@ -281,9 +282,10 @@
     <fieldset>
         <div class="xar-form-input-wrapper-after">
           <input type="hidden" name="authid" id="authid" value="#$authid#" />
-            <xar:set name="$updatebutton"><xar:mlstring>Update Configuration</xar:mlstring></xar:set>
+            <xar:set name="updatebutton"><xar:mlstring>Update Configuration</xar:mlstring></xar:set>
                 <input type="submit" value="#$updatebutton#" />
         </div>
     </fieldset>
     </form>
 </div>
+</xar:template>

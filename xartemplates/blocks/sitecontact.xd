@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:style module="sitecontact" file="contactblock" scope="block" />
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
 <xar:if condition="isset($AntiBot_Available) AND $AntiBot_Available AND $useantibot">
@@ -124,7 +125,7 @@
             <xar:if condition="$allowbccs or $allowccs">
              <p class="xar-blockform-input-wrapper">
                     <xar:mlstring>
-                    Separate email addresses by colons (;)</xar:mlstring></strong>
+                    Separate email addresses by colons (;)</xar:mlstring>
              </p>
             </xar:if>
             <div class="xar-blockform-input-wrapper">
@@ -227,3 +228,4 @@
       </form>
 </xar:if>
 </div>
+</xar:template>

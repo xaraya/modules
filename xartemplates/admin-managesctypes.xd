@@ -1,4 +1,5 @@
-﻿<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
 <script type="text/javascript">
 </script>
@@ -178,7 +179,7 @@
             <xar:else />
                 <input type="checkbox" name="allowcopy" id="allowcopy" value="1" />
             </xar:if>
-            <label for="allowcopy"title="#xarML('Allow sending of copy to feedback sender')#">
+            <label for="allowcopy" title="#xarML('Allow sending of copy to feedback sender')#">
                  <xar:mlstring>Allow copy to sender (registered user)?</xar:mlstring>
             </label>            
         </div>
@@ -220,10 +221,10 @@
         <xar:mlstring>You can use the following variables in your email:</xar:mlstring>
        </div>
        <div  class="xar-form-input-wrapper-after">
-         %%useremail%%    &nbsp;&nbsp;<xar:mlstring>User email</xar:mlstring><br />
-         %%username%%     &nbsp;&nbsp;<xar:mlstring>User name</xar:mlstring><br />
-         %%requesttext%%  &nbsp;&nbsp;<xar:mlstring>Subject from drop down list</xar:mlstring><br />
-         %%company%%  &nbsp;&nbsp;<xar:mlstring>Organization</xar:mlstring><br />
+         %%useremail%%    &#160;&#160;<xar:mlstring>User email</xar:mlstring><br />
+         %%username%%     &#160;&#160;<xar:mlstring>User name</xar:mlstring><br />
+         %%requesttext%%  &#160;&#160;<xar:mlstring>Subject from drop down list</xar:mlstring><br />
+         %%company%%  &#160;&#160;<xar:mlstring>Organization</xar:mlstring><br />
          </div>
 
     </fieldset>
@@ -239,12 +240,12 @@
 -->
     <fieldset>
         <div class="xar-form-input-wrapper-after">
-            <xar:set name="$updatebutton"><xar:mlstring>Create Form</xar:mlstring></xar:set>
+            <xar:set name="updatebutton"><xar:mlstring>Create Form</xar:mlstring></xar:set>
                 <input type="submit" value="#$updatebutton#" />
         </div>
     </fieldset>
     </form>
-</div>
+
 
 <xar:comment> ****** MODIFY SITECONTACT FORM ****** </xar:comment>
 <xar:elseif condition="isset($action) and $action eq 'modify'" />
@@ -467,10 +468,10 @@
        </div>
        <div  class="xar-form-input-wrapper-after">
 
-        %%useremail%%    &nbsp;&nbsp;<xar:mlstring>User email</xar:mlstring><br />
-         %%username%%     &nbsp;&nbsp;<xar:mlstring>User name</xar:mlstring><br />
-         %%requesttext%%  &nbsp;&nbsp;<xar:mlstring>Subject from drop down list</xar:mlstring><br />
-         %%company%%  &nbsp;&nbsp;<xar:mlstring>Organization</xar:mlstring><br />
+        %%useremail%%    &#160;&#160;<xar:mlstring>User email</xar:mlstring><br />
+         %%username%%     &#160;&#160;<xar:mlstring>User name</xar:mlstring><br />
+         %%requesttext%%  &#160;&#160;<xar:mlstring>Subject from drop down list</xar:mlstring><br />
+         %%company%%  &#160;&#160;<xar:mlstring>Organization</xar:mlstring><br />
          </div>
 
     </fieldset>
@@ -488,12 +489,12 @@
            <input type="hidden" name="authid" id="authid" value="#$authid#" />
            <input type="hidden" name="scid" id="scid" value="#$item.scid#" />
 
-            <xar:set name="$updatebutton"><xar:mlstring>Update Form</xar:mlstring></xar:set>
+            <xar:set name="updatebutton"><xar:mlstring>Update Form</xar:mlstring></xar:set>
                 <input type="submit" value="#$updatebutton#" />
         </div>
     </fieldset>
     </form>
-</div>
+
 
  <xar:comment> ****** DELETE SITECONTACT FORM ****** </xar:comment>
 <xar:elseif condition="isset($action) and $action eq 'delete'" />
@@ -501,6 +502,7 @@
     <h3><xar:mlstring>Delete Definition</xar:mlstring></h3>
     <form id="post"  method="post" action="#$link#">
      <fieldset>
+
      <legend><xar:mlstring>Deletel this Sitecontact Form Definition?</xar:mlstring></legend>
          <div class="xar-form-input-wrapper">
             <label for="scid" class="xar-form-label" title="#xarML('Sitecontact Form ID')#">
@@ -524,6 +526,7 @@
             </label>
             <input type="text" name="sctypedesc" id="sctypedesc" value="#$item.sctypedesc#" size="32" maxlength="100" />
         </div>
+
         <p class="xar-form-input-wrapper-after">
             <xar:mlstring>Note: any responses saved for this form will also be deleted.</xar:mlstring>
         </p>
@@ -532,7 +535,7 @@
         <div class="xar-form-input-wrapper-after">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="scid" id="scid" value="#$item.scid#" />
-        <xar:set name="$updatebutton"><xar:mlstring>Delete</xar:mlstring></xar:set>
+        <xar:set name="updatebutton"><xar:mlstring>Delete</xar:mlstring></xar:set>
                 <input type="submit" value="#$updatebutton#" />
 
         <span style="float:right;">
@@ -542,11 +545,8 @@
     </fieldset>
     </form>
 
-</div>
-
-
-
 <xar:comment> ***** PREVIEW THE FORM ***** </xar:comment>
+
 <xar:elseif condition="isset($action) and $action eq 'preview'" />
     <xar:template type="module" file="admin-submenu" />
     <h3>
@@ -556,7 +556,7 @@
     <xar:mlvar>#$item.sctypename#</xar:mlvar>
     </xar:ml>
     </h3>
-<hr>
+<hr/>
 
     <xar:if condition="empty($item.customtitle)">
         <xar:set name="contacttitle"><xar:mlstring>Contact Form</xar:mlstring></xar:set>
@@ -660,18 +660,27 @@
             <xar:comment>
                 Dynamic Data properties added here for input
             </xar:comment>
-             <xar:if condition="xarModIsHooked('dynamicdata','sitecontact',$item['scid'])">
-                <xar:data-getitem name="$properties" module="sitecontact" itemtype="$item['scid']" itemid="$item['scid']" />
-                <xar:if condition="isset($properties) and count($properties) gt 0">
+           <xar:if  condition="xarModIsAvailable('dynamicdata')" >
+                <xar:set name="defaultarray">array('id','scid','cid','username','useremail','requesttext','company','usermessage','message',
+              'useripaddress','userreferer','sendcopy','permission','bccrecipients','ccrecipients','responsetime');</xar:set>
+                <!--<xar:set name="info">xarModAPIFunc('dynamicdata','user','getobjectinfo', array('name' => $item['sctypename']))</xar:set>
+                <xar:set name="thisobject">xarModAPIFunc('dynamicdata','user','getobject', array('objectid' => $info['objectid']))</xar:set>
+                <xar:set name="properties">$thisobject->properties</xar:set>-->
+                 <xar:if condition="isset($properties) and count($properties) gt 0">
                     <xar:foreach in="$properties" key="$name">
+                    <xar:if condition="!in_array($name,$defaultarray)">
                     <div class="xar-form-input-wrapper">
                         <label for="$properties[$name]" class="xar-form-label"  title="#$properties[$name]#">
                                 <xar:data-label property="$properties[$name]" label="id" />
                         </label>
                         <xar:data-input property="$properties[$name]" />
                     </div>
+                    </xar:if>
                     </xar:foreach>
                 </xar:if>
+            <!--
+                <xar:data-form module="$info['moduleid']" itemtype="$info['itemtype']" />
+            -->
             </xar:if>
 
             <xar:if condition="($item.allowcopy eq 1 and xarUserIsLoggedIn()) or ($item.allowcopy eq 1 and $item.allowanoncopy eq 1)">
@@ -773,4 +782,4 @@
 #$pager#
 </xar:if>
 
-</div>
+</div></xar:template>

@@ -29,7 +29,7 @@ function sitecontact_userapi_getcontacttypes($args)
    if (isset($args['sort'])) {
         $sort = $args['sort'];
     } else {
-        $sort = xarModGetVar('sitecontact','defaultsort');
+        $sort = xarModVars::get('sitecontact','defaultsort');
     }
     if (empty($sort)) {
         $sort = 'scid';

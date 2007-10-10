@@ -27,34 +27,40 @@ function sitecontact_init()
 
     $sitecontactTable = $xarTables['sitecontact'];
 
-    /* Get a data dictionary object with all the item create methods in it */
-    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    xarDBLoadTableMaintenanceAPI();
+    $fields = array(
+        'xar_scid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
+        'xar_sctypename' => array('type' => 'varchar', 'size' => 100, 'null' => false, 'default' => ''),
+        'xar_sctypedesc' => array('type' => 'varchar', 'size' => 254, 'null' => false, 'default' => ''),
+        'xar_customtext' => array('type' => 'text', 'size'=>'medium', 'null' => false, 'default' => ''),
+        'xar_customtitle' => array('type' => 'varchar', 'size' => 150, 'null' => false, 'default' => ''),
+        'xar_optiontext' => array('type' => 'text', 'size'=>'medium', 'null' => false, 'default' => ''),
+        'xar_webconfirmtext' => array('type' => 'text', 'size'=>'medium', 'null' => false, 'default' => ''),
+        'xar_notetouser' => array('type' => 'text', 'size'=>'medium', 'null' => false, 'default' => ''),
+        'xar_allowcopy' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
+        'xar_usehtmlemail' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
+        'xar_scdefaultemail' => array('type' => 'varchar', 'size' => 254, 'null' => false, 'default' => ''),
+        'xar_scdefaultname' => array('type' => 'varchar', 'size' => 254, 'null' => false, 'default' => ''),
+        'xar_scactive' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
+        'xar_savedata' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
+        'xar_permissioncheck' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
+        'xar_termslink' => array('type' => 'varchar', 'size' => 254, 'null' => false, 'default' => ''),
+        'xar_soptions' => array('type' => 'text', 'size'=>'large', 'null' => false, 'default' => '')
+        );
 
-    $fields= "xar_scid            I      AUTO       PRIMARY,
-              xar_sctypename      C(100) NotNull    DEFAULT '',
-              xar_sctypedesc      C(254) NotNull    DEFAULT '',
-              xar_customtext      X      NotNull    DEFAULT '',
-              xar_customtitle     C(150) NotNull    DEFAULT '',
-              xar_optiontext      X      NotNull    DEFAULT '',
-              xar_webconfirmtext  X      NotNull    DEFAULT '',
-              xar_notetouser      X      NotNull    DEFAULT '',
-              xar_allowcopy       I1     NotNull    DEFAULT 0,
-              xar_usehtmlemail    I1     NotNull    DEFAULT 0,
-              xar_scdefaultemail  C(254) NotNull    DEFAULT '',
-              xar_scdefaultname   C(254) NotNull    DEFAULT '',
-              xar_scactive        I1     NotNull    DEFAULT 1,
-              xar_savedata        I1     NotNull    DEFAULT 0,
-              xar_permissioncheck I1     NotNull    DEFAULT 0,
-              xar_termslink       C(254) NotNull    DEFAULT '',
-              xar_soptions        X      NotNull    DEFAULT ''
-              ";
-            $result = $datadict->changeTable($sitecontactTable, $fields);
-           if (!$result) {return;}
+    $query = xarDBCreateTable($sitecontactTable , $fields);
+    if (empty($query)) return; // throw back
+
+    $result = &$dbconn->Execute($query);
+    if (!$result) return;
 
     /* Create a default form */
-    $defaultemail=  xarModGetVar('mail', 'adminmail');
+    $defaultemail=  xarModVars::get('mail', 'adminmail');
     $sitecontactTable = $xarTables['sitecontact'];
-    $query = "INSERT INTO $sitecontactTable
+
+    // Begin 2x
+    // Do this via DD import -
+  /*  $query = "INSERT INTO $sitecontactTable
                   (xar_scid,
                    xar_sctypename,
                    xar_sctypedesc,
@@ -94,62 +100,66 @@ function sitecontact_init()
     $bindvars = array($defaultemail);
     $result = &$dbconn->Execute($query,$bindvars);
            if (!$result) {return;}
+*/
+    // End 2x
 
     /* Set up a table for holding any saved data, if that option is chosen */
     $sitecontactResponseTable = $xarTables['sitecontact_response'];
 
-    /* Get a data dictionary object with all the item create methods in it */
-    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    $fields = array(
+        'xar_scrid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
+        'xar_scid' => array('type' => 'integer', 'null' => false, 'default' => '0'),
+        'xar_username' => array('type' => 'varchar', 'size' => 100, 'null' => false, 'default' => ''),
+        'xar_useremail' => array('type' => 'varchar', 'size' => 254, 'null' => false, 'default' => ''),
+        'xar_requesttext' => array('type' => 'varchar', 'size' => 150, 'null' => false, 'default' => ''),
+        'xar_company' =>  array('type' => 'varchar', 'size' => 150, 'null' => false, 'default' => ''),
+        'xar_usermessage' => array('type' => 'text', 'size'=>'medium', 'null' => false, 'default' => ''),
+        'xar_useripaddress' => array('type' => 'varchar', 'size' => 24, 'null' => false, 'default' => ''),
+        'xar_userreferer' => array('type' => 'varchar', 'size' => 254, 'null' => false, 'default' => ''),
+        'xar_sendcopy' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
+        'xar_permission' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
+        'xar_bccrecipients' => array('type' => 'varchar', 'size' => 254, 'null' => false, 'default' => ''),
+        'xar_ccrecipients' => array('type' => 'varchar', 'size' => 254, 'null' => false, 'default' => ''),
+        'xar_responsetime' => array('type' => 'integer', 'size' => '10', 'null' => false, 'default' => '0')
+        );
 
-    $fields= "xar_scrid           I      AUTO       PRIMARY,
-              xar_scid            I      NotNull    DEFAULT 0,
-              xar_username        C(100) NotNull    DEFAULT '',
-              xar_useremail       C(254) NotNull    DEFAULT '',
-              xar_requesttext     C(150) NotNull    DEFAULT '',
-              xar_company         C(150) NotNull    DEFAULT '',
-              xar_usermessage     X      NotNull    DEFAULT '',
-              xar_useripaddress   C(24)  NotNull    DEFAULT '',
-              xar_userreferer     C(254) NotNull    DEFAULT '',
-              xar_sendcopy        I1     NotNull    DEFAULT 0,
-              xar_permission      I1     NotNull    DEFAULT 0,
-              xar_bccrecipients   C(254) NotNull    DEFAULT '',
-              xar_ccrecipients    C(254) NotNull    DEFAULT '',
-              xar_responsetime   I(10)  NotNull    DEFAULT 0
-              ";
-            $result = $datadict->changeTable($sitecontactResponseTable, $fields);
-           if (!$result) {return;}
+    $query = xarDBCreateTable( $sitecontactResponseTable, $fields);
+    if (empty($query)) return; // throw back
 
+    $result = &$dbconn->Execute($query);
+    if (!$result) return;
 
-    xarModSetVar('sitecontact', 'savedata', 0);
-    xarModSetVar('sitecontact', 'termslink', '');
-    xarModSetVar('sitecontact', 'soptions', '');
-    xarModSetVar('sitecontact', 'permissioncheck', 0);
-    xarModSetVar('sitecontact', 'itemsperpage', 10);
-    xarModSetVar('sitecontact', 'defaultform',1);
-    xarModSetVar('sitecontact', 'defaultsort','scid');
-    xarModSetVar('sitecontact', 'scactive', 1);
-    xarModSetVar('sitecontact', 'SupportShortURLs', 0);
-    xarModSetVar('sitecontact', 'useModuleAlias',0);
-    xarModSetVar('sitecontact', 'aliasname','');
-    xarModSetVar('sitecontact', 'usehtmlemail', 0);
-    xarModSetVar('sitecontact', 'allowcopy', 0); //bug 5800 set it off by default
-    xarModSetVar('sitecontact', 'scdefaultemail',xarModGetVar('mail', 'adminmail'));
-    xarModSetVar('sitecontact', 'customtitle','Contact and Feedback');
-    xarModSetVar('sitecontact', 'customtext',
+    xarModVars::set('sitecontact', 'savedata', 0);
+    xarModVars::set('sitecontact', 'termslink', '');
+    xarModVars::set('sitecontact', 'soptions', '');
+    xarModVars::set('sitecontact', 'permissioncheck', 0);
+    xarModVars::set('sitecontact', 'itemsperpage', 10);
+    xarModVars::set('sitecontact', 'defaultform',1);
+    xarModVars::set('sitecontact', 'defaultsort','scid');
+    xarModVars::set('sitecontact', 'scactive', 1);
+    xarModVars::set('sitecontact', 'SupportShortURLs', 0);
+    xarModVars::set('sitecontact', 'useModuleAlias',0);
+    xarModVars::set('sitecontact', 'aliasname','');
+    xarModVars::set('sitecontact', 'usehtmlemail', 0);
+    xarModVars::set('sitecontact', 'allowcopy', 0); //bug 5800 set it off by default
+    xarModVars::set('sitecontact', 'scdefaultemail',xarModVars::get('mail', 'adminmail'));
+    xarModVars::set('sitecontact', 'customtitle','Contact and Feedback');
+    xarModVars::set('sitecontact','useantibot',true);
+    xarModVars::set('sitecontact', 'customtext',
     'Thank you for visiting. We appreciate your feedback.
     Please let us know how we can assist you.');
 
-    xarModSetVar('sitecontact', 'optiontext', 
+    xarModVars::set('sitecontact', 'optiontext',
     'Information request,
 General assistance,
 Website issue,
 Spam/Abuse report,
 Complaint, Thank you!');
 
-    xarModSetVar('sitecontact', 'webconfirmtext',
+    xarModVars::set('sitecontact', 'webconfirmtext',
     'Your message has been sent. Thank you for contacting us.
 ');
-    xarModSetVar('sitecontact', 'defaultnote',
+    xarModVars::set('sitecontact', 'defaultnote',
     'Dear %%username%%
 
 This message confirms your email has been sent.
@@ -159,16 +169,23 @@ Thank you for your feedback.
 Administrator
 %%sitename%%
 -------------------------------------------------------------');
-  xarModSetVar('sitecontact','notetouser',xarModGetVar('sitecontact','defaultnote'));
+  xarModVars::set('sitecontact','notetouser',xarModVars::get('sitecontact','defaultnote'));
 
 
+     // Begin 2x
+     /* No longer use hooks
      // Enable dynamicdata hooks for sitecontact forms
     if (xarModIsAvailable('dynamicdata')) {
         xarModAPIFunc('modules','admin','enablehooks',
                        array('callerModName' => 'sitecontact', 'hookModName' => 'dynamicdata'));
     }
+    */
+    // End 2x
 
-
+// initialize the block
+    if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
+                        array('modName' => 'sitecontact',
+                              'blockType' => 'sitecontact'))) return;
 
 /* Define instances for sitecontact forms  */
 
@@ -179,8 +196,8 @@ Administrator
                                 'limit' => 20
                             )
                     );
-    xarDefineInstance('sitecontact', 'ContactForm', $instances); 
- 
+    xarDefineInstance('sitecontact', 'ContactForm', $instances);
+
     // Register our hooks that we are providing to other modules.  The example
     // module shows an example hook in the form of the user menu.
  /*   if (!xarModRegisterHook('item', 'usermenu', 'GUI',
@@ -205,8 +222,27 @@ Administrator
     xarRegisterMask('AdminSiteContact', 'All', 'sitecontact', 'Item', 'All:All:All', 'ACCESS_ADMIN');
     // Initialisation successful
 
-    //This initialization takes us to version 0.6.1 - continue in upgrade
-    return sitecontact_upgrade('0.6.1');
+
+    //This initialization takes us to version 2.0.0 - continue in upgrade
+        // Begin 2x
+        # --------------------------------------------------------
+        #
+        # Create DD objects
+        #
+            $module = 'sitecontact';
+            $objects = array(
+                        'sitecontact_definition',
+                        'sitecontact_basicform',
+//                        'sitecontact_skyquote',
+                    );
+
+        xarModAPIFunc('modules','admin','standardinstall',array('module' => 'sitecontact', 'objects' => $objects));
+
+        // Register a hook for utility modules
+        xarModRegisterHook('module', 'getconfig', 'API','sitecontact', 'admin', 'getconfighook');
+        //End 2x
+
+    return sitecontact_upgrade('2.0.0');
 }
 
 /**
@@ -217,194 +253,8 @@ function sitecontact_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch ($oldversion) {
-        case '0.0.1':
-        //Add two mod vars in version 0.0.2
-            xarModSetVar('sitecontact', 'usehtmlemail', 0);
-            xarModSetVar('sitecontact', 'allowcopy', 1);
 
-        case '0.0.2':
-            // Code to upgrade from version 1.0 goes here
-
-       case '0.2.0':
-
-        case '0.3.0':
-           xarModSetVar('sitecontact', 'useModuleAlias',0);
-           xarModSetVar('sitecontact', 'aliasname','');
-
-        case '0.3.5':
-          // Remove incomplete module hook until ready
-           if (!xarModUnregisterHook('item', 'usermenu', 'GUI',
-              'sitecontact', 'user', 'usermenu')) {
-               return false;
-           }
-            /* New modvars */
-            xarModSetVar('sitecontact', 'defaultform',1);
-            xarModSetVar('sitecontact', 'scactive',1);
-            xarModSetVar('sitecontact', 'defaultsort','scid');
-
-            /* Setup our table for holding the different contact itemtype forms */
-            $dbconn =& xarDBGetConn();
-            $xarTables =& xarDBGetTables();
-
-            $sitecontactTable = $xarTables['sitecontact'];
-
-            /* Get a data dictionary object with all the item create methods in it */
-            $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
-
-            $fields= "xar_scid           I      AUTO       PRIMARY,
-                      xar_sctypename     C(100) NotNull    DEFAULT '',
-                      xar_sctypedesc     C(254) NotNull    DEFAULT '',
-                      xar_customtext     X      NotNull    DEFAULT '',
-                      xar_customtitle    C(150) NotNull    DEFAULT '',
-                      xar_optiontext     X      NotNull    DEFAULT '',
-                      xar_webconfirmtext X      NotNull    DEFAULT '',
-                      xar_notetouser     X      NotNull    DEFAULT '',
-                      xar_allowcopy      I1     NotNull    DEFAULT 0,
-                      xar_usehtmlemail   I1     NotNull    DEFAULT 0,
-                      xar_scdefaultemail C(254) NotNull    DEFAULT '',
-                      xar_scdefaultname  C(254) NotNull    DEFAULT '',
-                      xar_scactive       I1     NotNull    DEFAULT 1
-                  ";
-            $result = $datadict->changeTable($sitecontactTable, $fields);
-            if (!$result) {return;}
-
-            /* Create a default form */
-            $scdefaultemail=  xarModGetVar('sitecontact', 'scdefaultemail');
-            $scdefaultname=xarModGetVar('sitecontact', 'scdefaultname');
-            if (!isset($scdefaultname) || trim($scdefaultname) == '') {
-                $scdefaultname = xarML('Admin');
-            }
-            $usehtmlemail = xarModGetVar('sitecontact', 'usehtmlemail');
-            $allowcopy = xarModGetVar('sitecontact', 'allowcopy');
-            $customtitle = xarModGetVar('sitecontact', 'customtitle');
-            $customtext = xarModGetVar('sitecontact', 'customtext');
-            $optiontext = xarModGetVar('sitecontact', 'optiontext');
-            $webconfirmtext = xarModGetVar('sitecontact', 'webconfirmtext');
-            $notetouser = xarModGetVar('sitecontact', 'notetouser');
-            $sitecontactTable = $xarTables['sitecontact'];
-            $query ="INSERT INTO $sitecontactTable
-                  (xar_scid,
-                   xar_sctypename,
-                   xar_sctypedesc,
-                   xar_customtext,
-                   xar_customtitle,
-                   xar_optiontext,
-                   xar_webconfirmtext,
-                   xar_notetouser,
-                   xar_allowcopy,
-                   xar_usehtmlemail,
-                   xar_scdefaultemail,
-                   xar_scdefaultname,
-                   xar_scactive)
-                VALUES (1,
-                        'basic',
-                        'Basic contact form',
-                        ?,
-                        ?,
-                        ?,
-                        ?,
-                        ?,
-                        ?,
-                        ?,
-                        ?,
-                        ?,
-                        1
-                        )";
-
-                $bindvars = array($customtext,$customtitle,$optiontext,$webconfirmtext,$notetouser,$allowcopy,$usehtmlemail,$scdefaultemail,$scdefaultname);
-                $result = &$dbconn->Execute($query,$bindvars);
-                if (!$result) {return;}
-
-
-        case '0.4.0':
-            /* New modvars */
-            xarModSetVar('sitecontact', 'savedata', 0);
-            xarModSetVar('sitecontact', 'termslink', '');
-            xarModSetVar('sitecontact', 'soptions', '');
-            xarModSetVar('sitecontact', 'permissioncheck', 0);
-
-            $dbconn =& xarDBGetConn();
-            $xarTables =& xarDBGetTables();
-
-            $sitecontactTable = $xarTables['sitecontact'];
-
-            /* Get a data dictionary object with all the item create methods in it */
-            $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
-
-            /* Add a few more fields */
-            $fields= "xar_savedata        I1     NotNull    DEFAULT 0,
-                      xar_permissioncheck I1     NotNull    DEFAULT 0,
-                      xar_termslink       C(254) NotNull    DEFAULT '',
-                      xar_soptions        X      NotNull    DEFAULT ''
-                     ";
-            $result = $datadict->changeTable($sitecontactTable, $fields);
-            if (!$result) {return;}
-
-            /* Enable dynamicdata hooks for sitecontact forms - now a dependency */
-            if (xarModIsAvailable('dynamicdata')) {
-               xarModAPIFunc('modules','admin','enablehooks',
-                   array('callerModName' => 'sitecontact', 'hookModName' => 'dynamicdata'));
-           }
-           return sitecontact_upgrade('0.5.0'); // Go direct to 0.5.0 to skip the intermediary release
-           break;
-        case '0.4.1': //0.4.1 users missed an intermediary release and the function changes. Take them back
-           return sitecontact_upgrade('0.4.0');
-           break;
-        case '0.5.0': //nothing new here
-             return sitecontact_upgrade('0.5.1');
-        case '0.5.1': //current version
-        $dbconn =& xarDBGetConn();
-        $xarTables =& xarDBGetTables();
-
-        /* Set up a table for holding any saved data, if that option is chosen */
-        $sitecontactResponseTable = $xarTables['sitecontact_response'];
-        $sitecontactTable = $xarTables['sitecontact'];
-        
-        /* Get a data dictionary object with all the item create methods in it */
-        $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
-
-        $fields= "xar_scrid          I      AUTO       PRIMARY,
-                 xar_scid            I      NotNull    DEFAULT 0,
-                 xar_username        C(100) NotNull    DEFAULT '',
-                 xar_useremail       C(254) NotNull    DEFAULT '',
-                 xar_requesttext     C(150) NotNull    DEFAULT '',
-                 xar_company         C(150) NotNull    DEFAULT '',
-                 xar_usermessage     X      NotNull    DEFAULT '',
-                 xar_useripaddress   C(24)  NotNull    DEFAULT '',
-                 xar_userreferer     C(254) NotNull    DEFAULT '',
-                 xar_sendcopy        I1     NotNull    DEFAULT 0,
-                 xar_permission      I1     NotNull    DEFAULT 0,
-                 xar_bccrecipients   C(254) NotNull    DEFAULT '',
-                 xar_ccrecipients    C(254) NotNull    DEFAULT '',
-                 xar_responsetime    I(10)  NotNull    DEFAULT 0
-              ";
-            $result = $datadict->changeTable($sitecontactResponseTable, $fields);
-            if (!$result) {return;}
-
-        //register a new mask for submitting and *saving* a site contact form
-        xarRegisterMask('SubmitSiteContact', 'All', 'sitecontact', 'Item', 'All:All:All', 'ACCESS_COMMENT'); //required where saving forms is done
-
-        /* Define instances for sitecontact forms  */
-
-        $query1 = "SELECT DISTINCT xar_scid FROM  $sitecontactTable";
-        $instances = array(
-                        array('header' => 'Form ID:',
-                                'query' => $query1,
-                                'limit' => 20
-                            )
-                    );
-        xarDefineInstance('sitecontact', 'ContactForm', $instances);
-           return sitecontact_upgrade('0.6.0');
-        case '0.6.0':
-            xarModSetVar('sitecontact', 'allowcopy', 0); //bug 5800 set it off by default
-           return sitecontact_upgrade('0.6.1');
-       case '0.6.1':
-            xarModSetVar('sitecontact','useantibot',true);
-       case '1.0.0':
-           if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
-                        array('modName' => 'sitecontact',
-                              'blockType' => 'sitecontact'))) return;
-       case '1.0.1': //current version
+        case '2.0.0': //current version
 
              break;
     }
@@ -419,46 +269,37 @@ function sitecontact_upgrade($oldversion)
  */
 function sitecontact_delete()
 {
- 
-    /* Let's clean up - delete the DD objects we have created if any, for each form type */
-    $formtypes = xarModAPIFunc('sitecontact','user','getcontacttypes');
-    $moduleid= xarModGetIDFromName('sitecontact');    
-
-    if (is_array($formtypes)) {
-        foreach ($formtypes as $formtype) {
-            $objectinfo= xarModAPIFunc('dynamicdata','user','getobjectinfo',
-                array('moduleid'=>$moduleid, 'itemtype'=>$formtype['scid']));
-            
-            $objectid= $objectinfo['objectid'];
-            
-            if (!empty($objectid)) {
-                xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
-            }
-        }
-    }
-
+    $this_module = 'sitecontact';
 
     /* drop the sitecontact table */
     $dbconn =& xarDBGetConn();
     $xarTables =& xarDBGetTables();
+    xarDBLoadTableMaintenanceAPI();
 
     $sitecontactTable = $xarTables['sitecontact'];
-    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
-    $result = $datadict->dropTable($sitecontactTable);
-
     $sitecontactResponseTable = $xarTables['sitecontact_response'];
-    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
-    $result = $datadict->dropTable($sitecontactResponseTable);
 
+    try {
+        $query = xarDBDropTable($sitecontactTable);
+        if (empty($query)) return; // throw back
+        $result = &$dbconn->Execute($query);
+
+        $query = xarDBDropTable($sitecontactResponseTable);
+        if (empty($query)) return; // throw back
+        $result = &$dbconn->Execute($query);
+    } catch(SQLException $e) {
+        // if they dont exist, no worries
+    }
 
     /* Remove any module aliases before deleting module vars */
-    $aliasname =xarModGetVar('sitecontact','aliasname');
-    $isalias = xarModGetAlias($aliasname);
+    $aliasname =xarModVars::get('sitecontact','aliasname');
+    $isalias = xarModAlias::resolve($aliasname);
     if (isset($isalias) && ($isalias =='sitecontact')){
-        xarModDelAlias($aliasname,'sitecontact');
+        xarModAlias::delete($aliasname,'sitecontact');
     }
     // Delete any module variables
-     xarModDelAllVars('sitecontact');
+     xarModVars::delete_all('sitecontact');
+
     // UnRegister blocks
     if (!xarModAPIFunc('blocks', 'admin', 'unregister_block_type',
                  array('modName' => 'sitecontact',
@@ -472,6 +313,8 @@ function sitecontact_delete()
 */
     xarRemoveMasks('sitecontact');
     xarRemoveInstances('sitecontact');
+
+    $deinstall = xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'sitecontact'));
 
     // Deletion successful
     return true;

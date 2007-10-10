@@ -48,10 +48,16 @@ function sitecontact_admin_display($args)
     if (!xarSecurityCheck('EditSiteContact',0,'ContactForm',"$scid:All:All")) {
         return; // todo: something
     }
-    
+
     $thisform = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
     $thisform=$thisform[0];
+    $info = xarModAPIFunc('dynamicdata','user','getobjectinfo',array('name'=> $thisform['sctypename']));
+    $thisobject = xarModAPIFunc('dynamicdata','user','getobject', array('objectid' => $info['objectid']));
+    $args['module']= 'dynamicdata';
+    $args['itemtype']= $thisobject->itemtype;
+    $args['itemid']= $scrid;
 
+    $data['args'] = $args;
     $data['username'] = $item['username'];
     $data['useremail'] = $item['useremail'];
     $data['requesttext'] = $item['requesttext'];
@@ -92,7 +98,7 @@ function sitecontact_admin_display($args)
         $formfilters[] = $responseitem;
     }
     $data['formfilters'] = $formfilters;
-    $data['menuscid']=    xarVarGetCached('Blocks.sitecontact','itemtype');
+    $data['menuscid']=    xarCore::getCached('Blocks.sitecontact','itemtype');
     $item['returnurl'] = xarModURL('sitecontact','admin','display',array('scrid' => $scrid));
     $item['module'] = 'sitecontact';
     $item['itemid'] = $scrid;

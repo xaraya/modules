@@ -23,7 +23,7 @@ function sitecontact_user_main($args)
 {
     extract($args);
 
-    $defaultformid=(int)xarModGetVar('sitecontact','defaultform');
+    $defaultformid=(int)xarModVars::get('sitecontact','defaultform');
 
     if(!xarVarFetch('company',    'str:1:', $company,    NULL, XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if(!xarVarFetch('message',    'isset',  $message,    NULL, XARVAR_DONT_SET)) {return;}
@@ -41,22 +41,22 @@ function sitecontact_user_main($args)
         $sctypename=trim($sctypename);
     }
     if (isset($scform) && (trim($scform) !='')) { //provide alternate entry name
-        $sctypename=trim($scform);
+      $sctypename=trim($scform);
     }
 
     //Have we got a form that is available and active?
     if (isset($sctypename) && trim($sctypename) !='') {
-        $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('sctypename'=> $sctypename));
+       $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('sctypename'=> $sctypename));
     }elseif (isset($scid) && is_int($scid)) {
-        $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $scid));
+       $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $scid));
     } else {
         $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $defaultformid));
     }
 
     //Have we got an active form
     if (!is_array($formdata)) { //exists but not active
-        //fallback to default form again
-        $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $defaultformid));
+      //fallback to default form again
+      $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $defaultformid));
     }
     $formdata=$formdata[0];
 
@@ -96,41 +96,41 @@ function sitecontact_user_main($args)
     if (!isset($data['allowccs']))$data['allowccs']=0;
     if (!isset($data['allowanoncopy']))$data['allowanoncopy']=0;
     if (!isset($data['useantibot']))$data['useantibot']=false;
-    if (!isset($data['savedata']))$data['savedata']=xarModGetVar('sitecontact','savedata')?xarModGetVar('sitecontact','savedata'):0;
-    if (!isset($data['permissioncheck']))$data['permissioncheck']=xarModGetVar('sitecontact','permissioncheck');
-    if (!isset($data['termslink']))$data['termslink']=xarModGetVar('sitecontact','termslink');
+    if (!isset($data['savedata']))$data['savedata']=xarModVars::get('sitecontact','savedata')?xarModVars::get('sitecontact','savedata'):0;
+    if (!isset($data['permissioncheck']))$data['permissioncheck']=xarModVars::get('sitecontact','permissioncheck');
+    if (!isset($data['termslink']))$data['termslink']=xarModVars::get('sitecontact','termslink');
 
-    $customtext   = $formdata['customtext'];
-    $customtitle  = $formdata['customtitle'];
-    $usehtmlemail = $formdata['usehtmlemail'];
-    $allowcopy    = $formdata['allowcopy'];
+    $customtext = $formdata['customtext'];
+    $customtitle = $formdata['customtitle'];
+    $usehtmlemail= $formdata['usehtmlemail'];
+    $allowcopy = $formdata['allowcopy'];
 
-    $data['customtitle'] = xarVarPrepHTMLDisplay($customtitle);
-    $data['customtext']  = xarVarPrepHTMLDisplay($customtext);
+    $data['customtitle']=xarVarPrepHTMLDisplay($customtitle);
+    $data['customtext'] = xarVarPrepHTMLDisplay($customtext);
 
     $data['usehtmlemail'] = $usehtmlemail;
     $data['allowcopy'] = $allowcopy;
 
     $optiontext = $formdata['optiontext'];
-    $optionset  = array();
-    $selectitem = array();
-    $optionset  = explode(',',$optiontext);
+    $optionset = array();
+    $selectitem=array();
+    $optionset=explode(',',$optiontext);
     $data['optionset']=$optionset;
-    $optionitems = array();
+    $optionitems=array();
     foreach ($optionset as $optionitem) {
-      $optionitems[] = explode(';',$optionitem);
+      $optionitems[]=explode(';',$optionitem);
     }
-    $data['optionitems'] = $optionitems;
+    $data['optionitems']=$optionitems;
     /*  The IP capturing has now been moved to contactus function  with a call to the getcurrent ip function
                 This could be removed at some time along with the hidden field in the form
           */
-    $HTTP_REMOTE_ADDR = xarServerGetVar('REMOTE_ADDR');
+    $HTTP_REMOTE_ADDR = xarServer::getVar('REMOTE_ADDR');
     if (empty($HTTP_REMOTE_ADDR)) {
         $HTTP_REMOTE_ADDR= isset($_SERVER['$REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
     }
     $data['useripaddress'] = $HTTP_REMOTE_ADDR;
     if ($botreset== false) { //we don't want to set referer to our own form on an anti-bot return, keep the original referer
-        $HTTP_REFERER = xarServerGetVar('HTTP_REFERER');
+        $HTTP_REFERER = xarServer::getVar('HTTP_REFERER');
         if (empty($HTTP_REFERER)) {
             $HTTP_REFERER = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
         }
@@ -173,14 +173,14 @@ function sitecontact_user_main($args)
             }
     unset($properties);
     $data['withupload']=$withupload;
-    //$webconfirmtext = trim(xarModGetVar('sitecontact','webconfirmtext'));
+    //$webconfirmtext = trim(xarModVars::get('sitecontact','webconfirmtext'));
     $webconfirmtext = trim($formdata['webconfirmtext']);
     if (empty($webconfirmtext) || !isset($webconfirmtext)) {
 
         $webconfirmtext = xarML('Your message has been sent.');
         $webconfirmtext  .='<br />';
         $webconfirmtext   .= xarML('You should receive confirmation of your email within a few minutes.');
-        xarModSetVar('sitecontact','webconfirmtext',$webconfirmtext);
+        xarModVars::set('sitecontact','webconfirmtext',$webconfirmtext);
     }
     $data['webconfirmtext']=$webconfirmtext;
     if ($message == 1 && $antibotinvalid != TRUE) {
@@ -199,7 +199,7 @@ function sitecontact_user_main($args)
     $data['termslink']=trim($formdata['termslink']);
     if (!empty($data['sctypename'])){
         $template = 'main-' . $data['sctypename'];
-      } else {
+    } else {
         $template =  'main';
     }
     $data['scform']=$data['sctypename'];
@@ -207,6 +207,10 @@ function sitecontact_user_main($args)
     if (xarModIsAvailable('formantibot')) {
         $data['AntiBot_Available'] = TRUE;
     }
+    //set of default fields now in DD, we don't want these twice as they have special handling
+    $data['defaultarray']=
+        array('id','scid','username','useremail','requesttext','company','usermessage',
+              'useripaddress','userreferer','sendcopy','permission','bccrecipients','ccrecipients','responsetime');
 
     $templatedata = xarTplModule('sitecontact', 'user', $template, $data);
 

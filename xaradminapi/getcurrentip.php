@@ -26,14 +26,14 @@ function sitecontact_adminapi_getcurrentip()
     $trueip=''; //true ip if it exists
     $isanip=0; //is this an ip
 
-    $remote_addr = xarServerGetVar('REMOTE_ADDR');
-    $x_forwarded_for= xarServerGetVar('HTTP_X_FORWARDED_FOR');
-    $x_forwarded= xarServerGetVar('HTTP_X_FORWARDED');
-    $forwarded_for= xarServerGetVar('HTTP_FORWARDED_FOR');
-    $forwarded= xarServerGetVar('HTTP_FORWARDED');
-    $x_comingfrom=xarServerGetVar('HTTP_X_COMING_FROM');
-    $comingfrom=xarServerGetVar('HTTP_COMING_FROM');
-    $httpvia=xarServerGetVar('HTTP_VIA');
+    $remote_addr = xarServer::getVar('REMOTE_ADDR');
+    $x_forwarded_for= xarServer::getVar('HTTP_X_FORWARDED_FOR');
+    $x_forwarded= xarServer::getVar('HTTP_X_FORWARDED');
+    $forwarded_for= xarServer::getVar('HTTP_FORWARDED_FOR');
+    $forwarded= xarServer::getVar('HTTP_FORWARDED');
+    $x_comingfrom=xarServer::getVar('HTTP_X_COMING_FROM');
+    $comingfrom=xarServer::getVar('HTTP_COMING_FROM');
+    $httpvia=xarServer::getVar('HTTP_VIA');
     /* Gets the ip sent by the user */
     if (!empty($remote_addr )) {
         $trueip = $remote_addr;

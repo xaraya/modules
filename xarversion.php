@@ -14,9 +14,9 @@
 $modversion['name']           = 'sitecontact';
 $modversion['displayname']    = xarML('Site Contact');
 $modversion['id']             = '890';
-$modversion['version']        = '1.0.1';
+$modversion['version']        = '2.0.0';
 $modversion['displayname']    = xarML('SiteContact');
-$modversion['description']    = xarML('Contact site admin by email');
+$modversion['description']    = xarML('Contact and other forms with email for Xaraya Series 2');
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
 $modversion['changelog']      = 'xardocs/changelog.txt';
@@ -28,5 +28,5 @@ $modversion['admin']          = 1;
 $modversion['user']           = 1;
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Content';
-$modversion['dependency'] = array(182); //dynamic data dependency
+$modversion['dependency'] = array(); // just core
 ?>

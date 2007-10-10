@@ -39,29 +39,37 @@ function sitecontact_adminapi_create($args)
     // Get arguments from argument array
     extract($args);
 
+    // Begin 2x
     // Argument check (all the rest is optional, and set to defaults below)
     if (empty($scid) || !is_int($scid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'title', 'admin', 'create', 'Sitecontact');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return false;
+        throw new BadParameterException(null,$msg);
     }
-
-    // There was a point when we could have scid as optional and default to default form it
-    // however better to pass it in
-    if (empty($scid) || !is_numeric($scid)) {
-        //we won't use this atm
-    }
-
-     // Security check
+    // End 2x
 
      if(!xarSecurityCheck('SubmitSiteContact', 0, 'ContactForm', "$scid:All:All")) return; // we don't want to error display here and distrupt
-
-    // Default publication date is now
+    //Begin 2x
+    // Default response date - create in contactus and pass as args
     if (!isset($responsetime) || empty($responsetime)) {
         $responsetime = time();
     }
+    //End 2x
+
+    // Begin 2x
+    $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $scid));
+    $thisform = array_pop($formdata);
+    $info = xarModAPIFunc('dynamicdata','user','getobjectinfo',array('name' => $thisform['sctypename']));
+    $thisobject = & DataObjectMaster::getObject(array('objectid' => $info['objectid']));
+    $thisobject->checkInput();
+    $itemid = $thisobject->createItem($args);
+
+    return $itemid;
+    // End 2x
+
+
+
+// Old code. Leave it for reference for the moment
 
     // Get database setup
     $dbconn =& xarDBGetConn();
@@ -78,7 +86,7 @@ function sitecontact_adminapi_create($args)
     // Add item
     $query = "INSERT INTO $sitecontactResponseTable (
               xar_scrid,
-              xar_scid,
+              xar_scnid,
               xar_username,
               xar_useremail,
               xar_requesttext,

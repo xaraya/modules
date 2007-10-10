@@ -3,7 +3,7 @@
  * Sitecontact form create
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -43,54 +43,54 @@ function sitecontact_adminapi_createsctype($args)
     }
 
     if (!isset ($customtext)) {
-        $customtext= xarModGetVar('sitecontact', 'customtext');
+        $customtext= xarModVars::get('sitecontact', 'customtext');
     }
     if (!isset ($customtitle)) {
-        $customtitle=xarModGetVar('sitecontact', 'customtitle');
+        $customtitle=xarModVars::get('sitecontact', 'customtitle');
     }
     if (!isset($optiontext)) {
-        $optiontext= xarModGetVar('sitecontact', 'optiontext');
+        $optiontext= xarModVars::get('sitecontact', 'optiontext');
     }
     if (!isset($webconfirmtext)) {
-        $webconfirmtext= xarModGetVar('sitecontact', 'webconfirmtext');
+        $webconfirmtext= xarModVars::get('sitecontact', 'webconfirmtext');
     }
     if (!isset($notetouser) || trim($notetouser)=='') {
-        $notetouser = xarModGetVar('sitecontact', 'notetouser');
+        $notetouser = xarModVars::get('sitecontact', 'notetouser');
     }
     if (!isset($usehtmlemail)) {
-        $usehtmlemail = xarModGetVar('sitecontact', 'usehtmlemail');
+        $usehtmlemail = xarModVars::get('sitecontact', 'usehtmlemail');
     }
     if (!isset($allowcopy)) {
-        $allowcopy = xarModGetVar('sitecontact', 'allowcopy');
+        $allowcopy = xarModVars::get('sitecontact', 'allowcopy');
     }
 
     if (!isset($scdefaultemail)) {
-       $scdefaultemail = xarModGetVar('sitecontact', 'scdefaultemail');
+       $scdefaultemail = xarModVars::get('sitecontact', 'scdefaultemail');
        if (!isset($scdefaultemail) || (trim($scdefaultemail)=='')) {
-            $scdefaultemail=xarModGetVar('mail','adminmail');
+            $scdefaultemail=xarModVars::get('mail','adminmail');
        }
     }
 
     if (!isset($scdefaultname) || ($scdefaultname)=='') {
-        $scdefaultname = xarModGetVar('sitecontact', 'scdefaultname');
+        $scdefaultname = xarModVars::get('sitecontact', 'scdefaultname');
         if (!isset($scdefaultname)) {
-            $scdefaultname=xarModGetVar('mail','adminname');
+            $scdefaultname=xarModVars::get('mail','adminname');
         }
     }
     if (!isset($scactive)) {
-        $scactive = xarModGetVar('sitecontact', 'scactive');
+        $scactive = xarModVars::get('sitecontact', 'scactive');
     }
     if (!isset($savedata)) {
-        $savedata = xarModGetVar('sitecontact', 'savedata');
+        $savedata = xarModVars::get('sitecontact', 'savedata');
     }
      if (!isset($permissioncheck)) {
-        $permissioncheck = xarModGetVar('sitecontact', 'permissioncheck');
+        $permissioncheck = xarModVars::get('sitecontact', 'permissioncheck');
     }
     if (!isset($termslink)) {
-        $termslink = xarModGetVar('sitecontact', 'termslink');
+        $termslink = xarModVars::get('sitecontact', 'termslink');
     }
     if (!isset($soptions)) {
-        $soptions = xarModGetVar('sitecontact', 'soptions');
+        $soptions = xarModVars::get('sitecontact', 'soptions');
     }
 
     // Security check
@@ -116,7 +116,7 @@ function sitecontact_adminapi_createsctype($args)
               xar_notetouser,
               xar_allowcopy,
               xar_usehtmlemail,
-   	          xar_scdefaultemail,
+              xar_scdefaultemail,
               xar_scdefaultname,
               xar_scactive,
               xar_savedata,

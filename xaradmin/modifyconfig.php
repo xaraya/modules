@@ -3,7 +3,7 @@
  * Modify the configuration settings
  * 
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -22,16 +22,16 @@ function sitecontact_admin_modifyconfig()
 
        /* Specify some labels and values for display */
         $data['sctypename']= xarML('Global Configuration');
-        $data['customtext']  = xarModGetVar('sitecontact', 'customtext');
-        $data['customtitle'] = xarModGetVar('sitecontact', 'customtitle');
-        $data['optiontext']  = xarModGetVar('sitecontact', 'optiontext');
-        $data['usehtmlemail']= (int)xarModGetVar('sitecontact', 'usehtmlemail');
-        $data['allowcopy']   = (int)xarModGetVar('sitecontact', 'allowcopy');
-        $data['webconfirmtext'] = xarModGetVar('sitecontact', 'webconfirmtext');
-        $data['savedata']   = xarModGetVar('sitecontact', 'savedata');
-        $data['termslink']   = xarModGetVar('sitecontact', 'termslink'); 
-        $soptions   = xarModGetVar('sitecontact', 'soptions');
-        $data['permissioncheck']   = xarModGetVar('sitecontact', 'permissioncheck');
+        $data['customtext']  = xarModVars::get('sitecontact', 'customtext');
+        $data['customtitle'] = xarModVars::get('sitecontact', 'customtitle');
+        $data['optiontext']  = xarModVars::get('sitecontact', 'optiontext');
+        $data['usehtmlemail']= (int)xarModVars::get('sitecontact', 'usehtmlemail');
+        $data['allowcopy']   = (int)xarModVars::get('sitecontact', 'allowcopy');
+        $data['webconfirmtext'] = xarModVars::get('sitecontact', 'webconfirmtext');
+        $data['savedata']   = xarModVars::get('sitecontact', 'savedata');
+        $data['termslink']   = xarModVars::get('sitecontact', 'termslink'); 
+        $soptions   = xarModVars::get('sitecontact', 'soptions');
+        $data['permissioncheck']   = xarModVars::get('sitecontact', 'permissioncheck');
         if (!isset($soptions)) $soptions=array();
 
         $soptions=unserialize($soptions);
@@ -43,36 +43,36 @@ function sitecontact_admin_modifyconfig()
         if (!isset($data['allowbcc']))$data['allowbcc']=false;
         if (!isset($data['allowcc']))$data['allowcc']=false;
         if (!isset($data['allowanoncopy']))$data['allowanoncopy']=false;        
-        $notetouser = xarModGetVar('sitecontact', 'notetouser');
+        $notetouser = xarModVars::get('sitecontact', 'notetouser');
         if (!isset($notetouser) || (trim($notetouser)=='')) {
-            $notetouser=xarModGetVar('sitecontact','defaultnote');
+            $notetouser=xarModVars::get('sitecontact','defaultnote');
         }
         $data['notetouser']=$notetouser;
 
-        $scdefaultemail = xarModGetVar('sitecontact', 'scdefaultemail');
+        $scdefaultemail = xarModVars::get('sitecontact', 'scdefaultemail');
 
         if (!isset($scdefaultemail) || (trim($scdefaultemail)=='')) {
-            $scdefaultemail=xarModGetVar('mail','adminmail');
+            $scdefaultemail=xarModVars::get('mail','adminmail');
         }
         $data['scdefaultemail']= $scdefaultemail;
 
-       $scdefaultname = xarModGetVar('sitecontact', 'scdefaultname');
+       $scdefaultname = xarModVars::get('sitecontact', 'scdefaultname');
 
        if (!isset($scdefaultname) || ($scdefaultname)=='') {
-          $scdefaultname=xarModGetVar('mail','adminname');
+          $scdefaultname=xarModVars::get('mail','adminname');
        }
        $data['scdefaultname']= $scdefaultname;
 
 //    }
     /* global config options */
-    $data['shorturlschecked'] = xarModGetVar('sitecontact', 'SupportShortURLs') ? 'checked' : '';
-    $data['formisactive'] = xarModGetVar('sitecontact', 'scactive') ? 'checked' : '';
-    $data['scdefaultform']= xarModGetVar('sitecontact', 'defaultform');
-    $data['itemsperpage']=  xarModGetVar('sitecontact', 'itemsperpage');
-    $data['useModuleAlias']=xarModGetVar('sitecontact', 'useModuleAlias');
-    $data['aliasname']=xarModGetVar('sitecontact', 'aliasname');
-    $data['defaultsort'] = xarModGetVar('sitecontact', 'defaultsort');
-    $data['useantibot'] = xarModGetVar('sitecontact', 'useantibot');
+    $data['shorturlschecked'] = xarModVars::get('sitecontact', 'SupportShortURLs') ? 'checked' : '';
+    $data['formisactive'] = xarModVars::get('sitecontact', 'scactive') ? 'checked' : '';
+    $data['scdefaultform']= xarModVars::get('sitecontact', 'defaultform');
+    $data['itemsperpage']=  xarModVars::get('sitecontact', 'itemsperpage');
+    $data['useModuleAlias']=xarModVars::get('sitecontact', 'useModuleAlias');
+    $data['aliasname']=xarModVars::get('sitecontact', 'aliasname');
+    $data['defaultsort'] = xarModVars::get('sitecontact', 'defaultsort');
+    $data['useantibot'] = xarModVars::get('sitecontact', 'useantibot');
     
     /* Get all the sitecontact forms now so we can choose a default */
     $scformdata=xarModAPIFunc('sitecontact','user','getcontacttypes');

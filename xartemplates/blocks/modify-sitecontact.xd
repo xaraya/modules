@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
 <div class="xar-form-input-wrapper">
         <label class="xar-form-label help" title="#xarML('Choose the sitecontact form to display.')#" for="scid#$blockid#">
@@ -36,4 +37,4 @@
     <div class="xar-form-input-wrapper-after">
         <xar:mlstring>Hook Dynamic Data to sitecontact or itemtypes for Dynamic Data option</xar:mlstring>
     </div>
-</xar:if>
+</xar:if></xar:template>

@@ -3,7 +3,7 @@
  * Sitecontact itemtype management
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -41,7 +41,7 @@ function sitecontact_admin_managesctypes()
     if (!xarVarFetch('startnum',      'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
 
     if (!xarSecurityCheck('EditSiteContact')) return;
-    xarVarSetCached('sitecontact.data','scid',$scid);
+    xarCore::setCached('sitecontact.data','scid',$scid);
     // Initialise the template variables
     $data = array();
     $sctypes=array();
@@ -49,9 +49,9 @@ function sitecontact_admin_managesctypes()
     // Get current item types
     $sctypes = xarModAPIFunc('sitecontact','user', 'getcontacttypes',
                             array('startnum' => $startnum,
-                                  'numitems' => xarModGetVar('sitecontact','itemsperpage')));
+                                  'numitems' => xarModVars::get('sitecontact','itemsperpage')));
 
-    $defaultform= xarModGetVar('sitecontact','defaultform');
+    $defaultform= xarModVars::get('sitecontact','defaultform');
     $data['defaultform']=$defaultform;
     // Verify the action
     if (!isset($action) ){
@@ -61,16 +61,16 @@ function sitecontact_admin_managesctypes()
     if (!isset($scid) && $action =='view') {
          xarSessionSetVar('statusmsg','');
     }
-    
+
     // Add a pager for forms
     $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('sitecontact','user','countitems'),
         xarModURL('sitecontact', 'admin', 'managesctypes', array('action'=>$action, 'startnum' => '%%')),
-        xarModGetVar('sitecontact', 'itemsperpage'));
+        xarModVars::get('sitecontact', 'itemsperpage'));
 
 
     $data['managetype']=xarML('List Forms');
-    $formisactive = xarModGetVar('sitecontact', 'scactive') ? 'checked' : '';
+    $formisactive = xarModVars::get('sitecontact', 'scactive') ? 'checked' : '';
     $allowanoncopy = ($allowcopy && $allowanoncopy)? true :false; //only allow anonymous if allow copy for registered too
     $soptions=array('allowccs'=>$allowccs,'allowbccs'=>$allowbccs, 'allowanoncopy' => $allowanoncopy, 'useantibot'=>$useantibot);
     $soptions=serialize($soptions);
@@ -106,7 +106,7 @@ function sitecontact_admin_managesctypes()
         if (!xarSecConfirmAuthKey()) return;
 
         if ($action == 'create') {
-   
+
             $sctype = xarModAPIFunc('sitecontact','admin','createsctype',$item);
 
             if (isset($sctype) && $sctype['created']==1) {
@@ -212,7 +212,7 @@ function sitecontact_admin_managesctypes()
         $data['managetype']=xarML('Create Form');
         $data['link'] = xarModURL('sitecontact','admin','managesctypes',
                                  array('action' => 'create'));
-        $soptions =xarModGetVar('sitecontact','soptions');
+        $soptions =xarModVars::get('sitecontact','soptions');
         $soptions=unserialize($soptions);
         if (is_array($soptions)) {
             foreach ($soptions as $k=>$v) {
@@ -221,27 +221,27 @@ function sitecontact_admin_managesctypes()
         }
         if (!isset($allowbccs)) $allowbccs=false;
         if (!isset($allowccs)) $allowccs=false;
-        if (!isset($allowanoncopy)) $allowanoncopy=false;   
+        if (!isset($allowanoncopy)) $allowanoncopy=false;
         if (!isset($useantibot)) $useantibot=false;
         $item = array('sctypename'     => xarML('Unique name for new form'),
                       'sctypedesc'     => xarML('Another contact form'),
-                      'customtext'     => xarModGetVar('sitecontact','customtext'),
-                      'customtitle'    => xarModGetVar('sitecontact','customtitle'),
-                      'optiontext'     => xarModGetVar('sitecontact','optiontext'),
-                      'webconfirmtext' => xarModGetVar('sitecontact','webconfirmtext'),
-                      'notetouser'     => xarModGetVar('sitecontact','notetouser'),
-                      'allowcopy'      => xarModGetVar('sitecontact','allowcopy'),
-                      'usehtmlemail'   => xarModGetVar('sitecontact','usehtmlemail'),
-                      'scdefaultemail' => xarModGetVar('sitecontact','scdefaultemail'),
-                      'scdefaultname'  => xarModGetVar('sitecontact','scdefaultname'),
-                      'permissioncheck'=> xarModGetVar('sitecontact','permissioncheck'),
-                      'savedata'       => xarModGetVar('sitecontact','savedata'),
-                      'termslink'      => xarModGetVar('sitecontact','termslink'),
+                      'customtext'     => xarModVars::get('sitecontact','customtext'),
+                      'customtitle'    => xarModVars::get('sitecontact','customtitle'),
+                      'optiontext'     => xarModVars::get('sitecontact','optiontext'),
+                      'webconfirmtext' => xarModVars::get('sitecontact','webconfirmtext'),
+                      'notetouser'     => xarModVars::get('sitecontact','notetouser'),
+                      'allowcopy'      => xarModVars::get('sitecontact','allowcopy'),
+                      'usehtmlemail'   => xarModVars::get('sitecontact','usehtmlemail'),
+                      'scdefaultemail' => xarModVars::get('sitecontact','scdefaultemail'),
+                      'scdefaultname'  => xarModVars::get('sitecontact','scdefaultname'),
+                      'permissioncheck'=> xarModVars::get('sitecontact','permissioncheck'),
+                      'savedata'       => xarModVars::get('sitecontact','savedata'),
+                      'termslink'      => xarModVars::get('sitecontact','termslink'),
                       'allowbccs'      => $allowbccs,
                       'allowccs'       => $allowccs,
                       'allowanoncopy'  => $allowanoncopy,
                       'useantibot'     => $useantibot,
-                      'formisactive'   => (xarModGetVar('sitecontact', 'scactive') ? 'checked' : '')
+                      'formisactive'   => (xarModVars::get('sitecontact', 'scactive') ? 'checked' : '')
                 );
         $data['item']=$item;
 
@@ -263,12 +263,12 @@ function sitecontact_admin_managesctypes()
         if (!isset($data['item']['allowccs']))$data['item']['allowccs']=0;
         if (!isset($data['item']['allowanoncopy']))$data['item']['allowanoncopy']=0;
         if (!isset($data['item']['useantibot']))$data['item']['useantibot']=false;
-        if (!isset($data['item']['savedata']))$data['item']['savedata']=xarModGetVar('sitecontact','savedata')?xarModGetVar('sitecontact','savedata'):0;
-        if (!isset($data['item']['permissioncheck']))$data['item']['permissioncheck']=xarModGetVar('sitecontact','permissioncheck');
-        if (!isset($data['item']['termslink']))$data['item']['termslink']=xarModGetVar('sitecontact','termslink');
+        if (!isset($data['item']['savedata']))$data['item']['savedata']=xarModVars::get('sitecontact','savedata')?xarModVars::get('sitecontact','savedata'):0;
+        if (!isset($data['item']['permissioncheck']))$data['item']['permissioncheck']=xarModVars::get('sitecontact','permissioncheck');
+        if (!isset($data['item']['termslink']))$data['item']['termslink']=xarModVars::get('sitecontact','termslink');
 
         $data['managetype']=xarML('Edit Form Definition');
-        $data['formisactive']=xarModGetVar('sitecontact', 'scactive') ? 'checked' : '';
+        $data['formisactive']=xarModVars::get('sitecontact', 'scactive') ? 'checked' : '';
         $data['authid'] = xarSecGenAuthKey();
         $data['buttonlabel'] = xarML('Modify');
         $data['link'] = xarModURL('sitecontact','admin','managesctypes',
@@ -283,9 +283,16 @@ function sitecontact_admin_managesctypes()
         }
     } elseif ($action == 'delete') {
         xarSessionSetVar('statusmsg','');
-        $item = xarModAPIFunc('sitecontact','user','getcontacttypes', array('scid'=> $scid));
-        if (is_array($item) && count($item) == 1) {
-          $data['item']=$item[0];
+        $forminfo = xarModAPIFunc('sitecontact','user','getcontacttypes', array('scid'=> $scid));
+        $forminfo=$forminfo[0];
+        $info = xarModAPIFunc('dynamicdata','user','getobjectinfo',array('name'=> $forminfo['sctypename']));
+        $thisobject = xarModAPIFunc('dynamicdata','user','getobject', array('objectid' => $info['objectid']));
+
+        $thisitem =$thisobject->properties;
+
+        if (is_array($thisitem) ) {
+          $data['item']=$forminfo;
+          $data['objectid']=$info['objectid'];
         } else {
           //there is something wrong - the item doesn't exist
             $msg = xarML('There has been an error. Please contact the system administrator and inform them of this error message.');
@@ -308,8 +315,17 @@ function sitecontact_admin_managesctypes()
 
     } elseif ($action == 'preview') {
         xarSessionSetVar('statusmsg','');
-        $item = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
-        $data['item']=$item[0];
+
+        $item = xarModAPIFunc('sitecontact','user','getcontacttypes', array('scid'=> $scid));
+        $forminfo=$item[0];
+        $info = xarModAPIFunc('dynamicdata','user','getobjectinfo',array('name'=> $forminfo['sctypename']));
+        $thisobject = xarModAPIFunc('dynamicdata','user','getobject', array('objectid' => $info['objectid']));
+
+        $thisitem =$thisobject->properties;
+        $data['item']=$forminfo;
+
+        $data['properties']=$thisitem;
+
         if (isset($data['item']['soptions'])) {
             $soptions=unserialize($data['item']['soptions']);
             if (is_array($soptions)) {
@@ -323,9 +339,9 @@ function sitecontact_admin_managesctypes()
         if (!isset($data['item']['allowccs']))$data['item']['allowccs']=0;
         if (!isset($data['item']['allowanoncopy']))$data['item']['allowanoncopy']=0;
         if (!isset($data['item']['useantibot']))$data['item']['useantibot']=false;
-        if (!isset($data['item']['savedata']))$data['item']['savedata']=xarModGetVar('sitecontact','savedata');
-        if (!isset($data['item']['permissioncheck']))$data['item']['permissioncheck']=xarModGetVar('sitecontact','permissioncheck');
-        if (!isset($data['item']['termslink']))$data['item']['termslink']=xarModGetVar('sitecontact','termslink');
+        if (!isset($data['item']['savedata']))$data['item']['savedata']=xarModVars::get('sitecontact','savedata');
+        if (!isset($data['item']['permissioncheck']))$data['item']['permissioncheck']=xarModVars::get('sitecontact','permissioncheck');
+        if (!isset($data['item']['termslink']))$data['item']['termslink']=xarModVars::get('sitecontact','termslink');
 
         $optionset=explode(',',$item[0]['optiontext']);
         $data['optionset']=$optionset;
@@ -350,7 +366,7 @@ function sitecontact_admin_managesctypes()
          $isvalid = $object->checkInput();
 
          /*we just want a copy of data - don't need to save it in a table (no request yet anyway!) */
-         $dditems =& $object->getProperties();
+         $dditems = $thisitem;
 
          foreach ($dditems as $itemid => $fields) {
             $items[$itemid] = array();

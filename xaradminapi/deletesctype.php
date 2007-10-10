@@ -3,7 +3,7 @@
  * Site Contact
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -48,24 +48,27 @@ function sitecontact_adminapi_deletesctype($args)
                        new SystemException($msg));
         return false;
     }
-    
-   
+
+
     //delete hooks
     $item['module'] = 'sitecontact';
     $item['itemid'] = $scid;
     $item['itemtype']=$scid;
     xarModCallHooks('item', 'delete', $scid, $item);
-    
-    //Hooks aren't doing their job?
+
     //Delete the DD object associated with this form -if it exists
-    $moduleid= xarModGetIDFromName('sitecontact');    
-    $objectinfo= xarModAPIFunc('dynamicdata','user','getobjectinfo',
-                array('moduleid'=>$moduleid, 'itemtype'=>$scid));
-    $objectid= $objectinfo['objectid'];      
+    $moduleid= xarModGetIDFromName('sitecontact');
+    $forminfo = xarModAPIFunc('sitecontact','user','getcontacttypes', array('scid'=> $scid));
+    $forminfo=$forminfo[0];
+    $info = xarModAPIFunc('dynamicdata','user','getobjectinfo',array('name'=> $forminfo['sctypename']));
+    $thisobject = xarModAPIFunc('dynamicdata','user','getobject', array('objectid' => $info['objectid']));
+
+    $objectid= $info['objectid'];
+
     if (!empty($objectid)) {
                 xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
     }
-
+    xarModVars::delete('sitecontact', $forminfo['sctypename'].'_objectid');
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

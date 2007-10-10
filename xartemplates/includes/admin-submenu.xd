@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 ﻿<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:comment>Common Administration menu</xar:comment>
 <xar:style scope="module" module="base" file="navtabs" />
@@ -19,7 +20,7 @@
             <a href="&xar-modurl-sitecontact-admin-managesctypes;&amp;scid=#$scid#&amp;action=modify" >
                 <xar:mlstring>Edit Contact Form</xar:mlstring>
             </a>
-
+        </dd> 
         <xar:if condition="$activetab eq 'managesctypes' and $action eq 'preview'">
             <xar:set name="tabclass">'active'</xar:set>
         <xar:else />
@@ -46,4 +47,4 @@
     </xar:sec>    
 
 </dl>
-</div>
+</div></xar:template>

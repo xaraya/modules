@@ -104,7 +104,7 @@ function sitecontact_userapi_getall($args)
    if (isset($scid)) {
      $thistype= $scid;
    }else {
-     $thistype=xarModGetVar('sitecontact','defaultform');
+     $thistype=xarModVars::get('sitecontact','defaultform');
    }
  
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1,$bindvars );

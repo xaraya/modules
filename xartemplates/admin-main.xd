@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
 <div class="xar-mod-head">
@@ -57,7 +58,7 @@
         </li>
         </ol>
 
-        <h3><xar:mlstring>Manage Custom Contact Forms</xar:mlstring><a name="managesctypes" title="Manage Custom Forms">&nbsp;</a></h3>
+        <h3><xar:mlstring>Manage Custom Contact Forms</xar:mlstring><a name="managesctypes" title="Manage Custom Forms">&#160;</a></h3>
         <ol>
         <li><xar:mlstring>
         This option allows you to create new forms, modify, delete and preview existing ones. Sitecontact is installed with a default 'basic' form that you can start to use immediately.
@@ -73,7 +74,7 @@
         </xar:mlstring></li>
         </ol>
 
-        <h3><xar:mlstring>Modify Configuration (Global Configuration)</xar:mlstring><a name="modifyconfig" title="Modify Config">&nbsp;</a></h3>
+        <h3><xar:mlstring>Modify Configuration (Global Configuration)</xar:mlstring><a name="modifyconfig" title="Modify Config">&#160;</a></h3>
         <p style="margin-left: 1em; margin-right: 1em; text-align:left;">
         <xar:mlstring>There are a number of variables you can set in the Modify Config
                 option. These options are preset on install but you can change them. They are the GLOBAL options for sitecontact 
@@ -198,8 +199,9 @@
               </li>
          </ul>
          <p class="xar-sub">
-             <strong>&nbsp;<xar:mlstring>Sitecontact Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Doc Version</xar:mlstring> 1.6.3&nbsp; 2006-08-18
+             <strong>&#160;<xar:mlstring>Sitecontact Module Overview</xar:mlstring></strong><br />&#160;<xar:mlstring>Doc Version</xar:mlstring> 1.6.3&#160; 2006-08-18
          </p>
       </div>
 
 
+</xar:template>

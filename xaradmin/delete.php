@@ -76,11 +76,26 @@ function sitecontact_admin_delete($args)
         return $data;
     }
     if (!xarSecConfirmAuthKey()) return;
+    
+    $item = xarModAPIFunc('sitecontact','user','getcontacttypes', array('scid'=>$item['scid']));
+    $forminfo=$item[0];
+    $info = xarModAPIFunc('dynamicdata','user','getobjectinfo',array('name'=> $forminfo['sctypename']));
+    $thisobject = xarModAPIFunc('dynamicdata','user','getobject', array('objectid' => $info['objectid']));
+
+    $args['module']= 'dynamicdata';
+    $args['itemtype']= $thisobject->itemtype;
+    $args['itemid']= $scrid;
+
+    //delete the DD item
+    $itemid = $thisobject->deleteItem($args);
+
+    if (empty($itemid)) return;
+
 
     if (!xarModAPIFunc('sitecontact','admin','delete', array('scrid' => $scrid))) {
         return; // throw back
     }
-    if (!isset($scid)) $scid=xarModGetVar('sitecontact','defaultform');
+    if (!isset($scid)) $scid=xarModVars::get('sitecontact','defaultform');
 
 
     xarResponseRedirect(xarModURL('sitecontact', 'admin', 'view',array('scid'=>$scid)));

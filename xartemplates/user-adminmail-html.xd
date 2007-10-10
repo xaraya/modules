@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <p>
    <xar:mlstring>Submitted By:</xar:mlstring> #$username#
 </p>
@@ -18,13 +19,19 @@
     #$usermessage#
 </p>
 
-<xar:if condition="isset($propdata) and count($propdata) gt 0">
+<xar:set name="defaultarray">array('id','scid','cid','username','useremail','requesttext','company','usermessage',
+              'useripaddress','userreferer','sendcopy','permission','bccrecipients','ccrecipients','responsetime');</xar:set>
+
+<xar:if condition="isset($propdata) and count($propdata)">
     <xar:foreach in="$propdata" key="$name">
-<p>
-    #$propdata[$name]['label']#:  #$propdata[$name]['value']#
-</p>
+    <xar:if condition="!in_array($name,$defaultarray)">
+    <p>
+       #$propdata[$name]['label']#:  #$propdata[$name]['value']#    
+    </p>
+    </xar:if>
     </xar:foreach>
 </xar:if>
+
 
 <hr />
 <p>
@@ -45,3 +52,4 @@
 </p>
 <p>#$todaydate#</p>
 
+</xar:template>

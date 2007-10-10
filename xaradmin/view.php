@@ -18,7 +18,7 @@ function sitecontact_admin_view($args)
 {
     extract($args);
   
-    $defaultform =  (int)xarModGetVar('sitecontact','defaultform');
+    $defaultform =  (int)xarModVars::get('sitecontact','defaultform');
     // Get parameters
     if(!xarVarFetch('startnum', 'isset', $startnum, 1,    XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('scid',     'int:0:', $scid,     $defaultform, XARVAR_DONT_SET)) {return;}
@@ -49,6 +49,7 @@ function sitecontact_admin_view($args)
     $data['scid'] = $scid;
     $data['responsetime'] = $responsetime;
 
+
     if (empty($scid)) {
         if (!xarSecurityCheck('EditSiteContact',0,'ContactForm',"All:All:All")) {
             $msg = xarML('You have no permission to edit #(1)',
@@ -64,15 +65,15 @@ function sitecontact_admin_view($args)
         return;
     } elseif (!xarSecurityCheck('EditSitecontact',0,'ContactForm',"$scid:All:All")) {
         $msg = xarML('You have no permission to edit #(1)',
-                     $thisform['sctypename']);
+                     $thisform['scformtype']);
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                         new SystemException($msg));
         return;
     }
 
 
-    if (xarModGetVar('sitecontact','itemsperpage')) {
-        $numitems = xarModGetVar('sitecontact','itemsperpage');
+    if (xarModVars::get('sitecontact','itemsperpage')) {
+        $numitems = xarModVars::get('sitecontact','itemsperpage');
     } else {
         $numitems = 30;
     }
@@ -91,9 +92,14 @@ function sitecontact_admin_view($args)
     // the form
     $data['formname']= $thisform['sctypename'];
     $data['scid']    =  $thisform['scid'];
- 
+    $info = xarModAPIFunc('dynamicdata','user','getobjectinfo',array('name'=> $thisform['sctypename']));
+    $thisobject = xarModAPIFunc('dynamicdata','user','getobject', array('objectid' => $info['objectid']));
+
+    $thisitem =$thisobject->properties;
+    $data['properties']=$thisitem;
+
     $totalresponses = count($responses);
-   
+
     if ($responses != false) {
 
         for ($i = 0; $i < $totalresponses; $i++) {
@@ -122,7 +128,7 @@ function sitecontact_admin_view($args)
     $data['deletetitle'] = xarML('Delete');
     $data['edittitle'] = xarML('Edit');
     $data['viewtitle'] = xarML('View');
-  
+
     $data['responses'] = $responses;
     } else {
         $data['responses']='';
@@ -161,9 +167,9 @@ function sitecontact_admin_view($args)
     }
     $data['formfilters'] = $formfilters;
 
-    xarVarSetCached('Blocks.sitecontact','itemtype',$scid);
+    xarCore::setCached('Blocks.sitecontact','itemtype',$scid);
     if (!empty($scid) && !empty($formtypes[$scid]['sctypename'])) {
-        xarVarSetCached('Blocks.sitecontact','formname',$formtypes[$scid]['sctypename']);
+        xarCore::setCached('Blocks.sitecontact','formname',$formtypes[$scid]['sctypename']);
     }
 
     return $data;

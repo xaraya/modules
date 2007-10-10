@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <!-- common user menu for this module - remove link to the current function -->
 
@@ -24,3 +25,4 @@
 
 <!-- the specific template for the current function comes here -->
 
+</xar:template>
