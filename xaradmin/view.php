@@ -171,7 +171,11 @@ function sitecontact_admin_view($args)
     if (!empty($scid) && !empty($formtypes[$scid]['sctypename'])) {
         xarCore::setCached('Blocks.sitecontact','formname',$formtypes[$scid]['sctypename']);
     }
-
-    return $data;
+    try {
+        $templatedata = xarTplModule('sitecontact', 'admin', $template, $data, $data['formname']);
+    } catch (Exception $e) {
+        $templatedata = xarTplModule('sitecontact', 'admin', 'view', $data, $data['formname']);
+    }    
+    return $templatedata;
 }
 ?>

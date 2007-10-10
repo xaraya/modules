@@ -112,6 +112,12 @@ function sitecontact_admin_display($args)
     }        
 
     xarTplSetPageTitle(xarVarPrepForDisplay($data['formname']));
-    return $data;
+    //let's also give a custom template for admin display
+    try {
+        $templatedata = xarTplModule('sitecontact', 'admin', $template, $data, $data['formname']);
+    } catch (Exception $e) {
+        $templatedata = xarTplModule('sitecontact', 'admin', 'display', $data, $data['formname']);
+    }    
+    return $templatedata;
 }
 ?>
