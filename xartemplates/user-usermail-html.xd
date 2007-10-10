@@ -28,7 +28,7 @@
 
 <hr />
 <p>
-    #$sitename# <xar:mlstring>at</xar:mlstring> #$siteurl#
+    #$sitename# &#160;at&#160; #$siteurl#
 </p>
 <p>
     #$todaydate#
