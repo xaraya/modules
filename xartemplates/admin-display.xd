@@ -3,6 +3,9 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Sitecontact Administration</xar:mlstring></span>
 </div>
+<xar:if condition="isset($object)">
+    <xar:set name="properties">$object->getProperties()</xar:set>
+</xar:if>
 <div class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
     <h2>
@@ -120,6 +123,7 @@
         <xar:set name="defaultarray">array('id','scid','cid','username','useremail','message','requesttext','usermessage','message',
               'useripaddress','userreferer','sendcopy','permission','bccrecipients','ccrecipients','responsetime');
         </xar:set>
+        <!--
         <xar:if condition="isset($properties) and count($properties) gt 0">
             <xar:foreach in="$properties" key="$name">
                 <div class="xar-form-input-wrapper">
@@ -128,6 +132,20 @@
                 </div>
             </xar:foreach>
         </xar:if>
+-->
+ <xar:if condition="isset($properties) and count($properties) gt 0">
+                    <xar:foreach in="$properties" key="$name">
+                    <xar:if condition="!in_array($name,$defaultarray)">
+                    <div class="xar-form-input-wrapper">
+                        <label for="$properties[$name]" class="xar-form-label"  title="#$properties[$name]-&gt;label#">
+                                <xar:data-label property="$properties[$name]" label="id" />
+                        </label>
+                        <xar:data-input property="$properties[$name]" />
+                    </div>
+                    </xar:if>
+                    </xar:foreach>
+                </xar:if>
+
 
     </fieldset>
     <xar:if condition="!empty($hooks)">
