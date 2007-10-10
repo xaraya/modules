@@ -24,7 +24,7 @@ function sitecontact_admin_updateconfig()
 
     if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'sitecontact_general', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('tabmodule', 'str:1:100', $tabmodule, 'sitecontact', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('SupportShortURLs', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('scactive', 'checkbox', $scactive, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('useantibot', 'checkbox', $useantibot, true, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('customtext', 'str:1:', $customtext, '', XARVAR_NOT_REQUIRED)) return;
@@ -37,7 +37,7 @@ function sitecontact_admin_updateconfig()
     if (!xarVarFetch('usehtmlemail', 'checkbox', $usehtmlemail, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('scdefaultemail', 'str:1:', $scdefaultemail,'', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('scdefaultname', 'str:1:', $scdefaultname, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('aliasname', 'str:1:', $aliasname, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('useModuleAlias', 'str:1:', $aliasname, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('modulealias','checkbox', $modulealias,false,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('defaultform','int:1:', $defaultform, 1,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemsperpage','int:1:', $itemsperpage, 10, XARVAR_NOT_REQUIRED)) {return;}
