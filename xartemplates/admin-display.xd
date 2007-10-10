@@ -119,19 +119,14 @@
     <xar:data-getitem name="$properties" module="dynamicdata" itemtype="$args['itemtype']" itemid="$args['itemid']" />
         <xar:set name="defaultarray">array('id','scid','cid','username','useremail','message','requesttext','usermessage','message',
               'useripaddress','userreferer','sendcopy','permission','bccrecipients','ccrecipients','responsetime');</xar:set>
-        <xar:if condition="isset($properties) and count($properties) gt 0">
-            <xar:foreach in="$properties" key="$name">
-                <xar:if condition="!in_array($name,$defaultarray)">
+          <xar:if condition="isset($properties) and count($properties) gt 0">
+                    <xar:foreach in="$properties" key="$name">
                     <div class="xar-form-input-wrapper">
-                        <label for="$properties[$name]" class="xar-form-label"  title="#$properties[$name]#">
-                                <xar:data-label property="$properties[$name]" label="id" />
-                        </label>
-                        <xar:data-output property="$properties[$name]" />
+                        <xar:data-label property="$properties[$name]" label="id" />
+                        <xar:data-input property="$properties[$name]" value="" />
                     </div>
+                    </xar:foreach>
                 </xar:if>
-            </xar:foreach>
-        </xar:if>
-
 
     </fieldset>
     <xar:if condition="!empty($hooks)">

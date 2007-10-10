@@ -158,18 +158,14 @@
             <xar:set name="info">xarModAPIFunc('dynamicdata','user','getobjectinfo', array('name' => $sctypename))</xar:set>
             <xar:set name="thisobject">xarModAPIFunc('dynamicdata','user','getobject', array('objectid' => $info['objectid']))</xar:set>
             <xar:set name="properties">$thisobject->properties</xar:set>
-                 <xar:if condition="isset($properties) and count($properties) gt 0">
+               <xar:if condition="isset($properties) and count($properties) gt 0">
                     <xar:foreach in="$properties" key="$name">
-                    <xar:if condition="!in_array($name,$defaultarray)">
-                        <div class="xar-form-input-wrapper">
-                            <label for="$properties[$name]" class="xar-form-label"  title="#$properties[$name]#">
-                                <xar:data-label property="$properties[$name]" label="id" />
-                            </label>
-                            <xar:data-input property="$properties[$name]" />
-                        </div>
-                    </xar:if>
-                     </xar:foreach>
-                 </xar:if>
+                    <div class="xar-form-input-wrapper">
+                        <xar:data-label property="$properties[$name]" label="id" />
+                        <xar:data-input property="$properties[$name]" value="" />
+                    </div>
+                    </xar:foreach>
+                </xar:if>
            <xar:if condition="($allowcopy eq 1 and xarUserIsLoggedIn()) or ($allowcopy eq 1 and $allowanoncopy eq 1)">
             <div class="xar-form-input-wrapper-after">
                  <input type="checkbox" name="sendcopy" id="sendcopy" value="1" checked="checked" />

@@ -184,10 +184,22 @@ function sitecontact_user_contactus($args)
     //Begin 2x
     $info = xarModAPIFunc('dynamicdata','user','getobjectinfo',array('name'=> $data['sctypename']));
     $object = & DataObjectMaster::getObject(array('objectid' => $info['objectid']));
+
+    $dateproperty = DataPropertyMaster::getProperty(array('type' =>'formatteddate'));
+    $timeproperty = DataPropertyMaster::getProperty(array('type' =>'formattedtime'));
+
     $object->checkInput();
     $properties = $object->properties;
-    var_dump($object->properties['departure_date']->value);exit;
 
+   //var_dump($object->properties['flightlegdata[0][1]']->value);echo "</pre>";die();
+/*
+    $flightlegdata1 = $test1 ? $dateproperty->getValue() :mktime(0,0,0,date("m"),date("d"),date("Y"));
+    //$flightlegdata2 = $test2 ? $dateproperty->getValue() :mktime(0,0,0,date("m"),date("d"),date("Y"));
+   echo "<pre>";var_dump($flightlegdata[0][startdate]);echo"<br />";
+    var_dump($properties);echo"<br />";
+
+     echo "</pre>";die();
+*/
     //End 2x
     /* comment out 1x for now
     if (xarModIsAvailable('dynamicdata')) {
