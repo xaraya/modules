@@ -151,7 +151,7 @@
         </div> 
            <p class="xar-form-input-wrapper-after">
                     <xar:mlstring>
-                    Separate emails by colons (;) or optionally add a name for each email by separating email and name by a comma eg
+                    Separate emails by semicolons (;) or optionally add a name for each email by separating email and name by a comma eg
                     </xar:mlstring> <strong>email1@somedomain.com,SomeName;</strong>
              </p>        
         <xar:else />
