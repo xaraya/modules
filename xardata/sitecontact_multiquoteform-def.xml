@@ -1,7 +1,7 @@
 <object name="multiquoteform">
   <objectid>30</objectid>
   <label>Skylliance Quotation</label>
-  <parent>basicform</parent>
+  <parent>sitecontact_basicform</parent>
   <moduleid>182</moduleid>
   <itemtype>20</itemtype>
   <urlparam>itemid</urlparam>
