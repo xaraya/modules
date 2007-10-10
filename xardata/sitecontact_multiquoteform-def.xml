@@ -1,16 +1,16 @@
 <object name="multiquoteform">
-  <objectid>49</objectid>
+  <objectid>30</objectid>
   <label>Skylliance Quotation</label>
   <parent>basicform</parent>
   <moduleid>182</moduleid>
-  <itemtype>22</itemtype>
+  <itemtype>20</itemtype>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
   <config></config>
   <isalias>1</isalias>
   <properties>
     <property name="flight_type">
-      <id>413</id>
+      <id>247</id>
       <label>Flight Type</label>
       <type>radio</type>
       <default></default>
@@ -20,17 +20,17 @@
       <validation>Round Trip;One Way;Multi City</validation>
     </property>
     <property name="flightlegdata">
-      <id>414</id>
+      <id>248</id>
       <label>Flight Leg</label>
       <type>subform</type>
       <default></default>
       <source>dynamic_data</source>
       <status>33</status>
       <order>2</order>
-      <validation>a:4:{s:8:&quot;objectid&quot;;s:2:&quot;50&quot;;s:5:&quot;style&quot;;s:10:&quot;serialized&quot;;s:9:&quot;fieldlist&quot;;a:4:{i:0;s:3:&quot;leg&quot;;i:1;s:4:&quot;date&quot;;i:2;s:4:&quot;time&quot;;i:3;s:10:&quot;passengers&quot;;}s:6:&quot;repeat&quot;;s:1:&quot;2&quot;;}</validation>
+      <validation>a:4:{s:8:&quot;objectid&quot;;s:2:&quot;29&quot;;s:5:&quot;style&quot;;s:10:&quot;serialized&quot;;s:9:&quot;fieldlist&quot;;a:4:{i:0;s:3:&quot;leg&quot;;i:1;s:4:&quot;date&quot;;i:2;s:4:&quot;time&quot;;i:3;s:10:&quot;passengers&quot;;}s:6:&quot;repeat&quot;;s:1:&quot;2&quot;;}</validation>
     </property>
     <property name="additional_request">
-      <id>415</id>
+      <id>249</id>
       <label>Additional Request</label>
       <type>textarea</type>
       <default></default>
@@ -40,27 +40,27 @@
       <validation></validation>
     </property>
     <property name="aircraft_type">
-      <id>416</id>
+      <id>250</id>
       <label>Aircraft Type</label>
       <type>dropdown</type>
       <default></default>
       <source>dynamic_data</source>
       <status>34</status>
       <order>13</order>
-      <validation>Small;Medium;Large;Widebody</validation>
+      <validation>small,Small;midsize,Midsize;large,Large;widebody,Widebody</validation>
     </property>
     <property name="aircraft_model">
-      <id>417</id>
+      <id>251</id>
       <label>Aircraft Model</label>
       <type>dropdown</type>
       <default></default>
       <source>dynamic_data</source>
       <status>34</status>
       <order>14</order>
-      <validation>xarModAPIFunc('bookings','user','getobjects')</validation>
+      <validation></validation>
     </property>
     <property name="company">
-      <id>418</id>
+      <id>252</id>
       <label>Company</label>
       <type>textbox</type>
       <default></default>
@@ -70,7 +70,7 @@
       <validation></validation>
     </property>
     <property name="address">
-      <id>419</id>
+      <id>253</id>
       <label>Address</label>
       <type>textbox</type>
       <default></default>
@@ -80,7 +80,7 @@
       <validation></validation>
     </property>
     <property name="post_code">
-      <id>420</id>
+      <id>254</id>
       <label>Post Code</label>
       <type>textbox</type>
       <default></default>
@@ -90,7 +90,7 @@
       <validation></validation>
     </property>
     <property name="city">
-      <id>421</id>
+      <id>255</id>
       <label>City</label>
       <type>textbox</type>
       <default></default>
@@ -100,7 +100,7 @@
       <validation></validation>
     </property>
     <property name="country">
-      <id>422</id>
+      <id>256</id>
       <label>Country</label>
       <type>countrylisting</type>
       <default></default>
@@ -110,7 +110,7 @@
       <validation></validation>
     </property>
     <property name="phone">
-      <id>423</id>
+      <id>257</id>
       <label>Phone</label>
       <type>textbox</type>
       <default></default>
@@ -120,7 +120,7 @@
       <validation></validation>
     </property>
     <property name="mobile">
-      <id>424</id>
+      <id>258</id>
       <label>Mobile</label>
       <type>textbox</type>
       <default></default>

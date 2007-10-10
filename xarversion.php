@@ -1,6 +1,6 @@
 <?php
 /**
- * Sitecontact package 
+ * Sitecontact package
  *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation

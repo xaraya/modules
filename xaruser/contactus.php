@@ -27,16 +27,16 @@ function sitecontact_user_contactus($args)
     if (!xarVarFetch('requesttext', 'str:1:', $requesttext, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('company', 'str:1:', $company, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('usermessage', 'str:1:', $usermessage, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('useripaddress', 'str:1:', $dummy, '', XARVAR_NOT_REQUIRED)) return;
+//    if (!xarVarFetch('useripaddress', 'str:1:', $dummy, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('userreferer', 'str:1:', $userreferer, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sendcopy', 'checkbox', $sendcopy, true, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sctypename', 'str:0:', $sctypename, NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('scform',     'str:0:', $scform, NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('scid',       'int:1:', $scid,       $defaultformid, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('bccrecipients', 'str:1', $bccrecipients, '')) return;
-    if (!xarVarFetch('ccrecipients', 'str:1', $ccrecipients, '')) return;
+//    if (!xarVarFetch('bccrecipients', 'str:1', $bccrecipients, '')) return;
+//    if (!xarVarFetch('ccrecipients', 'str:1', $ccrecipients, '')) return;
     if (!xarVarFetch('return_url',  'isset', $return_url, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('savedata',     'checkbox', $savedata, 0, XARVAR_NOT_REQUIRED)) return;
+//    if (!xarVarFetch('savedata',     'checkbox', $savedata, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('permissioncheck', 'checkbox', $permissioncheck, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('permission',   'checkbox', $permission, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('termslink',    'str:1:',   $termslink, '', XARVAR_NOT_REQUIRED)) return;
@@ -44,36 +44,30 @@ function sitecontact_user_contactus($args)
     /* Confirm authorisation code. */
 //    if (!xarSecConfirmAuthKey()) return;
 
-    $formdata=array();
-    if (isset($sctypename) && trim($sctypename) !=''){
-        $sctypename=trim($sctypename);
-    }
-    if (isset($scform) && (trim($scform) !='')) { //provide alternate entry name
-      $sctypename=trim($scform);
-    }
-   //Have we got a form that is available and active?
-    if (isset($sctypename) && trim($sctypename) !='') {
+    $formdata = array();
+    if (!empty($sctypename)) $sctypename=trim($sctypename);
+    if (!empty($scform)) $sctypename=trim($scform); //provide alternate entry name
+
+    //Have we got a form that is available and active?
+    if (!empty($sctypename)) {
        $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('sctypename'=> $sctypename));
-    }elseif (isset($scid) && is_int($scid)) {
+    }elseif (!empty($scid)) {
        $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $scid));
     } else {
         $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $defaultformid));
     }
 
     //Have we got an active form
-    if (!is_array($formdata)) { //exists but not active
+    if (!empty($scid)) { //exists but not active
       //fallback to default form again
       $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $defaultformid));
     }
-    $formdata=$formdata[0];
+    $formdata = $formdata[0];
 
-    if ($formdata['scactive'] !=1) { //form but not active
-       $msg = xarML('The form requested is not available');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
+    if ($formdata['scactive'] != 1) { //form but not active
+        $msg = xarML('The form requested is not available');
+        throw new BadParameterException(null,$msg);
     }
-
-    $data['submit'] = xarML('Submit');
 
     //now check for the options, and including antibot and - bbccrecipient and ccrecipient switch Bug 5799
      if (isset($formdata['soptions'])) {

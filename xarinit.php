@@ -56,54 +56,6 @@ function sitecontact_init()
     $result = &$dbconn->Execute($query);
     if (!$result) return;
 
-    /* Create a default form */
-    $defaultemail=  xarModVars::get('mail', 'adminmail');
-    $sitecontactTable = $xarTables['sitecontact'];
-
-    // Begin 2x
-    // Do this via DD import -
-  /*  $query = "INSERT INTO $sitecontactTable
-                  (xar_scid,
-                   xar_sctypename,
-                   xar_sctypedesc,
-                   xar_customtext,
-                   xar_customtitle,
-                   xar_optiontext,
-                   xar_webconfirmtext,
-                   xar_notetouser,
-                   xar_allowcopy,
-                   xar_usehtmlemail,
-                   xar_scdefaultemail,
-                   xar_scdefaultname,
-                   xar_scactive,
-                   xar_savedata,
-                   xar_permissioncheck,
-                   xar_termslink,
-                   xar_soptions)
-                VALUES (1,
-                        'basic',
-                        'Basic contact form',
-                        'Thank you for visiting. We appreciate your feedback.\nPlease let us know how we can assist you.',
-                        'Contact and Feedback',
-                        'Information request,\nGeneral assistance,\nWebsite issue,\nSpam report,\nComplaint,\nThank you!',
-                        'Your message has been sent. Thank you for contacting us.',
-                        'Dear %%username%%\n\nThis message confirms your email has been sent.\n\nThank you for your feedback.\n\nAdministrator\n%%sitename%%\n-------------------------------------------------------------',
-                        '0',
-                        '0',
-                        ?,
-                        'Site Admin',
-                        1,
-                        0,
-                        0,
-                        '',
-                        ''
-                        )";
-
-    $bindvars = array($defaultemail);
-    $result = &$dbconn->Execute($query,$bindvars);
-           if (!$result) {return;}
-*/
-    // End 2x
 
     /* Set up a table for holding any saved data, if that option is chosen */
     $sitecontactResponseTable = $xarTables['sitecontact_response'];
@@ -131,6 +83,11 @@ function sitecontact_init()
     $result = &$dbconn->Execute($query);
     if (!$result) return;
 
+//    $defaultemail=  xarModVars::get('mail', 'adminmail');
+
+    xarModVars::set('sitecontact', 'SupportShortURLs', 0);
+    xarModVars::set('sitecontact', 'useModuleAlias',0);
+    xarModVars::set('sitecontact', 'aliasname','');
     xarModVars::set('sitecontact', 'allowcc', false);
     xarModVars::set('sitecontact', 'allowbcc', false);
     xarModVars::set('sitecontact', 'savedata', 0);
@@ -141,9 +98,6 @@ function sitecontact_init()
     xarModVars::set('sitecontact', 'defaultform',1);
     xarModVars::set('sitecontact', 'defaultsort','scid');
     xarModVars::set('sitecontact', 'scactive', 1);
-    xarModVars::set('sitecontact', 'SupportShortURLs', 0);
-    xarModVars::set('sitecontact', 'useModuleAlias',0);
-    xarModVars::set('sitecontact', 'aliasname','');
     xarModVars::set('sitecontact', 'usehtmlemail', 0);
     xarModVars::set('sitecontact', 'allowcopy', 0); //bug 5800 set it off by default
     xarModVars::set('sitecontact', 'allowanoncopy', 0); //bug 5800 set it off by default
@@ -204,14 +158,6 @@ Administrator
                             )
                     );
     xarDefineInstance('sitecontact', 'ContactForm', $instances);
-
-    // Register our hooks that we are providing to other modules.  The example
-    // module shows an example hook in the form of the user menu.
- /*   if (!xarModRegisterHook('item', 'usermenu', 'GUI',
-                            'sitecontact', 'user', 'usermenu')) {
-        return false;
-    }
- */
 
     /**
      * Register the module components that are privileges objects
