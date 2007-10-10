@@ -103,9 +103,9 @@
         </label>
             <textarea name="webconfirmtext" id="webconfirmtext" rows="5" cols="50">#$item.webconfirmtext#</textarea>
         </div>
-        
+
        <div class="xar-form-input-wrapper-after">
-            <xar:set name="onchange">"this.form.action='" . xarServerGetCurrentURL() . "';this.form.submit();"</xar:set>       
+            <xar:set name="onchange">"this.form.action='" . xarServerGetCurrentURL() . "';this.form.submit();"</xar:set>
             <xar:if condition="$item.adminccs">
                 <input type="checkbox" name="adminccs" id="adminccs" value="1" checked="checked" onchange="#$onchange#" />
             <xar:else />
@@ -115,7 +115,7 @@
                <xar:mlstring>Allow Admin to enter CC Recipient list?</xar:mlstring>
             </label>
         </div>
-        <xar:if condition="$item.adminccs">        
+        <xar:if condition="$item.adminccs">
         <div class="xar-form-input-wrapper">
             <xar:data-label label="Admin CC List" for="admincclist" />
             <xar:data-input type="textbox" name="admincclist" id="admincclist" size="255" value="$item['admincclist']"/>
@@ -123,8 +123,8 @@
                     <xar:mlstring>
                     Separate emails by colons (;) or optionally add a name for each email by separating email and name by a comma eg
                     </xar:mlstring> <strong>email1@somedomain.com,SomeName;</strong>
-             </p>        
-        </div> 
+             </p>
+        </div>
         <xar:else />
             <input type="hidden" name="admincclist" id="admincclist1" value="" />
         </xar:if>
@@ -374,7 +374,7 @@
         </div>
 
        <div class="xar-form-input-wrapper-after">
-            <xar:set name="onchange">"this.form.submit();"</xar:set>       
+            <xar:set name="onchange">"this.form.submit();"</xar:set>
             <xar:if condition="$item.adminccs">
                 <input type="checkbox" name="adminccs" id="adminccs" value="1" checked="checked" onchange="#$onchange#" />
             <xar:else />
@@ -384,8 +384,8 @@
                <xar:mlstring>Allow Admin to enter CC Recipient list?</xar:mlstring>
             </label>
         </div>
-        <xar:if condition="$item.adminccs">     
-        
+        <xar:if condition="$item.adminccs">
+
         <div class="xar-form-input-wrapper">
             <xar:data-label label="Admin CC List" for="admincclist" />
             <xar:data-input type="textbox" name="admincclist" id="admincclist1" size="255" value="$item['admincclist']" />
@@ -394,10 +394,10 @@
                     Separate emails by colons (;) or optionally add a name for each email by separating email and name by a comma eg
                     </xar:mlstring> <strong>email1@somedomain.com,SomeName;</strong>
              </p>
-            </div> 
+            </div>
         <xar:else />
             <input type="hidden" name="admincclist" id="admincclist1" value="" />
-        </xar:if>     
+        </xar:if>
        <div class="xar-form-input-wrapper-after">
             <xar:if condition="$item.allowccs eq 1">
                 <input type="checkbox" name="allowccs" id="allowccs" value="1" checked="checked" />
@@ -789,8 +789,9 @@
 <xar:comment> ****** VIEW LISTING OF SITECONTACT FORMS BY DEFAULT ****** </xar:comment>
 <xar:else />
     <h3 style="text-align: left;"><a href="#$newurl#"><xar:mlstring>Create New Sitecontact Form</xar:mlstring></a></h3>
-    <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
-        <p class="xar-error">#xarSessionGetVar('statusmsg')#</p>
+    <xar:if condition="xarSession::getVar('statusmsg') ne ''">
+        <xar:set name="status">xarSession::getVar('statusmsg')</xar:set>
+        <p class="xar-error">$status</p>
     </xar:if>
     <p><xar:mlstring>NOTE: The Preview link uses the default SiteContact template. If you are having troubles with a custom sitecontact form and a custom template, you can test the sitecontact form with the default system template here. </xar:mlstring></p>
     <table class="xar-fullwidth">

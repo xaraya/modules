@@ -32,14 +32,14 @@ function sitecontact_admin_display($args)
     if (!empty($objectid)) {
         $scrid = $objectid;
     }
-    $lastview = xarSessionGetVar('Sitecontact.LastView');
+    $lastview = xarSession::getVar('Sitecontact.LastView');
     if (!empty($lastview)) {
         $lastview= unserialize($lastview);
     }
     //$data = xarModAPIFunc('sitecontact', 'admin', 'menu');
-    
+
     $data['status'] = '';
-    
+
     $item = xarModAPIFunc('sitecontact','user','get',array('scrid' => $scrid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; /* throw back */
     $scid=$item['scid'];
@@ -70,7 +70,7 @@ function sitecontact_admin_display($args)
     $data['permission'] = $item['permission'];
     $data['bccrecipients'] = isset($item['bccrecipients'])?unserialize($item['bccrecipients']):'';
     $data['ccrecipients'] = isset($item['ccrecipients'])?unserialize($item['ccrecipients']):'';
-    $data['responsetime'] = $item['responsetime'];            
+    $data['responsetime'] = $item['responsetime'];
     $data['scrid'] = $scrid;
     $data['scid'] = $item['scid'];
     $data['formname']=$thisform['sctypename'];
@@ -109,7 +109,7 @@ function sitecontact_admin_display($args)
         $data['hookoutput'] = '';
     } else {
         $data['hookoutput'] = $hooks;
-    }        
+    }
 
     xarTplSetPageTitle(xarVarPrepForDisplay($data['formname']));
     //let's also give a custom template for admin display
@@ -117,7 +117,7 @@ function sitecontact_admin_display($args)
         $templatedata = xarTplModule('sitecontact', 'admin', $template, $data, $data['formname']);
     } catch (Exception $e) {
         $templatedata = xarTplModule('sitecontact', 'admin', 'display', $data, $data['formname']);
-    }    
+    }
     return $templatedata;
 }
 ?>

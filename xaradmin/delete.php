@@ -35,7 +35,7 @@ function sitecontact_admin_delete($args)
     if (!xarSecurityCheck('DeleteSiteContact', 1, 'ContactForm', "$item[scid]:All:All")) {
         return;
     }
-    $lastview = xarSessionGetVar('Sitecontact.LastView');
+    $lastview = xarSession::getVar('Sitecontact.LastView');
     if (!empty($lastview)) {
         $lastview= unserialize($lastview);
     }
@@ -76,7 +76,7 @@ function sitecontact_admin_delete($args)
         return $data;
     }
     if (!xarSecConfirmAuthKey()) return;
-    
+
     $item = xarModAPIFunc('sitecontact','user','getcontacttypes', array('scid'=>$item['scid']));
     $forminfo=$item[0];
     $info = xarModAPIFunc('dynamicdata','user','getobjectinfo',array('name'=> $forminfo['sctypename']));

@@ -74,7 +74,7 @@ function sitecontact_sitecontactblock_display($blockinfo)
     $messagetext = trim($formdata['webconfirmtext']);
     $item['messagetext']=$messagetext;
 
-    $returnedform = xarSessionGetVar('sitecontact.sent');
+    $returnedform = xarSession::getVar('sitecontact.sent');
 
    if ($returnedform != 1) {
      /*  Generate a onetime authorisation code for this operation */
@@ -203,13 +203,13 @@ function sitecontact_sitecontactblock_display($blockinfo)
         $item['AntiBot_Available'] = TRUE;
     }
     $item['showdd']=$vars['showdd'];
-    xarSessionSetVar('sitecontact.sent',0);
+    xarSession::setVar('sitecontact.sent',0);
     $item['return_url'] = xarServerGetCurrentUrl(array(),false);
   }else {
         //just confirm
         $item['returnedform']= $returnedform;
        $item['messagetext']=  $messagetext;
-       xarSessionSetVar('sitecontact.sent',0);
+       xarSession::setVar('sitecontact.sent',0);
   }
   // Populate block info and pass to theme
     $blockinfo['content'] = $item;

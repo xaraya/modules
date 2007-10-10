@@ -17,20 +17,20 @@
 function sitecontact_admin_view($args)
 {
     extract($args);
-  
+
     $defaultform =  (int)xarModVars::get('sitecontact','defaultform');
     // Get parameters
     if(!xarVarFetch('startnum', 'isset', $startnum, 1,    XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('scid',     'int:0:', $scid,     $defaultform, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('itemtype', 'int:0:', $itemtype, NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('responsetime',  'int:0:', $responsetime,  NULL, XARVAR_NOT_REQUIRED)) {return;}
-  
+
     // Default parameters
     if (!isset($scid)) {
         if (!empty($itemtype) && is_numeric($itemtype)) {
             // when we use some categories filter
             $scid = $itemtype;
-        } 
+        }
     }
 
     if (!isset($scid) || empty($scid)) {
@@ -87,7 +87,7 @@ function sitecontact_admin_view($args)
     $lastview = array('scid' => $scid,
                       'responsetime' => $responsetime,
                       'startnum' => $startnum > 1 ? $startnum : null);
-    xarSessionSetVar('Sitecontact.LastView',serialize($lastview));
+    xarSession::setVar('Sitecontact.LastView',serialize($lastview));
 
     // the form
     $data['formname']= $thisform['sctypename'];
@@ -175,7 +175,7 @@ function sitecontact_admin_view($args)
         $templatedata = xarTplModule('sitecontact', 'admin', $template, $data, $data['formname']);
     } catch (Exception $e) {
         $templatedata = xarTplModule('sitecontact', 'admin', 'view', $data, $data['formname']);
-    }    
+    }
     return $templatedata;
 }
 ?>
