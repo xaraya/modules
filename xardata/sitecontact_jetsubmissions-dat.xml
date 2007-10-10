@@ -1,0 +1,30 @@
+  <items>
+  <sitecontact_definition itemid="3">
+    <id>3</id>
+    <sctypename>jetsubmissions</sctypename>
+    <sctypedesc>Jet Aviation Contact</sctypedesc>
+    <customtext>If you prefer, please use the form below to contact us and we will respond to you as soon as possible. Thank you.</customtext>
+    <customtitle>Contact Jet Aviation</customtitle>
+    <optiontext>Information request</optiontext>
+    <webconfirmtext>Thank you for contacting us. Your message has been successfully sent.
+    </webconfirmtext>
+    <notetouser>Dear %%username%%
+
+This message confirms your request for a quotation has been sent.
+
+Thank you for your interest.
+
+Sales Manager
+%%sitename%%
+-------------------------------------------------------------</notetouser>
+    <allowcopy>1</allowcopy>
+    <usehtmlemail>1</usehtmlemail>
+    <defaultemail>admin@yoursite.com</defaultemail>
+    <defaultname>Sales Manager</defaultname>
+    <active>1</active>
+    <savedata>1</savedata>
+    <permissioncheck>0</permissioncheck>
+    <termslink></termslink>
+    <options>a:4:{s:8:&quot;allowccs&quot;;b:0;s:9:&quot;allowbccs&quot;;b:0;s:13:&quot;allowanoncopy&quot;;b:1;s:10:&quot;useantibot&quot;;b:0;}</options>
+  </sitecontact_definition>
+</items>

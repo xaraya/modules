@@ -1,0 +1,35 @@
+<items>
+  <sitecontact_definition itemid="1">
+    <id>1</id>
+    <sctypename>sitecontact_basicform</sctypename>
+    <sctypedesc>Basic contact form</sctypedesc>
+    <customtext>Thank you for visiting. We appreciate your feedback.
+Please let us know how we can assist you.</customtext>
+    <customtitle>Contact and Feedback</customtitle>
+    <optiontext>Information request,
+General assistance,
+Website issue,
+Spam report,
+Complaint,
+Thank you!</optiontext>
+    <webconfirmtext>Your message has been sent. Thank you for contacting us.</webconfirmtext>
+    <notetouser>Dear %%username%%
+
+This message confirms your email has been sent.
+
+Thank you for your feedback.
+
+Administrator
+%%sitename%%
+-------------------------------------------------------------</notetouser>
+    <allowcopy>0</allowcopy>
+    <usehtmlemail>0</usehtmlemail>
+    <defaultemail>none@none.com</defaultemail>
+    <defaultname>Site Admin</defaultname>
+    <active>1</active>
+    <savedata>0</savedata>
+    <permissioncheck>0</permissioncheck>
+    <termslink></termslink>
+    <options></options>
+  </sitecontact_definition>
+</items>

@@ -1,0 +1,43 @@
+<object name="flightdata">
+  <objectid>33</objectid>
+  <label>Flight Data</label>
+  <parent>objects</parent>
+  <moduleid>182</moduleid>
+  <itemtype>23</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="id">
+      <id>277</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>65</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="flight_type">
+      <id>278</id>
+      <label>Flight_Type</label>
+      <type>radio</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>33</status>
+      <order>2</order>
+      <validation>Round Trip;One Way;Multi City</validation>
+    </property>
+    <property name="flight_legs">
+      <id>279</id>
+      <label>Flight Legs</label>
+      <type>subform</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>65</status>
+      <order>3</order>
+      <validation>a:4:{s:8:&quot;objectid&quot;;s:2:&quot;29&quot;;s:5:&quot;style&quot;;s:10:&quot;serialized&quot;;s:9:&quot;fieldlist&quot;;a:4:{i:0;s:3:&quot;leg&quot;;i:1;s:4:&quot;date&quot;;i:2;s:4:&quot;time&quot;;i:3;s:10:&quot;passengers&quot;;}s:6:&quot;repeat&quot;;s:1:&quot;2&quot;;}</validation>
+    </property>
+  </properties>
+</object>

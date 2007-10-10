@@ -1,0 +1,153 @@
+<object name="sitecontact_basicform">
+  <objectid>26</objectid>
+  <label>Basic Form</label>
+  <moduleid>182</moduleid>
+  <itemtype>18</itemtype>
+  <urlparam>itemid</urlparam>
+  <parent>objects</parent>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="id">
+      <id>200</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_sitecontact_response.xar_scrid</source>
+      <status>65</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="scid">
+      <id>201</id>
+      <label>SCID</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_sitecontact_response.xar_scid</source>
+      <status>33</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="username">
+      <id>202</id>
+      <label>User Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_sitecontact_response.xar_username</source>
+      <status>33</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="useremail">
+      <id>203</id>
+      <label>User Email</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_sitecontact_response.xar_useremail</source>
+      <status>33</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="requesttext">
+      <id>204</id>
+      <label>Request Text</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>xar_sitecontact_response.xar_requesttext</source>
+      <status>34</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="company">
+      <id>205</id>
+      <label>Company</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_sitecontact_response.xar_company</source>
+      <status>33</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="usermessage">
+      <id>206</id>
+      <label>User Message</label>
+      <type>textarea</type>
+      <default></default>
+      <source>xar_sitecontact_response.xar_usermessage</source>
+      <status>34</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+    <property name="useripaddress">
+      <id>207</id>
+      <label>User IP</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_sitecontact_response.xar_useripaddress</source>
+      <status>34</status>
+      <order>8</order>
+      <validation></validation>
+    </property>
+    <property name="userreferer">
+      <id>208</id>
+      <label>User Referer</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_sitecontact_response.xar_userreferer</source>
+      <status>34</status>
+      <order>9</order>
+      <validation></validation>
+    </property>
+    <property name="sendcopy">
+      <id>209</id>
+      <label>Send Copy</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>xar_sitecontact_response.xar_sendcopy</source>
+      <status>34</status>
+      <order>10</order>
+      <validation></validation>
+    </property>
+    <property name="permission">
+      <id>210</id>
+      <label>Permission</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>xar_sitecontact_response.xar_permission</source>
+      <status>34</status>
+      <order>11</order>
+      <validation></validation>
+    </property>
+    <property name="bccrecipients">
+      <id>211</id>
+      <label>BCC</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_sitecontact_response.xar_bccrecipients</source>
+      <status>34</status>
+      <order>12</order>
+      <validation></validation>
+    </property>
+    <property name="ccrecipients">
+      <id>212</id>
+      <label>CC</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_sitecontact_response.xar_ccrecipients</source>
+      <status>34</status>
+      <order>13</order>
+      <validation></validation>
+    </property>
+    <property name="responsetime">
+      <id>213</id>
+      <label>Response Time</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_sitecontact_response.xar_responsetime</source>
+      <status>34</status>
+      <order>14</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

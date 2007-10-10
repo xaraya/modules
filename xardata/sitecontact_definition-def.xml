@@ -1,0 +1,183 @@
+<object name="sitecontact_definition">
+  <objectid>45</objectid>
+  <label>Sitecontact Definition</label>
+  <moduleid>182</moduleid>
+  <itemtype>14</itemtype>
+  <urlparam>itemid</urlparam>
+  <parent>objects</parent>
+  <maxid>2</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="id">
+      <id>593</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_sitecontact.xar_scid</source>
+      <status>65</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="sctypename">
+      <id>594</id>
+      <label>Type Name</label>
+      <type>objectref</type>
+      <default></default>
+      <source>xar_sitecontact.xar_sctypename</source>
+      <status>33</status>
+      <order>3</order>
+      <validation>objects:name:name</validation>
+    </property>
+    <property name="sctypedesc">
+      <id>595</id>
+      <label>Type Description</label>
+      <type>textarea</type>
+      <default></default>
+      <source>xar_sitecontact.xar_sctypedesc</source>
+      <status>34</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="customtext">
+      <id>596</id>
+      <label>Custom Text</label>
+      <type>textarea</type>
+      <default></default>
+      <source>xar_sitecontact.xar_customtext</source>
+      <status>34</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="customtitle">
+      <id>597</id>
+      <label>Custom Title</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_sitecontact.xar_customtitle</source>
+      <status>34</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="optiontext">
+      <id>598</id>
+      <label>Option Text</label>
+      <type>textarea</type>
+      <default></default>
+      <source>xar_sitecontact.xar_optiontext</source>
+      <status>34</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+    <property name="webconfirmtext">
+      <id>599</id>
+      <label>Confirmation Text</label>
+      <type>textarea</type>
+      <default></default>
+      <source>xar_sitecontact.xar_webconfirmtext</source>
+      <status>34</status>
+      <order>8</order>
+      <validation></validation>
+    </property>
+    <property name="notetouser">
+      <id>600</id>
+      <label>Note to User</label>
+      <type>textarea</type>
+      <default></default>
+      <source>xar_sitecontact.xar_notetouser</source>
+      <status>34</status>
+      <order>9</order>
+      <validation></validation>
+    </property>
+    <property name="allowcopy">
+      <id>601</id>
+      <label>Allow Copy</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>xar_sitecontact.xar_allowcopy</source>
+      <status>34</status>
+      <order>10</order>
+      <validation></validation>
+    </property>
+    <property name="usehtmlemail">
+      <id>602</id>
+      <label>User HTML Email</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>xar_sitecontact.xar_usehtmlemail</source>
+      <status>34</status>
+      <order>11</order>
+      <validation></validation>
+    </property>
+    <property name="defaultemail">
+      <id>603</id>
+      <label>Default Email</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_sitecontact.xar_scdefaultemail</source>
+      <status>34</status>
+      <order>12</order>
+      <validation></validation>
+    </property>
+    <property name="defaultname">
+      <id>604</id>
+      <label>Default Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_sitecontact.xar_scdefaultname</source>
+      <status>34</status>
+      <order>13</order>
+      <validation></validation>
+    </property>
+    <property name="active">
+      <id>605</id>
+      <label>Active</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>xar_sitecontact.xar_scactive</source>
+      <status>34</status>
+      <order>14</order>
+      <validation></validation>
+    </property>
+    <property name="savedata">
+      <id>606</id>
+      <label>Save Data</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>xar_sitecontact.xar_savedata</source>
+      <status>34</status>
+      <order>15</order>
+      <validation></validation>
+    </property>
+    <property name="permissioncheck">
+      <id>607</id>
+      <label>Permission Check</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>xar_sitecontact.xar_permissioncheck</source>
+      <status>34</status>
+      <order>16</order>
+      <validation></validation>
+    </property>
+    <property name="termslink">
+      <id>608</id>
+      <label>Terms Link</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_sitecontact.xar_termslink</source>
+      <status>34</status>
+      <order>17</order>
+      <validation></validation>
+    </property>
+    <property name="options">
+      <id>609</id>
+      <label>Options</label>
+      <type>textarea</type>
+      <default></default>
+      <source>xar_sitecontact.xar_soptions</source>
+      <status>34</status>
+      <order>18</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>
