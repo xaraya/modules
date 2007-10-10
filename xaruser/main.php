@@ -213,6 +213,7 @@ function sitecontact_user_main($args)
               'useripaddress','userreferer','sendcopy','permission','bccrecipients','ccrecipients','responsetime');
 
     $data = array_merge($data,xarModAPIFunc('sitecontact','workflow','skyquote'));
+//    echo "XX".$template;exit;
     $templatedata = xarTplModule('sitecontact', 'user', $template, $data);
 
     if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {

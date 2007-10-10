@@ -1,7 +1,7 @@
 <?php
 /**
  * Modify the configuration settings
- * 
+ *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -20,77 +20,50 @@ function sitecontact_admin_modifyconfig()
 {
     if (!xarSecurityCheck('AdminSiteContact')) return;
 
-       /* Specify some labels and values for display */
-        $data['sctypename']= xarML('Global Configuration');
-        $data['customtext']  = xarModVars::get('sitecontact', 'customtext');
-        $data['customtitle'] = xarModVars::get('sitecontact', 'customtitle');
-        $data['optiontext']  = xarModVars::get('sitecontact', 'optiontext');
-        $data['usehtmlemail']= (int)xarModVars::get('sitecontact', 'usehtmlemail');
-        $data['allowcopy']   = (int)xarModVars::get('sitecontact', 'allowcopy');
-        $data['webconfirmtext'] = xarModVars::get('sitecontact', 'webconfirmtext');
-        $data['savedata']   = xarModVars::get('sitecontact', 'savedata');
-        $data['termslink']   = xarModVars::get('sitecontact', 'termslink'); 
-        $soptions   = xarModVars::get('sitecontact', 'soptions');
-        $data['permissioncheck']   = xarModVars::get('sitecontact', 'permissioncheck');
-        if (!isset($soptions)) $soptions=array();
+    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'sitecontact_general', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('tabmodule', 'str:1:100', $tabmodule, 'sitecontact', XARVAR_NOT_REQUIRED)) return;
 
-        $soptions=unserialize($soptions);
-        if (is_array($soptions)) {
-            foreach ($soptions as $k=>$v) {
-                $data[$k]=$v;
-            }
+    sys::import('xaraya.structures.hooks.observer');
+    $subject = new HookSubject('sitecontact');
+    $messenger = $subject->getMessenger();
+    $messenger->setHook('module', 'getconfig');
+
+    $hooks = $subject->notify();
+    if (!empty($hooks) && isset($hooks['tabs'])) {
+        foreach ($hooks['tabs'] as $key => $row) {
+            $configarea[$key]  = $row['configarea'];
+            $configtitle[$key] = $row['configtitle'];
+            $configcontent[$key] = $row['configcontent'];
         }
-        if (!isset($data['allowbcc']))$data['allowbcc']=false;
-        if (!isset($data['allowcc']))$data['allowcc']=false;
-        if (!isset($data['allowanoncopy']))$data['allowanoncopy']=false;        
-        $notetouser = xarModVars::get('sitecontact', 'notetouser');
-        if (!isset($notetouser) || (trim($notetouser)=='')) {
-            $notetouser=xarModVars::get('sitecontact','defaultnote');
+        array_multisort($configtitle, SORT_ASC, $hooks['tabs']);
+    } else {
+        $hooks['tabs'] = array();
+    }
+    $data['hooks'] = $hooks;
+    $data['tabmodule'] = $tabmodule;
+
+   /* Specify some labels and values for display */
+   /* not used?
+    $soptions   = xarModVars::get('sitecontact', 'soptions');
+    if (!isset($soptions)) $soptions=array();
+
+    $soptions=unserialize($soptions);
+    if (is_array($soptions)) {
+        foreach ($soptions as $k=>$v) {
+            $data[$k]=$v;
         }
-        $data['notetouser']=$notetouser;
-
-        $scdefaultemail = xarModVars::get('sitecontact', 'scdefaultemail');
-
-        if (!isset($scdefaultemail) || (trim($scdefaultemail)=='')) {
-            $scdefaultemail=xarModVars::get('mail','adminmail');
-        }
-        $data['scdefaultemail']= $scdefaultemail;
-
-       $scdefaultname = xarModVars::get('sitecontact', 'scdefaultname');
-
-       if (!isset($scdefaultname) || ($scdefaultname)=='') {
-          $scdefaultname=xarModVars::get('mail','adminname');
-       }
-       $data['scdefaultname']= $scdefaultname;
-
-//    }
+    }
+*/
     /* global config options */
-    $data['shorturlschecked'] = xarModVars::get('sitecontact', 'SupportShortURLs') ? 'checked' : '';
-    $data['formisactive'] = xarModVars::get('sitecontact', 'scactive') ? 'checked' : '';
-    $data['scdefaultform']= xarModVars::get('sitecontact', 'defaultform');
-    $data['itemsperpage']=  xarModVars::get('sitecontact', 'itemsperpage');
-    $data['useModuleAlias']=xarModVars::get('sitecontact', 'useModuleAlias');
-    $data['aliasname']=xarModVars::get('sitecontact', 'aliasname');
-    $data['defaultsort'] = xarModVars::get('sitecontact', 'defaultsort');
-    $data['useantibot'] = xarModVars::get('sitecontact', 'useantibot');
-    
+// not used?    $data['defaultsort'] = xarModVars::get('sitecontact', 'defaultsort');
+
     /* Get all the sitecontact forms now so we can choose a default */
     $scformdata=xarModAPIFunc('sitecontact','user','getcontacttypes');
+    $scforms = array();
     foreach ($scformdata as $k=>$scform) {
-           $scforms[]=$scform;
+           $scforms[] = array('id' =>$scform['scid'], 'name' => ucfirst($scform['sctypename']));
     }
-    $data['scforms']=$scforms;
-    
-    // call modifyconfig hooks with module only for general hooks
-    //  - not required for general config but leave for backward compatibility
-        $hooks = xarModCallHooks('module', 'modifyconfig', 'sitecontact',
-                           array('module'   => 'sitecontact'));
-
-        if (empty($hooks)) {
-            $data['hooks'] = array('dynamicdata' => xarML('You can add Dynamic Data fields here by hooking Dynamic Data to Sitecontact'));
-        } else {
-            $data['hooks'] = $hooks;
-        }
+    $data['scforms'] = $scforms;
 
     /* Do we need this here .. I don't think so */
     // Get the list of current hooks for item displays

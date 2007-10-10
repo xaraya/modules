@@ -28,3 +28,33 @@ Sales Manager
     <options>a:4:{s:8:&quot;allowccs&quot;;b:0;s:9:&quot;allowbccs&quot;;b:0;s:13:&quot;allowanoncopy&quot;;b:1;s:10:&quot;useantibot&quot;;b:0;}</options>
   </sitecontact_definition>
 </items>
+  <items>
+  <sitecontact_definition itemid="2">
+    <id>2</id>
+    <sctypename>multiquoteform</sctypename>
+    <sctypedesc>Request for Quotation</sctypedesc>
+    <customtext>Thank you for your interest. Please fill in the following form with your quotation requirements.</customtext>
+    <customtitle>Skylliance Request for Quotation</customtitle>
+    <optiontext>Information request</optiontext>
+    <webconfirmtext>Your request for a quote has been sent. Thank you for contacting us.
+    </webconfirmtext>
+    <notetouser>Dear %%username%%
+
+This message confirms your request for a quotation has been sent.
+
+Thank you for your interest.
+
+Sales Manager
+%%sitename%%
+-------------------------------------------------------------</notetouser>
+    <allowcopy>1</allowcopy>
+    <usehtmlemail>1</usehtmlemail>
+    <defaultemail>admin@yoursite.com</defaultemail>
+    <defaultname>Sales Manager</defaultname>
+    <active>1</active>
+    <savedata>1</savedata>
+    <permissioncheck>0</permissioncheck>
+    <termslink></termslink>
+    <options>a:4:{s:8:&quot;allowccs&quot;;b:0;s:9:&quot;allowbccs&quot;;b:0;s:13:&quot;allowanoncopy&quot;;b:1;s:10:&quot;useantibot&quot;;b:0;}</options>
+  </sitecontact_definition>
+</items>

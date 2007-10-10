@@ -19,6 +19,8 @@
  *
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
  */
+sys::import('structures.hooks.observer');
+
 function sitecontact_init()
 {
     /* Setup our table for holding the different contact itemtype forms */
@@ -129,6 +131,8 @@ function sitecontact_init()
     $result = &$dbconn->Execute($query);
     if (!$result) return;
 
+    xarModVars::set('sitecontact', 'allowcc', false);
+    xarModVars::set('sitecontact', 'allowbcc', false);
     xarModVars::set('sitecontact', 'savedata', 0);
     xarModVars::set('sitecontact', 'termslink', '');
     xarModVars::set('sitecontact', 'soptions', '');
@@ -142,6 +146,7 @@ function sitecontact_init()
     xarModVars::set('sitecontact', 'aliasname','');
     xarModVars::set('sitecontact', 'usehtmlemail', 0);
     xarModVars::set('sitecontact', 'allowcopy', 0); //bug 5800 set it off by default
+    xarModVars::set('sitecontact', 'allowanoncopy', 0); //bug 5800 set it off by default
     xarModVars::set('sitecontact', 'scdefaultemail',xarModVars::get('mail', 'adminmail'));
     xarModVars::set('sitecontact', 'customtitle','Contact and Feedback');
     xarModVars::set('sitecontact','useantibot',true);
@@ -180,6 +185,8 @@ Administrator
                        array('callerModName' => 'sitecontact', 'hookModName' => 'dynamicdata'));
     }
     */
+    $observer = new BasicObserver('sitecontact','admin','createhook');
+    $observer->register('module', 'create', 'API');
     // End 2x
 
 // initialize the block

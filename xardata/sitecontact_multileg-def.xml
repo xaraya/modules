@@ -53,7 +53,7 @@
       <id>429</id>
       <label>Passengers</label>
       <type>dropdown</type>
-      <default></default>
+      <default>1</default>
       <source>dynamic_data</source>
       <status>34</status>
       <order>5</order>
