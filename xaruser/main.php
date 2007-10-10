@@ -1,15 +1,12 @@
 <?php
 
-function sitecontact_user_main()
+function sitecontact_user_main($args)
 {
    // Security Check
     if(!xarSecurityCheck('ReadSiteContact')) return;
 
-    if (xarModVars::get('modules', 'disableoverview') == 0) {
-        return array();
-    } else {
-        xarResponseRedirect(xarModURL('sitecontact', 'user', 'display'));
-    }
+    xarResponseRedirect(xarModURL('sitecontact', 'user', 'display',array($args)));
+
     return true;
 }
 
