@@ -18,7 +18,7 @@
     <xar:mlstring>Comments:</xar:mlstring> #$usermessage#
 </p>
 
-<xar:foreach in="$properties">
+<xar:foreach in="$properties" key="$name">
     <xar:if condition="!in_array($name,$baseproperties)">
         <p>
            <xar:data-label property="$properties[$name]" />:  <xar:data-input property="$properties[$name]" />
