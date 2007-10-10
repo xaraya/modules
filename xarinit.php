@@ -19,7 +19,7 @@
  *
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
  */
-sys::import('structures.hooks.observer');
+sys::import('xaraya.structures.hooks.observer');
 
 function sitecontact_init()
 {
@@ -85,12 +85,13 @@ function sitecontact_init()
 
 //    $defaultemail=  xarModVars::get('mail', 'adminmail');
 
+    xarModVars::set('sitecontact', 'scdefaultname', 'Basic Form');
     xarModVars::set('sitecontact', 'SupportShortURLs', 0);
     xarModVars::set('sitecontact', 'useModuleAlias',0);
     xarModVars::set('sitecontact', 'aliasname','');
     xarModVars::set('sitecontact', 'allowcc', false);
     xarModVars::set('sitecontact', 'allowbcc', false);
-    xarModVars::set('sitecontact', 'admincc', false);    
+    xarModVars::set('sitecontact', 'admincc', false);
     xarModVars::set('sitecontact', 'savedata', 0);
     xarModVars::set('sitecontact', 'termslink', '');
     xarModVars::set('sitecontact', 'soptions', '');

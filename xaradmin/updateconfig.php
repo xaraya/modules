@@ -60,7 +60,7 @@ function sitecontact_admin_updateconfig()
     $scdefaultname=trim($scdefaultname);
     if (!isset($scdefaultname) || $scdefaultname=='') {
         $scdefaultname=xarModVars::get('mail','adminname');
-    }   
+    }
     if ($tab == 'sitecontact_general') {
         xarModVars::set('sitecontact', 'customtext', $customtext);
         xarModVars::set('sitecontact', 'customtitle', $customtitle);
@@ -79,11 +79,11 @@ function sitecontact_admin_updateconfig()
         xarModVars::set('sitecontact', 'savedata', $savedata);
         xarModVars::set('sitecontact', 'permissioncheck', $permissioncheck);
         xarModVars::set('sitecontact', 'termslink', trim($termslink));
-        xarModVars::set('sitecontact', 'useantibot', $useantibot);      
-        xarModVars::set('sitecontact', 'scdefaultname', $scdefaultname);        
-        
+        xarModVars::set('sitecontact', 'useantibot', $useantibot);
+        xarModVars::set('sitecontact', 'scdefaultname', $scdefaultname);
+
     } else {
-    $regid = xarModGetIDFromName($tabmodule);
+        $regid = xarModGetIDFromName($tabmodule);
         xarModSetUserVar('sitecontact', 'customtext', $customtext, $regid);
         xarModSetUserVar('sitecontact', 'customtitle', $customtitle, $regid);
         xarModSetUserVar('sitecontact', 'optiontext', $optiontext, $regid);
@@ -110,7 +110,7 @@ function sitecontact_admin_updateconfig()
     } else{
          xarModVars::set('sitecontact', 'useModuleAlias', 0);
     }
-   
+
     $currentalias = xarModVars::get('sitecontact','aliasname');
     $newalias = trim($aliasname);
           /* Get rid of the spaces if any, it's easier here and use that as the alias*/
