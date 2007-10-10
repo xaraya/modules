@@ -119,7 +119,7 @@
                 #xarLocaleGetFormattedDate('medium', $responsetime)#
                 #xarLocaleGetFormattedTime('medium', $responsetime)#               
             </div>                                                               
-            <xar:if condition="xarModIsHooked('dynamicdata')">
+            <xar:if condition="xarModIsHooked('dynamicdata', 'sitecontact',$scid)">
                 <xar:data-getitem name="$properties" module="sitecontact" itemid="$scrid" itemtype="$scid" />
                 <xar:if condition="isset($properties) and count($properties) gt 0">
                     <xar:foreach in="$properties" key="$name">

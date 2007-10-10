@@ -22,14 +22,28 @@
 function sitecontact_admin_waitingcontent($args)
 {
     extract($args);
-    if (!isset($scid)) $scid = 2;//specific case
 
-    // Get
     unset($responses);
-    $responses = xarModAPIFunc('sitecontact', 'user', 'getitemlinks', array('status' => array(0), 'scid'=>2));
 
-     $data['loop'] = $responses;
+    $responselist = array();
+    $responses = array();
+    $typelist = array();
 
-     return $data;
+    $sctypes = xarModAPIFunc('sitecontact','user','getcontacttypes');
+
+    if (xarModIsHooked('sitecontact','base')) {
+        foreach ($sctypes as $scform) {
+            if (xarModIsHooked('sitecontact','sitecontact', $scform['scid'])) {
+                  $typelist[] =$scform['scid'];
+            }
+        }
+    }
+
+    $responses = xarModAPIFunc('sitecontact', 'user', 'getitemlinks', array('status' => array(0), 'formids'=>$typelist));
+
+
+    $data['loop'] = $responses;
+
+    return $data;
 }
 ?>

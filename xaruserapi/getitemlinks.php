@@ -19,6 +19,7 @@
  *                     types that don't have articles too (default 0)
  * @param $args['func'] optional function to be called with the link
  * @param $args['count'] true (default) means counting the number of forms
+  * @param $args['formids'] optional array of form type ID for which we want responses
  * @return array of array('sctypename' => sctypename,
  *                        'scid' => scid,
  *                        'sclink' => sclink,
@@ -47,8 +48,20 @@ function sitecontact_userapi_getitemlinks($args)
     }
 
     // Get form types
+
     $sctypes = xarModAPIFunc('sitecontact','user','getcontacttypes');
 
+    if (isset($formids) && is_array($formids) && count($formids)>0) {
+        $formids = array_flip($formids);
+        $newsctypes = array();
+        foreach ($sctypes as $sctype) {
+           if (array_key_exists($sctype['scid'],$formids)) {
+               $newsctypes[]=$sctype;
+           }
+       }
+        $sctypes = $newsctypes;
+    }
+    
     if ($count) {
         if (isset($status)) {
             $typecount = xarModAPIFunc('sitecontact','user','countresponseitems',
@@ -61,6 +74,7 @@ function sitecontact_userapi_getitemlinks($args)
     $scformlinks = array();
     $isfirst = 1;
     foreach ($sctypes as $id => $sctype) {
+
         if (!xarSecurityCheck('ViewSiteContact',0,'ContactForm', "$sctype[scid]:All:All")) {
             continue;
         }

@@ -182,9 +182,19 @@
     <ul>
        <li><xar:mlstring><strong>Sitecontact Block</strong>: allows choice of one of the active forms for display in a block on your site.
        The block requires at least Read level (ReadBlock) privileges for viewing, and is privilege aware using Block privileges.
-       This means you can selectively apply privileges for the given block by creating a Blocks module privilege on the Sitecontact block.</xar:mlstring></li>
-       <li><xar:mlstring><strong>Waiting Content Block</strong>: This is strictly not a sitecontact block but Sitecontact provides the code for
-           the Base Waiting Content block so you can use it to see latest submitted responses.</xar:mlstring></li>
+       This means you can selectively apply privileges for the given block by creating a Blocks module privilege on the Sitecontact block.</xar:mlstring><br /></li>
+       <li><xar:mlstring><strong>Waiting Content Block functionality</strong>: This is strictly not a sitecontact block but Sitecontact provides the code for
+           the Base Waiting Content block so you can use it to see latest submitted responses. To use it:</xar:mlstring>
+          <ol>
+              <li><xar:mlstring>Create a Base module 'waiting content block' for your site</xar:mlstring></li>
+              <li><xar:mlstring>Go to Modules -&gt; Configure hooks, and click on Sitecontact</xar:mlstring></li>
+            <li><xar:mlstring>Find Base module and click on the radio button to allow all sitecontact hooks</xar:mlstring></li>
+            <li><xar:mlstring>If you want to activate waiting content for SOME sitecontact forms ONLY, then you will also
+                need to find Sitecontact in this list and check "Enable sitecontact functionality for SOME itemtypes in sitecontact".
+                Then check the individual form checkboxes.</xar:mlstring></li>
+
+          </ol>
+       </li>
     </ul>
     <h2>
         <xar:mlstring>Further Information</xar:mlstring>
