@@ -21,7 +21,7 @@
 <xar:foreach in="$properties" key="$name">
     <xar:if condition="!in_array($name,$baseproperties)">
         <p>
-           <xar:data-label property="$properties[$name]" />:  <xar:data-input property="$properties[$name]" />
+           <xar:data-label property="$properties[$name]" />:  <xar:data-output property="$properties[$name]" />
         </p>
     </xar:if>
 </xar:foreach>
