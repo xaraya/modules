@@ -1,7 +1,7 @@
 <?php
 /**
  * Sitecontact table definitions function
- * 
+ *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -21,20 +21,20 @@
  * @access private
  * @return array
  */
- 
+
 function sitecontact_xartables()
-{ 
+{
     // Initialise table array
     $xarTables = array();
 
-    $sitecontactTable     = xarDBGetSiteTablePrefix() . '_sitecontact';
+    $sitecontactTable     = xarDB::getPrefix() . '_sitecontact';
     $xarTables['sitecontact']     = $sitecontactTable;
 
-    $sitecontactResponseTable     = xarDBGetSiteTablePrefix() . '_sitecontact_response';
+    $sitecontactResponseTable     = xarDB::getPrefix() . '_sitecontact_response';
     $xarTables['sitecontact_response']     = $sitecontactResponseTable;
-    
+
     // Return the table information
     return $xarTables;
-} 
+}
 
 ?>
