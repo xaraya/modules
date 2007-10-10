@@ -28,5 +28,5 @@ $modversion['admin']          = 1;
 $modversion['user']           = 1;
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Content';
-$modversion['dependency'] = array(); // just core
+$modversion['dependency']     = array(); // just core
 ?>

@@ -15,16 +15,11 @@
 
 #$usermessage#
 
-<xar:set name="defaultarray">array('id','scid','cid','username','useremail','requesttext','company','usermessage',
-              'useripaddress','userreferer','sendcopy','permission','bccrecipients','ccrecipients','responsetime');</xar:set>
-
-<xar:if condition="isset($propdata) and count($propdata)">
-    <xar:foreach in="$propdata" key="$name">
-    <xar:if condition="!in_array($name,$defaultarray)">
-#$propdata[$name]['label']#: #$propdata[$name]['value']#
+<xar:foreach in="$properties">
+    <xar:if condition="!in_array($name,$baseproperties)">
+        <xar:data-label property="$properties[$name]" />:  <xar:data-input property="$properties[$name]" />
     </xar:if>
-    </xar:foreach>
-</xar:if>
+</xar:foreach>
 
 -------------------------------------------------------------
 

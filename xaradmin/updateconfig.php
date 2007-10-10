@@ -33,6 +33,7 @@ function sitecontact_admin_updateconfig()
     if (!xarVarFetch('webconfirmtext', 'str:1:', $webconfirmtext, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('notetouser', 'str:1:', $notetouser, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('allowcopy', 'checkbox', $allowcopy, true, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('allowanoncopy', 'checkbox', $allowanoncopy, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('usehtmlemail', 'checkbox', $usehtmlemail, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('scdefaultemail', 'str:1:', $scdefaultemail,'', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('scdefaultname', 'str:1:', $scdefaultname, '', XARVAR_NOT_REQUIRED)) return;
@@ -45,7 +46,6 @@ function sitecontact_admin_updateconfig()
     if (!xarVarFetch('termslink', 'str:1:', $termslink, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('allowcc', 'checkbox', $allowcc, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('allowbcc', 'checkbox', $allowbcc, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('allowanoncopy', 'checkbox', $allowanoncopy, false, XARVAR_NOT_REQUIRED)) return;
 
     $allowanoncopy = ($allowcopy && $allowanoncopy)? true :false; //only allow anonymous if allow copy for registered too
     $soptions=array('allowcc'=>$allowcc,'allowbcc'=>$allowbcc,'allowanoncopy'=>$allowanoncopy);
@@ -58,6 +58,7 @@ function sitecontact_admin_updateconfig()
         xarModVars::set('sitecontact', 'SupportShortURLs', $shorturls);
         xarModVars::set('sitecontact', 'scactive', $scactive);
         xarModVars::set('sitecontact', 'allowcopy', $allowcopy);
+        xarModVars::set('sitecontact', 'allowanoncopy', $allowanoncopy);
         xarModVars::set('sitecontact', 'usehtmlemail', $usehtmlemail);
         xarModVars::set('sitecontact', 'webconfirmtext', $webconfirmtext);
         xarModVars::set('sitecontact', 'notetouser', $notetouser);
@@ -78,6 +79,7 @@ function sitecontact_admin_updateconfig()
         xarModVars::set('sitecontact', 'SupportShortURLs', $shorturls, $regid);
         xarModVars::set('sitecontact', 'scactive', $scactive, $regid);
         xarModVars::set('sitecontact', 'allowcopy', $allowcopy, $regid);
+        xarModVars::set('sitecontact', 'allowanoncopy', $allowanoncopy, $regid);
         xarModVars::set('sitecontact', 'usehtmlemail', $usehtmlemail, $regid);
         xarModVars::set('sitecontact', 'webconfirmtext', $webconfirmtext, $regid);
         xarModVars::set('sitecontact', 'notetouser', $notetouser, $regid);

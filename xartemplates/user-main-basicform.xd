@@ -163,14 +163,12 @@
                     <xar:foreach in="$properties" key="$name">
                     <xar:if condition="!in_array($name,$defaultarray)">
                     <div class="xar-form-input-wrapper">
-                        <label for="$properties[$name]" class="xar-form-label"  title="#$properties[$name]#">
-                                <xar:data-label property="$properties[$name]" label="id" />
-                        </label>
-                        <xar:data-input property="$properties[$name]" />
+                        <xar:data-label property="$properties[$name]" label="id" />
+                        <xar:data-input property="$properties[$name]" value="" />
                     </div>
-                    </xar:if>
-                    </xar:foreach>
-                </xar:if>
+                  </xar:if>
+                </xar:foreach>
+              </xar:if>
             <!--
                 <xar:data-form module="$info['moduleid']" itemtype="$info['itemtype']" />
             -->
