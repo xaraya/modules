@@ -36,9 +36,12 @@ function sitecontact_admin_managesctypes()
     if (!xarVarFetch('termslink',    'str:1:',   $termslink, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('allowccs',      'checkbox', $allowccs, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('allowbccs',     'checkbox', $allowbccs, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('adminccs',     'checkbox', $adminccs, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('admincclist',  'str:0:', $admincclist, '', XARVAR_NOT_REQUIRED)) return;    
     if (!xarVarFetch('allowanoncopy', 'checkbox', $allowanoncopy, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('useantibot',    'checkbox', $useantibot,    true, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('startnum',      'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('returnurl',      'str:0:', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!xarSecurityCheck('EditSiteContact')) return;
     xarCore::setCached('sitecontact.data','scid',$scid);
@@ -72,7 +75,11 @@ function sitecontact_admin_managesctypes()
     $data['managetype']=xarML('List Forms');
     $formisactive = xarModVars::get('sitecontact', 'scactive') ? 'checked' : '';
     $allowanoncopy = ($allowcopy && $allowanoncopy)? true :false; //only allow anonymous if allow copy for registered too
-    $soptions=array('allowccs'=>$allowccs,'allowbccs'=>$allowbccs, 'allowanoncopy' => $allowanoncopy, 'useantibot'=>$useantibot);
+    $soptions=array('allowccs'=>$allowccs,'allowbccs'=>$allowbccs, 
+                    'allowanoncopy' => $allowanoncopy, 
+                    'useantibot'=>$useantibot, 
+                    'adminccs'=>$adminccs,
+                    'admincclist'=>$admincclist);
     $soptions=serialize($soptions);
 
     //Setup array with captured vars
@@ -92,11 +99,14 @@ function sitecontact_admin_managesctypes()
                 'savedata'       => $savedata,
                 'permissioncheck'=> $permissioncheck,
                 'termslink'      => $termslink,
+                'adminccs'       => $adminccs, 
+                'admincclist'    => $admincclist,                  
                 'allowccs'       => $allowccs,
                 'allowbccs'      => $allowbccs,
                 'allowanoncopy'  => $allowanoncopy,
                 'soptions'       => $soptions,
                 'useantibot'     => $useantibot,
+                'returnurl'      => $returnurl,
                 'formisactive'   => $formisactive // add this in addition to normal field value
                 );
 
@@ -221,6 +231,8 @@ function sitecontact_admin_managesctypes()
         }
         if (!isset($allowbccs)) $allowbccs=false;
         if (!isset($allowccs)) $allowccs=false;
+        if (!isset($adminccs)) $adminccs=false; 
+        if (!isset($admincclist)) $admincclist='';            
         if (!isset($allowanoncopy)) $allowanoncopy=false;
         if (!isset($useantibot)) $useantibot=false;
         $item = array('sctypename'     => xarML('Unique name for new form'),
@@ -239,6 +251,8 @@ function sitecontact_admin_managesctypes()
                       'termslink'      => xarModVars::get('sitecontact','termslink'),
                       'allowbccs'      => $allowbccs,
                       'allowccs'       => $allowccs,
+                      'adminccs'       => $adminccs,
+                      'admincclist'    => $admincclist,                        
                       'allowanoncopy'  => $allowanoncopy,
                       'useantibot'     => $useantibot,
                       'formisactive'   => (xarModVars::get('sitecontact', 'scactive') ? 'checked' : '')
@@ -261,6 +275,8 @@ function sitecontact_admin_managesctypes()
 
         if (!isset($data['item']['allowbccs']))$data['item']['allowbccs']=0;
         if (!isset($data['item']['allowccs']))$data['item']['allowccs']=0;
+        if (!isset($data['item']['adminccs']))$data['item']['adminccs']=0;
+        if (!isset($data['item']['admincclist']))$data['item']['admincclist']='';          
         if (!isset($data['item']['allowanoncopy']))$data['item']['allowanoncopy']=0;
         if (!isset($data['item']['useantibot']))$data['item']['useantibot']=false;
         if (!isset($data['item']['savedata']))$data['item']['savedata']=xarModVars::get('sitecontact','savedata')?xarModVars::get('sitecontact','savedata'):0;
@@ -273,6 +289,7 @@ function sitecontact_admin_managesctypes()
         $data['buttonlabel'] = xarML('Modify');
         $data['link'] = xarModURL('sitecontact','admin','managesctypes',
                                  array('action' => 'update'));
+        $data['returnurl'] = xarModURL('sitecontact','admin','managesctypes',array('action'=>'modify','scid'=>$scid));
         $hooks = xarModCallHooks('module', 'modifyconfig', 'sitecontact',
                              array('module'   => 'sitecontact',
                                    'itemtype' => $scid));
@@ -337,6 +354,8 @@ function sitecontact_admin_managesctypes()
 
         if (!isset($data['item']['allowbccs']))$data['item']['allowbccs']=0;
         if (!isset($data['item']['allowccs']))$data['item']['allowccs']=0;
+        if (!isset($data['item']['adminccs']))$data['item']['adminccs']=0; 
+        if (!isset($data['item']['admincclist']))$data['item']['admincclist']='';             
         if (!isset($data['item']['allowanoncopy']))$data['item']['allowanoncopy']=0;
         if (!isset($data['item']['useantibot']))$data['item']['useantibot']=false;
         if (!isset($data['item']['savedata']))$data['item']['savedata']=xarModVars::get('sitecontact','savedata');
@@ -385,7 +404,8 @@ function sitecontact_admin_managesctypes()
 
     $data['action'] = $action;
     $data['sctypes']=$sctypes;
-
+    
+    
     $data['sctypelink'] = xarModURL('sitecontact','admin','managesctypes');
     // Return the template variables defined in this function
     return $data;

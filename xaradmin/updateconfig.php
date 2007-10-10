@@ -46,9 +46,16 @@ function sitecontact_admin_updateconfig()
     if (!xarVarFetch('termslink', 'str:1:', $termslink, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('allowcc', 'checkbox', $allowcc, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('allowbcc', 'checkbox', $allowbcc, false, XARVAR_NOT_REQUIRED)) return;
-
+    if (!xarVarFetch('adminccs', 'checkbox', $adminccs, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('admincclist', 'str:0:', $admincclist, '', XARVAR_NOT_REQUIRED)) return;  
+  
     $allowanoncopy = ($allowcopy && $allowanoncopy)? true :false; //only allow anonymous if allow copy for registered too
-    $soptions=array('allowcc'=>$allowcc,'allowbcc'=>$allowbcc,'allowanoncopy'=>$allowanoncopy);
+    $soptions=array('allowcc'=>$allowcc,
+                    'allowbcc'=>$allowbcc,
+                    'allowanoncopy'=>$allowanoncopy,
+                    'adminccs'=>$adminccs,
+                    'admincclist' => $admincclist);
+
     $soptions=serialize($soptions);
     $scdefaultname=trim($scdefaultname);
     if (!isset($scdefaultname) || $scdefaultname=='') {

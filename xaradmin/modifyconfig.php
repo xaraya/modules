@@ -59,8 +59,10 @@ function sitecontact_admin_modifyconfig()
     }
     if (!isset($data['allowbcc']))$data['allowbcc']=false;
     if (!isset($data['allowcc']))$data['allowcc']=false;
+    if (!isset($data['adminccs']))$data['adminccs']=false; 
+        if (!isset($data['admincclist']))$data['admincclist']='';    
     if (!isset($data['allowanoncopy']))$data['allowanoncopy']=false;          
- 
+
    /* Specify some labels and values for display */
    /* not used?
     $soptions   = xarModVars::get('sitecontact', 'soptions');

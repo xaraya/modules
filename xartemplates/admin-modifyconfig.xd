@@ -65,6 +65,7 @@
                     </label>
                     <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('sitecontact', 'itemsperpage')#" />
                 </div>
+               
             </fieldset>
         </xar:if>
 
@@ -135,6 +136,27 @@
             </label>
             <textarea name="webconfirmtext" id="webconfirmtext" rows="5" cols="50">#xarModGetUserVar('sitecontact', 'webconfirmtext', $regid)#</textarea>
         </div>
+        
+        <div class="xar-form-input-wrapper-after">
+         <xar:set name="onchange">"this.form.submit();"</xar:set>       
+            <xar:data-input type="checkbox" name="adminccs" checked="$adminccs" onchange="$onchange" />
+            <label for="allowcc" title="#xarML('Allow a cc recipient list for admin to enter?')#">
+                <xar:mlstring>Allow Admin CC list?</xar:mlstring>
+            </label>
+        </div> 
+        <xar:if condition="$adminccs">   
+        <div class="xar-form-input-wrapper">
+            <xar:data-label label="Admin CC List" for="admincclist" />  
+            <xar:data-input type="textbox" name="admincclist" id="admincclist" size="150" value="$admincclist"/>
+        </div> 
+           <p class="xar-form-input-wrapper-after">
+                    <xar:mlstring>
+                    Separate emails by colons (;) or optionally add a name for each email by separating email and name by a comma eg
+                    </xar:mlstring> <strong>email1@somedomain.com,SomeName;</strong>
+             </p>        
+        <xar:else />
+            <input type="hidden" name="admincclist" id="admincclist" value="" />
+        </xar:if>        
        <div class="xar-form-input-wrapper-after">
             <xar:data-input type="checkbox" name="allowcc" checked="$allowcc" />
              <label for="allowcc" title="#xarML('Allow a cc recipient list?')#">
@@ -142,8 +164,7 @@
             </label>
         </div>
        <div class="xar-form-input-wrapper-after">
- 
-            <xar:data-input type="checkbox" name="allowbcc" checked="$allowbcc" />
+             <xar:data-input type="checkbox" name="allowbcc" checked="$allowbcc" />
              <label for="allowbcc" title="#xarML('Allow a bcc recipient list?')#">
                <xar:mlstring>Allow BCC Recipient list?</xar:mlstring>
             </label>

@@ -90,6 +90,7 @@ function sitecontact_init()
     xarModVars::set('sitecontact', 'aliasname','');
     xarModVars::set('sitecontact', 'allowcc', false);
     xarModVars::set('sitecontact', 'allowbcc', false);
+    xarModVars::set('sitecontact', 'admincc', false);    
     xarModVars::set('sitecontact', 'savedata', 0);
     xarModVars::set('sitecontact', 'termslink', '');
     xarModVars::set('sitecontact', 'soptions', '');
