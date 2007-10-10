@@ -14,7 +14,7 @@
 
 /**
  * Utility function to count the number of resonses for a form
- * 
+ *
  * @author jojodee
  * @returns integer
  * @return number of items held by this module
@@ -24,7 +24,7 @@ function sitecontact_userapi_countresponses()
 {
     if(!xarVarFetch('scid', 'int:0:', $scid, NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('responsetime',  'int:0:', $responsetime,  NULL, XARVAR_NOT_REQUIRED)) {return;}
-   
+
     $bindvars=array();
     $where='';
     if (isset($scid)) {
@@ -32,8 +32,8 @@ function sitecontact_userapi_countresponses()
         $bindvars[]= $scid;
     }
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $sitecontactResponseTable = $xartable['sitecontact_response'];
     $query = "SELECT COUNT(1)
             FROM $sitecontactResponseTable

@@ -24,12 +24,12 @@ sys::import('xaraya.structures.hooks.observer');
 function sitecontact_init()
 {
     /* Setup our table for holding the different contact itemtype forms */
-    $dbconn =& xarDBGetConn();
-    $xarTables =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xarTables = xarDB::getTables();
 
     $sitecontactTable = $xarTables['sitecontact'];
 
-    xarDBLoadTableMaintenanceAPI();
+    sys::import('xaraya.tableddl');
     $fields = array(
         'xar_scid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
         'xar_sctypename' => array('type' => 'varchar', 'size' => 100, 'null' => false, 'default' => ''),

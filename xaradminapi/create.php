@@ -71,8 +71,8 @@ function sitecontact_adminapi_create($args)
 // Old code. Leave it for reference for the moment
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $sitecontactResponseTable = $xartable['sitecontact_response'];
 
     // Get next ID in table

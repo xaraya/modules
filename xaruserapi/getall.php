@@ -49,13 +49,13 @@ function sitecontact_userapi_getall($args)
     $items = array();
     if (!xarSecurityCheck('EditSitecontact')) return; //this is higher than normal as normal visitors don't get to see these
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     $sitecontactResponseTable = $xartable['sitecontact_response'];
-    
+
     $bindvars=array();
-    
+
    if (!empty($scrid)) {
         $where = "WHERE xar_scrid = ?";
         $bindvars[] = $scrid;
@@ -106,7 +106,7 @@ function sitecontact_userapi_getall($args)
    }else {
      $thistype=xarModVars::get('sitecontact','defaultform');
    }
- 
+
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1,$bindvars );
 
     if (!$result) return;
@@ -123,11 +123,11 @@ function sitecontact_userapi_getall($args)
                             'company'       => $company,
                             'usermessage'   => $usermessage,
                             'useripaddress' => $useripaddress,
-                            'userreferer'   => $userreferer, 
+                            'userreferer'   => $userreferer,
                             'sendcopy'      => $sendcopy,
-                            'permission'    => $permission, 
-                            'bccrecipients' => $bccrecipients, 
-                            'ccrecipients'  => $ccrecipients, 
+                            'permission'    => $permission,
+                            'bccrecipients' => $bccrecipients,
+                            'ccrecipients'  => $ccrecipients,
                             'responsetime'  => $responsetime
                             );
         }

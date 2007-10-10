@@ -97,8 +97,8 @@ function sitecontact_adminapi_createsctype($args)
     if (!xarSecurityCheck('AddSiteContact')) return;
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $sitecontactTable = $xartable['sitecontact'];
 
     // Get next ID in table

@@ -33,16 +33,16 @@ function sitecontact_userapi_get($args)
                        new SystemException($msg));
         return false;
     }
-    
-    
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+
+
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     $sitecontactResponseTable = $xartable['sitecontact_response'];
-    
+
     $bindvars=array();
-    
+
    if (!empty($scrid)) {
         $where = "WHERE xar_scrid = ?";
         $bindvars[] = $scrid;
@@ -89,9 +89,9 @@ function sitecontact_userapi_get($args)
     }
 
     list($scrid,$scid, $username,$useremail,$requesttext,$company,$usermessage,$useripaddress,
-         $userreferer, $sendcopy,$permission, $bccrecipients, $ccrecipients, 
+         $userreferer, $sendcopy,$permission, $bccrecipients, $ccrecipients,
          $responsetime) = $result->fields;
-         
+
     if (xarSecurityCheck('ViewSitecontact', 0, 'sitecontact', "$scid:All:$scrid")) {
             $response =array('scrid'         => (int)$scrid,
                             'scid'          => (int)$scid,
@@ -101,11 +101,11 @@ function sitecontact_userapi_get($args)
                             'company'       => $company,
                             'usermessage'   => $usermessage,
                             'useripaddress' => $useripaddress,
-                            'userreferer'   => $userreferer, 
+                            'userreferer'   => $userreferer,
                             'sendcopy'      => $sendcopy,
-                            'permission'    => $permission, 
-                            'bccrecipients' => $bccrecipients, 
-                            'ccrecipients'  => $ccrecipients, 
+                            'permission'    => $permission,
+                            'bccrecipients' => $bccrecipients,
+                            'ccrecipients'  => $ccrecipients,
                             'responsetime'  => $responsetime
                             );
     }

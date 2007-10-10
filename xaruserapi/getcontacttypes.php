@@ -54,8 +54,8 @@ function sitecontact_userapi_getcontacttypes($args)
     }
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $sitecontactTable = $xartable['sitecontact'];
 
     // Get item

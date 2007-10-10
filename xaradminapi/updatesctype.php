@@ -113,8 +113,8 @@ function sitecontact_adminapi_updatesctype($args)
     }
 
      // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $sitecontactTable = $xartable['sitecontact'];
 
     // Update the publication type (don't allow updates on name)

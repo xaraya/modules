@@ -70,8 +70,8 @@ function sitecontact_adminapi_deletesctype($args)
     }
     xarModVars::delete('sitecontact', $forminfo['sctypename'].'_objectid');
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $sitecontactTable = $xartable['sitecontact'];
 
     // Delete the scform type

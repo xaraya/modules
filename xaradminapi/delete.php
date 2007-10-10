@@ -39,8 +39,8 @@ function sitecontact_adminapi_delete($args)
     if (!xarSecurityCheck('DeleteSitecontact',1)) {
         return;
     }
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $sitecontactResponseTable = $xartable['sitecontact_response'];
 
     $query = "DELETE FROM $sitecontactResponseTable WHERE xar_scrid = ?";

@@ -14,7 +14,7 @@
 
 /**
  * Utility function to count the number of items held by this module
- * 
+ *
  * @author jojodee
  * @returns integer
  * @return number of items held by this module
@@ -22,8 +22,8 @@
  */
 function sitecontact_userapi_countitems()
 {
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $sitecontactTable = $xartable['sitecontact'];
     $query = "SELECT COUNT(1)
             FROM $sitecontactTable";
