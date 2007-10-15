@@ -1,0 +1,69 @@
+
+<xar:style file="mag" scope="module" />
+
+<div class="mag mag-archive">
+
+    <xar:if condition="empty($mag)">
+        <p class="xar-error"><xar:mlstring>No magazines found. Please try a different search.</xar:mlstring></p>
+    <xar:else />
+        <h1>#xarVarPrepForDisplay($mag.title)#</h1>
+        <p class="mag-synopsis">#$mag.subtitle#</p>
+
+        <xar:comment>TODO: call up a hook template here so text can be inserted by the theme</xar:comment>
+
+        <xar:comment>Loop for each year to start with</xar:comment>
+
+        <xar:if condition="empty($issues)">
+            <p class="xar-error"><xar:mlstring>No issues found. Please try a different search.</xar:mlstring></p>
+        <xar:else />
+            <div>
+                <xar:loop name="$years" id="years">
+                    <xar:comment>
+                        Display the title for the year.
+                        Include the month if there happens to be just one month in total.
+                    </xar:comment>
+
+                    <h2 class="mag-grouping">
+                        <xar:ml>
+                            <xar:mlstring>Archive year: #(1)</xar:mlstring>
+                            <xar:mlvar>#$loop:years:key#</xar:mlvar>
+                        </xar:ml>
+                    </h2>
+
+                    <xar:loop name="$loop:years:item" id="months">
+                        <xar:comment>Display the titles for each month group</xar:comment>
+                        <xar:if condition="$max_month_count gt 1">
+                            <h3 class="mag-grouping">
+                                <xar:ml>
+                                    <xar:mlstring>#(1)</xar:mlstring>
+                                    <xar:mlvar>#$month_names[$loop:months:key]#</xar:mlvar>
+                                </xar:ml>
+                            </h3>
+                        </xar:if>
+
+                        <xar:comment>Display the issues</xar:comment>
+                        <xar:loop name="$loop:months:item" id="issueids">
+                            <xar:set name="issue">#$issues[$loop:issueids:item]#</xar:set>
+
+                            <div class="mag-issue-wrapper" >
+                                <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'contents','mag'=&gt;$mag.ref,'issue'=&gt;$issue.ref))#" title="#xarML('Read this issue')#">
+                                    <img src="#$issue.cover_img_path#" alt="#xarVarPrepForDisplay($issue.title)#: #xarVarPrepForDisplay($issue.tagline)#"/><br />
+                                </a>
+                                <p>
+                                    <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'contents','mag'=&gt;$mag.ref,'issue'=&gt;$issue.ref))#" title="#xarML('Read this issue')#">
+                                        #xarVarPrepForDisplay($issue.title)#
+                                    </a>
+                                </p>
+                            </div>
+                            
+                        </xar:loop>
+                    </xar:loop>
+
+                </xar:loop>
+                <div style="clear: both;"></div>
+                <xar:if condition="!empty($pager)"><div class="mag-pager">#$pager#</div></xar:if>
+            </div>
+        </xar:if>
+    </xar:if>
+
+</div>

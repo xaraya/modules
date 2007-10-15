@@ -1,0 +1,13 @@
+
+<xar:comment>We will only come into this template if we encounter an error trying to fetch the current magazine.</xar:comment>
+
+<xar:style file="mag" scope="module" />
+
+<div class="mag mag-current">
+    <xar:if condition="empty($mag)">
+        <p class="xar-error"><xar:mlstring>No magazine found. Please select a magazine.</xar:mlstring></p>
+    <xar:else />
+        <h1>#xarVarPrepForDisplay($mag.title)#</h1>
+        <p class="xar-error"><xar:mlstring>No current issue found for this magazine.</xar:mlstring></p>
+    </xar:if>
+</div>

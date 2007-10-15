@@ -1,0 +1,92 @@
+<object name="mag_series">
+  <objectid>18</objectid>
+  <label>mag_series</label>
+  <moduleid>940</moduleid>
+  <itemtype>3</itemtype>
+  <urlparam>sid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="sid">
+      <id>165</id>
+      <label>SID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_mag_series.sid</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="mag_id">
+      <id>166</id>
+      <label>Magazine</label>
+      <type>textbox</type>
+      <default>0</default>
+      <source>xar_mag_series.mag_id</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="ref">
+      <id>167</id>
+      <label>Ref</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_mag_series.ref</source>
+      <status>1</status>
+      <order>3</order>
+      <validation>0:20</validation>
+    </property>
+    <property name="title">
+      <id>168</id>
+      <label>Title</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_mag_series.title</source>
+      <status>1</status>
+      <order>4</order>
+      <validation>0:255</validation>
+    </property>
+    <property name="synopsis">
+      <id>169</id>
+      <label>Synopsis</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>xar_mag_series.synopsis</source>
+      <status>1</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="description">
+      <id>170</id>
+      <label>Description</label>
+      <type>xartinymce</type>
+      <default></default>
+      <source>xar_mag_series.description</source>
+      <status>1</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="display_order">
+      <id>171</id>
+      <label>Display Order</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_mag_series.display_order</source>
+      <status>1</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+    <property name="status">
+      <id>172</id>
+      <label>Status</label>
+      <type>dropdown</type>
+      <default>DRAFT</default>
+      <source>xar_mag_series.status</source>
+      <status>1</status>
+      <order>8</order>
+      <validation>ACTIVE;INACTIVE;DRAFT</validation>
+    </property>
+  </properties>
+</object>

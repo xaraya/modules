@@ -1,0 +1,18 @@
+
+<xar:style file="mag" scope="module" />
+
+<div class="mag mag-mags">
+
+    <xar:if condition="!empty($mid)">
+        <xar:loop name="$mags">
+            <xar:template file="mag-overview" module="mag" subdata="array('mag'=&gt;$loop:item)" />
+        </xar:loop>
+    <xar:else />
+        <h1><xar:mlstring>All Magazines</xar:mlstring></h1>
+
+        <xar:loop name="$mags">
+            <xar:template file="mag-overview" module="mag" subdata="array('mag'=&gt;$loop:item)" />
+        </xar:loop>
+    </xar:if>
+
+</div>

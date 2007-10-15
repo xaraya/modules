@@ -1,0 +1,102 @@
+<object name="mag_authors">
+  <objectid>20</objectid>
+  <label>mag_authors</label>
+  <moduleid>940</moduleid>
+  <itemtype>5</itemtype>
+  <urlparam>auid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="auid">
+      <id>189</id>
+      <label>AUID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_mag_authors.auid</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="name">
+      <id>190</id>
+      <label>Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_mag_authors.name</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>0:255</validation>
+    </property>
+    <property name="mini_bio">
+      <id>191</id>
+      <label>Mini Bio</label>
+      <type>xartinymce</type>
+      <default></default>
+      <source>xar_mag_authors.mini_bio</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="full_bio">
+      <id>192</id>
+      <label>Full Bio</label>
+      <type>xartinymce</type>
+      <default></default>
+      <source>xar_mag_authors.full_bio</source>
+      <status>1</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="photo">
+      <id>193</id>
+      <label>Photo</label>
+      <type>imagelist</type>
+      <default></default>
+      <source>xar_mag_authors.photo</source>
+      <status>1</status>
+      <order>5</order>
+      <validation>modules/mag/xarimages/authors</validation>
+    </property>
+    <property name="email">
+      <id>194</id>
+      <label>Email</label>
+      <type>email</type>
+      <default></default>
+      <source>xar_mag_authors.email</source>
+      <status>1</status>
+      <order>6</order>
+      <validation>0:200</validation>
+    </property>
+    <property name="website">
+      <id>195</id>
+      <label>Website</label>
+      <type>url</type>
+      <default></default>
+      <source>xar_mag_authors.website</source>
+      <status>1</status>
+      <order>7</order>
+      <validation>0:255</validation>
+    </property>
+    <property name="contact">
+      <id>196</id>
+      <label>Contact</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>xar_mag_authors.contact</source>
+      <status>1</status>
+      <order>8</order>
+      <validation></validation>
+    </property>
+    <property name="notes">
+      <id>197</id>
+      <label>Notes</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>xar_mag_authors.notes</source>
+      <status>1</status>
+      <order>9</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

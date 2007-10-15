@@ -1,0 +1,192 @@
+<object name="mag_articles">
+  <objectid>19</objectid>
+  <label>mag_articles</label>
+  <moduleid>940</moduleid>
+  <itemtype>4</itemtype>
+  <urlparam>aid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="aid">
+      <id>173</id>
+      <label>AID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_mag_articles.aid</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="issue_id">
+      <id>174</id>
+      <label>Issue</label>
+      <type>textbox</type>
+      <default>0</default>
+      <source>xar_mag_articles.issue_id</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="series_id">
+      <id>175</id>
+      <label>Series</label>
+      <type>textbox</type>
+      <default>0</default>
+      <source>xar_mag_articles.series_id</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="title">
+      <id>176</id>
+      <label>Title</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_mag_articles.title</source>
+      <status>1</status>
+      <order>4</order>
+      <validation>0:255</validation>
+    </property>
+    <property name="subtitle">
+      <id>177</id>
+      <label>Subtitle</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_mag_articles.subtitle</source>
+      <status>1</status>
+      <order>5</order>
+      <validation>0:255</validation>
+    </property>
+    <property name="summary">
+      <id>178</id>
+      <label>Summary</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>xar_mag_articles.summary</source>
+      <status>1</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="body">
+      <id>179</id>
+      <label>Body</label>
+      <type>xartinymce</type>
+      <default></default>
+      <source>xar_mag_articles.body</source>
+      <status>1</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+    <property name="footer">
+      <id>180</id>
+      <label>Footer</label>
+      <type>xartinymce</type>
+      <default></default>
+      <source>xar_mag_articles.footer</source>
+      <status>1</status>
+      <order>8</order>
+      <validation></validation>
+    </property>
+    <property name="status">
+      <id>181</id>
+      <label>Status</label>
+      <type>dropdown</type>
+      <default>DRAFT</default>
+      <source>xar_mag_articles.status</source>
+      <status>1</status>
+      <order>9</order>
+      <validation>PUBLISHED;DRAFT</validation>
+    </property>
+    <property name="pubdate">
+      <id>182</id>
+      <label>Publcation Date</label>
+      <type>calendar</type>
+      <default></default>
+      <source>xar_mag_articles.pubdate</source>
+      <status>1</status>
+      <order>10</order>
+      <validation></validation>
+    </property>
+    <property name="refs">
+      <id>183</id>
+      <label>References</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>xar_mag_articles.refs</source>
+      <status>1</status>
+      <order>11</order>
+      <validation></validation>
+    </property>
+    <property name="page">
+      <id>184</id>
+      <label>Page</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_mag_articles.page</source>
+      <status>1</status>
+      <order>12</order>
+      <validation></validation>
+    </property>
+    <property name="tags">
+      <id>185</id>
+      <label>Tags</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>xar_mag_articles.tags</source>
+      <status>1</status>
+      <order>13</order>
+      <validation></validation>
+    </property>
+    <property name="premium">
+      <id>186</id>
+      <label>Premium</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>xar_mag_articles.premium</source>
+      <status>1</status>
+      <order>14</order>
+      <validation>OPEN,Open to All;SAMPLE,Sample;PREMIUM,Members Only;,Default</validation>
+    </property>
+    <property name="style">
+      <id>187</id>
+      <label>Style</label>
+      <type>dropdown</type>
+      <default>DEFAULT</default>
+      <source>xar_mag_articles.style</source>
+      <status>1</status>
+      <order>15</order>
+      <validation>MAIN,Main Article;EDITORIAL,Editorial;BOOK_REVIEW,Book Review;IN_BRIEF,In Brief;FEATURED_MEMBER,Featured Member</validation>
+    </property>
+    <property name="image1">
+      <id>188</id>
+      <label>Image1</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_mag_articles.image1</source>
+      <status>1</status>
+      <order>16</order>
+      <validation></validation>
+    </property>
+    <property name="ref">
+      <id>212</id>
+      <label>Ref</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_mag_articles.ref</source>
+      <status>1</status>
+      <order>17</order>
+      <validation>0:255</validation>
+    </property>
+    <property name="image1_alt">
+      <id>214</id>
+      <label>image1_alt</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_mag_articles.image1_alt</source>
+      <status>1</status>
+      <order>18</order>
+      <validation>0:255</validation>
+    </property>
+  </properties>
+</object>

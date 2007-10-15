@@ -1,0 +1,88 @@
+
+<xar:style file="mag" scope="module" />
+
+<div class="mag mag-series">
+    <xar:if condition="empty($mag)">
+        <p class="xar-error"><xar:mlstring>No magazine found. Please select a magazine.</xar:mlstring></p>
+    <xar:else />
+        <h1>
+            <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'mags','mag'=&gt;$mag.ref))#">
+                #xarVarPrepForDisplay($mag.title)#
+            </a>
+        </h1>
+
+        <xar:if condition="empty($series)">
+            <p class="xar-error"><xar:mlstring>No series found. Please select a magazine series.</xar:mlstring></p>
+        <xar:else />
+            <xar:if condition="count($series) gt 1">
+                <p><xar:mlstring>Series in this magazine:</xar:mlstring></p>
+            </xar:if>
+
+            <xar:loop name="$series">
+                <h3>
+                    <xar:ml>
+                        <xar:mlstring>#(1)</xar:mlstring>
+                        <xar:mlvar>#xarVarPrepForDisplay($loop:item.title)#</xar:mlvar>
+                    </xar:ml>
+                    <span> | </span>
+                    <xar:if condition="count($series) gt 1">
+                        <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'series','mag'=&gt;$mag.ref,'series'=&gt;$loop:item.ref))#" title="#xarML('Show details for this series')#">
+                            <xar:mlstring>Details</xar:mlstring>
+                        </a>
+                    <xar:else />
+                        <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'series','mag'=&gt;$mag.ref))#" title="#xarML('Show all series for this magazine')#">
+                            <xar:mlstring>All series</xar:mlstring>
+                        </a>
+                    </xar:if>
+                    <span> | </span>
+                    <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'series','mag'=&gt;$mag.ref,'series'=&gt;$loop:item.ref,'show'=&gt;'articles'))#" title="#xarML('Show all articles published in this series')#">
+                        <xar:mlstring>Articles</xar:mlstring>
+                    </a>
+                </h3>
+
+                <xar:if condition="!empty($loop:item.synopsis)">
+                    <p class="mag-synopsis">#$loop:item.synopsis#</p>
+                </xar:if>
+
+                <xar:if condition="count($series) eq 1 and !empty($show)">
+                    <xar:if condition="$show eq 'articles' and !empty($groups)">
+                        <div class="mag-series-show">
+                            <h3><xar:mlstring>The following articles have been published in this series:</xar:mlstring></h3>
+                            <ul>
+                                <xar:loop name="$groups" id="issues">
+                                    <li>
+                                        <h4>
+                                            <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'contents','mag'=&gt;$mag.ref,'issue'=&gt;$issues[$loop:issues:key]['ref']))#">
+                                                #xarVarPrepForDisplay($issues[$loop:issues:key]['title'])#
+                                            </a>
+                                        </h4>
+                                        <ul>
+                                            <xar:loop name="$loop:issues:item" id="articles">
+                                                <li>
+                                                    <xar:if condition="$articles[$loop:articles:item]['premium'] ne ''">
+                                                        <xar:set name="$art_prem_class_suffix">#$articles[$loop:articles:item]['premium']#</xar:set>
+                                                    <xar:else />
+                                                        <xar:set name="$art_prem_class_suffix">'UNKNOWN'</xar:set>
+                                                    </xar:if>
+                                                    <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'article','mag'=&gt;$mag.ref,'issue'=&gt;$issues[$loop:issues:key]['ref'],'aid'=&gt;$loop:articles:item))#" class="mag-prem-#$art_prem_class_suffix#">
+                                                        #xarVarPrepForDisplay($articles[$loop:articles:item]['title'])#
+                                                    </a>
+                                                </li>
+                                            </xar:loop>
+                                        </ul>
+                                    </li>
+                                </xar:loop>
+                            </ul>
+                        </div>
+                    </xar:if>
+                </xar:if>
+
+                <xar:comment>Display the full description only if showing just one series.</xar:comment>
+                <xar:if condition="count($series) eq 1 && !empty($loop:item.synopsis)">
+                    <xar:comment>TODO: Force the description to HTML</xar:comment>
+                    <div class="mag-description">#$loop:item.description#</div>
+                </xar:if>
+            </xar:loop>
+        </xar:if>
+    </xar:if>
+</div>

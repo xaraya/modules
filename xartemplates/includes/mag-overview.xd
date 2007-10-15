@@ -1,0 +1,31 @@
+<h2>
+    <xar:ml>
+        <xar:mlstring>#(1)</xar:mlstring>
+        <xar:mlvar>#xarVarPrepForDisplay($mag.title)#</xar:mlvar>
+    </xar:ml>
+</h2>
+<xar:if condition="!empty($mag.logo_path)">
+    <xar:set name="logo_alt">
+        <xar:ml>
+            <xar:mlstring>logo for #(1)</xar:mlstring>
+            <xar:mlvar>#xarVarPrepForDisplay($mag.title)#</xar:mlvar>
+        </xar:ml>
+    </xar:set>
+    <p class="mag-maglogo">
+        <img src="#$mag.logo_path#" alt="#$logo_alt#" />
+    </p>
+</xar:if>
+<xar:if condition="!empty($mag.subtitle)">
+    <p class="mag-subtitle">
+        #xarVarPrepForDisplay($mag.subtitle)#
+    </p>
+</xar:if>
+<xar:if condition="!empty($mag.synopsis)">
+    <p class="mag-synopsis">
+        #xarVarPrepForDisplay($mag.synopsis)#
+    </p>
+</xar:if>
+<p class="mag-links">
+    <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'current','mag'=&gt;$mag.ref))#" class="mag-current-issue"><xar:mlstring>Current Issue</xar:mlstring></a>
+    | <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'archive','mag'=&gt;$mag.ref))#" class="mag-archives"><xar:mlstring>Archives</xar:mlstring></a>
+</p>

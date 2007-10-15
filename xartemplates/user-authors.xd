@@ -1,0 +1,133 @@
+
+<xar:style file="mag" scope="module" />
+
+<div class="mag mag-authors">
+
+    <xar:if condition="empty($mag)">
+        <p class="xar-error"><xar:mlstring>No magazine found. Please select a magazine.</xar:mlstring></p>
+    <xar:else />
+        <h1>
+            <xar:ml>
+                <xar:mlstring>Authors for <a href="#(2)">#(1)</a></xar:mlstring>
+                <xar:mlvar>#xarVarPrepForDisplay($mag.title)#</xar:mlvar>
+                <xar:mlvar>#xarModAPIfunc('mag','user','url',array('func'=&gt;'mags','mag'=&gt;$mag.ref))#</xar:mlvar>
+            </xar:ml>
+        </h1>
+        <xar:if condition="empty($authors)">
+            <p class="xar-error"><xar:mlstring>No authors found.</xar:mlstring></p>
+        <xar:else />
+            <xar:if condition="count($authors) eq 1">
+                <p><a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'authors','mag'=&gt;$mag.ref))#">
+                    <xar:mlstring>Show all authors for this magazine</xar:mlstring>
+                </a></p>
+            </xar:if>
+
+            <xar:loop name="$authors">
+                <xar:if condition="count($authors) eq 1">
+                    <div class="mag-author mag-author-detail">
+                        <xar:comment>Display full details of one single author</xar:comment>
+                        <xar:if condition="!empty($loop:item.photo_path)">
+                            <img src="#$loop:item.photo_path#" alt="#xarVarPrepForDisplay($loop:item.name)#" class="mag-author-photo" />
+                        </xar:if>
+
+                        <h2><a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'authors','mag'=&gt;$mag.ref,'auid'=&gt;$loop:item.auid))#">
+                            #xarVarPrepForDisplay($loop:item.name)#
+                        </a></h2>
+
+                        <xar:if condition="!empty($loop:item.mini_bio)">
+                            <p class="mag-mini-bio">#xarVarPrepForDisplay($loop:item.mini_bio)#</p>
+                        </xar:if>
+
+                        <xar:if condition="!empty($loop:item.email) or !empty($loop:item.website) or !empty($loop:item.contact)">
+                            <div class="mag-author-contact">
+                                <xar:if condition="!empty($loop:item.email)">
+                                    <p class="mag-email">
+                                        <xar:ml>
+                                            <xar:mlstring><strong>E-mail:</strong> <a href="email:#(1)">#(1)</a></xar:mlstring>
+                                            <xar:mlvar>#$loop:item.email#</xar:mlvar>
+                                        </xar:ml>
+                                    </p>
+                                </xar:if>
+
+                                <xar:if condition="!empty($loop:item.website)">
+                                    <p class="mag-website">
+                                        <xar:ml>
+                                            <xar:mlstring><strong>Website:</strong> <a href="#(1)">#(1)</a> | <a href="#(1)" target="_blank">In new window</a></xar:mlstring>
+                                            <xar:mlvar>#$loop:item.website#</xar:mlvar>
+                                        </xar:ml>
+                                    </p>
+                                </xar:if>
+
+                                <xar:if condition="!empty($loop:item.contact)">
+                                    <xar:comment>TODO: force this into HTML</xar:comment>
+                                    <div class="mag-contact">#$loop:item.contact#</div>
+                                </xar:if>
+                            </div>
+                        </xar:if>
+
+                        <xar:if condition="!empty($articles)">
+                            <p><a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'authors','mag'=&gt;$mag.ref,'auid'=&gt;$loop:item.auid))#">
+                                <xar:ml>
+                                    <xar:mlstring>Show profile for #(1)</xar:mlstring>
+                                    <xar:mlvar>#xarVarPrepForDisplay($loop:item.name)#</xar:mlvar>
+                                </xar:ml>
+                            </a></p>
+                            <div class="mag-author-articles">
+                                <h3 class="mag-author-article-title">
+                                    <xar:ml>
+                                        <xar:mlstring>Articles published in #(1)</xar:mlstring>
+                                        <xar:mlvar>#xarVarPrepForDisplay($mag.title)#</xar:mlvar>
+                                    </xar:ml>
+                                </h3>
+                                <ul>
+                                    <xar:loop name="$articles" id="article">
+                                        <li>
+                                            <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'article','mag'=&gt;$mag.ref,'iid'=&gt;$loop:item.issue_id,'aid'=&gt;$loop:item.aid))#">
+                                                #xarVarPrepForDisplay($loop:item.title)#
+                                            </a>
+                                            #xarLocaleGetFormattedDate('long', $loop:item.pubdate)#
+                                        </li>
+                                    </xar:loop>
+                                </ul>
+                            </div>
+                        <xar:else />
+                            <p><a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'authors','mag'=&gt;$mag.ref,'auid'=&gt;$loop:item.auid,'showarticles'=&gt;'true'))#">
+                                <xar:ml>
+                                    <xar:mlstring>Show articles for #(1)</xar:mlstring>
+                                    <xar:mlvar>#xarVarPrepForDisplay($loop:item.name)#</xar:mlvar>
+                                </xar:ml>
+                            </a></p>
+                            <xar:if condition="!empty($loop:item.full_bio)">
+                                <xar:comment>TODO: force this into HTML</xar:comment>
+                                <div class="mag-full-bio">
+                                    <h3 class="mag-full-bio-title"><xar:mlstring>Profile</xar:mlstring></h3>
+                                    #$loop:item.full_bio#
+                                </div>
+                            </xar:if>
+                        </xar:if>
+
+                        <div style="clear: both;"></div>
+                    </div>
+                <xar:else />
+                    <xar:comment>Display multiple authors</xar:comment>
+                    <div class="mag-author mag-author-summary">
+                        <xar:comment>Display full details of one single author</xar:comment>
+                        <xar:if condition="!empty($loop:item.photo_icon)">
+                            <img src="#$loop:item.photo_icon#" alt="#xarVarPrepForDisplay($loop:item.name)#" class="mag-author-photo" />
+                        </xar:if>
+
+                        <h2><a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'authors','mag'=&gt;$mag.ref,'auid'=&gt;$loop:item.auid))#">
+                            #xarVarPrepForDisplay($loop:item.name)#
+                        </a></h2>
+
+                        <xar:if condition="!empty($loop:item.mini_bio)">
+                            <p class="mag-mini-bio">#xarVarPrepForDisplay($loop:item.mini_bio)#</p>
+                        </xar:if>
+
+                        <div style="clear: both;"></div>
+                    </div>
+                </xar:if>
+            </xar:loop>
+        </xar:if>
+    </xar:if>
+</div>

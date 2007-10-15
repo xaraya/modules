@@ -1,0 +1,26 @@
+<xar:comment>
+    Thumbnailed Images Wrapper
+    Params
+        ~$oldImg      Array of attributes from the original image passed in
+        ~$newImg      Array of attributes for the new image tag
+        ~$imgClasses  Array of all the classes on the old image tag, includes 'thumbnailed'
+
+        Note that any style added to the original image, is moved to the wrapper div.
+        We will probably want to do that to additional classes too.
+</xar:comment>
+
+<xar:if condition="xarModIsAvailable('jquery')">
+    <xar:template file="thickbox" module="jquery" />
+</xar:if>
+
+<div class="thumbnail-wrapper #$newImg.class#" style="#$newImg.style#">
+    <a href="#$oldImg.src#" class="thickbox">
+        <xar:if condition="!empty($newImg.title)">
+            <img src="#$newImg.src#" title="#xarML('Click to enlarge')#" alt="#$newImg.alt#" />
+            <br/><span>#$newImg.title#</span>
+        <xar:else />
+            <img src="#$newImg.src#" title="#xarML('Click to enlarge')#" alt="#$newImg.alt#" />
+            <br/><span><xar:mlstring>Click to enlarge</xar:mlstring></span>
+        </xar:if>
+    </a>
+</div>

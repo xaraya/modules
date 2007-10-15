@@ -1,0 +1,102 @@
+<object name="mag_mags">
+  <objectid>16</objectid>
+  <label>mag_magazines</label>
+  <moduleid>940</moduleid>
+  <itemtype>1</itemtype>
+  <urlparam>mid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="mid">
+      <id>149</id>
+      <label>MID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_mag_mags.mid</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="ref">
+      <id>150</id>
+      <label>Ref</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_mag_mags.ref</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>0:255</validation>
+    </property>
+    <property name="title">
+      <id>151</id>
+      <label>Title</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_mag_mags.title</source>
+      <status>1</status>
+      <order>3</order>
+      <validation>0:255</validation>
+    </property>
+    <property name="subtitle">
+      <id>152</id>
+      <label>Subtitle</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_mag_mags.subtitle</source>
+      <status>1</status>
+      <order>4</order>
+      <validation>0:255</validation>
+    </property>
+    <property name="status">
+      <id>153</id>
+      <label>Status</label>
+      <type>dropdown</type>
+      <default>ACTIVE</default>
+      <source>xar_mag_mags.status</source>
+      <status>1</status>
+      <order>5</order>
+      <validation>ACTIVE;INACTIVE</validation>
+    </property>
+    <property name="synopsis">
+      <id>154</id>
+      <label>Synopsis</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>xar_mag_mags.synopsis</source>
+      <status>1</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="logo">
+      <id>155</id>
+      <label>Logo</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_mag_mags.logo</source>
+      <status>1</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+    <property name="showin">
+      <id>211</id>
+      <label>Show In</label>
+      <type>dropdown</type>
+      <default>ALL</default>
+      <source>xar_mag_mags.showin</source>
+      <status>1</status>
+      <order>8</order>
+      <validation>ALL,All places;MAG,Mag Module;XARPAGES,Xarpages Module</validation>
+    </property>
+    <property name="premium">
+      <id>213</id>
+      <label>premium</label>
+      <type>dropdown</type>
+      <default>OPEN</default>
+      <source>xar_mag_mags.premium</source>
+      <status>1</status>
+      <order>9</order>
+      <validation>OPEN,Open to All;SAMPLE,Sample;PREMIUM,Members Only;,Default</validation>
+    </property>
+  </properties>
+</object>

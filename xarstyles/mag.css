@@ -1,0 +1,281 @@
+
+/* Generic */
+
+div.mag a {
+    text-decoration: none;
+}
+
+/* Magazine archive page, with magazine front covers. */
+
+div.mag-archive {
+}
+
+/* Wrapper around an individual issue. */
+div.mag-archive div.mag-issue-wrapper {
+    float: left;
+    width: 150px;
+    height: 260px;
+    margin: 8px;
+    background-color: #ffffaa;
+    overflow: hide;
+    border-bottom: solid 1px #999999;
+}
+div.mag-archive div.mag-issue-wrapper img {
+    width: 150px;
+    border: none;
+}
+div.mag-archive div.mag-issue-wrapper p {
+    margin: 0;
+    padding: 4px;
+    line-height: 100%;
+}
+div.mag-archive div.mag-issue-wrapper p a {
+    color: #333333;
+}
+div.mag-archive h2.mag-grouping {
+    color: #222222;
+    background-color: #bbbbdd;
+    clear: both;
+    margin: 0.25em 0;
+    padding: 0.25em;
+    font-size: 130%;
+}
+div.mag-archive h3.mag-grouping {
+    color: #ffffff;
+    background-color: #666633;
+    clear: both;
+    margin: 0.25em 0;
+    padding: 0.25em;
+    font-size: 120%;
+}
+
+/* Issue contents page */
+
+/* Banner/header block */
+div.mag-contents div.mag-issue-banner {
+    clear: both;
+    padding: 0.5em;
+    border-top: 1px solid #666666;
+    border-bottom: 1px solid #666666;
+    background-color: #eeeeee;
+    margin: 0.5em 0;
+}
+div.mag-contents div.mag-issue-banner img {
+    width: 75px;
+    float: left;
+    margin-right: 1em;
+    margin-bottom: 1em;
+}
+div.mag-contents div.mag-issue-banner div.mag-issue-abstract {
+    clear: both;
+    padding: 0.25em;
+    margin: 0.25em 0;
+    background-color: #fafafa;
+    border: 1px solid #dddddd;
+}
+div.mag-contents div.mag-issue-banner h1 {
+    margin-top: 0;
+    padding-top: 0;
+    font-size: 140%;
+}
+div.mag-contents div.mag-issue-banner h1 a {
+}
+div.mag-contents div.mag-issue-banner h2 {
+    margin-top: 0;
+    padding-top: 0;
+    font-size: 120%;
+    font-style: italic;
+}
+div.mag-contents div.mag-issue-banner p.mag-issue-pub a {
+    white-space: nowrap;
+}
+/* Main contents section. */
+div.mag-contents div.mag-contents-group {
+    margin-top: 0.25em;
+    padding-top: 0.25em;
+    border-top: 2px solid #66dd66;
+}
+div.mag-contents div.mag-contents-group h3 {
+    margin: 0;
+    padding: 0;
+}
+div.mag-contents div.mag-contents-group h3 a {
+    color: #bbbbbb;
+}
+div.mag-contents div.mag-contents-group a {
+}
+/* Flags for each article premium status type. */
+div.mag-contents div.mag-contents-group a.mag-prem-OPEN,
+div.mag-series a.mag-prem-OPEN {
+}
+div.mag-contents div.mag-contents-group a.mag-prem-SAMPLE,
+div.mag-series a.mag-prem-SAMPLE {
+}
+div.mag-contents div.mag-contents-group a.mag-prem-PREMIUM,
+div.mag-series a.mag-prem-PREMIUM {
+    background: top right url('../xarimages/icon-premium.gif') no-repeat;
+    padding-right: 40px;
+}
+
+/* Series page */
+div.mag-series h1 a {
+}
+div.mag-series h3 a {
+    color: #bbbbbb;
+}
+div.mag-series p.mag-synopsis {
+    border: solid #999999;
+    border-width: 2px 0;
+    margin: 0.25em 0;
+    padding: 0.25em;
+    background-color: #fafafa;
+}
+div.mag-series div.mag-description {
+    margin: 1em 0;
+}
+
+/* Article display/detail page */
+
+div.mag-article div.mag-article-body {
+    background-color: #fbfbfb;
+    padding: 0.5em;
+}
+div.mag-article div.mag-article-body a {
+    text-decoration: underline;
+}
+div.mag-article div.mag-article-header {
+    clear: both;
+    margin: 1em 0;
+}
+
+div.mag-article p.mag-header-publishing {
+    padding: 0.25em;
+    margin: 1em 0;
+    border: solid #dddddd;
+    border-width: 3px 0 1px;
+    background-color: #eeeeee;
+}
+
+div.mag-article div.mag-article-intro-block {
+    margin: 1em 0;
+}
+div.mag-article div.mag-article-intro-block img.mag-article-main-image {
+    float: right;
+    margin: 0 0 1em 1em;
+}
+div.mag-article div.mag-article-intro-block p {
+    font-style: italic;
+}
+
+div.mag-article div.mag-article-footer {
+    margin: 1em 0;
+    border-top: 1px solid #999999;
+    padding: 0.25em 0;
+}
+
+div.mag-article div.mag-article-footer div.mag-article-footer-text {
+    margin: 0.5em 0;
+    font-style: italic;
+}
+
+div.mag-article div.mag-article-footer div.mag-footer-authors {
+    margin: 1em 0;
+}
+div.mag-article div.mag-article-footer div.mag-footer-author {
+    float: left;
+    width: 240px;
+    font-size: 14px;
+    line-height: 100%;
+    padding-right: 0.25em;
+    margin: 0.25em;
+    border-right: 1px solid #aaaaaa;
+}
+div.mag-article div.mag-article-footer div.mag-footer-author img {
+    float: left;
+    margin-right: 0.5em;
+    border: 1px solid #666666;
+}
+
+
+/* Article display page thumbnail */
+div.mag-article div.mag-article-body div.thumbnail-wrapper {
+    width: 200px;
+    padding: 0.25em;
+    border: 1px solid #333333;
+    background-color: #ffffff;
+}
+div.mag-article div.mag-article-body div.thumbnail-wrapper img {
+    width: 200px;
+    border: none;
+}
+div.mag-article div.mag-article-body div.thumbnail-wrapper a {
+    text-decoration: none;
+}
+/* Extra classes for aligning the thumbnail images. Also falls back to non-thumbnailed images. */
+div.mag-article div.mag-article-body div.thumbnailed-right,
+div.mag-article div.mag-article-body img.thumbnailed-right {
+    float: right;
+    margin-left: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+div.mag-article div.mag-article-body div.thumbnailed-left,
+div.mag-article div.mag-article-body img.thumbnailed-left {
+    float: left;
+    margin-right: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+div.mag-article div.mag-article-body div.thumbnailed-centre,
+div.mag-article div.mag-article-body img.thumbnailed-centre {
+    float: none !important;
+    clear: both !important;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+div.mag-article div.mag-article-body img.thumbnailed-centre {
+    display: block;
+}
+
+/* Author details pages */
+
+div.mag_authors {
+}
+
+div.mag-authors div.mag-author-detail img.mag-author-photo {
+    border: 1px solid #666666;
+    padding: 3px;
+    background-color: #fafafa;
+    float: left;
+    margin: 0 1em 1em 0;
+}
+div.mag-authors div.mag-author-detail div.mag-full-bio,
+div.mag-authors div.mag-author-detail div.mag-author-articles {
+    clear: both;
+    margin: 1em 0;
+    padding: 1em;
+    border: 1px solid #eeeeee;
+}
+div.mag-authors div.mag-author-detail div.mag-contact {
+    margin: 0.5em 0;
+}
+div.mag-authors div.mag-author-summary img.mag-author-photo {
+    border: 2px solid #666666;
+    padding: 4px;
+    background-color: #fafafa;
+    float: left;
+    clear: left;
+    margin: 0 1em 1em 0;
+}
+div.mag-authors div.mag-author-summary {
+    margin: 1em 0;
+    padding: 0 0 0.25em;
+    border-bottom: 1px solid #aaaaaa;
+}
+
+/* Bit of styling on thickbox */
+body div#TB_overlay.TB_overlayBG {
+    background-color: #003f3f;
+}

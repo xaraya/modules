@@ -1,0 +1,62 @@
+<object name="mag_articles_authors">
+  <objectid>21</objectid>
+  <label>mag_articles_authors</label>
+  <moduleid>940</moduleid>
+  <itemtype>6</itemtype>
+  <urlparam>aaid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="aaid">
+      <id>198</id>
+      <label>AAID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_mag_articles_authors.aaid</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="article_id">
+      <id>199</id>
+      <label>Article</label>
+      <type>integerbox</type>
+      <default>0</default>
+      <source>xar_mag_articles_authors.article_id</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="author_id">
+      <id>200</id>
+      <label>Author</label>
+      <type>integerbox</type>
+      <default>0</default>
+      <source>xar_mag_articles_authors.author_id</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="role">
+      <id>201</id>
+      <label>Role</label>
+      <type>dropdown</type>
+      <default>WRITER</default>
+      <source>xar_mag_articles_authors.role</source>
+      <status>1</status>
+      <order>4</order>
+      <validation>WRITER,Writer;CO_WRITER,Cowriter;ILLUSTRATOR,Illustrator;EDITOR,Editor;COMPILER,Compiler</validation>
+    </property>
+    <property name="notes">
+      <id>202</id>
+      <label>Notes</label>
+      <type>xartinymce</type>
+      <default></default>
+      <source>xar_mag_articles_authors.notes</source>
+      <status>1</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>
