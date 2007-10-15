@@ -23,6 +23,7 @@ function foo_init()
 # Set up masks
 #
     xarRegisterMask('ViewFoo','All','foo','All','All','ACCESS_OVERVIEW');
+    xarRegisterMask('ReadFoo','All','foo','All','All','ACCESS_READ');
     xarRegisterMask('AdminFoo','All','foo','All','All','ACCESS_ADMIN');
 
 # --------------------------------------------------------
