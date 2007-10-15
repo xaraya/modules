@@ -39,6 +39,13 @@ function soapserver_userapi_initsoapserver()
        $server->soap_defencoding = strtoupper($locale[1]);
     }
 
+    if ($server->soap_defencoding == 'UTF-8') {
+        // Need to explicitly switch decoding off, otherwise everything gets decoded
+        // to ISO-8859-1 on receipt by default. This is a kind of 'output encoding'
+        // flag, though a bit of a rough one.
+        $server->decode_utf8 = false;
+    }
+
     // Declare the entry point for use in the WSDL file
     $server->configureWSDL('xaraya', 'urn:xar', xarServerGetBaseURL() . '/ws.php?type=soap');
 
