@@ -69,7 +69,7 @@ function ratings_user_display($args)
                            'getitems',
                            $args);
     // Select the way to get the rating
-    if (!empty($rating) && count($rating == 1)) {
+    if (!empty($rating[$objectid])) {
         $key_id = array_keys($rating);
         $data['rating'] = $rating[$key_id[0]]['rating'];
         $data['numratings'] = $rating[$key_id[0]]['numratings'];
