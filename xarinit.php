@@ -666,7 +666,8 @@ function julian_upgrade($oldversion)
 
 /**
  * Julian Module Delete Function
- * @return bool
+ * @param none
+ * @return bool true on successful deletion
  */
 function julian_delete()
 {
