@@ -1,4 +1,10 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Flag for Show Add icon (plus sign) on each day in the month and to add an event.</xar:comment>
+<xar:sec mask="AddJulian" catch="false">
+    <xar:set name="ShowAddIcon">TRUE</xar:set>
+<xar:else />
+    <xar:set name="ShowAddIcon">FALSE</xar:set>
+</xar:sec>
 <div class="xar-julian xar-julian-user-month">
 <xar:comment> Include the header file which also loads the css for Julian</xar:comment>
     <xar:template file="header" />
@@ -60,12 +66,11 @@
                                 <a href="#xarModURL('julian','user','day',array('cal_date'=>$date))#">#$day#</a>
                             </div>
                             <div class="cal-icons">
-                                <xar:comment>Show Add icon (plus sign) on each day in the month and allow the administrator to add an event.</xar:comment>
-                                <xar:sec id="unique1" mask="AddJulian" catch="false">
+                                <xar:if condition="$ShowAddIcon">
                                     <a href="#xarModURL('julian','user','addevent',array('cal_date'=>$date))#">
                                         <img src="#xarTplGetImage('new.gif')#" alt="#xarML('Add Event')#" />
                                     </a>
-                                </xar:sec>
+                                </xar:if>
                             </div>
                             <xar:if condition="isset($event_array[$dbdate])">
                                 <ul class="eventlist">
