@@ -13,9 +13,9 @@
     <xar:mlstring>It is currently responsible for accomplishing three main tasks:</xar:mlstring>
   </p>
   <ol>
-    <li><xar:mlstring>Hold Education Education Plans. The plans have plan items that represent education blocks.</xar:mlstring></li>
+    <li><xar:mlstring>Hold Education Plans. The plans have plan items that represent education blocks.</xar:mlstring></li>
     <li><xar:mlstring>Let users choose an education plan that they will follow (create an ITSP).</xar:mlstring></li>
-    <li><xar:mlstring>Let those users add courses and external courses to the their ITSP.</xar:mlstring></li>
+    <li><xar:mlstring>Let those users add courses from the courses module and external courses to the their ITSP.</xar:mlstring></li>
 
   </ol>
 
@@ -24,7 +24,7 @@
   students in your organisation obtain credits for items within a plan.
   The ITSP module will need this information and work out where to store information on parts
   of the personal education plan, and where to obtain related information from.</xar:mlstring><br />
-  <xar:mlstring>The easiest location for educational information is the courses module</xar:mlstring>
+  <xar:mlstring>The easiest location for educational information is the Courses module</xar:mlstring>
   </p>
   <p>
     <xar:mlstring>Install the courses module.</xar:mlstring><br />
@@ -52,7 +52,7 @@
   <p><xar:mlstring>Create, or let users create, an ITSP via the user_new function. Choose the education plan you want to use and press the create button.
   Now, users can fill in the details for the planitems. This way, they will gather credits that will make up their planned credits. These credits are shown in the overview page. If
   the planitem has a minimum number of credits assigned, the user will see if there are enough credits entered.</xar:mlstring><br />
-  <xar:mlstring>If enough credits are entered, a user can choose to submit the ITSP for approval. The ITSP then goes to the next status: submitted.</xar:mlstring>
+  <xar:mlstring>If enough credits are entered (which you have defined before as the needed amount of credits, a user can choose to submit the ITSP for approval. The ITSP then goes to the next status: submitted.</xar:mlstring>
  </p>
 
   <h3><xar:mlstring>Interaction with other modules</xar:mlstring></h3>
@@ -92,7 +92,7 @@
     </li>
   </ul>
   <p class="xar-sub">
-    <strong>&nbsp;<xar:mlstring>ITSP Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.2&nbsp; 2006-10-19
+    <strong>&nbsp;<xar:mlstring>ITSP Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.3&nbsp; 2007-10-17
   </p>
 </div>
 
