@@ -1,0 +1,49 @@
+<xar:comment>Article header section</xar:comment>
+<div class="mag-article-header">
+    <xar:comment>Main title</xar:comment>
+    <h1>
+        <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'article','mag'=&gt;$mag.ref,'issue'=&gt;$issue.ref,'aid'=&gt;article.aid))#">
+            #xarVarPrepForDisplay($article.title)#
+        </a>
+    </h1>
+
+    <xar:comment>Sub-title</xar:comment>
+    <xar:if condition="!empty($article.subtitle)">
+        <h3>#xarVarPrepForDisplay($article.subtitle)#</h3>
+    </xar:if>
+
+    <xar:comment>Publishing information</xar:comment>
+    <p class="mag-header-publishing">
+        <xar:ml>
+            <xar:mlstring>Published #(1) in the <a href="#(4)">#(2)</a> issue of <a href="#(5)">#(3)</a></em></xar:mlstring>
+            <xar:mlvar>#xarLocaleGetFormattedDate('long', $issue.pubdate)#</xar:mlvar>
+            <xar:mlvar>#xarVarPrepForDisplay($issue.title)#</xar:mlvar>
+            <xar:mlvar>#xarVarPrepForDisplay($mag.title)#</xar:mlvar>
+            <xar:mlvar>#xarModAPIfunc('mag','user','url',array('func'=&gt;'contents','mag'=&gt;$mag.ref,'issue'=&gt;$issue.ref))#</xar:mlvar>
+            <xar:mlvar>#xarModAPIfunc('mag','user','url',array('func'=&gt;'mags','mag'=&gt;$mag.ref))#</xar:mlvar>
+        </xar:ml>
+        <xar:if condition="!empty($article.series_id)">
+            <xar:ml>
+                <xar:mlstring>; in the <a href="#(1)">#(2)</a> series</xar:mlstring>
+                <xar:mlvar>#xarModAPIfunc('mag','user','url',array('func'=&gt;'series','mag'=&gt;$mag.ref,'series'=&gt;$series.ref))#</xar:mlvar>
+                <xar:mlvar>#xarVarPrepForDisplay($series['title'])#</xar:mlvar>
+            </xar:ml>
+        </xar:if>
+        <xar:if condition="!empty($article.page)">
+            <xar:ml>
+                <xar:mlstring>; Page #(1)</xar:mlstring>
+                <xar:mlvar>#$article.page#</xar:mlvar>
+            </xar:ml>
+        </xar:if>
+    </p>
+
+    <xar:if condition="!empty($authors)">
+        <div class="mag-header-author">
+            <xar:mlstring>By:</xar:mlstring>
+            <xar:loop name="$authors">
+                <xar:if condition="$loop:index gt 0"> | </xar:if>
+                <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'authors','mag'=&gt;$mag.ref,'auid'=&gt;$loop:item.auid))#">#xarVarPrepForDisplay($loop:item.name)#</a>
+            </xar:loop>
+        </div>
+    </xar:if>
+</div>

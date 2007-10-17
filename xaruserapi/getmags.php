@@ -59,6 +59,12 @@ function mag_userapi_getmags($args)
         $where[] = "status in ('" . implode("','", $status) . "')";
     }
 
+    // Showin
+    if (!empty($showin)) {
+        if (is_string($showin)) $status = array($showin);
+        $where[] = "showin in ('" . implode("','", $showin) . "')";
+    }
+
     // Magazine ID
     if (!empty($mid) && is_numeric($mid)) {
         $where[] = 'mid eq ' . (integer)$mid;

@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * Return a list of series for a given magazine.
+ * No privileges are checked as the assumption is that
+ * the privileges are handled at the magazine level.
+ */
+
+function mag_listapi_magseries($args)
+{
+    extract($args);
+
+    xarVarFetch('mid', 'id', $mid, 0, XARVAR_NOT_REQUIRED);
+
+    // Try fetching from the page cache.
+    if (empty($mid) && xarVarIsCached('mag', 'mid')) {
+        $mid = xarVarGetCached('mag', 'mid');
+    }
+
+    if (empty($mid)) {
+        $return = array(xarML('No magazine selected'));
+    } else {
+        $items = xarModAPIfunc('mag', 'user', 'getseries', array('mid' => $mid));
+
+        $return = array(xarML('Not connected to a series'));
+
+        if (!empty($items)) {
+            foreach($items as $item) {
+                $return[$item['sid']] = $item['title'];
+            }
+        }
+    }
+
+    return $return;
+}
+
+?>

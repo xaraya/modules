@@ -110,6 +110,8 @@ div.mag-series a.mag-prem-OPEN {
 }
 div.mag-contents div.mag-contents-group a.mag-prem-SAMPLE,
 div.mag-series a.mag-prem-SAMPLE {
+    background: top right url('../xarimages/icon-sample.gif') no-repeat;
+    padding-right: 40px;
 }
 div.mag-contents div.mag-contents-group a.mag-prem-PREMIUM,
 div.mag-series a.mag-prem-PREMIUM {
@@ -178,10 +180,11 @@ div.mag-article div.mag-article-footer div.mag-article-footer-text {
     font-style: italic;
 }
 
-div.mag-article div.mag-article-footer div.mag-footer-authors {
+
+div.mag-article div.mag-article-authors {
     margin: 1em 0;
 }
-div.mag-article div.mag-article-footer div.mag-footer-author {
+div.mag-article div.mag-article-author {
     float: left;
     width: 240px;
     font-size: 14px;
@@ -190,7 +193,7 @@ div.mag-article div.mag-article-footer div.mag-footer-author {
     margin: 0.25em;
     border-right: 1px solid #aaaaaa;
 }
-div.mag-article div.mag-article-footer div.mag-footer-author img {
+div.mag-article div.mag-article-author img {
     float: left;
     margin-right: 0.5em;
     border: 1px solid #666666;

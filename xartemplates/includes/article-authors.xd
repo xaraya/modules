@@ -1,0 +1,24 @@
+<xar:comment>Authors section - mini-bios of authors for this article</xar:comment>
+
+<xar:if condition="!empty($authors)">
+    <div class="mag-article-authors">
+        <div class="mag-footer-authors">
+            <xar:loop name="$authors">
+                <div class="mag-article-author">
+                    <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'authors','mag'=&gt;$mag.ref,'auid'=&gt;$loop:item.auid))#">
+                        <xar:if condition="!empty($loop:item.photo_icon)">
+                            <img src="#xarVarPrepForDisplay($loop:item.photo_icon)#" alt="#xarVarPrepForDisplay($loop:item.name)#" />
+                        </xar:if>
+                        <xar:comment>TODO: force mini-bio to be text</xar:comment>
+                        <xar:if condition="!empty($loop:item.mini_bio)">
+                            #xarVarPrepForDisplay($loop:item.mini_bio)#
+                        <xar:else />
+                            #xarVarPrepForDisplay($loop:item.name)#
+                        </xar:if>
+                    </a>
+                </div>
+            </xar:loop>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+</xar:if>

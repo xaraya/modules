@@ -1,0 +1,24 @@
+
+/* ... */
+
+div.mag-issues img.mag-cover-img-icon {
+    height: 2em;
+}
+
+/* Dynamic data forms and form items */
+
+div.mag-admin div.mag-form-item {
+    clear: both;
+    margin: 1em 0;
+}
+div.mag-admin div.mag-form-item label {
+    clear: both;
+    display: block;
+}
+div.mag-admin div.mag-form-item textarea,
+div.mag-admin div.mag-form-item div.xar-form-container-after {
+    padding: 0;
+    margin: 0;
+    display: block;
+    float: none;
+}

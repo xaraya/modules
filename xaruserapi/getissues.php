@@ -23,7 +23,7 @@ function mag_userapi_getissues($args)
     // Get module parameters
     extract(xarModAPIfunc('mag', 'user', 'params',
         array(
-            'knames' => 'module,modid,itemtype_issues,image_issue_cover_vpath,sort_default_issues'
+            'knames' => 'module,modid,itemtype_issues,image_issue_cover_vpath,sort_default_issues,image_issue_cover_icon_vpath'
         )
     ));
 
@@ -121,6 +121,18 @@ function mag_userapi_getissues($args)
                     'mag', 'user', 'imagepaths',
                     array(
                         'path' => $image_issue_cover_vpath,
+                        'fields' => array(
+                            'mag_ref' => $mag['ref'],
+                            'issue_ref' => $issue['ref'],
+                            'issue_cover' => $issue['cover_img'],
+                        )
+                    )
+                );
+
+                $issue['cover_img_icon_path'] = xarModAPIfunc(
+                    'mag', 'user', 'imagepaths',
+                    array(
+                        'path' => $image_issue_cover_icon_vpath,
                         'fields' => array(
                             'mag_ref' => $mag['ref'],
                             'issue_ref' => $issue['ref'],

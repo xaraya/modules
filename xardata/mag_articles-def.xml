@@ -21,22 +21,22 @@
     <property name="issue_id">
       <id>174</id>
       <label>Issue</label>
-      <type>textbox</type>
+      <type>dropdown</type>
       <default>0</default>
       <source>xar_mag_articles.issue_id</source>
       <status>1</status>
       <order>2</order>
-      <validation></validation>
+      <validation>xarModAPIfunc('mag','list','magissues')</validation>
     </property>
     <property name="series_id">
       <id>175</id>
       <label>Series</label>
-      <type>textbox</type>
-      <default>0</default>
+      <type>dropdown</type>
+      <default></default>
       <source>xar_mag_articles.series_id</source>
       <status>1</status>
       <order>3</order>
-      <validation></validation>
+      <validation>xarModAPIfunc('mag','list','magseries')</validation>
     </property>
     <property name="title">
       <id>176</id>
@@ -100,7 +100,7 @@
     </property>
     <property name="pubdate">
       <id>182</id>
-      <label>Publcation Date</label>
+      <label>Publication Date</label>
       <type>calendar</type>
       <default></default>
       <source>xar_mag_articles.pubdate</source>
@@ -146,7 +146,7 @@
       <source>xar_mag_articles.premium</source>
       <status>1</status>
       <order>14</order>
-      <validation>OPEN,Open to All;SAMPLE,Sample;PREMIUM,Members Only;,Default</validation>
+      <validation>OPEN,Open (no restrictions);SAMPLE,Sampler;PREMIUM,Members Only;,Default (inherit from issue)</validation>
     </property>
     <property name="style">
       <id>187</id>
@@ -156,7 +156,7 @@
       <source>xar_mag_articles.style</source>
       <status>1</status>
       <order>15</order>
-      <validation>MAIN,Main Article;EDITORIAL,Editorial;BOOK_REVIEW,Book Review;IN_BRIEF,In Brief;FEATURED_MEMBER,Featured Member</validation>
+      <validation>DEFAULT,Default (inherit from series);EDITORIAL,Editorial;BOOKS,Book Review;BRIEF,In Brief;FMEMBER,Featured Member</validation>
     </property>
     <property name="image1">
       <id>188</id>

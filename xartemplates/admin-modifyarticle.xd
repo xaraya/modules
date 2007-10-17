@@ -1,0 +1,47 @@
+<xar:style file="mag-admin" scope="module" />
+
+<xar:comment>
+    Modify or create a magazine article.
+</xar:comment>
+<div class="mag-admin">
+
+    <xar:if condition="!empty($mag)">
+        <h2>
+            <xar:ml>
+                <xar:mlstring>Magazine: #(1)</xar:mlstring>
+                <xar:mlvar>#xarVarPrepForDisplay($mag.title)#</xar:mlvar>
+            </xar:ml>
+        </h2>
+    </xar:if>
+
+    <xar:if condition="!empty($message)">
+        <p class="xar-error">#xarVarPrepForDisplay($message)#</p>
+    </xar:if>
+
+    <form method="post" action="#xarModURL('mag','admin','modifyarticle')#">
+        <xar:if condition="!empty($properties)">
+            <xar:loop name="$properties">
+                <xar:set name="this_property">#$loop:item#</xar:set>
+                <xar:set name="property_name">#$this_property-&gt;name#</xar:set>
+
+                <div class="mag-form-item">
+                    <label><xar:data-label property="$this_property" /></label>
+                    <xar:data-input property="$this_property" />
+                </div>
+            </xar:loop>
+            <div style="clear: both;">&nbsp;</div>
+        </xar:if>
+
+        <p>
+            <input type="hidden" name="mid" value="#$mid#" />
+            <input type="hidden" name="aid" value="#$aid#" />
+            <input type="hidden" name="authid" value="#xarSecGenAuthKey('mag')#" />
+            <input type="hidden" name="return_url" value="#xarVarPrepForDisplay($return_url)#" />
+            <xar:if condition="!empty($return_url)">
+                <input type="submit" name="submit_return" value="#xarML('Save and Return')#" />
+            </xar:if>
+            <input type="submit" name="submit_save" value="#xarML('Save')#" />
+        </p>
+    </form>
+
+</div>

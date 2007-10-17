@@ -1,0 +1,11 @@
+
+<xar:comment>TODO: force to HTML format</xar:comment>
+<xar:comment>TODO: handle premium and sample flags</xar:comment>
+<xar:comment>TODO: handle images as pop-ups etc</xar:comment>
+
+<xar:if condition="!empty($article.body)">
+    <div class="mag-article-body">
+        #xarModAPIfunc('mag','user','imgfilter',array('text'=&gt;$article.body))#
+        <div style="clear: both;"></div>
+    </div>
+</xar:if>

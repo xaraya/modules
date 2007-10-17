@@ -60,6 +60,7 @@ function mag_userapi_params($args)
         // Path of the issue front cover.
         // Available substitution vars: {base_image_vpath} {mag_ref} {issue_ref} {issue_cover}
         $params['image_issue_cover_vpath'] = '{base_image_vpath}/{mag_ref}/issues/{issue_ref}/cover/{issue_cover_filename}';
+        $params['image_issue_cover_icon_vpath'] = '{base_image_vpath}/{mag_ref}/issues/{issue_ref}/cover/{issue_cover_filename}';
 
         // Path for the article main image.
         $params['image_article_main_vpath'] = '{base_image_vpath}/{mag_ref}/issues/{issue_ref}/articles/{image1_filename}';
@@ -104,6 +105,9 @@ function mag_userapi_params($args)
 
         // Maximum number of articles to show on the author profile page.
         $params['max_author_articles_profile_page'] = 40;
+
+        // Default number of author articles to select.
+        $params['default_author_articles'] = 100;
 
         // List of month names (MLS-sensitive)
         $params['month_names'] = array();

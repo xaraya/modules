@@ -8,6 +8,7 @@
  *
  * @param mag array Magazine record.
  * @param issue array Issue record.
+ * @param status_group string PUBLISHED or DRAFT; sets statuses at all levels appropriately
  * @return array Returns arrays for articles, series and the TOC grouping.
  *
  */
@@ -27,12 +28,27 @@ function mag_userapi_gettoc($args)
     // The magazine and issue are mandatory records.
     if (empty($mag) || empty($issue)) return $return;
 
+    // The statuses of various records.
+    // Can override these so that, for example, previews of draft
+    // issues can be show to administrators.
+    if (!empty($status_group)) {
+        if ($status_group == 'PUBLISHED') {
+            $series_status = array('ACTIVE');
+            $article_status = array('PUBLISHED');
+        } elseif ($status_group == 'DRAFT') {
+            $article_status = array();
+            $article_status = array();
+        }
+    }
+    if (!isset($series_status)) $series_status = array('ACTIVE');
+    if (!isset($article_status)) $article_status = array('PUBLISHED');
+
     // TODO: If cacheing is implemented, then this would make a good key.
     $cachekey = $mag['mid'] . '-' . $issue['iid'];
 
     // Fetch all the articles for this issue.
     $article_select = array(
-        'status' => 'PUBLISHED',
+        'status' => $article_status,
         'mid' => $mag['mid'],
         'iid' => $issue['iid'],
         'fields' => 'TOC',
@@ -112,14 +128,14 @@ function mag_userapi_gettoc($args)
         // Now fetch the details of each series we are displaying.
         $series = xarModAPIfunc(
             $module, 'user', 'getseries',
-            array('sids' => $series_list, 'status' => 'ACTIVE', 'mid' => $mag['mid'])
+            array('sids' => $series_list, 'status' => $series_status, 'mid' => $mag['mid'])
         );
 
         // Go through the articles and remove any for series that do not exist
         // (or more accurately, that are not active).
         foreach($articles as $key => $article) {
             if (isset($article['series_id']) && $article['series_id'] > 0 && !isset($series[$article['series_id']])) {
-                // Remove articles if the series is disabled.
+                // Remove articles if the series is disabled, or more accuratly, not available.
                 unset($articles[$key]);
                 unset($groups[$article['series_id']]);
             }
