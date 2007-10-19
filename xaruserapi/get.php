@@ -12,9 +12,9 @@
  * @author mikespub
  */
 /**
- * get a specific article by aid, or by a combination of other fields
+ * get a specific article by id, or by a combination of other fields
  *
- * @param id $args['aid'] id of article to get, or
+ * @param id $args['id'] id of article to get, or
  * @param id $args['pubtypeid'] pubtype id of article to get, and optional
  * @param string $args['title'] title of article to get, and optional
  * @param string $args['summary'] summary of article to get, and optional
@@ -26,7 +26,7 @@
  * @param string $args['language'] language of article to get
  * @param bool $args['withcids'] (optional) if we want the cids too (default false)
  * @param array $args['fields'] array with all the fields to return per article
- *                        Default list is : 'aid','title','summary','authorid',
+ *                        Default list is : 'id','title','summary','authorid',
  *                        'pubdate','pubtypeid','notes','status','body'
  *                        Optional fields : 'cids','author','counter','rating','dynamicdata'
  * @param array $args['extra'] array with extra fields to return per article (in addition
@@ -42,7 +42,7 @@ function articles_userapi_get($args)
     extract($args);
 
     // Argument check
-    if (isset($aid) && (!is_numeric($aid) || $aid < 1)) {
+    if (isset($id) && (!is_numeric($id) || $id < 1)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'article ID', 'user', 'get',
                     'Articles');
@@ -55,8 +55,8 @@ function articles_userapi_get($args)
 
     // bypass this function, call getall instead?
     if (isset($fields) || isset($extra)) {
-        if (!empty($aid))
-            $args['aids'] = array($aid);
+        if (!empty($id))
+            $args['ids'] = array($id);
         if (!empty($pubtypeid))
             $args['ptid'] = $pubtypeid;
         $wheres = array();
@@ -88,16 +88,16 @@ function articles_userapi_get($args)
 // TODO: put all this in dynamic data and retrieve everything via there (including hooked stuff)
 
     $bindvars = array();
-    if (!empty($aid)) {
-        $where = "WHERE xar_aid = ?";
-        $bindvars[] = $aid;
+    if (!empty($id)) {
+        $where = "WHERE id = ?";
+        $bindvars[] = $id;
     } else {
         $wherelist = array();
         $fieldlist = array('title','summary','authorid','pubdate','pubtypeid',
                            'notes','status','body','language');
         foreach ($fieldlist as $field) {
             if (isset($$field)) {
-                $wherelist[] = "xar_$field = ?";
+                $wherelist[] = "$field = ?";
                 $bindvars[] = $$field;
             }
         }
@@ -114,19 +114,19 @@ function articles_userapi_get($args)
     $articlestable = $xartable['articles'];
 
     // Get item
-    $query = "SELECT xar_aid,
-                   xar_title,
-                   xar_summary,
-                   xar_body,
-                   xar_authorid,
-                   xar_pubdate,
-                   xar_pubtypeid,
-                   xar_notes,
-                   xar_status,
-                   xar_language
+    $query = "SELECT id,
+                   title,
+                   summary,
+                   body,
+                   authorid,
+                   pubdate,
+                   pubtypeid,
+                   notes,
+                   status,
+                   language
             FROM $articlestable
             $where";
-    if (!empty($aid)) {
+    if (!empty($id)) {
         $result =& $dbconn->Execute($query,$bindvars);
     } else {
         $result =& $dbconn->SelectLimit($query,1,0,$bindvars);
@@ -137,10 +137,10 @@ function articles_userapi_get($args)
         return false;
     }
 
-    list($aid, $title, $summary, $body, $authorid, $pubdate, $pubtypeid, $notes,
+    list($id, $title, $summary, $body, $authorid, $pubdate, $pubtypeid, $notes,
          $status, $language) = $result->fields;
 
-    $article = array('aid' => $aid,
+    $article = array('id' => $id,
                      'title' => $title,
                      'summary' => $summary,
                      'body' => $body,
@@ -160,7 +160,7 @@ function articles_userapi_get($args)
         $articlecids = xarModAPIFunc('categories',
                                     'user',
                                     'getlinks',
-                                    array('iids' => Array($aid),
+                                    array('iids' => Array($id),
                                           'itemtype' => $pubtypeid,
                                           'modid' => $sysid,
                                           'reverse' => 0
@@ -175,13 +175,13 @@ function articles_userapi_get($args)
     if (isset($article['cids']) && count($article['cids']) > 0) {
 // TODO: do we want all-or-nothing access here, or is one access enough ?
         foreach ($article['cids'] as $cid) {
-            if (!xarSecurityCheck('ReadArticles',0,'Article',"$pubtypeid:$cid:$authorid:$aid")) return;
+            if (!xarSecurityCheck('ReadArticles',0,'Article',"$pubtypeid:$cid:$authorid:$id")) return;
         // TODO: combine with ViewCategoryLink check when we can combine module-specific
         // security checks with "parent" security checks transparently ?
             if (!xarSecurityCheck('ReadCategories',0,'Category',"All:$cid")) return;
         }
     } else {
-        if (!xarSecurityCheck('ReadArticles',0,'Article',"$pubtypeid:All:$authorid:$aid")) return;
+        if (!xarSecurityCheck('ReadArticles',0,'Article',"$pubtypeid:All:$authorid:$id")) return;
     }
 
 /*
@@ -189,7 +189,7 @@ function articles_userapi_get($args)
         $values = xarModAPIFunc('dynamicdata','user','getitem',
                                  array('module'   => 'articles',
                                        'itemtype' => $pubtypeid,
-                                       'itemid'   => $aid));
+                                       'itemid'   => $id));
         if (!empty($values) && count($values) > 0) {
         // TODO: compare with looping over $name => $value pairs
             $article = array_merge($article,$values);

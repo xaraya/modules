@@ -35,4 +35,7 @@ $modversion['class']        = 'Complete';
 $modversion['category']     = 'Content';
 // this module depends on the categories module
 $modversion['dependency']   = array(147);
+$modversion['dependencyinfo'] = array(
+                                      147 => 'categories',
+                                      );
 ?>

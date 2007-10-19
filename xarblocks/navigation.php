@@ -131,7 +131,7 @@ function articles_navigationblock_display($blockinfo)
             // try to get itemid from input
             xarVarFetch('itemid', 'isset', $itemid, NULL, XARVAR_DONT_SET);
             if (empty($itemid)) {
-              xarVarFetch('aid', 'isset', $itemid, NULL, XARVAR_DONT_SET);
+              xarVarFetch('id', 'isset', $itemid, NULL, XARVAR_DONT_SET);
             }// if
         }
     }
@@ -353,11 +353,11 @@ function articles_navigationblock_display($blockinfo)
               $articles = xarModAPIFunc('articles', 'user', 'getall',
                                         array('cid'=>$info['cid'],
                                               'ptid'=>$itemtype,
-                                              'fields'=>array('aid','title')
+                                              'fields'=>array('id','title')
                                               )
                                         );
               foreach($articles as $k=>$article) {
-                $articles[$article['title']] = $article['aid'];
+                $articles[$article['title']] = $article['id'];
                 unset($articles[$k]);
               }// foreach
 
@@ -367,7 +367,7 @@ function articles_navigationblock_display($blockinfo)
                 $link = xarModURL($modname,$type,'display',
                                   array('ptid' => $itemtype,
                                         'catid' => $info['cid'],
-                                        'aid'=>$articles[$label]));
+                                        'id'=>$articles[$label]));
               } else {
                 $link = xarModURL($modname,$type,$func,
                                   array('itemtype' => $itemtype,
@@ -428,7 +428,7 @@ function articles_navigationblock_display($blockinfo)
             # get immediate items in current category
             $items = xarModAPIFunc('articles', 'user', 'getall',
                                       array('cids'=>array($cid),
-                                            'fields'=>array('aid', 'pubtypeid', 'title')
+                                            'fields'=>array('id', 'pubtypeid', 'title')
                                             )
                                       );
             $tmpArticles = array();
@@ -437,15 +437,15 @@ function articles_navigationblock_display($blockinfo)
                 unset($items[$k]);
               } else {
                 $label = xarVarPrepForDisplay($item['title']);
-                $class = ($item['aid'] == $itemid) ? 'xar-menu-item-current' : 'xar-menu-item';
+                $class = ($item['id'] == $itemid) ? 'xar-menu-item-current' : 'xar-menu-item';
                 $link = xarModURL($modname,$type,'display',
-                                  array('aid'       => $item['aid'],
+                                  array('id'       => $item['id'],
                                         'itemtype'  => $item['pubtypeid'],
                                         'catid'     => $cid));
 
                 $count = 0;
                 $items[$k] = array('label' => $label,
-                                   'aid' => $item['aid'],
+                                   'id' => $item['id'],
                                    'class'=>$class,
                                    'link' => $link);
 
@@ -466,11 +466,11 @@ function articles_navigationblock_display($blockinfo)
                   $articles = xarModAPIFunc('articles', 'user', 'getall',
                                             array('cid'=>$child['cid'],
                                                   'ptid'=>$itemtype,
-                                                  'fields'=>array('aid','title')
+                                                  'fields'=>array('id','title')
                                                   )
                                             );
                   foreach($articles as $k=>$article) {
-                    $articles[$article['title']] = $article['aid'];
+                    $articles[$article['title']] = $article['id'];
                     unset($articles[$k]);
                   }// foreach
 
@@ -480,7 +480,7 @@ function articles_navigationblock_display($blockinfo)
                     $clink = xarModURL($modname,$type,'display',
                                       array('ptid' => $itemtype,
                                             'catid' => $child['cid'],
-                                            'aid'=>$articles[$clabel]));
+                                            'id'=>$articles[$clabel]));
                   } else {
                     $clink = xarModURL($modname,$type,$func,
                                       array('itemtype' => $itemtype,

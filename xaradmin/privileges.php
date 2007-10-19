@@ -25,7 +25,7 @@ function articles_admin_privileges($args)
     if (!xarVarFetch('cid',          'isset', $cid,          NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('uid',          'isset', $uid,          NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('author',       'isset', $author,       NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('aid',          'isset', $aid,          NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('id',          'isset', $id,          NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('apply',        'isset', $apply,        NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('extpid',       'isset', $extpid,       NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('extname',      'isset', $extname,      NULL, XARVAR_DONT_SET)) {return;}
@@ -44,7 +44,7 @@ function articles_admin_privileges($args)
         if (count($parts) > 0 && !empty($parts[0])) $ptid = $parts[0];
         if (count($parts) > 1 && !empty($parts[1])) $cid = $parts[1];
         if (count($parts) > 2 && !empty($parts[2])) $uid = $parts[2];
-        if (count($parts) > 3 && !empty($parts[3])) $aid = $parts[3];
+        if (count($parts) > 3 && !empty($parts[3])) $id = $parts[3];
     }
 
     if (empty($ptid) || $ptid == 'All' || !is_numeric($ptid)) {
@@ -70,16 +70,16 @@ function articles_admin_privileges($args)
         }
     }
 
-    if (empty($aid) || $aid == 'All' || !is_numeric($aid)) {
-        $aid = 0;
+    if (empty($id) || $id == 'All' || !is_numeric($id)) {
+        $id = 0;
     }
     $title = '';
-    if (!empty($aid)) {
+    if (!empty($id)) {
         $article = xarModAPIFunc('articles','user','get',
-                                 array('aid'      => $aid,
+                                 array('id'      => $id,
                                        'withcids' => true));
         if (empty($article)) {
-            $aid = 0;
+            $id = 0;
         } else {
             // override whatever other params we might have here
             $ptid = $article['pubtypeid'];
@@ -131,7 +131,7 @@ function articles_admin_privileges($args)
     $newinstance[] = empty($ptid) ? 'All' : $ptid;
     $newinstance[] = empty($cid) ? 'All' : $cid;
     $newinstance[] = empty($uid) ? 'All' : $uid;
-    $newinstance[] = empty($aid) ? 'All' : $aid;
+    $newinstance[] = empty($id) ? 'All' : $id;
 
     if (!empty($apply)) {
         // create/update the privilege
@@ -154,7 +154,7 @@ function articles_admin_privileges($args)
         $author = '';
     }
 
-    if (empty($aid)) {
+    if (empty($id)) {
         $numitems = xarModAPIFunc('articles','user','countitems',
                                   array('ptid' => $ptid,
                                         'cids' => empty($cid) ? array() : array($cid),
@@ -169,7 +169,7 @@ function articles_admin_privileges($args)
                   'uid'          => $uid,
                   'author'       => xarVarPrepForDisplay($author),
                   'authorlist'   => $authorlist,
-                  'aid'          => $aid,
+                  'id'          => $id,
                   'title'        => xarVarPrepForDisplay($title),
                   'numitems'     => $numitems,
                   'extpid'       => $extpid,

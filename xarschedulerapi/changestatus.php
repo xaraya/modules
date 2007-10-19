@@ -48,10 +48,10 @@ do that directly via SQL :
     $newstatus = 2;
 
     $query = 'UPDATE ' . $xartables['articles'] . '
-                SET xar_status = ' . $newstatus . '
-              WHERE xar_pubtypeid = ' . $pubtypeid . '
-                AND xar_pubdate < ' . $pubdate . '
-                AND xar_status = ' . $oldstatus;
+                SET status = ' . $newstatus . '
+              WHERE pubtypeid = ' . $pubtypeid . '
+                AND pubdate < ' . $pubdate . '
+                AND status = ' . $oldstatus;
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;

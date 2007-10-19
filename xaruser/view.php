@@ -443,26 +443,26 @@ function articles_user_view($args)
 
     // retrieve the number of comments for each article
     if ($showcomments) {
-        $aidlist = array();
+        $idlist = array();
         foreach ($articles as $article) {
-            $aidlist[] = $article['aid'];
+            $idlist[] = $article['id'];
         }
         $numcomments = xarModAPIFunc('comments', 'user', 'get_countlist',
-            array('modid' => $c_modid, 'objectids' => $aidlist)
+            array('modid' => $c_modid, 'objectids' => $idlist)
         );
     }
 
     // retrieve the keywords for each article
     if ($showkeywords) {
-        $aidlist = array();
+        $idlist = array();
         foreach ($articles as $article) {
-            $aidlist[] = $article['aid'];
+            $idlist[] = $article['id'];
         }
 
         $keywords = xarModAPIFunc('keywords', 'user', 'getmultiplewords',
             array(
                 'modid' => $c_modid,
-                'objectids' =>  $aidlist,
+                'objectids' =>  $idlist,
                 'itemtype'  => $ptid
             )
         );
@@ -530,7 +530,7 @@ function articles_user_view($args)
             array(
                 'ptid' => empty($ptid) ? null : $article['pubtypeid'],
                 'catid' => $catid,
-                'aid' => $article['aid']
+                'id' => $article['id']
             )
         );
 
@@ -606,20 +606,20 @@ function articles_user_view($args)
 
         // TODO: make configurable?
         $article['redirect'] = xarModURL('articles', 'user', 'redirect',
-            array('ptid' => $curptid, 'aid' => $article['aid'])
+            array('ptid' => $curptid, 'id' => $article['id'])
         );
 
         // number of comments for this article
         if ($showcomments) {
-            if (empty($numcomments[$article['aid']])) {
+            if (empty($numcomments[$article['id']])) {
                 $article['numcomments'] = 0;
                 $article['comments'] = xarML('no comments');
-            } elseif ($numcomments[$article['aid']] == 1) {
+            } elseif ($numcomments[$article['id']] == 1) {
                 $article['numcomments'] = 1;
                 $article['comments'] = xarML('1 comment');
             } else {
-                $article['numcomments'] = $numcomments[$article['aid']];
-                $article['comments'] = xarML('#(1) comments', $numcomments[$article['aid']]);
+                $article['numcomments'] = $numcomments[$article['id']];
+                $article['comments'] = xarML('#(1) comments', $numcomments[$article['id']]);
             }
         } else {
             $article['comments'] = '';
@@ -627,10 +627,10 @@ function articles_user_view($args)
 
         // keywords for this article
         if ($showkeywords) {
-            if (empty($keywords[$article['aid']])) {
+            if (empty($keywords[$article['id']])) {
                 $article['keywords'] = '';
             } else {
-                $article['keywords'] = $keywords[$article['aid']];
+                $article['keywords'] = $keywords[$article['id']];
             }
         } else {
             $article['keywords'] = '';
@@ -713,7 +713,7 @@ function articles_user_view($args)
             //$article['rssdate'] = strtotime($article['date']);
             $article['rsssummary'] = preg_replace('<br />', "\n", $article['summary']);
             $article['rsssummary'] = xarVarPrepForDisplay(strip_tags($article['rsssummary']));
-            $article['rsscomment'] = xarModURL('comments', 'user', 'display', array('modid' => $c_modid, 'objectid' => $article['aid']));
+            $article['rsscomment'] = xarModURL('comments', 'user', 'display', array('modid' => $c_modid, 'objectid' => $article['id']));
             // $article['rsscname'] = htmlspecialchars($item['cname']);
             // <category>#$rsscname#</category>
         }
@@ -730,10 +730,10 @@ function articles_user_view($args)
             } else {
                 $article['transform'] = array('summary', 'body', 'notes');
             }
-            $article = xarModCallHooks('item', 'transform', $article['aid'], $article, 'articles');
+            $article = xarModCallHooks('item', 'transform', $article['id'], $article, 'articles');
         }
 
-        $data['titles'][$article['aid']] = $article['title'];
+        $data['titles'][$article['id']] = $article['title'];
 
         // fill in the summary template for this article
         $summary_template = $pubtypes[$article['pubtypeid']]['name'];

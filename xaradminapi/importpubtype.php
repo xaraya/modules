@@ -176,7 +176,7 @@ function articles_adminapi_importpubtype($args)
                 foreach ($properties as $property) {
                     $field = $property['name'];
                     switch($field) {
-                        case 'aid':
+                        case 'id':
                         case 'pubtypeid':
                             // skip these
                             break;

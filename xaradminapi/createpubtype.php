@@ -71,15 +71,15 @@ function articles_adminapi_createpubtype($args)
     $nextId = $dbconn->GenId($pubtypestable);
 
     // Insert the publication type
-    $query = "INSERT INTO $pubtypestable (xar_pubtypeid, xar_pubtypename,
-            xar_pubtypedescr, xar_pubtypeconfig)
+    $query = "INSERT INTO $pubtypestable (pubtypeid, pubtypename,
+            pubtypedescr, pubtypeconfig)
             VALUES (?,?,?,?)";
     $bindvars = array($nextId, $name, $descr, serialize($config));
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     // Get ptid to return
-    $ptid = $dbconn->PO_Insert_ID($pubtypestable, 'xar_pubtypeid');
+    $ptid = $dbconn->PO_Insert_ID($pubtypestable, 'pubtypeid');
 
     // Don't call creation hooks here...
     //xarModCallHooks('item', 'create', $ptid, 'ptid');

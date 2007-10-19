@@ -1,5 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<a name="#$aid#"></a>
+<a name="#$id#"></a>
 <br />
 <xar:if condition="!empty($categories) and count($categories) gt 0">
     [ <xar:foreach in="$categories" value="$cat">

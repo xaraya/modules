@@ -13,9 +13,9 @@
  */
 /**
  * get previous article
- * Note : the following parameters are all optional (except aid and ptid)
+ * Note : the following parameters are all optional (except id and ptid)
  *
- * @param $args['aid'] the article ID we want to have the previous article of
+ * @param $args['id'] the article ID we want to have the previous article of
  * @param $args['ptid'] publication type ID (for news, sections, reviews, ...)
  * @param $args['sort'] sort order ('date','title','hits','rating',...)
  * @param $args['authorid'] the ID of the author
@@ -39,7 +39,7 @@ function articles_userapi_getprevious($args)
     }
 
     // Default fields in articles (for now)
-    $fields = array('aid','title');
+    $fields = array('id','title');
 
     // Security Check
     if (!xarSecurityCheck('ViewArticles')) return;
@@ -53,7 +53,7 @@ function articles_userapi_getprevious($args)
     $articlesdef = xarModAPIFunc('articles','user','leftjoin',$args);
 
     // Create the query base query
-    $query = "SELECT $articlesdef[aid], $articlesdef[title], $articlesdef[pubtypeid], $articlesdef[authorid]
+    $query = "SELECT $articlesdef[id], $articlesdef[title], $articlesdef[pubtypeid], $articlesdef[authorid]
                 FROM $articlesdef[table] WHERE ";
 
     // we rely on leftjoin() to create the necessary articles clauses now
@@ -62,19 +62,19 @@ function articles_userapi_getprevious($args)
     }
 
     // Get the current article
-    $current = xarModAPIFunc('articles','user','get',array('aid' => $aid));
+    $current = xarModAPIFunc('articles','user','get',array('id' => $id));
 
     // Create the ORDER BY part
     switch($sort) {
     case 'title':
-        $query .= $articlesdef['title'] . ' < ' . $dbconn->qstr($current['title']) . ' ORDER BY ' . $articlesdef['title'] . ' DESC, ' . $articlesdef['aid'] . ' DESC';
+        $query .= $articlesdef['title'] . ' < ' . $dbconn->qstr($current['title']) . ' ORDER BY ' . $articlesdef['title'] . ' DESC, ' . $articlesdef['id'] . ' DESC';
         break;
-    case 'aid':
-        $query .= $articlesdef['aid'] . ' < ' . $current['aid'] . ' ORDER BY ' . $articlesdef['aid'] . ' DESC';
+    case 'id':
+        $query .= $articlesdef['id'] . ' < ' . $current['id'] . ' ORDER BY ' . $articlesdef['id'] . ' DESC';
         break;
     case 'date':
     default:
-        $query .= $articlesdef['pubdate'] . ' < ' . $dbconn->qstr($current['pubdate']) . ' ORDER BY ' . $articlesdef['pubdate'] . ' DESC, ' . $articlesdef['aid'] . ' DESC';
+        $query .= $articlesdef['pubdate'] . ' < ' . $dbconn->qstr($current['pubdate']) . ' ORDER BY ' . $articlesdef['pubdate'] . ' DESC, ' . $articlesdef['id'] . ' DESC';
     }
 
 
@@ -84,14 +84,14 @@ function articles_userapi_getprevious($args)
     if (!$result) return;
 
     $item = array();
-    list($item['aid'],$item['title'],$item['pubtypeid'],$item['authorid']) = $result->fields;
+    list($item['id'],$item['title'],$item['pubtypeid'],$item['authorid']) = $result->fields;
 
     $result->Close();
 
     // TODO: grab categories & check against them too
 
     // check security - don't generate an exception here
-    if (!xarSecurityCheck('ViewArticles',0,'Article',"$item[pubtypeid]:All:$item[authorid]:$item[aid]")) {
+    if (!xarSecurityCheck('ViewArticles',0,'Article',"$item[pubtypeid]:All:$item[authorid]:$item[id]")) {
         return array();
     }
 

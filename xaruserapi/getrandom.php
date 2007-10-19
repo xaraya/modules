@@ -23,7 +23,7 @@
  *                      (for all categories don?t set it)
  * @param bool   $args['andcids'] true means AND-ing categories listed in cids
  * @param array  $args['fields'] array with all the fields to return per article
- *                        Default list is : 'aid','title','summary','authorid',
+ *                        Default list is : 'id','title','summary','authorid',
  *                        'pubdate','pubtypeid','notes','status','body'
  *                        Optional fields : 'cids','author','counter','rating','dynamicdata'
  * @param string $args['language'] language/locale (if not using multi-sites, categories etc.)
@@ -45,7 +45,7 @@ function articles_userapi_getrandom($args)
         $numitems = $args['numitems'];
     }
 
-    $aidlist = array();
+    $idlist = array();
     if (empty($args['unique'])) {
         $args['unique'] = false;
     } else {
@@ -73,10 +73,10 @@ function articles_userapi_getrandom($args)
         for ($i = 0; $i < $numitems; $i++) {
             $args['startnum'] = mt_rand(1, $count);
 
-            if ($args['unique'] && in_array($args['startnum'], $aidlist)) {
+            if ($args['unique'] && in_array($args['startnum'], $idlist)) {
                 $i--;
             } else {
-                $aidlist[] = $args['startnum'];
+                $idlist[] = $args['startnum'];
                 $items = xarModAPIFunc('articles','user','getall',$args);
                 if (empty($items)) break;
                 array_push($articles, array_pop($items));

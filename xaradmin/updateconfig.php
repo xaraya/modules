@@ -69,7 +69,7 @@ function articles_admin_updateconfig()
                 $dbconn = xarDB::getConn();
                 $xartable = xarDB::getTables();
                 $articlestable = $xartable['articles'];
-                // Drop fulltext index on xar_articles table
+                // Drop fulltext index on articles table
                 $query = "ALTER TABLE $articlestable DROP INDEX $index";
                 $result =& $dbconn->Execute($query);
                 if (!$result) return;
@@ -81,8 +81,8 @@ function articles_admin_updateconfig()
                 $dbconn = xarDB::getConn();
                 $xartable = xarDB::getTables();
                 $articlestable = $xartable['articles'];
-                // Add fulltext index on xar_articles table
-                $query = "ALTER TABLE $articlestable ADD FULLTEXT $index (xar_" . join(', xar_', $searchfields) . ")";
+                // Add fulltext index on articles table
+                $query = "ALTER TABLE $articlestable ADD FULLTEXT $index (" . join(', ', $searchfields) . ")";
                 $result =& $dbconn->Execute($query);
                 if (!$result) return;
                 xarModSetVar('articles', 'fulltextsearch', join(',',$searchfields));

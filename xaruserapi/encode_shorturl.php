@@ -46,7 +46,7 @@ function articles_userapi_encode_shorturl($args)
 
     // Coming from categories etc.
     if (!empty($objectid)) {
-        $aid = $objectid;
+        $id = $objectid;
     }
     if (!empty($itemtype)) {
         $ptid = $itemtype;
@@ -152,7 +152,7 @@ function articles_userapi_encode_shorturl($args)
                 $path = '/' . $module . '/';
             }
         }
-    } elseif ($func == 'display' && isset($aid)) {
+    } elseif ($func == 'display' && isset($id)) {
         if (isset($ptid) && isset($pubtypes[$ptid]))
         {
 
@@ -167,9 +167,9 @@ function articles_userapi_encode_shorturl($args)
             // Check to see if we want to encode using Title
             if( $encodeUsingTitle )
             {
-                $path .= articles_encodeUsingTitle($aid, $encodeUsingTitle, $ptid);
+                $path .= articles_encodeUsingTitle($id, $encodeUsingTitle, $ptid);
             } else {
-                $path .= $aid;
+                $path .= $id;
             }
 
         } else {
@@ -178,23 +178,23 @@ function articles_userapi_encode_shorturl($args)
             // Check to see if we want to encode using Title
             if( $encodeUsingTitle )
             {
-                $path .= articles_encodeUsingTitle($aid, $encodeUsingTitle, '');
+                $path .= articles_encodeUsingTitle($id, $encodeUsingTitle, '');
             } else {
-                $path .= "$aid";
+                $path .= "$id";
             }
         }
         // TODO: do we want to include categories in the display URL too someday ?
-    } elseif ($func == 'redirect' && isset($aid)) {
+    } elseif ($func == 'redirect' && isset($id)) {
         if (isset($ptid) && isset($pubtypes[$ptid])) {
             $alias = xarModGetAlias($pubtypes[$ptid]['name']);
             if ($module == $alias) {
                 // OK, we can use a 'fake' module name here
-                $path = '/' . $pubtypes[$ptid]['name'] . "/redirect/$aid";
+                $path = '/' . $pubtypes[$ptid]['name'] . "/redirect/$id";
             } else {
-                $path = '/' . $module . '/' . $pubtypes[$ptid]['name'] . "/redirect/$aid";
+                $path = '/' . $module . '/' . $pubtypes[$ptid]['name'] . "/redirect/$id";
             }
         } else {
-            $path = '/' . $module . "/redirect/$aid";
+            $path = '/' . $module . "/redirect/$id";
         }
     } elseif ($func == 'archive') {
         if (isset($ptid) && isset($pubtypes[$ptid])) {
@@ -319,14 +319,14 @@ function articles_userapi_encode_shorturl($args)
     return $path;
 }
 
-function articles_encodeUsingTitle( $aid, $encodeUsingTitle = 1, $ptid = '' )
+function articles_encodeUsingTitle( $id, $encodeUsingTitle = 1, $ptid = '' )
 {
-    $searchArgs['aid'] = $aid;
+    $searchArgs['id'] = $id;
     $article = xarModAPIFunc('articles','user','get', $searchArgs);
 
     if (empty($article)) {
         // default to just the article ID
-        $path = $aid;
+        $path = $id;
         return $path;
     }
 
@@ -336,10 +336,10 @@ function articles_encodeUsingTitle( $aid, $encodeUsingTitle = 1, $ptid = '' )
             $dupeResolutionMethod = 'Append Date';
             break;
         case 2:
-            $dupeResolutionMethod = 'Append AID';
+            $dupeResolutionMethod = 'Append ID';
             break;
         case 3:
-            $dupeResolutionMethod = 'Use AID';
+            $dupeResolutionMethod = 'Use ID';
             break;
         case 4:
         default:
@@ -381,15 +381,15 @@ function articles_encodeUsingTitle( $aid, $encodeUsingTitle = 1, $ptid = '' )
     } elseif (count($articles) == 0) {
         // Can't find article through search, won't be able to find it on decode
         // default to just the article ID
-        $path = $aid;
+        $path = $id;
 
     } else {
         // Finding multiple articles through search, add a duplication resolution flag
         switch( $dupeResolutionMethod )
         {
-            case 'Append AID':
-                // User Title and AID
-                $path = $encodedTitle .'/'.$aid;
+            case 'Append ID':
+                // User Title and ID
+                $path = $encodedTitle .'/'.$id;
                 break;
 
             case 'Append Date':
@@ -398,10 +398,10 @@ function articles_encodeUsingTitle( $aid, $encodeUsingTitle = 1, $ptid = '' )
                 $path = $encodedTitle .'/'.date('Y-m-d H:i',$article['pubdate']) ;
                 break;
 
-            case 'Use AID':
+            case 'Use ID':
             default:
                 // Just use ID instead of title
-                $path = $aid;
+                $path = $id;
         }
     }
 

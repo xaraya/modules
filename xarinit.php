@@ -16,15 +16,6 @@
  */
 function articles_init()
 {
-
-    //Not needed anymore with the dependency checks.
-    if(!xarModIsAvailable('categories')) {
-        $msg=xarML('The categories module should be activated first');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',
-                        new SystemException($msg));
-        return;
-    }
-
     // Get database information
     $dbconn = xarDB::getConn();
     $xartable = xarDB::getTables();
@@ -38,36 +29,36 @@ function articles_init()
     $articlestable = $xartable['articles'];
 /*
     $query = "CREATE TABLE $articlestable (
-            xar_aid INT(10) NOT NULL AUTO_INCREMENT,
-            xar_title VARCHAR(255) NOT NULL DEFAULT '',
-            xar_summary TEXT,
-            xar_body TEXT,
-            xar_notes TEXT,
-            xar_status TINYINT(2) NOT NULL DEFAULT '0',
-            xar_authorid INT(11) NOT NULL,
-            xar_pubdate INT UNSIGNED NOT NULL,
-            xar_pubtypeid INT(4) NOT NULL DEFAULT '1',
-            xar_pages INT UNSIGNED NOT NULL,
-            xar_language VARCHAR(30) NOT NULL DEFAULT '',
-            PRIMARY KEY(xar_aid),
-            KEY xar_authorid (xar_authorid),
-            KEY xar_pubtypeid (xar_pubtypeid),
-            KEY xar_pubdate (xar_pubdate),
-            KEY xar_status (xar_status)
+            id INT(10) NOT NULL AUTO_INCREMENT,
+            title VARCHAR(255) NOT NULL DEFAULT '',
+            summary TEXT,
+            body TEXT,
+            notes TEXT,
+            status TINYINT(2) NOT NULL DEFAULT '0',
+            authorid INT(11) NOT NULL,
+            pubdate INT UNSIGNED NOT NULL,
+            pubtypeid INT(4) NOT NULL DEFAULT '1',
+            pages INT UNSIGNED NOT NULL,
+            language VARCHAR(30) NOT NULL DEFAULT '',
+            PRIMARY KEY(id),
+            KEY authorid (authorid),
+            KEY pubtypeid (pubtypeid),
+            KEY pubdate (pubdate),
+            KEY status (status)
             )";
 */
     $fields = array(
-        'xar_aid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'xar_title'=>array('type'=>'varchar','size'=>254,'null'=>FALSE,'default'=>''),
-        'xar_summary'=>array('type'=>'text'),
-        'xar_body'=>array('type'=>'text'),
-        'xar_notes'=>array('type'=>'text'),
-        'xar_status'=>array('type'=>'integer','size'=>'tiny','null'=>FALSE,'default'=>'0'),
-        'xar_authorid'=>array('type'=>'integer','null'=>FALSE,'default'=>'0'),
-        'xar_pubdate'=>array('type'=>'integer','unsigned'=>TRUE,'null'=>FALSE,'default'=>'0'),
-        'xar_pubtypeid'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'1'),
-        'xar_pages'=>array('type'=>'integer','unsigned'=>TRUE,'null'=>FALSE,'default'=>'1'),
-        'xar_language'=>array('type'=>'varchar','size'=>30,'null'=>FALSE,'default'=>'')
+        'id'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'title'=>array('type'=>'varchar','size'=>254,'null'=>FALSE,'default'=>''),
+        'summary'=>array('type'=>'text'),
+        'body'=>array('type'=>'text'),
+        'notes'=>array('type'=>'text'),
+        'status'=>array('type'=>'integer','size'=>'tiny','null'=>FALSE,'default'=>'0'),
+        'authorid'=>array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        'pubdate'=>array('type'=>'integer','unsigned'=>TRUE,'null'=>FALSE,'default'=>'0'),
+        'pubtypeid'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'1'),
+        'pages'=>array('type'=>'integer','unsigned'=>TRUE,'null'=>FALSE,'default'=>'1'),
+        'language'=>array('type'=>'varchar','size'=>30,'null'=>FALSE,'default'=>'')
     );
 
     // Create the Table - the function will return the SQL is successful or
@@ -81,7 +72,7 @@ function articles_init()
 
     $index = array(
         'name'      => 'i_' . xarDB::getPrefix() . '_articles_authorid',
-        'fields'    => array('xar_authorid'),
+        'fields'    => array('authorid'),
         'unique'    => false
     );
     $query = xarDBCreateIndex($articlestable,$index);
@@ -90,7 +81,7 @@ function articles_init()
 
     $index = array(
         'name'      => 'i_' . xarDB::getPrefix() . '_articles_pubtypeid',
-        'fields'    => array('xar_pubtypeid'),
+        'fields'    => array('pubtypeid'),
         'unique'    => false
     );
     $query = xarDBCreateIndex($articlestable,$index);
@@ -99,7 +90,7 @@ function articles_init()
 
     $index = array(
         'name'      => 'i_' . xarDB::getPrefix() . '_articles_pubdate',
-        'fields'    => array('xar_pubdate'),
+        'fields'    => array('pubdate'),
         'unique'    => false
     );
     $query = xarDBCreateIndex($articlestable,$index);
@@ -108,7 +99,7 @@ function articles_init()
 
     $index = array(
         'name'      => 'i_' . xarDB::getPrefix() . '_articles_status',
-        'fields'    => array('xar_status'),
+        'fields'    => array('status'),
         'unique'    => false
     );
     $query = xarDBCreateIndex($articlestable,$index);
@@ -117,7 +108,7 @@ function articles_init()
 
     $index = array(
         'name'      => 'i_' . xarDB::getPrefix() . '_articles_language',
-        'fields'    => array('xar_language'),
+        'fields'    => array('language'),
         'unique'    => false
     );
     $query = xarDBCreateIndex($articlestable,$index);
@@ -128,17 +119,17 @@ function articles_init()
     $pubtypestable = $xartable['publication_types'];
 /*
     $query = "CREATE TABLE $pubtypestable (
-            xar_pubtypeid INT(4) NOT NULL AUTO_INCREMENT,
-            xar_pubtypename VARCHAR(30) NOT NULL,
-            xar_pubtypedescr VARCHAR(255) NOT NULL DEFAULT '',
-            xar_pubtypeconfig TEXT,
-            PRIMARY KEY(xar_pubtypeid))";
+            pubtypeid INT(4) NOT NULL AUTO_INCREMENT,
+            pubtypename VARCHAR(30) NOT NULL,
+            pubtypedescr VARCHAR(255) NOT NULL DEFAULT '',
+            pubtypeconfig TEXT,
+            PRIMARY KEY(pubtypeid))";
 */
     $fields = array(
-        'xar_pubtypeid'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'xar_pubtypename'=>array('type'=>'varchar','size'=>30,'null'=>FALSE,'default'=>''),
-        'xar_pubtypedescr'=>array('type'=>'varchar','size'=>254,'null'=>FALSE,'default'=>''),
-        'xar_pubtypeconfig'=>array('type'=>'text')
+        'pubtypeid'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'pubtypename'=>array('type'=>'varchar','size'=>30,'null'=>FALSE,'default'=>''),
+        'pubtypedescr'=>array('type'=>'varchar','size'=>254,'null'=>FALSE,'default'=>''),
+        'pubtypeconfig'=>array('type'=>'text')
     );
 
     // Create the Table - the function will return the SQL is successful or
@@ -169,13 +160,13 @@ function articles_init()
         list($id,$name,$descr,$config) = $pubtype;
         $nextId = $dbconn->GenId($pubtypestable);
         $query = "INSERT INTO $pubtypestable
-                (xar_pubtypeid, xar_pubtypename, xar_pubtypedescr,
-                 xar_pubtypeconfig)
+                (pubtypeid, pubtypename, pubtypedescr,
+                 pubtypeconfig)
                 VALUES (?,?,?,?)";
         $bindvars = array($nextId, $name, $descr, $config);
         $result =& $dbconn->Execute($query,$bindvars);
         if (!$result) return;
-        $ptid = $dbconn->PO_Insert_ID($pubtypestable, 'xar_pubtypeid');
+        $ptid = $dbconn->PO_Insert_ID($pubtypestable, 'pubtypeid');
         $pubid[$id] = $ptid;
     }
 
@@ -339,7 +330,7 @@ function articles_init()
                     );
     xarDefineInstance('articles', 'Article', $instances);
 
-    $query = "SELECT DISTINCT instances.xar_title FROM $xartable[block_instances] as instances LEFT JOIN $xartable[block_types] as btypes ON btypes.xar_id = instances.xar_type_id WHERE xar_modid = $sysid";
+    $query = "SELECT DISTINCT instances.title FROM $xartable[block_instances] as instances LEFT JOIN $xartable[block_types] as btypes ON btypes.id = instances.type_id WHERE modid = $sysid";
     $instances = array(
                         array('header' => 'Article Block Title:',
                                 'query' => $query,
@@ -440,7 +431,7 @@ function articles_upgrade($oldversion)
 
             $index = array(
                 'name'      => 'i_' . xarDB::getPrefix() . '_articles_language',
-                'fields'    => array('xar_language'),
+                'fields'    => array('language'),
                 'unique'    => false
             );
             $query = xarDBCreateIndex($articlestable,$index);

@@ -115,7 +115,7 @@ function articles_admin_create()
 
     // for preview
     $article['pubtypeid'] = $ptid;
-    $article['aid'] = 0;
+    $article['id'] = 0;
 
     if ($preview || count($invalid) > 0) {
         $data = xarModFunc('articles','admin','new',
@@ -137,9 +137,9 @@ function articles_admin_create()
                                'articles', $ptid);
 
     // Pass to API
-    $aid = xarModAPIFunc('articles', 'admin', 'create', $article);
+    $id = xarModAPIFunc('articles', 'admin', 'create', $article);
 
-    if ($aid == false) {
+    if ($id == false) {
         // Throw back any system exceptions (e.g. database failure)
         if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION) {
             return; // throw back
@@ -164,7 +164,7 @@ function articles_admin_create()
     if (isset($save)){
         if (xarSecurityCheck('EditArticles',0,'Article',$ptid.':All:All:All')) {
             xarResponseRedirect(xarModURL('articles', 'admin', 'modify',
-                                          array('aid' => $aid)));
+                                          array('id' => $id)));
         } else {
             xarResponseRedirect(xarModURL('articles', 'user', 'view',
                                           array('ptid' => $ptid)));

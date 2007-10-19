@@ -29,17 +29,17 @@ function articles_xartables()
     $xartable['articles'] = $articles;
 
     // Column names
-    $xartable['articles_column'] = array('aid'      => $articles . '.xar_aid',
-                                        'title'    => $articles . '.xar_title',
-                                        'summary'  => $articles . '.xar_summary',
-                                        'authorid' => $articles . '.xar_authorid',
-                                        'pubdate'  => $articles . '.xar_pubdate',
-                                        'pubtypeid' => $articles . '.xar_pubtypeid',
-                                        'pages'    => $articles . '.xar_pages',
-                                        'body'     => $articles . '.xar_body',
-                                        'notes'    => $articles . '.xar_notes',
-                                        'status'   => $articles . '.xar_status',
-                                        'language' => $articles . '.xar_language');
+    $xartable['articles_column'] = array('id'      => $articles . '.id',
+                                        'title'    => $articles . '.title',
+                                        'summary'  => $articles . '.summary',
+                                        'authorid' => $articles . '.authorid',
+                                        'pubdate'  => $articles . '.pubdate',
+                                        'pubtypeid' => $articles . '.pubtypeid',
+                                        'pages'    => $articles . '.pages',
+                                        'body'     => $articles . '.body',
+                                        'notes'    => $articles . '.notes',
+                                        'status'   => $articles . '.status',
+                                        'language' => $articles . '.language');
 
     // Name for publication types table
     $publicationtypes = $sitePrefix . '_publication_types';
@@ -49,10 +49,10 @@ function articles_xartables()
 
     // Column names
     $xartable['publication_types_column'] = array(
-                'pubtypeid'      => $publicationtypes . '.xar_pubtypeid',
-                'pubtypename'    => $publicationtypes . '.xar_pubtypename',
-                'pubtypedescr'   => $publicationtypes . '.xar_pubtypedescr',
-                'pubtypeconfig'   => $publicationtypes . '.xar_pubtypeconfig');
+                'pubtypeid'      => $publicationtypes . '.pubtypeid',
+                'pubtypename'    => $publicationtypes . '.pubtypename',
+                'pubtypedescr'   => $publicationtypes . '.pubtypedescr',
+                'pubtypeconfig'   => $publicationtypes . '.pubtypeconfig');
 
     // Return table information
     return $xartable;

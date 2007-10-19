@@ -24,7 +24,7 @@
 function articles_admin_update()
 {
     // Get parameters
-    if(!xarVarFetch('aid',          'isset', $aid,       NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('id',          'isset', $id,       NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('ptid',         'isset', $ptid,      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('modify_cids',  'isset', $cids,      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('preview',      'isset', $preview,   NULL, XARVAR_DONT_SET)) {return;}
@@ -33,7 +33,7 @@ function articles_admin_update()
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
 
-    if (empty($aid) || !is_numeric($aid)) {
+    if (empty($id) || !is_numeric($id)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'item id', 'admin', 'update', 'Articles');
         throw new BadParameterException(null,$msg);
@@ -50,7 +50,7 @@ function articles_admin_update()
     $article = xarModAPIFunc('articles',
                             'user',
                             'get',
-                            array('aid' => $aid,
+                            array('id' => $id,
                                   'withcids' => true));
 
     if (!isset($article)) {
@@ -79,7 +79,7 @@ function articles_admin_update()
                                                        // fake DD property from articles (for now)
                                                        '_moduleid' => $modid,
                                                        '_itemtype' => $ptid,
-                                                       '_itemid'   => $aid));
+                                                       '_itemid'   => $id));
             $check = $properties[$field]->checkInput($field);
             if (!$check) {
                 if ($field == 'authorid') {
@@ -135,7 +135,7 @@ function articles_admin_update()
 
     // for preview
     $article['pubtypeid'] = $ptid;
-    $article['aid'] = $aid;
+    $article['id'] = $id;
 
     if ($preview || count($invalid) > 0) {
         $data = xarModFunc('articles','admin','modify',
@@ -153,7 +153,7 @@ function articles_admin_update()
 
     // call transform input hooks
     $article['transform'] = array('summary','body','notes');
-    $article = xarModCallHooks('item', 'transform-input', $aid, $article,
+    $article = xarModCallHooks('item', 'transform-input', $id, $article,
                                'articles', $ptid);
 
     // Pass to API
@@ -168,7 +168,7 @@ function articles_admin_update()
     // Save and continue editing via feature request.
     if (isset($save) && xarSecurityCheck('EditArticles',0,'Article',$ptid.':All:All:All')) {
         xarResponseRedirect(xarModURL('articles', 'admin', 'modify',
-                                      array('aid' => $aid)));
+                                      array('id' => $id)));
         return true;
     }
 

@@ -13,7 +13,7 @@
  */
 /**
  * modify article
- * @param int aid The ID of the article
+ * @param int id The ID of the article
  * @param string return_url
  * @param int preview
  */
@@ -22,21 +22,21 @@ function articles_admin_modify($args)
     extract($args);
 
     // Get parameters
-    if (!xarVarFetch('aid','isset', $aid, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('id','isset', $id, NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('return_url', 'str:1', $return_url, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
-    if (isset($aid) && empty($preview)) {
+    if (isset($id) && empty($preview)) {
         $preview = 0;
         // Get article information
         $article = xarModAPIFunc('articles',
                                 'user',
                                 'get',
-                                array('aid' => $aid,
+                                array('id' => $id,
                                       'withcids' => true));
     }
     if (!isset($article) || $article == false) {
         $msg = xarML('Unable to find #(1) item #(2)',
-                    'Article', xarVarPrepForDisplay($aid));
+                    'Article', xarVarPrepForDisplay($id));
         throw new ForbiddenOperationException(null, $msg);
     }
 
@@ -46,7 +46,7 @@ function articles_admin_modify($args)
     }
     $data = array();
     $data['ptid'] = $ptid;
-    $data['aid'] = $aid;
+    $data['id'] = $id;
 
     $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
 
@@ -56,7 +56,7 @@ function articles_admin_modify($args)
     $input['mask'] = 'EditArticles';
     if (!xarModAPIFunc('articles','user','checksecurity',$input)) {
         $msg = xarML('You have no permission to modify #(1) item #(2)',
-                     $pubtypes[$ptid]['descr'], xarVarPrepForDisplay($aid));
+                     $pubtypes[$ptid]['descr'], xarVarPrepForDisplay($id));
         throw new ForbiddenOperationException(null, $msg);
     }
     unset($input);
@@ -72,10 +72,10 @@ function articles_admin_modify($args)
 
     // preset some variables for hook modules
     $article['module'] = 'articles';
-    $article['itemid'] = $aid;
+    $article['itemid'] = $id;
     $article['itemtype'] = $ptid;
 
-    $hooks = xarModCallHooks('item','modify',$aid,$article);
+    $hooks = xarModCallHooks('item','modify',$id,$article);
     if (empty($hooks)) {
         $hooks = array();
     }

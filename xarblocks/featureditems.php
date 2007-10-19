@@ -22,7 +22,7 @@
 function articles_featureditemsblock_init()
 {
     return array(
-        'featuredaid'       => 0,
+        'featuredid'       => 0,
         'alttitle'          => '',
         'altsummary'        => '',
         'moreitems'         => array(),
@@ -75,7 +75,7 @@ function articles_featureditemsblock_display(& $blockinfo)
     }
 
     // Defaults
-    if (empty($vars['featuredaid'])) {$vars['featuredaid'] = 0;}
+    if (empty($vars['featuredid'])) {$vars['featuredid'] = 0;}
     if (empty($vars['alttitle'])) {$vars['alttitle'] = '';}
     if (empty($vars['altsummary'])) {$vars['altsummary'] = '';}
     if (empty($vars['toptype'])) {$vars['toptype'] = 'date';}
@@ -89,9 +89,9 @@ function articles_featureditemsblock_display(& $blockinfo)
         }
     }
 
-    $featuredaid = $vars['featuredaid'];
+    $featuredid = $vars['featuredid'];
 
-    $fields = array('aid', 'title', 'cids');
+    $fields = array('id', 'title', 'cids');
 
     $fields[] = 'dynamicdata';
 
@@ -100,7 +100,7 @@ function articles_featureditemsblock_display(& $blockinfo)
     $data['items'] = array();
 
     // Setup featured item
-    if ($featuredaid > 0) {
+    if ($featuredid > 0) {
 
         if (xarModIsHooked('uploads', 'articles', $vars['pubtypeid'])) {
             xarVarSetCached('Hooks.uploads','ishooked',1);
@@ -109,18 +109,18 @@ function articles_featureditemsblock_display(& $blockinfo)
           if($featart = xarModAPIFunc(
             'articles','user','getall',
             array(
-                'aids' => array($featuredaid),
+                'ids' => array($featuredid),
                 'extra' => array('cids','dynamicdata')))) {
 
                 foreach($featart as $featuredart) {
 
-            $fieldlist = array('aid', 'title', 'summary', 'authorid', 'pubdate',
+            $fieldlist = array('id', 'title', 'summary', 'authorid', 'pubdate',
                                'pubtypeid', 'notes', 'status', 'body', 'cids');
 
             $featuredlink = xarModURL(
                 'articles', 'user', 'display',
                 array(
-                    'aid' => $featuredart['aid'],
+                    'id' => $featuredart['id'],
                     'itemtype' => (!empty($vars['linkpubtype']) ? $featuredart['pubtypeid'] : NULL),
                     'catid' => ((!empty($vars['linkcat']) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)
                 )
@@ -139,7 +139,7 @@ function articles_featureditemsblock_display(& $blockinfo)
                 'featuredbody'      => $featuredart['body'],
                 'featuredcids'      => $featuredart['cids'],
                 'pubtypeid'         => $featuredart['pubtypeid'],
-                'featuredaid'       => $featuredart['aid'],
+                'featuredid'       => $featuredart['id'],
                 'featureddate'      => $featuredart['pubdate']
             );
 
@@ -157,7 +157,7 @@ function articles_featureditemsblock_display(& $blockinfo)
     }
 
     // Setup additional items
-    $fields = array('aid', 'title', 'pubtypeid', 'cids');
+    $fields = array('id', 'title', 'pubtypeid', 'cids');
 
     // Added the 'summary' field to the field list.
     if (!empty($vars['showsummary'])) {
@@ -181,7 +181,7 @@ function articles_featureditemsblock_display(& $blockinfo)
         $articles = xarModAPIFunc(
             'articles', 'user', 'getall',
             array(
-                'aids' => $vars['moreitems'],
+                'ids' => $vars['moreitems'],
                 'enddate' => time(),
                 'fields' => $fields,
                 'sort' => $sort
@@ -189,18 +189,18 @@ function articles_featureditemsblock_display(& $blockinfo)
         );
 
         // See if we're currently displaying an article
-        if (xarVarIsCached('Blocks.articles', 'aid')) {
-            $curaid = xarVarGetCached('Blocks.articles', 'aid');
+        if (xarVarIsCached('Blocks.articles', 'id')) {
+            $curid = xarVarGetCached('Blocks.articles', 'id');
         } else {
-            $curaid = -1;
+            $curid = -1;
         }
 
         foreach ($articles as $article) {
-            if ($article['aid'] != $curaid) {
+            if ($article['id'] != $curid) {
                 $link = xarModURL(
                     'articles', 'user', 'display',
                     array (
-                        'aid' => $article['aid'],
+                        'id' => $article['id'],
                         'itemtype' => (!empty($vars['linkpubtype']) ? $article['pubtypeid'] : NULL),
                         'catid' => ((!empty($vars['linkcat']) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)
                     )
@@ -247,7 +247,7 @@ function articles_featureditemsblock_display(& $blockinfo)
                 'cids' => $cids,
                 'pubdate' => $pubdate,
                 'desc' => ((!empty($vars['showsummary']) && !empty($article['summary'])) ? $article['summary'] : ''),
-                'aid' => $article['aid']
+                'id' => $article['id']
             );
         }
     }}

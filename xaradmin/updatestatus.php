@@ -17,7 +17,7 @@
 function articles_admin_updatestatus()
 {
     // Get parameters
-    if(!xarVarFetch('aids',   'isset', $aids,    NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('ids',   'isset', $ids,    NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('status', 'isset', $status,  NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('catid',  'isset', $catid,   NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('ptid',   'isset', $ptid,    NULL, XARVAR_DONT_SET)) {return;}
@@ -26,7 +26,7 @@ function articles_admin_updatestatus()
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
 
-    if (!isset($aids) || count($aids) == 0) {
+    if (!isset($ids) || count($ids) == 0) {
         $msg = xarML('No articles selected');
         throw new DataNotFoundException(null, $msg);
     }
@@ -49,7 +49,7 @@ function articles_admin_updatestatus()
     // into thin air.  Bug 1960 and 3161
     xarVarSetCached('Hooks.all','noupdate',1);
 
-    foreach ($aids as $aid => $val) {
+    foreach ($ids as $id => $val) {
         if ($val != 1) {
             continue;
         }
@@ -57,11 +57,11 @@ function articles_admin_updatestatus()
         $article = xarModAPIFunc('articles',
                                  'user',
                                  'get',
-                                 array('aid' => $aid,
+                                 array('id' => $id,
                                        'withcids' => 1));
         if (!isset($article) || !is_array($article)) {
             $msg = xarML('Unable to find #(1) item #(2)',
-                         $descr, xarVarPrepForDisplay($aid));
+                         $descr, xarVarPrepForDisplay($id));
             throw new BadParameterException(null,$msg);
         }
         $article['ptid'] = $article['pubtypeid'];
@@ -75,7 +75,7 @@ function articles_admin_updatestatus()
         }
         if (!xarModAPIFunc('articles','user','checksecurity',$input)) {
             $msg = xarML('You have no permission to modify #(1) item #(2)',
-                         $descr, xarVarPrepForDisplay($aid));
+                         $descr, xarVarPrepForDisplay($id));
             throw new ForbiddenOperationException(null, $msg);
         }
 

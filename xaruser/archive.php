@@ -226,7 +226,7 @@ function articles_user_archive($args)
                                        'status' => $status,
                                        'cids' => $cids,
                                        'andcids' => $andcids,
-                                       'fields' => array('aid','title',
+                                       'fields' => array('id','title',
                                                   'pubdate','pubtypeid','cids')
                                       )
                                 );
@@ -243,7 +243,7 @@ function articles_user_archive($args)
     foreach ($articles as $key => $article) {
         $articles[$key]['link'] = xarModURL('articles','user','display',
                                array('ptid' => isset($ptid) ? $articles[$key]['pubtypeid'] : null,
-                                     'aid' => $articles[$key]['aid']));
+                                     'id' => $articles[$key]['id']));
         if (empty($articles[$key]['title'])) {
             $articles[$key]['title'] = xarML('(none)');
         }

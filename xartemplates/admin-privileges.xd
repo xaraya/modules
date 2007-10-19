@@ -78,7 +78,7 @@
                     </th>
                     <td>
                     <xar:mlstring>Enter article number</xar:mlstring>:
-                    <input type="text" name="aid" id="aid" value="#$aid#" size="10" onchange="javascript:this.form.submit();" />
+                    <input type="text" name="id" id="id" value="#$id#" size="10" onchange="javascript:this.form.submit();" />
                     <!-- TODO: show dropdown box for all relevant articles (if not too many) -->
                     <xar:if condition="!empty($title)">
                     <br />

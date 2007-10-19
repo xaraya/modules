@@ -171,7 +171,7 @@ function articles_admin_view($args)
             // Title and pubdate
             $item['title'] = $article['title'];
             $item['summary'] = $article['summary'];
-            $item['aid'] = $article['aid'];
+            $item['id'] = $article['id'];
             if (!empty($article['cids'])) {
                  $item['cids'] = $article['cids'];
             } else {
@@ -199,15 +199,15 @@ function articles_admin_view($args)
                 $item['deleteurl'] = xarModURL('articles',
                                               'admin',
                                               'delete',
-                                              array('aid' => $article['aid']));
+                                              array('id' => $article['id']));
                 $item['editurl'] = xarModURL('articles',
                                             'admin',
                                             'modify',
-                                            array('aid' => $article['aid']));
+                                            array('id' => $article['id']));
                 $item['viewurl'] = xarModURL('articles',
                                             'user',
                                             'display',
-                                            array('aid' => $article['aid'],
+                                            array('id' => $article['id'],
                                                   'ptid' => $article['pubtypeid']));
             } else {
                 $item['deleteurl'] = '';
@@ -217,11 +217,11 @@ function articles_admin_view($args)
                     $item['editurl'] = xarModURL('articles',
                                                 'admin',
                                                 'modify',
-                                                array('aid' => $article['aid']));
+                                                array('id' => $article['id']));
                     $item['viewurl'] = xarModURL('articles',
                                                 'user',
                                                 'display',
-                                                array('aid' => $article['aid'],
+                                                array('id' => $article['id'],
                                                       'ptid' => $article['pubtypeid']));
                 } else {
                     $item['editurl'] = '';
@@ -231,7 +231,7 @@ function articles_admin_view($args)
                         $item['viewurl'] = xarModURL('articles',
                                                     'user',
                                                     'display',
-                                                    array('aid' => $article['aid'],
+                                                    array('id' => $article['id'],
                                                           'ptid' => $article['pubtypeid']));
                     } else {
                         $item['viewurl'] = '';

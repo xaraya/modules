@@ -29,7 +29,7 @@
  *
  * Note : the following arguments are all optional :
  *
- * @param $args['aids'] optional array of aids that we are selecting on
+ * @param $args['ids'] optional array of ids that we are selecting on
  * @param $args['authorid'] the ID of the author
  * @param $args['ptid'] publication type ID (for news, sections, reviews, ...) or array of pubtype IDs
  * @param $args['status'] array of requested status(es) for the articles
@@ -44,11 +44,11 @@
  * @param $args['where'] additional where clauses (myfield gt 1234)
  * @param $args['language'] language/locale (if not using multi-sites, categories etc.)
  * @return array('table' => 'nuke_articles',
- *               'field' => 'nuke_articles.xar_aid',
- *               'where' => 'nuke_articles.xar_aid IN (...)',
- *               'title'  => 'nuke_articles.xar_title',
+ *               'field' => 'nuke_articles.id',
+ *               'where' => 'nuke_articles.id IN (...)',
+ *               'title'  => 'nuke_articles.title',
  *               ...
- *               'body'  => 'nuke_articles.xar_body')
+ *               'body'  => 'nuke_articles.body')
  */
 function articles_userapi_leftjoin($args)
 {
@@ -56,8 +56,8 @@ function articles_userapi_leftjoin($args)
     extract($args);
 
     // Optional argument
-    if (empty($aids) || !is_array($aids)) {
-        $aids = array();
+    if (empty($ids) || !is_array($ids)) {
+        $ids = array();
     }
 
     // Note : no security checks here
@@ -70,15 +70,15 @@ function articles_userapi_leftjoin($args)
     $leftjoin = array();
 
     // Add available columns in the articles table (for now)
-    $columns = array('aid','title','summary','authorid','pubdate','pubtypeid',
+    $columns = array('id','title','summary','authorid','pubdate','pubtypeid',
                      'notes','status','body','language');
     foreach ($columns as $column) {
-        $leftjoin[$column] = $articlestable . '.xar_' . $column;
+        $leftjoin[$column] = $articlestable . '.' . $column;
     }
 
     // Specify LEFT JOIN ... ON ... [WHERE ...] parts
     $leftjoin['table'] = $articlestable;
-    $leftjoin['field'] = $leftjoin['aid'];
+    $leftjoin['field'] = $leftjoin['id'];
 
     // Specify the WHERE part
     // FIXME: <mrb> someone better informed about this should replace
@@ -158,9 +158,9 @@ function articles_userapi_leftjoin($args)
     if (!empty($language) && is_string($language)) {
         $whereclauses[] = $leftjoin['language'] . " = " . $dbconn->qstr($language);
     }
-    if (count($aids) > 0) {
-        $allaids = join(', ', $aids);
-        $whereclauses[] = $articlestable . '.xar_aid IN (' . $allaids .')';
+    if (count($ids) > 0) {
+        $allids = join(', ', $ids);
+        $whereclauses[] = $articlestable . '.id IN (' . $allids .')';
     }
 
     if (!empty($where)) {

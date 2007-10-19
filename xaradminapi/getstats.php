@@ -35,17 +35,17 @@ function articles_adminapi_getstats($args)
             $dbtype = xarDBGetType();
             switch ($dbtype) {
                 case 'mysql':
-                    $newfields[] = "LEFT(FROM_UNIXTIME(xar_pubdate),4) AS myyear";
+                    $newfields[] = "LEFT(FROM_UNIXTIME(pubdate),4) AS myyear";
                     $newgroups[] = "myyear";
                     break;
                 case 'postgres':
-                    $newfields[] = "TO_CHAR(ABSTIME(xar_pubdate),'YYYY') AS myyear";
+                    $newfields[] = "TO_CHAR(ABSTIME(pubdate),'YYYY') AS myyear";
                 // CHECKME: do we need to use TO_CHAR(...) for the group field too ?
                     $newgroups[] = "myyear";
                     break;
                 case 'mssql':
-                    $newfields[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,xar_pubdate,'1/1/1970'),120),4) as myyear";
-                    $newgroups[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,xar_pubdate,'1/1/1970'),120),4)";
+                    $newfields[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,pubdate,'1/1/1970'),120),4) as myyear";
+                    $newgroups[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,pubdate,'1/1/1970'),120),4)";
                     break;
                 // TODO:  Add SQL queries for Oracle, etc.
                 default:
@@ -55,17 +55,17 @@ function articles_adminapi_getstats($args)
             $dbtype = xarDBGetType();
             switch ($dbtype) {
                 case 'mysql':
-                    $newfields[] = "LEFT(FROM_UNIXTIME(xar_pubdate),7) AS mymonth";
+                    $newfields[] = "LEFT(FROM_UNIXTIME(pubdate),7) AS mymonth";
                     $newgroups[] = "mymonth";
                     break;
                 case 'postgres':
-                    $newfields[] = "TO_CHAR(ABSTIME(xar_pubdate),'YYYY-MM') AS mymonth";
+                    $newfields[] = "TO_CHAR(ABSTIME(pubdate),'YYYY-MM') AS mymonth";
                 // CHECKME: do we need to use TO_CHAR(...) for the group field too ?
                     $newgroups[] = "mymonth";
                     break;
                 case 'mssql':
-                    $newfields[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,xar_pubdate,'1/1/1970'),120),7) as mymonth";
-                    $newgroups[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,xar_pubdate,'1/1/1970'),120),7)";
+                    $newfields[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,pubdate,'1/1/1970'),120),7) as mymonth";
+                    $newgroups[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,pubdate,'1/1/1970'),120),7)";
                     break;
                 // TODO:  Add SQL queries for Oracle, etc.
                 default:
@@ -75,30 +75,30 @@ function articles_adminapi_getstats($args)
             $dbtype = xarDBGetType();
             switch ($dbtype) {
                 case 'mysql':
-                    $newfields[] = "LEFT(FROM_UNIXTIME(xar_pubdate),10) AS myday";
+                    $newfields[] = "LEFT(FROM_UNIXTIME(pubdate),10) AS myday";
                     $newgroups[] = "myday";
                     break;
                 case 'postgres':
-                    $newfields[] = "TO_CHAR(ABSTIME(xar_pubdate),'YYYY-MM-DD') AS myday";
+                    $newfields[] = "TO_CHAR(ABSTIME(pubdate),'YYYY-MM-DD') AS myday";
                 // CHECKME: do we need to use TO_CHAR(...) for the group field too ?
                     $newgroups[] = "myday";
                     break;
                 case 'mssql':
-                    $newfields[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,xar_pubdate,'1/1/1970'),120),10) as myday";
-                    $newgroups[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,xar_pubdate,'1/1/1970'),120),10)";
+                    $newfields[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,pubdate,'1/1/1970'),120),10) as myday";
+                    $newgroups[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,pubdate,'1/1/1970'),120),10)";
                     break;
                 // TODO:  Add SQL queries for Oracle, etc.
                 default:
                     continue;
             }
         } else {
-            $newfields[] = 'xar_' . $field;
-            $newgroups[] = 'xar_' . $field;
+            $newfields[] = $field;
+            $newgroups[] = $field;
         }
     }
     if (empty($newfields) || count($newfields) < 1) {
-        $newfields = array('xar_pubtypeid', 'xar_status', 'xar_authorid');
-        $newgroups = array('xar_pubtypeid', 'xar_status', 'xar_authorid');
+        $newfields = array('pubtypeid', 'status', 'authorid');
+        $newgroups = array('pubtypeid', 'status', 'authorid');
     }
 
     // Database information

@@ -55,32 +55,32 @@ function articles_userapi_getpubtypes($args)
     $pubtypestable = $xartable['publication_types'];
 
     // Get item
-    $query = "SELECT xar_pubtypeid,
-                   xar_pubtypename,
-                   xar_pubtypedescr,
-                   xar_pubtypeconfig
+    $query = "SELECT pubtypeid,
+                   pubtypename,
+                   pubtypedescr,
+                   pubtypeconfig
             FROM $pubtypestable";
 
     //WHERE clause begins
     if(isset($name)) {
-        $query .= " WHERE xar_pubtypename = ? ";
+        $query .= " WHERE pubtypename = ? ";
         $bindvars[] = $name;
     } else if (isset($ptid)) {
-        $query .= " WHERE xar_pubtypeid = ? ";
+        $query .= " WHERE pubtypeid = ? ";
         $bindvars[] = $ptid;
     }
 
     //different sort options
     switch ($sort) {
         case 'name':
-            $query .= " ORDER BY xar_pubtypename ASC";
+            $query .= " ORDER BY pubtypename ASC";
             break;
         case 'descr':
-            $query .= " ORDER BY xar_pubtypedescr ASC";
+            $query .= " ORDER BY pubtypedescr ASC";
             break;
         case 'id':
         default:
-            $query .= " ORDER BY xar_pubtypeid ASC";
+            $query .= " ORDER BY pubtypeid ASC";
             break;
     }
     $result =& $dbconn->Execute($query, $bindvars);
