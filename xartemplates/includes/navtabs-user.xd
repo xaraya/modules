@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="!empty($maplink) or !empty($archivelink) or !empty($submitlink)">
     <xar:style scope="module" module="base" file="navtabs" />
     <dl class="xar-tabs">
@@ -32,3 +33,4 @@
         </xar:if>
     </dl>
 </xar:if>
+</xar:template>

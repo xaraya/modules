@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-form-input-wrapper">
     <label for="pubtypeid#$blockid#" class="help xar-form-label" title="#xarML('Choose the publication type for the featured items.')#">
         <xar:mlstring>
@@ -230,3 +231,4 @@
         </label>
     </div>
 </xar:if>
+</xar:template>

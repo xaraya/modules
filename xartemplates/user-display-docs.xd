@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:template file="publinks" type="module" />
 <xar:categories-navigation layout="trails" showchildren="1" module="articles" itemtype="$ptid" itemid="$id" cids="$cids" showcatcount="$showcatcount" showempty="0" />
@@ -70,3 +71,4 @@
     </xar:foreach>
 </xar:if>
 <xar:template file="navtabs-user" type="module" />
+</xar:template>

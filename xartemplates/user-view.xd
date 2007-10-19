@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:template file="publinks" type="module" />
 
@@ -86,4 +87,5 @@
 <xar:if condition="!empty($showprevnext)">
     <xar:categories-navigation layout="prevnext" />
 </xar:if>
+</xar:template>
 

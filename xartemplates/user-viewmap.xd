@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:if condition="count($cattree) gt 0">
     <h2>
@@ -144,3 +145,4 @@
     </xar:foreach>
     <xar:template file="navtabs-user-map" type="module" />
 </xar:if>
+</xar:template>

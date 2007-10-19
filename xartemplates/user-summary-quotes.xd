@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <table border="0" cellpadding="5" cellspacing="0" width="100%">
     <tr>
@@ -26,3 +27,4 @@
         </td>
     </tr>
 </table>
+</xar:template>
