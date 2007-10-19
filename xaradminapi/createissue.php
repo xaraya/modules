@@ -49,8 +49,9 @@ function ebulletin_adminapi_createissue($args)
     $pub = xarModAPIFunc('ebulletin', 'user', 'get', array('id' => $pid));
     if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
-    // security check
-    if (!xarSecurityCheck('AddeBulletin', 1, 'Publication', "$pub[name]:$pid")) return;
+    // security check REMOVED to allow scheduler to run 
+	// (see equivalent solution in sitetools' module bug 2802)
+    // if (!xarSecurityCheck('AddeBulletin', 1, 'Publication', "$pub[name]:$pid")) return;
 
     // generate subject and body
     $issue = xarModAPIFunc('ebulletin', 'admin', 'generateissue', array(

@@ -24,6 +24,8 @@ function ebulletin_schedulerapi_publishissues($args)
     $issues = xarModAPIFunc('ebulletin', 'user', 'getallissues', array('published' => 0));
     if (xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
+	if (sizeof($issues) == 0) return;
+
     foreach ($issues as $issue) {
 	   // get publication
 	   $pub = xarModAPIFunc('ebulletin', 'user', 'get', array('id' => $issue['pid']));

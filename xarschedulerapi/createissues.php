@@ -18,7 +18,7 @@
  * @access public
  * @args $scheduler: min value of scheduler column TODO:explain
  */
-function ebulletin_schedulerapi_createissues($args)
+function ebulletin_schedulerapi_createissues($args=array())
 {
     extract($args);
 	if (!($pubs = xarModAPIFunc('ebulletin', 'user', 'getall', array('scheduler'=> 1)))) {

@@ -34,8 +34,9 @@ function ebulletin_adminapi_send_issue($args)
     $pub = xarModAPIFunc('ebulletin', 'user', 'get', array('id' => $pid));
     if (empty($pub) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
-    // security check
-    if (!xarSecurityCheck('AddeBulletin', 1, 'Publication', "$pub[name]:$pub[id]")) return;
+    // security check REMOVED to allow scheduler to run
+	// (see equivalent solution for sitetools' module, bug 2802)
+    // if (!xarSecurityCheck('AddeBulletin', 1, 'Publication', "$pub[name]:$pub[id]")) return;
 
     // assemble the email
     $mail = $pub;
