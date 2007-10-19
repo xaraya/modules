@@ -15,7 +15,7 @@
  * Update an article
  * Usage : if (xarModAPIFunc('articles', 'admin', 'update', $article)) {...}
  *
- * @param id $args['aid'] ID of the item (mandatory argument)
+ * @param id $args['id'] ID of the item (mandatory argument)
  * @param string $args['title'] name of the item (mandatory argument)
  * @param string $args['summary'] summary of the item
  * @param string $args['body'] body of the item
@@ -34,7 +34,7 @@ function articles_adminapi_update($args)
     extract($args);
 
     // Argument check
-    if (empty($aid) || !is_numeric($aid)) {
+    if (empty($id) || !is_numeric($id)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'article ID', 'admin', 'update',
                     'Articles');
@@ -47,7 +47,7 @@ function articles_adminapi_update($args)
     }
 
 // Note : this will take care of checking against the current article values
-//        too if nothing is passed as arguments except aid & title
+//        too if nothing is passed as arguments except id & title
 
     // Security check
     if (!xarModAPILoad('articles', 'user')) return;
@@ -66,58 +66,58 @@ function articles_adminapi_update($args)
     $bindvars = array();
     // Update the item
     $query = "UPDATE $articlestable
-            SET xar_title = ?";
+            SET title = ?";
     $bindvars[] = (string) $title;
 // Note : we use isset() here because we *do* care whether it's set to ''
 //        or if it's not set at all
 
     if (isset($summary)) {
-        $query .= ", xar_summary = ?";
+        $query .= ", summary = ?";
         $bindvars[] = (string) $summary;
     }
 
     if (isset($body)) {
-        $query .= ", xar_body = ?";
+        $query .= ", body = ?";
         $bindvars[] = (string) $body;
     }
 
     if (isset($notes)) {
-        $query .= ", xar_notes = ?";
+        $query .= ", notes = ?";
         $bindvars[] = (string) $notes;
     }
 
     if (isset($status) && is_numeric($status)) {
         $oldversion= xarModAPIFunc('articles','user','get',
-                                    array('aid'=>$aid,
+                                    array('id'=>$id,
                                           'fields'=>array('status')));
         $args['oldstatus'] = $oldversion['status'];
-        $query .= ", xar_status = ?";
+        $query .= ", status = ?";
         $bindvars[] = (int) $status;
     }
 
     // not recommended
     if (isset($ptid) && is_numeric($ptid)) {
-        $query .= ", xar_pubtypeid = ?";
+        $query .= ", pubtypeid = ?";
         $bindvars[] = (int) $ptid;
     }
 
     if (isset($pubdate) && is_numeric($pubdate)) {
-        $query .= ", xar_pubdate = ?";
+        $query .= ", pubdate = ?";
         $bindvars[] = (int) $pubdate;
     }
 
     // not recommended
     if (isset($authorid) && is_numeric($authorid)) {
-        $query .= ", xar_authorid = ?";
+        $query .= ", authorid = ?";
         $bindvars[] = (int) $authorid;
     }
 
     if (isset($language)) {
-        $query .= ", xar_language = ?";
+        $query .= ", language = ?";
         $bindvars[] = (string) $language;
     }
-    $query .= " WHERE xar_aid = ?";
-    $bindvars[] =  (int) $aid;
+    $query .= " WHERE id = ?";
+    $bindvars[] =  (int) $id;
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
@@ -136,7 +136,7 @@ function articles_adminapi_update($args)
 /* ---------------------------- TODO: Remove
     sys::import('modules.dynamicdata.class.properties.master');
     $categories = DataPropertyMaster::getProperty(array('name' => 'categories'));
-    $categories->checkInput('categories',$aid);
+    $categories->checkInput('categories',$id);
 ------------------------------- */
 
     $args['module'] = 'articles';
@@ -146,7 +146,7 @@ function articles_adminapi_update($args)
         $args['itemtype'] = $pubtypeid;
     }
     $args['cids'] = $cids;
-    xarModCallHooks('item', 'update', $aid, $args);
+    xarModCallHooks('item', 'update', $id, $args);
 
     return true;
 }

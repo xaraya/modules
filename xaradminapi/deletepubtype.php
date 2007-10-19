@@ -54,7 +54,7 @@ function articles_adminapi_deletepubtype($args)
 
     // Delete the publication type
     $query = "DELETE FROM $pubtypestable
-            WHERE xar_pubtypeid = ?";
+            WHERE pubtypeid = ?";
     $result =& $dbconn->Execute($query,array($ptid));
     if (!$result) return;
 
@@ -62,7 +62,7 @@ function articles_adminapi_deletepubtype($args)
 
     // Delete all articles for this publication type
     $query = "DELETE FROM $articlestable
-            WHERE xar_pubtypeid = ?";
+            WHERE pubtypeid = ?";
     $result =& $dbconn->Execute($query,array($ptid));
     if (!$result) return;
 

@@ -76,12 +76,12 @@
     </xar:mlstring>
 </div>
 <div class="xar-form-input-wrapper">
-    <label for="featuredaid#$blockid#" class="help xar-form-label" title="#xarML('Choose the article to display as a featured item.')#">
+    <label for="featuredid#$blockid#" class="help xar-form-label" title="#xarML('Choose the article to display as a featured item.')#">
         <xar:mlstring>
             Featured Article
         </xar:mlstring>
-    </label> <select name="featuredaid" id="featuredaid#$blockid#" size="1">
-        <xar:if condition="empty($featuredaid)">
+    </label> <select name="featuredid" id="featuredid#$blockid#" size="1">
+        <xar:if condition="empty($featuredid)">
             <option value="" selected="selected">
                 --- choose an article to be featured ---
             </option>
@@ -91,12 +91,12 @@
             </option>
         </xar:if>
         <xar:foreach in="$filtereditems" value="$filtereditem">
-            <xar:if condition="$featuredaid eq $filtereditem['aid']">
-                <option value="#$filtereditem['aid']#" selected="selected">
+            <xar:if condition="$featuredid eq $filtereditem['id']">
+                <option value="#$filtereditem['id']#" selected="selected">
                     #$filtereditem['title']#
                 </option>
                 <xar:else />
-                <option value="#$filtereditem['aid']#">
+                <option value="#$filtereditem['id']#">
                     #$filtereditem['title']#
                 </option>
             </xar:if>
@@ -150,11 +150,11 @@
     </label> <select name="moreitems[]" id="moreitems" multiple="mulitple" size="10">
         <xar:foreach in="$morearticles" value="$item">
             <xar:if condition="!empty($item['selected'])">
-                <option name="aid" value="#$item['aid']#" selected="selected">
+                <option name="id" value="#$item['id']#" selected="selected">
                     #xarVarPrepForDisplay($item['title'])#
                 </option>
                 <xar:else />
-                <option name="aid" value="#$item['aid']#">
+                <option name="id" value="#$item['id']#">
                     #xarVarPrepForDisplay($item['title'])#
                 </option>
             </xar:if>

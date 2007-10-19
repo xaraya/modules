@@ -26,7 +26,7 @@
     </xar:comment>
     <xar:comment>
         <xar:set name="prevartinfo">
-            #xarModAPIFunc('articles','user','getprevious',array('ptid' => $ptid, 'aid' => $aid, 'status' => array(0,1,2,3)))#
+            #xarModAPIFunc('articles','user','getprevious',array('ptid' => $ptid, 'id' => $id, 'status' => array(0,1,2,3)))#
         </xar:set>
     </xar:comment>
     <xar:comment>
@@ -34,23 +34,23 @@
     </xar:comment>
     <xar:comment>
         <xar:set name="nextartinfo">
-            #xarModAPIFunc('articles','user','getnext',array('ptid' => $ptid, 'aid' => $aid, 'status' => array(0,1,2,3)))#
+            #xarModAPIFunc('articles','user','getnext',array('ptid' => $ptid, 'id' => $id, 'status' => array(0,1,2,3)))#
         </xar:set>
     </xar:comment>
     <xar:comment>
         show a link to modify the previous article with title
     </xar:comment>
     <xar:comment>
-        <xar:if condition="!empty($prevartinfo['aid'])">
-            <a href="#xarModURL('articles','admin','modify',array('aid' => $prevartinfo['aid']))#">&lt;&lt; #xarVarPrepHTMLDisplay($prevartinfo['title'])#</a>
+        <xar:if condition="!empty($prevartinfo['id'])">
+            <a href="#xarModURL('articles','admin','modify',array('id' => $prevartinfo['id']))#">&lt;&lt; #xarVarPrepHTMLDisplay($prevartinfo['title'])#</a>
         </xar:if>
     </xar:comment>
     <xar:comment>
         show a link to modify the next article with title
     </xar:comment>
     <xar:comment>
-        <xar:if condition="!empty($nextartinfo['aid'])">
-            <a href="#xarModURL('articles','admin','modify',array('aid' => $nextartinfo['aid']))#">#xarVarPrepHTMLDisplay($nextartinfo['title'])# &gt;&gt;</a>
+        <xar:if condition="!empty($nextartinfo['id'])">
+            <a href="#xarModURL('articles','admin','modify',array('id' => $nextartinfo['id']))#">#xarVarPrepHTMLDisplay($nextartinfo['title'])# &gt;&gt;</a>
         </xar:if>
     </xar:comment>
     <xar:if condition="!empty($withupload)">
@@ -87,7 +87,7 @@
             <label class="xar-form-label help" title="#xarML('This is the allowed HTML that this website has configured.')#">
                 <xar:mlstring>Categories</xar:mlstring>
             </label>
-            <xar:data-input type="categories" name="categories" itemid="$aid" itemtype="$ptid" returnitself="true" />
+            <xar:data-input type="categories" name="categories" itemid="$id" itemtype="$ptid" returnitself="true" />
         </div>
         -->
         <xar:if condition="!empty($formhooks['formdisplay'])">
@@ -117,7 +117,7 @@
         <div class="xar-form-input-wrapper">
             <div class="xar-form-container-after">
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <input type="hidden" name="aid" id="aid" value="#$aid#" />
+                <input type="hidden" name="id" id="id" value="#$id#" />
                 <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
                 <input type="hidden" name="return_url" value="#$return_url#" />
                 <input type="submit" name="preview" id="preview" value="#$previewlabel#" />
@@ -130,7 +130,7 @@
                 </xar:comment>
                 <xar:comment>
                     <xar:sec mask="DeleteArticles" catch="false">
-                        <a href="#xarModURL('articles','admin','delete',array('aid' => $aid))#">
+                        <a href="#xarModURL('articles','admin','delete',array('id' => $id))#">
                             <xar:mlstring>
                                 Delete Article
                             </xar:mlstring>

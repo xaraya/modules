@@ -31,7 +31,7 @@ function articles_featureditemsblock_modify($blockinfo)
     if (empty($vars['catfilter'])) {$vars['catfilter'] = '';}
     if (empty($vars['status'])) {$vars['status'] = array(3, 2);}
     if (empty($vars['itemlimit'])) {$vars['itemlimit'] = 0;}
-    if (empty($vars['featuredaid'])) {$vars['featuredaid'] = 0;}
+    if (empty($vars['featuredid'])) {$vars['featuredid'] = 0;}
     if (empty($vars['alttitle'])) {$vars['alttitle'] = '';}
     if (empty($vars['altsummary'])) {$vars['altsummary'] = '';}
     if (empty($vars['showfeaturedsum'])) {$vars['showfeaturedsum'] = false;}
@@ -50,7 +50,7 @@ function articles_featureditemsblock_modify($blockinfo)
         }
     }
 
-    $vars['fields'] = array('aid', 'title');
+    $vars['fields'] = array('id', 'title');
 
     if (!is_array($vars['status'])) {
         $statusarray = array($vars['status']);
@@ -118,7 +118,7 @@ function articles_featureditemsblock_modify($blockinfo)
     for($idx=0; $idx < count($vars['filtereditems']); ++$idx) {
         $vars['filtereditems'][$idx]['selected'] = '';
         for($mx=0; $mx < count($vars['moreitems']); ++$mx) {
-            if (($vars['moreitems'][$mx]) == ($vars['filtereditems'][$idx]['aid'])) {
+            if (($vars['moreitems'][$mx]) == ($vars['filtereditems'][$idx]['id'])) {
                 $vars['filtereditems'][$idx]['selected'] = 'selected';
             }
         }
@@ -143,7 +143,7 @@ function articles_featureditemsblock_update($blockinfo)
     xarVarFetch('status', 'int:0:4', $vars['status'], NULL, XARVAR_NOT_REQUIRED);
     xarVarFetch('itemlimit', 'int:1', $vars['itemlimit'], 0, XARVAR_NOT_REQUIRED);
     xarVarFetch('toptype', 'enum:author:date:hits:rating:title', $vars['toptype'], 'date', XARVAR_NOT_REQUIRED);
-    xarVarFetch('featuredaid', 'id', $vars['featuredaid'], 0, XARVAR_NOT_REQUIRED);
+    xarVarFetch('featuredid', 'id', $vars['featuredid'], 0, XARVAR_NOT_REQUIRED);
     xarVarFetch('alttitle', 'str', $vars['alttitle'], '', XARVAR_NOT_REQUIRED);
     xarVarFetch('altsummary', 'str', $vars['altsummary'], '', XARVAR_NOT_REQUIRED);
     xarVarFetch('moreitems', 'list:id', $vars['moreitems'], NULL, XARVAR_NOT_REQUIRED);

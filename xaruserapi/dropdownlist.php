@@ -39,7 +39,7 @@ function articles_userapi_dropdownlist($args)
         $args['field'] = 'title';
     }
     if (!isset($args['fields'])) {
-        $args['fields'] = array('aid', $args['field'], 'cids');
+        $args['fields'] = array('id', $args['field'], 'cids');
     }
     if (!isset($args['sort'])) {
         $args['sort'] = $args['field'];
@@ -69,7 +69,7 @@ function articles_userapi_dropdownlist($args)
     foreach ($articles as $article) {
         if (!isset($article[$field])) continue;
     // TODO: support other formatting options here depending on the field type ?
-        $list[$article['aid']] = xarVarPrepForDisplay($article[$field]);
+        $list[$article['id']] = xarVarPrepForDisplay($article[$field]);
     }
 
     return $list;

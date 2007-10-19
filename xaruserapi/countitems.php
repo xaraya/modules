@@ -67,7 +67,7 @@ function articles_userapi_countitems($args)
 
         $query .= ' LEFT JOIN ' . $categoriesdef['table'];
         $query .= ' ON ' . $categoriesdef['field'] . ' = '
-                . $articlesdef['aid'];
+                . $articlesdef['id'];
         $query .= $categoriesdef['more'];
         $docid = 1;
     }

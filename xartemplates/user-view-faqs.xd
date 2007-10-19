@@ -7,9 +7,9 @@
 </xar:if>
 <xar:if condition="!empty($titles) and count($titles) gt 0">
     <ul>
-        <xar:foreach in="$titles" key="$aid" value="$title">
+        <xar:foreach in="$titles" key="$id" value="$title">
             <li>
-                <a href="#xarServerGetCurrentURL()####$aid#">
+                <a href="#xarServerGetCurrentURL()####$id#">
                     #$title#
                 </a>
             </li>

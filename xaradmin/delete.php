@@ -17,7 +17,7 @@
 function articles_admin_delete()
 {
     // Get parameters
-    if (!xarVarFetch('aid', 'id', $aid)) return;
+    if (!xarVarFetch('id', 'id', $id)) return;
     if (!xarVarFetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('return_url', 'str:1', $return_url, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
@@ -25,11 +25,11 @@ function articles_admin_delete()
     $article = xarModAPIFunc('articles',
                              'user',
                              'get',
-                             array('aid' => $aid,
+                             array('id' => $id,
                                    'withcids' => true));
     if (!isset($article) || $article == false) {
         $msg = xarML('Unable to find #(1) item #(2)',
-                     'Article', xarVarPrepForDisplay($aid));
+                     'Article', xarVarPrepForDisplay($id));
         throw new ForbiddenOperationException(null, $msg);
     }
 
@@ -42,7 +42,7 @@ function articles_admin_delete()
     if (!xarModAPIFunc('articles','user','checksecurity',$input)) {
         $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
         $msg = xarML('You have no permission to delete #(1) item #(2)',
-                     $pubtypes[$ptid]['descr'], xarVarPrepForDisplay($aid));
+                     $pubtypes[$ptid]['descr'], xarVarPrepForDisplay($id));
         throw new ForbiddenOperationException(null, $msg);
     }
 
@@ -51,7 +51,7 @@ function articles_admin_delete()
         $data = array();
 
         // Specify for which item you want confirmation
-        $data['aid'] = $aid;
+        $data['id'] = $id;
 
         // Use articles user GUI function (not API) for preview
         if (!xarModLoad('articles','user')) return;
@@ -81,7 +81,7 @@ function articles_admin_delete()
     if (!xarModAPIFunc('articles',
                      'admin',
                      'delete',
-                     array('aid' => $aid,
+                     array('id' => $id,
                            'ptid' => $ptid))) {
         return;
     }

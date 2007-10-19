@@ -105,13 +105,13 @@
                             </xar:if>
                             <xar:if condition="$showstatus">
                                 <td class="xar-norm">
-                                    <label for="aids[#$item['aid']#]">
+                                    <label for="ids[#$item['id']#]">
                                         #$item['status']#
                                     </label>
                                 </td>
                                 <td class="xar-norm">
                                     <xar:if condition="!empty($item['editurl'])">
-                                        <input type="checkbox" name="aids[#$item['aid']#]" id="aids[#$item['aid']#]" value="1" #$item['selected']# />
+                                        <input type="checkbox" name="ids[#$item['id']#]" id="ids[#$item['id']#]" value="1" #$item['selected']# />
                                     </xar:if>
                                 </td>
                             </xar:if>

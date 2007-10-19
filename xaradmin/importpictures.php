@@ -224,7 +224,7 @@ function articles_admin_importpictures()
                           // for preview
                              'pubtypeid' => $data['ptid'],
                              'authorid' => xarUserGetVar('id'),
-                             'aid' => 0);
+                             'id' => 0);
             if (!empty($data['title']) && !empty($filename)) {
                 $article[$data['title']] = $filename;
             }
@@ -240,11 +240,11 @@ function articles_admin_importpictures()
                                               array('article' => $article, 'preview' => true));
                 break;
             } else {
-                $aid = xarModAPIFunc('articles', 'admin', 'create', $article);
-                if (empty($aid)) {
+                $id = xarModAPIFunc('articles', 'admin', 'create', $article);
+                if (empty($id)) {
                     return; // throw back
                 } else {
-                    $data['logfile'] .= xarML('File #(1) was imported as #(2) #(3)',$curfile,$pubtypes[$data['ptid']]['descr'],$aid);
+                    $data['logfile'] .= xarML('File #(1) was imported as #(2) #(3)',$curfile,$pubtypes[$data['ptid']]['descr'],$id);
                     $data['logfile'] .= '<br />';
                 }
             }

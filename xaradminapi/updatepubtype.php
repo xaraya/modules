@@ -81,9 +81,9 @@ function articles_adminapi_updatepubtype($args)
 
     // Update the publication type (don't allow updates on name)
     $query = "UPDATE $pubtypestable
-            SET xar_pubtypedescr = ?,
-                xar_pubtypeconfig = ?
-            WHERE xar_pubtypeid = ?";
+            SET pubtypedescr = ?,
+                pubtypeconfig = ?
+            WHERE pubtypeid = ?";
     $bindvars = array($descr, serialize($config), $ptid);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;

@@ -13,7 +13,7 @@
  */
 /**
  * Create a new article
- * Usage : $aid = xarModAPIFunc('articles', 'admin', 'create', $article);
+ * Usage : $id = xarModAPIFunc('articles', 'admin', 'create', $article);
  *
  * @param string $args['title'] name of the item (this is the only mandatory argument)
  * @param string $args['summary'] summary for this item
@@ -119,24 +119,24 @@ function articles_adminapi_create($args)
     $articlestable = $xartable['articles'];
 
     // Get next ID in table
-    if (empty($aid) || !is_numeric($aid) || $aid == 0) {
+    if (empty($id) || !is_numeric($id) || $id == 0) {
         $nextId = $dbconn->GenId($articlestable);
     } else {
-        $nextId = $aid;
+        $nextId = $id;
     }
 
     // Add item
     $query = "INSERT INTO $articlestable (
-              xar_aid,
-              xar_title,
-              xar_summary,
-              xar_body,
-              xar_authorid,
-              xar_pubdate,
-              xar_pubtypeid,
-              xar_notes,
-              xar_status,
-              xar_language)
+              id,
+              title,
+              summary,
+              body,
+              authorid,
+              pubdate,
+              pubtypeid,
+              notes,
+              status,
+              language)
             VALUES (?,?,?,?,?,?,?,?,?,?)";
     $bindvars = array($nextId,
                       (string)  $title,
@@ -151,9 +151,9 @@ function articles_adminapi_create($args)
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
-    // Get aid to return
-    if (empty($aid) || !is_numeric($aid) || $aid == 0) {
-        $aid = $dbconn->PO_Insert_ID($articlestable, 'xar_aid');
+    // Get id to return
+    if (empty($id) || !is_numeric($id) || $id == 0) {
+        $id = $dbconn->PO_Insert_ID($articlestable, 'id');
     }
 
     if (empty($cids)) {
@@ -163,20 +163,20 @@ function articles_adminapi_create($args)
 /* ---------------------------- TODO: Remove
     sys::import('modules.dynamicdata.class.properties.master');
     $categories = DataPropertyMaster::getProperty(array('name' => 'categories'));
-    $categories->checkInput('categories',$aid);
+    $categories->checkInput('categories',$id);
 ------------------------------- */
 
     // Call create hooks for categories, hitcount etc.
-    $args['aid'] = $aid;
+    $args['id'] = $id;
 // Specify the module, itemtype and itemid so that the right hooks are called
     $args['module'] = 'articles';
     $args['itemtype'] = $ptid;
-    $args['itemid'] = $aid;
+    $args['itemid'] = $id;
 // TODO: get rid of this
     $args['cids'] = $cids;
-    xarModCallHooks('item', 'create', $aid, $args);
+    xarModCallHooks('item', 'create', $id, $args);
 
-    return $aid;
+    return $id;
 }
 
 ?>

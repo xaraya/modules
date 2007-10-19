@@ -43,7 +43,7 @@ function articles_admin_exportpubtype($args)
   <label>' . xarVarPrepForDisplay($pubtype['descr']) . '</label>
   <moduleid>' . xarModGetIDFromName('articles') . '</moduleid>
   <itemtype>' . $ptid . '</itemtype>
-  <urlparam>aid</urlparam>
+  <urlparam>id</urlparam>
   <maxid>0</maxid>
   <config>
 ';
@@ -69,12 +69,12 @@ function articles_admin_exportpubtype($args)
     $data['xml'] .= '  </config>
   <isalias>' . $isalias . '</isalias>
   <properties>
-    <property name="aid">
+    <property name="id">
       <id>1</id>
       <label>Article ID</label>
       <type>itemid</type>
       <default></default>
-      <source>xar_articles.xar_aid</source>
+      <source>xar_articles.id</source>
       <status>1</status>
     </property>
     <property name="pubtypeid">
@@ -82,7 +82,7 @@ function articles_admin_exportpubtype($args)
       <label>Publication Type</label>
       <type>itemtype</type>
       <default>1</default>
-      <source>xar_articles.xar_pubtypeid</source>
+      <source>xar_articles.pubtypeid</source>
       <status>1</status>
     </property>
 ';
@@ -113,7 +113,7 @@ function articles_admin_exportpubtype($args)
       <label>' . $specs['label'] . '</label>
       <type>' . $specs['format'] . '</type>
       <default></default>
-      <source>xar_articles.xar_' . $field . '</source>
+      <source>xar_articles.' . $field . '</source>
       <input>' . $specs['input'] . '</input>
       <status>' . $status . '</status>
       <validation>' . xarVarPrepForDisplay($specs['validation']) . '</validation>
@@ -129,7 +129,7 @@ function articles_admin_exportpubtype($args)
                                    'label'    => $pubtype['descr'],
                                    'moduleid' => xarModGetIDFromName('articles'),
                                    'itemtype' => $ptid,
-                                   'urlparam' => 'aid',
+                                   'urlparam' => 'id',
                                    'isalias'  => $isalias,
                                    //'config'   => $settings));
                                    'config'   => $unsettings));
@@ -194,7 +194,7 @@ function articles_admin_exportpubtype($args)
                                    'label'  => $specs['label'],
                                    'status' => $status,
                                    'type'   => $specs['format'],
-                                   'source' => 'xar_articles.xar_'.$field));
+                                   'source' => 'xar_articles.'.$field));
     // these field specs have no equivalent in DD :
         // $specs['input'], // we'll guess this on import
         // $specs['type'], // unused/fixed for articles
@@ -206,13 +206,13 @@ function articles_admin_exportpubtype($args)
                                'status' => 1,
                                'type'   => 'itemtype',
                                'default' => $ptid,
-                               'source' => 'xar_articles.xar_pubtypeid'));
+                               'source' => 'xar_articles.pubtypeid'));
 
-    $object->addProperty(array('name'   => 'aid',
+    $object->addProperty(array('name'   => 'id',
                                'label'  => 'Article ID',
                                'status' => 1,
                                'type'   => 'itemid',
-                               'source' => 'xar_articles.xar_aid'));
+                               'source' => 'xar_articles.id'));
 
     // Reverse the properties list for nicer export
     $object->properties = array_reverse($object->properties);

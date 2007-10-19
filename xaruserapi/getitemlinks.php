@@ -28,7 +28,7 @@ function articles_userapi_getitemlinks($args)
         $itemtype = null;
     }
     // get cids for security check in getall
-    $fields = array('aid','title','pubtypeid','cids');
+    $fields = array('id','title','pubtypeid','cids');
 
     // make sure we have the title field we want here
     if (empty($field)) {
@@ -49,7 +49,7 @@ function articles_userapi_getitemlinks($args)
         $status = array(2, 3);
     }
     $articles = xarModAPIFunc('articles','user','getall',
-                             array('aids' => $itemids,
+                             array('ids' => $itemids,
                                    'ptid' => $itemtype,
                                    'fields' => $fields,
                                    'status' => $status,
@@ -63,11 +63,11 @@ function articles_userapi_getitemlinks($args)
     // if we didn't have a list of itemids, return all the articles we found
     if (empty($itemids)) {
         foreach ($articles as $article) {
-            $itemid = $article['aid'];
+            $itemid = $article['id'];
             if (!isset($article[$field])) continue;
             $itemlinks[$itemid] = array('url'   => xarModURL('articles', 'user', 'display',
                                                              array('ptid' => $article['pubtypeid'],
-                                                                   'aid' => $article['aid'])),
+                                                                   'id' => $article['id'])),
                                         'title' => xarML('Display Article'),
                                         'label' => xarVarPrepForDisplay($article[$field]));
         }
@@ -77,7 +77,7 @@ function articles_userapi_getitemlinks($args)
     // if we had a list of itemids, return only those articles
     $itemid2key = array();
     foreach ($articles as $key => $article) {
-        $itemid2key[$article['aid']] = $key;
+        $itemid2key[$article['id']] = $key;
     }
     foreach ($itemids as $itemid) {
         if (!isset($itemid2key[$itemid])) continue;
@@ -85,7 +85,7 @@ function articles_userapi_getitemlinks($args)
         if (!isset($article[$field])) continue;
         $itemlinks[$itemid] = array('url'   => xarModURL('articles', 'user', 'display',
                                                                  array('ptid' => $article['pubtypeid'],
-                                                                       'aid' => $article['aid'])),
+                                                                       'id' => $article['id'])),
                                             'title' => xarML('Display Article'),
                                             'label' => xarVarPrepForDisplay($article[$field]));
     }

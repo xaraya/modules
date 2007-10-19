@@ -342,7 +342,7 @@ function articles_user_search($args)
     }
 
     if (!empty($q) || (!empty($author) && isset($authorid)) || !empty($search) || !empty($ptid) || !empty($startdate) || $enddate != $now || !empty($catid)) {
-        $getfields = array('aid','title', 'pubdate','pubtypeid','cids');
+        $getfields = array('id','title', 'pubdate','pubtypeid','cids');
         // Return the relevance when using MySQL full-text search
         //if (!empty($search) && !empty($searchtype) && substr($searchtype,0,8) == 'fulltext') {
         //    $getfields[] = 'relevance';
@@ -427,7 +427,7 @@ function articles_user_search($args)
                     $curptid = $article['pubtypeid'];
                     $link = xarModURL('articles','user','display',
                                      array('ptid' => $article['pubtypeid'],
-                                           'aid' => $article['aid']));
+                                           'id' => $article['id']));
                     // publication date of article (if needed)
                     if (!empty($pubtypes[$curptid]['config']['pubdate']['label'])
                         && !empty($article['pubdate'])) {

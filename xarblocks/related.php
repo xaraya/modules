@@ -72,7 +72,7 @@ function articles_relatedblock_display($blockinfo)
     // Trick : work with cached variables here (set by the module function)
 
     // Check if we've been through articles display
-    if (!xarVarIsCached('Blocks.articles','aid')) {
+    if (!xarVarIsCached('Blocks.articles','id')) {
         return;
     }
 

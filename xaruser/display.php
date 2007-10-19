@@ -14,7 +14,7 @@
 /**
  * Display article
  *
- * @param int aid
+ * @param int id
  * @param int page
  * @param int ptid The publication Type ID
  * @return array with template information
@@ -23,7 +23,7 @@ function articles_user_display($args)
 {
     extract ($args);
     // Get parameters from user
-    if(!xarVarFetch('aid',  'id',    $aid,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('id',  'id',    $id,   NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('page', 'int:1', $page,  NULL, XARVAR_NOT_REQUIRED)) {return;}
 // this is used to determine whether we come from a pubtype-based view or a
 // categories-based navigation
@@ -50,8 +50,8 @@ function articles_user_display($args)
         if (!isset($article)) {
             return xarML('Invalid article');
         }
-        $aid = $article['aid'];
-    } elseif (!isset($aid) || !is_numeric($aid) || $aid < 1) {
+        $id = $article['id'];
+    } elseif (!isset($id) || !is_numeric($id) || $id < 1) {
         return xarML('Invalid article ID');
     }
 
@@ -63,12 +63,12 @@ function articles_user_display($args)
         $article = xarModAPIFunc('articles',
                                 'user',
                                 'get',
-                                array('aid' => $aid,
+                                array('id' => $id,
                                       'withcids' => true));
     }
 
     if (!is_array($article)) {
-        $msg = xarML('Failed to retrieve article in #(3)_#(1)_#(2).php', 'user', 'get', 'articles');
+        $msg = xarML('Failed to retrieve article in #(3)_#(1)_#(2).php', 'userapi', 'get', 'articles');
         throw new DataNotFoundException(null, $msg);
     }
 
@@ -125,7 +125,7 @@ function articles_user_display($args)
         $input['mask'] = 'EditArticles';
         if (xarModAPIFunc('articles','user','checksecurity',$input)) {
             $data['editurl'] = xarModURL('articles', 'admin', 'modify',
-                                         array('aid' => $article['aid']));
+                                         array('id' => $article['id']));
         // don't show unapproved articles to non-editors
         } elseif ($article['status'] < 2) {
             $status = xarModAPIFunc('articles', 'user', 'getstatusname',
@@ -212,7 +212,7 @@ function articles_user_display($args)
                 // option for the publication type.
                 $urlmask = xarModURL(
                     'articles','user','display',
-                    array('ptid' => $ptid, 'aid' => $aid, 'page' => '%%')
+                    array('ptid' => $ptid, 'id' => $id, 'page' => '%%')
                 );
                 $data['pager'] = xarTplGetPager(
                     $page, $numpages, $urlmask,
@@ -246,37 +246,37 @@ function articles_user_display($args)
     }
     if (!empty($settings['prevnextart']) && ($preview == 0)) {
         if(!array_key_exists('defaultsort',$settings)) {
-            $settings['defaultsort'] = 'aid';
+            $settings['defaultsort'] = 'id';
         }
         $prevart = xarModAPIFunc('articles','user','getprevious',
-                                 array('aid' => $aid,
+                                 array('id' => $id,
                                        'ptid' => $ptid,
                                        'sort' => $settings['defaultsort'],
                                        'status' => array(3,2),
                                        'enddate' => time()));
-        if (!empty($prevart['aid'])) {
+        if (!empty($prevart['id'])) {
             //Make all previous article info available to template
             $data['prevartinfo'] = $prevart;
 
             $data['prevart'] = xarModURL('articles','user','display',
                                          array('ptid' => $prevart['pubtypeid'],
-                                               'aid' => $prevart['aid']));
+                                               'id' => $prevart['id']));
         } else {
             $data['prevart'] = '';
         }
         $nextart = xarModAPIFunc('articles','user','getnext',
-                                 array('aid' => $aid,
+                                 array('id' => $id,
                                        'ptid' => $ptid,
                                        'sort' => $settings['defaultsort'],
                                        'status' => array(3,2),
                                        'enddate' => time()));
-        if (!empty($nextart['aid'])) {
+        if (!empty($nextart['id'])) {
             //Make all next art info available to template
             $data['nextartinfo'] = $nextart;
 
             $data['nextart'] = xarModURL('articles','user','display',
                                          array('ptid' => $nextart['pubtypeid'],
-                                               'aid' => $nextart['aid']));
+                                               'id' => $nextart['id']));
         } else {
             $data['nextart'] = '';
         }
@@ -337,7 +337,7 @@ function articles_user_display($args)
                 if (!empty($article[$field]) && $article[$field] != 'http://') {
                     $data['redirect'] = xarModURL('articles','user','redirect',
                                                   array('ptid' => $ptid,
-                                                        'aid' => $aid));
+                                                        'id' => $id));
                 } else {
                     $data['redirect'] = '';
                 }
@@ -384,7 +384,7 @@ function articles_user_display($args)
         list($properties) = xarModAPIFunc('dynamicdata','user','getitemfordisplay',
                                           array('module'   => 'articles',
                                                 'itemtype' => $pubtypeid,
-                                                'itemid'   => $aid,
+                                                'itemid'   => $id,
                                                 'preview'  => $preview));
         if (!empty($properties) && count($properties) > 0) {
             foreach (array_keys($properties) as $field) {
@@ -423,7 +423,7 @@ function articles_user_display($args)
             $data['transform'][] = 'notes';
         }
     }
-    $data = xarModCallHooks('item', 'transform', $aid, $data, 'articles');
+    $data = xarModCallHooks('item', 'transform', $id, $data, 'articles');
 
     if (!empty($data['title'])) {
         // CHECKME: <rabbit> Strip tags out of the title - the <title> tag shouldn't have any other tags in it.
@@ -495,14 +495,14 @@ function articles_user_display($args)
     if ($preview) {
         $data['hooks'] = '';
     } else {
-        $data['hooks'] = xarModCallHooks('item', 'display', $aid,
+        $data['hooks'] = xarModCallHooks('item', 'display', $id,
                                          array('module'    => 'articles',
                                                'itemtype'  => $pubtypeid,
                                                'returnurl' => xarModURL('articles',
                                                                         'user',
                                                                         'display',
                                                                         array('ptid' => $ptid,
-                                                                              'aid' => $aid))
+                                                                              'id' => $id))
                                               ),
                                          'articles'
                                         );
@@ -534,7 +534,7 @@ function articles_user_display($args)
 
     xarVarSetCached('Blocks.articles','body',$keywords);
     xarVarSetCached('Blocks.articles','summary',$data['summary']);
-    xarVarSetCached('Blocks.articles','aid',$aid);
+    xarVarSetCached('Blocks.articles','id',$id);
     xarVarSetCached('Blocks.articles','ptid',$ptid);
     xarVarSetCached('Blocks.articles','cids',$cids);
     xarVarSetCached('Blocks.articles','authorid',$authorid);
@@ -543,11 +543,11 @@ function articles_user_display($args)
     }
 // TODO: add this to articles configuration ?
 //if ($shownavigation) {
-    $data['aid'] = $aid;
+    $data['id'] = $id;
     $data['cids'] = $cids;
     xarVarSetCached('Blocks.categories','module','articles');
     xarVarSetCached('Blocks.categories','itemtype',$ptid);
-    xarVarSetCached('Blocks.categories','itemid',$aid);
+    xarVarSetCached('Blocks.categories','itemid',$id);
     xarVarSetCached('Blocks.categories','cids',$cids);
 
     if (!empty($ptid) && !empty($pubtypes[$ptid]['descr'])) {

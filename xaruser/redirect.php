@@ -17,12 +17,12 @@
 function articles_user_redirect($args)
 {
     // Get parameters from user
-    if(!xarVarFetch('aid', 'id', $aid, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('id', 'id', $id, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // Override if needed from argument array
     extract($args);
 
-    if (!isset($aid) || !is_numeric($aid) || $aid < 1) {
+    if (!isset($id) || !is_numeric($id) || $id < 1) {
         return xarML('Invalid article ID');
     }
 
@@ -33,7 +33,7 @@ function articles_user_redirect($args)
     $article = xarModAPIFunc('articles',
                             'user',
                             'get',
-                            array('aid' => $aid));
+                            array('id' => $id));
 
     if (!is_array($article)) {
         $msg = xarML('Failed to retrieve article in #(3)_#(1)_#(2).php', 'user', 'get', 'articles');

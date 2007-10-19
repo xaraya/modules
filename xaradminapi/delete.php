@@ -15,7 +15,7 @@
  * Delete an article
  * Usage : if (xarModAPIFunc('articles', 'admin', 'delete', $article)) {...}
  *
- * @param $args['aid'] ID of the article
+ * @param $args['id'] ID of the article
  * @param $args['ptid'] publication type ID for the item (*cough*)
  * @return bool true on success, false on failure
  */
@@ -25,7 +25,7 @@ function articles_adminapi_delete($args)
     extract($args);
 
     // Argument check
-    if (!isset($aid)) {
+    if (!isset($id)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'article ID', 'admin', 'delete',
                     'Articles');
@@ -44,13 +44,13 @@ function articles_adminapi_delete($args)
 
     // Call delete hooks for categories, hitcount etc.
     $args['module'] = 'articles';
-    $args['itemid'] = $aid;
+    $args['itemid'] = $id;
     if (isset($ptid)) {
         $args['itemtype'] = $ptid;
     } elseif (isset($pubtypeid)) {
         $args['itemtype'] = $pubtypeid;
     }
-    xarModCallHooks('item', 'delete', $aid, $args);
+    xarModCallHooks('item', 'delete', $id, $args);
 
     // Get database setup
     $dbconn = xarDB::getConn();
@@ -59,8 +59,8 @@ function articles_adminapi_delete($args)
 
     // Delete item
     $query = "DELETE FROM $articlestable
-            WHERE xar_aid = ?";
-    $result =& $dbconn->Execute($query,array($aid));
+            WHERE id = ?";
+    $result =& $dbconn->Execute($query,array($id));
     if (!$result) return;
 
     return true;

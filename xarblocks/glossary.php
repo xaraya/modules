@@ -99,7 +99,7 @@ function articles_glossaryblock_display($blockinfo)
         $vars['term'] = $glossaryterm;
         $vars['detailurl'] = xarModURL(
             'articles', 'user', 'display',
-            array('aid' => $article['aid'], 'ptid' => $article['pubtypeid'])
+            array('id' => $article['id'], 'ptid' => $article['pubtypeid'])
         );
         $vars['detailavailable'] = !empty($article['body']);
     }

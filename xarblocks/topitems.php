@@ -80,10 +80,10 @@ function articles_topitemsblock_display($blockinfo)
     }
 
     // see if we're currently displaying an article
-    if (xarVarIsCached('Blocks.articles', 'aid')) {
-        $curaid = xarVarGetCached('Blocks.articles', 'aid');
+    if (xarVarIsCached('Blocks.articles', 'id')) {
+        $curid = xarVarGetCached('Blocks.articles', 'id');
     } else {
-        $curaid = -1;
+        $curid = -1;
     }
 
     if (!empty($vars['dynamictitle'])) {
@@ -112,7 +112,7 @@ function articles_topitemsblock_display($blockinfo)
             if (xarVarIsCached('Blocks.articles', 'cids')) {
                 $curcids = xarVarGetCached('Blocks.articles', 'cids');
                 if (!empty($curcids)) {
-                    if ($curaid == -1) {
+                    if ($curid == -1) {
                         //$cid = $curcids[0]['name'];
                         $cid = $curcids[0];
                         $cidsarray = array($curcids[0]);
@@ -195,7 +195,7 @@ function articles_topitemsblock_display($blockinfo)
     }
 
     // get cids for security check in getall
-    $fields = array('aid', 'title', 'pubtypeid', 'cids');
+    $fields = array('id', 'title', 'pubtypeid', 'cids');
     if ($vars['toptype'] == 'rating' && xarModIsHooked('ratings', 'articles', $ptid)) {
         array_push($fields, 'rating');
         $sort = 'rating';
@@ -235,12 +235,12 @@ function articles_topitemsblock_display($blockinfo)
     $items = array();
     foreach ($articles as $article) {
         $article['title'] = xarVarPrepHTMLDisplay($article['title']);
-        if ($article['aid'] != $curaid) {
+        if ($article['id'] != $curid) {
             // Use the filtered category if set, and not including children
             $article['link'] = xarModURL(
                 'articles', 'user', 'display',
                 array(
-                    'aid' => $article['aid'],
+                    'id' => $article['id'],
                     'ptid' => (!empty($vars['linkpubtype']) ? $article['pubtypeid'] : NULL),
                     'catid' => ((!empty($vars['linkcat']) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)
                 )
@@ -279,7 +279,7 @@ function articles_topitemsblock_display($blockinfo)
         if (!empty($vars['showsummary'])) {
             $article['summary']  = xarVarPrepHTMLDisplay($article['summary']);
             $article['transform'] = array('summary', 'title');
-            $article = xarModCallHooks('item', 'transform', $article['aid'], $article, 'articles');
+            $article = xarModCallHooks('item', 'transform', $article['id'], $article, 'articles');
         } else {
             $article['summary'] = '';
         }

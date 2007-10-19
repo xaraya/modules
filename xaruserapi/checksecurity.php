@@ -17,7 +17,7 @@
  * @param $args['mask'] the requested security mask
  *
  * @param $args['article'] the article array (if already retrieved)
- * @param $args['aid'] the article ID (if known, and article array not
+ * @param $args['id'] the article ID (if known, and article array not
                        already retrieved)
  * @param $args['authorid'] the user ID of the author (if not already included)
  * @param $args['ptid'] the publication type ID (if not already included)
@@ -61,21 +61,21 @@ function articles_userapi_checksecurity($args)
     }
 
     // Get article information
-    if (!isset($article) && !empty($aid) && $mask != 'SubmitArticles') {
+    if (!isset($article) && !empty($id) && $mask != 'SubmitArticles') {
         $article = xarModAPIFunc('articles',
                                 'user',
                                 'get',
-                                array('aid' => $aid,
+                                array('id' => $id,
                                       'withcids' => true));
         if ($article == false) {
             return false;
         }
     }
-    if (empty($aid) && isset($article['aid'])) {
-        $aid = $article['aid'];
+    if (empty($id) && isset($article['id'])) {
+        $id = $article['id'];
     }
-    if (!isset($aid)) {
-        $aid = '';
+    if (!isset($id)) {
+        $id = '';
     }
 
     // Get author ID
@@ -116,14 +116,14 @@ function articles_userapi_checksecurity($args)
     }
 
     // Get category information for this article
-    if (!isset($article['cids']) && !empty($aid)) {
+    if (!isset($article['cids']) && !empty($id)) {
         if (!xarModAPILoad('categories', 'user')) return;
         $info = xarMod::getBaseInfo('articles');
         $sysid = $info['systemid'];
         $articlecids = xarModAPIFunc('categories',
                                     'user',
                                     'getlinks',
-                                    array('iids' => Array($aid),
+                                    array('iids' => Array($id),
                                           'itemtype' => $ptid,
                                           'modid' => $sysid,
                                           'reverse' => 0
@@ -173,15 +173,15 @@ function articles_userapi_checksecurity($args)
     if (!isset($authorid)) {
         $authorid = 'All';
     }
-    if (empty($aid)) {
-        $aid = 'All';
+    if (empty($id)) {
+        $id = 'All';
     }
 
     // Loop over all categories and check the different combinations
     $result = false;
     foreach (array_keys($jointcids) as $cid) {
 // TODO: do we want all-or-nothing access here, or is one access enough ?
-        if (xarSecurityCheck($mask,0,'Article',"$ptid:$cid:$authorid:$aid")) {
+        if (xarSecurityCheck($mask,0,'Article',"$ptid:$cid:$authorid:$id")) {
             $result = true;
         }
     }

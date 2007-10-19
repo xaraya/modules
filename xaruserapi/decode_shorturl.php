@@ -73,8 +73,8 @@ function articles_userapi_decode_shorturl($params)
         return array('search', $args);
 
     } elseif (preg_match('/^(\d+)$/',$params[1],$matches)) {
-        $aid = $matches[1];
-        $args['aid'] = $aid;
+        $id = $matches[1];
+        $args['id'] = $id;
         return array('display', $args);
 
     } elseif ($params[1] == 'archive') {
@@ -94,7 +94,7 @@ function articles_userapi_decode_shorturl($params)
 
     } elseif ($params[1] == 'redirect') {
         if (!empty($params[2]) && preg_match('/^(\d+)/',$params[2],$matches)) {
-            $args['aid'] = $matches[1];
+            $args['id'] = $matches[1];
             return array('redirect', $args);
         }
 
@@ -140,8 +140,8 @@ function articles_userapi_decode_shorturl($params)
 
                 if (!empty($params[2])) {
                     if (preg_match('/^(\d+)$/',$params[2],$matches)) {
-                        $aid = $matches[1];
-                        $args['aid'] = $aid;
+                        $id = $matches[1];
+                        $args['id'] = $id;
                         return array('display', $args);
                     } elseif (preg_match('/^c(_?[0-9 +-]+)/',$params[2],$matches)) {
                         $catid = $matches[1];
@@ -169,7 +169,7 @@ function articles_userapi_decode_shorturl($params)
                         return array('archive', $args);
                     } elseif ($params[2] == 'redirect') {
                         if (!empty($params[3]) && preg_match('/^(\d+)/',$params[3],$matches)) {
-                            $args['aid'] = $matches[1];
+                            $args['id'] = $matches[1];
                             return array('redirect', $args);
                         }
                     } else {
@@ -181,7 +181,7 @@ function articles_userapi_decode_shorturl($params)
 
                         // Decode using title
                         if( $decodeUsingTitle ) {
-                            $args['aid'] = articles_decodeAIDUsingTitle( $params, $args['ptid'], $decodeUsingTitle );
+                            $args['id'] = articles_decodeIDUsingTitle( $params, $args['ptid'], $decodeUsingTitle );
                             return array('display', $args);
                         }
 
@@ -195,7 +195,7 @@ function articles_userapi_decode_shorturl($params)
 
         // Decode using title
         if( $decodeUsingTitle ) {
-            $args['aid'] = articles_decodeAIDUsingTitle( $params, '', $decodeUsingTitle );
+            $args['id'] = articles_decodeIDUsingTitle( $params, '', $decodeUsingTitle );
             return array('display', $args);
         }
     }
@@ -206,10 +206,10 @@ function articles_userapi_decode_shorturl($params)
 /**
  * Find the article ID by its title.
  * @access private
- * @return int aid The article ID
- * @todo bug 5878 Why does a title need higher privileges than the usual aid in a short title?
+ * @return int id The article ID
+ * @todo bug 5878 Why does a title need higher privileges than the usual id in a short title?
  */
-function articles_decodeAIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 1 )
+function articles_decodeIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 1 )
 {
     switch ($decodeUsingTitle)
     {
@@ -217,10 +217,10 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 
             $dupeResolutionMethod = 'Append Date';
             break;
         case 2:
-            $dupeResolutionMethod = 'Append AID';
+            $dupeResolutionMethod = 'Append ID';
             break;
         case 3:
-            $dupeResolutionMethod = 'Use AID';
+            $dupeResolutionMethod = 'Use ID';
             break;
         case 4:
         default:
@@ -252,7 +252,7 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 
     // see if we need to append anything else to the title (= when it contains a /)
     if (count($params) > $paramidx + 1) {
         for ($i = $paramidx + 1; $i < count($params); $i++) {
-            if ($dupeResolutionMethod == 'Append AID' && preg_match('/^\d+$/',$params[$i])) {
+            if ($dupeResolutionMethod == 'Append ID' && preg_match('/^\d+$/',$params[$i])) {
                 break;
             } elseif ($dupeResolutionMethod == 'Append Date' && preg_match('/^\d+-\d+-\d+ \d+:\d+$/',$params[$i])) {
                 break;
@@ -287,13 +287,13 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 
         // to keep working even if the configuration changes.
         switch( $dupeResolutionMethod )
         {
-            case 'Append AID':
-                // Look for AID appended after title
+            case 'Append ID':
+                // Look for ID appended after title
                 if( !empty($params[$paramidx]) )
                 {
                     foreach ($articles as $article)
                     {
-                        if( $article['aid'] == $params[$paramidx] )
+                        if( $article['id'] == $params[$paramidx] )
                         {
                             $theArticle = $article;
                             break;
@@ -326,7 +326,7 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 
                         {
                             $theArticle = $article;
                             break;
-                        } else if( $article['aid'] == $params[$paramidx] )
+                        } else if( $article['id'] == $params[$paramidx] )
                         {
                             $theArticle = $article;
                             break;
@@ -346,8 +346,8 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 
 
     if( !empty($theArticle) )
     {
-        $aid = $theArticle['aid'];
-        return $aid;
+        $id = $theArticle['id'];
+        return $id;
     }
 }
 

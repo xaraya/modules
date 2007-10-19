@@ -418,14 +418,14 @@
                             </option>
                         </xar:if>
                     </xar:if>
-                    <xar:if condition="$defaultsort eq 'aid'">
-                        <option value="aid" selected="selected">
+                    <xar:if condition="$defaultsort eq 'id'">
+                        <option value="id" selected="selected">
                             <xar:mlstring>
                                 Article ID
                             </xar:mlstring>
                         </option>
                         <xar:else />
-                        <option value="aid">
+                        <option value="id">
                             <xar:mlstring>
                                 Article ID
                             </xar:mlstring>

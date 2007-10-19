@@ -32,13 +32,13 @@ function articles_userapi_getmonthcount($args)
     $dbtype = xarDBGetType();
     switch ($dbtype) {
         case 'mysql':
-            $query = "SELECT LEFT(FROM_UNIXTIME(xar_pubdate),7) AS mymonth, COUNT(*) FROM " . $articlesdef['table'];
+            $query = "SELECT LEFT(FROM_UNIXTIME(pubdate),7) AS mymonth, COUNT(*) FROM " . $articlesdef['table'];
             break;
         case 'postgres':
-            $query = "SELECT TO_CHAR(ABSTIME(xar_pubdate),'YYYY-MM') AS mymonth, COUNT(*) FROM " . $articlesdef['table'];
+            $query = "SELECT TO_CHAR(ABSTIME(pubdate),'YYYY-MM') AS mymonth, COUNT(*) FROM " . $articlesdef['table'];
             break;
         case 'mssql':
-            $query = "SELECT LEFT(CONVERT(VARCHAR,DATEADD(ss,xar_pubdate,'1/1/1970'),120),7) as mymonth, COUNT(*) FROM " . $articlesdef['table'];
+            $query = "SELECT LEFT(CONVERT(VARCHAR,DATEADD(ss,pubdate,'1/1/1970'),120),7) as mymonth, COUNT(*) FROM " . $articlesdef['table'];
             break;
         // TODO:  Add SQL queries for Oracle, etc.
         default:
@@ -49,7 +49,7 @@ function articles_userapi_getmonthcount($args)
     }
     switch ($dbtype) {
         case 'mssql':
-            $query .= " GROUP BY LEFT(CONVERT(VARCHAR,DATEADD(ss,xar_pubdate,'1/1/1970'),120),7)";
+            $query .= " GROUP BY LEFT(CONVERT(VARCHAR,DATEADD(ss,pubdate,'1/1/1970'),120),7)";
             break;
         default:
             $query .= ' GROUP BY mymonth';
