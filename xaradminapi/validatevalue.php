@@ -78,21 +78,20 @@ function uploads_adminapi_validatevalue($args)
         $typeCheck .= (isset($methods['external']) && $methods['external'])  ? ':' . _UPLOADS_GET_EXTERNAL : '';
         $typeCheck .= (isset($methods['trusted']) && $methods['trusted']) ? ':' . _UPLOADS_GET_LOCAL : '';
         $typeCheck .= (isset($methods['upload']) && $methods['upload']) ? ':' . _UPLOADS_GET_UPLOAD : '';
-        $typeCheck .= ':';
+        $typeCheck .= ':-2'; // clear value
     } else {
         $typeCheck = 'enum:0:' . _UPLOADS_GET_STORED;
         $typeCheck .= (xarModGetVar('uploads', 'dd.fileupload.external') == TRUE) ? ':' . _UPLOADS_GET_EXTERNAL : '';
         $typeCheck .= (xarModGetVar('uploads', 'dd.fileupload.trusted') == TRUE) ? ':' . _UPLOADS_GET_LOCAL : '';
         $typeCheck .= (xarModGetVar('uploads', 'dd.fileupload.upload') == TRUE) ? ':' . _UPLOADS_GET_UPLOAD : '';
-        $typeCheck .= ':';
+        $typeCheck .= ':-2'; // clear value
     }
 
-    xarVarFetch($id . '_attach_type', $typeCheck, $action, -2, XARVAR_NOT_REQUIRED);
+    xarVarFetch($id . '_attach_type', $typeCheck, $action, -3, XARVAR_NOT_REQUIRED);
 
     if (!isset($action)) {
-        $action = -2;
+        $action = -3;
     }
-
 
     $args['action']    = $action;
     switch ($action) {
@@ -168,6 +167,11 @@ function uploads_adminapi_validatevalue($args)
             break;
         case '-1':
             return array(true,$value);
+            break;
+        case '-2':
+            // clear stored value
+            return array(true, NULL);
+            break;
         default:
             if (isset($value)) {
                 if (strlen($value) && $value{0} == ';') {
