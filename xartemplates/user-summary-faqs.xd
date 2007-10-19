@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <a name="#$id#"></a>
 <br />
@@ -22,3 +23,4 @@
 </xar:if>
 <p>#$body#</p>
 <p><a href="#xarServerGetCurrentURL()##titles"><xar:mlstring>Back to top</xar:mlstring></a></p>
+</xar:template>

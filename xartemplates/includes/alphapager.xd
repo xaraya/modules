@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="isset($sort) and ($sort eq 'title')">
     <xar:comment>Added to automatically display an alpha pager when articles are sorted by title.</xar:comment>
     <xar:style scope="module" module="articles" file="alphapager" />
@@ -22,3 +23,4 @@
     </div>
 
 </xar:if>
+</xar:template>

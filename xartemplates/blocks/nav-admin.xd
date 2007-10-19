@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-form-input-wrapper">
     <label class="xar-form-label" for="layout#$blockid#">
         <xar:mlstring>
@@ -115,3 +116,4 @@
         </xar:loop>
     </select>
 </div>
+</xar:template>

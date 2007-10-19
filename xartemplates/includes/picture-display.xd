@@ -1,5 +1,7 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>Note: when using the image-resize tag, width percentage is calculated
                    on the size of the original image, not the size of the available
                    space.  This is why we are not using width="100%" here.
 </xar:comment>
 <xar:image-resize src="$file[fileId]" label="$title" width="500px" height="500px" constrain="true"/>
+</xar:template>
