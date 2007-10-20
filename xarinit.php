@@ -154,6 +154,7 @@ function articles_init()
         $defaultpubtype = 0;
     }
 
+/* TODO: remove this code and the setup.php file
     // Save publication types
     $pubid = array();
     foreach ($pubtypes as $pubtype) {
@@ -169,7 +170,21 @@ function articles_init()
         $ptid = $dbconn->PO_Insert_ID($pubtypestable, 'pubtypeid');
         $pubid[$id] = $ptid;
     }
+*/
 
+# --------------------------------------------------------
+#
+# Create DD objects
+#
+    $module = 'articles';
+    $objects = array(
+                     'articles_news',
+                     );
+
+    if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+
+
+        $categories = array();
     // Create articles categories
     $cids = array();
     foreach ($categories as $category) {
@@ -457,7 +472,11 @@ function articles_upgrade($oldversion)
  */
 function articles_delete()
 {
-    // Get database information
+    $module = 'articles';
+    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => $module));
+
+   // TODO: remove everything below here
+   // Get database information
     $dbconn = xarDB::getConn();
     $xartable = xarDB::getTables();
 
