@@ -18,8 +18,8 @@
 */
 function ebulletin_userapi_getsubscriberemails($args)
 {
-    // security check
-    if (!xarSecurityCheck('EditeBulletin')) return;
+    // security check REMOVED to allow scheduler to work anonymously
+    //    if (!xarSecurityCheck('EditeBulletin')) return;
 
     extract($args);
 

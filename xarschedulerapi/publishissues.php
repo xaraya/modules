@@ -16,7 +16,7 @@
  * publish issues for scheduler module
  *
  */
-function ebulletin_schedulerapi_publishissues($args)
+function ebulletin_schedulerapi_publishissues($args=array())
 {
     extract($args);
     
