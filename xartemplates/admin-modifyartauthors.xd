@@ -1,0 +1,102 @@
+<xar:style file="mag-admin" scope="module" />
+
+<xar:comment>
+    Modify the list of authors for an article.
+</xar:comment>
+
+<div class="mag-admin mag-admin-authorlist">
+    <xar:if condition="empty($mag)">
+        <p class="xar-error"><xar:mlstring>Missing magazine details</xar:mlstring></p>
+    <xar:else />
+        <xar:if condition="empty($issue)">
+            <p class="xar-error"><xar:mlstring>Missing issue details</xar:mlstring></p>
+        <xar:else />
+            <h1><xar:mlstring>Modify Article Authors</xar:mlstring></h1>
+            <p>
+                <xar:ml>
+                    <xar:mlstring>
+                        <strong>Magazine:</strong> #(1); 
+                        <br/><strong>Issue:</strong> #(2); 
+                        <br/><strong>Article:</strong> #(3)
+                    </xar:mlstring>
+                    <xar:mlvar>#xarVarPrepForDisplay($mag.title)#</xar:mlvar>
+                    <xar:mlvar>#xarVarPrepForDisplay($issue.title)#</xar:mlvar>
+                    <xar:mlvar>#xarVarPrepForDisplay($article.title)#</xar:mlvar>
+                </xar:ml>
+            </p>
+
+            <p>
+                <a href="#xarModURL('mag','admin','modifyartauthors',array('action'=&gt;'new','aid'=&gt;$aid,'return_url'=&gt;$return_url))#"><xar:mlstring>New author</xar:mlstring></a>
+                <xar:if condition="!empty($return_url)">
+                    | <a href="#xarVarPrepForDisplay($return_url)#"><xar:mlstring>Return</xar:mlstring></a>
+                </xar:if>
+            </p>
+
+            <xar:if condition="!empty($roles)">
+                <table class="sortable">
+                    <thead>
+                        <tr>
+                            <th><xar:mlstring>Author ID</xar:mlstring></th>
+                            <th><xar:mlstring>Name</xar:mlstring></th>
+                            <th><xar:mlstring>Role</xar:mlstring></th>
+                            <th><xar:mlstring>Role Notes</xar:mlstring></th>
+                            <th><xar:mlstring>Options</xar:mlstring></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <xar:loop name="$roles">
+                            <tr>
+                                <td>#$loop:item.author_id#</td>
+                                <td>
+                                    <a href="#xarModURL('mag','admin','modifyartauthors',array('action'=&gt;'modify','aaid'=&gt;$loop:item.aaid,'aid'=&gt;$aid,'return_url'=&gt;$return_url))#" title="#xarML('Edit this record')#">
+                                        <xar:if condition="isset($authors[$loop:item['author_id']])">
+                                            #xarVarPrepForDisplay($authors[$loop:item['author_id']]['name'])#
+                                        <xar:else />
+                                            <xar:mlstring>Author name unknown</xar:mlstring>
+                                        </xar:if>
+                                    </a>
+                                </td>
+                                <td>#xarVarPrepForDisplay($loop:item.role)#</td>
+                                <td>#xarVarPrepForDisplay($loop:item.notes)#</td>
+                                <td>
+                                    <a href="#xarModURL('mag','admin','modifyartauthors',array('action'=&gt;'delete','aaid'=&gt;$loop:item.aaid,'aid'=&gt;$aid,'return_url'=&gt;$return_url))#"><xar:mlstring>Remove author</xar:mlstring></a>
+                                </td>
+                            </tr>
+                        </xar:loop>
+                    </tbody>
+                </table>
+            <xar:else />
+                <p class="xar-error"><xar:mlstring>No current authors</xar:mlstring></p>
+            </xar:if>
+
+            <xar:if condition="!empty($message)">
+                <p class="xar-error">#xarVarPrepForDisplay($message)#</p>
+            </xar:if>
+
+            <xar:if condition="!empty($properties)">
+                <form method="post" action="#xarModURL('mag','admin','modifyartauthors')#">
+                    <xar:loop name="$properties">
+                        <xar:set name="this_property">#$loop:item#</xar:set>
+                        <xar:set name="property_name">#$this_property-&gt;name#</xar:set>
+
+                        <div class="mag-form-item">
+                            <label><xar:data-label property="$this_property" /></label>
+                            <xar:data-input property="$this_property" />
+                        </div>
+                    </xar:loop>
+                    <div style="clear: both;">&nbsp;</div>
+
+                    <p>
+                        <input type="hidden" name="action" value="#$action#" />
+                        <input type="hidden" name="aid" value="#$aid#" />
+                        <xar:if condition="!empty($aaid)">
+                            <input type="hidden" name="aaid" value="#$aaid#" />
+                        </xar:if>
+                        <input type="hidden" name="return_url" value="#xarVarPrepForDisplay($return_url)#" />
+                        <input type="submit" name="save" value="#xarML('Save')#" />
+                    </p>
+                </form>
+            </xar:if>
+        </xar:if>
+    </xar:if>
+</div>

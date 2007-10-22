@@ -1,0 +1,26 @@
+
+<xar:comment>
+    Article links.
+    Shows links to other articles in this issue.
+    TODO: perhaps a jQuery pop-up window showing a mini-version of the table of contents? All the data is here.
+</xar:comment>
+
+<xar:if condition="!empty($toc.article_ids)">
+    <div class="mag-artlinks">
+        <xar:if condition="!empty($toc.prev_aid)">
+            <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'article','mag'=&gt;$mag.ref,'issue'=&gt;$issue.ref,'aid'=&gt;$toc.prev_aid))#" title="#xarVarPrepForDisplay($toc['articles'][$toc['prev_aid']]['title'])#">
+                &lt;&lt;
+            </a>
+        <xar:else />
+            &lt;&lt;
+        </xar:if>
+        |
+        <xar:if condition="!empty($toc.next_aid)">
+            <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'article','mag'=&gt;$mag.ref,'issue'=&gt;$issue.ref,'aid'=&gt;$toc.next_aid))#" title="#xarVarPrepForDisplay($toc['articles'][$toc['next_aid']]['title'])#">
+                &gt;&gt;
+            </a>
+        <xar:else />
+            &gt;&gt;
+        </xar:if>
+    </div>
+</xar:if>

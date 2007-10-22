@@ -74,7 +74,7 @@ function mag_user_series($args)
                     'mid' => $mid,
                     'sid' => $one_series['sid'],
                     'status' => 'PUBLISHED',
-                    'fields' => 'TOC',
+                    'fieldset' => 'TOC',
                 );
 
                 $articles = xarModAPIfunc($module, 'user', 'getarticles', $article_select);

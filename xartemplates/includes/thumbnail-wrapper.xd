@@ -7,13 +7,15 @@
 
         Note that any style added to the original image, is moved to the wrapper div.
         We will probably want to do that to additional classes too.
+    
+    Removed: style="#$newImg.style#" from wrapper div
 </xar:comment>
 
 <xar:if condition="xarModIsAvailable('jquery')">
     <xar:template file="thickbox" module="jquery" />
 </xar:if>
 
-<div class="thumbnail-wrapper #$newImg.class#" style="#$newImg.style#">
+<div class="thumbnail-wrapper #$newImg.class#">
     <a href="#$oldImg.src#" class="thickbox">
         <xar:if condition="!empty($newImg.title)">
             <img src="#$newImg.src#" title="#xarML('Click to enlarge')#" alt="#$newImg.alt#" />

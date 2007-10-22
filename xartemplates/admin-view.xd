@@ -1,13 +1,63 @@
 
 <xar:style file="mag-admin" scope="module" />
 
+<xar:if condition="xarModIsAvailable('jquery')">
+    <xar:template file="jquery.tablesorter" module="jquery" subdata="array('selector'=&gt;'table.sortable','options'=&gt;'')" />
+</xar:if>
+
 <xar:comment>
     Display a list of magazines or a single magazine.
 </xar:comment>
 
 <xar:if condition="!empty($mags)">
     <xar:comment>List of magazines</xar:comment>
-    <p>TODO!</p>
+    <div class="mag-mags-list">
+        <h1>
+            <xar:ml>
+                <xar:mlstring>All Magazines</xar:mlstring>
+            </xar:ml>
+        </h1>
+
+        <table class="sortable">
+            <thead>
+                <tr>
+                    <th scope="col"><xar:mlstring>ID</xar:mlstring></th>
+                    <th scope="col"><xar:mlstring>Ref</xar:mlstring></th>
+                    <th scope="col"><xar:mlstring>Title</xar:mlstring></th>
+                    <th scope="col"><xar:mlstring>Status</xar:mlstring></th>
+                    <th scope="col"><xar:mlstring>Logo</xar:mlstring></th>
+                    <th scope="col"><xar:mlstring>Options</xar:mlstring></th>
+                </tr>
+            </thead>
+            </tbody>
+                <xar:loop name="$mags">
+                    <tr>
+                        <td>#$loop:item.mid#</td>
+                        <td>#$loop:item.ref#</td>
+                        <td><a href="#TODO" title="#xarML('Edit this magazine')#">
+                            <xar:if condition="!empty($loop:item.title)">
+                                #xarVarPrepForDisplay($loop:item.title)#
+                            <xar:else />
+                                <xar:mlstring>No title</xar:mlstring>
+                            </xar:if>
+                        </a></td>
+                        <td>#$loop:item.status#</td>
+                        <td>
+                            <xar:if condition="!empty($loop:item.logo_path)">
+                                <img src="#$loop:item.logo_path#" class="mag-logo-icon" />
+                            <xar:else />
+                                <xar:mlstring>No logo</xar:mlstring>
+                            </xar:if>
+                        </td>
+                        <td>
+                            <a href="#xarModURL('mag','admin','view',array('view'=&gt;'issues','mid'=&gt;$loop:item.mid))#"><xar:mlstring>Issues</xar:mlstring></a>
+                            | <a href="TODO"><xar:mlstring>delete</xar:mlstring></a>
+                        </td>
+                    </tr>
+                </xar:loop>
+            </tbody>
+        </table>
+    </div>
 <xar:elseif condition="!empty($mag)" />
     <xar:comment>Single magazine</xar:comment>
     <div class="mag-single-summary">
@@ -39,10 +89,11 @@
 
     <div class="mag-single-links">
         <ul>
-            <li><a href="#xarModURL('mag','admin','view')#"><xar:mlstring>Show Magazines</xar:mlstring></a></li>
-            <li><a href="#xarModURL('mag','admin','view',array('view'=&gt;'issues','mid'=&gt;$mid))#"><xar:mlstring>Show Issues</xar:mlstring></a></li>
-            <li><a href="#xarModURL('mag','admin','view',array('view'=&gt;'series','mid'=&gt;$mid))#"><xar:mlstring>Show Series</xar:mlstring></a></li>
-            <li><a href="#xarModURL('mag','admin','view',array('view'=&gt;'articles','mid'=&gt;$mid))#"><xar:mlstring>Show Articles</xar:mlstring></a></li>
+            <li><a href="#xarModURL('mag','admin','view')#"><xar:mlstring>All Magazines</xar:mlstring></a></li>
+            <li><a href="#xarModURL('mag','admin','view',array('view'=&gt;'issues','mid'=&gt;$mid))#"><xar:mlstring>Issues</xar:mlstring></a></li>
+            <li><a href="#xarModURL('mag','admin','view',array('view'=&gt;'series','mid'=&gt;$mid))#"><xar:mlstring>Series</xar:mlstring></a></li>
+            <xar:comment><li><a href="#xarModURL('mag','admin','view',array('view'=&gt;'articles','mid'=&gt;$mid))#"><xar:mlstring>Articles</xar:mlstring></a></li></xar:comment>
+            <li><a href="#"><xar:mlstring>Show Authors</xar:mlstring></a></li>
         </ul>
     </div>
 
@@ -53,42 +104,46 @@
             <xar:if condition="!empty($issues)">
                 <xar:comment>Lots of issues: show a list</xar:comment>
                 <h2><xar:mlstring>Issues</xar:mlstring></h2>
-                <table>
-                    <tr>
-                        <th scope="col"><xar:mlstring>ID</xar:mlstring></th>
-                        <th scope="col"><xar:mlstring>Ref</xar:mlstring></th>
-                        <th scope="col"><xar:mlstring>Date</xar:mlstring></th>
-                        <th scope="col"><xar:mlstring>Title</xar:mlstring></th>
-                        <th scope="col"><xar:mlstring>Status</xar:mlstring></th>
-                        <th scope="col"><xar:mlstring>Cover</xar:mlstring></th>
-                        <th scope="col"><xar:mlstring>Options</xar:mlstring></th>
-                    </tr>
-                    <xar:loop name="$issues">
+                <table class="sortable">
+                    <thead>
                         <tr>
-                            <td>#$loop:item.iid#</td>
-                            <td>#$loop:item.ref#</td>
-                            <td>#xarLocaleGetFormattedDate('medium', $loop:item.pubdate)#</td>
-                            <td><a href="#xarModURL('mag','admin','view',array('view'=&gt;'issues','mid'=&gt;$mid,'iid'=&gt;$loop:item.iid))#">
-                                <xar:if condition="!empty($loop:item.title)">
-                                    #xarVarPrepForDisplay($loop:item.title)#
-                                <xar:else />
-                                    <xar:mlstring>No title</xar:mlstring>
-                                </xar:if>
-                            </a></td>
-                            <td>#$loop:item.status#</td>
-                            <td>
-                                <xar:if condition="!empty($loop:item.cover_img_icon_path)">
-                                    <img src="#$loop:item.cover_img_icon_path#" class="mag-cover-img-icon" />
-                                <xar:else />
-                                    <xar:mlstring>No image</xar:mlstring>
-                                </xar:if>
-                            </td>
-                            <td>
-                                <a href="TODO"><xar:mlstring>edit</xar:mlstring></a>
-                                | <a href="TODO"><xar:mlstring>delete</xar:mlstring></a>
-                            </td>
+                            <th scope="col"><xar:mlstring>ID</xar:mlstring></th>
+                            <th scope="col"><xar:mlstring>Ref</xar:mlstring></th>
+                            <th scope="col"><xar:mlstring>Date</xar:mlstring></th>
+                            <th scope="col"><xar:mlstring>Title</xar:mlstring></th>
+                            <th scope="col"><xar:mlstring>Status</xar:mlstring></th>
+                            <th scope="col"><xar:mlstring>Cover</xar:mlstring></th>
+                            <th scope="col"><xar:mlstring>Options</xar:mlstring></th>
                         </tr>
-                    </xar:loop>
+                    </thead>
+                    </tbody>
+                        <xar:loop name="$issues">
+                            <tr>
+                                <td>#$loop:item.iid#</td>
+                                <td>#$loop:item.ref#</td>
+                                <td>#xarLocaleGetFormattedDate('medium', $loop:item.pubdate)#</td>
+                                <td><a href="#TODO" title="#xarML('Edit this issue')#">
+                                    <xar:if condition="!empty($loop:item.title)">
+                                        #xarVarPrepForDisplay($loop:item.title)#
+                                    <xar:else />
+                                        <xar:mlstring>No title</xar:mlstring>
+                                    </xar:if>
+                                </a></td>
+                                <td>#$loop:item.status#</td>
+                                <td>
+                                    <xar:if condition="!empty($loop:item.cover_img_icon_path)">
+                                        <img src="#$loop:item.cover_img_icon_path#" class="mag-cover-img-icon" />
+                                    <xar:else />
+                                        <xar:mlstring>No image</xar:mlstring>
+                                    </xar:if>
+                                </td>
+                                <td>
+                                    <a href="#xarModURL('mag','admin','view',array('view'=&gt;'issues','mid'=&gt;$mid,'iid'=&gt;$loop:item.iid))#"><xar:mlstring>Articles</xar:mlstring></a>
+                                    | <a href="TODO"><xar:mlstring>delete</xar:mlstring></a>
+                                </td>
+                            </tr>
+                        </xar:loop>
+                    </tbody>
                 </table>
             <xar:elseif condition="!empty($issue)" />
                 <xar:comment>Single issue: show articles</xar:comment>
@@ -109,46 +164,65 @@
 
                 <xar:if condition="!empty($articles)">
                     <div class="mag-admin-articles-table">
-                        <table>
-                            <tr>
-                                <th scope="col"><xar:mlstring>ID</xar:mlstring></th>
-                                <th scope="col"><xar:mlstring>Title</xar:mlstring></th>
-                                <th scope="col"><xar:mlstring>Page</xar:mlstring></th>
-                                <th scope="col"><xar:mlstring>Status</xar:mlstring></th>
-                                <th scope="col"><xar:mlstring>Series</xar:mlstring></th>
-                                <th scope="col"><xar:mlstring>Options</xar:mlstring></th>
-                            </tr>
-                            <xar:loop name="$articles">
+                        <table class="sortable">
+                            <thead>
                                 <tr>
-                                    <td>#$loop:item.aid#</td>
-                                    <td>
-                                        <a href="#xarModURL('mag','user','article',array('mid'=&gt;$mid,'iid'=&gt;$iid,'aid'=&gt;$loop:item.aid,'show'=&gt;'preview'))#" title="#xarML('Preview')#" id="article-id-#$loop:item.aid#">
-                                            #xarVarPrepForDisplay($loop:item.title)#
-                                        </a>
-                                    </td>
-                                    <td>#$loop:item.page#</td>
-                                    <td>#$loop:item.status#</td>
-                                    <td>
-                                        <xar:if condition="empty($loop:item.series_id)">
-                                            <xar:mlstring>No series</xar:mlstring>
-                                        <xar:elseif condition="!empty($series[$loop:item.series_id])" />
-                                            <a href="TODO">
-                                                #xarVarPrepForDisplay($series[$loop:item.series_id]['title'])#
-                                            </a>
-                                        <xar:else />
-                                            <xar:ml>
-                                                <xar:mlstring>Invalid series ID "#(1)"</xar:mlstring>
-                                                <xar:mlvar>#$loop:item.series_id#</xar:mlvar>
-                                            </xar:ml>
-                                        </xar:if>
-                                    </td>
-                                    <td>
-                                        <a href="#xarModURL('mag','admin','modify',array('aid'=&gt;$loop:item.aid,'return_url'=&gt;xarServerGetCurrentURL(array(),false,'article-id-'.$loop:item.aid)))#"><xar:mlstring>edit</xar:mlstring></a>
-                                        | <a href="TODO"><xar:mlstring>delete</xar:mlstring></a>
-                                        | <a href="TODO"><xar:mlstring>authors</xar:mlstring></a>
-                                    </td>
+                                    <th scope="col"><xar:mlstring>ID</xar:mlstring></th>
+                                    <th scope="col"><xar:mlstring>Title</xar:mlstring></th>
+                                    <th scope="col"><xar:mlstring>Page</xar:mlstring></th>
+                                    <th scope="col"><xar:mlstring>Status</xar:mlstring></th>
+                                    <th scope="col"><xar:mlstring>Series</xar:mlstring></th>
+                                    <th scope="col"><xar:mlstring>Authors</xar:mlstring></th>
+                                    <th scope="col"><xar:mlstring>Options</xar:mlstring></th>
                                 </tr>
-                            </xar:loop>
+                            </thead>
+                            <tbody>
+                                <xar:loop name="$articles">
+                                    <tr>
+                                        <td>#$loop:item.aid#</td>
+                                        <td>
+                                            <a href="#xarModURL('mag','user','article',array('mid'=&gt;$mid,'iid'=&gt;$iid,'aid'=&gt;$loop:item.aid,'show'=&gt;'preview'))#" title="#xarML('Preview article')#"><xar:mlstring>Preview</xar:mlstring></a> |
+                                            <a href="#xarModURL('mag','admin','modify',array('aid'=&gt;$loop:item.aid,'return_url'=&gt;xarServerGetCurrentURL(array(),false,'article-id-'.$loop:item.aid)))#" title="#xarML('Edit article')#" id="article-id-#$loop:item.aid#">
+                                                #xarVarPrepForDisplay($loop:item.title)#
+                                            </a>
+                                        </td>
+                                        <td>#$loop:item.page#</td>
+                                        <td>#$loop:item.status#</td>
+                                        <td>
+                                            <xar:if condition="empty($loop:item.series_id)">
+                                                <xar:mlstring>No series</xar:mlstring>
+                                            <xar:elseif condition="!empty($series[$loop:item.series_id])" />
+                                                <a href="TODO">
+                                                    #xarVarPrepForDisplay($series[$loop:item.series_id]['title'])#
+                                                </a>
+                                            <xar:else />
+                                                <xar:ml>
+                                                    <xar:mlstring>Invalid series ID "#(1)"</xar:mlstring>
+                                                    <xar:mlvar>#$loop:item.series_id#</xar:mlvar>
+                                                </xar:ml>
+                                            </xar:if>
+                                        </td>
+                                        <td>
+                                            <xar:if condition="empty($loop:item.authors)">
+                                                <a href="#xarModURL('mag','admin','modifyartauthors',array('aid'=&gt;$loop:item.aid,'return_url'=&gt;xarServerGetCurrentURL(array(),false,'article-id-'.$loop:item.aid)))#" title="#xarML('Edit author list')#">
+                                                    <xar:mlstring>None</xar:mlstring>
+                                                </a>
+                                            <xar:else />
+                                                <a href="#xarModURL('mag','admin','modifyartauthors',array('aid'=&gt;$loop:item.aid,'return_url'=&gt;xarServerGetCurrentURL(array(),false,'article-id-'.$loop:item.aid)))#" title="#xarML('Edit author list')#">
+                                                    <xar:mlstring>Edit</xar:mlstring>
+                                                </a>
+                                                <xar:loop name="$loop:item.authors">
+                                                    <xar:if condition="$loop:index gt 0"></xar:if>
+                                                    | #xarVarPrepForDisplay($loop:item.name)#
+                                                </xar:loop>
+                                            </xar:if>
+                                        </td>
+                                        <td>
+                                            <a href="TODO"><xar:mlstring>delete</xar:mlstring></a>
+                                        </td>
+                                    </tr>
+                                </xar:loop>
+                            </tbody>
                         </table>
                     </div>
                 <xar:else />

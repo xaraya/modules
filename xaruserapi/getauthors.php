@@ -10,7 +10,10 @@
  * @param mid integer Magazine ID
  * @param iid integer Issue ID
  * @param sid integer Series ID
+ * @param status_group string PUBLISHED or DRAFT (default PUBLISHED)
  * @param docount boolean If set, speficies that a count should be returned instead.
+ * @param groupby string Indicates grouping of the authors. Values include 
+ * @param sort string List of sortcriteria (opetions: name [ASC|DESC], auid [ASC|DESC])
  *
  * Return a list of authors based on one of a number of criteria:
  * - writing for a particular article
@@ -43,13 +46,22 @@ function mag_userapi_getauthors($args)
     $dbconn =& xarDBGetConn();
     $tables =& xarDBGetTables();
 
+    // Validate the groupby parameter.
+    if (!xarVarValidate('enum:author:article', $groupby, true)) $groupby = 'author';
+
     // Handle numitems.
-    // TODO: make this a parameter.
-    if (empty($numitems)) $numitems = 100;
+    // TODO: remove the limit here - it should be handled at a higher level.
+    if (empty($numitems)) $numitems = 1000;
     if (empty($startnum)) $startnum = 1;
 
-    // TODO: handle sorting, which can include data in other tables.
+    // Handle sorting, which can include data in other tables.
     // Note: can only sort by columns that are selected in some databases.
+    // TODO: include the ability to sort by article ID and article publication dates
+    if (!empty($sort) && xarVarValidate('strlist:,:pre:trim:lower:passthru:enum:name:name asc:name desc:auid:auid asc:auid desc', $sort, true)) {
+        // COnvert the keywords into column names.
+        $sorting = str_replace(array('name', 'auid'), array('a.name', 'a.auid'), $sort);
+    }
+    
     $bind = array();
     $where = array();
 
@@ -58,24 +70,44 @@ function mag_userapi_getauthors($args)
         $sql = 'SELECT COUNT(DISTINCT a.auid)';
     } else {
         $sql = 'SELECT DISTINCT a.auid';
+        if ($groupby == 'article') $sql .= ', art.aid';
     }
 
     $sql .= ' FROM ' . $tables['mag_authors'] . ' AS a';
+
+    if (!empty($status_group)) {
+        if ($status_group == 'PUBLISHED') {
+            $article_status = array('PUBLISHED');
+            $issue_status = array('PUBLISHED');
+            $mag_status = array('ACTIVE');
+        } elseif ($status_group == 'DRAFT') {
+            $article_status = array();
+            $issue_status = array();
+            $mag_status = array();
+        }
+    }
+    if (!isset($article_status)) $article_status = array('PUBLISHED');
+    if (!isset($issue_status)) $issue_status = array('PUBLISHED');
+    if (!isset($mag_status)) $mag_status = array('ACTIVE');
 
     // Link to the articles (lots of reasons to do this).
     if (!empty($aid) || !empty($aids) || !empty($iid) || !empty($iids) || !empty($mid) || !empty($sid)) {
         $sql .= ' INNER JOIN ' . $tables['mag_articles_authors'] . ' AS aa'
             . ' ON aa.author_id = a.auid'
             . ' INNER JOIN ' . $tables['mag_articles'] . ' AS art'
-            . ' ON art.aid = aa.article_id AND art.status = ?'
+            . ' ON art.aid = aa.article_id'
+            . (!empty($article_status) ? ' AND art.status in (?' . str_repeat(',?', count($article_status)-1) . ')' : '')
             . ' INNER JOIN ' . $tables['mag_issues'] . ' AS i'
-            . ' ON i.iid = art.issue_id AND i.status = ?'
+            . ' ON i.iid = art.issue_id'
+            . (!empty($issue_status) ? ' AND i.status in (?' . str_repeat(',?', count($issue_status)-1) . ')' : '')
             . ' INNER JOIN ' . $tables['mag_mags'] . ' AS m'
-            . ' ON m.mid = i.mag_id AND m.status = ?';
+            . ' ON m.mid = i.mag_id'
+            . (!empty($mag_status) ? ' AND m.status in (?' . str_repeat(',?', count($mag_status)-1) . ')' : '');
 
-        $bind[] = 'PUBLISHED';  // Article
-        $bind[] = 'PUBLISHED';  // Issue
-        $bind[] = 'ACTIVE';     // Magazine
+        // Add the bind data, if statuses are being checked.
+        if (!empty($article_status)) $bind = array_merge($bind, $article_status);
+        if (!empty($issue_status)) $bind = array_merge($bind, $issue_status);
+        if (!empty($mag_status)) $bind = array_merge($bind, $mag_status);
     }
 
     // Extra join when fetching for series.
@@ -129,10 +161,13 @@ function mag_userapi_getauthors($args)
 
     if (!empty($where)) $sql .= ' WHERE ' . implode(' AND ', $where);
 
+    if (!empty($sorting)) $sql .= ' ORDER BY ' . $sorting;
+
     // Fetch the authors.
     $result = $dbconn->SelectLimit($sql, $numitems, $startnum - 1, $bind);
 
     $author_ids = array();
+    $articles = array();
 
     if ($result) {
         if (!empty($docount)) {
@@ -141,9 +176,15 @@ function mag_userapi_getauthors($args)
             return (integer)$count;
         } else {
             while (!$result->EOF) {
-                list($author_id) = $result->fields;
+                list($author_id, $article_id) = $result->fields;
                 $result->MoveNext();
-                $author_ids[] = $author_id;
+
+                // Store the author ID
+                if (!in_array($author_id, $author_ids)) $author_ids[] = $author_id;
+
+                // If we have an article ID, then group the author in with that.
+                if (!empty($article_id) && !isset($articles)) $articles[$article_id] = array();
+                if (!empty($article_id)) $articles[$article_id][] = $author_id;
             }
         }
     }
@@ -195,7 +236,24 @@ function mag_userapi_getauthors($args)
                     }
                 }
             }
-            $return = $authors;
+
+            // Group the authors by whatever.
+            if ($groupby == 'article') {
+                foreach($articles as $key1 => $article) {
+                    foreach($article as $key2 => $author_id) {
+                        if (isset($authors[$author_id])) {
+                            $articles[$key1][$key2] = $authors[$author_id];
+                        } else {
+                            // Uathor is missing - we found a link, but there is no author record.
+                            unset($articles[$key1][$key2]);
+                        }
+                    }
+                }
+                $return = $articles;
+            } else {
+                // Default grouping is just by author: just return the list of authors.
+                $return = $authors;
+            }
         }
     }
 

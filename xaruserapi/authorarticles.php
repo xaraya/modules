@@ -158,13 +158,13 @@ function mag_userapi_authorarticles($args)
     // article details.
     if (!empty($article_ids)) {
         // Selection criteria.
-        $return = xarModAPIfunc($module, 'user', 'getarticles', array('aids' => $article_ids, 'fields' => 'TOC'));
+        $return = xarModAPIfunc($module, 'user', 'getarticles', array('aids' => $article_ids, 'fieldset' => 'TOC'));
 /*
         $params = array (
             'module' => $module,
             'itemtype' => $itemtype_articles,
             'where' => 'aid in (' . implode(',', $article_ids) . ')',
-            'fields' => 'TOC', // Get minimal fields for speed
+            'fieldset' => 'TOC', // Get minimal fields for speed
         );
 
         $article_details = xarModAPIfunc('dynamicdata', 'user', 'getitems', $params);

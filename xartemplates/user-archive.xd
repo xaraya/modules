@@ -1,5 +1,8 @@
 
 <xar:style file="mag" scope="module" />
+<xar:style file="mag-custom" scope="module" />
+
+<xar:template module="mag" file="custom-navbar" />
 
 <div class="mag mag-archive">
 

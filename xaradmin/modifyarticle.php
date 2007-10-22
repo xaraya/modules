@@ -24,6 +24,9 @@ function mag_admin_modifyarticle($args)
     // An issue ID may have been passed in
     xarVarFetch('iid', 'id', $iid, 0, XARVAR_NOT_REQUIRED);
 
+    // An issue ID may have been passed in
+    xarVarFetch('mid', 'id', $mid, 0, XARVAR_NOT_REQUIRED);
+
     // Check whether we are submitting to this page.
     // Can submit with 'save' or 'save and return'.
     xarVarFetch('submit_save', 'str', $submit_save, '', XARVAR_NOT_REQUIRED);
@@ -92,39 +95,56 @@ function mag_admin_modifyarticle($args)
             array('modid' => $modid, 'itemtype' => $itemtype_articles)
         );
 
-        // Set some defaults, if passed in.
-        // Set the default issue.
-        if (!empty($iid)) $object->properties['issue_id']->setValue($iid);
+        // Cache the mid so we can use it to restrict drop-downs.
+        // (CHECKME: Possibly do the same for the issue, so images can be selected in context)
+        if (isset($mid)) xarVarSetCached($module, 'mid', $mid);
+
+        if ($action == 'display') {
+            // Set some defaults, if passed in.
+            // Set the default issue, if we have selected one.
+            if (!empty($iid)) $object->properties['issue_id']->setValue($iid);
+
+            // Set today's date as the default publication date.
+            $pubdate = $object->properties['pubdate']->getValue();
+            if (empty($pubdate)) $object->properties['pubdate']->setValue(time());
+        }
     }
 
     if ($action == 'save' || $action == 'return') {
-        // We would like to save.
-        if ($aid == 0) {
-            // Creating a new article.
-            // TODO
+        // Read input and check all is okay.
+        // TODO: pass in various arguments so this GUI function can double as an API.
+        $isvalid = $object->checkInput();
+
+        // The article issue may have been changed.
+        // Get the issue ID to ensure we return to the right place.
+        $iid = $object->properties['issue_id']->getValue();
+
+        // TODO: get the issue ID, and the mag ID, and ensure we have privileges to write these changes.
+        // ...
+
+        // TODO: set some overrides, such as the 'ref' being a transform of the 'title'.
+        $article_ref = $object->properties['ref']->getValue();
+
+        if (empty($article_ref)) {
+            $article_ref = str_replace(' ', '_', strtolower(trim($object->properties['title']->getValue())));
+            $object->properties['ref']->setValue($article_ref);
+        }
+
+        if (!$isvalid) {
+            $message = xarML('Error in form data - please check and try again');
+            $action = 'display';
         } else {
-            // Modifying an existing article.
+            // We would like to save.
+            if ($aid == 0) {
+                // Creating a new article.
 
-            // Read input and check all is okay.
-            // TODO: pass in various arguments so this doubles as an API.
-            $isvalid = $object->checkInput();
-
-            if ($isvalid) {
-                // The article issue may have been changed.
-                // Get the issue ID to ensure we return to the right place.
-                $iid = $object->properties['issue_id']->getValue();
-
-                // TODO: get the issue ID, and the mag ID, and ensure we have privileges to write these changes.
-                // ...
-
-                // TODO: set some overrides, such as the 'ref' being a transform of the 'title'.
-                // ...
+                // Update the existing item
+                $id = $object->createItem();
+            } else {
+                // Modifying an existing article.
 
                 // Update the existing item
                 $id = $object->updateItem();
-            } else {
-                $message = xarML('Error in form data - please check and try again');
-                $action = 'display';
             }
         }
     }

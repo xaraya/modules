@@ -18,7 +18,7 @@ function mag_user_article($args)
     // Get module parameters
     extract(xarModAPIfunc('mag', 'user', 'params',
         array(
-            'knames' => 'module,default_numitems_mags,max_numitems_mags,image_article_main_vpath'
+            'knames' => 'module,default_numitems_mags,max_numitems_mags,image_article_main_vpath,premium_policy_bypass_ip'
         )
     ));
 
@@ -152,6 +152,25 @@ function mag_user_article($args)
                     array('mid' => $mid, 'iid' => $issue['iid'], 'aid' => $article['aid'])
                 );
 
+                // Get the table of contents, for use as a navigation tool.
+                // TODO: This information would be very useful to the navigation blocks, so cache it.
+                $toc = xarModAPIfunc($module, 'user', 'gettoc', array('mag' => $mag, 'issue' => $issue));
+
+                // Do a bit of organisation in the TOC.
+                // First find out where we are in the linear list of articles.
+                // The position will be zero-indexed.
+                $article_ids = array_keys($toc['articles']);
+                $article_position = array_search($article['aid'], $article_ids);
+                $toc['article_ids'] = $article_ids;
+                $toc['article_position'] = $article_position;
+
+                // Get the IDs of previous and next articles.
+                $toc['prev_aid'] = (isset($article_ids[$article_position-1]) ? $article_ids[$article_position-1] : 0);
+                $toc['next_aid'] = (isset($article_ids[$article_position+1]) ? $article_ids[$article_position+1] : 0);
+
+                // Send the toc to the template, with all its extra bits.
+                $return['toc'] = $toc;
+
                 $return['issue'] = $issue;
                 $return['article'] = $article;
                 $return['authors'] = $authors;
@@ -172,10 +191,12 @@ function mag_user_article($args)
             $style = $article['style'];
         } elseif (!empty($series) && !empty($series['style'])) {
             $style = $series['style'];
+        } else {
+            $style = 'default';
         }
 
         // We will try the user-article[-mag_ref] template first, and from there
-        // call up sub-templates using the style attribute.
+        // call up sub-templates using the style attribute, e.g. article-body[-style].
         $return['style'] = $style;
     }
 
@@ -185,8 +206,30 @@ function mag_user_article($args)
     if (!empty($mag['ref']) && !empty($style)) {
         // Equivalent to the following, but still allows us to return an array:
         // return xarTplModule($module, 'user', 'article', $return, $mag['ref']);
+        // Returning an array is important as it allows us to use this GUI
+        // function as an API.
         $return['_bl_template'] = $mag['ref'];
     }
+
+    // Flag where the request has come from: the localhost or not.
+    // This allows certain requests to bypass any premium-related
+    // restrictions, e.g. a local spidering search engine.
+    // It does not bypass security restrictions though, only the
+    // premium policy.
+
+    if (!empty($premium_policy_bypass_ip) && !empty($GLOBALS['HTTP_SERVER_VARS']['SERVER_ADDR']) && !empty($GLOBALS['HTTP_SERVER_VARS']['REMOTE_ADDR'])) {
+        $ips = explode(',', str_replace('localhost', $GLOBALS['HTTP_SERVER_VARS']['SERVER_ADDR'], $premium_policy_bypass_ip));
+        if (in_array($GLOBALS['HTTP_SERVER_VARS']['REMOTE_ADDR'], $ips)) {
+            $premium_bypass = true;
+        } else {
+            $premium_bypass = false;
+        }
+    } else {
+        $premium_bypass = false;
+    }
+
+    // Pass the boolean into the templates for processing.
+    $return['premium_bypass'] = $premium_bypass;
 
     return $return;
 }

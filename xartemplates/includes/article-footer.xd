@@ -5,7 +5,7 @@
         <xar:if condition="!empty($article.refs)">
             <xar:comment>TODO: force this to HTML</xar:comment>
             <div class="mag-article-refs">
-                <h4><xar:mlstring>References:</xar:mlstring></h4>
+                <h2><xar:mlstring>References:</xar:mlstring></h2>
                 #$article.refs#
             </div>
         </xar:if>

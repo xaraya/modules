@@ -7,6 +7,7 @@
  * @param sids array Array of series IDs
  * @param ref string Series reference
  * @param mid integer Magazine ID
+ * @param style_isset boolean If set, then only return series with a style set
  *
  */
 
@@ -17,7 +18,7 @@ function mag_userapi_getseries($args)
     // Get module parameters
     extract(xarModAPIfunc('mag', 'user', 'params',
         array(
-            'knames' => 'module,modid,itemtype_series,sort_default_articles'
+            'knames' => 'module,modid,itemtype_series,sort_default_series'
         )
     ));
 
@@ -59,6 +60,11 @@ function mag_userapi_getseries($args)
     // Series reference
     if (!empty($ref) && is_string($ref)) {
         $where[] = 'ref eq ' . $dbconn->qstr($ref);
+    }
+
+    // Styles are set (boolean)
+    if (!empty($style_isset)) {
+        $where[] = "style is not null and style ne ''";
     }
 
     if (!empty($where)) $params['where'] = implode(' AND ', $where);

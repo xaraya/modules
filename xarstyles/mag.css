@@ -150,7 +150,7 @@ div.mag-article div.mag-article-header {
     margin: 1em 0;
 }
 
-div.mag-article p.mag-header-publishing {
+div.mag-article p.mag-publishing {
     padding: 0.25em;
     margin: 1em 0;
     border: solid #dddddd;
@@ -187,16 +187,26 @@ div.mag-article div.mag-article-authors {
 div.mag-article div.mag-article-author {
     float: left;
     width: 240px;
-    font-size: 14px;
     line-height: 100%;
     padding-right: 0.25em;
     margin: 0.25em;
     border-right: 1px solid #aaaaaa;
 }
+div.mag-article div.mag-article-authors h3 {
+    margin: 0 0 0.3em 0;
+    padding: 0;
+    font-size: 100%;
+}
 div.mag-article div.mag-article-author img {
     float: left;
     margin-right: 0.5em;
     border: 1px solid #666666;
+}
+div.mag-article div.mag-article-authors a {
+    font-size: 100%;
+    line-height: 130%;
+    font-weight: normal;
+    color: #333333;
 }
 
 

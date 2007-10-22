@@ -10,7 +10,7 @@ function mag_listapi_magissues($args)
 {
     extract($args);
 
-    xarVarFetch('mid', 'id', $mid, 0, XARVAR_NOT_REQUIRED);
+    if (!xarVarValidate('id', $mid, true)) $mid = 0;
 
     // Try fetching from the page cache.
     if (empty($mid) && xarVarIsCached('mag', 'mid')) {

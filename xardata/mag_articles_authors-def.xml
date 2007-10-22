@@ -21,22 +21,22 @@
     <property name="article_id">
       <id>199</id>
       <label>Article</label>
-      <type>integerbox</type>
+      <type>dropdown</type>
       <default>0</default>
       <source>xar_mag_articles_authors.article_id</source>
       <status>1</status>
       <order>2</order>
-      <validation></validation>
+      <validation>xarModAPIfunc('mag','list','issuearticles')</validation>
     </property>
     <property name="author_id">
       <id>200</id>
       <label>Author</label>
-      <type>integerbox</type>
+      <type>dropdown</type>
       <default>0</default>
       <source>xar_mag_articles_authors.author_id</source>
       <status>1</status>
       <order>3</order>
-      <validation></validation>
+      <validation>xarModAPIfunc('mag','list','allauthors')</validation>
     </property>
     <property name="role">
       <id>201</id>
@@ -51,7 +51,7 @@
     <property name="notes">
       <id>202</id>
       <label>Notes</label>
-      <type>xartinymce</type>
+      <type>textarea_large</type>
       <default></default>
       <source>xar_mag_articles_authors.notes</source>
       <status>1</status>

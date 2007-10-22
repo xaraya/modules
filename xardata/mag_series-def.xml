@@ -88,5 +88,15 @@
       <order>8</order>
       <validation>ACTIVE;INACTIVE;DRAFT</validation>
     </property>
+    <property name="style">
+      <id>215</id>
+      <label>style</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_mag_series.style</source>
+      <status>1</status>
+      <order>9</order>
+      <validation>0:20:/^[a-zA-Z0-9]*$/</validation>
+    </property>
   </properties>
 </object>

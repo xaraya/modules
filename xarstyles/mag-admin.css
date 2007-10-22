@@ -1,7 +1,11 @@
 
-/* ... */
+/* Reduce the sizes of images to fit into the tables */
 
 div.mag-issues img.mag-cover-img-icon {
+    height: 2em;
+}
+
+div.mag-mags-list img.mag-logo-icon {
     height: 2em;
 }
 

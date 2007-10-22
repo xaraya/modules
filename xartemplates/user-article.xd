@@ -1,5 +1,6 @@
 
 <xar:style file="mag" scope="module" />
+<xar:style file="mag-custom" scope="module" />
 
 <xar:comment>
     Wrap the whole article in a class based on the style name.
@@ -8,11 +9,7 @@
     colours, fonts, borders etc.
 </xar:comment>
 
-<xar:if condition="!empty($style)">
-    <xar:set name="style_class_suffix">#$style#</xar:set>
-<xar:else />
-    <xar:set name="style_class_suffix">'DEFAULT'</xar:set>
-</xar:if>
+<xar:set name="style_class_suffix">#$style#</xar:set>
 
 <div class="mag mag-article">
 <div class="mag-article-style-#$style_class_suffix#">
@@ -32,19 +29,39 @@
             <xar:comment>TODO: call up alternative templates for different styles, where the templates exist</xar:comment>
 
             <xar:comment>Article header section - title, publication details, orientation</xar:comment>
-            <xar:template module="mag" file="article-header" />
+            <xar:if condition="!empty($style) and xarModAPIfunc('mag','user','testtemplate',array('templateName'=&gt;'article-header','templateSuffix'=&gt;$style))">
+                <xar:template module="mag" file="article-header-$style" />
+            <xar:else />
+                <xar:template module="mag" file="article-header" />
+            </xar:if>
 
             <xar:comment>Introduction section - image, summary</xar:comment>
-            <xar:template module="mag" file="article-intro" />
+            <xar:if condition="!empty($style) and xarModAPIfunc('mag','user','testtemplate',array('templateName'=&gt;'article-intro','templateSuffix'=&gt;$style))">
+                <xar:template module="mag" file="article-intro-$style" />
+            <xar:else />
+                <xar:template module="mag" file="article-intro" />
+            </xar:if>
 
             <xar:comment>Body section - main body</xar:comment>
-            <xar:template module="mag" file="article-body" />
+            <xar:if condition="!empty($style) and xarModAPIfunc('mag','user','testtemplate',array('templateName'=&gt;'article-body','templateSuffix'=&gt;$style))">
+                <xar:template module="mag" file="article-body-$style" />
+            <xar:else />
+                <xar:template module="mag" file="article-body" />
+            </xar:if>
 
             <xar:comment>Footer section - references, footer notes</xar:comment>
-            <xar:template module="mag" file="article-footer" />
+            <xar:if condition="!empty($style) and xarModAPIfunc('mag','user','testtemplate',array('templateName'=&gt;'article-footer','templateSuffix'=&gt;$style))">
+                <xar:template module="mag" file="article-footer-$style" />
+            <xar:else />
+                <xar:template module="mag" file="article-footer" />
+            </xar:if>
 
             <xar:comment>Authors section - mini-biographies of authors for this article</xar:comment>
-            <xar:template module="mag" file="article-authors" />
+            <xar:if condition="!empty($style) and xarModAPIfunc('mag','user','testtemplate',array('templateName'=&gt;'article-authors','templateSuffix'=&gt;$style))">
+                <xar:template module="mag" file="article-authors-$style" />
+            <xar:else />
+                <xar:template module="mag" file="article-authors" />
+            </xar:if>
         </xar:if>
     </xar:if>
 

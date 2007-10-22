@@ -51,7 +51,7 @@ function mag_userapi_gettoc($args)
         'status' => $article_status,
         'mid' => $mag['mid'],
         'iid' => $issue['iid'],
-        'fields' => 'TOC',
+        'fieldset' => 'TOC',
         'sort' => 'page ASC', //$sort_default_articles_toc,
     );
 

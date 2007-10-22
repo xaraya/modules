@@ -120,7 +120,7 @@ function mag_userapi_params($args)
         $params['pager_template_name'] = 'default';
 
         // Lists of restricted fields when selecting articles, to help performance.
-        $params['article_fieldlist_toc'] = array('aid','issue_id','series_id','title','subtitle','status','ref','page','premium','image1','pubdate');
+        $params['article_fieldset_toc'] = array('aid','issue_id','series_id','title','subtitle','status','ref','page','premium','image1','pubdate');
 
         // Article display template search path.
         // Change the order as required.
@@ -130,7 +130,13 @@ function mag_userapi_params($args)
             . '{module_templates}/user-article-{style}.xd;{theme_templates}/user-article.xt;{module_templates}/user-article.xd';
         $params['article_template_extra'] = '{style}-{mag_ref};{style};;';
 
-        
+        // List of IP addresses that bypass any premium restrictions.
+        // Used mainly for administration and for allowing search spiders
+        // to scan the full details of the articles.
+        $params['premium_policy_bypass_ip'] = 'localhost,192.168.1.1';
+
+        // 
+        //,Default (inherit from series);editorial,Editorial;BOOKS,Book Review;BRIEF,In Brief;fmember,Featured Member
         
         //
         // Parameters below here not yet used

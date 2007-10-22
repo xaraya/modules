@@ -5,7 +5,7 @@
  * This page provides an overall view of the complete module, with links
  * out to the individual administration pages where relevant.
  *
- * @param
+ * @param 
  *
  */
 
@@ -87,7 +87,22 @@ function mag_admin_view($args)
                     $return['issue_ref'] = $issue_ref;
 
                     // Get the articles for this issue.
-                    $articles = xarModAPIfunc($module, 'user', 'getarticles', array('mid' => $mid, 'iid' => $iid, 'fields' => 'TOC'));
+                    $articles = xarModAPIfunc($module, 'user', 'getarticles', array('mid' => $mid, 'iid' => $iid, 'fieldset' => 'TOC'));
+
+                    // Get the authors for each article.
+                    // Get all the issue authors in one go, grouped by article.
+                    // (we want to be nice and efficient here:-)
+                    $issue_authors = xarModAPIfunc(
+                        $module, 'user', 'getauthors',
+                        array('iid' => $iid, 'status_group' => 'DRAFT', 'groupby' => 'article')
+                    );
+
+                    foreach($articles as $key => $article) {
+                        if (isset($issue_authors[$article['aid']])) {
+                            $articles[$key]['authors'] = $issue_authors[$article['aid']];
+                        }
+                    }
+
                     $return['articles'] = $articles;
                 } else {
                     // Multiple issues - show a list

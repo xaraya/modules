@@ -61,7 +61,7 @@
     <property name="summary">
       <id>178</id>
       <label>Summary</label>
-      <type>textarea_medium</type>
+      <type>xartinymce</type>
       <default></default>
       <source>xar_mag_articles.summary</source>
       <status>1</status>
@@ -111,7 +111,7 @@
     <property name="refs">
       <id>183</id>
       <label>References</label>
-      <type>textarea_medium</type>
+      <type>xartinymce</type>
       <default></default>
       <source>xar_mag_articles.refs</source>
       <status>1</status>
@@ -152,11 +152,11 @@
       <id>187</id>
       <label>Style</label>
       <type>dropdown</type>
-      <default>DEFAULT</default>
+      <default></default>
       <source>xar_mag_articles.style</source>
       <status>1</status>
       <order>15</order>
-      <validation>DEFAULT,Default (inherit from series);EDITORIAL,Editorial;BOOKS,Book Review;BRIEF,In Brief;FMEMBER,Featured Member</validation>
+      <validation>xarModAPIfunc('mag','list','magstyles')</validation>
     </property>
     <property name="image1">
       <id>188</id>
@@ -176,7 +176,7 @@
       <source>xar_mag_articles.ref</source>
       <status>1</status>
       <order>17</order>
-      <validation>0:255</validation>
+      <validation></validation>
     </property>
     <property name="image1_alt">
       <id>214</id>

@@ -26,6 +26,7 @@ CREATE TABLE `xar_mag_issues` (
   `cover_img` varchar(255) default NULL,
   `abstract` text,
   `premium` varchar(30) NOT NULL default '',
+  `style` varchar(30) NOT NULL default '',
   PRIMARY KEY  (`iid`),
   KEY `mag_id` (`mag_id`),
   KEY `ref` (`ref`)

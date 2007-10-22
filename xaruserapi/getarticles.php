@@ -21,7 +21,7 @@ function mag_userapi_getarticles($args)
     // Get module parameters
     extract(xarModAPIfunc('mag', 'user', 'params',
         array(
-            'knames' => 'module,modid,itemtype_articles,base_image_vpath,article_fieldlist_toc,sort_default_articles,image_article_main_vpath'
+            'knames' => 'module,modid,itemtype_articles,base_image_vpath,article_fieldset_toc,sort_default_articles,image_article_main_vpath'
         )
     ));
 
@@ -37,8 +37,8 @@ function mag_userapi_getarticles($args)
         'sort' => $sort,
     );
 
-    if (!empty($fields)) {
-        if ($fields == 'TOC') $params['fieldlist'] = $article_fieldlist_toc;
+    if (!empty($fieldset)) {
+        if ($fieldset == 'TOC') $params['fieldlist'] = $article_fieldset_toc;
     }
 
     $where = array();
