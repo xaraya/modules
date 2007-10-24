@@ -13,7 +13,7 @@
     </xar:if>
     <input type="submit" id="multiform_submit_next" name="multiform_submit_next" value="#xarVarPrepForDisplay($multiform.submit_labels.next)#" />
     <span style="margin-left: 5em;">
-        <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$current_page.pid,'multiform_cancel'=&gt;'true'))#" onClick="return xar_base_confirmLink(this, '#xarML('Cancel the form completely?')#')">
+        <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$current_page.pid,'multiform_cancel'=&gt;'true'))#" onclick="return xar_base_confirmLink(this, '#xarML('Cancel the form completely?')#')">
             <xar:mlstring>Cancel</xar:mlstring>
         </a>
     </span>
