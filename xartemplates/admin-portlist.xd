@@ -36,7 +36,7 @@
   </table>
   <p>
     <form>
-      <input type="button" value="Close Window" onClick="javascript:window.close();"/>
+      <input type="button" value="Close Window" onclick="javascript:window.close();"/>
     </form>
   </p>
 </div>
