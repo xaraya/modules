@@ -6,7 +6,7 @@
             <input type="hidden" name="mid" id="mid" value="#$mid#" />
             <input type="hidden" name="action" id="action" value="confirmed" />
             <input type="submit" name="confirmed" id="delete" value="#xarML('Delete')#" />
-            <input type="button" value="#xarML('Cancel')#" onClick="javascript:history.go(-1);" />
+            <input type="button" value="#xarML('Cancel')#" onclick="javascript:history.go(-1);" />
         </form>
     </div>
     <br />
