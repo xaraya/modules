@@ -36,7 +36,7 @@
             </tr>
             <tr>
                 <td style="padding: 5px;">
-                    <select name="statusfilter" onChange="javascript:document.options.submit();" class="xar-form-textshort">
+                    <select name="statusfilter" onchange="javascript:document.options.submit();" class="xar-form-textshort">
                     <option value="-1"></option>
                     <xar:loop name="$status">
                         <xar:if condition="$statusfilter eq $loop:item['id']">
@@ -48,7 +48,7 @@
                     </select>
                 </td>
                 <td>
-                    <select name="order" onChange="javascript:document.options.submit();" class="xar-form-textmedium">
+                    <select name="order" onchange="javascript:document.options.submit();" class="xar-form-textmedium">
                     <xar:if condition="$order eq 'ASC'">
                     <option value="ASC" selected="selected"><xar:mlstring>Ascending</xar:mlstring></option>
                     <option value="DESC"><xar:mlstring>Descending</xar:mlstring></option>
@@ -58,7 +58,7 @@
                     </xar:if>
                 </td>
                 <td>
-                    <select name="selection" onChange="javascript:document.options.submit();" class="xar-form-textmedium">
+                    <select name="selection" onchange="javascript:document.options.submit();" class="xar-form-textmedium">
 
                     <xar:if condition="!empty($selection)">
                     <option value="#$selection#">#$selections[$selection]#</option>
@@ -80,7 +80,7 @@
                 </td>
                 <xar:if condition="!empty($companies)">
                 <td>
-                	<select name="company" onChange="javascript:document.options.submit();" class="xar-form-textmedium">
+                	<select name="company" onchange="javascript:document.options.submit();" class="xar-form-textmedium">
                     <option value="-1"></option>
                 	<xar:foreach in="$companies" key="$key" value="$value">
                 	   <xar:if condition="$value.uid eq $company">
