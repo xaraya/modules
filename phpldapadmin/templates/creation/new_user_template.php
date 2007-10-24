@@ -106,18 +106,18 @@ function autoFillHomeDir( form )
 <tr>
     <td><img src="images/uid.png" /></td>
     <td class="heading">First name:</td>
-    <td><input type="text" name="first_name" id="first_name" value=""  onChange="autoFillUserName(this.form)" /></td>
+    <td><input type="text" name="first_name" id="first_name" value=""  onchange="autoFillUserName(this.form)" /></td>
 </tr>
 <tr>
     <td></td>
     <td class="heading">Last name:</td>
-    <td><input type="text" name="last_name" id="last_name" value="" onChange="autoFillUserName(this.form)" /></td>
+    <td><input type="text" name="last_name" id="last_name" value="" onchange="autoFillUserName(this.form)" /></td>
 </tr>
 <tr>
     <td></td>
     <td class="heading">User name:</td>
     <td><input type="text" name="user_name" id="user_name" value=""
-        onChange="autoFillHomeDir(this.form)" onExit="autoFillHomeDir(this.form)" /></td>
+        onchange="autoFillHomeDir(this.form)" onExit="autoFillHomeDir(this.form)" /></td>
 </tr>
 <tr class="spacer"><td colspan="3"></tr>
 <tr>

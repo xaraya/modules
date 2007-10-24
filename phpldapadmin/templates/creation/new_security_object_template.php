@@ -79,7 +79,7 @@ function autoFillHomeDir( form )
     <td><img src="images/uid.png" /></td>
     <td class="heading">User name:</td>
     <td><input type="text" name="user_name" id="user_name" value=""
-        onChange="autoFillHomeDir(this.form)" onExit="autoFillHomeDir(this.form)" /></td>
+        onchange="autoFillHomeDir(this.form)" onExit="autoFillHomeDir(this.form)" /></td>
 </tr>
 <tr class="spacer"><td colspan="3"></tr>
 <tr>

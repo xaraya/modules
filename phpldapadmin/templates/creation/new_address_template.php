@@ -64,9 +64,9 @@ function autoFillCommonName( form )
     <td class="heading">Name:</td>
     <td>
         <input type="text" name="first_name" 
-            id="first_name" value="first" onChange="autoFillCommonName(this.form)" />
+            id="first_name" value="first" onchange="autoFillCommonName(this.form)" />
         <input type="text" name="last_name" 
-            id="last_name" value="last" onChange="autoFillCommonName(this.form)" />
+            id="last_name" value="last" onchange="autoFillCommonName(this.form)" />
     </td>
 </tr>
 <tr>

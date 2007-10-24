@@ -124,7 +124,7 @@ if( $view == 'syntaxes' ) {
     <small><?php echo $lang['jump_to_attr']; ?>:</small>
     <form><input type="hidden" name="view" value="<?php echo $view; ?>">
         <input type="hidden" name="server_id" value="<?php echo $server_id; ?>">                        <select name="viewvalue"
-    onChange="submit()">
+    onchange="submit()">
     <option value=""> - all -</option>
 
     <?php foreach( $schema_attrs as $attr ) { ?>
@@ -291,7 +291,7 @@ if( $view == 'syntaxes' ) {
     <form><input type="hidden" name="view" value="<?php echo $view; ?>">
         <input type="hidden" name="server_id" value="<?php echo $server_id; ?>">
     <select name="viewvalue"
-    onChange="submit()">
+    onchange="submit()">
         <option value=""> - all - </option>
     <?php foreach( $schema_oclasses as $name => $oclass ) { ?>
         <option value="<?php echo $oclass->getName();  ?>"><?php echo $oclass->getName(); ?></option>

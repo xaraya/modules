@@ -69,7 +69,7 @@ function autoFillSambaRID( form )
 <tr>
     <td></td>
     <td class="heading">Samba Group Name:</td>
-    <td><input type="text" name="samba_group_name" value="" onChange="autoFillDisplayName(this.form)"/> <small>(example: admins, do not include "cn=")</small></td>
+    <td><input type="text" name="samba_group_name" value="" onchange="autoFillDisplayName(this.form)"/> <small>(example: admins, do not include "cn=")</small></td>
 </tr>
 <tr>
     <td></td>
@@ -79,7 +79,7 @@ function autoFillSambaRID( form )
 <tr>
     <td></td>
     <td class="heading"><acronym title="Group Identification">GID</acronym> Number:</td>
-    <td><input type="text" name="gid_number" value="" onChange="autoFillSambaRID(this.form)" /> <small>(example: 2000)</small></td>
+    <td><input type="text" name="gid_number" value="" onchange="autoFillSambaRID(this.form)" /> <small>(example: 2000)</small></td>
 </tr>
 <tr>
     <td></td>

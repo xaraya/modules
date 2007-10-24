@@ -26,7 +26,7 @@ else {
 $js_on_change_string ='';
 if( isset( $_GET['form'] ) && $_GET['form'] == 'advanced' ) 
     $js_on_change_string = 
-        'onChange="document.forms[0].base_dn.value=servers[document.forms[0].server_id.value].getBaseDn()"';
+        'onchange="document.forms[0].base_dn.value=servers[document.forms[0].server_id.value].getBaseDn()"';
 
 // build the server drop-down html and JavaScript array (for base_dns)
 $server_menu_html = '<select name="server_id" '.$js_on_change_string.'>';

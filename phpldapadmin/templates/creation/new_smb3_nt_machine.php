@@ -61,7 +61,7 @@ if( get_schema_objectclass( $server_id, 'sambaSamAccount' ) == null )
 <tr>
     <td></td>
     <td class="heading">UID Number:</td>
-    <td><input type="text" name="uid_number" value="" onChange="autoFillSambaRID(this.form);" /></td>
+    <td><input type="text" name="uid_number" value="" onchange="autoFillSambaRID(this.form);" /></td>
 </tr>
 <tr>
     <td></td>
