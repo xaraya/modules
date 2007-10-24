@@ -30,7 +30,7 @@
 				<label for="pubtypeid" title="#xarML('choose option')#" class="xar-form-label">
 					<xar:mlstring>Publication Type</xar:mlstring>
 				</label>
-				<select name="pubtypeid" id="pubtypeid" onChange="this.form.submit();">
+				<select name="pubtypeid" id="pubtypeid" onchange="this.form.submit();">
 					<option value="0"><xar:mlstring>All</xar:mlstring></option>
 					<xar:foreach in="$pubtypes" key="$pubid" value="$pubtype">
 						<xar:if condition="!empty($pubtypeid) and $pubtypeid eq $pubid">
@@ -45,7 +45,7 @@
 				<label for="catfilter" title="#xarML('choose option')#" class="xar-form-label">
 					<xar:mlstring>Category</xar:mlstring>
 				</label>
-				<select name="catfilter" id="catfilter" onChange="this.form.submit();">
+				<select name="catfilter" id="catfilter" onchange="this.form.submit();">
 					<option value="0"><xar:mlstring>All</xar:mlstring></option>
 					<xar:foreach in="$categorylist" value="$catlistx">
 						<xar:if condition="!empty($catfilter) and $catfilter eq $catlistx['cid']">
@@ -60,7 +60,7 @@
 				<label for="status" title="#xarML('choose option')#" class="xar-form-label">
 					<xar:mlstring>Status</xar:mlstring>
 				</label>
-				<select name="status" id="status" size="1" onChange="this.form.submit();">
+				<select name="status" id="status" size="1" onchange="this.form.submit();">
 					<xar:foreach in="$statusoptions" value="$statusoption">
 						<xar:if condition="!empty($status) and $status eq $statusoption['id']">
 							<option value="#$statusoption['id']#" selected="selected">#$statusoption['name']#</option>
@@ -91,14 +91,14 @@
 		</fieldset>
 	</xar:if>
 	<div class="xar-form-input-wrapper-after">
-		<!-- <a HREF="javascript:void(0);" onClick="window.opener.location.href = '#xarModURL('newsletter', 'admin', 'newstory')#'+ '&amp;articleid='+document.chooseArticleForm.articleid.value;self.close();">test</A> -->
+		<!-- <a HREF="javascript:void(0);" onclick="window.opener.location.href = '#xarModURL('newsletter', 'admin', 'newstory')#'+ '&amp;articleid='+document.chooseArticleForm.articleid.value;self.close();">test</A> -->
 		<xar:if condition="!empty($notNew)">
-			<a href="javascript:void(0);" onClick="window.opener.location.href = '#xarModURL('newsletter', 'admin', 'modifystory')#'+'&amp;id=#$id#&amp;articleid='+document.chooseArticleForm.articleid.value;self.close();">Use Selected</a>
+			<a href="javascript:void(0);" onclick="window.opener.location.href = '#xarModURL('newsletter', 'admin', 'modifystory')#'+'&amp;id=#$id#&amp;articleid='+document.chooseArticleForm.articleid.value;self.close();">Use Selected</a>
 		<xar:else/>
-			<a href="javascript:void(0);" onClick="window.opener.location.href = '#xarModURL('newsletter', 'admin', 'newstory')#'+'&amp;publicationId=#$publicationId#&amp;issueId=#$issueId#&amp;articleid='+document.chooseArticleForm.articleid.value;self.close();">Use Selected</a>
+			<a href="javascript:void(0);" onclick="window.opener.location.href = '#xarModURL('newsletter', 'admin', 'newstory')#'+'&amp;publicationId=#$publicationId#&amp;issueId=#$issueId#&amp;articleid='+document.chooseArticleForm.articleid.value;self.close();">Use Selected</a>
 		</xar:if>
 		- 
-		<a HREF="javascript:void(0);" onClick="self.close();">Cancel</a>
+		<a HREF="javascript:void(0);" onclick="self.close();">Cancel</a>
 	</div>
 	</form>       
 </div>

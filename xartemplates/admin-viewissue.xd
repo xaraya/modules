@@ -22,7 +22,7 @@
             </tr>
             <tr>
                 <td class="xar-valign-middle">
-                    <select name="owner" onChange="this.form.submit();" tabindex="1">
+                    <select name="owner" onchange="this.form.submit();" tabindex="1">
                         <xar:if condition="$owner eq 0">
                             <option value="0" selected="selected">All Issues</option>
                         <xar:else />
@@ -36,7 +36,7 @@
                     </select>
                 </td>
                 <td class="xar-valign-middle">
-                    <select name="sortby" onChange="this.form.submit();" tabindex="2">
+                    <select name="sortby" onchange="this.form.submit();" tabindex="2">
                         <xar:if condition="$sortby eq 'date'">
                             <option value="datePublished" selected="selected">Date Published</option>
                         <xar:else />

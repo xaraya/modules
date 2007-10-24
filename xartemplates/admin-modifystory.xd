@@ -25,7 +25,7 @@ window.open(urlGoto,windowName,'width='+widthPassed+',height='+heightPassed+',re
                 <label for="publicationId" class="xar-form-label" title="#xarML('Choose the publication.')#">
                     <xar:mlstring>Change publication:</xar:mlstring>
                 </label>
-                <select id="publicationId" name="publicationId" onChange="if(this.options[this.selectedIndex].value != 0) this.form.submit();" tabindex="1">
+                <select id="publicationId" name="publicationId" onchange="if(this.options[this.selectedIndex].value != 0) this.form.submit();" tabindex="1">
                     <option value="0">Choose Publication</option>
                     <xar:loop name="$story['publications']">
                         <xar:if condition="$story['publicationId'] eq $loop:item['id']">

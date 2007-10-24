@@ -26,7 +26,7 @@ window.location.href = redirect;
             <label for="publication" title="#xarML('Publication')#" class="xar-form-label">
                 <xar:mlstring>Publication:</xar:mlstring>
             </label>
-            <select id="publication" name="publication" onChange="if(this.options[this.selectedIndex].value != 0) this.form.submit();" tabindex="1">
+            <select id="publication" name="publication" onchange="if(this.options[this.selectedIndex].value != 0) this.form.submit();" tabindex="1">
                 <option value="0">Choose Publication</option>
                 <xar:loop name="$issue['publications']">
                     <xar:if condition="$publication eq $loop:item['id']">

@@ -17,7 +17,7 @@
       <label for="publicationId" title="#xarML('Publication')#" class="xar-form-label">
             <xar:mlstring>Select Publication:</xar:mlstring>
       </label>    
-           <select name="publicationId" onChange="this.form.submit();" tabindex="1">
+           <select name="publicationId" onchange="this.form.submit();" tabindex="1">
               <option value="0">All Publications</option>
               <xar:loop name="$publications">
                 <xar:if condition="$loop:item['private'] != 1">
