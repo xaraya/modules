@@ -109,7 +109,7 @@
                 <xar:if condition="empty($item['deleteurl'])">
                     <xar:mlstring>Delete</xar:mlstring>
                 <xar:else />
-                    <a href="#$item['deleteurl']#" onClick="return xar_base_confirmLink(this, '#xarML('Delete autolink').' '.xarVarPrepfordisplay($item['name'])#?')"><xar:mlstring>Delete</xar:mlstring></a>
+                    <a href="#$item['deleteurl']#" onclick="return xar_base_confirmLink(this, '#xarML('Delete autolink').' '.xarVarPrepfordisplay($item['name'])#?')"><xar:mlstring>Delete</xar:mlstring></a>
                 </xar:if>
             </td>
         </tr>
