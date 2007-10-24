@@ -108,7 +108,7 @@
       <label for="trigger"><xar:mlstring>Type</xar:mlstring></label>
     </td>
     <td align="left">
-      <select name="trigger" id="trigger" onChange="submit();">
+      <select name="trigger" id="trigger" onchange="submit();">
       <xar:if condition="$trigger eq 'disabled'">
         <option value="disabled" selected="selected"><xar:mlstring>Disabled</xar:mlstring></option>
       <xar:else/>
