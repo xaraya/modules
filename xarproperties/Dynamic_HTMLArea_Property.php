@@ -58,7 +58,7 @@ class Dynamic_HTMLArea_Property extends Dynamic_Property
                    .'    document.getElementById("'.$name.'button").style.display="none"; '
                    .'}'
                    .'</script>'
-                   .'<input type="button" onClick="init'.$name.'Editor()" id="'.$name.'button" value="Use GUI Edit"/>';
+                   .'<input type="button" onclick="init'.$name.'Editor()" id="'.$name.'button" value="Use GUI Edit"/>';
 
 
         return '<textarea' .
