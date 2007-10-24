@@ -49,7 +49,7 @@
 
             <xar:if condition="!empty($issue['editurl'])">
                 <xar:if condition="$issue['published']">
-                    <a href="#$issue['editurl']#" onClick="return confirm('This issue has already been published.  Are you sure you want to edit it?');"><xar:mlstring>Edit</xar:mlstring></a>
+                    <a href="#$issue['editurl']#" onclick="return confirm('This issue has already been published.  Are you sure you want to edit it?');"><xar:mlstring>Edit</xar:mlstring></a>
                 <xar:else />
                     <a href="#$issue['editurl']#"><xar:mlstring>Edit</xar:mlstring></a>
                 </xar:if>
@@ -58,7 +58,7 @@
             &nbsp;
             <xar:if condition="!empty($issue['regenerateurl'])">
                 <xar:if condition="$issue['published']">
-                    <a href="#$issue['regenerateurl']#" onClick="return confirm('This issue has already been published.  Are you sure you want to regenerate it?');"><xar:mlstring>Regenerate</xar:mlstring></a>
+                    <a href="#$issue['regenerateurl']#" onclick="return confirm('This issue has already been published.  Are you sure you want to regenerate it?');"><xar:mlstring>Regenerate</xar:mlstring></a>
                 <xar:else />
                     <a href="#$issue['regenerateurl']#"><xar:mlstring>Regenerate</xar:mlstring></a>
                 </xar:if>
@@ -66,7 +66,7 @@
             </xar:if>
             <xar:if condition="!empty($issue['deleteurl'])">
                 <xar:if condition="$issue['published']">
-                    <a href="#$issue['deleteurl']#" onClick="return confirm('This issue has already been published.  Are you sure you want to delete it?');"><xar:mlstring>Delete</xar:mlstring></a>
+                    <a href="#$issue['deleteurl']#" onclick="return confirm('This issue has already been published.  Are you sure you want to delete it?');"><xar:mlstring>Delete</xar:mlstring></a>
                 <xar:else />
                     <a href="#$issue['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a>
                 </xar:if>
@@ -75,7 +75,7 @@
             &nbsp;
             <xar:if condition="!empty($issue['publishurl'])">
                 <xar:if condition="$issue['published']">
-                    <a href="#$issue['publishurl']#" onClick="return confirm('This issue has already been published.  Are you sure you want to publish it again?');"><xar:mlstring>Publish</xar:mlstring></a>
+                    <a href="#$issue['publishurl']#" onclick="return confirm('This issue has already been published.  Are you sure you want to publish it again?');"><xar:mlstring>Publish</xar:mlstring></a>
                 <xar:else />
                     <a href="#$issue['publishurl']#"><xar:mlstring>Publish</xar:mlstring></a>
                 </xar:if>

@@ -104,7 +104,7 @@
 
         <fieldset>
             <div class="xar-form-input-wrapper-after">
-                <input type="submit" value="#xarML('Subscribe')#" /> &nbsp; <a href="javascript:void(0);" onClick="xar_ebulletin_checkall(document.forms['ebulletin_form'])" title="#xarML('Check or Uncheck all subscribers on this page')#"><xar:mlstring>Check/Uncheck All</xar:mlstring></a>
+                <input type="submit" value="#xarML('Subscribe')#" /> &nbsp; <a href="javascript:void(0);" onclick="xar_ebulletin_checkall(document.forms['ebulletin_form'])" title="#xarML('Check or Uncheck all subscribers on this page')#"><xar:mlstring>Check/Uncheck All</xar:mlstring></a>
             </div>
         </fieldset>
 
