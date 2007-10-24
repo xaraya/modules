@@ -56,7 +56,7 @@
                         <input type="checkbox" name="fileId[]" id="fileId_#$loop:item['fileId']#" value="#$loop:item['fileId']#"/>
                     </td>
                     <td class="xar-norm" align="center">&nbsp;
-                        <a style="cursor: pointer;" onClick="PropertiesDialog('#xarModURL('uploads','user','file_properties', array('fileId' => $loop:item['fileId']))#'); return false;">
+                        <a style="cursor: pointer;" onclick="PropertiesDialog('#xarModURL('uploads','user','file_properties', array('fileId' => $loop:item['fileId']))#'); return false;">
                             #$loop:item['fileName']#
                         </a>
                     </td>
@@ -72,7 +72,7 @@
                         <input type="checkbox" name="fileId[]" id="fileId_#$loop:item['fileId']#" value="#$loop:item['fileId']#"/>
                     </td>
                     <td class="xar-accent" align="center">&nbsp;
-                        <a style="cursor: pointer;" onClick="PropertiesDialog('#xarModURL('uploads','user','file_properties', array('fileId' => $loop:item['fileId']))#'); return false;">
+                        <a style="cursor: pointer;" onclick="PropertiesDialog('#xarModURL('uploads','user','file_properties', array('fileId' => $loop:item['fileId']))#'); return false;">
                             #$loop:item['fileName']#
                         </a>
                     </td>

@@ -32,7 +32,7 @@
                             <xar:loop name="$fileList">
                                 <!-- TODO: reformulate this -->
                            <li style="list-type-style:none;">
-                            <a onClick="MyWindow=window.open('#xarModURL('uploads','user','file_properties')#&amp;fileId=#$loop:item['fileId']#',
+                            <a onclick="MyWindow=window.open('#xarModURL('uploads','user','file_properties')#&amp;fileId=#$loop:item['fileId']#',
                                                             '#$loop:item['fileName']#',
                                                             'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,width=500,height=375,left=20,top=20');
                                                             return false;">
@@ -47,7 +47,7 @@
                             <input type="hidden" name="authid" value="#$authid#" />
                             <input type="hidden" name="confirmation" value="1" />
 
-                            <input type="submit" name="submit" value="#xarML('Cancel')#" onClick="javascript:window.location='#xarModURL('uploads', 'admin', 'view')#'; return false;" />
+                            <input type="submit" name="submit" value="#xarML('Cancel')#" onclick="javascript:window.location='#xarModURL('uploads', 'admin', 'view')#'; return false;" />
                         </div>
                         </form>
             </xar:if>
