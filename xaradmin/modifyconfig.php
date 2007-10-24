@@ -55,7 +55,7 @@ function navigator_admin_modifyconfig()
                            array('values' => $selpri,
                                  'name_prefix' => 'primary_',
                                  'maximum_depth' => 2,
-                                 'javascript' => 'onChange="javascript:this.form.submit();"',
+                                 'javascript' => 'onchange="javascript:this.form.submit();"',
                                  'show_edit' => false));
 
     $data['secondarySelect'] =
@@ -63,7 +63,7 @@ function navigator_admin_modifyconfig()
                            array('values' => $selsec,
                                  'name_prefix' => 'secondary_',
                                  'maximum_depth' => 2,
-                                 'javascript' => 'onChange="javascript:this.form.submit();"',
+                                 'javascript' => 'onchange="javascript:this.form.submit();"',
                                  'show_edit' => false,
                                  'eid' => $priCid));
 
@@ -73,7 +73,7 @@ function navigator_admin_modifyconfig()
                                array('values' => $selsecdef,
                                      'name_prefix' => 'secdef_',
                                      'show_edit' => false,
-                                     'javascript' => 'onChange="javascript:this.form.submit();"',
+                                     'javascript' => 'onchange="javascript:this.form.submit();"',
                                      'cid' => $secCid));
     }
 

@@ -15,9 +15,9 @@
             <p>
                 <strong><xar:mlstring>Use Category Matrix</xar:mlstring>:</strong>&nbsp;&nbsp;
                 <xar:if condition="$matrix">
-                    <input type="checkbox" name="matrix" value="true" checked="checked" onChange="javascript:this.form.submit()"/>
+                    <input type="checkbox" name="matrix" value="true" checked="checked" onchange="javascript:this.form.submit()"/>
                 <xar:else />
-                    <input type="checkbox" name="matrix" value="true" onChange="javascript:this.form.submit()"/>
+                    <input type="checkbox" name="matrix" value="true" onchange="javascript:this.form.submit()"/>
                 </xar:if>
                 <br />
                 <xar:mlstring>
@@ -68,7 +68,7 @@
                 <label for="resetStyles">
                     <strong><xar:mlstring>Reset stored styles?</xar:mlstring>:</strong>&nbsp;&nbsp;
                     <input id="resetStyles" type="checkbox" name="resetStyles" value="true"
-                           onChange="javascript:this.form.submit()"/>
+                           onchange="javascript:this.form.submit()"/>
                 </label>
                 <br />
                 <xar:mlstring>

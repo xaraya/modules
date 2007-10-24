@@ -82,7 +82,7 @@
                                         </span>
                                     </div>
                                     <div style="margin-left: #$type['indent']#px;">
-                                        <select name="dynimages[#$typeId#][#$Id#]" onChange="javascript:navigator_image_changer('#$jsURL#', #$typeId#, '#$Id#');">
+                                        <select name="dynimages[#$typeId#][#$Id#]" onchange="javascript:navigator_image_changer('#$jsURL#', #$typeId#, '#$Id#');">
                                             <option value="0">Default</option>
                                             <xar:comment>
                                                   The Default has a type == 0 so, if we are on that one,

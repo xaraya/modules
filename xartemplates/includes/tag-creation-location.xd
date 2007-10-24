@@ -12,14 +12,14 @@
                             name="tagtype"
                             value="simple"
                             checked="checked"
-                            onChange="javascript:this.form.submit()"/>
+                            onchange="javascript:this.form.submit()"/>
                 <xar:else />
                     <label for="tagtypeSimple">Simple</label><br />
                     <input id="tagtypeSimple"
                             type="radio"
                             name="tagtype"
                             value="simple"
-                            onChange="javascript:this.form.submit()"/>
+                            onchange="javascript:this.form.submit()"/>
                 </xar:if>
             </span>
         <xar:else />
@@ -31,14 +31,14 @@
                             name="tagtype"
                             value="simple"
                             checked="checked"
-                            onChange="javascript:this.form.submit()"/>
+                            onchange="javascript:this.form.submit()"/>
                 <xar:else />
                     <label for="tagtypeSimple">Simple</label><br />
                     <input id="tagtypeSimple"
                             type="radio"
                             name="tagtype"
                             value="simple"
-                            onChange="javascript:this.form.submit()"/>
+                            onchange="javascript:this.form.submit()"/>
                 </xar:if>
             </span>
             <span style="width: 75px; display: block; float: left;">
@@ -49,14 +49,14 @@
                             name="tagtype"
                             value="crumbtrail"
                             checked="checked"
-                            onChange="javascript:this.form.submit()"/>
+                            onchange="javascript:this.form.submit()"/>
                 <xar:else />
                     <label for="tagtypeCrumbtrail">Crumbtrail</label><br />
                     <input id="tagtypeCrumbtrail"
                             type="radio"
                             name="tagtype"
                             value="crumbtrail"
-                            onChange="javascript:this.form.submit()"/>
+                            onchange="javascript:this.form.submit()"/>
                 </xar:if>
             </span>
         </xar:if>

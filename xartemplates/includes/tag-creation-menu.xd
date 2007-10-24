@@ -15,7 +15,7 @@
                         name="base"
                         value="primary"
                         checked="checked"
-                        onChange="javascript:this.form.submit()"/>
+                        onchange="javascript:this.form.submit()"/>
             <xar:else />
                 <label for="basePrimary">Primary</label>
                 <br />
@@ -23,7 +23,7 @@
                         type="radio"
                         name="base"
                         value="primary"
-                        onChange="javascript:this.form.submit()"/>
+                        onchange="javascript:this.form.submit()"/>
             </xar:if>
         </span>
         <span style="width: 75px; display: block; float: left;">
@@ -36,7 +36,7 @@
                             name="base"
                             value="secondary"
                             checked="checked"
-                            onChange="javascript:this.form.submit()"/>
+                            onchange="javascript:this.form.submit()"/>
                 <xar:else />
                     <label for="baseSecondary">Secondary</label>
                     <br />
@@ -44,7 +44,7 @@
                             type="radio"
                             name="base"
                             value="secondary"
-                            onChange="javascript:this.form.submit()"/>
+                            onchange="javascript:this.form.submit()"/>
                 </xar:if>
             <xar:else />
                 <label for="baseSecondary">Secondary</label>
@@ -54,7 +54,7 @@
                         type="radio"
                         name="base"
                         value="secondary"
-                        onChange="javascript:this.form.submit()"/>
+                        onchange="javascript:this.form.submit()"/>
             </xar:if>
         </span>
     </span>
@@ -77,7 +77,7 @@
                         name="tagtype"
                         value="list"
                         checked="checked"
-                        onChange="javascript:this.form.submit()"/>
+                        onchange="javascript:this.form.submit()"/>
             <xar:else />
                 <label for="tagtypeList">List</label>
                 <br />
@@ -85,7 +85,7 @@
                         type="radio"
                         name="tagtype"
                         value="list"
-                        onChange="javascript:this.form.submit()"/>
+                        onchange="javascript:this.form.submit()"/>
             </xar:if>
         </span>
         <span style="width: 75px; display: block; float: left;">
@@ -97,7 +97,7 @@
                         name="tagtype"
                         value="images"
                         checked="checked"
-                        onChange="javascript:this.form.submit()"/>
+                        onchange="javascript:this.form.submit()"/>
             <xar:else />
                 <label for="tagtypeImages">Images</label>
                 <br />
@@ -105,7 +105,7 @@
                         type="radio"
                         name="tagtype"
                         value="images"
-                        onChange="javascript:this.form.submit()"/>
+                        onchange="javascript:this.form.submit()"/>
             </xar:if>
         </span>
     </span>
@@ -129,7 +129,7 @@
                         name="emptygroups"
                         value="hide"
                         checked="checked"
-                        onChange="javascript:this.form.submit()" />
+                        onchange="javascript:this.form.submit()" />
             <xar:else />
                 <label for="emptygroupHide">Yes</label>
                 <br />
@@ -137,7 +137,7 @@
                         type="radio"
                         name="emptygroups"
                         value="hide"
-                        onChange="javascript:this.form.submit()" />
+                        onchange="javascript:this.form.submit()" />
             </xar:if>
         </span>
         <span style="width: 75px; display: block; float: left;">
@@ -149,7 +149,7 @@
                         name="emptygroups"
                         value="show"
                         checked="checked"
-                        onChange="javascript:this.form.submit()" />
+                        onchange="javascript:this.form.submit()" />
             <xar:else />
                 <label for="emptygroupShow">No</label>
                 <br />
@@ -157,7 +157,7 @@
                         type="radio"
                         name="emptygroups"
                         value="show"
-                        onChange="javascript:this.form.submit()" />
+                        onchange="javascript:this.form.submit()" />
             </xar:if>
         </span>
     </span>
@@ -224,14 +224,14 @@
                     <input type="text"
                            name="rename[#$cid#]"
                            value="#$rename[$cid]#"
-                           onChange="javascript:this.form.submit();" />
+                           onchange="javascript:this.form.submit();" />
                 </td>
             <xar:else />
                 <td style="border-right: 1px dotted blue;">&nbsp;
                     <input type="text"
                            name="rename[#$cid#]"
                            value=""
-                           onChange="javascript:this.form.submit();" />
+                           onchange="javascript:this.form.submit();" />
                 </td>
             </xar:if>
             <xar:if condition="in_array($cid, $exclude)">
@@ -240,14 +240,14 @@
                            name="exclude[#$cid#]"
                            value="#$cid#"
                            checked="true"
-                           onChange="javascript:this.form.submit();" />
+                           onchange="javascript:this.form.submit();" />
                 </td>
             <xar:else />
                 <td>&nbsp;
                     <input type="checkbox"
                            name="exclude[#$cid#]"
                            value="#$cid#"
-                           onChange="javascript:this.form.submit();" />
+                           onchange="javascript:this.form.submit();" />
                 </td>
             </xar:if>
         </tr>
