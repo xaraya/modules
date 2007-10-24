@@ -3,7 +3,7 @@
         <xar:mlstring>
             Publication Type 
         </xar:mlstring>
-    </label><select name="pubtypeid" id="pubtypeid#$blockid#" onChange="this.form.submit();"> 
+    </label><select name="pubtypeid" id="pubtypeid#$blockid#" onchange="this.form.submit();"> 
         <option value="0">
             <xar:mlstring>
                 All 
@@ -27,7 +27,7 @@
         <xar:mlstring>
             Category 
         </xar:mlstring>
-    </label><select name="catfilter" id="catfilter#$blockid#" onChange="this.form.submit();"> 
+    </label><select name="catfilter" id="catfilter#$blockid#" onchange="this.form.submit();"> 
         <option value="0">
             <xar:mlstring>
                 All 
@@ -51,7 +51,7 @@
         <xar:mlstring>
             Status 
         </xar:mlstring>
-    </label> <select name="status" id="status#$blockid#" size="1" onChange="this.form.submit();"> 
+    </label> <select name="status" id="status#$blockid#" size="1" onchange="this.form.submit();"> 
         <xar:foreach in="$statusoptions" value="$statusoption">
             <xar:if condition="!empty($status) and $status eq $statusoption['id']">
                 <option value="#$statusoption['id']#" selected="selected">
@@ -170,7 +170,7 @@
         <xar:mlstring>
             Sort by 
         </xar:mlstring>
-    </label> <select name="toptype" id="toptype#$blockid#" size="1" onChange="this.form.submit();"> 
+    </label> <select name="toptype" id="toptype#$blockid#" size="1" onchange="this.form.submit();"> 
         <xar:foreach in="$sortoptions" value="$sortoption">
             <xar:if condition="$toptype eq $sortoption['id']">
                 <option value="#$sortoption['id']#" selected="selected">

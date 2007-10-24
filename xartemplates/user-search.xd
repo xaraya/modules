@@ -109,14 +109,14 @@
     <td><xar:mlstring>Categories</xar:mlstring></td>
     <xar:if condition="count($categories) eq 0">
       <td>
-        <input type="checkbox" name="by" id="filterbycat" value="cat" onChange="javascript:this.form.submit();" />
+        <input type="checkbox" name="by" id="filterbycat" value="cat" onchange="javascript:this.form.submit();" />
         <label for="filterbycat"><xar:mlstring>Filter by category</xar:mlstring></label>
       </td>
   </tr>
 </table>
 <xar:else />
 <td>
-  <input type="checkbox" name="by" id="filterbycat" value="cat" onChange="javascript:this.form.submit();" checked="checked" />
+  <input type="checkbox" name="by" id="filterbycat" value="cat" onchange="javascript:this.form.submit();" checked="checked" />
   <label for="filterbycat"><xar:mlstring>Filter by category</xar:mlstring></label></td>
 </tr>
 </table>
