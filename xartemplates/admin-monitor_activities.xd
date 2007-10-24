@@ -26,7 +26,7 @@
               </tr>
               <tr>
                 <td>
-                  <select name="filter_process" onChange='javascript:getElementById("filterf").submit();'>
+                  <select name="filter_process" onchange='javascript:getElementById("filterf").submit();'>
                     <xar:if condition="'' eq $filter_process">
                       <option selected="selected" value=""><xar:mlstring>All</xar:mlstring></option>
                       <xar:else/>

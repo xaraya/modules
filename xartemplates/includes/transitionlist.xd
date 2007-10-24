@@ -11,7 +11,7 @@
         <input type="hidden" name="sort_mode2" value="#$sort_mode2#" />
         <div class="xar-form-input-wrapper">
           <label class="xar-form-label"><xar:mlstring>From:</xar:mlstring></label>
-          <select name="filter_tran_name" onChange="javascript:document.getElementById('filtran').submit();">
+          <select name="filter_tran_name" onchange="javascript:document.getElementById('filtran').submit();">
             <xar:if condition="$filter_tran_name eq ''">
               <option value="" selected="selected"><xar:mlstring>All</xar:mlstring></option>
               <xar:else/>
