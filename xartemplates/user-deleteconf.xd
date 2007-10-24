@@ -21,7 +21,7 @@
          </fieldset>
         <div class="xar-form-input-wrapper">
             <input type="hidden" name="thread" id="thread" value="" />
-            <input type="Submit" value="Delete" />&nbsp;&nbsp;&nbsp;<input type="button" value="Cancel" onClick="javascript:history.go(-1);" />
+            <input type="Submit" value="Delete" />&nbsp;&nbsp;&nbsp;<input type="button" value="Cancel" onclick="javascript:history.go(-1);" />
         </div>
     </form>
 </div>
