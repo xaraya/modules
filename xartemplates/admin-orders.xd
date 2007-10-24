@@ -446,8 +446,8 @@ require(DIR_WS_CLASSES . 'currencies.php');
       </form></tr>
       <tr>
         <td colspan="2" align="right">
-   <img src="<?php echo DIR_WS_CATALOG.'lang/'.$_SESSION['language'].'/admin/images/buttons/'; ?>button_invoice.gif" style="cursor:hand" onClick="window.open('<?php echo xarModURL('commerce','admin',(FILENAME_PRINT_ORDER,'oID='.$_GET['oID']); ?>', 'popup', 'toolbar=0, width=640, height=600')">
-   <img src="<?php echo DIR_WS_CATALOG.'lang/'.$_SESSION['language'].'/admin/images/buttons/'; ?>button_packingslip.gif" style="cursor:hand" onClick="window.open('<?php echo xarModURL('commerce','admin',(FILENAME_PRINT_PACKINGSLIP,'oID='.$_GET['oID']); ?>', 'popup', 'toolbar=0, width=640, height=600')">
+   <img src="<?php echo DIR_WS_CATALOG.'lang/'.$_SESSION['language'].'/admin/images/buttons/'; ?>button_invoice.gif" style="cursor:hand" onclick="window.open('<?php echo xarModURL('commerce','admin',(FILENAME_PRINT_ORDER,'oID='.$_GET['oID']); ?>', 'popup', 'toolbar=0, width=640, height=600')">
+   <img src="<?php echo DIR_WS_CATALOG.'lang/'.$_SESSION['language'].'/admin/images/buttons/'; ?>button_packingslip.gif" style="cursor:hand" onclick="window.open('<?php echo xarModURL('commerce','admin',(FILENAME_PRINT_PACKINGSLIP,'oID='.$_GET['oID']); ?>', 'popup', 'toolbar=0, width=640, height=600')">
  <?php
 
 
@@ -476,7 +476,7 @@ require(DIR_WS_CLASSES . 'currencies.php');
   <tr>
     <td class="main" valign="top">XT Customers</td>
     <td class="main" valign="top" align="right"><?php echo xtc_draw_form('status', FILENAME_ORDERS, '', 'get'); ?>
-                <?php echo HEADING_TITLE_STATUS . ' ' . commerce_userapi_draw_pull_down_menu('status', xtc_array_merge(array(array('id' => '', 'text' => TEXT_ALL_ORDERS)), $orders_statuses), '', 'onChange="this.form.submit();"'); ?>
+                <?php echo HEADING_TITLE_STATUS . ' ' . commerce_userapi_draw_pull_down_menu('status', xtc_array_merge(array(array('id' => '', 'text' => TEXT_ALL_ORDERS)), $orders_statuses), '', 'onchange="this.form.submit();"'); ?>
               </form></td>
   </tr>
 </table>
