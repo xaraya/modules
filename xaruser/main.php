@@ -122,7 +122,7 @@ function xarcpshop_user_main()
        //$content = eregi_replace('<p class="storesmallprint">','<p class=storesmallprint" style="visibility:hidden; font-size:0px;">', $content);
      }
     $content = eregi_replace('<form method="post" action="http://www.cafepress.com/cp/addtocart.aspx">', '<form method="post" name="cart" action="http://www.cafepress.com/cp/addtocart.aspx?keepshopping=javascript:self.close()" target="cartWin">', $content);
-    $content = eregi_replace('<input type="submit"', "<input type=\"submit\" onClick=\"cartWin = window.open ('','cartWin','toolbar=yes,location=no,directories=no,status=yes,scrollbars=yes,resizable=yes,copyhistory=no,width=800,height=500'); cartWin.focus(); return true;\"", $content);
+    $content = eregi_replace('<input type="submit"', "<input type=\"submit\" onclick=\"cartWin = window.open ('','cartWin','toolbar=yes,location=no,directories=no,status=yes,scrollbars=yes,resizable=yes,copyhistory=no,width=800,height=500'); cartWin.focus(); return true;\"", $content);
     if ($shorturls ==1) {
         $content = eregi_replace('<a href="#top">', '<a href="index.php/xarcpshop/'.$cp.'#top">', $content);
     } else {
