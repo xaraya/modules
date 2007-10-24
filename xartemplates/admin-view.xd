@@ -255,7 +255,7 @@
                                                 #xarVarPrepForDisplay($loop:item.item_code)# =
                                                 #xarVarPrepForDisplay($loop:item.item_short_name)#
                                                 [<a href="#$loop:item.urledit#" title="#$label_edit_list_item#">#$label_edit_list_item#</a>]
-                                                [<a href="#$loop:item.urldelete#" title="#$label_edit_list_item#" onClick="return xar_base_confirmLink(this, '#xarML('Delete list item ')#.' '.#xarVarPrepfordisplay($loop:item.item_short_name)#?')">#$label_delete_list_item#</a>]
+                                                [<a href="#$loop:item.urldelete#" title="#$label_edit_list_item#" onclick="return xar_base_confirmLink(this, '#xarML('Delete list item ')#.' '.#xarVarPrepfordisplay($loop:item.item_short_name)#?')">#$label_delete_list_item#</a>]
                                                 <xar:if condition="!empty($loop:item.item_long_name)">
                                                     <br /><em>#xarVarPrepForDisplay($loop:item.item_long_name)#</em>
                                                 </xar:if>
