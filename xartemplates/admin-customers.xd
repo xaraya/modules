@@ -36,7 +36,7 @@
                     <form name="status" action="#xarModURL('commerce','admin','customers')#" method="get">
                     <td class="smallText" align="right">
                         <xar:mlstring>Customer Group</xar:mlstring>
-                            #xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'status', 'values' => $select_data, 'default' => 99, 'parameters' => 'onChange="this.form.submit()"'))#
+                            #xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'status', 'values' => $select_data, 'default' => 99, 'parameters' => 'onchange="this.form.submit()"'))#
                     </td>
 
                     </form>

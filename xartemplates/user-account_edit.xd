@@ -1,6 +1,6 @@
 <xar:template file="application_top" type="module"/>
 <br></font>
-<FORM method="POST" name="account_edit" id="post" action="#xarModURL('commerce','user',(FILENAME_ACCOUNT_EDIT, '', 'SSL')#" onSubmit="return check_form(account_edit);">
+<FORM method="POST" name="account_edit" id="post" action="#xarModURL('commerce','user',(FILENAME_ACCOUNT_EDIT, '', 'SSL')#" onsubmit="return check_form(account_edit);">
 <input type="hidden" name="action" value="process">
 {if $error!=''}<br>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">

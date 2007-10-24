@@ -3,7 +3,7 @@
   <tr>
     <td><font size="3" face="Verdana, Arial, Helvetica, sans-serif"><strong>{#heading_create_account#}</strong></font>
 <br>
-<FORM method="POST" name="create_account" id="post" action="#xarModURL('commerce','user','create_account', '', 'SSL')#" onSubmit="return check_form(create_account);">
+<FORM method="POST" name="create_account" id="post" action="#xarModURL('commerce','user','create_account', '', 'SSL')#" onsubmit="return check_form(create_account);">
 <input type="hidden" name="action" value="process">
 {if $error!=''}<br>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
