@@ -553,7 +553,7 @@ if (isset($action)) {
                                         'name' =>'cPath',
                                         'values' => xarModAPIFunc('products','user','get_category_tree'),
                                         'default' => $current_category_id,
-                                        'parameters' => 'onChange="this.form.submit();"')
+                                        'parameters' => 'onchange="this.form.submit();"')
                             );
     $data['items'] = $items;
     $data['items1'] = $items1;

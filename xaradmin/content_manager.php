@@ -273,13 +273,13 @@ for ($ii = 0, $nn = sizeof($content); $ii < $nn; $ii++) {
 <?php
  if ($content[$ii]['CONTENT_DELETE']=='1'){
 ?>
- <a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER,'special=delete&coID='.$content[$ii]['CONTENT_ID']); ?>" onClick="return confirm('<?php echo CONFIRM_DELETE; ?>')">
- <?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'delete.gif','Delete','','','style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_DELETE.'</a>&#160;&#160;';
+ <a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER,'special=delete&coID='.$content[$ii]['CONTENT_ID']); ?>" onclick="return confirm('<?php echo CONFIRM_DELETE; ?>')">
+ <?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'delete.gif','Delete','','','style="cursor:hand" onclick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_DELETE.'</a>&#160;&#160;';
 } // if content
 ?>
  <a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER,'action=edit&coID='.$content[$ii]['CONTENT_ID']); ?>">
-<?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'icon_edit.gif','Edit','','','style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_EDIT.'</a>'; ?>
- <a style="cursor:hand" onClick="javascript:window.open('<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_PREVIEW,'coID='.$content[$ii]['CONTENT_ID']); ?>', 'popup', 'toolbar=0, width=640, height=600')"
+<?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'icon_edit.gif','Edit','','','style="cursor:hand" onclick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_EDIT.'</a>'; ?>
+ <a style="cursor:hand" onclick="javascript:window.open('<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_PREVIEW,'coID='.$content[$ii]['CONTENT_ID']); ?>', 'popup', 'toolbar=0, width=640, height=600')"
 
 
  ><?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'preview.gif','Preview','','','style="cursor:hand"').'&#160;&#160;'.TEXT_PREVIEW.'</a>'; ?>
@@ -339,13 +339,13 @@ if ($content_1[$a]!='') {
 <?php
  if ($content_1[$a]['CONTENT_DELETE']=='1'){
 ?>
- <a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER,'special=delete&coID='.$content_1[$a]['CONTENT_ID']); ?>" onClick="return confirm('<?php echo CONFIRM_DELETE; ?>')">
- <?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'delete.gif','Delete','','','style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_DELETE.'</a>&#160;&#160;';
+ <a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER,'special=delete&coID='.$content_1[$a]['CONTENT_ID']); ?>" onclick="return confirm('<?php echo CONFIRM_DELETE; ?>')">
+ <?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'delete.gif','Delete','','','style="cursor:hand" onclick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_DELETE.'</a>&#160;&#160;';
 } // if content
 ?>
  <a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER,'action=edit&coID='.$content_1[$a]['CONTENT_ID']); ?>">
-<?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'icon_edit.gif','Edit','','','style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_EDIT.'</a>'; ?>
- <a style="cursor:hand" onClick="javascript:window.open('<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_PREVIEW,'coID='.$content_1[$a]['CONTENT_ID']); ?>', 'popup', 'toolbar=0, width=640, height=600')"
+<?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'icon_edit.gif','Edit','','','style="cursor:hand" onclick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_EDIT.'</a>'; ?>
+ <a style="cursor:hand" onclick="javascript:window.open('<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_PREVIEW,'coID='.$content_1[$a]['CONTENT_ID']); ?>', 'popup', 'toolbar=0, width=640, height=600')"
 
 
  ><?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'preview.gif','Preview','','','style="cursor:hand"').'&#160;&#160;'.TEXT_PREVIEW.'</a>'; ?>
@@ -874,14 +874,14 @@ for ($xx=0,$zz=sizeof($languages); $xx<$zz;$xx++){
  <td class="dataTableContent" align="left"><?php echo $content_array[$ii]['read']; ?></td>
  <td class="dataTableContent" align="left">
 
-  <a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER,'special=delete_product&coID='.$content_array[$ii]['id']).'&pID='.$product_ids[$i]['id']; ?>" onClick="return confirm('<?php echo CONFIRM_DELETE; ?>')">
+  <a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER,'special=delete_product&coID='.$content_array[$ii]['id']).'&pID='.$product_ids[$i]['id']; ?>" onclick="return confirm('<?php echo CONFIRM_DELETE; ?>')">
  <?php
 
- echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'delete.gif','Delete','','','style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_DELETE.'</a>&#160;&#160;';
+ echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'delete.gif','Delete','','','style="cursor:hand" onclick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_DELETE.'</a>&#160;&#160;';
 
 ?>
  <a href="<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_MANAGER,'action=edit_product_content&coID='.$content_array[$ii]['id']); ?>">
-<?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'icon_edit.gif','Edit','','','style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_EDIT.'</a>'; ?>
+<?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'icon_edit.gif','Edit','','','style="cursor:hand" onclick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_EDIT.'</a>'; ?>
 
 <?php
 // display preview button if filetype
@@ -901,7 +901,7 @@ if (    eregi('.gif',$content_array[$ii]['file'])
     eregi('.bmp',$content_array[$ii]['file'])
     ) {
 ?>
- <a style="cursor:hand" onClick="javascript:window.open('<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_PREVIEW,'pID=media&coID='.$content_array[$ii]['id']); ?>', 'popup', 'toolbar=0, width=640, height=600')"
+ <a style="cursor:hand" onclick="javascript:window.open('<?php echo xarModURL('commerce','admin',(FILENAME_CONTENT_PREVIEW,'pID=media&coID='.$content_array[$ii]['id']); ?>', 'popup', 'toolbar=0, width=640, height=600')"
 
 
  ><?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'preview.gif','Preview','','','style="cursor:hand"').'&#160;&#160;'.TEXT_PREVIEW.'</a>'; ?>

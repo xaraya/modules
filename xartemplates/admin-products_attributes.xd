@@ -119,7 +119,7 @@
                                     </td>
                                     <td align="right">
                                         <br><form name="option_order_by" action="#xarModURL('products','admin','product_attributes')#">
-                                        <select name="selected" onChange="go_option()">
+                                        <select name="selected" onchange="go_option()">
                                             <xar:if condition="$option_order_by eq 'product_options_id'">
                                                 <option value="product_options_id" SELECTED>
                                             <xar:else />
