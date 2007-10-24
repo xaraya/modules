@@ -1,6 +1,6 @@
 <xar:template file="header" />
 <div align="right"><xar:mlstring>Order by</xar:mlstring>
-<select onChange="javascript:window.location='#xarModURL('photoshare', 'user', 'viewallfolders', array('order'=>''))#'+this.value">
+<select onchange="javascript:window.location='#xarModURL('photoshare', 'user', 'viewallfolders', array('order'=>''))#'+this.value">
     <option value="title" #empty($title) || $order == 'title' ? "selected" : ""#><xar:mlstring>Title</xar:mlstring></option>
     <option value="owner" #$order == 'owner' ? "selected" : ""#><xar:mlstring>Owner</xar:mlstring></option>
     <option value="date" #$order == 'date' ? "selected" : ""#><xar:mlstring>Date</xar:mlstring></option>

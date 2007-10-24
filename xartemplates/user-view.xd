@@ -57,8 +57,8 @@
             <tr>
                 <td align="center" valign="middle"><img
                     src="#$imgTargetDimmed#" id="#$imgPosition#" title="#xarMl('Move selected image here')#"
-                    onClick="handleOnClickTarget(this)" onMouseOver="this.src='#$imgTarget#'"
-                    onMouseOut="this.src='#$imgTargetDimmed#'" /></td>
+                    onclick="handleOnClickTarget(this)" onmouseover="this.src='#$imgTarget#'"
+                    onmouseout="this.src='#$imgTargetDimmed#'" /></td>
                 <td align="center" valign="top"><table>
                     <tr>
                         <td align="center" valign="middle"><img
@@ -78,9 +78,9 @@
                 </td>
                 <xar:if condition="$images[count($images)-1] == $image">
                     <td align="center" valign="middle"><img src="#$imgTargetDimmed#" id="#$imgPosition+1#" title="#xarMl('Move selected image here')#"
-                        onClick="handleOnClickTarget(this)"
-                        onMouseOver="this.src='#$imgTarget#'"
-                        onMouseOut="this.src='#$imgTargetDimmed#'" /></td>
+                        onclick="handleOnClickTarget(this)"
+                        onmouseover="this.src='#$imgTarget#'"
+                        onmouseout="this.src='#$imgTargetDimmed#'" /></td>
                 </xar:if>
             </tr>
             <tr>
