@@ -194,10 +194,10 @@
 
                         <xar:mlstring>All day event</xar:mlstring>
                         <input type="radio" name="event_allday" id="event_allday1" value="1"
-                               onClick="processEventTimed(this.form,this,'button');" />
+                               onclick="processEventTimed(this.form,this,'button');" />
                         <xar:mlstring>Timed event</xar:mlstring>
                         <input type="radio" name="event_allday" id="event_allday2" value="0" checked="checked"
-                               onClick="processEventTimed(this.form,this,'button');" />
+                               onclick="processEventTimed(this.form,this,'button');" />
 
                 </div>
 

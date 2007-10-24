@@ -90,15 +90,15 @@
             </label>
 
             <xar:if condition="$item.isallday eq 1">
-                <input type="radio" id="event_allday_1" name="event_allday" value="1" checked="checked" onClick="processEventTimed(this.form,this,'button');" />
+                <input type="radio" id="event_allday_1" name="event_allday" value="1" checked="checked" onclick="processEventTimed(this.form,this,'button');" />
             <xar:else />
-                <input type="radio" id="event_allday_1" name="event_allday" value="1" onClick="processEventTimed(this.form,this,'button');" />
+                <input type="radio" id="event_allday_1" name="event_allday" value="1" onclick="processEventTimed(this.form,this,'button');" />
             </xar:if>
             <label for="event_allday_1"><xar:mlstring>All day event</xar:mlstring></label>
             <xar:if condition="$item.isallday eq 0">
-                <input type="radio" id="event_allday_0" name="event_allday" value="0" checked="checked" onClick="processEventTimed(this.form,this,'button');" />
+                <input type="radio" id="event_allday_0" name="event_allday" value="0" checked="checked" onclick="processEventTimed(this.form,this,'button');" />
             <xar:else />
-                <input type="radio" id="event_allday_0" name="event_allday" value="0" onClick="processEventTimed(this.form,this,'button');" />
+                <input type="radio" id="event_allday_0" name="event_allday" value="0" onclick="processEventTimed(this.form,this,'button');" />
             </xar:if>
             <label for="event_allday_0"><xar:mlstring>Timed event</xar:mlstring></label>
         </div>
@@ -125,9 +125,9 @@
         <label for="recur" class="required xar-form-label" title="#xarML('Check if the event recurs')#">
             <xar:mlstring>Event Recurs:</xar:mlstring>
         </label>
-        <input type="radio" name="event_repeat" id="event_repeat1" value="0" #$event_repeat_checked[0]# onClick="processEventRepeat(this.form,this,'button'); document.getElementById('p_event_recurend').style.visibility='hidden';" />
+        <input type="radio" name="event_repeat" id="event_repeat1" value="0" #$event_repeat_checked[0]# onclick="processEventRepeat(this.form,this,'button'); document.getElementById('p_event_recurend').style.visibility='hidden';" />
         <xar:mlstring>Takes places once</xar:mlstring><br />
-        <input type="radio" name="event_repeat" id="event_repeat2" value="1" #$event_repeat_checked[1]# onClick="processEventRepeat(this.form,this,'button'); document.getElementById('p_event_recurend').style.visibility='visible';" />
+        <input type="radio" name="event_repeat" id="event_repeat2" value="1" #$event_repeat_checked[1]# onclick="processEventRepeat(this.form,this,'button'); document.getElementById('p_event_recurend').style.visibility='visible';" />
         <xar:mlstring>Every (period)</xar:mlstring>
         <xar:if condition ="!$event_repeat == 1">
         <div class="xar-form-input-wrapper-after" id="p_event_recurend" style="visibility:hidden">
