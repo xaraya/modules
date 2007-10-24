@@ -12,7 +12,7 @@
 </xar:if>
 
 <xar:if condition="count($options) gt 1">
-    <select name="companyselect_#$name#" id="companyselect_#$fieldname_id#" tabindex="0" onChange="loadcontacts('#$name#','#$fieldname_id#','#$size#')" onKeyup="loadcontacts('#$name#','#$fieldname_id#','#$size#')" >
+    <select name="companyselect_#$name#" id="companyselect_#$fieldname_id#" tabindex="0" onchange="loadcontacts('#$name#','#$fieldname_id#','#$size#')" onKeyup="loadcontacts('#$name#','#$fieldname_id#','#$size#')" >
         <xar:foreach in="$options" value="$option">
             <xar:if condition="!empty($option['id'])">
                 <xar:set name="optionid">urlencode($option['id'])</xar:set>

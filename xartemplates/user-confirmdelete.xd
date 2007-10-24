@@ -31,7 +31,7 @@ function MM_callJS(jsStr) { //v2.0
   <input type="hidden" id="authid" name="authid" value="#$authid#" />
   <input type="hidden" id="id" name="id" value="#$id#" /><br />
   <input name="#$buttonDelete#" type="submit" id="#$buttonDelete#" value="#$buttonDelete#" />&nbsp;&nbsp;&nbsp;
-  <input name="#$buttonCancel#" type="button" id="#$buttonCancel#" onClick="MM_callJS('javascript:history.go(-1)')" value="#$buttonCancel#" />
+  <input name="#$buttonCancel#" type="button" id="#$buttonCancel#" onclick="MM_callJS('javascript:history.go(-1)')" value="#$buttonCancel#" />
 </form>
 </div>
 <xar:template compile="false" file="mod-footer" type="module" />
