@@ -453,7 +453,7 @@ if(status){
 <td><br /></td>
 <td colspan="5"><em>#$note_label#</em></td>
 </tr><tr>
-<td align="right" valign="bottom" nowrap="nowrap"><input type="checkbox" name="displayall" onClick="checkAll(this.checked);" value="1"/></td>
+<td align="right" valign="bottom" nowrap="nowrap"><input type="checkbox" name="displayall" onclick="checkAll(this.checked);" value="1"/></td>
 <td colspan="5"><label for="displayall">#$displayall_label#</label></td>
 </tr><tr>
 <td align="right" valign="bottom" nowrap="nowrap">

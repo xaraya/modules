@@ -248,7 +248,7 @@ if(status){
 </tr>
 <tr>
 <td><label for="displayall">#$displayall_label#</label></td>
-<td colspan="4" nowrap="nowrap"><input type="checkbox" name="displayall" id="displayall" onClick="checkAll(this.checked);" value="1" /></td>
+<td colspan="4" nowrap="nowrap"><input type="checkbox" name="displayall" id="displayall" onclick="checkAll(this.checked);" value="1" /></td>
 </tr>
 <tr>
 <td><label for="active">#$active_label#</label></td>
