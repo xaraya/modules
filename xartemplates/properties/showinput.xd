@@ -65,7 +65,7 @@
                     Coordinates:
                 </xar:mlstring>
             </label>
-            <textarea name="maps_address" id="maps_address"></textarea>&#160;<input type="button" value="Place on Map" onClick="getGeoCode(mapnumber,'maps_address','maps_latitude','maps_longitude');return false;">
+            <textarea name="maps_address" id="maps_address"></textarea>&#160;<input type="button" value="Place on Map" onclick="getGeoCode(mapnumber,'maps_address','maps_latitude','maps_longitude');return false;">
         </div>
         <div class="xar-form-input-wrapper-after">
             <input type="submit" value="Save this Location" />

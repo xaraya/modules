@@ -20,7 +20,7 @@
 <form method="post" action="#xarModURL('maps','admin','create')#">
     <xar:comment>TODO: There may be multiple map divs on the same screen.  Need to ID each one uniquely</xar:comment>
     Location:<br/>
-    <textarea id="maps_address"></textarea><input type="button" value="Map Location" onClick="getGeoCode(mapnumber,'maps_address','maps_latitude','maps_longitude');return false;">
+    <textarea id="maps_address"></textarea><input type="button" value="Map Location" onclick="getGeoCode(mapnumber,'maps_address','maps_latitude','maps_longitude');return false;">
     <div id="maps_map" style="width: #$mapwidth#px; height: #$mapheight#px"></div>
     <input type="text" name="maps_latitude" id="maps_latitude" value="" />
     <input type="text" name="maps_longitude" id="maps_longitude" value="" />
