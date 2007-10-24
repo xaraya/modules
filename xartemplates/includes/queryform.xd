@@ -2,7 +2,7 @@
 
 <xar:base-include-javascript module="bible" filename="replace.js" position="head" />
 
-<form action="&xar-modurl-bible-user-query;" method="post" onSubmit="str=this.queryraw.value;str=replace(str,' ','%20');str=replace(str,'+','%2B');this.query.value=str;">
+<form action="&xar-modurl-bible-user-query;" method="post" onsubmit="str=this.queryraw.value;str=replace(str,' ','%20');str=replace(str,'+','%2B');this.query.value=str;">
 
     <fieldset>
         <legend><xar:mlstring>Search Form</xar:mlstring></legend>

@@ -38,7 +38,7 @@
             <label for="searchtype" class="xar-form-label" title="#xarML('Type of search')#">
                 <xar:mlstring>Search Type</xar:mlstring>
             </label>
-            <select name="searchtype" id="type" onChange="boolToggle(this);">
+            <select name="searchtype" id="type" onchange="boolToggle(this);">
                 <option value=""><xar:mlstring>Auto Detect</xar:mlstring></option>
                 <option value="normal"><xar:mlstring>Normal</xar:mlstring></option>
                 <option value="fuzzy"><xar:mlstring>Fuzzy</xar:mlstring></option>
@@ -52,7 +52,7 @@
             </label>
             <div class="xar-form-input-wrapper">
                 <input type="text" name="words[]" id="words_1" class="xar-form-textmedium" />
-                <select name="bools[]" id="bools[]" disabled="true" onChange="if(this.selectedIndex!=0)document.searchform.elements['type'].selectedIndex=3;">
+                <select name="bools[]" id="bools[]" disabled="true" onchange="if(this.selectedIndex!=0)document.searchform.elements['type'].selectedIndex=3;">
                     <option value=""><xar:mlstring>---</xar:mlstring></option>
                     <option value=""><xar:mlstring>scored higher</xar:mlstring></option>
                     <option value="+"><xar:mlstring>present</xar:mlstring></option>
@@ -65,7 +65,7 @@
             <label class="xar-form-label"><br /></label>
             <div class="xar-form-input-wrapper">
                 <input type="text" name="words[]" class="xar-form-textmedium" />
-                <select name="bools[]" id="bools[]" disabled="true" onChange="if(this.selectedIndex!=0)document.searchform.elements['type'].selectedIndex=3;">
+                <select name="bools[]" id="bools[]" disabled="true" onchange="if(this.selectedIndex!=0)document.searchform.elements['type'].selectedIndex=3;">
                     <option value=""><xar:mlstring>---</xar:mlstring></option>
                     <option value=""><xar:mlstring>scored higher</xar:mlstring></option>
                     <option value="+"><xar:mlstring>present</xar:mlstring></option>
@@ -78,7 +78,7 @@
             <label class="xar-form-label"><br /></label>
             <div class="xar-form-input-wrapper">
                 <input type="text" name="words[]" class="xar-form-textmedium" />
-                <select name="bools[]" id="bools[]" disabled="true" onChange="if(this.selectedIndex!=0)document.searchform.elements['type'].selectedIndex=3;">
+                <select name="bools[]" id="bools[]" disabled="true" onchange="if(this.selectedIndex!=0)document.searchform.elements['type'].selectedIndex=3;">
                     <option value=""><xar:mlstring>---</xar:mlstring></option>
                     <option value=""><xar:mlstring>scored higher</xar:mlstring></option>
                     <option value="+"><xar:mlstring>present</xar:mlstring></option>
@@ -91,7 +91,7 @@
             <label class="xar-form-label"><br /></label>
             <div class="xar-form-input-wrapper">
                 <input type="text" name="words[]" class="xar-form-textmedium" />
-                <select name="bools[]" id="bools[]" disabled="true" onChange="if(this.selectedIndex!=0)document.searchform.elements['type'].selectedIndex=3;">
+                <select name="bools[]" id="bools[]" disabled="true" onchange="if(this.selectedIndex!=0)document.searchform.elements['type'].selectedIndex=3;">
                     <option value=""><xar:mlstring>---</xar:mlstring></option>
                     <option value=""><xar:mlstring>scored higher</xar:mlstring></option>
                     <option value="+"><xar:mlstring>present</xar:mlstring></option>
