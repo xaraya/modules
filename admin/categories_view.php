@@ -33,7 +33,7 @@
                 <td class="smallText" align="right"><?php echo HEADING_TITLE_SEARCH . ' ' . xtc_draw_input_field('search', $_GET['search']); ?></td>
               </form></tr>
               <tr><?php echo xtc_draw_form('goto', FILENAME_CATEGORIES, '', 'get'); ?>
-                <td class="smallText" align="right"><?php echo HEADING_TITLE_GOTO . ' ' . commerce_userapi_draw_pull_down_menu('cPath', xtc_get_category_tree(), $current_category_id, 'onChange="this.form.submit();"'); ?></td>
+                <td class="smallText" align="right"><?php echo HEADING_TITLE_GOTO . ' ' . commerce_userapi_draw_pull_down_menu('cPath', xtc_get_category_tree(), $current_category_id, 'onchange="this.form.submit();"'); ?></td>
               </form></tr>
             </table></td>
           </tr>

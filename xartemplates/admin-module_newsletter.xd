@@ -391,16 +391,16 @@ $total_data=$q->output();
 <td colspan="2" class="dataTableContent_products" style="border-bottom: 1px solid; border-color: #f1f1f1;" align="left"><?php echo TEXT_SEND_TO.$total_data['count']; ?></td>
 </tr>
 <td class="dataTableContent" valign="top" style="border-bottom: 1px solid; border-color: #f1f1f1;" align="left">
-  <a href="<?php echo xarModURL('commerce','admin',(FILENAME_MODULE_NEWSLETTER,'action=delete&ID='.$news_data[$i]['id']); ?>" onClick="return confirm('<?php echo CONFIRM_DELETE; ?>')">
+  <a href="<?php echo xarModURL('commerce','admin',(FILENAME_MODULE_NEWSLETTER,'action=delete&ID='.$news_data[$i]['id']); ?>" onclick="return confirm('<?php echo CONFIRM_DELETE; ?>')">
   <?php
-  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_delete.gif'),'' => '',''=>'','parameters' => 'Delete','','','style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"');
+  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_delete.gif'),'' => '',''=>'','parameters' => 'Delete','','','style="cursor:hand" onclick="return confirm(\''.DELETE_ENTRY.'\')"');
 </a><br>';
   ?>
 <a href="<?php echo xarModURL('commerce','admin',(FILENAME_MODULE_NEWSLETTER,'action=edit&ID='.$news_data[$i]['id']); ?>">
-  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_edit.gif'),'' => '',''=>'','parameters' => 'Edit','','','style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"');
+  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_edit.gif'),'' => '',''=>'','parameters' => 'Edit','','','style="cursor:hand" onclick="return confirm(\''.DELETE_ENTRY.'\')"');
 </a>'; ?>
 <a href="<?php echo xarModURL('commerce','admin',(FILENAME_MODULE_NEWSLETTER,'action=send&ID='.$news_data[$i]['id']); ?>"><br><br><hr noshade>
-  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_send.gif'),'' => '',''=>'','parameters' => 'style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"');
+  xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_send.gif'),'' => '',''=>'','parameters' => 'style="cursor:hand" onclick="return confirm(\''.DELETE_ENTRY.'\')"');
 </a>'; ?>
 
 </td>
@@ -471,12 +471,12 @@ if ($news_data[$i]['id']!='') {
           <td class="dataTableContent" style="border-bottom: 1px solid; border-color: #f1f1f1;" valign="middle" align="left"><?php echo $news_data[$i]['date'].'    '; ?><b><?php echo $news_data[$i]['title']; ?></b></td>
           <td class="dataTableContent" style="border-bottom: 1px solid; border-color: #f1f1f1;" align="left">
 
-  <a href="<?php echo xarModURL('commerce','admin',(FILENAME_MODULE_NEWSLETTER,'action=delete&ID='.$news_data[$i]['id']); ?>" onClick="return confirm('<?php echo CONFIRM_DELETE; ?>')">
+  <a href="<?php echo xarModURL('commerce','admin',(FILENAME_MODULE_NEWSLETTER,'action=delete&ID='.$news_data[$i]['id']); ?>" onclick="return confirm('<?php echo CONFIRM_DELETE; ?>')">
   <?php
-  echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'delete.gif'),'Delete','','','style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_DELETE.'</a>&#160;&#160;';
+  echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'delete.gif'),'Delete','','','style="cursor:hand" onclick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_DELETE.'</a>&#160;&#160;';
   ?>
            <a href="<?php echo xarModURL('commerce','admin',(FILENAME_MODULE_NEWSLETTER,'action=edit_products_content&coID='.$content_array[$ii]['id']); ?>">
-<?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'icon_edit.gif'),'Edit','','','style="cursor:hand" onClick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_EDIT.'</a>'; ?>
+<?php echo xtc_image(xarTplGetImage(DIR_WS_ICONS.'icon_edit.gif'),'Edit','','','style="cursor:hand" onclick="return confirm(\''.DELETE_ENTRY.'\')"').'  '.TEXT_EDIT.'</a>'; ?>
 
 
 

@@ -224,18 +224,18 @@ $l->setBlock('table_cell_prop');
 <tr>
   <td colspan="2"><?php echo $l->m('horizontal_align')?>:</td>
   <td colspan="2" align="right"><input type="hidden" name="chalign">
-  <img id="ha_left" src="<?php echo $theme_path.'img/'?>tb_left.gif" class="align_off" onClick="setHAlign('left');" alt="<?php echo $l->m('left')?>">
-  <img id="ha_center" src="<?php echo $theme_path.'img/'?>tb_center.gif" class="align_off" onClick="setHAlign('center');" alt="<?php echo $l->m('center')?>">
-  <img id="ha_right" src="<?php echo $theme_path.'img/'?>tb_right.gif" class="align_off" onClick="setHAlign('right');" alt="<?php echo $l->m('right')?>">
+  <img id="ha_left" src="<?php echo $theme_path.'img/'?>tb_left.gif" class="align_off" onclick="setHAlign('left');" alt="<?php echo $l->m('left')?>">
+  <img id="ha_center" src="<?php echo $theme_path.'img/'?>tb_center.gif" class="align_off" onclick="setHAlign('center');" alt="<?php echo $l->m('center')?>">
+  <img id="ha_right" src="<?php echo $theme_path.'img/'?>tb_right.gif" class="align_off" onclick="setHAlign('right');" alt="<?php echo $l->m('right')?>">
   </td>
 </tr>
 <tr>
   <td colspan="2"><?php echo $l->m('vertical_align')?>:</td>
   <td colspan="2" align="right"><input type="hidden" name="cvalign">
-  <img id="ha_top" src="<?php echo $theme_path.'img/'?>tb_top.gif" class="align_off" onClick="setVAlign('top');" alt="<?php echo $l->m('top')?>">
-  <img id="ha_middle" src="<?php echo $theme_path.'img/'?>tb_middle.gif" class="align_off" onClick="setVAlign('middle');" alt="<?php echo $l->m('middle')?>">
-  <img id="ha_bottom" src="<?php echo $theme_path.'img/'?>tb_bottom.gif" class="align_off" onClick="setVAlign('bottom');" alt="<?php echo $l->m('bottom')?>">
-  <img id="ha_baseline" src="<?php echo $theme_path.'img/'?>tb_baseline.gif" class="align_off" onClick="setVAlign('baseline');" alt="<?php echo $l->m('baseline')?>">
+  <img id="ha_top" src="<?php echo $theme_path.'img/'?>tb_top.gif" class="align_off" onclick="setVAlign('top');" alt="<?php echo $l->m('top')?>">
+  <img id="ha_middle" src="<?php echo $theme_path.'img/'?>tb_middle.gif" class="align_off" onclick="setVAlign('middle');" alt="<?php echo $l->m('middle')?>">
+  <img id="ha_bottom" src="<?php echo $theme_path.'img/'?>tb_bottom.gif" class="align_off" onclick="setVAlign('bottom');" alt="<?php echo $l->m('bottom')?>">
+  <img id="ha_baseline" src="<?php echo $theme_path.'img/'?>tb_baseline.gif" class="align_off" onclick="setVAlign('baseline');" alt="<?php echo $l->m('baseline')?>">
   </td>
 </tr>
 <tr>
@@ -271,8 +271,8 @@ $l->setBlock('table_cell_prop');
   <td colspan="2">&#160;</td>
 </tr>
 <tr>
-  <td colspan="4"><?php echo $l->m('bg_color')?>: <img src="spacer.gif" id="color_sample" border="1" width="30" height="18" align="absbottom">&#160;<input type="text" name="cbgcolor" size="7" maxlenght="7" class="input_color" onKeyUp="setSample()">&#160;
-  <img src="<?php echo $theme_path.'img/'?>tb_colorpicker.gif" border="0" onClick="showColorPicker(cbgcolor.value)" align="absbottom">
+  <td colspan="4"><?php echo $l->m('bg_color')?>: <img src="spacer.gif" id="color_sample" border="1" width="30" height="18" align="absbottom">&#160;<input type="text" name="cbgcolor" size="7" maxlenght="7" class="input_color" onkeyup="setSample()">&#160;
+  <img src="<?php echo $theme_path.'img/'?>tb_colorpicker.gif" border="0" onclick="showColorPicker(cbgcolor.value)" align="absbottom">
   </td>
 </tr>
 <tr>
@@ -282,8 +282,8 @@ $l->setBlock('table_cell_prop');
 </tr>
 <tr>
 <td colspan="4" align="right" valign="bottom" nowrap>
-<input type="button" value="<?php echo $l->m('ok')?>" onClick="okClick()" class="bt">
-<input type="button" value="<?php echo $l->m('cancel')?>" onClick="cancelClick()" class="bt">
+<input type="button" value="<?php echo $l->m('ok')?>" onclick="okClick()" class="bt">
+<input type="button" value="<?php echo $l->m('cancel')?>" onclick="cancelClick()" class="bt">
 </td>
 </tr>
 </form>

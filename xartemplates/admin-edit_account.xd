@@ -240,7 +240,7 @@
                         <xar:mlstring>Country</xar:mlstring>
                     </td>
                     <td class="main">
-                        #xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'entry_country_id', 'values' => xarModAPIFunc('commerce','user','get_countries'), 'default' => $entry_country_id, 'parameters' => 'onChange="this.form.submit()"'))#
+                        #xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'entry_country_id', 'values' => xarModAPIFunc('commerce','user','get_countries'), 'default' => $entry_country_id, 'parameters' => 'onchange="this.form.submit()"'))#
                     </td>
                 </tr>
             </table>
@@ -325,7 +325,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a href="#xarModURL('commerce','admin','edit_account', array('cID' => $cID, 'action' => 'edit', 'special' => 'remove_memo', 'mID' => $loop:item['memo_id']))#" onClick="return confirm(#xarML('Delete Entry')#"><img src="#xarTplGetImage($language . '/admin/buttons/button_insert.gif')#" alt="#xarML('Delete')#"></a>
+                                        <a href="#xarModURL('commerce','admin','edit_account', array('cID' => $cID, 'action' => 'edit', 'special' => 'remove_memo', 'mID' => $loop:item['memo_id']))#" onclick="return confirm(#xarML('Delete Entry')#"><img src="#xarTplGetImage($language . '/admin/buttons/button_insert.gif')#" alt="#xarML('Delete')#"></a>
                                     </td>
                                 </tr>
                             </table>

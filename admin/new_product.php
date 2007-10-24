@@ -278,6 +278,6 @@ echo xtc_draw_textarea_field('products_short_description_' . $languages[$i]['id'
       <td class="main" align="right">
 <input type="hidden" name="products_date_added" value="#(($pInfo->products_date_added) ? $pInfo->products_date_added : date('Y-m-d'))#">
 
-    <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_save.gif')#" border="0" alt=IMAGE_SAVE style="cursor:hand" onClick="return confirm(\''.SAVE_ENTRY.'\')">.
+    <input type="image" src="#xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_save.gif')#" border="0" alt=IMAGE_SAVE style="cursor:hand" onclick="return confirm(\''.SAVE_ENTRY.'\')">.
       . '&#160;&#160;<a href="' . xarModURL('commerce','admin',(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&pID=' . $_GET['pID']) . '">' . xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_cancel.gif'),'alt' => IMAGE_CANCEL); . '</a>'; ?></td>
     </tr></form>

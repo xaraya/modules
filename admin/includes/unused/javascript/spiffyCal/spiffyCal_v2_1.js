@@ -802,7 +802,7 @@ function ctlSpiffyCalendarBox(strVarName, strFormName, strTextBoxName, strBtnNam
         }
 
         if (!(bViewOnly)) {
-            strOutput += '<td class="cal-HeadCell" align="center" width="100%"><a href="javascript:'+this.varName+'.clearDay();"><img name="calbtn1" src="'+strDefBtnImgPath+'btn_del_small.gif" border="0" width="12" height="10"></a>&#160;&#160;<a href="javascript:'+this.varName+'.scrollMonth(-1);" class="cal-DayLink">&lt;</a>&#160;<SELECT class="cal-ComboBox" NAME="cboMonth" onChange="'+this.varName+'.changeMonth();">';
+            strOutput += '<td class="cal-HeadCell" align="center" width="100%"><a href="javascript:'+this.varName+'.clearDay();"><img name="calbtn1" src="'+strDefBtnImgPath+'btn_del_small.gif" border="0" width="12" height="10"></a>&#160;&#160;<a href="javascript:'+this.varName+'.scrollMonth(-1);" class="cal-DayLink">&lt;</a>&#160;<SELECT class="cal-ComboBox" NAME="cboMonth" onchange="'+this.varName+'.changeMonth();">';
 
 
             for (intLoop=0; intLoop<12; intLoop++) {
@@ -811,7 +811,7 @@ function ctlSpiffyCalendarBox(strVarName, strFormName, strTextBoxName, strBtnNam
             }
 
 
-            strOutput += '<\/SELECT><SELECT class="cal-ComboBox" NAME="cboYear" onChange="'+this.varName+'.changeYear();">';
+            strOutput += '<\/SELECT><SELECT class="cal-ComboBox" NAME="cboYear" onchange="'+this.varName+'.changeYear();">';
 
             for (intLoop=this.minYearChoice; intLoop<this.maxYearChoice; intLoop++) {
                 if (intLoop == intWhatYear) strOutput += '<OPTION VALUE="' + intLoop + '" SELECTED>' + intLoop + '<\/OPTION>';
@@ -911,19 +911,19 @@ function ctlSpiffyCalendarBox(strVarName, strFormName, strTextBoxName, strBtnNam
         // specify whether you can type in the date box and validate them as well
         // or whether you must use the calendar only to select a date
         if (this.readonly) {
-            strTemp=' onFocus="this.blur();" readonly ';
+            strTemp=' onfocus="this.blur();" readonly ';
         }
         if (this.focusClick) {
-            strTemp=' onFocus="'+this.varName+'.show();" ';
+            strTemp=' onfocus="'+this.varName+'.show();" ';
         }
 
         if (!(this.useDateRange)) {
-            strTemp+=' onChange="calMgr.validateDate(document.'+this.formName+'.'+this.textBoxName+','+this.varName+'.required);" onBlur="calMgr.formatDate(document.'+this.formName+'.'+this.textBoxName+','+this.varName+'.dateFormat);" ';
+            strTemp+=' onchange="calMgr.validateDate(document.'+this.formName+'.'+this.textBoxName+','+this.varName+'.required);" onblur="calMgr.formatDate(document.'+this.formName+'.'+this.textBoxName+','+this.varName+'.dateFormat);" ';
         }
         else {
             strTempMinDate=this.minDate.getDate()+'-'+msNames[this.minDate.getMonth()]+'-'+this.minDate.getFullYear();
             strTempMaxDate=this.maxDate.getDate()+'-'+msNames[this.maxDate.getMonth()]+'-'+this.maxDate.getFullYear();
-            strTemp+=' onChange="calMgr.validateDate('+'document.'+this.formName+'.'+this.textBoxName+','+this.varName+'.required,'+this.varName+'.minDate,'+this.varName+'.maxDate);" onBlur="calMgr.formatDate(document.'+this.formName+'.'+this.textBoxName+','+this.varName+'.dateFormat);" ';
+            strTemp+=' onchange="calMgr.validateDate('+'document.'+this.formName+'.'+this.textBoxName+','+this.varName+'.required,'+this.varName+'.minDate,'+this.varName+'.maxDate);" onblur="calMgr.formatDate(document.'+this.formName+'.'+this.textBoxName+','+this.varName+'.dateFormat);" ';
         }
 
         strHold='<input class="cal-TextBox" type="text" name="' + this.textBoxName + '"' + strTemp + 'size="12" value="' + this.getSelectedDate() + '">';

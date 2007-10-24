@@ -83,7 +83,7 @@ $content_query=new xenQuery("SELECT
     {
 
 
-     $button = '<a style="cursor:hand" onClick="javascript:window.open(\''.xarModURL('commerce','user',(FILENAME_MEDIA_CONTENT,'coID='.$content_data['content_id']).'\', \'popup\', \'toolbar=0, width=640, height=600\')">
+     $button = '<a style="cursor:hand" onclick="javascript:window.open(\''.xarModURL('commerce','user',(FILENAME_MEDIA_CONTENT,'coID='.$content_data['content_id']).'\', \'popup\', \'toolbar=0, width=640, height=600\')">
      xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_view.gif'),'alt' => TEXT_VIEW).'
   xarModAPIFunc('commerce','user','image',array('src' => xarTplGetImage('buttons/' . xarSession::getVar('language') . '/'.'button_view.gif'),'alt' => TEXT_VIEW);
      </a>';

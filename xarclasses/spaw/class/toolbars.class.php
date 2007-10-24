@@ -91,7 +91,7 @@ class SPAW_TB_Button extends SPAW_TB_Item
     if (!isset($this->attributes)) $this->attributes = '';
       $buf = '<img id="SPAW_'.$this->editor.'_tb_'.$this->name .
                 '" alt="' . $this->lang->m('title',$this->name) .
-                '" src="'.$spaw_dir.'lib/themes/'.$this->theme.'/img/tb_'.$this->name.'.gif" onClick="SPAW_'.$this->name.'_click(\''.$this->editor.'\',this)" class="SPAW_'.$this->theme.'_tb_out" onMouseOver="SPAW_'.$this->theme.'_bt_over(this)" onMouseOut="SPAW_'.$this->theme.'_bt_out(this)" onMouseDown="SPAW_'.$this->theme.'_bt_down(this)" onMouseUp="SPAW_'.$this->theme.'_bt_up(this)"  '.$this->attributes.' unselectable="on">';
+                '" src="'.$spaw_dir.'lib/themes/'.$this->theme.'/img/tb_'.$this->name.'.gif" onclick="SPAW_'.$this->name.'_click(\''.$this->editor.'\',this)" class="SPAW_'.$this->theme.'_tb_out" onmouseover="SPAW_'.$this->theme.'_bt_over(this)" onmouseout="SPAW_'.$this->theme.'_bt_out(this)" onmousedown="SPAW_'.$this->theme.'_bt_down(this)" onmouseup="SPAW_'.$this->theme.'_bt_up(this)"  '.$this->attributes.' unselectable="on">';
       return $buf;
     }
   }

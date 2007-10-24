@@ -1,6 +1,6 @@
 <xar:template file="application_top" type="module"/>
 <br>
-<FORM method="GET" name="advanced_search" id="post" action="#xarModURL('commerce','user',(FILENAME_ADVANCED_SEARCH_RESULT, '', 'NONSSL', false)#" onSubmit="return check_form(this);">
+<FORM method="GET" name="advanced_search" id="post" action="#xarModURL('commerce','user',(FILENAME_ADVANCED_SEARCH_RESULT, '', 'NONSSL', false)#" onsubmit="return check_form(this);">
 <br>
 {if $error!=''}
 <table width="100%" border="0" cellspacing="0" cellpadding="0">

@@ -1,7 +1,7 @@
 <xar:template file="application_top" type="module"/>
 <br>
 <br></strong></font>
-<FORM method="POST" name="addressbook" id="post" action="#xarModURL('commerce','user',(FILENAME_ADDRESS_BOOK_PROCESS, (isset($_GET['edit']) ? 'edit=' . $_GET['edit'] : ''), 'SSL')#" onSubmit="return check_form(addressbook);">
+<FORM method="POST" name="addressbook" id="post" action="#xarModURL('commerce','user',(FILENAME_ADDRESS_BOOK_PROCESS, (isset($_GET['edit']) ? 'edit=' . $_GET['edit'] : ''), 'SSL')#" onsubmit="return check_form(addressbook);">
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="edit" value="#$_GET['edit']#">
 {if $error!=''}

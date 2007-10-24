@@ -83,7 +83,7 @@ function commerce_currenciesblock_display($blockinfo)
             'name' =>'currency',
             'values' => $currencies_array,
             'default' => xarSession::getVar('currency'),
-            'parameters' => 'onChange="this.form.submit();" style="width: 100%"'
+            'parameters' => 'onchange="this.form.submit();" style="width: 100%"'
         )
     );
 

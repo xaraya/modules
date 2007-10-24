@@ -425,7 +425,7 @@ function commerce_admin_customers()
       <tr>
         <td><?php echo xtc_draw_separator('pixel_trans.gif', '1', '10'); ?></td>
       </tr>
-      <tr><?php echo xtc_draw_form('customers', FILENAME_CUSTOMERS, xtc_get_all_get_params(array('action')) . 'action=update', 'post', 'onSubmit="return check_form();"') .
+      <tr><?php echo xtc_draw_form('customers', FILENAME_CUSTOMERS, xtc_get_all_get_params(array('action')) . 'action=update', 'post', 'onsubmit="return check_form();"') .
   <input type="hidden" name="default_address_id" value="#$cInfo->customers_default_address_id#">
         <td class="formAreaTitle"><?php echo CATEGORY_PERSONAL; ?></td>
       </tr>
@@ -764,7 +764,7 @@ function commerce_admin_customers()
 $select_data=array();
 $select_data=array(array('id' => '99', 'text' => TEXT_SELECT),array('id' => '100', 'text' => TEXT_ALL_CUSTOMERS));
 ?>
-            <td class="smallText" align="right"><?php echo HEADING_TITLE_STATUS . ' ' . commerce_userapi_draw_pull_down_menu('status',xtc_array_merge($select_data, $customers_statuses_array), '99', 'onChange="this.form.submit();"'); ?></td>
+            <td class="smallText" align="right"><?php echo HEADING_TITLE_STATUS . ' ' . commerce_userapi_draw_pull_down_menu('status',xtc_array_merge($select_data, $customers_statuses_array), '99', 'onchange="this.form.submit();"'); ?></td>
 
 
 

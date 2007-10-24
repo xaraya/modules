@@ -1,7 +1,7 @@
 <xar:template file="application_top" type="module"/>
 <br>
 </font>
- <FORM method="POST" name="checkout_address" id="post" action="#xarModURL('commerce','user',(FILENAME_CHECKOUT_PAYMENT_ADDRESS, '', 'SSL')#" onSubmit="return check_form_optional(checkout_address);">
+ <FORM method="POST" name="checkout_address" id="post" action="#xarModURL('commerce','user',(FILENAME_CHECKOUT_PAYMENT_ADDRESS, '', 'SSL')#" onsubmit="return check_form_optional(checkout_address);">
 <input type="hidden" name="action" value="submit">
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>

@@ -62,8 +62,8 @@ $l->setBlock($block);
 <?php echo $l->m($message)?>
 <br><br>
 <form name="colorpicker">
-<input type="button" value="<?php echo $l->m('ok')?>" onClick="okClick()" class="bt">
-<input type="button" value="<?php echo $l->m('cancel')?>" onClick="cancelClick()" class="bt"><br><br>
+<input type="button" value="<?php echo $l->m('ok')?>" onclick="okClick()" class="bt">
+<input type="button" value="<?php echo $l->m('cancel')?>" onclick="cancelClick()" class="bt"><br><br>
 </form>
 </p>
 

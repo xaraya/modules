@@ -79,7 +79,7 @@
           <tr><?php echo xtc_draw_form('lng', FILENAME_DEFINE_LANGUAGE, '', 'get'); ?>
             <td class="pageHeading"><?php echo HEADING_TITLE; ?></td>
             <td class="pageHeading" align="right"><?php echo xtc_draw_separator('pixel_trans.gif', '1', HEADING_IMAGE_HEIGHT); ?></td>
-            <td class="pageHeading" align="right"><?php echo commerce_userapi_draw_pull_down_menu('lngdir', $languages_array, '', 'onChange="this.form.submit();"'); ?></td>
+            <td class="pageHeading" align="right"><?php echo commerce_userapi_draw_pull_down_menu('lngdir', $languages_array, '', 'onchange="this.form.submit();"'); ?></td>
           </form></tr>
         </table></td>
       </tr>

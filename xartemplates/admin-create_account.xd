@@ -236,7 +236,7 @@
                         <xar:mlstring>Country</xar:mlstring>
                     </td>
                     <td class="main">
-                        #xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'entry_country_id', 'values' => xarModAPIFunc('commerce','user','get_countries'), 'default' => $entry_country_id, 'parameters' => 'onChange="this.form.submit()"'))#
+                        #xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'entry_country_id', 'values' => xarModAPIFunc('commerce','user','get_countries'), 'default' => $entry_country_id, 'parameters' => 'onchange="this.form.submit()"'))#
                     </td>
                 </tr>
             </table>
@@ -297,7 +297,7 @@
                         <xar:mlstring>Customer Group</xar:mlstring>
                     </td>
                     <td class="main">
-                        #xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'customers_status', 'values' => $customers_statuses_array, 'parameters' => 'onChange="this.form.submit()"'))#
+                        #xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'customers_status', 'values' => $customers_statuses_array, 'parameters' => 'onchange="this.form.submit()"'))#
                     </td>
                 </tr>
                 <tr>

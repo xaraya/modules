@@ -232,8 +232,8 @@ $l->setBlock('table_prop');
 </tr>
 
 <tr>
-  <td colspan="4"><?php echo $l->m('bg_color')?>: <img src="spacer.gif" id="color_sample" border="1" width="30" height="18" align="absbottom">&#160;<input type="text" name="tbgcolor" size="7" maxlenght="7" class="input_color" onKeyUp="setSample()">&#160;
-  <img src="<?php echo $theme_path.'img/'?>tb_colorpicker.gif" border="0" onClick="showColorPicker(tbgcolor.value)" align="absbottom">
+  <td colspan="4"><?php echo $l->m('bg_color')?>: <img src="spacer.gif" id="color_sample" border="1" width="30" height="18" align="absbottom">&#160;<input type="text" name="tbgcolor" size="7" maxlenght="7" class="input_color" onkeyup="setSample()">&#160;
+  <img src="<?php echo $theme_path.'img/'?>tb_colorpicker.gif" border="0" onclick="showColorPicker(tbgcolor.value)" align="absbottom">
   </td>
 </tr>
 <tr>
@@ -243,8 +243,8 @@ $l->setBlock('table_prop');
 </tr>
 <tr>
 <td colspan="4" align="right" valign="bottom" nowrap>
-<input type="button" value="<?php echo $l->m('ok')?>" onClick="okClick()" class="bt">
-<input type="button" value="<?php echo $l->m('cancel')?>" onClick="cancelClick()" class="bt">
+<input type="button" value="<?php echo $l->m('ok')?>" onclick="okClick()" class="bt">
+<input type="button" value="<?php echo $l->m('cancel')?>" onclick="cancelClick()" class="bt">
 </td>
 </tr>
 </form>

@@ -113,7 +113,7 @@ if ($HTTP_POST_FILES['img_file']['size']>0)
 </tr>
 <tr>
   <td valign="top" align="left">
-  <select name="lib" size="1" class="input" style="width: 150px;" onChange="libbrowser.submit();">
+  <select name="lib" size="1" class="input" style="width: 150px;" onchange="libbrowser.submit();">
     <?php echo $lib_options?>
   </select>
   </td>

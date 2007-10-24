@@ -89,7 +89,7 @@ echo TEXT_NETTO . '<b>'.$currencies->format(xtc_round(get_group_price($group_dat
 
 
       if ($_GET['pID'] != '') {
-        echo ' ' . TXT_STAFFELPREIS; ?> <img onMouseOver="this.style.cursor='hand'" src="images/arrow_down.gif" height="12" width="12" onClick="toggleBox('staffel_<?php echo $group_data[$col]['STATUS_ID']; ?>');"><?php
+        echo ' ' . TXT_STAFFELPREIS; ?> <img onmouseover="this.style.cursor='hand'" src="images/arrow_down.gif" height="12" width="12" onclick="toggleBox('staffel_<?php echo $group_data[$col]['STATUS_ID']; ?>');"><?php
       }
       if ($_GET['pID'] != '') {
       }

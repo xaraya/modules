@@ -59,7 +59,7 @@
 
 
 <xar:if condition="$pID ne 0">
-        <xar:mlstring>Graduated Price</xar:mlstring>; <img onMouseOver="this.style.cursor='hand'" src="images/arrow_down.gif" height="12" width="12" onClick="toggleBox('staffel_echo $loop:item['status_id']; ');">
+        <xar:mlstring>Graduated Price</xar:mlstring>; <img onmouseover="this.style.cursor='hand'" src="images/arrow_down.gif" height="12" width="12" onclick="toggleBox('staffel_echo $loop:item['status_id']; ');">
 <div id="staffel_ echo $loop:item['status_id'] " class="longDescription"><br>
 
       // ok, lets check if there is already a staffelpreis

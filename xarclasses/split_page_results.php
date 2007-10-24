@@ -60,7 +60,7 @@
                                         'name' => 'page',
                                         'values' => $pages_array,
                                         'default' => $this->currentpage,
-                                        'parameters' => 'onChange="this.form.submit();"')),
+                                        'parameters' => 'onchange="this.form.submit();"')),
                                         $num_pages);
             $i = 1;
             foreach($args as $var) {

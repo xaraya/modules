@@ -198,8 +198,8 @@ $l->setBlock('image_prop');
 </tr>
 <tr>
 <td colspan="4" align="right" valign="bottom" nowrap>
-<input type="button" value="<?php echo $l->m('ok')?>" onClick="okClick()" class="bt">
-<input type="button" value="<?php echo $l->m('cancel')?>" onClick="cancelClick()" class="bt">
+<input type="button" value="<?php echo $l->m('ok')?>" onclick="okClick()" class="bt">
+<input type="button" value="<?php echo $l->m('cancel')?>" onclick="cancelClick()" class="bt">
 </td>
 </tr>
 </form>

@@ -215,7 +215,7 @@ A.sub:hover { color: #dddddd; text-decoration: underline; }
                     <td colspan="2"><table border="0" width="100%" cellspacing="0" cellpadding="2">
                       <tr><?php echo xtc_draw_form('languages', 'index.php', '', 'get'); ?>
                         <td class="heading"><?php echo HEADING_TITLE; ?></td>
-                        <td align="right"><?php echo commerce_userapi_draw_pull_down_menu('language', $languages_array, $languages_selected, 'onChange="this.form.submit();"'); ?></td>
+                        <td align="right"><?php echo commerce_userapi_draw_pull_down_menu('language', $languages_array, $languages_selected, 'onchange="this.form.submit();"'); ?></td>
                       </form></tr>
                     </table></td>
                   </tr>

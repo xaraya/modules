@@ -54,7 +54,7 @@
     $info_smarty->assign('PRODUCTS_WEIGHT',$product_info['products_weight']);
     $info_smarty->assign('PRODUCTS_STATUS',$product_info['products_status']);
     $info_smarty->assign('PRODUCTS_ORDERED',$product_info['products_ordered']);
-    $info_smarty->assign('PRODUCTS_PRINT', '<img src="'.DIR_WS_ICONS.'print.gif"  style="cursor:hand" onClick="javascript:window.open(\''.xarModURL('commerce','user',(FILENAME_PRINT_PRODUCT_INFO,'products_id='.$_GET['products_id']).'\', \'popup\', \'toolbar=0, width=640, height=600\')">');
+    $info_smarty->assign('PRODUCTS_PRINT', '<img src="'.DIR_WS_ICONS.'print.gif"  style="cursor:hand" onclick="javascript:window.open(\''.xarModURL('commerce','user',(FILENAME_PRINT_PRODUCT_INFO,'products_id='.$_GET['products_id']).'\', \'popup\', \'toolbar=0, width=640, height=600\')">');
     $info_smarty->assign('PRODUCTS_DESCRIPTION',stripslashes($product_info['products_description']));
     $info_smarty->assign('PRODUCTS_IMAGE',xarModURL('commerce','user',(DIR_WS_INFO_IMAGES . $product_info['products_image']));
     $info_smarty->assign('PRODUCTS_POPUP_LINK','javascript:popupWindow(\'' . xarModURL('commerce','user',(FILENAME_POPUP_IMAGE, 'pID=' . $product_info['products_id']) . '\')');

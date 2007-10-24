@@ -3,7 +3,7 @@
 {if $error}
 {$error}
 {else}
-<FORM method="POST" name="product_reviews_write" id="post" action="#xarModURL('commerce','user','product_reviews'_WRITE, 'action=process&products_id=' . $_GET['products_id'])#" onSubmit="return checkForm();">
+<FORM method="POST" name="product_reviews_write" id="post" action="#xarModURL('commerce','user','product_reviews'_WRITE, 'action=process&products_id=' . $_GET['products_id'])#" onsubmit="return checkForm();">
   <input type="hidden" name="get_params" value="#$get_params#">
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>

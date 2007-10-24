@@ -263,7 +263,7 @@
                                 <input type="hidden" name="categories_date_added" value="#$cInfo.date_added#">
                             </xar:if>
                             <input type="hidden" name="parent_id" value="$cInfo.parent_id">
-                            <input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_save.gif')#" border="0" alt="#xarML('Save')#" style="cursor:hand" onClick="return confirm('#xarML("Save this Entry?")#')">.
+                            <input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_save.gif')#" border="0" alt="#xarML('Save')#" style="cursor:hand" onclick="return confirm('#xarML("Save this Entry?")#')">.
                             &#160;&#160;
                             <a href="#xarModURL('commerce','admin','categories', array('cPath' => $cPath, 'cID' => $cID))#">
                                 <img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif')#" alt="#xarML('Cancel')#">

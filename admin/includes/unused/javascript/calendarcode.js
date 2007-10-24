@@ -220,13 +220,13 @@ function Calendar(whatMonth,whatYear) {
         output += '<table width="185" border="3" class="cal-Table" cellspacing="0" cellpadding="0"><form name="Cal"><tr>';
     }
 
-    output += '<td class="cal-HeadCell" align="center" width="100%"><a href="javascript:clearDay();"><img name="calbtn1" src="./images/cal_del_small.gif" border="0" width="12" height="10"></a>&#160;&#160;<a href="javascript:scrollMonth(-1);" class="cal-DayLink">&lt;</a>&#160;<SELECT class="cal-TextBox" NAME="cboMonth" onChange="changeMonth();">';
+    output += '<td class="cal-HeadCell" align="center" width="100%"><a href="javascript:clearDay();"><img name="calbtn1" src="./images/cal_del_small.gif" border="0" width="12" height="10"></a>&#160;&#160;<a href="javascript:scrollMonth(-1);" class="cal-DayLink">&lt;</a>&#160;<SELECT class="cal-TextBox" NAME="cboMonth" onchange="changeMonth();">';
     for (month=0; month<12; month++) {
         if (month == whatMonth) output += '<OPTION VALUE="' + month + '" SELECTED>' + names[month] + '<\/OPTION>';
         else                output += '<OPTION VALUE="' + month + '">'          + names[month] + '<\/OPTION>';
     }
 
-    output += '<\/SELECT><SELECT class="cal-TextBox" NAME="cboYear" onChange="changeYear();">';
+    output += '<\/SELECT><SELECT class="cal-TextBox" NAME="cboYear" onchange="changeYear();">';
 
     for (year=minYearList; year<maxYearList; year++) {
         if (year == whatYear) output += '<OPTION VALUE="' + year + '" SELECTED>' + year + '<\/OPTION>';
