@@ -45,7 +45,7 @@
             <tr>
                 <td width="10%" class="xar-accent" align="center">
                     <xar:if condition="isset($fileList) AND count($fileList)">
-                        <input type="checkbox" name="file_all" id="file_all" onClick="CheckAll();" />
+                        <input type="checkbox" name="file_all" id="file_all" onclick="CheckAll();" />
                     </xar:if>
                 </td>
                 <td width="65%" class="xar-accent" align="left">&nbsp;

@@ -27,7 +27,7 @@
                             <input type="submit" name="submit" value="#xarML('Delete')#" />
                             <input type="hidden" name="authid" value="#$authid#" />
                             <input type="hidden" name="confirmation" value="1" />
-                            <input type="submit" name="submit" value="#xarML('Cancel')#" onClick="javascript:window.location='#xarModURL('filemanager', 'admin', 'view')#'; return false;" />
+                            <input type="submit" name="submit" value="#xarML('Cancel')#" onclick="javascript:window.location='#xarModURL('filemanager', 'admin', 'view')#'; return false;" />
                         </form>
                     </td>
                 </tr>
@@ -38,7 +38,7 @@
                             </tr><tr>
                         </xar:if>
                         <td class="xar-norm" align="left">&nbsp;
-                            <a onClick="MyWindow=window.open('#xarModURL('filemanager', 'fs', 'properties')#&amp;fileId=#$loop:item['fileId']#',
+                            <a onclick="MyWindow=window.open('#xarModURL('filemanager', 'fs', 'properties')#&amp;fileId=#$loop:item['fileId']#',
                                                             '#$loop:item['fileName']#',
                                                             'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,width=500,height=375,left=20,top=20'); 
                                                             return false;">
