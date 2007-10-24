@@ -18,7 +18,7 @@
                 <a href="#$loop:item['editurl']#">
                     <img src="modules/censor/xarimages/edit.gif" alt="#$loop:item['edittitle']#" />
                 </a>  
-                <a href="#$loop:item['deleteurl']#" onClick="#$loop:item['javascript']#">
+                <a href="#$loop:item['deleteurl']#" onclick="#$loop:item['javascript']#">
                     <img src="modules/censor/xarimages/delete.gif" alt="#$loop:item['deletetitle']#" />
                 </a>
             </td>

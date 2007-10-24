@@ -27,7 +27,7 @@
             </td>
             <td class="xar-norm-outline" style="text-align: center; width: 100px;border-width: 0px 0px 1px 0px;border-style: dotted;">
                 <a href="#$loop:item['editurl']#"><xar:mlstring>Edit</xar:mlstring></a>  |
-                <a href="#$loop:item['deleteurl']#" onClick="#$loop:item['javascript']#"><xar:mlstring>Delete</xar:mlstring></a>
+                <a href="#$loop:item['deleteurl']#" onclick="#$loop:item['javascript']#"><xar:mlstring>Delete</xar:mlstring></a>
             </td>
         </tr>
         </xar:loop>
