@@ -22,7 +22,7 @@
         </a>
     </dd>
     <dd>
-        <a href="#$deleteurl#" onClick="#$javascript#">
+        <a href="#$deleteurl#" onclick="#$javascript#">
             <xar:mlstring>
                 Delete Referers
             </xar:mlstring>
@@ -30,7 +30,7 @@
     </dd>
     <xar:if condition="(xarModIsAvailable('comments')) and (xarModGetVar('comments', 'useblacklist') eq true)">
         <dd>
-            <a href="#$filterurl#" onClick="#$filterjavascript#">
+            <a href="#$filterurl#" onclick="#$filterjavascript#">
                 <xar:mlstring>
                     Filter Spam
                 </xar:mlstring>
