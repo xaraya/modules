@@ -90,7 +90,7 @@ function vendors_manufacturersblock_display($blockinfo)
                 'name' =>'manufacturers_id',
                 'values' => $manufacturers_array,
                 'default' => xarSession::getVar('currency'),
-                'parameters' => 'onChange="this.form.submit();" size="' . $configuration['max_manufacturers_list'] . '" style="width: 100%"'
+                'parameters' => 'onchange="this.form.submit();" size="' . $configuration['max_manufacturers_list'] . '" style="width: 100%"'
             )
         );
     }
