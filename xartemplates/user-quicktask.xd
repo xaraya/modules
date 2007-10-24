@@ -16,7 +16,7 @@
             <xar:if condition="count($tasklist) gt 0">
                 <form method="post" action="#$action#" name="searchtasks" id="searchtasks" style="display: inline;" >
         
-                <select name="taskid" onChange="#$action#">
+                <select name="taskid" onchange="#$action#">
                     <option value=""><xar:mlstring> - select a task - </xar:mlstring></option>
                 <xar:foreach in="$tasklist" value="$taskinfo">
                     <option value="#$taskinfo['taskid']#">#$taskinfo['task_name']#</option>

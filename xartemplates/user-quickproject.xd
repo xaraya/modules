@@ -21,7 +21,7 @@
 	        </xar:if>
         
           
-            <select name="projectid" onChange="#$action#">
+            <select name="projectid" onchange="#$action#">
                 <option value=""><xar:mlstring> - select a project - </xar:mlstring></option>
             <xar:foreach in="$projectlist" value="$projectinfo">
                 <option value="#$projectinfo['projectid']#">#$projectinfo['project_name']#</option>
