@@ -29,7 +29,7 @@ function startTimer(bid) {
 }
 
 <xar:if condition="$refresh">
-window.onLoad = startTimer(#$bid#);
+window.onload = startTimer(#$bid#);
 </xar:if>
 // ]]>
 </script>
