@@ -2,7 +2,7 @@
   <objectid>27</objectid>
   <label>News</label>
   <parent>objects</parent>
-  <moduleid>182</moduleid>
+  <moduleid>151</moduleid>
   <itemtype>19</itemtype>
   <class>DataObject</class>
   <filepath></filepath>

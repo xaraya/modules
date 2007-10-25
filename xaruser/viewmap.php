@@ -98,14 +98,11 @@ function articles_user_viewmap($args)
 
     // TODO: re-evaluate this after user feedback...
         // *trick* Use the 'default' categories here, instead of all rootcats
-        $rootcats = unserialize(xarModVars::get('articles','basecids'));
+        $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles','itemtype' => 0));
 
-        $catlist = array();
-        if (!empty($rootcats) && is_array($rootcats)) {
-            foreach ($rootcats as $cid) {
-                $catlist[$cid] = 1;
-            }
-        }
+		foreach ($rootcats as $cid) {
+			$catlist[$catid['category_id']] = 1;
+		}
 
 
         // create the category tree for each root category
@@ -140,15 +137,11 @@ function articles_user_viewmap($args)
 
         // Get the base categories
         if (!empty($ptid)) {
-            $cidstring = xarModGetVar('articles','mastercids.'.$ptid);
+	        $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles','itemtype' => $ptid));
         } else {
-            $cidstring = xarModGetVar('articles','mastercids');
+	        $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles','itemtype' => 0));
             $ptid = null;
         }
-        if (!isset($cidstring)) {
-            $cidstring = '';
-        }
-        $rootcats = explode (';', $cidstring);
 
         if (count($rootcats) != 2) {
             $data['catgrid'][0][0] = xarML('You need 2 base categories in order to use this grid view');
@@ -156,7 +149,7 @@ function articles_user_viewmap($args)
             $catlist = array();
             if (!empty($rootcats) && is_array($rootcats)) {
                 foreach ($rootcats as $cid) {
-                    $catlist[$cid] = 1;
+                    $catlist[$catid['category_id']] = 1;
                 }
             }
 

@@ -159,9 +159,9 @@ function articles_user_archive($args)
 
     // Get the list of root categories for this publication type
     if (!empty($ptid)) {
-        $rootcats = unserialize(xarModGetUserVar('articles','basecids',$ptid));
+        $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles','itemtype' => $ptid));
     } else {
-        $rootcats = unserialize(xarModVars::get('articles','basecids'));
+        $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles','itemtype' => 0));
     }
     $catlist = array();
     $catinfo = array();
@@ -177,13 +177,13 @@ function articles_user_archive($args)
             $cats = xarModAPIFunc('categories',
                                  'user',
                                  'getcat',
-                                 array('cid' => $cid,
+                                 array('cid' => $cid['category_id'],
                                        'return_itself' => true,
                                        'getchildren' => true));
             foreach ($cats as $info) {
                 $item = array();
                 $item['name'] = $info['name'];
-                $item['root'] = $cid;
+                $item['root'] = $cid['category_id'];
                 $catinfo[$info['cid']] = $item;
             }
             // don't allow sorting by category when viewing all articles
@@ -198,14 +198,14 @@ function articles_user_archive($args)
 
             }
             // catch more faulty categories assignments
-            if (isset($catinfo[$cid])) {
-                $catlist[] = array('cid' => $cid,
-                                   'name' => $catinfo[$cid]['name'],
+            if (isset($catinfo[$cid['category_id']])) {
+                $catlist[] = array('cid' => $cid['category_id'],
+                                   'name' => $catinfo[$cid['category_id']]['name'],
                                    'link' => $link);
                 $catsel[] = xarModAPIFunc('categories',
                                           'visual',
                                           'makeselect',
-                                          Array('cid' => $cid,
+                                          Array('cid' => $cid['category_id'],
                                                 'return_itself' => true,
                                                 'select_itself' => true,
                                                 'values' => &$seencid,

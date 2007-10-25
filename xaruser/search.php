@@ -282,12 +282,9 @@ function articles_user_search($args)
         $catarray = array();
         foreach ($ptids as $curptid) {
             // get root categories for this publication type
-            $catlinks = xarModAPIFunc('articles',
-                                     'user',
-                                     'getrootcats',
-                                     array('ptid' => $curptid));
+	        $catlinks = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles','itemtype' => $curptid));
             foreach ($catlinks as $cat) {
-                $catarray[$cat['catid']] = $cat['cattitle'];
+                $catarray[$cat['category_id']] = $cat['name'];
             }
         }
 
@@ -391,6 +388,7 @@ function articles_user_search($args)
                                                   'user',
                                                   'getrootcats',
                                                   array('ptid' => $curptid));
+        				$catroots = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles','itemtype' => $curptid));
 
                     }
                     foreach ($catinfo as $cid => $info) {
@@ -405,9 +403,9 @@ function articles_user_search($args)
                         $rootidx = 1;
                         foreach ($catroots as $rootcat) {
                             // see if we're a child category of this rootcat (cfr. Celko model)
-                            if ($info['left'] >= $rootcat['catleft'] && $info['left'] < $rootcat['catright']) {
+                            if ($info['left'] >= $rootcat['left_id'] && $info['left'] < $rootcat['right_id']) {
                                 // only needed when sorting by root category id
-                                $catinfo[$cid]['root'] = $rootcat['catid'];
+                                $catinfo[$cid]['root'] = $rootcat['category_id'];
                                 // only needed when sorting by root category order
                                 $catinfo[$cid]['order'] = $rootidx;
                                 break;

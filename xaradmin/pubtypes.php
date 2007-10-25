@@ -14,8 +14,20 @@
 /**
  * manage publication types (all-in-one function for now)
  */
+sys::import('modules.query.class.query');
+
 function articles_admin_pubtypes()
 {
+    if (!xarSecurityCheck('AdminArticles')) return;
+    /*
+    $myobject = DataObjectMaster::getObjectList(array('name' => 'objects'));
+    $conditions = new Query();
+    $conditions->eq('object_moduleid',xarMod::getRegID('articles'));
+    $return_url = xarServerGetCurrentURL();
+
+    return array('return_url'=>$return_url, 'object'=>$myobject, 'conditions' => $conditions);
+    */
+
     // Get parameters
     if (!xarVarFetch('ptid',   'isset', $ptid,   NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('action', 'isset', $action, NULL, XARVAR_DONT_SET)) {return;}
