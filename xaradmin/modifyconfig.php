@@ -203,16 +203,13 @@ function articles_admin_modifyconfig()
 
     // get root categories for this publication type
     if (!empty($ptid)) {
-        $catlinks = xarModAPIFunc('articles',
-                                 'user',
-                                 'getrootcats',
-                                 array('ptid' => $ptid));
+        $catlinks = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles','itemtype' => $ptid));
     // Note: if you want to use a *combination* of categories here, you'll
     //       need to use something like 'c15+32'
         foreach ($catlinks as $catlink) {
-            $viewoptions[] = array('value' => 'c' . $catlink['catid'],
+            $viewoptions[] = array('value' => 'c' . $catlink['category_id'],
                                    'label' => xarML('Browse in') . ' ' .
-                                              $catlink['cattitle']);
+                                              $catlink['name']);
         }
     }
     $data['viewoptions'] = $viewoptions;

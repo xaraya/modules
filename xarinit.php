@@ -143,6 +143,7 @@ function articles_init()
 
 // TODO: load configuration from file(s) ?
 
+// TODO: remove this code and the setup.php file
     // Load the initial setup of the publication types
     if (file_exists('modules/articles/xarsetup.php')) {
         include 'modules/articles/xarsetup.php';
@@ -154,7 +155,6 @@ function articles_init()
         $defaultpubtype = 0;
     }
 
-/* TODO: remove this code and the setup.php file
     // Save publication types
     $pubid = array();
     foreach ($pubtypes as $pubtype) {
@@ -170,7 +170,7 @@ function articles_init()
         $ptid = $dbconn->PO_Insert_ID($pubtypestable, 'pubtypeid');
         $pubid[$id] = $ptid;
     }
-*/
+// ----------------------------------------------------
 
 # --------------------------------------------------------
 #
@@ -179,6 +179,10 @@ function articles_init()
     $module = 'articles';
     $objects = array(
                      'articles_news',
+                     'articles_documents',
+//                     'articles_faqs',
+//                     'articles_reviews',
+//                     'articles_weblinks',
                      );
 
     if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
@@ -302,6 +306,17 @@ function articles_init()
                       //array(new xarTemplateAttribute('bid', XAR_TPL_STRING|XAR_TPL_REQUIRED)),
                       array(),
                       'articles_userapi_handleFieldTag');
+
+# --------------------------------------------------------
+#
+# Set up hooks
+#
+    sys::import('xaraya.structures.hooks.observer');
+
+    $observer = new BasicObserver('articles','admin','getconfighook');
+    $observer->register('module', 'getconfig', 'API');
+    $subject = new HookSubject('listings');
+    $subject->attach($observer);
 
     // Enable articles hooks for search
     if (xarModIsAvailable('search')) {

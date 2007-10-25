@@ -78,9 +78,9 @@ function articles_admin_importpages()
         }
 
         $catlist = array();
-        $rootcats = unserialize(xarModGetUserVar('articles','basecids',$ptid));
+        $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles','itemtype' => $ptid));
         foreach ($rootcats as $catid) {
-            $catlist[$catid] = 1;
+            $catlist[$catid['category_id']] = 1;
         }
         $seencid = array();
         if (isset($cids) && is_array($cids)) {

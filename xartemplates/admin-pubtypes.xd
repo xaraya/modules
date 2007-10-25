@@ -14,7 +14,12 @@
             Publication Types
         </xar:mlstring>
     </h2>
-    <xar:set name="statusmsg">xarSession::getVar('statusmsg')</xar:set>
+<!-- 
+    <xar:set name="name">$object->name</xar:set>
+    <xar:data-input type="listingslist"  object="$name" fieldlist="label,name" conditions="$conditions" />
+    -->
+
+<xar:set name="statusmsg">xarSession::getVar('statusmsg')</xar:set>
     <xar:if condition="isset($statusmsg) and $statusmsg ne ''">
         <p class="xar-error">#$statusmsg#</p>
     </xar:if>
