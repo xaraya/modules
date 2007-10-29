@@ -49,7 +49,6 @@
                 <div style="clear: both;"></div>
             </div>
 
-
             <xar:comment>
                 Display the contents section.
                 TODO: this section really lends itself to a couple of nested lists.
@@ -57,35 +56,8 @@
 
             <div class="mag-issue-contents">
                 <h2><xar:mlstring>In This Issue</xar:mlstring></h2>
-
-                <xar:loop name="$groups" id="series">
-                    <div class="mag-contents-group">
-                        <xar:if condition="$loop:series:key ge 1">
-                            <h3>
-                                #xarVarPrepForDisplay($series[$loop:series:key]['title'])#
-                                <span> | </span>
-                                <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'series','mag'=&gt;$mag.ref,'series'=&gt;$series[$loop:series:key]['ref']))#" title="#xarML('View details about this series')#">
-                                    <xar:mlstring>Details</xar:mlstring>
-                                </a>
-                            </h3>
-                        </xar:if>
-
-                        <xar:loop name="$loop:series:item" id="article">
-                            <p>
-                                <xar:if condition="$articles[$loop:article:item]['premium'] ne ''">
-                                    <xar:set name="$art_prem_class_suffix">#$articles[$loop:article:item]['premium']#</xar:set>
-                                <xar:else />
-                                    <xar:set name="$art_prem_class_suffix">'UNKNOWN'</xar:set>
-                                </xar:if>
-                                <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'article','mag'=&gt;$mag.ref,'issue'=&gt;$issue.ref,'aid'=&gt;$loop:article:item))#" class="mag-prem-#$art_prem_class_suffix#">
-                                    #xarVarPrepForDisplay($articles[$loop:article:item]['title'])#
-                                </a>
-                            </p>
-                        </xar:loop>
-                    </div>
-                </xar:loop>
+                <xar:template module="mag" file="toc-list" />
             </div>
-
         
         </xar:if>
     </xar:if>

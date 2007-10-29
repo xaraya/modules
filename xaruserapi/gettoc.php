@@ -11,6 +11,8 @@
  * @param status_group string PUBLISHED or DRAFT; sets statuses at all levels appropriately
  * @return array Returns arrays for articles, series and the TOC grouping.
  *
+ * @todo Provide a full TOC for an absolute minimum of details - just an issue ID should be enough.
+ *
  */
 
 function mag_userapi_gettoc($args)

@@ -1,7 +1,11 @@
 <xar:if condition="!empty($authors)">
     <div class="mag-article-authors">
         <div class="mag-footer-authors">
-            <h2>Authors</h2>
+            <xar:if condition="count($authors) eq 1">
+                <h2><xar:mlstring>About the Author</xar:mlstring></h2>
+            <xar:else />
+                <h2><xar:mlstring>About the Authors</xar:mlstring></h2>
+            </xar:if>
             <xar:loop name="$authors">
                 <div class="mag-article-author">
                     <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'authors','mag'=&gt;$mag.ref,'auid'=&gt;$loop:item.auid))#">
@@ -10,10 +14,11 @@
                         </xar:if>
                         <xar:comment>TODO: force mini-bio to be text</xar:comment>
                         <h3>#xarVarPrepForDisplay($loop:item.name)#</h3>
-                        <xar:if condition="!empty($loop:item.mini_bio)">
-                            #xarVarPrepForDisplay($loop:item.mini_bio)#
-                        </xar:if>
                     </a>
+
+                    <xar:if condition="!empty($loop:item.mini_bio)">
+                        <p>#xarVarPrepForDisplay($loop:item.mini_bio)#</p>
+                    </xar:if>
                 </div>
             </xar:loop>
             <div style="clear: both;"></div>

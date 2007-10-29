@@ -1,6 +1,11 @@
 <xar:comment>Article header section</xar:comment>
 <div class="mag-article-header">
     <xar:comment>Main title</xar:comment>
+
+    <xar:if condition="!empty($series.title)">
+        <p class="mag-article-series">#xarVarPrepForDisplay($series.title)#</p>
+    </xar:if>
+
     <h1>
         <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'article','mag'=&gt;$mag.ref,'issue'=&gt;$issue.ref,'aid'=&gt;article.aid))#">
             #xarVarPrepForDisplay($article.title)#

@@ -2,25 +2,40 @@
 <xar:comment>
     Article links.
     Shows links to other articles in this issue.
-    TODO: perhaps a jQuery pop-up window showing a mini-version of the table of contents? All the data is here.
+    TODO: perhaps a jQuery pop-up window showing a mini-version of the table of contents? All the data is here [DONE]
+    TODO: pass the titles through a filter to ensure they are truncated to a maximum number of words.
 </xar:comment>
 
+
 <xar:if condition="!empty($toc.article_ids)">
+    <xar:comment>Pop-up table of contents</xar:comment>
     <div class="mag-artlinks">
+        <xar:if condition="xarModIsAvailable('jquery')">
+            <xar:set name="cluetip_subdata">array("selector"=>"a#mag_show_toc", "options"=>"width: 500, attribute: 'rel', local: true, hideLocal: true, sticky: true, activation: 'toggle'")</xar:set>
+            <xar:template file="jquery.cluetip" module="jquery" subdata="#$cluetip_subdata#"/>
+            <div id="mag_toc"><div id="mag_toc_inner">
+                <xar:template module="mag" file="toc-list" subdata="$toc" />
+            </div></div>
+        </xar:if>
+
         <xar:if condition="!empty($toc.prev_aid)">
             <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'article','mag'=&gt;$mag.ref,'issue'=&gt;$issue.ref,'aid'=&gt;$toc.prev_aid))#" title="#xarVarPrepForDisplay($toc['articles'][$toc['prev_aid']]['title'])#">
-                &lt;&lt;
+                &lt;&lt; #xarVarPrepForDisplay($toc['articles'][$toc['prev_aid']]['title'])#
             </a>
         <xar:else />
-            &lt;&lt;
+            &lt;&lt; <xar:mlstring>First Article</xar:mlstring>
         </xar:if>
+        |
+        <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'contents','mag'=&gt;$mag.ref,'issue'=&gt;$issue.ref,'fragment'=&gt;'mag-article-' . $article.aid))#" id="mag_show_toc" rel="#mag_toc" title="#xarML('Table Of Contents')#">
+            <xar:mlstring>Contents</xar:mlstring>
+        </a>
         |
         <xar:if condition="!empty($toc.next_aid)">
             <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'article','mag'=&gt;$mag.ref,'issue'=&gt;$issue.ref,'aid'=&gt;$toc.next_aid))#" title="#xarVarPrepForDisplay($toc['articles'][$toc['next_aid']]['title'])#">
-                &gt;&gt;
+                #xarVarPrepForDisplay($toc['articles'][$toc['next_aid']]['title'])# &gt;&gt;
             </a>
         <xar:else />
-            &gt;&gt;
+            <xar:mlstring>Last Article</xar:mlstring> &gt;&gt;
         </xar:if>
     </div>
 </xar:if>

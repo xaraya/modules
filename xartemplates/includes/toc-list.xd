@@ -1,0 +1,36 @@
+
+<xar:comment>
+    Show the table of contents main list.
+    Used in both the main contents pages and in pop-up TOCs in article displays.
+    Input (all available directly from the main toc API structure):
+       $groups - the TOC grouping
+       $articles - all articles
+       $mag - the magazine
+       $series - the list of series
+       $issue - the issue
+</xar:comment>
+
+<xar:loop name="$groups" id="series">
+    <div class="mag-contents-group">
+        <xar:if condition="$loop:series:key ge 1">
+            <h3>
+                <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'series','mag'=&gt;$mag.ref,'series'=&gt;$series[$loop:series:key]['ref']))#" title="#xarML('View details about this series')#">
+                    #xarVarPrepForDisplay($series[$loop:series:key]['title'])#
+                </a>
+            </h3>
+        </xar:if>
+
+        <xar:loop name="$loop:series:item" id="article">
+            <p id="mag-article-#$loop:article:item#">
+                <xar:if condition="$articles[$loop:article:item]['premium'] ne ''">
+                    <xar:set name="$art_prem_class_suffix">#$articles[$loop:article:item]['premium']#</xar:set>
+                <xar:else />
+                    <xar:set name="$art_prem_class_suffix">'UNKNOWN'</xar:set>
+                </xar:if>
+                <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'article','mag'=&gt;$mag.ref,'issue'=&gt;$issue.ref,'aid'=&gt;$loop:article:item))#" class="mag-prem-#$art_prem_class_suffix#">
+                    #xarVarPrepForDisplay($articles[$loop:article:item]['title'])#
+                </a>
+            </p>
+        </xar:loop>
+    </div>
+</xar:loop>

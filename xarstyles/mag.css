@@ -202,11 +202,12 @@ div.mag-article div.mag-article-author img {
     margin-right: 0.5em;
     border: 1px solid #666666;
 }
-div.mag-article div.mag-article-authors a {
+div.mag-article div.mag-article-authors p {
     font-size: 100%;
     line-height: 130%;
     font-weight: normal;
     color: #333333;
+    margin-top: 0;
 }
 
 
@@ -291,4 +292,41 @@ div.mag-authors div.mag-author-summary {
 /* Bit of styling on thickbox */
 body div#TB_overlay.TB_overlayBG {
     background-color: #003f3f;
+}
+
+/* Article links - links at the top of each article, to other related articles, e.g. next/prev */
+
+div.mag-artlinks {
+    margin: 0.5em 0;
+    clear: both;
+    text-align: right;
+}
+/* Hide the pop-up TOC right from the start, so it does not flicker up
+before jQuery tooltips disables it. */
+div.mag-artlinks #mag_toc {
+    display: none;
+}
+
+/* Cluetip styles - for general articles boxes */
+.cluetip-default div#cluetip-outer {
+    background-color: #ffffff;
+    border: 2px solid #444444;
+}
+.cluetip-default h3#cluetip-title {
+    background-color: #444444;
+}
+
+/* Cluetip inner styles for TOC popup on article detail page */
+div#mag_toc_inner a {
+    text-decoration: none !important;
+    font-weight: normal;
+}
+div#mag_toc_inner p {
+    line-height: 110%;
+    margin: 0;
+    font-weight: normal;
+}
+div#mag_toc_inner h3 {
+    margin: 0.25em 0;
+    text-decoration: underline;
 }

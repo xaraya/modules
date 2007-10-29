@@ -1,6 +1,12 @@
 
+<xar:if condition="xarModIsAvailable('jquery')">
+    <xar:set name="cluetip_subdata">array("selector"=>"a.resource", "options"=>"width: 500, attribute: 'href', local: true, hideLocal: false, sticky: true, activation: 'toggle'")</xar:set>
+    <xar:template file="jquery.cluetip" module="jquery" subdata="#$cluetip_subdata#"/>
+</xar:if>
+
 <xar:style file="mag" scope="module" />
 <xar:style file="mag-custom" scope="module" />
+<xar:style file="mag-wysiwyg" scope="module" />
 
 <xar:comment>
     Wrap the whole article in a class based on the style name.

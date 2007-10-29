@@ -29,6 +29,14 @@ function mag_userapi_url($args)
         }
     }
 
+    // If a fragment has been requested, then extract it.
+    if (isset($args['fragment'])) {
+        $fragment = $args['fragment'];
+        unset($args['fragment']);
+    } else {
+        $fragment = NULL;
+    }
+
     if (!empty($s_pid)) {
         // Magazine is embedded into xarpages, so return a URL to xarpages.
         $args['pid'] = $s_pid;
@@ -40,7 +48,7 @@ function mag_userapi_url($args)
             unset($args['func']);
         }
 
-        $url = xarModURL('xarpages', $type, 'display', $args);
+        $url = xarModURL('xarpages', $type, 'display', $args, true, $fragment);
     } else {
         if (isset($args['func'])) {
             // If the func is set (which it should be) then remove it
@@ -52,7 +60,7 @@ function mag_userapi_url($args)
             $func = 'main';
         }
 
-        $url = xarModURL('mag', $type, $func, $args);
+        $url = xarModURL('mag', $type, $func, $args, true, $fragment);
     }
 
     return $url;
