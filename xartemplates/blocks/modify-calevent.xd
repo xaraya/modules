@@ -23,7 +23,7 @@
         <xar:mlstring>
             Category
         </xar:mlstring>
-    </label><select name="catfilter" id="catfilter#$blockid#" onChange="this.form.submit();">
+    </label><select name="catfilter" id="catfilter#$blockid#" onchange="this.form.submit();">
         <option value="0">
             <xar:mlstring>
                 All

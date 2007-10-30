@@ -12,7 +12,7 @@
         </xar:mlstring>
     </h2>
 
-    <form name="cat_modify" action="&xar-modurl-julian-admin-modifycategories;" onSubmit="if(!isCancel){return validate2(this)}" method="post" enctype="application/x-www-form-urlencoded">
+    <form name="cat_modify" action="&xar-modurl-julian-admin-modifycategories;" onsubmit="if(!isCancel){return validate2(this)}" method="post" enctype="application/x-www-form-urlencoded">
         <fieldset>
             <legend>
                 <strong><xar:mlstring>Existing category colors</xar:mlstring></strong>
@@ -50,7 +50,7 @@
         </fieldset>
     </form>
 
-    <form name="cat_add" action="&xar-modurl-julian-admin-modifycategories;" onSubmit="if(!isCancel){return validate2(this)}" method="post" enctype="application/x-www-form-urlencoded">
+    <form name="cat_add" action="&xar-modurl-julian-admin-modifycategories;" onsubmit="if(!isCancel){return validate2(this)}" method="post" enctype="application/x-www-form-urlencoded">
         <fieldset>
             <legend>
                 <strong><xar:mlstring>Add Category Color</xar:mlstring></strong>
