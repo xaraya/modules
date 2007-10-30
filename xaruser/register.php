@@ -50,7 +50,7 @@ function registration_user_register()
         return;
     }
 
-    //we could turn of registration, but let's check for site lock . We don't want people  registering during this period
+     //Check for site lock . We don't want people  registering during this period
      $lockvars = unserialize(xarModVars::get('roles','lockdata'));
      if ($lockvars['locked'] ==1) {
         xarErrorSet(XAR_SYSTEM_MESSAGE,
@@ -60,20 +60,13 @@ function registration_user_register()
      }
 
     xarTplSetPageTitle(xarML('New Account'));
-    if (!xarVarFetch('phase','str:1:100',$phase,'request',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('phase','str:1:100',$phase,'registerform',XARVAR_NOT_REQUIRED)) return;
 
 
     $regobjectid = xarModVars::get('registration', 'registrationobject');
 	$authid = xarSecGenAuthKey();
 
     switch(strtolower($phase)) {
-
-        case 'choices':
-            xarTplSetPageTitle(xarML('Log In'));
-            $loginlabel = xarML('Sign In');
-            $data       = xarTplModule('authsystem','user', 'choices', array('loginlabel' => $loginlabel));
-            break;
-
         case 'checkage':
             $minage     = xarModVars::get('registration', 'minage');
             $submitlink = xarModURL('registration', 'user', 'register',array('phase' => 'registerform'));
@@ -84,7 +77,6 @@ function registration_user_register()
 
         case 'registerformcycle':
             $fieldvalues = xarSessionGetVar('Registration.UserInfo');
-        case 'registerform': //Make this default now login is handled by authsystem
         default:
 
             $object = DataObjectMaster::getObject(array('objectid' => $regobjectid));
@@ -236,7 +228,7 @@ function registration_user_register()
             $authmodule          = $defaultauthdata['defaultauthmodname'];
 
             //jojo - should just use authsystem now as we used to pre 1.1 merge
-            $loginlink =xarModURL($defaultloginmodname,'user','main');
+            $loginlink = xarModURL($defaultloginmodname,'user','main');
 
             //variables required for display of correct validation template to users, depending on registration options
             $data['loginlink'] = $loginlink;
@@ -263,11 +255,16 @@ function registration_user_register()
 			// Update the field values and create the user
 			$object->setFieldValues($fieldvalues,1);
             $id = $object->createItem();
+            $isvalid = $object->checkInput($userdata);
+            debug($userdata);
+            if (!$isvalid) return;*/
+            $id = $object->createItem($userdata);
 
-            if (empty($id)) return;
+            $values['id'] = $id;
+
             xarModVars::set('roles', 'lastuser', $id);
 
-            //Make sure the user email setting is off unless the user sets it
+            // @todo we prolly shouldn't need to call this if roles create returned the object
             xarModSetUserVar('roles','allowemail', false, $id);
 
             $hookdata = $fieldvalues;

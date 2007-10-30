@@ -4,16 +4,11 @@
 
 <xar:mlstring>A user registered with the following details at: </xar:mlstring> #$sitename#
 
-
-<xar:mlstring>Status: </xar:mlstring>#$pending#
-
-<xar:mlstring>User ID: </xar:mlstring>#$id#
-
-<xar:mlstring>User Display Name: </xar:mlstring>#$userrealname#
-
-<xar:mlstring>Username: </xar:mlstring>#$username#
-
-<xar:mlstring>User email: </xar:mlstring>#$useremail#
+<xar:set name="lineend">"\r\n"</xar:set>
+    <xar:data-getitem name="$properties" object="$object" />
+    <xar:foreach in="$properties" key="$field">
+        #$properties.$field:label#: #$properties.$field:value# #$lineend#
+    </xar:foreach>
 
 #$terms#
 
