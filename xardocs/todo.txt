@@ -1,0 +1,113 @@
+
+Author API:
+- Fetch roles when retrieving for an article
+- Translate roles (from codes to descriptions) using the DD object
+- Display author role when showing the author in context (with an article)
+- Select articles for an author [DONE]
+- Display author articles on author page [DONE]
+- Display author articles on article page [USE A BLOCK]
+- Pager on authors page [LATER]
+
+Article templates for each style and/or series [DONE]
+- Split main article template into includes [DONE]
+
+Pass page details to all user templates for use by the custom navbar template
+
+Next/Previous article in the issue (from the table of contents). [DONE]
+
+Handling of premium articles - custom templates to link to joining information
+
+Filters to force HTML and TEXT where appropriate
+
+Admin screens
+- Magazines Overview [DONE]
+- Magazines Editing
+- Issues Overview [DONE]
+- Issues Editing
+- Series Overview
+- Series Editing
+- Articles Overview [DONE]
+- Articles Editing [DONE]
+- Article author links [DONE]
+-- Drop-down list of authors to select [DONE]
+-- Drop-down list of articles (optionally locked onto current article, and certainly locked onto current magazine and issue) [DONE]
+- Authors Overview
+- Authors Editing
+
+Include TinyMCE
+- iBrowser testing
+- configuration of thumbnail generation
+
+Support general transform hooks on output
+- Hook code
+- Params to define which fields are hooked in each itemtype
+- admin API to declare itemtypes to the hooks admin pages
+
+Handy blocks
+- Send major IDs and record to a page cache structure
+- Block: related articles (linked to tags)
+- Block: articles by this author
+- Block: articles in this magazine/issue/series
+- Block: series in this issue (perhaps working through the contents page?)
+- Block: current issue (front page image and a link)
+
+Included template to pull in stylesheets specific to individual magazines.
+
+Linking to adverts - decide on how this is likely to work
+
+Set the title on various pages
+- Article detail title
+- Other pages
+
+Privileges
+==========
+
+Privileges will be fairly coarse: will apply to whole magazines, which all their
+articles will inherit. Only one privilege will need to be checked for each page
+view - the level for the magazine (or for each magazine when administering).
+
+There are two instances: magazine and article.
+
+Instance: magazine; masks: magazine ID
+--------------------------------------
+- No Access (0)         No access to a magazine.
+- Overview (100)        Read the magazine overviews, TOCs and series overviews; no access to articles at all.
+- Read (200)            Read articles (used in conjuction with the article instance).
+- Comment (300)
+- Moderate (400)
+- Edit (500)            Edit articles in a magazine (add, remove, modify, link authors); edit authors (add, modify only)
+- Add (600)
+- Delete (700)          Edit series for a magazine (add, remove, modify); Edit magazines (modify only, no status changes)
+- Administer (800)      Edit magazines (add, remove, move, modify); Edit authors (add, remove, modify)
+
+With edit privilege, a user is able to preview articles, regardless of the status of that magazine, article or series.
+
+Instance: article; masks: magazine ID, article 'premium' flag
+-------------------------------------------------------------
+- No Access (0)         No access to the article (title can be seen in the TOC only).
+- Overview (100)        View summary details only for the article. The extent of this is defined in the templates.
+- Read (200)            Read full article.
+- Comment (300)
+- Moderate (400)
+- Edit (500)            
+- Add (600)
+- Delete (700)          
+- Administer (800)      
+
+When the user does not have access to an article, a custom template will be displayed in its place. This allows
+the administrator to direct the user to membership pages or put in a custom message.
+
+The 'premium' flag value is used to map a premium value onto a privilege. Suggested default mappings are:
+
+    Flag        Anonymous   User        Subscriber
+    ----        ---------   ----        ----------
+    'OPEN'      Read*       Read        Read
+    'SAMPLE'    Overview    Overview    Read
+    'PREMIUM'   Overview    Overview    Read
+
+* You may wish to force users to log in to view articles - set this one to Overview or No Access.
+Similarly, Anonymous may get No Access rather than Overview in all instances. Subscribers are
+considered fully-paid up members.
+
+The unused access levels are reserved for future 
+
