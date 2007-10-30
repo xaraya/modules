@@ -45,7 +45,6 @@ function registration_admin_modifyconfig()
                     }
                     $data['groups'] = $groups;
 \
-                    $data['defaultgroup'] = xarModVars::get('roles', 'defaultgroup');
                     $notifyemail = xarModVars::get('registration','notifyemail');
                     if (!isset($notifyemail) || trim ($notifyemail)== '') $notifyemail = xarModVars::get('mail','adminmail');
                     $data['notifyemail']=$notifyemail;
@@ -81,7 +80,8 @@ function registration_admin_modifyconfig()
 
                     break;
                 case 'registration':
-                    if (!xarVarFetch('defaultgroup',      'int',    $defaultgroup,     xarModVars::get('roles', 'defaultgroup'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+                    if (!xarVarFetch('defaultgroup',      'int',    $defaultgroup,        xarModVars::get('registration', 'defaultgroup'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+                    if (!xarVarFetch('defaultuserstate',  'int',    $defaultuserstate,    xarModVars::get('registration', 'defaultuserstate'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
                     if (!xarVarFetch('allowregistration', 'checkbox', $allowregistration, false, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('chooseownpassword', 'checkbox', $chooseownpassword, false, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('minage',            'str:1:3:', $minage,            '13', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
@@ -89,12 +89,12 @@ function registration_admin_modifyconfig()
                     if (!xarVarFetch('explicitapproval',  'checkbox', $explicitapproval,  false, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('requirevalidation', 'checkbox', $requirevalidation, false, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('sendwelcomeemail',  'checkbox', $sendwelcomeemail,  false, XARVAR_NOT_REQUIRED)) return;
-                    // @todo <johnny> how should we handle minpasslength now ?
-                    if (!xarVarFetch('minpasslength',     'int:1',    $minpasslength,     5, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('notifyemail',       'str:1:150',$notifyemail,       xarModVars::get('mail', 'adminmail'), XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('regobjectid',      'int',    $regobjectid,     xarModVars::get('registration', 'registrationobject'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
 
                     xarModVars::set('registration', 'chooseownpassword', $chooseownpassword);
-                    xarModVars::set('roles', 'defaultgroup', $defaultgroup);
+                    xarModVars::set('registration', 'defaultgroup', $defaultgroup);
+                    xarModVars::set('registration', 'defaultuserstate', $defaultuserstate);
                     xarModVars::set('registration', 'allowregistration', $allowregistration);
                     xarModVars::set('registration', 'minage', $minage);
                     xarModVars::set('registration', 'notifyemail', $notifyemail);
@@ -102,7 +102,7 @@ function registration_admin_modifyconfig()
                     xarModVars::set('registration', 'explicitapproval', $explicitapproval? true:false);
                     xarModVars::set('registration', 'requirevalidation', $requirevalidation);
                     xarModVars::set('registration', 'sendwelcomeemail', $sendwelcomeemail);
-                    xarModVars::set('registration', 'minpasslength', $minpasslength);
+				    xarModVars::set('registration', 'registrationobject', $regobjectid);
                     break;
                 case 'filtering':
                     if (!xarVarFetch('disallowednames',  'str:1', $disallowednames,  '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;

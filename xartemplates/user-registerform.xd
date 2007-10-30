@@ -39,8 +39,8 @@
                     <xar:mlstring>I agree to be bound by this website's </xar:mlstring>
                     <a href="&xar-modurl-registration-user-terms;"><xar:mlstring>Terms of Use</xar:mlstring></a>.
                 </label>
-                <xar:if condition="!empty($invalid['agreetoterms'])">
-                    <span class="xar-error">#$invalid['agreetoterms']#</span>
+                <xar:if condition="isset($termsmsg)">
+                    <span class="xar-error">Please agree to the terms</span>
                 </xar:if>
             </div>
             <xar:elseif condition="xarModGetVar('registration','showprivacy') eq 1 and xarModGetVar('registration','showterms') eq 1" />
@@ -53,8 +53,8 @@
                     <a href="&xar-modurl-registration-user-terms;"><xar:mlstring>Terms of Use</xar:mlstring></a>&#160;<xar:mlstring>and</xar:mlstring>&#160;<a href="&xar-modurl-registration-user-privacy;"><xar:mlstring>Privacy Policy</xar:mlstring></a>.
                  </label>
             </div>
-                 <xar:if condition="!empty($invalid['agreetoterms'])">
-                     <div class="xar-form-wrapper-after xar-error">#$invalid['agreetoterms']#</div>
+                <xar:if condition="isset($termsmsg)">
+                    <span class="xar-error">Please agree to the terms</span>
                  </xar:if>
 
             <xar:else />

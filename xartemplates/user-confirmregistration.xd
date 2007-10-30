@@ -1,5 +1,6 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<xar:base-include-javascript position="head" module="registration" filename="registration.js" />
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Create User Account</xar:mlstring></span></div>
 <div class="xar-mod-body">
     <form action="&xar-modurl-registration-user-register;" method="post" enctype="application/x-www-form-urlencoded">
@@ -29,7 +30,8 @@
                 <xar:mlstring>Please review the above information and check it for correctness. Click Create Account to continue.</xar:mlstring>
             </p>
             <div class="xar-form-input-wrapper-after xar-padding-thick">
-                <input type="submit" value="#xarML('Create Account')#" />
+                <input type="submit" id="1" value="#xarML('Edit Data')#" onclick="javascript:setPhase('registerformcycle')" />
+                <input type="submit" id="2" value="#xarML('Create Account')#" />
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="phase" id="phase" value="createuser" />
             </div>

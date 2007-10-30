@@ -31,18 +31,13 @@ function registration_userapi_createnotify($args)
 {
     extract($args);
 
-    $id = $values['id'];
-    $pass = $values['password'];
     if ($state == ROLES_STATE_NOTVALIDATED) {
-        if (empty($ip)) {
-            $ip = xarServerGetVar('REMOTE_ADDR');
-        }
 
         // TODO: make sending mail configurable too, depending on the other options ?
         $emailargs = array( 'id'           => array($id => '1'),
-                            'mailtype'      => 'confirmation',
-                            'ip'            => $ip,
-                            'pass'          => $pass );
+                            'mailtype'     => 'confirmation',
+                            'ip'           => xarServerGetVar('REMOTE_ADDR'),
+                            'pass'         => $password );
 
         if (!xarModAPIFunc('roles', 'admin', 'senduseremail', $emailargs)) {
             $msg = xarML('Problem sending confirmation email');

@@ -67,7 +67,7 @@ function registration_userapi_createuser($args)
     xarModCallHooks('item', 'create', $id, $userdata);
 
     // Insert the user into the default users group
-    $defaultgroup = xarModVars::get('roles', 'defaultgroup');
+    $defaultgroup = xarModVars::get('registration', 'defaultgroup');
     if (empty($defaultgroup)) return;
 
     // Make the user a member of the users role

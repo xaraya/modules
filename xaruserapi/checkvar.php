@@ -93,10 +93,6 @@ function registration_userapi_checkvar($args)
             break;
 
         case 'pass1':
-            $minpasslength = xarModVars::get('registration', 'minpasslength');
-            if (strlen($var) < $minpasslength) {
-                $invalid = xarML('Your password must be #(1) characters long.', $minpasslength);
-            }
             break;
 
         case 'pass2':

@@ -31,6 +31,8 @@
  * @return array
  * @TODO jojodee - rethink and provide cleaner separation between roles, authsystem/authentication and registration
  */
+sys::import('modules.dynamicdata.class.objects.master');
+
 function registration_user_register()
 {
     if (!xarSecurityCheck('ViewRegistration')) return;
@@ -61,6 +63,9 @@ function registration_user_register()
     if (!xarVarFetch('phase','str:1:100',$phase,'request',XARVAR_NOT_REQUIRED)) return;
 
 
+    $regobjectid = xarModVars::get('registration', 'registrationobject');
+	$authid = xarSecGenAuthKey();
+
     switch(strtolower($phase)) {
 
         case 'choices':
@@ -77,17 +82,17 @@ function registration_user_register()
                                        'submitlink' => $submitlink));
             break;
 
+        case 'registerformcycle':
+            $fieldvalues = xarSessionGetVar('Registration.UserInfo');
         case 'registerform': //Make this default now login is handled by authsystem
         default:
-            $authid = xarSecGenAuthKey();
 
-            $object = xarModAPIFunc('dynamicdata','user','getobject',
-                                         array('name' => 'roles_users'));
+            $object = DataObjectMaster::getObject(array('objectid' => $regobjectid));
             if(empty($object)) return;
 
-            // dont want to show this to the user
-            $object->properties['state']->status = 33;
-            $object->properties['state']->value = 3;
+            if (isset($fieldvalues)) {
+				$object->setFieldValues($fieldvalues);
+            }
 
             /* Call hooks here, others than just dyn data
              * We pass the phase in here to tell the hook it should check the data
@@ -113,7 +118,7 @@ function registration_user_register()
         case 'checkregistration':
             if (!xarVarFetch('agreetoterms', 'checkbox',  $agreetoterms, false, XARVAR_NOT_REQUIRED)) return;
 
-            if (!xarSecConfirmAuthKey()) return;
+//            if (!xarSecConfirmAuthKey()) return;
 
             $ip = xarServerGetVar('REMOTE_ADDR');
             $invalid = xarModApiFunc('registration','user','checkvar', array('type'=>'ip', 'var'=>$ip));
@@ -122,14 +127,12 @@ function registration_user_register()
                 return;
             }
 
-            $object = xarModAPIFunc('dynamicdata','user','getobject',array('name' => 'roles_users'));
-
-            $isvalid = $object->checkInput();
+            $object = DataObjectMaster::getObject(array('objectid' => $regobjectid));
+			$isvalid = $object->checkInput();
 
             /* Call hooks here, others than just dyn data
              * We pass the phase in here to tell the hook it should check the data
              */
-            $item = array();
             $item['module'] = 'registration';
             $item['itemid'] = '';
             $item['values'] = $object->getFieldValues(); // TODO: this includes the password. Do we want this?
@@ -142,11 +145,18 @@ function registration_user_register()
                  $hookoutput = $hooks;
             }
 
+			if (!$isvalid || !$agreetoterms) {
+				$data = array('authid'     => $authid,
+				  			  'object'     => $object,
+							  'hookoutput' => $hookoutput);
+				if (!$agreetoterms) $data['termsmsg'] = true;
+				return xarTplModule('registration','user', 'registerform',$data);
+            }
             // invalid fields (we'll check this below)
             $invalid = array();
 
             $values = $object->getFieldValues();
-            $uname  = $values['uname'];
+/*            $uname  = $values['uname'];
             $email  = $values['email'];
             $name   = $values['name'];
             $pass   = $values['password'];
@@ -159,7 +169,8 @@ function registration_user_register()
                 throw new DuplicateException(array('user',$uname));
             }
 
-            if (xarModGetVar('roles','uniqueemail')) {
+*/
+			if (xarModGetVar('roles','uniqueemail')) {
                 $user = xarModAPIFunc('roles','user', 'get', array('email' => $email));
                 if ($user) throw new DuplicateException(array('email',$email));
             }
@@ -185,7 +196,7 @@ function registration_user_register()
             // @todo add preview?
             if (!$isvalid || ($count > 0)) {
                 $data = array();
-                $data['authid'] = xarSecGenAuthKey();
+                $data['authid'] = $authid;
                 $data['object'] = & $object;
                 $data['invalid'] = $invalid;
                 //$data['preview'] = $preview;
@@ -200,18 +211,22 @@ function registration_user_register()
             // everything seems OK -> go on to the next step
             $data = xarTplModule('registration','user', 'confirmregistration',
                                  array('object'      => $object,
-                                       'authid'      => xarSecGenAuthKey(),
+                                       'authid'      => $authid,
                                        'hookoutput'  => $hookoutput));
 
             break;
 
         case 'createuser':
             if (!xarSecConfirmAuthKey()) return;
-            $values = xarSessionGetVar('Registration.UserInfo');
+            $fieldvalues = xarSessionGetVar('Registration.UserInfo');
 
-            //Set some general vars that we need in various registration options
-            $pending = xarModVars::get('registration', 'explicitapproval'); //Require admin approval for account
-            $requireValidation = xarModVars::get('registration', 'requirevalidation'); //require user validation of account by email
+            $object = DataObjectMaster::getObject(array('objectid' => $regobjectid));
+            if(empty($object)) return;
+
+            // Do we need admin activation of the account?
+            if (xarModVars::get('registration', 'explicitapproval')) {
+            	$fieldvalues['state'] = xarRoles::ROLES_STATE_PENDING;
+            }
 
             //Get the default auth module data
             //this 'authmodule' was introduced previously (1.1 merge ?)
@@ -224,79 +239,61 @@ function registration_user_register()
             $loginlink =xarModURL($defaultloginmodname,'user','main');
 
             //variables required for display of correct validation template to users, depending on registration options
-            $tplvars = array();
-            $tplvars['loginlink'] = $loginlink;
-            $tplvars['pending']   = $pending;
+            $data['loginlink'] = $loginlink;
+            $data['pending']   = xarModVars::get('registration', 'explicitapproval');
 
 
-            // determine state of this create user
-            $state = xarModAPIFunc('registration','user','createstate');
-
-            // need a password
-            if (empty($password)){
+            // Create a password if the user can't create one himself
+            if (!xarModVars::get('registration', 'chooseownpassword')){
                 $pass = xarModAPIFunc('roles', 'user', 'makepass');
-                $values['password'] = $pass;
+                $fieldvalues['password'] = $pass;
             }
 
-            // Create confirmation code if required
-            if ($requireValidation) {
+            // Do we require user validation of account by email?
+            if (xarModVars::get('registration', 'requirevalidation')) {
+            	$fieldvalues['state'] = xarRoles::ROLES_STATE_NOTVALIDATED;
+
+				// Create confirmation code
                 $confcode = xarModAPIFunc('roles', 'user', 'makepass');
             } else {
                 $confcode = '';
             }
 
-            $userdata = $values;
-            $userdata['parentid'] = xarModVars::get('roles', 'defaultgroup');
-            $userdata['itemtype'] = 2;
-            $id = xarModAPIFunc('roles', 'admin', 'create', $userdata);
-            $values['id'] = $id;
+
+			// Update the field values and create the user
+			$object->setFieldValues($fieldvalues,1);
+            $id = $object->createItem();
+
             if (empty($id)) return;
             xarModVars::set('roles', 'lastuser', $id);
 
             //Make sure the user email setting is off unless the user sets it
-            xarModSetUserVar('roles','usersendemails', false, $id);
+            xarModSetUserVar('roles','allowemail', false, $id);
 
-            /* Call hooks in here
-             * This might be double as the roles hook will also call the create,
-             * but the new hook wasn't called there, so no data is passed
-             */
-             $userdata['module'] = 'registration';
-             $userdata['itemid'] = $id;
-             xarModCallHooks('item', 'create', $id, $userdata);
-
-             // Option: If admin requires notification of a new user, and no validation required,
-             // send out an email to Admin
-
-             $uname = $values['uname'];
-             $pass  = $values['password'];
-
-
-            // Let's finish by sending emails to those that require it based on options - the user or the admin
-            // and redirecting to appropriate pages that depend on user state and options set in the registration config
-            // note: dont email password if user chose his own (should this condition be in the createnotify api instead?)
-            $emailargs = array();
-            $emailargs['pass'] = xarModVars::get('registration', 'chooseownpassword') ? '' : $pass;
-            $emailargs['ip'] = $ip;
-            $emailargs['state'] = $state;
-            $ret = xarModAPIFunc('registration','user','createnotify',$emailargs);
-            if (!$ret) return;
+            $hookdata = $fieldvalues;
+            $hookdata['itemtype'] = xarRoles::ROLES_USERTYPE;
+            $hookdata['module'] = 'registration';
+			$hookdata['itemid'] = $id;
+			xarModCallHooks('item', 'create', $id, $hookdata);
 
             // go to appropriate page, based on state
-            if ($state == ROLES_STATE_ACTIVE) {
+            if ($fieldvalues['state'] == xarRoles::ROLES_STATE_ACTIVE) {
                 // log in and redirect
+
+                /* Need a more general definition of what it means to "log in"
                 xarModAPIFunc('authsystem', 'user', 'login',
                         array('uname'      => $uname,
                               'pass'       => $pass,
                               'rememberme' => 0));
-                $redirect = xarServerGetBaseURL();
-                xarResponseRedirect($redirect);
+                */
+                $data = xarTplModule('registration','user', 'accountstate', array('state' => $fieldvalues['state']));
 
-            } else if ($state == ROLES_STATE_PENDING) {
+            } else if ($fieldvalues['state'] == xarRoles::ROLES_STATE_PENDING) {
                 // If we are still waiting on admin to review pending accounts send the user to a page to notify them
                 // This page is for options of validation alone, validation and pending, and pending alone
-                $data = xarTplModule('roles','user', 'getvalidation', $tplvars);
+                $data = xarTplModule('roles','user', 'getvalidation', $data);
 
-            } else { // $state == ROLES_STATE_NOTVALIDATED
+            } else { // $state == xarRoles::ROLES_STATE_NOTVALIDATED
                 $data = xarTplModule('registration','user', 'waitingconfirm');
             }
 

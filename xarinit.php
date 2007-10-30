@@ -43,18 +43,28 @@ function registration_init()
     xarMakePrivilegeRoot('ReadRegistration');
     xarMakePrivilegeRoot('AdminRegistration');
 
+# --------------------------------------------------------
+#
+# Create DD objects
+#
+    $module = 'registration';
+    $objects = array(
+                   'registration_users',
+                     );
+
+    if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+
 /** --------------------------------------------------------
  * Define modvars
  */
     xarModVars::set('registration', 'allowregistration', true);
-    xarModVars::set('registration', 'requirevalidation', true);
+    xarModVars::set('registration', 'requirevalidation', false);
     xarModVars::set('registration', 'uniqueemail', true); //move back to roles - better there
     xarModVars::set('registration', 'askwelcomeemail', true);
     xarModVars::set('registration', 'askvalidationemail', true); // not in reg atm, leave in roles?
     xarModVars::set('registration', 'askdeactivationemail', true);// not in reg atm, leave in roles?
     xarModVars::set('registration', 'askpendingemail', true); // not in reg atm, leave in roles?
     xarModVars::set('registration', 'askpasswordemail', true);// not in reg atm, leave in roles?
-    //xarModVars::set('registration', 'defaultgroup', 'Users'); //Use the Roles modvar
     xarModVars::set('registration', 'minage', 13);
 
     //we need these too
@@ -64,14 +74,24 @@ function registration_init()
     xarModVars::set('registration', 'chooseownpassword', false);
     xarModVars::set('registration', 'notifyemail', xarModVars::get('mail', 'adminmail'));
     xarModVars::set('registration', 'sendnotice', false);
-    xarModVars::set('registration', 'explicitapproval', false);
+    xarModVars::set('registration', 'explicitapproval', true);
     xarModVars::set('registration', 'showdynamic', false);
     xarModVars::set('registration', 'sendwelcomeemail', false);
-    xarModVars::set('registration', 'minpasslength', 5);
-    $defaultregmodule= xarModVars::get('roles','defaultregmodule');
-    if (!isset($defaultregmodule)) {
-        xarModVars::set('roles','defaultregmodule',xarModGetIDFromName('registration'));
+
+    // Make the default group of this module that of Roles for starters
+    $defaultgroup = xarModVars::get('roles','defaultgroup');
+	xarModVars::set('registration','defaultgroup',$defaultgroup);
+
+	// If Roles has no default registrtion module, make this it
+    $defaultregmodule = xarModVars::get('roles','defaultregmodule');
+    if (empty($defaultregmodule)) {
+        xarModVars::set('roles','defaultregmodule','registration');
     }
+
+	xarModVars::set('registration','defaultuserstate',xarRoles::ROLES_STATE_ACTIVE);
+
+    $regobject = DataObjectMaster::getObjectInfo(array('name' => 'registration_users'));
+    xarModVars::set('registration', 'registrationobject', $regobject['objectid']);
 
 /** ---------------------------------------------------------------
  * Set disallowed names
@@ -146,10 +166,9 @@ function registration_delete()
 
     //check if the roles default registration module is set
     //If so - we have to remove the registration value if it's registration module
-    $regid = xarModGetIDFromName('registration');
     $defaultregvalue = xarModVars::get('roles','defaultregmodule');
-    if (isset($defaultregmodule) && $defaultregmodule==$regid) {
-        xarModVars::set('roles','defaultregmodule',NULL);
+    if ($defaultregvalue == 'registration') {
+        xarModVars::set('roles','defaultregmodule','');
     }
 
     $module = 'registration';

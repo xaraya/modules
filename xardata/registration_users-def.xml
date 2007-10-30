@@ -1,0 +1,115 @@
+<object name="registration_users">
+  <objectid>15</objectid>
+  <label>Registered Users</label>
+  <parent>objects</parent>
+  <moduleid>182</moduleid>
+  <itemtype>3</itemtype>
+  <class>RegisteredUser</class>
+  <filepath>modules/registration/class/registereduser.php</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="id">
+      <id>107</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_roles.id</source>
+      <status>67</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="name">
+      <id>108</id>
+      <label>Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_roles.name</source>
+      <status>33</status>
+      <order>2</order>
+      <validation>4:50</validation>
+    </property>
+    <property name="itemtype">
+      <id>109</id>
+      <label>Itemtype</label>
+      <type>integerbox</type>
+      <default>2</default>
+      <source>xar_roles.type</source>
+      <status>35</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="user_name">
+      <id>110</id>
+      <label>User Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_roles.uname</source>
+      <status>33</status>
+      <order>4</order>
+      <validation>4:30</validation>
+    </property>
+    <property name="email">
+      <id>111</id>
+      <label>Email</label>
+      <type>email</type>
+      <default></default>
+      <source>xar_roles.email</source>
+      <status>33</status>
+      <order>5</order>
+      <validation>8:100</validation>
+    </property>
+    <property name="password">
+      <id>112</id>
+      <label>Password</label>
+      <type>passwordbox</type>
+      <default></default>
+      <source>xar_roles.pass</source>
+      <status>34</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="date_registered">
+      <id>113</id>
+      <label>Date Registered</label>
+      <type>integerbox</type>
+      <default>time()</default>
+      <source>xar_roles.date_reg</source>
+      <status>67</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+    <property name="state">
+      <id>114</id>
+      <label>State</label>
+      <type>dropdown</type>
+      <default>3</default>
+      <source>xar_roles.state</source>
+      <status>35</status>
+      <order>8</order>
+      <validation>xarModAPIFunc('roles','user','getstates')</validation>
+    </property>
+    <property name="validationcode">
+      <id>115</id>
+      <label>ValidationCode</label>
+      <type>textbox</type>
+      <default>createdbyregistration</default>
+      <source>xar_roles.valcode</source>
+      <status>67</status>
+      <order>9</order>
+      <validation></validation>
+    </property>
+    <property name="auth_module">
+      <id>116</id>
+      <label>Auth Module</label>
+      <type>module</type>
+      <default>xarMod::getID('registration')</default>
+      <source>xar_roles.auth_modid</source>
+      <status>67</status>
+      <order>10</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>
