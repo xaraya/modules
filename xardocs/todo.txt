@@ -43,14 +43,6 @@ Support general transform hooks on output
 - Params to define which fields are hooked in each itemtype
 - admin API to declare itemtypes to the hooks admin pages
 
-Handy blocks
-- Send major IDs and record to a page cache structure
-- Block: related articles (linked to tags)
-- Block: articles by this author
-- Block: articles in this magazine/issue/series
-- Block: series in this issue (perhaps working through the contents page?)
-- Block: current issue (front page image and a link)
-
 Included template to pull in stylesheets specific to individual magazines.
 
 Linking to adverts - decide on how this is likely to work
@@ -70,23 +62,23 @@ There are two instances: magazine and article.
 
 Instance: magazine; masks: magazine ID
 --------------------------------------
-- No Access (0)         No access to a magazine.
-- Overview (100)        Read the magazine overviews, TOCs and series overviews; no access to articles at all.
-- Read (200)            Read articles (used in conjuction with the article instance).
+- No Access (0)                         No access to a magazine.
+- Overview (100)        OverviewMag     Read the magazine overviews, TOCs and series overviews; no access to articles at all.
+- Read (200)            ReadMag         Read articles (used in conjuction with the article instance).
 - Comment (300)
 - Moderate (400)
-- Edit (500)            Edit articles in a magazine (add, remove, modify, link authors); edit authors (add, modify only)
+- Edit (500)            EditMag         Edit articles in a magazine (add, remove, modify, link authors); edit authors (add, modify only)
 - Add (600)
-- Delete (700)          Edit series for a magazine (add, remove, modify); Edit magazines (modify only, no status changes)
-- Administer (800)      Edit magazines (add, remove, move, modify); Edit authors (add, remove, modify)
+- Delete (700)          DeleteMag       Edit series for a magazine (add, remove, modify); Edit magazines (modify only, no status changes)
+- Administer (800)      AdminMag        Edit magazines (add, remove, move, modify); Edit authors (add, remove, modify)
 
 With edit privilege, a user is able to preview articles, regardless of the status of that magazine, article or series.
 
 Instance: article; masks: magazine ID, article 'premium' flag
 -------------------------------------------------------------
-- No Access (0)         No access to the article (title can be seen in the TOC only).
-- Overview (100)        View summary details only for the article. The extent of this is defined in the templates.
-- Read (200)            Read full article.
+- No Access (0)                         No access to the article (title can be seen in the TOC only).
+- Overview (100)        OverviewMagArt  View summary details only for the article. The extent of this is defined in the templates.
+- Read (200)            ReadMagArt      Read full article.
 - Comment (300)
 - Moderate (400)
 - Edit (500)            
@@ -132,4 +124,11 @@ all stored against the 'mag' module, are:
 - function: archive, article, authors, contents, mags or series (all pages will supply this)
 
 Unless otherwise stated, all cached variables are optional, and will not apply in all instances.
+
+Handy blocks we will have:
+- Block: related articles (linked to tags, which is very much TODO)
+- Block: articles by this author
+- Block: articles in this magazine/issue/series
+- Block: series in this issue (perhaps working through the contents page?)
+- Block: current issue (front page image and a link)
 

@@ -18,10 +18,11 @@ function mag_init()
 {
     // Set up database tables
     $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-
     $module = 'mag';
 
+    // Get table names.
+    extract(mag_init_tablelist($module));
+    
     $magazines_table = $xartable[$module . '_magazines'];
     $issues_table = $xartable[$module . '_issues'];
     $series_table = $xartable[$module . '_series'];
@@ -58,8 +59,89 @@ function mag_init()
     xarModSetVar($module, 'SupportShortURLs', 1);
 
     // Privileges
+
     // Components
-    // Masks
+
+    // Set up 'Mag' component.
+    $comp = 'Mag';
+    $instances = array (
+        array (
+            'header' => 'Magazine ID',
+            'query' => 'SELECT mid FROM ' . $table_magazines . ' ORDER BY mid',
+            'limit' => 50
+        ),
+    );
+    // This function is a misnomer. It actually defines a *component*, not an instance.
+    xarDefineInstance(
+        $module, $comp, $instances, 0, 'All', 'All', 'All',
+        xarML('Security component for #(1) #(2)', $module, $comp)
+    );
+
+    // Masks for component 'Mag'.
+    xarRegisterMask(
+        'Overview' . $comp, 'All', $module, $comp, 'All', 'ACCESS_OVERVIEW',
+        xarML('Read the magazine overviews and TOCs')
+    );
+    xarRegisterMask(
+        'Read' . $comp, 'All', $module, $comp, 'All', 'ACCESS_READ',
+        xarML('Read articles')
+    );
+    /*xarRegisterMask(
+        'Comment' . $comp, 'All', $module, $comp, 'All', 'ACCESS_COMMENT',
+        xarML('')
+    );*/
+    /*xarRegisterMask(
+        'Moderate' . $comp, 'All', $module, $comp, 'All', 'ACCESS_MODERATE',
+        xarML('')
+    );*/
+    xarRegisterMask(
+        'Edit' . $comp, 'All', $module, $comp, 'All', 'ACCESS_EDIT',
+        xarML('Edit articles in a magazine')
+    );
+    xarRegisterMask(
+        'Delete' . $comp, 'All', $module, $comp, 'All', 'ACCESS_DELETE',
+        xarML('Edit series and magazine details')
+    );
+    xarRegisterMask(
+        'Admin' . $comp, 'All', $module, $comp, 'All', 'ACCESS_ADMIN',
+        xarML('Administer the magazine')
+    );
+
+    // Set up 'Art' (Article) component.
+    $comp = 'MagArt';
+    $instances = array (
+        array (
+            'header' => 'Magazine ID',
+            'query' => 'SELECT mid FROM ' . $table_magazines . ' ORDER BY mid',
+            'limit' => 50
+        ),
+        // The premium flag can be OPEN, SAMPLE or PREMIUM.
+        // However, the admin may extend that list, but there is no simple
+        // place to put that data for selection.
+        // *** TODO: Perhaps we need to create a custom form, though that seems like
+        // *** overkill for something that should be a lot simpler: a simple API call.
+        array (
+            'header' => 'Premium Code',
+            'query' => '',
+            'limit' => 50
+        ),
+    );
+    // This function is a misnomer. It actually defines a *component*, not an instance.
+    xarDefineInstance(
+        $module, $comp, $instances, 0, 'All', 'All', 'All',
+        xarML('Security component for #(1) #(2)', $module, $comp)
+    );
+
+    // Masks for component 'MagArt'.
+    xarRegisterMask(
+        'Overview' . $comp, 'All', $module, $comp, 'All', 'ACCESS_OVERVIEW',
+        xarML('View summary details only for the article')
+    );
+    xarRegisterMask(
+        'Read' . $comp, 'All', $module, $comp, 'All', 'ACCESS_READ',
+        xarML('Read full article')
+    );
+
 
     // Register block types.
     // None.
@@ -68,6 +150,30 @@ function mag_init()
     // None.
 
     // Create the DD objects
+    $objectid = xarModAPIFunc(
+        'dynamicdata', 'util', 'import',
+        array('file' => 'modules/' .$module. '/xardata/' .$module. '_mags-def.xml', 'keepitemid' => false)
+    );
+    $objectid = xarModAPIFunc(
+        'dynamicdata', 'util', 'import',
+        array('file' => 'modules/' .$module. '/xardata/' .$module. '_issues-def.xml', 'keepitemid' => false)
+    );
+    $objectid = xarModAPIFunc(
+        'dynamicdata', 'util', 'import',
+        array('file' => 'modules/' .$module. '/xardata/' .$module. '_articles-def.xml', 'keepitemid' => false)
+    );
+    $objectid = xarModAPIFunc(
+        'dynamicdata', 'util', 'import',
+        array('file' => 'modules/' .$module. '/xardata/' .$module. '_series-def.xml', 'keepitemid' => false)
+    );
+    $objectid = xarModAPIFunc(
+        'dynamicdata', 'util', 'import',
+        array('file' => 'modules/' .$module. '/xardata/' .$module. '_authors-def.xml', 'keepitemid' => false)
+    );
+    $objectid = xarModAPIFunc(
+        'dynamicdata', 'util', 'import',
+        array('file' => 'modules/' .$module. '/xardata/' .$module. '_articles_authors-def.xml', 'keepitemid' => false)
+    );
 
     return true;
 }
@@ -83,16 +189,10 @@ function mag_upgrade($oldversion)
 {
     // Set up database tables
     $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-
     $module = 'mag';
 
-    $magazines_table = $xartable[$module . '_magazines'];
-    $issues_table = $xartable[$module . '_issues'];
-    $series_table = $xartable[$module . '_series'];
-    $articles_table = $xartable[$module . '_articles'];
-    $authors_table = $xartable[$module . '_authors'];
-    $articles_authors_table = $xartable[$module . '_articles_authors'];
+    // Get table names.
+    extract(mag_init_tablelist($module));
 
     // Upgrade dependent on old version number.
     switch ($oldversion) {
@@ -111,20 +211,14 @@ function mag_upgrade($oldversion)
  * Delete (remove) the mag module.
  * @return bool true on success
  */
-function ievents_delete()
+function mag_delete()
 {
     // Set up database tables
     $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-
     $module = 'mag';
 
-    $magazines_table = $xartable[$module . '_magazines'];
-    $issues_table = $xartable[$module . '_issues'];
-    $series_table = $xartable[$module . '_series'];
-    $articles_table = $xartable[$module . '_articles'];
-    $authors_table = $xartable[$module . '_authors'];
-    $articles_authors_table = $xartable[$module . '_articles_authors'];
+    // Get table names.
+    extract(mag_init_tablelist($module));
 
     // Delete module variables
     xarModDelAllVars($module);
@@ -135,6 +229,23 @@ function ievents_delete()
 
     // Deletion successful.
     return true;
+}
+
+// Return an array of table names.
+// TODO: would be nice if xarDBGetTables() accepted a parameter to limit the table names,
+// including the ability to use wildcards.
+// Returns array of "table_{name}" => {table_name}
+function mag_init_tablelist($module = 'mag')
+{
+    $xartable =& xarDBGetTables();
+
+    $return = array();
+
+    foreach(array('magazines', 'issues', 'series', 'articles', 'authors', 'articles_authors') as $base) {
+        $return['table_' . $base] = $xartable[$module . '_' . $base];
+    }
+
+    return $return;
 }
 
 ?>
