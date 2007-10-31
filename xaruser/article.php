@@ -114,7 +114,7 @@ function mag_user_article($args)
 
                 // The premium flag should fall back to the issue and then the magazine
                 // if not set on the article.
-                // TODO: this is the same as in the 'gettoc' APi - could be shared?
+                // TODO: this is the same as in the 'gettoc' API - could be shared?
                 if (empty($article['premium'])) {
                     // The premium flag is not set on the article.
                     if (!empty($issue['premium'])) {
@@ -173,7 +173,7 @@ function mag_user_article($args)
 
                 $return['issue'] = $issue;
                 $return['article'] = $article;
-                $return['authors'] = $authors;
+                $return['article_authors'] = $authors;
             }
         }
     }
@@ -230,6 +230,10 @@ function mag_user_article($args)
 
     // Pass the boolean into the templates for processing.
     $return['premium_bypass'] = $premium_bypass;
+
+    // Set context information for custom templates and blocks.
+    $return['function'] = 'article';
+    xarModAPIfunc($module, 'user', 'cachevalues', $return);
 
     return $return;
 }

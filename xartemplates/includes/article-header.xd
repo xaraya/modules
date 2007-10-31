@@ -7,7 +7,7 @@
     </xar:if>
 
     <h1>
-        <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'article','mag'=&gt;$mag.ref,'issue'=&gt;$issue.ref,'aid'=&gt;article.aid))#">
+        <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'article','mag'=&gt;$mag.ref,'issue'=&gt;$issue.ref,'aid'=&gt;$article.aid))#">
             #xarVarPrepForDisplay($article.title)#
         </a>
     </h1>

@@ -54,14 +54,25 @@ function mag_user_authors($args)
                 $articles = xarModAPIfunc($module, 'user', 'authorarticles', 
                     array('mid' => $mid, 'auid' => $auid, 'numitems' => $max_author_articles_profile_page, 'sort' => 'pubdate DESC')
                 );
-                $return['articles'] = $articles;
+                $return['author_articles'] = $articles;
             }
         }
 
         $authors = xarModAPIfunc($module, 'user', 'getauthors', $author_select);
 
         $return['authors'] = $authors;
+
+        // If selecting a single author, then pass that in separately.
+        if (count($authors) == 1) {
+            $return['author'] = reset($authors);
+            $return['auid'] = $return['author']['auid'];
+        }
+
     }
+
+    // Set context information for custom templates and blocks.
+    $return['function'] = 'authors';
+    xarModAPIfunc($module, 'user', 'cachevalues', $return);
 
     return $return;
 }

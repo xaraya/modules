@@ -68,6 +68,10 @@ function mag_user_mags($args)
         'mid' => $mid,
     );
 
+    // Set context information for custom templates and blocks.
+    $return['function'] = 'mags';
+    xarModAPIfunc($module, 'user', 'cachevalues', $return);
+
     return $return;
 }
 

@@ -1,3 +1,5 @@
 <xar:comment>
     Custom navigation bar along the top of each page.
+    #$function# will tell you which section of the module you
+    are in, and all other template values will be availble.
 </xar:comment>

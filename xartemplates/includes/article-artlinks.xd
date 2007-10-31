@@ -13,7 +13,7 @@
         <xar:if condition="xarModIsAvailable('jquery')">
             <xar:set name="cluetip_subdata">array("selector"=>"a#mag_show_toc", "options"=>"width: 500, attribute: 'rel', local: true, hideLocal: true, sticky: true, activation: 'toggle'")</xar:set>
             <xar:template file="jquery.cluetip" module="jquery" subdata="#$cluetip_subdata#"/>
-            <div id="mag_toc"><div id="mag_toc_inner">
+            <div id="mag_toc" style="display: none;"><div id="mag_toc_inner">
                 <xar:template module="mag" file="toc-list" subdata="$toc" />
             </div></div>
         </xar:if>

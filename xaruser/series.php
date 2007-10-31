@@ -116,6 +116,9 @@ function mag_user_series($args)
         $return['series'] = $series;
     }
 
+    // Set context information for custom templates and blocks.
+    $return['function'] = 'series';
+    xarModAPIfunc($module, 'user', 'cachevalues', $return);
 
     return $return;
 }

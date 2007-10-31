@@ -109,5 +109,27 @@ The 'premium' flag value is used to map a premium value onto a privilege. Sugges
 Similarly, Anonymous may get No Access rather than Overview in all instances. Subscribers are
 considered fully-paid up members.
 
-The unused access levels are reserved for future 
+The unused access levels are reserved for future use.
+
+Blocks
+======
+
+Various page-cached values will be available to blocks. The names of the page-cached variables,
+all stored against the 'mag' module, are:
+
+- mid: magazine ID
+- mag: magazine record
+- iid: issue ID
+- issue: issue record
+- sid: series ID
+- series: series record
+- auid: author ID
+- author: single author (displaying the author)
+- article_authors: multiple authors (for an article)
+- aid: article ID
+- article: single article
+- toc: table of contents record
+- function: archive, article, authors, contents, mags or series (all pages will supply this)
+
+Unless otherwise stated, all cached variables are optional, and will not apply in all instances.
 

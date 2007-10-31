@@ -67,6 +67,15 @@ function mag_user_contents($args)
         }
     }
 
+    // Set context information for custom templates and blocks.
+    $return['function'] = 'contents';
+    if (!empty($toc)) {
+        // Send the complete toc in as a separate element, for caching.
+        xarModAPIfunc($module, 'user', 'cachevalues', array_merge($return, array('toc' => $toc)));
+    } else {
+        xarModAPIfunc($module, 'user', 'cachevalues', $return);
+    }
+
     return $return;
 }
 

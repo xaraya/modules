@@ -156,6 +156,10 @@ function mag_user_archive($args)
         // The error is displayed in the template, on detecting a lack of a magazine.
     }
 
+    // Set context information for custom templates and blocks.
+    $return['function'] = 'archive';
+    xarModAPIfunc($module, 'user', 'cachevalues', $return);
+
     return $return;
 }
 

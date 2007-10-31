@@ -68,7 +68,7 @@
                             </div>
                         </xar:if>
 
-                        <xar:if condition="!empty($articles)">
+                        <xar:if condition="!empty($author_articles)">
                             <p><a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'authors','mag'=&gt;$mag.ref,'auid'=&gt;$loop:item.auid))#">
                                 <xar:ml>
                                     <xar:mlstring>Show profile for #(1)</xar:mlstring>
@@ -83,7 +83,7 @@
                                     </xar:ml>
                                 </h3>
                                 <ul>
-                                    <xar:loop name="$articles" id="article">
+                                    <xar:loop name="$author_articles" id="article">
                                         <li>
                                             <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'article','mag'=&gt;$mag.ref,'iid'=&gt;$loop:item.issue_id,'aid'=&gt;$loop:item.aid))#">
                                                 #xarVarPrepForDisplay($loop:item.title)#

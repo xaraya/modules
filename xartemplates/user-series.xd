@@ -23,11 +23,13 @@
 
             <xar:loop name="$series">
                 <h3>
+                    <span class="series-title">
                     <xar:ml>
                         <xar:mlstring><a href="#(2)" title="Show details for this series">#(1)</a></xar:mlstring>
                         <xar:mlvar>#xarVarPrepForDisplay($loop:item.title)#</xar:mlvar>
                         <xar:mlvar>#xarModAPIfunc('mag','user','url',array('func'=&gt;'series','mag'=&gt;$mag.ref,'series'=&gt;$loop:item.ref))#</xar:mlvar>
                     </xar:ml>
+                    </span>
                     <xar:if condition="count($series) gt 1">
                         <xar:comment>
                         <span> | </span>
@@ -87,7 +89,10 @@
                 <xar:comment>Display the full description only if showing just one series.</xar:comment>
                 <xar:if condition="count($series) eq 1 && !empty($loop:item.synopsis)">
                     <xar:comment>TODO: Force the description to HTML</xar:comment>
-                    <div class="mag-description">#$loop:item.description#</div>
+                    <div class="mag-description">
+                        <h2>Description</h2>
+                        #$loop:item.description#
+                    </div>
                 </xar:if>
             </xar:loop>
         </xar:if>

@@ -8,6 +8,8 @@
 <xar:style file="mag-custom" scope="module" />
 <xar:style file="mag-wysiwyg" scope="module" />
 
+<xar:template module="mag" file="custom-navbar" />
+
 <xar:comment>
     Wrap the whole article in a class based on the style name.
     This is used only to override the default styles.
