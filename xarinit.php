@@ -154,7 +154,7 @@ function mag_init_privileges($module)
     $instances = array (
         array (
             'header' => 'Magazine ID',
-            'query' => 'SELECT mid FROM ' . $table_magazines . ' ORDER BY mid',
+            'query' => 'SELECT mid FROM ' . $table_mags . ' ORDER BY mid',
             'limit' => 50
         ),
     );
@@ -191,7 +191,7 @@ function mag_init_privileges($module)
     $instances = array (
         array (
             'header' => 'external',
-            'query' => xarModURL($module, 'admin', 'privileges', array('component' => $comp)),
+            'query' => xarModURL($module, 'admin', 'privileges'),
             'limit' => 50
         ),
         /*array (
