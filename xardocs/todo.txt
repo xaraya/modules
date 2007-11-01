@@ -62,7 +62,7 @@ There are two instances: magazine and article.
 
 Instance: magazine; masks: magazine ID
 --------------------------------------
-- No Access (0)                         No access to a magazine.
+- No Access (0)         No access to a magazine.
 - Overview (100)        OverviewMag     Read the magazine overviews, TOCs and series overviews; no access to articles at all.
 - Read (200)            ReadMag         Read articles (used in conjuction with the article instance).
 - Comment (300)
@@ -76,7 +76,7 @@ With edit privilege, a user is able to preview articles, regardless of the statu
 
 Instance: article; masks: magazine ID, article 'premium' flag
 -------------------------------------------------------------
-- No Access (0)                         No access to the article (title can be seen in the TOC only).
+- No Access (0)         No access to the article (title can be seen in the TOC only).
 - Overview (100)        OverviewMagArt  View summary details only for the article. The extent of this is defined in the templates.
 - Read (200)            ReadMagArt      Read full article.
 - Comment (300)
