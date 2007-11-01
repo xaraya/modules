@@ -30,7 +30,8 @@ function mag_init()
     xarModSetVar($module, 'SupportShortURLs', 1);
 
     // Privileges
-    mag_init_privileges($module);
+    $result = mag_init_privileges($module);
+    if (empty($result)) xarErrorFree();
 
     // Register block types.
     // None.
@@ -71,9 +72,14 @@ function mag_upgrade($oldversion)
             // Set up the privileges.
             mag_init_privileges($module);
             // Create the database tables.
-            mag_init_tables($module);
+            $result = mag_init_tables($module);
+            if (empty($result)) xarErrorFree();
             // Set up the DD objects.
-            mag_init_ddobjects($module);
+            $result = mag_init_ddobjects($module);
+            if (empty($result)) xarErrorFree();
+
+            // Switch short URL support on by default.
+            xarModSetVar($module, 'SupportShortURLs', 1);
 
         case '0.2.0':
             // Upgrading from 0.2.0
@@ -108,7 +114,7 @@ function mag_delete()
     // For now, and until there is a method by which this data can be backed up,
     // we will leave this as a manual excerise for the administrator.
 
-    // Deletion successful.
+    // Deletion (i.e. removal) successful.
     return true;
 }
 
@@ -256,9 +262,10 @@ function mag_init_tables($module)
     xarDBLoadTableMaintenanceAPI();
 
     $return = true;
+    $indexes = array();
+    $fields = array();
 
-    // Magazines
-    // Create the magazines table.
+    // Magazines (mag_mags)
     /*
         CREATE TABLE `xar_mag_mags` (
             `mid` int(11) NOT NULL auto_increment,
@@ -274,7 +281,8 @@ function mag_init_tables($module)
             UNIQUE KEY `ref` (`ref`)
         );
     */
-    $fields = array(
+    $table = $table_mags;
+    $fields[$table] = array(
         'mid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
         'ref' => array('type' => 'varchar', 'size' => 60, 'null' => false, 'default' => ''),
         'title' => array('type' => 'varchar', 'size' => 255, 'null' => false, 'default' => ''),
@@ -286,13 +294,15 @@ function mag_init_tables($module)
         'premium' => array('type' => 'varchar', 'size' => 30, 'null' => false, 'default' => 'ACTIVE'),
     );
 
-    // Create the calendar table.
-    $query = xarDBCreateTable($table_mags, $fields);
-    $result =& $dbconn->Execute($query);
-    if (!$result) $return = false;
+    // Record the indexes for this table.
+    $indexes[$table] = array();
+    $indexes[$table][] = array(
+        'name' => 'i_' . $table . '_1',
+        'fields'    => array('ref'),
+        'unique'    => true
+    );
 
-    // Issues
-    // Create the issues table.
+    // Issues (mag_issues)
     /*
         CREATE TABLE `xar_mag_issues` (
             `iid` int(11) NOT NULL auto_increment,
@@ -312,7 +322,8 @@ function mag_init_tables($module)
         );
     */
 
-    $fields = array(
+    $table = $table_issues;
+    $fields[$table] = array(
         'iid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
         'mag_id' => array('type' => 'integer', 'size' => 11, 'null' => false, 'default' => '0'),
         'ref' => array('type' => 'varchar', 'size' => 60, 'null' => false, 'default' => ''),
@@ -326,13 +337,20 @@ function mag_init_tables($module)
         'premium' => array('type' => 'varchar', 'size' => 30, 'null' => false, 'default' => ''),
     );
 
-    // Create the calendar table.
-    $query = xarDBCreateTable($table_issues, $fields);
-    $result =& $dbconn->Execute($query);
-    if (!$result) $return = false;
+    // Record the indexes for this table.
+    $indexes[$table] = array();
+    $indexes[$table][] = array(
+        'name' => 'i_' . $table . '_1',
+        'fields'    => array('mag_id'),
+        'unique'    => false
+    );
+    $indexes[$table][] = array(
+        'name' => 'i_' . $table . '_2',
+        'fields'    => array('ref'),
+        'unique'    => true
+    );
 
-    // Series
-    // Create the series table.
+    // Series (mag_series)
     /*
         CREATE TABLE `xar_mag_series` (
             `sid` int(11) NOT NULL auto_increment,
@@ -348,8 +366,9 @@ function mag_init_tables($module)
             KEY `mag_id` (`mag_id`)
         );
     */
-    
-    $fields = array(
+
+    $table = $table_series;
+    $fields[$table] = array(
         'sid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
         'mag_id' => array('type' => 'integer', 'null' => false, 'default' => '0'),
         'ref' => array('type' => 'varchar', 'size' => 60, 'null' => false, 'default' => ''),
@@ -361,13 +380,15 @@ function mag_init_tables($module)
         'status' => array('type' => 'varchar', 'size' => 30, 'null' => false, 'default' => 'DRAFT'),
     );
 
-    // Create the calendar table.
-    $query = xarDBCreateTable($table_series, $fields);
-    $result =& $dbconn->Execute($query);
-    if (!$result) $return = false;
+    // Record the indexes for this table.
+    $indexes[$table] = array();
+    $indexes[$table][] = array(
+        'name' => 'i_' . $table . '_1',
+        'fields'    => array('mag_id'),
+        'unique'    => false
+    );
 
-    // Articles
-    // Create the articles table.
+    // Articles (mag_articles)
     /*
         CREATE TABLE `xar_mag_articles` (
             `aid` int(11) NOT NULL auto_increment,
@@ -394,7 +415,8 @@ function mag_init_tables($module)
         );
     */
     
-    $fields = array(
+    $table = $table_articles;
+    $fields[$table] = array(
         'aid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
         'issue_id' => array('type' => 'integer', 'null' => false, 'default' => '0'),
         'series_id' => array('type' => 'integer', 'null' => false, 'default' => '0'),
@@ -415,13 +437,20 @@ function mag_init_tables($module)
         'image1_alt' => array('type' => 'varchar', 'size' => 255, 'null' => false, 'default' => ''),
     );
 
-    // Create the calendar table.
-    $query = xarDBCreateTable($table_articles, $fields);
-    $result =& $dbconn->Execute($query);
-    if (!$result) $return = false;
+    // Record the indexes for this table.
+    $indexes[$table] = array();
+    $indexes[$table][] = array(
+        'name' => 'i_' . $table . '_1',
+        'fields'    => array('issue_id'),
+        'unique'    => false
+    );
+    $indexes[$table][] = array(
+        'name' => 'i_' . $table . '_2',
+        'fields'    => array('series_id'),
+        'unique'    => false
+    );
 
-    // Authors
-    // Create the authors table.
+    // Authors (mag_authors)
     /*
         CREATE TABLE `xar_mag_authors` (
             `auid` int(11) NOT NULL auto_increment,
@@ -436,8 +465,9 @@ function mag_init_tables($module)
             PRIMARY KEY  (`auid`)
         );
     */
-    
-    $fields = array(
+
+    $table = $table_authors;
+    $fields[$table] = array(
         'auid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
         'name' => array('type' => 'varchar', 'size' => 255, 'null' => false, 'default' => ''),
         'mini_bio' => array('type' => 'text', 'null' => false),
@@ -449,13 +479,7 @@ function mag_init_tables($module)
         'notes' => array('type' => 'text', 'null' => false),
     );
 
-    // Create the calendar table.
-    $query = xarDBCreateTable($table_authors, $fields);
-    $result =& $dbconn->Execute($query);
-    if (!$result) $return = false;
-
-    // Articles_Authors
-    // Create the articles_authors table.
+    // Articles_Authors (mag_articles_authors)
     /*
         CREATE TABLE `xar_mag_articles_authors` (
             `aaid` int(11) NOT NULL auto_increment,
@@ -469,7 +493,8 @@ function mag_init_tables($module)
         );
     */
 
-    $fields = array(
+    $table = $table_articles_authors;
+    $fields[$table] = array(
         'aaid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
         'article_id' => array('type' => 'integer', 'null' => false, 'default' => '0'),
         'author_id' => array('type' => 'integer', 'null' => false, 'default' => '0'),
@@ -477,13 +502,25 @@ function mag_init_tables($module)
         'notes' => array('type' => 'text', 'null' => false),
     );
 
-    // Create the calendar table.
-    $query = xarDBCreateTable($table_articles_authors, $fields);
-    $result =& $dbconn->Execute($query);
-    if (!$result) $return = false;
-
+    // The data is set up, so now do the actual processing.
+    
+    // Create the tables.
+    // Loop over each table and sets of fields.
+    foreach($fields as $table_name => $field_set) {
+        $query = xarDBCreateTable($table_name, $field_set);
+        $result =& $dbconn->Execute($query);
+        if (!$result) $return = false;
+    }
+    
     // Create indexes
-    // TODO
+    // Loop for tables and indexes, and create the indexes.
+    foreach($indexes as $table_name => $index_list) {
+        foreach($index_list as $index) {
+            $query = xarDBCreateIndex($table_name, $index);
+            $result =& $dbconn->Execute($query);
+            if (!$result) $result = false;
+        }
+    }
 
     return $return;
 }
