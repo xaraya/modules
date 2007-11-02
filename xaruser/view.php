@@ -599,12 +599,16 @@ function ievents_user_view($args)
         // Add the events
         // TODO: move this markup to the templates.
         foreach($events as $eventkey => $eventvalue) {
-            //$cal->addEvent($eventvalue['startdate'], '<a href="' . $eventvalue['detail_url'] . '">' . xarVarPrepForDisplay($eventvalue['title']) . '</a>');
             $cal->addEvent(
                 $eventvalue['startdate'],
                 $eventvalue['title'],
                 $eventvalue['detail_url'],
-                $eventvalue['allday']
+                $eventvalue['all_day'],
+                xarModURL('ievents','user','view',array(
+                    'startdate' => date('Ymd', $eventvalue['startdate']),
+                    'enddate' => date('Ymd', $eventvalue['startdate']),
+                    'group' => 'day'
+                ))
             );
         }
     } else {
