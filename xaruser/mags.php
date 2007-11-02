@@ -52,6 +52,15 @@ function mag_user_mags($args)
     // Fetch the selected magazines.
     $mags = xarModAPIfunc($module, 'user', 'getmags', $mag_select);
 
+    // Weed out any magazines we don't have privilege to look at.
+    // CHECKME: is there any reason why this could not be done in the API?
+    if (!empty($mags)) {
+        foreach($mags as $key => $check_mag) {
+            // If no overview privilege, then remove it from the list.
+            if (!xarSecurityCheck('OverviewMag', 0, 'Mag', "$check_mag[mid]")) unset($mags[$key]);
+        }
+    }
+
     // Get the mag ID if there is only one.
     // It does not matter whether this happened by selecting a single magazine,
     // or because there is only one magazine.

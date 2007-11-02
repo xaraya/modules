@@ -5,17 +5,19 @@
 <xar:template module="mag" file="custom-navbar" />
 
 <div class="mag mag-mags">
-
-    <xar:if condition="!empty($mid)">
-        <xar:loop name="$mags">
-            <xar:template file="mag-overview" module="mag" subdata="array('mag'=&gt;$loop:item)" />
-        </xar:loop>
+    <xar:if condition="empty($mags)">
+        <xar:template module="mag" file="error-no-mag" />
     <xar:else />
-        <h1><xar:mlstring>All Magazines</xar:mlstring></h1>
+        <xar:if condition="!empty($mid)">
+            <xar:loop name="$mags">
+                <xar:template file="mag-overview" module="mag" subdata="array('mag'=&gt;$loop:item)" />
+            </xar:loop>
+        <xar:else />
+            <h1><xar:mlstring>All Magazines</xar:mlstring></h1>
 
-        <xar:loop name="$mags">
-            <xar:template file="mag-overview" module="mag" subdata="array('mag'=&gt;$loop:item)" />
-        </xar:loop>
+            <xar:loop name="$mags">
+                <xar:template file="mag-overview" module="mag" subdata="array('mag'=&gt;$loop:item)" />
+            </xar:loop>
+        </xar:if>
     </xar:if>
-
 </div>

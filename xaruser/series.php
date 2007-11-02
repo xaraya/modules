@@ -45,68 +45,71 @@ function mag_user_series($args)
     if (!empty($current_mag)) {
         // Extract the current mag details.
         extract($current_mag);
-        $return['mid'] = $mid;
-        $return['mag'] = $mag;
 
-        // Get the series details.
-        $series_select = array();
+        if (xarSecurityCheck('OverviewMag', 0, 'Mag', "$mid")) {
+            $return['mid'] = $mid;
+            $return['mag'] = $mag;
 
-        // Single series selected.
-        if (!empty($sid)) $series_select['sid'] = $sid;
-        if (!empty($series_ref)) $series_select['ref'] = $series_ref;
+            // Get the series details.
+            $series_select = array();
 
-        $series_select['status'] = 'ACTIVE';
-        $series_select['sort'] = 'display_order ASC';
-        $series_select['mid'] = $mid;
+            // Single series selected.
+            if (!empty($sid)) $series_select['sid'] = $sid;
+            if (!empty($series_ref)) $series_select['ref'] = $series_ref;
 
-        // Get the series (single or multiple).
-        $series = xarModAPIfunc($module, 'user', 'getseries', $series_select);
+            $series_select['status'] = 'ACTIVE';
+            $series_select['sort'] = 'display_order ASC';
+            $series_select['mid'] = $mid;
 
-        // If we have just one series, and the user has requsted additional details,
-        // then fetch those details now.
-        if (count($series) == 1) {
-            $one_series = reset($series);
+            // Get the series (single or multiple).
+            $series = xarModAPIfunc($module, 'user', 'getseries', $series_select);
 
-            if ($show == 'articles') {
-                // Fetch articles for this series.
-                // TODO: support the pager.
-                $article_select = array(
-                    'mid' => $mid,
-                    'sid' => $one_series['sid'],
-                    'status' => 'PUBLISHED',
-                    'fieldset' => 'TOC',
-                );
+            // If we have just one series, and the user has requsted additional details,
+            // then fetch those details now.
+            if (count($series) == 1) {
+                $one_series = reset($series);
 
-                $articles = xarModAPIfunc($module, 'user', 'getarticles', $article_select);
-
-                if (!empty($articles)) {
-                    // Group the articles by issue.
-                    $groups_unsorted = array();
-
-                    foreach($articles as $article) {
-                        if (!isset($groups_unsorted[$article['issue_id']])) $groups_unsorted[$article['issue_id']] = array();
-                        $groups_unsorted[$article['issue_id']][] = $article['aid'];
-                    }
-
-                    // Fetch the issues related to these articles.
-                    $issue_select = array(
-                        'status' => 'PUBLISHED',
+                if ($show == 'articles') {
+                    // Fetch articles for this series.
+                    // TODO: support the pager.
+                    $article_select = array(
                         'mid' => $mid,
-                        'iids' => array_keys($groups_unsorted),
+                        'sid' => $one_series['sid'],
+                        'status' => 'PUBLISHED',
+                        'fieldset' => 'TOC',
                     );
 
-                    $issues = xarModAPIfunc($module, 'user', 'getissues', $issue_select);
+                    $articles = xarModAPIfunc($module, 'user', 'getarticles', $article_select);
 
-                    if (!empty($issues)) {
-                        // Order $groups into issue number, descending.
-                        $groups = array();
-                        foreach($issues as $issue) {
-                            if (isset($groups_unsorted[$issue['iid']])) $groups[$issue['iid']] = $groups_unsorted[$issue['iid']];
+                    if (!empty($articles)) {
+                        // Group the articles by issue.
+                        $groups_unsorted = array();
+
+                        foreach($articles as $article) {
+                            if (!isset($groups_unsorted[$article['issue_id']])) $groups_unsorted[$article['issue_id']] = array();
+                            $groups_unsorted[$article['issue_id']][] = $article['aid'];
                         }
 
-                        $return['groups'] = $groups;
-                        $return['issues'] = $issues;
-                        $return['articles'] = $articles;
+                        // Fetch the issues related to these articles.
+                        $issue_select = array(
+                            'status' => 'PUBLISHED',
+                            'mid' => $mid,
+                            'iids' => array_keys($groups_unsorted),
+                        );
+
+                        $issues = xarModAPIfunc($module, 'user', 'getissues', $issue_select);
+
+                        if (!empty($issues)) {
+                            // Order $groups into issue number, descending.
+                            $groups = array();
+                            foreach($issues as $issue) {
+                                if (isset($groups_unsorted[$issue['iid']])) $groups[$issue['iid']] = $groups_unsorted[$issue['iid']];
+                            }
+
+                            $return['groups'] = $groups;
+                            $return['issues'] = $issues;
+                            $return['articles'] = $articles;
+                        }
                     }
                 }
             }

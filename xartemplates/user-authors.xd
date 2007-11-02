@@ -7,7 +7,7 @@
 <div class="mag mag-authors">
 
     <xar:if condition="empty($mag)">
-        <p class="xar-error"><xar:mlstring>No magazine found. Please select a magazine.</xar:mlstring></p>
+        <xar:template module="mag" file="error-no-mag" />
     <xar:else />
         <h1>
             <xar:ml>

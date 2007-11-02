@@ -330,3 +330,12 @@ div#mag_toc_inner h3 {
     margin: 0.25em 0;
     text-decoration: underline;
 }
+
+/* The box for displaying premium access details */
+div.mag-readmore {
+    margin: 1em 0;
+    padding: 0.5em;
+    background-color: #FFFFCC;
+    border: 4px double #CC0000;
+    clear: both;
+}

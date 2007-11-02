@@ -6,14 +6,14 @@
 
 <div class="mag mag-contents">
     <xar:if condition="empty($mag)">
-        <p class="xar-error"><xar:mlstring>No magazine found. Please try a different search.</xar:mlstring></p>
+        <xar:template module="mag" file="error-no-mag" />
     <xar:else />
         <xar:comment>
             Start with a header banner/block for the issue.
         </xar:comment>
 
         <xar:if condition="empty($issue)">
-            <p class="xar-error"><xar:mlstring>No issue found. Please try a different search.</xar:mlstring></p>
+            <xar:template module="mag" file="error-no-issue" />
         <xar:else />
             <div class="mag-issue-banner">
                 <xar:if condition="!empty($issue.cover_img_path)">

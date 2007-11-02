@@ -6,7 +6,7 @@
 
 <div class="mag mag-series">
     <xar:if condition="empty($mag)">
-        <p class="xar-error"><xar:mlstring>No magazine found. Please select a magazine.</xar:mlstring></p>
+        <xar:template module="mag" file="error-no-mag" />
     <xar:else />
         <h1>
             <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'mags','mag'=&gt;$mag.ref))#">
@@ -15,7 +15,7 @@
         </h1>
 
         <xar:if condition="empty($series)">
-            <p class="xar-error"><xar:mlstring>No series found. Please select a magazine series.</xar:mlstring></p>
+            <xar:template module="mag" file="error-no-issue" />
         <xar:else />
             <xar:if condition="count($series) gt 1">
                 <p><xar:mlstring>Series in this magazine:</xar:mlstring></p>
@@ -87,7 +87,7 @@
                 </xar:if>
 
                 <xar:comment>Display the full description only if showing just one series.</xar:comment>
-                <xar:if condition="count($series) eq 1 && !empty($loop:item.synopsis)">
+                <xar:if condition="count($series) eq 1 && !empty($loop:item.description)">
                     <xar:comment>TODO: Force the description to HTML</xar:comment>
                     <div class="mag-description">
                         <h2>Description</h2>

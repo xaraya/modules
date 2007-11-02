@@ -7,9 +7,11 @@
 <div class="mag mag-archive">
 
     <xar:if condition="empty($mag)">
-        <p class="xar-error"><xar:mlstring>No magazines found. Please try a different search.</xar:mlstring></p>
+        <xar:template module="mag" file="error-no-mag" />
     <xar:else />
-        <h1>#xarVarPrepForDisplay($mag.title)#</h1>
+        <h1>
+            <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'mags','mag'=&gt;$mag.ref))#">#xarVarPrepForDisplay($mag.title)#</a>
+        </h1>
         <p class="mag-synopsis">#$mag.subtitle#</p>
 
         <xar:comment>TODO: call up a hook template here so text can be inserted by the theme</xar:comment>
@@ -17,7 +19,7 @@
         <xar:comment>Loop for each year to start with</xar:comment>
 
         <xar:if condition="empty($issues)">
-            <p class="xar-error"><xar:mlstring>No issues found. Please try a different search.</xar:mlstring></p>
+            <xar:template module="mag" file="error-no-issue" />
         <xar:else />
             <div>
                 <xar:loop name="$years" id="years">

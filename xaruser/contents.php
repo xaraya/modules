@@ -36,34 +36,37 @@ function mag_user_contents($args)
     if (!empty($current_mag)) {
         // Extract the current mag details.
         extract($current_mag);
-        $return['mid'] = $mid;
-        $return['mag'] = $mag;
 
-        // Get the issue details.
-        $issue_select = array();
+        if (xarSecurityCheck('OverviewMag', 0, 'Mag', "$mid")) {
+            $return['mid'] = $mid;
+            $return['mag'] = $mag;
 
-        if (!empty($iid)) $issue_select['iid'] = $iid;
-        if (!empty($issue_ref)) $issue_select['ref'] = $issue_ref;
-        $issue_select['numitems'] = 2;
-        $issue_select['mid'] = $mid;
+            // Get the issue details.
+            $issue_select = array();
 
-        // TODO: in iadmin preview mode, any status will do.
-        $issue_select['status'] = array('PUBLISHED');
+            if (!empty($iid)) $issue_select['iid'] = $iid;
+            if (!empty($issue_ref)) $issue_select['ref'] = $issue_ref;
+            $issue_select['numitems'] = 2;
+            $issue_select['mid'] = $mid;
 
-        // Get the issue.
-        $issues = xarModAPIfunc($module, 'user', 'getissues', $issue_select);
+            // TODO: in iadmin preview mode, any status will do.
+            $issue_select['status'] = array('PUBLISHED');
 
-        // We must have exactly one issue.
-        if (count($issues) == 1) {
-            $issue = reset($issues);
-            $iid = $issue['iid'];
-            $return['iid'] = $iid;
-            $return['issue'] = $issue;
+            // Get the issue.
+            $issues = xarModAPIfunc($module, 'user', 'getissues', $issue_select);
 
-            // Get the articles and series for this magazine, organised as a table of contents.
-            // TODO: in admin preview mode, suppress status and showin properties ('status_group')
-            $toc = xarModAPIfunc($module, 'user', 'gettoc', array('mag' => $mag, 'issue' => $issue));
-            if (!empty($toc)) $return = array_merge($return, $toc);
+            // We must have exactly one issue.
+            if (count($issues) == 1) {
+                $issue = reset($issues);
+                $iid = $issue['iid'];
+                $return['iid'] = $iid;
+                $return['issue'] = $issue;
+
+                // Get the articles and series for this magazine, organised as a table of contents.
+                // TODO: in admin preview mode, suppress status and showin properties ('status_group')
+                $toc = xarModAPIfunc($module, 'user', 'gettoc', array('mag' => $mag, 'issue' => $issue));
+                if (!empty($toc)) $return = array_merge($return, $toc);
+            }
         }
     }
 

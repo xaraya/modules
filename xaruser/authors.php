@@ -36,38 +36,40 @@ function mag_user_authors($args)
     if (!empty($current_mag)) {
         // Extract the current mag details.
         extract($current_mag);
-        $return['mid'] = $mid;
-        $return['mag'] = $mag;
 
-        // Get the author details.
-        $author_select = array(
-            'status' => 'PUBLISHED',
-            //'numitems' => $numitems,
-            'mid' => $mid,
-        );
+        if (xarSecurityCheck('OverviewMag', 0, 'Mag', "$mid")) {
+            $return['mid'] = $mid;
+            $return['mag'] = $mag;
 
-        if (!empty($auid)) {
-            $author_select['auid'] = $auid;
+            // Get the author details.
+            $author_select = array(
+                'status' => 'PUBLISHED',
+                //'numitems' => $numitems,
+                'mid' => $mid,
+            );
 
-            if (!empty($showarticles)) {
-                // Get articles by this author, if requested.
-                $articles = xarModAPIfunc($module, 'user', 'authorarticles', 
-                    array('mid' => $mid, 'auid' => $auid, 'numitems' => $max_author_articles_profile_page, 'sort' => 'pubdate DESC')
-                );
-                $return['author_articles'] = $articles;
+            if (!empty($auid)) {
+                $author_select['auid'] = $auid;
+
+                if (!empty($showarticles)) {
+                    // Get articles by this author, if requested.
+                    $articles = xarModAPIfunc($module, 'user', 'authorarticles', 
+                        array('mid' => $mid, 'auid' => $auid, 'numitems' => $max_author_articles_profile_page, 'sort' => 'pubdate DESC')
+                    );
+                    $return['author_articles'] = $articles;
+                }
+            }
+
+            $authors = xarModAPIfunc($module, 'user', 'getauthors', $author_select);
+
+            $return['authors'] = $authors;
+
+            // If selecting a single author, then pass that in separately.
+            if (count($authors) == 1) {
+                $return['author'] = reset($authors);
+                $return['auid'] = $return['author']['auid'];
             }
         }
-
-        $authors = xarModAPIfunc($module, 'user', 'getauthors', $author_select);
-
-        $return['authors'] = $authors;
-
-        // If selecting a single author, then pass that in separately.
-        if (count($authors) == 1) {
-            $return['author'] = reset($authors);
-            $return['auid'] = $return['author']['auid'];
-        }
-
     }
 
     // Set context information for custom templates and blocks.

@@ -1,0 +1,6 @@
+<xar:comment>
+    Template displayed when no article is found, either due to an
+    invalid article ID or reference, or no privileges.
+</xar:comment>
+
+<p class="xar-error"><xar:mlstring>No article found. Please select an article.</xar:mlstring></p>

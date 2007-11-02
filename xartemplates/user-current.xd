@@ -8,9 +8,10 @@
 
 <div class="mag mag-current">
     <xar:if condition="empty($mag)">
-        <p class="xar-error"><xar:mlstring>No magazine found. Please select a magazine.</xar:mlstring></p>
+        <xar:template module="mag" file="error-no-mag" />
     <xar:else />
         <h1>#xarVarPrepForDisplay($mag.title)#</h1>
-        <p class="xar-error"><xar:mlstring>No current issue found for this magazine.</xar:mlstring></p>
+        <xar:comment><p class="xar-error"><xar:mlstring>No current issue found for this magazine.</xar:mlstring></p></xar:comment>
+        <xar:template module="mag" file="error-no-issue" />
     </xar:if>
 </div>

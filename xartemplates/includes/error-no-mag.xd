@@ -1,0 +1,6 @@
+<xar:comment>
+    Template displayed when no magazine is found, either due to an
+    invalid magazine ID or reference, or no privileges.
+</xar:comment>
+
+<p class="xar-error"><xar:mlstring>No magazine found. Please select a magazine.</xar:mlstring></p>

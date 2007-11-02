@@ -1,0 +1,6 @@
+<xar:comment>
+    Template displayed when no issues are found, due to an
+    invalid issue ID or reference.
+</xar:comment>
+
+<p class="xar-error"><xar:mlstring>No issues found. Please try a different search.</xar:mlstring></p>

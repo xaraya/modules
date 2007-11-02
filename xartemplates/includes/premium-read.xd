@@ -1,0 +1,15 @@
+<xar:comment>
+    Template displayed when an article is found, the user
+    has privileges to view the magazine but the
+    user does not have privileges to read the article at all.
+    Generally this will be a message directing users to where
+    they can pay or become members.
+</xar:comment>
+
+<div class="mag-readmore">
+    <xar:if condition="!xarUserIsLoggedIn()">
+        <xar:mlstring>To read this article you must be logged in to the site.</xar:mlstring>
+    <xar:else />
+        <xar:mlstring>To read this article you must be a subscriber.</xar:mlstring>
+    </xar:if>
+</div>

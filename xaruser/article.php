@@ -7,6 +7,8 @@
  * @param mag string Magazine reference
  *
  * @todo Fetch lots of other useful information and cache it, such as other articles, related issues etc.
+ * @todo Privileges: need OverviewMag to see anything at all, and ReadMag to display any details of the article,
+ *       then we have OverviewMagArt and ReadMagArt to check.
  *
  */
 
@@ -39,143 +41,170 @@ function mag_user_article($args)
     if (!empty($current_mag)) {
         // Extract the current mag details.
         extract($current_mag);
-        $return['mid'] = $mid;
-        $return['mag'] = $mag;
 
-        // Get the article details.
-        $article_select = array(
-            'status' => 'PUBLISHED',
-            'numitems' => 2,
-            'mid' => $mid,
-        );
+        // Check we have any access to the magazine.
+        // If we don't have overview access to the magazine, all
+        // details must be completely hidden. This is handled in
+        // the template by simply not passing a magazine into it.
+        if (xarSecurityCheck('OverviewMag', 0, 'Mag', "$mid")) {
+            $return['mid'] = $mid;
+            $return['mag'] = $mag;
 
-        if (isset($aid)) $article_select['aid'] = $aid;
-        if (isset($article_ref)) $article_select['ref'] = $article_ref;
-
-        // If the issue ID has been supplied, then use it, in case the article_ref is not unique.
-        if (empty($iid) && !empty($issue_ref)) {
-            // Get the issue ID by using the supplied reference.
-            $issues = xarModAPIfunc(
-                $module, 'user', 'getissues',
-                array(
-                    'status' => 'PUBLISHED',
-                    'numitems' => 1,
-                    'mid' => $mid,
-                    'ref' => $issue_ref,
-                )
+            // Get the article details.
+            $article_select = array(
+                'status' => 'PUBLISHED',
+                'numitems' => 2,
+                'mid' => $mid,
             );
-            if (!empty($issues)) {
-                $issue = reset($issues);
-                $iid = $issue['iid'];
-            }
-        }
-        if (isset($iid)) $article_select['iid'] = $iid;
 
-        $articles = xarModAPIfunc($module, 'user', 'getarticles', $article_select);
+            if (isset($aid)) $article_select['aid'] = $aid;
+            if (isset($article_ref)) $article_select['ref'] = $article_ref;
 
-        if (count($articles) == 1) {
-            $article = reset($articles);
-
-            // Get the issue details (if not already fetched)
-            // If an attempt has been made to fetch the issue already, then don't try again,
-            // even if that attempt did not result in any issues selected.
-            if (!isset($issues)) {
+            // If the issue ID has been supplied, then use it, in case the article_ref is not unique.
+            if (empty($iid) && !empty($issue_ref)) {
+                // Get the issue ID by using the supplied reference.
                 $issues = xarModAPIfunc(
                     $module, 'user', 'getissues',
                     array(
                         'status' => 'PUBLISHED',
                         'numitems' => 1,
-                        'aid' => $article['issue_id'],
+                        'mid' => $mid,
+                        'ref' => $issue_ref,
                     )
                 );
+                if (!empty($issues)) {
+                    $issue = reset($issues);
+                    $iid = $issue['iid'];
+                }
             }
+            if (isset($iid)) $article_select['iid'] = $iid;
 
-            // If there is no issue, or the issue is not published, then we cannot
-            // display this article. Check we have exactly one article.
-            if (count($issues) == 1) {
-                $issue = reset($issues);
+            $articles = xarModAPIfunc($module, 'user', 'getarticles', $article_select);
 
-                // Get the main image path, transformed.
-                if (isset($article['image1'])) {
-                    $article['image1_path'] = xarModAPIfunc(
-                        'mag', 'user', 'imagepaths',
+            if (count($articles) == 1) {
+                $article = reset($articles);
+
+                // Get the issue details (if not already fetched)
+                // If an attempt has been made to fetch the issue already, then don't try again,
+                // even if that attempt did not result in any issues selected.
+                if (!isset($issues)) {
+                    $issues = xarModAPIfunc(
+                        $module, 'user', 'getissues',
                         array(
-                            'path' => $image_article_main_vpath,
-                            'fields' => array(
-                                'mag_ref' => $mag['ref'],
-                                'issue_ref' => $issue['ref'],
-                                'article_ref' => $article['ref'],
-                                'article_id' => $article['aid'],
-                                'image1' => $article['image1'],
+                            'status' => 'PUBLISHED',
+                            'numitems' => 1,
+                            'aid' => $article['issue_id'],
+                        )
+                    );
+                }
+
+                // If there is no issue, or the issue is not published, then we cannot
+                // display this article. Check we have exactly one article.
+                if (count($issues) == 1) {
+                    $issue = reset($issues);
+
+                    // Get the main image path, transformed.
+                    if (isset($article['image1'])) {
+                        $article['image1_path'] = xarModAPIfunc(
+                            'mag', 'user', 'imagepaths',
+                            array(
+                                'path' => $image_article_main_vpath,
+                                'fields' => array(
+                                    'mag_ref' => $mag['ref'],
+                                    'issue_ref' => $issue['ref'],
+                                    'article_ref' => $article['ref'],
+                                    'article_id' => $article['aid'],
+                                    'image1' => $article['image1'],
+                                )
                             )
-                        )
-                    );
-                }
-
-                // The premium flag should fall back to the issue and then the magazine
-                // if not set on the article.
-                // TODO: this is the same as in the 'gettoc' API - could be shared?
-                if (empty($article['premium'])) {
-                    // The premium flag is not set on the article.
-                    if (!empty($issue['premium'])) {
-                        // Fall back to the issue flag.
-                        $articles[$key]['premium'] = $issue['premium'];
-                    } elseif (!empty($mag['premium'])) {
-                        // Fall back to the magazine flag.
-                        $articles[$key]['premium'] = $mag['premium'];
-                    } else {
-                        // Default to 'OPEN'.
-                        $articles[$key]['premium'] = 'OPEN';
+                        );
                     }
-                }
-                
-                // Get the [optional] series details.
-                if (!empty($article['series_id'])) {
-                    $series = xarModAPIfunc(
-                        $module, 'user', 'getseries',
-                        array(
-                            'status' => 'ACTIVE',
-                            'mid' => $mid,
-                            'sid' => $article['series_id'],
-                        )
+
+                    // The premium flag should fall back to the issue and then the magazine
+                    // if not set on the article.
+                    // TODO: this is the same as in the 'gettoc' API - could be shared?
+                    if (empty($article['premium'])) {
+                        // The premium flag is not set on the article.
+                        if (!empty($issue['premium'])) {
+                            // Fall back to the issue flag.
+                            $article['premium'] = $issue['premium'];
+                        } elseif (!empty($mag['premium'])) {
+                            // Fall back to the magazine flag.
+                            $article['premium'] = $mag['premium'];
+                        } else {
+                            // Default to 'OPEN'.
+                            $article['premium'] = 'OPEN';
+                        }
+                    }
+                    
+                    // Get the [optional] series details.
+                    if (!empty($article['series_id'])) {
+                        $series = xarModAPIfunc(
+                            $module, 'user', 'getseries',
+                            array(
+                                'status' => 'ACTIVE',
+                                'mid' => $mid,
+                                'sid' => $article['series_id'],
+                            )
+                        );
+
+                        if (count($series) == 1) {
+                            $series = reset($series);
+                            $return['series'] = $series;
+                        }
+                    }
+
+                    // Get all authors for this article.
+                    $authors = xarModAPIfunc(
+                        $module, 'user', 'getauthors',
+                        array('mid' => $mid, 'iid' => $issue['iid'], 'aid' => $article['aid'])
                     );
 
-                    if (count($series) == 1) {
-                        $series = reset($series);
-                        $return['series'] = $series;
-                    }
+                    // Get the table of contents, for use as a navigation tool.
+                    // TODO: This information would be very useful to the navigation blocks, so cache it.
+                    $toc = xarModAPIfunc($module, 'user', 'gettoc', array('mag' => $mag, 'issue' => $issue));
+
+                    // Do a bit of organisation in the TOC.
+                    // First find out where we are in the linear list of articles.
+                    // The position will be zero-indexed.
+                    $article_ids = array_keys($toc['articles']);
+                    $article_position = array_search($article['aid'], $article_ids);
+                    $toc['article_ids'] = $article_ids;
+                    $toc['article_position'] = $article_position;
+
+                    // Get the IDs of previous and next articles.
+                    $toc['prev_aid'] = (isset($article_ids[$article_position-1]) ? $article_ids[$article_position-1] : 0);
+                    $toc['next_aid'] = (isset($article_ids[$article_position+1]) ? $article_ids[$article_position+1] : 0);
+
+                    // Send the toc to the template, with all its extra bits.
+                    $return['toc'] = $toc;
+
+                    $return['issue'] = $issue;
+                    $return['article'] = $article;
+                    $return['article_authors'] = $authors;
                 }
-
-                // Get all authors for this article.
-                $authors = xarModAPIfunc(
-                    $module, 'user', 'getauthors',
-                    array('mid' => $mid, 'iid' => $issue['iid'], 'aid' => $article['aid'])
-                );
-
-                // Get the table of contents, for use as a navigation tool.
-                // TODO: This information would be very useful to the navigation blocks, so cache it.
-                $toc = xarModAPIfunc($module, 'user', 'gettoc', array('mag' => $mag, 'issue' => $issue));
-
-                // Do a bit of organisation in the TOC.
-                // First find out where we are in the linear list of articles.
-                // The position will be zero-indexed.
-                $article_ids = array_keys($toc['articles']);
-                $article_position = array_search($article['aid'], $article_ids);
-                $toc['article_ids'] = $article_ids;
-                $toc['article_position'] = $article_position;
-
-                // Get the IDs of previous and next articles.
-                $toc['prev_aid'] = (isset($article_ids[$article_position-1]) ? $article_ids[$article_position-1] : 0);
-                $toc['next_aid'] = (isset($article_ids[$article_position+1]) ? $article_ids[$article_position+1] : 0);
-
-                // Send the toc to the template, with all its extra bits.
-                $return['toc'] = $toc;
-
-                $return['issue'] = $issue;
-                $return['article'] = $article;
-                $return['article_authors'] = $authors;
             }
-        }
+
+            // Now check the permissions for this article.
+            // We still need all the information in the template, regardless of what
+            // the privilege level is, hence doing this check right at the end.
+            // The three levels are: NONE, OVERVIEW and READ.
+            if (xarSecurityCheck('OverviewMagArt', 0, 'MagArt', "$mid:$article[premium]")) {
+                // We have at least overview privilege.
+                if (xarSecurityCheck('ReadMagArt', 0, 'MagArt', "$mid:$article[premium]")) {
+                    $viewlevel = 'READ';
+                } else {
+                    $viewlevel = 'OVERVIEW';
+                }
+            } else {
+                // No have no privilege to view this page.
+                $viewlevel = 'NONE';
+            }
+
+            // Pass the view level to the templates, where it can be used to
+            // show or hide sections of the article as appropriate.
+            $return['viewlevel'] = $viewlevel;
+        } // Overview privilege check on magazine
     }
 
     // Determine the template style to use.
