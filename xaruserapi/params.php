@@ -135,6 +135,14 @@ function mag_userapi_params($args)
         // to scan the full details of the articles.
         $params['premium_policy_bypass_ip'] = 'localhost,192.168.1.1';
 
+        // List of premium flags and their values.
+        // These are shared across three DD properties and the MagArt privilege configuration.
+        $params['premium_flags'] = array(
+            'OPEN' => xarML('Open (unrestricted)'),
+            'SAMPLE' => xarML('Sample (semi-restricted)'),
+            'PREMIUM' => xarML('Premium (restricted)'),
+        );
+
         // 
         //,Default (inherit from series);editorial,Editorial;BOOKS,Book Review;BRIEF,In Brief;fmember,Featured Member
         

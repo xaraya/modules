@@ -108,5 +108,15 @@
       <order>10</order>
       <validation></validation>
     </property>
+    <property name="premium">
+      <id>299</id>
+      <label>Premium</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>xar_mag_mags.premium</source>
+      <status>1</status>
+      <order>9</order>
+      <validation>xarModAPIfunc('mag','list','issuepremiumflags')</validation>
+    </property>
   </properties>
 </object>

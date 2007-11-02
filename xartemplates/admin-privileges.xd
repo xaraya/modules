@@ -1,0 +1,40 @@
+
+<div>
+    <h1>
+        <xar:ml>
+            <xar:mlstring>Privileges for Magazine Component '#(1)'</xar:mlstring>
+            <xar:mlvar>#$extcomponent#</xar:mlvar>
+        </xar:ml>
+    </h1>
+
+    <p>
+        <xar:ml>
+            <xar:mlstring>Current Instance '#(1)'</xar:mlstring>
+            <xar:mlvar>#$instance#</xar:mlvar>
+        </xar:ml>
+    </p>
+
+    <form method="post" action="#xarModURL('mag','admin','privileges')#">
+        <p>
+            <label for="mid"><xar:mlstring>Magazine:</xar:mlstring></label>
+            <xar:data-input type="dropdown" name="mid" options="$mags" value="$mid" id="mid" />
+        </p>
+
+        <p>
+            <label for="premium"><xar:mlstring>Premium Flag:</xar:mlstring></label>
+            <xar:data-input type="dropdown" name="premium" options="$premium_flags" value="$premium" id="premium" />
+        </p>
+
+        <p>
+            <input type="submit" name="update" value="#xarML('Update')#" />
+            <input type="submit" name="apply" value="#xarML('Apply')#" />
+            <a href="#xarModURL('privileges', 'admin', 'modifyprivilege', array('pid'=&gt;$extpid))#"><xar:mlstring>Cancel</xar:mlstring></a>
+
+            <input type="hidden" name="extpid" id="extpid" value="#$extpid#" />
+            <input type="hidden" name="extname" id="extname" value="#$extname#" />
+            <input type="hidden" name="extrealm" id="extrealm" value="#$extrealm#" />
+            <input type="hidden" name="extmodule" id="extmodule" value="#$extmodule#" />
+            <input type="hidden" name="extcomponent" id="extcomponent" value="#$extcomponent#" />
+        </p>
+    </form>
+</div>

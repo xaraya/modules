@@ -146,7 +146,7 @@
       <source>xar_mag_articles.premium</source>
       <status>1</status>
       <order>14</order>
-      <validation>OPEN,Open (no restrictions);SAMPLE,Sampler;PREMIUM,Members Only;,Default (inherit from issue)</validation>
+      <validation>xarModAPIfunc('mag','list','artpremiumflags')</validation>
     </property>
     <property name="style">
       <id>187</id>

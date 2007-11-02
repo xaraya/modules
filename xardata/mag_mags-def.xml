@@ -90,13 +90,13 @@
     </property>
     <property name="premium">
       <id>213</id>
-      <label>premium</label>
+      <label>Premium</label>
       <type>dropdown</type>
       <default>OPEN</default>
       <source>xar_mag_mags.premium</source>
       <status>1</status>
       <order>9</order>
-      <validation>OPEN,Open to All;SAMPLE,Sample;PREMIUM,Members Only;,Default</validation>
+      <validation>xarModAPIfunc('mag','list','premiumflags')</validation>
     </property>
   </properties>
 </object>
