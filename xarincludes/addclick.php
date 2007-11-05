@@ -4,7 +4,9 @@
  * Adds link clicked data into the database from a GET request.
  * Limited to MySQL only.
  *
- * @param page Page the link is on.
+ * @param linkid
+ * @param target
+ * @param label
  *
  */
 
@@ -22,11 +24,13 @@ function linktracker_addclick()
     mysql_select_db($systemConfiguration['DB.Name']);
 
     // Fetch variables (some passed in, some local).
-    $page = $_SERVER['HTTP_REFERER'];
+    // Strip the target from the current page, which only IE7 seems to send.
+    $page = preg_replace('/#.*$/', '', $_SERVER['HTTP_REFERER']);
     $linkid = get_param('linkid');
     $target = get_param('target');
     $label = get_param('label');
     $ipaddr = $_SERVER['REMOTE_ADDR'];
+    // Timestamp details.
     $time = time();
     $year = (int)date('Y', $time);
     $month = (int)date('m', $time);

@@ -1,5 +1,6 @@
 <xar:comment>
     until other plugins have been fixed.
+    <xar:base-include-javascript filename="jquery.js" module="jquery" />
 </xar:comment>
 
 <xar:base-include-javascript filename="jquery.pack.js" module="jquery" />
