@@ -1,0 +1,27 @@
+<xar:comment>
+    Load the jquery.tablesorter plugin.
+    This is version 2, which supports themes and AJAX to update the
+    table through its built-in pager.
+    TODO: make pager, up/down arrows and striping classes available by default.
+</xar:comment>
+
+<xar:comment>
+    Make sure jQuery is going to be loaded.
+</xar:comment>
+
+<xar:template file="jquery" module="jquery" />
+
+<xar:comment>
+    Load the main javascript.
+</xar:comment>
+
+<xar:base-include-javascript filename="jquery.tablesorter.pack.js" module="jquery" />
+
+<xar:if condition="!empty($selector)">
+    <xar:if condition="!empty($options)">
+        <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').tablesorter({ $options });});" />
+    <xar:else />
+        <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').tablesorter();});" />
+    </xar:if>
+</xar:if>
+

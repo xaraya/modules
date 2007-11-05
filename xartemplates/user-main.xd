@@ -244,4 +244,17 @@
         </tbody>
     </table>
 
+    <h2><xar:mlstring>Linktracker</xar:mlstring></h2>
+    <p><xar:mlstring>The database table defined in modules/jquery/xarincludes/linktracker-table.sql needs to be created before this will work.</xar:mlstring></p>
+
+    <xar:template file="jquery.linktracker" module="jquery" />
+
+    <ul>
+        <li><a href="#xarServergetCurrentURL(array(),true,'linktracker_1')#">Linktracker 1 (no id attribute)</a></li>
+        <li><a href="#xarServergetCurrentURL(array(),true,'linktracker_2')#" id="linktracker2">Linktracker 2 (with id attribute)</a></li>
+        <li><a href="#xarServergetCurrentURL(array(),true,'linktracker_3')#">Linktracker 3</a></li>
+        <li><a href="mailto:noone@example.com">Linktracker 4 (mail link)</a></li>
+        <li><a href="#xarServergetCurrentURL(array(),true,'linktracker_5')#"><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg" alt="image alt text" title="test title" /></a></li>
+    </ul>
+
 </div>

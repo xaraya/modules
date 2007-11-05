@@ -19,7 +19,7 @@
 $modversion['name']         = 'jquery';
 $modversion['id']           = '934';
 $modversion['displayname']  = xarML('JQuery');
-$modversion['version']      = '0.1.0';
+$modversion['version']      = '0.1.1';
 $modversion['description']  = 'JQuery library';
 $modversion['displaydescription'] = xarML('JQuery library');
 $modversion['credits']      = 'xardocs/credits.txt';

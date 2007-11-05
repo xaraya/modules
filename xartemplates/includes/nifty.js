@@ -43,7 +43,7 @@ jQuery(document).ready(function() {
 
 /* 'this' is an array of selected blocks */
 
-(function($) {
+(function(jQuery) {
 	jQuery.fn.nifty = function(options){
 		if((document.createElement && Array.prototype.push) == false) return;
 		

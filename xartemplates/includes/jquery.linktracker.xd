@@ -1,0 +1,17 @@
+<xar:comment>
+    Initialise the jquery.linktracker tool.
+    Based on http://www.glennjones.net/Post/811/AjaxLinkTracker22Thedownload.htm
+</xar:comment>
+
+<xar:comment>Make sure jQuery is going to be loaded.</xar:comment>
+<xar:template file="jquery" module="jquery" />
+
+<xar:comment>Load the main javascript.</xar:comment>
+<xar:base-include-javascript filename="jquery.linktracker.js" module="jquery" />
+
+<xar:comment>
+    Initialise the main javascript.
+    There are no options to pass in yet, but the destination tracker script would
+    be a good one.
+</xar:comment>
+<xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery().linktracker('');});" />
