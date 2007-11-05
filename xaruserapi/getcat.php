@@ -41,21 +41,21 @@ function categories_userapi_getcat($args)
     if (!isset($getparents)) {
         $getparents = false;
     }
-    if (!isset($start)) {
-        $start = 0;
+    if (!isset($startnum)) {
+        $startnum = 0;
     }
-    elseif (!is_numeric($start)) {
+    elseif (!is_numeric($startnum)) {
         xarSession::setVar('errormsg', xarML('Bad numeric arguments for API function'));
         return false;
     } else {
         //The pager starts counting from 1
         //SelectLimit starts from 0
-        $start--;
+        $startnum--;
     }
-    if (!isset($count)) {
-        $count = 0;
+    if (!isset($itemsperpage)) {
+        $itemsperpage = 0;
     }
-    elseif (!is_numeric($count)) {
+    elseif (!is_numeric($itemsperpage)) {
         xarSession::setVar('errormsg', xarML('Bad numeric arguments for API function'));
         return false;
     }
@@ -177,11 +177,11 @@ function categories_userapi_getcat($args)
 
 // cfr. xarcachemanager - this approach might change later
     $expire = xarModVars::get('categories','cache.userapi.getcat');
-    if (is_numeric($count) && $count > 0 && is_numeric($start) && $start > -1) {
+    if (is_numeric($itemsperpage) && $itemsperpage > 0 && is_numeric($startnum) && $startnum > -1) {
         if (!empty($expire)){
-            $result = $dbconn->CacheSelectLimit($expire,$SQLquery, $count, $start, $bindvars);
+            $result = $dbconn->CacheSelectLimit($expire,$SQLquery, $itemsperpage, $startnum, $bindvars);
         } else {
-            $result = $dbconn->SelectLimit($SQLquery, $count, $start, $bindvars);
+            $result = $dbconn->SelectLimit($SQLquery, $itemsperpage, $startnum, $bindvars);
         }
     } else {
         if (!empty($expire)){

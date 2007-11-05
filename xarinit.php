@@ -299,6 +299,12 @@ function categories_init()
 
 # --------------------------------------------------------
 #
+# Set up modvars
+#
+    xarModVars::set('categories', 'itemsperpage', 20);
+
+# --------------------------------------------------------
+#
 # Create DD objects
 #
     $module = 'categories';

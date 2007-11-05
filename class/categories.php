@@ -41,6 +41,8 @@
         public $maxdepth;
         public $getchildren = true;
         public $returnitself = true;
+        public $start = 1;
+        public $itemstoshow = 0;
 
         public $cidlist = null;
 
@@ -140,18 +142,18 @@
     {
         function createnodes(CategoryTreeNode $node)
         {
+            if ($node->id != null) $node->cid = $node->id;
             $data = xarModAPIFunc('categories',
                                     'user',
                                     'getcat',
-    //                                array(
-    //                                      'cid' => false,
-    //                                      'getchildren' => true));
-                                  array('eid' => $node->eid,
-                                        'cid' => $node->cid,
+                                  array('eid'           => $node->eid,
+                                        'cid'           => $node->cid,
                                         'return_itself' => $node->returnitself,
-                                        'getchildren' => $node->getchildren,
+                                        'getchildren'   => $node->getchildren,
                                         'maximum_depth' => $node->maxdepth,
                                         'minimum_depth' => $node->mindepth,
+                                        'startnum'      => $node->start,
+                                        'itemsperpage'  => $node->itemstoshow,
                                         ));
              foreach ($data as $row) {
                 $nodedata = array(
@@ -168,7 +170,7 @@
                     $cidlist = $node->cidlist[$node->id];
                     if (in_array($row['cid'],$cidlist)) $this->treedata[] = $nodedata;
                 } else {
-                    $this->treedata[] = $nodedata;
+                    $this->treedata[$row['name']] = $nodedata;
                 }
             }
             parent::createnodes($node);

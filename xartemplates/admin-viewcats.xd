@@ -61,7 +61,7 @@
             <xar:if condition="$i le $pagerstart  AND ($i + $catsperpage) gt $pagerstart">
                 #$i#-#$i+$catsperpage#
             <xar:else />
-                <a href="#xarModURL('categories', 'admin', 'viewcats', array('pagerstart' => $i))#">
+                <a href="#xarModURL('categories', 'admin', 'viewcats', array('activetab' => 1,'pagerstart' => $i))#">
                     #$i#-#$i+$catsperpage#
                 </a>
             </xar:if>
@@ -75,7 +75,7 @@
             <xar:if condition="$i le $pagerstart  AND ($i + $catsperpage) gt $pagerstart">
                 #$i#
             <xar:else />
-                <a href="#xarModURL('categories', 'admin', 'viewcats', array('pagerstart' => $i))#">
+                <a href="#xarModURL('categories', 'admin', 'viewcats', array('activetab' => 1,'pagerstart' => $i))#">
                     #$i#
                 </a>
             </xar:if>
@@ -84,7 +84,7 @@
             <xar:if condition="$i le $pagerstart  AND ($i + $catsperpage) gt $pagerstart">
                 #$i#-#$pagertotal#
             <xar:else />
-                <a href="#xarModURL('categories', 'admin', 'viewcats', array('pagerstart' => $i))#">
+                <a href="#xarModURL('categories', 'admin', 'viewcats', array('activetab' => 1,'pagerstart' => $i))#">
                     #$i#-#$pagertotal#
                 </a>
             </xar:if>
