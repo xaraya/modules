@@ -61,10 +61,10 @@ function newsletter_admin_updatesubscription()
         }
         xarSessionSetVar('statusmsg', xarML('Newsletter Subscription Update'));
         // Redirect
-        xarResponseRedirect(xarModURL('newsletter', 'admin', 'viewsubscription'));
+        xarResponseRedirect(xarModURL('newsletter', 'admin', 'viewsubscription',array('uid'=>$uid)));
     } else {
-        // Redirect the user to new subscription page
-        xarResponseRedirect(xarModURL('newsletter', 'admin', 'newsubscription'));
+        // Redirect the user to search subscription page
+        xarResponseRedirect(xarModURL('newsletter', 'admin', 'searchsubscription'));
     }
 
     // Return
