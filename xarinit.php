@@ -88,11 +88,13 @@ function sharecontent_init()
 
     // Initialisation successful
 	// run upgrades
-	if (sharecontent_upgrade('0.9.3')) {;
-       return true;
-	} else {
+	if (!sharecontent_upgrade('0.9.3')) {;
 	   return false;
     }
+	if (!sharecontent_upgrade('0.9.4')) {;
+	   return false;
+    }
+	return true;
 }
 
 /**
@@ -122,6 +124,28 @@ function sharecontent_upgrade($oldversion)
         
             // Save  websites
             foreach ($websites2 as $website) {
+                list($title,$homeurl,$submiturl,$image,$active) = $website;
+                $nextId = $dbconn->GenId($xartable['sharecontent']);
+                $query = "INSERT INTO $xartable[sharecontent] (xar_id,xar_title, xar_homeurl, xar_submiturl, xar_image,xar_active) VALUES (?,?,?,?,?,?)";
+                $bindvars = array($nextId,$title,$homeurl,$submiturl,$image,$active);
+                $result =& $dbconn->Execute($query,$bindvars);
+                if (!$result)  sharecontent_delete();
+            }
+
+        case '0.9.4':
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+        
+            // Load the initial setup of the publication types
+            if (file_exists('modules/sharecontent/xarsetup.php')) {
+                include 'modules/sharecontent/xarsetup.php';
+            } else {
+                // TODO: add some defaults here
+                $websites= array();
+            }
+        
+            // Save  websites
+            foreach ($websites3 as $website) {
                 list($title,$homeurl,$submiturl,$image,$active) = $website;
                 $nextId = $dbconn->GenId($xartable['sharecontent']);
                 $query = "INSERT INTO $xartable[sharecontent] (xar_id,xar_title, xar_homeurl, xar_submiturl, xar_image,xar_active) VALUES (?,?,?,?,?,?)";

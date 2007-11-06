@@ -16,7 +16,13 @@
 /**
  * Initial setup for the sharecontent module
  */
-
+$websites3 = array(
+   array('ZicZac',
+         'http://ziczac.it/',
+		 'http://ziczac.it/a/segnala/?gurl=#URL#&gtit=#TITLE#',
+		 'http://ziczac.it/a/e/zzsmall.png',
+		 true)
+		 );
     // The list of currently supported websites 
 $websites2= array(
     array('OKNO',

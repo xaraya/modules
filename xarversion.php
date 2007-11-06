@@ -13,7 +13,7 @@
  */
 $modversion['name']           = 'Sharecontent';
 $modversion['id']             = '894';
-$modversion['version']        = '0.9.4';
+$modversion['version']        = '0.9.5';
 $modversion['displayname']    = xarML('Sharecontent');
 $modversion['description']    = 'Share items in web 2.0 sites and by email';
 $modversion['changelog']      = 'xardocs/changelog.txt';
