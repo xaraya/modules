@@ -16,7 +16,7 @@
             <legend>
                 <xar:mlstring>Jobs</xar:mlstring>
             </legend>
-            <table class="xar-fullwidth">  
+            <table class="xar-fullwidth">
   <tr>
     <th><xar:mlstring>ID</xar:mlstring></th>
     <th><xar:mlstring>Module</xar:mlstring></th>
@@ -28,14 +28,14 @@
   </tr>
   <xar:foreach in="$jobs" key="$id" value="$job">
     <tr>
-                    <td class="xar-align-center">
+      <td class="xar-align-center">
         <xar:if condition="!empty($id)">
           <a href="#xarModURL('scheduler','admin','modify',array('itemid' => $id))#" title="#xarML('Edit Configuration')#">
             #$id#
           </a>
         </xar:if>
       </td>
-                    <td class="xar-align-center">
+      <td class="xar-align-center">
         <select name="jobs[#$id#][module]">
           <xar:if condition="$jobs[$id]['module'] eq ''">
             <option value=""></option>
@@ -57,7 +57,7 @@
           </xar:foreach>
         </select>
       </td>
-                    <td class="xar-align-center">
+      <td class="xar-align-center">
         <select name="jobs[#$id#][type]">
           <xar:comment>TODO: is there a reason for this blank entry?</xar:comment>
           <option value=""></option>
@@ -70,10 +70,10 @@
           </xar:foreach>
         </select>
       </td>
-                    <td class="xar-align-center">
+      <td class="xar-align-center">
         <input type="text" name="jobs[#$id#][func]" value="#$job['func']#" size="10" />
       </td>
-                    <td class="xar-align-center">
+      <td class="xar-align-center">
         <select name="jobs[#$id#][interval]">
           <xar:foreach in="$intervals" key="$name" value="$display">
             <xar:if condition="!empty($job['interval']) and $job['interval'] eq $name">
@@ -84,13 +84,13 @@
           </xar:foreach>
         </select>
       </td>
-                    <td class="xar-align-center">
+      <td class="xar-align-center">
         <input type="hidden" name="jobs[#$id#][lastrun]" value="#$job['lastrun']#" />
         <xar:if condition="!empty($job['lastrun'])">
                             #xarLocaleGetFormattedDate('short',$job['lastrun'])# - #xarLocaleGetFormattedTime('short',$job['lastrun'])#
         </xar:if>
       </td>
-                    <td class="xar-align-center">
+      <td class="xar-align-center">
         <input type="hidden" name="jobs[#$id#][result]" value="#$job['result']#" />
         #$job['result']#
       </td>
@@ -102,7 +102,7 @@
             <legend>
                 <xar:mlstring>Trigger</xar:mlstring>
             </legend>
-            <table class="xar-fullwidth">
+<table class="xar-fullwidth">
   <tr>
     <td align="right">
       <label for="trigger"><xar:mlstring>Type</xar:mlstring></label>
@@ -184,7 +184,7 @@
     </td>
     <td align="left">
       <xar:if condition="!empty($lastrun)">
-                            #xarLocaleGetFormattedDate('long',$job['lastrun'])# - #xarLocaleGetFormattedTime('short',$job['lastrun'])#
+        #xarLocaleGetFormattedDate('long',$job['lastrun'])# - #xarLocaleGetFormattedTime('short',$job['lastrun'])#
       </xar:if>
     </td>
   </tr>
@@ -201,7 +201,7 @@
       #$hooks#
     </td>
   </tr>
-            </table>
+</table>
         </fieldset>
         <div class="xar-form-input-wrapper-after">
       <xar:if condition="xarModGetVar('scheduler','running')">
@@ -210,5 +210,4 @@
             <input type="submit" value="#xarML('Update Configuration')#" />
         </div>
 </form>
-
 </div>
