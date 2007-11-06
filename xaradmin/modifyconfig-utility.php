@@ -71,10 +71,10 @@ function foo_admin_modifyconfig()
                 xarModVars::set('foo', 'supportshorturls', $shorturls);
                 xarModVars::set('foo', 'useModuleAlias', $useModuleAlias);
                 xarModVars::set('foo', 'aliasname', $aliasname);
-                foreach ($modvars as $var)if (isset($$var))   xarModVars::set('foo', $var, $$var);
+                foreach ($modvars as $var) if (isset($$var)) xarModVars::set('foo', $var, $$var);
             }
             $regid = xarModGetIDFromName($tabmodule);
-            foreach ($modvars as $var)  if (isset($$var)) xarModItemVars::set('foo', $var, $$var, $regid);
+            foreach ($modvars as $var) if (isset($$var)) xarModItemVars::set('foo', $var, $$var, $regid);
 
             xarResponseRedirect(xarModURL('foo', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
             // Return

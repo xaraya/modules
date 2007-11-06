@@ -1,2 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> The table view is the default by default, but a list view is also available</xar:comment>
 <xar:template file="objectlist-table"/>
+</xar:template>
