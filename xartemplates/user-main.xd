@@ -16,33 +16,6 @@
     <form action="&xar-modurl-ebulletin-user-subscribe;" method="post">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
 
-    <fieldset>
-        <legend><xar:mlstring>My Subscriptions</xar:mlstring></legend>
-
-        <div class="xar-form-input-wrapper">
-            <xar:if condition="empty($pubs)">
-                <xar:mlstring><em>Sorry, no publications are available at this time.</em></xar:mlstring>
-            <xar:else />
-                <div>
-                    <xar:foreach in="$pubs" value="$pub">
-                        <xar:if condition="!empty($pub['subscribed'])">
-                            <input type="checkbox" name="subscriptions[#$pub['id']#]" id="publication_#$pub['id']#" checked="checked" />
-                        <xar:else />
-                            <input type="checkbox" name="subscriptions[#$pub['id']#]" id="publication_#$pub['id']#" />
-                        </xar:if>
-                        <label for="publication_#$pub['id']#">
-                            <em>#$pub['name']#</em>
-                            <xar:if condition="!empty($pub['desc'])">
-                                - #$pub['desc']#
-                            </xar:if>
-                        </label><br />
-                    </xar:foreach>
-                </div>
-            </xar:if>
-        </div>
-
-    </fieldset>
-
     <xar:if condition="!$loggedin">
     <fieldset>
         <legend><xar:mlstring>Identification</xar:mlstring></legend>
@@ -77,7 +50,31 @@
     </xar:if>
 
     <fieldset>
-        <div class="xar-form-input-wrapper-after">
+        <legend><xar:mlstring>My Subscriptions</xar:mlstring></legend>
+
+        <div class="xar-form-input-wrapper">
+            <xar:if condition="empty($pubs)">
+                <xar:mlstring><em>Sorry, no publications are available at this time.</em></xar:mlstring>
+            <xar:else />
+                <div>
+                    <xar:foreach in="$pubs" value="$pub">
+                        <xar:if condition="!empty($pub['subscribed'])">
+                            <input type="checkbox" name="subscriptions[#$pub['id']#]" id="publication_#$pub['id']#" checked="checked" />
+                        <xar:else />
+                            <input type="checkbox" name="subscriptions[#$pub['id']#]" id="publication_#$pub['id']#" />
+                        </xar:if>
+                        <label for="publication_#$pub['id']#">
+                            <em>#$pub['name']#</em>
+                            <xar:if condition="!empty($pub['desc'])">
+                                - #$pub['desc']#
+                            </xar:if>
+                        </label><br />
+                    </xar:foreach>
+                </div>
+            </xar:if>
+        </div>
+
+        <div class="xar-form-input-wrapper">
             <input type="submit" value="#xarML('Update Subscriptions')#"  tabindex="2" />
         </div>
     </fieldset>

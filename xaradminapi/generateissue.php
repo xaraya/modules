@@ -95,8 +95,14 @@ function ebulletin_adminapi_generateissue($args)
         xarTplSetThemeName($defaulttheme);
     }
 
-    // get the page output
+    // get the page output - check if html template exists
+    if(!($body_html = xarTplModule('ebulletin', 
+	                             'admin', 
+								 'publication', 
+								 $data, 
+								 $template_html.'-html')))
     $body_html = xarTplModule('ebulletin', 'admin', 'publication', $data, $template_html);
+    ;
     $body_txt  = xarTplModule('ebulletin', 'admin', 'publication', $data, $template_txt);
 
     // restore the theme

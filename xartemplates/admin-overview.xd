@@ -15,11 +15,20 @@
         content is included and how it is formatted.</xar:mlstring>
     </p>
 
-    <h3><xar:mlstring>Installation Notes</xar:mlstring></h3>
+    <h3><xar:mlstring>Mail templates</xar:mlstring></h3>
     <p>
-        <xar:mlstring>After installing this module, be sure to set your desired template directory.
-        You will also have to create Blocklayout templates for your newsletters.  See <code>modules/ebulletin/contrib/templates/sample.xd</code> for a sample template with instructions.</xar:mlstring>
-    </p>
+        <xar:mlstring>After installing this module, you will have to create Blocklayout templates for your newsletters.  
+		</xar:mlstring>
+	</p>
+	<p>
+	<xar:mlstring>In each publication config page you can choose the theme where 
+	   you would like to place the templates, and create in that theme's <i>modules/ebulletin</i>
+	    directory a template named <i>admin-publication-[name].xd</i>, where [name] is the name specified in the publication config. See <code>modules/ebulletin/contrib/templates/sample.xd</code> for a sample template with instructions.
+	</xar:mlstring>
+		</p>
+		<p><xar:mlstring>If you would like to specify a different template for html mail, you <i>can</i> add a template named <i>admin-publication-[name]-html.xd</i>. If this template is not found, the system will generate html mail with the default template. 
+	</xar:mlstring>
+	</p>
     <p>
         <xar:mlstring>eBulletin can also be configured to use an alternate theme when generating templates.  You might consider creating your own customized theme (perhaps starting with
         the 'print' theme due to its simplicity).</xar:mlstring>
@@ -83,11 +92,11 @@
 	<p><xar:mlstring>You can schedule the automatic creation of new issues and their publication by installing the scheduler module.</xar:mlstring></p>
 	<p><xar:mlstring>When the scheduler module is installed, you can configure each publication to create and publish new issues in the publication options page.</xar:mlstring>
 	</p>
-	<p><xar:mlstring>Once the appropriate option is selected, you need to schedule the execution of the appropriate function in the scheduler module config page. Three scheduler functions are supplied:</xar:mlstring>
-	<ul><li><xar:mlstring>createissues: this function creates new issues for each publication that is enabled to be automatically published</xar:mlstring></li>
-	<li><xar:mlstring>publishissues: this function publishes all unpublished issues of each publication that is enabled to be automatically published</xar:mlstring></li>
-	<li><xar:mlstring>createandpublishissues: this function creates new issues and publishes them for each publication that is enabled to be automatically published</xar:mlstring></li>
+	<p><xar:mlstring>Once the appropriate option is selected, you need to schedule the execution of the appropriate function in the scheduler module config page. Two scheduler functions are supplied:</xar:mlstring>
+	<ul><li><xar:mlstring><i>createissues</i>: this function creates new issues for each publication that is enabled to be automatically published</xar:mlstring></li>
+	<li><xar:mlstring><i>publishissues</i>: this function publishes all unpublished issues of each publication that is enabled to be automatically published</xar:mlstring></li>
 	</ul>
+
 
     <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
     <ul>

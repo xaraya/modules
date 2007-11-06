@@ -41,4 +41,6 @@ Version 1.2.1 2007-10-09 (andream - andrea@andreamoro.net)
 	  Templates modified: 
 	  admin-modify.xd
 	  admin-new.xd
+	- added possibility to specify different template for htmlmail (see overview
+	  template for details)
 

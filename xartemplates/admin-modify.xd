@@ -124,10 +124,30 @@
             <legend><xar:mlstring>Mail Body</xar:mlstring></legend>
 
             <div class="xar-form-input-wrapper">
+                <label for="defaulttheme" class="xar-form-label" title="#xarML('Default theme for generating issues')#">
+                    <xar:mlstring>Default theme</xar:mlstring>
+                </label>
+                <select name="defaulttheme" id="defaulttheme">
+                    <option value=""><xar:mlstring>[System Theme]</xar:mlstring></option>
+                    <xar:loop name="$themes">
+                        <xar:if condition="$loop:item['directory'] eq $defaulttheme">
+                            <option value="#$loop:item['directory']#" selected="selected">
+                                #$loop:item['name']#
+                            </option>
+                        <xar:else />
+                            <option value="#$loop:item['directory']#">
+                                #$loop:item['name']#
+                            </option>
+                        </xar:if>
+                    </xar:loop>
+                </select>
+            </div>
+
+            <div class="xar-form-input-wrapper">
                 <label for="template" class="xar-form-label" title="#xarML('Template')#">
                     <xar:mlstring>Template:</xar:mlstring>
                 </label>
-                <input type="text" name="template" id="template" value="#$template#" maxlength="255" class="xar-form-textmedium" />
+                admin-publication-<input type="text" name="template" id="template" value="#$template#" maxlength="255" class="xar-form-textmedium" />.xd
                 <span class="xar-error">*</span>
                 <xar:if condition="!empty($invalid['template'])">
                     <div class="xar-error">
@@ -168,26 +188,6 @@
                 <span class="xar-sub">
                     <xar:mlstring>Relative to issue date.  Use negative number to include days in the past.</xar:mlstring>
                 </span>
-            </div>
-
-            <div class="xar-form-input-wrapper">
-                <label for="defaulttheme" class="xar-form-label" title="#xarML('Default theme for generating issues')#">
-                    <xar:mlstring>Default theme</xar:mlstring>
-                </label>
-                <select name="defaulttheme" id="defaulttheme">
-                    <option value=""><xar:mlstring>[System Theme]</xar:mlstring></option>
-                    <xar:loop name="$themes">
-                        <xar:if condition="$loop:item['directory'] eq $defaulttheme">
-                            <option value="#$loop:item['directory']#" selected="selected">
-                                #$loop:item['name']#
-                            </option>
-                        <xar:else />
-                            <option value="#$loop:item['directory']#">
-                                #$loop:item['name']#
-                            </option>
-                        </xar:if>
-                    </xar:loop>
-                </select>
             </div>
 
         </fieldset>
