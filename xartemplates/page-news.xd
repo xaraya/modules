@@ -31,10 +31,14 @@
 
     <div class="xarpages-summary-wrapper">
         <xar:comment>Loop through the articles to display the summary, calling up a template for format it</xar:comment>
-        <xar:loop name="$articles">
-            <xar:set name="summary">#xarTplModule('xarpages', $template_prefix, 'summary', $loop:item, $pubtypes[$loop:item.pubtypeid]['name'])#</xar:set>
-            #$summary#
-        </xar:loop>
+        <xar:if condition="!empty($articles) and is_array($articles)">
+            <xar:loop name="$articles">
+                <xar:set name="summary">#xarTplModule('xarpages', $template_prefix, 'summary', $loop:item, $pubtypes[$loop:item.pubtypeid]['name'])#</xar:set>
+                #$summary#
+            </xar:loop>
+        <xar:else />
+            <p><xar:mlstring>No items found.</xar:mlstring></p>
+        </xar:if>
     </div>
 </xar:if>
 
