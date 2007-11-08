@@ -4,8 +4,8 @@
 </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:if condition="xarModGetVar('foo','useModuleAlias')">
-            #xarModGetVar('foo','aliasname')#
+        <xar:if condition="xarModVars::get('foo','useModuleAlias')">
+            <xar:var scope="module" module="foo" name="aliasname" />
         <xar:else />
             <xar:mlstring>Foo Administration</xar:mlstring>
         </xar:if>
@@ -43,10 +43,11 @@
                             Items Per Page:
                         </xar:mlstring>
                     </label>
-                    <input type="text" name="itemsperpage" id="itemsperpage" value="#xarModGetVar('foo','itemsperpage')#" maxlength="3" class="xar-form-textshort" />
+                    <xar:set name="value"><xar:var scope="module" module="foo" name="itemsperpage" /></xar:set>
+                    <input type="text" name="itemsperpage" id="itemsperpage" value="#$value#" maxlength="3" class="xar-form-textshort" />
                 </div>
                 <div class="xar-form-input-wrapper-after">
-                    <xar:set name="checked">xarModGetVar('foo','SupportShortURLs')</xar:set>
+                    <xar:set name="checked">xarModVars::get('foo','SupportShortURLs')</xar:set>
                     <xar:data-input type="checkbox" name="shorturls" id="shorturls" checked="$checked" />
                     <label for="shorturls" title="#xarML('Enable short URLs for Foo module')#">
                         <xar:mlstring>
@@ -60,7 +61,7 @@
                             Use a module alias
                         </xar:mlstring>
                     </label>
-                    <xar:set name="checked">xarModGetVar('foo','useModuleAlias')</xar:set>
+                    <xar:set name="checked">xarModVars::get('foo','useModuleAlias')</xar:set>
                     <xar:data-input type="checkbox" name="modulealias" id="modulealias" checked="$checked" />
                 </div>
                 <div class="xar-form-input-wrapper">
@@ -69,7 +70,8 @@
                                 Module Alias Name
                             </xar:mlstring>
                     </label>
-                    <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('foo', 'aliasname')#" size="32" maxlength="100" />
+                    <xar:set name="value"><xar:var scope="module" module="foo" name="aliasname" /></xar:set>
+                    <input type="text" name="aliasname" id="aliasname" value="#$value#" size="32" maxlength="100" />
                 </div>
             </fieldset>
         <xar:else />
