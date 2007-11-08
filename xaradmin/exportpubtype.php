@@ -49,7 +49,7 @@ function articles_admin_exportpubtype($args)
 ';
 
     // Get the article settings for this pubtype
-    $settings = xarModGetVar('articles','settings.'.$ptid);
+    $settings = xarModVars::get('articles','settings.'.$ptid);
     $unsettings = unserialize($settings);
     unset($unsettings['cids']);
     unset($unsettings['number_of_categories']);

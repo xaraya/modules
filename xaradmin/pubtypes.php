@@ -178,7 +178,7 @@ function articles_admin_pubtypes()
                 xarModDelAlias($pubtypes[$ptid]['name'],'articles');
                 xarModDelVar('articles', 'number_of_categories.'.$ptid);
                 xarModDelVar('articles', 'mastercids.'.$ptid);
-                $default = xarModGetVar('articles','defaultpubtype');
+                $default = xarModVars::get('articles','defaultpubtype');
                 if ($ptid == $default) {
                     xarModSetVar('articles','defaultpubtype','');
                 }

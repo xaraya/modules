@@ -244,7 +244,7 @@ function articles_userapi_leftjoin($args)
         // 0. Check for fulltext or fulltext boolean searchtypes (MySQL only)
     // CHECKME: switch to other search type if $search is less than min. length ?
         if (!empty($searchtype) && substr($searchtype,0,8) == 'fulltext') {
-            $fulltext = xarModGetVar('articles', 'fulltextsearch');
+            $fulltext = xarModVars::get('articles', 'fulltextsearch');
             if (!empty($fulltext)) {
                 $fulltextfields = explode(',',$fulltext);
             } else {

@@ -317,7 +317,7 @@
                         </xar:mlvar>
                     </xar:ml>
                 </p>
-                <xar:if condition="$ptid eq xarModGetVar('articles','defaultpubtype')">
+                <xar:if condition="$ptid eq xarModVars::get('articles','defaultpubtype')">
                     <p>
                         <strong>
                             <xar:mlstring>

@@ -168,7 +168,7 @@
                                 </option>
                             <xar:elseif condition="$id eq 3"/>
                                 <xar:comment>Frontpage</xar:comment>
-                                <xar:if condition="xarModGetVar('articles','defaultpubtype') eq $ptid or xarModGetVar('articles','defaultpubtype') eq ''">
+                                <xar:if condition="xarModVars::get('articles','defaultpubtype') eq $ptid or xarModVars::get('articles','defaultpubtype') eq ''">
                                     <option value="#$id#">
                                         #$name#
                                     </option>

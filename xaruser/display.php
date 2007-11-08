@@ -91,9 +91,9 @@ function articles_user_display($args)
 
     // Get the article settings for this publication type
     if (empty($ptid)) {
-        $settings = unserialize(xarModGetVar('articles', 'settings'));
+        $settings = unserialize(xarModVars::get('articles', 'settings'));
     } else {
-        $settings = unserialize(xarModGetVar('articles', 'settings.'.$ptid));
+        $settings = unserialize(xarModVars::get('articles', 'settings.'.$ptid));
     }
 
     // show the number of articles for each publication type

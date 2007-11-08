@@ -88,7 +88,7 @@ function articles_admin_create()
 
 // TODO: make $status dependent on permissions ?
     if (empty($article['status'])) {
-        $settings = unserialize(xarModGetVar('articles', 'settings.'.$ptid));
+        $settings = unserialize(xarModVars::get('articles', 'settings.'.$ptid));
         if (isset($settings['defaultstatus'])) {
             $article['status'] = $settings['defaultstatus'];
         } elseif (empty($pubtypes[$ptid]['config']['status']['label'])) {

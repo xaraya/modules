@@ -133,7 +133,7 @@ function articles_user_search($args)
     // default publication type(s) to search in
     if (!empty($ptid) && isset($pubtypes[$ptid])) {
         $ptids = array($ptid);
-        $settings = unserialize(xarModGetVar('articles', 'settings.'.$ptid));
+        $settings = unserialize(xarModVars::get('articles', 'settings.'.$ptid));
         if (empty($settings['showcategories'])) {
             $showcategories = 0;
         } else {
@@ -145,7 +145,7 @@ function articles_user_search($args)
         }
         $showcategories = 1;
     } elseif (!isset($ptids)) {
-    //    $ptids = array(xarModGetVar('articles','defaultpubtype'));
+    //    $ptids = array(xarModVars::get('articles','defaultpubtype'));
         $ptids = array();
         foreach ($pubtypes as $pubid => $pubtype) {
             $ptids[] = $pubid;
@@ -231,7 +231,7 @@ function articles_user_search($args)
     }
 
     // Set default searchtype to 'fulltext' if necessary
-    $fulltext = xarModGetVar('articles', 'fulltextsearch');
+    $fulltext = xarModVars::get('articles', 'fulltextsearch');
     if (!isset($searchtype) && !empty($fulltext)) {
         $searchtype = 'fulltext';
     }
