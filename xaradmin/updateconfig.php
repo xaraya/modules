@@ -18,8 +18,8 @@ function workflow_admin_updateconfig()
 {
     // Get parameters
     xarVarFetch('settings', 'isset',    $settings, '', XARVAR_DONT_SET);
-    xarVarFetch('shorturls',  'checkbox', $shorturls,  xarModGetVar('workflow','SupportShortURLs'), XARVAR_NOT_REQUIRED);
-    xarVarFetch('numitems', 'int:1',    $numitems, xarModGetVar('workflow','itemsperpage'), XARVAR_NOT_REQUIRED);
+    xarVarFetch('shorturls',  'checkbox', $shorturls,  xarModVars::get('workflow','SupportShortURLs'), XARVAR_NOT_REQUIRED);
+    xarVarFetch('numitems', 'int:1',    $numitems, xarModVars::get('workflow','itemsperpage'), XARVAR_NOT_REQUIRED);
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;

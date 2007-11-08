@@ -31,7 +31,7 @@ function workflow_user_activities()
 
     // Initialize some stuff
     $user = xarUserGetVar('id');
-    $maxRecords = xarModGetVar('workflow','itemsperpage');
+    $maxRecords = xarModVars::get('workflow','itemsperpage');
 
     // Filtering data to be received by request and
     // used to build the where part of a query

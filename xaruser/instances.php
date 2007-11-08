@@ -25,7 +25,7 @@ function workflow_user_instances()
 
     // Initialize some stuff
     $user = xarUserGetVar('id');
-    $maxRecords = xarModGetVar('workflow','itemsperpage');
+    $maxRecords = xarModVars::get('workflow','itemsperpage');
 
     if (isset($_REQUEST['run']) || isset($_REQUEST['run_x'])) {
         return xarModFunc('workflow','user','run_activity');

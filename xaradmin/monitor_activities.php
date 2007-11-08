@@ -24,7 +24,7 @@ function workflow_admin_monitor_activities()
 
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
-    $maxRecords = xarModGetVar('workflow','itemsperpage');
+    $maxRecords = xarModVars::get('workflow','itemsperpage');
 
 // Adapted from tiki-g-monitor_activities.php
 include_once (GALAXIA_LIBRARY.'/processmonitor.php');

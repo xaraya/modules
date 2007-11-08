@@ -8,14 +8,14 @@
     <fieldset>
       <legend><xar:mlstring>Global Configuration</xar:mlstring></legend>
       <div class="xar-form-input-wrapper-after">
-        <xar:set name="checked">xarModGetVar('workflow', 'SupportShortURLs')</xar:set>
+        <xar:set name="checked"><xar:var scope="module" module="workflow" name="SupportShortURLs" /></xar:set>
         <xar:data-input type="checkbox" name="shorturls" id="shorturls" checked="$checked" />
         <label for="isalias"><xar:mlstring>Enable Short URLs</xar:mlstring></label>
         [<xar:mlstring>Not currently implemented</xar:mlstring>]
       </div>
       <div class="xar-form-input-wrapper">
         <label class="xar-form-label" for="numitems"><xar:mlstring>Items per Page :</xar:mlstring></label>
-        <xar:set name="value">xarModGetVar('workflow', 'itemsperpage')</xar:set>
+        <xar:set name="value"><xar:var scope="module" module="workflow" name="itemsperpage" /></xar:set>
         <input type="text" name="numitems" id="numitems" value="#$value#" size="4" />
       </div>
     </fieldset>

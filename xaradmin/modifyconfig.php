@@ -29,9 +29,9 @@ function workflow_admin_modifyconfig()
     $data = array();
     $data['settings'] = array();
 
-    $create = xarModGetVar('workflow','default.create');
-    $update = xarModGetVar('workflow','default.update');
-    $delete = xarModGetVar('workflow','default.delete');
+    $create = xarModVars::get('workflow','default.create');
+    $update = xarModVars::get('workflow','default.update');
+    $delete = xarModVars::get('workflow','default.delete');
     $data['settings']['default'] = array('label' => xarML('Default configuration'),
                                          'create' => $create,
                                          'update' => $update,
@@ -48,15 +48,15 @@ function workflow_admin_modifyconfig()
                                          // don't throw an exception if this function doesn't exist
                                          array(), 0);
                 foreach ($value as $itemtype => $val) {
-                    $create = xarModGetVar('workflow', "$modname.$itemtype.create");
+                    $create = xarModVars::get('workflow', "$modname.$itemtype.create");
                     if (empty($create)) {
                         $create = '';
                     }
-                    $update = xarModGetVar('workflow', "$modname.$itemtype.update");
+                    $update = xarModVars::get('workflow', "$modname.$itemtype.update");
                     if (empty($update)) {
                         $update = '';
                     }
-                    $delete = xarModGetVar('workflow', "$modname.$itemtype.delete");
+                    $delete = xarModVars::get('workflow', "$modname.$itemtype.delete");
                     if (empty($delete)) {
                         $delete = '';
                     }
@@ -73,15 +73,15 @@ function workflow_admin_modifyconfig()
                                                                     'delete' => $delete);
                 }
             } else {
-                $create = xarModGetVar('workflow', "$modname.create");
+                $create = xarModVars::get('workflow', "$modname.create");
                 if (empty($create)) {
                     $create = '';
                 }
-                $update = xarModGetVar('workflow', "$modname.update");
+                $update = xarModVars::get('workflow', "$modname.update");
                 if (empty($update)) {
                     $update = '';
                 }
-                $delete = xarModGetVar('workflow', "$modname.delete");
+                $delete = xarModVars::get('workflow', "$modname.delete");
                 if (empty($delete)) {
                     $delete = '';
                 }
@@ -132,7 +132,7 @@ function workflow_admin_modifyconfig()
 // workflow activities to run when. Other modules will typically have 1 job that corresponds
 // to 1 API function, so they won't need this...
 
-    $serialjobs = xarModGetVar('workflow','jobs');
+    $serialjobs = xarModVars::get('workflow','jobs');
     if (!empty($serialjobs)) {
         $data['jobs'] = unserialize($serialjobs);
     } else {

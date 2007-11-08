@@ -84,13 +84,13 @@ function workflow_adminapi_deletehook($args)
 
     // see if we need to start some workflow activity here
     if (!empty($itemtype)) {
-        $activityId = xarModGetVar('workflow',"$modname.$itemtype.delete");
+        $activityId = xarModVars::get('workflow',"$modname.$itemtype.delete");
     }
     if (empty($activityId)) {
-        $activityId = xarModGetVar('workflow',"$modname.delete");
+        $activityId = xarModVars::get('workflow',"$modname.delete");
     }
     if (empty($activityId)) {
-        $activityId = xarModGetVar('workflow','default.delete');
+        $activityId = xarModVars::get('workflow','default.delete');
     }
     if (empty($activityId)) {
         return $extrainfo;

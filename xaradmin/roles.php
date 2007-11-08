@@ -26,7 +26,7 @@ function workflow_admin_roles()
     // Common setup for Galaxia environment
     sys::import('modules.workflow.lib.galaxia.config');
     $data = array();
-    $maxRecords = xarModGetVar('workflow','itemsperpage');
+    $maxRecords = xarModVars::get('workflow','itemsperpage');
 
     // Adapted from tiki-g-admin_roles.php
     include_once(GALAXIA_LIBRARY.'/processmanager.php');

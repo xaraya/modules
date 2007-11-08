@@ -24,7 +24,7 @@ function workflow_schedulerapi_activities($args)
 // to 1 API function, so they won't need this...
 
     $log = xarML('Starting scheduled workflow activities') . "\n";
-    $serialjobs = xarModGetVar('workflow','jobs');
+    $serialjobs = xarModVars::get('workflow','jobs');
     if (!empty($serialjobs)) {
         $jobs = unserialize($serialjobs);
     } else {
@@ -97,7 +97,7 @@ function workflow_schedulerapi_activities($args)
     xarVarDelCached('Mod.Variables.workflow', 'jobs');
 
     // get the current list of jobs
-    $serialjobs = xarModGetVar('workflow','jobs');
+    $serialjobs = xarModVars::get('workflow','jobs');
     if (!empty($serialjobs)) {
         $newjobs = unserialize($serialjobs);
     } else {

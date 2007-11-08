@@ -62,13 +62,13 @@ function workflow_adminapi_createhook($args)
 
     // see if we need to start some workflow activity here
     if (!empty($itemtype)) {
-        $activityId = xarModGetVar('workflow',"$modname.$itemtype.create");
+        $activityId = xarModVars::get('workflow',"$modname.$itemtype.create");
     }
     if (empty($activityId)) {
-        $activityId = xarModGetVar('workflow',"$modname.create");
+        $activityId = xarModVars::get('workflow',"$modname.create");
     }
     if (empty($activityId)) {
-        $activityId = xarModGetVar('workflow','default.create');
+        $activityId = xarModVars::get('workflow','default.create');
     }
     if (empty($activityId)) {
         return $extrainfo;

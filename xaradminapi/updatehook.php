@@ -84,13 +84,13 @@ function workflow_adminapi_updatehook($args)
 
     // see if we need to start some workflow activity here
     if (!empty($itemtype)) {
-        $activityId = xarModGetVar('workflow',"$modname.$itemtype.update");
+        $activityId = xarModVars::get('workflow',"$modname.$itemtype.update");
     }
     if (empty($activityId)) {
-        $activityId = xarModGetVar('workflow',"$modname.update");
+        $activityId = xarModVars::get('workflow',"$modname.update");
     }
     if (empty($activityId)) {
-        $activityId = xarModGetVar('workflow','default.update');
+        $activityId = xarModVars::get('workflow','default.update');
     }
     if (empty($activityId)) {
         return $extrainfo;
