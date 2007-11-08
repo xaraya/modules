@@ -140,7 +140,7 @@
                                 <option value="default">[<xar:mlstring>Default site theme</xar:mlstring>]</option>
                             </xar:if>
                             <xar:loop name="$themes">
-                                <xar:if condition="$loop:item.name eq $page.theme">
+                                <xar:if condition="$loop:item.name eq $page.theme or $loop:item.osdirectory eq $page.theme">
                                     <option value="#xarVarPrepForDisplay($loop:item.osdirectory)#" selected="selected">#xarVarPrepForDisplay($loop:item.name)#</option>
                                 <xar:else />
                                     <option value="#xarVarPrepForDisplay($loop:item.osdirectory)#">#xarVarPrepForDisplay($loop:item.name)#</option>
