@@ -17,7 +17,7 @@
 function articles_user_archive($args)
 {
     // Get parameters from user
-    if (!xarVarFetch('ptid',  'id',           $ptid,  xarModGetVar('articles','defaultpubtype'), XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('ptid',  'id',           $ptid,  xarModVars::get('articles','defaultpubtype'), XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('sort',  'enum:d:t:1:2', $sort,  'd',  XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('month', 'str',          $month, '',   XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('cids',  'array',        $cids,  NULL, XARVAR_NOT_REQUIRED)) {return;}
@@ -352,9 +352,9 @@ function articles_user_archive($args)
     }
 //}
     if (!empty($ptid)) {
-        $settings = unserialize(xarModGetVar('articles', 'settings.'.$ptid));
+        $settings = unserialize(xarModVars::get('articles', 'settings.'.$ptid));
     } else {
-        $string = xarModGetVar('articles', 'settings');
+        $string = xarModVars::get('articles', 'settings');
         if (!empty($string)) {
             $settings = unserialize($string);
         }

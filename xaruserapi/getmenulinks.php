@@ -61,7 +61,7 @@ function articles_userapi_getmenulinks()
                                      'label' => '&#160;' . xarML('Submit Now'));
             }
 
-            $settings = unserialize(xarModGetVar('articles', 'settings.'.$ptid));
+            $settings = unserialize(xarModVars::get('articles', 'settings.'.$ptid));
             if (!empty($settings['showarchives'])) {
                 $menulinks[] = Array('url'   => xarModURL('articles',
                                                           'user',

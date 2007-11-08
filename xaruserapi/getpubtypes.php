@@ -35,7 +35,7 @@ function articles_userapi_getpubtypes($args)
     if (isset($args['sort'])) {
         $sort = $args['sort'];
     } else {
-        $sort = xarModGetVar('articles','sortpubtypes');
+        $sort = xarModVars::get('articles','sortpubtypes');
     }
     if (empty($sort)) {
         $sort = 'id';

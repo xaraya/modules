@@ -169,7 +169,7 @@ function articles_topitemsblock_display($blockinfo)
             }
             if (empty($ptid)) {
                 // default publication type
-                $ptid = xarModGetVar('articles', 'defaultpubtype');
+                $ptid = xarModVars::get('articles', 'defaultpubtype');
             }
         } else {
             // MikeC: Admin Specified a publication type, use it.

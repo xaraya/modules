@@ -108,7 +108,7 @@
                 </div>
                 <xar:if condition="xarDBGetType() eq 'mysql'">
                 <div class="xar-form-input-wrapper-after">
-                    <xar:set name="fulltext">xarModGetVar('articles', 'fulltextsearch')</xar:set>
+                    <xar:set name="fulltext">xarModVars::get('articles', 'fulltextsearch')</xar:set>
                 <xar:comment>
                     You can adapt the field list here if you want e.g. to ignore the notes field for full-text search
                 </xar:comment>

@@ -38,7 +38,7 @@ function articles_admin_view($args)
             $ptid = $itemtype;
         } else {
             // we default to this for convenience
-            $default = xarModGetVar('articles','defaultpubtype');
+            $default = xarModVars::get('articles','defaultpubtype');
             if (!empty($default) && !xarSecurityCheck('EditArticles',0,'Article',"$default:All:All:All")) {
                 // try to find some alternate starting pubtype if necessary
                 foreach ($pubtypes as $id => $pubtype) {
@@ -98,9 +98,9 @@ function articles_admin_view($args)
     }
 
     if (!empty($ptid)) {
-        $settings = unserialize(xarModGetVar('articles', 'settings.'.$ptid));
+        $settings = unserialize(xarModVars::get('articles', 'settings.'.$ptid));
     } else {
-        $string = xarModGetVar('articles', 'settings');
+        $string = xarModVars::get('articles', 'settings');
         if (!empty($string)) {
             $settings = unserialize($string);
         }

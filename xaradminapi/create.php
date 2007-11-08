@@ -44,7 +44,7 @@ function articles_adminapi_create($args)
 
     // Default publication type is defined in the admin interface
     if (empty($ptid) || !is_numeric($ptid)) {
-        $ptid = xarModGetVar('articles', 'defaultpubtype');
+        $ptid = xarModVars::get('articles', 'defaultpubtype');
         if (empty($ptid)) {
             $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                         'ptid', 'admin', 'create', 'Articles');

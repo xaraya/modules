@@ -62,7 +62,7 @@ function articles_admin_updateconfig()
         xarModSetVar('articles', 'sortpubtypes', $sortpubtypes);
         if (xarDBGetType() == 'mysql') {
             if (!xarVarFetch('fulltext', 'isset', $fulltext, '', XARVAR_NOT_REQUIRED)) {return;}
-            $oldval = xarModGetVar('articles', 'fulltextsearch');
+            $oldval = xarModVars::get('articles', 'fulltextsearch');
             $index = 'i_' . xarDB::getPrefix() . '_articles_fulltext';
             if (empty($fulltext) && !empty($oldval)) {
                 // Get database setup
