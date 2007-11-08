@@ -1,11 +1,9 @@
 
+<xar:comment>Common navbar stuff</xar:comment>
+<xar:template file="user-navbar" module="xarpages" />
+
 <xar:comment>Change this from 'article' to some other prefix to use a different set of template prefixes</xar:comment>
 <xar:set name="template_prefix">'article'</xar:set>
-
-<xar:comment>Provide an edit link if we have privileges</xar:comment>
-<xar:if condition="xarSecurityCheck('EditXarpagesPage', 0, 'Page', $current_page.name . ':' . $current_page.pagetype.name)">
-    <div>[<a href="#xarModURL('xarpages','admin','modifypage',array('pid'=>$pid,'return_url'=>xarServerGetCurrentURL(array(),false)))#">edit</a>]</div>
-</xar:if>
 
 <xar:comment>
     If no searching is being done, then display the introduction text.
@@ -30,6 +28,9 @@
     </xar:if>
 
     <div class="xarpages-summary-wrapper">
+        <xar:if condition="!isset($extra)">
+            <p><xar:mlstring>Configuration error: page requires the 'news' custom page function to be set.</xar:mlstring></p>
+        </xar:if>
         <xar:comment>Loop through the articles to display the summary, calling up a template for format it</xar:comment>
         <xar:if condition="!empty($articles) and is_array($articles)">
             <xar:loop name="$articles">

@@ -1,0 +1,25 @@
+<item>
+    <title>#xarVarPrepForDisplay($title)#</title>
+    <link>#xarModURL('xarpages', 'user', 'display', array('pid'=&gt;$pid, 'aid'=&gt;$aid))#</link>
+    <xar:if condition="!empty($pubdate)"><pubDate>#xarLocaleFormatUTCDate('%a, %d %b %Y %H:%M:%S %z',$pubdate)#</pubDate></xar:if>
+
+    <description>#xarVarPrepForDisplay($summary)#</description>
+
+    <xar:if condition="!empty($categories)">
+    <xar:foreach in="$categories" value="$cat">
+        <category domain="#xarModURL('xarpages', 'user', 'display', array('pid'=&gt;$pid, 'cids'=&gt;array($cat.cid)))#">#xarVarPrepForDisplay($cat.name)#</category>
+    </xar:foreach>
+    </xar:if>
+
+    <xar:if condition="!empty($categories)">
+        <xar:loop name="$categories">
+            <xar:comment>Choose just one icon from the categories</xar:comment>
+            <xar:if condition="!empty($loop:item.image) and empty($image_displayed)">
+                <xar:comment>In here, choose your own path and MIME type</xar:comment>
+                <enclosure url="#xarServerGetBaseURL()#modules/categories/xarimages/#$loop:item.image#" length="" type="image/JPEG" />
+                <xar:comment>Ensure only one image is displayed (the first one we get)</xar:comment>
+                <xar:set name="image_displayed">true</xar:set>
+            </xar:if>
+        </xar:loop>
+    </xar:if>
+</item>

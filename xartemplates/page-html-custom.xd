@@ -5,46 +5,8 @@
     'body'.
 </xar:comment>
 
-<xar:comment>
-    Set the page title to the description of the page.
-    You could instead create a DD property called 'title' and refererence
-    it as $current_page.dd.title, reserving the description field for
-    administration notes.
-</xar:comment>
-<xar:set name="dummy">#xarTplSetPageTitle($current_page.desc)#</xar:set>
-
-<div>
-    <xar:mlstring>You are here:</xar:mlstring>
-    <xar:loop name="$ancestors">
-        <xar:if condition="$loop:item.pid eq $pid">
-            &gt;&gt; <span title="#xarVarPrepForDisplay($loop:item.desc)#">#$loop:item.name#</span>
-        <xar:else />
-            &gt;&gt; <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$loop:item.pid))#" title="#xarVarPrepForDisplay($loop:item.desc)#">#$loop:item.name#</a>
-        </xar:if>
-    </xar:loop>
-</div>
-
-<xar:if condition="!empty($siblings)">
-    <div>
-        <xar:mlstring>Pages in this section:</xar:mlstring>
-        <xar:loop name="$siblings">
-            <xar:if condition="$loop:item.pid eq $pid">
-                <span title="#xarVarPrepForDisplay($loop:item.desc)#">#$loop:item.name#</span>
-            <xar:else />
-                <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$loop:item.pid))#" title="#xarVarPrepForDisplay($loop:item.desc)#">#$loop:item.name#</a>
-            </xar:if>
-        </xar:loop>
-    </div>
-</xar:if>
-
-<xar:if condition="!empty($children)">
-    <div>
-        <xar:mlstring>Sub-pages:</xar:mlstring>
-        <xar:loop name="$children">
-            <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$loop:item.pid))#" title="#xarVarPrepForDisplay($loop:item.desc)#">#$loop:item.name#</a>
-        </xar:loop>
-    </div>
-</xar:if>
+<xar:comment>Common navbar stuff</xar:comment>
+<xar:template file="user-navbar" module="xarpages" />
 
 <xar:if condition="isset($current_page.dd.body)">
     <div style="margin: 1em; padding: 1em; border: 5px solid #FFCC00;">#$current_page.dd.body#</div>
