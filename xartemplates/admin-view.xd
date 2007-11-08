@@ -58,7 +58,7 @@
         </xar:if>
         <xar:categories-navigation layout="trails" showchildren="1" module="articles" type="admin" itemtype="$ptid" catid="$catid" />
         <xar:base-include-javascript module="base" filename="checkall.js" />
-            <form method="post" name="viewarticles" id="viewarticles" action="#xarModURL('articles','admin','updatestatus')#">
+            <form method="post" id="viewarticles" action="#xarModURL('articles','admin','updatestatus')#">
                 <div>
                     <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
                     <input type="hidden" name="catid" id="catid" value="#$catid#" />
@@ -112,7 +112,7 @@
                                 </td>
                                 <td class="xar-norm">
                                     <xar:if condition="!empty($item['editurl'])">
-                                        <input type="checkbox" name="ids[#$item['id']#]" id="ids[#$item['id']#]" value="1" #$item['selected']# />
+                                        <input type="checkbox" name="ids[#$item['id']#]" id="ids[#$item['id']#]" value="1" checked="#$item['selected']#" />
                                     </xar:if>
                                 </td>
                             </xar:if>
@@ -182,8 +182,10 @@
                         </select>
                         <input type="submit" value="#$changestatuslabel#" />
 <script type="text/javascript">
-    document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewarticles'],true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
-    document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewarticles'],false)\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
+    <![CDATA[
+    document.write("[ <a href=\"javascript:xar_base_checkall(document.getElementById('viewarticles'),true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
+    document.write("<a href=\"javascript:xar_base_checkall(document.getElementById('viewarticles'),false)\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
+    ]]>
 </script>
                     </p>
                 </xar:if>
