@@ -178,8 +178,8 @@ function articles_init()
 #
     $module = 'articles';
     $objects = array(
-                     'articles_news',
-                     'articles_documents',
+//                     'articles_news',
+//                     'articles_documents',
 //                     'articles_faqs',
 //                     'articles_reviews',
 //                     'articles_weblinks',
