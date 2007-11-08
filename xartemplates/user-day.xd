@@ -31,8 +31,8 @@
 <xar:set name="titlewidth">$windowwidth+2</xar:set>
 <xar:set name="minutesperunit">xarModVars::get('calendar','minutesperunit')</xar:set>
 <xar:set name="unitsperhour">60/$minutesperunit</xar:set>
-<xar:set name="day_start">(int)(xarModGetVar('calendar','day_start')/3600)</xar:set>
-<xar:set name="day_end">(int)(xarModGetVar('calendar','day_end')/3600)</xar:set>
+<xar:set name="day_start">(int)(xarModVars::get('calendar','day_start')/3600)</xar:set>
+<xar:set name="day_end">(int)(xarModVars::get('calendar','day_end')/3600)</xar:set>
 
 <table id="cal-calendar" style="width: #$titlewidth#px">
     <tr>

@@ -71,7 +71,7 @@
             Morning starts at:
         </xar:mlstring>
     </label>
-    <xar:set name="value">xarModGetVar('calendar', 'day_start')</xar:set>
+    <xar:set name="value">xarModVars::get('calendar', 'day_start')</xar:set>
     <xar:data-input type="formattedtime" name="day_start" id="day_start" value="$value" dropdown="true" seconds="false" minutes="false" />&#160;: 00
 </div>
 <div class="xar-form-input-wrapper">
@@ -80,7 +80,7 @@
             Evening ends at:
         </xar:mlstring>
     </label>
-    <xar:set name="value">xarModGetVar('calendar', 'day_end')</xar:set>
+    <xar:set name="value">xarModVars::get('calendar', 'day_end')</xar:set>
     <xar:data-input type="formattedtime" name="day_end" id="day_end" value="$value" dropdown="true" seconds="false" minutes="false" />&#160;: 00
 </div>
 <div class="xar-form-input-wrapper">
@@ -94,7 +94,7 @@
                             array('id' => true, 'name' => '24 hour'),
                             )
     </xar:set>
-    <xar:set name="value">xarModGetVar('calendar', 'twentyfourhourformat')</xar:set>
+    <xar:set name="value">xarModVars::get('calendar', 'twentyfourhourformat')</xar:set>
     <xar:data-input type="radio" name="twentyfourhourformat" id="twentyfourhourformat" value="$value" options="$options" />
 </div>
 </xar:template>

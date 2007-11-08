@@ -2,8 +2,8 @@
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:if condition="xarModGetVar('calendar','useModuleAlias')">
-            #xarModGetVar('calendar','aliasname')#
+        <xar:if condition="xarModVars::get('calendar','useModuleAlias')">
+            <xar:var scope="module" module="calendar" name="aliasname" />
         <xar:else />
             <xar:mlstring>Display Item</xar:mlstring>
         </xar:if>

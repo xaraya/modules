@@ -86,48 +86,48 @@ function calendar_admin_modifyconfig()
     // support easy navigation
 
     // Variables from phpIcalendar config.inc.php
-    $data['default_view'] = xarModGetVar('calendar', 'default_view');
-    $data['minical_view'] = xarModGetVar('calendar', 'minical_view');
-    $data['default_cal'] = unserialize(xarModGetVar('calendar', 'default_cal'));
-    $data['cal_sdow']         = xarModGetVar('calendar', 'cal_sdow');
-    $data['week_start_day']         = xarModGetVar('calendar','week_start_day'         );
-    $data['day_start']              = xarModGetVar('calendar','day_start'              );
-    $data['day_end']                = xarModGetVar('calendar','day_end'                );
-    $data['gridLength']             = xarModGetVar('calendar','gridLength'             );
-    $data['num_years']              = xarModGetVar('calendar','num_years'              );
-    $data['month_event_lines']      = xarModGetVar('calendar','month_event_lines'      );
-    $data['tomorrows_events_lines'] = xarModGetVar('calendar','tomorrows_events_lines' );
-    $data['allday_week_lines']      = xarModGetVar('calendar','allday_week_lines'      );
-    $data['week_events_lines']      = xarModGetVar('calendar','week_events_lines'      );
-    $data['second_offset']          = xarModGetVar('calendar','second_offset'          );
-    $data['bleed_time']             = xarModGetVar('calendar','bleed_time'             );
+    $data['default_view'] = xarModVars::get('calendar', 'default_view');
+    $data['minical_view'] = xarModVars::get('calendar', 'minical_view');
+    $data['default_cal'] = unserialize(xarModVars::get('calendar', 'default_cal'));
+    $data['cal_sdow']         = xarModVars::get('calendar', 'cal_sdow');
+    $data['week_start_day']         = xarModVars::get('calendar','week_start_day'         );
+    $data['day_start']              = xarModVars::get('calendar','day_start'              );
+    $data['day_end']                = xarModVars::get('calendar','day_end'                );
+    $data['gridLength']             = xarModVars::get('calendar','gridLength'             );
+    $data['num_years']              = xarModVars::get('calendar','num_years'              );
+    $data['month_event_lines']      = xarModVars::get('calendar','month_event_lines'      );
+    $data['tomorrows_events_lines'] = xarModVars::get('calendar','tomorrows_events_lines' );
+    $data['allday_week_lines']      = xarModVars::get('calendar','allday_week_lines'      );
+    $data['week_events_lines']      = xarModVars::get('calendar','week_events_lines'      );
+    $data['second_offset']          = xarModVars::get('calendar','second_offset'          );
+    $data['bleed_time']             = xarModVars::get('calendar','bleed_time'             );
 
-    $data['display_custom_goto']    = xarModGetVar('calendar','display_custom_goto'    );
-    $data['display_custom_gotochecked'] = xarModGetVar('calendar', 'display_custom_goto') ? 'checked' : '';
-    $data['display_ical_list']      = xarModGetVar('calendar','display_ical_list'      );
-    $data['display_ical_listchecked'] = xarModGetVar('calendar', 'display_ical_list') ? 'checked' : '';
-    $data['allow_webcals']          = xarModGetVar('calendar','allow_webcals'          );
-    $data['allow_webcalschecked'] = xarModGetVar('calendar', 'allow_webcals') ? 'checked' : '';
-    $data['this_months_events']     = xarModGetVar('calendar','this_months_events'     );
-    $data['this_months_eventschecked'] = xarModGetVar('calendar', 'this_months_events') ? 'checked' : '';
-    $data['use_color_cals']         = xarModGetVar('calendar','use_color_cals'         );
-    $data['use_color_calschecked'] = xarModGetVar('calendar', 'use_color_cals') ? 'checked' : '';
-    $data['daysofweek_dayview']     = xarModGetVar('calendar','daysofweek_dayview'     );
-    $data['daysofweek_dayviewchecked'] = xarModGetVar('calendar', 'daysofweek_dayview') ? 'checked' : '';
-    $data['enable_rss']             = xarModGetVar('calendar','enable_rss'             );
-    $data['enable_rsschecked'] = xarModGetVar('calendar', 'enable_rss') ? 'checked' : '';
-    $data['show_search']            = xarModGetVar('calendar','show_search'            );
-    $data['show_searchchecked'] = xarModGetVar('calendar', 'show_search') ? 'checked' : '';
-    $data['allow_preferences']      = xarModGetVar('calendar','allow_preferences'      );
-    $data['allow_preferenceschecked'] = xarModGetVar('calendar', 'allow_preferences') ? 'checked' : '';
-    $data['printview_default']      = xarModGetVar('calendar','printview_default'      );
-    $data['printview_defaultchecked'] = xarModGetVar('calendar', 'printview_default') ? 'checked' : '';
-    $data['show_todos']             = xarModGetVar('calendar','show_todos'             );
-    $data['show_todoschecked'] = xarModGetVar('calendar', 'show_todos') ? 'checked' : '';
-    $data['show_completed']         = xarModGetVar('calendar','show_completed'         );
-    $data['show_completedchecked'] = xarModGetVar('calendar', 'show_completed') ? 'checked' : '';
-    $data['allow_login']            = xarModGetVar('calendar','allow_login'            );
-    $data['allow_loginchecked'] = xarModGetVar('calendar', 'allow_login') ? 'checked' : '';
+    $data['display_custom_goto']    = xarModVars::get('calendar','display_custom_goto'    );
+    $data['display_custom_gotochecked'] = xarModVars::get('calendar', 'display_custom_goto') ? 'checked' : '';
+    $data['display_ical_list']      = xarModVars::get('calendar','display_ical_list'      );
+    $data['display_ical_listchecked'] = xarModVars::get('calendar', 'display_ical_list') ? 'checked' : '';
+    $data['allow_webcals']          = xarModVars::get('calendar','allow_webcals'          );
+    $data['allow_webcalschecked'] = xarModVars::get('calendar', 'allow_webcals') ? 'checked' : '';
+    $data['this_months_events']     = xarModVars::get('calendar','this_months_events'     );
+    $data['this_months_eventschecked'] = xarModVars::get('calendar', 'this_months_events') ? 'checked' : '';
+    $data['use_color_cals']         = xarModVars::get('calendar','use_color_cals'         );
+    $data['use_color_calschecked'] = xarModVars::get('calendar', 'use_color_cals') ? 'checked' : '';
+    $data['daysofweek_dayview']     = xarModVars::get('calendar','daysofweek_dayview'     );
+    $data['daysofweek_dayviewchecked'] = xarModVars::get('calendar', 'daysofweek_dayview') ? 'checked' : '';
+    $data['enable_rss']             = xarModVars::get('calendar','enable_rss'             );
+    $data['enable_rsschecked'] = xarModVars::get('calendar', 'enable_rss') ? 'checked' : '';
+    $data['show_search']            = xarModVars::get('calendar','show_search'            );
+    $data['show_searchchecked'] = xarModVars::get('calendar', 'show_search') ? 'checked' : '';
+    $data['allow_preferences']      = xarModVars::get('calendar','allow_preferences'      );
+    $data['allow_preferenceschecked'] = xarModVars::get('calendar', 'allow_preferences') ? 'checked' : '';
+    $data['printview_default']      = xarModVars::get('calendar','printview_default'      );
+    $data['printview_defaultchecked'] = xarModVars::get('calendar', 'printview_default') ? 'checked' : '';
+    $data['show_todos']             = xarModVars::get('calendar','show_todos'             );
+    $data['show_todoschecked'] = xarModVars::get('calendar', 'show_todos') ? 'checked' : '';
+    $data['show_completed']         = xarModVars::get('calendar','show_completed'         );
+    $data['show_completedchecked'] = xarModVars::get('calendar', 'show_completed') ? 'checked' : '';
+    $data['allow_login']            = xarModVars::get('calendar','allow_login'            );
+    $data['allow_loginchecked'] = xarModVars::get('calendar', 'allow_login') ? 'checked' : '';
 
     /*
     //  list of options from config.inc.php not included
@@ -147,7 +147,7 @@ function calendar_admin_modifyconfig()
     // short URLs (see xaruserapi.php), you should remove these from your
     // admin-modifyconfig.xard template !
     $data['shorturlslabel'] = xarML('Enable short URLs?');
-    $data['shorturlschecked'] = xarModGetVar('calendar', 'SupportShortURLs') ?
+    $data['shorturlschecked'] = xarModVars::get('calendar', 'SupportShortURLs') ?
     'checked' : '';
 
 

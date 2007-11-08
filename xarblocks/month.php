@@ -42,7 +42,7 @@ function calendar_monthblock_display($blockinfo)
     if (!xarSecurityCheck('ReadCalendar', 0, 'Block', "All:" . $blockinfo['title'] . ":" . $blockinfo['bid'])) {return;}
 
     if (!defined('CALENDAR_ROOT')) {
-        define('CALENDAR_ROOT', xarModGetVar('calendar','pearcalendar_root'));
+        define('CALENDAR_ROOT', xarModVars::get('calendar','pearcalendar_root'));
     }
     include_once(CALENDAR_ROOT.'Month/Weekdays.php');
     include_once(CALENDAR_ROOT.'Decorator/Textual.php');

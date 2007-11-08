@@ -62,7 +62,7 @@
                                     <div class="li-content">
                                         <xar:set name="$event_id">#$event_array[$dbdate][$index]['event_id']#</xar:set>
                                         <div class="icons">
-                                           <xar:if condition="xarModGetVar('julian','ical_links')">
+                                           <xar:if condition="xarModVars::get('julian','ical_links')">
                                                 <a href="#xarModURL('julian','user','export',array('event_id'=>$event_id))#">
                                                     <img src="#xarTplGetImage('export.gif')#" alt="#xarML('Export Event')#" title="#xarML('Export event to desktop calendar')#" align="middle "/>
                                                 </a>
@@ -184,7 +184,7 @@
                                     <div class="li-content">
                                         <xar:set name="$event_id">#$event_array[$dbdate][$index]['event_id']#</xar:set>
                                         <div class="icons">
-                                           <xar:if condition="xarModGetVar('julian','ical_links')">
+                                           <xar:if condition="xarModVars::get('julian','ical_links')">
                                                 <a href="#xarModURL('julian','user','export',array('event_id'=>$event_id))#">
                                                     <img src="#xarTplGetImage('export.gif')#" alt="#xarML('Export Event')#" title="#xarML('Export event to desktop calendar')#" align="middle "/>
                                                 </a>

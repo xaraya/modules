@@ -28,7 +28,7 @@ if(isset($cal_sdow)) {
 // Define the location of the PEAR::Calendar files
 //======================================================================
 if (!defined('CALENDAR_ROOT')) {
-    define('CALENDAR_ROOT', xarModGetVar('calendar','pearcalendar_root'));
+    define('CALENDAR_ROOT', xarModVars::get('calendar','pearcalendar_root'));
 }
 //======================================================================
 // Define directory locations for this module
@@ -50,7 +50,7 @@ function calendar_userapi_currentView()
     $valid = array('day','week','month','year');
     $func = strtolower($func);
     if(!in_array($func,$valid)) {
-        return xarModGetVar('calendar','default_view');
+        return xarModVars::get('calendar','default_view');
     } else {
         return $func;
     }

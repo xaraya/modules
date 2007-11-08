@@ -14,7 +14,7 @@
         $args = array(
             'day' => &$Day,
         );
-        $day_endts = $DayEvents->getTimestamp() + xarModGetVar('calendar','day_end') + 3600;
+        $day_endts = $DayEvents->getTimestamp() + xarModVars::get('calendar','day_end') + 3600;
 //        $events = xarModAPIFunc('icalendar','user','getevents',$args);
 
         // get all the events. need to improve this query

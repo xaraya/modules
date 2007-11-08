@@ -24,7 +24,7 @@ function calendar_user_publish($args)
             // does this user have access to this calendar ?
             !xarSecurityCheck('ViewCalendar',0,'All',$calname)) {
 
-            $realm = xarModGetVar('themes','SiteName');
+            $realm = xarModVars::get('themes','SiteName');
             header('WWW-Authenticate: Basic realm="'.$realm.'"');
             //header('HTTP/1.0 401 Unauthorized');
             header("Status: 401 Access Denied");
