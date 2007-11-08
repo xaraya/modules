@@ -193,6 +193,18 @@
                         A value of 0 disables the age check.
                     </div>
                     <div class="xar-form-input-wrapper-after">
+                        <xar:if condition="xarModGetVar('registration', 'enteremailtwice')">
+                            <input type="checkbox" name="enteremailtwice" id="enteremailtwice" value="1" checked="checked" />
+                            <xar:else />
+                            <input type="checkbox" name="enteremailtwice" id="enteremailtwice" value="1" />
+                        </xar:if>
+                        <label for="enteremailtwice" title="#xarML('Require user email addresses to be typed twice during registration')#">
+                            <xar:mlstring>
+                                Require email address to be entered twice
+                            </xar:mlstring>
+                        </label>
+                    </div>
+                    <div class="xar-form-input-wrapper-after">
                         <xar:if condition="xarModGetVar('registration', 'chooseownpassword')">
                             <input type="checkbox" name="chooseownpassword" id="chooseownpassword" value="1" checked="checked" />
                             <xar:else />

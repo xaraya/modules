@@ -89,6 +89,7 @@ function registration_user_register()
             $values = array('username' => '',
                             'realname' => '',
                             'email'    => '',
+                            'email2'    => '',
                             'pass1'    => '',
                             'pass2'    => '');
 
@@ -150,6 +151,7 @@ function registration_user_register()
             if (!xarVarFetch('pass1',        'str:4:100', $pass1,        '',    XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('pass2',        'str:4:100', $pass2,        '',    XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('email',        'str:1:100', $email,        '',    XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('email2',       'str:1:100', $email2,       '',    XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('agreetoterms', 'checkbox',  $agreetoterms, false, XARVAR_NOT_REQUIRED)) return;
 
             // Confirm authorisation code.
@@ -167,6 +169,7 @@ function registration_user_register()
             $values = array('username' => $username,
                             'realname' => $realname,
                             'email'    => $email,
+                            'email2'   => $email2,
                             'pass1'    => $pass1,
                             'pass2'    => $pass2);
 
@@ -197,6 +200,15 @@ function registration_user_register()
 
             // check email
             $invalid['email'] = xarModApiFunc('registration','user','checkvar', array('type'=>'email', 'var'=>$email));
+
+			// check second email entry if required and verify match
+			if(xarModGetVar('registration','enteremailtwice')){
+				$invalid['email2'] = xarModApiFunc('registration','user','checkvar', array('type'=>'email2', 'var'=>array($email,$email2)));
+				if(!empty($invalid['email']) || !empty($invalid['email2'])){
+					// null out if either email is invalid
+					$values['email2'] = '';
+				}
+			}
 
             // agree to terms (kind of dumb, but for completeness)
             $invalid['agreetoterms'] = xarModApiFunc('registration','user','checkvar', array('type'=>'agreetoterms', 'var'=>$agreetoterms));

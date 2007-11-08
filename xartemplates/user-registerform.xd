@@ -42,6 +42,17 @@
                     <span class="xar-error">#$invalid['email']#</span>
                 </xar:if>
             </div>
+			<xar:if condition="xarModGetVar('registration', 'enteremailtwice')" >
+            <div class="xar-form-input-wrapper">
+                <label for="email2" class="xar-form-label" title="#xarML('Enter your email address')#">
+                       <xar:mlstring>Retype E-mail Address</xar:mlstring>:
+                </label>
+                <input type="text" name="email2" id="email2" value="#xarVarPrepForDisplay($values['email2'])#" size="25" maxlength="255" />
+                <xar:if condition="!empty($invalid['email2'])">
+                    <span class="xar-error">#$invalid['email2']#</span>
+                </xar:if>
+            </div>
+			</xar:if>
             <xar:if condition="xarModGetVar('registration', 'chooseownpassword')" >
             <div class="xar-form-input-wrapper">
                 <label for="pass1" class="xar-form-label" title="#xarML('Enter a password')#">

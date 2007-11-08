@@ -50,6 +50,7 @@ function registration_init()
     xarModSetVar('registration', 'askpasswordemail', true);// not in reg atm, leave in roles?
     //xarModSetVar('registration', 'defaultgroup', 'Users'); //Use the Roles modvar
     xarModSetVar('registration', 'minage', 13);
+    xarModSetVar('registration', 'enteremailtwice', false);
 
     //we need these too
     xarModSetVar('registration', 'SupportShortURLs', false);
@@ -133,7 +134,11 @@ function registration_upgrade($oldVersion)
         if (!isset($defaultregmodule) || $defaultregmodule < 1) {
             xarModSetVar('roles','defaultregmodule', xarModGetIDFromName('registration'));
         }
-        case '1.0.2': //current version
+        case '1.0.2':
+		    xarModSetVar('registration', 'enteremailtwice', false);
+
+            break;
+        case '1.0.3': //current version
 
             break;
     }

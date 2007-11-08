@@ -87,6 +87,7 @@ function registration_admin_modifyconfig()
                     if (!xarVarFetch('allowregistration', 'checkbox', $allowregistration, false, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('chooseownpassword', 'checkbox', $chooseownpassword, false, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('minage',            'str:1:3:', $minage,            '13', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+                    if (!xarVarFetch('enteremailtwice',   'checkbox', $enteremailtwice,   false, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('sendnotice',        'checkbox', $sendnotice,        false, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('explicitapproval',  'checkbox', $explicitapproval,  false, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('requirevalidation', 'checkbox', $requirevalidation, false, XARVAR_NOT_REQUIRED)) return;
@@ -101,6 +102,7 @@ function registration_admin_modifyconfig()
                     xarModSetVar('roles', 'defaultgroup', $defaultgroup);
                     xarModSetVar('registration', 'allowregistration', $allowregistration);
                     xarModSetVar('registration', 'minage', $minage);
+                    xarModSetVar('registration', 'enteremailtwice', $enteremailtwice);
                     xarModSetVar('registration', 'notifyemail', $notifyemail);
                     xarModSetVar('registration', 'sendnotice', $sendnotice); 
                     xarModSetVar('registration', 'explicitapproval', $explicitapproval? true:false);

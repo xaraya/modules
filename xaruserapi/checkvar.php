@@ -22,6 +22,7 @@
  * possible type, value: 
     'ip' (no var required), 
     'email', email str
+    'email2', email str
     'username', username str
     'realname', realname str
     'agreetoterms', not empty (checkbox)
@@ -172,6 +173,15 @@ function registration_userapi_checkvar($args)
                 }
             }
             break;
+        case 'email2':
+            $email = $var[0];
+            $email2 = $var[1];
+            if ((empty($email)) || (empty($email2))) {
+                $invalid = xarML('You must enter the same email address twice');
+            } elseif ($email != $email2) {
+                $invalid = xarML('The email addresses do not match');
+            }
+        	break;
     }
 
     return $invalid;
