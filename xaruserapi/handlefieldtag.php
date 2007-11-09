@@ -21,7 +21,7 @@
  * @return string The PHP code needed to invoke showfield() in the BL template
  * @TODO : move this to some common place in Xaraya (base module ?)
  */
-function articles_userapi_handleFieldTag($args)
+function articles_userapi_handlefieldtag($args)
 {
     $out = "xarModAPILoad('articles','user');
 echo xarModAPIFunc('articles',
