@@ -55,11 +55,11 @@ function newsletter_adminapi_createaltsubscription($args)
     $nwsltrTable = $xartable['nwsltrAltSubscriptions'];
 
     // Check if that subscription already exists
-    $query = "SELECT xar_email FROM $nwsltrTable
+    $query = "SELECT LOWER('xar_email') FROM $nwsltrTable
               WHERE xar_email = ?
               AND   xar_pid = ?";
 
-    $result =& $dbconn->Execute($query, array((string) $email, (int) $pid));
+    $result =& $dbconn->Execute($query, array((string) strtolower($email), (int) $pid));
     if (!$result) return false;
 
     if ($result->RecordCount() > 0) {
