@@ -68,7 +68,7 @@ function articles_schedulerapi_makedigest($args)
                                    'showpublinks' => 0));
 
     // update the last digest time
-    xarModSetVar('articles','lastdigest',$now);
+    xarModVars::set('articles','lastdigest',$now);
 
     // ... do something with this digest ...
 

@@ -121,9 +121,9 @@ function articles_admin_pubtypes()
                                   'usetitleforurl'       => 0,
                                   'defaultstatus'        => $status,
                                   'defaultsort'          => 'date');
-                xarModSetVar('articles', 'settings.'.$ptid,serialize($settings));
-                xarModSetVar('articles', 'number_of_categories.'.$ptid, 0);
-                xarModSetVar('articles', 'mastercids.'.$ptid, '');
+                xarModVars::set('articles', 'settings.'.$ptid,serialize($settings));
+                xarModVars::set('articles', 'number_of_categories.'.$ptid, 0);
+                xarModVars::set('articles', 'mastercids.'.$ptid, '');
 
                 // Redirect to the admin view page
                 xarSession::setVar('statusmsg',
@@ -174,13 +174,13 @@ function articles_admin_pubtypes()
                               array('ptid' => $ptid))) {
                 return; // throw back
             } else {
-                xarModDelVar('articles', 'settings.'.$ptid);
+                xarModVars::del('articles', 'settings.'.$ptid);
                 xarModDelAlias($pubtypes[$ptid]['name'],'articles');
-                xarModDelVar('articles', 'number_of_categories.'.$ptid);
-                xarModDelVar('articles', 'mastercids.'.$ptid);
+                xarModVars::del('articles', 'number_of_categories.'.$ptid);
+                xarModVars::del('articles', 'mastercids.'.$ptid);
                 $default = xarModVars::get('articles','defaultpubtype');
                 if ($ptid == $default) {
-                    xarModSetVar('articles','defaultpubtype','');
+                    xarModVars::set('articles','defaultpubtype','');
                 }
 
                 // Redirect to the admin view page
@@ -257,7 +257,7 @@ function articles_admin_pubtypes()
                                       'format' => $value['format'],
                                       'validation' => !empty($value['validation']) ? $value['validation'] : '',
                                       'type'   => $pubfieldtypes[$field],
-                                      'input'  => !empty($value['input']) ? 'checked="checked"' : '');
+                                      'input'  => !empty($value['input']));
         }
     } elseif ($action == 'modify') {
         $data['item'] = $pubtypes[$ptid];

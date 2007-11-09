@@ -209,7 +209,7 @@ function articles_init()
     }
 
     // Set up module variables
-    xarModSetVar('articles', 'SupportShortURLs', 1);
+    xarModVars::set('articles', 'SupportShortURLs', 1);
 
     // Save articles settings for each publication type
     foreach ($settings as $id => $values) {
@@ -226,18 +226,18 @@ function articles_init()
             }
             unset($values['categories']);
             if (!empty($id)) {
-                xarModSetVar('articles', 'number_of_categories.'.$id, count($cidlist));
-                xarModSetVar('articles', 'mastercids.'.$id, join(';',$cidlist));
+                xarModVars::set('articles', 'number_of_categories.'.$id, count($cidlist));
+                xarModVars::set('articles', 'mastercids.'.$id, join(';',$cidlist));
             } else {
-                xarModSetVar('articles', 'number_of_categories', count($cidlist));
-                xarModSetVar('articles', 'mastercids', join(';',$cidlist));
+                xarModVars::set('articles', 'number_of_categories', count($cidlist));
+                xarModVars::set('articles', 'mastercids', join(';',$cidlist));
             }
         } elseif (!empty($id)) {
-            xarModSetVar('articles', 'number_of_categories.'.$id, 0);
-            xarModSetVar('articles', 'mastercids.'.$id, '');
+            xarModVars::set('articles', 'number_of_categories.'.$id, 0);
+            xarModVars::set('articles', 'mastercids.'.$id, '');
         } else {
-            xarModSetVar('articles', 'number_of_categories', 0);
-            xarModSetVar('articles', 'mastercids', '');
+            xarModVars::set('articles', 'number_of_categories', 0);
+            xarModVars::set('articles', 'mastercids', '');
         }
         if (isset($values['defaultview']) && !is_numeric($values['defaultview'])) {
             if (isset($cid[$values['defaultview']])) {
@@ -247,17 +247,17 @@ function articles_init()
             }
         }
         if (!empty($id)) {
-            xarModSetVar('articles', 'settings.'.$id,serialize($values));
+            xarModVars::set('articles', 'settings.'.$id,serialize($values));
         } else {
-            xarModSetVar('articles', 'settings',serialize($values));
+            xarModVars::set('articles', 'settings',serialize($values));
         }
     }
 
     // Set default publication type
-    xarModSetVar('articles', 'defaultpubtype', $defaultpubtype);
+    xarModVars::set('articles', 'defaultpubtype', $defaultpubtype);
 
     // Enable/disable full-text search with MySQL (for all pubtypes and all text fields)
-    xarModSetVar('articles', 'fulltextsearch', '');
+    xarModVars::set('articles', 'fulltextsearch', '');
 
     // Register blocks
     if (!xarModAPIFunc('blocks',
@@ -305,7 +305,7 @@ function articles_init()
     xarTplRegisterTag('articles', 'articles-field',
                       //array(new xarTemplateAttribute('bid', XAR_TPL_STRING|XAR_TPL_REQUIRED)),
                       array(),
-                      'articles_userapi_handleFieldTag');
+                      'articles_userapi_handlefieldtag');
 
 # --------------------------------------------------------
 #
@@ -447,7 +447,7 @@ function articles_upgrade($oldversion)
             // Code to upgrade from version 1.5.1 goes here
 
             // Enable/disable full-text search with MySQL (for all pubtypes and all text fields)
-            xarModSetVar('articles', 'fulltextsearch', '');
+            xarModVars::set('articles', 'fulltextsearch', '');
 
 /* skip for now...
             // Get database information
@@ -519,23 +519,23 @@ function articles_delete()
     // Delete module variables
 
     //FIXME: This is breaking the removal of the module...
-    xarModDelVar('articles', 'itemsperpage');
+    xarModVars::del('articles', 'itemsperpage');
 
-    xarModDelVar('articles', 'SupportShortURLs');
+    xarModVars::del('articles', 'SupportShortURLs');
 
-    xarModDelVar('articles', 'number_of_categories');
-    xarModDelVar('articles', 'mastercids');
+    xarModVars::del('articles', 'number_of_categories');
+    xarModVars::del('articles', 'mastercids');
 
 // TODO: remove all current pubtypes
 
-    xarModDelVar('articles', 'settings.1');
-    xarModDelVar('articles', 'settings.2');
-    xarModDelVar('articles', 'settings.3');
-    xarModDelVar('articles', 'settings.4');
-    xarModDelVar('articles', 'settings.5');
-    xarModDelVar('articles', 'settings.6');
+    xarModVars::del('articles', 'settings.1');
+    xarModVars::del('articles', 'settings.2');
+    xarModVars::del('articles', 'settings.3');
+    xarModVars::del('articles', 'settings.4');
+    xarModVars::del('articles', 'settings.5');
+    xarModVars::del('articles', 'settings.6');
 
-    xarModDelVar('articles', 'defaultpubtype');
+    xarModVars::del('articles', 'defaultpubtype');
 
     // UnRegister blocks
     if (!xarModAPIFunc('blocks',

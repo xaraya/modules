@@ -232,9 +232,9 @@ function articles_adminapi_importpubtype($args)
                 if (empty($ptid)) return;
 
                 // 4. set the module variables
-                xarModSetVar('articles', 'settings.'.$ptid, $object['config']);
-                xarModSetVar('articles', 'number_of_categories.'.$ptid, 0);
-                xarModSetVar('articles', 'mastercids.'.$ptid, '');
+                xarModVars::set('articles', 'settings.'.$ptid, $object['config']);
+                xarModVars::set('articles', 'number_of_categories.'.$ptid, 0);
+                xarModVars::set('articles', 'mastercids.'.$ptid, '');
 
                 // 5. create a dynamic object if necessary
                 if (count($extra) > 0) {

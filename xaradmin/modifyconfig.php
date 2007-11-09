@@ -256,7 +256,7 @@ function articles_admin_modifyconfig()
         $data['sortpubtypes'] = xarModVars::get('articles', 'sortpubtypes');
         if (empty($data['sortpubtypes'])) {
             $data['sortpubtypes'] = 'id';
-            xarModSetVar('articles','sortpubtypes','id');
+            xarModVars::set('articles','sortpubtypes','id');
         }
     }
 
