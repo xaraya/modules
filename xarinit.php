@@ -165,8 +165,8 @@ function categories_init()
     if (!$q->run($query)) return;
 
     // Set up module variables
-//    xarModSetVar('categories', 'bold', 0);
-    xarModSetVar('categories', 'catsperpage', 40);
+//    xarModVars::set('categories', 'bold', 0);
+    xarModVars::set('categories', 'catsperpage', 40);
 
     // when a new module item is being specified
     if (!xarModRegisterHook('item', 'new', 'GUI',
@@ -524,8 +524,8 @@ function categories_delete()
     if (!$result) return;
 
     // Delete module variables
-//    xarModDelVar('categories', 'bold');
-    xarModDelVar('categories', 'catsperpage');
+//    xarModVars::del('categories', 'bold');
+    xarModVars::del('categories', 'catsperpage');
 
     // Remove module hooks
     if (!xarModUnregisterHook('item', 'new', 'GUI',

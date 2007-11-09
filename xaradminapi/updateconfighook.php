@@ -49,9 +49,9 @@ function categories_adminapi_updateconfighook($args)
         $numcats = 0;
     }
     if (!empty($extrainfo['itemtype'])) {
-        xarModSetVar($modname,'number_of_categories.'.$extrainfo['itemtype'],$numcats);
+        xarModVars::set($modname,'number_of_categories.'.$extrainfo['itemtype'],$numcats);
     } else {
-        xarModSetVar($modname,'number_of_categories',$numcats);
+        xarModVars::set($modname,'number_of_categories',$numcats);
     }
 
     if (empty($extrainfo['cids']) || !is_array($extrainfo['cids'])) {
@@ -82,16 +82,16 @@ function categories_adminapi_updateconfighook($args)
 
     if ($numcats == 0 || count($mastercids) == 0) {
         if (!empty($extrainfo['itemtype'])) {
-            xarModSetVar($modname,'mastercids.'.$extrainfo['itemtype'],'');
+            xarModVars::set($modname,'mastercids.'.$extrainfo['itemtype'],'');
         } else {
-            xarModSetVar($modname,'mastercids','');
+            xarModVars::set($modname,'mastercids','');
         }
     } else {
         if (!empty($extrainfo['itemtype'])) {
-            xarModSetVar($modname,'mastercids.'.$extrainfo['itemtype'],
+            xarModVars::set($modname,'mastercids.'.$extrainfo['itemtype'],
                         join(';',$mastercids));
         } else {
-            xarModSetVar($modname,'mastercids',join(';',$mastercids));
+            xarModVars::set($modname,'mastercids',join(';',$mastercids));
         }
     }
 
