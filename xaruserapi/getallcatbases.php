@@ -18,12 +18,14 @@
 
 function categories_userapi_getallcatbases($args)
 {
+    sys::import('modules.query.class.query');
     extract($args);
     $xartable = xarDB::getTables();
-    //FIXME: needs to be unique
-    $q = new xarQuery('SELECT');
+
+    $q = new Query('SELECT');
     $q->addtable($xartable['categories_basecategories'],'base');
     $q->addtable($xartable['categories'],'category');
+    $q->join('base.category_id','category.id');
     $q->addfield('base.id AS id');
     $q->addfield('base.category_id AS category_id');
     $q->addfield('base.name AS name');
