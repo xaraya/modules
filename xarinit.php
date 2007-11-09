@@ -116,39 +116,39 @@ function calendar_init()
 
     // Location of the PEAR Calendar Classes
     // Use the PHP Include path for now
-    xarModSetVar('calendar','pearcalendar_root','modules/calendar/pear/Calendar/');
+    xarModVars::set('calendar','pearcalendar_root','modules/calendar/pear/Calendar/');
 
     // get list of calendar ics files
     $data = xarModAPIFunc('calendar', 'admin', 'get_calendars');
-    xarModSetVar('calendar','default_cal',serialize($data['icsfiles']));
+    xarModVars::set('calendar','default_cal',serialize($data['icsfiles']));
 
     // Other variables from phpIcalendar config.inc.php
-//    xarModSetVar('calendar','default_view'           , 'week');
-    xarModSetVar('calendar','minical_view'           , 'week');
-//    xarModSetVar('calendar','cal_sdow'               , 0);   // 0=sunday $week_start_day in phpIcalendar
-//    xarModSetVar('calendar','day_start'              , '0700');
-//    xarModSetVar('calendar','day_end'                , '2300');
-//    xarModSetVar('calendar','gridLength'             , 15);
-    xarModSetVar('calendar','num_years'              , 1);
-    xarModSetVar('calendar','month_event_lines'      , 1);
-    xarModSetVar('calendar','tomorrows_events_lines' , 1);
-    xarModSetVar('calendar','allday_week_lines'      , 1);
-    xarModSetVar('calendar','week_events_lines'      , 1);
-    xarModSetVar('calendar','second_offset'          , 0);
-    xarModSetVar('calendar','bleed_time'             , 0);
-    xarModSetVar('calendar','display_custom_goto'    , 0);
-    xarModSetVar('calendar','display_ical_list'      , 1);
-    xarModSetVar('calendar','allow_webcals'          , 0);
-    xarModSetVar('calendar','this_months_events'     , 1);
-    xarModSetVar('calendar','use_color_cals'         , 1);
-    xarModSetVar('calendar','daysofweek_dayview'     , 0);
-    xarModSetVar('calendar','enable_rss'             , 1);
-    xarModSetVar('calendar','show_search'            , 1);
-    xarModSetVar('calendar','allow_preferences'      , 1);
-    xarModSetVar('calendar','printview_default'      , 0);
-    xarModSetVar('calendar','show_todos'             , 1);
-    xarModSetVar('calendar','show_completed'         , 0);
-    xarModSetVar('calendar','allow_login'            , 0);
+//    xarModVars::set('calendar','default_view'           , 'week');
+    xarModVars::set('calendar','minical_view'           , 'week');
+//    xarModVars::set('calendar','cal_sdow'               , 0);   // 0=sunday $week_start_day in phpIcalendar
+//    xarModVars::set('calendar','day_start'              , '0700');
+//    xarModVars::set('calendar','day_end'                , '2300');
+//    xarModVars::set('calendar','gridLength'             , 15);
+    xarModVars::set('calendar','num_years'              , 1);
+    xarModVars::set('calendar','month_event_lines'      , 1);
+    xarModVars::set('calendar','tomorrows_events_lines' , 1);
+    xarModVars::set('calendar','allday_week_lines'      , 1);
+    xarModVars::set('calendar','week_events_lines'      , 1);
+    xarModVars::set('calendar','second_offset'          , 0);
+    xarModVars::set('calendar','bleed_time'             , 0);
+    xarModVars::set('calendar','display_custom_goto'    , 0);
+    xarModVars::set('calendar','display_ical_list'      , 1);
+    xarModVars::set('calendar','allow_webcals'          , 0);
+    xarModVars::set('calendar','this_months_events'     , 1);
+    xarModVars::set('calendar','use_color_cals'         , 1);
+    xarModVars::set('calendar','daysofweek_dayview'     , 0);
+    xarModVars::set('calendar','enable_rss'             , 1);
+    xarModVars::set('calendar','show_search'            , 1);
+    xarModVars::set('calendar','allow_preferences'      , 1);
+    xarModVars::set('calendar','printview_default'      , 0);
+    xarModVars::set('calendar','show_todos'             , 1);
+    xarModVars::set('calendar','show_completed'         , 0);
+    xarModVars::set('calendar','allow_login'            , 0);
 
     // Regulate display in day view
     xarModVars::set('calendar','windowwidth', 902);
@@ -162,10 +162,10 @@ function calendar_init()
 
 //TODO::Register the Module Variables
     //
-    //xarModSetVar('calendar','allowUserCalendars',false);
-    //xarModSetVar('calendar','eventsOpenNewWindow',false);
-    //xarModSetVar('calendar','adminNotify',false);
-    //xarModSetVar('calendar','adminEmail','none@none.org');
+    //xarModVars::set('calendar','allowUserCalendars',false);
+    //xarModVars::set('calendar','eventsOpenNewWindow',false);
+    //xarModVars::set('calendar','adminNotify',false);
+    //xarModVars::set('calendar','adminEmail','none@none.org');
 
 //TODO::Figure out all the permissions stuff
     // allow users to see the calendar w/ events
@@ -184,7 +184,7 @@ function calendar_init()
 //<xar:calendar-build object="$Month" />
 //<xar:set name="$Month">& $Year->fetch()</xar:set>
 
-    xarModSetVar('calendar', 'SupportShortURLs', true);
+    xarModVars::set('calendar', 'SupportShortURLs', true);
 
     xarTplRegisterTag(
         'calendar', 'calendar-decorator', array(),

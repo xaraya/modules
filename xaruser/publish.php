@@ -10,7 +10,7 @@ function calendar_user_publish($args)
     xarVarFetch('calname','str:1:',$calname,'',XARVAR_NOT_REQUIRED);
 
 // test
-    xarModSetVar('calendar', 'SupportShortURLs', 1);
+    xarModVars::set('calendar', 'SupportShortURLs', 1);
 
 // TODO: security et al.
 

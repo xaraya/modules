@@ -66,36 +66,36 @@ function calendar_admin_updateconfig()
     // Update module variables.  Note that the default values are set in
     // xarVarFetch when recieving the incoming values, so no extra processing
     // is needed when setting the variables here.
-    xarModSetVar('calendar', 'SupportShortURLs', $shorturls);
+    xarModVars::set('calendar', 'SupportShortURLs', $shorturls);
 
     // Variables from phpIcalendar config.inc.php
-    xarModSetVar('calendar','default_view'           , $default_view);
-    xarModSetVar('calendar','minical_view'           , $minical_view);
-    xarModSetVar('calendar','default_cal'            , serialize($default_cal));
-    xarModSetVar('calendar','cal_sdow'               , $cal_sdow);
-    xarModSetVar('calendar','day_start'              , $day_start);
-    xarModSetVar('calendar','day_end'                , $day_end);
-    xarModSetVar('calendar','gridLength'             , $gridLength);
-    xarModSetVar('calendar','num_years'              , $num_years);
-    xarModSetVar('calendar','month_event_lines'      , $month_event_lines);
-    xarModSetVar('calendar','tomorrows_events_lines' , $tomorrows_events_lines);
-    xarModSetVar('calendar','allday_week_lines'      , $allday_week_lines);
-    xarModSetVar('calendar','week_events_lines'      , $week_events_lines);
-    xarModSetVar('calendar','second_offset'          , $second_offset);
-    xarModSetVar('calendar','bleed_time'             , $bleed_time);
-    xarModSetVar('calendar','display_custom_goto'    , $display_custom_goto);
-    xarModSetVar('calendar','display_ical_list'      , $display_ical_list);
-    xarModSetVar('calendar','allow_webcals'          , $allow_webcals);
-    xarModSetVar('calendar','this_months_events'     , $this_months_events);
-    xarModSetVar('calendar','use_color_cals'         , $use_color_cals);
-    xarModSetVar('calendar','daysofweek_dayview'     , $daysofweek_dayview);
-    xarModSetVar('calendar','enable_rss'             , $enable_rss);
-    xarModSetVar('calendar','show_search'            , $show_search);
-    xarModSetVar('calendar','allow_preferences'      , $allow_preferences);
-    xarModSetVar('calendar','printview_default'      , $printview_default);
-    xarModSetVar('calendar','show_todos'             , $show_todos);
-    xarModSetVar('calendar','show_completed'         , $show_completed);
-    xarModSetVar('calendar','allow_login'            , $allow_login);
+    xarModVars::set('calendar','default_view'           , $default_view);
+    xarModVars::set('calendar','minical_view'           , $minical_view);
+    xarModVars::set('calendar','default_cal'            , serialize($default_cal));
+    xarModVars::set('calendar','cal_sdow'               , $cal_sdow);
+    xarModVars::set('calendar','day_start'              , $day_start);
+    xarModVars::set('calendar','day_end'                , $day_end);
+    xarModVars::set('calendar','gridLength'             , $gridLength);
+    xarModVars::set('calendar','num_years'              , $num_years);
+    xarModVars::set('calendar','month_event_lines'      , $month_event_lines);
+    xarModVars::set('calendar','tomorrows_events_lines' , $tomorrows_events_lines);
+    xarModVars::set('calendar','allday_week_lines'      , $allday_week_lines);
+    xarModVars::set('calendar','week_events_lines'      , $week_events_lines);
+    xarModVars::set('calendar','second_offset'          , $second_offset);
+    xarModVars::set('calendar','bleed_time'             , $bleed_time);
+    xarModVars::set('calendar','display_custom_goto'    , $display_custom_goto);
+    xarModVars::set('calendar','display_ical_list'      , $display_ical_list);
+    xarModVars::set('calendar','allow_webcals'          , $allow_webcals);
+    xarModVars::set('calendar','this_months_events'     , $this_months_events);
+    xarModVars::set('calendar','use_color_cals'         , $use_color_cals);
+    xarModVars::set('calendar','daysofweek_dayview'     , $daysofweek_dayview);
+    xarModVars::set('calendar','enable_rss'             , $enable_rss);
+    xarModVars::set('calendar','show_search'            , $show_search);
+    xarModVars::set('calendar','allow_preferences'      , $allow_preferences);
+    xarModVars::set('calendar','printview_default'      , $printview_default);
+    xarModVars::set('calendar','show_todos'             , $show_todos);
+    xarModVars::set('calendar','show_completed'         , $show_completed);
+    xarModVars::set('calendar','allow_login'            , $allow_login);
 
     xarModCallHooks('module','updateconfig','calendar',
                    array('module' => 'calendar'));
