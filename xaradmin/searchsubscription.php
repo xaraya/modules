@@ -55,7 +55,7 @@ function newsletter_admin_searchsubscription()
 
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
-
+    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Search Subsciptions')));
     // Return the template variables defined in this function
     return $data;
 

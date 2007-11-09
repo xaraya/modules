@@ -59,7 +59,8 @@ function newsletter_user_newsubscription()
 
         $data['publications'] = $publications;
     }
-
+    // Set the page name
+    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Subscribe')));
     // Return the template variables defined in this function
     return $data;
 }

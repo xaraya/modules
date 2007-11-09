@@ -239,7 +239,8 @@ function newsletter_admin_viewissue($args)
                                                    'publicationId' => $publicationId)),
                                     xarModGetVar('newsletter', 'itemsperpage'));
 
-
+    // Set the page name
+    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('View issue')));
     // Return the template variables defined in this function
     return $data;
 }

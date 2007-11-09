@@ -103,7 +103,8 @@ function newsletter_admin_modifyissue()
         'display' => $display,
         'publication' => $publication,
         'issue' => $issue);
-
+    // Set the page name
+    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Modify Issue')));
     // Return the template variables defined in this function
     return $templateVarArray;
 }

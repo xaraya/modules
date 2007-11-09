@@ -15,8 +15,8 @@
  *
  * @public
  * @author Richard Cave
- * @returns array
- * @return $data
+ * @param string func The current function
+ * @return array $data
  */
 function newsletter_admin_modifynewsletter()
 {
@@ -49,7 +49,8 @@ function newsletter_admin_modifynewsletter()
     }
     $data['categorysort']     = xarModGetVar('newsletter', 'categorysort');
     $data['previewbrowser']   = xarModGetVar('newsletter', 'previewbrowser');
-
+    // Set the page name
+    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Modify Newsletter')));
     // Return the template variables defined in this function
     return $data;
 }
