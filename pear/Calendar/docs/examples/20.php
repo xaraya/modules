@@ -219,7 +219,7 @@ while ($Day = $MonthDecorator->fetch()) {
     echo '<div class="dayNumber">'.$Day->thisDay().'</div>';
 
     if ($Day->isEmpty()) {
-        echo '&nbsp;';
+        echo '&#160;';
     } else {
         echo '<div class="dayContents"><ul>';
         while ($entry = $Day->getEntry()) {

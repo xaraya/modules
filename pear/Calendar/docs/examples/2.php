@@ -129,7 +129,7 @@ while ($Week = $Month->fetch()) {
 <td>
 <a href="<?php echo $prev; ?>" class="prevMonth"><< </a>
 </td>
-<td colspan="5">&nbsp;</td>
+<td colspan="5">&#160;</td>
 <td>
 <a href="<?php echo $next; ?>" class="nextMonth"> >></a>
 </td>

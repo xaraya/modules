@@ -53,7 +53,7 @@ require_once CALENDAR_ROOT.'Month.php';
  *         echo '<tr>';
  *     }
  *     if ($Day->isEmpty()) {
- *         echo '<td>&nbsp;</td>';
+ *         echo '<td>&#160;</td>';
  *     } else {
  *         echo '<td>'.$Day->thisDay().'</td>';
  *     }

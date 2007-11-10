@@ -74,7 +74,7 @@ while ( $Day = $MonthDecorator->fetch() ) {
         echo ( "\n<tr>\n" );
     }
     if ( $Day->isEmpty() ) {
-        echo ( "<td>&nbsp;</td>" );
+        echo ( "<td>&#160;</td>" );
     } else {
         echo ( "<td>".$Day->thisDay()."</td>" );
     }
@@ -85,7 +85,7 @@ while ( $Day = $MonthDecorator->fetch() ) {
 ?>
 <tr>
 <td><a href="<?php echo ($MonthDecorator->prevMonth()); ?>">Prev</a></td>
-<td colspan="5">&nbsp;</td>
+<td colspan="5">&#160;</td>
 <td><a href="<?php echo ($MonthDecorator->nextMonth()); ?>">Next</a></td>
 </tr>
 </table>

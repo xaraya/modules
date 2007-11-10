@@ -1,7 +1,7 @@
 <?php
 function calendar_userapi_getmenulinks()
 {
-    xarVarFetch('cal_sdow','int::',$cal_sdow,xarModGetUserVar('calendar','cal_sdow'));
+    xarVarFetch('cal_sdow','int::',$cal_sdow,xarModUserVars::get('calendar','cal_sdow'));
     xarVarFetch('cal_date','int::',$cal_date,xarLocaleFormatDate('%Y%m%d'));
 
     $menulinks[] = array('url'   => xarModURL('calendar','user','day',array('cal_date'=>$cal_date)),

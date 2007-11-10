@@ -2,6 +2,6 @@
 
 function calendar_user_main()
 {
-    xarResponseRedirect(xarModURL('calendar','user',xarModGetUserVar('calendar','default_view')));
+    xarResponseRedirect(xarModURL('calendar','user',xarModUserVars::get('calendar','default_view')));
 }
 ?>

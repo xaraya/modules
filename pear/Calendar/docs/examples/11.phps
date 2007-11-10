@@ -94,7 +94,7 @@ while ( $Hour = & $Day->fetch() ) {
         if ( $Hour->isSelected() ) {
             echo ( "<td bgcolor=\"silver\">".$Hour->getEntry()."</td>\n" );
         } else {
-            echo ( "<td>&nbsp;</td>\n" );
+            echo ( "<td>&#160;</td>\n" );
         }
         echo ( "</tr>\n" );
     }

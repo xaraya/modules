@@ -15,7 +15,7 @@
 //======================================================================
 //  Capture and set the calendar's First Day Of The Week
 //======================================================================
-$cal_sdow = (int) xarModGetUserVar('calendar', 'cal_sdow');
+$cal_sdow = (int) xarModUserVars::get('calendar', 'cal_sdow');
 if(isset($cal_sdow)) {
     // Catch and set the first day of the week for the calendar views
     define('CALENDAR_FIRST_DAY_OF_WEEK', $cal_sdow);

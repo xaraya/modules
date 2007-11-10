@@ -88,8 +88,8 @@ th, td {
 <a href="?year=<?php echo $Year->prevYear(); ?>&week_type=<?php echo $_GET['week_type']; ?>"><<</a>
 </div>
 <div id="week_type">
-<a href="?year=<?php echo $Year->thisYear(); ?>&week_type=n_in_year">Weeks by Year</a> : 
-<a href="?year=<?php echo $Year->thisYear(); ?>&week_type=n_in_month">Weeks by Month</a> 
+<a href="?year=<?php echo $Year->thisYear(); ?>&week_type=n_in_year">Weeks by Year</a> :
+<a href="?year=<?php echo $Year->thisYear(); ?>&week_type=n_in_month">Weeks by Month</a>
 </div>
 </caption>
 <?php
@@ -122,7 +122,7 @@ while ($Month = $Year->fetch()) {
 
         while ($Day = $Week->fetch()) {
             if ($Day->isEmpty()) {
-                echo "<td>&nbsp;</td>\n";
+                echo "<td>&#160;</td>\n";
             } else {
                 echo "<td>".$Day->thisDay()."</td>\n";
             }

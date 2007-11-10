@@ -46,7 +46,7 @@ require_once CALENDAR_ROOT.'Calendar.php';
  * echo '<tr>';
  * while ($Day = & $Week->fetch()) {
  *     if ($Day->isEmpty()) {
- *         echo '<td>&nbsp;</td>';
+ *         echo '<td>&#160;</td>';
  *     } else {
  *         echo '<td>'.$Day->thisDay().'</td>';
  *      }

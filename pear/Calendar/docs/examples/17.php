@@ -59,7 +59,7 @@ while ($Day = $Calendar->fetch()) {
         echo "<tr>\n";
     }
     if ($Day->isEmpty()) {
-        echo '<td>&nbsp;</td>';
+        echo '<td>&#160;</td>';
     } else {
         echo '<td>'.$Day->thisDay().'</td>';
     }

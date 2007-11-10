@@ -62,8 +62,8 @@ foreach ( $month->days as $day ) {
 </table>
 <p>Enter Year and Month to View:</p>
 <form action="<?php echo ( $_SERVER['PHP_SELF'] ); ?>" method="get">
-Year: <input type="text" size="4" name="y" value="<?php echo ( $_GET['y'] ); ?>">&nbsp;
-Month: <input type="text" size="2" name="m" value="<?php echo ( $_GET['m'] ); ?>">&nbsp;
+Year: <input type="text" size="4" name="y" value="<?php echo ( $_GET['y'] ); ?>">&#160;
+Month: <input type="text" size="2" name="m" value="<?php echo ( $_GET['m'] ); ?>">&#160;
 <input type="submit" value="Fetch Calendar">
 </form>
 </body>

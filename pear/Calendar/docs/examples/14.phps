@@ -113,7 +113,7 @@ while ($day = $month->fetch()) {
     if ($day->isSelected()) {
        echo '<td class="selected">'.$day->thisDay().'</td>'."\n";
     } else if ($day->isEmpty()) {
-        echo '<td>&nbsp;</td>'."\n";
+        echo '<td>&#160;</td>'."\n";
     } else {
         echo '<td><a href="'.$link.'">'.$day->thisDay().'</a></td>'."\n";
     }
@@ -128,7 +128,7 @@ while ($day = $month->fetch()) {
 <td>
 <a href="<?php echo $prev; ?>" class="prevMonth"><< </a>
 </td>
-<td colspan="5">&nbsp;</td>
+<td colspan="5">&#160;</td>
 <td>
 <a href="<?php echo $next; ?>" class="nextMonth"> >></a>
 </td>
