@@ -201,14 +201,17 @@ function registration_user_register()
             // check email
             $invalid['email'] = xarModApiFunc('registration','user','checkvar', array('type'=>'email', 'var'=>$email));
 
-			// check second email entry if required and verify match
-			if(xarModGetVar('registration','enteremailtwice')){
-				$invalid['email2'] = xarModApiFunc('registration','user','checkvar', array('type'=>'email2', 'var'=>array($email,$email2)));
-				if(!empty($invalid['email']) || !empty($invalid['email2'])){
-					// null out if either email is invalid
-					$values['email2'] = '';
-				}
-			}
+            // check second email entry if required and verify match
+            if(xarModGetVar('registration','enteremailtwice')){
+                $invalid['email2'] = xarModApiFunc('registration','user','checkvar', array('type'=>'email2', 'var'=>array($email,$email2)));
+                if(!empty($invalid['email']) || !empty($invalid['email2'])){
+                    // null out if either email is invalid
+                    $values['email2'] = '';
+                }
+                if($invalid['email2'] == ''){
+                    unset($invalid['email2']);
+                }
+            }
 
             // agree to terms (kind of dumb, but for completeness)
             $invalid['agreetoterms'] = xarModApiFunc('registration','user','checkvar', array('type'=>'agreetoterms', 'var'=>$agreetoterms));
