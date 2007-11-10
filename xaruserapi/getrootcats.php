@@ -31,7 +31,7 @@ function articles_userapi_getrootcats($args)
     // see which root categories we need to handle
     $rootcats = array();
     if (!empty($ptid)) {
-        $rootcats = unserialize(xarModGetUserVar('articles','basecids',$ptid));
+        $rootcats = unserialize(xarModUserVars::get('articles','basecids',$ptid));
     } elseif (empty($all)) {
         $rootcats = unserialize(xarModVars::get('articles','basecids'));
     } else {
@@ -47,7 +47,7 @@ function articles_userapi_getrootcats($args)
             if (empty($pubid)) {
                 $cidstring = xarModVars::get('articles','basecids');
             } else {
-                $cidstring = xarModGetUserVar('articles','basecids',$pubid);
+                $cidstring = xarModUserVars::get('articles','basecids',$pubid);
             }
             if (!empty($cidstring)) {
                 $rootcats = unserialize($cidstring);
