@@ -10,7 +10,7 @@
             Bar:
         </xar:mlstring>
     </label>
-    <xar:set name="value">xarModGetUserVar('foo', 'bar', $regid)</xar:set>
+    <xar:set name="value">xarModUserVars::get('foo', 'bar', $regid)</xar:set>
     <input type="text" name="bar" id="bar" value="#$value#" />
 </div>
 </xar:template>
