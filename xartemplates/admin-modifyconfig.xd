@@ -4,8 +4,8 @@
 </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:if condition="xarModGetVar('query','useModuleAlias')">
-            #xarModGetVar('query','aliasname')#
+        <xar:if condition="xarModVars::get('query','useModuleAlias')">
+            <xar:var scope="module" module="query" name="aliasname" />
         <xar:else />
             <xar:mlstring>Query Administration</xar:mlstring>
         </xar:if>
@@ -43,7 +43,8 @@
                             Items Per Page:
                         </xar:mlstring>
                     </label>
-                    <input type="text" name="itemsperpage" id="itemsperpage" value="#xarModGetVar('query','itemsperpage')#" maxlength="3" class="xar-form-textshort" />
+                    <xar:set name="value"><xar:var scope="module" module="query" name="itemsperpage" /></xar:set>
+                    <input type="text" name="itemsperpage" id="itemsperpage" value="#$value#" maxlength="3" class="xar-form-textshort" />
                 </div>
                 <div class="xar-form-input-wrapper-after">
                     <xar:set name="checked">xarModVars::get('query','SupportShortURLs')</xar:set>
@@ -69,7 +70,8 @@
                                 Module Alias Name
                             </xar:mlstring>
                     </label>
-                    <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('query', 'aliasname')#" size="32" maxlength="100" />
+                    <xar:set name="value"><xar:var scope="module" module="query" name="aliasname" /></xar:set>
+                    <input type="text" name="aliasname" id="aliasname" value="#$value#" size="32" maxlength="100" />
                 </div>
             </fieldset>
         <xar:else />
