@@ -1,3 +1,4 @@
+<div class="mag-overview">
 <h2>
     <xar:ml>
         <xar:mlstring>#(1)</xar:mlstring>
@@ -29,3 +30,4 @@
     <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'current','mag'=&gt;$mag.ref))#" class="mag-current-issue"><xar:mlstring>Current Issue</xar:mlstring></a>
     | <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'archive','mag'=&gt;$mag.ref))#" class="mag-archives"><xar:mlstring>Archives</xar:mlstring></a>
 </p>
+</div>

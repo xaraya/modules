@@ -16,7 +16,7 @@
 
 $modversion['name']           = 'mag';
 $modversion['id']             = '940';
-$modversion['version']        = '0.2.0';
+$modversion['version']        = '0.3.0';
 $modversion['displayname']    = xarML('Mag');
 $modversion['description']    = 'Magazines module';
 $modversion['credits']        = 'xardocs/credits.txt';

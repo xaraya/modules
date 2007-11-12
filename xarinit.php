@@ -34,7 +34,7 @@ function mag_init()
     if (empty($result)) xarErrorFree();
 
     // Register block types.
-    // None.
+    mag_init_blocktypes($module, array('latestissue', 'related'));
 
     // Set up module hooks
     // None.
@@ -62,8 +62,15 @@ function mag_upgrade($oldversion)
 {
     $module = 'mag';
 
+    // Set up database tables
+    $dbconn =& xarDBGetConn();
+    $module = 'mag';
+
     // Get table names.
     extract(mag_init_tablelist($module));
+
+    // Load Table Maintainance API
+    xarDBLoadTableMaintenanceAPI();
 
     // Upgrade dependent on old version number.
     switch ($oldversion) {
@@ -82,7 +89,60 @@ function mag_upgrade($oldversion)
             xarModSetVar($module, 'SupportShortURLs', 1);
 
         case '0.2.0':
-            // Upgrading from 0.2.0
+            // Upgrading from 0.2.0 (to 0.3.0)
+            // Added some new blocks, and a hitcount to the articles table.
+
+            // Register block types.
+            mag_init_blocktypes($module, array('latestissue', 'related'));
+
+            // Add new database column.
+            $query = xarDBAlterTable($table_articles,
+                array(
+                    'command' => 'add',
+                    'field' => 'hitcount',
+                    'type' => 'integer',
+                    'null' => false,
+                    'default' => '0',
+                )
+            );
+
+            if (!empty($query)) {
+                $result =& $dbconn->Execute($query);
+                if (!$result) $result = false;
+            }
+
+            $articles_itemtype = 4;
+
+            $object = xarModAPIfunc('dynamicdata', 'user', 'getobject',
+                array('moduleid' => xarModGetIDFromName($module), 'itemtype' => $articles_itemtype)
+            );
+
+            if (!empty($object)) {
+                $objectid = $object->objectid;
+
+                // Add the new dynamic data property.
+                // FIXME: must fix this in DD - if the object ID is not passed in,
+                // then the new property is not linked up to the object properly.
+                $result = xarModAPIfunc(
+                    'dynamicdata', 'admin', 'createproperty',
+                    array(
+                        'objectid' => $objectid,
+                        'name' => 'hitcount',
+                        'label' => 'Hitcount',
+                        'moduleid' => xarModGetIDFromName($module),
+                        'itemtype' => $articles_itemtype,
+                        'type' => 15, // integerbox
+                        'default' => 0,
+                        'source' => $table_articles . '.hitcount',
+                        'status' => 1, // Active
+                        'order' => 20,
+                        'validation' => '',
+                    )
+                );
+            }
+
+        case '0.3.0':
+            // Upgrading from 0.3.0
 
         break;
     }
@@ -523,6 +583,19 @@ function mag_init_tables($module)
     }
 
     return $return;
+}
+
+function mag_init_blocktypes($module, $blocktypes)
+{
+    foreach($blocktypes as $blocktype) {
+        xarModAPIFunc(
+            'blocks', 'admin', 'register_block_type',
+            array(
+                'modName' => $module,
+                'blockType'=> $blocktype
+            )
+        );
+    }
 }
 
 ?>

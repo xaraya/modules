@@ -10,6 +10,7 @@
  * @param iid integer Issue ID (unique across all magazines)
  * @param sid integer Series ID
  * @param fields string Limits the fields returned; 'TOC'=minimal fields for a table of contents; default=all available fields
+ * @param sort string Sort criteria
  *
  */
 
@@ -72,6 +73,11 @@ function mag_userapi_getarticles($args)
     // Single series ID
     if (!empty($sid) && is_numeric($sid)) {
         $where[] = 'series_id eq ' . (integer)$sid;
+    }
+
+    // Magazine ID
+    if (!empty($mid) && is_numeric($mid)) {
+        // TODO: need to add in a join to the issues to link to a magazine.
     }
 
     if (!empty($where)) $params['where'] = implode(' AND ', $where);

@@ -39,6 +39,8 @@ function mag_userapi_params($args)
         $params['module'] = $module;
         $params['modid'] = xarModGetIDFromName($module);
 
+
+        
         // Various image paths.
         //
         // Substitution variables used in paths are:
@@ -47,8 +49,11 @@ function mag_userapi_params($args)
         //  {mag_logo} - magazine logo (full file-path as stored)
         //  {issue_ref} - issue reference
         //  {issue_cover} - issue cover image (full file-path as stored)
-        // TODO: for thumbnails, support substitution vars for the dirname, filename body and extension.
+        // etc.
 
+        // Note that these paths will completely override the paths stored in the images.
+        // You can take these paths out, and just use the image path and name as stored.
+  
         // The base path for most, if not all, images.
         // This is relative to the site entry point (index.php)
         $params['base_image_vpath'] = 'modules/' . $module . '/xarimages';
@@ -68,11 +73,14 @@ function mag_userapi_params($args)
         //$params['image_article_main_vpath'] = '{image1}';
 
         // Path for an article embedded images, and its associated display thumbnail.
+        // The thumbnails are assumed to be in the same directory as the full-size images,
+        // but they need not be; adapt the thumbnail path as required.
         $params['image_article_embedded_vpath'] = '{base_image_vpath}/{mag_ref}/issues/{issue_ref}/articles/{image_filename}';
         $params['image_article_embedded_thumb_vpath'] = '{image_filedir}/{image_filebody}.thumb{image_fileext}';
-        //$params['image_article_embedded_thumb_vpath'] = '{base_image_vpath}/{mag_ref}/issues/{issue_ref}/articles/{image_filebody}-thumb{image_fileext}';
 
         // Image classes that trigger the thumbnail code.
+        // Add any of these classes to an article image, and they will automatically get
+        // replaced by a thumb-nail, with a pop-up full sized image (using jQuery thickbox if available).
         $params['image_article_thumb_classes'] = array('thumbnailed', 'thumbnailed-left', 'thumbnailed-right', 'thumbnailed-centre');
         
         // Photos for the authors.
@@ -80,6 +88,8 @@ function mag_userapi_params($args)
         $params['image_author_photo_vpath'] = '{base_image_vpath}/authors/{photo_filename}';
         $params['image_author_icon_vpath'] = '{base_image_vpath}/authors/{photo_filebody}.icon80{photo_fileext}';
 
+
+        
         // Determine whether fulltext search is supported.
         // The mode can be 'TRUE', 'FALSE' or 'AUTO'.
         $fulltext_mode = xarModGetVar($module, 'fulltext_search');
@@ -142,50 +152,8 @@ function mag_userapi_params($args)
             'SAMPLE' => xarML('Sample (semi-restricted)'),
             'PREMIUM' => xarML('Premium (restricted)'),
         );
-
-        // 
-        //,Default (inherit from series);editorial,Editorial;BOOKS,Book Review;BRIEF,In Brief;fmember,Featured Member
-        
-        //
-        // Parameters below here not yet used
-        //
-
-        // Archive page Settings
-        $params['archive_maxmags'] = 16;
-        $params['archive_rows'] = 4;
-        $params['archive_cols'] = 4;
-
-        // Article Summaries list settings
-        $params['default_numitems'] = 10;
-        $params['max_numitems'] = 100;
-
-        // Output transform fields.
-        // Only these fields will be passed through the output transform.
-        // They will generally just be the HTML fields.
-        // TODO: perhaps the output transforms and filters should converge, e.g. a field that
-        // is declared 'html' will always have the 'html' filter applied, and will always be
-        // passed through the output transforms. The 'html' filter should happen *before* the
-        // transform and not afterwards in the template.
-        // TODO: depracate
-        // See notes above. We are probably going to go with this one.
-        // 2D Array $params['fieldtype']['itemtype']
-        $params['html_fields'][2] = 'abstract';
-        $params['html_fields'][3] = 'description';
-        $params['html_fields'][4] = 'body,footer,references';
-        $params['html_fields'][5] = 'full_bio';
-        $params['html_fields'][6] = 'notes';
-
-        $params['text_fields'][1] = 'synopsis';
-        $params['text_fields'][3] = 'synopsis';
-        $params['text_fields'][4] = 'summary';
-        $params['text_fields'][5] = 'mini_bio,contact';
-
-        // Default listing sort order
-        $params['sort'][2] = 'pubdate DESC'; // Latest First
-        $params['sort'][3] = 'pubdate DESC'; // Latest First
-        $params['sort'][4] = 'title ASC'; // Alphabetical
-        $params['sort'][5] = 'name ASC'; // Alphabetical
     }
+
 
     if (!empty($name)) {
         // Return a single parameter

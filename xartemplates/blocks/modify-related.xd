@@ -1,0 +1,59 @@
+<div>
+    <div class="xar-form-input-wrapper">
+        <label for="related_magazine_#$bid#" class="xar-form-label"><xar:mlstring>Articles from: </xar:mlstring></label>
+        <select name="magazine" id="related_magazine_#$bid#">
+            <xar:if condition="$magazine eq '0'">
+                <option value="current" selected="selected">-- <xar:mlstring>Current Magazine</xar:mlstring> --</option>
+            <xar:else />
+                <option value="0">-- <xar:mlstring>Current Magazine</xar:mlstring> --</option>
+            </xar:if>
+            <xar:loop name="$mag_types">
+                <xar:if condition="$magazine eq $loop:item.mid">
+                    <option value="#$loop:item.mid#" selected="selected">#$loop:item.title#</option>
+                <xar:else />
+                    <option value="#$loop:item.mid#">#$loop:item.title#</option>
+                </xar:if>
+            </xar:loop>
+        </select>
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="related_relatedby_#$bid#" class="xar-form-label"><xar:mlstring>Articles related by: </xar:mlstring></label>
+        <select name="relatedby" id="related_relatedby_#$bid#">
+        <xar:loop name="$relatedby_types">
+            <xar:if condition="$loop:key eq $relatedby">
+                <option value="#$loop:key#" selected="selected">#$loop:item#</option>
+            <xar:else />
+                <option value="#$loop:key#">#$loop:item#</option>
+            </xar:if>
+        </xar:loop>
+        </select>
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="related_display_#$bid#" class="xar-form-label"><xar:mlstring>Display option: </xar:mlstring></label>
+        <select name="display" id="related_display_#$bid#">
+        <xar:loop name="$display_types">
+            <xar:if condition="$loop:key eq $display">
+                <option value="#$loop:key#" selected="selected">#$loop:item#</option>
+            <xar:else />
+                <option value="#$loop:key#">#$loop:item#</option>
+            </xar:if>
+        </xar:loop>
+        </select>
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="related_numitems_#$bid#" class="xar-form-label"><xar:mlstring>Number of items: </xar:mlstring></label>
+        <input type="text" name="numitems" value="#$numitems#" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="select_magazine_#$bid#" class="xar-form-label"><xar:mlstring>Sort by: </xar:mlstring></label>
+        <select name="sortby" id="related_sortby_#$bid#">
+        <xar:loop name="$sortby_types">
+            <xar:if condition="$loop:key eq $sortby">
+                <option value="#$loop:key#" selected="selected">#$loop:item#</option>
+            <xar:else />
+                <option value="#$loop:key#">#$loop:item#</option>
+            </xar:if>
+        </xar:loop>
+        </select>
+    </div>
+</div>

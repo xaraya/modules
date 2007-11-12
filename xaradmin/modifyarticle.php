@@ -4,6 +4,12 @@
  * Modify or create an article.
  *
  * @todo Add privilege checks.
+ *
+ * Privilege check:
+ * - if an existing article, then fetch the article, then the issue, and check against the mag ID
+ * - if starting a new article, and the mag ID passed in, then check against that mag ID
+ * - if starting a new article, and no mag ID passed in, then require the user to select from allowed magazines
+ *
  */
 
 function mag_admin_modifyarticle($args)

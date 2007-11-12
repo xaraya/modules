@@ -152,6 +152,9 @@ function mag_userapi_gettoc($args)
 
         // Return the grouping array for the series and articles.
         $return['groups'] = $groups;
+
+        // Return the mag record.
+        $return['mag'] = $mag;
     }
 
     return $return;

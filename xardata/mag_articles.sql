@@ -33,6 +33,7 @@ CREATE TABLE `xar_mag_articles` (
   `style` varchar(30) NOT NULL default 'MAIN',
   `image1` varchar(255) default NULL,
   `image1_alt` varchar(255) NOT NULL default '',
+  `hitcount` int(11) NOT NULL default 0,
   PRIMARY KEY  (`aid`),
   KEY `issue_id` (`issue_id`),
   KEY `series_id` (`series_id`)

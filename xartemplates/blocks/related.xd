@@ -1,0 +1,15 @@
+<div class="magblock-related"><div class="magblock-related-inner">
+    <xar:comment>
+    <xar:if condition="$relatedby eq 'author'">
+        <h4><xar:mlstring>Other articles by this </xar:mlstring>#$relatedby#</h4>
+    <xar:else />
+        <h4><xar:mlstring>Other articles in this </xar:mlstring>#$relatedby#</h4>
+    </xar:if>
+    </xar:comment>
+
+    <ul>
+    <xar:loop name="$articles">
+        <li><a href="">#$loop:item.title#</a></li>
+    </xar:loop>
+    </ul>
+</div></div>

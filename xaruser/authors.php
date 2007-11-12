@@ -53,7 +53,7 @@ function mag_user_authors($args)
 
                 if (!empty($showarticles)) {
                     // Get articles by this author, if requested.
-                    $articles = xarModAPIfunc($module, 'user', 'authorarticles', 
+                    $articles = xarModAPIfunc($module, 'user', 'relatedarticles', 
                         array('mid' => $mid, 'auid' => $auid, 'numitems' => $max_author_articles_profile_page, 'sort' => 'pubdate DESC')
                     );
                     $return['author_articles'] = $articles;

@@ -188,5 +188,15 @@
       <order>18</order>
       <validation>0:255</validation>
     </property>
+    <property name="hitcount">
+      <id>215</id>
+      <label>Hitcount</label>
+      <type>integerbox</type>
+      <default>0</default>
+      <source>xar_mag_articles.hitcount</source>
+      <status>1</status>
+      <order>20</order>
+      <validation></validation>
+    </property>
   </properties>
 </object>

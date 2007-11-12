@@ -150,6 +150,7 @@ function mag_user_article($args)
 
                         if (count($series) == 1) {
                             $series = reset($series);
+                            $return['sid'] = $series['sid'];
                             $return['series'] = $series;
                         }
                     }
@@ -179,8 +180,12 @@ function mag_user_article($args)
                     // Send the toc to the template, with all its extra bits.
                     $return['toc'] = $toc;
 
+                    $return['iid'] = $issue['iid'];
                     $return['issue'] = $issue;
+
+                    $return['aid'] = $article['aid'];
                     $return['article'] = $article;
+
                     $return['article_authors'] = $authors;
                 }
             }

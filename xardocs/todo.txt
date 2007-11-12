@@ -127,8 +127,27 @@ Unless otherwise stated, all cached variables are optional, and will not apply i
 
 Handy blocks we will have:
 - Block: related articles (linked to tags, which is very much TODO)
-- Block: articles by this author
-- Block: articles in this magazine/issue/series
+- Block: articles related by: mag, issue, series, author [DONE]
 - Block: series in this issue (perhaps working through the contents page?)
-- Block: current issue (front page image and a link)
+- Block: current issue (front page image and a link) [DONE]
+
+Images Directory Structure
+==========================
+
+The default settings puts the images under the mag/xarimages/ directory. All images
+are stored in a tree under there. This root and the entire structure under there can
+be changed using settings in mag/xaruserapi/params.php Eventtually, the settings in that
+file will be configurable through GUI screens.
+
+{root}/authors/{author-name}.jpg - author photos, passport-sized
+{root}/authors/{author-name}.icon80.jpg - author photos, 80-pixels square
+{root}/{mag-ref}/ - root folder for a magazine; each matgazine has its own root
+{root}/{mag-ref}/logo/ - logos and images for the magazine (not issues)
+{root}/{mag-ref}/issues/ - root directory for issues
+{root}/{mag-ref}/issues/{issue-ref} - root directory for a single issue
+{root}/{mag-ref}/issues/{issue-ref}/cover/ - directory for the cover image or images
+{root}/{mag-ref}/issues/{issue-ref}/articles/ - directory for all article images
+{root}/{mag-ref}/issues/{issue-ref}/articles/{image-name}.jpg - full-size article image
+{root}/{mag-ref}/issues/{issue-ref}/articles/{image-name}.thumb.jpg - thumb-nail article image, 200 pixels wide
+
 

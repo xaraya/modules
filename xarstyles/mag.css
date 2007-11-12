@@ -289,6 +289,19 @@ div.mag-authors div.mag-author-summary {
     border-bottom: 1px solid #aaaaaa;
 }
 
+
+/* Magazines Overview Page */
+div.mag-overview {
+    padding: 0 0 1em 0;
+    margin: 0 0 1em 0;
+    border-bottom: 3px solid #dddddd;
+}
+div.mag-overview h2 {
+    margin: 1em 0 0.7em 0;
+    padding: 0;
+}
+
+
 /* Bit of styling on thickbox */
 body div#TB_overlay.TB_overlayBG {
     background-color: #003f3f;
@@ -338,4 +351,38 @@ div.mag-readmore {
     background-color: #FFFFCC;
     border: 4px double #CC0000;
     clear: both;
+}
+
+
+/* Latest Issue Block */
+div.magblock-latestissue {
+    text-align: center;
+}
+div.magblock-latestissue h4 {
+    font-size: 100%;
+}
+div.magblock-latestissue ul {
+    font-size: 90%;
+    padding: 0 0 0 1em;
+    text-align: left;
+    list-style-type: disc;
+    list-style-position: inside;
+}
+div.magblock-latestissue ul li {
+    list-style-type: disc;
+    list-style-position: inside;
+    display: list-item;
+}
+
+/* Related Articles block */
+div.magblock-related ul {
+    font-size: 90%;
+    list-style-type: disc;
+    list-style-position: inside;
+}
+div.magblock-related ul li {
+    list-style-type: disc;
+    list-style-position: inside;
+    display: list-item;
+    margin: 0.5em 0;
 }
