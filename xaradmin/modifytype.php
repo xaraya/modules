@@ -15,8 +15,10 @@
  * @todo Check the page type name is unique when creating and modifying; make a better error
  */
 
-function xarpages_admin_modifytype()
+function xarpages_admin_modifytype($args)
 {
+    extract($args);
+
     if (!xarVarFetch('creating', 'bool', $creating, true, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('ptid', 'id', $ptid, 0, XARVAR_DONT_SET)) {return;}
 

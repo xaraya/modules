@@ -13,8 +13,10 @@
  * @subpackage xarpages
  */
 
-function xarpages_admin_updatetype()
+function xarpages_admin_updatetype($args)
 {
+    extract($args);
+
     if (!xarVarFetch('ptid', 'id', $ptid, 0, XARVAR_NOT_REQUIRED)) return;
 
     // Allow the optional pre-selected drop-downs to take precedence.

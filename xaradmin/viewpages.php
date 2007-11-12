@@ -14,8 +14,10 @@
  * @todo Support a pager of sorts, or allow display to be limited to specific sub-trees.
  */
 
-function xarpages_admin_viewpages()
+function xarpages_admin_viewpages($args)
 {
+    extract($args);
+
     // Security check
     if (!xarSecurityCheck('ModerateXarpagesPage', 1, 'Page', 'All')) {
         // No privilege for viewing pages.

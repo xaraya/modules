@@ -13,14 +13,13 @@
  * @subpackage xarpages
  */
 
-function xarpages_admin_modifyconfig()
+function xarpages_admin_modifyconfig($args)
 {
+    extract($args);
     $data = array();
 
     // Need admin priv to modify config.
-    if (!xarSecurityCheck('AdminXarpagesPage')) {
-        return;
-    }
+    if (!xarSecurityCheck('AdminXarpagesPage')) return;
 
     // Get the tree of all pages.
     $data['tree'] = xarModAPIfunc('xarpages', 'user', 'getpagestree', array('dd_flag' => false));

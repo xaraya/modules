@@ -3,7 +3,7 @@
   <label>Xarpages_Multiform_Master</label>
   <moduleid>160</moduleid>
   <itemtype>0</itemtype>
-  <urlparam>pid</urlparam>
+  <urlparam>itemid</urlparam>
   <maxid>0</maxid>
   <config></config>
   <isalias>1</isalias>

@@ -13,8 +13,10 @@
  * @subpackage xarpages
  */
 
-function xarpages_admin_updatepage()
+function xarpages_admin_updatepage($args)
 {
+    extract($args);
+
     // Get parameters
     if (!xarVarFetch('batch', 'bool', $batch, false, XARVAR_NOT_REQUIRED)) return;
 

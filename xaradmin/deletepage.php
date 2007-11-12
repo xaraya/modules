@@ -13,8 +13,10 @@
  * @subpackage xarpages
  */
 
-function xarpages_admin_deletepage()
+function xarpages_admin_deletepage($args)
 {
+    extract($args);
+
     if (!xarVarFetch('pid', 'id', $pid)) return;
     if (!xarVarFetch('confirm', 'str:1', $confirm, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('return_url', 'str:0:200', $return_url, '', XARVAR_DONT_SET)) {return;}

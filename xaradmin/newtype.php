@@ -13,9 +13,9 @@
  * @subpackage xarpages
  */
 
-function xarpages_admin_newtype()
+function xarpages_admin_newtype($args)
 {
-    return(xarModFunc('xarpages', 'admin', 'modifytype'));
+    return(xarModFunc('xarpages', 'admin', 'modifytype', $args));
 }
 
 ?>
