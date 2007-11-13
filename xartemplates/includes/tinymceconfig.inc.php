@@ -1,4 +1,12 @@
 <?php
+/**
+    * xarTinyMCE  imanager, ibrowser and filebrowser integration
+    * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+    * @link http://www.xaraya.com
+    * @subpackage xarTinyMCE
+    * @author Jo Dalle Nogare jo@2skies.com or visit http://xarigami.com
+    * Last update 2007/9/1
+    */
     // ================================================
     // PHP Image and  File Browser Configurations
     // ================================================
@@ -12,13 +20,6 @@
     // ================================================
     // Revision: 1.3                   Date: 08/12/2005
     // ================================================
-     /**
-    * xarTinyMCE  imanager, ibrowser and filebrowser integration
-    * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
-    * @link http://www.xaraya.com
-    * @subpackage xarTinyMCE
-    * @author Jo Dalle Nogare <jojodee@xaraya.com>
-    * Last update 2006/7/1
     */
     /** *********REMEMBER TO CHECK, COPY AND EDIT THIS FILE!!! *******************
     *
