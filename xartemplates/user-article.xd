@@ -45,7 +45,7 @@
             <xar:if condition="$viewlevel eq 'OVERVIEW' or $viewlevel eq 'READ'">
                 <xar:comment>Introduction section - image, summary</xar:comment>
                 <xar:if condition="!empty($style) and xarModAPIfunc('mag','user','testtemplate',array('templateName'=&gt;'article-intro','templateSuffix'=&gt;$style))">
-                    <xar:templatefile="article-intro-$style"  module="mag" />
+                    <xar:template file="article-intro-$style"  module="mag" />
                 <xar:else />
                     <xar:template file="article-intro" module="mag" />
                 </xar:if>
