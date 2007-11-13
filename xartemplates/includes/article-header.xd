@@ -19,23 +19,23 @@
 
     <xar:comment>Publishing section - where the article was first published</xar:comment>
     <xar:if condition="!empty($style) and xarModAPIfunc('mag','user','testtemplate',array('templateName'=&gt;'article-publishing','templateSuffix'=&gt;$style))">
-        <xar:template module="mag" file="article-publishing-$style" />
+        <xar:template file="article-publishing-$style" module="mag" />
     <xar:else />
-        <xar:template module="mag" file="article-publishing" />
+        <xar:template file="article-publishing" module="mag" />
     </xar:if>
 
     <xar:comment>Next/previous section - links to other articles in this issue</xar:comment>
     <xar:if condition="!empty($style) and xarModAPIfunc('mag','user','testtemplate',array('templateName'=&gt;'article-publishing','templateSuffix'=&gt;$style))">
-        <xar:template module="mag" file="article-artlinks-$style" />
+        <xar:template file="article-artlinks-$style" module="mag" />
     <xar:else />
-        <xar:template module="mag" file="article-artlinks" />
+        <xar:template file="article-artlinks" module="mag" />
     </xar:if>
 
     <xar:comment>Author names section - short list of authors names, roles, and links to their bios</xar:comment>
     <xar:if condition="!empty($style) and xarModAPIfunc('mag','user','testtemplate',array('templateName'=&gt;'article-publishing','templateSuffix'=&gt;$style))">
-        <xar:template module="mag" file="article-authors-short-$style" />
+        <xar:template file="article-authors-short-$style" module="mag" />
     <xar:else />
-        <xar:template module="mag" file="article-authors-short" />
+        <xar:template file="article-authors-short" module="mag" />
     </xar:if>
 
 </div>

@@ -12,9 +12,9 @@
     <div class="mag-artlinks">
         <xar:if condition="xarModIsAvailable('jquery')">
             <xar:set name="cluetip_subdata">array("selector"=>"a#mag_show_toc", "options"=>"width: 500, attribute: 'rel', local: true, hideLocal: true, sticky: true, activation: 'toggle'")</xar:set>
-            <xar:template file="jquery.cluetip" module="jquery" subdata="#$cluetip_subdata#"/>
+            <xar:template file="jquery.cluetip" subdata="#$cluetip_subdata#" module="jquery" />
             <div id="mag_toc" style="display: none;"><div id="mag_toc_inner">
-                <xar:template module="mag" file="toc-list" subdata="$toc" />
+                <xar:template file="toc-list" subdata="$toc" module="mag" />
             </div></div>
         </xar:if>
 

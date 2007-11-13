@@ -6,6 +6,8 @@
 
 function mag_admin_modify($args)
 {
+    extract($args);
+
     // Get module parameters
     extract(xarModAPIfunc('mag', 'user', 'params',
         array(

@@ -29,24 +29,26 @@ function mag_relatedblock_modify($blockinfo)
     
     // Related by options
     $vars['relatedby_types'] = array(
-        'magazine' => 'Magazine', 
-        'issue' => 'Issue',
-        'series' => 'Series',
-        'author' => 'Author',
+        'magazine' => xarML('Magazine'), 
+        'issue' => xarML('Issue'),
+        'series' => xarML('Series'),
+        'author' => xarML('Author'),
     );
     
     // Display options
     $vars['display_types'] = array(
-        0 => 'Always hide if empty',
-        1 => 'Use if available',
+        0 => xarML('Always hide if empty'),
+        1 => xarML('Use if available'),
     );
 
     // Sorting options
     $vars['sortby_types'] = array(
-        'latest' => 'Most Recent',
+        'latest' => xarML('Most Recent'),
+        'popular' => xarML('Most Viewed'),
     );
 
-    //print_r($vars);
+    if (empty($vars['pid'])) $vars['pid'] = 0;
+    if (empty($vars['auto_titles'])) $vars['auto_titles'] = false;
 
     return $vars;
 }
@@ -67,20 +69,26 @@ function mag_relatedblock_update($blockinfo)
     $vars =& $blockinfo['content'];
 
     // Set the parameters
-    if (xarVarFetch('magazine', 'int:0', $magazine, false, XARVAR_NOT_REQUIRED)) {
+    if (xarVarFetch('magazine', 'int:0', $magazine, 0, XARVAR_NOT_REQUIRED)) {
         $vars['magazine'] = $magazine;
     }
-    if (xarVarFetch('relatedby', 'str', $relatedby, false, XARVAR_NOT_REQUIRED)) {
+    if (xarVarFetch('relatedby', 'str', $relatedby, '', XARVAR_NOT_REQUIRED)) {
         $vars['relatedby'] = $relatedby;
     }
-    if (xarVarFetch('display', 'int:0', $display, false, XARVAR_NOT_REQUIRED)) {
+    if (xarVarFetch('display', 'int:0', $display, 0, XARVAR_NOT_REQUIRED)) {
         $vars['display'] = $display;
     }
-    if (xarVarFetch('numitems', 'int:1:100', $numitems, false, XARVAR_NOT_REQUIRED)) {
+    if (xarVarFetch('numitems', 'int:1:100', $numitems, 5, XARVAR_NOT_REQUIRED)) {
         $vars['numitems'] = $numitems;
     }
-    if (xarVarFetch('sortby', 'str', $sortby, false, XARVAR_NOT_REQUIRED)) {
+    if (xarVarFetch('sortby', 'str', $sortby, '', XARVAR_NOT_REQUIRED)) {
         $vars['sortby'] = $sortby;
+    }
+    if (xarVarFetch('pid', 'int:0', $pid, 0, XARVAR_NOT_REQUIRED)) {
+        $vars['pid'] = $pid;
+    }
+    if (xarVarFetch('auto_titles', 'checkbox', $auto_titles, false, XARVAR_NOT_REQUIRED)) {
+        $vars['auto_titles'] = $auto_titles;
     }
 
     return $blockinfo;

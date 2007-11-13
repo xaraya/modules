@@ -21,8 +21,11 @@ function mag_latestissueblock_modify($blockinfo)
     $vars = unserialize($blockinfo['content']);
 
     // Get a list of all magazines
-    $allmags = xarModAPIFunc('mag', 'user', 'getmags');
-    $vars['allmags'] = $allmags;
+    $mags = xarModAPIFunc('mag', 'user', 'getmags');
+    $mags = array_merge(array(0 => array('mid' => 0, 'title' => xarML('-- Current Magazine --'))), $mags);
+
+    $vars['allmags'] = $mags;
+    if (empty($vars['pid'])) $vars['pid'] = 0;
 
     $vars['bid'] = $blockinfo['bid'];
 
@@ -44,8 +47,12 @@ function mag_latestissueblock_update($blockinfo)
     // Reference to content array.
     $vars =& $blockinfo['content'];
 
-    if (xarVarFetch('select_magazine', 'int:0', $magazine, false, XARVAR_NOT_REQUIRED)) {
+    if (xarVarFetch('select_magazine', 'int:0', $magazine, 0, XARVAR_NOT_REQUIRED)) {
         $vars['magazine'] = $magazine;
+    }
+
+    if (xarVarFetch('pid', 'int:0', $pid, 0, XARVAR_NOT_REQUIRED)) {
+        $vars['pid'] = $pid;
     }
 
     return $blockinfo;

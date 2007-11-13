@@ -1,19 +1,19 @@
 
-<xar:style file="mag" scope="module" />
-<xar:style file="mag-custom" scope="module" />
+<xar:style file="mag" scope="module" module="mag" />
+<xar:style file="mag-custom" scope="module" module="mag" />
 
-<xar:template module="mag" file="custom-navbar" />
+<xar:template file="custom-navbar" module="mag" />
 
 <div class="mag mag-contents">
     <xar:if condition="empty($mag)">
-        <xar:template module="mag" file="error-no-mag" />
+        <xar:template file="error-no-mag" module="mag" />
     <xar:else />
         <xar:comment>
             Start with a header banner/block for the issue.
         </xar:comment>
 
         <xar:if condition="empty($issue)">
-            <xar:template module="mag" file="error-no-issue" />
+            <xar:template file="error-no-issue" module="mag" />
         <xar:else />
             <div class="mag-issue-banner">
                 <xar:if condition="!empty($issue.cover_img_path)">
@@ -56,7 +56,7 @@
 
             <div class="mag-issue-contents">
                 <h2><xar:mlstring>In This Issue</xar:mlstring></h2>
-                <xar:template module="mag" file="toc-list" />
+                <xar:template file="toc-list" module="mag" />
             </div>
         
         </xar:if>

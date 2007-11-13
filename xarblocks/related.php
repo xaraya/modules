@@ -26,6 +26,8 @@ function mag_relatedblock_init()
         'display' => 0,
         'numitems' => 5,
         'sortby' => 'latest',
+        'pid' => 0,
+        'auto_titles' => true,
     );
 }
 
@@ -56,7 +58,6 @@ function mag_relatedblock_info()
  */
 function mag_relatedblock_display($blockinfo)
 {
-    
     // Get variables from content block.
     if (!is_array($blockinfo['content'])) {
         $blockinfo['content'] = unserialize($blockinfo['content']);
@@ -73,20 +74,35 @@ function mag_relatedblock_display($blockinfo)
     ));
     
     // Sorting
-    if ($vars['sortby'] == 'latest') {
-        $sort = 'pubdate DESC';
-    }
-    // TODO: Popular articles
-    else {
-        $sort = 'pubdate DESC';
+    switch ($vars['sortby']) {
+        case 'popular':
+            $sort = 'hitcount DESC';
+            break;
+        case 'latest':
+        default:
+            $sort = 'pubdate DESC';
+            break;
     }
 
     // Set magazine
     if ($vars['magazine'] == 0) {
         $mid = xarVarGetCached('mag', 'mid');
-        if (empty($mid)) return;
     } else {
         $mid = $vars['magazine'];
+    }
+
+    // If no magazine ID, then end the block.
+    if (empty($mid)) return;
+
+    // Check privileges.
+    if (!xarSecurityCheck('OverviewMag', 0, 'Mag', "$mid")) return;
+
+    // Get the mag record (from cache, if it's available).
+    if (xarVarIsCached($module, 'mag')) $mag = xarVarGetCached($module, 'mag');
+    if (empty($mag)) {
+        $mags = xarModAPIfunc($module, 'user', 'getmags', array('mid' => $mid));
+        if (empty($mags)) return;
+        $mag = reset($mags);
     }
 
     // Initilise the params
@@ -100,42 +116,86 @@ function mag_relatedblock_display($blockinfo)
     // Article Relationships
     // Display Options:
     //    0: Hide if empty
-    //    1: Use if available
+    //    1: Use if available, i.e. if we have context
+    //    2: Force use, regardless of current page (TODO)
     $display = $vars['display'];
 
-    // Articles from the same magazine
-    if ($vars['relatedby'] == 'magazine') {
-        // No extra parameters - we're just fetching the articles from the magazine set
-    }
+    switch($vars['relatedby']) {
+        case 'issue':
+            // Articles in the same issue
+            $iid = xarVarGetCached('mag', 'iid');
+            if (empty($iid) && ($display == 0)) return;
 
-    // Articles in the same issue
-    elseif ($vars['relatedby'] == 'issue') {
-        $iid = xarVarGetCached('mag', 'iid');
-        if (empty($iid) && ($display == 0)) return;
-        elseif (!empty($iid)) $params['iid'] = $iid;
-    }
+            if (!empty($iid)) {
+                $params['iid'] = $iid;
 
-    // Articles from the same series
-    elseif ($vars['relatedby'] == 'series') {
-        $sid = xarVarGetCached('mag', 'sid');
-        if (empty($sid) && ($display == 0)) return;
-        elseif (!empty($sid)) $params['sid'] = $sid;
-    }
+                // Pass the issue details into the template for automated titles (e.g. "Other articles in issue X").
+                $issue = xarVarGetCached($module, 'issue');
+                if (empty($issue)) {
+                    $issues = xarModAPIfunc($module, 'user', 'getissues', array('iid' =>$iid));
+                    if (!empty($issues)) $issue = reset($issues);
+                }
+                if (!empty($issue)) $vars['issue'] = $issue;
+            }
+            break;
 
-    // Articles by the same authors
-    elseif ($vars['relatedby'] == 'author') {
-        $authors = xarVarGetCached('mag', 'article_authors');
-        $auids = array_keys($authors);
-        if (empty($auids) && ($display == 0)) return;
-        elseif (!empty($auids)) $params['auids'] = $auids;
-    }
-    else return;
+        case 'series':
+            // Articles from the same series
+            $sid = xarVarGetCached($module, 'sid');
+            if (empty($sid) && ($display == 0)) return;
 
+            if (!empty($sid)) {
+                $params['sid'] = $sid;
+
+                // Pass the series details into the template for automated titles (e.g. "Other articles in series X").
+                $series = xarVarGetCached($module, 'series');
+                if (empty($series)) {
+                    $serieses = xarModAPIfunc($module, 'user', 'getseries', array('sid' =>$sid));
+                    if (!empty($issueses)) $series = reset($issueses);
+                }
+                if (!empty($series)) $vars['series'] = $series;
+            }
+            break;
+
+        case 'author':
+            // Articles by the same authors
+            $authors = xarVarGetCached($module, 'article_authors');
+            $auids = array_keys($authors);
+            if (empty($auids) && ($display == 0)) return;
+
+            if (!empty($auids)) {
+                $params['auids'] = $auids;
+
+                // Pass the author details into the template for automated titles (e.g. "Other articles by X and Y").
+                $article_authors = xarVarGetCached($module, 'article_authors');
+                if (!empty($article_authors)) $vars['article_authors'] = $article_authors;
+            }
+            break;
+
+        case 'magazine':
+        default:
+            break;
+    }
     
-    $related_articles = xarModAPIFunc($module, 'user', 'relatedarticles', $params);
-    
-    //print_r($related_articles);
-    $vars['articles'] = $related_articles;
+    $articles = xarModAPIFunc($module, 'user', 'relatedarticles', $params);
+
+    // End the block if there are no articles to display.
+    if (empty($articles)) return;
+
+    $vars['articles'] = $articles;
+    $vars['mag'] = $mag;
+
+    if (empty($vars['pid'])) {
+        // No forced page ID. Check for a cached value instead.
+        if (xarVarIsCached('mag', 'pid')) {
+            $vars['pid'] = xarVarGetCached('mag', 'pid');
+        } else {
+            $vars['pid'] = 0;
+        }
+    }
+
+    if (empty($vars['auto_titles'])) $vars['auto_titles'] = false;
+
     return $blockinfo;
 }
 

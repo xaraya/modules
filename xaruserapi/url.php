@@ -17,15 +17,17 @@
 
 function mag_userapi_url($args)
 {
-    static $s_pid = NULL;
+    extract($args);
+
     $type = 'user';
 
     // A cached variable points to the xarpage if necessary.
-    if (!isset($s_pid)) {
+    // Only look at the cached value if a pid is not passed in.
+    if (!isset($pid) || !is_numeric($pid)) {
         if (xarVarIsCached('mag', 'pid')) {
-            $s_pid = xarVarGetCached('mag', 'pid');
+            $pid = xarVarGetCached('mag', 'pid');
         } else {
-            $s_pid = 0;
+            $pid = 0;
         }
     }
 
@@ -37,9 +39,9 @@ function mag_userapi_url($args)
         $fragment = NULL;
     }
 
-    if (!empty($s_pid)) {
+    if (!empty($pid)) {
         // Magazine is embedded into xarpages, so return a URL to xarpages.
-        $args['pid'] = $s_pid;
+        $args['pid'] = $pid;
         if (isset($args['func'])) {
             // If the func is set (which it should be) then move it to 'mfunc'
             // so it does not clash with the 'display' of xarpages.
@@ -50,6 +52,9 @@ function mag_userapi_url($args)
 
         $url = xarModURL('xarpages', $type, 'display', $args, true, $fragment);
     } else {
+        // In case the pid is set, but is zero.
+        unset($args['pid']);
+
         if (isset($args['func'])) {
             // If the func is set (which it should be) then remove it
             // so it can be passed in the traditional way.

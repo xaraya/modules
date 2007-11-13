@@ -130,7 +130,7 @@ function mag_userapi_params($args)
         $params['pager_template_name'] = 'default';
 
         // Lists of restricted fields when selecting articles, to help performance.
-        $params['article_fieldset_toc'] = array('aid','issue_id','series_id','title','subtitle','status','ref','page','premium','image1','pubdate');
+        $params['article_fieldset_toc'] = array('aid','issue_id','series_id','title','subtitle','status','ref','page','premium','image1','pubdate','hitcount');
 
         // Article display template search path.
         // Change the order as required.

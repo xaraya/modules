@@ -1,13 +1,13 @@
 
-<xar:style file="mag" scope="module" />
-<xar:style file="mag-custom" scope="module" />
+<xar:style file="mag" scope="module" module="mag" />
+<xar:style file="mag-custom" scope="module" module="mag" />
 
-<xar:template module="mag" file="custom-navbar" />
+<xar:template file="custom-navbar" module="mag" />
 
 <div class="mag mag-authors">
 
     <xar:if condition="empty($mag)">
-        <xar:template module="mag" file="error-no-mag" />
+        <xar:template file="error-no-mag" module="mag" />
     <xar:else />
         <h1>
             <xar:ml>

@@ -1,15 +1,43 @@
-<div class="magblock-related"><div class="magblock-related-inner">
-    <xar:comment>
-    <xar:if condition="$relatedby eq 'author'">
-        <h4><xar:mlstring>Other articles by this </xar:mlstring>#$relatedby#</h4>
-    <xar:else />
-        <h4><xar:mlstring>Other articles in this </xar:mlstring>#$relatedby#</h4>
-    </xar:if>
-    </xar:comment>
+<div class="magblock-related">
+    <div class="magblock-related-inner">
+        <xar:if condition="!empty($auto_titles)">
+            <xar:if condition="$relatedby eq 'magazine' and !empty($mag)">
+                <xar:if condition="$sortby eq 'latest'">
+                    <h4>
+                        <xar:ml>
+                            <xar:mlstring>Latest articles in #(1)</xar:mlstring>
+                            <xar:mlvar>#xarVarPrepForDisplay($mag.title)#</xar:mlvar>
+                        </xar:ml>
+                    </h4>
+                </xar:if>
+                <xar:if condition="$sortby eq 'popular'">
+                    <h4>
+                        <xar:ml>
+                            <xar:mlstring>Most popular articles in #(1)</xar:mlstring>
+                            <xar:mlvar>#xarVarPrepForDisplay($mag.title)#</xar:mlvar>
+                        </xar:ml>
+                    </h4>
+                </xar:if>
+            </xar:if>
+        </xar:if>
+        <xar:comment>
+            etc.
+            To simplify this, it would probably be easier to set up a bunch of strings, and then pass it all
+            through xarML() once at the end, saving many tags in this template.
+        </xar:comment>
 
-    <ul>
-    <xar:loop name="$articles">
-        <li><a href="">#$loop:item.title#</a></li>
-    </xar:loop>
-    </ul>
-</div></div>
+        <ul>
+            <xar:loop name="$articles">
+                <li>
+                    <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'article','mag'=&gt;$mag.ref,'aid'=&gt;$loop:item.aid,'pid'=&gt;$pid))#">#$loop:item.title#</a>
+                    <xar:if condition="$sortby eq 'popular'">
+                        <span style="white-space: nowrap;"><xar:ml>
+                            <xar:mlstring>#(1) view(s)</xar:mlstring>
+                            <xar:mlvar>#$loop:item.hitcount#</xar:mlvar>
+                        </xar:ml></span>
+                    </xar:if>
+                </li>
+            </xar:loop>
+        </ul>
+    </div>
+</div>

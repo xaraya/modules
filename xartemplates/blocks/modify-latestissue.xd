@@ -2,18 +2,18 @@
     <div class="xar-form-input-wrapper">
         <label for="select_magazine_#$bid#" class="xar-form-label"><xar:mlstring>Selected Magazine</xar:mlstring></label>
         <select name="select_magazine" id="select_magazine_#$bid#">
-            <xar:if condition="$magazine eq '0'">
-                <option value="current" selected="selected">-- <xar:mlstring>Current Magazine</xar:mlstring> --</option>
-            <xar:else />
-                <option value="0">-- <xar:mlstring>Current Magazine</xar:mlstring> --</option>
-            </xar:if>
             <xar:loop name="$allmags">
                 <xar:if condition="$magazine eq $loop:item.mid">
-                    <option value="#$loop:item.mid#" selected="selected">#$loop:item.title#</option>
+                    <option value="#$loop:item.mid#" selected="selected">#xarVarPrepForDisplay($loop:item.title)#</option>
                 <xar:else />
-                    <option value="#$loop:item.mid#">#$loop:item.title#</option>
+                    <option value="#$loop:item.mid#">#xarVarPrepForDisplay($loop:item.title)#</option>
                 </xar:if>
             </xar:loop>
         </select>
+    </div>
+
+    <div class="xar-form-input-wrapper">
+        <label for="pid" class="xar-form-label"><xar:mlstring>Xarpages Page ID</xar:mlstring></label>
+        <input type="text" name="pid" id="pid" value="#$pid#" />
     </div>
 </div>

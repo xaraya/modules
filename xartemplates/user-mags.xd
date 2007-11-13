@@ -1,8 +1,8 @@
 
-<xar:style file="mag" scope="module" />
-<xar:style file="mag-custom" scope="module" />
+<xar:style file="mag" scope="module" module="mag" />
+<xar:style file="mag-custom" scope="module" module="mag" />
 
-<xar:template module="mag" file="custom-navbar" />
+<xar:template file="custom-navbar" module="mag" />
 
 <div class="mag mag-mags">
     <xar:if condition="empty($mags)">
@@ -10,13 +10,13 @@
     <xar:else />
         <xar:if condition="!empty($mid)">
             <xar:loop name="$mags">
-                <xar:template file="mag-overview" module="mag" subdata="array('mag'=&gt;$loop:item)" />
+                <xar:template file="mag-overview" subdata="array('mag'=&gt;$loop:item)" module="mag" />
             </xar:loop>
         <xar:else />
             <h1><xar:mlstring>All Magazines</xar:mlstring></h1>
 
             <xar:loop name="$mags">
-                <xar:template file="mag-overview" module="mag" subdata="array('mag'=&gt;$loop:item)" />
+                <xar:template file="mag-overview" subdata="array('mag'=&gt;$loop:item)" module="mag" />
             </xar:loop>
         </xar:if>
     </xar:if>

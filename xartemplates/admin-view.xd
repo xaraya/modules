@@ -1,8 +1,8 @@
 
-<xar:style file="mag-admin" scope="module" />
+<xar:style file="mag-admin" scope="module" module="mag" />
 
 <xar:if condition="xarModIsAvailable('jquery')">
-    <xar:template file="jquery.tablesorter" module="jquery" subdata="array('selector'=&gt;'table.sortable','options'=&gt;'')" />
+    <xar:template file="jquery.tablesorter" subdata="array('selector'=&gt;'table.sortable','options'=&gt;'')" module="jquery" />
 </xar:if>
 
 <xar:comment>

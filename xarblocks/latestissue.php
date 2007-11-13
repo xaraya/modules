@@ -23,6 +23,7 @@ function mag_latestissueblock_init()
 {
     return array(
         'magazine' => 0,
+        'pid' => 0,
     );
 }
 
@@ -112,7 +113,18 @@ function mag_latestissueblock_display($blockinfo)
     if (empty($issues)) return;
 
     $vars['issue'] = reset($issues);
-    
+
+    // If we want links in the context of a xarpage, then set that now.
+    // This will then place all mag URLs onto the end of that xarpage.
+    if (empty($vars['pid'])) {
+        // No forced page ID. Check for a cached value instead.
+        if (xarVarIsCached('mag', 'pid')) {
+            $vars['pid'] = xarVarGetCached('mag', 'pid');
+        } else {
+            $vars['pid'] = 0;
+        }
+    }
+
     return $blockinfo;
 }
 

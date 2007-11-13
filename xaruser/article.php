@@ -263,11 +263,17 @@ function mag_user_article($args)
     }
 
     // Pass the boolean into the templates for processing.
+    // In general, if premium_bypass is true, then the full article is displayed.
     $return['premium_bypass'] = $premium_bypass;
 
     // Set context information for custom templates and blocks.
     $return['function'] = 'article';
     xarModAPIfunc($module, 'user', 'cachevalues', $return);
+
+    // Increment the hitcount.
+    if (!$premium_bypass && !empty($article['aid'])) {
+        xarModAPIfunc($module, 'admin', 'hitarticle', array('aid' => $article['aid']));
+    }
 
     return $return;
 }

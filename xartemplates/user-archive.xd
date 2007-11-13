@@ -1,13 +1,13 @@
 
-<xar:style file="mag" scope="module" />
-<xar:style file="mag-custom" scope="module" />
+<xar:style file="mag" scope="module" module="mag" />
+<xar:style file="mag-custom" scope="module" module="mag" />
 
-<xar:template module="mag" file="custom-navbar" />
+<xar:template file="custom-navbar" module="mag" />
 
 <div class="mag mag-archive">
 
     <xar:if condition="empty($mag)">
-        <xar:template module="mag" file="error-no-mag" />
+        <xar:template file="error-no-mag" module="mag" />
     <xar:else />
         <h1>
             <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'mags','mag'=&gt;$mag.ref))#">#xarVarPrepForDisplay($mag.title)#</a>
@@ -19,7 +19,7 @@
         <xar:comment>Loop for each year to start with</xar:comment>
 
         <xar:if condition="empty($issues)">
-            <xar:template module="mag" file="error-no-issue" />
+            <xar:template file="error-no-issue" module="mag" />
         <xar:else />
             <div>
                 <xar:loop name="$years" id="years">
