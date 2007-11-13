@@ -1,0 +1,13 @@
+
+<xar:comment>
+    This template can be used for displaying the contents of other modules.
+    It displays just one thing: the 'content' value, assumed to be HTML.
+    Use in conjunction with the 'mag' custom function, or any other custom
+    function that generates its own HTML content.
+</xar:comment>
+
+<xar:if condition="isset($content)">
+    #$content#
+<xar:else />
+    <p class="xar-error"><xar:mlstring>No 'content' value passed in.</xar:mlstring>
+</xar:if>
