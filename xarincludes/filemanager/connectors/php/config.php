@@ -21,10 +21,10 @@
 global $Config ;
 
 
-if (is_file('../../../../../../var/tinymce/tinymceconfig.inc')) {
-    include_once '../../../../../../var/tinymce/tinymceconfig.inc';
+if (is_file('../../../../../../var/tinymce/tinymceconfig.inc.php')) {
+    include_once '../../../../../../var/tinymce/tinymceconfig.inc.php';
 }else{
-    include_once '../../../../xartemplates/includes/tinymceconfig.inc';
+    include_once '../../../../xartemplates/includes/tinymceconfig.inc.php';
 }
 // SECURITY: You must explicitly enable this "connector". (Set it to "true").
 if (!isset ($cfg['Enabled']) || $cfg['Enabled']==1) { //just in case there is an old config file with no setting

@@ -1,4 +1,12 @@
 <?php
+/**
+    * xarTinyMCE  imanager, ibrowser and filebrowser integration
+    * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+    * @link http://www.xaraya.com
+    * @subpackage xarTinyMCE
+    * @author Jo Dalle Nogare jo@2skies.com or visit http://xarigami.com
+    * Last update 2007/9/1
+    */
     // ================================================
     // PHP Image and  File Browser Configurations
     // ================================================
@@ -12,19 +20,12 @@
     // ================================================
     // Revision: 1.3                   Date: 08/12/2005
     // ================================================
-     /**
-    * xarTinyMCE  imanager, ibrowser and filebrowser integration
-    * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
-    * @link http://www.xaraya.com
-    * @subpackage xarTinyMCE
-    * @author Jo Dalle Nogare <jojodee@xaraya.com>
-    * Last update 2006/7/1
     */
     /** *********REMEMBER TO CHECK, COPY AND EDIT THIS FILE!!! *******************
     *
     * INSTRUCTIONS: The main configuration file for the xarTinyMCE ibrowser, imanager and filebrowser
     *
-    * 1. Copy this file to var/tinymce/tinymceconfig.inc
+    * 1. Copy this file to var/tinymce/tinymceconfig.inc.php
     * 2. Please make sure you check all configurations settings
     * 3. Update the configurations especially:
     *     - $cfg['thumbs'] - set your sizes for image uploads and uncomment where necessary
@@ -139,7 +140,7 @@
     //FILEBROWSER only settings - you MUST set this correctly
     $cfg['filebrowser_dir']= '/var/uploads/'; //Filebrowser will look for images here and create allowed types directories
 
-    $cfg['Enabled'] = 1 ; // 1 - on, 0 off Set this to enable or disable Filebrowser upload and browse facility. If disabled filebrowser appears but a disabled message is shown
+    $cfg['Enabled'] = 0 ; // 1 - on, 0 off Set this to enable or disable Filebrowser upload and browse facility. If disabled filebrowser appears but a disabled message is shown
 
     // Configurations below can be left at default
     //Types of media users can 'browse' - remove type to prevent browsing of that type. Do not change names unless you know what you are doing. You can remo

@@ -223,7 +223,7 @@
                 <label for="tinybrowsers" class="xar-form-label" title="#xarML('Select which browsers to use WYSIWYG - msie,gecko,opera,safari')#">
                        <xar:mlstring>Use for browsers:</xar:mlstring>
                 </label>
-                <input type="text" name="tinybrowsers" id="tinybrowsers" value="#$tinybrowsers#" size="20" maxlength="20" />
+                <input type="text" name="tinybrowsers" id="tinybrowsers" value="#$tinybrowsers#" size="40" maxlength="60" />
                 <xar:mlstring>No spaces eg msie,gecko,opera,safari. Defaults to all.</xar:mlstring>
             </div>
 
@@ -694,8 +694,8 @@
             <ul>
             <li><xar:mlstring>Add <strong>ibrowser or imanager</strong> (or any plugin that uses filebrowser eg advimage or advlink) to the plugins above</xar:mlstring></li>
             <li><xar:mlstring>Add <strong>ibrowser or imanager </strong> to the button list in Advanced Theme Layout option below.</xar:mlstring></li>
-            <li><xar:mlstring> Update the </xar:mlstring><a href="modules/tinymce/xartemplates/includes/tinymceconfig.inc"><xar:mlstring>configuration file at modules/tinymce/xartemplates/includes/tinymceconfig.inc</xar:mlstring></a>
-                <xar:mlstring> and copy to your <code>var/tinymce/tinymceconfig.inc</code> directory</xar:mlstring>
+            <li><xar:mlstring> Update the </xar:mlstring><a href="modules/tinymce/xartemplates/includes/tinymceconfig.inc.php"><xar:mlstring>configuration file at modules/tinymce/xartemplates/includes/tinymceconfig.inc.php</xar:mlstring></a>
+                <xar:mlstring> and copy to your <code>var/tinymce/tinymceconfig.inc.php</code> directory</xar:mlstring>
             </li>
             </ul>
 

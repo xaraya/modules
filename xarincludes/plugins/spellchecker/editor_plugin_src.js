@@ -1,5 +1,5 @@
 /**
- * $Id: editor_plugin_src.js 177 2007-01-10 13:23:14Z spocke $
+ * $Id: editor_plugin_src.js 289 2007-05-28 09:12:16Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
@@ -19,8 +19,8 @@ var TinyMCE_SpellCheckerPlugin = {
 			longname : 'Spellchecker PHP',
 			author : 'Moxiecode Systems AB',
 			authorurl : 'http://tinymce.moxiecode.com',
-			infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_spellchecker.html',
-			version : "1.0.3"
+			infourl : 'http://wiki.moxiecode.com/index.php/TinyMCE:Plugins/spellchecker',
+			version : "1.0.5"
 		};
 	},
 
@@ -372,10 +372,13 @@ var TinyMCE_SpellCheckerPlugin = {
 		}
 
 		bb.hide();
+
+		// Boom, crash in FF if focus isn't else were
+		// el.style.display='none' on a opacity element seems to crash it
 		mb.hide();
 	},
 
-	_ajaxResponse : function(xml) {
+	_ajaxResponse : function(xml, text) {
 		var el = xml ? xml.documentElement : null;
 		var inst = tinyMCE.selectedInstance, self = TinyMCE_SpellCheckerPlugin;
 		var cmd = el ? el.getAttribute("cmd") : null, err, id = el ? el.getAttribute("id") : null;
@@ -383,16 +386,31 @@ var TinyMCE_SpellCheckerPlugin = {
 		if (id)
 			inst = tinyMCE.getInstanceById(id.substring(0, id.indexOf('|')));
 
+		// Workaround for crash in Gecko
+		if (tinyMCE.isGecko)
+			window.focus();
+
 		self._displayUI(inst);
+
+		// Restore the selection again
+		if (tinyMCE.isGecko) {
+			inst.getWin().focus();
+			inst.selection.moveToBookmark(inst.spellCheckerBookmark);
+		}
 
 		// Ignore suggestions for other ajax responses
 		if (cmd == "suggest" && id != inst.editorId + "|" + self._counter)
 			return;
 
 		if (!el) {
+			text = '' + text;
+
+			if (text.length > 500)
+				text = text.substring(500);
+
 			inst.spellcheckerOn = false;
 			tinyMCE.switchClass(inst.editorId + '_spellchecker', 'mceMenuButton');
-			alert("Could not execute AJAX call, server didn't return valid a XML.");
+			alert("Could not execute AJAX call, server didn't return valid a XML.\nResponse: " + text);
 			return;
 		}
 
@@ -440,7 +458,7 @@ var TinyMCE_SpellCheckerPlugin = {
 	},
 
 	_getWordList : function(n) {
-		var i, x, s, nv = '', nl = tinyMCE.getNodeTree(n, new Array(), 3), wl = new Array();
+		var i, x, s, nv = '', nl = tinyMCE.getNodeTree(n, [], 3), wl = [];
 		var re = TinyMCE_SpellCheckerPlugin._getWordSeparators();
 
 		for (i=0; i<nl.length; i++) {
@@ -528,6 +546,7 @@ var TinyMCE_SpellCheckerPlugin = {
 
 		for (i=0; i<nl.length; i++) {
 			nv = nl[i].nodeValue;
+
 			r1 = new RegExp('([' + re + '])(' + w + ')([' + re + '])', 'g');
 			r2 = new RegExp('^(' + w + ')', 'g');
 			r3 = new RegExp('(' + w + ')([' + re + ']?)$', 'g');
@@ -535,7 +554,7 @@ var TinyMCE_SpellCheckerPlugin = {
 			r5 = new RegExp('(' + w + ')([' + re + '])', 'g');
 
 			if (r1.test(nv) || r2.test(nv) || r3.test(nv) || r4.test(nv)) {
-				nv = tinyMCE.xmlEncode(nv);
+				nv = tinyMCE.xmlEncode(nv).replace('&#39;', "'");
 				nv = nv.replace(r5, '<span class="mceItemHiddenSpellWord">$1</span>$2');
 				nv = nv.replace(r3, '<span class="mceItemHiddenSpellWord">$1</span>$2');
 
@@ -597,7 +616,7 @@ var TinyMCE_SpellCheckerPlugin = {
 
 		x.onreadystatechange = function() {
 			if (x.readyState == 4)
-				f(x.responseXML);
+				f(x.responseXML, x.responseText);
 		};
 
 		if (m == 'post')

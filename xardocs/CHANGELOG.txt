@@ -1,3 +1,8 @@
+* Version 1.1.5 6 Oct 2007
+- Integrate 2.1.2 and post release fixes
+- Changed tinymceconfig.inc file to tinymceconfig.inc.php for better security
+- See full tinymce changelog for details
+
 * Version 1.1.4 31 Jan 2007
 - Integrate post 2.0.9 fixes to 31 Jan
 - Updated compressor and colourpicker and spellchecker
@@ -19,7 +24,7 @@
 - Lots of bug fixes and enhancements
 
 * Version 1.1.1 June 26
-- Add on/off switch for filebrowser in the tinymceconfig.inc file
+- Add on/off switch for filebrowser in the tinymceconfig.inc.php file
 - Some bug fixes related to IE, base element and relative URLs, and style plugin fix
 - Add new Media plugin for Flash, Shockwave, etc
 - Fix some bugs regarding Layer plugin
@@ -29,7 +34,7 @@
 * Version 1.1.0 7 May 06
 - Includes upstream project version 2.0.6.1
 - New plugins to manage layers, and edit css styles, fixed list style plugin
-- Better integration of filebrowser with config available in the tinymceconfig.inc file
+- Better integration of filebrowser with config available in the tinymceconfig.inc.php file
 - Configuration for ibrowser, imanager and filebrowser in one configuration file for easier management
 - xartinymce IBrowser and Dictionary no longer bundled. Available separately at http://xaraya.com/~jojodee
 - Enhanced Block formatting now includes other block formats including divs, blockquote,

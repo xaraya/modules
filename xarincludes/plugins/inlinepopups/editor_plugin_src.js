@@ -1,5 +1,5 @@
 /**
- * $Id: editor_plugin_src.js 186 2007-01-28 18:40:03Z spocke $
+ * $Id: editor_plugin_src.js 268 2007-04-28 15:52:59Z spocke $
  *
  * Moxiecode DHTML Windows script.
  *
@@ -15,7 +15,7 @@ var TinyMCE_InlinePopupsPlugin = {
 			longname : 'Inline Popups',
 			author : 'Moxiecode Systems AB',
 			authorurl : 'http://tinymce.moxiecode.com',
-			infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_inlinepopups.html',
+			infourl : 'http://wiki.moxiecode.com/index.php/TinyMCE:Plugins/inlinepopups',
 			version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
 		};
 	}
@@ -88,14 +88,19 @@ TinyMCE_Engine.prototype.openWindow = function(template, args) {
 
 TinyMCE_Engine.prototype.closeWindow = function(win) {
 	var gotit = false, n, w;
+
 	for (n in mcWindows.windows) {
 		w = mcWindows.windows[n];
-		if (typeof(w) == 'function') continue;
+
+		if (typeof(w) == 'function')
+			continue;
+
 		if (win.name == w.id + '_iframe') {
 			w.close();
 			gotit = true;
 		}
 	}
+
 	if (!gotit)
 		this.orgCloseWindow(win);
 

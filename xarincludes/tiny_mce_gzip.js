@@ -5,14 +5,15 @@ var tinyMCE_GZ = {
 		languages : 'en',
 		disk_cache : true,
 		page_name : 'tiny_mce_gzip.php',
-		debug : false
+		debug : false,
+		suffix : ''
 	},
 
 	init : function(s) {
 		var n, d = document, nl, i, b = '', sr, db;
 
 		this.isIE = (navigator.appName == "Microsoft Internet Explorer");
-		this.isOpera = navigator.userAgent.indexOf('Opera') != -1;
+		this.isOpera = window['opera'] && opera.buildNumber ? true : false;
 
 		for (n in s)
 			this.settings[n] = s[n];
@@ -52,6 +53,7 @@ var tinyMCE_GZ = {
 		var s = this.settings, h, d = document, sp2;
 
 		v += '?js=true&plugins=' + escape(s.plugins);
+		v += '&suffix=' + escape(s.suffix);
 		v += '&themes=' + escape(s.themes);
 		v += '&languages=' + escape(s.languages);
 		v += '&diskcache=' + (s.disk_cache ? 'true' : 'false');
@@ -116,16 +118,16 @@ var tinyMCE_GZ = {
 		p.loadScript = p.importThemeLanguagePack = p.importPluginLanguagePack = p.loadNextScript = function() {};
 		tinyMCE.baseURL = this.baseURL.substring(0, this.baseURL.length - 1);
 		tinyMCE.settings = {};
-		tinyMCE.srcMode = '';
+		tinyMCE.srcMode = s.suffix;
 	},
 
 	end : function() {
 		var s = this.settings, l = tinyMCE.loadedFiles, la, i, p = TinyMCE_Engine.prototype;
 
-		this.addFiles(s.plugins, 'plugins', 'editor_plugin.js');
-		this.addFiles(s.themes, 'themes', 'editor_template.js');
+		this.addFiles(s.plugins, 'plugins', 'editor_plugin' + s.suffix + '.js');
+		this.addFiles(s.themes, 'themes', 'editor_template' + s.suffix + '.js');
 
-		la = s.languages.replace(/\s+/, '').split(',')
+		la = s.languages.replace(/\s+/g, '').split(',')
 		for (i=0; i<la.length; i++)
 			l[l.length] = this.baseURL + 'langs/' + la[i] + '.js';
 
@@ -138,12 +140,12 @@ var tinyMCE_GZ = {
 	addFiles : function(f, c, e) {
 		var i, a, s = this.settings, l = tinyMCE.loadedFiles, la, x;
 
-		a = f.replace(/\s+/, '').split(',');
+		a = f.replace(/\s+/g, '').split(',');
 		for (i=0; i<a.length; i++) {
 			if (a[i]) {
 				l[l.length] = this.baseURL + c + '/' +  a[i] + '/' + e;
 
-				la = s.languages.replace(/\s+/, '').split(',')
+				la = s.languages.replace(/\s+/g, '').split(',')
 				for (x=0; x<la.length; x++)
 					l[l.length] = this.baseURL + c + '/' +  a[i] + '/langs/' + la[x] + '.js';
 			}
