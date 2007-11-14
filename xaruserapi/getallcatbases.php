@@ -25,7 +25,7 @@ function categories_userapi_getallcatbases($args)
     $q = new Query('SELECT');
     $q->addtable($xartable['categories_basecategories'],'base');
     $q->addtable($xartable['categories'],'category');
-    $q->join('base.category_id','category.id');
+    $q->leftjoin('base.category_id','category.id');
     $q->addfield('base.id AS id');
     $q->addfield('base.category_id AS category_id');
     $q->addfield('base.name AS name');
