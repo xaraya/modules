@@ -31,7 +31,7 @@
             </xar:ml>
              (#$cidindex#)
          </label>
-        <xar:data-input type="categories" name="$cidname" value="$item['category_id']" bases="0" onchange="$evt_change" style="$style" />
+        <xar:data-input type="categories" name="$cidname" value="$item['category_id']" bases="single" onchange="$evt_change" style="$style" />
         &#160;Itemtype:
         <input type="text" name="#$name#_categories_basecatitemtype[#$item['num']#]" value="#$item['itemtype']#" style="width: 50px" />
         &#160;Name:

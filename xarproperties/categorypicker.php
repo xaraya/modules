@@ -51,7 +51,7 @@ class CategoryPickerProperty extends DataProperty
             $thiscid = isset($basecid[$i]) && is_numeric($basecid[$i]) ? $basecid[$i] : 0;
             $thisname = (isset($basename[$i]) && !empty($basename[$i])) ? $basename[$i] : xarML('Base Category #(1)',$i+1);
             $thisitemtype = isset($baseitemtype[$i]) ? $baseitemtype[$i] : $localitemtype;
-            $thisbasecat = xarModAPIFunc('categories','user','getcatbase',array('name' => $thisname, 'module' => $name));
+            $thisbasecat = xarModAPIFunc('categories','user','getcatbase',array('name' => $thisname, 'module' => $localmodule, 'itemtype' => $thisitemtype));
             if (!empty($thisbasecat)) {
                 $currentbaseids[] = $thisbasecat['id'];
                 $q = new xarQuery('UPDATE', $xartable['categories_basecategories']);
@@ -72,7 +72,7 @@ class CategoryPickerProperty extends DataProperty
         }
         $q = new xarQuery('DELETE', $xartable['categories_basecategories']);
         $q->eq('module_id',xarMod::getID($localmodule));
-        if (!empty($localitemtype)) $q->in('itemtype',$localitemtype);
+        $q->in('itemtype',$localitemtype);
         if (!empty($currentbaseids)) $q->notin('id',$currentbaseids);
         if (!$q->run()) return;
         return true;

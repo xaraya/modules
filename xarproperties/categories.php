@@ -189,14 +189,20 @@ class CategoriesProperty extends SelectProperty
         if (isset($data['validation'])) $this->parseValidation($data['validation']);
         if (isset($data['bases'])) $this->baselist = $data['bases'];
 
-        if (empty($this->baselist)) {
-        	// this means 'All'
+        // Return an array where each toplevel category is a base category
+        if (strtolower($this->baselist) == 'all') {
             $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => $data['categories_localmodule'], 'itemtype' => $data['categories_localitemtype']));
             $data['basecids'] = array();
             foreach ($basecats as $basecat) $data['basecids'][] = $basecat['category_id'];
-        } elseif ($this->baselist == 'none') {
-        	// this means 'None'
+
+        // Return an array where the only base category is the parent all categories
+        } elseif (strtolower($this->baselist) == 'single') {
+            $data['basecids'] = array(0);
+
+        // Return an array with no base categories
+        } elseif (strtolower($this->baselist) == 'none') {
             $data['basecids'] = array();
+
         } else {
             // still todo: display manually entered basecat trees
             // right now works for 1 basecat
@@ -215,7 +221,7 @@ class CategoriesProperty extends SelectProperty
         );
         $returnitself = (empty($data['returnitself'])) ? false : $data['returnitself'];
         $data['trees'] = array();
-        if (count($data['basecids']) == 1 && $data['basecids'][0] == 0) {
+        if ($data['basecids'] == array(0)) {
             $toplevel = xarModAPIFunc('categories','user','getchildren',array('cid' => 0));
             $nodes = new BasicSet();
             foreach ($toplevel as $entry) {
