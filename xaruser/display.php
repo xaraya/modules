@@ -189,7 +189,9 @@ function comments_user_display($args)
     $package['uid']                   = xarUserGetVar('uid');
     $package['uname']                 = xarUserGetVar('uname');
     $package['name']                  = xarUserGetVar('name');
-    $package['new_title']             = xarVarPrepForDisplay(xarVarGetCached('Comments.title', 'title'));
+    // Bug 6175: removed xarVarPrepForDisplay() from the title, as articles already
+    // does this *but* maybe needs fixing in articles instead?
+    $package['new_title']             = xarVarGetCached('Comments.title', 'title');
 
     // Let's honour the phpdoc entry at the top :-)
     if(isset($args['returnurl'])) {
