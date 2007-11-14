@@ -102,13 +102,13 @@ function articles_user_viewmap($args)
 
     // TODO: re-evaluate this after user feedback...
         // *trick* Use the 'default' categories here, instead of all rootcats
-        $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles','itemtype' => 0));
+        $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles'));
 
         $catlist = array();
-        foreach ($rootcats as $cid) {
-            $catlist[$catid['category_id']] = 1;
+        foreach ($basecats as $basecat) {
+            $catlist[$basecat['category_id']] = 1;
         }
-
+        $data['basecids'] = array_keys($catlist);
 
         // create the category tree for each root category
     // TODO: make sure permissions are taken into account here !

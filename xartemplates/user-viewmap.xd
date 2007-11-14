@@ -11,10 +11,7 @@
             <xar:mlstring>
                 Filter :
             </xar:mlstring>
-            <xar:data-input type="categories" cids="array_keys($catfilter)" />xxx
-            <xar:foreach in="$catfilter" key="$cid">
-                &#160;#$catfilter[$cid]#
-            </xar:foreach>
+            <xar:data-input type="categories" bases="$basecids" />
             &#160; <input type="submit" name="go" value="Go" />
         </div>
     </form>
