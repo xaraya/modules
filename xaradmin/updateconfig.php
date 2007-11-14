@@ -145,7 +145,10 @@ function articles_admin_updateconfig()
 
     if (empty($ptid)) {
         $ptid = null;
-    }
+    }var_dump($_POST);//exit;
+    sys::import('modules.dynamicdata.class.properties.master');
+    $picker = DataPropertyMaster::getProperty(array('name' => 'categorypicker'));
+    $picker->checkInput('basecid');
     xarResponseRedirect(xarModURL('articles', 'admin', 'modifyconfig',
                                   array('ptid' => $ptid)));
     return true;

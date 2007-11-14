@@ -108,12 +108,9 @@
     <br />
     <br />
     <xar:foreach in="$publinks" value="$pubtype">
-        <xar:comment>
-            if you want to skip other publication types, remove these comments...
             <xar:if condition="!empty($ptid) and $pubtype['pubid'] ne $ptid">
                 <xar:continue />
             </xar:if>
-        </xar:comment>
         <div class="xar-accent-outline">
             <div class="xar-title xar-accent xar-standard-box-padding">
                 <xar:if condition="empty($pubtype['publink'])">

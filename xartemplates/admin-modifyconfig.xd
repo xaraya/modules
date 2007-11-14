@@ -789,22 +789,16 @@
                 </xar:if>
             </div>
         </fieldset>
-        <xar:if condition="!empty($hooks)">
-            <fieldset class="xar-norm">
-                <legend>
-                    <strong>
-                        <xar:mlstring>
-                            Configuration of Hooked Modules
-                        </xar:mlstring>
-                    </strong>
-                </legend>
-                <xar:foreach in="$hooks" key="$hookmodule">
-                    <xar:if condition="!empty($ptid) or $hookmodule ne 'dynamicdata'">
-                        #$hooks[$hookmodule]#
-                    </xar:if>
-                </xar:foreach>
-            </fieldset>
-        </xar:if>
+        <fieldset class="xar-norm">
+            <legend>
+                <strong>
+                    <xar:mlstring>
+                        Categories
+                    </xar:mlstring>
+                </strong>
+            </legend>
+            <xar:data-input type="categorypicker" name="basecid" module="articles" itemtype="$ptid" />
+        </fieldset>
         <div class="xar-form-input-wrapper">
             <div class="xar-form-container-after">
                 <input type="submit" value="#xarML('Submit')#" />
