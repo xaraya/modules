@@ -187,22 +187,26 @@ class CategoriesProperty extends SelectProperty
         }
 
         if (isset($data['validation'])) $this->parseValidation($data['validation']);
-        if (isset($data['bases'])) $this->baselist = $data['bases'];
+        if (!isset($data['bases'])) $data['bases'] = $this->baselist;
 
-        // Return an array where each toplevel category is a base category
-        if (strtolower($this->baselist) == 'all') {
-            $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => $data['categories_localmodule'], 'itemtype' => $data['categories_localitemtype']));
-            $data['basecids'] = array();
-            foreach ($basecats as $basecat) $data['basecids'][] = $basecat['category_id'];
+        if (!is_array($data['bases'])) {
+            // Return an array where each toplevel category is a base category
+            if (strtolower($data['bases']) == 'all') {
+                $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => $data['categories_localmodule'], 'itemtype' => $data['categories_localitemtype']));
+                $data['basecids'] = array();
+                foreach ($basecats as $basecat) $data['basecids'][] = $basecat['category_id'];
 
-        // Return an array where the only base category is the parent all categories
-        } elseif (strtolower($this->baselist) == 'single') {
-            $data['basecids'] = array(0);
+            // Return an array where the only base category is the parent all categories
+            } elseif (strtolower($data['bases']) == 'single') {
+                $data['basecids'] = array(0);
 
-        // Return an array with no base categories
-        } elseif (strtolower($this->baselist) == 'none') {
-            $data['basecids'] = array();
+            // Return an array with no base categories
+            } elseif (strtolower($data['bases']) == 'none') {
+                $data['basecids'] = array();
 
+            } else {
+                $data['basecids'] = explode(',',$data['basecids']);
+            }
         } else {
             // still todo: display manually entered basecat trees
             // right now works for 1 basecat
@@ -211,7 +215,7 @@ class CategoriesProperty extends SelectProperty
 
         // sort the base categories
         // TODO: make the sorting changeable
-        if (is_array($data['basecids'])) sort($data['basecids']);
+        //sort($data['basecids']);
 
         $filter = array(
             'getchildren' => true,
