@@ -16,6 +16,10 @@
  */
 function articles_user_viewmap($args)
 {
+    define('ARTCLES_STATE_SUBMITTED',1);
+    define('ARTCLES_STATE_APPROVED',2);
+    define('ARTCLES_STATE_FRONTPAGE',4);
+
     // Don't use standard categories function for this
     //xarModLoad('categories', 'user');
     //return xarModFunc('categories', 'user', 'viewmap');
@@ -100,9 +104,10 @@ function articles_user_viewmap($args)
         // *trick* Use the 'default' categories here, instead of all rootcats
         $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles','itemtype' => 0));
 
-		foreach ($rootcats as $cid) {
-			$catlist[$catid['category_id']] = 1;
-		}
+        $catlist = array();
+        foreach ($rootcats as $cid) {
+            $catlist[$catid['category_id']] = 1;
+        }
 
 
         // create the category tree for each root category
@@ -111,6 +116,7 @@ function articles_user_viewmap($args)
             if (empty($val)) {
                 continue;
             }
+            /*
             $data['catfilter'][$cid] = xarModAPIFunc('categories',
                                                      'visual',
                                                      'makeselect',
@@ -119,11 +125,12 @@ function articles_user_viewmap($args)
                                                            'select_itself' => true,
                                                            'values' => &$seencid,
                                                            'multiple' => 0));
+            */
             $data['cattree'][$cid] = xarModAPIFunc('articles',
                                                    'user',
                                                    'getchildcats',
                                                          // frontpage or approved
-                                                   array('status' => array(3,2),
+                                                   array('status' => array(ARTCLES_STATE_APPROVED,ARTCLES_STATE_FRONTPAGE),
                                                          'cid' => $cid,
                                                          'ptid' => null,
                                                          // keep a link to the parent cid
@@ -137,9 +144,9 @@ function articles_user_viewmap($args)
 
         // Get the base categories
         if (!empty($ptid)) {
-	        $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles','itemtype' => $ptid));
+            $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles','itemtype' => $ptid));
         } else {
-	        $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles','itemtype' => 0));
+            $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles','itemtype' => 0));
             $ptid = null;
         }
 
