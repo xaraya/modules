@@ -20,7 +20,6 @@
     // ================================================
     // Revision: 1.3                   Date: 08/12/2005
     // ================================================
-    */
     /** *********REMEMBER TO CHECK, COPY AND EDIT THIS FILE!!! *******************
     *
     * INSTRUCTIONS: The main configuration file for the xarTinyMCE ibrowser, imanager and filebrowser
