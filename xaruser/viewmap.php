@@ -116,16 +116,6 @@ function articles_user_viewmap($args)
             if (empty($val)) {
                 continue;
             }
-            /*
-            $data['catfilter'][$cid] = xarModAPIFunc('categories',
-                                                     'visual',
-                                                     'makeselect',
-                                                     Array('cid' => $cid,
-                                                           'return_itself' => true,
-                                                           'select_itself' => true,
-                                                           'values' => &$seencid,
-                                                           'multiple' => 0));
-            */
             $data['cattree'][$cid] = xarModAPIFunc('articles',
                                                    'user',
                                                    'getchildcats',
@@ -312,18 +302,6 @@ function articles_user_viewmap($args)
                 }
             }
         }
-        /*
-        foreach ($array as $cid) {
-            $data['catfilter'][$cid] = xarModAPIFunc('categories',
-                                                     'visual',
-                                                     'makeselect',
-                                                     Array('cid' => $cid,
-                                                           'return_itself' => true,
-                                                           'select_itself' => true,
-                                                           'values' => &$seencid,
-                                                           'multiple' => 0));
-        }
-        */
 
         foreach ($publinks as $pub) {
             if ($pub['pubid'] == $ptid) {
