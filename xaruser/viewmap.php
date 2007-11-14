@@ -312,6 +312,7 @@ function articles_user_viewmap($args)
                 }
             }
         }
+        /*
         foreach ($array as $cid) {
             $data['catfilter'][$cid] = xarModAPIFunc('categories',
                                                      'visual',
@@ -322,6 +323,7 @@ function articles_user_viewmap($args)
                                                            'values' => &$seencid,
                                                            'multiple' => 0));
         }
+        */
 
         foreach ($publinks as $pub) {
             if ($pub['pubid'] == $ptid) {
