@@ -157,7 +157,7 @@ function categories_init()
       id int NOT NULL auto_increment,
       category_id int(11) DEFAULT '1' NOT NULL,
       module_id int(11) DEFAULT NULL,
-      itemtype int(11) DEFAULT '0' NOT NULL,
+      itemtype int(11) DEFAULT NULL,
       name varchar(64) NOT NULL,
       selectable int(1) DEFAULT '1' NOT NULL,
       PRIMARY KEY  (id)

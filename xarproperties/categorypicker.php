@@ -50,7 +50,7 @@ class CategoryPickerProperty extends DataProperty
         for($i=0;$i<$numberofbasecats;$i++) {
             $thiscid = isset($basecid[$i]) && is_numeric($basecid[$i]) ? $basecid[$i] : 0;
             $thisname = (isset($basename[$i]) && !empty($basename[$i])) ? $basename[$i] : xarML('Base Category #(1)',$i+1);
-            $thisitemtype = isset($baseitemtype[$i]) ? $baseitemtype[$i] : 0;
+            $thisitemtype = isset($baseitemtype[$i]) ? $baseitemtype[$i] : $localitemtype;
             $thisbasecat = xarModAPIFunc('categories','user','getcatbase',array('name' => $thisname, 'module' => $name));
             if (!empty($thisbasecat)) {
                 $currentbaseids[] = $thisbasecat['id'];
