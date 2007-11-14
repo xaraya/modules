@@ -180,7 +180,7 @@ class CategoriesProperty extends SelectProperty
             unset($data['module']);
         }
 
-        if (empty($data['itemtype'])) {
+        if (!isset($data['itemtype'])) {
             $data['categories_localitemtype'] = 0;
         } else {
             $data['categories_localitemtype'] = $data['itemtype'];
@@ -192,7 +192,11 @@ class CategoriesProperty extends SelectProperty
         if (!is_array($data['bases'])) {
             // Return an array where each toplevel category is a base category
             if (strtolower($data['bases']) == 'all') {
-                $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => $data['categories_localmodule'], 'itemtype' => $data['categories_localitemtype']));
+                if (!isset($data['itemtype'])) {
+                    $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => $data['categories_localmodule']));
+                } else {
+                    $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => $data['categories_localmodule'], 'itemtype' => $data['categories_localitemtype']));
+                }
                 $data['basecids'] = array();
                 foreach ($basecats as $basecat) $data['basecids'][] = $basecat['category_id'];
 
@@ -204,13 +208,14 @@ class CategoriesProperty extends SelectProperty
             } elseif (strtolower($data['bases']) == 'none') {
                 $data['basecids'] = array();
 
+            // Return an array of base categories we got from the tag
             } else {
                 $data['basecids'] = explode(',',$data['basecids']);
             }
         } else {
             // still todo: display manually entered basecat trees
             // right now works for 1 basecat
-            $data['basecids'] = $this->baselist;
+            $data['basecids'] = $data['bases'];
         }
 
         // sort the base categories
