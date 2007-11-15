@@ -16,10 +16,6 @@
  */
 function articles_user_viewmap($args)
 {
-    define('ARTCLES_STATE_SUBMITTED',1);
-    define('ARTCLES_STATE_APPROVED',2);
-    define('ARTCLES_STATE_FRONTPAGE',4);
-
     // Don't use standard categories function for this
     //xarModLoad('categories', 'user');
     //return xarModFunc('categories', 'user', 'viewmap');
@@ -160,7 +156,7 @@ function articles_user_viewmap($args)
                                                'user',
                                                'getchildcats',
                                                    // frontpage or approved
-                                               array('status' => array(3,2),
+                                               array('status' => array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED),
                                                      'cid' => $cid,
                                                      'ptid' => $ptid,
                                                      // keep a link to the parent cid
@@ -214,7 +210,7 @@ function articles_user_viewmap($args)
                                          'user',
                                          'getpubcatcount',
                                          // frontpage or approved
-                                         array('status' => array(3,2),
+                                         array('status' => array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED),
                                                'ptid' => $ptid,
                                                'groupcids' => 2,
                                                'reverse' => 1));
@@ -251,7 +247,7 @@ function articles_user_viewmap($args)
 
         // get the links and counts for all publication types
         $publinks = xarModAPIFunc('articles','user','getpublinks',
-                                  array('status' => array(3,2),
+                                  array('status' => array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED),
                                         'all' => 1));
 
         // build the list of root categories for all publication types
@@ -282,7 +278,7 @@ function articles_user_viewmap($args)
                                             'user',
                                             'getchildcats',
                                             // frontpage or approved
-                                            array('status' => array(3,2),
+                                            array('status' => array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED),
                                                   'cid' => $cid,
                                                   'ptid' => $pubid,
                                                   // keep a link to the parent cid

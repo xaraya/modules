@@ -148,7 +148,7 @@ function articles_user_display($args)
                                 array('cids' => $cids));
         foreach ($catlist as $cat) {
             $link = xarModURL('articles','user','view',
-                             array(//'status' => array(3,2),
+                             array(//'status' => array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED).
                                    'ptid' => $ptid,
                                    'catid' => $cat['cid']));
             $name = xarVarPrepForDisplay($cat['name']);
@@ -252,7 +252,7 @@ function articles_user_display($args)
                                  array('id' => $id,
                                        'ptid' => $ptid,
                                        'sort' => $settings['defaultsort'],
-                                       'status' => array(3,2),
+                                       'status' => array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED),
                                        'enddate' => time()));
         if (!empty($prevart['id'])) {
             //Make all previous article info available to template
@@ -268,7 +268,7 @@ function articles_user_display($args)
                                  array('id' => $id,
                                        'ptid' => $ptid,
                                        'sort' => $settings['defaultsort'],
-                                       'status' => array(3,2),
+                                       'status' => array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED),
                                        'enddate' => time()));
         if (!empty($nextart['id'])) {
             //Make all next art info available to template
@@ -446,7 +446,7 @@ function articles_user_display($args)
     // Navigation links
     $data['publabel'] = xarML('Publication');
     $data['publinks'] = xarModAPIFunc('articles','user','getpublinks',
-                                     array('status' => array(3,2),
+                                     array('status' => array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED),
                                            'count' => $showpubcount));
     if (isset($showmap)) {
         $settings['showmap'] = $showmap;
@@ -560,7 +560,7 @@ function articles_user_display($args)
                                     'user',
                                     'getpubcatcount',
                                     // frontpage or approved
-                                    array('status' => array(3,2),
+                                    array('status' => array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED),
                                           'ptid' => $ptid));
         if (!empty($pubcatcount[$ptid])) {
             xarVarSetCached('Blocks.categories','catcount',$pubcatcount[$ptid]);

@@ -35,7 +35,7 @@ function articles_userapi_getnext($args)
     }
     if (!isset($status)) {
         // frontpage or approved
-        $status = array(3,2);
+        $status = array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED);
     }
 
     // Default fields in articles (for now)

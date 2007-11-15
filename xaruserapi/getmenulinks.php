@@ -44,9 +44,9 @@ function articles_userapi_getmenulinks()
         }
     }
     $publinks = xarModAPIFunc('articles','user','getpublinks',
-                              //array('status' => array(3,2), 'ptid' => $ptid));
+                              //array('status' => array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED), 'ptid' => $ptid));
                               // we show all links here
-                              array('status' => array(3,2)));
+                              array('status' => array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED)));
     foreach ($publinks as $pubitem) {
         $menulinks[] = Array('url'   => $pubitem['publink'],
                              'title' => xarML('Display #(1)',$pubitem['pubtitle']),

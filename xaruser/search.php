@@ -104,7 +104,7 @@ function articles_user_search($args)
 
     // frontpage or approved status
     if (!$isadmin || !isset($status)) {
-        $status = array(3,2);
+        $status = array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED);
     } elseif (is_string($status)) {
         if (strpos($status,' ')) {
             $status = explode(' ',$status);
@@ -120,7 +120,7 @@ function articles_user_search($args)
         $seenstatus[$that] = 1;
     }
     $status = array_keys($seenstatus);
-    if (count($status) != 2 || !in_array(2,$status) || !in_array(3,$status)) {
+    if (count($status) != 2 || !in_array(ARTCLES_STATE_APPROVED,$status) || !in_array(ARTCLES_STATE_FRONTPAGE,$status)) {
         $statusline = implode('+',$status);
     } else {
         $statusline = null;
@@ -282,7 +282,7 @@ function articles_user_search($args)
         $catarray = array();
         foreach ($ptids as $curptid) {
             // get root categories for this publication type
-	        $catlinks = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles','itemtype' => $curptid));
+            $catlinks = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles','itemtype' => $curptid));
             foreach ($catlinks as $cat) {
                 $catarray[$cat['category_id']] = $cat['name'];
             }
@@ -388,7 +388,7 @@ function articles_user_search($args)
                                                   'user',
                                                   'getrootcats',
                                                   array('ptid' => $curptid));
-        				$catroots = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles','itemtype' => $curptid));
+                        $catroots = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles','itemtype' => $curptid));
 
                     }
                     foreach ($catinfo as $cid => $info) {

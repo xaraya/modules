@@ -61,7 +61,7 @@ function articles_user_view($args)
     // articles module ID
     $c_modid = xarModGetIDFromName('articles');
     // status: front page or approved
-    $c_posted = array(3,2);
+    $c_posted = array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED);
 
     // Default parameters
     if (!isset($startnum)) $startnum = 1;
@@ -80,7 +80,7 @@ function articles_user_view($args)
         // default publication type
         $ptid = xarModVars::get('articles', 'defaultpubtype');
         // frontpage status
-        $status = array(3);
+        $status = array(ARTCLES_STATE_FRONTPAGE);
     } else {
         $ishome = 0;
         // frontpage or approved status
@@ -316,7 +316,7 @@ function articles_user_view($args)
     );
 
     if (!is_array($articles)) {
-    	throw new Exception('Failed to retrieve articles');
+        throw new Exception('Failed to retrieve articles');
     }
 
     // TODO : support different 'index' templates for different types of articles
