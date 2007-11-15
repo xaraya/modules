@@ -42,7 +42,7 @@ function articles_user_archive($args)
         return xarML('You have no permission to view these items');
     }
 
-    $status = array(2,3);
+    $status = array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED);
 
     $seencid = array();
     $andcids = false;
@@ -392,7 +392,7 @@ function articles_user_archive($args)
                  'publabel' => xarML('Publication'),
                  'publinks' => xarModAPIFunc('articles','user','getpublinks',
                                             array('ptid' => $ptid,
-                                                  'status' => array(3,2),
+                                                  'status' => array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED),
                                                   'count' => $showpubcount,
                                                   // override default 'view'
                                                   'func' => 'archive')),

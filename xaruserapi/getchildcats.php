@@ -34,7 +34,7 @@ function articles_userapi_getchildcats($args)
     }
     if (!isset($status)) {
         // frontpage or approved
-        $status = array(3,2);
+        $status = array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED);
     }
     if (!isset($showcid)) {
         $showcid = false;
@@ -72,7 +72,7 @@ function articles_userapi_getchildcats($args)
                                     'user',
                                     'getpubcatcount',
                                     // frontpage or approved
-                                    array('status' => array(3,2),
+                                    array('status' => array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED),
                                           'cids' => $childlist,
                                           'andcids' => $andcids,
                                           'ptid' => $ptid,
