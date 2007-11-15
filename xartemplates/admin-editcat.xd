@@ -41,15 +41,8 @@
                     <label for="image[#$cid#]" class="xar-form-label help" title="#xarML('In modules/categories/xarimages. Theme-dependent versions can then be placed in themes/[theme name]/modules/categories/images')#">
                         <xar:mlstring>Optional Image</xar:mlstring>
                     </label>
-                    <select name="image[#$cid#]" id="image[#$cid#]">
-                        <xar:loop name="$imageoptions">
-                            <xar:if condition="!empty($category['image']) and $category['image'] eq $loop:item['name']">
-                                <option selected="selected">#$loop:item['name']#</option>
-                                <xar:else />
-                                <option>#$loop:item['name']#</option>
-                            </xar:if>
-                        </xar:loop>
-                    </select>
+                    <xar:set name="imagename">'image[' . $cid . ']'</xar:set>
+                    <xar:data-input type="dropdown" name="$imagename" value="$category['image']" options="$imageoptions" />
                 </div>
                     <xar:if condition="!empty($hooks)">
                         <xar:foreach in="$hooks" key="$module" value="$output">#$output#</xar:foreach>
