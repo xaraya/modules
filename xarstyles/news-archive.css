@@ -1,0 +1,32 @@
+/* News archive table formatting */
+div.xarpages-archive-list {
+    margin: 1em 0;
+    text-align: center;
+}
+div.xarpages-archive-list table {
+    margin: 0.5em auto;
+    border-collapse: collapse;
+    empty-cells: show;
+}
+div.xarpages-archive-list table td a {
+    width: 3em;
+    text-align: center;
+    display: block;
+}
+div.xarpages-archive-list table a:hover {
+    background-color: #333366;
+    color: #ffffff;
+    text-decoration: none;
+}
+div.xarpages-archive-list td {
+    border: 1px solid #e0e0e0;
+    padding: 0;
+}
+div.xarpages-archive-list th {
+    padding: 0.25em;
+    border: 1px solid #e0e0e0;
+}
+div.xarpages-archive-list td.current,
+div.xarpages-archive-list tr.current td {
+    background-color: #ffff99;
+}

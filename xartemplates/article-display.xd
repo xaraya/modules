@@ -13,7 +13,7 @@
             <xar:if condition="xarSecurityCheck('EditArticles',0,'Article',$pubtypeid.'::' . $authorid . ':' . $aid)">
                 [<a href="#xarModURL('articles','admin','modify',array('aid'=&gt;$aid,'return_url'=&gt;xarServergetCurrentURL(array(),false)))#">edit</a>]
             </xar:if>
-            #xarvarPrepForDisplay($title)#
+            <a href="#xarServerGetCurrentURL(array('aid'=&gt;$aid))#">#xarvarPrepForDisplay($title)#</a>
         </h3>
     </div>
 
