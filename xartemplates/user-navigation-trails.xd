@@ -39,65 +39,65 @@ The 'baseflag' variable allows you to skip certain categories in the trail :
 </table>
 
 <xar:if condition="!empty($catimage)">
-<br />
-<table border="0" width="95%">
-<tr>
-    <td align="center" valign="top">
-        <img src="#$catimage#" border="0" alt="#$catname#" />
-    </td>
-</tr>
-</table>
+    <br />
+    <table border="0" width="95%">
+        <tr>
+            <td align="center" valign="top">
+                <img src="#$catimage#" border="0" alt="#$catname#" />
+            </td>
+        </tr>
+    </table>
 </xar:if>
 
 <xar:if condition="!empty($cathooks)">
-<br />
-<!-- TODO: do something specific with pubsub, hitcount, comments etc. -->
-<xar:foreach in="$cathooks" key="$hookmodule" value="$hookoutput">
-<xar:if condition="$hookmodule ne 'pubsub'">
-#$hookoutput#
-</xar:if>
-</xar:foreach>
+    <br />
+    <!-- TODO: do something specific with pubsub, hitcount, comments etc. -->
+    <xar:foreach in="$cathooks" key="$hookmodule" value="$hookoutput">
+        <xar:if condition="$hookmodule ne 'pubsub'">
+            #$hookoutput#
+        </xar:if>
+    </xar:foreach>
 </xar:if>
 
 <xar:if condition="!empty($caticons) and count($caticons) gt 0">
-<br />
-<table border="0" cellpadding="8" cellspacing="0" width="95%">
-<tr>
-    <xar:loop id="icons" name="$caticons">
-        <td align="center" valign="middle">
-            <a href="#$loop:icons:item['catlink']#"><img src="#$loop:icons:item['catimage']#" border="0" alt="#$loop:icons:item['catlabel']#" /><br />#$loop:icons:item['catlabel']#</a>
-            <xar:if condition="!empty($loop:icons:item['catcount'])">
-                (#$loop:icons:item['catcount']#)
-            </xar:if>
-        </td>
-        <xar:if condition="$loop:icons:item['catnum'] % 2 eq 0">
-    </tr>
-    <tr>
-        </xar:if>
-    </xar:loop>
-</tr>
-</table>
+    <br />
+    <table border="0" cellpadding="8" cellspacing="0" width="95%">
+        <tr>
+            <xar:loop id="icons" name="$caticons">
+                <td align="center" valign="middle">
+                    <a href="#$loop:icons:item['catlink']#"><img src="#$loop:icons:item['catimage']#" border="0" alt="#$loop:icons:item['catlabel']#" /><br />#$loop:icons:item['catlabel']#</a>
+                    <xar:if condition="!empty($loop:icons:item['catcount'])">
+                        (#$loop:icons:item['catcount']#)
+                    </xar:if>
+                </td>
+                <xar:if condition="$loop:icons:item['catnum'] % 2 eq 0">
+            </tr>
+            <tr>
+                </xar:if>
+            </xar:loop>
+        </tr>
+    </table>
 </xar:if>
 
 <xar:if condition="!empty($catlines) and count($catlines) gt 0">
-<br />
-<table border="0">
-<tr>
-    <td valign="top">
-    <xar:loop id="catlines" name="$catlines">
-        #$loop:catlines:item['beforetags']#
-        <a href="#$loop:catlines:item['catlink']#">#$loop:catlines:item['catlabel']#</a>
-        <xar:if condition="!empty($loop:catlines:item['catcount'])">
-            (#$loop:catlines:item['catcount']#)
-        </xar:if>
-        <xar:if condition="!empty($loop:catlines:item['catdescr'])">
-            : #$loop:catlines:item['catdescr']#
-        </xar:if>
-        #$loop:catlines:item['aftertags']#
-    </xar:loop>
-    </td>
-</tr>
-</table>
+    <br />
+    <table border="0">
+        <tr>
+            <td valign="top">
+            <xar:loop id="catlines" name="$catlines">
+                #$loop:catlines:item['beforetags']#
+                <a href="#$loop:catlines:item['catlink']#">#$loop:catlines:item['catlabel']#</a>
+                <xar:if condition="!empty($loop:catlines:item['catcount'])">
+                    (#$loop:catlines:item['catcount']#)
+                </xar:if>
+                <xar:if condition="!empty($loop:catlines:item['catdescr'])">
+                    : #$loop:catlines:item['catdescr']#
+                </xar:if>
+                #$loop:catlines:item['aftertags']#
+            </xar:loop>
+            </td>
+        </tr>
+    </table>
 </xar:if>
 
 <br />
