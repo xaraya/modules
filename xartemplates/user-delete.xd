@@ -3,17 +3,21 @@
 </div>
 <div class="xar-mod-body">
     <xar:template type="module" file="user-menu" />
+
+	<h2><xar:mlstring>Delete Message</xar:mlstring></h2>
+
     <xar:if condition="!isset($error)">
-        <xar:template file="view-message" type="module" />
+		<div class="xar-margin-thick xar-padding-thick xar-border-thin">
+	        <xar:template file="view-message" type="module" />
+		</div>
+
         <xar:template file="delete-message" type="module" />
     <xar:else />
-        <div class="xar-mod-head">
-            <span class="xar-mod-title">
-                <xar:mlstring>Messages</xar:mlstring>
-            </span>
-        </div>
+        <h3>
+            <xar:mlstring>Error</xar:mlstring>
+        </h3>
 
-        <div class="xar-norm">
+        <div>
             #$error#
         </div>
     </xar:if>

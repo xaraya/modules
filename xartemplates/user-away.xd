@@ -3,13 +3,10 @@
         <xar:mlstring>Away Message</xar:mlstring>
     </span>
 </div>
-
 <div class="xar-mod-body">
-    <span class="xar-accent">
-        <xar:ml><xar:mlstring>#(1) is away</xar:mlstring><xar:mlvar>#xarUserGetVar('name',$receipient)#</xar:mlvar></xar:ml>
-    </span>
-    <span class="xar-norm">
-        <p>#xarVarPrepHTMLDisplay($away_message)#</p>
-    </span>
+    <h2>
+        <xar:ml><xar:mlstring>#(1) is away</xar:mlstring><xar:mlvar>#xarUserGetVar('name',$recipient)#</xar:mlvar></xar:ml>
+    </h2>
+    <p>#xarVarPrepHTMLDisplay($away_message)#</p>
 </div>
 

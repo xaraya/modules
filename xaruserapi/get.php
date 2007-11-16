@@ -23,10 +23,15 @@ function messages_userapi_get( $args )
         return;
     }
 
+	if(!isset($status) || !in_array($status, array(1,2,3))){
+		$status = 2;
+	}
+
     $list = xarModAPIFunc('comments',
                            'user',
                            'get_one',
-                            array('cid' => $mid));
+                            array('cid' => $mid, 'status' => $status));
+
     $read_messages = xarModGetUserVar('messages','read_messages');
     if (!empty($read_messages)) {
         $read_messages = unserialize($read_messages);
@@ -40,29 +45,28 @@ function messages_userapi_get( $args )
         $message['mid']           = $node['xar_cid'];
         $message['sender']        = $node['xar_author'];
         $message['sender_id']     = $node['xar_uid'];
-        $message['receipient']    = xarUserGetVar('name',$node['xar_objectid']);
-        $message['receipient_id'] = $node['xar_objectid'];
+        $message['recipient']    = xarUserGetVar('name',$node['xar_objectid']);
+        $message['recipient_id'] = $node['xar_objectid'];
         $message['posting_host']  = $node['xar_hostname'];
         $message['raw_date']      = $node['xar_datetime'];
         $message['date']          = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', $node['xar_datetime']);
         $message['subject']       = $node['xar_title'];
         $message['body']          = $node['xar_text'];
+        $message['draft']        = ($node['xar_status'] == 1 ? true : false);
 
-        if (!in_array($message['mid'], $read_messages)) {
-            $message['status_image'] = xarTplGetImage('unread.gif');
-            $message['status_alt']   = xarML('unread');
-        } else {
-            $message['status_image'] = xarTplGetImage('read.gif');
-            $message['status_alt']   = xarML('read');
-        }
+        $message['status_image'] = xarTplGetImage('draft.gif');
+        $message['status_alt']   = xarML('draft');
+
 
         $message['user_link']     = xarModURL('roles','user','display',
                                                array('uid' => $node['xar_uid']));
         $message['view_link']     = xarModURL('messages','user', 'view',
                                                array('mid'    => $node['xar_cid']));
+
         $message['reply_link']    = xarModURL('messages','user','send',
                                                array('action' => 'reply',
                                                      'mid'    => $node['xar_cid']));
+
         $message['delete_link']   = xarModURL('messages','user','delete',
                                                array('mid'    => $node['xar_cid'],
                                                      'action' => 'check'));

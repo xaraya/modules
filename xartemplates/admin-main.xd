@@ -26,7 +26,7 @@
             <xar:mlstring>The Messages Module has one block included at this time.</xar:mlstring>
             <ul>
             <li>
-            <xar:mlstring><strong>newmessages :</strong> Display's a block that lists any new unread messages for the user with a link to the view messages page.'</xar:mlstring>
+            <xar:mlstring><strong>newmessages :</strong> Displays a block that lists any new unread messages for the user with a link to the view messages page.</xar:mlstring>
             </li>
             </ul>
         </p>

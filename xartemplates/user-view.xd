@@ -3,5 +3,8 @@
 </div>
 <div class="xar-mod-body">
     <xar:template type="module" file="user-menu" />
+
+	<h2><xar:mlstring>View Messages</xar:mlstring></h2>
+
     <xar:template file="view-message" type="module" />
 </div>

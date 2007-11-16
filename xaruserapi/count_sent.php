@@ -13,11 +13,11 @@
  */
 function messages_userapi_count_sent()
 {
-
     $total = xarModAPIFunc('comments',
                             'user',
                             'get_author_count',
                              array('modid'  => xarModGetIDFromName('messages'),
+                                   'status' => 2,
                                    'author' => xarUserGetVar('uid')));
 
     return $total;

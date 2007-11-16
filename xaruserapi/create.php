@@ -29,24 +29,39 @@ function messages_userapi_create( $args )
         return;
     }
 
-    if (!isset($receipient)) {
+    if (!isset($recipient)) {
         $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
-                     'receipient', 'userapi', 'create', 'messages');
+                     'recipient', 'userapi', 'create', 'messages');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
+	if (!isset($draft) || $draft != true) {
+		$draft = false;
+	}
+
     // check the authorisation key
     if (!xarSecConfirmAuthKey()) return; // throw back
 
-    return xarModAPIFunc('comments',
+    $mid =  xarModAPIFunc('comments',
                          'user',
                          'add',
                           array('modid'       => xarModGetIDFromName('messages'),
-                                'objectid'    => $receipient,
+                                'objectid'    => $recipient,
                                 'title'       => $subject,
                                 'comment'     => $body,
                                 'author'      => xarUserGetVar('uid')));
+
+	if($mid !== false && $draft == true) {
+    	xarModAPIFunc('comments',
+                         'user',
+                         'deactivate',
+                          array('cid'       => $mid));
+	
+	}
+
+
+	return $mid;
 }
 
 ?>

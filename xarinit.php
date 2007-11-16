@@ -129,7 +129,13 @@ function messages_upgrade($oldversion)
         case '1.8.0':
             // compatability upgrade
             xarModSetVar('messages', 'away_message', '');
-
+        case '1.8.1':
+            // nothing to do for this rev
+            break;
+        case '1.9':
+        case '1.9.0':
+            // Code to upgrade from version 2.0 goes here
+            break;
         case '2.0.0':
             // Code to upgrade from version 2.0 goes here
             break;

@@ -2,19 +2,19 @@
     <xar:if condition="empty($numitems)">
         #$emptymessage#
     <xar:else />
-        <center>
+        <p>
             <xar:mlstring>You have</xar:mlstring>
             <a href="#xarModURL('messages','user','display')#">#$totalin#</a>
             <xar:mlstring>Total Messages</xar:mlstring>
-            <br />
+        </p>
     
+		<p>
             <xar:mlstring>You have</xar:mlstring>
             <a href="#xarModURL('messages','user','display')#">#$unread#</a>
             <xar:mlstring>Unread Messages</xar:mlstring><br />
             <a href="#xarModURL('messages','user','display')#">
                 <img src="modules/messages/xarimages/unread.gif" border="0"/>
             </a>
-        </center>
+        </p>
     </xar:if>
-    <br />
 </div>

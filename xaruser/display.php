@@ -18,6 +18,7 @@ function messages_user_display( )
         return $data['error'] = xarML('You are not permitted to read messages.');
     }
 
+    if (!xarVarFetch('folder', 'enum:inbox:sent:drafts', $folder, 'inbox')) return;
 
     $read_messages = xarModGetUserVar('messages','read_messages');
     if (!empty($read_messages)) {
@@ -26,18 +27,19 @@ function messages_user_display( )
         $read_messages = array();
     }
 
-    $messages = xarModAPIFunc('messages', 'user', 'getall', array());
+    $messages = xarModAPIFunc('messages', 'user', 'getall', array('folder' => $folder));
 
     if (is_array($messages)) {
 
         krsort($messages);
 
-        $data['messages'] = $messages;
+        $data['messages']                = $messages;
         $data['header_attachment_image'] = xarTplGetImage('attachment.png');
         $data['header_status_image']     = xarTplGetImage('check_read.gif');
-        $data['unread'] = xarModAPIFunc('messages','user','count_unread');
-        $data['sent']   = xarModAPIFunc('messages','user','count_sent');
-        $data['total']  = xarModAPIFunc('messages','user','count_total');
+        $data['unread']                  = xarModAPIFunc('messages','user','count_unread');
+        $data['sent']                    = xarModAPIFunc('messages','user','count_sent');
+        $data['total']                   = xarModAPIFunc('messages','user','count_total');
+        $data['drafts']                  = xarModAPIFunc('messages','user','count_drafts');
 
     } else {
         $list = array();
@@ -52,6 +54,8 @@ function messages_user_display( )
     } else {
         $data['away_message'] = '';
     }
+
+	$data['folder'] = xarML(ucfirst($folder));
 
     return $data;
 }
