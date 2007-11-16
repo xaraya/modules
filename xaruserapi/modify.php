@@ -46,6 +46,31 @@ function comments_userapi_modify($args)
         $error = TRUE;
     }
 
+    if(isset($itemtype) && !xarVarValidate('int:0:', $itemtype)) {
+            $msg .= xarMLbykey('itemtype');
+            $error = TRUE;
+    }
+
+    if(isset($objectid) && !xarVarValidate('int:1:', $objectid)) {
+            $msg .= xarMLbykey('objectid');
+            $error = TRUE;
+    }
+
+    if(isset($date) && !xarVarValidate('int:1:', $date)) {
+            $msg .= xarMLbykey('date');
+            $error = TRUE;
+    }
+
+    if(isset($status) && !xarVarValidate('enum:1:2:3', $status)) {
+            $msg .= xarMLbykey('status');
+            $error = TRUE;
+    }
+
+    if(isset($useeditstamp) && !xarVarValidate('enum:0:1:2', $useeditstamp)) {
+            $msg .= xarMLbykey('useeditstamp');
+            $error = TRUE;
+    }
+
     if ($error) {
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                         new SystemException($msg));
@@ -58,7 +83,11 @@ function comments_userapi_modify($args)
     } else {
         $hostname = xarServerGetVar('REMOTE_ADDR');
     }
-    $useeditstamp=xarModGetVar('comments','editstamp');
+
+    if(!isset($useeditstamp)) {
+        $useeditstamp = xarModGetVar('comments','editstamp');
+    }
+
     $adminid = xarModGetVar('roles','admin');
 
     $dbconn =& xarDBGetConn();
@@ -88,11 +117,32 @@ function comments_userapi_modify($args)
     $sql =  "UPDATE $xartable[comments]
                 SET xar_title    = ?,
                     xar_text     = ?,
-                    xar_anonpost = ?
-              WHERE xar_cid      = ?";
+                    xar_anonpost = ?";
     $bpostanon = empty($postanon) ? 0 : 1;
-    $bindvars = array($title, $text, $bpostanon, $cid);
+    $bindvars = array($title, $text, $bpostanon);
 
+    if(isset($itemtype)) {
+        $sql .= ",\nxar_itemtype = ?";
+        $bindvars[] = $itemtype;
+    }
+
+    if(isset($objectid)) {
+        $sql .= ",\nxar_objectid = ?";
+        $bindvars[] = $objectid;
+    }
+
+    if(isset($date)) {
+        $sql .= ",\nxar_date = ?";
+        $bindvars[] = $date;
+    }
+
+    if(isset($status)) {
+        $sql .= ",\nxar_status = ?";
+        $bindvars[] = $status;
+    }
+
+    $sql .= "\nWHERE xar_cid = ?";
+    $bindvars[] = $cid;
     $result = &$dbconn->Execute($sql,$bindvars);
 
     if (!$result) {

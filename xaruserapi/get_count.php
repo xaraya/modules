@@ -19,6 +19,7 @@
  * @param integer    $modid     the id of the module that these nodes belong to
  * @param integer    $itemtype  the item type that these nodes belong to
  * @param integer    $objectid    the id of the item that these nodes belong to
+ * @param integer    $status    the status of the comment: 1 - active, 2 - inactive, 3 - root node
  * @returns integer  the number of comments for the particular modid/objectid pair,
  *                   or raise an exception and return false.
  */
@@ -45,6 +46,21 @@ function comments_userapi_get_count($args)
         $exception |= true;
     }
 
+    if( isset($status) && $status == 1 ) {
+        $status = (int) _COM_STATUS_OFF;
+    } elseif ( isset($status) && $status == 2 ) {
+        $status = (int) _COM_STATUS_ON;
+    } elseif ( isset($status) && $status == 3 ) {
+        $status = (int) _COM_STATUS_ROOT_NODE;
+    } elseif ( isset($status) ) {
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                                 'status', 'userapi', 'get_count', 'comments');
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+                        new SystemException($msg));
+        $exception |= true;
+    }
+
+
     if ($exception) {
         return;
     }
@@ -58,13 +74,18 @@ function comments_userapi_get_count($args)
              WHERE  $ctable[objectid]=? AND $ctable[modid]=?
                AND  $ctable[status]=?";
 // Note: objectid is not an integer here (yet ?)
-    $bindvars = array((string) $objectid, (int) $modid, (int) _COM_STATUS_ON);
+    $bindvars = array((string) $objectid, (int) $modid, (int) $status);
 
     if (isset($itemtype) && is_numeric($itemtype)) {
         $sql .= " AND $ctable[itemtype]=?";
         $bindvars[] = (int) $itemtype;
     }
 
+/*    if (isset($status)) {
+        $sql .= " AND $ctable[status]=?";
+        $bindvars[] = (int) $status;
+    }
+*/
     $result =& $dbconn->Execute($sql,$bindvars);
     if (!$result)
         return;
@@ -72,7 +93,6 @@ function comments_userapi_get_count($args)
     if ($result->EOF) {
         return 0;
     }
-
     list($numitems) = $result->fields;
 
     $result->Close();

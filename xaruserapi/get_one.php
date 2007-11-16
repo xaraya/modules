@@ -33,6 +33,12 @@ function comments_userapi_get_one( $args )
         return false;
     }
 
+    if(!isset($status) || !in_array($status, array(1,2,3))){
+        $status = (int) _COM_STATUS_ON;
+    }
+
+
+
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
@@ -60,7 +66,7 @@ function comments_userapi_get_one( $args )
                     $ctable[objectid] AS xar_objectid
               FROM  $xartable[comments]
              WHERE  $ctable[cid]=$cid
-               AND  $ctable[status]="._COM_STATUS_ON;
+               AND  $ctable[status]=$status";
 
     $result =& $dbconn->Execute($sql);
     if(!$result) return;

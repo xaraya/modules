@@ -93,6 +93,7 @@ function comments_userapi_get_multiple($args)
                     $ctable[comment] AS xar_text,
                     $ctable[author] AS xar_author,
                     $ctable[author] AS xar_uid,
+                    $ctable[objectid] AS xar_objectid,
                     $ctable[cid] AS xar_cid,
                     $ctable[pid] AS xar_pid,
                     $ctable[status] AS xar_status,
