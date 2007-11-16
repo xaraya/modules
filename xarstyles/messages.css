@@ -1,0 +1,50 @@
+table.xar-messages-mailboxsummary {
+	border-collapse: collapse;
+	margin-bottom: 1em;
+}
+table.xar-messages-mailboxsummary td {
+	border: 1px solid;
+}
+td.xar-messages-mailboxlabel {
+	padding: .1em .5em .1em .5em;
+}
+td.xar-messages-mailboxlabel img {
+	margin-right: .5em;
+}
+td.xar-messages-mailboxstats {
+	padding: .1em .2em .1em 2em;
+	text-align: right;
+}
+
+table.xar-messages-mailboxlist {
+	margin-bottom: 1em;
+}
+table.xar-messages-mailboxlist img {
+	margin: .1em .2em;
+	vertical-align: bottom;
+}
+table.xar-messages-mailboxlist th {
+	white-space: nowrap;
+	padding: .1em .2em;
+}
+table.xar-messages-mailboxlist td {
+	padding: .1em .2em;
+}
+td.xar-messages-mailboxlistattachment {
+	width: 3%;
+}
+td.xar-messages-mailboxliststatus {
+	width: 3%;
+}
+td.xar-messages-mailboxlistsender {
+	width: 9em;
+}
+td.xar-messages-mailboxlistdate {
+	width: 10em;
+}
+td.xar-messages-mailboxlistaction {
+	width: 10%;
+}
+a.xar-messages-newpmlink img {
+	border: 0;
+}
