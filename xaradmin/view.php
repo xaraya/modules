@@ -45,7 +45,9 @@ function mag_admin_view($args)
     }
 
     // Check privileges for magazines - remove any that we do not have any privileges on.
-    // TODO...
+    foreach($mags as $mag_key => $mag_value) {
+        if (!xarSecurityCheck('EditMag', 0, 'Mag', (string)$mag_value['mid'])) unset($mags[$mag_key]);
+    }
 
     if (!empty($mags)) {
         // We have either one or many magazines.

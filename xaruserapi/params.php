@@ -56,7 +56,8 @@ function mag_userapi_params($args)
   
         // The base path for most, if not all, images.
         // This is relative to the site entry point (index.php)
-        $params['base_image_vpath'] = 'modules/' . $module . '/xarimages';
+        //$params['base_image_vpath'] = 'modules/' . $module . '/xarimages';
+        $params['base_image_vpath'] = 'images/' . $module;
 
         // Path of a magazine logo image.
         // Available substitution vars: {base_image_vpath} {mag_ref} {mag_logo}
@@ -76,7 +77,10 @@ function mag_userapi_params($args)
         // The thumbnails are assumed to be in the same directory as the full-size images,
         // but they need not be; adapt the thumbnail path as required.
         $params['image_article_embedded_vpath'] = '{base_image_vpath}/{mag_ref}/issues/{issue_ref}/articles/{image_filename}';
-        $params['image_article_embedded_thumb_vpath'] = '{image_filedir}/{image_filebody}.thumb{image_fileext}';
+        // Thumbnail in the same directory as the full-sized image...
+        //$params['image_article_embedded_thumb_vpath'] = '{image_filedir}/{image_filebody}.thumb{image_fileext}';
+        // ...or in a forced directory.
+        $params['image_article_embedded_thumb_vpath'] = '{base_image_vpath}/{mag_ref}/issues/{issue_ref}/articles/{image_filebody}.thumb{image_fileext}';
 
         // Image classes that trigger the thumbnail code.
         // Add any of these classes to an article image, and they will automatically get

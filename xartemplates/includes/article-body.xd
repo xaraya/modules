@@ -5,7 +5,7 @@
 
 <xar:if condition="!empty($article.body)">
     <div class="mag-article-body">
-        #xarModAPIfunc('mag','user','imgfilter',array('text'=&gt;$article.body))#
+        #xarModAPIfunc('mag','user','imgfilter',array('text'=&gt;$article.body,'mag_ref'=&gt;$mag.ref,'issue_ref'=&gt;$issue.ref))#
         <div style="clear: both;"></div>
     </div>
 </xar:if>

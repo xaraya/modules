@@ -6,7 +6,7 @@
  * @todo Add privilege checks.
  *
  * Privilege check:
- * - if an existing article, then fetch the article, then the issue, and check against the mag ID
+ * - if an existing article, then fetch the article, then the issue, and check against the mag ID [done]
  * - if starting a new article, and the mag ID passed in, then check against that mag ID
  * - if starting a new article, and no mag ID passed in, then require the user to select from allowed magazines
  *
@@ -70,7 +70,7 @@ function mag_admin_modifyarticle($args)
             $message = xarML('Error fetching article details');
             $action = 'display';
         } else {
-            // TODO: Check we can edit articles for this magazine.
+            // Check we can edit articles for this magazine.
             // We can only get the magazine ID through the issue number.
             
             $iid = $object->properties['issue_id']->getValue();
@@ -84,38 +84,56 @@ function mag_admin_modifyarticle($args)
                 // (CHECKME: Possibly do the same for the issue, so images can be selected in context)
                 xarVarSetCached($module, 'mid', $mid);
 
-                // TODO: security check here on the magazine id
-                if (false) {
-                    $message = xarML('No privileges to edit this article');
+                // Security check here on the magazine id
+                if (!xarSecurityCheck('EditMag', 0, 'Mag', "$mid")) {
+                    $message = xarML('No privileges to edit an article from this magazine');
                     $action = 'display';
+                    $object = NULL;
                 }
             }
+            // FIXME: what happens if the article has no issue? Can we still
+            // allow the user to edit it? Can this actually happen?
         }
     } else {
         // Get 'new' object.
 
-        // Get the object, without an item id.
-        // TODO: the user must have chosen a magazine before a new article can be created.
-        $object = xarModAPIFunc(
-            'dynamicdata', 'user', 'getobject',
-            array('modid' => $modid, 'itemtype' => $itemtype_articles)
-        );
+        // The user must have chosen a magazine before a new article can be created.
+        // Must also have privileges to edit articles in this magazine.
+        if (empty($mid)) {
+            $message = xarML('Must chose a magazine to add the article to');
+            $action = 'display';
+            $object = NULL;
+        } elseif (!xarSecurityCheck('EditMag', 0, 'Mag', "$mid")) {
+            $message = xarML('No privileges to create an article in this magazine');
+            $action = 'display';
+            $object = NULL;
+        } else {
+            // Get the object, without an item id.
+            $object = xarModAPIFunc(
+                'dynamicdata', 'user', 'getobject',
+                array('modid' => $modid, 'itemtype' => $itemtype_articles)
+            );
 
-        // Cache the mid so we can use it to restrict drop-downs.
-        // (CHECKME: Possibly do the same for the issue, so images can be selected in context)
-        if (isset($mid)) xarVarSetCached($module, 'mid', $mid);
+            // Cache the mid so we can use it to restrict drop-downs.
+            // (CHECKME: Possibly do the same for the issue, so images can be selected in context)
+            if (isset($mid)) xarVarSetCached($module, 'mid', $mid);
 
-        if ($action == 'display') {
-            // Set some defaults, if passed in.
-            // Set the default issue, if we have selected one.
-            if (!empty($iid)) $object->properties['issue_id']->setValue($iid);
+            if ($action == 'display') {
+                // Set some defaults, if passed in.
+                // Set the default issue, if we have selected one.
+                if (!empty($iid)) $object->properties['issue_id']->setValue($iid);
 
-            // Set today's date as the default publication date.
-            $pubdate = $object->properties['pubdate']->getValue();
-            if (empty($pubdate)) $object->properties['pubdate']->setValue(time());
+                // Set today's date as the default publication date.
+                $pubdate = $object->properties['pubdate']->getValue();
+                if (empty($pubdate)) $object->properties['pubdate']->setValue(time());
+            }
         }
     }
 
+    // Form is submitted (either 'save and stay' or 'save and return').
+    // Some privilege checks have already been performed above, so if this
+    // action is still set, then we are allowed to perform it without further
+    // checks.
     if ($action == 'save' || $action == 'return') {
         // Read input and check all is okay.
         // TODO: pass in various arguments so this GUI function can double as an API.
@@ -165,9 +183,9 @@ function mag_admin_modifyarticle($args)
     if (!isset($iid)) $iid = 0;
     if (empty($return_url)) {
         if (empty($aid)) {
-            $return_url = xarModURL($module, 'admin', 'view', array('mid' => $mid, 'iid' => $iid));
+            $return_url = xarModURL($module, 'admin', 'view', array('mid' => $mid, 'iid' => $iid), false);
         } else {
-            $return_url = xarModURL($module, 'admin', 'view', array('mid' => $mid, 'iid' => $iid), true, 'mag-article-' . $aid);
+            $return_url = xarModURL($module, 'admin', 'view', array('mid' => $mid, 'iid' => $iid), false, 'mag-article-' . $aid);
         }
     }
 
@@ -180,8 +198,16 @@ function mag_admin_modifyarticle($args)
     $return['aid'] = $aid;
     $return['return_url'] = $return_url;
 
-
-    //var_dump($return);
+    // If we are displaying the article, and there is
+    // no magazine ID, then send a list of magazines to the
+    // template for the user to chose from.
+    // If the list is empty, then include an error message to
+    // that effect (in the template).
+    if (empty($mid)) {
+        // Get the list of mags the current user is allowed to edit articles on.
+        $return['mags'] = xarModAPIfunc($module, 'list', 'mags', array('level' => 'edit'));
+    }
+    
     return $return;
 }
 

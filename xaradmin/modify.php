@@ -21,6 +21,12 @@ function mag_admin_modify($args)
     // Fetch the itemtype
     xarVarFetch('itemtype', 'id', $itemtype, 0, XARVAR_NOT_REQUIRED);
 
+    // An article_author itemtype is set.
+    if ($itemtype == itemtype_articles_authors) {
+        if (!empty($itemid)) $aid = $itemtype;
+        $args['aid'] = $aid;
+        return xarModFunc('mag', 'admin', 'modifyartauthors', $args);
+    }
     
     // An article ID or itemtype is set.
     if (isset($aid) || $itemtype == $itemtype_articles) {
@@ -28,6 +34,8 @@ function mag_admin_modify($args)
         $args['aid'] = $aid;
         return xarModFunc('mag', 'admin', 'modifyarticle', $args);
     }
+
+    // TODO: issue, series, author (all yet to gain admin GUIs)
 
     // We should only get here in the event of an error.
     return array();

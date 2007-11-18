@@ -18,6 +18,19 @@
         <p class="xar-error">#xarVarPrepForDisplay($message)#</p>
     </xar:if>
 
+    <xar:if condition="empty($mid)">
+        <xar:if condition="empty($mags)">
+            <p class="xar-error"><xar:mlstring>No privileges to edit articles in any magazine.</xar:mlstring></p>
+        <xar:else />
+            <p><xar:mlstring>Choose a magazine.</xar:mlstring></p>
+            <ul>
+                <xar:loop name="$mags">
+                    <li><a href="#xarServerGetCurrentURL(array('mid'=&gt;$loop:key))#">#xarVarPrepForDisplay($loop:item)#</a></li>
+                </xar:loop>
+            </ul>
+        </xar:if>
+    </xar:if>
+
     <form method="post" action="#xarModURL('mag','admin','modifyarticle')#">
         <xar:if condition="!empty($properties)">
             <xar:loop name="$properties">
@@ -37,10 +50,15 @@
             <input type="hidden" name="aid" value="#$aid#" />
             <input type="hidden" name="authid" value="#xarSecGenAuthKey('mag')#" />
             <input type="hidden" name="return_url" value="#xarVarPrepForDisplay($return_url)#" />
-            <xar:if condition="!empty($return_url)">
-                <input type="submit" name="submit_return" value="#xarML('Save and Return')#" />
+            <xar:if condition="!empty($properties)">
+                <xar:if condition="!empty($return_url)">
+                    <input type="submit" name="submit_return" value="#xarML('Save and Return')#" />
+                </xar:if>
+                <input type="submit" name="submit_save" value="#xarML('Save')#" />
             </xar:if>
-            <input type="submit" name="submit_save" value="#xarML('Save')#" />
+            <xar:if condition="!empty($return_url)">
+                <a href="#xarVarPrepForDisplay($return_url)#"><xar:mlstring>Cancel</xar:mlstring></a>
+            </xar:if>
         </p>
     </form>
 

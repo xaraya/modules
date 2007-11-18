@@ -3,12 +3,16 @@
 /**
  * Transforms image into thumbnail with JS Popup
  * @param text string Body of text to filter out all the images
+ * @param mag_ref string 
+ * @param issue_ref string 
  * @param template string Template to use for the thumbnail wrapper; overrides the default
  */
 
-function mag_userapi_imgfilter($args, $template = 'thumbnail-wrapper')
+function mag_userapi_imgfilter($args)
 {
     extract($args);
+
+    if (empty($template)) $template = 'thumbnail-wrapper';
     
     // Get Module Paramaters
     extract(xarModAPIfunc('mag', 'user', 'params',
@@ -58,12 +62,17 @@ function mag_userapi_imgfilter($args, $template = 'thumbnail-wrapper')
             
             // Class - "thumbnailed" is a flag to make it a thumbnail
             if (array_intersect($image_article_thumb_classes, $imgClasses)) {
+                $fields = array(
+                    'image' => $imgAttr['src'],
+                );
+                if (!empty($mag_ref)) $fields['mag_ref'] = $mag_ref;
+                if (!empty($issue_ref)) $fields['issue_ref'] = $issue_ref;
 
                 // Fetch the path to the thumbnail
                 $thumbnail_path = xarModAPIfunc('mag', 'user', 'imagepaths',
                     array(
                         'path' => $image_article_embedded_thumb_vpath,
-                        'fields' => array('image' => $imgAttr['src'],)
+                        'fields' => $fields,
                     )
                 );
 

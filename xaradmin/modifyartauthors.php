@@ -43,10 +43,9 @@ function mag_admin_modifyartauthors($args)
                     // Cache the issue ID for use in the DD drop-down lists.
                     xarVarSetCached('mag', 'iid', $iid);
 
-                    // TODO: Do a security check to ensure we have privileges
+                    // Do a security check to ensure we have privileges
                     // for altering authors on articles in this magazine.
-                    // TODO...
-                    if (true) {
+                    if (xarSecurityCheck('EditMag', 0, 'Mag', (string)$mid)) {
                         // Get the magazine details.
                         $mags = xarModAPIfunc($module, 'user', 'getmags', array('mid' => $mid));
                         if (!empty($mags) && count($mags) == 1) {
@@ -178,7 +177,7 @@ function mag_admin_modifyartauthors($args)
                                         xarResponseRedirect(
                                             xarModURL(
                                                 $module,'admin','modifyartauthors',
-                                                    array('return_url' => $return_url, 'aid' => $aid)
+                                                array('return_url' => $return_url, 'aid' => $aid)
                                             )
                                          );
                                         return true;
@@ -214,7 +213,7 @@ function mag_admin_modifyartauthors($args)
         $default_url = array();
         if (!empty($mid)) $default_url['mid'] = $mid;
         if (!empty($aid)) $default_url['aid'] = $aid;
-        $return_url = xarModURL($module, 'admin', 'view', $default_url);
+        $return_url = xarModURL($module, 'admin', 'view', $default_url, false);
     }
 
     if (!empty($message)) $return['message'] = $message;

@@ -32,12 +32,35 @@ function mag_user_article($args)
     xarVarFetch('iid', 'id', $iid, 0, XARVAR_NOT_REQUIRED);
     xarVarFetch('issue', 'str:0:30', $issue_ref, '', XARVAR_NOT_REQUIRED);
 
+    // Flag that effects the way an article is shown.
+    // The 'preview' value allows an unpublished article to be
+    // viewed, but only to someone with edit privileges.
+    xarVarFetch('show', 'enum:preview', $show, '', XARVAR_NOT_REQUIRED);
+
     // aid overrides article
     if (!empty($article_ref) && !empty($aid)) $article_ref = '';
 
     // Get the current selected magazine details.
-    $current_mag = xarModAPIfunc($module, 'user', 'currentmag', $args);
-   
+    if ($show == 'preview') {
+        // If previewing, then try the 'draft' status first.
+        $args['status_group'] = 'DRAFT';
+        $current_mag = xarModAPIfunc($module, 'user', 'currentmag', $args);
+
+        // If we have a magazine, then make sure we have edit privilages to it.
+        if (!empty($current_mag) && !xarSecurityCheck('EditMag', 0, 'Mag', (string)$current_mag['mid'])) {
+            // Actually we don't have edit privileges, so clear this out and we can start again
+            // ignoring the preview flag.
+            $current_mag = array();
+            $show = '';
+        }
+    }
+
+    // We don't have a preview version of the mag, so try a published version.
+    if (empty($current_mag)) {
+        $args['status_group'] = 'PUBLISHED';
+        $current_mag = xarModAPIfunc($module, 'user', 'currentmag', $args);
+    }
+
     if (!empty($current_mag)) {
         // Extract the current mag details.
         extract($current_mag);
@@ -52,10 +75,12 @@ function mag_user_article($args)
 
             // Get the article details.
             $article_select = array(
-                'status' => 'PUBLISHED',
                 'numitems' => 2,
                 'mid' => $mid,
             );
+
+            // Limit to published articles if not previewing.
+            if ($show != 'preview') $article_select['status'] = 'PUBLISHED';
 
             if (isset($aid)) $article_select['aid'] = $aid;
             if (isset($article_ref)) $article_select['ref'] = $article_ref;
@@ -138,15 +163,14 @@ function mag_user_article($args)
                     }
                     
                     // Get the [optional] series details.
+                    $series_args = array(
+                        'mid' => $mid,
+                        'sid' => $article['series_id'],
+                    );
+                    // Must be active if not previewing.
+                    if ($show != 'preview') $series_args['status'] = 'ACTIVE';
                     if (!empty($article['series_id'])) {
-                        $series = xarModAPIfunc(
-                            $module, 'user', 'getseries',
-                            array(
-                                'status' => 'ACTIVE',
-                                'mid' => $mid,
-                                'sid' => $article['series_id'],
-                            )
-                        );
+                        $series = xarModAPIfunc($module, 'user', 'getseries', $series_args);
 
                         if (count($series) == 1) {
                             $series = reset($series);
@@ -162,7 +186,7 @@ function mag_user_article($args)
                     );
 
                     // Get the table of contents, for use as a navigation tool.
-                    // TODO: This information would be very useful to the navigation blocks, so cache it.
+                    // This information would be very useful to the navigation blocks, so cache it (done further down).
                     $toc = xarModAPIfunc($module, 'user', 'gettoc', array('mag' => $mag, 'issue' => $issue));
 
                     // Do a bit of organisation in the TOC.
@@ -194,16 +218,21 @@ function mag_user_article($args)
             // We still need all the information in the template, regardless of what
             // the privilege level is, hence doing this check right at the end.
             // The three levels are: NONE, OVERVIEW and READ.
-            if (xarSecurityCheck('OverviewMagArt', 0, 'MagArt', "$mid:$article[premium]")) {
-                // We have at least overview privilege.
-                if (xarSecurityCheck('ReadMagArt', 0, 'MagArt', "$mid:$article[premium]")) {
-                    $viewlevel = 'READ';
-                } else {
-                    $viewlevel = 'OVERVIEW';
-                }
+            if ($show == 'preview') {
+                // Preview mode trumps them all.
+                $viewlevel = 'READ';
             } else {
-                // No have no privilege to view this page.
-                $viewlevel = 'NONE';
+                if (xarSecurityCheck('OverviewMagArt', 0, 'MagArt', "$mid:$article[premium]")) {
+                    // We have at least overview privilege.
+                    if (xarSecurityCheck('ReadMagArt', 0, 'MagArt', "$mid:$article[premium]")) {
+                        $viewlevel = 'READ';
+                    } else {
+                        $viewlevel = 'OVERVIEW';
+                    }
+                } else {
+                    // No have no privilege to view this page.
+                    $viewlevel = 'NONE';
+                }
             }
 
             // Pass the view level to the templates, where it can be used to

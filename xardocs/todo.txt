@@ -149,5 +149,3 @@ file will be configurable through GUI screens.
 {root}/{mag-ref}/issues/{issue-ref}/articles/ - directory for all article images
 {root}/{mag-ref}/issues/{issue-ref}/articles/{image-name}.jpg - full-size article image
 {root}/{mag-ref}/issues/{issue-ref}/articles/{image-name}.thumb.jpg - thumb-nail article image, 200 pixels wide
-
-
