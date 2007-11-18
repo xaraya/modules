@@ -105,17 +105,6 @@
         <div class="clear"></div>   
     </div>
 
-    <h2><xar:mlstring>ability - a simple style switcher</xar:mlstring></h2>
-
-    <p>
-        <xar:mlstring>Switch font sizes and stylesheets (for high contrast).
-        Not too keen on the way this one works, as it disabled all other stylesheets to put the hight contract one in, which is a bit drastic.</xar:mlstring>
-    </p>
-
-    <xar:template file="jquery.ability" module="jquery" />
-
-    <div id="accessibility"></div>
-
     <h2><xar:mlstring>image-viewer - a simple modal image viewer</xar:mlstring></h2>
 
     <xar:template file="image-viewer" module="jquery" subdata="array('selector'=&gt;'#image-viewer-images')" />
