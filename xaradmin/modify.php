@@ -22,7 +22,7 @@ function mag_admin_modify($args)
     xarVarFetch('itemtype', 'id', $itemtype, 0, XARVAR_NOT_REQUIRED);
 
     // An article_author itemtype is set.
-    if ($itemtype == itemtype_articles_authors) {
+    if ($itemtype == $itemtype_articles_authors) {
         if (!empty($itemid)) $aid = $itemtype;
         $args['aid'] = $aid;
         return xarModFunc('mag', 'admin', 'modifyartauthors', $args);
