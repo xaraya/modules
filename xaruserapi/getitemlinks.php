@@ -17,7 +17,7 @@
  * @param $args['itemtype'] item type (optional)
  * @param $args['itemids'] array of item ids to get
  * @param $args['field'] field to return as label in the list (default 'title')
- * @return array Array containing the itemlink(s) for the item(s).
+ * @return array Array containing the itemlink(s) for the item(s) with url, title and label. The label is prepped for HTML display.
  */
 function articles_userapi_getitemlinks($args)
 {
@@ -69,7 +69,7 @@ function articles_userapi_getitemlinks($args)
                                                              array('ptid' => $article['pubtypeid'],
                                                                    'aid' => $article['aid'])),
                                         'title' => xarML('Display Article'),
-                                        'label' => xarVarPrepForDisplay($article[$field]));
+                                        'label' => xarVarPrepHTMLDisplay($article[$field]));
         }
         return $itemlinks;
     }
@@ -87,7 +87,7 @@ function articles_userapi_getitemlinks($args)
                                                                  array('ptid' => $article['pubtypeid'],
                                                                        'aid' => $article['aid'])),
                                             'title' => xarML('Display Article'),
-                                            'label' => xarVarPrepForDisplay($article[$field]));
+                                            'label' => xarVarPrepHTMLDisplay($article[$field]));
     }
     return $itemlinks;
 }
