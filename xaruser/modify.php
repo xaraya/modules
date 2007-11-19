@@ -270,7 +270,7 @@ function itsp_user_modify($args)
     $data['authid']      = xarSecGenAuthKey('itsp.modify');
 
     $data['item']        = $item;
-
+    $data['itspuser']    = xarUserGetVar('name', $userid);
     xarTplSetPageTitle(xarVarPrepForDisplay($pitem['pitemname']));
     return $data;
 }
