@@ -3,17 +3,16 @@
  * Keywords Module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Keywords Module
  * @link http://xaraya.com/index.php/release/187.html
  * @author mikespub
-*/
-
+ */
 /**
- * get module items for a word
+ * get module items for a keyword
  *
  * @param $args['id'] id(s) of the keywords entry(ies), or
  * @param $args['keyword'] keyword
@@ -21,7 +20,6 @@
  * @param $args['itemtype'] itemtype
  * @param $args['numitems'] number of entries to retrieve (optional)
  * @param $args['startnum'] starting number (optional)
- * @returns array
  * @return array of module id, item type and item id
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
