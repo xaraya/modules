@@ -12,7 +12,7 @@ function categories_adminapi_getmenulinks()
     $menulinks = array();
 
 // Security Check
-    if (xarSecurityCheck('AddCategories',0)) {
+    if (xarSecurityCheck('ManageCategories',0)) {
 
         $menulinks[] = Array('url'   => xarModURL('categories',
                                                    'admin',

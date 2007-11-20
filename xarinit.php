@@ -287,7 +287,7 @@ function categories_init()
     xarRegisterMask('ModerateCategories','All','categories','Category','All:All','ACCESS_MODERATE');
     xarRegisterMask('EditCategories','All','categories','Category','All:All','ACCESS_EDIT');
     xarRegisterMask('AddCategories','All','categories','Category','All:All','ACCESS_ADD');
-    xarRegisterMask('DeleteCategories','All','categories','Category','All:All','ACCESS_DELETE');
+    xarRegisterMask('ManageCategories','All','categories','Category','All:All','ACCESS_DELETE');
     xarRegisterMask('AdminCategories','All','categories','Category','All:All','ACCESS_ADMIN');
 
     xarRegisterMask('ReadCategoryBlock','All','categories','Block','All:All:All','ACCESS_READ');

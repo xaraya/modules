@@ -11,9 +11,9 @@ function categories_admin_viewcats()
     if(!xarVarFetch('itemsperpage',   'isset', $data['itemsperpage'],    xarModVars::get('categories', 'itemsperpage'), XARVAR_NOT_REQUIRED)) {return;}
 
     // Security check
-    if(!xarSecurityCheck('ReadCategories')) return;
+    if(!xarSecurityCheck('ManageCategories')) return;
 
-	$data['options'][] = array('cid' => $activetab);
+    $data['options'][] = array('cid' => $activetab);
 
     if (!isset($useJSdisplay)) {
         $useJSdisplay = $data['useJSdisplay'] = xarModVars::get('categories','useJSdisplay');
@@ -21,7 +21,7 @@ function categories_admin_viewcats()
         $data['useJSdisplay'] = $useJSdisplay;
     }
 
-	return xarTplModule('categories','admin','viewcats-render',$data);
+    return xarTplModule('categories','admin','viewcats-render',$data);
 }
 
 ?>

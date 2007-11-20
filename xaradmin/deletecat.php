@@ -25,7 +25,7 @@ function categories_admin_deletecat()
     if (!xarVarFetch('confirm','str:1:',$confirm,'',XARVAR_NOT_REQUIRED)) return;
 
     // Security check
-    if(!xarSecurityCheck('DeleteCategories',1,'category',"All:$cid")) return;
+    if(!xarSecurityCheck('ManageCategories',1,'category',"All:$cid")) return;
 
     // Check for confirmation
     if (empty($confirm)) {
