@@ -78,5 +78,15 @@
       <order>70</order>
       <validation></validation>
     </property>
+    <property name="where_clause">
+      <id>66</id>
+      <label>Where Clause</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>80</order>
+      <validation></validation>
+    </property>
   </properties>
 </object>

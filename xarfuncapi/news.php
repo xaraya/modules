@@ -72,11 +72,19 @@ function xarpages_funcapi_news($args)
         }
     }
 
+    // If some additional where-clause is supplied, then include it.
+    // Example: "notes like '%mykeyword%' and title ne ''"
+    if (!empty($args['current_page']['dd']['where_clause'])) {
+        $where_clause = $args['current_page']['dd']['where_clause'];
+    } else {
+        $where_clause = '';
+    }
+
     // Keyword search
     xarVarFetch('q', 'pre:trim:passthru:strlist: ,;:pre:lower:trim:passthru:str', $q, '', XARVAR_NOT_REQUIRED);
     // Clean up the keywords
     if (!empty($q)) {
-        $q = trim(preg_replace('/[^a-z0-9 .,:;@#-]/', '', strtolower($q)));
+        $q = trim(preg_replace('/[^a-z0-9 .,:;@#+-]/', '', strtolower($q)));
         $q = trim(preg_replace('/[ ]+/', ' ', $q));
         $q_array = explode(' ', $q);
     }
@@ -162,8 +170,9 @@ function xarpages_funcapi_news($args)
         'status' => $status,
         'sort' => $sort,
         'search' => $q,
+        'fieldfields' => array('title', 'summary', 'body', 'notes'),
         //'extra' => $extra,
-        //'where' => $where_string,
+        'where' => $where_clause,
         //'wheredd' => $wheredd_string,
         'ptid' => $ptids, // Pass in an array
         'enddate' => $enddate,
