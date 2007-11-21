@@ -25,7 +25,7 @@ function mag_user_mags($args)
     // Fetch the magazine ID or reference.
     // The short URL encoding/decoding may have converted these to a reference -- ?
     xarVarFetch('mid', 'id', $mid, 0, XARVAR_NOT_REQUIRED);
-    xarVarFetch('mag', 'str:0:30', $ref, '', XARVAR_NOT_REQUIRED);
+    xarVarFetch('mag', 'str:0:30', $mag_ref, '', XARVAR_NOT_REQUIRED);
 
     // Pager parameters
     xarVarFetch('startnum', 'int:1', $startnum, 0, XARVAR_NOT_REQUIRED);
@@ -44,7 +44,7 @@ function mag_user_mags($args)
     // If we have an ID or reference, then attempt to fetch the magazine.
     // Fetch all magazines viewable from the appropriate module.
     if (!empty($mid)) $mag_select['mid'] = $mid;
-    if (!empty($mag)) $mag_select['ref'] = $ref;
+    if (!empty($mag_ref)) $mag_select['ref'] = $mag_ref;
 
     // Only active magazines (we have admin screens for others).
     $mag_select['status'] = 'ACTIVE';
@@ -61,21 +61,20 @@ function mag_user_mags($args)
         }
     }
 
+    $return = array(
+        'mags' => $mags,
+    );
+
     // Get the mag ID if there is only one.
     // It does not matter whether this happened by selecting a single magazine,
     // or because there is only one magazine.
     if (count($mags) == 1) {
         $mag = reset($mags);
         $mid = $mag['mid'];
+
+        $return['mid'] = $mid;
+        $return['mag'] = $mag;
     }
-
-    // If there are no magazines, then ensure the mid is not set.
-    if (empty($mags)) $mid = 0;
-
-    $return = array(
-        'mags' => $mags,
-        'mid' => $mid,
-    );
 
     // Set context information for custom templates and blocks.
     $return['function'] = 'mags';

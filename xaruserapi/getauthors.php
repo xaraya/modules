@@ -176,7 +176,12 @@ function mag_userapi_getauthors($args)
             return (integer)$count;
         } else {
             while (!$result->EOF) {
-                list($author_id, $article_id) = $result->fields;
+                
+                if ($groupby == 'article') {
+                    list($author_id, $article_id) = $result->fields;
+                } else {
+                    list($author_id) = $result->fields;
+                }
                 $result->MoveNext();
 
                 // Store the author ID
