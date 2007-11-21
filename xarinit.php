@@ -34,11 +34,11 @@ function sitecontact_init()
         'xar_scid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
         'xar_sctypename' => array('type' => 'varchar', 'size' => 100, 'null' => false, 'default' => ''),
         'xar_sctypedesc' => array('type' => 'varchar', 'size' => 254, 'null' => false, 'default' => ''),
-        'xar_customtext' => array('type' => 'text', 'size'=>'medium', 'null' => false, 'default' => ''),
+        'xar_customtext' => array('type' => 'text', 'size'=>'medium', 'null' => false),
         'xar_customtitle' => array('type' => 'varchar', 'size' => 150, 'null' => false, 'default' => ''),
-        'xar_optiontext' => array('type' => 'text', 'size'=>'medium', 'null' => false, 'default' => ''),
-        'xar_webconfirmtext' => array('type' => 'text', 'size'=>'medium', 'null' => false, 'default' => ''),
-        'xar_notetouser' => array('type' => 'text', 'size'=>'medium', 'null' => false, 'default' => ''),
+        'xar_optiontext' => array('type' => 'text', 'size'=>'medium', 'null' => false),
+        'xar_webconfirmtext' => array('type' => 'text', 'size'=>'medium', 'null' => false),
+        'xar_notetouser' => array('type' => 'text', 'size'=>'medium', 'null' => false),
         'xar_allowcopy' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
         'xar_usehtmlemail' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
         'xar_scdefaultemail' => array('type' => 'varchar', 'size' => 254, 'null' => false, 'default' => ''),
@@ -47,7 +47,7 @@ function sitecontact_init()
         'xar_savedata' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
         'xar_permissioncheck' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
         'xar_termslink' => array('type' => 'varchar', 'size' => 254, 'null' => false, 'default' => ''),
-        'xar_soptions' => array('type' => 'text', 'size'=>'large', 'null' => false, 'default' => '')
+        'xar_soptions' => array('type' => 'text', 'size'=>'large', 'null' => false,)
         );
 
     $query = xarDBCreateTable($sitecontactTable , $fields);
@@ -67,7 +67,7 @@ function sitecontact_init()
         'xar_useremail' => array('type' => 'varchar', 'size' => 254, 'null' => false, 'default' => ''),
         'xar_requesttext' => array('type' => 'varchar', 'size' => 150, 'null' => false, 'default' => ''),
         'xar_company' =>  array('type' => 'varchar', 'size' => 150, 'null' => false, 'default' => ''),
-        'xar_usermessage' => array('type' => 'text', 'size'=>'medium', 'null' => false, 'default' => ''),
+        'xar_usermessage' => array('type' => 'text', 'size'=>'medium', 'null' => false),
         'xar_useripaddress' => array('type' => 'varchar', 'size' => 24, 'null' => false, 'default' => ''),
         'xar_userreferer' => array('type' => 'varchar', 'size' => 254, 'null' => false, 'default' => ''),
         'xar_sendcopy' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),

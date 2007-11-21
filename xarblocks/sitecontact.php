@@ -17,7 +17,7 @@
 function sitecontact_sitecontactblock_init()
 {
     // Initial values when the block is created.
-    $defaultformid = xarModGetVar('sitecontact','defaultform');
+    $defaultformid = xarModVars::get('sitecontact','defaultform');
     return array(
         'formchoice' => $defaultformid,
         'showdd' => false,
@@ -65,7 +65,7 @@ function sitecontact_sitecontactblock_display($blockinfo)
         $vars['showdd'] = false;
     }
     if (!isset($vars['formchoice'])) {
-        $vars['formchoice'] = xarModGetVar('sitecontact','defaultform');
+        $vars['formchoice'] = xarModVars::get('sitecontact','defaultform');
     }
 
     // Get the form data
@@ -99,9 +99,9 @@ function sitecontact_sitecontactblock_display($blockinfo)
     if (!isset($item['allowccs']))$item['allowccs']=0;
     if (!isset($item['allowanoncopy']))$item['allowanoncopy']=0;
     if (!isset($item['useantibot']))$item['useantibot']=false;
-    if (!isset($item['savedata']))$item['savedata']=xarModGetVar('sitecontact','savedata')?xarModGetVar('sitecontact','savedata'):0;
-    if (!isset($item['permissioncheck']))$item['permissioncheck']=xarModGetVar('sitecontact','permissioncheck');
-    if (!isset($item['termslink']))$item['termslink']=xarModGetVar('sitecontact','termslink');
+    if (!isset($item['savedata']))$item['savedata']=xarModVars::get('sitecontact','savedata')?xarModVars::get('sitecontact','savedata'):0;
+    if (!isset($item['permissioncheck']))$item['permissioncheck']=xarModVars::get('sitecontact','permissioncheck');
+    if (!isset($item['termslink']))$item['termslink']=xarModVars::get('sitecontact','termslink');
 
     $customtext = $formdata['customtext'];
     $customtitle = $formdata['customtitle'];
@@ -171,14 +171,14 @@ function sitecontact_sitecontactblock_display($blockinfo)
             }
     unset($properties);
    $item['withupload']=$withupload;
-    //$webconfirmtext = trim(xarModGetVar('sitecontact','webconfirmtext'));
+    //$webconfirmtext = trim(xarModVars::get('sitecontact','webconfirmtext'));
     $webconfirmtext = trim($formdata['webconfirmtext']);
     if (empty($webconfirmtext) || !isset($webconfirmtext)) {
 
         $webconfirmtext = xarML('Your message has been sent.');
         $webconfirmtext  .='<br />';
         $webconfirmtext   .= xarML('You should receive confirmation of your email within a few minutes.');
-        xarModSetVar('sitecontact','webconfirmtext',$webconfirmtext);
+        xarModVars::set('sitecontact','webconfirmtext',$webconfirmtext);
     }
     $data['webconfirmtext']=$webconfirmtext;
 

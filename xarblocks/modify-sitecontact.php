@@ -24,7 +24,7 @@ function sitecontact_sitecontactblock_modify($blockinfo)
     }
 
     if (!isset($vars['formchoice'])) {
-        $vars['formchoice'] = xarModGetVar('sitecontact','defaultform');
+        $vars['formchoice'] = xarModVars::get('sitecontact','defaultform');
     }
 
     if (!isset($vars['showdd'])) {
@@ -44,7 +44,7 @@ function sitecontact_sitecontactblock_modify($blockinfo)
  */
 function sitecontact_sitecontactblock_update($blockinfo)
 {
-    $defaultformid = xarModGetVar('sitecontact','defaultform');
+    $defaultformid = xarModVars::get('sitecontact','defaultform');
     if (!xarVarFetch('showdd', 'checkbox', $vars['showdd'], false, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('formchoice', 'id', $vars['formchoice'],$defaultformid, XARVAR_NOT_REQUIRED)) {return;}
 

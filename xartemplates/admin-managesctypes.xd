@@ -199,7 +199,7 @@
         </div>
 
         <div class="xar-form-input-wrapper-after">
-            <xar:if condition="xarModGetVar('sitecontact', 'allowcopy')">
+            <xar:if condition="xarModVars::get('sitecontact', 'allowcopy')">
                 <input type="checkbox" name="allowcopy" id="allowcopy" value="1" checked="checked" />
             <xar:else />
                 <input type="checkbox" name="allowcopy" id="allowcopy" value="1" />
@@ -227,7 +227,7 @@
             <label for="usehtmlemail" class="xar-form-label" title="#xarML('Allow HTML in feedback emails')#">
                 <xar:mlstring>Use HTML Email?</xar:mlstring>
             </label>
-            <xar:if condition="xarModGetVar('sitecontact', 'usehtmlemail')">
+            <xar:if condition="xarModVars::get('sitecontact', 'usehtmlemail')">
                 <input type="checkbox" name="usehtmlemail" id="usehtmlemail" value="1" checked="checked" />
             <xar:else />
                 <input type="checkbox" name="usehtmlemail" id="usehtmlemail" value="1" />
@@ -326,7 +326,7 @@
             <xar:else />
                 <input type="checkbox" name="scactive" id="scactive" value="1" />
             </xar:if>
-            <xar:if condition="xarModGetVar('sitecontact','defaultform') eq $item.scid">
+            <xar:if condition="xarModVars::get('sitecontact','defaultform') eq $item.scid">
                 <xar:mlstring>Must be checked (active) for Default Form</xar:mlstring>
             </xar:if>
             <label for="scactive" title="#xarML('Sitecontact form is active and available?')#">

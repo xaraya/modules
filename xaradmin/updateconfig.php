@@ -47,8 +47,8 @@ function sitecontact_admin_updateconfig()
     if (!xarVarFetch('allowcc', 'checkbox', $allowcc, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('allowbcc', 'checkbox', $allowbcc, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('adminccs', 'checkbox', $adminccs, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('admincclist', 'str:0:', $admincclist, '', XARVAR_NOT_REQUIRED)) return;  
-  
+    if (!xarVarFetch('admincclist', 'str:0:', $admincclist, '', XARVAR_NOT_REQUIRED)) return;
+
     $allowanoncopy = ($allowcopy && $allowanoncopy)? true :false; //only allow anonymous if allow copy for registered too
     $soptions=array('allowcc'=>$allowcc,
                     'allowbcc'=>$allowbcc,
@@ -84,25 +84,25 @@ function sitecontact_admin_updateconfig()
 
     } else {
         $regid = xarModGetIDFromName($tabmodule);
-        xarModSetUserVar('sitecontact', 'customtext', $customtext, $regid);
-        xarModSetUserVar('sitecontact', 'customtitle', $customtitle, $regid);
-        xarModSetUserVar('sitecontact', 'optiontext', $optiontext, $regid);
-        xarModSetUserVar('sitecontact', 'SupportShortURLs', $shorturls, $regid);
-        xarModSetUserVar('sitecontact', 'scactive', $scactive, $regid);
-        xarModSetUserVar('sitecontact', 'allowcopy', $allowcopy, $regid);
-        xarModSetUserVar('sitecontact', 'allowanoncopy', $allowanoncopy, $regid);
-        xarModSetUserVar('sitecontact', 'usehtmlemail', $usehtmlemail, $regid);
-        xarModSetUserVar('sitecontact', 'webconfirmtext', $webconfirmtext, $regid);
-        xarModSetUserVar('sitecontact', 'notetouser', $notetouser, $regid);
-        xarModSetUserVar('sitecontact', 'scdefaultemail', $scdefaultemail, $regid);
-        xarModSetUserVar('sitecontact', 'scdefaultname', $scdefaultname, $regid);
-        xarModSetUserVar('sitecontact', 'defaultform', $defaultform, $regid);
-        xarModSetUserVar('sitecontact', 'itemsperpage', $itemsperpage, $regid);
-        xarModSetUserVar('sitecontact', 'soptions', $soptions, $regid);
-        xarModSetUserVar('sitecontact', 'savedata', $savedata, $regid);
-        xarModSetUserVar('sitecontact', 'permissioncheck', $permissioncheck, $regid);
-        xarModSetUserVar('sitecontact', 'termslink', trim($termslink), $regid);
-        xarModSetUserVar('sitecontact', 'useantibot', $useantibot, $regid);
+        xarModItemVars::set('sitecontact', 'customtext', $customtext, $regid);
+        xarModItemVars::set('sitecontact', 'customtitle', $customtitle, $regid);
+        xarModItemVars::set('sitecontact', 'optiontext', $optiontext, $regid);
+        xarModItemVars::set('sitecontact', 'SupportShortURLs', $shorturls, $regid);
+        xarModItemVars::set('sitecontact', 'scactive', $scactive, $regid);
+        xarModItemVars::set('sitecontact', 'allowcopy', $allowcopy, $regid);
+        xarModItemVars::set('sitecontact', 'allowanoncopy', $allowanoncopy, $regid);
+        xarModItemVars::set('sitecontact', 'usehtmlemail', $usehtmlemail, $regid);
+        xarModItemVars::set('sitecontact', 'webconfirmtext', $webconfirmtext, $regid);
+        xarModItemVars::set('sitecontact', 'notetouser', $notetouser, $regid);
+        xarModItemVars::set('sitecontact', 'scdefaultemail', $scdefaultemail, $regid);
+        xarModItemVars::set('sitecontact', 'scdefaultname', $scdefaultname, $regid);
+        xarModItemVars::set('sitecontact', 'defaultform', $defaultform, $regid);
+        xarModItemVars::set('sitecontact', 'itemsperpage', $itemsperpage, $regid);
+        xarModItemVars::set('sitecontact', 'soptions', $soptions, $regid);
+        xarModItemVars::set('sitecontact', 'savedata', $savedata, $regid);
+        xarModItemVars::set('sitecontact', 'permissioncheck', $permissioncheck, $regid);
+        xarModItemVars::set('sitecontact', 'termslink', trim($termslink), $regid);
+        xarModItemVars::set('sitecontact', 'useantibot', $useantibot, $regid);
 
     }
     if (isset($aliasname) && trim($aliasname)<>'') {

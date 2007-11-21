@@ -46,22 +46,22 @@ function sitecontact_admin_modifyconfig()
         $soptions = xarModVars::get('sitecontact','soptions');
     } else {
         $regid = xarModGetIDFromName($tabmodule);
-        $soptions = xarModGetUserVar('sitecontact','soptions', $regid);
+        $soptions = xarModUserVars::get('sitecontact','soptions', $regid);
     }
     if (!isset($soptions)) $soptions=array();
-    
+
     $soptions=unserialize($soptions);
     if (is_array($soptions)) {
         foreach ($soptions as $k=>$v) {
             unset($data[$k]);
-            $data[$k]=$v; 
+            $data[$k]=$v;
         }
     }
     if (!isset($data['allowbcc']))$data['allowbcc']=false;
     if (!isset($data['allowcc']))$data['allowcc']=false;
-    if (!isset($data['adminccs']))$data['adminccs']=false; 
-        if (!isset($data['admincclist']))$data['admincclist']='';    
-    if (!isset($data['allowanoncopy']))$data['allowanoncopy']=false;          
+    if (!isset($data['adminccs']))$data['adminccs']=false;
+        if (!isset($data['admincclist']))$data['admincclist']='';
+    if (!isset($data['allowanoncopy']))$data['allowanoncopy']=false;
 
    /* Specify some labels and values for display */
    /* not used?
