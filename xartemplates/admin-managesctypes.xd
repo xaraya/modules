@@ -206,7 +206,7 @@
             </xar:if>
             <label for="allowcopy" title="#xarML('Allow sending of copy to feedback sender')#">
                  <xar:mlstring>Allow copy to sender (registered user)?</xar:mlstring>
-            </label>            
+            </label>
         </div>
         <div class="xar-form-input-wrapper-after">
             <xar:if condition="$item.allowanoncopy">
@@ -217,7 +217,7 @@
             <label for="allowanoncopy" title="#xarML('Allow sending of copy to anonymous user')#">
                  <xar:mlstring>Allow anonymous users to also request a copy?</xar:mlstring>
             </label>
-        </div>              
+        </div>
         <p class="xar-form-input-wrapper-after">
             <xar:mlstring>NOTE: Please ensure you understand the potential problems of allowing
             copy to sender option (spammer use) if you have open access on your website to this specific form.</xar:mlstring>
@@ -478,7 +478,7 @@
             </xar:if>
             <label for="allowcopy" title="#xarML('Allow sending of copy to feedback sender')#">
                  <xar:mlstring>Allow copy to sender?</xar:mlstring>
-            </label>            
+            </label>
        </div>
        <div class="xar-form-input-wrapper-after">
             <xar:if condition="$item.allowanoncopy eq 1">
@@ -489,7 +489,7 @@
             <label for="allowanoncopy" title="#xarML('Allow sending of copy to anonymous user')#">
                  <xar:mlstring>Allow anonymous users to also request a copy?</xar:mlstring>
             </label>
-        </div>                     
+        </div>
        <p class="xar-form-input-wrapper-after">
             <xar:mlstring>NOTE: Please ensure you understand the potential problems of allowing
             copy to sender option (spammer use) if you have open access on your website to this specific form.</xar:mlstring>

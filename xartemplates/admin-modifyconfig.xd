@@ -217,7 +217,7 @@
        </div>
 
         <div class="xar-form-input-wrapper-after">
-          <xar:set name="value">xarModVars::get('sitecontact', 'allowcopy',$regid)</xar:set>
+          <xar:set name="value">xarModUserVars::get('sitecontact', 'allowcopy',$regid)</xar:set>
           <xar:data-input type="checkbox" name="allowcopy" checked="$value" />
           <label for="allowcopy" title="#xarML('Allow sending of copy to feedback sender')#">
             <xar:mlstring>Allow copy to sender (registered users)?</xar:mlstring>
@@ -245,9 +245,9 @@
         </div>
 
         <div class="xar-form-input-wrapper">
-          <xar:set name="notetouser">xarModVars::get('sitecontact', 'notetouser',$regid)</xar:set>
+          <xar:set name="notetouser">xarModUserVars::get('sitecontact', 'notetouser',$regid)</xar:set>
           <xar:if condition="!isset($notetouser) || (trim($notetouser)=='')">
-              <xar:set name="notetouser">xarModVars::get('mail','defaultnote')</xar:set>
+              <xar:set name="notetouser">xarModUserVars::get('mail','defaultnote')</xar:set>
           </xar:if>
           <label for="notetouser" class="xar-form-label" title="#xarML('Included in email to user - use HTML only if email configured for HTML')#">
             <xar:mlstring>Default emailed note to user (in template as ##$notetouser##):</xar:mlstring>

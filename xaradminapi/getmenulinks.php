@@ -1,7 +1,7 @@
 <?php
 /**
  * Menu items
- * 
+ *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -20,6 +20,7 @@
  */
 function sitecontact_adminapi_getmenulinks()
 {
+    $menulinks = array();
      /*Security Check */
     if (xarSecurityCheck('AdminSiteContact', 0)) {
        $menulinks[] = Array('url' => xarModURL('sitecontact','admin','managesctypes'),
@@ -31,11 +32,8 @@ function sitecontact_adminapi_getmenulinks()
         $menulinks[] = Array('url' => xarModURL('sitecontact','admin','modifyconfig'),
             'title' => xarML('Modify the configuration for the module'),
             'label' => xarML('Modify Config'));
-    }            
-    
-    if (empty($menulinks)) {
-        $menulinks = '';
     }
+
     /* The final thing that we need to do in this function is return the values back
      * to the main menu for display.
      */

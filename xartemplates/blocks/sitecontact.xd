@@ -125,7 +125,7 @@
             <xar:if condition="$allowbccs or $allowccs">
              <p class="xar-blockform-input-wrapper">
                     <xar:mlstring>
-                    Separate email addresses by colons (;)</xar:mlstring>
+                    Separate email addresses by colons (;)</xar:mlstring></strong>
              </p>
             </xar:if>
             <div class="xar-blockform-input-wrapper">

@@ -59,6 +59,7 @@ function sitecontact_adminapi_create($args)
     // Begin 2x
     $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $scid));
     $thisform = array_pop($formdata);
+
     $thisobject = & DataObjectMaster::getObject(array('name' => $thisform['sctypename']));
     $thisobject->checkInput();
     $itemid = $thisobject->createItem($args);

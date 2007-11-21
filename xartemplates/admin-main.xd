@@ -77,7 +77,7 @@
         <h3><xar:mlstring>Modify Configuration (Global Configuration)</xar:mlstring><a name="modifyconfig" title="Modify Config">&#160;</a></h3>
         <p style="margin-left: 1em; margin-right: 1em; text-align:left;">
         <xar:mlstring>There are a number of variables you can set in the Modify Config
-                option. These options are preset on install but you can change them. They are the GLOBAL options for sitecontact 
+                option. These options are preset on install but you can change them. They are the GLOBAL options for sitecontact
                 and will be used by default for all *new* contact forms that you create.</xar:mlstring>
         </p>
           <ol>
@@ -110,14 +110,14 @@
             Admin notification email (user-adminmail-text.xd and user-adminmail-html.xd) and the user (user-
             usermail-text.xd and user-usermail-html.xd).
             </xar:mlstring></li>
-            <li><xar:mlstring><strong>Allow copy to sender</strong> - if checked, will allow logged in users on your site to send themselves a copy of their form data by email.</xar:mlstring></li>            
-            <li><xar:mlstring><strong>Allow anonymous users to request a copy</strong> - if checked, will allow anonymous users to send themselves a copy of their form data by email, if the Allow Copy to Sender checkbox is also checked. </xar:mlstring></li>            
+            <li><xar:mlstring><strong>Allow copy to sender</strong> - if checked, will allow logged in users on your site to send themselves a copy of their form data by email.</xar:mlstring></li>
+            <li><xar:mlstring><strong>Allow anonymous users to request a copy</strong> - if checked, will allow anonymous users to send themselves a copy of their form data by email, if the Allow Copy to Sender checkbox is also checked. </xar:mlstring></li>
             </ol>
     <h3><xar:mlstring>CC or BC to other Recipients</xar:mlstring></h3>
-    <p><xar:mlstring>You can configure your forms with a list of CC or BC recipients from the 
-        configuration for each form. The CC and BC fields take a list of recipient emails and 
-        optionally a name for each. These emails and names must be in the correct format. Make 
-        sure you understand the <span class="xar-error">POTENTIAL PROBLEMS</span> of adding these fields to your forms on an open access website where potential spammers can gain access! 
+    <p><xar:mlstring>You can configure your forms with a list of CC or BC recipients from the
+        configuration for each form. The CC and BC fields take a list of recipient emails and
+        optionally a name for each. These emails and names must be in the correct format. Make
+        sure you understand the <span class="xar-error">POTENTIAL PROBLEMS</span> of adding these fields to your forms on an open access website where potential spammers can gain access!
         It is an option best kept protected by using Site Contact permissions for trusted user groups on your site. Keep in mind the following:</xar:mlstring></p>
     <ol>
             <li><xar:mlstring>If you have a list of email addresses, separate each by a semicolon (;) eg <code>person1@somedomain.com;person2@anotherdomain.com</code>
@@ -149,33 +149,33 @@
         <xar:mlstring>Saving SiteContact Forms </xar:mlstring>
     </h3>
     <p>
-        <xar:mlstring>Sitecontact allows administrators to choose form responses to be saved to 
-        their database. There is also an option available to Administrators to allow users to give 
-        their permission to save data to the database. In this case, the contact forms are still 
-        emailed but data will only be saved if user explicitly checks the permission checkbox. 
+        <xar:mlstring>Sitecontact allows administrators to choose form responses to be saved to
+        their database. There is also an option available to Administrators to allow users to give
+        their permission to save data to the database. In this case, the contact forms are still
+        emailed but data will only be saved if user explicitly checks the permission checkbox.
         Users must have comment level access to the form to have the data saved else they can only read and submit the form.</xar:mlstring>
     </p>
  
    <h3>
         <xar:mlstring>SiteContact Permissions</xar:mlstring>
     </h3>
-    <p><xar:mlstring>Sitecontact provides Xaraya permissions to manage user access to your forms. 
+    <p><xar:mlstring>Sitecontact provides Xaraya permissions to manage user access to your forms.
     You can provide access to users for all forms, or for specific form instances.</xar:mlstring></p>
    <ul>
     <li><xar:mlstring>Read Level Access - allows filling out a form and emailing it.</xar:mlstring></li>
-    <li><xar:mlstring>Comment Level Access - allows filling out a form and emailing it and also saving the form to the database, if you have activated this option for this form.</xar:mlstring></li> 
-    <li><xar:mlstring>Edit Level Access - for All forms, allows editing and modification of form configuration.</xar:mlstring></li> 
-    <li><xar:mlstring>Admin Level Access - for All forms, allows all administration functions for your forms.</xar:mlstring></li> 
+    <li><xar:mlstring>Comment Level Access - allows filling out a form and emailing it and also saving the form to the database, if you have activated this option for this form.</xar:mlstring></li>
+    <li><xar:mlstring>Edit Level Access - for All forms, allows editing and modification of form configuration.</xar:mlstring></li>
+    <li><xar:mlstring>Admin Level Access - for All forms, allows all administration functions for your forms.</xar:mlstring></li>
     </ul>
 
     <h3>
         <xar:mlstring>Extra Security Features</xar:mlstring>
     </h3>
-    <p><xar:mlstring>Starting with Sitecontact version 1.0.0 there is the ability to add anti-bot 
-        security to your form by installing the FormAntiBot module. This provides what is also commonly 
+    <p><xar:mlstring>Starting with Sitecontact version 1.0.0 there is the ability to add anti-bot
+        security to your form by installing the FormAntiBot module. This provides what is also commonly
         known as CAPTCHA as a configured option for each form.</xar:mlstring></p>
     <p><xar:mlstring>Some drawbacks of using CAPTCHA with the current Sitecontact module are loss of accessibility for sight impared,
-    and, loss of form data on resubmits for large forms due to a mistyped captcha code. The default fields in a form will always be repopulated, 
+    and, loss of form data on resubmits for large forms due to a mistyped captcha code. The default fields in a form will always be repopulated,
     but currently any extra dynamic data data is lost on resubmission and needs to be reentered.</xar:mlstring></p>
     <h2>
         <xar:mlstring>Included Blocks</xar:mlstring>
