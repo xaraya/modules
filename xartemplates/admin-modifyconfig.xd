@@ -124,21 +124,21 @@
             <label for="customtitle" class="xar-form-label" title="#xarML('Custom title for your contact page.')#">
                <xar:mlstring>Custom page title:</xar:mlstring>
             </label>
-            <xar:set name="value">xarModItemVars::get('sitecontact', 'customtitle', $regid)</xarset>
+            <xar:set name="value">xarModItemVars::get('sitecontact', 'customtitle', $regid)</xar:set>
             <input type="text" name="customtitle" id="customtitle" size="40" maxlength="128" value="#$value#" />
         </div>
         <div class="xar-form-input-wrapper">
             <label for="customtext" class="xar-form-label" title="#xarML('Custom text for the contact page. You can use HTML here if configured on your site.')#">
                  <xar:mlstring>Your custom text:</xar:mlstring>
             </label>
-            <xar:set name="value">xarModItemVars::get('sitecontact', 'customtext', $regid)</xarset>
+            <xar:set name="value">xarModItemVars::get('sitecontact', 'customtext', $regid)</xar:set>
             <textarea name="customtext" id="customtext" rows="5" cols="50">#$value#</textarea>
         </div>
         <div class="xar-form-input-wrapper">
             <label for="webconfirmtext" class="xar-form-label" title="#xarML('Custom text displayed on your site after the user sends their message.')#">
                  <xar:mlstring>Confirm Page Text:</xar:mlstring>
             </label>
-            <xar:set name="value">xarModItemVars::get('sitecontact', 'webconfirmtext', $regid)</xarset>
+            <xar:set name="value">xarModItemVars::get('sitecontact', 'webconfirmtext', $regid)</xar:set>
             <textarea name="webconfirmtext" id="webconfirmtext" rows="5" cols="50">#$value#</textarea>
         </div>
         
@@ -207,7 +207,7 @@
          <label for="optiontext" class="xar-form-label" title="#xarML('Subject and optional email address per line. Form : Subject[semicolon]email[comma]')#">
              <xar:mlstring>Options for subject with optional alternative email address:</xar:mlstring>
          </label>
-            <xar:set name="value">xarModItemVars::get('sitecontact', 'optiontext', $regid)</xarset>
+            <xar:set name="value">xarModItemVars::get('sitecontact', 'optiontext', $regid)</xar:set>
          <textarea name="optiontext" id="optiontext" rows="10" cols="50">#$value#</textarea>
         </div>
         <div class="xar-form-input-wrapper-after">
