@@ -48,7 +48,7 @@
                                 Module Alias Name
                             </xar:mlstring>
                     </label>
-                    <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('sitecontact', 'aliasname')#" size="32" maxlength="100" />
+                    <input type="text" name="aliasname" id="aliasname" value="#xarModVars::get('sitecontact', 'aliasname')#" size="32" maxlength="100" />
                 </div>
                 <div class="xar-form-input-wrapper">
                     <label for="defaultform" class="xar-form-label" title="#xarML('Default form for display on your site')#">
@@ -63,14 +63,14 @@
                             Forms listed per admin page
                         </xar:mlstring>
                     </label>
-                    <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('sitecontact', 'itemsperpage')#" />
+                    <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModVars::get('sitecontact', 'itemsperpage')#" />
                 </div>
                
             </fieldset>
         </xar:if>
 
         <xar:if condition="$tabmodule ne 'sitecontact'">
-            <xar:set name="regid">xarModGetIDFromName($tabmodule)</xar:set>
+            <xar:set name="regid">xarMod::getRegID($tabmodule)</xar:set>
         <xar:else />
             <xar:set name="regid">0</xar:set>
         </xar:if>
