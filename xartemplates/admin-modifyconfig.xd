@@ -48,7 +48,8 @@
                                 Module Alias Name
                             </xar:mlstring>
                     </label>
-                    <input type="text" name="aliasname" id="aliasname" value="#xarModVars::get('sitecontact', 'aliasname')#" size="32" maxlength="100" />
+                    <xar:set name="value"><xar:var scope="module" module="sitecontact" name="aliasname" /></xar:set>
+                    <input type="text" name="aliasname" id="aliasname" value="#$value#" size="32" maxlength="100" />
                 </div>
                 <div class="xar-form-input-wrapper">
                     <label for="defaultform" class="xar-form-label" title="#xarML('Default form for display on your site')#">
@@ -63,7 +64,8 @@
                             Forms listed per admin page
                         </xar:mlstring>
                     </label>
-                    <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModVars::get('sitecontact', 'itemsperpage')#" />
+                    <xar:set name="value"><xar:var scope="module" module="sitecontact" name="itemsperpage" /></xar:set>
+                    <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$value#" />
                 </div>
                
             </fieldset>
@@ -78,7 +80,7 @@
     <fieldset>
         <legend><xar:mlstring>Defaults</xar:mlstring></legend>
         <div class="xar-form-input-wrapper">
-            <xar:set name="scdefaultemail">xarModGetUserVar('sitecontact', 'scdefaultemail',$regid)</xar:set>
+            <xar:set name="scdefaultemail">xarModUserVars::get('sitecontact', 'scdefaultemail',$regid)</xar:set>
             <xar:if condition="!isset($scdefaultemail) || (trim($scdefaultemail)=='')">
                 <xar:set name="scdefaultemail">xarModVars::get('mail','adminmail')</xar:set>
             </xar:if>
@@ -88,7 +90,7 @@
             <input type="text" name="scdefaultemail" id="scdefaultemail" size="40" maxlength="128" value="#$scdefaultemail#" />
         </div>
         <div class="xar-form-input-wrapper">
-            <xar:set name="scdefaultname">xarModGetUserVar('sitecontact', 'scdefaultname',$regid)</xar:set>
+            <xar:set name="scdefaultname">xarModUserVars::get('sitecontact', 'scdefaultname',$regid)</xar:set>
             <xar:if condition="!isset($scdefaultname) || (trim($scdefaultname)=='')">
                 <xar:set name="scdefaultname">xarModVars::get('mail','adminname')</xar:set>
             </xar:if>
@@ -98,14 +100,14 @@
             <input type="text" name="scdefaultname" id="scdefaultname" size="40" maxlength="128" value="#$scdefaultname#" />
         </div>
         <div class="xar-form-input-wrapper-after">
-            <xar:set name="value">xarModGetUserVar('sitecontact', 'scactive',$regid)</xar:set>
+            <xar:set name="value">xarModUserVars::get('sitecontact', 'scactive',$regid)</xar:set>
             <xar:data-input type="checkbox" name="scactive" checked="$value" />
             <label for="scactive" title="#xarML('Site contact forms active by default?')#">
                 <xar:mlstring>New forms Active by default?</xar:mlstring>
             </label>
         </div>
        <div class="xar-form-input-wrapper-after">
-            <xar:set name="value">xarModGetUserVar('sitecontact', 'useantibot',$regid)</xar:set>
+            <xar:set name="value">xarModUserVars::get('sitecontact', 'useantibot',$regid)</xar:set>
             <xar:data-input type="checkbox" name="useantibot" checked="$value" />
             <label for="useantibot" title="#xarML('Use form anti-bot captcha by default?')#">
                 <xar:mlstring>Use form anti-bot captcha by default?</xar:mlstring>
@@ -122,19 +124,22 @@
             <label for="customtitle" class="xar-form-label" title="#xarML('Custom title for your contact page.')#">
                <xar:mlstring>Custom page title:</xar:mlstring>
             </label>
-            <input type="text" name="customtitle" id="customtitle" size="40" maxlength="128" value="#xarModGetUserVar('sitecontact', 'customtitle', $regid)#" />
+            <xar:set name="value">xarModUserVars::get('sitecontact', 'customtitle', $regid)</xarset>
+            <input type="text" name="customtitle" id="customtitle" size="40" maxlength="128" value="#$value#" />
         </div>
         <div class="xar-form-input-wrapper">
             <label for="customtext" class="xar-form-label" title="#xarML('Custom text for the contact page. You can use HTML here if configured on your site.')#">
                  <xar:mlstring>Your custom text:</xar:mlstring>
             </label>
-            <textarea name="customtext" id="customtext" rows="5" cols="50">#xarModGetUserVar('sitecontact', 'customtext', $regid)#</textarea>
+            <xar:set name="value">xarModUserVars::get('sitecontact', 'customtext', $regid)</xarset>
+            <textarea name="customtext" id="customtext" rows="5" cols="50">#$value#</textarea>
         </div>
         <div class="xar-form-input-wrapper">
             <label for="webconfirmtext" class="xar-form-label" title="#xarML('Custom text displayed on your site after the user sends their message.')#">
                  <xar:mlstring>Confirm Page Text:</xar:mlstring>
             </label>
-            <textarea name="webconfirmtext" id="webconfirmtext" rows="5" cols="50">#xarModGetUserVar('sitecontact', 'webconfirmtext', $regid)#</textarea>
+            <xar:set name="value">xarModUserVars::get('sitecontact', 'webconfirmtext', $regid)</xarset>
+            <textarea name="webconfirmtext" id="webconfirmtext" rows="5" cols="50">#$value#</textarea>
         </div>
         
         <div class="xar-form-input-wrapper-after">
@@ -174,14 +179,14 @@
             muliple emailings (spammer use) if you have open access on your website to this form.</xar:mlstring>
         </p>
         <div class="xar-form-input-wrapper-after">
-            <xar:set name="value">xarModGetUserVar('sitecontact', 'savedata',$regid)</xar:set>
+            <xar:set name="value">xarModUserVars::get('sitecontact', 'savedata',$regid)</xar:set>
             <xar:data-input type="checkbox" name="savedata" checked="$value" />
             <label for="savedata" title="#xarML('Save the site contact form data')#">
                <xar:mlstring>Save form responses to the database?</xar:mlstring>
             </label>
         </div>
         <div class="xar-form-input-wrapper-after">
-            <xar:set name="value">xarModGetUserVar('sitecontact', 'permissioncheck',$regid)</xar:set>
+            <xar:set name="value">xarModUserVars::get('sitecontact', 'permissioncheck',$regid)</xar:set>
             <xar:data-input type="checkbox" name="permissioncheck" checked="$value" />
             <label for="permissioncheck" title="#xarML('Require user permission for data save?')#">
                <xar:mlstring>Require user permission for response save in database?</xar:mlstring>
@@ -191,7 +196,8 @@
             <label for="termslink" class="xar-form-label" title="#xarML('URL link to your terms.')#">
                <xar:mlstring>Terms link URL :</xar:mlstring>
             </label>
-            <input type="text" name="termslink" id="termslink" size="40" maxlength="128" value="#xarModGetVar('sitecontact', 'termslink', $regid)#" /> [none - leave blank]
+            <xar:set name="value">xarModItemVars::get('sitecontact', 'termslink', $regid)</xar:set>
+            <input type="text" name="termslink" id="termslink" size="40" maxlength="128" value="#$value#" /> [none - leave blank]
         </div>
     </fieldset>
 
@@ -201,7 +207,8 @@
          <label for="optiontext" class="xar-form-label" title="#xarML('Subject and optional email address per line. Form : Subject[semicolon]email[comma]')#">
              <xar:mlstring>Options for subject with optional alternative email address:</xar:mlstring>
          </label>
-         <textarea name="optiontext" id="optiontext" rows="10" cols="50">#xarModGetUserVar('sitecontact', 'optiontext', $regid)#</textarea>
+            <xar:set name="value">xarModUserVars::get('sitecontact', 'optiontext', $regid)</xarset>
+         <textarea name="optiontext" id="optiontext" rows="10" cols="50">#$value#</textarea>
         </div>
         <div class="xar-form-input-wrapper-after">
             <xar:mlstring>Each line above should be entered with the semicolon and comma: </xar:mlstring>

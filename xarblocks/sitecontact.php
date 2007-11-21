@@ -178,7 +178,7 @@ function sitecontact_sitecontactblock_display($blockinfo)
         $webconfirmtext = xarML('Your message has been sent.');
         $webconfirmtext  .='<br />';
         $webconfirmtext   .= xarML('You should receive confirmation of your email within a few minutes.');
-        xarModSetVar('sitecontact','webconfirmtext',$webconfirmtext);
+        xarModVars::set('sitecontact','webconfirmtext',$webconfirmtext);
     }
     $data['webconfirmtext']=$webconfirmtext;
 
