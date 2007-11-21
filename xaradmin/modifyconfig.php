@@ -46,7 +46,7 @@ function sitecontact_admin_modifyconfig()
         $soptions = xarModVars::get('sitecontact','soptions');
     } else {
         $regid = xarModGetIDFromName($tabmodule);
-        $soptions = xarModUserVars::get('sitecontact','soptions', $regid);
+        $soptions = xarModItemVars::get('sitecontact','soptions', $regid);
     }
     if (!isset($soptions)) $soptions=array();
 
