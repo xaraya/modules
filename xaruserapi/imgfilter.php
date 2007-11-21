@@ -55,7 +55,7 @@ function mag_userapi_imgfilter($args)
             // Set an array of the img attributes
             $imgAttr = ($htmlparser->iNodeAttributes);
 
-            if (empty($imgAttr)) continue;
+            if (empty($imgAttr) || empty($imgAttr['class'])) continue;
 
             // Get an array of classes for this image
             $imgClasses = explode(' ', $imgAttr['class']);

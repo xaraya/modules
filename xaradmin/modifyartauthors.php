@@ -12,7 +12,7 @@ function mag_admin_modifyartauthors($args)
     // Get module parameters
     extract(xarModAPIfunc('mag', 'user', 'params',
         array(
-            'knames' => 'module,$modid,itemtype_articles_authors'
+            'knames' => 'module,modid,itemtype_articles_authors'
         )
     ));
 

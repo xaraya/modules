@@ -20,6 +20,8 @@ function mag_userapi_getissues($args)
 {
     extract($args);
 
+    static $s_mags = array();
+
     // Get module parameters
     extract(xarModAPIfunc('mag', 'user', 'params',
         array(
@@ -119,31 +121,43 @@ function mag_userapi_getissues($args)
 
     if (!empty($issues)) {
         foreach($issues as $issue) {
+            // Get the magazine details, if we don't already have it.
+            if (!isset($s_mag[$issue['mag_id']])) {
+                $mags = xarModAPIfunc($module, 'user', 'getmags', array('mid' => $issue['mag_id']));
+                if (!empty($mags)) {
+                    $s_mags[$issue['mag_id']] = reset($mags);
+                } else {
+                    $s_mags[$issue['mag_id']] = false;
+                }
+            }
+
             // Add some additional useful information into the list of issues.
             // Substitution variables are used so that path can be varied as required.
-            $issue['cover_img_path'] = xarModAPIfunc(
-                'mag', 'user', 'imagepaths',
-                array(
-                    'path' => $image_issue_cover_vpath,
-                    'fields' => array(
-                        'mag_ref' => $mag['ref'],
-                        'issue_ref' => $issue['ref'],
-                        'issue_cover' => $issue['cover_img'],
+            if (!empty($s_mags[$issue['mag_id']])) {
+                $issue['cover_img_path'] = xarModAPIfunc(
+                    'mag', 'user', 'imagepaths',
+                    array(
+                        'path' => $image_issue_cover_vpath,
+                        'fields' => array(
+                            'mag_ref' => $s_mags[$issue['mag_id']]['ref'],
+                            'issue_ref' => $issue['ref'],
+                            'issue_cover' => $issue['cover_img'],
+                        )
                     )
-                )
-            );
+                );
 
-            $issue['cover_img_icon_path'] = xarModAPIfunc(
-                'mag', 'user', 'imagepaths',
-                array(
-                    'path' => $image_issue_cover_icon_vpath,
-                    'fields' => array(
-                        'mag_ref' => $mag['ref'],
-                        'issue_ref' => $issue['ref'],
-                        'issue_cover' => $issue['cover_img'],
+                $issue['cover_img_icon_path'] = xarModAPIfunc(
+                    'mag', 'user', 'imagepaths',
+                    array(
+                        'path' => $image_issue_cover_icon_vpath,
+                        'fields' => array(
+                            'mag_ref' => $s_mags[$issue['mag_id']]['ref'],
+                            'issue_ref' => $issue['ref'],
+                            'issue_cover' => $issue['cover_img'],
+                        )
                     )
-                )
-            );
+                );
+            }
 
             $return[$issue['iid']] = $issue;
         }

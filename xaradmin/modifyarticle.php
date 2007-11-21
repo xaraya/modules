@@ -4,6 +4,7 @@
  * Modify or create an article.
  *
  * @todo Add privilege checks.
+ * @todo Fix a bug: saving a new article multiple times, results in multiple copies.
  *
  * Privilege check:
  * - if an existing article, then fetch the article, then the issue, and check against the mag ID [done]
@@ -14,12 +15,12 @@
 
 function mag_admin_modifyarticle($args)
 {
-    extract(args);
+    extract($args);
 
     // Get module parameters
     extract(xarModAPIfunc('mag', 'user', 'params',
         array(
-            'knames' => 'module,$modid,itemtype_articles'
+            'knames' => 'module,modid,itemtype_articles'
         )
     ));
 
