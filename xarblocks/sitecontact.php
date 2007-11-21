@@ -128,7 +128,7 @@ function sitecontact_sitecontactblock_display($blockinfo)
       $botreset=false;
     }
    if ($botreset== false) { //we don't want to set referer to our own form on an anti-bot return, keep the original referer
-        $HTTP_REFERER = xarServerGetVar('HTTP_REFERER');
+        $HTTP_REFERER = xarServer::getVar('HTTP_REFERER');
         if (empty($HTTP_REFERER)) {
             $HTTP_REFERER = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
         }

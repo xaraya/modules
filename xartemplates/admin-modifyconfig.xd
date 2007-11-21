@@ -72,7 +72,7 @@
         </xar:if>
 
         <xar:if condition="$tabmodule ne 'sitecontact'">
-            <xar:set name="regid">xarModGetIDFromName($tabmodule)</xar:set>
+            <xar:set name="regid">xarMod::getRegID($tabmodule)</xar:set>
         <xar:else />
             <xar:set name="regid">0</xar:set>
         </xar:if>
