@@ -1,0 +1,20 @@
+<xar:comment>
+    Provide a simple text search box for use in 'news' page types.
+    Query words are POSTed so as to retain any GET parameters already present in the URL.
+    In order to use GET for searching, it is necessary to strip off any GET parameters in
+    the URL and embed them in the form as hidden parameters. A generic solution to this
+    would be good at some point.
+</xar:comment>
+
+<xar:if condition="isset($extra.q)">
+    <div class="xarpages-searchbox">
+        <form method="post" action="#xarServerGetCurrentURL(array('q'=&gt;NULL))#">
+            <p>
+                <label for="articles_q"><xar:mlstring>Search this page:</xar:mlstring></label>
+                <input type="text" name="q" id="articles_q" value="#xarVarPrepForDisplay($extra.q)#" />
+                <input type="submit" name="articles_q_submit" value="#xarML('Search')#" />
+                <a href="#xarServerGetCurrentURL(array('q'=&gt;NULL))#"><xar:mlstring>Show all</xar:mlstring></a>
+            </p>
+        </form>
+    </div>
+</xar:if>

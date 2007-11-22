@@ -15,6 +15,9 @@
     <div class="xarpages-intro-text">#$current_page.dd.intro_text#</div>
 </xar:if>
 
+<xar:comment>Include a simple search box</xar:comment>
+<xar:template file="news-searchbox" type="module" module="xarpages" />
+
 <xar:comment>List of items</xar:comment>
 <xar:if condition="empty($extra.aid)">
     <xar:comment>Archive table - the user has elected to view an archive (only show on the overview)</xar:comment>
