@@ -101,7 +101,7 @@
                         </xar:mlstring>
                     </label>
                     <xar:set name="value"><xar:var scope="module" module="foo" name="itemsperpage" /></xar:set>
-                    <input type="text" name="itemsperpage" id="itemsperpage" value="#$value#" maxlength="3" class="xar-form-textshort" />
+                    <xar:data-input type="textbox" name="itemsperpage" value="$value" class="xar-form-textshort" />
                 </div>
                 <div class="xar-form-input-wrapper-after">
                     <xar:set name="checked">xarModVars::get('foo','SupportShortURLs')</xar:set>
@@ -127,7 +127,7 @@
                             </xar:mlstring>
                     </label>
                     <xar:set name="value"><xar:var scope="module" module="foo" name="aliasname" /></xar:set>
-                    <input type="text" name="aliasname" id="aliasname" value="#$value#" size="32" maxlength="100" />
+                    <xar:data-input type="textbox" name="aliasname" value="$value" size="32" maxlength="100" />
                 </div>
             </fieldset>
             <fieldset>
