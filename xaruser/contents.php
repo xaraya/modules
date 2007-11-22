@@ -78,7 +78,6 @@ function mag_user_contents($args)
     } else {
         xarModAPIfunc($module, 'user', 'cachevalues', $return);
     }
-
     return $return;
 }
 

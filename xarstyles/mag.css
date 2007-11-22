@@ -379,6 +379,7 @@ div.magblock-related ul {
     font-size: 90%;
     list-style-type: disc;
     list-style-position: inside;
+    padding: 0;
 }
 div.magblock-related ul li {
     list-style-type: disc;
