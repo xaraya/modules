@@ -3,7 +3,7 @@
  * Helpdesk Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -77,19 +77,23 @@ function helpdesk_admin_setup_security($args)
     if( xarModIsAvailable('security') && xarModIsHooked('security', 'helpdesk', TICKET_ITEMTYPE) ){ $data['security_hooked'] = true; }
     else{ $data['security_hooked'] = false; }
 
-
     $settings = SecuritySettings::factory(xarModGetIDFromName('helpdesk'), TICKET_ITEMTYPE);
 
     /*
         Check security levels
     */
-    if( helpdesk_level_to_numeric($settings->default_item_levels['user']) >= 60 ){ $data['security_user_levels_ok'] = true; }
-    else{ $data['security_user_levels_ok'] = false; }
 
-    if( isset($settings->default_item_levels[$tech_group_id])
-        and helpdesk_level_to_numeric($settings->default_item_levels[$tech_group_id]) >= 60 )
-    { $data['security_tech_levels_ok'] = true; }
-    else{ $data['security_tech_levels_ok'] = false; }
+    //if( helpdesk_level_to_numeric($settings->default_item_levels['user']) >= 60 ){
+    //    $data['security_user_levels_ok'] = true;
+    //} else {
+        $data['security_user_levels_ok'] = false;
+    //}
+
+    //if( isset($settings->default_item_levels[$tech_group_id]) && helpdesk_level_to_numeric($settings->default_item_levels[$tech_group_id]) >= 60 ) {
+    //    $data['security_tech_levels_ok'] = true;
+    //} else {
+        $data['security_tech_levels_ok'] = false;
+    //}
 
     if( !isset($settings->default_item_levels[0])
         or  helpdesk_level_to_numeric($settings->default_item_levels[0]) == 0 ){ $data['security_world_levels_ok'] = true; }
@@ -204,23 +208,16 @@ function helpdesk_level_to_numeric($level)
         , 'admin'   => SECURITY_ADMIN
     );
 
-    $numeric_level = 0;
-    if( is_array($level) )
-    {
-        foreach( $level as $key => $value )
-        {
-            if( $value == 1 )
-            {
-                $numeric_level += $map[$key];
+    (int)$numeric_level = 0;
+    if( is_array($level) ) {
+        foreach( $level as $key => $value ) {
+            if( $value == 1 ) {
+                (int)$numeric_level += $map[$key];
             }
         }
+    } else {
+       $numeric_level = $level;
     }
-    else
-    {
-        $numeric_level = $level;
-    }
-
     return $numeric_level;
 }
-
 ?>

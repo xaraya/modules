@@ -220,10 +220,11 @@ function helpdesk_userapi_gettickets($args)
             break;
     }
 
-    if( $count == true )
-    { $results = $dbconn->Execute($sql, $bindvars); }
-    else
-    { $results = $dbconn->SelectLimit($sql, $numitems, $startnum-1, $bindvars);  }
+    if( $count == true || $numitems == 0 ) {
+        $results = $dbconn->Execute($sql, $bindvars);
+    } else {
+        $results = $dbconn->SelectLimit($sql, $numitems, $startnum-1, $bindvars);
+    }
     if( !$results ){ return false; }
 
     if( $count == true ){ return $results->fields[0]; }

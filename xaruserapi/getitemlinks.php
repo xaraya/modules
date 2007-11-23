@@ -1,11 +1,23 @@
 <?php
 /**
+ * Helpdesk Module
+ *
+ * @package modules
+ * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Helpdesk Module
+ * @link http://www.abraisontechnoloy.com/
+ * @author Brian McGilligan <brianmcgilligan@gmail.com>
+ */
+/**
  * Generate links to given tickets
  *
  * @param array $args
  * @param integer $args['itemtype'] - itemtype of items
  * @param array $args['itemids'] - itemids to get info on
- * @return unknown
+ * @return array with itemlinks (URL, title and label for the link)
  */
 function helpdesk_userapi_getitemlinks($args)
 {

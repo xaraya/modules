@@ -86,7 +86,8 @@ function helpdesk_user_view($args)
             'statusfilter' => $statusfilter,
             'company'      => $company,
             'search_fields'=> $search_fields,
-            'keywords'     => $keywords
+            'keywords'     => $keywords,
+            'numitems'     => xarModGetVar('helpdesk', 'Default rows per page')
         )
     );
 
@@ -123,6 +124,7 @@ function helpdesk_user_view($args)
     );
     $url_template   = xarModURL('helpdesk', 'user', 'view', $args);
     $items_per_page = xarModGetVar('helpdesk', 'Default rows per page');
+    // The pager is erronous when number is set to 0: all
     $data['pager']  = xarTplGetPager($startnum, $totaltickets, $url_template, $items_per_page);
 
     $data['selections'] = array(

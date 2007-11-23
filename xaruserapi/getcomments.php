@@ -3,7 +3,7 @@
  * Helpdesk Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,9 +11,12 @@
  * @link http://www.abraisontechnoloy.com/
  * @author Brian McGilligan <brianmcgilligan@gmail.com>
  */
-/*
-    Get ticket comments
-*/
+/**
+ * Get ticket comments
+ * @param array $args argument array with:
+ * @param id itemid
+ * @return mixed comments The comments for this ticket
+ */
 function helpdesk_userapi_getcomments($args)
 {
     extract($args);
