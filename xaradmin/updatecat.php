@@ -102,32 +102,34 @@ function categories_admin_updatecat()
         */
         // Pass to API
         if (!$creating) {
-            if (!xarModAPIFunc('categories',
-                             'admin',
-                             'updatecat',
-                             array('cid'         => $cid,
-                                   'name'        => $name[$cid],
-                                   'description' => $description[$cid],
-                                   'image'       => $image[$cid],
-                                   'moving'      => $moving[$cid],
-                                   'refcid'      => $refcid[$cid],
-                                   'inorout'     => $inorout,
-                                   'rightorleft' => $rightorleft
-                               ))) return;
+            // Updating a category. Check we have privilage to do so.
+            if (!xarSecurityCheck('EditCategories', 1, 'Category', "All:$cid")) return;
+            if (!xarModAPIFunc('categories', 'admin', 'updatecat',
+                array(
+                    'cid'         => $cid,
+                    'name'        => $name[$cid],
+                    'description' => $description[$cid],
+                    'image'       => $image[$cid],
+                    'moving'      => $moving[$cid],
+                    'refcid'      => $refcid[$cid],
+                    'inorout'     => $inorout,
+                    'rightorleft' => $rightorleft
+                )
+            )) return;
         } else {
-            // Pass to API
-            if (!xarModAPIFunc('categories',
-                              'admin',
-                              'createcat',
-                              array(
-                                    'name'        => $name[$cid],
-                                    'description' => $description[$cid],
-                                    'image'       => $image[$cid],
-                                    'catexists'   => $catexists[$cid],
-                                    'refcid'      => $refcid[$cid],
-                                    'inorout'     => $inorout,
-                                    'rightorleft' => $rightorleft
-                                   ))) return;
+            // Creating a category. Check we have privilage to do so.
+            if (!xarSecurityCheck('AddCategories')) return;
+            if (!xarModAPIFunc('categories', 'admin', 'createcat',
+                array(
+                    'name'        => $name[$cid],
+                    'description' => $description[$cid],
+                    'image'       => $image[$cid],
+                    'catexists'   => $catexists[$cid],
+                    'refcid'      => $refcid[$cid],
+                    'inorout'     => $inorout,
+                    'rightorleft' => $rightorleft
+                )
+            )) return;
         }
     }
     if ($creating) {
