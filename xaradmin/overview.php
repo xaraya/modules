@@ -7,7 +7,6 @@
  *
  * @subpackage xarbb Module
  */
-
 /**
  * Overview displays standard Overview page
  *
@@ -16,8 +15,7 @@
  *
  * @author John Cox <niceguyeddie@xaraya.com>
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
- * @returns array xarTplModule with $data containing template data
- * @return array containing the menulinks for the overview item on the main manu
+ * @return array xarTplModule with $data containing template data
  * @since 3 Sept 2005
  */
 function xarbb_admin_overview()
@@ -26,9 +24,9 @@ function xarbb_admin_overview()
     if (!xarSecurityCheck('AdminxarBB', 0)) return;
 
     $data=array();
-    
+
     // if there is a separate overview function return data to it
-    // else just call the main function that usually displays the overview 
+    // else just call the main function that usually displays the overview
 
     return xarTplModule('xarbb', 'admin', 'main', $data, 'main');
 }

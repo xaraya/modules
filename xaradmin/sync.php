@@ -1,7 +1,7 @@
 <?php
 /**
  * Re-synchronise the totals and last posts of forums
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -9,14 +9,14 @@
  *
  * @subpackage  xarbb Module
  * @author mikespub
-*/ 
+*/
 
 /**
  * Re-synchronise forums and topics
  *
  * @param $args['fid'] int forum id (optional)
  * @param $args['withtopics'] bool update topics too (optional, default false)
- * @returns void
+ * @return void
 */
 function xarbb_admin_sync($args)
 {

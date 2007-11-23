@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2005 by the Xaraya Development Team.
@@ -12,8 +11,8 @@
 
 /**
  * Manage definition of instances for privileges (unfinished)
+ * @return array
  */
-
 function xarbb_admin_privileges($args)
 {
     extract($args);
