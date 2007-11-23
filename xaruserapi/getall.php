@@ -460,13 +460,33 @@ function articles_userapi_getall($args)
         );
 
         // Inserting the corresponding Category ID in the Article Description
+        //also check pubdate security based on all article instances as we have cid here as well
         $delete = array();
         $cachesec = array();
         foreach ($articles as $key => $article) {
+            // Get the article settings for this publication type -- sheesh more hits
+            //try cache
+            $checkpubdate = xarVarGetCached('articles.checkdate',$item['pubtypeid']);
+            if (!isset($checkpubdate)) {
+                if (empty($item['pubtypeid'])) {
+                    $settings = unserialize(xarModGetVar('articles', 'settings'));
+                } else {
+                    $settings = unserialize(xarModGetVar('articles', 'settings.'.$article['pubtypeid']));
+                }
+                $checkpubdate = isset($settings['checkpubdate'])?$settings['checkpubdate']:0;
+                xarVarSetCached('articles.checkdate',$article['pubtypeid'],$checkpubdate);
+            }
             if (isset($cids[$article['aid']]) && count($cids[$article['aid']]) > 0) {
                 $articles[$key]['cids'] = $cids[$article['aid']];
                 foreach ($cids[$article['aid']] as $cid) {
-                    if (!xarSecurityCheck('ViewArticles', 0, 'Article', "$article[pubtypeid]:$cid:$article[authorid]:$article[aid]")) {
+                    
+                    if (($checkpubdate ==1) && $article['pubdate']> time()) { //don't display article unless a person has edit level privs
+                        if (!xarSecurityCheck('EditArticles',0,'Article',"$article[pubtypeid]:$cid:$article[authorid]:$article[aid]")) {
+                          $delete[$key] = 1;
+                          break;
+                        }
+                    //now check lower level security
+                    }elseif (!xarSecurityCheck('ViewArticles',0,'Article',"$article[pubtypeid]:$cid:$article[authorid]:$article[aid]")) {
                         $delete[$key] = 1;
                         break;
                     }
@@ -481,7 +501,13 @@ function articles_userapi_getall($args)
                     }
                 }
             } else {
-                if (!xarSecurityCheck('ViewArticles', 0, 'Article', "$article[pubtypeid]:All:$article[authorid]:$article[aid]")) {
+
+                if (($checkpubdate ==1) && $article['pubdate']> time()) { //don't display article unless a person has edit level privs
+                    if (!xarSecurityCheck('EditArticles',0,'Article',"$article[pubtypeid]:All:$article[authorid]:$article[aid]")) return;
+                    $delete[$key] = 1;
+                    continue;
+                //now check the lower level security
+                } elseif (!xarSecurityCheck('ViewArticles',0,'Article',"$article[pubtypeid]:All:$article[authorid]:$article[aid]")) {
                     $delete[$key] = 1;
                     continue;
                 }

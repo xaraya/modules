@@ -48,7 +48,7 @@ function articles_admin_updateconfig()
     if(!xarVarFetch('ptid',              'isset', $ptid,              0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('dotransform',       'isset', $dotransform,       0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('titletransform',    'isset', $titletransform,    0,  XARVAR_NOT_REQUIRED)) {return;}
-
+    if(!xarVarFetch('checkpubdate',      'isset', $checkpubdate,      0,  XARVAR_NOT_REQUIRED)) {return;}
     if (empty($ptid)) {
         $ptid = '';
         if (!xarSecurityCheck('AdminArticles')) return;
@@ -114,7 +114,7 @@ function articles_admin_updateconfig()
     $settings['defaultstatus']      = $defaultstatus;
     $settings['defaultsort']        = $defaultsort;
     $settings['usetitleforurl']     = $usetitleforurl;
-
+    $settings['checkpubdate']       = $checkpubdate;
     if (!empty($ptid)) {
         xarModSetVar('articles', 'settings.'.$ptid, serialize($settings));
 
