@@ -212,22 +212,25 @@ div.mag-article div.mag-article-authors p {
 
 
 /* Article display page thumbnail */
-div.mag-article div.mag-article-body div.thumbnail-wrapper {
+div.mag-article div.mag-article-body div.thumbnail-wrapper,
+div.mag-article div.mag-article-intro-block div.thumbnail-wrapper{
     width: 200px;
     padding: 0.25em;
     border: 1px solid #333333;
     background-color: #ffffff;
 }
-div.mag-article div.mag-article-body div.thumbnail-wrapper img {
+div.mag-article div.mag-article-body div.thumbnail-wrapper img,
+div.mag-article div.mag-article-intro-block div.thumbnail-wrapper img {
     width: 200px;
     border: none;
 }
-div.mag-article div.mag-article-body div.thumbnail-wrapper a {
+div.mag-article div.mag-article-body div.thumbnail-wrapper a,
+div.mag-article div.mag-article-intro-block div.thumbnail-wrapper a{
     text-decoration: none;
 }
 /* Extra classes for aligning the thumbnail images. Also falls back to non-thumbnailed images. */
-div.mag-article div.mag-article-body div.thumbnailed-right,
-div.mag-article div.mag-article-body img.thumbnailed-right {
+div.mag-article div.mag-article-body div.thumbnailed-right, div.mag-article div.mag-article-intro-block div.thumbnailed-right,
+div.mag-article div.mag-article-body img.thumbnailed-right, div.mag-article div.mag-article-intro-block img.thumbnailed-right {
     float: right;
     margin-left: 1em;
     margin-top: 1em;

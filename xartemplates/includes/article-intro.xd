@@ -4,12 +4,12 @@
 <xar:if condition="!empty($article.image1_path) or !empty($article.summary)">
     <div class="mag-article-intro-block">
         <xar:if condition="!empty($article.image1_path)">
-            <img src="#$article.image1_path#" alt="#xarvarPrepForDisplay($article.image1_alt)#" title="#xarvarPrepForDisplay($article.image1_alt)#" class="mag-article-main-image" />
+            <img src="#$article.image1_path#" alt="#xarvarPrepForDisplay($article.image1_alt)#" title="#xarvarPrepForDisplay($article.image1_alt)#" class="mag-article-main-image thumbnailed-right" />
         </xar:if>
         <xar:if condition="!empty($article.summary)">
             <xar:comment>TODO: force the summary to be HTML</xar:comment>
             #$article.summary#
         </xar:if>
-        <div style="clear: both;"></div>
+        <xar:comment><div style="clear: both;"></div></xar:comment>
     </div>
 </xar:if>
