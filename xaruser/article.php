@@ -122,7 +122,7 @@ function mag_user_article($args)
                         array(
                             'status' => 'PUBLISHED',
                             'numitems' => 1,
-                            'aid' => $article['issue_id'],
+                            'iid' => $article['issue_id'],
                         )
                     );
                 }

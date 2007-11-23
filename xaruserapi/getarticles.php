@@ -66,7 +66,7 @@ function mag_userapi_getarticles($args)
     }
 
     // Article reference
-    if (!empty($ref) && is_strimng($ref)) {
+    if (!empty($ref) && is_string($ref)) {
         $where[] = 'ref eq ' . $dbconn->qstr($ref);
     }
 
