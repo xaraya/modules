@@ -73,6 +73,10 @@ function mag_user_article($args)
             $return['mid'] = $mid;
             $return['mag'] = $mag;
 
+            // Check if we have edit privileges on this magazine.
+            // If we have, then we can put edit links all over the place.
+            if (xarSecurityCheck('EditMag', 0, 'Mag', (string)$mid)) $mag_editor = true;
+
             // Get the article details.
             $article_select = array(
                 'numitems' => 2,
@@ -303,6 +307,8 @@ function mag_user_article($args)
     if (!$premium_bypass && !empty($article['aid'])) {
         xarModAPIfunc($module, 'admin', 'hitarticle', array('aid' => $article['aid']));
     }
+
+    if (!empty($mag_editor)) $return['mag_editor'] = true;
 
     return $return;
 }

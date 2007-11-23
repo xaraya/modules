@@ -18,6 +18,15 @@
 
 <xar:set name="style_class_suffix">#$style#</xar:set>
 
+<xar:if condition="!empty($mag_editor)">
+    <div>
+        <a href="#xarModURL('mag','admin','modify',array('aid'=&gt;$article.aid,'return_url'=&gt;xarServerGetCurrentURL(array(),false)))#">
+            <xar:mlstring>Edit Article</xar:mlstring>
+        </a>
+        | <a href="#xarModURL('mag','admin','modifyarticle',array('mid'=&gt;$mag.mid,'iid'=&gt;$issue.iid))#"><xar:mlstring>New Article</xar:mlstring></a>
+    </div>
+</xar:if>
+
 <div class="mag mag-article">
 <div class="mag-article-style-#$style_class_suffix#">
 
