@@ -1,15 +1,15 @@
 
 <div class="magblock-latestissue">
     <div class="magblock-latestissue-inner">
-        <h4>#$issue.title#</h4>
+        <h4>#xarVarPrepForDisplay($issue.title)#</h4>
         <xar:if condition="!empty($issue.cover_img_path)">
             <a href="#xarModAPIfunc('mag', 'user', 'url', array('func'=&gt;'current', 'mag'=&gt;$mag.ref, 'pid' =&gt; $pid))#">
-                <img src="#$issue.cover_img_path#" />
+                <img src="#$issue.cover_img_path#" alt="#xarVarPrepForDisplay($issue.title)#" title="#xarVarPrepForDisplay($issue.title)#" />
             </a>
         </xar:if>
-        <ul>
-            <li><a href="#xarModAPIfunc('mag', 'user', 'url', array('func'=&gt;'current', 'mag'=&gt;$mag.ref, 'pid' =&gt; $pid))#">Latest Issue</a></li>
-            <li><a href="#xarModAPIfunc('mag', 'user', 'url', array('func'=&gt;'archive', 'mag'=&gt;$mag.ref, 'pid' =&gt; $pid))#">Archive</a></li>
-        </ul>
+        <p>
+            <a href="#xarModAPIfunc('mag', 'user', 'url', array('func'=&gt;'current', 'mag'=&gt;$mag.ref, 'pid'=&gt;$pid))#">Latest Issue</a>
+            | <a href="#xarModAPIfunc('mag', 'user', 'url', array('func'=&gt;'archive', 'mag'=&gt;$mag.ref, 'pid'=&gt;$pid))#">Archive</a>
+        </p>
     </div>
 </div>

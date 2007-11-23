@@ -1,0 +1,25 @@
+<xar:comment>
+    Display a group of issues (grouped by year, month, whatever).
+    subdata:
+        $issues: all issues available, indexed by issue id
+        $mag: magazine record
+        $issueids: an array of issue IDs to display.
+</xar:comment>
+
+<xar:if condition="!empty($mag) and !empty($issues) and !empty($issueids)">
+    <xar:loop name="$issueids" id="issueids">
+        <xar:set name="issue">#$issues[$loop:issueids:item]#</xar:set>
+
+        <div class="mag-issue-wrapper" >
+            <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'contents','mag'=&gt;$mag.ref,'issue'=&gt;$issue.ref))#" title="#xarML('Read this issue')#">
+                <img src="#$issue.cover_img_path#" alt="#xarVarPrepForDisplay($issue.title)#: #xarVarPrepForDisplay($issue.tagline)#"/><br />
+            </a>
+            <p>
+                <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'contents','mag'=&gt;$mag.ref,'issue'=&gt;$issue.ref))#" title="#xarML('Read this issue')#">
+                    #xarVarPrepForDisplay($issue.title)#
+                </a>
+            </p>
+        </div>
+        
+    </xar:loop>
+</xar:if>

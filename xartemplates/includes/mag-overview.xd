@@ -1,9 +1,11 @@
 <div class="mag-overview">
-<h2>
-    <xar:ml>
-        <xar:mlstring>#(1)</xar:mlstring>
-        <xar:mlvar>#xarVarPrepForDisplay($mag.title)#</xar:mlvar>
-    </xar:ml>
+<h2 class="mag-title">
+    <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'mags','mag'=&gt;$mag.ref))#">
+        <xar:ml>
+            <xar:mlstring>#(1)</xar:mlstring>
+            <xar:mlvar>#xarVarPrepForDisplay($mag.title)#</xar:mlvar>
+        </xar:ml>
+    </a>
 </h2>
 <xar:if condition="!empty($mag.logo_path)">
     <xar:set name="logo_alt">
@@ -13,7 +15,9 @@
         </xar:ml>
     </xar:set>
     <p class="mag-maglogo">
-        <img src="#$mag.logo_path#" alt="#$logo_alt#" />
+        <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'mags','mag'=&gt;$mag.ref))#">
+            <img src="#$mag.logo_path#" alt="#$logo_alt#" />
+        </a>
     </p>
 </xar:if>
 <xar:if condition="!empty($mag.subtitle)">

@@ -14,6 +14,8 @@
         </h1>
         <p class="mag-synopsis">#$mag.subtitle#</p>
 
+        <xar:set name="mag_ref">#$mag.ref#</xar:set>
+
         <xar:comment>TODO: call up a hook template here so text can be inserted by the theme</xar:comment>
 
         <xar:comment>Loop for each year to start with</xar:comment>
@@ -46,22 +48,19 @@
                             </h3>
                         </xar:if>
 
-                        <xar:comment>Display the issues</xar:comment>
-                        <xar:loop name="$loop:months:item" id="issueids">
-                            <xar:set name="issue">#$issues[$loop:issueids:item]#</xar:set>
+                        <xar:comment>
+                            Display the issues.
+                            Use a sub-template to do this, so that each magazine type can have its own
+                            version (some may use front page images, some just text etc.
+                            The sub-template is 'archive-issues-{mag-ref}' falling back to 'archive-issues'.
+                        </xar:comment>
 
-                            <div class="mag-issue-wrapper" >
-                                <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'contents','mag'=&gt;$mag.ref,'issue'=&gt;$issue.ref))#" title="#xarML('Read this issue')#">
-                                    <img src="#$issue.cover_img_path#" alt="#xarVarPrepForDisplay($issue.title)#: #xarVarPrepForDisplay($issue.tagline)#"/><br />
-                                </a>
-                                <p>
-                                    <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'contents','mag'=&gt;$mag.ref,'issue'=&gt;$issue.ref))#" title="#xarML('Read this issue')#">
-                                        #xarVarPrepForDisplay($issue.title)#
-                                    </a>
-                                </p>
-                            </div>
-                            
-                        </xar:loop>
+                        <xar:if condition="!empty($style) and xarModAPIfunc('mag','user','testtemplate',array('templateName'=&gt;'archive-issues','templateSuffix'=&gt;$mag_ref))">
+                            <xar:template file="archive-issues-$mag_ref" module="mag" subdata="#array('mag'=&gt;$mag,'issues'=&gt;$issues,'issueids'=&gt;$loop:months:item)#" />
+                        <xar:else />
+                            <xar:template file="archive-issues" module="mag" subdata="#array('mag'=&gt;$mag,'issues'=&gt;$issues,'issueids'=&gt;$loop:months:item)#" />
+                        </xar:if>
+                        
                     </xar:loop>
 
                 </xar:loop>
