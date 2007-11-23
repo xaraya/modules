@@ -751,6 +751,18 @@
                     </xar:mlstring>
                     <em>($prevart + $nextart)</em> </label>
             </div>
+           <div class="xar-form-input-wrapper-after">
+                <xar:if condition="$checkpubdate">
+                    <input type="checkbox" name="checkpubdate" id="checkpubdate" value="1" checked="checked" />
+                    <xar:else />
+                    <input type="checkbox" name="checkpubdate" id="checkpubdate" value="1" />
+                </xar:if>
+                <label for="checkpubdate" class="help" title="#xarML('Do not display article if pubdate is less than current date/time')#">
+                    <xar:mlstring>
+                        Display article only if current date is later than publication date (submitter level or less)
+                    </xar:mlstring>
+                </label>
+            </div>
         </fieldset>
         <fieldset class="xar-norm">
             <legend>
