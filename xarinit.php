@@ -18,7 +18,7 @@
  *
  * @access public
  * @param none
- * @returns bool
+ * @return bool
  * @throws DATABASE_ERROR
  */
 function pubsub_init()
@@ -188,7 +188,7 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
     xarRegisterMask('AdminPubSub','All','pubsub','All','All','ACCESS_ADMIN');
 
     // Initialisation successful
-    return true;
+    return pubsub_upgrade('1.5.0');
 }
 
 /**
@@ -387,6 +387,9 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
 
             $result = &$dbconn->Execute($query);
             if (!$result) return;
+        case '1.5.0':
+            // We can now use local templates in the pubsub/xartemplates dir
+            xarModSetVar('pubsub','usetemplateids',1);
         default:
             break;
     } // END switch

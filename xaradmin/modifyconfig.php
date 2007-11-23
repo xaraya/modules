@@ -143,6 +143,7 @@ function pubsub_admin_modifyconfig()
     $data['includechildren'] = xarModGetVar('pubsub','includechildren');
     $data['allindigest'] = xarModGetVar('pubsub','allindigest');
     $data['wrapper'] = xarModGetVar('pubsub','wrapper');
+    $data['usetemplateids'] = xarModGetVar('pubsub','usetemplateids');
 
     if (xarModIsAvailable('scheduler')) {
         $data['intervals'] = xarModAPIFunc('scheduler','user','intervals');

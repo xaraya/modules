@@ -3,7 +3,7 @@
  * Pubsub module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -22,7 +22,7 @@
  *
  * @param $args['userid'] the subscriber OR
  * @param $args['email'] EMail address of anonymous user
- *
+ * @param int actionid The id for the action to take
  * @param $args['groupdescr'] <unknown>
  * @returns output
  * @return output with pubsub information
@@ -53,9 +53,13 @@ function pubsub_userapi_subscribe($args)
         $email = '';
     }
 
-    if (!isset($extra))
+    if (!isset($extra)) {
         $extra = '';
-
+    }
+    // use htmlemail or not
+    if (!isset($actionid)) {
+        $actionid = 1;
+    }
     if (!isset($groupdescr))
         $groupdescr = 'Subscribe';
 
@@ -74,7 +78,7 @@ function pubsub_userapi_subscribe($args)
                        'user',
                        'adduser',
                         array('eventid' => $eventid
-                             ,'actionid' => 1
+                             ,'actionid' => $actionid
                              ,'userid' => $userid
                              ,'email' => $email
                               ))) {

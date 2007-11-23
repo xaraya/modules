@@ -73,7 +73,7 @@
             <label class="xar-form-label">
                 <xar:mlstring>Item Type</xar:mlstring>
             </label>
-            <input type="text" name="sub_itemtype"/></span>
+            <input type="text" name="sub_itemtype"/>
         </div>
         <div class="xar-form-input-wrapper">
             <label class="xar-form-label">
@@ -88,6 +88,12 @@
                         <option value="#$category['cid']#">#$indent# #$category['name']#</option>
                     </xar:foreach>
              </select>
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label">
+                <xar:mlstring>Send HTML email?</xar:mlstring>
+            </label>
+            <input type="checkbox" name="sub_htmlmail" checked="checked" />
         </div>
         <div class="xar-form-input-wrapper">
             <label class="xar-form-label">

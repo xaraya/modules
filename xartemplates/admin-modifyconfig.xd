@@ -22,36 +22,42 @@
        <div class="xar-form-input-wrapper">
           <label for="numitems" class="xar-form-label"><xar:mlstring>Items per Page :</xar:mlstring></label>
           <input type="text" name="numitems" id="numitems" value="#$numitems#" size="4" />
-      </div>
-      <div class="xar-form-input-wrapper-after">
+       </div>
+       <div class="xar-form-input-wrapper-after">
           <xar:if condition="!empty($subjecttitle)">
               <input type="checkbox" name="subjecttitle" id="subjecttitle" value="1" checked="checked" />
           <xar:else/>
               <input type="checkbox" name="subjecttitle" id="subjecttitle" value="1" />
           </xar:if>
           <label for="subjecttitle"><xar:mlstring>Use Content's Title for EMail Subject</xar:mlstring></label>
-     </div>
-
-    <div class="xar-form-input-wrapper-after">
-        <xar:if condition="!empty($includechildren)">
-            <input type="checkbox" name="includechildren" id="includechildren" value="1" checked="checked" />
-        <xar:else/>
-            <input type="checkbox" name="includechildren" id="includechildren" value="1" />
-        </xar:if>
-        <label for="includechildren"><xar:mlstring> Include Child Categories in Subscriptions:</xar:mlstring></label>
-    </div>
-  <div class="xar-form-input-wrapper-after">
-      <xar:if condition="!empty($allindigest)">
-      <input type="checkbox" name="allindigest" id="allindigest" value="1" checked="checked" />
-        <xar:else />
-      <input type="checkbox" name="allindigest" id="allindigest" value="1"  />
-    </xar:if>
-        <label for="includechildren"><xar:mlstring>Send only one email per user</xar:mlstring>
-        <xar:mlstring>(you may create a template, call it 'wrapper', with a variable called # $contents #</xar:mlstring>
-        </label>
- </div>
+       </div>
+       <div class="xar-form-input-wrapper-after">
+          <xar:if condition="!empty($usetemplateids)">
+              <input type="checkbox" name="usetemplateids" id="usetemplateids" value="1" checked="checked" />
+          <xar:else/>
+              <input type="checkbox" name="usetemplateids" id="usetemplateids" value="1" />
+          </xar:if>
+          <label for="usetemplateids"><xar:mlstring>Use the template id for templates</xar:mlstring></label>
+       </div>
+       <div class="xar-form-input-wrapper-after">
+          <xar:if condition="!empty($includechildren)">
+              <input type="checkbox" name="includechildren" id="includechildren" value="1" checked="checked" />
+          <xar:else/>
+              <input type="checkbox" name="includechildren" id="includechildren" value="1" />
+          </xar:if>
+          <label for="includechildren"><xar:mlstring> Include Child Categories in Subscriptions:</xar:mlstring></label>
+       </div>
+       <div class="xar-form-input-wrapper-after">
+          <xar:if condition="!empty($allindigest)">
+              <input type="checkbox" name="allindigest" id="allindigest" value="1" checked="checked" />
+                <xar:else />
+              <input type="checkbox" name="allindigest" id="allindigest" value="1"  />
+          </xar:if>
+          <label for="includechildren"><xar:mlstring>Send only one email per user</xar:mlstring>
+              <xar:mlstring>(you may create a template, call it 'wrapper', with a variable called # $contents #</xar:mlstring>
+          </label>
+       </div>
     </fieldset>
-
     <fieldset>
         <legend>
             <xar:mlstring>Configuration of Hooked Modules</xar:mlstring>

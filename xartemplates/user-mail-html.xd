@@ -1,0 +1,19 @@
+<p>
+   #$htmlcontent#
+</p>
+<p>
+    <xar:mlstring>Link to the item:</xar:mlstring>
+    <a href="#$link#">#$title#</a>
+</p>
+
+<xar:comment>
+You have the following paramaters available:
+$userid
+$name;
+$modname;
+$itemtype;
+$objectid;
+If the itemlinks did work:
+$title = $itemlinks[$objectid]['label'];
+$link =  $itemlinks[$objectid]['url'];
+</xar:comment>

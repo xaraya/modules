@@ -3,7 +3,7 @@
  * Pubsub Version vars
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -15,7 +15,7 @@
  */
 $modversion['name']         = 'Pubsub';
 $modversion['id']           = '181';
-$modversion['version']      = '1.5.0';
+$modversion['version']      = '1.5.1';
 $modversion['displayname']  = xarML('Pubsub');
 $modversion['description']  = 'Allow users to subscribe to updates to events';
 $modversion['official']     = 1;

@@ -3,7 +3,7 @@
  * Pubsub module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -19,8 +19,7 @@
  * @param $args['pubsubid'] the subscription id
  * @param $args['objectid'] the specific object in the module
  * @param $args['templateid'] the template id for this job
- * @returns bool
- * @return true on success, false on failure
+ * @return bool true on success, false on failure
  * @throws BAD_PARAM, DATABASE_ERROR
  */
 function pubsub_adminapi_runjob($args)
@@ -74,15 +73,13 @@ function pubsub_adminapi_runjob($args)
 
     list($actionid,$userid,$eventid,$modid,$itemtype,$email) = $result->fields;
 
-    if( $userid != -1 )
-    {
+    if( $userid != -1 ) {
         $info = xarUserGetVar('email',$userid);
         $name = xarUserGetVar('uname',$userid);
     } else {
         $emailinfo = explode(' ',$email,2);
         $info    = $emailinfo[0];
-        if( isset($emailinfo[1]) )
-        {
+        if( isset($emailinfo[1]) ) {
             $name = $emailinfo[1];
         } else {
             $name = '';
@@ -117,7 +114,7 @@ function pubsub_adminapi_runjob($args)
         // Database information
         $pubsubtemplatestable = $xartable['pubsub_templates'];
         // Get the (compiled) template to use
-        $query = "SELECT xar_compiled
+        $query = "SELECT xar_compiled, xar_template
                   FROM $pubsubtemplatestable
                   WHERE xar_templateid = ?";
         $result   = $dbconn->Execute($query, array((int)$templateid));
@@ -132,6 +129,7 @@ function pubsub_adminapi_runjob($args)
         }
 
         $compiled = $result->fields[0];
+        $templatecontent = $result->fields[1];
 
         if (empty($compiled)) {
             $msg = xarML('Invalid #(1) template',
@@ -140,6 +138,8 @@ function pubsub_adminapi_runjob($args)
                      new SystemException($msg));
             return;
         }
+        // Close the result
+        $result->Close();
 
         $tplData = array();
         $tplData['userid'] = $userid;
@@ -147,6 +147,7 @@ function pubsub_adminapi_runjob($args)
         $tplData['module'] = $modname;
         $tplData['itemtype'] = $itemtype;
         $tplData['itemid'] = $objectid;
+        $tplData['templatecontent'] =$templatecontent;
 
         // (try to) retrieve a title and link for this item
         $itemlinks = xarModAPIFunc($modname,'user','getitemlinks',
@@ -164,15 +165,45 @@ function pubsub_adminapi_runjob($args)
         // *** TODO  ***
         // need to define some variables for user firstname and surname,etc.
         // might not be able to use the normal BL user vars as they would
-        // probabaly expand to currently logged in user, not the user for
+        // probably expand to currently logged in user, not the user for
         // this event.
         // But you can use $userid to get the relevant user, as above...
 
-        // call BL with the (compiled) template to parse it and generate the HTML
-        $html = xarTplString($compiled, $tplData);
-        $plaintext = strip_tags($html);
+         if( xarModGetVar('pubsub','subjecttitle') == 1 ) {
+             $subject = $tplData['title'];
+         } else {
+             $subject = xarML('Publish / Subscribe Notification');
+         }
+         $fmail = xarConfigGetVar('adminmail');
+         $fname = xarConfigGetVar('adminmail');
 
-        if ($action == "htmlmail") {
+        // call BL with the (compiled) template to parse it and generate the HTML free plaintext version
+        $html = xarTplString($compiled, $tplData);
+        $tplData['htmlcontent'] = $html;
+        $tplData['textcontent'] = strip_tags($html);
+
+        $UseTemplateVersions = xarModGetVar('pubsub', 'UseTemplateVersions') ? true : false;
+        if ($UseTemplateVersions) {
+             $htmltemplate = 'html-' . $templateid;
+             $texttemplate = 'text-' . $templateid;
+        } else {
+             $htmltemplate = 'html';
+             $texttemplate = 'text';
+        }
+
+        $htmlmessage= xarTplModule('pubsub','user','mail',$tplData,$htmltemplate);
+        if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
+            xarErrorHandled();
+            // Default to the module template
+            $htmlmessage= xarTplModule('pubsub', 'user', 'mail',$tplData,'html');
+        }
+        $textmessage= xarTplModule('pubsub','user','mail', $tplData,$texttemplate);
+        if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
+            xarErrorHandled();
+            $textmessage= xarTplModule('pubsub', 'user', 'mail',$tplData,'text');
+        }
+
+            /*
             $boundary = "b" . md5(uniqid(time()));
             $message = "From: xarConfigGetVar('adminmail')\r\nReply-to: xarConfigGetVar('adminmail')\r\n";
             $message .= "Content-type: multipart/mixed; ";
@@ -188,37 +219,38 @@ function pubsub_adminapi_runjob($args)
             $message .= "Content-type: text/html\r\n";
             $message .= "Content-Transfer-Encoding: base64";
             $message .= "\r\n\r\n" . chunk_split(base64_encode($html)) . "\r\n";
-         } else {
-            // plaintext mail
-            $message=$plaintext;
-            // add the link at the bottom, because it's probably gone with the strip_tags
-            $message .= "\n" . xarML('Link: #(1)',$tplData['link']);
-         }
-      // TODO: make configurable too ?
 
-         if(  xarModGetVar('pubsub','subjecttitle') == 1 )
-         {
-             $subject = $tplData['title'];
-         } else {
-             $subject = xarML('Publish / Subscribe Notification');
-         }
-         $fmail = xarConfigGetVar('adminmail');
-         $fname = xarConfigGetVar('adminmail');
+            */
+        if ($actionid == 2 ) {
+             // Send the mail using the mail module
+             if (!xarModAPIFunc('mail',
+                                'admin',
+                                'sendhtmlmail',
+                                array('info'     => $info,
+                                      'name'     => $name,
+                                      'subject'  => $subject,
+                                      'message'  => $textmessage,
+                                      'htmlmessage' => $htmlmessage,
+                                      'from'     => $fmail,
+                                      'fromname' => $fname,
+                                      'usetemplates' => false))) return;
+        } else {
+             // plaintext mail
+             if (!xarModAPIFunc('mail',
+                                'admin',
+                                'sendmail',
+                                array('info'     => $info,
+                                      'name'     => $name,
+                                      'subject'  => $subject,
+                                      'message'  => $textmessage,
+                                      'htmlmessage' => $htmlmessage,
+                                      'from'     => $fmail,
+                                      'fromname' => $fname,
+                                      'usetemplates' => false))) return;
+        }
+        // delete job from queue now it has run
+        xarModAPIFunc('pubsub','admin','deljob', array('handlingid' => $handlingid));
 
-         // Send the mail using the mail module
-         if (!xarModAPIFunc('mail',
-                            'admin',
-                            'sendmail',
-                            array('info'     => $info,
-                                  'name'     => $name,
-                                  'subject'  => $subject,
-                                  'message'  => $message,
-                                  'from'     => $fmail,
-                                  'fromname' => $fname))) return;
-
-             // delete job from queue now it has run
-             xarModAPIFunc('pubsub','admin','deljob',
-                           array('handlingid' => $handlingid));
     } else {
         // invalid action - update queue accordingly
         xarModAPIFunc('pubsub','admin','updatejob',
@@ -231,7 +263,7 @@ function pubsub_adminapi_runjob($args)
                      'Pubsub');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                  new SystemException($msg));
-        return;
+        return false;
     }
     return true;
 }

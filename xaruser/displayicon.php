@@ -3,7 +3,7 @@
  * Pubsub module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -21,8 +21,7 @@
  *
  * @param $args['extrainfo'] category, module, itemtype and URL to return
  * @param $args['layout'] layout to use (icon or text) - not when using hooks
- * @returns output
- * @return output with pubsub information
+ * @return array output with pubsub information
  */
 function pubsub_user_displayicon($args)
 {

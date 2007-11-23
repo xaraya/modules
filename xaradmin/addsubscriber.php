@@ -19,6 +19,7 @@
  * @param sub_itemtype
  * @param sub_category
  * @param sub_email
+ * @param sub_htmlmail
  * @return bool true
  */
 function pubsub_admin_addsubscriber()
@@ -28,7 +29,7 @@ function pubsub_admin_addsubscriber()
     xarVarFetch('sub_itemtype','isset',$sub_itemtype,'', XARVAR_DONT_SET);
     xarVarFetch('sub_category','isset',$sub_category,'', XARVAR_DONT_SET);
     xarVarFetch('sub_email','isset',$sub_email,'', XARVAR_DONT_SET);
-
+    xarVarFetch('sub_htmlmail','checkbox',$sub_htmlmail,true, XARVAR_DONT_SET);
     // Confirm authorisation code
 //    if (!xarSecConfirmAuthKey()) return;
     // Security Check
@@ -38,6 +39,7 @@ function pubsub_admin_addsubscriber()
     $sub_args['modid']    = $sub_module;
     $sub_args['cid']      = $sub_category;
     $sub_args['itemtype'] = $sub_itemtype;
+    $sub_args['actionid'] = $sub_htmlmail ? 2:1 ;
 
     if( strstr($sub_email,"\n") )
     {

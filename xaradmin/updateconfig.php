@@ -26,7 +26,7 @@ function pubsub_admin_updateconfig()
     xarVarFetch('includechildren','isset',  $includechildren,'', XARVAR_DONT_SET);
     xarVarFetch('allindigest',  'isset',    $allindigest,   '', XARVAR_DONT_SET);
     xarVarFetch('wrapper',      'isset',    $wrapper,       '', XARVAR_DONT_SET);
-
+    xarVarFetch('usetemplateids', 'isset',  $usetemplateids, 1, XARVAR_DONT_SET);
     // Security Check
     if (!xarSecurityCheck('AdminPubSub')) return;
 
@@ -65,7 +65,7 @@ function pubsub_admin_updateconfig()
     } else {
         xarModSetVar('pubsub','allindigest',1);
     }
-
+    xarModSetVar('pubsub','usetemplateids',$usetemplateids);
 
     if (xarModIsAvailable('scheduler')) {
         if (!xarVarFetch('interval', 'str:1', $interval, '', XARVAR_NOT_REQUIRED)) return;
