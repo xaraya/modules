@@ -33,7 +33,7 @@
                <li><xar:mlstring>Hook BBCode or HTML to allow formatted user input and also the option to supply linebreaks for plain text.</xar:mlstring></li>
                <li><xar:mlstring>Turn off modify 'stamps' in topics and posts and hook Changelog module to allow enhanced changelog management of posts and topics</xar:mlstring></li>
                <li><xar:mlstring>If you have imported the extra default User dynamic data such as avatars, msn, irc and so on, to your user roles, then these attributes will automatically be displayed in xarbb topics and posts.</xar:mlstring></li>
-               <li><xar:mlstring>Set privilges for Comments module and xarBB to allow or disallow viewing, posting of topics and replies, editing of their own posts by users, and setup of moderator groups.</xar:mlstring></li>
+               <li><xar:mlstring>Set priviliges for Comments module and xarBB to allow or disallow viewing, posting of topics and replies, editing of their own posts by users, and setup of moderator groups.</xar:mlstring></li>
             </ul>
 
         <p><xar:mlstring>Administrators and moderators have additional functionality including deleting posts, marking posts as announcements or sticky topics, moving posts, and locking topics from further postings.</xar:mlstring>
@@ -60,12 +60,12 @@
     </p>
        <ul>
               <li><xar:mlstring>Xarbb Extension page at</xar:mlstring> <a title="#xarML('xarBB Module - Xaraya Extension 300')#" href="http://www.xaraya.com/index.php/release/300.html">Xaraya Extension and Releases</a>.
-              <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+              <xar:mlstring>Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
               </li>
               <li><xar:mlstring>Related tutorials and documentation on XarBB found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/xarbb/" title="#xarML('Related documentation on xarBB')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
               </li>
          </ul>
          <p class="xar-sub">
-             <strong>&nbsp;<xar:mlstring>xarBB Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2005-09-25
+             <strong>&nbsp;<xar:mlstring>xarBB Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.1&nbsp; 2007-11-23
          </p>
 </div>
