@@ -15,3 +15,8 @@ Richard Cave
     (Who wrote the first Newsletter module for Xaraya.  My newsletter needs
     necessitated a module with a whole different architecture, though I
     borrowed a number of his ideas initially.)
+
+
+Changes to version 1.2.x
+Andrea Moro <andrea@andreamoro.net>
+

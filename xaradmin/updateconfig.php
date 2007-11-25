@@ -28,7 +28,9 @@ function ebulletin_admin_updateconfig()
     if (!xarVarFetch('msglimit', 'int:0:', $msglimit, 'msglimit', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('msgunit', 'enum:minute:hour:day:week:month', $msgunit, 'msgunit', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('requirevalidation', 'checkbox', $requirevalidation, false, XARVAR_NOT_REQUIRED)) return;
-
+    if (!xarVarFetch('notifyemail','str:1:150',$notifyemail,xarModGetVar('mail', 'adminmail'), XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sendnotice','checkbox', $sendnotice,false, XARVAR_NOT_REQUIRED)) return;
+					   
     // validate and clean up module alias
     $aliasname = trim($aliasname);
     $aliasname = str_replace(' ', '_', $aliasname);
@@ -48,6 +50,8 @@ function ebulletin_admin_updateconfig()
     xarModSetVar('ebulletin', 'msglimit', $msglimit);
     xarModSetVar('ebulletin', 'msgunit', $msgunit);
     xarModSetVar('ebulletin', 'requirevalidation', $requirevalidation);
+    xarModSetVar('ebulletin', 'notifyemail', $notifyemail);
+	xarModSetVar('ebulletin', 'sendnotice', $sendnotice);
 
     // call updateconfig hooks
     xarModCallHooks('module', 'updateconfig', 'ebulletin', array('module' => 'ebulletin'));

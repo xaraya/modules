@@ -162,6 +162,9 @@ function ebulletin_init()
 	if (!ebulletin_upgrade('1.2.0')) {
 	    return;
     }
+	if (!ebulletin_upgrade('1.2.2')) {
+	    return;
+    }
 
     // success
 	return true;
@@ -240,6 +243,10 @@ function ebulletin_upgrade($oldversion)
             $ebulletintable, 'xar_scheduler I1 DEFAULT 0'
         );
         if (!$result) {return;}
+
+	case '1.2.2' :
+	     xarModSetVar('ebulletin', 'notifyemail', xarModGetVar('mail', 'adminmail'));
+		 xarModSetVar('ebulletin', 'sendnotice', false);
     }
     return true;
 }

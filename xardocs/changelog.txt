@@ -44,3 +44,8 @@ Version 1.2.1 2007-10-09 (andream - andrea@andreamoro.net)
 	- added possibility to specify different template for htmlmail (see overview
 	  template for details)
 
+Version 1.2.3 2007-11 (andream - andrea@andreamoro.net)
+    - Added admin notification of registration (options)
+	  Templates modified: 
+	  admin-modifyconfig.xd
+	  admin-modify.xd

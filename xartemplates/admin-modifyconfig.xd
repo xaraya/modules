@@ -56,6 +56,25 @@
                 <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('ebulletin', 'aliasname')#" size="32" maxlength="100" />
             </div>
 
+            <div class="xar-form-input-wrapper-after">
+                <xar:if condition="xarModGetVar('ebulletin', 'sendnotice')">
+                    <input type="checkbox" name="sendnotice" id="sendnotice" value="1" checked="checked" />                             <xar:else />
+                    <input type="checkbox" name="sendnotice" id="sendnotice" value="1" />
+                </xar:if>
+                <label for="sendnotice" title="#xarML('Notify Admin when users create an account')#">
+                    <xar:mlstring>                                                                                                          Send Notice To Admin Upon User Registration
+                    </xar:mlstring>
+                </label>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="sendnotice" class="xar-form-label" title="#xarML('Email address for admin notification')#">
+                    <xar:mlstring>                                                                                                          Email for notification to Admin
+                    </xar:mlstring>
+                </label>
+                <input type="text" name="notifyemail" id="notifyemail" value="#$notifyemail#" size="40" maxlength="150" />
+                                                                                                                        </div>
+
+
         </fieldset>
 
         <fieldset>

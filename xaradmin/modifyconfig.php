@@ -47,6 +47,9 @@ function ebulletin_admin_modifyconfig()
     $data['msglimit']          = $msglimit;
     $data['msgunit']           = $msgunit;
     $data['requirevalidation'] = $requirevalidation;
+    $notifyemail = xarModGetVar('ebulletin','notifyemail');
+	if (!isset($notifyemail) || trim ($notifyemail)=='')$notifyemail = xarModGetVar('mail','adminmail');
+	$data['notifyemail']=$notifyemail;
 
     // add other vars to template
     $data['authid']   = xarSecGenAuthKey();

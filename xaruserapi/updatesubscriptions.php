@@ -105,6 +105,20 @@ function ebulletin_userapi_updatesubscriptions($args)
 
         $result = $dbconn->Execute($query, $bindvars);
         if (!$result) return;
+
+    	// Send an e-mail to the admin if notification is required
+    	if (xarModGetVar('ebulletin', 'sendnotice')) {
+            $emailargs = array(
+	      			     'notifyemail'   => xarModGetVar('ebulletin', 'notifyemail'),
+	  					 'email' => $email,
+	  					 'uid' => $uid,
+	  					 'name' => $name
+	      			     );
+	      	if (!xarModAPIFunc('ebulletin', 'user', 'notifyadmin', $emailargs)) {
+		var_dump($uid);exit;
+	      	    return; // TODO ...something here if the email is not sent..
+      	    }
+    	}
     }
 
     // success
