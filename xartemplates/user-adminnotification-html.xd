@@ -1,0 +1,8 @@
+<p>
+    <xar:mlstring>New user has registered to ebulletin</xar:mlstring> 
+</p>
+<p>
+    <xar:mlstring>Name:</xar:mlstring> #$name#<br />
+    <xar:mlstring>Email:</xar:mlstring> #$email#<br />
+</p>
+
