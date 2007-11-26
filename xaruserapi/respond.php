@@ -1,9 +1,9 @@
 <?php
 /**
- * Contact us main function
+ * Respond function
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,47 +12,29 @@
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
  */
 /**
- * @ Function: contactus
- * @ Author Jo Dalle Nogare <jojodee@xaraya.com>
- * @ Param username, useremail, requesttext,company, usermessage,useripaddress,userreferer,altmail
- * @ <jojodee> deprecated - here for backward compatibility
+ * @ Function: respond
+ * @
+ * @ API function to handle custom call from other modules
+ * @ If customcontact field email is passed it it will override the admin email set in the current form
   */
-function sitecontact_user_contactus($args)
+sys::import('modules.dynamicdata.class.objects.master');
+
+function sitecontact_userapi_respond($args)
 {
-     extract($args);
+    extract($args);
 
-     $defaultformid=(int)xarModVars::get('sitecontact','defaultform');
-
-    /* Get parameters */
-    if (!xarVarFetch('username',      'str:1:',  $username,    '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('useremail',     'str:1:',  $useremail,   '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('requesttext',   'str:1:',  $requesttext, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('company',       'str:1:',  $company,     '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('usermessage',   'str:1:',  $usermessage, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('useripaddress', 'str:1:',  $dummy,       '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('userreferer',   'str:1:',  $userreferer, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sendcopy',      'checkbox',$sendcopy,    true, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sctypename',    'str:0:',  $sctypename,  NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('scform',        'str:0:',  $scform,      NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('scid',          'int:1:',  $scid,        $defaultformid, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('bccrecipients', 'str:1',   $bccrecipients, '')) return;
-    if (!xarVarFetch('ccrecipients',  'str:1',   $ccrecipients, '')) return;
-    if (!xarVarFetch('return_url',    'isset',   $return_url,   NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('savedata',      'checkbox', $savedata,    0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('permissioncheck', 'checkbox', $permissioncheck, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('permission',    'checkbox',$permission,   false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('termslink',     'str:1:',  $termslink,    '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('return_url',    'isset',   $return_url, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('newemail',      'str:1',  $newemail, '')) return;
-    /* Confirm authorisation code. */
-//    if (!xarSecConfirmAuthKey()) return;
+    $defaultformid=(int)xarModVars::get('sitecontact','defaultform');
 
     $formdata = array();
-    if (!empty($sctypename)) $sctypename=trim($sctypename);
-    if (!empty($scform)) $sctypename=trim($scform); //provide alternate entry name
-
+    if (isset($sctypename) && !empty($sctypename)) $sctypename = trim($sctypename);
+    if (isset($scform) && !empty($scform)) {//provide alternate entry name
+        $scform=trim($scform);
+        $sctypename=$scform;
+    } else {
+        $scform =$sctypename;
+    }
     //Have we got a form that is available and active?
-    if (!empty($sctypename)) {
+    if (isset($sctypename) && !empty($sctypename)) {
        $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('sctypename'=> $sctypename));
     }elseif (!empty($scid)) {
        $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $scid));
@@ -61,15 +43,23 @@ function sitecontact_user_contactus($args)
     }
 
     //Have we got an active form
-    if (!empty($scid)) { //exists but not active
+    if (!is_array($formdata)) { //exists but not active
       //fallback to default form again
       $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $defaultformid));
     }
     $formdata = $formdata[0];
+    $sctypename = $formdata['sctypename'];
 
     if ($formdata['scactive'] != 1) { //form but not active
         $msg = xarML('The form requested is not available');
         throw new BadParameterException(null,$msg);
+    }
+
+    //we use the value customcontact field if it exists - this overrides the set admin email.
+    if (isset($customcontact) && !empty($customcontact)){
+           $newadminemail=$customcontact;
+    }else {
+           $newadminemail='';
     }
 
     //now check for the options, and including antibot and - bbccrecipient and ccrecipient switch Bug 5799
@@ -81,8 +71,8 @@ function sitecontact_user_contactus($args)
               }
            }
     }
-    $useantibot=$soptions['useantibot'];
 
+    $useantibot=$soptions['useantibot'];
     if (xarModIsAvailable('formantibot') && $useantibot) {
         if (!xarVarFetch('antibotcode',  'str:6:10', $antibotcode, '', XARVAR_NOT_REQUIRED) ||
             !xarModAPIFunc('formantibot', 'user', 'validate', array('userInput' => $antibotcode))) {
@@ -104,7 +94,10 @@ function sitecontact_user_contactus($args)
     if (!isset($soptions['allowbccs']) || $soptions['allowbccs']!=1) {
        $bccrecipients='';
     }
-    if (!isset($soptions['allowccs']) || $soptions['allowccs']!=1) {
+    if (isset($soptions['adminccs']) && $soptions['adminccs'] == TRUE && $soptions['allowccs'] == FALSE) {
+      //if admin has a cclist and user ccs is not set
+      //use the existing $ccreciepient list which should now hold the admin cclist now
+    }elseif (!isset($soptions['allowccs']) || $soptions['allowccs']!= 1) { //if cc list is not set
        $ccrecipients='';
     }
     //end check for bug 5799
@@ -117,7 +110,7 @@ function sitecontact_user_contactus($args)
     //leave the ip capture in the forms - hehehe :)
     $useripaddress=xarModAPIFunc('sitecontact','admin','getcurrentip');
 
-    //Put all set data in an array for later processing
+     //Put all set data in an array for later processing
      $item=array('scid'           => array(xarML('Form ID'),(int)$scid),
                 'sctypename'      => array(xarML('Form'),$sctypename),
                 'scform'          => array(xarML('Form Name'),$scform),
@@ -171,71 +164,20 @@ function sitecontact_user_contactus($args)
     }
     $bccrecipients=$bccrec;
 
-
-
     $data['scid']=$formdata['scid'];
     $data['sctypename']=$formdata['sctypename'];
     $withupload = isset($withupload)? $withupload :(int) false;
-    $dditems=array();
-    $propdata=array();
-    //Begin 2x
-    $info = xarModAPIFunc('dynamicdata','user','getobjectinfo',array('name'=> $data['sctypename']));
-    $object = & DataObjectMaster::getObject(array('objectid' => $info['objectid']));
+    $object = DataObjectMaster::getObject(array('name' => $sctypename));
+    $properties = $object->getProperties();
+    $object->checkinput();
 
-    $dateproperty = DataPropertyMaster::getProperty(array('type' =>'formatteddate'));
-    $timeproperty = DataPropertyMaster::getProperty(array('type' =>'formattedtime'));
+    foreach ($properties as $itemid => $fields) {
 
-    $object->checkInput();
-    $properties = $object->properties;
-
-   //var_dump($object->properties['flightlegdata[0][1]']->value);echo "</pre>";die();
-/*
-    $flightlegdata1 = $test1 ? $dateproperty->getValue() :mktime(0,0,0,date("m"),date("d"),date("Y"));
-    //$flightlegdata2 = $test2 ? $dateproperty->getValue() :mktime(0,0,0,date("m"),date("d"),date("Y"));
-   echo "<pre>";var_dump($flightlegdata[0][startdate]);echo"<br />";
-    var_dump($properties);echo"<br />";
-
-     echo "</pre>";die();
-*/
-    //End 2x
-    /* comment out 1x for now
-    if (xarModIsAvailable('dynamicdata')) {
-        // get the Dynamic Object defined for this module (and itemtype, if relevant)
-        $object = xarModAPIFunc('dynamicdata','user','getobject',
-                             array('module' => 'sitecontact',
-                                   'itemtype' => $data['scid']));
-        if (!isset($object)) return;
-        $objectid=$object->objectid;
-
-
-        // check the input values for this object and do ....what here?
-        $isvalid = $object->checkInput();
-*/
-         if (isset($object) && !empty($object->objectid)) {
-             $dditems =& $object->getProperties();
-         }
-
-        if (is_array($dditems)) {
-            foreach ($dditems as $itemid => $fields) {
-
-                if (isset($fields->upload) && $fields->upload == true) {
-                    $withupload = (int) true;
-                    $fileuploadfieldname=$itemid;
-                }
-
-                 $items[$itemid] = array();
-                foreach ($fields as $name => $value) {
-                    $items[$itemid][$name] = ($value);
-                }
-
-                $propdata=array();
-                foreach ($items as $key => $value) {
-                    $propdata[$value['name']]['label']=$value['label'];
-                    $propdata[$value['name']]['value']=$value['value'];
-                }
-            }
+        if (isset($fields->upload) && $fields->upload == true) {
+            $withupload = (int) true;
+            $fileuploadfieldname=$itemid;
         }
-  //   }
+    }
 
     if ($withupload && isset($fileuploadfieldname) && is_array($items[$fileuploadfieldname]) && !empty($items[$fileuploadfieldname]['value'])) {
        $filebasepath=$items[$fileuploadfieldname]['basePath'];
@@ -247,11 +189,11 @@ function sitecontact_user_contactus($args)
        $attachpath='';
        $attachname='';
    }
-   //Begin 2x
 
    $responsetime = time();
-   //End 2x
+
    /* Do we want to save the data for this form? */
+
    if ($savedata) {
        // save the form - let it handle save of the hooked dd
        // First check to see if we needed user permission or not, and if we do the user has agreed
@@ -274,40 +216,37 @@ function sitecontact_user_contactus($args)
                          'ccrecipients'    => serialize($ccrecipients),
                          'responsetime'    => $responsetime
                     );
+
          } elseif ($permissioncheck && !$permission) {
            //what to do - better save a 'blank' spot as missing data?
            //let's do that for now
           $args = array('scid'           => (int)$scid,
-                         'scform'          => '',
-                         'username'        => xarML('Missing Value'),
-                         'useremail'       => '',
-                         'requesttext'     => '',
-                         'company'         => '',
-                         'usermessage'     => '',
-                         'useripaddress'   => '',
-                         'userreferer'     => '',
-                         'sendcopy'        => 0,
-                         'savedata'        => $savedata,
-                         'permissioncheck' => $permissioncheck,
-                         'permission'      => $permission,
-                         'bccrecipients'   => '',
-                         'ccrecipients'    => '',
-                         'responsetime'    => $responsetime
+                        'scform'          => $scform,
+                        'username'        => xarML('Missing Value'),
+                        'useremail'       => '',
+                        'requesttext'     => '',
+                        'company'         => '',
+                        'usermessage'     => '',
+                        'useripaddress'   => '',
+                        'userreferer'     => '',
+                        'sendcopy'        => 0,
+                        'savedata'        => $savedata,
+                        'permissioncheck' => $permissioncheck,
+                        'permission'      => $permission,
+                        'bccrecipients'   => '',
+                        'ccrecipients'    => '',
+                        'responsetime'    => $responsetime
                     );
         }
 
         $newscrid = xarModAPIFunc('sitecontact','admin','create',$args);
+
         if (!$newscrid) {
             //no, don't do anything ... if there is a prob we don't want to disrupt the user feedback
             //on their emailing
             //TODO: workout something for this and any other errors related to create reponse portion of process
         }
-   }
-
-    /* Security Check - caused some problems here with anon browsing and cachemanager
-     * should be ok now - review
-     * if(!xarSecurityCheck('ReadSiteContact')) return;
-     */
+    }
 
     $notetouser = $formdata['notetouser'];
     if (!isset($notetouser)){
@@ -340,6 +279,12 @@ function sitecontact_user_contactus($args)
        $setmail = $formdata['scdefaultemail'];;
    }
     $data['setmail']=$setmail;
+    //now override with specific admin email from location data
+    if (!empty($newadminemail)) {
+        $setmail=$newadminemail;
+        $data['setmail']=$setmail;
+    }
+
     $today = getdate();
     $month = $today['month'];
     $mday = $today['mday'];
@@ -381,8 +326,11 @@ function sitecontact_user_contactus($args)
     }
 
 
-    /* Prepare the html text message to user */
+    //set of default fields now in DD, we don't want these twice as they have special handling
+    $basicform = DataObjectMaster::getObject(array('name' => 'sitecontact_basicform'));
+    $baseproperties = array_keys($basicform->getProperties());
 
+    /* Prepare the html text message to user */
     $trans = get_html_translation_table(HTML_ENTITIES);
     $trans = array_flip($trans);
     $htmlsubject = strtr(xarVarPrepHTMLDisplay($requesttext), $trans);
@@ -390,66 +338,61 @@ function sitecontact_user_contactus($args)
     $htmlusermessage  = strtr(xarVarPrepHTMLDisplay($usermessage), $trans);
     $htmlnotetouser  = strtr(xarVarPrepHTMLDisplay($notetouser), $trans);
 
-
     /* jojodee: html_entity_decode only available in php >=4.3
         * $htmlsubject = html_entity_decode(xarVarPrepHTMLDisplay($requesttext));
         * $htmlcompany = html_entity_decode(xarVarPrepHTMLDisplay($company));
         *  $htmlusermessage = html_entity_decode(xarVarPrepHTMLDisplay($usermessage));
         * $htmlnotetouser = xarVarPrepHTMLDisplay($notetouser);
         */
-        if (!empty($data['sctypename'])){
-             $htmltemplate = 'html_' . $data['sctypename'];
-             //$htmltemplate = 'html-' . $data['sctypename']; Not working in 2x
-             $texttemplate = 'text_' . $data['sctypename'];
-             //$texttemplate = 'text-' . $data['sctypename']; Not working in 2x
-        } else {
-             $htmltemplate =  'html';
-             $texttemplate =  'text';
-        }
-       $userhtmlarray= array('notetouser' => $htmlnotetouser,
-                              'username'   => $username,
-                              'useremail'  => $useremail,
-                              'company'    => $htmlcompany,
-                              'requesttext'=> $htmlsubject,
-                              'usermessage'=> $htmlusermessage,
-                              'sitename'   => $sitename,
-                              'siteurl'    => $siteurl,
-                              'propdata'    => $propdata,
-                              'properties'  => $properties,
-                              'todaydate'  => $todaydate);
 
-        $userhtmlmessage= xarTplModule('sitecontact','user','usermail',$userhtmlarray,$htmltemplate);
-        if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
-            xarErrorHandled();
-            $userhtmlmessage= xarTplModule('sitecontact', 'user', 'usermail',$userhtmlarray,'html');
-        }
-        /* prepare the text message to user */
-        $textsubject = strtr($requesttext,$trans);
-        $textcompany = strtr($company,$trans);
-        $textusermessage = strtr($usermessage,$trans);
-        $textnotetouser = strtr($notetouser,$trans);
+    if (!empty($data['sctypename'])){
+         $htmltemplate = 'html_' . $data['sctypename'];
+         $texttemplate = 'text_' . $data['sctypename'];
+    } else {
+         $htmltemplate =  'html';
+         $texttemplate =  'text';
+    }
 
-        $usertextarray =array('notetouser' => $textnotetouser,
-                              'username'   => $username,
-                              'useremail'  => $useremail,
-                              'company'    => $textcompany,
-                              'requesttext'=> $textsubject,
-                              'usermessage'=> $textusermessage,
-                              'sitename'   => $sitename,
-                              'siteurl'    => $siteurl,
-                              'propdata'   => $propdata,
-                              'properties' => $properties,
-                              'todaydate'  => $todaydate);
+   $userhtmlarray= array('notetouser' => $htmlnotetouser,
+                          'username'   => $username,
+                          'useremail'  => $useremail,
+                          'company'    => $htmlcompany,
+                          'requesttext'=> $htmlsubject,
+                          'usermessage'=> $htmlusermessage,
+                          'sitename'   => $sitename,
+                          'siteurl'    => $siteurl,
+                          'properties'  => $properties,
+                          'baseproperties'  => $baseproperties,
+                          'todaydate'  => $todaydate);
+    try {
+        $userhtmlmessage= xarTplModule('sitecontact','user','usermail',$userhtmlarray, $htmltemplate);
+    } catch (Exception $e) {
+        $userhtmlmessage= xarTplModule('sitecontact', 'user', 'usermail',$userhtmlarray,'html');
+    }
 
-         //In 2x the itemtype specific template must be present. This never user html or text, and
-         //   doesn't falls back to user-usermail-text.xt (or user-usermail-html)
-         //Using user-usermail-basic.xt instead for example.. Need an alternative for text and html still
+    /* prepare the text message to user */
+    $textsubject = strtr($requesttext,$trans);
+    $textcompany = strtr($company,$trans);
+    $textusermessage = strtr($usermessage,$trans);
+    $textnotetouser = strtr($notetouser,$trans);
 
-         $usertextmessage= xarTplModule('sitecontact','user','usermail', $usertextarray,$texttemplate);
-        if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
-            xarErrorHandled();
-            $usertextmessage= xarTplModule('sitecontact', 'user', 'usermail',$usertextarray,'text');
-        }
+    $usertextarray =array('notetouser' => $textnotetouser,
+                          'username'   => $username,
+                          'useremail'  => $useremail,
+                          'company'    => $textcompany,
+                          'requesttext'=> $textsubject,
+                          'usermessage'=> $textusermessage,
+                          'sitename'   => $sitename,
+                          'siteurl'    => $siteurl,
+                          'properties' => $properties,
+                          'baseproperties'  => $baseproperties,
+                          'todaydate'  => $todaydate);
+
+    try {
+     $usertextmessage= xarTplModule('sitecontact','user','usermail', $usertextarray,$texttemplate);
+    } catch (Exception $e) {
+        $usertextmessage= xarTplModule('sitecontact', 'user', 'usermail',$usertextarray,'text');
+    }
     if (($allowcopy ) and ($sendcopy)) { //the user wants to copy to self and it is allowed by admin
         /* check the logged in user's email address  and if anon is allowed*/
         $docopy = false;
@@ -485,8 +428,8 @@ function sitecontact_user_contactus($args)
             } else {/*it's html email */
                 if (!xarModAPIFunc('mail','admin','sendhtmlmail', $args)) return;
             }
-        } //end do copy
-    } //end user copy to self check
+        }
+    }
 
     /* now let's do the html message to admin */
 
@@ -500,15 +443,16 @@ function sitecontact_user_contactus($args)
                           'siteurl'    => $siteurl,
                           'todaydate'  => $todaydate,
                           'useripaddress' => $useripaddress,
-                          'propdata'    => $propdata,
-                           'properties' => $properties,
+                          'properties' => $properties,
+                          'baseproperties'  => $baseproperties,
                           'userreferer' => $userreferer);
     //In 2x the itemtype specific template must be present. This never user html or text, and
     //   doesn't falls back to user-adminmail-text.xt (or user-adminmail-html)
     //Using user-adminmail-basic.xt instead for example.. Need an alternative for text and html still
-    $adminhtmlmessage= xarTplModule('sitecontact','user','adminmail',$adminhtmlarray,$htmltemplate);
-    if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
-        xarErrorHandled();
+
+    try {
+        $adminhtmlmessage= xarTplModule('sitecontact','user','adminmail',$adminhtmlarray,$htmltemplate);
+    } catch (Exception $e) {
         $adminhtmlmessage= xarTplModule('sitecontact', 'user', 'adminmail',$adminhtmlarray,'html');
     }
     $admintextarray =  array('notetouser' => $textnotetouser,
@@ -521,14 +465,14 @@ function sitecontact_user_contactus($args)
                              'siteurl'    => $siteurl,
                              'todaydate'  => $todaydate,
                              'useripaddress' => $useripaddress,
-                             'propdata'    => $propdata,
+                             'baseproperties'  => $baseproperties,
                              'properties' => $properties,
                              'userreferer' => $userreferer);
 
     /* Let's do admin text message */
-    $admintextmessage= xarTplModule('sitecontact','user','adminmail',$admintextarray,$texttemplate);
-    if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
-        xarErrorHandled();
+    try {
+        $admintextmessage= xarTplModule('sitecontact','user','adminmail',$admintextarray,$texttemplate);
+    } catch (Exception $e) {
         $admintextmessage= xarTplModule('sitecontact', 'user', 'adminmail',$admintextarray,'text');
     }
 
@@ -558,14 +502,8 @@ function sitecontact_user_contactus($args)
     /* Set the theme comments back */
     xarModVars::set('themes','ShowTemplates',$themecomments);
     /* lets update status and display updated configuration */
-    xarSessionSetVar('sitecontact.sent',1);
+    xarSession::setVar('sitecontact.sent',1);
 
-    if (isset($return_url)) {
-        xarResponseRedirect($return_url);
-    } else {
-        xarResponseRedirect(xarModURL('sitecontact', 'user', 'main', array('message' => '1', 'scid'=>$data['scid'])));
-    }
-    /* Return */
     return true;
 }
 ?>

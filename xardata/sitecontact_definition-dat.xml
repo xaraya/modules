@@ -24,12 +24,12 @@ Administrator
 -------------------------------------------------------------</notetouser>
     <allowcopy>0</allowcopy>
     <usehtmlemail>0</usehtmlemail>
-    <defaultemail>none@none.com</defaultemail>
+    <defaultemail>jojodee@gmail.com</defaultemail>
     <defaultname>Site Admin</defaultname>
     <active>1</active>
     <savedata>0</savedata>
     <permissioncheck>0</permissioncheck>
     <termslink></termslink>
-    <options></options>
+    <options>a:6:{s:8:&quot;allowccs&quot;;b:0;s:9:&quot;allowbccs&quot;;b:0;s:13:&quot;allowanoncopy&quot;;b:0;s:10:&quot;useantibot&quot;;b:0;s:8:&quot;adminccs&quot;;b:0;s:11:&quot;admincclist&quot;;s:0:&quot;&quot;;}</options>
   </sitecontact_definition>
 </items>

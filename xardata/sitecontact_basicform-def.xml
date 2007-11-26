@@ -1,16 +1,18 @@
 <object name="sitecontact_basicform">
-  <objectid>26</objectid>
+  <objectid>13</objectid>
   <label>Basic Form</label>
-  <moduleid>182</moduleid>
-  <itemtype>18</itemtype>
-  <urlparam>itemid</urlparam>
   <parent>objects</parent>
+  <moduleid>182</moduleid>
+  <itemtype>5</itemtype>
+  <class>DataObject</class>
+  <filepath></filepath>
+  <urlparam>itemid</urlparam>
   <maxid>0</maxid>
   <config></config>
   <isalias>1</isalias>
   <properties>
     <property name="id">
-      <id>200</id>
+      <id>113</id>
       <label>ID</label>
       <type>itemid</type>
       <default></default>
@@ -20,7 +22,7 @@
       <validation></validation>
     </property>
     <property name="scid">
-      <id>201</id>
+      <id>114</id>
       <label>SCID</label>
       <type>integerbox</type>
       <default></default>
@@ -30,7 +32,7 @@
       <validation></validation>
     </property>
     <property name="username">
-      <id>202</id>
+      <id>115</id>
       <label>User Name</label>
       <type>textbox</type>
       <default></default>
@@ -40,7 +42,7 @@
       <validation></validation>
     </property>
     <property name="useremail">
-      <id>203</id>
+      <id>116</id>
       <label>User Email</label>
       <type>textbox</type>
       <default></default>
@@ -50,7 +52,7 @@
       <validation></validation>
     </property>
     <property name="requesttext">
-      <id>204</id>
+      <id>117</id>
       <label>Request Text</label>
       <type>textarea_medium</type>
       <default></default>
@@ -60,7 +62,7 @@
       <validation></validation>
     </property>
     <property name="company">
-      <id>205</id>
+      <id>118</id>
       <label>Company</label>
       <type>textbox</type>
       <default></default>
@@ -70,7 +72,7 @@
       <validation></validation>
     </property>
     <property name="usermessage">
-      <id>206</id>
+      <id>119</id>
       <label>User Message</label>
       <type>textarea</type>
       <default></default>
@@ -80,7 +82,7 @@
       <validation></validation>
     </property>
     <property name="useripaddress">
-      <id>207</id>
+      <id>120</id>
       <label>User IP</label>
       <type>textbox</type>
       <default></default>
@@ -90,7 +92,7 @@
       <validation></validation>
     </property>
     <property name="userreferer">
-      <id>208</id>
+      <id>121</id>
       <label>User Referer</label>
       <type>textbox</type>
       <default></default>
@@ -100,7 +102,7 @@
       <validation></validation>
     </property>
     <property name="sendcopy">
-      <id>209</id>
+      <id>122</id>
       <label>Send Copy</label>
       <type>checkbox</type>
       <default></default>
@@ -110,7 +112,7 @@
       <validation></validation>
     </property>
     <property name="permission">
-      <id>210</id>
+      <id>123</id>
       <label>Permission</label>
       <type>checkbox</type>
       <default></default>
@@ -120,7 +122,7 @@
       <validation></validation>
     </property>
     <property name="bccrecipients">
-      <id>211</id>
+      <id>124</id>
       <label>BCC</label>
       <type>textbox</type>
       <default></default>
@@ -130,7 +132,7 @@
       <validation></validation>
     </property>
     <property name="ccrecipients">
-      <id>212</id>
+      <id>125</id>
       <label>CC</label>
       <type>textbox</type>
       <default></default>
@@ -140,7 +142,7 @@
       <validation></validation>
     </property>
     <property name="responsetime">
-      <id>213</id>
+      <id>126</id>
       <label>Response Time</label>
       <type>integerbox</type>
       <default></default>

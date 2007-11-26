@@ -83,25 +83,11 @@
 
             <div class="xar-form-input-wrapper">
                 <label for="requesttext" class="xar-form-label" title="#xarML('Subject')#">
-                        <xar:mlstring>
-                            Subject
-                        </xar:mlstring>
+                    <xar:mlstring>
+                        Subject
+                    </xar:mlstring>
                 </label>
-
-                <select id="requesttext" name="requesttext">
-                <xar:foreach in="$optionitems" value="$optionrequest" key="$key" >
-
-                    <xar:set name="optionKey">trim($optionrequest[0])</xar:set>
-                    <xar:set name="optionValue">trim($optionrequest[0])</xar:set>
-                    <xar:set name="optionSelected">trim($requesttext)</xar:set>
-
-                    <xar:if condition="$optionValue eq $optionSelected">
-                        <option value="#$optionValue#" selected="selected">#$optionKey#</option>
-                    <xar:else />
-                        <option value="#$optionValue#">#$optionKey#</option>
-                    </xar:if>
-                </xar:foreach>
-                </select>
+                <xar:data-input type="dropdown" id="requesttext" name="requesttext" options="$options" value="$requesttext" />
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="company" class="xar-form-label" title="#xarML('Please enter your organization name.')#">
@@ -148,33 +134,20 @@
                     <textarea name="usermessage" id="usermessage" rows="5" cols="40"></textarea>
                 </xar:if>
             </div>
-            <xar:comment>
-                Dynamic Data properties added here for input
-            </xar:comment>
 
-
-            <xar:if  condition="xarModIsAvailable('dynamicdata')" >
-                <xar:set name="defaultarray">array('id','scid','cid','username','useremail','requesttext','company','usermessage',
-              'useripaddress','userreferer','sendcopy','permission','bccrecipients','ccrecipients','responsetime');</xar:set>
-                <xar:set name="info">xarModAPIFunc('dynamicdata','user','getobjectinfo', array('name' => $sctypename))</xar:set>
-                <xar:set name="thisobject">xarModAPIFunc('dynamicdata','user','getobject', array('objectid' => $info['objectid']))</xar:set>
-                <xar:set name="properties">$thisobject->properties</xar:set>
-                 <xar:if condition="isset($properties) and count($properties) gt 0">
-                    <xar:foreach in="$properties" key="$name">
-                    <xar:if condition="!in_array($name,$defaultarray)">
-                    <div class="xar-form-input-wrapper">
-                        <xar:data-label property="$properties[$name]" label="id" />
-                        <xar:data-input property="$properties[$name]" value="" />
-                    </div>
-                  </xar:if>
+            <xar:set name="info">xarModAPIFunc('dynamicdata','user','getobjectinfo', array('name' => $sctypename))</xar:set>
+            <xar:set name="thisobject">xarModAPIFunc('dynamicdata','user','getobject', array('objectid' => $info['objectid']))</xar:set>
+            <xar:set name="properties">$thisobject->properties</xar:set>
+           <xar:if condition="isset($properties) and count($properties) gt 0">
+                <xar:foreach in="$properties" key="$name">
+                <div class="xar-form-input-wrapper">
+                    <xar:data-label property="$properties[$name]" label="id" />
+                    <xar:data-input property="$properties[$name]" value="" />
+                </div>
                 </xar:foreach>
-              </xar:if>
-            <!--
-                <xar:data-form module="$info['moduleid']" itemtype="$info['itemtype']" />
-            -->
             </xar:if>
 
-            <xar:if condition="($allowcopy eq 1 and xarUserIsLoggedIn()) or ($allowcopy eq 1 and $allowanoncopy eq 1)">
+           <xar:if condition="($allowcopy eq 1 and xarUserIsLoggedIn()) or ($allowcopy eq 1 and $allowanoncopy eq 1)">
             <div class="xar-form-input-wrapper-after">
                  <input type="checkbox" name="sendcopy" id="sendcopy" value="1" checked="checked" />
                 <label for="sendcopy" title="#xarML('Would you like to have a copy of the message sent to your email')#">
@@ -236,8 +209,6 @@
 
            <fieldset>
                <div class="xar-form-input-wrapper-after">
-                   <input type="hidden" name="useripaddress" value="#$useripaddress#" />
-                   <input type="hidden" name="userreferer" value="#$userreferer#" />
                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
                    <input type="hidden" name="scid" id="scid" value="#$scid#" />
                    <input type="hidden" name="savedata" id="savedata" value="#$savedata#" />

@@ -1,16 +1,18 @@
 <object name="sitecontact_definition">
-  <objectid>45</objectid>
+  <objectid>12</objectid>
   <label>Sitecontact Definition</label>
-  <moduleid>182</moduleid>
-  <itemtype>14</itemtype>
-  <urlparam>itemid</urlparam>
   <parent>objects</parent>
+  <moduleid>182</moduleid>
+  <itemtype>4</itemtype>
+  <class>DataObject</class>
+  <filepath></filepath>
+  <urlparam>itemid</urlparam>
   <maxid>2</maxid>
   <config></config>
   <isalias>1</isalias>
   <properties>
     <property name="id">
-      <id>593</id>
+      <id>96</id>
       <label>ID</label>
       <type>itemid</type>
       <default></default>
@@ -20,7 +22,7 @@
       <validation></validation>
     </property>
     <property name="sctypename">
-      <id>594</id>
+      <id>97</id>
       <label>Type Name</label>
       <type>objectref</type>
       <default></default>
@@ -30,7 +32,7 @@
       <validation>objects:name:name</validation>
     </property>
     <property name="sctypedesc">
-      <id>595</id>
+      <id>98</id>
       <label>Type Description</label>
       <type>textarea</type>
       <default></default>
@@ -40,7 +42,7 @@
       <validation></validation>
     </property>
     <property name="customtext">
-      <id>596</id>
+      <id>99</id>
       <label>Custom Text</label>
       <type>textarea</type>
       <default></default>
@@ -50,7 +52,7 @@
       <validation></validation>
     </property>
     <property name="customtitle">
-      <id>597</id>
+      <id>100</id>
       <label>Custom Title</label>
       <type>textbox</type>
       <default></default>
@@ -60,7 +62,7 @@
       <validation></validation>
     </property>
     <property name="optiontext">
-      <id>598</id>
+      <id>101</id>
       <label>Option Text</label>
       <type>textarea</type>
       <default></default>
@@ -70,7 +72,7 @@
       <validation></validation>
     </property>
     <property name="webconfirmtext">
-      <id>599</id>
+      <id>102</id>
       <label>Confirmation Text</label>
       <type>textarea</type>
       <default></default>
@@ -80,7 +82,7 @@
       <validation></validation>
     </property>
     <property name="notetouser">
-      <id>600</id>
+      <id>103</id>
       <label>Note to User</label>
       <type>textarea</type>
       <default></default>
@@ -90,7 +92,7 @@
       <validation></validation>
     </property>
     <property name="allowcopy">
-      <id>601</id>
+      <id>104</id>
       <label>Allow Copy</label>
       <type>checkbox</type>
       <default></default>
@@ -100,7 +102,7 @@
       <validation></validation>
     </property>
     <property name="usehtmlemail">
-      <id>602</id>
+      <id>105</id>
       <label>User HTML Email</label>
       <type>checkbox</type>
       <default></default>
@@ -110,7 +112,7 @@
       <validation></validation>
     </property>
     <property name="defaultemail">
-      <id>603</id>
+      <id>106</id>
       <label>Default Email</label>
       <type>textbox</type>
       <default></default>
@@ -120,7 +122,7 @@
       <validation></validation>
     </property>
     <property name="defaultname">
-      <id>604</id>
+      <id>107</id>
       <label>Default Name</label>
       <type>textbox</type>
       <default></default>
@@ -130,7 +132,7 @@
       <validation></validation>
     </property>
     <property name="active">
-      <id>605</id>
+      <id>108</id>
       <label>Active</label>
       <type>checkbox</type>
       <default></default>
@@ -140,7 +142,7 @@
       <validation></validation>
     </property>
     <property name="savedata">
-      <id>606</id>
+      <id>109</id>
       <label>Save Data</label>
       <type>checkbox</type>
       <default></default>
@@ -150,7 +152,7 @@
       <validation></validation>
     </property>
     <property name="permissioncheck">
-      <id>607</id>
+      <id>110</id>
       <label>Permission Check</label>
       <type>checkbox</type>
       <default></default>
@@ -160,7 +162,7 @@
       <validation></validation>
     </property>
     <property name="termslink">
-      <id>608</id>
+      <id>111</id>
       <label>Terms Link</label>
       <type>textbox</type>
       <default></default>
@@ -170,7 +172,7 @@
       <validation></validation>
     </property>
     <property name="options">
-      <id>609</id>
+      <id>112</id>
       <label>Options</label>
       <type>textarea</type>
       <default></default>
