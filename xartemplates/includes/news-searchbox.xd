@@ -8,7 +8,7 @@
 
 <xar:if condition="isset($extra.q)">
     <div class="xarpages-searchbox">
-        <form method="post" action="#xarServerGetCurrentURL(array('q'=&gt;NULL))#">
+        <form method="post" action="#xarServerGetCurrentURL(array('q'=&gt;NULL,'startnum'=&gt;NULL))#">
             <p>
                 <label for="articles_q"><xar:mlstring>Search this page:</xar:mlstring></label>
                 <input type="text" name="q" id="articles_q" value="#xarVarPrepForDisplay($extra.q)#" />
