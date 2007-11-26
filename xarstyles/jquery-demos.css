@@ -1,7 +1,7 @@
 /* Styles for the demos - just undo a few styles applied by the theme */
 
 div.jquery-demos ul {
-	margin-bottom: 10em;
+	/*margin-bottom: 10em;*/
 }
 
 div.jquery-demos li {

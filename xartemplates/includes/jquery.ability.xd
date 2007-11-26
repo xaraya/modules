@@ -1,0 +1,33 @@
+<xar:comment> DEPRECATED </xar:comment>
+
+<xar:comment>
+    Make sure jQuery is going to be loaded.
+</xar:comment>
+
+<xar:template file="jquery" module="jquery" />
+
+<xar:comment>
+    Required plugins.
+</xar:comment>
+
+<xar:base-include-javascript filename="jquery.cookie.js" module="jquery" />
+
+<xar:comment>
+    Load up the ability style switcher.
+</xar:comment>
+
+<xar:base-include-javascript filename="jquery.ability.packed.js" module="jquery" />
+
+<xar:comment>
+    Default options.
+</xar:comment>
+
+<xar:base-include-javascript filename="jquery.ability.options.js" module="jquery" />
+
+<xar:comment>
+    Default stylesheets.
+</xar:comment>
+
+<xar:style file='high-contrast.ability' scope="module" module="jquery" />
+<xar:style file='default.ability' scope="module" module="jquery" />
+<xar:style file='jquery.ability' scope="module" module="jquery" />

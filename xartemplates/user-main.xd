@@ -197,6 +197,7 @@
     </p>
 
     <h2><xar:mlstring>Table Sorter</xar:mlstring></h2>
+    <p><xar:mlstring>Sort the columns by clicking on the headings.</xar:mlstring></p>
     <xar:template file="jquery.tablesorter" module="jquery" subdata="array('selector'=&gt;'table.tablesorter','options'=&gt;'')" />
 
     <table cellspacing="1" class="tablesorter">
@@ -246,4 +247,27 @@
         <li><a href="#xarServergetCurrentURL(array(),true,'linktracker_5')#"><img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg" alt="image alt text" title="test title" /></a></li>
     </ul>
 
+    <h2 id="link-cycle"><xar:mlstring>cycle</xar:mlstring></h2>
+    <p><xar:mlstring>Cycle through a list of blocks or images using any of many different transitions.</xar:mlstring></p>
+    <p><xar:mlstring>All images and blocks must be located in an appropriately-sized container, because absolute positioning is used, so the images will be taken out of the page flow.</xar:mlstring></p>
+
+    <xar:template file="jquery.cycle" module="jquery" subdata="array('selector'=&gt;'div#cycle1','options'=&gt;'')" />
+    <xar:base-include-javascript type="code" code="jQuery(function(){jQuery('div#cycle2').cycle({fx: 'turnDown', delay: -3000, easing: 'bounceout'});});" />
+
+    <div>
+        <div id="cycle1" style="height: 200px; width: 300px; float: left;">
+            <img src="modules/jquery/xarimages/gallery/image1.jpg" alt="" height="200" />
+            <img src="modules/jquery/xarimages/gallery/image2.jpg" alt="" height="200" style="display: none;" />
+            <img src="modules/jquery/xarimages/gallery/image3.jpg" alt="" height="200" style="display: none;" />
+        </div>
+
+        <div id="cycle2" style="height: 200px; width: 300px; float: left;">
+            <img src="modules/jquery/xarimages/gallery/image1.jpg" alt="" height="200" />
+            <img src="modules/jquery/xarimages/gallery/image2.jpg" alt="" height="200" style="display: none;" />
+            <img src="modules/jquery/xarimages/gallery/image3.jpg" alt="" height="200" style="display: none;" />
+            <img src="modules/jquery/xarimages/gallery/image5.jpg" alt="" height="200" style="display: none;" />
+        </div>
+
+        <div style="clear: both;"></div>
+    </div>
 </div>

@@ -1,0 +1,37 @@
+<xar:comment>
+    Initialise the jquery.cycle tool.
+    See TBC for details of this plugin.
+    TODO: remove references to '$' in this plugin, using the preferred 'jQuery' for
+    better compatibility with other libraries.
+</xar:comment>
+
+<xar:comment>
+    Make sure jQuery is going to be loaded.
+</xar:comment>
+
+<xar:template file="jquery" module="jquery" />
+
+<xar:comment>
+    Load dependant plugins.
+    Easing is optional, but extends jquery.cycle nicely.
+</xar:comment>
+
+<xar:base-include-javascript filename="jquery.easing.js" module="jquery" />
+
+<xar:comment>
+    Load the main javascript class.
+</xar:comment>
+
+<xar:base-include-javascript filename="jquery.cycle.all.pack.js" module="jquery" />
+
+<xar:comment>
+    Initialise.
+</xar:comment>
+
+<xar:if condition="!empty($selector)">
+    <xar:if condition="!empty($options)">
+        <xar:base-include-javascript type="code" code="jQuery(function(){jQuery('$selector').cycle({ $options });});" />
+    <xar:else />
+        <xar:base-include-javascript type="code" code="jQuery(function(){jQuery('$selector').cycle();});" />
+    </xar:if>
+</xar:if>
