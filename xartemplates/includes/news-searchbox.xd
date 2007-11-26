@@ -13,7 +13,7 @@
                 <label for="articles_q"><xar:mlstring>Search this page:</xar:mlstring></label>
                 <input type="text" name="q" id="articles_q" value="#xarVarPrepForDisplay($extra.q)#" />
                 <input type="submit" name="articles_q_submit" value="#xarML('Search')#" />
-                <a href="#xarServerGetCurrentURL(array('q'=&gt;NULL))#"><xar:mlstring>Show all</xar:mlstring></a>
+                <a href="#xarServerGetCurrentURL(array('q'=&gt;NULL,'startnum'=&gt;NULL))#"><xar:mlstring>Show all</xar:mlstring></a>
             </p>
         </form>
     </div>
