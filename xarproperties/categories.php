@@ -58,7 +58,7 @@ class CategoriesProperty extends SelectProperty
     public $desc       = 'Categories';
     public $reqmodules = array('categories');
 
-    public $baselist   = array();
+    public $baselist   = 'all';
     public $cidlist    = array();
     public $showbase   = true;
 
