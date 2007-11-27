@@ -55,7 +55,7 @@ extract($args);
        $img = xarTplGetImage('email.gif','sitecontact');
        $maildata['link']= "<a href=\"mailto:{$maildata['encoded']}\"><img src=\"{$img}\" alt=\"Email\" />&#160;".$maildata['text'] . "</a>";
     }else {
-        $maildata['link']= "<a href=\"mailto:{$maildata['encoded']}\">" .$imgsrc.$maildata['text'] . "</a>";
+        $maildata['link']= "<a href=\"mailto:{$maildata['encoded']}\">" .$maildata['text'] . "</a>";
     }
 
     return $maildata;
