@@ -46,10 +46,10 @@ extract($args);
         for($intCounter = 0; $intCounter < strlen($email); $intCounter++){
             $newaddress .= "&#" . ord(substr($email,$intCounter,1)) . ";";
         }
-        $newtext=explode("&#064;", $newaddress);
+        $newtext=explode("&#64;", $newaddress);
         $at = xarML(' at ');
         $dot = xarML(' dot ');
-        $maildata['text'] = $newtext[0].$at. str_replace("&#046;",$dot,$newtext[1]);
+        $maildata['text'] = $newtext[0].$at. str_replace("&#46;",$dot,$newtext[1]);
     }
     if (isset($image) && TRUE==$image) {
        $img = xarTplGetImage('email.gif','sitecontact');
