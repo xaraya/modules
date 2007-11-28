@@ -6,7 +6,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage comments
- * @link http://xaraya.com/index.php/release/147.html
+ * @link http://xaraya.com/index.php/release/14.html
  * @author Categories module development team
  */
 /**
@@ -15,6 +15,7 @@
  * @param $args['objectid'] ID of the object
  * @param $args['extrainfo'] extra information
  * @return bool
+ * @todo MichelV: BUG 6182 need either defines in here, or change depth to a string
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function comments_adminapi_updateconfighook($args)
@@ -54,12 +55,12 @@ function comments_adminapi_updateconfighook($args)
 
     $itemtype = 0;
     if (isset($extrainfo['itemtype'])) {
-        $itemtype = $extrainfo['itemtype']; 
+        $itemtype = $extrainfo['itemtype'];
     }
 
     xarModSetVar($modname, 'edittimelimit.' . $itemtype, $edittimelimit);
     xarModSetVar($modname, 'AllowPostAsAnon.' . $itemtype, $postanon);
-    xarModSetVar($modname, 'AuthorizeComments.' . $itemtype, $authorize); 
+    xarModSetVar($modname, 'AuthorizeComments.' . $itemtype, $authorize);
     xarModSetVar($modname, 'depth.' . $itemtype, $depth);
     xarModSetVar($modname, 'render.' . $itemtype, $render);
     xarModSetVar($modname, 'sortby.' . $itemtype, $sortby);
