@@ -32,17 +32,17 @@ function comments_admin_updateconfig()
     if (!xarVarFetch('wrap','checkbox', $wrap, false,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('edittimelimit','str:1:', $edittimelimit, '',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('authorize', 'checkbox', $authorize, false, XARVAR_NOT_REQUIRED)) return;
-    
+
     if (!xarVarFetch('numstats', 'int', $numstats, 100, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('rssnumitems', 'int', $rssnumitems, 25, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('showtitle', 'checkbox', $showtitle, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('allowhookoverride', 'checkbox', $allowhookoverride, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('usersetrendering', 'checkbox', $usersetrendering, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('useblacklist', 'checkbox', $xar_useblacklist, false, XARVAR_NOT_REQUIRED)) return;
-    
+    if (!xarVarFetch('useblacklist', 'checkbox', $useblacklist, false, XARVAR_NOT_REQUIRED)) return;
+
     xarModSetVar('comments', 'edittimelimit', $edittimelimit);
     xarModSetVar('comments', 'AllowPostAsAnon', $postanon);
-    xarModSetVar('comments', 'AuthorizeComments', $authorize); 
+    xarModSetVar('comments', 'AuthorizeComments', $authorize);
     xarModSetVar('comments', 'depth', $depth);
     xarModSetVar('comments', 'render', $render);
     xarModSetVar('comments', 'sortby', $sortby);
@@ -50,7 +50,7 @@ function comments_admin_updateconfig()
     xarModSetVar('comments', 'editstamp', $editstamp);
     xarModSetVar('comments', 'wrap', $wrap);
     xarModSetVar('comments', 'showoptions', $showoptions);
-    
+
     xarModSetVar('comments', 'numstats', $numstats);
     xarModSetVar('comments', 'rssnumitems', $rssnumitems);
     xarModSetVar('comments', 'showtitle', $showtitle);
