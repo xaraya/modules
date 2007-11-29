@@ -15,6 +15,8 @@
  * get list of keywords (from the existing assignments for now)
  *
  * @param $args['count'] if you want to count items per keyword
+ * @param $args['tab'] = int(1:5) returns keywords with initial withn
+ *    a specific letter range (1=[A-F]; 2=[G-L]; etc...)
  * @return array of found keywords
  */
 function keywords_userapi_getlist($args)
