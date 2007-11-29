@@ -25,7 +25,7 @@ function articles_admin_privileges($args)
     if (!xarVarFetch('cid',          'isset', $cid,          NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('uid',          'isset', $uid,          NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('author',       'isset', $author,       NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('id',          'isset', $id,          NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('id',           'isset', $id,           NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('apply',        'isset', $apply,        NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('extpid',       'isset', $extpid,       NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('extname',      'isset', $extname,      NULL, XARVAR_DONT_SET)) {return;}
@@ -135,14 +135,12 @@ function articles_admin_privileges($args)
 
     if (!empty($apply)) {
         // create/update the privilege
-        $pid = xarReturnPrivilege($extpid,$extname,$extrealm,$extmodule,$extcomponent,$newinstance,$extlevel);
-        if (empty($pid)) {
-            return; // throw back
-        }
+        $id = xarReturnPrivilege($extpid,$extname,$extrealm,$extmodule,$extcomponent,$newinstance,$extlevel);
+        if (empty($id)) return; // throw back
 
         // redirect to the privilege
         xarResponseRedirect(xarModURL('privileges', 'admin', 'modifyprivilege',
-                                      array('pid' => $pid)));
+                                      array('id' => $id)));
         return true;
     }
 
