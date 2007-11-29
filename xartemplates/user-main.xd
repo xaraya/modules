@@ -200,6 +200,7 @@
                     </div>
                 </xar:if>
             </xar:if>
+            <xar:if condition="!xarUserIsLoggedIn()">
             <xar:if condition="isset($AntiBot_Available) AND $AntiBot_Available eq TRUE AND $useantibot eq '1'">
                 <div class="xar-form-input-wrapper">
                     <label for="useremail" class="xar-form-label" title="#xarML('Enter the value as seen in the image (if you can not read the image, click on it to load a new one).')#">
@@ -224,10 +225,9 @@
                         </p>
                     </div>
                 </div>
-            </xar:if>
-        </fieldset>
-         <xar:comment>Anti spam formcaptcha code</xar:comment>
-         <xar:if condition="$useantibot eq '1' and xarModIsAvailable('formcaptcha') and xarModGetVar('formcaptcha','usecaptcha') eq true">
+             </xar:if>
+             <xar:comment>Anti spam formcaptcha code</xar:comment>
+             <xar:if condition="$useantibot eq '1' and xarModIsAvailable('formcaptcha') and xarModGetVar('formcaptcha','usecaptcha') eq true">
                 <div class="xar-form-input-wrapper">
                     <xar:set name="dumdum">require('modules/formcaptcha/xaruser/anticonfig.php');</xar:set>
                     <xar:set name="cas_textcount">count($cas_text )</xar:set>
@@ -247,8 +247,9 @@
                         <input type="hidden" name="antiselect" id="antiselect" value="#$cas_antiselect#" />
                     </div>
                 </div>
-            </xar:if>
-            <xar:comment>End Anti spam code</xar:comment>
+             </xar:if>
+             <xar:comment>End Anti spam code</xar:comment>
+       </xar:if>
         <fieldset>
            <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="useripaddress" value="#$useripaddress#" />

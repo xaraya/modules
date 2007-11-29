@@ -90,8 +90,10 @@ function sitecontact_user_contactus($args)
 
   //this is to be moved to a hook
   //the original code logic copied in here, but needs a bit of a change later
-    $badcaptcha = 0;
-    if (xarModIsAvailable('formcaptcha') && xarModGetVar('formcaptcha','usecaptcha') == true && $useantibot) {
+  $badcaptcha = 0;
+  $args['botreset']=false;
+  if (!xarUserIsLoggedIn()) { //we want to use this else don't bother
+     if (xarModIsAvailable('formcaptcha') && xarModGetVar('formcaptcha','usecaptcha') == true && $useantibot) {
         include_once 'modules/formcaptcha/xaruser/anticonfig.php'; // get rid of this - move to modvars
         $cas_antiselect = intval($antiselect);
         $cas_antiword = $antiword;
@@ -124,11 +126,11 @@ function sitecontact_user_contactus($args)
                 return xarModFunc('sitecontact', 'user', 'main', $args);
         }
         $args['botreset']=false; // switch used for referer mainly in main function
-    }
+      }
         
 
-    if (xarModIsAvailable('formantibot') && $useantibot) {
-        if (!xarVarFetch('antibotcode',  'str:6:10', $antibotcode, '', XARVAR_NOT_REQUIRED) ||
+        if (xarModIsAvailable('formantibot') && $useantibot) {
+            if (!xarVarFetch('antibotcode',  'str:6:10', $antibotcode, '', XARVAR_NOT_REQUIRED) ||
             !xarModAPIFunc('formantibot', 'user', 'validate', array('userInput' => $antibotcode))) {
                 $args['company'] = $company;
                 $args['scid']   = $scid;
@@ -140,11 +142,12 @@ function sitecontact_user_contactus($args)
                 $args['botreset']=true;
                 $args['userreferer']= $userreferer; //don't loose our original referer
                 return xarModFunc('sitecontact', 'user', 'main', $args);
-        }
-    } else {
+            }
+        } else {
         $args['botreset']=false; // switch used for referer mainly in main function
+        }
     }
-
+    
     if (!isset($soptions['allowbccs']) || $soptions['allowbccs']!=1) {
         $bccrecipients='';
     }
