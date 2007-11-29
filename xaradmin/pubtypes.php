@@ -174,10 +174,10 @@ function articles_admin_pubtypes()
                               array('ptid' => $ptid))) {
                 return; // throw back
             } else {
-                xarModVars::del('articles', 'settings.'.$ptid);
+                xarModVars::delete('articles', 'settings.'.$ptid);
                 xarModDelAlias($pubtypes[$ptid]['name'],'articles');
-                xarModVars::del('articles', 'number_of_categories.'.$ptid);
-                xarModVars::del('articles', 'mastercids.'.$ptid);
+                xarModVars::delete('articles', 'number_of_categories.'.$ptid);
+                xarModVars::delete('articles', 'mastercids.'.$ptid);
                 $default = xarModVars::get('articles','defaultpubtype');
                 if ($ptid == $default) {
                     xarModVars::set('articles','defaultpubtype','');

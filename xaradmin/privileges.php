@@ -162,7 +162,6 @@ function articles_admin_privileges($args)
     } else {
         $numitems = 1;
     }
-
     $data = array(
                   'ptid'         => $ptid,
                   'cid'          => $cid,
@@ -187,7 +186,7 @@ function articles_admin_privileges($args)
     $catlist = array();
     if (!empty($ptid)) {
         $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles', 'itemtype' => $ptid));
-        foreach ($basecats as $catid) $catlist[$catid['cid']] = 1;
+        foreach ($basecats as $catid) $catlist[$catid['id']] = 1;
         if (empty($data['pubtypes'][$ptid]['config']['authorid']['label'])) {
             $data['showauthor'] = 0;
         } else {
@@ -197,7 +196,7 @@ function articles_admin_privileges($args)
         foreach (array_keys($data['pubtypes']) as $pubid) {
             $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles', 'itemtype' => $pubid));
             foreach ($basecats as $catid) {
-                $catlist[$catid['cid']] = 1;
+                $catlist[$catid['id']] = 1;
             }
         }
         $data['showauthor'] = 1;
