@@ -46,7 +46,7 @@
                     <td>
                         <xar:set name="basecids">array_keys($pubtypes)</xar:set>
                         <xar:set name="onchange">"this.form.action='" . xarServerGetCurrentURL() . "';this.form.submit();"</xar:set>
-                        <xar:data-input type="categories" name="privcategories" basecids="$basecids" value="$cids" layout="vertical" returnitself="true" onchange="$onchange" />
+                        <xar:data-input type="categories" name="privcategories" module="articles" itemtype="$ptid" value="$cids" layout="vertical" returnitself="true" onchange="$onchange" />
                     </td>
                 </tr>
                 <xar:if condition="!empty($showauthor)">
