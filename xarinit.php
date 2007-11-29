@@ -519,23 +519,23 @@ function articles_delete()
     // Delete module variables
 
     //FIXME: This is breaking the removal of the module...
-    xarModVars::del('articles', 'itemsperpage');
+    xarModVars::delete('articles', 'itemsperpage');
 
-    xarModVars::del('articles', 'SupportShortURLs');
+    xarModVars::delete('articles', 'SupportShortURLs');
 
-    xarModVars::del('articles', 'number_of_categories');
-    xarModVars::del('articles', 'mastercids');
+    xarModVars::delete('articles', 'number_of_categories');
+    xarModVars::delete('articles', 'mastercids');
 
 // TODO: remove all current pubtypes
 
-    xarModVars::del('articles', 'settings.1');
-    xarModVars::del('articles', 'settings.2');
-    xarModVars::del('articles', 'settings.3');
-    xarModVars::del('articles', 'settings.4');
-    xarModVars::del('articles', 'settings.5');
-    xarModVars::del('articles', 'settings.6');
+    xarModVars::delete('articles', 'settings.1');
+    xarModVars::delete('articles', 'settings.2');
+    xarModVars::delete('articles', 'settings.3');
+    xarModVars::delete('articles', 'settings.4');
+    xarModVars::delete('articles', 'settings.5');
+    xarModVars::delete('articles', 'settings.6');
 
-    xarModVars::del('articles', 'defaultpubtype');
+    xarModVars::delete('articles', 'defaultpubtype');
 
     // UnRegister blocks
     if (!xarModAPIFunc('blocks',

@@ -55,18 +55,7 @@
                             <xar:mlstring>Author</xar:mlstring>
                         </th>
                         <td>
-                            <select name="uid" id="uid" onchange="javascript:this.form.submit();">
-                                <option value="0">
-                                    <xar:mlstring>All / Other --&gt;</xar:mlstring>
-                                </option>
-                                <xar:foreach in="$authorlist" key="$id">
-                                    <xar:if condition="$auth eq $id">
-                                        <option value="#$id#" selected="selected">#xarVarPrepForDisplay($authorlist[$id])#</option>
-                                        <xar:else />
-                                        <option value="#$id#">#xarVarPrepForDisplay($authorlist[$id])#</option>
-                                    </xar:if>
-                                </xar:foreach>
-                            </select>
+                            <xar:data-input type="dropdown" name="uid" options="$authorlist" value="$uid" firstline="All / Other --&gt" onchange="javascript:this.form.submit();" />
                             <input type="text" name="author" id="author" value="#$author#" size="15" onchange="javascript:this.form.submit();" />
                         </td>
                     </tr>
@@ -90,71 +79,21 @@
                         <xar:mlstring>Access Level</xar:mlstring>
                     </th>
                     <td>
-                        <select name="extlevel" id="extlevel">
-                            <xar:if condition="$extlevel eq 0">
-                                <option value="0" selected="selected">
-                                    <xar:mlstring>No Access</xar:mlstring>
-                                </option>
-                                <xar:else />
-                                <option value="0">
-                                    <xar:mlstring>No Access</xar:mlstring>
-                                </option>
-                            </xar:if>
-                            <xar:if condition="$extlevel eq 100">
-                                <option value="100" selected="selected">
-                                    <xar:mlstring>Overview</xar:mlstring>
-                                </option>
-                                <xar:else />
-                                <option value="100">
-                                    <xar:mlstring>Overview</xar:mlstring>
-                                </option>
-                            </xar:if>
-                            <xar:if condition="$extlevel eq 200">
-                                <option value="200" selected="selected">
-                                    <xar:mlstring>Read</xar:mlstring>
-                                </option>
-                                <xar:else />
-                                <option value="200">
-                                    <xar:mlstring>Read</xar:mlstring>
-                                </option>
-                            </xar:if>
-                            <xar:if condition="$extlevel eq 300">
-                                <option value="300" selected="selected">
-                                    <xar:mlstring>Submit (Comment)</xar:mlstring>
-                                </option>
-                                <xar:else />
-                                <option value="300">
-                                    <xar:mlstring>Submit (Comment)</xar:mlstring>
-                                </option>
-                            </xar:if>
-                            <xar:if condition="$extlevel eq 500">
-                                <option value="500" selected="selected">
-                                    <xar:mlstring>Edit / Approve</xar:mlstring>
-                                </option>
-                                <xar:else />
-                                <option value="500">
-                                    <xar:mlstring>Edit / Approve</xar:mlstring>
-                                </option>
-                            </xar:if>
-                            <xar:if condition="$extlevel eq 700">
-                                <option value="700" selected="selected">
-                                    <xar:mlstring>Delete</xar:mlstring>
-                                </option>
-                                <xar:else />
-                                <option value="700">
-                                    <xar:mlstring>Delete</xar:mlstring>
-                                </option>
-                            </xar:if>
-                            <xar:if condition="$extlevel eq 800">
-                                <option value="800" selected="selected">
-                                    <xar:mlstring>Admin</xar:mlstring>
-                                </option>
-                                <xar:else />
-                                <option value="800">
-                                    <xar:mlstring>Admin</xar:mlstring>
-                                </option>
-                            </xar:if>
-                        </select>
+                        <xar:set name="levels">
+                            SecurityLevel::$displayMap
+                        </xar:set>
+                        <xar:set name="foo">
+                            1; unset($levels[-1]);unset($levels[400]);unset($levels[600]);
+                        </xar:set>
+                        <xar:set name="options">
+                            array()
+                        </xar:set>
+                        <xar:foreach in="$levels" key="$key" value="$value" >
+                            <xar:set name="foo">1;
+                                $options[] = array('id' => $key, 'name' => $value)
+                            </xar:set>
+                        </xar:foreach>
+                        <xar:data-input type="dropdown" name="extlevel" value="$extlevel" options="$options" />
                     </td>
                 </tr>
                 <tr>

@@ -99,7 +99,7 @@ function articles_userapi_getauthors($args)
     $authors = array();
     while (!$result->EOF) {
         list($uid, $name) = $result->fields;
-        $authors[$uid] = $name;
+        $authors[$uid] = array('id' => $uid, 'name' => $name);
         $result->MoveNext();
     }
 
