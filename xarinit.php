@@ -524,8 +524,8 @@ function categories_delete()
     if (!$result) return;
 
     // Delete module variables
-//    xarModVars::del('categories', 'bold');
-    xarModVars::del('categories', 'catsperpage');
+//    xarModVars::delete('categories', 'bold');
+    xarModVars::delete('categories', 'catsperpage');
 
     // Remove module hooks
     if (!xarModUnregisterHook('item', 'new', 'GUI',

@@ -127,10 +127,12 @@ class CategoriesProperty extends SelectProperty
         $this->fieldname = $name;
 
         list($isvalid, $categories) = $this->fetchValue($name . '_categories');
-        if ($categories == null) {
-            if (!xarVarFetch($name . '_categories', 'array', $categories, array(), XARVAR_NOT_REQUIRED)) return;
-        } else {
-            if (!is_array($categories)) $categories = array($categories);
+        if ($isvalid) {
+            if (!is_array($categories)) {
+                $categories = array($categories);
+            } else {
+                if (!xarVarFetch($name . '_categories', 'array', $categories, array(), XARVAR_NOT_REQUIRED)) return;
+            }
         }
         return $categories;
     }
