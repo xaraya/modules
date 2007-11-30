@@ -9,13 +9,13 @@
  * @link http://xaraya.com/index.php/release/14.html
  * @author Categories module development team
  */
+include_once('modules/comments/xarincludes/defines.php');
 /**
  * update configuration for a module - hook for ('module','updateconfig','API')
  *
  * @param $args['objectid'] ID of the object
  * @param $args['extrainfo'] extra information
  * @return bool
- * @todo MichelV: BUG 6182 need either defines in here, or change depth to a string
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function comments_adminapi_updateconfighook($args)
