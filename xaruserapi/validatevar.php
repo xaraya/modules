@@ -16,9 +16,9 @@
  * @author Damien Bonvillain
  * @author Gregor J. Rothfuss
  * @since 1.23 - 2002/02/01
- * @param var the variable to validate
- * @param type the type of the validation to perform
- * @param args optional array with validation-specific settings
+ * @param mixed var the variable to validate
+ * @param string type the type of the validation to perform
+ * @param array args optional array with validation-specific settings
  * @return bool true if the validation was successful, false otherwise
  * @todo move this to xarVar* api
  */

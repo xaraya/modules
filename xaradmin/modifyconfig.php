@@ -3,7 +3,7 @@
  * Modify configuration
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,7 +11,11 @@
  * @link http://xaraya.com/index.php/release/30205.html
  */
 /**
- * modify configuration
+ * modify configuration of registration module
+ * @param string phase The phase we are in
+ * @param string tab The tab we show
+ * @param bool shorturls Do you want short urls to be used in registration?
+ * @return array
  */
 function registration_admin_modifyconfig()
 {
@@ -76,7 +80,7 @@ function registration_admin_modifyconfig()
                 default:
                     if (!xarVarFetch('showterms',   'checkbox', $showterms,   false, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('showprivacy', 'checkbox', $showprivacy, false, XARVAR_NOT_REQUIRED)) return;
-                
+
                     xarModSetVar('registration', 'SupportShortURLs', $shorturls);
                     xarModSetVar('registration', 'showterms', $showterms);
                     xarModSetVar('registration', 'showprivacy', $showprivacy);
@@ -97,14 +101,14 @@ function registration_admin_modifyconfig()
                     //jojodee - the following is better kept in roles - reduces unwanted dependencies of core on noncore modules among other reasons
                     //if (!xarVarFetch('uniqueemail',       'checkbox', $uniqueemail,       xarModGetVar('registration', 'uniqueemail'), XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('notifyemail',       'str:1:150',$notifyemail,       xarModGetVar('mail', 'adminmail'), XARVAR_NOT_REQUIRED)) return;
-             
+
                     xarModSetVar('registration', 'chooseownpassword', $chooseownpassword);
                     xarModSetVar('roles', 'defaultgroup', $defaultgroup);
                     xarModSetVar('registration', 'allowregistration', $allowregistration);
                     xarModSetVar('registration', 'minage', $minage);
                     xarModSetVar('registration', 'enteremailtwice', $enteremailtwice);
                     xarModSetVar('registration', 'notifyemail', $notifyemail);
-                    xarModSetVar('registration', 'sendnotice', $sendnotice); 
+                    xarModSetVar('registration', 'sendnotice', $sendnotice);
                     xarModSetVar('registration', 'explicitapproval', $explicitapproval? true:false);
                     xarModSetVar('registration', 'requirevalidation', $requirevalidation);
                     xarModSetVar('registration', 'showdynamic', $showdynamic);
