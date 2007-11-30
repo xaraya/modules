@@ -3,7 +3,7 @@
  * Register a new user
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -57,9 +57,9 @@ function registration_user_register()
         xarErrorSet(XAR_SYSTEM_MESSAGE,
        'SITE_LOCKED',
         new SystemMessage($lockvars['message']));
-        return;     
+        return;
      }
-    
+
     xarTplSetPageTitle(xarML('New Account'));
     if (!xarVarFetch('phase','str:1:100',$phase,'request',XARVAR_NOT_REQUIRED)) return;
 
@@ -316,7 +316,7 @@ function registration_user_register()
 
             // determine state of this create user
             $state = xarModAPIFunc('registration','user','createstate' );
-         
+
             // need a password
             if (empty($pass)){
                 $pass = xarModAPIFunc('roles', 'user', 'makepass');
@@ -353,6 +353,8 @@ function registration_user_register()
              */
              $userdata['module'] = 'registration';
              $userdata['itemid'] = $uid;
+             // Make sure we pass the phase as well
+             $userdata['phase']  = $phase;
              xarModCallHooks('item', 'create', $uid, $userdata);
 
              // Option: If admin requires notification of a new user, and no validation required,
