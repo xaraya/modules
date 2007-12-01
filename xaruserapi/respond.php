@@ -355,10 +355,11 @@ function sitecontact_userapi_respond($args)
     if (!empty($data['sctypename'])){
          $htmltemplate = 'html_' . $data['sctypename'];
          $texttemplate = 'text_' . $data['sctypename'];
-    } else {
-         $htmltemplate =  'html';
-         $texttemplate =  'text';
     }
+    //else {
+      //   $htmltemplate =  'html';
+      //   $texttemplate =  'text';
+   // }
 
    $userhtmlarray= array('notetouser' => $htmlnotetouser,
                           'username'   => $username,
@@ -453,7 +454,7 @@ function sitecontact_userapi_respond($args)
                           'properties' => $properties,
                           'baseproperties'  => $baseproperties,
                           'userreferer' => $userreferer);
-    //In 2x the itemtype specific template must be present. This never user html or text, and
+    //In 2x the itemtype specific template must be present for html and text mail. This never uses html or text, and
     //   doesn't falls back to user-adminmail-text.xt (or user-adminmail-html)
     //Using user-adminmail-basic.xt instead for example.. Need an alternative for text and html still
 
