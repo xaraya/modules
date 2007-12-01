@@ -1,19 +1,27 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:style scope="module" module="sitecontact" file="defaultform" />
+
+<!-- List of the sitecontact basic form fields - do not need to show these for objects with the basic form as a parent -->
+<xar:set name="defaultarray">array('id','scid','cid','company','username','useremail','requesttext','usermessage',
+              'useripaddress','userreferer','sendcopy','permission','bccrecipients','ccrecipients','responsetime');
+</xar:set>
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Sitecontact Administration</xar:mlstring></span>
 </div>
 <xar:if condition="isset($object)">
     <xar:set name="properties">$object->getProperties()</xar:set>
 </xar:if>
+<xar:data-getitem name="$properties" module="dynamicdata" itemtype="$args['itemtype']" itemid="$args['itemid']" />
+
 <div class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
     <h2>
-      <xar:ml>
-        <xar:mlstring>Response ID: #(1) for #(2) </xar:mlstring>
-        <xar:mlvar>#$scrid#</xar:mlvar>
-        <xar:mlvar>#$formname#</xar:mlvar>
-      </xar:ml>
+        <xar:ml>
+            <xar:mlstring>Response ID: #(1) for #(2) </xar:mlstring>
+            <xar:mlvar>#$scrid#</xar:mlvar>
+            <xar:mlvar>#$formname#</xar:mlvar>
+        </xar:ml>
     </h2>
     <xar:template file="navviewtabs" type="module" />
     <xar:if condition="$permissioncheck">
@@ -24,129 +32,93 @@
     <xar:else />
     <fieldset>
        <legend><xar:mlstring>Response</xar:mlstring> #$scrid#</legend>
+           <!--
            <p class="xar-form-input-wrapper">
                <span class="xar-form-label">
                    <xar:mlstring>User name:</xar:mlstring>
                </span>
-                #xarVarPrepForDisplay($username)#
+                    #xarVarPrepForDisplay($username)#
+           </p>-->
+           <p class="xar-form-input-wrapper">
+               <xar:data-label property="$properties['username']" label="id" />
+               <xar:data-output property="$properties['username']" />
            </p>
            <p class="xar-form-input-wrapper">
-               <span class="xar-form-label">
-                   <xar:mlstring>Email:</xar:mlstring>
-               </span>
-                #$useremail#
+               <xar:data-label property="$properties['useremail']" label="id" />
+               <xar:data-output property="$properties['useremail']" />
            </p>
            <p class="xar-form-input-wrapper">
-               <span class="xar-form-label">
-                   <xar:mlstring>Subject:</xar:mlstring>
-               </span>
-                #xarVarPrepForDisplay($requesttext)#
-           </p>
-
-           <p class="xar-form-input-wrapper">
-               <span class="xar-form-label">
-                   <xar:mlstring>Message:</xar:mlstring>
-               </span>
-                <span class="xar-form-container">#$usermessage#</span>
+               <xar:data-label property="$properties['requesttext']" label="id" />
+               <xar:data-output property="$properties['requesttext']" />
            </p>
            <p class="xar-form-input-wrapper">
-               <span class="xar-form-label">
-                   <xar:mlstring>User IP:</xar:mlstring>
-               </span>
-               #$useripaddress#
+               <xar:data-label property="$properties['usermessage']" label="id" />
+               <div class="xar-form-container-after">
+                   <xar:data-output property="$properties['usermessage']" />
+               </div>
+           </p>
+          <p class="xar-form-input-wrapper">
+               <xar:data-label property="$properties['useripaddress']" label="id" />
+               <xar:data-output property="$properties['useripaddress']" />
            </p>
            <p class="xar-form-input-wrapper">
-               <span class="xar-form-label">
-                   <xar:mlstring>Referer:</xar:mlstring>
-               </span>
-               #$userreferer#
+               <xar:data-label property="$properties['userreferer']" label="id" />
+               <xar:data-output property="$properties['userreferer']" />
            </p>
            <p class="xar-form-input-wrapper">
-               <span class="xar-form-label">
-                   <xar:mlstring>Requested a copy?</xar:mlstring>
-               </span>
-               <xar:if condition="$sendcopy">
-                  <xar:mlstring>Yes</xar:mlstring>
-               <xar:else />
-                  <xar:mlstring>No</xar:mlstring>
-               </xar:if>
+                <xar:data-label property="$properties['sendcopy']" label="id" />
+                <xar:data-output property="$properties['sendcopy']" />
            </p>
            <p class="xar-form-input-wrapper">
-               <span class="xar-form-label">
-                   <xar:mlstring>Permission given?</xar:mlstring>
-               </span>
-               <xar:if condition="$permission">
-                  <xar:mlstring>Yes</xar:mlstring>
-               <xar:else />
-                  <xar:mlstring>No</xar:mlstring>
-               </xar:if>
+               <xar:data-label property="$properties['permission']" label="id" />
+                <xar:data-output property="$properties['permission']" />
                <xar:if condition="$permissioncheck">
-                   <xar:mlstring> (Permission requested)</xar:mlstring>
+                   <xar:mlstring> [Permission was requested]</xar:mlstring>
                 <xar:else />
-                  <xar:mlstring> (No permission requested)</xar:mlstring>
+                  <xar:mlstring> [Permission was not requested]</xar:mlstring>
                </xar:if>
            </p>
            <p class="xar-form-input-wrapper">
-               <span class="xar-form-label">
-                   <xar:mlstring>Copy list:</xar:mlstring>
-               </span>
-               <xar:if condition="is_array($ccrecipients)">
-                 <xar:foreach in="$ccrecipients" key="$k" value="$v">
-                 #$k#,
-                 </xar:foreach>
+               <xar:data-label property="$properties['ccrecipients']" label="id" />
+               <xar:if condition="is_array($ccrecipients) and !empty($ccrecipients)">
+                   <div class="xar-form-container-after">
+                       <xar:foreach in="$ccrecipients" key="$k" value="$v">
+                       #$k#,
+                       </xar:foreach>
+                   </div>
                <xar:else/>
                   <xar:mlstring>None</xar:mlstring>
                </xar:if>
            </p>
 
-         <p class="xar-form-input-wrapper">
-               <span class="xar-form-label">
-                   <xar:mlstring>BB Copy list:</xar:mlstring>
-               </span>
-               <xar:if condition="is_array($bccrecipients)">
-                 <xar:foreach in="$bccrecipients" key="$k" value="$v">
-                 #$k#,
-                 </xar:foreach>
-               <xar:else />
+          <p class="xar-form-input-wrapper">
+               <xar:data-label property="$properties['bccrecipients']" label="id" />
+               <xar:if condition="is_array($bccrecipients) and !empty($bccrecipients)">
+                   <div class="xar-form-container-after">
+                       <xar:foreach in="$bccrecipients" key="$k" value="$v">
+                       #$k#,
+                       </xar:foreach>
+                   </div>
+               <xar:else/>
                   <xar:mlstring>None</xar:mlstring>
                </xar:if>
            </p>
           <p class="xar-form-input-wrapper">
-               <span class="xar-form-label">
-                   <xar:mlstring>Response Time:</xar:mlstring>
-               </span>
+               <xar:data-label property="$properties['responsetime']" label="id" />
+
                #xarLocaleGetFormattedDate('medium', $responsetime)#
                 #xarLocaleGetFormattedTime('medium', $responsetime)#
            </p>
-
-    <xar:data-getitem name="$properties" module="dynamicdata" itemtype="$args['itemtype']" itemid="$args['itemid']" />
-        <xar:set name="defaultarray">array('id','scid','cid','username','useremail','message','requesttext','usermessage','message',
-              'useripaddress','userreferer','sendcopy','permission','bccrecipients','ccrecipients','responsetime');
-        </xar:set>
-        <!--
-        <xar:if condition="isset($properties) and count($properties) gt 0">
-            <xar:foreach in="$properties" key="$name">
-                <div class="xar-form-input-wrapper">
-                    <xar:data-label property="$properties[$name]" label="id" />
-                    <xar:data-input property="$properties[$name]" />
-                </div>
-            </xar:foreach>
-        </xar:if>
--->
- <xar:if condition="isset($properties) and count($properties) gt 0">
-                    <xar:foreach in="$properties" key="$name">
+           <xar:foreach in="$properties" key="$name">
                     <xar:if condition="!in_array($name,$defaultarray)">
-                    <div class="xar-form-input-wrapper">
+                    <p class="xar-form-input-wrapper">
                         <label for="$properties[$name]" class="xar-form-label"  title="#$properties[$name]-&gt;label#">
                                 <xar:data-label property="$properties[$name]" label="id" />
                         </label>
                         <xar:data-input property="$properties[$name]" />
-                    </div>
+                    </p>
                     </xar:if>
-                    </xar:foreach>
-                </xar:if>
-
-
+           </xar:foreach>
     </fieldset>
     <xar:if condition="!empty($hooks)">
         <xar:foreach in="$hooks" key="$hookmodule">

@@ -3,7 +3,7 @@
  * Display a response
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -49,14 +49,25 @@ function sitecontact_admin_display($args)
         return; // todo: something
     }
 
+    $basicobject = DataObjectMaster::getObject(array('name'=> 'sitecontact_basicform'));
+    $args['basicitemtype']= $basicobject->itemtype;
+    $args['basicitemid']= $scrid;
+    $data['basicobject'] = $basicobject;
+    
     $thisform = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
     $thisform=$thisform[0];
-    $info = xarModAPIFunc('dynamicdata','user','getobjectinfo',array('name'=> $thisform['sctypename']));
-    $thisobject = xarModAPIFunc('dynamicdata','user','getobject', array('objectid' => $info['objectid']));
+
+    if ($thisform['sctypename'] != 'sitecontact_basicform') {
+        $thisobject = DataObjectMaster::getObject(array('name'=> $thisform['sctypename']));
+    } else {
+        //we only have the basic form, not as a parent
+        $thisobject = $basicobject;
+    }
+    $data['object'] = $thisobject;
     $args['module']= 'dynamicdata';
     $args['itemtype']= $thisobject->itemtype;
     $args['itemid']= $scrid;
-
+    //keep some data vars for backward compat in templates
     $data['args'] = $args;
     $data['username'] = $item['username'];
     $data['useremail'] = $item['useremail'];
@@ -114,9 +125,9 @@ function sitecontact_admin_display($args)
     xarTplSetPageTitle(xarVarPrepForDisplay($data['formname']));
     //let's also give a custom template for admin display
     try {
-        $templatedata = xarTplModule('sitecontact', 'admin', $template, $data, $data['formname']);
-    } catch (Exception $e) {
         $templatedata = xarTplModule('sitecontact', 'admin', 'display', $data, $data['formname']);
+    } catch (Exception $e) {
+        $templatedata = xarTplModule('sitecontact', 'admin', 'display', $data);
     }
     return $templatedata;
 }
