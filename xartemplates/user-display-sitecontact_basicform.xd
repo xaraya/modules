@@ -1,4 +1,11 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:style scope="module" module="sitecontact" file="defaultform" />
+<xar:set name="thisobject">xarModAPIFunc('dynamicdata','user','getobject', array('name' => $sctypename))</xar:set>
+<xar:set name="properties">$thisobject->properties</xar:set>
+<!-- List of the sitecontact basic form fields - do not need to show these for objects with the basic form as a parent -->
+<xar:set name="defaultarray">array('id','scid','cid','company','username','useremail','requesttext','usermessage',
+              'useripaddress','userreferer','sendcopy','permission','bccrecipients','ccrecipients','responsetime');
+</xar:set>
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
 <xar:if condition="isset($AntiBot_Available) AND $AntiBot_Available AND $useantibot">
     <script type="text/javascript">
@@ -33,7 +40,7 @@
 
 <div class="xar-mod-body">
         <p>
-            #$customtext#
+            #$customtext# 
         </p>
 
         <form action="&xar-modurl-sitecontact-user-respond;" method="post" enctype="multipart/form-data" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
@@ -96,14 +103,17 @@
                     </div>
                 <xar:elseif condition="$adminccs" />
                       <input type="hidden" name="ccrecipients" id="ccrecipients" value="#$admincclist#" />
+                <xar:else />
+                      <input type="hidden" name="ccrecipients" id="ccrecipients" value="" />
                 </xar:if>
 
                 <xar:if condition="$allowbccs">
                     <div class="xar-form-input-wrapper">
                         <xar:data-label label="BCC Recipients" for="bccrecipients" />
                         <xar:data-input type="textbox" name="bccrecipients" id="bccrecipients" size="150" value=""/>
-
                     </div>
+                 <xar:else />
+                      <input type="hidden" name="bccrecipients" id="bccrecipients" value="" />
                 </xar:if>
                 <xar:if condition="$allowbccs or $allowccs">
                  <p class="xar-form-input-wrapper-after">
@@ -203,7 +213,11 @@
                <div class="xar-form-input-wrapper-after">
                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
                    <input type="hidden" name="scid" id="scid" value="#$scid#" />
+                   <input type="hidden" name="id" id="id" value="" />
+                   <input type="hidden" name="responsetime" id="responsetime" value="" />
                    <input type="hidden" name="savedata" id="savedata" value="#$savedata#" />
+                   <input type="hidden" name="useripaddress" id="useripaddress" value="#$useripaddress#" />
+                   <input type="hidden" name="userreferer" id="userreferer" value="#$userreferer#" />
                    <input type="hidden" name="permissioncheck" id="permissioncheck" value="#$permissioncheck#" />
                    <input type="hidden" name="message" id="message" value="1" />
                    <input type="submit" value="#xarML('Submit')#" />

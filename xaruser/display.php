@@ -3,7 +3,7 @@
  * Main user function
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -154,47 +154,6 @@ function sitecontact_user_display($args)
     }
     $data['requesttext']=$requesttext;
 
-/*  no longer used
-    $properties = null;
-    $withupload = (int) false;
-    // get the Dynamic Object defined for this module
-    $object =  xarModAPIFunc('dynamicdata','user','getobject',
-    array('module' =>'sitecontact',
-          'itemtype'=>$formdata['scid']));
-
-    if (isset($object) && !empty($object->objectid)) {
-        $properties =& $object->getProperties();
-    }
-    if (is_array($properties)) {
-        foreach ($properties as $key => $ddprop) {
-            if (isset($ddprop->upload) && $ddprop->upload == true) {
-                $withupload = (int) true;
-            }
-        }
-    }
-    unset($properties);
-    $data['withupload'] = $withupload;
-*/
-
-/*  not needed
-    //$webconfirmtext = trim(xarModVars::get('sitecontact','webconfirmtext'));
-    $webconfirmtext = trim($formdata['webconfirmtext']);
-    if (empty($webconfirmtext) || !isset($webconfirmtext)) {
-
-        $webconfirmtext = xarML('Your message has been sent.');
-        $webconfirmtext  .='<br />';
-        $webconfirmtext   .= xarML('You should receive confirmation of your email within a few minutes.');
-        xarModVars::set('sitecontact','webconfirmtext',$webconfirmtext);
-    }
-    $data['webconfirmtext']=$webconfirmtext;
-    if ($message == 1 && $antibotinvalid != TRUE) {
-        $data['messagetxt']= $data['webconfirmtext'];
-         $data['message']=$message;
-    } else {
-        $data['message']='';
-        $data['messagetxt'] = '';
-    }
-*/
 
     // get the dataobject for this form
     if ($sctypename != 'sitecontact_basicform') {
@@ -206,9 +165,12 @@ function sitecontact_user_display($args)
     }
 
     $data['useripaddress'] = isset($useripaddress)?$useripaddress:xarServerGetVar('REMOTE_ADDR');
+
     //set of default fields now in DD, we don't want these twice as they have special handling
     $basicform = DataObjectMaster::getObject(array('name' => 'sitecontact_basicform'));
+    
     $data['baseproperties']= array_keys($basicform->getProperties());
+    
     $data['authid'] = xarSecGenAuthKey('sitecontact');
     $data['submit'] = xarML('Submit');
 
