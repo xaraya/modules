@@ -24,7 +24,7 @@ Administrator
 -------------------------------------------------------------</notetouser>
     <allowcopy>0</allowcopy>
     <usehtmlemail>0</usehtmlemail>
-    <defaultemail>jojodee@gmail.com</defaultemail>
+    <defaultemail>yourname@yoursite.com</defaultemail>
     <defaultname>Site Admin</defaultname>
     <active>1</active>
     <savedata>0</savedata>
