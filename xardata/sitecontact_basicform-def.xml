@@ -69,7 +69,7 @@
       <source>xar_sitecontact_response.xar_company</source>
       <status>33</status>
       <order>6</order>
-      <validation></validation>
+      <validation>0:</validation>
     </property>
     <property name="usermessage">
       <id>207</id>
@@ -87,9 +87,9 @@
       <type>textbox</type>
       <default></default>
       <source>xar_sitecontact_response.xar_useripaddress</source>
-      <status>66</status>
+      <status>34</status>
       <order>8</order>
-      <validation></validation>
+      <validation>0:</validation>
     </property>
     <property name="userreferer">
       <id>209</id>
@@ -97,13 +97,13 @@
       <type>textbox</type>
       <default></default>
       <source>xar_sitecontact_response.xar_userreferer</source>
-      <status>66</status>
+      <status>34</status>
       <order>9</order>
-      <validation></validation>
+      <validation>0:</validation>
     </property>
     <property name="sendcopy">
       <id>210</id>
-      <label>Send Copy</label>
+      <label>Send Copy?</label>
       <type>checkbox</type>
       <default></default>
       <source>xar_sitecontact_response.xar_sendcopy</source>
@@ -113,7 +113,7 @@
     </property>
     <property name="permission">
       <id>211</id>
-      <label>Permission</label>
+      <label>Permission given?</label>
       <type>checkbox</type>
       <default></default>
       <source>xar_sitecontact_response.xar_permission</source>
@@ -123,29 +123,29 @@
     </property>
     <property name="bccrecipients">
       <id>212</id>
-      <label>BCC</label>
+      <label>BCC list</label>
       <type>textbox</type>
       <default></default>
       <source>xar_sitecontact_response.xar_bccrecipients</source>
       <status>34</status>
       <order>12</order>
-      <validation></validation>
+      <validation>0:</validation>
     </property>
     <property name="ccrecipients">
       <id>213</id>
-      <label>CC</label>
+      <label>CC list</label>
       <type>textbox</type>
       <default></default>
       <source>xar_sitecontact_response.xar_ccrecipients</source>
       <status>34</status>
       <order>13</order>
-      <validation></validation>
+      <validation>0:</validation>
     </property>
     <property name="responsetime">
       <id>214</id>
       <label>Response Time</label>
       <type>integerbox</type>
-      <default></default>
+      <default>0</default>
       <source>xar_sitecontact_response.xar_responsetime</source>
       <status>66</status>
       <order>14</order>
