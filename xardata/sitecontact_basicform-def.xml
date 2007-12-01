@@ -44,7 +44,7 @@
     <property name="useremail">
       <id>204</id>
       <label>User Email</label>
-      <type>textbox</type>
+      <type>email</type>
       <default></default>
       <source>xar_sitecontact_response.xar_useremail</source>
       <status>33</status>
