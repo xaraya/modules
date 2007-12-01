@@ -22,6 +22,8 @@
  * @param  $args ['scrid'] the item id used for this example module
  * @return array $data The array that contains all data for the template
  */
+sys::import('modules.dynamicdata.class.objects.master');
+
 function sitecontact_admin_display($args)
 {
     extract($args);

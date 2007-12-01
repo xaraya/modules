@@ -49,7 +49,7 @@
         <p>
             #$customtext#
         </p>
-        <form action="&xar-modurl-sitecontact-user-contactus;" method="post" enctype="multipart/form-data" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
+        <form action="&xar-modurl-sitecontact-user-respond;" method="post" enctype="multipart/form-data" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
             <fieldset>
                 <legend>#$contacttitle#</legend>
                 <div class="xar-form-input-wrapper">

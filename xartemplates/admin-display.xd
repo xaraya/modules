@@ -115,7 +115,7 @@
                         <label for="$properties[$name]" class="xar-form-label"  title="#$properties[$name]-&gt;label#">
                                 <xar:data-label property="$properties[$name]" label="id" />
                         </label>
-                        <xar:data-input property="$properties[$name]" />
+                        <xar:data-output property="$properties[$name]" />
                     </p>
                     </xar:if>
            </xar:foreach>
