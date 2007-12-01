@@ -51,24 +51,24 @@ function sitecontact_admin_display($args)
         return; // todo: something
     }
 
-    $basicobject = DataObjectMaster::getObject(array('name'=> 'sitecontact_basicform'));
-    $args['basicitemtype']= $basicobject->itemtype;
-    $args['basicitemid']= $scrid;
-    $data['basicobject'] = $basicobject;
-    
+    $baseobject = DataObjectMaster::getObject(array('name'=> 'sitecontact_basicform'));
+    $args['baseitemtype']= $baseobject->itemtype;
+    $args['baseitemid']= $scrid;
+    $data['baseobject'] = $baseobject;
+    $data['baseproperties']= $baseobject->getProperties();
     $thisform = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
     $thisform=$thisform[0];
 
     if ($thisform['sctypename'] != 'sitecontact_basicform') {
         $thisobject = DataObjectMaster::getObject(array('name'=> $thisform['sctypename']));
-    } else {
-        //we only have the basic form, not as a parent
-        $thisobject = $basicobject;
-    }
+    } 
+    
     $data['object'] = $thisobject;
+    $data['properties']= $thisobject->getProperties();
     $args['module']= 'dynamicdata';
     $args['itemtype']= $thisobject->itemtype;
     $args['itemid']= $scrid;
+    
     //keep some data vars for backward compat in templates
     $data['args'] = $args;
     $data['username'] = $item['username'];

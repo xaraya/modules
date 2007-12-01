@@ -9,11 +9,8 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Sitecontact Administration</xar:mlstring></span>
 </div>
-<xar:if condition="isset($object)">
-    <xar:set name="properties">$object->getProperties()</xar:set>
-</xar:if>
-<xar:data-getitem name="$properties" module="dynamicdata" itemtype="$args['itemtype']" itemid="$args['itemid']" />
 
+<xar:data-getitem name="$properties" module="dynamicdata" itemtype="$args['itemtype']" itemid="$args['itemid']" />
 <div class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
     <h2>
@@ -32,13 +29,6 @@
     <xar:else />
     <fieldset>
        <legend><xar:mlstring>Response</xar:mlstring> #$scrid#</legend>
-           <!--
-           <p class="xar-form-input-wrapper">
-               <span class="xar-form-label">
-                   <xar:mlstring>User name:</xar:mlstring>
-               </span>
-                    #xarVarPrepForDisplay($username)#
-           </p>-->
            <p class="xar-form-input-wrapper">
                <xar:data-label property="$properties['username']" label="id" />
                <xar:data-output property="$properties['username']" />
@@ -50,6 +40,10 @@
            <p class="xar-form-input-wrapper">
                <xar:data-label property="$properties['requesttext']" label="id" />
                <xar:data-output property="$properties['requesttext']" />
+           </p>
+           <p class="xar-form-input-wrapper">
+               <xar:data-label property="$properties['company']" label="id" />
+               <xar:data-output property="$properties['company']" />
            </p>
            <p class="xar-form-input-wrapper">
                <xar:data-label property="$properties['usermessage']" label="id" />
@@ -108,8 +102,9 @@
 
                #xarLocaleGetFormattedDate('medium', $responsetime)#
                 #xarLocaleGetFormattedTime('medium', $responsetime)#
-           </p>
-           <xar:foreach in="$properties" key="$name">
+          </p>
+          <xar:if condition="isset($properties) and count($properties) gt 0">
+               <xar:foreach in="$properties" key="$name">
                     <xar:if condition="!in_array($name,$defaultarray)">
                     <p class="xar-form-input-wrapper">
                         <label for="$properties[$name]" class="xar-form-label"  title="#$properties[$name]-&gt;label#">
@@ -118,7 +113,8 @@
                         <xar:data-output property="$properties[$name]" />
                     </p>
                     </xar:if>
-           </xar:foreach>
+               </xar:foreach>
+          </xar:if>
     </fieldset>
     <xar:if condition="!empty($hooks)">
         <xar:foreach in="$hooks" key="$hookmodule">

@@ -185,8 +185,8 @@ function sitecontact_userapi_respond($args)
             $fileuploadfieldname=$itemid;
         }
     }
-
-    if ($withupload && isset($fileuploadfieldname) && is_array($items[$fileuploadfieldname]) && !empty($items[$fileuploadfieldname]['value'])) {
+   
+     if ($withupload && isset($fileuploadfieldname) && is_array($items[$fileuploadfieldname]) && !empty($items[$fileuploadfieldname]['value'])) {
        $filebasepath=$items[$fileuploadfieldname]['basePath'];
        $filebasedir=$items[$fileuploadfieldname]['basedir'];
        $fileattachmentname=$items[$fileuploadfieldname]['value'];

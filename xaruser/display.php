@@ -162,7 +162,8 @@ function sitecontact_user_display($args)
             $object->checkInput();
         }
         $data['object'] = $object;
-    }
+        $data['properties']= $object->getProperties();
+    } 
 
     $data['useripaddress'] = isset($useripaddress)?$useripaddress:xarServerGetVar('REMOTE_ADDR');
 
