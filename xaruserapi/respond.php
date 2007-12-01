@@ -62,7 +62,7 @@ function sitecontact_userapi_respond($args)
            $newadminemail='';
     }
 
-    //now check for the options, and including antibot and - bbccrecipient and ccrecipient switch Bug 5799
+    //now check for the options, and including antibot and - bbccrecipients and ccrecipients switch Bug 5799
      if (isset($formdata['soptions'])) {
            $soptions=unserialize($formdata['soptions']);
            if (is_array($soptions)) {
@@ -81,6 +81,8 @@ function sitecontact_userapi_respond($args)
                 $args['scform'] = $scform;
                 $args['usermessage'] = $usermessage;
                 $args['sctypename'] = $sctypename;
+                $args['bccrecipients'] = $bccrecipients;
+                $args['ccrecipients'] = $ccrecipients;
                 $args['requesttext'] = $requesttext;
                 $args['antibotinvalid'] = TRUE;
                 $args['botreset']=true;
@@ -167,9 +169,14 @@ function sitecontact_userapi_respond($args)
     $data['scid']=$formdata['scid'];
     $data['sctypename']=$formdata['sctypename'];
     $withupload = isset($withupload)? $withupload :(int) false;
+
     $object = DataObjectMaster::getObject(array('name' => $sctypename));
+
     $properties = $object->getProperties();
-    $object->checkinput();
+    //make sure some non user input fields are updated
+    //jojo:  ->setValue() not working here?
+    
+    $object->checkInput();
 
     foreach ($properties as $itemid => $fields) {
 

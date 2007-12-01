@@ -1,8 +1,8 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:style scope="module" module="sitecontact" file="defaultform" />
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
-<xar:set name="thisobject">xarModAPIFunc('dynamicdata','user','getobject', array('name' => $sctypename))</xar:set>
-<xar:set name="properties">$thisobject->properties</xar:set>
+<xar:set name="object">xarModAPIFunc('dynamicdata','user','getobject', array('name' => $sctypename))</xar:set>
+<xar:set name="properties">$object->properties</xar:set>
 <!-- List of the sitecontact basic form fields - do not need to show these for objects with the basic form as a parent -->
 <xar:set name="defaultarray">array('id','scid','cid','company','username','useremail','requesttext','usermessage',
               'useripaddress','userreferer','sendcopy','permission','bccrecipients','ccrecipients','responsetime');
@@ -33,6 +33,7 @@
 <xar:else />
     <xar:set name="contacttitle">#$customtitle#</xar:set>
 </xar:if>
+
 <div class="xar-mod-head">
     <span class="xar-mod-title">
             #$customtitle#
@@ -120,6 +121,7 @@
                  <xar:else />
                       <input type="hidden" name="bccrecipients" id="bccrecipients" value="" />
                 </xar:if>
+
                 <xar:if condition="$allowbccs or $allowccs">
                  <p class="xar-form-input-wrapper-after">
                         <xar:mlstring>
@@ -127,6 +129,7 @@
                         </xar:mlstring> <strong>email1@somedomain.com,SomeName;</strong>
                  </p>
                 </xar:if>
+
                 <div class="xar-form-input-wrapper">
                     <label for="usermessage" class="xar-form-label" title="#xarML('Type in your message')#">
                             <xar:mlstring>
@@ -140,20 +143,17 @@
                     </xar:if>
                 </div>
 
-                <xar:if condition="isset($object)">
-                    <xar:set name="properties">$object->getProperties()</xar:set>
-                     <xar:if condition="isset($properties) and count($properties) gt 0">
-                        <xar:foreach in="$properties" key="$name">
-                            <xar:if condition="!in_array($name,$baseproperties)">
-                                <div class="xar-form-input-wrapper">
-                                    <xar:data-label property="$properties[$name]" label="id" />
-                                    <xar:data-input property="$properties[$name]" />
-                                </div>
-                            </xar:if>
-                        </xar:foreach>
-                    </xar:if>
+                <xar:if condition="isset($properties) and count($properties) gt 0">
+                    <xar:foreach in="$properties" key="$name">
+                        <xar:if condition="!in_array($name,$baseproperties)">
+                            <div class="xar-form-input-wrapper">
+                                <xar:data-label property="$properties[$name]" label="id" />
+                                <xar:data-input property="$properties[$name]" />
+                            </div>
+                        </xar:if>
+                    </xar:foreach>
                 </xar:if>
-
+                
                 <xar:if condition="($allowcopy eq 1 and xarUserIsLoggedIn()) OR ($allowcopy eq 1 and $allowanoncopy eq 1)">
                     <div class="xar-form-input-wrapper-after">
                          <input type="checkbox" name="sendcopy" id="sendcopy" value="1" checked="checked" />
@@ -229,4 +229,5 @@
                </div>
            </fieldset>
       </form>
+    </xar:if>
 </div>

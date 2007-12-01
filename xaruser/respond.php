@@ -22,7 +22,7 @@ function sitecontact_user_respond($args)
 
     $defaultformid=(int)xarModVars::get('sitecontact','defaultform');
 
-    if (!xarVarFetch('useripaddress', 'str:1:', $dummy, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('useripaddress', 'str:1:', $useripaddress, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('userreferer',   'str:1:', $userreferer, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sctypename',    'str:0:', $sctypename, NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('scform',        'str:0:', $scform, NULL, XARVAR_NOT_REQUIRED)) {return;}
@@ -36,10 +36,10 @@ function sitecontact_user_respond($args)
     if (!xarVarFetch('company',       'str:1:', $company, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('usermessage',   'str:1:', $usermessage, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('sendcopy',      'checkbox', $sendcopy, true, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('bccrecipients', 'str:1',  $bccrecipients, '')) return;
-    if (!xarVarFetch('ccrecipients',  'str:1',  $ccrecipients, '')) return;
+    if (!xarVarFetch('bccrecipients', 'str:1',  $bccrecipients, '',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('ccrecipients',  'str:1',  $ccrecipients, '',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('permission',    'checkbox', $permission, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('newemail',      'str:1',  $newemail, '')) return;
+    if (!xarVarFetch('newemail',      'str:1',  $newemail, '',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('customcontact', 'str:0:', $customcontact, '',XARVAR_NOT_REQUIRED)) {return;}
     $formdata = array(); 
      if (isset($sctypename) && !empty($sctypename)) $sctypename = trim($sctypename);
@@ -67,9 +67,12 @@ function sitecontact_user_respond($args)
     $data=$formdata;
     $sctypename = $formdata['sctypename'];
 
+    $data['scid'] =$scid;
     $data['scform']=$scform;
     $data['return_url']=$return_url;   
-    $data['userreferer']=$userreferer;
+    $data['userreferer']=isset($userreferer)?$userreferer:array();
+    $data['useripaddress']='';
+    $data['return_url']=$return_url;
     $data['sctypename']=$sctypename;
     $data['savedata']=$savedata;    
     $data['username']=$username;
@@ -77,8 +80,8 @@ function sitecontact_user_respond($args)
     $data['requesttext']=$requesttext;      
     $data['company']=$company;      
     $data['permission']=$permission;
-    $data['ccrecipients']=$ccrecipients; 
-    $data['bccrecipients']=$bccrecipients;
+    $data['ccrecipients'] = isset($ccrecipients)?$ccrecipients:'';
+    $data['bccrecipients']=isset($bccrecipients)?$bccrecipients:'';
     $data['sendcopy']=$sendcopy;  
     $data['usermessage']=$usermessage;   
     $data['customcontact']=$customcontact;       
