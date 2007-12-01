@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 #$notetouser#
 
 <xar:mlstring>You submitted the following information:</xar:mlstring>
@@ -31,3 +32,4 @@
 #$todaydate#
 
 
+</xar:template>
