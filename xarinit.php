@@ -186,9 +186,8 @@ Administrator
         #
             $module = 'sitecontact';
             $objects = array(
-                        'sitecontact_definition',
                         'sitecontact_basicform',
-//                        'sitecontact_skyquote',
+                        'sitecontact_definition',
                     );
 
         xarModAPIFunc('modules','admin','standardinstall',array('module' => 'sitecontact', 'objects' => $objects));

@@ -107,7 +107,7 @@
                         <xar:data-label label="CC Recipients" for="ccrecipients" />
                         <xar:data-input type="textbox" name="ccrecipients" id="ccrecipients" size="150" value=""/>
                     </div>
-                <xar:elseif condition="$adminccs" />
+                <xar:else />
                       <input type="hidden" name="ccrecipients" id="ccrecipients" value="#$admincclist#" />
                 <xar:else />
                       <input type="hidden" name="ccrecipients" id="ccrecipients" value="" />
