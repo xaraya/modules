@@ -48,7 +48,7 @@ function sitecontact_userapi_encode_shorturl($args)
          $scform=$sctypename;
     }
     /* specify some short URLs relevant to your module */
-    if ($func == 'main') {
+    if ($func == 'main' || $func == 'display') {
         if (($module == $alias) && ($usealias)){
             /* OK, we can use a 'fake' module name here */
             $path = '/' . $aliasname . '/';
@@ -69,22 +69,22 @@ function sitecontact_userapi_encode_shorturl($args)
                $path = '/' . $module . '/' . $scform;
             }
         }
-    } elseif ($func == 'contactus') {
+    } elseif ($func == 'contactus' || $func == 'respond') {
           if (($module == $alias) && ($usealias)){
-              $path = '/' . $aliasname . '/contactus';
+              $path = '/' . $aliasname . '/respond';
 
               if (isset($message)&& is_numeric($message) && isset($scid) && is_numeric($scid)) {
-                  $path = '/' .$aliasname  . '/contactus/' . $message.'/'. $scid;
+                  $path = '/' .$aliasname  . '/respond/' . $message.'/'. $scid;
               } elseif (isset($message) && is_numeric($message) && !isset($scid)) {
-                     $path = '/' .$aliasname  . '/contactus/' .$message;
+                     $path = '/' .$aliasname  . '/respond/' .$message;
               }
           }else {
            if (isset($message) && is_numeric($message) && isset($scid) && is_numeric($scid)) {
-                  $path = '/' .$module  . '/contactus/' .$message.'/'. $scid;
+                  $path = '/' .$module  . '/respond/' .$message.'/'. $scid;
               } elseif (!isset($message) && isset($scid)){
-                    $path = '/' .$module  . '/contactus/' .$scform;
+                    $path = '/' .$module  . '/respond/' .$scform;
               } elseif (isset($message) && !isset($scid)) {
-                     $path = '/' .$module  . '/contactus/'. $message;
+                     $path = '/' .$module  . '/respond/'. $message;
               }
           }
     }

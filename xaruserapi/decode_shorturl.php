@@ -47,9 +47,9 @@ function sitecontact_userapi_decode_shorturl($params)
     /* If no path components then return. */
    if (empty($params[0])) {
         /* nothing specified -> we'll go to the main function */
-        return array('main', $args);
+        return array('display', $args);
         
-  } elseif (preg_match('/^contactus/i', $params[0])) {
+  } elseif (preg_match('/^respond/i', $params[0])) {
         if (!empty($params[1]) && (preg_match('/^(\d+)/', $params[1], $matches))){
             $args['message'] = (int)$matches[0];
             if (!empty($params[2]) &&  (preg_match('/^(\d+)/', $params[2], $matches)))  {
@@ -60,27 +60,27 @@ function sitecontact_userapi_decode_shorturl($params)
             $args['scid'] = null;
         }
 
-        return array('contactus', $args);
+        return array('respond', $args);
      }elseif (!empty($params[0]) && (preg_match('/^(\d+)/', $params[0], $matches))) {
         $args['message'] = $matches[0];
         if (!empty($params[1])  &&  (preg_match('/^(\d+)/', $params[1], $matches))) {
             $args['scid'] = (int)$matches[0];
         }
-         return array('main', $args);
+         return array('display', $args);
      }elseif (!empty($params[0]) && (preg_match('/^(\w+)/',$params[0],$matches))) {
         $args['scform'] = $matches[0];
-        return array('main', $args);
+        return array('display', $args);
 
     } elseif (preg_match('/^index/i', $params[0])) {
         /* some search engine/someone tried using index.html (or similar)
          * -> we'll go to the main function
          */
-        return array('main', $args);
+        return array('display', $args);
 
     } elseif (preg_match('/^(\d+)/', $params[0], $matches)) {
          $message = $matches[0];
         $args['message'] = (int)$message;
-        return array('main', $args);
+        return array('display', $args);
     } else {
 
     }
