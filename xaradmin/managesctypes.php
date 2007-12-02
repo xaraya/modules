@@ -313,14 +313,12 @@ function sitecontact_admin_managesctypes()
         } else {
           //there is something wrong - the item doesn't exist
             $msg = xarML('There has been an error. Please contact the system administrator and inform them of this error message.');
-             xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+               throw new BadParameterException(null,$msg);
             return false;
         }
         if ($scid == $defaultform) {
             $msg = xarML('You cannot delete the default form. Please change the default form first');
-             xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+               throw new BadParameterException(null,$msg);
             return false;
         }
         $data['authid'] = xarSecGenAuthKey();
