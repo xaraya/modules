@@ -48,9 +48,9 @@ function courses_user_enroll($args)
     if (!xarSecurityCheck('ReadCourses', 0) || !xarUserIsLoggedIn()) {
         $data['loginerror'] = xarML('You must be logged in to enroll in this course.');
         $regmoduleinfo = xarModGetInfo(xarModGetVar('roles', 'defaultregmodule'));
-        $authmoduleinfo = xarModGetinfo(xarModGetVar('roles', 'defaultauthmodule'));
-        $data['loginurl'] = xarModURL($authmoduleinfo['name'],'user','main');
-        $data['regurl'] = xarModURL($regmoduleinfo['name'],'user','main');
+        $authmoduleinfo = 'authsystem';//xarModGetinfo(xarModGetVar('roles', 'defaultauthmodule'));
+        $data['loginurl'] = xarModURL('authsystem','user','main');
+        $data['regurl'] = xarModURL($regmoduleinfo,'user','main');
         return $data;
     }
 
