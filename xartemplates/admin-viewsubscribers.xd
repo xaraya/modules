@@ -87,7 +87,7 @@
     <table class="xar-fullwidth">
     <tr>
         <th>
-            <input type="checkbox" onClick="xar_ebulletin_checkall(document.forms['ebulletin_form'])" title="#xarML('Check or Uncheck all subscribers on this page')#" />
+            <input type="checkbox" onclick="xar_ebulletin_checkall(document.forms['ebulletin_form'])" title="#xarML('Check or Uncheck all subscribers on this page')#" />
         </th>
         <th>
             <a href="#xarServerGetCurrentURL(array('order' => 'name', 'sort' => $nextsort))#"><xar:mlstring>Name</xar:mlstring></a>
@@ -125,7 +125,7 @@
     <xar:if condition="!empty($pager)"><div class="xar-align-center xar-padding-thick">#$pager#</div></xar:if>
 
     <p><xar:mlstring>With checked subscribers :</xar:mlstring> <input type="submit" value="#xarML('Unsubscribe')#" />
-    &nbsp; <a href="javascript:void(0);" onClick="xar_ebulletin_checkall(document.forms['ebulletin_form'])" title="#xarML('Check or Uncheck all subscribers on this page')#"><xar:mlstring>Check/Uncheck All</xar:mlstring></a></p>
+    &nbsp; <a href="javascript:void(0);" onclick="xar_ebulletin_checkall(document.forms['ebulletin_form'])" title="#xarML('Check or Uncheck all subscribers on this page')#"><xar:mlstring>Check/Uncheck All</xar:mlstring></a></p>
 
         <input type="hidden" name="stype" value="#$stype#" />
         <input type="hidden" name="return" value="#$currenturl#" />
