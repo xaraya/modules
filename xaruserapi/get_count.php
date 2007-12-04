@@ -48,7 +48,7 @@ function comments_userapi_get_count($args)
 
     if( isset($status) && $status == 1 ) {
         $status = (int) _COM_STATUS_OFF;
-    } elseif ( isset($status) && $status == 2 ) {
+    } elseif (( isset($status) && $status == 2) || !isset($status) ) {
         $status = (int) _COM_STATUS_ON;
     } elseif ( isset($status) && $status == 3 ) {
         $status = (int) _COM_STATUS_ROOT_NODE;
