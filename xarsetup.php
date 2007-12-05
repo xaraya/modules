@@ -19,7 +19,7 @@
 $websites3 = array(
    array('ZicZac',
          'http://ziczac.it/',
-		 'http://ziczac.it/a/segnala/?gurl=#URL#&gtit=#TITLE#',
+		 'http://ziczac.it/a/segnala/?gurl=#URL#&amp;gtit=#TITLE#',
 		 'http://ziczac.it/a/e/zzsmall.png',
 		 true)
 		 );
@@ -27,19 +27,19 @@ $websites3 = array(
 $websites2= array(
     array('OKNO',
 	      'http://oknotizie.alice.it',
-		  'http://oknotizie.alice.it/post?title=#TITLE#&url=#URL#',
+		  'http://oknotizie.alice.it/post?title=#TITLE#&amp;url=#URL#',
 		  'modules/sharecontent/xarimages/okno.png',
 		  true),
     array('Segnalo',
 	      'http://segnalo.alice.it',
-		  'http://segnalo.alice.it/post.html.php?title=#TITLE#&url=#URL#',
+		  'http://segnalo.alice.it/post.html.php?title=#TITLE#&amp;url=#URL#',
 		  'modules/sharecontent/xarimages/segnalo.png',
 		  true)
 );
 $websites= array(
     array('del.icio.us',
 	      'http://del.icio.us',
-		  'http://del.icio.us/post?url=#URL#&title=#TITLE#',
+		  'http://del.icio.us/post?url=#URL#&amp;title=#TITLE#',
 		  'modules/sharecontent/xarimages/delicious.png',
 		  true),
     array('Blinklist',
@@ -234,7 +234,7 @@ $websites= array(
           true),
     array('Rojo',
           'http://www.rojo.com',
-          'http://www.rojo.com/submit/?url=#URL#&title=#TITLE#&summary=&ready=true',
+          'http://www.rojo.com/submit/?url=#URL#&amp;title=#TITLE#&amp;summary=&amp;ready=true',
           'modules/sharecontent/xarimages/rojo.png',
           true),
     array('Scoopeo',
@@ -284,7 +284,7 @@ $websites= array(
           true),
     array('StumbleUpon',
           'http://www.stumbleupon.com',
-          'http://www.stumbleupon.com/submit?url=#URL#&title=#TITLE#',
+          'http://www.stumbleupon.com/submit?url=#URL#&amp;title=#TITLE#',
           'modules/sharecontent/xarimages/stumbleupon.png',
           true),
     array('Taggly',
@@ -349,7 +349,7 @@ $websites= array(
 		   true) ,
 	 array('Hemidemi',
 	       'http://www.hemidemi.com',
-		'http://www.hemidemi.com/user_bookmark/new?title=#TITLE#&url=#URL#',
+		'http://www.hemidemi.com/user_bookmark/new?title=#TITLE#&amp;url=#URL#',
 		'modules/sharecontent/xarimages/hemidemi.png',
 		   true) 
 	  ,array('IndiaGram',
@@ -369,7 +369,7 @@ $websites= array(
 		   true) ,
 	   array('MyShare',
 		'http://myshare.url.com.tw',
-		'http://myshare.url.com.tw/index.php?func=newurl&url=#URL#&desc=#TITLE#',
+		'http://myshare.url.com.tw/index.php?func=newurl&amp;url=#URL#&amp;desc=#TITLE#',
 		'modules/sharecontent/xarimages/myshare.png',
 		   true) 
 	   ,array('Rec6',
