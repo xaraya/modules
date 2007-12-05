@@ -33,8 +33,21 @@ function keywords_userapi_decode_shorturl($params)
     } elseif (preg_match('/^tab[0-5]$/', $params[1])) {
         $args['tab'] = $params[1]{3};
         return array('main',$args);
+<<<<<<< variant A
     } elseif (!empty($params[1])){
         $args['keyword'] = $params[1];
+>>>>>>> variant B
+     } elseif (!empty($params[1])) {
+        $args['keyword'] = rawurldecode($params[1]);
+		if (strpos($args['keyword'],'_') !== false) {
+		    $args['keyword'] = str_replace('_',' ',$args['keyword']);
+	    }
+        // $args['keyword'] = $params[1];
+####### Ancestor
+     } elseif (!empty($params[1])){
+        //$args['keyword'] = rawurldecode($params[1]);
+        $args['keyword'] = $params[1];
+======= end
         if (!empty($params[2]) && is_numeric($params[2])) {
             $args['id'] = $params[2];
         }
@@ -44,4 +57,11 @@ function keywords_userapi_decode_shorturl($params)
     // default : return nothing -> no short URL decoded
     }
 }
+<<<<<<< variant A
 ?>
+>>>>>>> variant B
+}
+?>
+####### Ancestor
+}
+?>======= end

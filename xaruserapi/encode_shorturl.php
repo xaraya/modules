@@ -41,14 +41,44 @@ function keywords_userapi_encode_shorturl($args)
         $path = '/' . $module . '/';
         if (!empty($tab)) {
             $path .= 'tab' . $tab . '/';
+<<<<<<< variant A
         } elseif (!empty($keyword)) {
             $path .= $keyword . '/';
             if (!empty($id)) {
                 $path .= $id;
+>>>>>>> variant B
+        } elseif (!empty($keyword)) {
+			if ( strpos($keyword,'_') === FALSE ) {
+			    $keyword = str_replace(' ','_',$keyword);
+		    }
+            $encodedKey= rawurlencode($keyword);
+
+		    // the URL encoded / (%2F) is not accepted by Apache in PATH_INFO
+		    $encodedKey = str_replace('%2F','/',$encodedKey);
+            $path .= $encodedKey. '/';
+            if (!empty($id)) {
+               $path .= $id;
+####### Ancestor
+            } elseif (!empty($keyword)) {
+                  //$path .= rawurlencode($keyword) . '/';
+                  $path .= $keyword . '/';
+                  if (!empty($id)) {
+                   $path .= $id;
             }
+======= end
+            }
+<<<<<<< variant A
         }
     } else {
 
+>>>>>>> variant B
+        }
+    } else {
+####### Ancestor
+
+
+    } else {
+======= end
         // anything else that you haven't defined a short URL equivalent for
         // -> don't create a path here
     }

@@ -54,6 +54,10 @@ if (!xarSecurityCheck('ReadKeywords')) return;
                      'tab' => $tab);
 
     } elseif (empty($id)) {
+	    $keyword = rawurldecode($keyword);
+		if (strpos($keyword,'_') !== false) {
+		    $keyword = str_replace('_',' ',$keyword);
+		}
         // get the list of items to which this keyword is assigned
         $items = xarModAPIFunc('keywords','user','getitems',
                                array('keyword' => $keyword));
