@@ -133,6 +133,8 @@ class CategoriesProperty extends SelectProperty
             } else {
                 if (!xarVarFetch($name . '_categories', 'array', $categories, array(), XARVAR_NOT_REQUIRED)) return;
             }
+        } else {
+            $categories = array();
         }
         return $categories;
     }
