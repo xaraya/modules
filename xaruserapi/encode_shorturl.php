@@ -41,16 +41,14 @@ function keywords_userapi_encode_shorturl($args)
         $path = '/' . $module . '/';
         if (!empty($tab)) {
             $path .= 'tab' . $tab . '/';
-            } elseif (!empty($keyword)) {
-                  //$path .= rawurlencode($keyword) . '/';
-                  $path .= $keyword . '/';
-                  if (!empty($id)) {
-                   $path .= $id;
+        } elseif (!empty($keyword)) {
+            $path .= $keyword . '/';
+            if (!empty($id)) {
+                $path .= $id;
             }
-            }
-
-
+        }
     } else {
+
         // anything else that you haven't defined a short URL equivalent for
         // -> don't create a path here
     }
