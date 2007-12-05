@@ -28,23 +28,23 @@ function keywords_userapi_encode_shorturl($args)
     if (!isset($func)) {
         return;
     }
-    // Note : make sure you don't pass the following variables as arguments in
-    // your module too - adapt here if necessary
-    // default path is empty -> no short URL
-    $path = '';
-    // if we want to add some common arguments as URL parameters below
-    $join = '?';
-    // we can't rely on xarModGetName() here -> you must specify the modname !
+	$path = array();
+	$get = $args;
+
     $module = 'keywords';
-    // specify some short URLs relevant to your module
+	$path[] = $module;
+
     if ($func == 'main') {
-        $path = '/' . $module . '/';
+	    unset($get['func']);
         if (!empty($tab)) {
-            $path .= 'tab' . $tab . '/';
+            $path[] = 'tab'.$tab;
+            unset($get['tab']);
         } elseif (!empty($keyword)) {
-            $path .= $keyword . '/';
+		    $path[] = $keyword;
+	     	unset($get['keyword']);
             if (!empty($id)) {
-                $path .= $id;
+			    $path[] = $id;
+			    unset($getp['id']);
             }
         }
     } else {
@@ -52,7 +52,7 @@ function keywords_userapi_encode_shorturl($args)
         // anything else that you haven't defined a short URL equivalent for
         // -> don't create a path here
     }
-    return $path;
+    return array('path'=>$path,'get'=>$get);
 }
 
 ?>
