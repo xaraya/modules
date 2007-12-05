@@ -24,7 +24,7 @@ function logconfig_admin_delete($args)
     if (!xarVarFetch('itemid',   'id', $itemid,  $itemid,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid', 'id', $objectid,    $objectid,    XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemtype', 'id', $itemtype,    $itemtype,    XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm',  'string',  $confirm, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm',  'str::',  $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
         $itemid = $objectid;

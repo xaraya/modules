@@ -9,7 +9,7 @@
         <h3><xar:mlstring>What is it?</xar:mlstring></h3>
 
         <p><xar:mlstring>The LogConfig Module controls the Xaraya logging system.</xar:mlstring></p>
-        
+
         <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
         <p><xar:mlstring>From the menu, you have three choices. </xar:mlstring></p>
         <ul>
@@ -20,6 +20,25 @@
 
         <p><xar:mlstring>Fallback System:</xar:mlstring></p>
         <p><xar:mlstring>If the logging is set to off in this module (if this module is not active, it turns off logging automatically) and there is no logging configuration in config.system.php (old configuration style) then there is a fallback system that will log to var/logs/log.txt whenever it is present .</xar:mlstring></p>
+
+        <h3>
+            <xar:mlstring>Notes</xar:mlstring>
+        </h3>
+        <p>
+            <xar:mlstring>The sql logger needs a database table to write its data to. This table should be added to your database with the following code:</xar:mlstring>
+        </p>
+            <code>
+
+            CREATE TABLE `xar_log_messages` (
+              `id` int(10) NOT NULL auto_increment,
+              `ident` varchar(32) NOT NULL,
+              `logtime` timestamp NOT NULL default CURRENT_TIMESTAMP,
+              `priority` tinyint(4) NOT NULL,
+              `message` tinytext NOT NULL,
+              PRIMARY KEY  (`id`)
+            )
+
+            </code>
         <h3>
             <xar:mlstring>Further Information</xar:mlstring>
         </h3>
@@ -27,13 +46,13 @@
             <xar:mlstring>Further information on the LogConfig module can be found at</xar:mlstring>
         </p>
         <ul>
-            <li><xar:mlstring>LogConfig Extension page at</xar:mlstring> <a title="#xarML('LogConfig Module - Xaraya Extension 36')#" href="http://www.xaraya.com/index.php/release/6969.html">Xaraya Extension and Releases</a>.
+            <li><xar:mlstring>LogConfig Extension page at</xar:mlstring> <a title="#xarML('LogConfig Module - Xaraya Extension 6969')#" href="http://www.xaraya.com/index.php/release/6969.html">Xaraya Extension and Releases</a>.
                 <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
             </li>
             <li><xar:mlstring>Related tutorials and documentation on LogConfig found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/logconfig/" title="#xarML('Related documentation on LogConfig')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
             </li>
         </ul>
         <p class="xar-sub">
-            <strong>&nbsp;<xar:mlstring>LogConfig Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-05-29
+            <strong>&nbsp;<xar:mlstring>LogConfig Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.1.0&nbsp; 2007-12-05
         </p>
 </div>

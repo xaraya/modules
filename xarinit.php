@@ -37,11 +37,11 @@ function logconfig_init()
      * Q: it should fail?
      * Q: with a slight modification, we could use the dd api function importprops to import the property
      *    before importing.
-     */
+
     // Make sure we import our property
     $mypropdirs = array('modules/logconfig/xarproperties/');
     $result = xarModApiFunc('dynamicdata','admin','importpropertytypes',array('dirs' => $mypropdirs));
-
+     */
     $ids = array();
     $dir = "modules/logconfig/loggers/";
     $itemsnum = 0;
@@ -72,11 +72,11 @@ function logconfig_init()
     xarRegisterMask('AdminLogConfig','All','logconfig','Item','All','ACCESS_ADMIN');
 
     // Initialisation successful
-    return true;
+    return logconfig_upgrade('0.1.1');
 }
 
 /**
- * upgrade the example module from an old version
+ * upgrade the logconfig module from an old version
  * This function can be called multiple times
  * @param string oldversion
  * @return bool true on success
@@ -90,8 +90,7 @@ function logconfig_upgrade($oldversion)
             if (file_exists($logConfigFile)) unlink($logConfigFile);
             //When people turn it on again it will produce the config in the
             //new directory, no need to do it in here.
-        case '1.0.0':
-        case '2.0.0':
+        case '0.1.1':
             break;
     }
 

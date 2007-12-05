@@ -22,7 +22,7 @@ function logconfig_admin_update($args)
     if (!xarVarFetch('itemid',   'id', $itemid,  $itemid,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid', 'id', $objectid,    $objectid,    XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('itemtype', 'id', $itemtype,    $itemtype,    XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('preview',  'string',  $preview, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('preview',  'str::',  $preview, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
         $itemid = $objectid;
