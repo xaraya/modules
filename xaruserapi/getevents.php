@@ -304,8 +304,12 @@ function ievents_userapi_getevents($args)
                 }
 
                 // Expand the flags (array of 'flag'=>'name' pairs) - just for convenience
-                if (isset($event['flags'])) {
-                    $flags_arr = explode(',', $event['flags']);
+                if (isset($event['flags']) && trim($event['flags']) != '') {
+                    $flags_arr = explode(',', trim($event['flags']));
+
+                    // Remove empty flags, because even an empty string of flags will result in an array.
+                    foreach($flags_arr as $key => $value) if (empty($value)) unset($flags_arr[$key]);
+
                     if (!empty($flags_arr)) {
                         $flags_arr = array_flip($flags_arr);
                         foreach($flags_arr as $key => $value) {

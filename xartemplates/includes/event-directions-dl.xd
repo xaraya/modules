@@ -10,7 +10,7 @@
 
         <xar:set name="postcode">#xarVarPrepForDisplay(rawurlencode($event.location.postcode))#</xar:set>
 
-        <a href="http://maps.google.co.uk/maps?ie=UTF-8&amp;q=#$postcode#&amp;f=d" target="_blank" style="float: left;">
+        <a href="http://maps.google.co.uk/maps?ie=UTF-8&amp;q=#$postcode#&amp;f=d" target="_blank">
             <img src="#xarTplGetImage('logo-google-maps-micro.gif')#" alt="Google Maps" /><br />
             <xar:mlstring>Road Directions</xar:mlstring>
         </a>
@@ -31,13 +31,13 @@
             <xar:set name="destination">#$event.location.venue#</xar:set>
         </xar:if>
 
-        <a href="http://www.transportdirect.info/transportdirect/en/journeyplanning/jplandingpage.aspx?et=jp&amp;id=#xarVarPrepForDisplay(rawurlencode(xarServerGetBaseURL()))#&amp;oo=p&amp;do=p&amp;dn=#xarVarPrepForDisplay(rawurlencode($destination))#&amp;d=#$postcode#&amp;dt=#$startdate#&amp;t=#$starttime#&amp;da=a&amp;p=0" target="_blank" style="float: left; margin: 0 1em;">
+        <a href="http://www.transportdirect.info/transportdirect/en/journeyplanning/jplandingpage.aspx?et=jp&amp;id=#xarVarPrepForDisplay(rawurlencode(xarServerGetBaseURL()))#&amp;oo=p&amp;do=p&amp;dn=#xarVarPrepForDisplay(rawurlencode($destination))#&amp;d=#$postcode#&amp;dt=#$startdate#&amp;t=#$starttime#&amp;da=a&amp;p=0" target="_blank">
             <img src="#xarTplGetImage('logo-transport-direct-micro.gif')#" alt="Transport Direct" /><br />
             <xar:mlstring>Public Transport</xar:mlstring>
         </a>
 
         <xar:comment>*** liftshare ***</xar:comment>
-        <a href="http://www.liftshare.org/?sub=2416" target="_blank" style="float: left;">
+        <a href="http://www.liftshare.org/?sub=2416" target="_blank">
             <img src="#xarTplGetImage('logo-liftshare-micro.gif')#" alt="liftshare" /><br />
             <xar:mlstring>Share a car</xar:mlstring>
         </a>

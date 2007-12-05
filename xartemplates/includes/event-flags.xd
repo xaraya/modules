@@ -17,6 +17,8 @@
                 <span class="ievents-cancelled ievents-flag"><span>#$loop:item#</span></span>
             <xar:elseif condition="$loop:key eq 'V'" />
                 <span class="ievents-newvenue ievents-flag"><span>#$loop:item#</span></span>
+            <xar:else />
+                <span class="ievents-other ievents-flag"><span>#$loop:item#</span></span>
             </xar:if>
         </xar:loop>
     </span>
