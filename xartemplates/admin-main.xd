@@ -13,14 +13,24 @@
         <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
         <p><xar:mlstring>From the menu, you have three choices. </xar:mlstring></p>
         <ul>
-            <li><xar:mlstring>Add logger -- Allows you add a new logger to the configuration.</xar:mlstring></li>
+            <li><xar:mlstring>Add logger -- Allows you add a new logger to the configuration. You can choose the type most applicable to your situation.</xar:mlstring></li>
             <li><xar:mlstring>List loggers -- List the loggers that are currently configured.</xar:mlstring></li>
             <li><xar:mlstring>Turn logging on/off -- Makes Xaraya log according to the loggers configured or not.</xar:mlstring></li>
         </ul>
 
         <p><xar:mlstring>Fallback System:</xar:mlstring></p>
         <p><xar:mlstring>If the logging is set to off in this module (if this module is not active, it turns off logging automatically) and there is no logging configuration in config.system.php (old configuration style) then there is a fallback system that will log to var/logs/log.txt whenever it is present .</xar:mlstring></p>
-
+        <h3>
+            <xar:mlstring>Available loggers</xar:mlstring>
+        </h3>
+        <ul>
+            <li><xar:mlstring>The sql logger</xar:mlstring></li>
+            <li><xar:mlstring>The mail logger</xar:mlstring></li>
+            <li><xar:mlstring>The html logger</xar:mlstring></li>
+            <li><xar:mlstring>The mozilla logger</xar:mlstring></li>
+            <li><xar:mlstring>The simple logger</xar:mlstring></li>
+            <li><xar:mlstring>The syslog logger</xar:mlstring></li>
+        </ul>
         <h3>
             <xar:mlstring>Notes</xar:mlstring>
         </h3>
@@ -34,11 +44,14 @@
               `ident` varchar(32) NOT NULL,
               `logtime` timestamp NOT NULL default CURRENT_TIMESTAMP,
               `priority` tinyint(4) NOT NULL,
-              `message` tinytext NOT NULL,
+              `message` text NOT NULL,
               PRIMARY KEY  (`id`)
             )
 
             </code>
+        <p>
+            <xar:mlstring>The logging level can be set with the dynamic "Logging Level" property.</xar:mlstring>
+        </p>
         <h3>
             <xar:mlstring>Further Information</xar:mlstring>
         </h3>
