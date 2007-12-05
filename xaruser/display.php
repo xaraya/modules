@@ -30,7 +30,7 @@ function sharecontent_user_display($args)
             $modname = $extrainfo['module'];
         }
         if (isset($extrainfo['returnurl']) && is_string($extrainfo['returnurl'])) {
-            $data['returnurl'] = $extrainfo['returnurl'];
+            $data['returnurl'] = rawurlencode($extrainfo['returnurl']);
 			unset($extrainfo['returnurl']);
         }
     } else {
