@@ -81,13 +81,13 @@ function sitecontact_user_display($args)
     if (!empty($invalid)) {
         $data['invalid']=$invalid;
     }
-    $data['scform']=$scform;
-    $data['scid']=$formdata['scid'];
-    $data['sctypename']=$formdata['sctypename'];
-    $data['permissioncheck']=$formdata['permissioncheck'];
-    $data['savedata']=$formdata['savedata'];
-    $data['permission']=false; //set it to false and require user to check
-    $data['termslink']=trim($formdata['termslink']);
+    $data['scform']     = $scform;
+    $data['scid']       = $formdata['scid'];
+    $data['sctypename'] = $formdata['sctypename'];
+    $data['permissioncheck'] = $formdata['permissioncheck'];
+    $data['savedata']   = $formdata['savedata'];
+    $data['permission'] = false; //set it to false and require user to check
+    $data['termslink']  = trim($formdata['termslink']);
 
     if (isset($formdata['soptions'])) {
         $soptions=unserialize($formdata['soptions']);
@@ -135,14 +135,7 @@ function sitecontact_user_display($args)
     $optionset   = array();
     $selectitem  = array();
     $optionset   = explode(',',$optiontext);
-    $data['optionset'] = $optionset;
-    $optionitems = array();
-    foreach ($optionset as $optionitem) {
-        $item = explode(';',$optionitem);
-        if (!isset($item[1])) $item[1] = $item[0];
-      $optionitems[] = array('id' => $item[0], 'name' => $item[1]);
-    }
-    $data['options'] = $optionitems;
+    $data['options'] = $optionset;
 
     $setmail='';
     if (isset($customtitle)){
@@ -154,6 +147,10 @@ function sitecontact_user_display($args)
         $requesttext='';
     }
     $data['requesttext']=$requesttext;
+    
+    //set of default fields now in DD, we don't want these twice as they have special handling
+    //also here for backward compatibility
+    $basicform = DataObjectMaster::getObject(array('name' => 'sitecontact_basicform'));
 
     // get the dataobject for this form
     if ($sctypename != 'sitecontact_basicform') {
@@ -164,15 +161,18 @@ function sitecontact_user_display($args)
         $data['object'] = $object;
         $data['properties']= $object->getProperties();
         $data['itemtype'] = $object->itemtype;
+        //for backward compat and special cases
+        $data['baseproperties']= array_keys($basicform->getProperties());
+    } else {
+       if ($submitted ==1) {
+            $basicform->checkInput();
+       }
+       $data['object'] = $basicform;
+       $data['properties']= $basicform->getProperties();
+       $data['itemtype'] = $basicform->itemtype;
     }
-
     $data['useripaddress'] = isset($useripaddress)?$useripaddress:xarServerGetVar('REMOTE_ADDR');
 
-    //set of default fields now in DD, we don't want these twice as they have special handling
-    $basicform = DataObjectMaster::getObject(array('name' => 'sitecontact_basicform'));
-    
-    $data['baseproperties']= array_keys($basicform->getProperties());
-    
     $data['authid'] = xarSecGenAuthKey('sitecontact');
     $data['submit'] = xarML('Submit');
     
@@ -181,7 +181,7 @@ function sitecontact_user_display($args)
     if (file_exists($customfunc)) {
         include_once($customfunc);
     }
-
+    //always test for existance of the custom template as the basic override is often used without rename
     try {
         $templatedata = xarTplModule('sitecontact', 'user', 'display', $data, $data['sctypename']);
     } catch (Exception $e) {
