@@ -53,6 +53,7 @@ function sitecontact_userapi_respond($args)
     $data['customtitle']  = $formdata['customtitle'];
     $data['usehtmlemail'] = $formdata['usehtmlemail'];
     $data['allowcopy']    = $formdata['allowcopy'];
+    
     if ($formdata['scactive'] != 1) { //form but not active
         $msg = xarML('The form requested is not available');
         throw new BadParameterException(null,$msg);
@@ -73,11 +74,11 @@ function sitecontact_userapi_respond($args)
                    $soptions[$k]=$v;
               }
            }
-           $data['options'] = $soptions;
+           $data['soptions'] = $soptions;
     } else {
-           $data['options'] = '';
+           $data['soptions'] = '';
     }
-   $options= $data['options'];
+
     $useantibot=$soptions['useantibot'];
     if (xarModIsAvailable('formantibot') && $useantibot) {
         if (!xarVarFetch('antibotcode',  'str:6:10', $antibotcode, '', XARVAR_NOT_REQUIRED) ||
@@ -101,12 +102,19 @@ function sitecontact_userapi_respond($args)
 
     if (!isset($soptions['allowbccs']) || $soptions['allowbccs']!=1) {
        $bccrecipients='';
+       $allowbccs = false;
+    } else {
+       $allowbccs = true;
     }
+    $adminccs = $soptions['adminccs'];
     if (isset($soptions['adminccs']) && $soptions['adminccs'] == TRUE && $soptions['allowccs'] == FALSE) {
       //if admin has a cclist and user ccs is not set
       //use the existing $ccreciepient list which should now hold the admin cclist now
     }elseif (!isset($soptions['allowccs']) || $soptions['allowccs']!= 1) { //if cc list is not set
        $ccrecipients='';
+       $allowccs = false;
+    } else {
+       $allowccs = true;
     }
     //end check for bug 5799
     if (!isset($soptions['allowanoncopy']) || $soptions['allowanoncopy']!=1) {
@@ -137,6 +145,10 @@ function sitecontact_userapi_respond($args)
                 'bccrecipients'   => array(xarML('BCC'),$bccrecipients),
                 'ccrecipients'    => array(xarML('CC'),$ccrecipients)
                 );
+
+    //process options
+    //make sure we set them for all instances if we are now checking checkinput
+    //and returning to display template so we can make consideration for all forms
 
     /* process CC Recipient list */
     $ccrecipientarray=array();
@@ -183,19 +195,35 @@ function sitecontact_userapi_respond($args)
     $isvalid = $object->checkInput();
 
     if (!$isvalid) {
-        $data = array('authid' => xarSecGenAuthKey('sitecontact'),
-                      'sctypename' =>$sctypename,
-                      'useantibot' =>$useantibot,
-                      'options'    =>$options,
-                      'customtext' => $formdata['customtext'],
-                      'customtitle'  => $formdata['customtitle'],
-                      'usehtmlemail' => $formdata['usehtmlemail'],
-                      'allowcopy'    => $formdata['allowcopy'],
-                      'requesttext'  => $requesttext,
-                       'antibotinvalid' => TRUE,
-                       'botreset'=>true,
-                       'userreferer'=> $userreferer
-                      );
+        //make sure we generalize our return for all forms, not just a special one
+        $optiontext     = $formdata['optiontext'];
+        $optionset   = explode(',',$optiontext);
+        $data = array('authid'         => xarSecGenAuthKey('sitecontact'),
+                      'scid'           => $scid,
+                      'sctypename'     => $sctypename,
+                      'useantibot'     => $useantibot,
+                      'options'        => $optiontext,
+                      'customtext'     => $formdata['customtext'],
+                      'customtitle'    => $formdata['customtitle'],
+                      'usehtmlemail'   => $formdata['usehtmlemail'],
+                      'allowcopy'      => $formdata['allowcopy'],
+                      'allowccs'        => $allowccs,
+                      'allowbccs'       => $allowbccs,
+                      'adminccs'       => $adminccs,
+                      'bccrecipients'  => $bccrecipients,
+                      'ccrecipients'   => $ccrecipients,
+                      'requesttext'    => $requesttext,
+                      'permissioncheck'=> $permissioncheck,
+                      'allowanoncopy'  => $allowanoncopy,
+                      'antibotinvalid' => TRUE,
+                      'botreset'       => true,
+                      'userreferer'    => $userreferer,
+                      'savedata'       => $savedata,
+                      'useripaddress'  => $useripaddress, //make sure we send something back so no error, but it is captured here :)
+                      'properties'     => $properties
+                     );
+
+       //test for existance of the custom template as the basic template override is often used without rename
         try {
             $templatedata = xarTplModule('sitecontact', 'user', 'display', $data, $sctypename);
         } catch (Exception $e) {
@@ -383,22 +411,18 @@ function sitecontact_userapi_respond($args)
          $htmltemplate = 'html_' . $data['sctypename'];
          $texttemplate = 'text_' . $data['sctypename'];
     }
-    //else {
-      //   $htmltemplate =  'html';
-      //   $texttemplate =  'text';
-   // }
 
-   $userhtmlarray= array('notetouser' => $htmlnotetouser,
-                          'username'   => $username,
-                          'useremail'  => $useremail,
-                          'company'    => $htmlcompany,
-                          'requesttext'=> $htmlsubject,
-                          'usermessage'=> $htmlusermessage,
-                          'sitename'   => $sitename,
-                          'siteurl'    => $siteurl,
-                          'properties'  => $properties,
-                          'baseproperties'  => $baseproperties,
-                          'todaydate'  => $todaydate);
+   $userhtmlarray= array('notetouser'      => $htmlnotetouser,
+                          'username'       => $username,
+                          'useremail'      => $useremail,
+                          'company'        => $htmlcompany,
+                          'requesttext'    => $htmlsubject,
+                          'usermessage'    => $htmlusermessage,
+                          'sitename'       => $sitename,
+                          'siteurl'        => $siteurl,
+                          'properties'     => $properties,
+                          'baseproperties' => $baseproperties,
+                          'todaydate'      => $todaydate);
     try {
         $userhtmlmessage= xarTplModule('sitecontact','user','usermail',$userhtmlarray, $htmltemplate);
     } catch (Exception $e) {
@@ -411,17 +435,17 @@ function sitecontact_userapi_respond($args)
     $textusermessage = strtr($usermessage,$trans);
     $textnotetouser = strtr($notetouser,$trans);
 
-    $usertextarray =array('notetouser' => $textnotetouser,
-                          'username'   => $username,
-                          'useremail'  => $useremail,
-                          'company'    => $textcompany,
-                          'requesttext'=> $textsubject,
-                          'usermessage'=> $textusermessage,
-                          'sitename'   => $sitename,
-                          'siteurl'    => $siteurl,
-                          'properties' => $properties,
+    $usertextarray =array('notetouser'      => $textnotetouser,
+                          'username'        => $username,
+                          'useremail'       => $useremail,
+                          'company'         => $textcompany,
+                          'requesttext'     => $textsubject,
+                          'usermessage'     => $textusermessage,
+                          'sitename'        => $sitename,
+                          'siteurl'         => $siteurl,
+                          'properties'      => $properties,
                           'baseproperties'  => $baseproperties,
-                          'todaydate'  => $todaydate);
+                          'todaydate'       => $todaydate);
 
     try {
      $usertextmessage= xarTplModule('sitecontact','user','usermail', $usertextarray,$texttemplate);
@@ -468,41 +492,38 @@ function sitecontact_userapi_respond($args)
 
     /* now let's do the html message to admin */
 
-    $adminhtmlarray=array('notetouser' => $htmlnotetouser,
-                          'username'   => $username,
-                          'useremail'  => $useremail,
-                          'company'    => $htmlcompany,
-                          'requesttext'=> $htmlsubject,
-                          'usermessage'=> $htmlusermessage,
-                          'sitename'   => $sitename,
-                          'siteurl'    => $siteurl,
-                          'todaydate'  => $todaydate,
-                          'useripaddress' => $useripaddress,
-                          'properties' => $properties,
+    $adminhtmlarray=array('notetouser'      => $htmlnotetouser,
+                          'username'        => $username,
+                          'useremail'       => $useremail,
+                          'company'         => $htmlcompany,
+                          'requesttext'     => $htmlsubject,
+                          'usermessage'     => $htmlusermessage,
+                          'sitename'        => $sitename,
+                          'siteurl'         => $siteurl,
+                          'todaydate'       => $todaydate,
+                          'useripaddress'   => $useripaddress,
+                          'properties'      => $properties,
                           'baseproperties'  => $baseproperties,
-                          'userreferer' => $userreferer);
-    //In 2x the itemtype specific template must be present for html and text mail. This never uses html or text, and
-    //   doesn't falls back to user-adminmail-text.xt (or user-adminmail-html)
-    //Using user-adminmail-basic.xt instead for example.. Need an alternative for text and html still
-
+                          'userreferer'     => $userreferer);
+    //In 2x the itemtype specific template must be present for html and text mail. 
     try {
         $adminhtmlmessage= xarTplModule('sitecontact','user','adminmail',$adminhtmlarray,$htmltemplate);
     } catch (Exception $e) {
         $adminhtmlmessage= xarTplModule('sitecontact', 'user', 'adminmail',$adminhtmlarray,'html');
     }
-    $admintextarray =  array('notetouser' => $textnotetouser,
-                             'username'   => $username,
-                             'useremail'  => $useremail,
-                             'company'    => $textcompany,
-                             'requesttext'=> $textsubject,
-                             'usermessage'=> $textusermessage,
-                             'sitename'   => $sitename,
-                             'siteurl'    => $siteurl,
-                             'todaydate'  => $todaydate,
-                             'useripaddress' => $useripaddress,
+    $admintextarray =  array('notetouser'      => $textnotetouser,
+                             'username'        => $username,
+                             'useremail'       => $useremail,
+                             'company'         => $textcompany,
+                             'requesttext'     => $textsubject,
+                             'usermessage'     => $textusermessage,
+                             'sitename'        => $sitename,
+                             'siteurl'         => $siteurl,
+                             'todaydate'       => $todaydate,
+                             'useripaddress'   => $useripaddress,
                              'baseproperties'  => $baseproperties,
-                             'properties' => $properties,
-                             'userreferer' => $userreferer);
+                             'properties'      => $properties,
+                             'userreferer'     => $userreferer);
 
     /* Let's do admin text message */
     try {
@@ -512,18 +533,18 @@ function sitecontact_userapi_respond($args)
     }
 
     /* send email to admin */
-    $args = array('info'         => $setmail,
-                  'name'         => $sendname,
-                  'ccrecipients' => $ccrecipients,
+    $args = array('info'          => $setmail,
+                  'name'          => $sendname,
+                  'ccrecipients'  => $ccrecipients,
                   'bccrecipients' => $bccrecipients,
-                  'subject'      => $subject,
-                  'message'      => $admintextmessage,
-                  'htmlmessage'  => $adminhtmlmessage,
-                  'from'         => $useremail,
-                  'fromname'     => $username,
-                  'attachName'   => $attachname,
-                  'attachPath'   => $attachpath,
-                  'usetemplates' => false);
+                  'subject'       => $subject,
+                  'message'       => $admintextmessage,
+                  'htmlmessage'   => $adminhtmlmessage,
+                  'from'          => $useremail,
+                  'fromname'      => $username,
+                  'attachName'    => $attachname,
+                  'attachPath'    => $attachpath,
+                  'usetemplates'  => false);
     if ($usehtmlemail != 1) {
         if (!xarModAPIFunc('mail','admin','sendmail', $args))return;
     } else {
