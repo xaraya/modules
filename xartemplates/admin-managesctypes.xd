@@ -667,7 +667,7 @@
             <xar:if condition="$item.allowbccs">
                 <div class="xar-form-input-wrapper">
                     <xar:data-label label="BCC Recipients" for="bccrecipients" />
-                    <xar:data-input type="textbox" name="bccrecipients" id="bccrecipients" size="150" value=""/>
+                    <xar:data-input type="textbox" name="bccrecipients" id="bccrecipients" class="xar-form-textxlong" value="$properties['bccrecipients']-&gt;value" />
 
                 </div>
             </xar:if>
