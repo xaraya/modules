@@ -186,7 +186,16 @@ function sitecontact_userapi_respond($args)
         $data = array('authid' => xarSecGenAuthKey('sitecontact'),
                       'sctypename' =>$sctypename,
                       'useantibot' =>$useantibot,
-                      'options'    =>$options);
+                      'options'    =>$options,
+                      'customtext' => $formdata['customtext'],
+                      'customtitle'  => $formdata['customtitle'],
+                      'usehtmlemail' => $formdata['usehtmlemail'],
+                      'allowcopy'    => $formdata['allowcopy'],
+                      'requesttext'  => $requesttext,
+                       'antibotinvalid' => TRUE,
+                       'botreset'=>true,
+                       'userreferer'=> $userreferer
+                      );
         try {
             $templatedata = xarTplModule('sitecontact', 'user', 'display', $data, $sctypename);
         } catch (Exception $e) {

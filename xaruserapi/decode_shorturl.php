@@ -23,7 +23,7 @@
  *          string arguments, or empty if it failed
  */
 function sitecontact_userapi_decode_shorturl($params)
-{
+{ 
     /* Initialise the argument list we will return */
     $args = array();
     $aliasisset = xarModVars::get('sitecontact', 'useModuleAlias');
