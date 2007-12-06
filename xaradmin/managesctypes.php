@@ -360,15 +360,9 @@ function sitecontact_admin_managesctypes()
         if (!isset($data['item']['permissioncheck']))$data['item']['permissioncheck']=xarModVars::get('sitecontact','permissioncheck');
         if (!isset($data['item']['termslink']))$data['item']['termslink']=xarModVars::get('sitecontact','termslink');
 
-        $optionset=explode(',',$item[0]['optiontext']);
-        $data['optionset']=$optionset;
-        $optionitems=array();
-        foreach ($optionset as $optionitem) {
-           $optionitems[]=explode(';',$optionitem);
-        }
-
+       $optionset=explode(',',$item[0]['optiontext']);
+       $data['optionset']=$optionset;
        $data['requesttext']='';
-       $data['optionitems']=$optionitems;
        $data['link'] = xarModURL('sitecontact','admin','managesctypes');
        $scid=$data['item']['scid'];
        $data['managetype']=xarML('Preview Form');
@@ -381,22 +375,7 @@ function sitecontact_admin_managesctypes()
 
          /* check the input values for this object and do ....what here? */
          $isvalid = $object->checkInput();
-
-         /*we just want a copy of data - don't need to save it in a table (no request yet anyway!) */
          $dditems = $thisitem;
-
-         foreach ($dditems as $itemid => $fields) {
-            $items[$itemid] = array();
-            foreach ($fields as $name => $value) {
-                $items[$itemid][$name] = ($value);
-            }
-
-            $propdata=array();
-            foreach ($items as $key => $value) {
-                $propdata[$value['name']]['label']=$value['label'];
-                $propdata[$value['name']]['value']=$value['value'];
-            }
-         }
       }
     }
 
