@@ -126,6 +126,7 @@ function sitecontact_admin_display($args)
 
     xarTplSetPageTitle(xarVarPrepForDisplay($data['formname']));
     //let's also give a custom template for admin display
+    //the base template is usually used but let's test for those that want an override here
     try {
         $templatedata = xarTplModule('sitecontact', 'admin', 'display', $data, $data['formname']);
     } catch (Exception $e) {

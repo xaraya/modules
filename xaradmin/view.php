@@ -134,7 +134,6 @@ function sitecontact_admin_view($args)
         $data['responses']='';
     }
 
-
     // Add pager
     $data['pager'] = xarTplGetPager($startnum,
                             xarModAPIFunc('sitecontact', 'user', 'countresponses',
@@ -145,7 +144,7 @@ function sitecontact_admin_view($args)
                                       array('startnum' => '%%',
                                             'scid' => $scid,
                                             'responsetime' => $responsetime)),
-                                            $numitems);
+                                             $numitems);
 
     // Create filters based on publication type
     $formfilters = array();
@@ -171,6 +170,7 @@ function sitecontact_admin_view($args)
     if (!empty($scid) && !empty($formtypes[$scid]['sctypename'])) {
         xarCore::setCached('Blocks.sitecontact','formname',$formtypes[$scid]['sctypename']);
     }
+    //the base template is usually used but let's test for those that want an override here else it will error out
     try {
         $templatedata = xarTplModule('sitecontact', 'admin', $template, $data, $data['formname']);
     } catch (Exception $e) {
