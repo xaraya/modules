@@ -49,7 +49,10 @@ function sitecontact_userapi_respond($args)
     }
     $formdata = $formdata[0];
     $sctypename = $formdata['sctypename'];
-
+    $data['customtext']   = $formdata['customtext'];
+    $data['customtitle']  = $formdata['customtitle'];
+    $data['usehtmlemail'] = $formdata['usehtmlemail'];
+    $data['allowcopy']    = $formdata['allowcopy'];
     if ($formdata['scactive'] != 1) { //form but not active
         $msg = xarML('The form requested is not available');
         throw new BadParameterException(null,$msg);
@@ -70,8 +73,11 @@ function sitecontact_userapi_respond($args)
                    $soptions[$k]=$v;
               }
            }
+           $data['options'] = $soptions;
+    } else {
+           $data['options'] = '';
     }
-
+   $options= $data['options'];
     $useantibot=$soptions['useantibot'];
     if (xarModIsAvailable('formantibot') && $useantibot) {
         if (!xarVarFetch('antibotcode',  'str:6:10', $antibotcode, '', XARVAR_NOT_REQUIRED) ||
@@ -173,10 +179,21 @@ function sitecontact_userapi_respond($args)
     $object = DataObjectMaster::getObject(array('name' => $sctypename));
 
     $properties = $object->getProperties();
-    //make sure some non user input fields are updated
-    //jojo:  ->setValue() not working here?
-    
-    $object->checkInput();
+
+    $isvalid = $object->checkInput();
+
+    if (!$isvalid) {
+        $data = array('authid' => xarSecGenAuthKey('sitecontact'),
+                      'sctypename' =>$sctypename,
+                      'useantibot' =>$useantibot,
+                      'options'    =>$options);
+        try {
+            $templatedata = xarTplModule('sitecontact', 'user', 'display', $data, $sctypename);
+        } catch (Exception $e) {
+            $templatedata = xarTplModule('sitecontact', 'user', 'display', $data);
+        }
+        return $templatedata;
+    }
 
     foreach ($properties as $itemid => $fields) {
 
@@ -323,6 +340,7 @@ function sitecontact_userapi_respond($args)
     /* comments in emails is a problem - set it manually for this module
        let's make it contingent on the mail module var - as that is what
        seems intuitively the correct thing
+       jojo - need to get rid of this with some generalized solution for xar
     */
     $themecomments = xarModVars::get('themes','ShowTemplates');
     $mailcomments = xarModVars::get('mail','ShowTemplates');

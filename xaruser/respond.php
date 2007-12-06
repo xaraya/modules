@@ -89,14 +89,29 @@ function sitecontact_user_respond($args)
         $msg = xarML('The form requested is not available');
         throw new BadParameterException(null,$msg);
     }
-
+    if (isset($formdata['soptions'])) {
+           $soptions=unserialize($formdata['soptions']);
+           if (is_array($soptions)) {
+               foreach ($soptions as $k=>$v) {
+                   $soptions[$k]=$v;
+              }
+           }
+           $data['options'] = $soptions;
+    } else {
+           $data['options'] = '';
+    }
+    $data['customtext']   = $formdata['customtext'];
+    $data['customtitle']  = $formdata['customtitle'];
+    $data['usehtmlemail'] = $formdata['usehtmlemail'];
+    $data['allowcopy']    = $formdata['allowcopy'];
+    
     $data['result'] = xarModAPIFunc('sitecontact','user','respond', $data);
     
-    try {
+  //  try {
         $templatedata = xarTplModule('sitecontact', 'user', 'result', $data, $sctypename);
-    } catch (Exception $e) {
-        $templatedata = xarTplModule('sitecontact', 'user', 'result', $data);
-    }
+  //  } catch (Exception $e) {
+ //       $templatedata = xarTplModule('sitecontact', 'user', 'result', $data);
+  //  }
     return $templatedata;
 }
 ?>
