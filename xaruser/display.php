@@ -20,6 +20,7 @@
  * @author Jo Dalle Nogare
  */
 
+
 sys::import('modules.dynamicdata.class.objects.master');
 
 function sitecontact_user_display($args)
@@ -154,7 +155,6 @@ function sitecontact_user_display($args)
     }
     $data['requesttext']=$requesttext;
 
-
     // get the dataobject for this form
     if ($sctypename != 'sitecontact_basicform') {
         $object = DataObjectMaster::getObject(array('name' => $sctypename));
@@ -163,7 +163,8 @@ function sitecontact_user_display($args)
         }
         $data['object'] = $object;
         $data['properties']= $object->getProperties();
-    } 
+        $data['itemtype'] = $object->itemtype;
+    }
 
     $data['useripaddress'] = isset($useripaddress)?$useripaddress:xarServerGetVar('REMOTE_ADDR');
 
@@ -174,6 +175,12 @@ function sitecontact_user_display($args)
     
     $data['authid'] = xarSecGenAuthKey('sitecontact');
     $data['submit'] = xarML('Submit');
+    
+    //now introduce any custom preprocessing function after we have all required data for prospective forms
+    $customfunc = 'modules/sitecontact/xarworkflowapi/'.$sctypename.'.php';
+    if (file_exists($customfunc)) {
+        include_once($customfunc);
+    }
 
     try {
         $templatedata = xarTplModule('sitecontact', 'user', 'display', $data, $data['sctypename']);
