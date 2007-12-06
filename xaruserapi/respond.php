@@ -197,7 +197,7 @@ function sitecontact_userapi_respond($args)
     if (!$isvalid) {
         //make sure we generalize our return for all forms, not just a special one
         $optiontext     = $formdata['optiontext'];
-        $optionset   = explode(',',$optiontext);
+        $optiontext  = explode(',',$optiontext);
         $data = array('authid'         => xarSecGenAuthKey('sitecontact'),
                       'scid'           => $scid,
                       'sctypename'     => $sctypename,
