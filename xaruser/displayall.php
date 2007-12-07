@@ -114,7 +114,8 @@ function comments_user_displayall($args)
     }
 
     $comments = xarModAPIFunc('comments','user','get_multipleall',$args);
-    $settings = xarModAPIFunc('comments','user','getoptions');
+    // Bug 6188: why is this needed? getoptions needs one hooked module to get the options for
+   //$settings = xarModAPIFunc('comments','user','getoptions');
 
     if (!empty($args['order'])) {
         $settings['order']=$args['order'];
