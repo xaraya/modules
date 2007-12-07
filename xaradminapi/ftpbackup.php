@@ -41,15 +41,19 @@ function sitetools_adminapi_ftpbackup($args)
     if (extension_loaded('openssl') && $usesftp) {
         $conn = ftp_ssl_connect($ftpserver);
     } else {
+        if ($usesftp) {
+            xarLogMessage('SITETOOLS: Openssl not loaded','XARLOG_LEVEL_ERROR');
+        }
         $conn = ftp_connect($ftpserver);
     }
     // Bail out if we cannot connect
     if(!$conn) {
-        xarLogMessage('SITETOOLS: FTP connect failed, backup not transferred');
+        xarLogMessage('SITETOOLS: FTP connect failed, backup not transferred','XARLOG_LEVEL_ERROR');
        return false;
     }
     // Login
     if(!ftp_login($conn,$ftpuser,$ftppw)) {
+        xarLogMessage('SITETOOLS: login failed, backup not transferred','XARLOG_LEVEL_ERROR');
         ftp_quit($conn);
         return false;
     }
@@ -59,14 +63,14 @@ function sitetools_adminapi_ftpbackup($args)
     }
 
     if(!ftp_put($conn,$ftpdir.$bkname,$bkfilename,FTP_ASCII)) {
-        xarLogMessage('SITETOOLS: FTP_put failed, backup not transferred');
+        xarLogMessage('SITETOOLS: FTP_put failed, backup not transferred','XARLOG_LEVEL_ERROR');
         return false;
     }
 
     ftp_quit($conn);
 
-    // Log a message
-    xarLogMessage('SITETOOLS: Excuted FTP of backup');
+    // Log a message No level needed as this is debug
+    xarLogMessage('SITETOOLS: Executed FTP of backup');
 
     return true;
 }
