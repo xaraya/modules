@@ -10,7 +10,6 @@
 <xar:set name="totaltext"><xar:mlstring>The database is currently a total size of </xar:mlstring></xar:set>
 <xar:set name="totgaintd"><xar:mlstring>Since installing this script you have saved </xar:mlstring></xar:set>
 
-<xar:style scope="module" file="forms" />
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>Site Tools Administration</xar:mlstring>
