@@ -15,6 +15,7 @@
  * optimize the database (executed by the scheduler module)
  *
  * @author jojodee <http://xaraya.athomeandabout.com >
+ * @return bool true if we succeeded, false if we encountered an error
  * @access private
  */
 function sitetools_schedulerapi_optimize($args)
@@ -26,23 +27,24 @@ function sitetools_schedulerapi_optimize($args)
      */
     if (empty($dbname)){
         $dbconn =& xarDBGetConn();
-            $dbname= xarDBGetName();
+        $dbname= xarDBGetName();
     }
 
-    /*   It may return true (or some logging text) if it succeeds, and null if it fails
-     *   return
+    /* It may return true (or some logging text) if it succeeds, and null if it fails
+     * return
      */
-     $tabledata=xarModAPIFunc('sitetools','admin','optimizedb',
+    $tabledata=xarModAPIFunc('sitetools','admin','optimizedb',
                       array('dbname' => $dbname));
 
-       $total_gain= $tabledata['total_gain'];
-       $total_gain = round ($total_gain,3);
-       //Add this new optimization record to the database
-       return xarModAPIFunc('sitetools',
-                              'admin',
-                              'create',
-                              array('totalgain' => $total_gain));
-
+    $total_gain= $tabledata['total_gain'];
+    $total_gain = round ($total_gain,3);
+    //Add this new optimization record to the database
+    if (!xarModAPIFunc('sitetools',
+                      'admin',
+                      'create',
+                      array('totalgain' => $total_gain))) {
+        return false;
+    }
     return true;
 }
 

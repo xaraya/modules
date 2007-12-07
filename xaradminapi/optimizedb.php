@@ -1,7 +1,7 @@
 <?php
 /**
  * @package modules
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2005-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -35,12 +35,14 @@ function sitetools_adminapi_optimizedb($dbname,$dbtype='')
 
     $rowinfo=array();//bug #2595
   // Instantiation of SiteTools class
-
-     include_once("modules/sitetools/xarclass/dbSiteTools_".$dbtype.".php");
-
      $classname="dbSiteTools_".$dbtype;
+
+     include_once("modules/sitetools/xarclass/".$classname.".php");
+
      $items= new $classname();
-     if (!$rowdata= $items->_optimize($dbname)) {return;}
+     if (!$rowdata= $items->_optimize($dbname)) {
+        return false;
+     }
 
 /** Move all this to db specific classes.
  ** Remove it when we have cleaned up a little and know it is working without a hitch

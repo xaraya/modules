@@ -1,18 +1,19 @@
 <?php
 /**
  * @package modules
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) 2005-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage Sitetools
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
  */
-
-/* @author the Example module development team
+/**
+ * Create a record for the total gain from an table optimization action
+ *
+ * @author the Sitetools module development team
  * @param  $args ['totalgained'] total kb gained in optimization
- * @returns int
- * @return sitetools item ID on success, false on failure
+ * @return int sitetools item ID on success, false on failure
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function sitetools_adminapi_create($args)
@@ -35,9 +36,12 @@ extract($args);
         return;
     }
     // Security check - important to do this as early on as possible
+    // This interferes with scheduler calling this function
+    /*
     if (!xarSecurityCheck('AdminSiteTools')) {
         return;
     }
+    */
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
