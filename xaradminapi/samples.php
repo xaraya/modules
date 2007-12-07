@@ -3,8 +3,7 @@
 /**
  * Create sample data (autolink types, links, DD objects, properties, etc.)
  * @param action - 'create' or 'get': create samples or return the samples array.
- * @returns int
- * @return autolink ID on success, false on failure
+ * @return int autolink ID on success, false on failure
  * @todo convert this into a multi-lingual XML file and an import function
  */
 

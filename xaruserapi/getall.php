@@ -3,7 +3,7 @@
 /**
  * get all links
  * TODO: allow fetched results to be ordered
- * @returns array
+ *
  * @param $args['enabled'] optional boolean: get only enabled or disabled links
  * @param $args['tid'] optional integer: get only given autolink type
  * @param $args['lid'] optional integer: get only given autolink (by lid)
@@ -79,7 +79,7 @@ function autolinks_userapi_getall($args)
         . ' xar_name, xar_type_tid, xar_dynamic_replace,'
         . ' xar_template_name, xar_type_name, xar_type_desc, xar_link_itemtype'
         . ' FROM ' . $autolinkstable
-        . ' LEFT JOIN ' . $autolinkstypestable 
+        . ' LEFT JOIN ' . $autolinkstypestable
         . ' ON xar_tid = xar_type_tid'
         . (!empty($where) ? ' where ' . $where : '')
         . ' ORDER BY xar_name';

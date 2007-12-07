@@ -4,7 +4,7 @@
  *
  * Xaraya Autolinks
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.org
@@ -25,7 +25,7 @@ function autolinks_init()
     if (!xarModAPIfunc('base', 'versions', 'assert_application', array('0.9.1.3'))) {
         return;
     }
-            
+
     // Set up database tables
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -70,7 +70,7 @@ function autolinks_init()
     ";
 
     // Create or alter the table as necessary.
-    $result = $datadict->changeTable($autolinkstable, $flds);    
+    $result = $datadict->changeTable($autolinkstable, $flds);
     if (!$result) {return;}
 
     // Create a unique key on the name column.
@@ -91,7 +91,7 @@ function autolinks_init()
     * xar_link_itemtype int(11) NOT NULL default '0',
     * xar_type_desc longtext,
     * PRIMARY KEY  (xar_tid)
-    * ) 
+    * )
     *****************************************************************/
     $flds = "
         xar_tid             I       AUTO    PRIMARY,
@@ -102,9 +102,9 @@ function autolinks_init()
         xar_type_desc       X
     ";
 
-    $result = $datadict->changeTable($autolinkstypestable, $flds);    
+    $result = $datadict->changeTable($autolinkstypestable, $flds);
     if (!$result) {return;}
-    
+
 
     // Set up module variables
     xarModSetVar('autolinks', 'itemsperpage', 20);
@@ -215,7 +215,7 @@ function autolinks_upgrade($oldversion)
             ";
 
             // Until we have a better method of handling errors, it is safer to continue.
-            $result = $datadict->changeTable($autolinkstable, $flds);    
+            $result = $datadict->changeTable($autolinkstable, $flds);
             if (!$result) {xarErrorHandled();}
 
         case '1.2':
@@ -229,9 +229,9 @@ function autolinks_upgrade($oldversion)
             ";
 
             // Until we have a better method of handling errors, it is safer to continue.
-            $result = $datadict->changeTable($autolinkstable, $flds);    
+            $result = $datadict->changeTable($autolinkstable, $flds);
             if (!$result) {xarErrorHandled();}
-            
+
             xarModSetVar('autolinks', 'punctuation', AUTOLINKS_PUNCTUATION);
             xarModSetVar('autolinks', 'nbspiswhite', '1');
 
@@ -246,8 +246,8 @@ function autolinks_upgrade($oldversion)
             if (!xarModAPIfunc('base', 'versions', 'assert_application', array('0.9.1.3'))) {
                 return;
             }
-            
-            // We are using the ADOdb Data Dictionary objects here. This is 
+
+            // We are using the ADOdb Data Dictionary objects here. This is
             // experimental, and they will be wrapped by Xaraya functions in the future.
             // Note: this does NOT maintain xar_tables meta-data.
 
@@ -287,7 +287,7 @@ function autolinks_upgrade($oldversion)
             // TODO?
 
             // Create autolinks types table.
-            
+
             // Now update the table using the data dictionary.
             $flds = "
                 xar_tid             I       AUTO    PRIMARY,
@@ -328,14 +328,14 @@ function autolinks_upgrade($oldversion)
                 . ' where xar_module = \'autolinks\''
                 . ' and xar_header = \'Autolink Keyword:\''
                 . ' and xar_component = \'Autolinks\'';
-            
+
             $result =& $dbconn->Execute($query);
             if (xarCurrentErrorType() <> XAR_NO_EXCEPTION) {
                 xarErrorHandled();
             }
-            
+
        case '1.6':
-            // compatability upgrade     
+            // compatability upgrade
        case '1.6.0':
             // The current version.
 
@@ -386,18 +386,7 @@ function autolinks_delete()
     //if (!$result) {return;}
 
     // Remove module variables
-    // TODO: 'removeall'?
-    xarModDelVar('autolinks', 'itemsperpage');
-    xarModDelVar('autolinks', 'maxlinkcount');
-    xarModDelVar('autolinks', 'decoration');
-    xarModDelVar('autolinks', 'punctuation');
-    xarModDelVar('autolinks', 'nbspiswhite');
-    xarModDelVar('autolinks', 'templatebase');
-    xarModDelVar('autolinks', 'showerrors');
-    xarModDelVar('autolinks', 'showsamples');
-    xarModDelVar('autolinks', 'typeitemtype');
-    xarModDelVar('autolinks', 'excludeelements');
-
+    xarModDelAllVars('autolinks');
     // Remove Masks and Instances
     xarRemoveMasks('autolinks');
     xarRemoveInstances('autolinks');

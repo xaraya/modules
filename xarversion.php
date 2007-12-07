@@ -27,7 +27,6 @@ $modversion['author'] = 'Jason Judge/Jim McDonald';
 $modversion['contact'] = 'jason.xaraya@acadweb.co.uk,Jim@mcdee.net';
 $modversion['admin'] = 1;
 $modversion['user'] = 0;
-$modversion['securityschema'] = array();
 $modversion['class'] = 'Utility';
 $modversion['category'] = 'Global';
 ?>

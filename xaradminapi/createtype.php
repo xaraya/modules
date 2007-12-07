@@ -8,8 +8,7 @@
  * @param $args['dynamic_replace'] flag indicates dynamic replacement; default: 0
  * @param $args['type_desc'] description of the autolink type (optional)
  * @param $args['itemtype'] the item type used for hooks for items of this type; default: tid+10
- * @returns int
- * @return autolink type ID on success, false or NULL on failure
+ * @return int autolink type ID on success, false or NULL on failure
  */
 function autolinks_adminapi_createtype($args)
 {
@@ -92,7 +91,7 @@ function autolinks_adminapi_createtype($args)
     if ($tid > 0 && $itemtype == 0) {
         $itemtype = $tid + 10;
 
-        $query = 'UPDATE ' . $autolinkstypestable 
+        $query = 'UPDATE ' . $autolinkstypestable
               . ' SET xar_link_itemtype = ?'
               . ' WHERE xar_tid = ?'
               . ' AND xar_link_itemtype <> ?';

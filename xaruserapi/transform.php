@@ -1,7 +1,7 @@
 <?php
 
 /**
- * $Id$
+ *
  * transform text
  * @param $args['extrainfo'] string or array of text items
  * @returns string
