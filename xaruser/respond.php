@@ -106,12 +106,6 @@ function sitecontact_user_respond($args)
 
     $data['result'] = xarModAPIFunc('sitecontact','user','respond', $data);
 
-    if (!empty($data['sctypename'])) {
-        $templatedata = xarTplModule('sitecontact', 'user', 'display', $data, $data['sctypename']);
-    } else {
-        $templatedata = xarTplModule('sitecontact', 'user', 'display', $data);
-    }
-
-    return $templatedata;
+    return $data['result'];
 }
 ?>
