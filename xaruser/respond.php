@@ -106,11 +106,12 @@ function sitecontact_user_respond($args)
 
     $data['result'] = xarModAPIFunc('sitecontact','user','respond', $data);
 
-  //  try {
-        $templatedata = xarTplModule('sitecontact', 'user', 'result', $data, $sctypename);
-  //  } catch (Exception $e) {
- //       $templatedata = xarTplModule('sitecontact', 'user', 'result', $data);
-  //  }
+    if (!empty($data['sctypename'])) {
+        $templatedata = xarTplModule('sitecontact', 'user', 'display', $data, $data['sctypename']);
+    } else {
+        $templatedata = xarTplModule('sitecontact', 'user', 'display', $data);
+    }
+
     return $templatedata;
 }
 ?>
