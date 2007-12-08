@@ -142,7 +142,7 @@ function sitecontact_user_display($args)
         if (!isset($item[1])) $item[1] = $item[0];
       $optionitems[] = array('id' => $item[0], 'name' => $item[1]);
     }
-    $data['sitecontactoptions'] = $optionitems;
+    $data['options'] = $optionitems;
 
     $setmail='';
     if (isset($customtitle)){

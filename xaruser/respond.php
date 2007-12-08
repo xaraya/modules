@@ -95,9 +95,9 @@ function sitecontact_user_respond($args)
                    $soptions[$k]=$v;
               }
            }
-           $data['sitecontactoptions'] = $soptions;
+           $data['options'] = $soptions;
     } else {
-           $data['sitecontactoptions'] = '';
+           $data['options'] = '';
     }
     $data['customtext']   = $formdata['customtext'];
     $data['customtitle']  = $formdata['customtitle'];

@@ -189,7 +189,7 @@ function sitecontact_userapi_respond($args)
                       'sctypename'     => $sctypename,
                       'properties'     => $properties,
                       'useantibot'     => $useantibot,
-                      'sitecontactoptions'    => $options,
+                      'options'        => $options,
                       'customtext'     => $formdata['customtext'],
                       'customtitle'    => $formdata['customtitle'],
                       'usehtmlemail'   => $formdata['usehtmlemail'],
