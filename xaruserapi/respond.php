@@ -183,22 +183,25 @@ function sitecontact_userapi_respond($args)
     $isvalid = $object->checkInput();
 
     if (!$isvalid) {
-        $data = array('authid' => xarSecGenAuthKey('sitecontact'),
-                      'sctypename' =>$sctypename,
-                      'useantibot' =>$useantibot,
-                      'options'    =>$options,
-                      'customtext' => $formdata['customtext'],
-                      'customtitle'  => $formdata['customtitle'],
-                      'usehtmlemail' => $formdata['usehtmlemail'],
-                      'allowcopy'    => $formdata['allowcopy'],
-                      'requesttext'  => $requesttext,
-                       'antibotinvalid' => TRUE,
-                       'botreset'=>true,
-                       'userreferer'=> $userreferer
+        $data = array('authid'         => xarSecGenAuthKey('sitecontact'),
+                      'properties'     => $properties,
+                      'scid'           => $scid,
+                      'sctypename'     => $sctypename,
+                      'properties'     => $properties,
+                      'useantibot'     => $useantibot,
+                      'sitecontactoptions'    => $options,
+                      'customtext'     => $formdata['customtext'],
+                      'customtitle'    => $formdata['customtitle'],
+                      'usehtmlemail'   => $formdata['usehtmlemail'],
+                      'allowcopy'      => $formdata['allowcopy'],
+                      'requesttext'    => $requesttext,
+                      'antibotinvalid' => TRUE,
+                      'botreset'       => true,
+                      'userreferer'    => $userreferer
                       );
-        try {
-            $templatedata = xarTplModule('sitecontact', 'user', 'display', $data, $sctypename);
-        } catch (Exception $e) {
+        if (!empty($sctypename)) {
+                $templatedata = xarTplModule('sitecontact', 'user', 'display', $data, $sctypename);
+        } else {
             $templatedata = xarTplModule('sitecontact', 'user', 'display', $data);
         }
         return $templatedata;
@@ -211,7 +214,7 @@ function sitecontact_userapi_respond($args)
             $fileuploadfieldname=$itemid;
         }
     }
-   
+
      if ($withupload && isset($fileuploadfieldname) && is_array($items[$fileuploadfieldname]) && !empty($items[$fileuploadfieldname]['value'])) {
        $filebasepath=$items[$fileuploadfieldname]['basePath'];
        $filebasedir=$items[$fileuploadfieldname]['basedir'];
