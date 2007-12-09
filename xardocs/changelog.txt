@@ -1,3 +1,10 @@
+Version 1.1.0  X Dec 2007 - 2skies.com
+- move key areas to dynamic data retaining backward compat where possible
+- add ability to add custom func for preprocessing data
+- add api function to process forms that can be called by other modules
+- updated obfuscation for email
+- various bug fixes see http://xarigami.com/?module=contrails&func=versions&projectid=5
+
 Version 1.0.3 Sept 2007 - 2skies.com
 - minor upgrade to remove block instances and block security checks
 - now handled from xarigami core
