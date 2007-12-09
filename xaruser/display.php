@@ -130,12 +130,21 @@ function sitecontact_user_display($args)
 
     $data['usehtmlemail'] = $usehtmlemail;
     $data['allowcopy']    = $allowcopy;
-
-    $optiontext  = $formdata['optiontext'];
-    $optionset   = array();
-    $selectitem  = array();
-    $optionset   = explode(',',$optiontext);
-    $data['options'] = $optionset;
+    
+    //remember -  request text and optional email in this scenario, explode them all for drop down options in DD
+    $optiontext = $formdata['optiontext'];
+    $optionset  = array();
+    $selectitem = array();
+    $optionset  = explode(',',$optiontext);
+    $data['optionset']=$optionset;
+    $optionitems = array();
+    foreach ($optionset as $optionitem) {
+      $optionitems[] = explode(';',$optionitem);
+    }
+    foreach ($optionitems as $selectitem=>$value) {
+       $options[]=trim($value[0]);
+    }
+    $data['options'] = $options;
 
     $setmail='';
     if (isset($customtitle)){

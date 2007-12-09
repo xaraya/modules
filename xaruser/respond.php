@@ -100,18 +100,24 @@ function sitecontact_user_respond($args)
     } else {
            $data['options'] = '';
     }
-    $data['customtext']   = $formdata['customtext'];
-    $data['customtitle']  = $formdata['customtitle'];
-    $data['usehtmlemail'] = $formdata['usehtmlemail'];
-    $data['allowcopy']    = $formdata['allowcopy'];
-    
-    $data['result'] = xarModAPIFunc('sitecontact','user','respond', $data);
-    
-  //  try {
-        $templatedata = xarTplModule('sitecontact', 'user', 'result', $data, $sctypename);
-  //  } catch (Exception $e) {
- //       $templatedata = xarTplModule('sitecontact', 'user', 'result', $data);
-  //  }
+  
+  
+    $checkdata = xarModAPIFunc('sitecontact','user','respond', $data);
+
+    if ($checkdata['isvalid'] == FALSE) {
+        try {
+            $templatedata = xarTplModule('sitecontact', 'user', 'display', $checkdata, $sctypename);
+        } catch (Exception $e) {
+            $templatedata = xarTplModule('sitecontact', 'user', 'display', $checkdata);
+        }
+    } else { //invalid could be null
+          $data['result'] = 1;
+        try {
+            $templatedata = xarTplModule('sitecontact', 'user', 'result', $data, $sctypename);
+        } catch (Exception $e) {
+            $templatedata = xarTplModule('sitecontact', 'user', 'result', $data);
+        }
+    }
     return $templatedata;
 }
 ?>

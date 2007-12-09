@@ -183,6 +183,16 @@ function sitecontact_userapi_respond($args)
       }
     }
     $bccrecipients=$bccrec;
+    $optiontext = $formdata['optiontext'];
+    $optionset  = array();
+    $selectitem = array();
+    $optionset  = explode(',',$optiontext);
+    $data['optionset']=$optionset;
+    $optionitems = array();
+    //use the optionitems array later for emails
+    foreach ($optionset as $optionitem) {
+         $optionitems[] = explode(';',$optionitem);
+    }
 
     $data['scid']=$formdata['scid'];
     $data['sctypename']=$formdata['sctypename'];
@@ -197,13 +207,15 @@ function sitecontact_userapi_respond($args)
     $permission = $properties['permission']->getValue();
     if (!$isvalid) {
         //make sure we generalize our return for all forms, not just a special one
-        $optiontext     = $formdata['optiontext'];
-        $optiontext  = explode(',',$optiontext);
+        foreach ($optionitems as $selectitem=>$value) {
+            $options[]=trim($value[0]);
+        }
+
         $data = array('authid'         => xarSecGenAuthKey('sitecontact'),
                       'scid'           => $scid,
                       'sctypename'     => $sctypename,
                       'useantibot'     => $useantibot,
-                      'options'        => $optiontext,
+                      'options'        => $options,
                       'customtext'     => $formdata['customtext'],
                       'customtitle'    => $formdata['customtitle'],
                       'usehtmlemail'   => $formdata['usehtmlemail'],
@@ -221,17 +233,11 @@ function sitecontact_userapi_respond($args)
                       'userreferer'    => $userreferer,
                       'savedata'       => $savedata,
                       'useripaddress'  => $useripaddress, //make sure we send something back so no error, but it is captured here :)
-                      'properties'     => $properties
+                      'properties'     => $properties,
+                      'isvalid'      => $isvalid
                      );
-
-       //test for existance of the custom template as the basic template override is often used without rename
-        try {
-            $templatedata = xarTplModule('sitecontact', 'user', 'display', $data, $sctypename);
-        } catch (Exception $e) {
-            $templatedata = xarTplModule('sitecontact', 'user', 'display', $data);
-        }
-        return $templatedata;
-    }
+         return $data;
+    } 
 
     foreach ($properties as $itemid => $fields) {
 
@@ -322,14 +328,10 @@ function sitecontact_userapi_respond($args)
     $adminemail = xarModVars::get('mail','adminmail');
     $mainemail=$formdata['scdefaultemail'];
 
-    $optionset=explode(',',$optiontext);
-    $data['optionset']=$optionset;
-    $optionitems=array();
-    foreach ($optionset as $optionitem) {
-      $optionitems[]=explode(';',$optionitem);
-    }
+    //now we need to get the value from DD
+    $requestoption = $properties['requesttext']->getValue();
     foreach ($optionitems as $optionid) {
-        if (trim($optionid[0])==trim($requesttext)) {
+        if (trim($optionid[0])==trim($requestoption)) {
             if (isset($optionid[1])) {
                 $setmail=$optionid[1];
             }else{
@@ -338,7 +340,7 @@ function sitecontact_userapi_respond($args)
         }
     }
     if (!isset($setmail) ) {
-       $setmail = $formdata['scdefaultemail'];;
+       $setmail = $formdata['scdefaultemail'];
    }
     $data['setmail']=$setmail;
     //now override with specific admin email from location data
@@ -560,7 +562,8 @@ function sitecontact_userapi_respond($args)
     xarModVars::set('themes','ShowTemplates',$themecomments);
     /* lets update status and display updated configuration */
     xarSession::setVar('sitecontact.sent',1);
-
-    return true;
+    $args['isvalid'] = true;
+    //let's return our data seeing as we have this intermediate  gui 'respond' function now
+    return $args;
 }
 ?>

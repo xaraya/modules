@@ -360,8 +360,16 @@ function sitecontact_admin_managesctypes()
         if (!isset($data['item']['permissioncheck']))$data['item']['permissioncheck']=xarModVars::get('sitecontact','permissioncheck');
         if (!isset($data['item']['termslink']))$data['item']['termslink']=xarModVars::get('sitecontact','termslink');
 
-       $optionset=explode(',',$item[0]['optiontext']);
-       $data['optionset']=$optionset;
+       $optionselect=explode(',',$item[0]['optiontext']);
+       $optionitems = array();
+       foreach ($optionselect as $optionitem) {
+           $optionitems[] = explode(';',$optionitem);
+       }
+       foreach ($optionitems as $selectitem=>$value) {
+           $options[]=trim($value[0]);
+       }
+       $data['optionset'] = $options;
+       
        $data['requesttext']='';
        $data['link'] = xarModURL('sitecontact','admin','managesctypes');
        $scid=$data['item']['scid'];

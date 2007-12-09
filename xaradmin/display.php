@@ -38,7 +38,6 @@ function sitecontact_admin_display($args)
     if (!empty($lastview)) {
         $lastview= unserialize($lastview);
     }
-    //$data = xarModAPIFunc('sitecontact', 'admin', 'menu');
 
     $data['status'] = '';
 
@@ -57,7 +56,20 @@ function sitecontact_admin_display($args)
     $data['baseproperties']= $baseobject->getProperties();
     $thisform = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
     $thisform=$thisform[0];
-    $optiontext = explode(',',$thisform['optiontext']);
+    $optionset = explode(',',$thisform['optiontext']);
+    $selectitem = array();
+    $optionitems = array();
+    foreach ($optionset as $optionitem) {
+      $optionitems[] = explode(';',$optionitem);
+    }
+    foreach ($optionitems as $selectitem=>$value) {
+       $options[]=trim($value[0]);
+       if (isset($value[1])) {
+          $emailedto[] = trim($value[1]);
+       } else {
+          $emailedto[] = $thisform['scdefaultemail'];
+       }
+    }
 
     if ($thisform['sctypename'] != 'sitecontact_basicform') {
         $thisobject = DataObjectMaster::getObject(array('name'=> $thisform['sctypename']));
@@ -75,7 +87,8 @@ function sitecontact_admin_display($args)
     $data['args'] = $args;
     $data['username'] = $item['username'];
     $data['useremail'] = $item['useremail'];
-    $data['requesttext'] = $optiontext[$item['requesttext']];
+    $data['requesttext'] = $options[$item['requesttext']];
+    $data['emailedto'] = $emailedto[$item['requesttext']];
     $data['company'] = $item['company'];
     $data['useremail'] = $item['useremail'];
     $data['usermessage'] = $item['usermessage'];

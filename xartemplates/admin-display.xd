@@ -15,7 +15,7 @@
     <xar:template type="module" file="admin-menu" />
     <h2>
         <xar:ml>
-            <xar:mlstring>Response ID: #(1) for #(2) </xar:mlstring>
+            <xar:mlstring>Response ID: #(1) for #(2)</xar:mlstring>
             <xar:mlvar>#$scrid#</xar:mlvar>
             <xar:mlvar>#$formname#</xar:mlvar>
         </xar:ml>
@@ -28,7 +28,13 @@
         <strong>#$status#</strong>
     <xar:else />
     <fieldset>
-       <legend><xar:mlstring>Response</xar:mlstring> #$scrid#</legend>
+       <legend>
+         <xar:ml>
+           <xar:mlstring>Response #(1) emailed to #(2)</xar:mlstring>
+           <xar:mlvar>#$scrid#</xar:mlvar>
+           <xar:mlvar>#$emailedto#</xar:mlvar>
+         </xar:ml>
+       </legend>
            <p class="xar-form-input-wrapper">
                <xar:data-label property="$properties['username']" label="id" />
                <xar:data-output property="$properties['username']" />
