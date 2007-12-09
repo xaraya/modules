@@ -61,12 +61,15 @@ function sitecontact_admin_display($args)
 
     if ($thisform['sctypename'] != 'sitecontact_basicform') {
         $thisobject = DataObjectMaster::getObject(array('name'=> $thisform['sctypename']));
-    } 
-    
-    $data['object'] = $thisobject;
-    $data['properties']= $thisobject->getProperties();
+        $data['object'] = $thisobject;
+        $data['properties']= $thisobject->getProperties();
+        $args['itemtype']= $thisobject->itemtype;
+    } else {
+        $data['object'] = $baseobject;
+        $data['properties']= $baseobject->getProperties();
+        $args['itemtype']= $baseobject->itemtype;
+    }
     $args['module']= 'dynamicdata';
-    $args['itemtype']= $thisobject->itemtype;
     $args['itemid']= $scrid;
     
     //keep some data vars for backward compat in templates
