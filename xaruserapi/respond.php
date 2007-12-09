@@ -193,7 +193,8 @@ function sitecontact_userapi_respond($args)
     $properties = $object->getProperties();
 
     $isvalid = $object->checkInput();
-
+    //need to check dd
+    $permission = $properties['permission']->getValue();
     if (!$isvalid) {
         //make sure we generalize our return for all forms, not just a special one
         $optiontext     = $formdata['optiontext'];
@@ -207,8 +208,8 @@ function sitecontact_userapi_respond($args)
                       'customtitle'    => $formdata['customtitle'],
                       'usehtmlemail'   => $formdata['usehtmlemail'],
                       'allowcopy'      => $formdata['allowcopy'],
-                      'allowccs'        => $allowccs,
-                      'allowbccs'       => $allowbccs,
+                      'allowccs'       => $allowccs,
+                      'allowbccs'      => $allowbccs,
                       'adminccs'       => $adminccs,
                       'bccrecipients'  => $bccrecipients,
                       'ccrecipients'   => $ccrecipients,
@@ -253,7 +254,7 @@ function sitecontact_userapi_respond($args)
 
    $responsetime = time();
 
-   /* Do we want to save the data for this form? */
+    /* Do we want to save the data for this form? */
 
    if ($savedata) {
        // save the form - let it handle save of the hooked dd

@@ -39,7 +39,7 @@
            </p>
            <p class="xar-form-input-wrapper">
                <xar:data-label property="$properties['requesttext']" label="id" />
-               <xar:data-output property="$properties['requesttext']" />
+               #$requesttext#
            </p>
            <p class="xar-form-input-wrapper">
                <xar:data-label property="$properties['company']" label="id" />

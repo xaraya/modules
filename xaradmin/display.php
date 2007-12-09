@@ -46,7 +46,6 @@ function sitecontact_admin_display($args)
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; /* throw back */
     $scid=$item['scid'];
     $item['itemtype'] = $scid;
-
     if (!xarSecurityCheck('EditSiteContact',0,'ContactForm',"$scid:All:All")) {
         return; // todo: something
     }
@@ -58,6 +57,7 @@ function sitecontact_admin_display($args)
     $data['baseproperties']= $baseobject->getProperties();
     $thisform = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid'=>$scid));
     $thisform=$thisform[0];
+    $optiontext = explode(',',$thisform['optiontext']);
 
     if ($thisform['sctypename'] != 'sitecontact_basicform') {
         $thisobject = DataObjectMaster::getObject(array('name'=> $thisform['sctypename']));
@@ -71,12 +71,11 @@ function sitecontact_admin_display($args)
     }
     $args['module']= 'dynamicdata';
     $args['itemid']= $scrid;
-    
     //keep some data vars for backward compat in templates
     $data['args'] = $args;
     $data['username'] = $item['username'];
     $data['useremail'] = $item['useremail'];
-    $data['requesttext'] = $item['requesttext'];
+    $data['requesttext'] = $optiontext[$item['requesttext']];
     $data['company'] = $item['company'];
     $data['useremail'] = $item['useremail'];
     $data['usermessage'] = $item['usermessage'];
