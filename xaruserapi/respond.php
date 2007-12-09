@@ -49,11 +49,7 @@ function sitecontact_userapi_respond($args)
     }
     $formdata = $formdata[0];
     $sctypename = $formdata['sctypename'];
-    $data['customtext']   = $formdata['customtext'];
-    $data['customtitle']  = $formdata['customtitle'];
-    $data['usehtmlemail'] = $formdata['usehtmlemail'];
-    $data['allowcopy']    = $formdata['allowcopy'];
-    
+
     if ($formdata['scactive'] != 1) { //form but not active
         $msg = xarML('The form requested is not available');
         throw new BadParameterException(null,$msg);
@@ -226,7 +222,6 @@ function sitecontact_userapi_respond($args)
                       'userreferer'    => $userreferer,
                       'savedata'       => $savedata,
                       'useripaddress'  => $useripaddress, //make sure we send something back so no error, but it is captured here :)
-                      'properties'     => $properties,
                       'isvalid'      => $isvalid
                      );
          return $data;

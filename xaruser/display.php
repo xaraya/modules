@@ -165,20 +165,23 @@ function sitecontact_user_display($args)
     // get the dataobject for this form
     if ($sctypename != 'sitecontact_basicform') {
         $object = DataObjectMaster::getObject(array('name' => $sctypename));
-        if ($submitted ==1) {
-            $object->checkInput();
-        }
         $data['object'] = $object;
         $data['properties']= $object->getProperties();
+        if ($submitted ==1) {
+        //we don't actually get here in this scenario -but keep in case someone needs it here.
+        // move it to correct place
+            $object->checkInput();
+        }
         $data['itemtype'] = $object->itemtype;
         //for backward compat and special cases
         $data['baseproperties']= array_keys($basicform->getProperties());
     } else {
-       if ($submitted ==1) {
+       $data['properties']= $basicform->getProperties();
+       if ($submitted ==1) { 
             $basicform->checkInput();
        }
        $data['object'] = $basicform;
-       $data['properties']= $basicform->getProperties();
+
        $data['itemtype'] = $basicform->itemtype;
     }
     $data['useripaddress'] = isset($useripaddress)?$useripaddress:xarServerGetVar('REMOTE_ADDR');

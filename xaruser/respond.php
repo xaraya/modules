@@ -106,6 +106,24 @@ function sitecontact_user_respond($args)
 
     if ($checkdata['isvalid'] == FALSE) {
        $data = $checkdata;
+       $basicform = DataObjectMaster::getObject(array('name' => 'sitecontact_basicform'));
+
+       // get the dataobject for this form
+       if ($sctypename != 'sitecontact_basicform') {
+        $object = DataObjectMaster::getObject(array('name' => $sctypename));
+        $data['object'] = $object;
+        $data['properties']= $object->getProperties();
+        $object->checkInput();
+        $data['itemtype'] = $object->itemtype;
+        //for backward compat and special cases
+        $data['baseproperties']= array_keys($basicform->getProperties());
+    } else {
+       $data['object'] = $basicform;
+       $data['properties']= $basicform->getProperties();
+       $basicform->checkInput();
+       $data['itemtype'] = $basicform->itemtype;
+    }
+
         // we need to include this again .... we cannot assume we have all vars
         $customfunc = 'modules/sitecontact/xarworkflowapi/'.$sctypename.'.php';
         if (file_exists($customfunc)) {
