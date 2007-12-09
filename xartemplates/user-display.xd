@@ -143,7 +143,7 @@
                 </xar:if>
                 <xar:if condition="$savedata and $permissioncheck">
                     <div class="xar-form-input-wrapper-after">
-                        <xar:data-input type="checkbox" name="permissioncheck" id="permissioncheck" value="$properties['permissioncheck']-&gt;value" />
+                        <xar:data-input type="checkbox" name="permission" id="permission" value="$properties['permission']-&gt;value" />
                         <label for="permission" title="#xarML('May we save your response to this form?')#">
                             <xar:mlstring>Permit saving of your form response?</xar:mlstring>
                         </label>
