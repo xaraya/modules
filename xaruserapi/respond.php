@@ -80,24 +80,15 @@ function sitecontact_userapi_respond($args)
     }
 
     $useantibot=$soptions['useantibot'];
+    $botreset = FALSE; // switch used for referer mainly in main function
+    $antibotinvalid = FALSE;
+    //just check for valid input and use the isvalid array futher down to return to our display form instead of doing it here
     if (xarModIsAvailable('formantibot') && $useantibot) {
         if (!xarVarFetch('antibotcode',  'str:6:10', $antibotcode, '', XARVAR_NOT_REQUIRED) ||
             !xarModAPIFunc('formantibot', 'user', 'validate', array('userInput' => $antibotcode))) {
-                $args['company'] = $company;
-                $args['scid']   = $scid;
-                $args['scform'] = $scform;
-                $args['usermessage'] = $usermessage;
-                $args['sctypename'] = $sctypename;
-                $args['bccrecipients'] = $bccrecipients;
-                $args['ccrecipients'] = $ccrecipients;
-                $args['requesttext'] = $requesttext;
-                $args['antibotinvalid'] = TRUE;
-                $args['botreset']=true;
-                $args['userreferer']= $userreferer; //don't loose our original referer
-                return xarModFunc('sitecontact', 'user', 'main', $args);
+                $antibotinvalid = TRUE;
+                $botreset = TRUE;
         }
-    } else {
-       $args['botreset']=false; // switch used for referer mainly in main function
     }
 
     if (!isset($soptions['allowbccs']) || $soptions['allowbccs']!=1) {
@@ -205,7 +196,7 @@ function sitecontact_userapi_respond($args)
     $isvalid = $object->checkInput();
     //need to check dd
     $permission = $properties['permission']->getValue();
-    if (!$isvalid) {
+    if (($isvalid == FALSE) || ($antibotinvalid == TRUE)) {
         //make sure we generalize our return for all forms, not just a special one
         foreach ($optionitems as $selectitem=>$value) {
             $options[]=trim($value[0]);
@@ -229,7 +220,7 @@ function sitecontact_userapi_respond($args)
                       'permissioncheck'=> $permissioncheck,
                       'allowanoncopy'  => $allowanoncopy,
                       'antibotinvalid' => TRUE,
-                      'botreset'       => true,
+                      'botreset'       => TRUE,
                       'userreferer'    => $userreferer,
                       'savedata'       => $savedata,
                       'useripaddress'  => $useripaddress, //make sure we send something back so no error, but it is captured here :)
