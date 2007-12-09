@@ -105,10 +105,16 @@ function sitecontact_user_respond($args)
     $checkdata = xarModAPIFunc('sitecontact','user','respond', $data);
 
     if ($checkdata['isvalid'] == FALSE) {
+       $data = $checkdata;
+        // we need to include this again .... we cannot assume we have all vars
+        $customfunc = 'modules/sitecontact/xarworkflowapi/'.$sctypename.'.php';
+        if (file_exists($customfunc)) {
+        include_once($customfunc);
+    }
         try {
-            $templatedata = xarTplModule('sitecontact', 'user', 'display', $checkdata, $sctypename);
+            $templatedata = xarTplModule('sitecontact', 'user', 'display', $data, $sctypename);
         } catch (Exception $e) {
-            $templatedata = xarTplModule('sitecontact', 'user', 'display', $checkdata);
+            $templatedata = xarTplModule('sitecontact', 'user', 'display', $data);
         }
     } else { //invalid could be null
           $data['result'] = 1;

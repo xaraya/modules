@@ -3,28 +3,25 @@
 
 <xar:mlstring>You submitted the following information:</xar:mlstring>
 
-<xar:mlstring>Name:</xar:mlstring> #$username#
+<xar:mlstring>Name: </xar:mlstring> <xar:data-output property="$properties['username']" />
 
-<xar:mlstring>Email:</xar:mlstring> #$useremail#
+<xar:mlstring>Email: </xar:mlstring> <xar:data-output property="$properties['useremail']" />
 
-<xar:mlstring>Organization:</xar:mlstring> #$company#
+<xar:mlstring>Organization: </xar:mlstring> <xar:data-output property="$properties['company']" />
 
-<xar:mlstring>Subject:</xar:mlstring> #$requesttext#
+<xar:mlstring>Subject: </xar:mlstring> #$requesttext#
 
-<xar:mlstring>Comments:</xar:mlstring>
+<xar:mlstring>Comments: </xar:mlstring>
+
+<xar:data-output property="$properties['usermessage']" />
 
 #$usermessage#
 
-<xar:set name="defaultarray">array('id','scid','cid','username','useremail','requesttext','company','usermessage',
-              'useripaddress','userreferer','sendcopy','permission','bccrecipients','ccrecipients','responsetime');</xar:set>
-
-<xar:if condition="isset($propdata) and count($propdata)">
-    <xar:foreach in="$propdata" key="$name">
-    <xar:if condition="!in_array($name,$defaultarray)">
-#$propdata[$name]['label']#: #$propdata[$name]['value']#
+<xar:foreach in="$properties" key="$name">
+    <xar:if condition="!in_array($name,$baseproperties)">
+           <xar:data-label property="$properties[$name]" />: &#160;  <xar:data-output property="$properties[$name]" />
     </xar:if>
-    </xar:foreach>
-</xar:if>
+</xar:foreach>
 
 -------------------------------------------------------------
 

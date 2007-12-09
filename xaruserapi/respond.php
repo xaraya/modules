@@ -184,6 +184,12 @@ function sitecontact_userapi_respond($args)
     foreach ($optionset as $optionitem) {
          $optionitems[] = explode(';',$optionitem);
     }
+    //make sure we generalize our return for all forms, not just a special one
+    //we still need our request text from the DD so put this back up here out of the isvalid false loop
+    $options = array(); //initialize
+    foreach ($optionitems as $selectitem=>$value) {
+          $options[]=trim($value[0]);
+    }
 
     $data['scid']=$formdata['scid'];
     $data['sctypename']=$formdata['sctypename'];
@@ -197,10 +203,6 @@ function sitecontact_userapi_respond($args)
     //need to check dd
     $permission = $properties['permission']->getValue();
     if (($isvalid == FALSE) || ($antibotinvalid == TRUE)) {
-        //make sure we generalize our return for all forms, not just a special one
-        foreach ($optionitems as $selectitem=>$value) {
-            $options[]=trim($value[0]);
-        }
 
         $data = array('authid'         => xarSecGenAuthKey('sitecontact'),
                       'scid'           => $scid,
@@ -330,6 +332,8 @@ function sitecontact_userapi_respond($args)
             }
         }
     }
+    //and the text equivalent of the dd value
+    $requesttext = $options[$requestoption];
     if (!isset($setmail) ) {
        $setmail = $formdata['scdefaultemail'];
    }
@@ -422,6 +426,7 @@ function sitecontact_userapi_respond($args)
     } catch (Exception $e) {
         $userhtmlmessage= xarTplModule('sitecontact', 'user', 'usermail',$userhtmlarray,'html');
     }
+
 
     /* prepare the text message to user */
     $textsubject = strtr($requesttext,$trans);

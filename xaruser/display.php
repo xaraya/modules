@@ -44,7 +44,7 @@ function sitecontact_user_display($args)
     if (!xarVarFetch('submitted',    'int:0:1', $submitted,      0,  XARVAR_NOT_REQUIRED)) return;
 
     $formdata = array();
-    
+ 
     if (isset($scform) && !empty($scform)) $sctypename = $scform; //provide alternate entry name
 
     //Have we got a form that is available and active?
@@ -55,12 +55,13 @@ function sitecontact_user_display($args)
     } else {
         $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $defaultformid));
     }
-
+   
     //Have we got an active form
     if (!is_array($formdata)) { //exists but not active
       //fallback to default form again
       $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $defaultformid));
     }
+
     $formdata = $formdata[0];
     $sctypename = $formdata['sctypename'];
 
