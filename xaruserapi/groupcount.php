@@ -51,7 +51,7 @@ function categories_userapi_groupcount($args)
     if (!empty($itemids) && is_array($itemids)) {
         $itemids = array_filter($itemids, 'is_numeric');
         if (!empty($itemids)) {
-            $where[] = $categoriesdef['iid'] . ' in (' . explode(', ', $itemids) . ')';
+            $where[] = $categoriesdef['iid'] . ' in (' . implode(', ', $itemids) . ')';
         }
     }
 
