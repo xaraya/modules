@@ -34,7 +34,7 @@ function categories_userapi_groupcount($args)
     }
 
     // Security check
-    if(!xarSecurityCheck('ViewCategoryLink')) return;
+    if (!xarSecurityCheck('ViewCategoryLink')) return;
 
     // Get database setup
     $dbconn =& xarDBGetConn();
@@ -67,6 +67,8 @@ function categories_userapi_groupcount($args)
 
     if ($groupby == 'item') {
         $field = $categoriesdef['iid'];
+    } elseif ($groupby == 'itemcategory') {
+        $field = $categoriesdef['iid'] . ',' . $categoriesdef['cid'];
     } else {
         $field = $categoriesdef['cid'];
     }
@@ -79,18 +81,31 @@ function categories_userapi_groupcount($args)
     }
     $sql .= ' GROUP BY ' . $field;
 
-
     $result = $dbconn->Execute($sql);
     if (!$result) return;
 
     $count = array();
     while (!$result->EOF) {
         $fields = $result->fields;
-        $num = array_pop($fields);
-// TODO: use multi-level array for multi-category grouping ?
-        $id = join('+',$fields);
-        $count[$id] = (int)$num;
         $result->MoveNext();
+
+        // The last field is the count.
+        $num = array_pop($fields);
+
+        // If grouping by item and category, then the first field will
+        // be the item ID.
+        if ($groupby == 'itemcategory') $itemid = array_shift($fields);
+
+        // Use multi-level array for multi-category grouping?
+        $id = join('+', $fields);
+
+        if ($groupby == 'itemcategory') {
+            // If grouping by item and category, then introduce the item id level.
+            $count[$itemid][$id] = (int)$num;
+        } else {
+            // Grouping by just category or item id.
+            $count[$id] = (int)$num;
+        }
     }
 
     $result->Close();

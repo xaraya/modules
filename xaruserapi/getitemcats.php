@@ -20,7 +20,8 @@
  * @param string $args['module'] name of the module; or
  * @param int    $args['modid'] module ID. If not given, the calling module will be used OPTIONAL
  * @param int    $args['itemtype'] item type
- * @param int    $args['itemid'] item ID
+ * @param int    $args['itemid'] item ID; or
+ * @param array  $args['itemids'] item IDs
  * @return array Details for the categories found supplied by the function 'getcatinfo'.
  * @TODO allow ordering of the results by name, description etc.
  */
@@ -36,24 +37,29 @@ function categories_userapi_getitemcats($args)
         $module = xarModGetName();
     }
 
+    // Group by categories by default.
+    // An alternative is 'itemcategory' which groups by categories within items.
+    if (!isset($args['groupby'])) $args['groupby'] = 'category';
+
     // Get module ID if only a name provided.
     if (empty($modid) && !empty($module)) {
         $args['modid'] = xarModGetIDfromName($module);
     }
 
-    // Get the list of assigned categories for this module item.
-    $args['groupby'] = 'category';
+    // Get the list of assigned categories for this module item or items
     $catlist = xarModAPIfunc(
         'categories', 'user', 'groupcount', $args
     );
 
-    // Throw back errors as an empty list.
-    if (empty($catlist)) {
-        return array();
-    }
+    // Throw back errors if an empty list.
+    if (empty($catlist)) return array();
 
-    // Flip the array, so the cat IDs are the values.
-    $catlist = array_keys($catlist);
+    // Flip the array (or arrays), so the cat IDs (which are the keys) are the values.
+    if ($groupby == 'itemcategory') {
+        foreach($catlist as $itemlist_key => $itemlist) $catlist[$itemlist_key] = array_keys($itemlist);
+    } else {
+        $catlist = array_keys($catlist);
+    }
 
     if (!isset($basecids) || !is_array($basecids)) {
         $basecids = array();
@@ -74,7 +80,7 @@ function categories_userapi_getitemcats($args)
         // Included, is a list of descendants for each category.
         $ancestors = xarModAPIfunc(
             'categories', 'user', 'getancestors',
-            array('cids'=>$catlist, 'self'=>true, 'descendants'=>'list')
+            array('cids' => $catlist, 'self' => true, 'descendants'=>'list')
         );
 
         $resultcids = array();
@@ -104,7 +110,33 @@ function categories_userapi_getitemcats($args)
         // TODO: include the 'basecid' stuff directly in 'getcatinfo', or
         // leave getcatinfo to handle the raw database stuff and this to do
         // the specials?
-        $result = xarModAPIfunc('categories', 'user', 'getcatinfo', array('cids'=>$catlist));
+
+        // If we are grouping by item ID and categories, then the cat info needs to be organised
+        // into a two-level structure.
+        if ($groupby == 'itemcategory') {
+            // Get the list of unique cids.
+            $unique_cids = array();
+            if (!empty($catlist)) {
+                foreach($catlist as $itemlist) {
+                    $unique_cids = array_merge($unique_cids, $itemlist);
+                }
+                $unique_cids = array_unique($unique_cids);
+
+                // Get each category once.
+                $catinfo = xarModAPIfunc('categories', 'user', 'getcatinfo', array('cids' => $unique_cids));
+
+                // Redistribute the categories into the items.
+                $result = array();
+                foreach($catlist as $itemid => $itemlist) {
+                    foreach($itemlist as $itemcat) {
+                        if (isset($catinfo[$itemcat])) $result[$itemid][$itemcat] = $catinfo[$itemcat];
+                    }
+                }
+            }
+        } else {
+            // Just organised by category, so return the flat list.
+            $result = xarModAPIfunc('categories', 'user', 'getcatinfo', array('cids' => $catlist));
+        }
     }
 
     return $result;
