@@ -3,7 +3,7 @@
  * Respond function
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -41,8 +41,9 @@ function sitecontact_user_respond($args)
     if (!xarVarFetch('permission',    'checkbox', $permission, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('newemail',      'str:1',  $newemail, '',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('customcontact', 'str:0:', $customcontact, '',XARVAR_NOT_REQUIRED)) {return;}
+
     $formdata = array(); 
-     if (isset($sctypename) && !empty($sctypename)) $sctypename = trim($sctypename);
+    if (isset($sctypename) && !empty($sctypename)) $sctypename = trim($sctypename);
     if (!empty($scform)) { //provide alternate entry name
         $scform = trim($scform); 
         $sctypename= $scform;
@@ -105,43 +106,44 @@ function sitecontact_user_respond($args)
     $checkdata = xarModAPIFunc('sitecontact','user','respond', $data);
 
     if ($checkdata['isvalid'] == FALSE) {
-       $data = $checkdata;
-       $basicform = DataObjectMaster::getObject(array('name' => 'sitecontact_basicform'));
+        $data = $checkdata;
+        $basicform = DataObjectMaster::getObject(array('name' => 'sitecontact_basicform'));
 
-       // get the dataobject for this form
-       if ($sctypename != 'sitecontact_basicform') {
-        $object = DataObjectMaster::getObject(array('name' => $sctypename));
-        $data['object'] = $object;
-        $data['properties']= $object->getProperties();
-        $object->checkInput();
-        $data['itemtype'] = $object->itemtype;
-        //for backward compat and special cases
-        $data['baseproperties']= array_keys($basicform->getProperties());
-    } else {
-       $data['object'] = $basicform;
-       $data['properties']= $basicform->getProperties();
-       $basicform->checkInput();
-       $data['itemtype'] = $basicform->itemtype;
-    }
+        // get the dataobject for this form
+        if ($sctypename != 'sitecontact_basicform') {
+            $object = DataObjectMaster::getObject(array('name' => $sctypename));
+            $data['object'] = $object;
+            $data['properties']= $object->getProperties();
+            $object->checkInput();
+            $data['itemtype'] = $object->itemtype;
+            //for backward compat and special cases
+            $data['baseproperties']= array_keys($basicform->getProperties());
+        } else {
+            $data['object'] = $basicform;
+            $data['properties']= $basicform->getProperties();
+            $basicform->checkInput();
+            $data['itemtype'] = $basicform->itemtype;
+        }
 
         // we need to include this again .... we cannot assume we have all vars
         $customfunc = 'modules/sitecontact/xarworkflowapi/'.$sctypename.'.php';
         if (file_exists($customfunc)) {
-        include_once($customfunc);
-    }
+            include_once($customfunc);
+        }
         try {
             $templatedata = xarTplModule('sitecontact', 'user', 'display', $data, $sctypename);
         } catch (Exception $e) {
             $templatedata = xarTplModule('sitecontact', 'user', 'display', $data);
         }
     } else { //invalid could be null
-          $data['result'] = 1;
+        $data['result'] = 1;
         try {
             $templatedata = xarTplModule('sitecontact', 'user', 'result', $data, $sctypename);
         } catch (Exception $e) {
             $templatedata = xarTplModule('sitecontact', 'user', 'result', $data);
         }
     }
+
     return $templatedata;
 }
 ?>
