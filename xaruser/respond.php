@@ -38,14 +38,13 @@ function sitecontact_user_respond($args)
     if (!xarVarFetch('sendcopy',      'checkbox', $sendcopy, true, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('bccrecipients', 'str:1',  $bccrecipients, '',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('ccrecipients',  'str:1',  $ccrecipients, '',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('permission',    'checkbox', $permission, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('newemail',      'str:1',  $newemail, '',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('customcontact', 'str:0:', $customcontact, '',XARVAR_NOT_REQUIRED)) {return;}
 
-    $formdata = array(); 
+    $formdata = array();
     if (isset($sctypename) && !empty($sctypename)) $sctypename = trim($sctypename);
     if (!empty($scform)) { //provide alternate entry name
-        $scform = trim($scform); 
+        $scform = trim($scform);
         $sctypename= $scform;
     }
 
@@ -57,7 +56,7 @@ function sitecontact_user_respond($args)
     } else {
         $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => xarModVars::get('sitecontact','defaultform')));
     }
- 
+
 
    //Have we got an active form
     if (!is_array($formdata)) { //exists but not active
@@ -68,24 +67,24 @@ function sitecontact_user_respond($args)
     $data=$formdata;
     $sctypename = $formdata['sctypename'];
 
-    $data['scid'] =$scid;
+    $data['scid'] = $scid;
     $data['scform']=$scform;
-    $data['return_url']=$return_url;   
+    $data['return_url']=$return_url;
     $data['userreferer']=isset($userreferer)?$userreferer:array();
     $data['useripaddress']='';
     $data['return_url']=$return_url;
     $data['sctypename']=$sctypename;
-    $data['savedata']=$savedata;    
+    $data['savedata']=$savedata;
     $data['username']=$username;
-    $data['useremail']=$useremail;    
-    $data['requesttext']=$requesttext;      
-    $data['company']=$company;      
+    $data['useremail']=$useremail;
+    $data['requesttext']=$requesttext;
+    $data['company']=$company;
     $data['permission']=$permission;
     $data['ccrecipients'] = isset($ccrecipients)?$ccrecipients:'';
     $data['bccrecipients']=isset($bccrecipients)?$bccrecipients:'';
-    $data['sendcopy']=$sendcopy;  
-    $data['usermessage']=$usermessage;   
-    $data['customcontact']=$customcontact;       
+    $data['sendcopy']=$sendcopy;
+    $data['usermessage']=$usermessage;
+    $data['customcontact']=$customcontact;
     if ($data['scactive'] != 1) { //form but not active
         $msg = xarML('The form requested is not available');
         throw new BadParameterException(null,$msg);
@@ -101,8 +100,8 @@ function sitecontact_user_respond($args)
     } else {
            $data['options'] = '';
     }
-  
-  
+
+
     $checkdata = xarModAPIFunc('sitecontact','user','respond', $data);
 
     if ($checkdata['isvalid'] == FALSE) {
@@ -144,6 +143,5 @@ function sitecontact_user_respond($args)
         }
     }
 
-    return $templatedata;
 }
 ?>

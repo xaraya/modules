@@ -201,8 +201,10 @@ function sitecontact_userapi_respond($args)
     if (($isvalid == FALSE) || ($antibotinvalid == TRUE)) {
 
         $data = array('authid'         => xarSecGenAuthKey('sitecontact'),
+                      'properties'     => $properties,
                       'scid'           => $scid,
                       'sctypename'     => $sctypename,
+                      'properties'     => $properties,
                       'useantibot'     => $useantibot,
                       'options'        => $options,
                       'customtext'     => $formdata['customtext'],
@@ -234,7 +236,7 @@ function sitecontact_userapi_respond($args)
             $fileuploadfieldname=$itemid;
         }
     }
-   
+
      if ($withupload && isset($fileuploadfieldname) && is_array($items[$fileuploadfieldname]) && !empty($items[$fileuploadfieldname]['value'])) {
        $filebasepath=$items[$fileuploadfieldname]['basePath'];
        $filebasedir=$items[$fileuploadfieldname]['basedir'];
