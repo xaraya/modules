@@ -1,0 +1,33 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+#$notetouser#
+
+<xar:mlstring>You submitted the following information:</xar:mlstring>
+
+<xar:mlstring>Name: </xar:mlstring> <xar:data-output property="$properties['username']" />
+
+<xar:mlstring>Email: </xar:mlstring> <xar:data-output property="$properties['useremail']" />
+
+<xar:mlstring>Organization: </xar:mlstring> <xar:data-output property="$properties['company']" />
+
+<xar:mlstring>Subject: </xar:mlstring> #$requesttext#
+
+<xar:mlstring>Comments: </xar:mlstring>
+
+<xar:data-output property="$properties['usermessage']" />
+
+#$usermessage#
+
+<xar:foreach in="$properties" key="$name">
+    <xar:if condition="!in_array($name,$baseproperties)">
+           <xar:data-label property="$properties[$name]" />: &#160;  <xar:data-output property="$properties[$name]" />
+    </xar:if>
+</xar:foreach>
+
+-------------------------------------------------------------
+
+#$sitename# <xar:mlstring>at</xar:mlstring> #$siteurl#
+
+#$todaydate#
+
+
+</xar:template>

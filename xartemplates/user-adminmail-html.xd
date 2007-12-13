@@ -1,0 +1,51 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<p>
+   <xar:mlstring>Submitted By: </xar:mlstring> <xar:data-output property="$properties['username']" />
+</p>
+<hr />
+<p>
+    <xar:mlstring>Email: </xar:mlstring> <xar:data-output property="$properties['useremail']" />
+</p>
+<p>
+   <xar:mlstring>Organization: </xar:mlstring> <xar:data-output property="$properties['company']" />
+</p>
+<p>
+    <xar:mlstring>Subject: </xar:mlstring> #$requesttext#
+</p>
+<p>
+<xar:mlstring>Comments: </xar:mlstring>
+</p>
+<p>
+<xar:data-output property="$properties['usermessage']" />
+</p>
+
+
+<xar:foreach in="$properties" key="$name">
+    <xar:if condition="!in_array($name,$baseproperties)">
+        <p>
+           <xar:data-label property="$properties[$name]" />:&#160;<xar:data-output property="$properties[$name]" />
+        </p>
+    </xar:if>
+</xar:foreach>
+
+
+<hr />
+<p>
+    <xar:mlstring>User information: </xar:mlstring>
+</p>
+<p>
+    <xar:mlstring>Sender: </xar:mlstring> ><xar:data-output property="$properties['useripaddress']" />
+</p>
+<p>
+    <xar:mlstring>Referer: </xar:mlstring> <xar:data-output property="$properties['userreferer']" />
+</p>
+<hr />
+<p>
+<xar:mlstring>Site Name: </xar:mlstring> #$sitename#
+</p>
+<p>
+    <xar:mlstring>Site URL: </xar:mlstring> #$siteurl#
+</p>
+<p>#$todaydate#</p>
+
+</xar:template>
