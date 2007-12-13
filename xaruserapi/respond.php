@@ -109,9 +109,12 @@ function sitecontact_userapi_respond($args)
     } else {
        $allowanoncopy=true;
     }
-    //Feature request for more accurate IP
-    //leave the ip capture in the forms - hehehe :)
-    $useripaddress=xarModAPIFunc('sitecontact','admin','getcurrentip');
+    
+    //set some dd property values not captured in post vars
+    //this is where we actually capture the current user ipaddress
+    $useripaddress = xarModAPIFunc('sitecontact','admin','getcurrentip');
+    $responsetime = time();
+
 
      //Put all set data in an array for later processing
      $item=array('scid'           => array(xarML('Form ID'),(int)$scid),
@@ -130,7 +133,8 @@ function sitecontact_userapi_respond($args)
                 'permission'      => array(xarML('Agree to save?'),$permission),
                 'termslink'       => array(xarML('Terms provided'),$termslink),
                 'bccrecipients'   => array(xarML('BCC'),$bccrecipients),
-                'ccrecipients'    => array(xarML('CC'),$ccrecipients)
+                'ccrecipients'    => array(xarML('CC'),$ccrecipients),
+                'responsetime'    => array(xarML('Response time'),$responsetime)
                 );
 
     //process options
@@ -194,12 +198,16 @@ function sitecontact_userapi_respond($args)
     $object = DataObjectMaster::getObject(array('name' => $sctypename));
 
     $properties = $object->getProperties();
-
-    $isvalid = $object->checkInput();
-    //need to check dd
+    
+    //make sure we also pass in any DD vars we have set ourself, or not come in on a post var
+    // now in DD only post vars are captured as we can't set with ->setValue();
+    $isvalid = $object->checkInput( array('useripaddress'=>$useripaddress,
+                                          'responsetime'=>$responsetime)
+                                  );
+                                  
     $permission = $properties['permission']->getValue();
-    if (($isvalid == FALSE) || ($antibotinvalid == TRUE)) {
 
+    if (($isvalid == FALSE) || ($antibotinvalid == TRUE)) {
         $data = array('authid'         => xarSecGenAuthKey('sitecontact'),
                       'properties'     => $properties,
                       'scid'           => $scid,
@@ -223,7 +231,8 @@ function sitecontact_userapi_respond($args)
                       'botreset'       => TRUE,
                       'userreferer'    => $userreferer,
                       'savedata'       => $savedata,
-                      'useripaddress'  => $useripaddress, //make sure we send something back so no error, but it is captured here :)
+                      'useripaddress'  => $useripaddress, 
+                      'responsetime'   => $responsetime,
                       'isvalid'      => $isvalid
                      );
          return $data;
@@ -247,8 +256,6 @@ function sitecontact_userapi_respond($args)
        $attachpath='';
        $attachname='';
    }
-
-   $responsetime = time();
 
     /* Do we want to save the data for this form? */
 
@@ -316,7 +323,7 @@ function sitecontact_userapi_respond($args)
     $optionset = array();
     $selectitem=array();
     $adminemail = xarModVars::get('mail','adminmail');
-    $mainemail=$formdata['scdefaultemail'];
+    $mainemail = $formdata['scdefaultemail'];
 
     //now we need to get the value from DD
     $requestoption = $properties['requesttext']->getValue();
@@ -382,8 +389,9 @@ function sitecontact_userapi_respond($args)
         xarModVars::set('themes','ShowTemplates',0);
     }
 
-
     //set of default fields now in DD, we don't want these twice as they have special handling
+    //jojo - important when basic form is the parent, but we make quite some assumptions here about the 'parent' (and properties)
+    
     $basicform = DataObjectMaster::getObject(array('name' => 'sitecontact_basicform'));
     $baseproperties = array_keys($basicform->getProperties());
 
@@ -402,10 +410,16 @@ function sitecontact_userapi_respond($args)
         * $htmlnotetouser = xarVarPrepHTMLDisplay($notetouser);
         */
 
-    if (!empty($data['sctypename'])){
-         $htmltemplate = 'html_' . $data['sctypename'];
-         $texttemplate = 'text_' . $data['sctypename'];
-    }
+    assert('!empty($sctypename); /* sctypename should NOT be empty here, code error */');
+
+    //jojo - the try/catch usage below is a approx. translation to try mimic the original behaviour of the 1x code.
+    // Originally intended behaviour in 1x was changed with a behaviour change in the xarTplModule function some time back
+    // In this case the intent was to use the given texttemplate, or htmltemplate, and if not drop back to the user-usermail-text.xd (or html) template
+    // This would never happen if we rely on xarTplModule as it will always force it to use user-usermail.xd if it exists
+    // Using try/catch it will fall back to the user-usermail-text.xd we have specified - we make sure no user-usermail.xd template exists.
+
+    $htmltemplate = 'html_' . $sctypename;
+    $texttemplate = 'text_' . $sctypename;
 
    $userhtmlarray= array('notetouser'      => $htmlnotetouser,
                           'username'       => $username,
@@ -418,12 +432,14 @@ function sitecontact_userapi_respond($args)
                           'properties'     => $properties,
                           'baseproperties' => $baseproperties,
                           'todaydate'      => $todaydate);
+
+    //jojo- apart from directly checking existence of every template we may want to use, along with other checks (prep osDir, etc)
+    //is there another compact way other than try/catch to provide the drop back to the usermail-html template?
     try {
         $userhtmlmessage= xarTplModule('sitecontact','user','usermail',$userhtmlarray, $htmltemplate);
     } catch (Exception $e) {
         $userhtmlmessage= xarTplModule('sitecontact', 'user', 'usermail',$userhtmlarray,'html');
     }
-
 
     /* prepare the text message to user */
     $textsubject = strtr($requesttext,$trans);
@@ -442,7 +458,7 @@ function sitecontact_userapi_respond($args)
                           'properties'      => $properties,
                           'baseproperties'  => $baseproperties,
                           'todaydate'       => $todaydate);
-
+                          
     try {
      $usertextmessage= xarTplModule('sitecontact','user','usermail', $usertextarray,$texttemplate);
     } catch (Exception $e) {
@@ -502,6 +518,7 @@ function sitecontact_userapi_respond($args)
                           'baseproperties'  => $baseproperties,
                           'userreferer'     => $userreferer);
     //In 2x the itemtype specific template must be present for html and text mail. 
+  
     try {
         $adminhtmlmessage= xarTplModule('sitecontact','user','adminmail',$adminhtmlarray,$htmltemplate);
     } catch (Exception $e) {
@@ -522,6 +539,7 @@ function sitecontact_userapi_respond($args)
                              'userreferer'     => $userreferer);
 
     /* Let's do admin text message */
+    
     try {
         $admintextmessage= xarTplModule('sitecontact','user','adminmail',$admintextarray,$texttemplate);
     } catch (Exception $e) {
