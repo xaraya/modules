@@ -192,7 +192,6 @@
                    <input type="hidden" name="id" id="id" value="" />
                    <input type="hidden" name="responsetime" id="responsetime" value="" />
                    <input type="hidden" name="savedata" id="savedata" value="#$savedata#" />
-                   <input type="hidden" name="useripaddress" id="useripaddress" value="#$useripaddress#" />
                    <input type="hidden" name="userreferer" id="userreferer" value="#$userreferer#" />
                    <input type="hidden" name="permissioncheck" id="permissioncheck" value="#$permissioncheck#" />
                    <input type="hidden" name="message" id="message" value="1" />
