@@ -103,7 +103,7 @@ function sitecontact_admin_display($args)
     $data['scid'] = $item['scid'];
     $data['formname']=$thisform['sctypename'];
     $data['permissioncheck']=$thisform['permissioncheck'];
-
+    $sctypename = $thisform['sctypename']; //consitent naming
     $scformtypes = xarModAPIFunc('sitecontact','user','getcontacttypes');
    // Create filters based on publication type
     $formfilters = array();
@@ -139,14 +139,14 @@ function sitecontact_admin_display($args)
         $data['hookoutput'] = $hooks;
     }
 
-    xarTplSetPageTitle(xarVarPrepForDisplay($data['formname']));
+    xarTplSetPageTitle(xarVarPrepForDisplay($sctypename));
     //let's also give a custom template for admin display
-    //the base template is usually used but let's test for those that want an override here
-    try {
-        $templatedata = xarTplModule('sitecontact', 'admin', 'display', $data, $data['formname']);
-    } catch (Exception $e) {
-        $templatedata = xarTplModule('sitecontact', 'admin', 'display', $data);
-    }
+    //assert for $sctypename, rather than use try/catch or if/else
+    // the 'else' and 'catch' will not occur as xarTplModule will itself drop back to the admin-display.xd template
+    assert('!empty($sctypename); /* $sctypename should NOT be empty here, code error */');
+
+    $templatedata = xarTplModule('sitecontact', 'admin', 'display', $data, $sctypename);
+
     return $templatedata;
 }
 ?>

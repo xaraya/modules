@@ -92,6 +92,7 @@ function sitecontact_admin_view($args)
     // the form
     $data['formname']= $thisform['sctypename'];
     $data['scid']    =  $thisform['scid'];
+    $sctypename = $thisform['sctypename']; //consistent naming
     $info = xarModAPIFunc('dynamicdata','user','getobjectinfo',array('name'=> $thisform['sctypename']));
     $thisobject = xarModAPIFunc('dynamicdata','user','getobject', array('objectid' => $info['objectid']));
 
@@ -170,12 +171,13 @@ function sitecontact_admin_view($args)
     if (!empty($scid) && !empty($formtypes[$scid]['sctypename'])) {
         xarCore::setCached('Blocks.sitecontact','formname',$formtypes[$scid]['sctypename']);
     }
-    //the base template is usually used but let's test for those that want an override here else it will error out
-    try {
-        $templatedata = xarTplModule('sitecontact', 'admin', $template, $data, $data['formname']);
-    } catch (Exception $e) {
-        $templatedata = xarTplModule('sitecontact', 'admin', 'view', $data, $data['formname']);
-    }
+    //let's also give a custom template for view
+    //assert for $sctypename, rather than use try/catch or if/else
+    // the 'else' and 'catch' will not occur as xarTplModule will itself drop back to the admin-view.xd template
+        assert('!empty($sctypename); /* $sctypename should NOT be empty here, code error */');
+
+    $templatedata = xarTplModule('sitecontact', 'admin', 'view', $data, $sctypename);
+
     return $templatedata;
 }
 ?>
