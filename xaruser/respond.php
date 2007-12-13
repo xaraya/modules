@@ -21,7 +21,7 @@ function sitecontact_user_respond($args)
     extract($args);
 
     $defaultformid=(int)xarModVars::get('sitecontact','defaultform');
-
+    // useripaddress retained here for backward compat - now set in the api function
     if (!xarVarFetch('useripaddress', 'str:1:', $useripaddress, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('userreferer',   'str:1:', $userreferer, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sctypename',    'str:0:', $sctypename, NULL, XARVAR_NOT_REQUIRED)) {return;}
@@ -56,7 +56,6 @@ function sitecontact_user_respond($args)
     } else {
         $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => xarModVars::get('sitecontact','defaultform')));
     }
-
 
    //Have we got an active form
     if (!is_array($formdata)) { //exists but not active
@@ -129,19 +128,20 @@ function sitecontact_user_respond($args)
         if (file_exists($customfunc)) {
             include_once($customfunc);
         }
-        try {
-            $templatedata = xarTplModule('sitecontact', 'user', 'display', $data, $sctypename);
-        } catch (Exception $e) {
-            $templatedata = xarTplModule('sitecontact', 'user', 'display', $data);
-        }
+        
+        assert('!empty($sctypename); /* sctypename should NOT be empty here, code error */');
+        //this will automatically fall back to the user-display.xd template if
+        // an override does not exist, or the override has errors!
+        $templatedata = xarTplModule('sitecontact', 'user', 'display', $data, $sctypename);
+        
     } else { //invalid could be null
         $data['result'] = 1;
-        try {
-            $templatedata = xarTplModule('sitecontact', 'user', 'result', $data, $sctypename);
-        } catch (Exception $e) {
-            $templatedata = xarTplModule('sitecontact', 'user', 'result', $data);
-        }
+        assert('!empty($sctypename); /* sctypename should NOT be empty here, code error */');
+        //this will automatically fall back to the user-result.xd template if
+        // an override does not exist, or the override has errors!
+        $templatedata = xarTplModule('sitecontact', 'user', 'result', $data, $sctypename);
     }
+     return $templatedata;
 
 }
 ?>

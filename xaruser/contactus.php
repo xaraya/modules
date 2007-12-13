@@ -15,7 +15,7 @@
  * @ Function: contactus
  * @ Author Jo Dalle Nogare <jojodee@xaraya.com>
  * @ Param username, useremail, requesttext,company, usermessage,useripaddress,userreferer,altmail
- * @ <jojodee> deprecated - here for backward compatibility
+ * @ <jojodee> deprecated since version 2.0.0 - here for backward compatibility
   */
 function sitecontact_user_contactus($args)
 {

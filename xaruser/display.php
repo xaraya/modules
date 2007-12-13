@@ -77,7 +77,7 @@ function sitecontact_user_display($args)
     $data['antibotinvalid'] =$antibotinvalid;
 
     /* Security Check */
-    if(!xarSecurityCheck('ReadSitecontact')) return;
+    if(!xarSecurityCheck('ReadSitecontact',0,'ContactForm',"$scid:All:All")) {
 
     if (!empty($invalid)) {
         $data['invalid']=$invalid;
@@ -126,12 +126,17 @@ function sitecontact_user_display($args)
     } else {
         $data['userreferer']=$userreferer;
     }
-    $data['customtitle'] = xarVarPrepHTMLDisplay($customtitle);
-    $data['customtext']  = xarVarPrepHTMLDisplay($customtext);
+    
+    $data['customtitle'] = isset($customtitle) ? xarVarPrepHTMLDisplay($customtitle) : '';
+    $data['customtext']  = isset($customtext) ? xarVarPrepHTMLDisplay($customtext) : '';
 
     $data['usehtmlemail'] = $usehtmlemail;
     $data['allowcopy']    = $allowcopy;
-    
+    $data['requesttext']=isset($requesttext) ? $requesttext:'';
+    //retain for backward compat for those with existing templates. Now set in the final api function
+    $data['useripaddress'] = isset($useripaddress)?$useripaddress:xarServerGetVar('REMOTE_ADDR'); 
+    $setmail='';
+
     //remember -  request text and optional email in this scenario, explode them all for drop down options in DD
     $optiontext = $formdata['optiontext'];
     $optionset  = array();
@@ -147,17 +152,9 @@ function sitecontact_user_display($args)
     }
     $data['options'] = $options;
 
-    $setmail='';
-    if (isset($customtitle)){
-        xarTplSetPageTitle(xarVarPrepForDisplay(xarML($customtitle)));
-    } else {
-         xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Site Contact')));
-    }
-    if (!isset($requesttext) ) {
-        $requesttext='';
-    }
-    $data['requesttext']=$requesttext;
-    
+    $pagetitle = !empty($customtitle) ? $customtitle : 'Site Contact';
+    $pagetitle =  xarTplSetPageTitle(xarVarPrepForDisplay(xarML($pagetitle)));
+
     //set of default fields now in DD, we don't want these twice as they have special handling
     //also here for backward compatibility
     $basicform = DataObjectMaster::getObject(array('name' => 'sitecontact_basicform'));
@@ -184,9 +181,6 @@ function sitecontact_user_display($args)
 
        $data['itemtype'] = $basicform->itemtype;
     }
-    $data['useripaddress'] = isset($useripaddress)?$useripaddress:xarServerGetVar('REMOTE_ADDR');
-
-
 
     $data['authid'] = xarSecGenAuthKey('sitecontact');
     $data['submit'] = xarML('Submit');
@@ -196,12 +190,13 @@ function sitecontact_user_display($args)
     if (file_exists($customfunc)) {
         include_once($customfunc);
     }
-    //always test for existance of the custom template as the basic override is often used without rename
-    if (!empty($data['sctypename'])) {
-        $templatedata = xarTplModule('sitecontact', 'user', 'display', $data, $data['sctypename']);
-    } else {
-        $templatedata = xarTplModule('sitecontact', 'user', 'display', $data);
-    }
+    
+    //assert for sctypename, rather than use try/catch
+    assert('!empty($sctypename); /* sctypename should NOT be empty here, code error */');
+    //we want to use an override template with the same name as the form, if it exists
+    //else drop back to the system template user-display.xd
+    //the xarTplModule function does the drop back itself so no need for conditionals
+    $templatedata = xarTplModule('sitecontact', 'user', 'display', $data, $sctypename);
 
     return $templatedata;
 }
