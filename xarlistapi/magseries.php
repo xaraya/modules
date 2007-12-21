@@ -20,7 +20,8 @@ function mag_listapi_magseries($args)
     if (empty($mid)) {
         $return = array(xarML('No magazine selected'));
     } else {
-        $items = xarModAPIfunc('mag', 'user', 'getseries', array('mid' => $mid));
+        $args['mid'] = $mid;
+        $items = xarModAPIfunc('mag', 'user', 'getseries', $args);
 
         $return = array(xarML('Not connected to a series'));
 
