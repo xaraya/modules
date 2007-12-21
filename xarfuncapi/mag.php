@@ -16,15 +16,18 @@
 function xarpages_funcapi_mag($args)
 {
     // Allow the magazine reference to be locked in by creating a 'mid'
+    $mid = 0;
+
     // (magazine ID) DD property.
-    if (!empty($args['dd']['mid'])) {
-        $mid = $args['dd']['mid'];
-    } else {
-        $mid = 0;
+    if (!empty($args['current_page']['dd']['mid'])) {
+        $mid = $args['current_page']['dd']['mid'];
+    } elseif(!empty($args['current_page']['dd']['body']) && is_numeric($args['current_page']['dd']['body'])) {
+        // If just using a standard 'html' page type, then the mag ID can be put into the body.
+        $mid = (int)$args['current_page']['dd']['body'];
     }
 
     // Fall-back message, in case the default html template is used by accident.
-    $args['dd']['body'] = xarML('Use the "html-external" page type with this function.');
+    $args['current_page']['dd']['body'] = xarML('Use the "html-external" page type with this function.');
 
     // Call up the main mag module function.
     // Check the module is installed first.
