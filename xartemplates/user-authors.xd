@@ -67,9 +67,10 @@
                                 </xar:if>
                             </div>
                         </xar:if>
+                        <div style="clear:both;"></div>
 
-                        <xar:if condition="!empty($author_articles)">
-                            <p><a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'authors','mag'=&gt;$mag.ref,'auid'=&gt;$loop:item.auid))#">
+                        <xar:if condition="!empty($articles)">
+                            <p class="show-tab"><a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'authors','mag'=&gt;$mag.ref,'auid'=&gt;$loop:item.auid))#">
                                 <xar:ml>
                                     <xar:mlstring>Show profile for #(1)</xar:mlstring>
                                     <xar:mlvar>#xarVarPrepForDisplay($loop:item.name)#</xar:mlvar>
@@ -83,18 +84,33 @@
                                     </xar:ml>
                                 </h3>
                                 <ul>
-                                    <xar:loop name="$author_articles" id="article">
+                                    <xar:loop name="$groups" id="issues">
                                         <li>
-                                            <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'article','mag'=&gt;$mag.ref,'iid'=&gt;$loop:item.issue_id,'aid'=&gt;$loop:item.aid))#">
-                                                #xarVarPrepForDisplay($loop:item.title)#
-                                            </a>
-                                            #xarLocaleGetFormattedDate('long', $loop:item.pubdate)#
+                                            <h4>
+                                                <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'contents','mag'=&gt;$mag.ref,'issue'=&gt;$issues[$loop:issues:key]['ref']))#">
+                                                    #xarVarPrepForDisplay($issues[$loop:issues:key]['title'])#
+                                                </a>
+                                            </h4>
+                                            <ul>
+                                                <xar:loop name="$loop:issues:item" id="articles">
+                                                    <li>
+                                                        <xar:if condition="$articles[$loop:articles:item]['premium'] ne ''">
+                                                            <xar:set name="$art_prem_class_suffix">#$articles[$loop:articles:item]['premium']#</xar:set>
+                                                        <xar:else />
+                                                            <xar:set name="$art_prem_class_suffix">'UNKNOWN'</xar:set>
+                                                        </xar:if>
+                                                        <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'article','mag'=&gt;$mag.ref,'issue'=&gt;$issues[$loop:issues:key]['ref'],'aid'=&gt;$loop:articles:item))#" class="mag-prem-#$art_prem_class_suffix#">
+                                                            #xarVarPrepForDisplay($articles[$loop:articles:item]['title'])#
+                                                        </a>
+                                                    </li>
+                                                </xar:loop>
+                                            </ul>
                                         </li>
                                     </xar:loop>
                                 </ul>
                             </div>
                         <xar:else />
-                            <p><a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'authors','mag'=&gt;$mag.ref,'auid'=&gt;$loop:item.auid,'showarticles'=&gt;'true'))#">
+                            <p class="show-tab"><a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'authors','mag'=&gt;$mag.ref,'auid'=&gt;$loop:item.auid,'showarticles'=&gt;'true'))#">
                                 <xar:ml>
                                     <xar:mlstring>Show articles for #(1)</xar:mlstring>
                                     <xar:mlvar>#xarVarPrepForDisplay($loop:item.name)#</xar:mlvar>

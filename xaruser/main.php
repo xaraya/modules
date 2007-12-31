@@ -26,7 +26,7 @@ function mag_user_main($args)
         xarVarFetch('mfunc', 'enum:archive:article:authors:contents:current:mags:series', $mfunc, NULL, XARVAR_NOT_REQUIRED);
 
         // Set the cached value that drives all URLs in this module.
-        if (!empty($mfunc)) xarVarSetCached('mag', 'pid', $pid);
+        /*if (!empty($mfunc))*/ xarVarSetCached('mag', 'pid', $pid);
     }
 
     if (empty($mfunc)) $mfunc = 'mags';

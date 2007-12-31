@@ -37,7 +37,7 @@
                         <xar:mlstring>Published #(1)</xar:mlstring>
                         <xar:mlvar>#xarLocaleGetFormattedDate('long', $issue.pubdate)#</xar:mlvar>
                     </xar:ml>
-                    <span> | </span> <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'current','mag'=&gt;$mag.ref))#" class="mag-current-issue"><xar:mlstring>Current Issue</xar:mlstring></a>
+                    <span> | </span> <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'current','mag'=&gt;$mag.ref))#" class="mag-current-issue"><xar:mlstring>Latest Issue</xar:mlstring></a>
                     <span> | </span> <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'archive','mag'=&gt;$mag.ref))#" class="mag-archives"><xar:mlstring>Archives</xar:mlstring></a>
                 </p>
                 <xar:if condition="!empty($issue.abstract)">
@@ -55,7 +55,7 @@
             </xar:comment>
 
             <div class="mag-issue-contents">
-                <h2><xar:mlstring>In This Issue</xar:mlstring></h2>
+                <h2><xar:mlstring>In this Issue</xar:mlstring></h2>
                 <xar:template file="toc-list" module="mag" />
             </div>
         
