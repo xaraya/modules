@@ -31,7 +31,7 @@
     </p>
 </xar:if>
 <p class="mag-links">
-    <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'current','mag'=&gt;$mag.ref))#" class="mag-current-issue"><xar:mlstring>Current Issue</xar:mlstring></a>
+    <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'current','mag'=&gt;$mag.ref))#" class="mag-current-issue"><xar:mlstring>Latest Issue</xar:mlstring></a>
     | <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'archive','mag'=&gt;$mag.ref))#" class="mag-archives"><xar:mlstring>Archives</xar:mlstring></a>
 </p>
 </div>
