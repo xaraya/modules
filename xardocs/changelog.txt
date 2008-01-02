@@ -1,0 +1,23 @@
+﻿**Version 1.0.1**
+User functions were moved to the xaruser directory.
+DELETE xaruser.php from the weather module root directory if you have a version lower than 1.0.0
+
+xarstyles were applied to all templates, and in most cases, hardcoded attributes and made compliant to XHTM 1
+
+A forecast block was added as a proof of concept.
+
+Cleanup and name consistency , thus "cc", "currentconditions" and "current" files were all renamed "current".
+
+Multiple block instances now allowed.
+
+user-modifyconfig link protected with conditional UserIsLoggedIn
+
+If you have a version 1.0.0 or lower, you may need to reconfigure your weather block.
+
+Weather.com guidelines added to documentation for reference.
+
+
+**Version 1.1.1**
+A forecast block was deleted, it wasn't adding any value.
+
+Call to template removed from current.php in order to allow overriding theme templates.

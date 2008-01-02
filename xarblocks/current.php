@@ -17,37 +17,35 @@
  */
 function weather_currentblock_init()
 {
-    return true;
+    return array(
+        'nocache'     => 1, /* no cache by default (if block caching is enabled) */
+    );
 }
 
 function weather_currentblock_info()
 {
-    return array('text_type' => 'Forecast',
-                 'module' => 'weather',
-                 'text_type_long' => 'Current Conditions');
+    return array(
+        'text_type' => 'Current',
+        'module' => 'weather',
+        'text_type_long' => 'Current Conditions',
+        'allow_multiple' => true,
+        'form_content' => false,
+        'form_refresh' => false,
+        'show_preview' => true
+        );
 }
 
 function weather_currentblock_display($blockinfo)
 {
     // Make sure we can view this block
-    //if(!xarSecurityCheck('ViewCurrentConditions',1,'Block',"All:" . $blockinfo['title'] . ":All",'All')) return;
+    if(!xarSecurityCheck('ReadWeatherBlock',1,'Block',"All:" . $blockinfo['name'] . ":All",'All')) return;
     
     // Get variables from content block
     $vars = unserialize($blockinfo['content']);
     $w = xarModAPIFunc('weather','user','factory');
-    $blockinfo['content'] = xarTplBlock('weather', 'currentconditions', array('wData'=>$w->ccData()));
-    return $blockinfo;
-}
 
-// Perhaps there will be stuff to set up here later, but it'll use the defaults of the
-// main module for now
-function weather_currentblock_modify($blockinfo)
-{
-    return $blockinfo;
-}
+    $blockinfo['content'] = array('wData'=>$w->ccData());
 
-function weather_currentblock_update($blockinfo)
-{
     return $blockinfo;
 }
 ?>

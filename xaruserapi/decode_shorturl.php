@@ -25,7 +25,7 @@ function weather_userapi_decode_shorturl(&$params)
     } 
     
     if($params[1] == 'current') {
-        $func = 'cc';
+        $func = 'main';
         if(isset($params[2])) {
             // this should be a location
             $args['xwloc'] = $params[2];
@@ -50,7 +50,7 @@ function weather_userapi_decode_shorturl(&$params)
         } 
     } else {
             // this should be a location
-            $func = 'cc';
+            $func = 'main';
             $args['xwloc'] = $params[1];
     }
     

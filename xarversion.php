@@ -1,6 +1,6 @@
 <?php
 /**
- * Purpose of file
+ * Weather module
  *
  * @package modules
  * @copyright (C) 2002-2005 The Digital Development Foundation
@@ -11,23 +11,20 @@
  * @link http://xaraya.com/index.php/release/662.html
  * @author Weather Module Development Team
  */
-
 $modversion['name']           = 'weather';
 $modversion['id']             = '662';
-$modversion['version']        = '1.0.0';
+$modversion['version']        = '1.1.1';
 $modversion['displayname']    = xarML('Weather');
 $modversion['description']    = 'Weather.com XML Weather Feed Module';
-$modversion['credits']        = 'credits.txt';
-$modversion['help']           = 'help.txt';
-$modversion['changelog']      = 'changelog.txt';
-$modversion['license']        = 'license.txt';
+$modversion['credits']        = 'xardocs/credits.txt';
+$modversion['help']           = 'xardocs/help.txt';
+$modversion['changelog']      = 'xardocs/changelog.txt';
+$modversion['license']        = 'xardocs/license.txt';
 $modversion['official']       = 0;
 $modversion['author']         = 'Roger Raymond';
-$modversion['contact']        = 'http://xaraya.simiansynapse.com/';
+$modversion['contact']        = '';
 $modversion['admin']          = 1;
 $modversion['user']           = 1;
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Content';
-$modversion['dependency']     = array();
-$modversion['securityschema'] = array();
 ?>

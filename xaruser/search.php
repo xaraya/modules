@@ -20,9 +20,10 @@ function weather_user_search()
     // grab the location we're searching for
     xarVarFetch('loc','str::',$loc,null,XARVAR_NOT_REQUIRED);
     $w = xarModAPIFunc('weather','user','factory');
-    //$w->setExtraParams();
+
     // perform the search
     $matches=null;
+
     //echo $loc; die();
     if(isset($loc) && !empty($loc)) {
         $matches = $w->locData($loc);
@@ -41,7 +42,7 @@ function weather_user_search()
     } 
     
     if(count($matches) == 1) {
-        xarResponseRedirect(xarModURL('weather','user','cc',array('xwloc'=>$matches[0]['zip'])));
+        xarResponseRedirect(xarModURL('weather','user','main',array('xwloc'=>$matches[0]['zip'])));
     } else {
         return array(
             'loc'=>$loc,

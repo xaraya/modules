@@ -129,21 +129,21 @@ class xoapWeather
                 XAR_USER_EXCEPTION,
                 xarML('No Default Location'),
                 xarML('Please enter a valid location id or zip code.')
-                );
+            );
         }
         if($this->xoapKey == "") {
             xarErrorSet(
                 XAR_USER_EXCEPTION,
                 xarML('Your License Key is Invalid!'),
                 xarML('Please enter a valid License Key or Visit http://www.weather.com/services/xmloap.html and sign-up for thier xoapXML Services.')
-                );
+            );
         }
         if($this->xoapPar == "") {
             xarErrorSet(
                 XAR_USER_EXCEPTION,
                 xarML('Your Partner ID is Invalid!'),
                 xarML('Please enter a valid Partner ID or Visit http://www.weather.com/services/xmloap.html and sign-up for their xoapXML Services.')
-                );
+            );
         }
         return true;
     }
@@ -158,7 +158,7 @@ class xoapWeather
      */
     function errorCheck(&$data)
     {
-        $tree = $this->GetXMLTree($data);
+        $tree =& $this->GetXMLTree($data);
         if(isset($tree['ERROR'])) {
             $this->error['number'] =& $tree['ERROR'][0]['ERR'][0]['ATTRIBUTES']['TYPE'];
             $this->error['type'] =& $tree['ERROR'][0]['ERR'][0]['VALUE'];
@@ -187,7 +187,7 @@ class xoapWeather
      * @param   string $units (S)tandard or (M)etric
      * @return  string xml data to parse
      */
-    function &getFile($type='cc',$units='s',$cache=true)
+    function &getFile($type='cc',$units='m',$cache=true)
     {
         $location = urlencode($this->location);
         if($type == 'cc') {
@@ -206,7 +206,8 @@ class xoapWeather
                 'refresh'=>$refresh,
                 'extension'=>'.xml',
                 'archive'=>false
-            ));
+            )
+        );
         return $data;
     }
 
@@ -222,7 +223,7 @@ class xoapWeather
         /*
         Grabbing the Current XML data for the Current Condition and the Current Conditions details
         */
-        $p = new xarXmlParser();
+        $p =& new xarXmlParser();
         $xmi =& $this->getFile('forecast',$this->units,$cache);
         if(!$p->parseString($xmi)) {
             // try again
@@ -234,24 +235,23 @@ class xoapWeather
         $head =& $tree['children'][0];
         $loc  =& $tree['children'][1];
         
-         if ($tree['children'][2]['name'] == 'dayf') {
+        if ($tree['children'][2]['name'] == 'dayf') {
             $days =& $tree['children'][2]['children'];
         } else {
             $days =& $tree['children'][3]['children'];
- 
         }
         $lnks  =& $tree['children'][2];
-        
-       // $days =& $tree['children'][2]['children'];
 
-        $forecast[0]['linkOne']     = $lnks['children'][0]['children'][0]['content'];
-        $forecast[0]['titleOne']    = $lnks['children'][0]['children'][1]['content'];
-        $forecast[0]['linkTwo']     = $lnks['children'][1]['children'][0]['content'];
-        $forecast[0]['titleTwo']    = $lnks['children'][1]['children'][1]['content'];
-        $forecast[0]['linkThree']   = $lnks['children'][2]['children'][0]['content'];
-        $forecast[0]['titleThree']  = $lnks['children'][2]['children'][1]['content'];
-        $forecast[0]['linkFour']    = $lnks['children'][3]['children'][0]['content'];
-        $forecast[0]['titleFour']   = $lnks['children'][3]['children'][1]['content'];
+        // $days =& $tree['children'][2]['children'];
+
+        $forecast[0]['linkOne']       = $lnks['children'][0]['children'][0]['content'];
+        $forecast[0]['titleOne']      = $lnks['children'][0]['children'][1]['content'];
+        $forecast[0]['linkTwo']       = $lnks['children'][1]['children'][0]['content'];
+        $forecast[0]['titleTwo']      = $lnks['children'][1]['children'][1]['content'];
+        $forecast[0]['linkThree']     = $lnks['children'][2]['children'][0]['content'];
+        $forecast[0]['titleThree']    = $lnks['children'][2]['children'][1]['content'];
+        $forecast[0]['linkFour']      = $lnks['children'][3]['children'][0]['content'];
+        $forecast[0]['titleFour']     = $lnks['children'][3]['children'][1]['content'];
 
         $forecast[0]['unitsTemp']     = $head['children'][2]['content'];
         $forecast[0]['unitsDistance'] = $head['children'][3]['content'];
@@ -324,7 +324,7 @@ class xoapWeather
         /*
         Grabbing the Current XML data for the Current Condition and the Current Conditions details
         */
-        $p = new xarXmlParser();
+        $p =& new xarXmlParser();
         $xmi =& $this->getFile('cc',$this->units,$cache);
         if(!$p->parseString($xmi)) {
             // try again
@@ -335,22 +335,21 @@ class xoapWeather
 
         $head =& $tree['children'][0];
         $loc  =& $tree['children'][1];
-        
+
         if ($tree['children'][2]['name'] == 'cc') {
             $cc =& $tree['children'][2];
         } else {
             $cc =& $tree['children'][3];    
         }
         $lnks  =& $tree['children'][2];
-        $cc['linkOne']     = $lnks['children'][0]['children'][0]['content'];
-        $cc['titleOne']    = $lnks['children'][0]['children'][1]['content'];
-        $cc['linkTwo']     = $lnks['children'][1]['children'][0]['content'];
-        $cc['titleTwo']    = $lnks['children'][1]['children'][1]['content'];
-        $cc['linkThree']   = $lnks['children'][2]['children'][0]['content'];
-        $cc['titleThree']  = $lnks['children'][2]['children'][1]['content'];
-        $cc['linkFour']    = $lnks['children'][3]['children'][0]['content'];
-        $cc['titleFour']   = $lnks['children'][3]['children'][1]['content'];
-
+        $cc['linkOne']       = $lnks['children'][0]['children'][0]['content'];
+        $cc['titleOne']      = $lnks['children'][0]['children'][1]['content'];
+        $cc['linkTwo']       = $lnks['children'][1]['children'][0]['content'];
+        $cc['titleTwo']      = $lnks['children'][1]['children'][1]['content'];
+        $cc['linkThree']     = $lnks['children'][2]['children'][0]['content'];
+        $cc['titleThree']    = $lnks['children'][2]['children'][1]['content'];
+        $cc['linkFour']      = $lnks['children'][3]['children'][0]['content'];
+        $cc['titleFour']     = $lnks['children'][3]['children'][1]['content'];
 
         $cc['unitsTemp']     = $head['children'][2]['content'];
         $cc['unitsDistance'] = $head['children'][3]['content'];
@@ -408,14 +407,15 @@ class xoapWeather
                 'cached'=>false,
                 'extension'=>'.xml',
                 'archive'=>false
-            ));
+            )
+        );
 
         //$this->errorCheck($data);
         if(empty($data)) {
             return;
         }
 
-        $p = new xarXmlParser();
+        $p =& new xarXmlParser();
         if(!$p->parseString($data)) {
             // try again
             return $this->locData($loc);
@@ -476,7 +476,6 @@ class xoapWeather
         } elseif(stristr($link,'prod=xoap')) {
             // the feed is correct, append the partner id
             $link .= '&amp;par='.$this->xoapPar;
-
         }
         return $link;
     }

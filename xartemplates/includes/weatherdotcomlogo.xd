@@ -1,4 +1,0 @@
-<xar:set name="$weatherdotcomurl">'http://www.weather.com?prod=xoap&amp;par='.xarModGetVar('weather','partner_id')</xar:set>
-<div id="weatherdotcomlogo" style="float:right;">
-    <a href="#$weatherdotcomurl#"><img border="0" src="modules/weather/xarimages/TWClogo_64px.png" /></a>
-</div>

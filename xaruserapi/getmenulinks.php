@@ -48,12 +48,14 @@ function &weather_userapi_getmenulinks()
         'label'=>xarML('Search Locations')
         );
         
-    $menulinks[] = Array(
-        'url'=>xarModURL('weather','user','modifyconfig',array('xwloc'=>$loc,'xwunits'=>$units)),
-        'title'=>xarML('Modify Config'),
-        'label'=>xarML('Modify Config')
+    if (xarUserIsLoggedIn()) {
+        $menulinks[] = Array(
+            'url'=>xarModURL('weather','user','modifyconfig',array('xwloc'=>$loc,'xwunits'=>$units)),
+            'title'=>xarML('Modify Config'),
+            'label'=>xarML('Modify Config')
         );
-   
-   return $menulinks;
+    }
+
+    return $menulinks;
 }
 ?>

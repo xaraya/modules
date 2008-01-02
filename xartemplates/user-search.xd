@@ -1,21 +1,39 @@
-<h1><xar:mlstring>Weather Location Search</xar:mlstring></h1>
-<xar:template file="weatherdotcomsearch" />
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<xar:if condition="count($matches)">
-    <p>
-    Below are the Matches that we found:
-    </p>
-    <form method="get" action="index.php">
-    <input type="hidden" name="module" value="weather" />
-    <input type="hidden" name="func" value="main" />
-    <input type="hidden" name="type" value="user" />
-    <select name="xwloc">
-    <xar:foreach in="$matches" value="$location">
-        <option value="#$location.zip#">#$location.name#</option>
-    </xar:foreach>
-    </select>
-    <input type="submit" name="submit" value="Get Forecast"/>
-    </form>
-<xar:elseif condition="$error eq true" />
-    <p class="xar-error">No Matches were found</p>
-</xar:if>
+<xar:set name="pagename"><xar:mlstring>Weather Location Search</xar:mlstring></xar:set>
+<xar:set name="dummy">#xarTplSetPageTitle($pagename)#</xar:set>
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Weather Forecast</xar:mlstring>
+    </span>
+</div>
+
+<div class="xar-mod-body">
+
+    <xar:template type="module" module="weather" file="user-menu" />
+
+    <!-- the weather.com links are required -->
+    <a href="http://www.weather.com"><img src="#xarTplGetImage('TWClogo_64px.png','weather')#" class="xar-module-icon" alt="weather.com&reg;" /></a>
+
+    <h2>#$pagename#</h2>
+    <xar:template file="weatherdotcomsearch" />
+
+    <xar:if condition="count($matches)">
+        <p><xar:mlstring>Below are the matches that found:</xar:mlstring></p>
+        <form method="get" action="index.php">
+            <input type="hidden" name="module" value="weather" />
+            <input type="hidden" name="func" value="main" />
+            <input type="hidden" name="type" value="user" />
+            <select name="xwloc">
+            <xar:foreach in="$matches" value="$location">
+                <option value="#$location.zip#">#$location.name#</option>
+            </xar:foreach>
+            </select>
+            <input type="submit" name="submit" value="Get Forecast"/>
+        </form>
+    <xar:elseif condition="$error eq true" />
+        <p class="xar-error"><xar:mlstring>No Matches were found</xar:mlstring></p>
+    </xar:if>
+
+</div>

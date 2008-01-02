@@ -1,6 +1,7 @@
 <xar:set name="$weatherdotcomurl">'<a href="http://www.weather.com?prod=xoap&amp;par='.xarModGetVar('weather','partner_id').'"><strong>weather.com&reg;</strong></a>'</xar:set>
-<div id="weatherdotcomfooter" style="text-align: center;">
-    <div id="weatherdotcomnotice">
+
+<div class="weatherdotcomfooter" style="text-align: center; font-size:85%;">
+    <div class="weatherdotcomnotice">
         <xar:ml>
             <xar:mlstring>Weather data provided by #(1)</xar:mlstring>
             <xar:mlvar>#$weatherdotcomurl#</xar:mlvar>
