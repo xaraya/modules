@@ -409,7 +409,7 @@ function articles_user_display($args)
     // TODO: what about transforming DDfields ?
     // <mrb> see above for a hack, needs to be a lot better.
 
-    // Summary is always included, is that handled somewhere else? (article config says i can ex/include it)
+    // Summary is always included, is that handled somewhere else? (article config says I can ex/include it)
     // <mikespub> articles config allows you to call transforms for the articles summaries in the view function
     if (!isset($titletransform)) {
         if (empty($settings['titletransform'])) {
@@ -499,7 +499,7 @@ function articles_user_display($args)
         $data['hooks'] = xarModCallHooks('item', 'display', $aid,
                                          array('module'    => 'articles',
                                                'itemtype'  => $pubtypeid,
-											   'title'     => $title,
+                                               'title'     => $title,
                                                'returnurl' => xarModURL('articles',
                                                                         'user',
                                                                         'display',
