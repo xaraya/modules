@@ -2,13 +2,13 @@
 
 <xar:style scope="module" module="base" file="navtabs" />
 <xar:style scope="module" />
-<xar:set name="$navViewUrl">#xarModURL('courses','user','view')#</xar:set>
-<xar:set name="$navDisplayUrl">#xarModURL('courses','user','display')#</xar:set>
-<xar:set name="$navDisplayPlannedUrl">#xarModURL('courses','user','displayplanned')#</xar:set>
-<xar:set name="$navMyCoursesUrl">#xarModURL('roles','user','account',array('moduleload'=>'courses'))#</xar:set>
+<xar:set name="navViewUrl">#xarModURL('courses','user','view')#</xar:set>
+
+<xar:set name="navDisplayPlannedUrl">#xarModURL('courses','user','displayplanned')#</xar:set>
+<xar:set name="navMyCoursesUrl">#xarModURL('roles','user','account',array('moduleload'=>'courses'))#</xar:set>
+<xar:set name="null">#xarVarFetch('func','str:1:',$whatFunc,'')#</xar:set>
 
 <div class="xar-courses-header">
-    <xar:set name="$null">#xarVarFetch('func','str:1:',$whatFunc,'')#</xar:set>
     <dl class="xar-tabs">
         <dt class="help"><xar:mlstring>Show</xar:mlstring>:</dt>
         <xar:if condition="$whatFunc eq 'view'">
@@ -17,9 +17,16 @@
             <dd><a href="#$navViewUrl#"><xar:mlstring>Overview</xar:mlstring></a></dd>
         </xar:if>
         <xar:if condition="$whatFunc eq 'display'">
+            <xar:set name="courseid">#xarVarGetCached('courses','courseid')#</xar:set>
+            <xar:set name="$navDisplayUrl">#xarModURL('courses','user','display',array('courseid'=>$courseid))#</xar:set>
             <dd class="active"><a href="#$navDisplayUrl#"><xar:mlstring>Display</xar:mlstring></a></dd>
         </xar:if>
         <xar:if condition="$whatFunc eq 'displayplanned'">
+            <xar:set name="courseid">#xarVarGetCached('courses','courseid')#</xar:set>
+            <xar:set name="$navDisplayUrl">#xarModURL('courses','user','display',array('courseid'=>$courseid))#</xar:set>
+            <dd><a href="#$navDisplayUrl#"><xar:mlstring>Display</xar:mlstring></a></dd>
+            <xar:set name="planningid">#xarVarGetCached('Blocks.courses', 'planningid')#</xar:set>
+            <xar:set name="navDisplayPlannedUrl">#xarModURL('courses','user','displayplanned', array('planningid'=>$planningid))#</xar:set>
             <dd class="active"><a href="#$navDisplayPlannedUrl#"><xar:mlstring>Display planned</xar:mlstring></a></dd>
         </xar:if>
         <xar:if condition="xarUserIsLoggedIn()">
