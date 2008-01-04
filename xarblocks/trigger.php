@@ -3,7 +3,7 @@
  * Scheduler module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -38,6 +38,8 @@ function scheduler_triggerblock_info()
 
 /**
  * display block
+ * @param array blockinfo
+ * @return array
  */
 function scheduler_triggerblock_display($blockinfo)
 {
@@ -130,6 +132,7 @@ function scheduler_triggerblock_modify($blockinfo)
 
 /**
  * update block settings
+ * @return array blockinfo
  */
 function scheduler_triggerblock_update($blockinfo)
 {
