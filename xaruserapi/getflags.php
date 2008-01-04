@@ -5,7 +5,7 @@ function netquery_userapi_getflags($args)
     if ((!isset($startnum)) || (!is_numeric($startnum))) $startnum = 1;
     if ((!isset($numitems)) || (!is_numeric($numitems))) $numitems = -1;
     $flags = array();
-    if (!xarSecurityCheck('OverviewNetquery')) return $flags;
+    if (!xarSecurityCheck('OverviewNetquery',0)) return $flags;
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $FlagsTable = $xartable['netquery_flags'];

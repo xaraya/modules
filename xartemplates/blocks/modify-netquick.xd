@@ -1,13 +1,7 @@
-<div style="clear: both; padding-top: 10px;">
-  <span style="float: left; width: 100%; text-align: left;">
-    <b><xar:mlstring>Netquery Block Options</xar:mlstring></b>
-  </span>
-</div>
-<div style="clear: both; padding-top: 10px;">
-  <span style="float: left; width: 20%; text-align: right;">
-    <xar:mlstring>Block Option</xar:mlstring>
-  </span>
-  <span style="float: right; width: 78%; text-align: left;">
+<div class="xar-form-input-wrapper">
+    <label for="blockoption" class="help xar-form-label" title="#xarML('Choose the type of block content.')#">
+        <xar:mlstring>Block Option</xar:mlstring>
+    </label>
     <select name="blockquery">
       <xar:if condition="$blockquery eq 'nqmonitor'">
         <option value="nqmonitor" selected="nqmonitor">
@@ -136,5 +130,4 @@
         </xar:if>
       </xar:if>
     </select>
-  </span>
 </div>

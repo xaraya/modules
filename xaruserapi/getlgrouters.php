@@ -5,7 +5,7 @@ function netquery_userapi_getlgrouters($args)
     if ((!isset($startnum)) || (!is_numeric($startnum))) $startnum = 1;
     if ((!isset($numitems)) || (!is_numeric($numitems))) $numitems = 100000;
     $lgrouters = array();
-    if (!xarSecurityCheck('OverviewNetquery')) return $lgrouters;
+    if (!xarSecurityCheck('OverviewNetquery',0)) return $lgrouters;
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $LGRouterTable = $xartable['netquery_lgrouter'];
