@@ -3,7 +3,7 @@
  * Get all itsp plans
  *
  * @package modules
- * @copyright (C) 2005-2007 The Digital Development Foundation
+ * @copyright (C) 2005-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -15,19 +15,15 @@
  * Get all ITSP planitems
  *
  * @author the ITSP module development team
- * @param numitems $ the number of items to retrieve (default -1 = all)
- * @param startnum $ start with this item number (default 1)
- * @returns array
+ * @param int numitems $ the number of items to retrieve (default -1 = all)
+ * @param int startnum $ start with this item number (default 1)
  * @return array of items, or false on failure
  * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
 function itsp_userapi_getall_planitems($args)
 {
     extract($args);
-    /* Optional arguments.
-     * FIXME: (!isset($startnum)) was ignoring $startnum as it contained a null value
-     * replaced it with ($startnum == "") (thanks for the talk through Jim S.) NukeGeek 9/3/02
-     * if (!isset($startnum)) { */
+    /* Optional arguments */
     if (!isset($startnum)) {
         $startnum = 1;
     }
@@ -59,7 +55,7 @@ function itsp_userapi_getall_planitems($args)
     /* Security check - important to do this as early on as possible to
      * avoid potential security holes or just too much wasted processing
      */
-    if (!xarSecurityCheck('ViewITSPPlan')) return;
+    if (!xarSecurityCheck('ViewITSPPlan',0)) return;
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

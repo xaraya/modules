@@ -25,17 +25,17 @@
 function itsp_userapi_getitemtypes($args)
 {
     $itemtypes = array();
-
+    // Get the plans
     $pitems = xarModApiFunc('itsp','user','getall_planitems');
-
-    foreach ($pitems as $pitem) {
-        $id = $pitem['pitemid'];
-        $itemtypes[$id] = array('label' => xarVarPrepForDisplay($pitem['pitemname']),
-                                'title' => xarVarPrepForDisplay(xarML('Display #(1)',$pitem['pitemname'])),
-                                'url'   => xarModURL('itsp','user','display',array('pitemid' => $id))
-                               );
+    if (count($pitems) > 0) {
+        foreach ($pitems as $pitem) {
+            $id = $pitem['pitemid'];
+            $itemtypes[$id] = array('label' => xarVarPrepForDisplay($pitem['pitemname']),
+                                    'title' => xarVarPrepForDisplay(xarML('Display #(1)',$pitem['pitemname'])),
+                                    'url'   => xarModURL('itsp','user','display',array('pitemid' => $id))
+                                   );
+        }
     }
-
     /*  Add the plans and the seperate ITSPs to the array */
     $itemtypes[99998] = array('label' => xarVarPrepForDisplay(xarML('ITSP Plans')),
                       'title' => xarVarPrepForDisplay(xarML('View ITSP Plans')),
