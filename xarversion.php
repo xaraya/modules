@@ -1,16 +1,22 @@
 <?php
 /**
- * Sitecontact package 
+ * Xaraya Sitecontact module version information
  *
- * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @package Xaraya 
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
+ * @link http://xaraya.com
  *
  * @subpackage SiteContact Module
- * @link http://xaraya.com/index.php/release/890.html
+ * @copyright (C) 2004-2008 2skies.com
+ * @link http://xarigami.com/project/sitecontact
  * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
+ 
+ /**
+  * Version information on this module
+  * @param none
+  * @return version information of this module
+  */
 $modversion['name']           = 'sitecontact';
 $modversion['displayname']    = xarML('Site Contact');
 $modversion['id']             = '890';
@@ -28,5 +34,6 @@ $modversion['admin']          = 1;
 $modversion['user']           = 1;
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Content';
-$modversion['dependency'] = array(182); //dynamic data dependency
+$modversion['dependency']     = array(182); //earlier format
+$modversion['dependencyinfo'] = array(182 => 'dynamicdata');
 ?>
