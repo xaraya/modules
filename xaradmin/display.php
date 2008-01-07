@@ -102,12 +102,7 @@ function sitecontact_admin_display($args)
     $item['itemtype'] = $item['scid'];
     $hooks = xarModCallHooks('item','display',$scrid,$item);
 
-   if (!empty($formtype['sctypename'])){
-        $template = $formtype['sctypename'];
-      } else {
-        $template =  '';
-    }
-
+    $template = !empty($formtype['sctypename']) ? $formtype['sctypename'] : '';
 
     if (empty($hooks)) {
         $data['hookoutput'] = '';
@@ -118,12 +113,7 @@ function sitecontact_admin_display($args)
     
     xarTplSetPageTitle(xarVarPrepForDisplay($data['formname']));
 
-    /*
-    if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
-        xarErrorHandled();
-        $templatedata = xarTplModule('sitecontact', 'admin', 'display', $data);
-    }
-    */
+
    return $templatedata;
 }
 ?>
