@@ -102,8 +102,9 @@ function sitecontact_userapi_respond($args)
 
         if (xarModIsAvailable('formcaptcha') && xarModGetVar('formcaptcha','usecaptcha') == true && $useantibot) {
             $autocap =xarModGetVar('formcaptcha','autocaptcha');
+            
             $cas_antispam='';
-            $badcaptcha = 0;
+            $badcaptcha = false;
             $casmsg ='';
             $cas_antiselect = intval($antiselect);
             $cas_antiword = $antiword;
@@ -119,18 +120,18 @@ function sitecontact_userapi_respond($args)
                $md5code = xarModGetVar('formcaptcha',xarSessionGetID());
                xarModDelVar('formcaptcha',xarSessionGetID());
             }
-    
+
             //Determine the correct word
             if (($autocap == TRUE) && (md5($antiword) != $md5code)) {
-                  $badcaptcha =1;
+                  $badcaptcha = true;
                   $casmsg = xarModGetVar('formcaptcha','antierror');
             } elseif (($autocap == FALSE) && ($cas_antispam != $cas_antiword)) {
-                  $badcaptcha =1;
+                  $badcaptcha = true;
                   $casmsg = xarModGetVar('formcaptcha','antierror');
             }
         }
     }
-    
+
     if (!isset($soptions['allowbccs']) || $soptions['allowbccs']!=1) {
         $bccrecipients='';
         $allowbccs = false;

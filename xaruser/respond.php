@@ -92,7 +92,7 @@ function sitecontact_user_respond($args)
         xarModSetVar('sitecontact','webconfirmtext',$webconfirmtext);
     }
     //check email if it is set and not empty
-    $invalid = array();
+    $invalid =''; // do not set array here - used as flag
     if (isset($useremail) && !empty($useremail)){
         $checkemail = xarModAPIFunc('roles','user','validatevar',
                               array('var' => $useremail,
