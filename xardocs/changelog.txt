@@ -1,11 +1,21 @@
-Version 1.1.0  X Dec 2007 - 2skies.com
+Version 1.1.0  7 Jan 2008 
 - move key areas to dynamic data retaining backward compat where possible
 - add ability to add custom func for preprocessing data
-- add api function to process forms that can be called by other modules
-- updated obfuscation for email
-- various bug fixes see http://xarigami.com/?module=contrails&func=versions&projectid=5
+- deprecated contactus function and instead now have repond gui and api functions
+  : can submit to for processing by other modules
+- updated and improved obfuscation for email
+- added instances for contact forms so access is via privileges per form
+  : this broke in prior merge of scenarios
+- addition of ability for admin to add their own cc list
+- fixed the sitecontact block for reliable form return on bad user data
+- updated formcaptcha and formantibot captcha
+- extended ability for overridden templates including user form display,
+  html and text email overrides, result page overrides, and admin display pages for saved responses.
+- allow consistent feedback to user on invalid email entry, and dynamic data field entry (xarigami core).
+- various minor bug fixes see http://xarigami.com/?module=contrails&func=versions&projectid=5
+- For upgrade instructions please see the notes accompanying release at the Sitecontact Project page at the Xarigami website
 
-Version 1.0.3 Sept 2007 - 2skies.com
+Version 1.0.3 Sept 2007
 - minor upgrade to remove block instances and block security checks
 - now handled from xarigami core
 
