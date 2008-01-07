@@ -1,28 +1,37 @@
-<p>
-   <xar:mlstring>Submitted By:</xar:mlstring> #$username#
-</p>
+<xar:if condition="!empty($username)">
+    <p>
+        <xar:mlstring>Submitted By:</xar:mlstring>&#160; #$username#
+    </p>
+</xar:if>
 <hr />
-<p>
-    <xar:mlstring>Email:</xar:mlstring> #$useremail#
-</p>
-<p>
-   <xar:mlstring>Organization:</xar:mlstring> #$company#
-</p>
-<p>
-    <xar:mlstring>Subject:</xar:mlstring> #$requesttext#
-</p>
-<p>
-<xar:mlstring>Comments:</xar:mlstring>
-</p>
-<p>
-    #$usermessage#
-</p>
-
-<xar:if condition="isset($propdata) and count($propdata) gt 0">
-    <xar:foreach in="$propdata" key="$name">
-<p>
-    #$propdata[$name]['label']#:  #$propdata[$name]['value']#
-</p>
+<xar:if condition="!empty($useremail)">
+    <p>
+        <xar:mlstring>Email:</xar:mlstring>&#160; #$useremail#
+    </p>
+</xar:if>
+<xar:if condition="!empty($company)">
+    <p>
+        <xar:mlstring>Organization:</xar:mlstring>&#160; #$company#
+    </p>
+</xar:if>
+<xar:if condition="!empty($requesttext)">
+    <p>
+        <xar:mlstring>Subject:</xar:mlstring>&#160; #$requesttext#
+    </p>
+</xar:if>
+<xar:if condition="!empty($usermessage)">
+    <p>
+        <xar:mlstring>Comments:</xar:mlstring>
+    </p>
+    <p>
+        #$usermessage#
+    </p>
+</xar:if>
+<xar:if condition="isset($properties) and count($properties) gt 0">
+    <xar:foreach in="$properties" key="$name">
+        <p>
+            <xar:data-label property="$properties[$name]" />:&#160;<xar:data-output property="$properties[$name]" />
+        </p>
     </xar:foreach>
 </xar:if>
 
@@ -31,17 +40,17 @@
     <xar:mlstring>User information:</xar:mlstring>
 </p>
 <p>
-    <xar:mlstring>Sender:</xar:mlstring> #$useripaddress#
+    <xar:mlstring>Sender:</xar:mlstring>&#160; #$useripaddress#
 </p>
 <p>
-    <xar:mlstring>Referer:</xar:mlstring> #$userreferer#
+    <xar:mlstring>Referer:</xar:mlstring>&#160; #$userreferer#
 </p>
 <hr />
 <p>
-<xar:mlstring>Site Name:</xar:mlstring> #$sitename#
+<xar:mlstring>Site Name:</xar:mlstring>&#160; #$sitename#
 </p>
 <p>
-    <xar:mlstring>Site URL:</xar:mlstring> #$siteurl#
+    <xar:mlstring>Site URL:</xar:mlstring>&#160; #$siteurl#
 </p>
 <p>#$todaydate#</p>
 
