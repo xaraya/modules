@@ -2,17 +2,18 @@
 /**
  * Contact us main function
  *
- * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @package Xaraya
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
+ * @link http://xaraya.com
  *
  * @subpackage SiteContact Module
- * @link http://xaraya.com/index.php/release/890.html
+ * @copyright (C) 2004-2008 2skies.com
+ * @link http://xarigami.com/project/sitecontact
  * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 /**
  * @ Function: contactus
+ * @ Deprecated at version 1.1.0  - use xaruser/respond.php that passes vars to xaruserapi/respond.php
  * @ Author Jo Dalle Nogare <icedlava@2skies.com>
  * @ Param username, useremail, requesttext,company, usermessage,useripaddress,userreferer,altmail
   */
@@ -144,7 +145,7 @@ function sitecontact_user_contactus($args)
                 return xarModFunc('sitecontact', 'user', 'main', $args);
             }
         } else {
-        $args['botreset']=false; // switch used for referer mainly in main function
+            $args['botreset']=false; // switch used for referer mainly in main function
         }
     }
     
