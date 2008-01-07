@@ -2,13 +2,13 @@
 /**
  * Display a response
  *
- * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @package Xaraya
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
+ * @link http://xaraya.com
  *
  * @subpackage SiteContact Module
- * @link http://xaraya.com/index.php/release/890.html
+ * @copyright (C) 2004-2008 2skies.com
+ * @link http://xarigami.com/project/sitecontact
  * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 /**
@@ -45,7 +45,7 @@ function sitecontact_admin_display($args)
     $scid=$item['scid'];
     $item['itemtype'] = $scid;
 
-    if (!xarSecurityCheck('EditSiteContact',0,'ContactForm',"$scid:All:All")) {
+    if (!xarSecurityCheck('EditSiteContact',0,'ContactForm',"$scid")) {
         return; // todo: something
     }
     
@@ -67,14 +67,17 @@ function sitecontact_admin_display($args)
     $data['responsetime'] = $item['responsetime'];            
     $data['scrid'] = $scrid;
     $data['scid'] = $item['scid'];
+    $data['usehtmlemail']    = $thisform['usehtmlemail'];
     $data['formname']=$thisform['sctypename'];
     $data['permissioncheck']=$thisform['permissioncheck'];
+    $soptions = unserialize($thisform['soptions']);
+    $data['admincclist'] = isset($soptions['admincclist']) && !empty($soptions['admincclist']) ?$soptions['admincclist']:'';
 
     $scformtypes = xarModAPIFunc('sitecontact','user','getcontacttypes');
    // Create filters based on publication type
     $formfilters = array();
     foreach ($scformtypes as $id => $formtype) {
-        if (!xarSecurityCheck('EditSiteContact',0,'ContactForm',"$formtype[scid]:All:All")) {
+        if (!xarSecurityCheck('EditSiteContact',0,'ContactForm',"$formtype[scid]")) {
             continue;
         }
         $responseitem = array();
@@ -100,9 +103,9 @@ function sitecontact_admin_display($args)
     $hooks = xarModCallHooks('item','display',$scrid,$item);
 
    if (!empty($formtype['sctypename'])){
-        $template = 'display-' . $formtype['sctypename'];
+        $template = $formtype['sctypename'];
       } else {
-        $template =  'display';
+        $template =  '';
     }
 
 
@@ -111,13 +114,16 @@ function sitecontact_admin_display($args)
     } else {
         $data['hookoutput'] = $hooks;
     }
-    $templatedata = xarTplModule('sitecontact', 'admin', $template, $data);
+    $templatedata = xarTplModule('sitecontact', 'admin', 'display', $data, $template);
+    
     xarTplSetPageTitle(xarVarPrepForDisplay($data['formname']));
+
+    /*
     if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
         xarErrorHandled();
         $templatedata = xarTplModule('sitecontact', 'admin', 'display', $data);
     }
-
+    */
    return $templatedata;
 }
 ?>

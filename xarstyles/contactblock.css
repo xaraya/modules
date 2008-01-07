@@ -6,6 +6,7 @@
     width: 3.75em;
     display: block;
     float: left;
+    font-size:smaller;
 }
 .xar-blockform-input-wrapper-after {
     width: auto;
