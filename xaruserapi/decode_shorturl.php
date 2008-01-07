@@ -2,28 +2,27 @@
 /**
  * Decode short urls
  *
- * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @package Xaraya
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
+ * @link http://xaraya.com
  *
  * @subpackage SiteContact Module
- * @link http://xaraya.com/index.php/release/890.html
+ * @copyright (C) 2004-2008 2skies.com
+ * @link http://xarigami.com/project/sitecontact
  * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 
 /**
- * extract function and arguments from short URLs for this module, and pass
- * them back to xarGetRequestInfo()
+ * extract function and arguments from short URLs and pass back to xarGetRequestInfo()
  *
  * @author Jo Dalle Nogare <icedlava@2skies.com>
- * @param  $params array containing the different elements of the virtual path
- * @returns array
+ * @param  array $params containing the different elements of the virtual path
  * @return array containing func the function to be called and args the query
  *          string arguments, or empty if it failed
  */
 function sitecontact_userapi_decode_shorturl($params)
 {
+
     /* Initialise the argument list we will return */
     $args = array();
     $aliasisset = xarModGetVar('sitecontact', 'useModuleAlias');
@@ -49,7 +48,7 @@ function sitecontact_userapi_decode_shorturl($params)
         /* nothing specified -> we'll go to the main function */
         return array('main', $args);
         
-  } elseif (preg_match('/^contactus/i', $params[0])) {
+    } elseif (preg_match('/^respond/i', $params[0])) {
         if (!empty($params[1]) && (preg_match('/^(\d+)/', $params[1], $matches))){
             $args['message'] = (int)$matches[0];
             if (!empty($params[2]) &&  (preg_match('/^(\d+)/', $params[2], $matches)))  {
@@ -59,15 +58,14 @@ function sitecontact_userapi_decode_shorturl($params)
             $args['message'] = (int)$matches[0];
             $args['scid'] = null;
         }
-
-        return array('contactus', $args);
-     }elseif (!empty($params[0]) && (preg_match('/^(\d+)/', $params[0], $matches))) {
+        return array('respond', $args);
+    } elseif (!empty($params[0]) && (preg_match('/^(\d+)/', $params[0], $matches))) {
         $args['message'] = $matches[0];
         if (!empty($params[1])  &&  (preg_match('/^(\d+)/', $params[1], $matches))) {
             $args['scid'] = (int)$matches[0];
         }
          return array('main', $args);
-     }elseif (!empty($params[0]) && (preg_match('/^(\w+)/',$params[0],$matches))) {
+    } elseif (!empty($params[0]) && (preg_match('/^(\w+)/',$params[0],$matches))) {
         $args['scform'] = $matches[0];
         return array('main', $args);
 
