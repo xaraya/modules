@@ -39,7 +39,10 @@ function categories_userapi_getitemcats($args)
 
     // Group by categories by default.
     // An alternative is 'itemcategory' which groups by categories within items.
-    if (!isset($args['groupby'])) $args['groupby'] = 'category';
+    if (!isset($args['groupby'])) {
+        $args['groupby'] = 'category';
+        $groupby = $args['groupby'];
+    }
 
     // Get module ID if only a name provided.
     if (empty($modid) && !empty($module)) {
