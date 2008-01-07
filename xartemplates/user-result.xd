@@ -1,0 +1,23 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="empty($customtitle)">
+    <xar:set name="contacttitle"><xar:mlstring>Contact Form</xar:mlstring></xar:set>
+<xar:else />
+    <xar:set name="contacttitle">#$customtitle#</xar:set>
+</xar:if>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+            #$contacttitle#
+    </span>
+</div>
+
+<div class="xar-mod-body">
+    <xar:if condition="$result">
+        <p style="text-align: center; padding:20px;">
+             #$webconfirmtext#
+        </p>
+    <xar:else />
+        <p style="text-align: center; padding:20px;">
+            <xar:mlstring>Sorry, your submission could not be processed.</xar:mlstring>
+        </p>
+    </xar:if>
+</div>
