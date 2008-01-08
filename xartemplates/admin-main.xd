@@ -1,117 +1,87 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head">
-  <span class="xar-mod-title"><xar:mlstring>Polls Administration </xar:mlstring></span>
-</div>
-
-<div class="xar-mod-body">
-  <xar:template type="module" file="admin-menu" />
-  <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
-  <h2>
-    <xar:mlstring>Overview</xar:mlstring>
-  </h2>
-  <h3>
-    <xar:mlstring>What is it?</xar:mlstring>
-  </h3>
-  <p>
-    <em>
-      <xar:mlstring>
-        Polls is a Xaraya Content Module.
-      </xar:mlstring>
-    </em>
-    <xar:mlstring>
-      It is currently responsible for accomplishing these tasks:
-    </xar:mlstring>
-    <ul>
-      <li>
-        <xar:mlstring>
-          The Polls Module controls the configuration and management of simple vote questions.
-        </xar:mlstring>
-      </li>
-    </ul>
-  </p>
-  <h3>
-    <xar:mlstring>How to use it?</xar:mlstring>
-  </h3>
-  <p>
-    <xar:mlstring>
-      From the menu, you have four choices.
-    </xar:mlstring>
-    <ul>
-      <li>
-        <xar:mlstring>
-          Overview
-        </xar:mlstring>
-        :
-        <xar:mlstring>
-          This page
-        </xar:mlstring>
-      </li>
-      <li>
-        <xar:mlstring>
-          New Poll
-        </xar:mlstring>
-        :
-        <xar:mlstring>
-          Add a Poll to your site
-        </xar:mlstring>
-      </li>
-      <li>
-        <xar:mlstring>
-          List Polls
-        </xar:mlstring>
-        :
-        <xar:mlstring>
-          View a summary list of existing Polls
-        </xar:mlstring>
-      </li>
-      <li>
-        <xar:mlstring>
-          Modify Config
-        </xar:mlstring>
-        :
-        <xar:mlstring>
-          Change the Polls module settings
-        </xar:mlstring>
-      </li>
-    </ul>
-  </p>
-  <h3>
-    <xar:mlstring>Included Blocks</xar:mlstring>
-  </h3>
-  <p>
-    <xar:mlstring>
-      Poll blocks will display the current poll in block format.
-    </xar:mlstring>
-  </p>
-  <h3>
-    <xar:mlstring>Included Hooks</xar:mlstring>
-  </h3>
-  <p>
-    <ul>
-      <li>
-        <xar:mlstring>
-          display -- Allows you to display a poll for a particular module item (e.g. an article, xarbb topic, ...)
-        </xar:mlstring>
-      </li>
-      <li>
-        <xar:mlstring>
-          new/create/modify/update/delete -- Allows you to create/update a poll for a particular module item
-        </xar:mlstring>
-      </li>
-    </ul>
-  </p>
-    <h3><xar:mlstring>Further Information</xar:mlstring></h3>
-  <p>
-       <xar:mlstring>Extended information about this module can be found at </xar:mlstring><a title="#xarML('Polls Module - Xaraya Extension 23')#" href="http://www.xaraya.com/index.php/release/23.html">Xaraya Extension and Releases</a>.
-  </p>
-      <ul>
-          <li><xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
-          </li>
-          <li><xar:mlstring>Related tutorials and documentation on Polls found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/polls/" title="#xarML('Related documentation on Polls')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
-          </li>
-      </ul>
-      <p class="xar-sub">
-         <strong>&nbsp;<xar:mlstring>Polls modules - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.5.0&nbsp; #xarLocaleGetFormattedDate('short','1130972400')#
-      </p>
-
-</div>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title"><xar:mlstring>Polls Administration </xar:mlstring></span>
+    </div>    
+    <div class="xar-mod-body">
+        <xar:template type="module" file="admin-menu" />
+        <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
+        <h2>
+            <xar:mlstring>Overview</xar:mlstring>
+        </h2>
+        <h3>
+            <xar:mlstring>What is it?</xar:mlstring>
+        </h3>
+        <p>
+            <em>
+                <xar:mlstring>Polls is a Xaraya Content Module.</xar:mlstring>
+            </em>
+            <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
+            <ul>
+                <li>
+                    <xar:mlstring>The Polls Module controls the configuration and management of simple vote questions.</xar:mlstring>
+                </li>
+            </ul>
+        </p>
+        <h3>
+            <xar:mlstring>How to use it?</xar:mlstring>
+        </h3>
+        <p>
+            <xar:mlstring>From the menu, you have four choices.</xar:mlstring>
+            <ul>
+                <li>
+                    <xar:mlstring>Overview</xar:mlstring>:
+                    <xar:mlstring>This page</xar:mlstring>
+                </li>
+                <li>
+                    <xar:mlstring>New Poll</xar:mlstring>:
+                    <xar:mlstring>Add a Poll to your site</xar:mlstring>
+                </li>
+                <li>
+                    <xar:mlstring>List Polls</xar:mlstring>:
+                    <xar:mlstring>View a summary list of existing Polls</xar:mlstring>
+                </li>
+                <li>
+                    <xar:mlstring>Modify Config</xar:mlstring>:
+                    <xar:mlstring>Change the Polls module settings</xar:mlstring>
+                </li>
+            </ul>
+        </p>
+        <h3>
+            <xar:mlstring>Included Blocks</xar:mlstring>
+        </h3>
+        <p>
+            <xar:mlstring>Poll blocks will display the current poll in block format.</xar:mlstring>
+        </p>
+        <h3>
+            <xar:mlstring>Included Hooks</xar:mlstring>
+        </h3>
+        <p>
+            <ul>
+                <li>
+                    <xar:mlstring>display -- Allows you to display a poll for a particular module item (e.g. an article, xarbb topic, ...)</xar:mlstring>
+                </li>
+                <li>
+                    <xar:mlstring>new/create/modify/update/delete -- Allows you to create/update a poll for a particular module item</xar:mlstring>
+                </li>
+            </ul>
+        </p>
+        <h3>
+            <xar:mlstring>Further Information</xar:mlstring>
+        </h3>
+        <p>
+            <xar:mlstring>Extended information about this module can be found at</xar:mlstring>&#160;<a title="#xarML('Polls Module - Xaraya Extension 23')#" href="http://www.xaraya.com/index.php/release/23.html">Xaraya Extension and Releases</a>.
+        </p>
+        <ul>          
+            <li>
+                <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+            </li>
+            <li>
+                <xar:mlstring>Related tutorials and documentation on Polls found at</xar:mlstring>&#160;<a href="http://www.xaraya.com/index.php/keywords/polls/" title="#xarML('Related documentation on Polls')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+            </li>
+        </ul>
+        <p class="xar-sub">
+            <strong>&#160;<xar:mlstring>Polls modules - Overview</xar:mlstring></strong><br />&#160;<xar:mlstring>Version</xar:mlstring> 2.0.0&#160; #xarLocaleGetFormattedDate('short','1130972400')#
+        </p>
+    </div>
+</xar:template>

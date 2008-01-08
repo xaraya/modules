@@ -19,12 +19,9 @@ function polls_admin_modify()
     // Get parameters
     if (!xarVarFetch('pid', 'id', $pid)) return;
 
-     if (empty($pid)) {
-        $msg = xarML('No poll selected');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
+    if (!isset($pid)) {
+            throw new EmptyParameterException($pid,'Missing id, Poll id must be set');
     }
-
     // Start output
     $data = array();
 
@@ -32,13 +29,14 @@ function polls_admin_modify()
     $poll = xarModAPIFunc('polls', 'user', 'get', array('pid' => $pid));
 
     if (!$poll) {
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
-        return;
+        throw new BadParameterException($pid,'Poll id (#(1)) not found ');
     }
+
+
 
     // Security check
 
-    if (!xarSecurityCheck('EditPolls',1,'Polls',"$poll[title]:$poll[type]")) {
+    if (!xarSecurityCheck('EditPolls',1,'Polls',"$poll[pid]:$poll[type]")) {
         return;
     }
     $data['authid'] = xarSecGenAuthKey();
@@ -100,14 +98,14 @@ function polls_admin_modify()
 
         $row['votes'] = $optinfo['votes'];
 
-        if (xarSecurityCheck('EditPolls',0,'Polls',"$poll[title]:$poll[type]")) {
+        if (xarSecurityCheck('EditPolls',0,'Polls',"$poll[pid]:$poll[type]")) {
             $row['modify'] = xarModURL('polls',
                                                'admin',
                                                'modifyopt',
                                                array('pid' => $pid,
                                                      'opt' => $opt));
         }
-        if (xarSecurityCheck('EditPolls',0,'Polls',"$poll[title]:$poll[type]")) {
+        if (xarSecurityCheck('EditPolls',0,'Polls',"$poll[pid]:$poll[type]")) {
              if (($optinfo['votes'] != 0)) {
                 $row['delete_confirm'] = xarML('Option "#(1)" has votes.  Delete anyway?', addslashes($optinfo['name']));
             } else {

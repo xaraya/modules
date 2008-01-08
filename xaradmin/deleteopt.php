@@ -25,25 +25,23 @@ function polls_admin_deleteopt()
     if (!xarVarFetch('votes', 'int:0:', $votes, 0,  XARVAR_DONT_SET)) return;
     if (!xarVarFetch('confirm', 'isset', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
-    if ((!isset($pid) || !isset($opt)) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    if ((!isset($pid) || !isset($opt)) && xarCurrentErrorType() != NO_EXCEPTION) return; // throw back
 
     $poll = xarModAPIFunc('polls',
                            'user',
                            'get',
                            array('pid' => $pid));
+//-> ftb da controllare
+    if (!isset($poll) && xarCurrentErrorType() != NO_EXCEPTION) return; // throw back
 
-    if (!isset($poll) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
-
-    if (!xarSecurityCheck('EditPolls',1,'Polls',"$poll[title]:$poll[type]")) {
+    if (!xarSecurityCheck('EditPolls',1,'Polls',"$poll[pid]:$poll[type]")) {
         return;
     }
 
-    // Check that option exists
     if (!isset($poll['options'][$opt])) {
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_DATA');
-        return;
-    }
+                throw new EmptyParameterException($poll['options'][$opt], 'Missing field, Options id must be set');
+            }
 
     // Check for confirmation
     if (empty($confirm)) {

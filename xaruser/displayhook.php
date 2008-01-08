@@ -65,7 +65,7 @@ function polls_user_displayhook($args)
     }
 
         if ((xarModAPIFunc('polls', 'user', 'usercanvote', array('pid' => $pid)))) {
-        if (xarSecurityCheck('VotePolls',0,'Polls',"$poll[title]:$poll[type]")) {
+        if (xarSecurityCheck('VotePolls',0,'Polls',"$poll[pid]:$poll[type]")) {
             $data['canvote'] = 1;
             $data['type'] = $poll['type'];
             $data['private'] = $poll['private'];
@@ -73,13 +73,13 @@ function polls_user_displayhook($args)
                                   'user',
                                   'resultshook',
                                   array('pid' => $poll['pid']));
-            $data['previewresults'] = xarModGetVar('polls', 'previewresults');
+            $data['previewresults'] = xarModVars::Get('polls', 'previewresults');
             $data['authid'] = xarSecGenAuthKey('polls');
             $data['pid'] =  $poll['pid'];
             $data['options'] = $poll['options'];
             $data['callingmod'] = $modname;
         } else {
-            if (xarSecurityCheck('ViewPolls',0,'Polls',"$poll[title]:$poll[type]")) {
+            if (xarSecurityCheck('ViewPolls',0,'Polls',"$poll[pid]:$poll[type]")) {
             return xarModFunc('polls',
                               'user',
                               'resultshook',
@@ -91,7 +91,7 @@ function polls_user_displayhook($args)
     }
     } else {
         // Security check to see this poll
-        if (xarSecurityCheck('ViewPolls',0,'Polls',"$poll[title]:$poll[type]")) {
+        if (xarSecurityCheck('ViewPolls',0,'Polls',"$poll[pid]:$poll[type]")) {
             return xarModFunc('polls',
                               'user',
                               'resultshook',

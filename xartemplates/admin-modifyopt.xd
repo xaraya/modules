@@ -1,4 +1,5 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
 <div class="xar-mod-head">
   <span class="xar-mod-title">
@@ -24,13 +25,13 @@
         <label for="option" title="#xarML('The new name of the option')#" class="xar-form-label">
           <xar:mlstring>Option Text</xar:mlstring>
         </label>
-        <input type="text" name="option" id="option" size="50" maxlength="100" value="#$option#"/>
+        <xar:data-input type="textbox" name="option" id="option" size="50" maxlength="100" value="$option"/>
       </div>
     </fieldset>
     <div class="xar-form-input-wrapper-after">
-      <input type="submit" value="#xarML('Modify Option')#"/> &nbsp; &nbsp;
+      <input type="submit" value="#xarML('Modify Option')#"/> &#160; &#160;
       <input type="button" value="#xarML('Cancel')#" onclick="location.href='#$cancelurl#'"/>
     </div>
   </form>
 </div>
-
+</xar:template>

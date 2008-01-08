@@ -27,18 +27,14 @@ function polls_adminapi_createopt($args)
 
     // Argument check
     if ((!isset($pid)) || (!isset($option))) {
-        $msg = xarML('Missing poll ID or option');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
-        return;
+        throw new BadParameterException(array($pid,$option),'Missing Poll id (#(1)), or Options (#(2))');
     }
 
     // Get poll information
     $poll = xarModAPIFunc('polls', 'user', 'get', array('pid' => $pid));
 
     // Security check
-    if (!xarSecurityCheck('EditPolls',1,'All',"$poll[title]:$poll[type]")) {
+    if (!xarSecurityCheck('EditPolls',1,'All',"$poll[pid]:$poll[type]")) {
         return;
     }
 
@@ -51,10 +47,10 @@ function polls_adminapi_createopt($args)
         $votes = 0;
     }
     $sql = "INSERT INTO $pollsinfotable (
-              xar_pid,
-              xar_optnum,
-              xar_votes,
-              xar_optname)
+              pid,
+              optnum,
+              votes,
+              optname)
             VALUES (?,?,?,?)";
 
     $bindvars = array($pid, $newitemnum, $votes, $option);
@@ -68,8 +64,8 @@ function polls_adminapi_createopt($args)
 
     // Update poll information
     $sql = "UPDATE $pollstable
-            SET xar_opts = xar_opts +1
-            WHERE xar_pid = ?";
+            SET opts = opts +1
+            WHERE pid = ?";
 
     $result2 = $dbconn->Execute($sql, array((int)$pid));
     if (!$result2) {

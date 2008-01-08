@@ -25,29 +25,26 @@ function polls_adminapi_reset($args)
 
     // Argument check
     if (!isset($pid)) {
-        $msg = xarML('Missing poll ID');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
-        return;
+            throw new IDNotFoundException($pid,'Unable to find poll id (#(1))');
     }
 
     // Get poll information
     $poll = xarModAPIFunc('polls', 'user', 'get', array('pid' => $pid));
 
     // Security check
-    if (!xarSecurityCheck('EditPolls',1,'All',"$poll[title]:$poll[type]")) {
+    if (!xarSecurityCheck('EditPolls',1,'All',"$poll[pid]:$poll[type]")) {
         return;
     }
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $pollsinfotable = $xartable['polls_info'];
-    $prefix = xarConfigGetVar('prefix');
+    //$prefix = xarConfigVars::get('prefix');
+    $prefix = xarConfigVars::get(null, 'prefix');
 
     $sql = "UPDATE $pollsinfotable
-            SET xar_votes = 0
-            WHERE xar_pid = ?";
+            SET votes = 0
+            WHERE pid = ?";
     $result = $dbconn->Execute($sql, array((int)$pid));
 
     if (!$result) {
@@ -57,9 +54,9 @@ function polls_adminapi_reset($args)
     $pollstable = $xartable['polls'];
 
     $sql = "UPDATE $pollstable
-            SET xar_votes = 0,
-            xar_reset = ".time()."
-            WHERE xar_pid = ?";
+            SET votes = 0,
+            reset = ".time()."
+            WHERE pid = ?";
     $result = $dbconn->Execute($sql, array((int)$pid));
 
     if (!$result) {

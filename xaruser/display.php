@@ -28,11 +28,7 @@ function polls_user_display($args)
     extract($args);
 
     if (!isset($pid)) {
-        $msg = xarML('Missing poll id');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
-        return;
+            throw new EmptyParameterException($pid,'Poll id (#(1)) not found');
     }
 
     // Get item
@@ -42,10 +38,7 @@ function polls_user_display($args)
                            array('pid' => $pid));
 
     if (!$poll) {
-        $msg = xarML('Error retrieving Poll data');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
+            throw new EmptyParameterException($pid,'Error retrieving Poll data, poll id (#(1)) not found');
         return;
     }
 
@@ -54,7 +47,7 @@ function polls_user_display($args)
     $data['returnurl'] =  xarServerGetCurrentURL();
 
     // See if user is allowed to vote
-    if (xarSecurityCheck('VotePolls',0,'Polls',"$poll[title]:$poll[type]")){
+    if (xarSecurityCheck('VotePolls',0,'Polls',"$poll[pid]:$poll[type]")){
 
         if ((xarModAPIFunc('polls', 'user', 'usercanvote', array('pid' => $pid)))) {
             // They have not voted yet, display voting options
@@ -65,7 +58,7 @@ function polls_user_display($args)
                                   'user',
                                   'results',
                                   array('pid' => $poll['pid']));
-            $data['previewresults'] = xarModGetVar('polls', 'previewresults');
+            $data['previewresults'] = xarModVars::Get('polls', 'previewresults');
 
             $data['authid'] = xarSecGenAuthKey('polls');
             $data['pid'] =  $poll['pid'];

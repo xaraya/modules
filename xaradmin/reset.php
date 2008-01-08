@@ -21,14 +21,14 @@ function polls_admin_reset()
     if (!xarVarFetch('pid', 'id', $pid)) return;
     if (!xarVarFetch('confirm', 'isset', $confirm, NULL, XARVAR_DONT_SET)) return;
 
-    if (!isset($pid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($pid) && xarCurrentErrorType() != NO_EXCEPTION) return; // throw back
 
     $poll = xarModAPIFunc('polls',
                            'user',
                            'get',
                            array('pid' => $pid));
 
-    if (!xarSecurityCheck('AdminPolls',1,'Poll',"$poll[title]:$poll[type]")) {
+    if (!xarSecurityCheck('AdminPolls',1,'Poll',"$poll[pid]:$poll[type]")) {
         return;
     }
 

@@ -16,28 +16,18 @@
  *
  * @param $args['objectid'] ID of the object
  * @param $args['extrainfo'] extra information
- * @return string hook output in HTML
- * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @returns string
+ * @return hook output in HTML
+ * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function polls_admin_modifyhook($args)
 {
     extract($args);
 
-    if (!isset($extrainfo)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'extrainfo', 'admin', 'modifyhook', 'polls');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return $msg;
-    }
 
-    if (!isset($objectid) || !is_numeric($objectid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'object ID', 'admin', 'modifyhook', 'polls');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return $msg;
-    }
+    if (!isset($extrainfo)) throw new EmptyParameterException('extrainfo');
+    if (!isset($objectid)) throw new EmptyParameterException('objectid');
+    if (!is_numeric($objectid)) throw new VariableValidationException(array('objectid',$objectid,'numeric'));
 
     // When called via hooks, the module name may be empty, so we get it from
     // the current module
@@ -49,11 +39,9 @@ function polls_admin_modifyhook($args)
 
     $modid = xarModGetIDFromName($modname);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'module name', 'admin', 'modifyhook', 'polls');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return $msg;
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('module name', 'admin', 'modifyhook', 'polls');
+        throw new BadParameterException($vars,$msg);
     }
 
     if (!empty($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
@@ -73,7 +61,7 @@ function polls_admin_modifyhook($args)
         return '';
     }
 
-    $optcount = xarModGetVar('polls', 'defaultopts');
+    $optcount = xarModVars::Get('polls', 'defaultopts');
     if (empty($optcount)) {
         $optcount = 6;
     }
@@ -84,7 +72,7 @@ function polls_admin_modifyhook($args)
                                    'itemtype' => $itemtype,
                                    'objectid' => $itemid));
     if (!empty($oldpoll)) {
-        if (!xarSecurityCheck('EditPolls',0,'Polls',"$oldpoll[title]:$oldpoll[type]")) {
+        if (!xarSecurityCheck('EditPolls',0,'Polls',"$oldpoll[pid]:$oldpoll[type]")) {
             return '';
         }
 

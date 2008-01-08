@@ -30,32 +30,32 @@ function polls_userapi_get($args)
     $bindvars  = array();
     // Selection check
     if (!empty($pid)) {
-        $extra = "WHERE xar_pid = ?";
+        $extra = "WHERE pid = ?";
         $bindvars[]=(int)$pid;
 // inserire una condizione sul polls con data futura
     } else {
-        $extra = "WHERE xar_modid = " . xarModGetIDFromName('polls');
+        $extra = "WHERE modid = " . xarModGetIDFromName('polls');
         if (isset ($act)) {
-         $extra .= " AND xar_open = 1 AND xar_start_date <= ? ";
+         $extra .= " AND open = 1 AND start_date <= ? ";
          $bindvars[]= time();
          }
-        $extra .= " ORDER BY xar_pid DESC";
+        $extra .= " ORDER BY pid DESC";
     }
 
     // Get item
-    $sql = "SELECT xar_pid,
-                   xar_title,
-                   xar_type,
-                   xar_open,
-                   xar_private,
-                   xar_modid,
-                   xar_itemtype,
-                   xar_itemid,
-                   xar_opts,
-                   xar_votes,
-                   xar_start_date,
-                   xar_end_date,
-                   xar_reset
+    $sql = "SELECT pid,
+                   title,
+                   type,
+                   open,
+                   private,
+                   modid,
+                   itemtype,
+                   itemid,
+                   opts,
+                   votes,
+                   start_date,
+                   end_date,
+                   reset
             FROM $pollstable
             $extra";
 
@@ -81,19 +81,19 @@ function polls_userapi_get($args)
     $result->Close();
 
     // Security check
-    if(!xarSecurityCheck('ViewPolls',0,'Polls',"$title:$type")){
+    if(!xarSecurityCheck('ViewPolls',0,'Polls',"$pid:$type")){
         return;
     }
 
     // Get the options for this poll
     $pollsinfotable = $xartable['polls_info'];
 
-    $sql = "SELECT xar_optnum,
-                   xar_optname,
-                   xar_votes
+    $sql = "SELECT optnum,
+                   optname,
+                   votes
             FROM $pollsinfotable
-            WHERE xar_pid = ?
-            ORDER BY xar_optnum";
+            WHERE pid = ?
+            ORDER BY optnum";
     $result = $dbconn->Execute($sql, array((int)$pid));
 
     if (!$result) {

@@ -23,28 +23,25 @@ function polls_adminapi_delete($args)
 
     // Argument check
     if (!isset($pid)) {
-        $msg = xarML('Missing poll ID');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
-        return;
+                throw new IDNotFoundException($pid,'Unable to find poll id (#(1))');
     }
 
     // Get poll information
     $poll = xarModAPIFunc('polls', 'user', 'get', array('pid' => $pid));
 
     // Security check
-    if (!xarSecurityCheck('DeletePolls',1,'All',"$poll[title]:$poll[type]")) {
+    if (!xarSecurityCheck('DeletePolls',1,'All',"$poll[pid]:$poll[type]")) {
         return;
     }
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $pollsinfotable = $xartable['polls_info'];
-    $prefix = xarConfigGetVar('prefix');
+    //$prefix = xarConfigVars::get('prefix');
+    $prefix = xarConfigVars::get(null, 'prefix');
 
     $sql = "DELETE FROM $pollsinfotable
-            WHERE xar_pid = ?";
+            WHERE pid = ?";
     $result = $dbconn->Execute($sql, array((int)$pid));
 
     if (!$result) {
@@ -54,7 +51,7 @@ function polls_adminapi_delete($args)
     $pollstable = $xartable['polls'];
 
     $sql = "DELETE FROM $pollstable
-            WHERE xar_pid = ?";
+            WHERE pid = ?";
     $result = $dbconn->Execute($sql, array((int)$pid));
     if (!$result) {
         return;

@@ -1,4 +1,5 @@
-<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>Poll Results</xar:mlstring>
@@ -24,7 +25,7 @@
                             <b>#$loop:item['name']#</b>
                             [ #$loop:item['percentage']#%
                             <xar:if condition="$showtotalvotes eq 1">
-                                &nbsp;(#$loop:item['votes']#)
+                                &#160;<p align="center"></p>(#$loop:item['votes']#)
                             </xar:if>    
                             ]<br />
                             <xar:if condition="$imggraph eq 1">
@@ -72,3 +73,4 @@
 <div class="xar-standard-box-padding xar-align-center">
 #$hookoutput#
 </div>
+</xar:template>

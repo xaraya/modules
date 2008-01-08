@@ -1,11 +1,12 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
 <script type="text/javascript">
 <!--
     // Enter name of mandatory fields
     var fieldRequired = Array("title");
     // Enter field description to appear in the dialog box
-    var fieldDescription = Array("title");
+    var fieldDescription = Array("Title");
 //-->
 </script>
 <div class="xar-mod-head">
@@ -28,24 +29,31 @@
                 <label for="title" title="#xarML('The name of the new poll')#" class="xar-form-label">
                     <xar:mlstring>Poll title</xar:mlstring>
                 </label>
-                <input type="text" name="title" id="title" size="50" maxlength="100" value=""/>
+                <xar:data-input type="textbox" name="title" id="title" size="50" maxlength="100" />
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="polltype" title="#xarML('The type of the new poll')#" class="xar-form-label">
                     <xar:mlstring>Poll type</xar:mlstring>
                 </label>
-                <input type="radio" id="polltype" name="polltype" value="single" checked="checked"/>
-                &nbsp;
-                <xar:mlstring>Single Choice</xar:mlstring>
-                <input type="radio" id="polltype" name="polltype" value="multi"/>
-                &nbsp;
-                <xar:mlstring>Multiple Choice</xar:mlstring>
+                <xar:set name="options">
+                        array(
+                          <!--  array('id' => 'single', 'name' => 'Single Choice'), -->
+                          <!--  array('id' => 'multi', 'name' => 'Multiple Choice'), -->
+                          
+                          array('id' => '0', 'name' => 'Single Choice'),
+                          array('id' => '1', 'name' => 'Multiple Choice') 
+                        )
+                </xar:set>
+                <xar:set name="value">
+                    'single'
+                </xar:set>
+                <xar:data-input type="radio" name="polltype" value="$value" options="$options" />
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="private" title="#xarML('who can view the new poll')#" class="xar-form-label">
                     <xar:mlstring>Private</xar:mlstring>
                 </label>
-                <input type="checkbox" name="private" id="private" value="1" />
+                <xar:data-input type="checkbox" name="private" id="private" value="0" />
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="start_date_input" title="#xarML('Poll active from')#" class="xar-form-label">
@@ -66,11 +74,11 @@
             </legend>
             <xar:for start="$i = 1" test="$i le $optcount" iter="$i++">
                 <div class="xar-form-input-wrapper">
-                    <label for="option_#$i#" class="xar-form-label">
+                    <label for="option_$i" class="xar-form-label">
                         <xar:mlstring>Option</xar:mlstring>
                         #$i#
                     </label>
-                    <input type="text" id="option_#$i#" name="option_#$i#" value="" size="50" maxlength="50"/>
+                    <xar:data-input type="textbox" id="option_'.$i.'" name="option_'.$i.'" value="" size="50" maxlength="50"/>
                 </div>
             </xar:for>
         </fieldset>
@@ -87,3 +95,4 @@
         </div>
     </form>
 </div>
+</xar:template>

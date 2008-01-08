@@ -38,32 +38,26 @@ function polls_admin_updateconfig()
     // Check arguments
     if (!is_numeric($barscale) || $barscale <= 0) {
         $msg = xarML("Invalid value for config variable: barscale");
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_DATA',
-                       new SystemException($msg));
-        return;
+        throw new BadParameterException($barscale,$msg);
     }
 
     if (strval(intval($defaultopts)) !== $defaultopts || $defaultopts < 2) {
         $msg = xarML("Invalid value for config variable: defaultopts");
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_DATA',
-                       new SystemException($msg));
-        return;
+        throw new BadParameterException($defaultopts,$msg);
     }
 
     if (strval(intval($imggraph)) !== $imggraph || $imggraph < 0 || $imggraph > 3) {
         $msg = xarML("Invalid value for config variable: imggraph");
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_DATA',
-                       new SystemException($msg));
-        return;
+        throw new BadParameterException($imggraph,$msg);
     }
+    
     if (!(($voteinterval == -1) ||
         ($voteinterval == 86400) ||
         ($voteinterval == 604800) ||
         ($voteinterval == 2592000))) {
+        
         $msg = xarML("Invalid value for config variable: voteinterval");
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_DATA',
-                       new SystemException($msg));
-        return;
+        throw new BadParameterException($voteinterval,$msg);
     }
     if ($previewresults != 1) {
         $previewresults = 0;
@@ -71,13 +65,13 @@ function polls_admin_updateconfig()
 
     // update the data
 
-    xarModSetVar('polls', 'barscale', $barscale);
-    xarModSetVar('polls', 'defaultopts', $defaultopts);
-    xarModSetVar('polls', 'imggraph', $imggraph);
-    xarModSetVar('polls', 'voteinterval', $voteinterval);
-    xarModSetVar('polls', 'previewresults', $previewresults);
-    xarModSetVar('polls', 'showtotalvotes', $showtotalvotes);
-    xarModSetVar('polls', 'SupportShortURLs', $shorturl);
+    xarModVars::set('polls', 'barscale', $barscale);
+    xarModVars::set('polls', 'defaultopts', $defaultopts);
+    xarModVars::set('polls', 'imggraph', $imggraph);
+    xarModVars::set('polls', 'voteinterval', $voteinterval);
+    xarModVars::set('polls', 'previewresults', $previewresults);
+    xarModVars::set('polls', 'showtotalvotes', $showtotalvotes);
+    xarModVars::set('polls', 'SupportShortURLs', $shorturl);
 
     xarModCallHooks('module','updateconfig','polls',
                     array('module' => 'polls'));

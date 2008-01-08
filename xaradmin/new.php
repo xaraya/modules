@@ -23,7 +23,7 @@ function polls_admin_new()
 
     $data = array();
     $data['authid'] = xarSecGenAuthKey();
-    $data['optcount'] = xarModGetVar('polls', 'defaultopts');
+    $data['optcount'] = xarModVars::Get('polls', 'defaultopts');
     $data['start_date']= time();
     $data['end_date']= NULL;
 

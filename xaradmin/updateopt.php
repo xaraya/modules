@@ -22,7 +22,7 @@ function polls_admin_updateopt()
     if (!xarVarFetch('opt', 'int:0:', $opt, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('option', 'isset', $option, XARVAR_DONT_SET)) return;
 
-    if ((!isset($pid) || !isset($opt) || !isset($option)) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    if ((!isset($pid) || !isset($opt) || !isset($option)) && xarCurrentErrorType() != NO_EXCEPTION) return; // throw back
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
@@ -34,7 +34,7 @@ function polls_admin_updateopt()
                      array('pid' => $pid,
                            'opt' => $opt,
                            'option' => $option));
-    if(!$updated && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    if(!$updated && xarCurrentErrorType() != NO_EXCEPTION) return; // throw back
 
     xarResponseRedirect(xarModURL('polls',
                         'admin',

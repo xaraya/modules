@@ -25,20 +25,15 @@ function polls_adminapi_deleteopt($args)
     extract($args);
 
     // Argument check
-    if ((!isset($pid))  ||
-        (!isset($opt))) {
-        $msg = xarML('Missing poll ID or option ID');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
-        return;
+    if ((!isset($pid))  || (!isset($opt))) {
+        throw new BadParameterException(array($pid,$option),'Missing Poll id (#(1)), or Options (#(2))');
     }
 
     // Get poll information
     $poll = xarModAPIFunc('polls', 'user', 'get', array('pid' => $pid));
 
     // Security check
-    if (!xarSecurityCheck('EditPolls',1,'All',"$poll[title]:$poll[type]")) {
+    if (!xarSecurityCheck('EditPolls',1,'All',"$poll[pid]:$poll[type]")) {
         return;
     }
 
@@ -47,8 +42,8 @@ function polls_adminapi_deleteopt($args)
     $pollsinfotable = $xartable['polls_info'];
 
     $sql = "DELETE FROM $pollsinfotable
-            WHERE xar_pid = ?
-              AND xar_optnum = ?";
+            WHERE pid = ?
+              AND optnum = ?";
 
     $result = $dbconn->Execute($sql, array((int)$pid, $opt));
 
@@ -60,9 +55,9 @@ function polls_adminapi_deleteopt($args)
     $new_votes = ($poll['votes'] - $votes);
     $pollstable = $xartable['polls'];
     $sql = "UPDATE $pollstable
-            SET xar_opts = xar_opts - 1,
-            xar_votes = ?
-            WHERE xar_pid = ?";
+            SET opts = opts - 1,
+            votes = ?
+            WHERE pid = ?";
 
     $result = $dbconn->Execute($sql, array((int)$new_votes,(int)$pid));
 

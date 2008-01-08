@@ -21,7 +21,7 @@ function polls_admin_incopt()
     if (!xarVarFetch('pid', 'id', $pid, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('opt', 'int:0:', $opt, XARVAR_DONT_SET)) return;
 
-    if (!isset($pid) || !isset($opt) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($pid) || !isset($opt) && xarCurrentErrorType() != NO_EXCEPTION) return; // throw back
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
@@ -30,7 +30,7 @@ function polls_admin_incopt()
     $incremented = xarModAPIFunc('polls', 'admin', 'incopt', array('pid' => $pid,
                                                          'opt' => $opt));
 
-    if (!$incremented && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    if (!$incremented && xarCurrentErrorType() != NO_EXCEPTION) return; // throw back
 
     // Redirect
     xarResponseRedirect(xarModURL('polls',

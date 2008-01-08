@@ -1,4 +1,5 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:style scope="common" />
 <xar:base-include-javascript module="base" filename="confirmlink.js" />
 <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
@@ -29,39 +30,34 @@
             <input type="hidden" name="authid" value="#$authid#"/>
             <input type="hidden" name="pid" value="#$pid#"/>
             <div class="xar-form-input-wrapper">
-                <label for="title" title="#xarML('The name of the new poll')#" class="xar-form-label">
+                <label for="title" title="#xarML('The name of the poll')#" class="xar-form-label">
                     <xar:mlstring>Poll title</xar:mlstring>:
                 </label>
-                <input type="text" name="title" id="title" size="50" maxlength="100" value="#$polltitle#"/>
+                <xar:data-input type="textbox" name="title" id="title" size="50" maxlength="100" value="$polltitle"/>
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="polltype" title="#xarML('The type of the new poll')#" class="xar-form-label">
                     <xar:mlstring>Poll type</xar:mlstring>:
-                </label>
-                <xar:if condition="$polltype eq 'single'">
-                    <input type="radio" id="polltype" name="polltype" value="single" checked="checked" />
-                <xar:else />
-                    <input type="radio" id="polltype" name="polltype" value="single" />
-                </xar:if>
-                &nbsp;
-                <xar:mlstring>Single Choice</xar:mlstring>
-                <xar:if condition="$polltype eq 'multi'">
-                    <input type="radio" id="polltype" name="polltype" value="multi" checked="checked" />
-                <xar:else />
-                    <input type="radio" id="polltype" name="polltype" value="multi" />
-                </xar:if>
-                &nbsp;
-                <xar:mlstring>Multiple Choice</xar:mlstring>
+                </label>           
+                <xar:set name="option">
+                        array(
+                            <!--  array('id' => 'single', 'name' => 'Single Choice'), -->
+                          <!--  array('id' => 'multi', 'name' => 'Multiple Choice'), -->
+                          
+                          array('id' => '0', 'name' => 'Single Choice'),
+                          array('id' => '1', 'name' => 'Multiple Choice') 
+                        )
+                </xar:set>
+                <xar:set name="value">
+                    #$polltype#
+                </xar:set>    
+                <xar:data-input type="radio" name="polltype" value="$value" options="$option"  />               
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="private" title="#xarML('who can view the new poll')#" class="xar-form-label">
                     <xar:mlstring>Private</xar:mlstring>
                 </label>
-                <xar:if condition="$private">
-                    <input type="checkbox" name="private" id="private" value="1" checked="checked" />
-                <xar:else />
-                    <input type="checkbox" name="private" id="private" value="1" />
-                </xar:if>
+                <xar:data-input type="checkbox" name="private" id="private" checked="$private" />
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="start_date_input" title="#xarML('Poll active from')#" class="xar-form-label">
@@ -158,3 +154,4 @@
         </div>
     </form>
 </div>
+</xar:template>

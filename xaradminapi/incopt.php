@@ -26,11 +26,7 @@ function polls_adminapi_incopt($args)
 
     // Argument check
     if ((!isset($pid)) || (!isset($opt))) {
-        $msg = xarML('Missing poll ID or option');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
-        return;
+        throw new BadParameterException(array($pid,$option),'Missing Poll id (#(1)), or Option (#(2))');
     }
 
     // Get poll information
@@ -40,12 +36,11 @@ function polls_adminapi_incopt($args)
                            array('pid' => $pid));
 
     if (!$poll) {
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
-        return;
-    }
+                throw new IDNotFoundException($pid,'Unable to found poll id (#(1))');
+            }
 
     // Security check
-    if (!xarSecurityCheck('EditPolls',1,'All',"$poll[title]:$poll[type]")) {
+    if (!xarSecurityCheck('EditPolls',1,'All',"$poll[pid]:$poll[type]")) {
         return;
     }
 
@@ -56,27 +51,27 @@ function polls_adminapi_incopt($args)
 
     // Swap positions - three updates
     $sql = "UPDATE $pollsinfotable
-            SET xar_optnum = xar_optnum + 900
-            WHERE xar_pid = ?
-            AND xar_optnum = ?";
+            SET optnum = optnum + 900
+            WHERE pid = ?
+            AND optnum = ?";
     $result = $dbconn->Execute($sql, array((int)$pid, $opt));
     if(!$result){
         return;
     }
     $opt2=$opt - 1;
     $sql = "UPDATE $pollsinfotable
-            SET xar_optnum = ?
-            WHERE xar_pid = ?
-            AND xar_optnum = ?";
+            SET optnum = ?
+            WHERE pid = ?
+            AND optnum = ?";
     $result = $dbconn->Execute($sql, array($opt, (int)$pid, $opt2));
     if(!$result){
         return;
     }
     $opt2=$opt + 900;
     $sql = "UPDATE $pollsinfotable
-            SET xar_optnum = xar_optnum - 901
-            WHERE xar_pid = ?
-            AND xar_optnum = ?";
+            SET optnum = optnum - 901
+            WHERE pid = ?
+            AND optnum = ?";
     $result = $dbconn->Execute($sql, array((int)$pid, $opt2));
     if(!$result){
         return;

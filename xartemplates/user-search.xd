@@ -1,4 +1,5 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <h2>
     <xar:mlstring>
         Search in Polls
@@ -55,3 +56,4 @@
     <input type="checkbox" name="options" id="options" value="1" />
     </xar:if>
 </p>
+</xar:template>

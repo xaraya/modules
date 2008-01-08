@@ -35,9 +35,7 @@ function polls_adminapi_getmenulinks()
 
 
     if (xarSecurityCheck('AdminPolls',0)) {
-        $menulinks[] = Array('url' => xarModURL('polls',
-                                                   'admin',
-                                                   'modifyconfig'),
+        $menulinks[] = Array('url' => xarModURL('polls','admin','modifyconfig'),
                               'title' => xarML('Modify Polls configuration'),
                               'label' => xarML('Modify Config'));
     }

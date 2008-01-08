@@ -31,18 +31,18 @@ function polls_userapi_getitemlinks($args)
     $pollstable = $xartable['polls'];
 
     // Get polls
-    $sql = "SELECT xar_pid,
-                   xar_title,
-                   xar_type
+    $sql = "SELECT pid,
+                   title,
+                   type
             FROM $pollstable
-            WHERE xar_pid IN (". join(', ', $itemids) . ")";
+            WHERE pid IN (". join(', ', $itemids) . ")";
     $result =& $dbconn->Execute($sql);
     if (!$result) return;
 
     // Put polls into result array.
     for (; !$result->EOF; $result->MoveNext()) {
         list($pid, $title,$type) = $result->fields;
-        if (xarSecurityCheck('ViewPolls',0,'Polls',"$title:$type")) {
+        if (xarSecurityCheck('ViewPolls',0,'Polls',"$pid:$type")) {
              $itemlinks[$pid] = array('url'   => xarModURL('polls', 'user', 'results',
                                                            array('pid' => $pid)),
                                       'title' => xarML('View Poll'),

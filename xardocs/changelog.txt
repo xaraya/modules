@@ -17,4 +17,8 @@ removing inline styles
 standard classes used
 header
 .....
- 
+
+
+1.6.0 dec 2007
+update to 2.x style
+revert permission on poll id to avoid duplicate

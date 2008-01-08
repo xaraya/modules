@@ -1,4 +1,5 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
 <div class="xar-mod-head">
     <span class="xar-mod-title">
@@ -20,13 +21,13 @@
                 <label for="barscale" title="#xarML('Scale of result bar')#" class="xar-form-label">
                       <xar:mlstring>Scale of result bar</xar:mlstring>
                 </label>
-                <input type="text" name="barscale" id="barscale" value="#$barscale#" size="4" maxlength="3"/>
+                <xar:data-input type="textbox" name="barscale" id="barscale" value="$barscale" size="4" maxlength="3"/>
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="defaultopts" title="#xarML('Default number of options for poll')#" class="xar-form-label">
                       <xar:mlstring>Options for new polls</xar:mlstring>
                 </label>
-                <input type="text" name="defaultopts" id="defaultopts" value="#$defaultopts#"/>
+                <xar:data-input type="textbox" name="defaultopts" id="defaultopts" value="$defaultopts"/>
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="imggraph" title="#xarML('Use an image for displayng poll result')#" class="xar-form-label">
@@ -64,35 +65,23 @@
                             </xar:foreach>
                        </select>
             </div>
-            <div class="xar-form-input-wrapper">
-                <label for="previewresults" title="#xarML('Users can view results before voting')#" class="xar-form-label">
-                       <xar:mlstring>Allow users to see results before voting?</xar:mlstring>
-                </label>
-                        <xar:if condition="$previewresults == 1">
-                            <input type="checkbox" name="previewresults" id="previewresults" value="1" checked="checked"/>
-                        <xar:else />
-                            <input type="checkbox" name="previewresults" id="previewresults" value="1"/>
-                        </xar:if>
+            <div class="xar-form-input-wrapper-after">
+                <xar:data-input type="checkbox" name="previewresults" id="previewresults" value="1" checked="$previewresults"/>
+                <label for="previewresults" title="#xarML('Users can view results before voting')#">
+                        <xar:mlstring>Allow users to see results before voting?</xar:mlstring>
+                </label>               
             </div>
-            <div class="xar-form-input-wrapper">
-                <label for="showtotalvotes" title="#xarML('Users can view total number of votes')#" class="xar-form-label">
+            <div class="xar-form-input-wrapper-after">
+                    <xar:data-input type="checkbox" name="showtotalvotes" id="showtotalvotes" value="1" checked="$showtotalvotes"/>
+                <label for="showtotalvotes" title="#xarML('Users can view total number of votes')#">
                         <xar:mlstring>Allow users to see total votes?</xar:mlstring>
-                </label>
-                        <xar:if condition="$showtotalvotes == 1">
-                            <input type="checkbox" name="showtotalvotes" id="showtotalvotes" value="1" checked="checked"/>
-                        <xar:else />
-                            <input type="checkbox" name="showtotalvotes" id="showtotalvotes" value="1"/>
-                        </xar:if>
+                </label>             
             </div>
-            <div class="xar-form-input-wrapper">
-                <label for="shorturl" title="#xarML('Use short urls for the polls')#" class="xar-form-label">
-                        <xar:mlstring>Enable Short URLs?</xar:mlstring>
-                </label>
-                        <xar:if condition="$shorturl == 1">
-                            <input type="checkbox" name="shorturl" id="shorturl" value="1" checked="checked"/>
-                        <xar:else />
-                            <input type="checkbox" name="shorturl" id="shorturl" value="1"/>
-                        </xar:if>
+            <div class="xar-form-input-wrapper-after">
+                    <xar:data-input type="checkbox" name="shorturl" id="shorturl" value="1" checked="$shorturl"/>
+                <label for="shorturl" title="#xarML('Use short urls for the polls')#">
+                            <xar:mlstring>Enable Short URLs?</xar:mlstring>
+                </label>               
             </div>
         </fieldset>
             <xar:if condition="!empty($hooks)">
@@ -105,3 +94,4 @@
         </div>
     </form>
 </div>
+</xar:template>

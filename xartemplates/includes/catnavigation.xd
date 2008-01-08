@@ -1,4 +1,5 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:if condition="!isset($catid)">
     <xar:set name="catid">0</xar:set>
 </xar:if>
@@ -6,4 +7,4 @@
     <xar:set name="pid">0</xar:set>
 </xar:if>
 <xar:categories-navigation layout="trails" module="polls" itemid="$pid" func="list" catid="$catid" showchildren="1" showcatcount="1" />
-
+</xar:template>

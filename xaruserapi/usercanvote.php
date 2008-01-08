@@ -25,14 +25,11 @@ function polls_userapi_usercanvote($args)
 
     // Check args
     if (!isset($pid)) {
-        $msg = xarML('Missing poll ID in checkvote');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
-        return false;
+        throw new EmptyParameterException($pid,'Error retrieving Poll data, poll id (#(1)) not found');
     }
     if(xarUserIsLoggedIn()){
-        $votes = xarModGetUserVar('polls', 'uservotes');
+       // $votes = xarModUserVars::get('polls', 'uservotes');
+        $votes =xarModUserVars::get('polls', 'uservotes');
     }
     else{
         $votes = xarSessionGetVar("uservotes");
@@ -57,7 +54,7 @@ function polls_userapi_usercanvote($args)
     $now = time();
     $reset = $poll['reset'];
 
-    $interval = xarModGetVar('polls', 'voteinterval');
+    $interval = xarModVars::Get('polls', 'voteinterval');
 
     // Allow voting on a poll reset since vote, regardless of vote interval
     if($vote < $reset){
@@ -82,10 +79,6 @@ function polls_userapi_usercanvote($args)
                 return false;
             }
         default:
-            $msg = xarML('Cannot determine vote status');
-            xarErrorSet(XAR_USER_EXCEPTION,
-                        'BAD_DATA',
-                        new DefaultUserException($msg));
             return false;
     }
     return true;

@@ -23,21 +23,9 @@ function polls_admin_newhook($args)
 {
     extract($args);
 
-    if (!isset($extrainfo)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'extrainfo', 'admin', 'newhook', 'polls');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return $msg;
-    }
-
-    if (!isset($objectid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'object ID', 'admin', 'newhook', 'polls');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return $msg;
-    }
+    if (!isset($extrainfo)) throw new EmptyParameterException('extrainfo');
+    if (!isset($objectid)) throw new EmptyParameterException('objectid');
+    if (!is_numeric($objectid)) throw new VariableValidationException(array('objectid',$objectid,'numeric'));
 
     // When called via hooks, the module name may be empty, so we get it from
     // the current module
@@ -49,11 +37,9 @@ function polls_admin_newhook($args)
 
     $modid = xarModGetIDFromName($modname);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'module name', 'admin', 'newhook', 'polls');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return $msg;
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('module name', 'admin', 'newhook', 'polls');
+        throw new BadParameterException($vars,$msg);
     }
 
     if (!empty($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
@@ -76,7 +62,7 @@ function polls_admin_newhook($args)
         return '';
     }
 
-    $optcount = xarModGetVar('polls', 'defaultopts');
+    $optcount = xarModVars::Get('polls', 'defaultopts');
     if (empty($optcount)) {
         $optcount = 6;
     }

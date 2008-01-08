@@ -18,13 +18,10 @@ function polls_xartables()
 {
     // Initialise table array
     $xartable = array();
-    $prefix = xarDBGetSiteTablePrefix();
+    $prefix = xarDB::getPrefix();
 
-    $polls = $prefix . '_polls';
-    $xartable['polls'] = $polls;
-
-    $pollsinfo = $prefix . '_polls_info';
-    $xartable['polls_info'] = $pollsinfo;
+    $xartable['polls'] = $prefix . '_polls';
+    $xartable['polls_info'] = $prefix . '_polls_info';
 
     // Return the table information
     return $xartable;

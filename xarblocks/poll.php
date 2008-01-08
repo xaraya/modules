@@ -42,7 +42,7 @@ function polls_pollblock_display($blockinfo)
 {
     // Security check
 
-    if (!xarSecurityCheck('ViewPollBlock',0,'Pollblock',"$blockinfo[title]:$blockinfo[type]")) return;
+   // if (!xarSecurityCheck('ViewPollBlock',0,'Pollblock',"$blockinfo[pid]:$blockinfo[type]")) return;
 
     // Get variables from content block
     $vars = @unserialize($blockinfo['content']);
@@ -61,7 +61,7 @@ function polls_pollblock_display($blockinfo)
     }
 
     // Permissions check
-    if (!xarSecurityCheck('ListPolls',0,'Polls',"$poll[title]:$poll[type]")) return;
+    if (!xarSecurityCheck('ListPolls',0,'Polls',"$poll[pid]:$poll[type]")) return;
 
     // Create output object
     $data = array();
@@ -72,14 +72,14 @@ function polls_pollblock_display($blockinfo)
     $data['open'] = $poll['open'];
     $data['start_date'] = $poll['start_date'];
     $data['buttonlabel'] = xarML('Vote');
-    $data['previewresults'] = xarModGetVar('polls', 'previewresults');
-    $data['showtotalvotes'] = xarModGetVar('polls', 'showtotalvotes');
+    $data['previewresults'] = xarModVars::Get('polls', 'previewresults');
+    $data['showtotalvotes'] = xarModVars::Get('polls', 'showtotalvotes');
     $data['canvote'] = xarModAPIFunc('polls', 'user', 'usercanvote', array('pid' => $poll['pid']));
     $data['bid'] = $blockinfo['bid'];
     //initialize our array to hold poll options, if any
     $data['options']=array();
     // See if user is allowed to vote
-    if ((xarSecurityCheck('VotePolls',0,'Polls',"$poll[title]:$poll[type]")) &&
+    if ((xarSecurityCheck('VotePolls',0,'Polls',"$poll[pid]:$poll[type]")) &&
                          ($data['canvote'])){
         // They have not voted yet, display voting options
 
@@ -90,8 +90,8 @@ function polls_pollblock_display($blockinfo)
         $data['canvote'] = 1;
     } else {
         // They have voted, display current results
-        $barscale = xarModGetVar('polls', 'barscale');
-        $imggraph = xarModGetVar('polls', 'imggraph');
+        $barscale = xarModVars::Get('polls', 'barscale');
+        $imggraph = xarModVars::Get('polls', 'imggraph');
         $data['imggraph'] = ($imggraph == 1 || $imggraph == 3)?1:0;
         $data['canvote'] = 0;
 

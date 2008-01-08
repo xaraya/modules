@@ -29,9 +29,7 @@ function polls_user_vote($args)
     extract($args);
 
     if(empty($pid)){
-        $msg = xarML('No poll specified');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
+            throw new EmptyParameterException($pid,'Error retrieving Poll data, poll id must be set');
     }
 
     $canvote = xarModAPIFunc('polls',
@@ -58,11 +56,7 @@ function polls_user_vote($args)
                      array('pid' => $pid));
 
     if (!$poll) {
-        $msg = xarML('Error retrieving Poll data');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
-        return;
+            throw new EmptyParameterException($pid,'Error retrieving Poll data, poll id (#(1)) not found');
     }
     $options = array();
     // Get selected options
@@ -80,14 +74,10 @@ function polls_user_vote($args)
         }
     }
     if(count($options) == 0){
-        $msg = xarML('No vote received');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
+                throw new EmptyParameterException($options,'For voting a vote is necessary');
     }
     if(count($options) > 1 && $poll['type'] == 'single'){
-        $msg = xarML('Multiple votes not allowed on this Poll.');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA', new DefaultUserException($msg));
-        return;
+          throw new EmptyParameterException($options,'Multiple votes not allowed on this Poll.');
     }
 
     // Pass vote to API
@@ -98,16 +88,12 @@ function polls_user_vote($args)
                            'options' => $options));
 
     if (!$vote) {
-        $msg = xarML('Error recording vote');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
-        return;
+            throw new EmptyParameterException($vote,'Error recording vote');
     }
     // CHECKME: find some cleaner way to update the page cache if necessary
     if (function_exists('xarOutputFlushCached')) {
         if (isset($callingmod) &&
-            xarModGetVar('xarcachemanager','FlushOnNewPollvote')) {
+            xarModVars::Get('xarcachemanager','FlushOnNewPollvote')) {
             xarPageFlushCached("$callingmod-user-display-");
         } else {
             xarOutputFlushCached("polls-user-");

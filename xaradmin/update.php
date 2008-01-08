@@ -28,11 +28,7 @@ function polls_admin_update()
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
 
-     if (!isset($title)){
-        $msg = xarML('Missing required field title');
-        xarErrorSet(XAR_USER_EXCEPTION,'MISSING_DATA',new DefaultUserException($msg));
-        return;
-    }
+    if ((!isset($title))) throw new EmptyParameterException('title');
 
     if($private != 1){
         $private = 0;
@@ -57,12 +53,11 @@ function polls_admin_update()
     $poll = xarModAPIFunc('polls', 'user', 'get', array('pid' => $pid));
 
     if (!$poll) {
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
-        return;
+        throw new BadParameterException($pid,'Poll not found (#(1))');
     }
 
     // security check
-    if (!xarSecurityCheck('EditPolls',1,'Polls',"$poll[title]:$poll[type]")) {
+    if (!xarSecurityCheck('EditPolls',1,'Polls',"$poll[pid]:$poll[type]")) {
         return;
     }
     $options = $poll['options'];

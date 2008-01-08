@@ -23,30 +23,27 @@ function polls_adminapi_close($args)
 
     // Argument check
     if (!isset($pid)) {
-        $msg = xarML('Missing poll');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
-        return;
+            throw new EmptyParameterException($pid,'Missing id, Poll id must be set');
     }
 
     // Get poll information
     $poll = xarModAPIFunc('polls', 'user', 'get', array('pid' => $pid));
 
     // Security check
-    if (!xarSecurityCheck('AdminPolls',1,'All',"$poll[title]:$poll[type]")) {
+    if (!xarSecurityCheck('AdminPolls',1,'All',"$poll[pid]:$poll[type]")) {
         return;
     }
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $pollstable = $xartable['polls'];
-    $prefix = xarConfigGetVar('prefix');
+//    $prefix = xarConfigVars::get('prefix');
+    $prefix = xarConfigVars::get(null, 'prefix');
 
     $sql = "UPDATE $pollstable
-            SET xar_end_date = ?,
-            xar_open = ?
-            WHERE xar_pid = ?";
+            SET end_date = ?,
+            open = ?
+            WHERE pid = ?";
     $result = $dbconn->Execute($sql,array(time(),(int)0,(int)$pid));
 
     if (!$result) {

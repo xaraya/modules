@@ -15,8 +15,8 @@
 /**
  * create a poll
  * @param $args['title'] title of poll
- * @param $args['polltype'] type of poll ('single' for select one
- *                                      'multi' for select many)
+ * @param $args['polltype'] type of poll ('single' for one selection
+ *                                        'multi' for multiple selections)
  * @param $args['time'] time when the poll was created (import only)
  * @param $args['votes'] number of votes for this poll (import only)
  * @param $args['module'] module of the item this poll relates to (hooks only)
@@ -32,11 +32,7 @@ function polls_adminapi_create($args)
 
     // Argument check
     if ((!isset($title)) || (!isset($polltype))) {
-        $msg = xarML('Missing poll title or type');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
-        return;
+            throw new EmptyParameterException($pid,'Missing Poll title or type ');
     }
     if ($private != 1){
         $private = 0;
@@ -56,7 +52,8 @@ function polls_adminapi_create($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $pollstable = $xartable['polls'];
-    $prefix = xarConfigGetVar('prefix');
+    //$prefix = xarConfigVars::get('prefix');
+    $prefix = xarConfigVars::get(null, 'prefix');
 
     $nextId = $dbconn->GenId($pollstable);
 
@@ -77,18 +74,18 @@ function polls_adminapi_create($args)
         $itemid = 0;
     }
     $sql = "INSERT INTO $pollstable (
-              xar_pid,
-              xar_title,
-              xar_type,
-              xar_open,
-              xar_private,
-              xar_votes,
-              xar_modid,
-              xar_itemtype,
-              xar_itemid,
-              xar_start_date,
-              xar_end_date,
-              xar_reset)
+              pid,
+              title,
+              type,
+              open,
+              private,
+              votes,
+              modid,
+              itemtype,
+              itemid,
+              start_date,
+              end_date,
+              reset)
             VALUES (?,?,?,1,?,?,?,?,?,?,?,?)";
 
     $bindvars = array($nextId, $title, $polltype, $private, $votes, (int)$modid, $itemtype, $itemid, $start_date, $end_date, $time);
@@ -98,7 +95,7 @@ function polls_adminapi_create($args)
     if (!$result) {
         return;
     }
-    $pid = $dbconn->PO_Insert_ID($pollstable, 'xar_pid');
+    $pid = $dbconn->PO_Insert_ID($pollstable, 'pid');
 
     $args['pid'] = $pid;
     $args['module'] = 'polls';

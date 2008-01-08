@@ -38,12 +38,12 @@ function polls_userapi_search($args)
     $polls = array();
     $where = array();
     if ($title == 1){
-        $where[] = "$pollstable .xar_title LIKE '%$q%'";
+        $where[] = "$pollstable .title LIKE '%$q%'";
     }
     $join = '';
     if ($options == 1){
-        $join = "LEFT JOIN $pollsinfotable ON $pollstable.xar_pid = $pollsinfotable.xar_pid";
-        $where[] = "$pollsinfotable .xar_optname LIKE '%$q%'";
+        $join = "LEFT JOIN $pollsinfotable ON $pollstable.pid = $pollsinfotable.pid";
+        $where[] = "$pollsinfotable .optname LIKE '%$q%'";
     }
     if(count($where) > 1){
         $clause = join($where, ' OR ');
@@ -56,16 +56,16 @@ function polls_userapi_search($args)
     }
 
     // Get item
-    $sql = "SELECT DISTINCT $pollstable.xar_pid,
-                   $pollstable.xar_title,
-                   $pollstable.xar_type,
-                   $pollstable.xar_open,
-                   $pollstable.xar_private,
-                   $pollstable.xar_modid,
-                   $pollstable.xar_itemtype,
-                   $pollstable.xar_itemid,
-                   $pollstable.xar_votes,
-                   $pollstable.xar_reset
+    $sql = "SELECT DISTINCT $pollstable.pid,
+                   $pollstable.title,
+                   $pollstable.type,
+                   $pollstable.open,
+                   $pollstable.private,
+                   $pollstable.modid,
+                   $pollstable.itemtype,
+                   $pollstable.itemid,
+                   $pollstable.votes,
+                   $pollstable.reset
 
             FROM $pollstable $join
             WHERE $clause";

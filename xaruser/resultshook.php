@@ -25,12 +25,9 @@ function polls_user_resultshook($args)
     extract($args);
 
     if (!isset($pid)) {
-        $msg = xarML('Missing poll ID');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
-        return;
-    }
+                throw new EmptyParameterException($pid,'Poll id must be set');
+      }
+
     $canvote = xarModAPIFunc('polls', 'user', 'usercanvote', array('pid' => $pid));
 
     $data = array();
@@ -42,11 +39,7 @@ function polls_user_resultshook($args)
                            array('pid' => $pid));
 
     if (!$poll) {
-        $msg = xarML('Error retrieving Poll data');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
-        return;
+        throw new EmptyParameterException($pid,'Error retrieving Poll data, poll id (#(1)) not found');
     }
 
     $data['pid'] = $poll['pid'];
@@ -80,11 +73,11 @@ function polls_user_resultshook($args)
     }
 
     $data['canvote'] = $canvote;
-    $barscale = xarModGetVar('polls', 'barscale');
-    $imggraph = xarModGetVar('polls', 'imggraph');
+    $barscale = xarModVars::Get('polls', 'barscale');
+    $imggraph = xarModVars::Get('polls', 'imggraph');
     $data['imggraph'] = ($imggraph >= 2)?1:0;
-    $data['showtotalvotes'] = xarModGetVar('polls', 'showtotalvotes');
-    $voteinterval = xarModGetVar('polls', 'voteinterval');
+    $data['showtotalvotes'] = xarModVars::Get('polls', 'showtotalvotes');
+    $voteinterval = xarModVars::Get('polls', 'voteinterval');
 
     if($voteinterval == 86400){
         $data['votelimit'] = xarML('per day');

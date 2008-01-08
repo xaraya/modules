@@ -44,21 +44,21 @@ function polls_userapi_gethooked($args)
     $pollstable = $xartable['polls'];
 
     // Get item
-    $sql = "SELECT xar_pid,
-                   xar_title,
-                   xar_type,
-                   xar_open,
-                   xar_private,
-                   xar_modid,
-                   xar_itemtype,
-                   xar_itemid,
-                   xar_opts,
-                   xar_votes,
-                   xar_reset
+    $sql = "SELECT pid,
+                   title,
+                   type,
+                   open,
+                   private,
+                   modid,
+                   itemtype,
+                   itemid,
+                   opts,
+                   votes,
+                   reset
             FROM $pollstable
-            WHERE  xar_modid = ?
-               AND xar_itemtype = ?
-               AND xar_itemid = ?";
+            WHERE  modid = ?
+               AND itemtype = ?
+               AND itemid = ?";
     $bindvars = array((int)$modid, $itemtype, $objectid);
     $result =& $dbconn->SelectLimit($sql, 1, -1, $bindvars);
 
@@ -78,19 +78,19 @@ function polls_userapi_gethooked($args)
     $result->Close();
 
     // Security check
-    if(!xarSecurityCheck('ViewPolls',0,'All',"$title:$type")){
+    if(!xarSecurityCheck('ViewPolls',0,'All',"$pid:$type")){
         return;
     }
 
     // Get the options for this poll
     $pollsinfotable = $xartable['polls_info'];
 
-    $sql = "SELECT xar_optnum,
-                   xar_optname,
-                   xar_votes
+    $sql = "SELECT optnum,
+                   optname,
+                   votes
             FROM $pollsinfotable
-            WHERE xar_pid = ?
-            ORDER BY xar_optnum";
+            WHERE pid = ?
+            ORDER BY optnum";
     $result = $dbconn->Execute($sql, array((int)$pid));
 
     if (!$result) {

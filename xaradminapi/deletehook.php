@@ -1,14 +1,14 @@
 <?php
-/**
- * Polls module
+/*
  *
- * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Polls Module
- * @link http://xaraya.com/index.php/release/23.html
+ * @subpackage polls
  * @author Jim McDonalds, dracos, mikespub et al.
  */
 
@@ -17,31 +17,18 @@
  *
  * @param $args['objectid'] ID of the object
  * @param $args['extrainfo'] extra information
- * @return bool true on success, false on failure
- * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ * @returns bool
+ * @return true on success, false on failure
+ * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function polls_adminapi_deletehook($args)
 {
     extract($args);
 
-    if (!isset($objectid) || !is_numeric($objectid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'object id', 'admin', 'deletehook', 'polls');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
-        return $extrainfo;
-    }
-    if (!isset($extrainfo) || !is_array($extrainfo)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'extrainfo', 'admin', 'deletehook', 'polls');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
-        return $extrainfo;
-    }
+    if (!isset($extrainfo)) throw new EmptyParameterException('extrainfo');
+    if (!isset($objectid)) throw new EmptyParameterException('objectid');
+    if (!is_numeric($objectid)) throw new VariableValidationException(array('objectid',$objectid,'numeric'));
+
 
     // When called via hooks, the module name may be empty, so we get it from
     // the current module
@@ -53,14 +40,11 @@ function polls_adminapi_deletehook($args)
 
     $modid = xarModGetIDFromName($modname);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'module name', 'admin', 'deletehook', 'polls');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
-        return $extrainfo;
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('module id', 'admin', 'newhook', 'polls');
+        throw new BadParameterException($vars,$msg);
     }
+
 
     if (!empty($extrainfo['itemtype'])) {
         $itemtype = $extrainfo['itemtype'];
@@ -74,13 +58,9 @@ function polls_adminapi_deletehook($args)
         $itemid = $objectid;
     }
     if (empty($itemid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'item id', 'admin', 'deletehook', 'polls');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
-        return $extrainfo;
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('item id', 'admin', 'newhook', 'polls');
+        throw new BadParameterException($vars,$msg);
     }
 
     // get the current poll for this item
@@ -97,9 +77,9 @@ function polls_adminapi_deletehook($args)
     // delete the old poll here
     if (!xarModAPIFunc('polls', 'admin', 'delete',
                        array('pid' => $oldpoll['pid']))) {
-        // Something went wrong - return
-        $msg = xarML('Unable to delete poll');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
+    if (empty($pid)) {
+        throw new IDNotFoundException($oldpoll['pid'],'Unable to find poll id (#(1))');
+    }
     }
     if (isset($extrainfo['poll'])) {
         unset($extrainfo['poll']);

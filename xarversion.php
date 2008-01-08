@@ -11,17 +11,17 @@
  * @link http://xaraya.com/index.php/release/23.html
  * @author Jim McDonalds, dracos, mikespub et al.
  */
-$modversion['name']         = 'polls';
+$modversion['name']         = 'Polls';
 $modversion['id']           = '23';
-$modversion['version']      = '1.5.0';
+$modversion['version']      = '1.6.0';
 $modversion['displayname']  = xarML('Polls');
-$modversion['description']  = 'Conduct polls';
+$modversion['description']  = 'Conduct simple polls';
 $modversion['credits']      = 'xardocs/credits.txt';
 $modversion['help']         = 'xardocs/help.txt';
 $modversion['changelog']    = 'xardocs/changelog.txt';
 $modversion['official']     = 1;
 $modversion['author']       = 'Jim McDonald';
-$modversion['contact']      = 'http://www.mcdee.net/';
+$modversion['contact']      = 'http://www.xaraya.com/';
 $modversion['admin']        = 1;
 $modversion['user']         = 1;
 $modversion['class']        = 'Complete';

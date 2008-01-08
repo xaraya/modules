@@ -25,25 +25,25 @@ function polls_admin_modifyconfig()
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
 
-    $data['barscale'] = xarModGetVar('polls', 'barscale');
-    $data['defaultopts'] = xarModGetVar('polls', 'defaultopts');
-    $data['previewresults'] = xarModGetVar('polls', 'previewresults');
-    $data['showtotalvotes'] = xarModGetVar('polls', 'showtotalvotes');
-    $data['shorturl'] = xarModGetVar('polls', 'SupportShortURLs');
+    $data['barscale'] = xarModVars::Get('polls', 'barscale');
+    $data['defaultopts'] = xarModVars::Get('polls', 'defaultopts');
+    $data['previewresults'] = xarModVars::Get('polls', 'previewresults');
+    $data['showtotalvotes'] = xarModVars::Get('polls', 'showtotalvotes');
+    $data['shorturl'] = xarModVars::Get('polls', 'SupportShortURLs');
 
     $data['imggraphs'] = array();
     $data['imggraphs']['0'] = xarML('Never');
     $data['imggraphs']['1'] = xarML('Blocks only');
     $data['imggraphs']['2'] = xarML('Module space only');
     $data['imggraphs']['3'] = xarML('Always');
-    $data['imggraph'] =  xarModGetVar('polls', 'imggraph');
+    $data['imggraph'] =  xarModVars::Get('polls', 'imggraph');
 
     $data['voteintervals'] = array();
     $data['voteintervals']['-1'] = xarML('Once');
     $data['voteintervals']['86400'] = xarML('Once per day');
     $data['voteintervals']['604800'] = xarML('Once per week');
     $data['voteintervals']['2592000'] = xarML('Once per month');
-    $data['voteinterval'] =  xarModGetVar('polls', 'voteinterval');
+    $data['voteinterval'] =  xarModVars::Get('polls', 'voteinterval');
 
     $hooks = xarModCallHooks('module', 'modifyconfig', 'polls',
                              array('module' => 'polls'));

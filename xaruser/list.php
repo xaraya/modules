@@ -43,8 +43,8 @@ function polls_user_list($args)
     // function did not succeed then the API function should have already
     // posted a failure message so no action is required
 
-    $data['previewresults'] = xarModGetVar('polls', 'previewresults');
-    $data['showtotalvotes'] = xarModGetVar('polls', 'showtotalvotes');
+    $data['previewresults'] = xarModVars::Get('polls', 'previewresults');
+    $data['showtotalvotes'] = xarModVars::Get('polls', 'showtotalvotes');
     $data['polls'] = array();
     // TODO - loop through each item and display it
     foreach ($items as $item) {
@@ -62,7 +62,7 @@ function polls_user_list($args)
             $poll['open'] = 0;
         }
 
-        if (xarSecurityCheck('VotePolls',0,'Polls',"$item[title]:$item[type]")) {
+        if (xarSecurityCheck('VotePolls',0,'Polls',"$item[pid]:$item[type]")) {
 
 
             $poll['canvote'] = xarModAPIFunc('polls',

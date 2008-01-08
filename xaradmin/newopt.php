@@ -19,7 +19,7 @@ function polls_admin_newopt()
     // Get parameters
     if (!xarVarFetch('pid', 'id', $pid, XARVAR_DONT_SET)) return;
 
-    if (!isset($pid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($pid) && xarCurrentErrorType() != NO_EXCEPTION) return; // throw back
 
     // Start output
     $data = array();
@@ -29,7 +29,7 @@ function polls_admin_newopt()
                            'get',
                            array('pid' => $pid));
 
-    if (!xarSecurityCheck('EditPolls',1,'Polls',"$poll[title]:$poll[type]")) {
+    if (!xarSecurityCheck('EditPolls',1,'Polls',"$poll[pid]:$poll[type]")) {
         return;
     }
 

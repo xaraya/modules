@@ -1,4 +1,5 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:style scope="common" />
 <xar:base-include-javascript module="base" filename="confirmlink.js" />
 
@@ -101,13 +102,11 @@
               Hooked
             </xar:mlstring>
           </th>
-          <xar:comment>
-            <th rowspan="2">
-              <xar:mlstring>
-                Status
-              </xar:mlstring>
+          <!--
+          <th rowspan="2">
+              <xar:mlstring>Status</xar:mlstring>
             </th>
-          </xar:comment>
+          -->
           <th colspan="2" class="xar-align-center">
             <xar:mlstring>
               Open
@@ -146,11 +145,9 @@
             <td>
               #$loop:item['hook']#
             </td>
-            <xar:comment>
-              <td>
-                #$loop:item['open']#
-              </td>
-            </xar:comment>
+            <!--
+              <td>#$loop:item['open']#</td>
+            -->
             <td>
               #xarLocaleGetFormattedDate('short',$loop:item['start_date'])#
             </td>
@@ -163,12 +160,12 @@
               #$loop:item['votes']#
             </td>
             <td>
-              <xar:comment><a href="#$loop:item['action_display']#">
+              <!-- <a href="#$loop:item['action_display']#">
                   <xar:mlstring>
                     Options
                   </xar:mlstring>
                 </a>
-                |</xar:comment>
+                | -->
               <xar:if condition="isset($loop:item['action_close'])">
                 <a href="#$loop:item['action_close']#" onclick="return xar_base_confirmLink(this, '#xarVarPrepForDisplay($loop:item['close_confirm'])#')">
                   <xar:mlstring>
@@ -205,3 +202,4 @@
     </xar:if>
   </form>
 </div>
+</xar:template>

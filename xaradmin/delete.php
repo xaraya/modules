@@ -20,7 +20,7 @@ function polls_admin_delete()
     if (!xarVarFetch('pid', 'id', $pid)) return;
     if (!xarVarFetch('confirm', 'isset', $confirm, NULL, XARVAR_DONT_SET)) return;
 
-    if (!isset($pid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($pid) && xarCurrentErrorType() != NO_EXCEPTION) return; // throw back
 
 
 
@@ -29,7 +29,7 @@ function polls_admin_delete()
                            'get',
                            array('pid' => $pid));
 
-    if (!xarSecurityCheck('DeletePolls',1,'Polls',"$poll[title]:$poll[type]")) {return;}
+    if (!xarSecurityCheck('DeletePolls',1,'Polls',"$poll[pid]:$poll[type]")) {return;}
 
     // Check for confirmation
     if ($confirm != 1) {

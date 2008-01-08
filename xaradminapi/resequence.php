@@ -22,11 +22,7 @@ function polls_adminapi_resequence($args)
 
     // Argument check
     if (!isset($pid)) {
-        $msg = xarML('Missing poll ID');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
-        return;
+              throw new IDNotFoundException($pid,'Unable to find poll id (#(1))');
     }
 
     $dbconn =& xarDBGetConn();
@@ -34,10 +30,10 @@ function polls_adminapi_resequence($args)
     $pollsinfotable = $xartable['polls_info'];
 
     // Get the information
-    $sql = "SELECT xar_optnum
+    $sql = "SELECT optnum
             FROM $pollsinfotable
-            WHERE xar_pid = ?
-            ORDER BY xar_optnum";
+            WHERE pid = ?
+            ORDER BY optnum";
     $result = $dbconn->Execute($sql, array((int)$pid));
 
     // Fix sequence numbers
@@ -47,9 +43,9 @@ function polls_adminapi_resequence($args)
 
         if ($optnum != $seq) {
             $query = "UPDATE $pollsinfotable
-                SET xar_optnum= ?
-                WHERE xar_pid= ?
-                AND xar_optnum= ?";
+                SET optnum= ?
+                WHERE pid= ?
+                AND optnum= ?";
             $result1 = $dbconn->Execute($query, array($seq, (int)$pid, $optnum));
             if(!$result1){
                 return;

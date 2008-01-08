@@ -39,32 +39,32 @@ function polls_userapi_getall($args)
     if (isset($status) && is_numeric($status)) {
 
         if ($status == 1) {
-            $where = " WHERE $pollstable.xar_start_date <= ? and ($pollstable.xar_end_date >= ? or $pollstable.xar_end_date = 0)";
+            $where = " WHERE $pollstable.start_date <= ? and ($pollstable.end_date >= ? or $pollstable.end_date = 0)";
             $bindvars[]= (int) time();
             $bindvars[]= (int) time();
             if (isset($hook) && is_numeric($hook)) {
-                $where .= " AND $pollstable.xar_itemid = ?";
+                $where .= " AND $pollstable.itemid = ?";
                 $bindvars[]= (int) $hook;
                 }
         } elseif ($status == 2) {
-            $where = " WHERE $pollstable.xar_start_date >= ?";
+            $where = " WHERE $pollstable.start_date >= ?";
             $bindvars[]= time();
             if (isset($hook) && is_numeric($hook)) {
-                $where .= " AND $pollstable.xar_itemid = ?";
+                $where .= " AND $pollstable.itemid = ?";
                 $bindvars[]= (int) $hook;
                 }
         } elseif ($status == 3) {
-            $where = " WHERE $pollstable.xar_end_date <= ? and $pollstable.xar_end_date > 0";
+            $where = " WHERE $pollstable.end_date <= ? and $pollstable.end_date > 0";
             $bindvars[]= time();
         if (isset($hook) && is_numeric($hook)) {
-            $where .= " AND $pollstable.xar_itemid = ?";
+            $where .= " AND $pollstable.itemid = ?";
             $bindvars[]= (int) $hook;
             }
         }
 
     } else {
         if (isset($modid) && is_numeric($modid)) {
-        $where = " WHERE $pollstable.xar_modid = ?";
+        $where = " WHERE $pollstable.modid = ?";
         $bindvars[]= (int) $modid;
     } else {
         $where = '';
@@ -78,7 +78,7 @@ function polls_userapi_getall($args)
                                              'catid' => $catid));
         if (!empty($categoriesdef)) {
             $catwhere = " LEFT JOIN $categoriesdef[table]
-                          ON $categoriesdef[field] = xar_pid
+                          ON $categoriesdef[field] = pid
                           $categoriesdef[more]
                           WHERE $categoriesdef[where] ";
             if (empty($where)) {
@@ -90,21 +90,21 @@ function polls_userapi_getall($args)
         }
     }
     // Get polls
-    $sql = "SELECT $pollstable.xar_pid,
-                   $pollstable.xar_title,
-                   $pollstable.xar_type,
-                   $pollstable.xar_open,
-                   $pollstable.xar_private,
-                   $pollstable.xar_modid,
-                   $pollstable.xar_itemtype,
-                   $pollstable.xar_itemid,
-                   $pollstable.xar_votes,
-                   $pollstable.xar_start_date,
-                   $pollstable.xar_end_date,
-                   $pollstable.xar_reset
+    $sql = "SELECT $pollstable.pid,
+                   $pollstable.title,
+                   $pollstable.type,
+                   $pollstable.open,
+                   $pollstable.private,
+                   $pollstable.modid,
+                   $pollstable.itemtype,
+                   $pollstable.itemid,
+                   $pollstable.votes,
+                   $pollstable.start_date,
+                   $pollstable.end_date,
+                   $pollstable.reset
             FROM $pollstable
             $where
-            ORDER BY $pollstable.xar_pid DESC";
+            ORDER BY $pollstable.pid DESC";
     $result = $dbconn->execute($sql, $bindvars);
 
     if (!$result) {
@@ -114,7 +114,7 @@ function polls_userapi_getall($args)
     // Put polls into result array.
     for (; !$result->EOF; $result->MoveNext()) {
         list($pid, $title, $type, $open, $private, $modid, $itemtype, $itemid, $votes, $start_date, $end_date, $reset) = $result->fields;
-        if (xarSecurityCheck('ViewPolls',0,'Polls',"$title:$type")) {
+        if (xarSecurityCheck('ViewPolls',0,'Polls',"$pid:$type")) {
             $polls[] = array('pid' => $pid,
                              'title' => $title,
                              'type' => $type,

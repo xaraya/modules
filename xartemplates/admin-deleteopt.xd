@@ -1,5 +1,5 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-head">
   <span class="xar-mod-title">
     <xar:mlstring>Polls Administration</xar:mlstring>
@@ -27,8 +27,9 @@
       </div>
     </fieldset>
     <div class="xar-form-input-wrapper-after">
-      <input type="submit" value="#xarML('Delete Option')#"/> &nbsp; &nbsp;
+      <input type="submit" value="#xarML('Delete Option')#"/> &#160; &#160;
       <input type="button" value="#xarML('Cancel')#" onclick="location.href='#$cancelurl#'"/>
     </div>
   </form>
 </div>
+</xar:template>

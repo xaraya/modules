@@ -1,4 +1,5 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-form-input-wrapper">
     <label for="pid#$blockid#" class="help" title="#xarML('Select the poll to display within the block.')#">
         <xar:mlstring>Poll to display:</xar:mlstring>
@@ -17,3 +18,4 @@
         </xar:loop>
     </select>
 </div>
+</xar:template>

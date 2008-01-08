@@ -23,11 +23,7 @@ function polls_adminapi_update($args)
 
     // Argument check
     if ((!isset($pid)) || (!isset($title)) || (!isset($type))) {
-        $msg = xarML('Missing poll ID, title, or type');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
-        return;
+        throw new BadParameterException(array($pid,$option, $type),'Missing Poll id (#(1)), or Poll title (#(2)) or Poll type (#(3))');
     }
 
     if($private != 1){
@@ -38,22 +34,23 @@ function polls_adminapi_update($args)
     $poll = xarModAPIFunc('polls', 'user', 'get', array('pid' => $pid));
 
     // Security check
-    if (!xarSecurityCheck('EditPolls',1,'All',"$poll[title]:$poll[type]")) {
+    if (!xarSecurityCheck('EditPolls',1,'All',"$poll[pid]:$poll[type]")) {
         return;
     }
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $pollstable = $xartable['polls'];
-   // $prefix = xarConfigGetVar('prefix');
+   // $prefix = xarConfigVars::get('prefix');
+   $prefix = xarConfigVars::get(null, 'prefix');
 
     $sql = "UPDATE $pollstable
-            SET xar_title = ?,
-            xar_type = ?,
-            xar_private = ?,
-            xar_start_date = ?,
-            xar_end_date = ?
-            WHERE xar_pid = ?";
+            SET title = ?,
+            type = ?,
+            private = ?,
+            start_date = ?,
+            end_date = ?
+            WHERE pid = ?";
 
     $bindvars = array($title, $type, $private, $start_date, $end_date, (int)$pid);
     $result = $dbconn->Execute($sql, $bindvars);

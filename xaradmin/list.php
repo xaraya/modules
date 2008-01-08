@@ -34,10 +34,7 @@ function polls_admin_list()
     $data['status'] = $status;
     $authid = xarSecGenAuthKey();
 
-    $polls = xarModAPIFunc('polls',
-                            'user',
-                            'getall',
-                            array('status' => $stat));
+    $polls = xarModAPIFunc('polls','user','getall',array('status' => $stat));
 
     if (!$polls) {
         return $data;
@@ -57,10 +54,12 @@ function polls_admin_list()
         $row['votes']      = $poll['votes'];
 
         switch ($poll['type']) {
-            case 'single':
+            //case 'single':
+            case 0:
                 $row['type'] = xarML('Single');
                 break;
-            case 'multi':
+            //case 'multi':
+            case 1:
                 $row['type'] = xarML('Multiple');
                 break;
         }
@@ -74,7 +73,7 @@ function polls_admin_list()
 
 
         $modinfo = xarModGetInfo($poll['modid']);
-
+/* TODO -> verify this step*/
         $mytypes = xarModAPIFunc($modinfo['name'],'user','getitemtypes',array(), 0);
                 if ($poll['itemtype'] == 0) {
                 $moditem['modname'] = ucwords($modinfo['displayname']). ' - ' . $poll['itemid'];

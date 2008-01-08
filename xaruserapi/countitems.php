@@ -29,8 +29,8 @@ function polls_userapi_countitems()
     // Get number of items
     $sql = "SELECT COUNT(1)
             FROM $pollstable
-            WHERE xar_itemid = 0
-            AND xar_open >= 0";
+            WHERE itemid = 0
+            AND open >= 0";
     $result = $dbconn->Execute($sql);
 
     if (!$result) return;
