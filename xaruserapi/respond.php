@@ -71,6 +71,7 @@ function sitecontact_userapi_respond($args)
     $customtext      = $formdata['customtext'];
     $customtitle     = $formdata['customtitle'];
     $permissioncheck = $formdata['permissioncheck'];
+    $sctypedesc      = $formdata['sctypedesc'];
     //now check for the options, and including antibot and - bbccrecipient and ccrecipient switch Bug 5799
     if (isset($formdata['soptions'])) {
            $soptions=unserialize($formdata['soptions']);
@@ -142,7 +143,7 @@ function sitecontact_userapi_respond($args)
     $adminccs = isset($soptions['adminccs']) ? $soptions['adminccs']: false;
     $admincclist = isset($soptions['admincclist']) ? $soptions['admincclist']: '';
 
-    if (($soptions['adminccs'] == TRUE)  && !empty($soptions['admincclist'])) {
+    if (($adminccs == TRUE)  && !empty($admincclist)) {
         if (!isset($soptions['allowccs']) || $soptions['allowccs']!= 1) { //no cc list
             $ccrecipients = $soptions['admincclist']; //just put the admincclist in the ccrecipients list and process that
             $adminccs = true;
@@ -293,6 +294,7 @@ function sitecontact_userapi_respond($args)
          $data['botreset']= TRUE; //so we do not reset referer
          return $data;
     }
+
     $data['properties'] = $properties;
     //we are not assuming at this stage everything is in DD
     if (is_array($properties) && !empty($properties)) {
@@ -334,6 +336,7 @@ function sitecontact_userapi_respond($args)
             //ok to save
             $args = array('scid'            => (int)$scid,
                           'scform'          => $scform,
+                          'sctypedesc'      => $sctypedesc,
                           'username'        => $username,
                           'useremail'       => $useremail,
                           'requesttext'     => $requesttext,
@@ -352,10 +355,11 @@ function sitecontact_userapi_respond($args)
             //what to do - better save a 'blank' spot as missing data?
             //let's do that for now
             $args = array('scid'            => (int)$scid,
-                          'scform'          => '',
+                          'scform'          => $scform,
+                          'sctypedesc'      => $sctypedesc,
                           'username'        => xarML('Missing Value'),
                           'useremail'       => '',
-                          'requesttext'     => '',
+                          'requesttext'     => xarML('Missing Value'),
                           'company'         => '',
                           'usermessage'     => '',
                           'useripaddress'   => '',
@@ -468,13 +472,6 @@ function sitecontact_userapi_respond($args)
             */
 
     assert('!empty($sctypename); /* sctypename should NOT be empty here, code error */');
-    // jojo -  Originally intended behaviour in 1x was changed with a behaviour change in the xarTplModule function some time back
-    // In this case the intent was to use the given texttemplate, or htmltemplate, and if not drop back to the user-usermail-text.xd (or html) template
-    // This would never happen if we rely on xarTplModule as it will always force it to use user-usermail.xd if it exists
-    // We get it to fall back to the user-usermail-text.xd we have specified - we make sure no user-usermail.xd template exists.
-
-    $htmltemplate = 'html_' . $sctypename;
-    $texttemplate = 'text_' . $sctypename;
 
     $userhtmlarray= array('notetouser' => $htmlnotetouser,
                           'username'   => $username,
@@ -482,16 +479,17 @@ function sitecontact_userapi_respond($args)
                           'company'    => $htmlcompany,
                           'requesttext'=> $htmlsubject,
                           'usermessage'=> $htmlusermessage,
+                          'sctypedesc' => $sctypedesc,
                           'sitename'   => $sitename,
                           'siteurl'    => $siteurl,
                           'propdata'   => $propdata,
                           'properties' => $properties,
                           'todaydate'  => $todaydate);
 
-    $userhtmlmessage= xarTplModule('sitecontact','user','usermail',$userhtmlarray,$htmltemplate);
+    $userhtmlmessage= xarTplModule('sitecontact','user','usermail-html-'.$sctypename,$userhtmlarray);
     if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
         xarErrorHandled();
-        $userhtmlmessage= xarTplModule('sitecontact', 'user', 'usermail',$userhtmlarray,'html');
+        $userhtmlmessage= xarTplModule('sitecontact', 'user', 'usermail-html',$userhtmlarray);
     }
     /* prepare the text message to user */
     $textsubject = strtr($requesttext,$trans);
@@ -505,16 +503,22 @@ function sitecontact_userapi_respond($args)
                           'company'    => $textcompany,
                           'requesttext'=> $textsubject,
                           'usermessage'=> $textusermessage,
+                          'sctypedesc' => $sctypedesc,
                           'sitename'   => $sitename,
                           'siteurl'    => $siteurl,
                           'propdata'   => $propdata,
                           'properties' => $properties,
                           'todaydate'  => $todaydate);
-    $usertextmessage= xarTplModule('sitecontact','user','usermail', $usertextarray,$texttemplate);
+                          
+    $usertextmessage= xarTplModule('sitecontact','user','usermail-text-'.$sctypename, $usertextarray);
+
     if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
-            xarErrorHandled();
-            $usertextmessage= xarTplModule('sitecontact', 'user', 'usermail',$usertextarray,'text');
+        xarErrorHandled();
+        $usertextmessage= xarTplModule('sitecontact', 'user', 'usermail-text',$userhtmlarray);
     }
+
+
+
     if (($allowcopy ) and ($sendcopy)) { //the user wants to copy to self and it is allowed by admin
         /* check the logged in user's email address  and if anon is allowed*/
         $docopy = false;
@@ -550,6 +554,7 @@ function sitecontact_userapi_respond($args)
             } else {/*it's html email */
                 if (!xarModAPIFunc('mail','admin','sendhtmlmail', $args)) return;
             }
+            xarLogMessage("User mail sent for $scform");
         } //end do copy
     } //end user copy to self check
 
@@ -562,6 +567,7 @@ function sitecontact_userapi_respond($args)
                           'requesttext' => $htmlsubject,
                           'usermessage' => $htmlusermessage,
                           'sitename'    => $sitename,
+                          'sctypedesc' => $sctypedesc,
                           'siteurl'     => $siteurl,
                           'todaydate'   => $todaydate,
                           'useripaddress' => $useripaddress,
@@ -569,10 +575,10 @@ function sitecontact_userapi_respond($args)
                           'properties'    => $properties,
                           'userreferer' => $userreferer);
 
-    $adminhtmlmessage= xarTplModule('sitecontact','user','adminmail',$adminhtmlarray,$htmltemplate);
+    $adminhtmlmessage= xarTplModule('sitecontact','user','adminmail-html',$adminhtmlarray,$sctypename);
     if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
         xarErrorHandled();
-        $adminhtmlmessage= xarTplModule('sitecontact', 'user', 'adminmail',$adminhtmlarray,'html');
+        $adminhtmlmessage= xarTplModule('sitecontact', 'user', 'adminmail-html',$userhtmlarray);
     }
     $admintextarray =  array('notetouser'  => $textnotetouser,
                              'username'    => $username,
@@ -581,20 +587,20 @@ function sitecontact_userapi_respond($args)
                              'requesttext' => $textsubject,
                              'usermessage' => $textusermessage,
                              'sitename'    => $sitename,
+                             'sctypedesc' => $sctypedesc,
                              'siteurl'     => $siteurl,
                              'todaydate'   => $todaydate,
                              'useripaddress' => $useripaddress,
-                             'propdata'    => $propdata,
-                             'properties'     => $properties,
+                             'propdata'      => $propdata,
+                             'properties'    => $properties,
                              'userreferer' => $userreferer);
 
     /* Let's do admin text message */
-    $admintextmessage= xarTplModule('sitecontact','user','adminmail',$admintextarray,$texttemplate);
+    $admintextmessage = xarTplModule('sitecontact','user','adminmail-text',$admintextarray, $sctypename);
     if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
         xarErrorHandled();
-        $admintextmessage= xarTplModule('sitecontact', 'user', 'adminmail',$admintextarray,'text');
+        $admintextmessage= xarTplModule('sitecontact', 'user', 'adminmail-text',$userhtmlarray);
     }
-
     /* send email to admin */
     $args = array('info'         => $setmail,
                   'name'         => $sendname,
@@ -613,6 +619,8 @@ function sitecontact_userapi_respond($args)
     } else {
         if (!xarModAPIFunc('mail','admin','sendhtmlmail', $args))return;
     }
+    xarLogMessage("Admin mail sent for $scform");
+    
     if (isset($attachpath) && !empty($attachpath)){
         if (file_exists($attachpath)) {
             unlink("{$attachpath}");

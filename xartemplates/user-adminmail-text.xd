@@ -5,26 +5,26 @@
 -------------------------------------------------------------
 
 <xar:if condition="!empty($useremail)">
-    <xar:mlstring>Email:</xar:mlstring>&#160; #$useremail#
+    <xar:mlstring>Email: </xar:mlstring> #$useremail#
 </xar:if>
 
 <xar:if condition="!empty($company)">
-    <xar:mlstring>Organization:</xar:mlstring>&#160; #$company#
+    <xar:mlstring>Organization: </xar:mlstring> #$company#
 </xar:if>
 
 <xar:if condition="!empty($requesttext)">
-    <xar:mlstring>Subject:</xar:mlstring>&#160; #$requesttext#
+    <xar:mlstring>Subject: </xar:mlstring> #$requesttext#
 </xar:if>
 
 <xar:if condition="!empty($usermessage)">
-<xar:mlstring>Comments:</xar:mlstring>
+<xar:mlstring>Comments: </xar:mlstring>
 
 #$usermessage#
 </xar:if>
 
 <xar:if condition="isset($properties) and count($properties) gt 0">
     <xar:foreach in="$properties" key="$name">
-            <xar:data-label property="$properties[$name]" />:&#160;<xar:data-output property="$properties[$name]" />
+            <xar:data-label property="$properties[$name]" />: <xar:data-output property="$properties[$name]" />
     </xar:foreach>
 </xar:if>
 
@@ -32,13 +32,16 @@
 
 <xar:mlstring>User information:</xar:mlstring>
 
-<xar:mlstring>Sender:</xar:mlstring>&#160; #$useripaddress#
+<xar:mlstring>Sender:  </xar:mlstring> #$useripaddress#
 
-<xar:mlstring>Referer:</xar:mlstring>&#160; #$userreferer#
+<xar:mlstring>Referer: </xar:mlstring> #$userreferer#
+
+<xar:mlstring>Form:    </xar:mlstring> #$sctypedesc#
+
 
 -------------------------------------------------------------
 
-#$sitename# &#160;<xar:mlstring>at</xar:mlstring>&#160; #$siteurl#
+#$sitename# <xar:mlstring> at </xar:mlstring> #$siteurl#
 
 #$todaydate#
 

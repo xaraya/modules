@@ -109,10 +109,9 @@ function sitecontact_admin_display($args)
     } else {
         $data['hookoutput'] = $hooks;
     }
-    $templatedata = xarTplModule('sitecontact', 'admin', 'display', $data, $template);
-    
     xarTplSetPageTitle(xarVarPrepForDisplay($data['formname']));
 
+    $templatedata = xarTplModule('sitecontact', 'admin', 'display', $data, $template);
 
    return $templatedata;
 }

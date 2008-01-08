@@ -14,6 +14,7 @@ Version 1.1.0 8 Jan 2008
 - allow consistent feedback to user on invalid email entry, and dynamic data field entry (xarigami core).
 - various minor bug fixes see http://xarigami.com/?module=contrails&func=versions&projectid=5
 - For upgrade instructions please see the notes accompanying release at the Sitecontact Project page at the Xarigami website
+  NOTE : You must upgrade email template names, and your custom overridden templates!!!
 
 Version 1.0.3 Sept 2007
 - minor upgrade to remove block instances and block security checks

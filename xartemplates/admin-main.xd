@@ -38,18 +38,20 @@
         </xar:mlstring></li>
 
         <li><xar:mlstring>
-            You can provide a link to any form by appending the form name variable called: <strong>scform</strong> and a form name, for example 'myniceform', to the main user url eg <strong>index.php?module=sitecontact&amp;scform=myniceform</strong> or
+            <strong>Form URLS</strong>: You can provide a link to any form by appending the form name variable called: <strong>scform</strong> and a form name, for example 'myniceform', to the main user url eg <strong>index.php?module=sitecontact&amp;scform=myniceform</strong> or
             with short urls <strong>index.php/sitecontact/myniceform</strong>
         </xar:mlstring></li>
 
         <li><xar:mlstring>
-            All forms will use the default display template (<code>user-main.xd</code>) for display of the form on your site.
+            <strong>Customizing entry display page/template</strong>: All forms will use the default display template (<code>user-main.xd</code>) for display of the form on your site.
             You can also create custom templates with the name of your form appended to the end (user-main-<code>myform</code>.xd).
             Form templates can be overridden in your theme as per other Xaraya templates (eg create <code>user-main-myform.xt</code> in
             your themes/yourtheme/modules/sitecontact directory), and will fall back to the default template if no others exist.</xar:mlstring></li>
-
+      <li><xar:mlstring>
+            <strong>Customizing the form submission result page</strong>: This page is now called user-result.xt and can be overridden in the usual way in your theme.
+        </xar:mlstring></li>
         <li><xar:mlstring>
-           You can also create override templates that are used to send the emails to Admins of your site, or the users when they request a copy of the email.
+           <strong>Customizing email templates</strong>: You can also create override templates that are used to send the emails to Admins of your site, or the users when they request a copy of the email.
            Each usertype has both an HTML and TEXT template. The <strong>admin</strong> default html
            and text email templates are <code>user-adminmail-html.xd</code> and <code>user-adminmail-text.xd</code> respectively.
             The <strong>user</strong> templates are <code>user-usermail-html.xd</code> and <code>user-usermail-text.xd</code> respectively.
@@ -58,12 +60,14 @@
         </xar:mlstring>
         </li>
         <li><xar:mlstring>
-             You can go further and create custom email templates for html and text for each FORM. eg if your
-             form is called <strong>basic</strong> you can create an override text email template called <code>user-usermail-html_basic.xt</code>.
-             Please note the name of the form is created with an UNDERSCORE and FORMNAME appened to the respective html or text template.</xar:mlstring>
+             <strong>Customizing email text or html templates</strong>:You can go further and create custom email templates for html and text for each FORM. eg if your
+             form is called <strong>basic</strong> you can create an override for the text or html email template in your theme by appending  <code>-FORMNAME.xt</code> to the existing template.
+             Please note the name of the template is created with a HYPHEN and FORMNAME appended to the respective html or text template
+             eg  <code>user-usermail-text-basic.xt</code> for the Basic default form (this changed in version 1.1.0 to HYPEN and was previously an underscore).</xar:mlstring>
         </li>
         <li><xar:mlstring>
-             Overriding the Administration Display page for individually saved forms is also now available using <code>admin-display-FORMNAME.xt</code>.
+             <strong>Customizing Admin display pages</strong>: Overriding the Administration View and Display page for individually saved forms is also now available
+             using <code>admin-view-FORMNAME.xt</code> and <code>admin-display-FORMNAME.xt</code> respectively.
             </xar:mlstring>
         </li>
         </ol>

@@ -28,6 +28,7 @@
                 <xar:mlstring>Form name</xar:mlstring>
             </label>
             <xar:data-input class="xar-form-textxlong" type="textbox" name="sctypename" id="sctypename" value="$item['sctypename']" maxlength="100" />
+            <xar:mlstring>[Do not use hypens (-) or spaces in the name.]</xar:mlstring>
         </div>
         
         <div class="xar-form-input-wrapper">
@@ -35,6 +36,7 @@
                 <xar:mlstring>Short description</xar:mlstring>
             </label>
             <xar:data-input class="xar-form-textxlong" type="textbox" name="sctypedesc" id="sctypedesc" value="$item['sctypedesc']" maxlength="100" />
+
         </div>
 
         <div class="xar-form-input-wrapper">

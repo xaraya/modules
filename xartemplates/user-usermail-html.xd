@@ -42,6 +42,10 @@
     #$sitename# &#160;<xar:mlstring>at</xar:mlstring>&#160; #$siteurl#
 </p>
 <p>
+    <xar:mlstring>Form: </xar:mlstring> #$sctypedesc#
+</p>
+
+<p>
     #$todaydate#
 </p>
 

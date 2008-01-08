@@ -4,19 +4,19 @@
 
 <xar:mlstring>You submitted the following information:</xar:mlstring>
 <xar:if condition="!empty($username)">
-    <xar:mlstring>Name:</xar:mlstring>&#160; #$username#
+    <xar:mlstring>Name: </xar:mlstring> #$username#
 </xar:if>
 
 <xar:if condition="!empty($useremail)">
-    <xar:mlstring>Email:</xar:mlstring>&#160; #$useremail#
+    <xar:mlstring>Email: </xar:mlstring> #$useremail#
 </xar:if>
 
 <xar:if condition="!empty($company)">
-    <xar:mlstring>Organization:</xar:mlstring>&#160; #$company#
+    <xar:mlstring>Organization: </xar:mlstring> #$company#
 </xar:if>
 
 <xar:if condition="!empty($requesttext)">
-    <xar:mlstring>Subject:</xar:mlstring>&#160; #$requesttext#
+    <xar:mlstring>Subject:</xar:mlstring> #$requesttext#
 </xar:if>
 
 <xar:if condition="!empty($usermessage)">
@@ -27,14 +27,16 @@
 
 <xar:if condition="isset($properties) and count($properties) gt 0">
     <xar:foreach in="$properties" key="$name">
-            <xar:data-label property="$properties[$name]" />:&#160;<xar:data-output property="$properties[$name]" />
+            <xar:data-label property="$properties[$name]" />: <xar:data-output property="$properties[$name]" />
     </xar:foreach>
 </xar:if>
 
 -------------------------------------------------------------
 
-#$sitename# &#160;<xar:mlstring>at</xar:mlstring>&#160; #$siteurl#
+#$sitename#  <xar:mlstring> at </xar:mlstring> #$siteurl#
 
 #$todaydate#
 
+
+<xar:mlstring>Form: </xar:mlstring> #$sctypedesc#
 

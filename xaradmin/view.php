@@ -167,7 +167,7 @@ function sitecontact_admin_view($args)
         xarVarSetCached('Blocks.sitecontact','formname',$formtypes[$scid]['sctypename']);
     }
     
-    $template = !empty($formtype['sctypename']) ? $formtype['sctypename'] : '';
+    $template = !empty($data['formname']) ? $data['formname'] : '';
     
     $templatedata = xarTplModule('sitecontact', 'admin', 'view', $data, $template);
 

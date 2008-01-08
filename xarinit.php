@@ -238,6 +238,8 @@ function sitecontact_upgrade($oldversion)
           xarRegisterMask('AdminSiteContact',     'All', 'sitecontact', 'ContactForm', 'All', 'ACCESS_ADMIN');
 
        case '1.1.0': //current version
+          xarModSetVar('sitecontact','adminccs',false);
+          xarModSetVar('sitecontact','admincclist','');
              break;
     }
     // Update successful
