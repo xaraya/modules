@@ -58,11 +58,11 @@ class Query
     function __construct($type='SELECT',$tables='',$fields='')
     {
         if (xarModVars::get('query','debugmode')) {
-        	$this->debugusers = array_keys(unserialize(xarModVars::get('query', 'debugusers')));
-        	$this->debugflag = xarModVars::get('query','debugmode') && in_array(xarUserGetVar('uname'),$this->debugusers);
-			$this->starttime = microtime(true);
+            $this->debugusers = array_keys(unserialize(xarModVars::get('query', 'debugusers')));
+            $this->debugflag = xarModVars::get('query','debugmode') && in_array(xarUserGetVar('uname'),$this->debugusers);
+            $this->starttime = microtime(true);
         } else {
-        	$this->debugflag = false;
+            $this->debugflag = false;
         }
         if (in_array($type,array("SELECT","INSERT","UPDATE","DELETE","DROP"))) $this->type = $type;
         else {
@@ -176,11 +176,11 @@ class Query
             }
         }
         if ($this->debugflag) {
-        	$assembletime = $querystart - $this->starttime;
-        	$querytime = $loopstart - $querystart;
-        	$looptime = microtime(true) - $loopstart;
-        	echo $this->qecho($statement);echo "<br />";
-			echo "Assemble: " . $assembletime . "    Query: " . $querytime . "   Loops: " . $looptime . "<br />";
+            $assembletime = $querystart - $this->starttime;
+            $querytime = $loopstart - $querystart;
+            $looptime = microtime(true) - $loopstart;
+            echo $this->qecho($statement);echo "<br />";
+            echo "Assemble: " . $assembletime . "    Query: " . $querytime . "   Loops: " . $looptime . "<br />";
         }
         return true;
     }
@@ -1281,7 +1281,7 @@ class Query
                 $temp2 = $this->startat;
                 $this->rowstodo = 0;
                 $this->startat = 0;
-                $this->setstatement();
+//                $this->setstatement();
                 $result = $this->dbconn->Execute($this->statement);
                 $this->rows = $result->getRecordCount();
                 $this->rowstodo = $temp1;

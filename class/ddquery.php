@@ -43,7 +43,8 @@ class DDQuery extends Query
         }
         // This is a reference id to the DD object this query is about
         $this->object = array();
-        $ancestors = xarModAPIFunc('dynamicdata','user','getancestors',array('objectid' => $object));
+//        $ancestors = xarModAPIFunc('dynamicdata','user','getancestors',array('objectid' => $object));
+        $ancestors = array();
         foreach ($ancestors as $ancestor) $this->object[] = $ancestor['objectid'];
 
         // Load the DD API so we have access to the DD tables
