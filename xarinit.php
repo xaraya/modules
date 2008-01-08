@@ -168,6 +168,7 @@ function netquery_upgrade($oldversion)
             return netquery_upgrade('4.1.0');
         case '4.1.0':
         case '4.1.1':
+        case '4.1.2':
         default:
             break;
     }

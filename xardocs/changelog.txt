@@ -81,3 +81,5 @@ Version 4.10 2007-01-04
    - Admin interface updated for new monitoring/display options
 Version 4.11 2007-03-05
    - Spambot blocker updated based on Bad Behavior v2.0.10
+Version 4.12 2007-12-11
+   - Spambot blocker updated based on Bad Behavior v2.0.11
