@@ -55,6 +55,9 @@ function bb2_post($settings, $package)
 //      if ($ip && $ip_screener && abs($ip_screener - $ip) > 256)
 //          return "c1fa729b";
 
+        if ($package['headers_mixed']['X-Forwarded-For']) {
+          $ip = $package['headers_mixed']['X-Forwarded-For'];
+        }
         // Screen for user agent changes
         // User connected previously with blank user agent
 //      $q = bb2_db_query("SELECT `ip` FROM " . $settings['log_table'] . " WHERE (`ip` = '" . $package['ip'] . "' OR `ip` = '" . $screener[1] . "') AND `user_agent` != '" . $package['user_agent'] . "' AND `date` > DATE_SUB('" . bb2_db_date() . "', INTERVAL 5 MINUTE)");
