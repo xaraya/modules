@@ -3,73 +3,58 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>
 
 <div class="xar-mod-body">
-  <xar:template type="module" file="admin-menu" />
-<h2><xar:mlstring>Add</xar:mlstring> <xar:mlstring>Autolink Type</xar:mlstring></h2>
+    <xar:template type="module" file="admin-menu" />
+    <h2><xar:mlstring>Add</xar:mlstring> <xar:mlstring>Autolink Type</xar:mlstring></h2>
 
-
-<xar:if condition="isset($global_error)">
-   <div class="xar-error">#$global_error#</div>
-</xar:if>
-
-<form method="post" action="#xarModURL('autolinks', 'admin', 'createtype')#" enctype="application/x-www-form-urlencoded">
-    <div><input type="hidden" name="authid" id="authid" value="#$authid#"/></div>
-
-    <div style="text-align: left; vertical-align: text-top; clear: left; float: left; width: 12em;">
-        <label for="type_name"><xar:mlstring>Name</xar:mlstring></label>
-    </div>
-    <div style="text-align: left; vertical-align: text-top; clear: right; float: left; left: 14em;">
-        <input type="text" name="type_name" id="type_name" value="#$type_name#" size="32" maxlength="60" />
-        <xar:if condition="!empty($type_name_error)">
-        <div class="xar-error">#$type_name_error#</div>
-        </xar:if>
-    </div>
-    <br style="clear: both; height=0;"/>
-
-    <div style="text-align: left; vertical-align: text-top; clear: left; float: left; width: 12em;">
-        <label for="template_name"><xar:mlstring>Template Name</xar:mlstring></label>
-        <div style="font-family: Courier New, Courier, mono; font-weight: bold;">
-            #$moduleinfo['directory']#/#xarModGetVar('autolinks','templatebase', 1)#-{<em><xar:mlstring>name</xar:mlstring></em>}.xd
-        </div>
-    </div>
-    <div style="text-align: left; vertical-align: text-top; clear: right; float: left; left: 14em;">
-        <input type="text" name="template_name" id="template_name" value="#$template_name#" size="32" maxlength="60" />
-        <xar:if condition="!empty($template_name_error)">
-        <div class="xar-error">#$template_name_error#</div>
-        </xar:if>
-    </div>
-    <br style="clear: both; height=0;"/>
-
-    <div style="text-align: left; vertical-align: text-top; clear: left; float: left; width: 12em;">
-        <label for="dynamic_replace"><xar:mlstring>Execute Template Dynamically</xar:mlstring></label>
-    </div>
-    <div style="text-align: left; vertical-align: text-top; clear: right; float: left; left: 14em;">
-        <xar:if condition="$dynamic_replace">
-            <input type="checkbox" name="dynamic_replace" id="dynamic_replace" value="1" checked="checked"/>
-        <xar:else/>
-            <input type="checkbox" name="dynamic_replace" id="dynamic_replace" value="1"/>
-        </xar:if>
-    </div>
-    <br style="clear: both; height=0;"/>
-
-    <div style="text-align: left; vertical-align: text-top; clear: left; float: left; width: 12em;">
-        <label for="type_desc"><xar:mlstring>Description</xar:mlstring></label>
-    </div>
-    <div style="text-align: left; vertical-align: text-top; clear: right; float: left; left: 14em;">
-        <textarea name="type_desc" cols="32" rows="5" id="type_desc">#$type_desc#</textarea>
-        <xar:if condition="isset($type_desc_error)">
-        <div class="xar-error">#$type_desc_error#</div>
-        </xar:if>
-    </div>
-    <br style="clear: both; height=0;"/>
-
-    
-    <xar:if condition="!empty($hooks)">
-    <xar:foreach in="$hooks" key="$hookmodule">
-    <div style="clear: both;">#$hooks[$hookmodule]#</div>
-    </xar:foreach>
+    <xar:if condition="isset($global_error)">
+       <div class="xar-error">#$global_error#</div>
     </xar:if>
 
-    <input type="submit" value="#$addbuttonlabel#"  />
-</form>
+    <form method="post" action="#xarModURL('autolinks', 'admin', 'createtype')#" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+        <fieldset>
+            <legend><xar:mlstring>Creating a new type</xar:mlstring></legend>
+            <div class="xar-form-input-wrapper">
+                <label for="type_name" class="xar-form-label" title="#xarML('This is the type name')#"><xar:mlstring>Name</xar:mlstring></label>
+                <input type="text" name="type_name" id="type_name" value="#$type_name#" size="32" maxlength="60" />
+                <xar:if condition="!empty($type_name_error)">
+                    <div class="xar-error">#$type_name_error#</div>
+                </xar:if>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="template_name" class="xar-form-label" title="#xarML('This is the name of the template to use')#"><xar:mlstring>Template Name</xar:mlstring></label>
+                #$moduleinfo['directory']#/#xarModGetVar('autolinks','templatebase', 1)#-{<em><xar:mlstring>name</xar:mlstring></em>}.xd
+                <input type="text" name="template_name" id="template_name" value="#$template_name#" size="32" maxlength="60" />
+                <xar:if condition="!empty($template_name_error)">
+                    <div class="xar-error">#$template_name_error#</div>
+                </xar:if>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="dynamic_replace" class="xar-form-label" title="#xarML('Use the template in a dynamic way?')#"><xar:mlstring>Execute Template Dynamically</xar:mlstring></label>
+
+                <xar:if condition="$dynamic_replace">
+                    <input type="checkbox" name="dynamic_replace" id="dynamic_replace" value="1" checked="checked"/>
+                <xar:else/>
+                    <input type="checkbox" name="dynamic_replace" id="dynamic_replace" value="1"/>
+                </xar:if>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="type_desc" class="xar-form-label" title="#xarML('Add a short description')#"><xar:mlstring>Description</xar:mlstring></label>
+                <textarea name="type_desc" cols="32" rows="5" id="type_desc">#$type_desc#</textarea>
+                <xar:if condition="isset($type_desc_error)">
+                    <div class="xar-error">#$type_desc_error#</div>
+                </xar:if>
+            </div>
+        </fieldset>
+
+        <br style="clear: both; height=0;"/>
+
+        <xar:if condition="!empty($hooks)">
+            <xar:foreach in="$hooks" key="$hookmodule">
+                <div style="clear: both;">#$hooks[$hookmodule]#</div>
+            </xar:foreach>
+        </xar:if>
+        <input type="submit" value="#$addbuttonlabel#"  />
+    </form>
 
 </div>
