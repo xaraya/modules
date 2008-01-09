@@ -138,11 +138,11 @@
                 </label>
                 <xar:data-input type="textarea_small" id="usermessage" name="usermessage" rows="5" value="$usermessage" />
             </div>
-            <xar:comment>
-                Dynamic Data properties added here for input
-            </xar:comment>
-            <xar:if  condition="xarModIsHooked('dynamicdata','sitecontact',$scid)" >
+            
+            <xar:comment>Dynamic Data properties input </xar:comment>
+            <xar:if condition="xarModIsHooked('dynamicdata','sitecontact',$scid)" >
                 <xar:if condition="!isset($properties)">
+                   <xar:comment>Important - only get the item again if properties are not already set</xar:comment>
                    <xar:data-getitem name="$properties" module="sitecontact" itemtype="$scid" itemid="0" />
                 </xar:if>
                 <xar:if condition="isset($properties) and count($properties) gt 0">
@@ -155,6 +155,8 @@
                     </xar:foreach>
                 </xar:if>
             </xar:if>
+           <xar:comment>Dynamic Data properties input - end </xar:comment>
+           
             <xar:if condition="($allowcopy eq 1 and xarUserIsLoggedIn()) or ($allowcopy eq 1 and $allowanoncopy eq 1)">
             <div class="xar-form-input-wrapper-after">
                 <xar:data-input type="checkbox" name="sendcopy" id="sendcopy" />
@@ -179,6 +181,9 @@
                     </div>
                 </xar:if>
             </xar:if>
+
+            <xar:comment>Start captcha support</xar:comment>
+            <xar:comment>Formantibot</xar:comment>
             <xar:if condition="!xarUserIsLoggedIn()">
             <xar:if condition="xarModIsAvailable('formantibot') AND $useantibot eq '1'">
                 <div class="xar-form-input-wrapper">
@@ -225,8 +230,8 @@
                     </div>
                 </div>
              </xar:if>
-             <xar:comment>End Anti spam code</xar:comment>
        </xar:if>
+       <xar:comment>End captcha support code</xar:comment>
 
        <div class="xar-form-input-wrapper-after xar-padding-thicktop">
             <input type="hidden" name="userreferer" value="#$userreferer#" />
