@@ -8,7 +8,7 @@ function netquery_userapi_getlink($args)
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
-    if (!xarSecurityCheck('OverviewNetquery',0)) return;
+    if (!xarSecurityCheck('ReadNetquery',0)) return;
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $WhoisTable = $xartable['netquery_whois'];

@@ -7,7 +7,7 @@ function netquery_adminapi_getbbsql($args)
     if ($where=="LIKE") $search = "%".$search."%";
     if (!is_numeric($search)) $search = "'".$search."'";
     $entries = array();
-    if (!xarSecurityCheck('OverviewNetquery')) return $entries;
+    if (!xarSecurityCheck('ReadNetquery')) return $entries;
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $SpamblockerTable = $xartable['netquery_spamblocker'];

@@ -16,7 +16,7 @@ function netquery_adminapi_getflag($args)
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     list($flag_id, $flagnum, $keyword, $fontclr, $backclr, $lookup_1, $lookup_2) = $result->fields;
-    if (!xarSecurityCheck('OverviewNetquery')) return;
+    if (!xarSecurityCheck('ReadNetquery')) return;
     $flag = array('flag_id'  => $flag_id,
                   'flagnum'  => $flagnum,
                   'keyword'  => $keyword,

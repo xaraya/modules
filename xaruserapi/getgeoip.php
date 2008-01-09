@@ -17,6 +17,7 @@ function netquery_userapi_getgeoip($args)
         $ip = $_SERVER['REMOTE_ADDR'];
       }
     }
+    if (!xarSecurityCheck('ReadNetquery',0)) return;
     $ipnum = sprintf("%u", ip2long($ip));
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -31,7 +32,7 @@ function netquery_userapi_getgeoip($args)
     $geoflag = "modules/netquery/xarimages/geoflags/".$cc.".gif";
     if (!file_exists($geoflag)) $geoflag = "modules/netquery/xarimages/geoflags/blank.gif";
     if (!file_exists($geoflag)) $geoflag = "";
-    if (!xarSecurityCheck('OverviewNetquery',0)) return;
+
     $geoip = array('ip'      => $ip,
                    'cc'      => $cc,
                    'cn'      => $cn,

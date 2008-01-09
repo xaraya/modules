@@ -8,6 +8,7 @@ function netquery_adminapi_getrouter($args)
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
+    if (!xarSecurityCheck('ReadNetquery')) return;
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $LGRouterTable = $xartable['netquery_lgrouter'];
@@ -23,7 +24,7 @@ function netquery_adminapi_getrouter($args)
          $bgpd, $bgpd_port, $bgpd_password,
          $ospf6d, $ospf6d_port, $ospf6d_password,
          $use_argc) = $result->fields;
-    if (!xarSecurityCheck('OverviewNetquery')) return;
+
     $router = array('router_id'       => $router_id,
                     'router'          => $router,
                     'address'         => $address,

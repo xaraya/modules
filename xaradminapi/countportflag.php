@@ -8,7 +8,7 @@ function netquery_adminapi_countportflag($args)
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
-    if(!xarSecurityCheck('OverviewNetquery')) return;
+    if(!xarSecurityCheck('ReadNetquery')) return;
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $PortsTable = $xartable['netquery_ports'];
