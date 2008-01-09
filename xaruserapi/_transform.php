@@ -14,7 +14,7 @@ function autolinks_userapi__transform_errhandler($errorType, $errorString, $erro
  * callback function to transform text dynamically (private)
  * @param $template_name name of template to execute
  * @param $matched_text the text that matched the autolink
- * @param $template_vars 
+ * @param $template_vars
  * @returns string unparsed array of values to pass into the template
  * @return string of transformed matched text
  */
@@ -68,7 +68,7 @@ function autolinks_userapi__transform_preg($template_name, $matched_text, $templ
             // This is the normal mode of operation.
             $replace = $matched_text;
         }
- 
+
         // Handle the error since we have rendered it here.
         xarErrorHandled();
     } else {
@@ -293,7 +293,7 @@ function autolinks_userapi__transform($args)
     // 3. Do the link replacement on the string (preg_replace).
     // 4. Explode the content string back to an array (explode).
     // 5. Zip the two arrays back together into a string (array_join with a call-back to concatenate elements).
-    
+
     // Get array of content.
     $content_array = preg_split($tag_preg, $text);
 

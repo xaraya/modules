@@ -4,7 +4,6 @@
  *
  * transform text
  * @param $args['extrainfo'] string or array of text items
- * @returns string
  * @return string or array of transformed text items
  */
 function autolinks_userapi_transform($args)

@@ -1,11 +1,9 @@
 <?php
-
 /**
- * File: $Id$
  *
  * Xaraya Autolinks
  *
- * @package Xaraya eXtensible Management System
+ * @package modules
  * @copyright (C) 2002 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.org
@@ -36,7 +34,7 @@
  * complete. The main task is to separate the generic from the specific.
  *
  * An over-riding requirement for this functionality is that a module
- * export function does not need to touch XML in any way - it just 
+ * export function does not need to touch XML in any way - it just
  * handles arrays, and the generic export stuff does the XML conversion.
  *
  * Importing will be done in a similar way: using a streaming XML parser,
@@ -115,7 +113,7 @@ function autolinks_util_export_callbackitemhooks($value, $level, $extrainfo)
         $info = xarModGetInfo($moduleid);
         $module = $info['name'];
     }
-    
+
     // Item type.
     if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
         $itemtype = $extrainfo['itemtype'];
@@ -187,7 +185,7 @@ function autolinks_util_export_callbackitemtypehooks($value, $level, $extrainfo)
         $info = xarModGetInfo($moduleid);
         $module = $info['name'];
     }
-    
+
     // Item type.
     if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
         $itemtype = $extrainfo['itemtype'];
@@ -272,7 +270,7 @@ function autolinks_util_export_callbacklinktype($value, $level, $extrainfo)
                 unset($links[$key]);
             }
         }
-        
+
         // Get the links and hooks for this type.
         return autolinks_util_export_arraytoxml(
             array(
@@ -295,7 +293,7 @@ function autolinks_util_export_callbacklinktype($value, $level, $extrainfo)
 
 // This is a useful function to be made available in a separate module.
 
-function autolinks_util_export_arraytoxml($array, $level=0, $callbacks='', $extrainfo = array()) 
+function autolinks_util_export_arraytoxml($array, $level=0, $callbacks='', $extrainfo = array())
 {
     $xml = '';
     $indent = '   ';
@@ -403,7 +401,7 @@ function autolinks_util_export($args)
     //   attribute 'module' with the value 'autolinks'.
     // - Within that tag are two further tags: autolinks-global and
     //   autolink-types.
-    // - The autolinks-global tags is handled by callback function 
+    // - The autolinks-global tags is handled by callback function
     //   autolinks_util_export_callbackconfig().
     // - The autolink-types tag has content generated from the array
     //   $types (an extract of the autolink types, done above).
@@ -427,7 +425,7 @@ function autolinks_util_export($args)
 
     // Return the XML.
     // TODO: we need a variety of methods for returning this data. It
-    // could go to a form item for cut-n-paste, to the browser as a 
+    // could go to a form item for cut-n-paste, to the browser as a
     // standalone MIME data stream, to a local file, etc.
     $data['xml'] = xarVarPrepForDisplay($xml);
 

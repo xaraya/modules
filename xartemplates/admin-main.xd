@@ -3,42 +3,49 @@
   <span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
-    <xar:template type="module" file="admin-menu" />
+  <xar:template type="module" file="admin-menu" />
   <img src="#xarTplGetImage('admin.gif','autolinks')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
 
   <h2><xar:mlstring>Overview</xar:mlstring></h2>
 
   <h3><xar:mlstring>What is it?</xar:mlstring></h3>
-  <p>
-        <p>
-            <em><xar:mlstring>Autolinks is a Xaraya Utility Module.</xar:mlstring></em>
-            <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
-        </p>
-            <ul>
-                <li><xar:mlstring>Automatically links text in articles or other content modules that you have configured.</xar:mlstring></li>
-            </ul>
-        <br />
-        <h3>
-            <xar:mlstring>How to use it?</xar:mlstring>
-        </h3>
-        <p>
-            <xar:mlstring>Simply set your configuration for the style of links that you want to have, and then start adding autolinks into the system.  The module will transform the text from there.</xar:mlstring>
-        </p>
-        <br />
-        <h3>
-            <xar:mlstring>Included Blocks</xar:mlstring>
-        </h3>
-        <p>
-            <xar:mlstring>There are no included blocks</xar:mlstring>
-        </p>
-        <br />
-        <h3>
-            <xar:mlstring>Included Hooks</xar:mlstring>
-        </h3>
+    <p>
+        <em><xar:mlstring>Autolinks is a Xaraya Utility Module.</xar:mlstring></em>
+        <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
+    </p>
+        <ul>
+            <li><xar:mlstring>Automatically links text in articles or other content modules that you have configured.</xar:mlstring></li>
+        </ul>
+    <h3>
+        <xar:mlstring>How to use it?</xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>Simply set your configuration for the style of links that you want to have, and then start adding autolinks into the system.  The module will transform the text from there.</xar:mlstring>
+        <ol>
+        <li><xar:mlstring>Create a type</xar:mlstring></li>
+        <li><xar:mlstring>Define it to be either dynamic or static. Dynamic transforms are more flexible.</xar:mlstring></li>
+        <li><xar:mlstring>Choose the template to use. If you create your own, make sure to place it in your themes dir.</xar:mlstring></li>
+        <li><xar:mlstring>Create a link. You can use regular expressions for the text you want to match. In that case, make sure you create the link dynamically.</xar:mlstring></li>
+        <li><xar:mlstring>Activate the link and hook the autolinks module to the module you want to transform.</xar:mlstring></li>
+        </ol>
+        <xar:mlstring>The autolinks module will transform the texts, but makes exceptions for text inclosed in tags eg in </xar:mlstring>
+        <code>&lt;a href="<xar:mlstring>something</xar:mlstring>"&gt;</code> <xar:mlstring>the word "something" will not be transformed due to being inside a tag.</xar:mlstring><br />
+        <xar:mlstring>You can use the exclude mechanism by using your own tags in a text. These exclude tags should be unique and enclose the texts that you do not want to be transformed.</xar:mlstring>
+    </p>
+    <br />
+    <h3>
+        <xar:mlstring>Privileges</xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>You will need to give readers of the texts a read access level to the autolinks module.</xar:mlstring>
+    </p>
+    <h3>
+        <xar:mlstring>Included Hooks</xar:mlstring>
+    </h3>
 
-        <p>
-            <xar:mlstring>Autolinks provide a transform hook for searching and replacing text as necessary.</xar:mlstring>
-        </p>
+    <p>
+        <xar:mlstring>Autolinks provide a transform hook for searching and replacing text as necessary.</xar:mlstring>
+    </p>
   <h3>
     <xar:mlstring>Further Information</xar:mlstring>
   </h3>
@@ -46,14 +53,14 @@
     <xar:mlstring>Further information on the Autolinks module can be found at</xar:mlstring>
   </p>
   <ul>
-    <li><xar:mlstring>Autolinks Extension page at</xar:mlstring> <a title="#xarML('Autolinks Module - Xaraya Extension 36')#" href="http://www.xaraya.com/index.php/release/11.html">Xaraya Extension and Releases</a>.
+    <li><xar:mlstring>Autolinks Extension page at</xar:mlstring> <a title="#xarML('Autolinks Module - Xaraya Extension 11')#" href="http://www.xaraya.com/index.php/release/11.html">Xaraya Extension and Releases</a>.
       <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
     </li>
     <li><xar:mlstring>Related tutorials and documentation on Autolinks found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/autolinks/" title="#xarML('Related documentation on Autolinks')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
     </li>
   </ul>
   <p class="xar-sub">
-    <strong>&nbsp;<xar:mlstring>Autolinks Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-02-28
+    <strong>&nbsp;<xar:mlstring>Autolinks Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.1.0&nbsp; 2008-01-09
   </p>
 </div>
 

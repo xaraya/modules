@@ -1,12 +1,13 @@
 <?php
 
 /**
- * This is a standard function that is called with the results of the
- * form supplied by xarModFunc('autolinks','admin','new') to create a new item
- * @param 'keyword' the keyword of the link to be created
- * @param 'title' the title of the link to be created
- * @param 'url' the url of the link to be created
- * @param 'comment' the comment of the link to be created
+ * Move a link
+ *
+ * @param id 'lid' the id for the link to move
+ * @param id 'tid' the id for the type of link
+ * @param string 'confirm' do the move?
+ * @param string 'cancel' cancel the move
+ * @return mixed array or void
  */
 function autolinks_admin_move()
 {
@@ -14,10 +15,10 @@ function autolinks_admin_move()
     // Pass 1: takes a lid and displays options.
     // Pass 2: takes a lid and tid and displays confirm.
     // Pass 3: does the move.
-    
+
     // Security Check
     if (!xarSecurityCheck('EditAutolinks')) {return;}
-    
+
     // A link ID is mandatory. The rest depend on the stage.
     if (!xarVarFetch('lid', 'id', $lid, NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('tid', 'id', $tid, NULL, XARVAR_DONT_SET)) {return;}
@@ -141,11 +142,11 @@ function autolinks_admin_move()
         xarResponseRedirect(xarModURL('autolinks', 'admin', 'modify', array('lid' => $lid)));
         return true;
     }
-    
+
     // Set the various data details for the template.
-    
+
     $data['authid'] = xarSecGenAuthKey();
-    
+
     if (isset($types)) {
         $data['types'] = $types;
     }
@@ -159,7 +160,7 @@ function autolinks_admin_move()
         $data['lid'] = $lid;
         $data['link'] = $link;
     }
-    
+
     return $data;
 }
 
