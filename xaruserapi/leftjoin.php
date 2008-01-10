@@ -133,6 +133,9 @@ function categories_userapi_leftjoin($args)
 
     // Specify LEFT JOIN ... ON ... [WHERE ...] parts
     if (count($cids) > 0 && $andcids) {
+        // Reorganise the keys to ensure they are sequential.
+        $cids = array_values($cids);
+
         for ($i = 0; $i < count($catlinks); $i++) {
             if ($i == 0) {
                 // Main table
@@ -253,6 +256,8 @@ function categories_userapi_leftjoin($args)
         // The categories are ORed, i.e. select items with ANY of the categories.
         $orcids = array();
         $tmpwhere = array();
+        // Reorganise the keys to ensure they are sequential.
+        $cids = array_values($cids);
         for ($i = 0; $i < count($cids); $i++) {
             if (is_numeric($cids[$i])) {
                 $orcids[] = $cids[$i];
