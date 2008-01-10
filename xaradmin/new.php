@@ -3,7 +3,7 @@
  * Add new item
  *
  * @package modules
- * @copyright (C) 2006-2007 The Digital Development Foundation
+ * @copyright (C) 2006-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -22,20 +22,9 @@
  */
 function jpgraph_admin_new($args)
 {
-    /* Admin functions of this type can be called by other modules. If this
-     * happens then the calling module will be able to pass in arguments to
-     * this function through the $args parameter. Hence we extract these
-     * arguments *before* we have obtained any form-based input through
-     * xarVarFetch().
-     */
     extract($args);
 
-    /* Get parameters from whatever input we need. All arguments to this
-     * function should be obtained from xarVarFetch(). xarVarFetch allows
-     * the checking of the input variables as well as setting default
-     * values if needed. Getting vars from other places such as the
-     * environment is not allowed, as that makes assumptions that will
-     * not hold in future versions of Xaraya
+    /* Get parameters from whatever input we need.
      */
     if (!xarVarFetch('img',  'int', $img,  false,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('name',    'str:1:', $name,    $name,    XARVAR_NOT_REQUIRED)) return;

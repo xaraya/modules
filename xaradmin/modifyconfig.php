@@ -92,7 +92,7 @@ function jpgraph_admin_modifyconfig()
         if (!xarVarFetch('window_height', 'str:1:', $window_height, xarModGetVar('jpgraph', 'window_height'), XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('window_width',  'str:1:', $window_width,  xarModGetVar('jpgraph', 'window_width'),  XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('cachetimeout',  'int::',  $cachetimeout,  xarModGetVar('jpgraph', 'cachetimeout'),  XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('mainversion',       'int:1:',  $mainversion,      xarModGetVar('jpgraph', 'mainversion'),       XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('mainversion',   'int:1:', $mainversion,   xarModGetVar('jpgraph', 'mainversion'),   XARVAR_NOT_REQUIRED)) return;
         /* Confirm authorisation code. */
 
         if (!xarSecConfirmAuthKey()) return;

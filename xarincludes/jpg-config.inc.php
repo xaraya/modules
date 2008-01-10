@@ -1,10 +1,9 @@
 <?php
 //=======================================================================
-// File: JPG-CONFIG.INC
-// Description: Configuration file for JpGraph library
-// Created: 2004-03-27
-// Author: Johan Persson (johanp@aditus.nu)
-// Ver: $Id: jpg-config.inc.php 638 2006-05-26 13:25:30Z ljp $
+// File:	JPG-CONFIG.INC
+// Description:	Configuration file for JpGraph library
+// Created: 	2004-03-27
+// Ver:		$Id: jpg-config.inc.php 781 2006-10-08 08:07:47Z ljp $
 //
 // Copyright (c) Aditus Consulting. All rights reserved.
 //========================================================================

@@ -3,7 +3,7 @@
  * The main administration function
  *
  * @package modules
- * @copyright (C) 2006-2007 The Digital Development Foundation
+ * @copyright (C) 2006-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -31,11 +31,7 @@ function jpgraph_admin_main()
     /* Security check
      */
     if (!xarSecurityCheck('EditJpGraph')) return;
-       /* If you want to go directly to some default function, instead of
-         * having a separate main function, you can simply call it here, and
-         * use the same template for admin-main.xd as for admin-view.xd
-         * return xarModFunc('jpgraph','admin','view');
-         */
+        //We redirect to the overview function
         xarResponseRedirect(xarModURL('jpgraph', 'admin', 'overview'));
 
     /* success so return true */

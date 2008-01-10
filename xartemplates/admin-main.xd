@@ -26,14 +26,14 @@
     <li><xar:mlstring>Templates with standard style classes, layouts and template requirements to meet Xaraya Block Layout coding standards.</xar:mlstring></li>
     <li><xar:mlstring>A property that will present you with the basic plot types.</xar:mlstring></li>
     <li>
-      <xar:mlstring>For more detailed info, look in the templates (e.g. xartemplates//admin-new.xd) in this module.</xar:mlstring>
+      <xar:mlstring>For more detailed info, look in the templates (e.g. xartemplates/admin-new.xd) in this module.</xar:mlstring>
     </li>
   </ul>
 
   <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
   <p>
   <xar:mlstring>Get the JpGraph library from the website at</xar:mlstring> <a href="http://www.aditus.nu/jpgraph/jpdownload.php">http://www.aditus.nu/jpgraph/jpdownload.php</a><br />
-  <xar:mlstring>Unzip the files. Copy the files from /src to /xarincludes/jpgraph2/ and the files from /docs to /xardocs/. Then, copy the config file (jpg-config.inc.php) from xarincludes over to the jpgraph2 directory.</xar:mlstring>
+  <xar:mlstring>Unzip the files. Copy the files from /src to /xarincludes/jpgraph2/ (or /jpgraph1 if you are using the version 1 files) and the files from /docs to /xardocs/. Then, copy the config file (jpg-config.inc.php) from xarincludes over to the jpgraph2 directory.</xar:mlstring>
   <br />
   <xar:mlstring>Run the test suit to see what goes ok on your system. Set any options in modifyconfig and optionally the others in the jpg-config.inc.php file in xarincludes/jpgraph2.</xar:mlstring>
   </p>
@@ -65,7 +65,7 @@
     </li>
   </ul>
   <p class="xar-sub">
-    <strong>&nbsp;<xar:mlstring>JpGraph Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.2&nbsp; 2007-02-07
+    <strong>&nbsp;<xar:mlstring>JpGraph Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.3&nbsp; 2008-01-10
   </p>
 </div>
 

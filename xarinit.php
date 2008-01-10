@@ -3,7 +3,7 @@
  * JpGraph Module - initialization functions
  *
  * @package modules
- * @copyright (C) 2006-2007 The Digital Development Foundation
+ * @copyright (C) 2006-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -125,6 +125,8 @@ function jpgraph_upgrade($oldversion)
         case '0.3.0':
             xarModSetVar('jpgraph', 'mainversion', 2);
         case '0.3.1':
+            xarModSetVar('jpgraph', 'jpgraphversion', '2.3');
+        case '0.3.2':
             break;
     }
     /* Update successful */
