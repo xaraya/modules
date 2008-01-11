@@ -13,6 +13,9 @@
             Modify Article
         </xar:mlstring>
     </h2>
+    <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
+        <p>#xarSessionGetVar('statusmsg')#</p>
+    </xar:if>
     <xar:if condition="!empty($preview)">
         <div>
             #$preview#
@@ -132,4 +135,10 @@
             </div>
         </div>
     </form>
+    <!--
+    // clear the status message
+    // we put this in an if tag to prevent the function from
+    // showing '1' in the page
+    -->
+    <xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>
 </div>

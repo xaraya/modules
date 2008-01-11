@@ -13,7 +13,13 @@
             Manage Articles
         </xar:mlstring>
     </h2>
-
+      <!--
+          // display a status message to the user if an action has been
+          // taken on an item
+      -->
+      <xar:if condition="xarSessionGetVar('statusmsg') != ''">
+          <p>#xarSessionGetVar('statusmsg')#</p>
+      </xar:if>
     <xar:comment>
         You can use different admin-view-[pubtype].xd templates for different pubtypes
     </xar:comment>
@@ -179,10 +185,10 @@
                         </xar:foreach>
                         </select>
                         <input type="submit" value="#$changestatuslabel#" />
-<script language="JavaScript" type="text/javascript">
-    document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewarticles'],true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
-    document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewarticles'],false)\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
-</script>
+                        <script language="JavaScript" type="text/javascript">
+                            document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewarticles'],true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
+                            document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewarticles'],false)\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
+                        </script>
                     </p>
                 </xar:if>
             </div>
@@ -190,3 +196,9 @@
         #$pager#
     </div>
 </div>
+<!--
+    // clear the status message
+    // we put this in an if tag to prevent the function from
+    // showing '1' in the page
+-->
+<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

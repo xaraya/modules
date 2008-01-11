@@ -147,7 +147,8 @@
     </h3>
     <p>
         <xar:mlstring>
-            this really needs a permissions wizard
+            Permissions to articles are set via a privileges wizard in the privileges module. You can define privileges based on publication types, articles ids, authors or a combination of these with categories.
+            The privileges also make use of the status of an article. A role needs the edit privilege to view submitted articles.
         </xar:mlstring>
     </p>
     <h3>
@@ -157,12 +158,13 @@
     </h3>
     <p>
         <xar:mlstring>
-            overall enable/disable in 'base' admin + specific enable/disable in 'articles' admin + use of module aliases
+            You can enable short URLs for the articles module. First, enable the short urls in the base module. Then check the option in articles. This is the global option. Then, choose which type of short url you want for each publication type.
+            You can choose to use titles of articles in short urls instead of the standard, which uses the article ID in the URL.
         </xar:mlstring>
     </p>
     <p>
         <xar:mlstring>
-            Module aliases seem to be disabled at the moment - uncomment the line in includes/xarServer.php if you want to try it out
+            Module aliases do not exist for the articles module. Instead, you can use the short publication type name in URLs. Eg, the news publication type will show articles using /index.php/news/ArticleID on your site.
         </xar:mlstring>
     </p>
     <h3>
@@ -205,6 +207,9 @@
     <p>
         <xar:mlstring>
             Search hook which provides the functionality to search your individual articles.
+        </xar:mlstring>
+        <xar:mlstring>
+            You will need to hook articles to the search module for this to work. Go to the hooks page in the modules admin area, choose articles and check the option to use the articles hook in the search module.
         </xar:mlstring>
     </p>
 </div>
