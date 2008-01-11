@@ -9,7 +9,7 @@
     </xar:ml>
     <br>
     <xar:if condition="xarSessionGetVar('statusmsg') != ''">
-        <p>#xarSessionGetVar('statusmsg')#</p>
+        <div class="xar-mod-statusmsg">#xarSessionGetVar('statusmsg')#</div>
     </xar:if>
         <form method="post" name="participants" id="participants" action="&xar-modurl-courses-admin-updatestatus;">
             <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />

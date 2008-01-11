@@ -7,7 +7,7 @@
 <div class="xar-mod-body">
     <h2><xar:mlstring>Confirm deleting this course</xar:mlstring></h2><br />
       <xar:if condition="xarSessionGetVar('statusmsg') != ''">
-          <p>#xarSessionGetVar('statusmsg')#</p>
+          <div class="xar-mod-statusmsg">#xarSessionGetVar('statusmsg')#</div>
       </xar:if>
     <xar:if condition="$countplanned eq 0">
         <form method="post" action="&xar-modurl-courses-admin-deletecourse;">

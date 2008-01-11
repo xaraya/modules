@@ -3,9 +3,13 @@
 <h2>#$menutitle#</h2>
 <xar:mlstring>Teachers in the planned course</xar:mlstring> #$planningid#<br>
 <strong>#$coursename#</strong><br />
-<xar:if condition="!empty($status)">
-    Statusmsg: #$status#<br />
-</xar:if>
+    <!--
+        // display a status message to the user if an action has been
+        // taken on an item
+    -->
+    <xar:if condition="xarSessionGetVar('statusmsg') != ''">
+        <div class="xar-mod-statusmsg">#xarSessionGetVar('statusmsg')#</div>
+    </xar:if>
     <form method="post" name="teachers" id="teachers" action="&xar-modurl-courses-admin-updateteachers;">
         <table width="100%" border="1" cellspacing="0" cellpadding="4">
             <tr>
@@ -60,7 +64,7 @@
          <xar:else />
             <xar:mlstring>No teachers found</xar:mlstring>
          </xar:if>
-        </p>         
+        </p>
     </form>
     <form method="post" name="addteacher" id="addteacher" action="&xar-modurl-courses-admin-newteacher;">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
@@ -71,3 +75,4 @@
     <input type="submit" value="#$addbutton#" />
     </form>
 <br />
+<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

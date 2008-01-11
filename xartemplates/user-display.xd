@@ -14,7 +14,7 @@
 <div class="xar-mod-body">
     <div class="xar-courses-contents">
         <xar:if condition="xarSessionGetVar('statusmsg') != ''">
-            <p>#xarSessionGetVar('statusmsg')#</p>
+            <div class="xar-mod-statusmsg">#xarSessionGetVar('statusmsg')#</div>
         </xar:if>
         <xar:if condition="$item['hidecourse'] == '1'">
             #xarModGetVar('courses','hidecoursemsg')#

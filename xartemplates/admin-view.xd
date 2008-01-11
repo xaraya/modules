@@ -11,7 +11,7 @@
     #$menu#
     </xar:if>
     <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
-        <p>#xarSessionGetVar('statusmsg')#</p>
+        <div class="xar-mod-statusmsg">#xarSessionGetVar('statusmsg')#</div>
     </xar:if>
     <xar:data-getitems name="$properties" value="$values" module="courses" itemtype="$itemtype" numitems="$itemsperpage" startnum="$startnum" />
 

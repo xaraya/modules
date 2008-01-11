@@ -102,6 +102,4 @@
     #$pager#
 </div>
 <!-- Empty statusmsg -->
-<xar:if condition="xarSessionGetVar('statusmsg') ne ''">
-   #xarSessionSetVar('statusmsg','')#
-</xar:if>
+<xar:if condition="xarSessionSetVar('statusmsg','')"></xar:if>

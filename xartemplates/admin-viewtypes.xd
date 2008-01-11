@@ -11,7 +11,7 @@
         // taken on an item
     -->
     <xar:if condition="xarSessionGetVar('statusmsg') != ''">
-        <p>#xarSessionGetVar('statusmsg')#</p>
+        <div class="xar-mod-statusmsg">#xarSessionGetVar('statusmsg')#</div>
     </xar:if>
    <!-- the specific template for the current admin function comes here -->
 

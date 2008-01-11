@@ -5,7 +5,7 @@
     <span class="xar-mod-title">Course details</span>
 </div>
 <xar:if condition="xarSessionGetVar('statusmsg') != ''">
-    <p>#xarSessionGetVar('statusmsg')#</p>
+    <div class="xar-mod-statusmsg">#xarSessionGetVar('statusmsg')#</div>
 </xar:if>
 <xar:if condition="!empty($editlink)">
     [<a href="#$editlink#"><xar:mlstring>Edit this planned course</xar:mlstring></a>]
