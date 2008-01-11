@@ -212,4 +212,20 @@
             You will need to hook articles to the search module for this to work. Go to the hooks page in the modules admin area, choose articles and check the option to use the articles hook in the search module.
         </xar:mlstring>
     </p>
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>Further information on the Articles module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>Articles Extension page at</xar:mlstring> <a title="#xarML('Articles Module - Xaraya Extension 151')#" href="http://www.xaraya.com/index.php/release/151.html">Xaraya Extension and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on Articles found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/articles/" title="#xarML('Related documentation on Articles')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>Articles Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.1&nbsp; 2008-01-11
+  </p>
 </div>
