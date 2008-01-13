@@ -2,49 +2,56 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Chat Module</xar:mlstring></span></div>
 <div class="xar-mod-body">
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="padding: 1px;" class="xar-norm-outline">
         <div style="float:right;padding:10px;">
             <xar:if condition="file_exists('modules/chat/xarimages/pjirclogo.gif')" >
                 <img src="modules/chat/xarimages/pjirclogo.gif" alt="official icon" width="131" height="102" />
             <xar:else />
                 <img src="modules/modules/xarimages/admin_generic.gif" alt="official icon" width="131" height="102" />
             </xar:if></div>
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+        <h3>
             <xar:mlstring>What is it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        </h3>
+        <p>
             <em><xar:mlstring>The Chat Module is a content module</xar:mlstring></em>
             <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
             <ul>
                 <li><xar:mlstring>Allowing a user to attach to an IRC server via their browser.</xar:mlstring></li>
-                <li><xar:mlstring>Chat module is based on PJIRC, and opensource chat client.  All source and credits are included in this distribution under xarjava directory.</xar:mlstring></li>
+                <li><xar:mlstring>Chat module is based on PJIRC, an opensource chat client.  All source and credits are included in this distribution under the xarjava directory.</xar:mlstring></li>
             </ul>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+        </p>
+        <h3>
             <xar:mlstring>How to use it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        </h3>
+        <p>
             <xar:mlstring>Configure the server, port (6667 is standard) and channel that you want to open when the chat is launched.</xar:mlstring>
 
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+        </p>
+        <h3>
             <xar:mlstring>Included Blocks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        </h3>
+        <p>
             <xar:mlstring>There are no included blocks.</xar:mlstring>
-        </div>
-        <br />
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+        </p>
+        <h3>
             <xar:mlstring>Included Hooks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        </h3>
+        <p>
             <xar:mlstring>There are no included hooks.</xar:mlstring>
-        </div>
-    </div>
+        </p>
+      <h3>
+        <xar:mlstring>Further Information</xar:mlstring>
+      </h3>
+      <p>
+        <xar:mlstring>Further information on the Chat module can be found at</xar:mlstring>
+      </p>
+      <ul>
+        <li><xar:mlstring>Chat Extension page at</xar:mlstring> <a title="#xarML('Chat Module - Xaraya Extension 158')#" href="http://www.xaraya.com/index.php/release/158.html">Xaraya Extension and Releases</a>.
+          <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+        </li>
+        <li><xar:mlstring>Related tutorials and documentation on Chat found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/chat/" title="#xarML('Related documentation on Chat')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+        </li>
+      </ul>
+      <p class="xar-sub">
+        <strong>&nbsp;<xar:mlstring>Chat Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.1&nbsp; 2008-01-13
+      </p>
 </div>
