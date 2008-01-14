@@ -27,8 +27,35 @@ function translations_admin_generate_skels_result()
         $res = xarModAPIFunc('translations','admin','generate_core_skels',$args);
         break;
         case XARMLS_DNTYPE_MODULE:
-        $args['modid'] = $extid;
-        $res = xarModAPIFunc('translations','admin','generate_module_skels',$args);
+
+            if (!xarVarFetch('dnTypeAll','bool',$dnTypeAll, true, XARVAR_NOT_REQUIRED)) return;
+            if ($dnTypeAll) {
+
+                // Get all modules
+                $installed = xarModAPIFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_INSTALLED)));
+                if (!isset($installed)) return;
+                $uninstalled = xarModAPIFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_UNINITIALISED)));
+                if (!isset($uninstalled)) return;
+
+                $modlist = array();
+                foreach($uninstalled as $term) {
+                    $modlist[] = $term['regid'];
+                }
+                //$modlist2 = array();
+                foreach($installed as $term) {
+                    $modlist[] = $term['regid'];
+                }
+                //$modlist = array_merge($modlist1,$modlist2);
+                //ksort($modlist);
+                // Loop over the modlist and for each module generate the skels
+                foreach($modlist as $extid) {
+                    $args['modid'] = $extid;
+                    $res = xarModAPIFunc('translations','admin','generate_module_skels',$args);
+                }
+            } else {
+                $args['modid'] = $extid;
+                $res = xarModAPIFunc('translations','admin','generate_module_skels',$args);
+            }
         break;
         case XARMLS_DNTYPE_THEME:
         $args['themeid'] = $extid;

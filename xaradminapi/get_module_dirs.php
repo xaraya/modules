@@ -3,16 +3,18 @@
  * Get directories list from module directory
  *
  * @package modules
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @link http://www.xaraya.com
  *
  * @subpackage translations
  * @author Marco Canini
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
-
-//  This function returns an array containing all the php files
-//  in a given directory that start with "xar"
+/**
+ *  This function returns an array containing all the php files
+ *  in a given directory that start with "xar"
+ * @return array
+ */
 function translations_adminapi_get_module_dirs($args)
 {
     // Get arguments

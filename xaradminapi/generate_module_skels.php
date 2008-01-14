@@ -37,9 +37,9 @@ function translations_adminapi_generate_module_skels($args)
     if(!xarSecurityCheck('AdminTranslations')) return;
 
     // {ML_dont_parse 'modules/translations/class/PHPParser.php'}
-    include 'modules/translations/class/PHPParser.php';
+    include_once 'modules/translations/class/PHPParser.php';
     // {ML_dont_parse 'modules/translations/class/TPLParser.php'}
-    include 'modules/translations/class/TPLParser.php';
+    include_once 'modules/translations/class/TPLParser.php';
 
     $time = explode(' ', microtime());
     $startTime = $time[1] + $time[0];
@@ -83,7 +83,7 @@ function translations_adminapi_generate_module_skels($args)
             $pattern = '/^([a-z0-9\-_]+)\.php$/i';
             $xtype = 'php';
         }
-        else { 
+        else {
             $pattern = '/^([a-z0-9\-_]+)\.xd$/i';
             $xtype = 'xd';
         }
@@ -143,7 +143,7 @@ function translations_adminapi_generate_module_skels($args)
     } else {
         $genLocale = $locale;
     }
-         
+
     $gen = xarModAPIFunc('translations','admin','create_generator_instance',array('interface' => 'ReferencesGenerator', 'locale' => $genLocale));
     if (!isset($gen)) return;
     if (!$gen->bindDomain(XARMLS_DNTYPE_MODULE, $modname)) return;
@@ -155,7 +155,7 @@ function translations_adminapi_generate_module_skels($args)
             $ctxtype1 = '';
             $ctxname1 = $subname;
         }
-        
+
         $fileAlreadyOpen = false;
 
         $statistics[$subname] = array('entries'=>0, 'keyEntries'=>0);
