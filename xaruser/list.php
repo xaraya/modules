@@ -50,8 +50,19 @@ function polls_user_list($args)
     foreach ($items as $item) {
         $poll = array();
 
+                switch ($item['type']) {
+            //case 'single':
+            case 0:
+                $poll['type'] = xarML('Single');
+                break;
+            //case 'multi':
+            case 1:
+                $poll['type'] = xarML('Multiple');
+                break;
+        }
+
         $poll['title'] = $item['title'];
-        $poll['type'] = $item['type'];
+        //$poll['type'] = $item['type'];
         $poll['private'] = $item['private'];
         $poll['votes'] = $item['votes'];
         $poll['start_date'] = $item['start_date'];

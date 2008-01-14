@@ -66,19 +66,19 @@
                        </select>
             </div>
             <div class="xar-form-input-wrapper-after">
-                <xar:data-input type="checkbox" name="previewresults" id="previewresults" value="1" checked="$previewresults"/>
+                <xar:data-input type="checkbox" name="previewresults" id="previewresults" value="$previewresults" checked="$previewresults"/>
                 <label for="previewresults" title="#xarML('Users can view results before voting')#">
                         <xar:mlstring>Allow users to see results before voting?</xar:mlstring>
                 </label>               
             </div>
             <div class="xar-form-input-wrapper-after">
-                    <xar:data-input type="checkbox" name="showtotalvotes" id="showtotalvotes" value="1" checked="$showtotalvotes"/>
+            		<xar:data-input type="checkbox" name="showtotalvotes" id="showtotalvotes" value="$showtotalvotes" checked="$showtotalvotes"/>
                 <label for="showtotalvotes" title="#xarML('Users can view total number of votes')#">
                         <xar:mlstring>Allow users to see total votes?</xar:mlstring>
                 </label>             
             </div>
             <div class="xar-form-input-wrapper-after">
-                    <xar:data-input type="checkbox" name="shorturl" id="shorturl" value="1" checked="$shorturl"/>
+            		<xar:data-input type="checkbox" name="shorturl" id="shorturl" value="$shorturl" checked="$shorturl"/>
                 <label for="shorturl" title="#xarML('Use short urls for the polls')#">
                             <xar:mlstring>Enable Short URLs?</xar:mlstring>
                 </label>               

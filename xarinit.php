@@ -33,14 +33,14 @@ function polls_init()
         $fields = array(
             'pid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
             'title'=>array('type'=>'varchar','size'=>255,'null'=>FALSE),
-            'type'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'0'),
-            'open'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'1'),
-            'private'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'0'),
+            'type'=>array('type'=>'boolean','null'=>FALSE,'default'=>'0'),
+            'open'=>array('type'=>'boolean','null'=>FALSE,'default'=>'1'),
+            'private'=>array('type'=>'boolean','null'=>FALSE,'default'=>'0'),
             'modid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE,'default'=>xarModGetIDFromName('polls')),
             'itemtype'=>array('type'=>'integer','unsigned'=>TRUE,'null'=>FALSE,'default'=>'0'),
             'itemid'=>array('type'=>'integer','unsigned'=>TRUE,'null'=>FALSE,'default'=>'0'),
-            'opts'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'0'),
-            'votes'=>array('type'=>'integer','size'=>'medium','null'=>FALSE,'default'=>'0'),
+            'opts'=>array('type'=>'integer','size'=>'tiny','null'=>FALSE,'default'=>'0'),
+            'votes'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'0'),
             'start_date'=>array('type'=>'integer','size'=>'large','null'=>FALSE,'default'=>time()),
             'end_date'=>array('type'=>'integer','size'=>'large','null'=>FALSE,'default'=>'0'),
             'reset'=>array('type'=>'integer','size'=>'large','null'=>FALSE,'default'=>'0')
@@ -50,6 +50,7 @@ function polls_init()
         $dbconn->Execute($query);
 
         $fields = array(
+            'id'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
             'pid'=>array('type'=>'integer','null'=>FALSE),
             'optnum'=>array('type'=>'integer','null'=>FALSE),
             'optname'=>array('type'=>'varchar','size'=>'255','null'=>FALSE),

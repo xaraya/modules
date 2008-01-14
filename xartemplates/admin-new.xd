@@ -45,7 +45,7 @@
                         )
                 </xar:set>
                 <xar:set name="value">
-                    'single'
+                	'0'
                 </xar:set>
                 <xar:data-input type="radio" name="polltype" value="$value" options="$options" />
             </div>

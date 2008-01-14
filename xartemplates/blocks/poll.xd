@@ -11,9 +11,9 @@
             </div>
             <xar:for start="$i = 1" test="$i le count($options)" iter="$i++">
                 <div class="xar-form-input-wrapper">
-                    <xar:if condition="$type eq 'single'">
+                    <xar:if condition="$type eq '0'">
                         <input type="radio" name="option" id="option_#$bid#_#$i#" value="#$i#" />
-                    <xar:elseif  condition="$type eq 'multi'" />
+                    <xar:elseif  condition="$type eq '1'" />
                         <input type="checkbox" name="option_#$i#" id="option_#$bid#_#$i#" value="#$i#" />
                     </xar:if>
                     <label for="option_#$bid#_#$i#">

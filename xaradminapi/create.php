@@ -15,8 +15,8 @@
 /**
  * create a poll
  * @param $args['title'] title of poll
- * @param $args['polltype'] type of poll ('single' for one selection
- *                                        'multi' for multiple selections)
+ * @param $args['polltype'] type of poll ('0' for one selection
+ *                                        '1' for multiple selections)
  * @param $args['time'] time when the poll was created (import only)
  * @param $args['votes'] number of votes for this poll (import only)
  * @param $args['module'] module of the item this poll relates to (hooks only)

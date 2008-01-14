@@ -21,6 +21,12 @@ function polls_adminapi_getmenulinks()
     $menulinks = array();
 
     if (xarSecurityCheck('EditPolls',0)) {
+        $menulinks[] = Array('url'   => xarModURL('polls','admin','overview'),
+                              'title' => xarML('Polls Overview'),
+                              'label' => xarML('Polls Overview'));
+    }
+
+    if (xarSecurityCheck('EditPolls',0)) {
         $menulinks[] = Array('url'   => xarModURL('polls','admin','list'),
                               'title' => xarML('View, edit or create Polls'),
                               'label' => xarML('Manage Polls'));

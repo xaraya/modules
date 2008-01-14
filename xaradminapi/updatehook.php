@@ -61,6 +61,7 @@ function polls_adminapi_updatehook($args)
         $vars = array('module name', 'admin', 'newhook', 'polls');
         throw new BadParameterException($vars,$msg);
     }
+    
 
 // TODO: security check based on calling module + item type + item id ?
     if (!xarSecurityCheck('EditPolls',0)) {
@@ -81,7 +82,7 @@ function polls_adminapi_updatehook($args)
     if (empty($poll['title']) || empty($poll['type'])) {
         // no poll
         $poll = null;
-    } elseif ($poll['type'] != 'single' && $poll['type'] != 'multi') {
+    } elseif ($poll['type'] != '0' && $poll['type'] != '1') {
         // invalid poll type
         $poll = null;
     } else {
@@ -119,7 +120,8 @@ function polls_adminapi_updatehook($args)
                                    'itemtype' => $itemtype,
                                    'itemid' => $objectid));
         if (empty($pid)) {
-        throw new IDNotFoundException($pid,'Unable to create poll');
+            throw new IDNotFoundException($pid,'Unable to create poll');
+        
         }
         $poll['pid'] = $pid;
 

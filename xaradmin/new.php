@@ -27,10 +27,11 @@ function polls_admin_new()
     $data['start_date']= time();
     $data['end_date']= NULL;
 
-
     $item = array();
     $item['module'] = 'polls';
     $item['itemtype'] = 0;
+    $item['itemid'] = 0;
+
     $hooks = xarModCallHooks('item', 'new', '', $item);
 
     if (empty($hooks)) {

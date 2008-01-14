@@ -63,6 +63,8 @@ function polls_adminapi_deletehook($args)
         throw new BadParameterException($vars,$msg);
     }
 
+  
+
     // get the current poll for this item
     $oldpoll = xarModAPIFunc('polls','user','gethooked',
                              array('modname' => $modname,

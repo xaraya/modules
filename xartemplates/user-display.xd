@@ -33,9 +33,9 @@
                         <label for="polloption_#$i#" class="xar-form-label">
                             #$options[$i]['name']#
                         </label>
-                        <xar:if condition="$type eq 'single'">
+                        <xar:if condition="$type eq '0'">
                             <input type="radio" name="option" id="polloption_#$i#" value="#$i#" />
-                        <xar:elseif condition="$type eq 'multi'" />
+                        <xar:elseif condition="$type eq '1'" />
                             <input type="checkbox" name="option_#$i#" id="polloption_#$i#" value="#$i#" />
                         </xar:if>
                     </div>

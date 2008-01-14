@@ -71,7 +71,7 @@ function polls_userapi_vote($args)
                 throw new EmptyParameterException($options,'For voting a vote is necessary');
     }
 
-    if ($poll['type'] == 'single') {
+    if ($poll['type'] == '0') {
         if(count($options) != 1){
                         throw new EmptyParameterException($options,'Multiple votes not allowed on this Poll.');
         }
@@ -95,7 +95,7 @@ function polls_userapi_vote($args)
 
         $voteinc++;
     }
-    elseif ($poll['type'] == 'multi') {
+    elseif ($poll['type'] == '1') {
         foreach($options as $option) {
             $option = $option * 1;
             if($option > $poll['opts'] || $option < 1){
@@ -114,8 +114,7 @@ function polls_userapi_vote($args)
             }
             $voteinc++;
         }
-    }
-    else {
+    } else {
         $msg = xarML('Poll type/vote mismatch');
                 throw new EmptyParameterException($options,'Poll type/vote mismatch');
         }

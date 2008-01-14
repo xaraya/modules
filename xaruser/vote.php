@@ -37,8 +37,7 @@ function polls_user_vote($args)
                      'usercanvote',
                      array('pid' => $pid));
     if(!$canvote){
-        xarSessionSetVar('polls_statusmsg', xarML('You cannot vote at this time.',
-                    'polls'));
+        xarSessionSetVar('polls_statusmsg', xarML('You cannot vote at this time.','polls'));
         if (!empty($returnurl)) {
             xarResponseRedirect($returnurl);
         } else {
@@ -60,11 +59,11 @@ function polls_user_vote($args)
     }
     $options = array();
     // Get selected options
-    if($poll['type'] == 'single'){
+    if($poll['type'] == '0'){
         xarVarFetch('option', 'isset', $opt, XARVAR_DONT_SET);
         $options[$opt] = $opt;
     }
-    elseif($poll['type'] == 'multi'){
+    elseif($poll['type'] == '1'){
         for($i = 1; $i <= $poll['opts']; $i++){
             xarVarFetch('option_' . $i, 'isset', $opt[$i], XARVAR_DONT_SET);
             if($opt[$i] == $i){

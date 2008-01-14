@@ -17,12 +17,13 @@
             </label>        
                 <xar:set name="options">
                         array(
-                               array('id' => 'single', 'name' => 'Single Choice'),
-                            array('id' => 'multi', 'name' => 'Multiple Choice'),
+                    		array('id' => '0', 'name' => 'Single Choice'),
+                    		array('id' => '1', 'name' => 'Multiple Choice')
+                    		
                         )
                 </xar:set>
                 <xar:set name="value">
-                        'single'
+                		'0'
                 </xar:set>
             <xar:data-input type="radio" name="poll[type]" value="$value" options="$options" />
         </div>

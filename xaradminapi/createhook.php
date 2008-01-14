@@ -73,7 +73,7 @@ function polls_adminapi_createhook($args)
         // no poll
         return $extrainfo;
     }
-    if ($poll['type'] != 'single' && $poll['type'] != 'multi') {
+    if ($poll['type'] != '0' && $poll['type'] != '1') {
         // invalid poll type
         return $extrainfo;
     }
