@@ -3,7 +3,7 @@
  * Start translation process
  *
  * @package modules
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @link http://www.xaraya.com
  *
  * @subpackage translations

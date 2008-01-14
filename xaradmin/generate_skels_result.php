@@ -3,14 +3,16 @@
  * Generate skels result
  *
  * @package modules
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @link http://www.xaraya.com
  *
  * @subpackage translations
  * @author Marco Canini
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
-
+/**
+ * Parse the generation request and show a result page.
+ */
 function translations_admin_generate_skels_result()
 {
     // Security Check
@@ -28,7 +30,7 @@ function translations_admin_generate_skels_result()
         break;
         case XARMLS_DNTYPE_MODULE:
 
-            if (!xarVarFetch('dnTypeAll','bool',$dnTypeAll, true, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('dnTypeAll','bool',$dnTypeAll, false, XARVAR_NOT_REQUIRED)) return;
             if ($dnTypeAll) {
 
                 // Get all modules

@@ -3,7 +3,7 @@
  * Generate skeletons for a module
  *
  * @package modules
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @link http://www.xaraya.com
  *
  * @subpackage translations
@@ -15,8 +15,7 @@
  * generate translations XML skels for a specified module
  * @param $args['modid'] module registry identifier
  * @param $args['locale'] locale name
- * @returns array
- * @return statistics on generation process
+ * @return array statistics on generation process
  */
 function translations_adminapi_generate_module_skels($args)
 {
