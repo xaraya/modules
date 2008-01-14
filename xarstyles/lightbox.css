@@ -50,8 +50,8 @@
 	}
 #prevLink { left: 0; float: left;}
 #nextLink { right: 0; float: right;}
-#prevLink:hover, #prevLink:visited:hover { background: url(../xarimages/prevlabel.gif) left 15% no-repeat; }
-#nextLink:hover, #nextLink:visited:hover { background: url(../xarimages/nextlabel.gif) right 15% no-repeat; }
+#prevLink:hover, #prevLink:visited:hover { background: transparent url(../xarimages/prevlabel.gif) left 15% no-repeat; }
+#nextLink:hover, #nextLink:visited:hover { background: transparent url(../xarimages/nextlabel.gif) right 15% no-repeat; }
 
 
 #imageDataContainer{
