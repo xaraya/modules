@@ -21,7 +21,7 @@ function translations_admin_generate_skels_result()
     if (!xarVarFetch('dnType','int',$dnType)) return;
     if (!xarVarFetch('dnName','str:1:',$dnName)) return;
     if (!xarVarFetch('extid','int',$extid)) return;
-
+    if (!xarVarFetch('dnTypeAll','bool',$dnTypeAll, false, XARVAR_NOT_REQUIRED)) return;
     $locale = translations_working_locale();
     $args = array('locale'=>$locale);
     switch ($dnType) {
@@ -30,7 +30,6 @@ function translations_admin_generate_skels_result()
         break;
         case XARMLS_DNTYPE_MODULE:
 
-            if (!xarVarFetch('dnTypeAll','bool',$dnTypeAll, false, XARVAR_NOT_REQUIRED)) return;
             if ($dnTypeAll) {
 
                 // Get all modules
@@ -38,22 +37,20 @@ function translations_admin_generate_skels_result()
                 if (!isset($installed)) return;
                 $uninstalled = xarModAPIFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_UNINITIALISED)));
                 if (!isset($uninstalled)) return;
-
+                // Add modules to the list
                 $modlist = array();
                 foreach($uninstalled as $term) {
                     $modlist[] = $term['regid'];
                 }
-                //$modlist2 = array();
                 foreach($installed as $term) {
                     $modlist[] = $term['regid'];
                 }
-                //$modlist = array_merge($modlist1,$modlist2);
-                //ksort($modlist);
                 // Loop over the modlist and for each module generate the skels
                 foreach($modlist as $extid) {
                     $args['modid'] = $extid;
                     $res = xarModAPIFunc('translations','admin','generate_module_skels',$args);
                 }
+
             } else {
                 $args['modid'] = $extid;
                 $res = xarModAPIFunc('translations','admin','generate_module_skels',$args);
@@ -80,7 +77,7 @@ function translations_admin_generate_skels_result()
     elseif ($dnType == XARMLS_DNTYPE_MODULE) $dnTypeText = 'module';
     else $dnTypeText = '';
     $tplData['dnTypeText'] = $dnTypeText;
-
+    $tplData['dnTypeAll']= $dnTypeAll;
     $tplData['dnName'] = $dnName;
     $tplData['extid'] = $extid;
     $tplData = array_merge($tplData, $druidbar, $opbar);
