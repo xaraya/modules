@@ -24,7 +24,7 @@ $modversion['official']       = 1;
 $modversion['author']         = 'MichelV, Jason, Random';
 $modversion['contact']        = 'http://www.xaraya.com/';
 $modversion['admin']          = 1;
-$modversion['user']           = 1;
+$modversion['user']           = 1; // Probably not necessary. Will see.
 $modversion['class']          = 'Utility';
 $modversion['category']       = 'Miscellaneous';
 

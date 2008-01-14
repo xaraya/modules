@@ -3,7 +3,7 @@
  * Utility function pass individual menu items to the main menu
  *
  * @package modules
- * @copyright (C) 2006-2007 The Digital Development Foundation
+ * @copyright (C) 2006-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -24,20 +24,14 @@ function jpgraph_userapi_getmenulinks()
      * that we are suppose to see.
      */
     if (xarSecurityCheck('ViewJpGraph', 0)) {
-        /* The main menu will look for this array and return it for a tree view of the module
-         * We are just looking for three items in the array, the url, which we need to use the
-         * xarModURL function, the title of the link, which will display a tool tip for the
-         * module url, in order to keep the label short, and finally the exact label for the
-         * function that we are displaying.
-         */
         $menulinks[] = array('url' => xarModURL('jpgraph',
                 'user',
-                'view'),
+                'main'),
             /* In order to display the tool tips and label in any language,
              * we must encapsulate the calls in the xarML in the API.
              */
-            'title' => xarML('Displays all jpgraph items for view'),
-            'label' => xarML('Display'));
+            'title' => xarML('Main user interface'),
+            'label' => xarML('Main'));
     }
     /* If we return nothing, then we need to tell PHP this, in order to avoid an ugly
      * E_ALL error.
