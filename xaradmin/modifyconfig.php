@@ -1,74 +1,63 @@
 <?php
 /**
- *
- * Function purpose to be added
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2006 by to be added
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
- * @link to be added
- * @subpackage Foo Module
- * @author Marc Lutolf <mfl@netspan.ch>
- *
- * Purpose of file:  to be added
- *
- * @param to be added
- * @return to be added
+ * Main configuration page for the foo object
  *
  */
 
-function foo_admin_modifyconfig()
-{
-    // Security Check
-    if (!xarSecurityCheck('AdminFoo')) return;
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
-    switch (strtolower($phase)) {
-        case 'modify':
-        default:
-            switch ($data['tab']) {
-                case 'general':
-                    break;
-                case 'tab2':
-                    break;
-                case 'tab3':
-                    break;
-                default:
-                    break;
-            }
+// Use this version of the modifyconfig file when the module is not a  utility module
 
-            break;
+    function foo_admin_modifyconfig()
+    {
+        // Security Check
+        if (!xarSecurityCheck('AdminFoo')) return;
+        if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+        if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
+        switch (strtolower($phase)) {
+            case 'modify':
+            default:
+                switch ($data['tab']) {
+                    case 'general':
+                        break;
+                    case 'tab2':
+                        break;
+                    case 'tab3':
+                        break;
+                    default:
+                        break;
+                }
 
-        case 'update':
-            // Confirm authorisation code
-            if (!xarSecConfirmAuthKey()) return;
-            switch ($data['tab']) {
-                case 'general':
-                    if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, xarModVars::get('foo', 'itemsperpage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-                    if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('foo', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('foo', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
+                break;
 
-                    xarModVars::set('foo', 'itemsperpage', $itemsperpage);
-                    xarModVars::set('foo', 'SupportShortURLs', $shorturls);
-                    xarModVars::set('foo', 'useModuleAlias', $useModuleAlias);
-                    xarModVars::set('foo', 'aliasname', $aliasname);
-                    break;
-                case 'tab2':
-                    break;
-                case 'tab3':
-                    break;
-                default:
-                    break;
-            }
+            case 'update':
+                // Confirm authorisation code
+                if (!xarSecConfirmAuthKey()) return;
+                switch ($data['tab']) {
+                    case 'general':
+                        if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, xarModVars::get('foo', 'itemsperpage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+                        if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
+                        if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('foo', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
+                        if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('foo', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
 
-            xarResponseRedirect(xarModURL('foo', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
-            // Return
-            return true;
-            break;
+                        xarModVars::set('foo', 'itemsperpage', $itemsperpage);
+                        xarModVars::set('foo', 'SupportShortURLs', $shorturls);
+                        xarModVars::set('foo', 'useModuleAlias', $useModuleAlias);
+                        xarModVars::set('foo', 'aliasname', $aliasname);
+                        break;
+                    case 'tab2':
+                        break;
+                    case 'tab3':
+                        break;
+                    default:
+                        break;
+                }
 
+                xarResponseRedirect(xarModURL('foo', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
+                // Return
+                return true;
+                break;
+
+        }
+        $data['authid'] = xarSecGenAuthKey();
+        return $data;
     }
-    $data['authid'] = xarSecGenAuthKey();
-    return $data;
-}
 ?>
