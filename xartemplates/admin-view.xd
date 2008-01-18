@@ -16,49 +16,51 @@
     <xar:if condition="xarSessionGetVar('statusmsg') != ''">
         <p>#xarSessionGetVar('statusmsg')#</p>
     </xar:if>
-   <!-- the specific template for the current admin function comes here -->
-
     <table class="xar-fullwidth">
-        <tr>
-            <th>
-                <xar:mlstring>Plan ID</xar:mlstring>
-            </th>
-            <th>
-                <xar:mlstring>Plan Name</xar:mlstring>
-            </th>
-            <th>
-                <xar:mlstring>Plan Options</xar:mlstring>
-            </th>
-        </tr>
-        <xar:foreach in="$items" value="$item">
-        <tr>
-            <td>
-                #$item.planid#
-            </td>
-            <td>
-                #$item.planname#
-            </td>
-            <td class="xar-align-center">
-               <xar:if condition="empty($item['editurl'])">
-                   <xar:mlstring>Edit</xar:mlstring>
-               <xar:else />
-                   <a href="#$item.editurl#"><xar:mlstring>Edit</xar:mlstring></a>
-               </xar:if>
-               |
-               <xar:if condition="empty($item['deleteurl'])">
-                   <xar:mlstring>Delete</xar:mlstring>
-               <xar:else />
-                   <a href="#$item.deleteurl#"><xar:mlstring>Delete</xar:mlstring></a>
-               </xar:if>
-               |
-               <xar:if condition="empty($item['pitemurl'])">
-                   <xar:mlstring>Add item</xar:mlstring>
-               <xar:else />
-                   <a href="#$item.pitemurl#"><xar:mlstring>Add item</xar:mlstring></a>
-               </xar:if>
-            </td>
-        </tr>
-        </xar:foreach>
+        <thead>
+            <tr>
+                <th>
+                    <xar:mlstring>Plan ID</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Plan Name</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Plan Options</xar:mlstring>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <xar:foreach in="$items" value="$item">
+            <tr>
+                <td>
+                    #$item.planid#
+                </td>
+                <td>
+                    #$item.planname#
+                </td>
+                <td class="xar-align-center">
+                   <xar:if condition="empty($item['editurl'])">
+                       <xar:mlstring>Edit</xar:mlstring>
+                   <xar:else />
+                       <a href="#$item.editurl#"><xar:mlstring>Edit</xar:mlstring></a>
+                   </xar:if>
+                   |
+                   <xar:if condition="empty($item['deleteurl'])">
+                       <xar:mlstring>Delete</xar:mlstring>
+                   <xar:else />
+                       <a href="#$item.deleteurl#"><xar:mlstring>Delete</xar:mlstring></a>
+                   </xar:if>
+                   |
+                   <xar:if condition="empty($item['pitemurl'])">
+                       <xar:mlstring>Add item</xar:mlstring>
+                   <xar:else />
+                       <a href="#$item.pitemurl#"><xar:mlstring>Add item</xar:mlstring></a>
+                   </xar:if>
+                </td>
+            </tr>
+            </xar:foreach>
+        </tbody>
     </table>
 
     <div class="xar-align-center xar-padding-thick">

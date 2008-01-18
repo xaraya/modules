@@ -20,40 +20,44 @@
 
    <a href="#xarModUrl('itsp','admin','new_pitem')#"><xar:mlstring>Add new item</xar:mlstring></a><br />
     <table class="xar-fullwidth">
-        <tr>
-            <th>
-                <xar:mlstring>Plan item rules</xar:mlstring>
-            </th>
-            <th>
-                <xar:mlstring>Plan item Name</xar:mlstring>
-            </th>
-            <th>
-                <xar:mlstring>Plan item Options</xar:mlstring>
-            </th>
-        </tr>
-        <xar:foreach in="$items" value="$item">
-        <tr>
-            <td>
-                #$item.pitemrules#
-            </td>
-            <td>
-                #$item.pitemid#: #$item.pitemname#
-            </td>
-            <td class="xar-align-center">
-               <xar:if condition="empty($item['editurl'])">
-                   <xar:mlstring>Edit</xar:mlstring>
-               <xar:else />
-                   <a href="#$item.editurl#"><xar:mlstring>Edit</xar:mlstring></a>
-               </xar:if>
-               |
-               <xar:if condition="empty($item['deleteurl'])">
-                   <xar:mlstring>Delete</xar:mlstring>
-               <xar:else />
-                   <a href="#$item.deleteurl#"><xar:mlstring>Delete</xar:mlstring></a>
-               </xar:if>
-            </td>
-        </tr>
-        </xar:foreach>
+        <thead>
+            <tr>
+                <th>
+                    <xar:mlstring>Plan item rules</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Plan item Name</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Plan item Options</xar:mlstring>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <xar:foreach in="$items" value="$item">
+            <tr>
+                <td>
+                    #$item.pitemrules#
+                </td>
+                <td>
+                    #$item.pitemid#: #$item.pitemname#
+                </td>
+                <td class="xar-align-center">
+                   <xar:if condition="empty($item['editurl'])">
+                       <xar:mlstring>Edit</xar:mlstring>
+                   <xar:else />
+                       <a href="#$item.editurl#"><xar:mlstring>Edit</xar:mlstring></a>
+                   </xar:if>
+                   |
+                   <xar:if condition="empty($item['deleteurl'])">
+                       <xar:mlstring>Delete</xar:mlstring>
+                   <xar:else />
+                       <a href="#$item.deleteurl#"><xar:mlstring>Delete</xar:mlstring></a>
+                   </xar:if>
+                </td>
+            </tr>
+            </xar:foreach>
+        </tbody>
     </table>
 
     <div class="xar-align-center xar-padding-thick">

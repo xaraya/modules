@@ -83,58 +83,60 @@
                                 <th><xar:mlstring>Obtained</xar:mlstring></th>
                             </tr>
                         </thead>
-                        <xar:foreach in="$items" value="$item">
+                        <tbody>
+                            <xar:foreach in="$items" value="$item">
+                                <tr>
+                                    <td>
+                                         <a href="#xarModURL('itsp','user','modify',array('pitemid'=>$item['pitemid'],'itspid'=>$itspid))#">#$item.pitemname#</a>
+
+                                    </td>
+                                    <xar:if condition="$fulldetails eq 1 AND !empty($item.courses)">
+                                         <td style="border: 0px">&nbsp;</td>
+                                         <td style="border: 0px">&nbsp;</td>
+                                         <td style="border: 0px">&nbsp;</td>
+
+                                         </tr>
+                                            <xar:foreach in="$item.courses" value="$course">
+                                               <tr style="border: 0px">
+                                                   <td style="border: 0px">#$course.number# #$course.title# </td>
+                                                   <td style="border: 0px">&nbsp;</td>
+                                                   <td style="border: 0px">#$course.credits#</td>
+                                                   <td style="border: 0px">#$course.obtained#</td>
+                                                </tr>
+                                            </xar:foreach>
+                                            <tr>
+                                            <td>&nbsp;</td>
+                                         </xar:if>
+                                    <td>
+                                         <strong>#$item.mincredit#</strong>
+                                    </td>
+                                    <td>
+                                         <strong>#$item.creditsnow#</strong>
+                                    </td>
+                                    <td >
+                                        <strong>#$item.obtained#</strong>
+                                    </td>
+                                </tr>
+                            </xar:foreach>
                             <tr>
                                 <td>
-                                     <a href="#xarModURL('itsp','user','modify',array('pitemid'=>$item['pitemid'],'itspid'=>$itspid))#">#$item.pitemname#</a>
-
-                                </td>
-                                <xar:if condition="$fulldetails eq 1 AND !empty($item.courses)">
-                                     <td style="border: 0px">&nbsp;</td>
-                                     <td style="border: 0px">&nbsp;</td>
-                                     <td style="border: 0px">&nbsp;</td>
-
-                                     </tr>
-                                        <xar:foreach in="$item.courses" value="$course">
-                                           <tr style="border: 0px">
-                                               <td style="border: 0px">#$course.number# #$course.title# </td>
-                                               <td style="border: 0px">&nbsp;</td>
-                                               <td style="border: 0px">#$course.credits#</td>
-                                               <td style="border: 0px">#$course.obtained#</td>
-                                            </tr>
-                                        </xar:foreach>
-                                        <tr>
-                                        <td>&nbsp;</td>
-                                     </xar:if>
-                                <td>
-                                     <strong>#$item.mincredit#</strong>
+                                <xar:mlstring>Totals</xar:mlstring>
                                 </td>
                                 <td>
-                                     <strong>#$item.creditsnow#</strong>
+                                <strong>#$plan.mincredit#</strong>
                                 </td>
-                                <td >
-                                    <strong>#$item.obtained#</strong>
+                                <td>
+                                <xar:if condition="$sumcreditsnow lt $plan.mincredit">
+                                    <span style="color:red"><strong>#$sumcreditsnow#</strong></span>
+                                <xar:else />
+                                    <span style="color:green"><strong>#$sumcreditsnow#</strong></span>
+                                </xar:if>
+                                </td>
+                                <td>
+                                    <strong>#$sumobtained#</strong>
                                 </td>
                             </tr>
-                        </xar:foreach>
-                        <tr>
-                            <td>
-                            <xar:mlstring>Totals</xar:mlstring>
-                            </td>
-                            <td>
-                            <strong>#$plan.mincredit#</strong>
-                            </td>
-                            <td>
-                            <xar:if condition="$sumcreditsnow lt $plan.mincredit">
-                                <span style="color:red"><strong>#$sumcreditsnow#</strong></span>
-                            <xar:else />
-                                <span style="color:green"><strong>#$sumcreditsnow#</strong></span>
-                            </xar:if>
-                            </td>
-                            <td>
-                                <strong>#$sumobtained#</strong>
-                            </td>
-                        </tr>
+                        </tbody>
                     </table>
                 </div>
             </fieldset>

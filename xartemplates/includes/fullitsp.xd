@@ -6,7 +6,11 @@
 <div class="xar-mod-body">
 
     <h2><xar:mlstring>ITSP</xar:mlstring></h2>
-    <strong><xar:mlstring>Name of student:</xar:mlstring> #$username#</strong><br />
+    <strong><xar:ml>
+                <xar:mlstring>Name of student: #(1)</xar:mlstring>
+                <xar:mlvar>#$username#</xar:mlvar>
+            </xar:ml>
+    </strong><br />
     <xar:if condition="!empty($status)">
         <strong>#$status#</strong>
 
@@ -24,41 +28,47 @@
         </p>
     <xar:else />
         <table>
-        <th><xar:mlstring>Title</xar:mlstring></th>
-        <th><xar:mlstring>Location</xar:mlstring></th>
-        <th><xar:mlstring>Startdate</xar:mlstring></th>
-        <th><xar:mlstring>Credits</xar:mlstring></th>
-        <th><xar:mlstring>Obtained credits</xar:mlstring></th>
-        <xar:foreach in="$fullitems" value="$pitem">
+            <thead>
             <tr>
-            <td><strong>#$pitem.pitemname#</strong></td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>#$pitem.mincredit#</td>
+            <th><xar:mlstring>Title</xar:mlstring></th>
+            <th><xar:mlstring>Location</xar:mlstring></th>
+            <th><xar:mlstring>Startdate</xar:mlstring></th>
+            <th><xar:mlstring>Credits</xar:mlstring></th>
+            <th><xar:mlstring>Obtained credits</xar:mlstring></th>
             </tr>
-            <xar:if condition="!empty($pitem.courses)">
-                <xar:foreach in="$pitem.courses" value="$item">
-                    <tr>
-                        <td>> #$item.title#: <br />
-                            #$item.description#</td>
-                        <xar:if condition="!empty($item.icourseloc)">
-                        <td>#$item.icourseloc#</td>
-                        <xar:else />
-                        <td>&nbsp;</td>
-                        </xar:if>
-                        <xar:if condition="$item.startdate gt 0">
-                            <td>#xarLocaleGetFormattedDate('medium', $item.startdate)#</td>
-                        <xar:else />
+            </thead>
+            <tbody>
+            <xar:foreach in="$fullitems" value="$pitem">
+                <tr>
+                <td><strong>#$pitem.pitemname#</strong></td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>#$pitem.mincredit#</td>
+                </tr>
+                <xar:if condition="!empty($pitem.courses)">
+                    <xar:foreach in="$pitem.courses" value="$item">
+                        <tr>
+                            <td>> #$item.title#: <br />
+                                #$item.description#</td>
+                            <xar:if condition="!empty($item.icourseloc)">
+                            <td>#$item.icourseloc#</td>
+                            <xar:else />
                             <td>&nbsp;</td>
-                        </xar:if>
-                        <td>#$item.credits#</td>
-                        <td>#$item.obtcredits#</td>
-                    </tr>
-                </xar:foreach>
-            </xar:if>
+                            </xar:if>
+                            <xar:if condition="$item.startdate gt 0">
+                                <td>#xarLocaleGetFormattedDate('medium', $item.startdate)#</td>
+                            <xar:else />
+                                <td>&nbsp;</td>
+                            </xar:if>
+                            <td>#$item.credits#</td>
+                            <td>#$item.obtcredits#</td>
+                        </tr>
+                    </xar:foreach>
+                </xar:if>
 
-            </xar:foreach>
+                </xar:foreach>
+            </tbody>
         </table>
 #$obtcredits#
         <!-- if you want to extend this module with dynamic data, you can retrieve

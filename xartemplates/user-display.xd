@@ -26,25 +26,31 @@
             #$item.mincredit#
         </p>
         <table>
-        <th><xar:mlstring>Item name</xar:mlstring></th>
-        <th><xar:mlstring>Description</xar:mlstring></th>
-        <th><xar:mlstring>Credits needed</xar:mlstring></th>
-        <th><xar:mlstring>Obtained</xar:mlstring></th>
-        <xar:foreach in="$planitems" value="$pitem">
-            <tr>
-                <td>#$pitem.pitemname#</td>
-                <td>#$pitem.pitemdesc#</td>
-                <td>
-                    <xar:if condition="$pitem.credits gt $pitem.mincredit">
-                        #$pitem.mincredit# - #$pitem.credits#
-                    <xar:elseif condition="($pitem.credits eq $pitem.mincredit) AND ($pitem.credits gt 0)" />
-                        #$pitem.mincredit#
-                    <xar:else />
-                        &ge; #$pitem.mincredit#
-                    </xar:if>
-                </td>
-            </tr>
-        </xar:foreach>
+            <thead>
+                <tr>
+                <th><xar:mlstring>Item name</xar:mlstring></th>
+                <th><xar:mlstring>Description</xar:mlstring></th>
+                <th><xar:mlstring>Credits needed</xar:mlstring></th>
+                <th><xar:mlstring>Obtained</xar:mlstring></th>
+                </tr>
+            </thead>
+            <tbody>
+            <xar:foreach in="$planitems" value="$pitem">
+                <tr>
+                    <td>#$pitem.pitemname#</td>
+                    <td>#$pitem.pitemdesc#</td>
+                    <td>
+                        <xar:if condition="$pitem.credits gt $pitem.mincredit">
+                            #$pitem.mincredit# - #$pitem.credits#
+                        <xar:elseif condition="($pitem.credits eq $pitem.mincredit) AND ($pitem.credits gt 0)" />
+                            #$pitem.mincredit#
+                        <xar:else />
+                            &ge; #$pitem.mincredit#
+                        </xar:if>
+                    </td>
+                </tr>
+            </xar:foreach>
+            </tbody>
         </table>
 
         <!-- if you want to extend this module with dynamic data, you can retrieve
@@ -63,12 +69,12 @@
             </xar:if>
         </xar:if>
 
-    <!-- add the output from the different display hooks here -->
-    <xar:if condition="!empty($hookoutput)">
-        <xar:foreach in="$hookoutput" key="$hookmodule">
-            #$hookoutput[$hookmodule]#
-        </xar:foreach>
-    </xar:if>
+        <!-- add the output from the different display hooks here -->
+        <xar:if condition="!empty($hookoutput)">
+            <xar:foreach in="$hookoutput" key="$hookmodule">
+                #$hookoutput[$hookmodule]#
+            </xar:foreach>
+        </xar:if>
 
-</xar:if>
+    </xar:if>
 </div>

@@ -15,37 +15,36 @@
         <strong>#$status#</strong>
     </xar:if>
     <table>
-        <tr>
-            <th><xar:mlstring>Education plan ID</xar:mlstring></th>
-            <th><xar:mlstring>Name</xar:mlstring></th>
-            <th><xar:mlstring>Date opened</xar:mlstring></th>
-        </tr>
-        <xar:foreach in="$items" value="$item">
-        <tr>
-            <td>
-                    #$item.planid#
-            </td>
-            <td>
-                <xar:if condition="empty($item.link)">
-                    #$item.planname#
-                <xar:else />
-                    <a href="#$item.link#">#$item.planname#</a>
-                </xar:if>
-            </td>
-            <td>
-
-                <!-- we only show a link if the item link variable is not empty -->
-
-                <xar:if condition="empty($item.create_link)">
-                    #$item.dateopen#
-                <xar:else />
-                    <a href="#$item.create_link#">#$item.dateopen#</a>
-                </xar:if>
-
-            </td>
-        </tr>
-        </xar:foreach>
-
+        <thead>
+            <tr>
+                <th><xar:mlstring>Education plan ID</xar:mlstring></th>
+                <th><xar:mlstring>Name</xar:mlstring></th>
+                <th><xar:mlstring>Date opened</xar:mlstring></th>
+            </tr>
+        </thead>
+        <tbody>
+            <xar:foreach in="$items" value="$item">
+                <tr>
+                    <td>
+                            #$item.planid#
+                    </td>
+                    <td>
+                        <xar:if condition="empty($item.link)">
+                            #$item.planname#
+                        <xar:else />
+                            <a href="#$item.link#">#$item.planname#</a>
+                        </xar:if>
+                    </td>
+                    <td>
+                        <xar:if condition="empty($item.create_link)">
+                            #$item.dateopen#
+                        <xar:else />
+                            <a href="#$item.create_link#">#$item.dateopen#</a>
+                        </xar:if>
+                    </td>
+                </tr>
+            </xar:foreach>
+        </tbody>
     </table>
 
     <div class="xar-align-center xar-padding-thick">

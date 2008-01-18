@@ -44,42 +44,46 @@
         </div>
     </form>
     <table>
-        <tr>
-            <th><xar:mlstring>ITSP Status</xar:mlstring></th>
-            <th><xar:mlstring>Student</xar:mlstring></th>
-            <th><xar:mlstring>Last edit</xar:mlstring></th>
-            <th><xar:mlstring>Approved?</xar:mlstring></th>
-        </tr>
-        <xar:foreach in="$items" value="$item">
-        <tr>
-            <td>
-                <xar:if condition="empty($item.itsplink)">
-                    #$item.statusname#
+        <thead>
+            <tr>
+                <th><xar:mlstring>ITSP Status</xar:mlstring></th>
+                <th><xar:mlstring>Student</xar:mlstring></th>
+                <th><xar:mlstring>Last edit</xar:mlstring></th>
+                <th><xar:mlstring>Approved?</xar:mlstring></th>
+            </tr>
+        </thead>
+        <tbody>
+            <xar:foreach in="$items" value="$item">
+            <tr>
+                <td>
+                    <xar:if condition="empty($item.itsplink)">
+                        #$item.statusname#
+                    <xar:else />
+                        <a href="#$item.itsplink#">#$item.statusname#</a>
+                    </xar:if>
+                </td>
+                <td>
+                     <a href="#$item.rolelink#">#$item.username#</a>
+                </td>
+                <td>
+                    #xarlocalegetformatteddate('medium',$item.datemodi)#
+                </td>
+                <xar:if condition="$item['dateappr'] gt 0">
+                    <td>
+                        #xarlocalegetformatteddate('medium',$item.dateappr)#
+                    </td>
+                <xar:elseif condition="!empty($item['approvelink'])" />
+                    <td>
+                        <a href="#$item.approvelink#"><xar:mlstring>Approve</xar:mlstring></a>
+                    </td>
                 <xar:else />
-                    <a href="#$item.itsplink#">#$item.statusname#</a>
+                    <td>
+                        <xar:mlstring>Not Yet</xar:mlstring>
+                    </td>
                 </xar:if>
-            </td>
-            <td>
-                 <a href="#$item.rolelink#">#$item.username#</a>
-            </td>
-            <td>
-                #xarlocalegetformatteddate('medium',$item.datemodi)#
-            </td>
-            <xar:if condition="$item['dateappr'] gt 0">
-                <td>
-                    #xarlocalegetformatteddate('medium',$item.dateappr)#
-                </td>
-            <xar:elseif condition="!empty($item['approvelink'])" />
-                <td>
-                    <a href="#$item.approvelink#"><xar:mlstring>Approve</xar:mlstring></a>
-                </td>
-            <xar:else />
-                <td>
-                    <xar:mlstring>Not Yet</xar:mlstring>
-                </td>
-            </xar:if>
-        </tr>
-        </xar:foreach>
+            </tr>
+            </xar:foreach>
+        </tbody>
     </table>
 
     <div class="xar-align-center xar-padding-thick">
