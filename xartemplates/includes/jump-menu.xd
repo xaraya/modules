@@ -1,6 +1,6 @@
 <div class="ievents-search">
 <div class="ievents-search-inner">
-    <h1>Search Events</h1>
+    <h1><xar:mlstring>Search Events</xar:mlstring></h1>
 
     <xar:if condition="xarThemeIsAvailable('rss') or !empty($export_handlers)">
         <p>
