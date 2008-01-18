@@ -4,7 +4,8 @@
     These examples are relevant to the UK only.
 </xar:comment>
 
-<xar:if condition="!empty($event.location.postcode) and !empty($event.location.country) and $event.location.country eq 'UK'">
+<xar:if condition="!empty($event.location.postcode) and !empty($event.location.country)">
+  <xar:if condition="$event.location.country eq 'UK'">
     <dd class="ievents-directions">
         <xar:comment>*** Google maps ***</xar:comment>
 
@@ -44,4 +45,20 @@
 
         <div style="clear: both;"></div>
     </dd>
+  <xar:else/>
+    <xar:if condition="$event.location.country eq 'Suomi' || $event.location.country eq 'Finland'">
+    <dd class="ievents-directions">
+        <xar:comment>*** Google maps ***</xar:comment>
+
+        <xar:set name="address">#xarVarPrepForDisplay(rawurlencode($event.location.address))#</xar:set>
+        <xar:set name="postcode">#xarVarPrepForDisplay(rawurlencode($event.location.postcode))#</xar:set>
+
+        <a href="http://maps.google.fi/maps?ie=UTF-8&amp;q=#$address#,+#$postcode#&amp;f=d&amp;z=14" target="_blank">
+            <img src="#xarTplGetImage('logo-google-maps-micro.gif')#" alt="Google Maps" /><br />
+            <xar:mlstring>Road Directions</xar:mlstring>
+        </a>
+        <div style="clear: both;"></div>
+    </dd>
+    </xar:if>
+  </xar:if>
 </xar:if>
