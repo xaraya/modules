@@ -11,7 +11,7 @@
         <legend><xar:mlstring>View Example Items</xar:mlstring></legend>
 
       <!--
-          // display a status message to the user if an action has been 
+          // display a status message to the user if an action has been
           // taken on an item
       -->
       <xar:if condition="xarSessionGetVar('statusmsg') != ''">
@@ -20,42 +20,51 @@
      <!-- the specific template for the current admin function comes here -->
 
       <table class="xar-fullwidth">
-          <tr>
-              <th>
-                  <xar:mlstring>Example Name</xar:mlstring>
-              </th>
-              <th>
-                  <xar:mlstring>Example Number</xar:mlstring>
-              </th>
-              <th>
-                  <xar:mlstring>Example Options</xar:mlstring>
-              </th>
-          </tr>
-          <xar:foreach in="$items" value="$item">
-          <tr>
-              <td>
-                  #$item.name#
-              </td>
-              <td>
-                  #$item.number#
-              </td>
-              <td class="xar-align-center">
-                 <xar:if condition="empty($item['editurl'])">
-                     <xar:mlstring>Edit</xar:mlstring>
-                 <xar:else />
-                     <a href="#$item.editurl#" onclick="return loadContent(this.href,'example_edit_or_add');"><xar:mlstring>Edit</xar:mlstring></a>
-                 </xar:if>
-                 |
-                 <xar:if condition="empty($item['deleteurl'])">
-                     <xar:mlstring>Delete</xar:mlstring>
-                 <xar:else />
-                     <a href="#$item.deleteurl#" onclick="return loadContent(this.href,'example_edit_or_add');"><xar:mlstring>Delete</xar:mlstring></a>
-                 </xar:if>
-              </td>
-          </tr>
-          </xar:foreach>
+          <thead>
+              <tr>
+                  <th>
+                      <xar:mlstring>Example Name</xar:mlstring>
+                  </th>
+                  <th>
+                      <xar:mlstring>Example Number</xar:mlstring>
+                  </th>
+                  <th>
+                      <xar:mlstring>Example Options</xar:mlstring>
+                  </th>
+              </tr>
+          </thead>
+          <tbody>
+              <xar:foreach in="$items" value="$item">
+              <tr>
+                  <td>
+                      #$item.name#
+                  </td>
+                  <td>
+                      #$item.number#
+                  </td>
+                  <td class="xar-align-center">
+                     <xar:if condition="empty($item['editurl'])">
+                         <xar:mlstring>Edit</xar:mlstring>
+                     <xar:else />
+                         <a href="#$item.editurl#" onclick="return loadContent(this.href,'example_edit_or_add');"><xar:mlstring>Edit</xar:mlstring></a>
+                     </xar:if>
+                     |
+                     <xar:if condition="empty($item['deleteurl'])">
+                         <xar:mlstring>Delete</xar:mlstring>
+                     <xar:else />
+                         <a href="#$item.deleteurl#" onclick="return loadContent(this.href,'example_edit_or_add');"><xar:mlstring>Delete</xar:mlstring></a>
+                     </xar:if>
+                  </td>
+              </tr>
+              </xar:foreach>
+          </tbody>
       </table>
       <!-- We could add a xar:sec here on AddExample to hide this link -->
+      <!--
+        // The loadContent in here is used to produce an xmlhttp request
+        // The function we call will load content into the <div> with id 'example_edit_or_add'
+        // You will need the ajax module to be installed for this feature to work
+        -->
       <a href="&xar-modurl-example-admin-new;" onclick="return loadContent(this.href,'example_edit_or_add');">
         <xar:mlstring>Add new item</xar:mlstring>
       </a>
@@ -64,14 +73,14 @@
           #$pager#
       </div>
     </fieldset>
-      
+
     <div id="example_edit_or_add">
       <!-- Editting area will get filled by xmlhttp requests -->
     </div>
 </div>
-<!-- 
+<!--
     // clear the status message
-    // we put this in an if tag to prevent the function from 
+    // we put this in an if tag to prevent the function from
     // showing '1' in the page
 -->
 <xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>
