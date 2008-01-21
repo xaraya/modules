@@ -259,8 +259,8 @@ function xarpages_user_display($args)
     // Use rolled-up page here so the theme is inherited.
     // The special case theme name 'default' will disable this feature
     // and just use the default page template.
-    if (!empty($inherited['page_template']) && $inherited['page_template'] != 'default') {
-        xarTplSetPageTemplateName($inherited['page_template']);
+    if (!empty($data['inherited']['page_template']) && $data['inherited']['page_template'] != 'default') {
+        xarTplSetPageTemplateName($data['inherited']['page_template']);
     }
 
     // Call display hooks
@@ -286,8 +286,8 @@ function xarpages_user_display($args)
     // template on a branch will apply to all pages within that branch, except
     // where sub-branches are explicitly over-ridden.
     return xarTplModule(
-        'xarpages', 'page', $inherited['pagetype']['name'], $data,
-        ($inherited['template'] == 'default' ? '' : $inherited['template'])
+        'xarpages', 'page', $data['inherited']['pagetype']['name'], $data,
+        ($data['inherited']['template'] == 'default' ? '' : $data['inherited']['template'])
     );
 }
 
