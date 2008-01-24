@@ -270,4 +270,23 @@
 
         <div style="clear: both;"></div>
     </div>
+
+    <h2 id=""><xar:mlstring>FAQ List</xar:mlstring></h2>
+    <p><xar:mlstring>Display a FAQ using a definition list, as pairs of question/answers</xar:mlstring></p>
+
+    <xar:style file='xar-faq-demo' scope="module" module="jquery" />
+    <xar:template file="jquery.xarfaq" module="jquery" subdata="array('selector'=&gt;'dl.jquery-xarfaq','options'=&gt;'')" />
+
+    <dl class="jquery-xarfaq">
+        <dt class="open-all-faqs"><xar:mlstring>Open or close all answers</xar:mlstring></dt>
+
+        <dt><xar:mlstring>1. How is a question formatted?</xar:mlstring></dt>
+        <dd><xar:mlstring>Each question is placed into a definition term (&lt;dt&gt; element)</xar:mlstring></dd>
+
+        <dt><xar:mlstring>2. How is the answer formatted?</xar:mlstring></dt>
+        <dd>
+            <p><xar:mlstring>Each answer is placed into a definition data (&lt;dd&gt; element)</xar:mlstring></p>
+            <p><xar:mlstring>Multiple paragraphs can be included if required, along with any other kind of element or image.</xar:mlstring></p>
+        </dd>
+    </dl>
 </div>
