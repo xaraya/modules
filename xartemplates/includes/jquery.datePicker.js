@@ -6,9 +6,9 @@
  * $Id: jquery.datePicker.js 2036 2007-06-05 22:55:15Z kelvin.luck $
  **/
 
-(function($){
+(function(jQuery){
     
-	$.fn.extend({
+	jQuery.fn.extend({
 /**
  * Render a calendar table into any matched elements.
  * 
@@ -53,30 +53,30 @@
 				return document.createElement(a);
 			};
 			
-			s = $.extend(
+			s = jQuery.extend(
 				{
 					month			: null,
 					year			: null,
 					renderCallback	: null,
-					showHeader		: $.dpConst.SHOW_HEADER_SHORT,
+					showHeader		: jQuery.dpConst.SHOW_HEADER_SHORT,
 					dpController	: null,
 					hoverClass		: 'dp-hover'
 				}
 				, s
 			);
 			
-			if (s.showHeader != $.dpConst.SHOW_HEADER_NONE) {
-				var headRow = $(dc('tr'));
+			if (s.showHeader != jQuery.dpConst.SHOW_HEADER_NONE) {
+				var headRow = jQuery(dc('tr'));
 				for (var i=Date.firstDayOfWeek; i<Date.firstDayOfWeek+7; i++) {
 					var weekday = i%7;
 					var day = Date.dayNames[weekday];
 					headRow.append(
-						jQuery(dc('th')).attr({'scope':'col', 'abbr':day, 'title':day, 'class':(weekday == 0 || weekday == 6 ? 'weekend' : 'weekday')}).html(s.showHeader == $.dpConst.SHOW_HEADER_SHORT ? day.substr(0, 1) : day)
+						jQuery(dc('th')).attr({'scope':'col', 'abbr':day, 'title':day, 'class':(weekday == 0 || weekday == 6 ? 'weekend' : 'weekday')}).html(s.showHeader == jQuery.dpConst.SHOW_HEADER_SHORT ? day.substr(0, 1) : day)
 					);
 				}
 			};
 			
-			var calendarTable = $(dc('table'))
+			var calendarTable = jQuery(dc('table'))
 									.attr(
 										{
 											'cellspacing':2,
@@ -84,14 +84,14 @@
 										}
 									)
 									.append(
-										(s.showHeader != $.dpConst.SHOW_HEADER_NONE ? 
-											$(dc('thead'))
+										(s.showHeader != jQuery.dpConst.SHOW_HEADER_NONE ? 
+											jQuery(dc('thead'))
 												.append(headRow)
 											:
 											dc('thead')
 										)
 									);
-			var tbody = $(dc('tbody'));
+			var tbody = jQuery(dc('tbody'));
 			
 			var today = (new Date()).zeroTime();
 			
@@ -108,13 +108,13 @@
 			var doHover = function()
 			{
 				if (s.hoverClass) {
-					$(this).addClass(s.hoverClass);
+					jQuery(this).addClass(s.hoverClass);
 				}
 			};
 			var unHover = function()
 			{
 				if (s.hoverClass) {
-					$(this).removeClass(s.hoverClass);
+					jQuery(this).removeClass(s.hoverClass);
 				}
 			};
 			
@@ -123,7 +123,7 @@
 				var r = jQuery(dc('tr'));
 				for (var i=0; i<7; i++) {
 					var thisMonth = currentDate.getMonth() == month;
-					var d = $(dc('td'))
+					var d = jQuery(dc('td'))
 								.text(currentDate.getDate() + '')
 								.attr('className', (thisMonth ? 'current-month ' : 'other-month ') +
 													(currentDate.isWeekend() ? 'weekend ' : 'weekday ') +
@@ -144,7 +144,7 @@
 			return this.each(
 				function()
 				{
-					$(this).empty().append(calendarTable);
+					jQuery(this).empty().append(calendarTable);
 				}
 			);
 		},
@@ -195,10 +195,10 @@
  **/
 		datePicker : function(s)
 		{			
-			if (!$.event._dpCache) $.event._dpCache = [];
+			if (!jQuery.event._dpCache) jQuery.event._dpCache = [];
 			
 			// initialise the date picker controller with the relevant settings...
-			s = $.extend(
+			s = jQuery.extend(
 				{
 					month				: undefined,
 					year				: undefined,
@@ -211,8 +211,8 @@
 					displayClose		: false,
 					selectMultiple		: false,
 					clickInput			: false,
-					verticalPosition	: $.dpConst.POS_TOP,
-					horizontalPosition	: $.dpConst.POS_LEFT,
+					verticalPosition	: jQuery.dpConst.POS_TOP,
+					horizontalPosition	: jQuery.dpConst.POS_LEFT,
 					verticalOffset		: 0,
 					horizontalOffset	: 0,
 					hoverClass			: 'dp-hover'
@@ -223,20 +223,20 @@
 			return this.each(
 				function()
 				{
-					var $this = $(this);
+					var $this = jQuery(this);
 					
 					if (!this._dpId) {
-						this._dpId = $.event.guid++;
-						$.event._dpCache[this._dpId] = new DatePicker(this);
+						this._dpId = jQuery.event.guid++;
+						jQuery.event._dpCache[this._dpId] = new DatePicker(this);
 					}
 					
-					var controller = $.event._dpCache[this._dpId];
+					var controller = jQuery.event._dpCache[this._dpId];
 					
 					controller.init(s);
 					
 					if (s.createButton) {
 						// create it!
-						controller.button = $('<a href="#" class="dp-choose-date" title="' + $.dpText.TEXT_CHOOSE_DATE + '">' + $.dpText.TEXT_CHOOSE_DATE + '</a>')
+						controller.button = jQuery('<a href="#" class="dp-choose-date" title="' + jQuery.dpText.TEXT_CHOOSE_DATE + '">' + jQuery.dpText.TEXT_CHOOSE_DATE + '</a>')
 								.bind(
 									'click',
 									function()
@@ -509,7 +509,7 @@
 		this.renderCallback		=	[];
 		this.selectedDates		=	{};
 	};
-	$.extend(
+	jQuery.extend(
 		DatePicker.prototype,
 		{	
 			init : function(s)
@@ -562,12 +562,12 @@
 			},
 			setDisabled : function(s)
 			{
-				$e = $(this.ele);
+				$e = jQuery(this.ele);
 				$e[s ? 'addClass' : 'removeClass']('dp-disabled');
 				if (this.button) {
 					$but = $(this.button);
 					$but[s ? 'addClass' : 'removeClass']('dp-disabled');
-					$but.attr('title', s ? '' : $.dpText.TEXT_CHOOSE_DATE);
+					$but.attr('title', s ? '' : jQuery.dpText.TEXT_CHOOSE_DATE);
 				}
 				if ($e.is(':text')) {
 					$e.attr('disabled', s ? 'disabled' : '');
@@ -635,18 +635,18 @@
 			},
 			display : function(eleAlignTo)
 			{
-				if ($(this.ele).is('.dp-disabled')) return;
+				if (jQuery(this.ele).is('.dp-disabled')) return;
 				
 				eleAlignTo = eleAlignTo || this.ele;
 				var c = this;
-				var $ele = $(eleAlignTo);
+				var $ele = jQuery(eleAlignTo);
 				var eleOffset = $ele.offset();
 				
 				
 				var _checkMouse = function(e)
 				{
 					var el = e.target;
-					var cal = $('#dp-popup')[0];
+					var cal = jQuery('#dp-popup')[0];
 					while (true){
 						if (el == cal) {
 							return true;
@@ -654,7 +654,7 @@
 							c._closeCalendar();
 							return false;
 						} else {
-							el = $(el).parent()[0];
+							el = jQuery(el).parent()[0];
 						}
 					}
 				};
@@ -662,9 +662,9 @@
 				
 				this._closeCalendar(true);
 				
-				$('body')
+				jQuery('body')
 					.append(
-						$('<div></div>')
+						jQuery('<div></div>')
 							.attr('id', 'dp-popup')
 							.css(
 								{
@@ -673,10 +673,10 @@
 								}
 							)
 							.append(
-								$('<h2></h2>'),
-								$('<div id="dp-nav-prev"></div>')
+								jQuery('<h2></h2>'),
+								jQuery('<div id="dp-nav-prev"></div>')
 									.append(
-										$('<a id="dp-nav-prev-year" href="#" title="' + $.dpText.TEXT_PREV_YEAR + '">&lt;&lt;</a>')
+										jQuery('<a id="dp-nav-prev-year" href="#" title="' + jQuery.dpText.TEXT_PREV_YEAR + '">&lt;&lt;</a>')
 											.bind(
 												'click',
 												function()
@@ -684,7 +684,7 @@
 													return c._displayNewMonth.call(c, this, 0, -1);
 												}
 											),
-										$('<a id="dp-nav-prev-month" href="#" title="' + $.dpText.TEXT_PREV_MONTH + '">&lt;</a>')
+										jQuery('<a id="dp-nav-prev-month" href="#" title="' + jQuery.dpText.TEXT_PREV_MONTH + '">&lt;</a>')
 											.bind(
 												'click',
 												function()
@@ -693,9 +693,9 @@
 												}
 											)
 									),
-								$('<div id="dp-nav-next"></div>')
+								jQuery('<div id="dp-nav-next"></div>')
 									.append(
-										$('<a id="dp-nav-next-year" href="#" title="' + $.dpText.TEXT_NEXT_YEAR + '">&gt;&gt;</a>')
+										jQuery('<a id="dp-nav-next-year" href="#" title="' + jQuery.dpText.TEXT_NEXT_YEAR + '">&gt;&gt;</a>')
 											.bind(
 												'click',
 												function()
@@ -703,7 +703,7 @@
 													return c._displayNewMonth.call(c, this, 0, 1);
 												}
 											),
-										$('<a id="dp-nav-next-month" href="#" title="' + $.dpText.TEXT_NEXT_MONTH + '">&gt;</a>')
+										jQuery('<a id="dp-nav-next-month" href="#" title="' + jQuery.dpText.TEXT_NEXT_MONTH + '">&gt;</a>')
 											.bind(
 												'click',
 												function()
@@ -712,20 +712,20 @@
 												}
 											)
 									),
-								$('<div></div>')
+								jQuery('<div></div>')
 									.attr('id', 'dp-calendar')
 							)
 							.bgIframe()
 						);
 					
-				var $pop = $('#dp-popup');
+				var $pop = jQuery('#dp-popup');
 				
 				if (this.showYearNavigation == false) {
-					$('#dp-nav-prev-year, #dp-nav-next-year').css('display', 'none');
+					jQuery('#dp-nav-prev-year, #dp-nav-next-year').css('display', 'none');
 				}
 				if (this.displayClose) {
 					$pop.append(
-						$('<a href="#" id="dp-close">' + $.dpText.TEXT_CLOSE + '</a>')
+						jQuery('<a href="#" id="dp-close">' + jQuery.dpText.TEXT_CLOSE + '</a>')
 							.bind(
 								'click',
 								function()
@@ -738,16 +738,16 @@
 				}
 				c._renderCalendar();
 				
-				if (this.verticalPosition == $.dpConst.POS_BOTTOM) {
+				if (this.verticalPosition == jQuery.dpConst.POS_BOTTOM) {
 					$pop.css('top', eleOffset.top + $ele.height() - $pop.height() + c.verticalOffset);
 				}
-				if (this.horizontalPosition == $.dpConst.POS_RIGHT) {
+				if (this.horizontalPosition == jQuery.dpConst.POS_RIGHT) {
 					$pop.css('left', eleOffset.left + $ele.width() - $pop.width() + c.horizontalOffset);
 				}
 				
-				$(this.ele).trigger('dpDisplayed', $pop);
+				jQuery(this.ele).trigger('dpDisplayed', $pop);
 				
-				$(document).bind('mousedown', this._checkMouse);
+				jQuery(document).bind('mousedown', this._checkMouse);
 			},
 			setRenderCallback : function(a)
 			{
@@ -766,11 +766,11 @@
 					'click',
 					function()
 					{
-						var $this = $(this);
+						var $this = jQuery(this);
 						if (!$this.is('.disabled')) {
 							c.setSelected(d, !$this.is('.selected') || !c.selectMultiple);
 							var s = c.isSelected(d.getTime());
-							$(c.ele).trigger('dateSelected', [d, $td, s]);
+							jQuery(c.ele).trigger('dateSelected', [d, $td, s]);
 							if (c.closeOnSelect) {
 								c._closeCalendar();
 							} else {
@@ -795,11 +795,11 @@
 			// m and y are -1, 0 or 1 depending which direction we want to go in...
 			_displayNewMonth : function(ele, m, y) 
 			{
-				if (!$(ele).is('.disabled')) {
+				if (!jQuery(ele).is('.disabled')) {
 					this.setDisplayedMonth(this.displayedMonth + m, this.displayedYear + y);
 					this._clearCalendar();
 					this._renderCalendar();
-					$(this.ele).trigger('dpMonthChanged', [this.displayedMonth, this.displayedYear]);
+					jQuery(this.ele).trigger('dpMonthChanged', [this.displayedMonth, this.displayedYear]);
 				}
 				ele.blur();
 				return false;
@@ -807,10 +807,10 @@
 			_renderCalendar : function()
 			{
 				// set the title...
-				$('#dp-popup h2').html(Date.monthNames[this.displayedMonth] + ' ' + this.displayedYear);
+				jQuery('#dp-popup h2').html(Date.monthNames[this.displayedMonth] + ' ' + this.displayedYear);
 				
 				// render the calendar...
-				$('#dp-calendar').renderCalendar(
+				jQuery('#dp-calendar').renderCalendar(
 					{
 						month			: this.displayedMonth,
 						year			: this.displayedYear,
@@ -823,40 +823,40 @@
 				// update the status of the control buttons and disable dates before startDate or after endDate...
 				// TODO: When should the year buttons be disabled? When you can't go forward a whole year from where you are or is that annoying?
 				if (this.displayedYear == this.startDate.getFullYear() && this.displayedMonth == this.startDate.getMonth()) {
-					$('#dp-nav-prev-year').addClass('disabled');
-					$('#dp-nav-prev-month').addClass('disabled');
-					$('#dp-calendar td.other-month').each(
+					jQuery('#dp-nav-prev-year').addClass('disabled');
+					jQuery('#dp-nav-prev-month').addClass('disabled');
+					jQuery('#dp-calendar td.other-month').each(
 						function()
 						{
-							var $this = $(this);
+							var $this = jQuery(this);
 							if (Number($this.text()) > 20) {
 								$this.addClass('disabled');
 							}
 						}
 					);
 					var d = this.startDate.getDate();
-					$('#dp-calendar td.current-month').each(
+					jQuery('#dp-calendar td.current-month').each(
 						function()
 						{
-							var $this = $(this);
+							var $this = jQuery(this);
 							if (Number($this.text()) < d) {
 								$this.addClass('disabled');
 							}
 						}
 					);
 				} else {
-					$('#dp-nav-prev-year').removeClass('disabled');
-					$('#dp-nav-prev-month').removeClass('disabled');
+					jQuery('#dp-nav-prev-year').removeClass('disabled');
+					jQuery('#dp-nav-prev-month').removeClass('disabled');
 					var d = this.startDate.getDate();
 					if (d > 20) {
 						// check if the startDate is last month as we might need to add some disabled classes...
 						var sd = new Date(this.startDate.getTime());
 						sd.addMonths(1);
 						if (this.displayedYear == sd.getFullYear() && this.displayedMonth == sd.getMonth()) {
-							$('#dp-calendar td.other-month').each(
+							jQuery('#dp-calendar td.other-month').each(
 								function()
 								{
-									var $this = $(this);
+									var $this = jQuery(this);
 									if (Number($this.text()) < d) {
 										$this.addClass('disabled');
 									}
@@ -866,40 +866,40 @@
 					}
 				}
 				if (this.displayedYear == this.endDate.getFullYear() && this.displayedMonth == this.endDate.getMonth()) {
-					$('#dp-nav-next-year').addClass('disabled');
-					$('#dp-nav-next-month').addClass('disabled');
-					$('#dp-calendar td.other-month').each(
+					jQuery('#dp-nav-next-year').addClass('disabled');
+					jQuery('#dp-nav-next-month').addClass('disabled');
+					jQuery('#dp-calendar td.other-month').each(
 						function()
 						{
-							var $this = $(this);
+							var $this = jQuery(this);
 							if (Number($this.text()) < 14) {
 								$this.addClass('disabled');
 							}
 						}
 					);
 					var d = this.endDate.getDate();
-					$('#dp-calendar td.current-month').each(
+					jQuery('#dp-calendar td.current-month').each(
 						function()
 						{
-							var $this = $(this);
+							var $this = jQuery(this);
 							if (Number($this.text()) > d) {
 								$this.addClass('disabled');
 							}
 						}
 					);
 				} else {
-					$('#dp-nav-next-year').removeClass('disabled');
-					$('#dp-nav-next-month').removeClass('disabled');
+					jQuery('#dp-nav-next-year').removeClass('disabled');
+					jQuery('#dp-nav-next-month').removeClass('disabled');
 					var d = this.endDate.getDate();
 					if (d < 13) {
 						// check if the endDate is next month as we might need to add some disabled classes...
 						var ed = new Date(this.endDate.getTime());
 						ed.addMonths(-1);
 						if (this.displayedYear == ed.getFullYear() && this.displayedMonth == ed.getMonth()) {
-							$('#dp-calendar td.other-month').each(
+							jQuery('#dp-calendar td.other-month').each(
 								function()
 								{
-									var $this = $(this);
+									var $this = jQuery(this);
 									if (Number($this.text()) > d) {
 										$this.addClass('disabled');
 									}
@@ -911,12 +911,12 @@
 			},
 			_closeCalendar : function(programatic)
 			{
-				$(document).unbind('mousedown', this._checkMouse);
+				jQuery(document).unbind('mousedown', this._checkMouse);
 				this._clearCalendar();
-				$('#dp-popup a').unbind();
-				$('#dp-popup').empty().remove();
+				jQuery('#dp-popup a').unbind();
+				jQuery('#dp-popup').empty().remove();
 				if (!programatic) {
-					$(this.ele).trigger('dpClosed', [this.getSelected()]);
+					jQuery(this.ele).trigger('dpClosed', [this.getSelected()]);
 				}
 			},
 			// empties the current dp-calendar div and makes sure that all events are unbound
@@ -924,14 +924,14 @@
 			_clearCalendar : function()
 			{
 				// TODO.
-				$('#dp-calendar td').unbind();
-				$('#dp-calendar').empty();
+				jQuery('#dp-calendar td').unbind();
+				jQuery('#dp-calendar').empty();
 			}
 		}
 	);
 	
 	// static constants
-	$.dpConst = {
+	jQuery.dpConst = {
 		SHOW_HEADER_NONE	:	0,
 		SHOW_HEADER_SHORT	:	1,
 		SHOW_HEADER_LONG	:	2,
@@ -941,7 +941,7 @@
 		POS_RIGHT			:	1
 	};
 	// localisable text
-	$.dpText = {
+	jQuery.dpText = {
 		TEXT_PREV_YEAR		:	'Previous year',
 		TEXT_PREV_MONTH		:	'Previous month',
 		TEXT_NEXT_YEAR		:	'Next year',
@@ -950,27 +950,27 @@
 		TEXT_CHOOSE_DATE	:	'Choose date'
 	};
 	// version
-	$.dpVersion = '$Id: jquery.datePicker.js 2036 2007-06-05 22:55:15Z kelvin.luck $';
+	jQuery.dpVersion = '$Id: jquery.datePicker.js 2036 2007-06-05 22:55:15Z kelvin.luck $';
 
 	function _getController(ele)
 	{
-		if (ele._dpId) return $.event._dpCache[ele._dpId];
+		if (ele._dpId) return jQuery.event._dpCache[ele._dpId];
 		return false;
 	};
 	
 	// make it so that no error is thrown if bgIframe plugin isn't included (allows you to use conditional
 	// comments to only include bgIframe where it is needed in IE without breaking this plugin).
-	if ($.fn.bgIframe == undefined) {
-		$.fn.bgIframe = function() {return this; };
+	if (jQuery.fn.bgIframe == undefined) {
+		jQuery.fn.bgIframe = function() {return this; };
 	};
 
 
 	// clean-up
-	$(window)
+	jQuery(window)
 		.bind('unload', function() {
-			var els = $.event._dpCache || [];
+			var els = jQuery.event._dpCache || [];
 			for (var i in els) {
-				$(els[i].ele)._dpDestroy();
+				jQuery(els[i].ele)._dpDestroy();
 			}
 		});
 		
