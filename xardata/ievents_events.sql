@@ -42,6 +42,7 @@ CREATE TABLE `xar_ievents_events` (
   `contact_phone` varchar(60) default NULL,
   `contact_details` text,
   `cost` varchar(255) default NULL,
+  `locks` varchar(10) NOT NULL default '',
   PRIMARY KEY  (`eid`),
   KEY `calendar_id` (`calendar_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=59 ;
