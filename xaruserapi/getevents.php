@@ -317,6 +317,8 @@ function ievents_userapi_getevents($args)
                         }
                     }
                     $event['flags_arr'] = $flags_arr;
+                } else {
+                    $event['flags_arr'] = array();
                 }
 
                 // Include the duration, in days, as it is used a lot.
