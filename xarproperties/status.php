@@ -32,41 +32,18 @@ class StatusProperty extends SelectProperty
     {
         parent::__construct($descriptor);
         $this->filepath   = 'modules/articles/xarproperties';
-        if (count($this->options) == 0) {
-            $this->options = array(
-                 array('id' => 0, 'name' => xarML('Submitted')),
-                 array('id' => 1, 'name' => xarML('Rejected')),
-                 array('id' => 2, 'name' => xarML('Approved')),
-                 array('id' => 3, 'name' => xarML('Front Page')),
-             );
-        }
     }
 
-    /**
-     * Get the base information for this property.
-     *
-     *
-     * @return array base information for this property
-     **/
-     function getBasePropertyInfo()
-     {
-         $args = array();
-         $baseInfo = array(
-                              'id'         => 10,
-                              'name'       => 'status',
-                              'label'      => 'Status',
-                              'format'     => '10',
-                              'validation' => '',
-                            'source'     => '',
-                            'dependancies' => '',
-                            'requiresmodule' => 'articles',
-                            'aliases'        => '',
-                            'args'           => serialize($args)
-                            // ...
-                           );
-        return $baseInfo;
-     }
-
+    function getOptions()
+    {
+        $options = array(
+             array('id' => 0, 'name' => xarML('Submitted')),
+             array('id' => 1, 'name' => xarML('Rejected')),
+             array('id' => 2, 'name' => xarML('Approved')),
+             array('id' => 3, 'name' => xarML('Front Page')),
+         );
+        return $options;
+    }
 }
 
 ?>
