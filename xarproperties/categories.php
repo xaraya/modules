@@ -380,7 +380,7 @@ class CategoriesProperty extends SelectProperty
         return $this->value;
     }
 
-    public function parseValidation($validation = '')
+/*    public function parseValidation($validation = '')
     {
         foreach(preg_split('/(?<!\\\);/', $validation) as $option) {
             // Semi-colons can be escaped with a '\' prefix.
@@ -404,6 +404,7 @@ class CategoriesProperty extends SelectProperty
             }
         }
     }
+    */
 }
 
 ?>
