@@ -36,6 +36,7 @@ function xarpages_userapi_addcurrentpageflags($args)
     // 'is_ancestor' - flag indicates an ancestor of the current page
     // 'is_child' - flag indicates a child of the current page
     // 'is_sibling' - flag indicates a sibling of the current page
+    // 'is_ancestor_sibling' - flag indicates a sibling of an ancestor of the current page
     // 'is_current' - flag indicates the current page
     // 'is_root' - flag indicates the page is a root page of the hierarchy - good
     //      starting point for menus
@@ -128,6 +129,18 @@ function xarpages_userapi_addcurrentpageflags($args)
             $pagedata['pages'][$key]['is_sibling'] = true;
             // Reference the page.
             $pagedata['siblings'][$key] =& $pagedata['pages'][$child];
+        }
+    }
+
+    // Go through each ancestor and flag up the siblings of those ancestors.
+    // They will be all pages that are children of the ancestors, assuming the
+    // root ancestor does not have any siblings.
+    foreach($pagedata['ancestors'] as $key => $value) {
+        if (isset($value['child_keys']) && is_array($value['child_keys'])) {
+            //var_dump($value['child_keys']);
+            foreach($value['child_keys'] as $value2) {
+                $pagedata['pages'][$value2]['is_ancestor_sibling'] = true;
+            }
         }
     }
 

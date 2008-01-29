@@ -2,25 +2,19 @@
     Input:
         $pages      - list of all pages
         $parent     - the parent page that owns the children to be rendered
-        $max_level  - optional; the maximum number of levels that will be shown
-        $menu_level - the menu level - starts at 1 for the top displayed level
+        $root_depth - optional; defines the maximum depth of page that will
+                      be permanently displayed; allows a higher-level branch
+                      of a tree to be displayed as a menu as though that were
+                      the complete tree.
 </xar:comment>
 
 <xar:if condition="!isset($max_level)">
     <xar:set name="max_level">0</xar:set>
 </xar:if>
 
-<xar:if condition="!isset($menu_level)">
-    <xar:set name="menu_level">0</xar:set>
+<xar:if condition="empty($menu_level)">
+    <xar:set name="menu_level">1</xar:set>
 </xar:if>
-
-<xar:set name="menu_level">$menu_level+1</xar:set>
-
-<xar:comment>
-    Levels that are permanently open (from the root) 1=top level etc.
-    Useful as a configurable item in the block? Not sure.
-</xar:comment>
-<xar:set name="perm_open">1</xar:set>
 
 <xar:if condition="!empty($parent.has_children)">
     <xar:comment>
@@ -46,7 +40,7 @@
     <xar:set name="display_children">false</xar:set>
     <xar:loop name="$parent.child_keys">
         <xar:set name="page">#$pages[$loop:item]#</xar:set>
-        <xar:if condition="($max_level eq 0 or $menu_level le $max_level) and (!empty($page.is_child) or !empty($page.is_sibling) or !empty($page.is_ancestor) or $menu_level le $perm_open)">
+        <xar:if condition="($max_level eq 0 or $page.depth le $max_level) and (!empty($page.is_child) or !empty($page.is_sibling) or !empty($page.is_ancestor) or $menu_level eq 1)">
             <xar:set name="display_children">true</xar:set>
         </xar:if>
     </xar:loop>
@@ -57,53 +51,65 @@
             affect the formatting of the embedded list.
         </xar:comment>
 
-        <ul class="side-menu#$menu_level#">
+        <ul>
             <xar:loop name="$parent.child_keys">
                 <xar:set name="page">#$pages[$loop:item]#</xar:set>
-                <xar:if condition="($max_level eq 0 or $menu_level le $max_level) and (!empty($page.is_child) or !empty($page.is_sibling) or !empty($page.is_ancestor) or !empty($page.is_ancestor_sibling) or $menu_level le $perm_open)">
-                    <xar:set name="class">''</xar:set>
-
+                <xar:if condition="($max_level eq 0 or $page.depth le $max_level) and (!empty($page.is_child) or !empty($page.is_sibling) or !empty($page.is_ancestor) or !empty($page.is_ancestor_sibling) or $menu_level eq 1)">
+                    <xar:comment>Set a class if the page has sub-pages</xar:comment>
+                    <xar:if condition="!empty($page.has_children)">
+                    </xar:if>
+                    
                     <xar:comment>Set a class if this is the current page</xar:comment>
                     <xar:if condition="!empty($page.is_current)">
-                        <xar:if condition="!empty($page.has_children)">
-                            <xar:set name="class">'open selected'</xar:set>
-                        <xar:else />
-                            <xar:set name="class">'selected'</xar:set>
-                        </xar:if>
-                    <xar:else />
-                        <xar:if condition="!empty($page.is_ancestor)">
-                            <xar:set name="class">'open'</xar:set>
-                        <xar:else />
-                            <xar:if condition="!empty($page.has_children)">
-                                <xar:set name="class">'closed'</xar:set>
-                            </xar:if>
-                        </xar:if>
                     </xar:if>
 
-                    <li class="#$class#">
+                    <xar:comment>Set a class if this is an ancestor</xar:comment>
+                    <xar:if condition="!empty($page.is_ancestor)">
+                    </xar:if>
+
+                    <xar:comment>Flag the current page</xar:comment>
+                    <xar:if condition="!empty($page.is_current) or (!empty($page.has_children) and !empty($page.is_ancestor))">
+                        <xar:set name="current_class">'current'</xar:set>
+                    <xar:else />
+                        <xar:set name="current_class">'not-current'</xar:set>
+                    </xar:if>
+
+                    <li class="#$current_class#">
                         <xar:comment>
                             An empty page with no children is treated as a section header,
                             used to divide sections of pages in a single menu level.
                         </xar:comment>
+
                         <xar:if condition="$page.status eq 'EMPTY' and empty($page.has_children)">
-                            <h2>
-                                <xar:if condition="!empty($page.dd.menu_title)">
-                                    #xarVarPrepForDisplay($page.dd.menu_title)#
-                                <xar:else />
-                                    #$page.name#
-                                </xar:if>
-                            </h2>
+                            <a href="javascript:return false;"><span>
+                            <xar:if condition="!empty($page.dd.menu_title)">
+                                #xarVarPrepForDisplay($page.dd.menu_title)#
+                            <xar:else />
+                                #$page.name#
+                            </xar:if>
+                            </span></a>
                         <xar:else />
-                            <a class="#$class#" href="#xarModURL('xarpages','user','display',array('pid'=&gt;$page.pid))#" title="#xarVarPrepForDisplay($page.desc)#">
+                            <xar:if condition="!empty($page.dd.url) and $page.pagetype.name eq 'redirect'">
+                                <xar:set name="gourl">#xarVarPrepForDisplay($page.dd.url)#</xar:set>
+                            <xar:else />
+                                <xar:set name="gourl">#xarModURL('xarpages','user','display',array('pid'=&gt;$page.pid))#</xar:set>
+                            </xar:if>
+                            <a href="#$gourl#" title="#xarVarPrepForDisplay($page.desc)#" class="#$current_class#"><span>
                                 <xar:if condition="!empty($page.dd.menu_title)">
                                     #xarVarPrepForDisplay($page.dd.menu_title)#
                                 <xar:else />
                                     #$page.name#
                                 </xar:if>
-                            </a>
+                            </span></a>
+
+                            <xar:comment>If the page has children and is not open</xar:comment>
+                            <xar:if condition="!empty($page.has_children) and empty($page.is_ancestor)"></xar:if>
+
+                            <xar:comment>If the page has children and is open</xar:comment>
+                            <xar:if condition="!empty($page.has_children) and !empty($page.is_ancestor)"></xar:if>
 
                             <xar:if condition="!empty($page.has_children)">
-                                <xar:template file="menu-css-side-menu1" subdata="array('parent'=&gt;$page,'pages'=&gt;$pages,'max_level'=&gt;$max_level,'menu_level'=&gt;$menu_level)" />
+                                <xar:template file="menu-level1" subdata="array('parent'=&gt;$page,'pages'=&gt;$pages,'max_level'=&gt;$max_level,'menu_level'=&gt;$menu_level+1)" />
                             </xar:if>
                         </xar:if>
                     </li>

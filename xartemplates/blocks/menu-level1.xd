@@ -1,0 +1,11 @@
+
+<xar:comment>
+    Menu for top tabs.
+    TODO: write up some documentation and include a default stylesheet.
+</xar:comment>
+
+<xar:if condition="empty($max_level)">
+    <xar:set name="max_level">0</xar:set>
+</xar:if>
+
+<xar:template file="menu-level1" subdata="array('parent'=&gt;$root_page,'pages'=&gt;$pages,'max_level'=&gt;$max_level)" />
