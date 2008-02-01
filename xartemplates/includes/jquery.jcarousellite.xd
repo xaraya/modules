@@ -13,7 +13,8 @@
     Load the main javascript.
 </xar:comment>
 
-<xar:base-include-javascript filename="jquery.jcarousellite.pack.js" module="jquery" />
+<xar:comment>Note: unpacked version only contains fixes for jQuery 1.2.2</xar:comment>
+<xar:base-include-javascript filename="jquery.jcarousellite.js" module="jquery" />
 
 <xar:comment>
     Examples of usage here: http://gmarwaha.com/jquery/jcarousellite/index.php#doc

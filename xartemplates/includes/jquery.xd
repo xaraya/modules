@@ -6,10 +6,10 @@
 <xar:base-include-javascript filename="jquery.pack.js" module="jquery" />
 
 <xar:comment>
-    Load up the jquery library, and apply any global options.
-    Include the jQuery XPath and 1.1 compatibility plugins, at least
-    NOTE: we will run 1.1.4 for a while, since 2.0 seems to break most
-    of the plugins, even with the compatibility plugins.
+    Enable these plugins if you want compatibility with some older plugins.
+    However, it is probably easier to bring your plugins up-to-date because
+    these compatibility plugins do introduce a whole new level of problems
+    of their own.
 </xar:comment>
 <xar:comment>
 <xar:base-include-javascript filename="jquery.compat-1.1.js" module="jquery" />
@@ -19,7 +19,7 @@
 
 
 <xar:comment>
-    Include a few common plugins by default.
+    Include a few universal plugins by default.
 </xar:comment>
 
 <xar:base-include-javascript filename="date.js" module="jquery" />

@@ -227,8 +227,8 @@ $.fn.jCarouselLite = function(o) {
         var div = $(this), ul = $("ul", div), tLi = $("li", ul), tl = tLi.size(), v = o.visible;
 
         if(o.circular) {
-            ul.prepend(tLi.gt(tl-v-1).clone()).append(tLi.lt(v).clone());
-            o.start += v;
+            ul.prepend(tLi.slice(tl-v-1).clone()).append(tLi.slice(0,v-1).clone());
+            o.start += v + 1;
         }
         
         var li = $("li", ul), itemLength = li.size(), curr = o.start;                       
@@ -289,7 +289,7 @@ $.fn.jCarouselLite = function(o) {
             }, o.auto+o.speed);
 
         function vis() {
-            return li.gt(curr-1).lt(v);
+            return li.slice(curr-1).slice(0,v-1);
         };  
 
         function go(to) {
