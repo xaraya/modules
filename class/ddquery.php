@@ -67,20 +67,20 @@ class DDQuery extends Query
         // so that we can use aliases to make the field names more intelligeable
         // The nice thing about using DD is that the tables have a known structure,
         // so all we really need is the first 2 or 3 columns
-        parent::addfield('prop_id as colid');
-        parent::addfield('prop_name as name');
-        parent::addfield('prop_label as label');
-        parent::addfield('prop_type as type');
+        parent::addfield('id as colid');
+        parent::addfield('name as name');
+        parent::addfield('label as label');
+        parent::addfield('type as type');
 
         // Which object?
         // Add the next line so we only get data from the encyclopedia object
         // TODO: use this line to subclass the rest of the code, which can
         // be left as a generic DynamicDataQuery
-        parent::in('prop_objectid', $object);
+        parent::in('objectid', $object);
 
         // Only include active fields
         // TODO: adjust the query for property status
-//        parent::eq('prop_status', 1);
+//        parent::eq('status', 1);
 
         // Get the column data and rearrange
         if(!parent::run()) return;
@@ -108,13 +108,13 @@ class DDQuery extends Query
         $init = $this->initalias;
         $this->table = $tables['dynamic_data'];
         parent::addtable($this->table, $init);
-        parent::addfield($init . '.dd_propid as propid');
-        parent::addfield($init . '.dd_itemid as itemid');
-        parent::addfield($init . '.dd_value as value');
+        parent::addfield($init . '.propid');
+        parent::addfield($init . '.itemid');
+        parent::addfield($init . '.value');
 
         // Restrict the query to the records which contain data
         // that belong to the object we are interested in
-        parent::in($this->initalias . '.dd_propid',$this->columnids);
+        parent::in($this->initalias . '.propid',$this->columnids);
     }
 
     function output()
@@ -145,7 +145,7 @@ class DDQuery extends Query
     {
         // Disable this for the moment
         $this->fieldsempty = 0;
-        parent::eq($this->initalias . '.dd_propid',$this->columnnames[$field]);
+        parent::eq($this->initalias . '.propid',$this->columnnames[$field]);
     }
 //    function addfields($fields)
 //    {
@@ -158,7 +158,7 @@ class DDQuery extends Query
         $this->subalias = "sub".time();
         parent::addtable($this->table, $this->subalias);
         parent::join($this->initalias . '.dd_itemid', $this->subalias . '.dd_itemid');
-        parent::eq($this->subalias . '.dd_propid',$this->columnnames[$field]);
+        parent::eq($this->subalias . '.propid',$this->columnnames[$field]);
     }
     function join($field1,$field2)
     {
@@ -201,7 +201,7 @@ class DDQuery extends Query
     // Disable this for the moment
 //    function run($statement='',$display=1)
 //    {
-//        parent::in($this->initalias . '.dd_propid',$this->columnids);
+//        parent::in($this->initalias . '.propid',$this->columnids);
 //        parent::run($statement,$display);
 //    }
 }
