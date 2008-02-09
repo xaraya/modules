@@ -86,7 +86,7 @@ function categories_admin_modifycat()
             $data['hooks'] = $hooks;
         }
 
-        $data['category'] = Array('left'=>0,'right'=>0,'name'=>'','description'=>'');
+        $data['category'] = Array('left'=>0,'right'=>0,'name'=>'','description'=>'', 'image' => '');
         $data['func'] = 'create';
         $data['cid'] = NULL;
     }
