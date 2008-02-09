@@ -3,70 +3,77 @@
 /**
  * modify configuration
  */
-function categories_admin_modifyconfig()
-{
-    // Security Check
-    if (!xarSecurityCheck('AdminCategories')) return;
-
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED)) return;
-
-    switch (strtolower($phase)) {
-        case 'modify':
-        default:
-            $catsperpage = xarModVars::get('categories','catsperpage');
-            if (!$catsperpage) {
-                $catsperpage = 10;
+    function categories_admin_modifyconfig()
+    {
+        // Security Check
+        if (!xarSecurityCheck('AdminCategories')) return;
+        if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+        if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'categories_general', XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('tabmodule', 'str:1:100', $tabmodule, 'categories', XARVAR_NOT_REQUIRED)) return;
+        $hooks = xarModCallHooks('module', 'getconfig', 'categories');
+        if (!empty($hooks) && isset($hooks['tabs'])) {
+            foreach ($hooks['tabs'] as $key => $row) {
+                $configarea[$key]  = $row['configarea'];
+                $configtitle[$key] = $row['configtitle'];
+                $configcontent[$key] = $row['configcontent'];
             }
+            array_multisort($configtitle, SORT_ASC, $hooks['tabs']);
+        } else {
+            $hooks['tabs'] = array();
+        }
 
-            $useJSdisplay = xarModVars::get('categories','useJSdisplay');
-            if (!$useJSdisplay) {
-                $useJSdisplay = false;
-            }
+        $regid = xarModGetIDFromName($tabmodule);
+        switch (strtolower($phase)) {
+            case 'modify':
+            default:
+                switch ($data['tab']) {
+                    case 'categories_general':
+                        break;
+                    case 'tab2':
+                        break;
+                    case 'tab3':
+                        break;
+                    default:
+                        break;
+                }
 
-            $extrainfo = array();
-            $extrainfo['module'] = 'categories';
-            $hooks = xarModCallHooks('module', 'modifyconfig', 'categories', $extrainfo);
+                break;
 
-            if (empty($hooks)) {
-                $hooks = '';
-            }
+            case 'update':
+                // Confirm authorisation code
+                if (!xarSecConfirmAuthKey()) return;
+                if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, xarModVars::get('categories', 'itemsperpage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+                if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('categories', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('categories', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('usejsdisplay', 'checkbox', $usejsdisplay, xarModVars::get('categories', 'usejsdisplay'), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('numstats', 'int', $numstats, xarModVars::get('categories', 'numstats'), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('showtitle', 'checkbox', $showtitle, xarModVars::get('categories', 'showtitle'), XARVAR_NOT_REQUIRED)) return;
 
-            $data = array ('catsperpage'   => $catsperpage,
-                           'useJSdisplay'  => $useJSdisplay,
-                           'hooks'         => $hooks);
-            $data['submitlabel'] = xarML('Submit');
+                $modvars = array(
+                                'usejsdisplay',
+                                'numstats',
+                                'showtitle',
+                                );
 
-            $data['numstats'] = xarModVars::get('categories','numstats');
-            if (empty($data['numstats'])) {
-                $data['numstats'] = 100;
-            }
-            $data['showtitle'] = xarModVars::get('categories','showtitle');
-            if (!empty($data['showtitle'])) {
-                $data['showtitle'] = 1;
-            }
+                if ($data['tab'] == 'categories_general') {
+                    xarModVars::set('categories', 'itemsperpage', $itemsperpage);
+                    xarModVars::set('categories', 'supportshorturls', $shorturls);
+                    xarModVars::set('categories', 'useModuleAlias', $useModuleAlias);
+                    xarModVars::set('categories', 'aliasname', $aliasname);
+                    foreach ($modvars as $var) if (isset($$var)) xarModVars::set('categories', $var, $$var);
+                }
+                foreach ($modvars as $var) if (isset($$var)) xarModItemVars::set('categories', $var, $$var, $regid);
 
-            return xarTplModule('categories','admin','modifyconfig',$data);
-            break;
+                xarResponseRedirect(xarModURL('categories', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
+                // Return
+                return true;
+                break;
 
-        case 'update':
-            if (!xarVarFetch('catsperpage', 'int:1:1000', $catsperpage, 10, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('useJSdisplay', 'bool', $useJSdisplay)) return;
-            if (!xarSecConfirmAuthKey()) return;
-            xarModVars::set('categories','catsperpage', $catsperpage);
-            xarModVars::set('categories','useJSdisplay', $useJSdisplay);
-            if (!xarVarFetch('numstats', 'int', $numstats, 100, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('showtitle', 'checkbox', $showtitle, false, XARVAR_NOT_REQUIRED)) return;
-            xarModVars::set('categories', 'numstats', $numstats);
-            xarModVars::set('categories', 'showtitle', $showtitle);
-
-            // Call update config hooks
-            xarModCallHooks('module','updateconfig','categories', array('module' => 'categories'));
-            xarResponseRedirect(xarModUrl('categories','admin','modifyconfig',array()));
-
-            break;
+        }
+        $data['hooks'] = $hooks;
+        $data['tabmodule'] = $tabmodule;
+        $data['authid'] = xarSecGenAuthKey();
+        return $data;
     }
-
-    return true;
-}
-
 ?>

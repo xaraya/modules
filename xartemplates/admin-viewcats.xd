@@ -57,12 +57,12 @@
 <table border="0" cellspacing="0" cellpadding="2" style="text-align: center;margin: auto;">
 <tr>
     <td>
-        <xar:for start="$i = 1" test="$i le ($pagertotal - $catsperpage)" iter="$i += $catsperpage">
-            <xar:if condition="$i le $pagerstart  AND ($i + $catsperpage) gt $pagerstart">
-                #$i#-#$i+$catsperpage#
+        <xar:for start="$i = 1" test="$i le ($pagertotal - $itemsperpage)" iter="$i += $itemsperpage">
+            <xar:if condition="$i le $pagerstart  AND ($i + $itemsperpage) gt $pagerstart">
+                #$i#-#$i+$itemsperpage#
             <xar:else />
                 <a href="#xarModURL('categories', 'admin', 'viewcats', array('activetab' => 1,'pagerstart' => $i))#">
-                    #$i#-#$i+$catsperpage#
+                    #$i#-#$i+$itemsperpage#
                 </a>
             </xar:if>
             <xar:if condition="(($i%100) eq 1) and ($i ne 1)">
@@ -72,7 +72,7 @@
             </xar:if>
         </xar:for>
         <xar:if condition="$i eq $pagertotal">
-            <xar:if condition="$i le $pagerstart  AND ($i + $catsperpage) gt $pagerstart">
+            <xar:if condition="$i le $pagerstart  AND ($i + $itemsperpage) gt $pagerstart">
                 #$i#
             <xar:else />
                 <a href="#xarModURL('categories', 'admin', 'viewcats', array('activetab' => 1,'pagerstart' => $i))#">
@@ -81,7 +81,7 @@
             </xar:if>
         </xar:if>
         <xar:if condition="$i lt $pagertotal">
-            <xar:if condition="$i le $pagerstart  AND ($i + $catsperpage) gt $pagerstart">
+            <xar:if condition="$i le $pagerstart  AND ($i + $itemsperpage) gt $pagerstart">
                 #$i#-#$pagertotal#
             <xar:else />
                 <a href="#xarModURL('categories', 'admin', 'viewcats', array('activetab' => 1,'pagerstart' => $i))#">
@@ -93,7 +93,7 @@
 </tr>
 <form action="#xarModURL('categories','admin','viewcats',array())#" method="post">
 <tr><td><xar:mlstring>Categories per page:</xar:mlstring>&#160;&#160;
-    <input type="text" name="catsperpage" id="catsperpage" value="#$catsperpage#" size="5" />
+    <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsperpage#" size="5" />
     <input type="submit" value="#$reloadlabel#" />
     </td></tr>
 </form>

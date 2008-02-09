@@ -1,107 +1,107 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:style scope="module" file="forms" />
-<xar:base-include-javascript module="base" filename="formcheck.js" />
-<script type="text/javascript">
-<!--
-    // Enter name of mandatory fields
-    var fieldRequired = Array("catsperpage");
-    // Enter field description to appear in the dialog box
-    var fieldDescription = Array("Categories per page.");
-//-->
-</script>
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>
-            Categories Administration
-        </xar:mlstring>
-    </span>
-</div>
-<div class="xar-mod-body">
-    <h2>
-        <xar:mlstring>
-            Modify Configuration
-        </xar:mlstring>
-    </h2>
-    <form class="xar-formwidget" action="#xarModURL('categories','admin','modifyconfig')#" method="post" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);" enctype="application/x-www-form-urlencoded">
-        <fieldset class="formelements xar-norm">
-            <legend>
-                <strong>
-                    <xar:mlstring>
-                        Settings
-                    </xar:mlstring>
-                </strong>
-            </legend>
-            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-            <input type="hidden" name="phase" id="phase" value="update" />
-            <p class="param">
-                <label for="catsperpage" class="required">
-                    <span class="help" title="#xarML('The number of categories that you want displayed per page.')#">
-                        <xar:mlstring>
-                            Categories per page
-                        </xar:mlstring>
-                    </span>
-                </label>
-                <input type="text" name="catsperpage" id="catsperpage" value="#$catsperpage#" size="5" />
-            </p>
-            <p class="param">
-                <label for="useJSdisplay">
-                    <span class="help" title="#xarML('The categories can be navigated in an explorer style interface.')#">
-                        <xar:mlstring>
-                            Windows Explorer style tree
-                        </xar:mlstring>
-                    </span>
-                </label>
-                <xar:if condition="$useJSdisplay">
-                    <input type="radio" name="useJSdisplay" id="useJSdisplayYes" value="true" checked="checked" /><label for="useJSdisplayYes"><xar:mlstring>Yes</xar:mlstring></label>
-                    <input type="radio" name="useJSdisplay" id="useJSdisplayNo" value="false" /><label for="useJSdisplayNo"><xar:mlstring>No</xar:mlstring></label>
-                <xar:else />
-                    <input type="radio" name="useJSdisplay" id="useJSdisplayYes" value="true" /><label for="useJSdisplayYes"><xar:mlstring>Yes</xar:mlstring></label>
-                    <input type="radio" name="useJSdisplay" id="useJSdisplayNo" value="false" checked="checked" /><label for="useJSdisplayNo"><xar:mlstring>No</xar:mlstring></label>
-                </xar:if>
-            </p>
-            <p class="param">
-                <label for="numstats">
-                    <span class="help" title="#xarML('Specify how many links you want to see per page.')#">
-                        <xar:mlstring>
-                            Number of links shown in statistics
-                        </xar:mlstring>
-                    </span>
-                </label>
-                <input type="text" name="numstats" id="numstats" size="4" maxlength="4" value="#$numstats#" />
-            </p>
-            <p class="param">
-                <label for="showtitle">
-                    <span class="help" title="#xarML('In many cases, you can see the item title if you want.')#">
-                        <xar:mlstring>
-                            Show the item title in statistics
-                        </xar:mlstring>
-                    </span>
-                </label>
-                <xar:data-input type="checkbox" name="showtitle" checked="showtitle" />
-            </p>
-        </fieldset>
-            <xar:if condition="!empty($hooks)">
-                <fieldset class="formelements xar-norm">
-                    <legend>
-                        <strong>
-                            <xar:mlstring>
-                                Hooks
-                            </xar:mlstring>
-                        </strong>
-                    </legend>
-                    <xar:if condition="!empty($hooks)">
-                        <xar:foreach in="$hooks" key="$module" value="$output">
-                            #$output#
-                        </xar:foreach>
-                    </xar:if>
-                </fieldset>
+    <xar:comment>
+        License: GPL http://www.gnu.org/copyleft/gpl.html
+    </xar:comment>
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:if condition="xarModVars::get('categories','useModuleAlias')">
+                <xar:var scope="module" module="categories" name="aliasname" />
+            <xar:else />
+                <xar:mlstring>Categories Administration</xar:mlstring>
             </xar:if>
-        <fieldset class="formelements xar-norm">
-            <p class="param">
-                <input type="submit" value="#xarML('Submit')#" />
-            </p>
-        </fieldset>
-    </form>
-</div>
+        </span>
+    </div>
+    <div class="xar-mod-body">
+        <h2>
+            <xar:mlstring>
+                Modify Configuration
+            </xar:mlstring>
+        </h2>
+        <div>
+            <xar:template file="headerconfig" type="module"/>
+        </div>
+
+        <xar:comment> Begin General Options
+        </xar:comment>
+
+        <form method="post" action="&xar-modurl-categories-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
+            <xar:if condition="$tab eq 'categories_general'">
+                <h3>
+                    <xar:mlstring>
+                        General Options
+                    </xar:mlstring>
+                </h3>
+                <fieldset>
+                    <legend>
+                        <xar:mlstring>
+                            Page Layout
+                        </xar:mlstring>
+                    </legend>
+                    <div class="xar-form-input-wrapper">
+                        <label for="itemsperpage" title="#xarML('Number of items to show on each page.')#" class="xar-form-label">
+                            <xar:mlstring>
+                                Items Per Page:
+                            </xar:mlstring>
+                        </label>
+                        <xar:set name="value"><xar:var scope="module" module="categories" name="itemsperpage" /></xar:set>
+                        <input type="text" name="itemsperpage" id="itemsperpage" value="#$value#" maxlength="3" class="xar-form-textshort" />
+                    </div>
+                    <div class="xar-form-input-wrapper-after">
+                        <xar:set name="checked">xarModVars::get('categories','SupportShortURLs')</xar:set>
+                        <xar:data-input type="checkbox" name="shorturls" id="shorturls" checked="$checked" />
+                        <label for="shorturls" title="#xarML('Enable short URLs for Categories module')#">
+                            <xar:mlstring>
+                                Enable Short URLs
+                            </xar:mlstring>
+                        </label>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for = "modulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
+                            <xar:mlstring>
+                                Use a module alias
+                            </xar:mlstring>
+                        </label>
+                        <xar:set name="checked">xarModVars::get('categories','useModuleAlias')</xar:set>
+                        <xar:data-input type="checkbox" name="modulealias" id="modulealias" checked="$checked" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
+                                <xar:mlstring>
+                                    Module Alias Name
+                                </xar:mlstring>
+                        </label>
+                        <xar:set name="value"><xar:var scope="module" module="categories" name="aliasname" /></xar:set>
+                        <input type="text" name="aliasname" id="aliasname" value="#$value#" size="32" maxlength="100" />
+                    </div>
+                </fieldset>
+            <xar:else />
+                <h3>
+                    <xar:set name="ucname">UCFirst($tabmodule)</xar:set>
+                    <xar:ml>
+                        <xar:mlstring>
+                            Module Defaults for #(1)
+                        </xar:mlstring>
+                        <xar:mlvar>#$ucname#</xar:mlvar>
+                    </xar:ml>
+                </h3>
+            </xar:if>
+            <fieldset>
+                <legend>
+                    <xar:mlstring>
+                        Defaults
+                    </xar:mlstring>
+                </legend>
+                <xar:template file="defaults" />
+            </fieldset>
+            <fieldset>
+                <div class="xar-form-input-wrapper-after">
+                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                    <input type="hidden" name="phase" id="phase" value="update" />
+                    <input type="hidden" name="tab" id="tab" value="#$tab#" />
+                    <input type="hidden" name="tabmodule" id="tabmodule" value="#$tabmodule#" />
+                    <input type="submit" value="#xarML('Update Configuration')#" />
+                </div>
+            </fieldset>
+        </form>
+    </div>
 </xar:template>
