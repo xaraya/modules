@@ -31,8 +31,8 @@ class CategoryTreeProperty extends DataProperty
 
     public function showInput(Array $data = array())
     {
-        if (!isset($data['startnum'])) $data['startnum'] = 1;
-        if (!isset($data['itemsperpage'])) $data['itemsperpage'] = xarModVars::get('categories','itemsperpage');
+        if (empty($data['startnum'])) $data['startnum'] = 1;
+        if (empty($data['itemsperpage'])) $data['itemsperpage'] = xarModVars::get('categories','itemsperpage');
 
         if (isset($data['options'])) {
             $this->options = $data['options'];

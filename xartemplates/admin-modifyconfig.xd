@@ -78,7 +78,7 @@
                         </xar:mlstring>
                     </span>
                 </label>
-                <xar:data-input name="showtitle" checked="showtitle" />
+                <xar:data-input type="checkbox" name="showtitle" checked="showtitle" />
             </p>
         </fieldset>
             <xar:if condition="!empty($hooks)">
