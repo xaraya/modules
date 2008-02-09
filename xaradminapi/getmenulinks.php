@@ -22,7 +22,7 @@ function categories_adminapi_getmenulinks()
     }
 
 // Security Check
-    if (xarSecurityCheck('EditCategories',0)) {
+    if (xarSecurityCheck('ManageCategories',0)) {
 
         $menulinks[] = Array('url'   => xarModURL('categories',
                                                    'admin',
@@ -30,6 +30,8 @@ function categories_adminapi_getmenulinks()
                               'title' => xarML('View and Edit Categories'),
                               'label' => xarML('View Categories'));
 
+    }
+    if (xarSecurityCheck('AdminCategories',0)) {
         $menulinks[] = Array('url'   => xarModURL('categories',
                                                    'admin',
                                                    'stats'),

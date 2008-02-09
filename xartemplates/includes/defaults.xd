@@ -31,4 +31,13 @@
         <xar:set name="checked">xarModItemVars::get('categories', 'showtitle', $regid)</xar:set>
         <xar:data-input type="checkbox" name="showtitle" checked="$checked" />
     </div>
+    <div class="xar-form-input-wrapper">
+        <label for="bar" title="#xarML('Make the batch processing option visible')#" class="xar-form-label">
+            <xar:mlstring>
+                Allow batch processing
+            </xar:mlstring>
+        </label>
+        <xar:set name="checked">xarModItemVars::get('categories', 'allowbatch', $regid)</xar:set>
+        <xar:data-input type="checkbox" name="allowbatch" checked="$checked" />
+    </div>
 </xar:template>
