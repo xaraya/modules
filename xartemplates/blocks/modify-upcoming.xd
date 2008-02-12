@@ -1,5 +1,12 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-
+<div class="xar-form-input-wrapper">
+    <label for="BlockDays" class="xar-form-label required" title="#xarML('Number of days in the future.')#">
+        <xar:mlstring>
+            Number of courses to show:
+        </xar:mlstring>
+    </label>
+    <input type="text" name="numitems" id="numitems" value="#$numitems#" size="2" />
+</div>
 <div class="xar-form-input-wrapper">
     <label for="BlockDays" class="xar-form-label required" title="#xarML('Number of days in the future.')#">
         <xar:mlstring>
@@ -15,6 +22,20 @@
         </xar:mlstring>
     </label>
     <input type="text" name="DateFormat" id="DateFormat" value="#$DateFormat#" size="10" />
+    <xar:mlstring>
+        Enter either the English term 'short', 'medium' or 'long' as the dateformat.
+    </xar:mlstring>
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="DateFormat" class="xar-form-label required" title="#xarML('Use a comma seperated list.')#">
+        <xar:mlstring>
+            Coursetypes to include:
+        </xar:mlstring>
+    </label>
+    <input type="text" name="CourseTypes" id="CourseTypes" value="#$CourseTypes#" size="10" />
+    <xar:mlstring>
+        Enter a comma seperated list of ids, or use "All" to display all course types.
+    </xar:mlstring>
 </div>
 <xar:comment>
 <div class="xar-form-input-wrapper">
