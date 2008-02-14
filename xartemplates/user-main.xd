@@ -250,11 +250,17 @@
     <h2 id="link-cycle"><xar:mlstring>cycle</xar:mlstring></h2>
     <p><xar:mlstring>Cycle through a list of blocks or images using any of many different transitions.</xar:mlstring></p>
     <p><xar:mlstring>All images and blocks must be located in an appropriately-sized container, because absolute positioning is used, so the images will be taken out of the page flow.</xar:mlstring></p>
+    <p><xar:mlstring>Note also that block elements (e.g. &lt;p&gt;) inside the container <strong>must</strong> be given a height and width - even if 100% - since the width seems to be reset on <em>some</em> browsers once cycle starts operating.</xar:mlstring></p>
 
     <xar:template file="jquery.cycle" module="jquery" subdata="array('selector'=&gt;'div#cycle1','options'=&gt;'')" />
     <xar:base-include-javascript type="code" code="jQuery(function(){jQuery('div#cycle2').cycle({fx: 'turnDown', delay: -3000, easing: 'bounceout'});});" />
+    <xar:base-include-javascript type="code" code="jQuery(function(){jQuery('div#cycle3').cycle({fx: 'shuffle', delay: -3000});});" />
 
     <div>
+        <xar:comment>
+            Note that everything after the the first element is set to display:none. This caters for browsers
+            with javascript turned off. This can all be done with classes - I'm just being lazy here.
+        </xar:comment>
         <div id="cycle1" style="height: 200px; width: 300px; float: left;">
             <img src="modules/jquery/xarimages/gallery/image1.jpg" alt="" height="200" />
             <img src="modules/jquery/xarimages/gallery/image2.jpg" alt="" height="200" style="display: none;" />
@@ -266,6 +272,14 @@
             <img src="modules/jquery/xarimages/gallery/image2.jpg" alt="" height="200" style="display: none;" />
             <img src="modules/jquery/xarimages/gallery/image3.jpg" alt="" height="200" style="display: none;" />
             <img src="modules/jquery/xarimages/gallery/image5.jpg" alt="" height="200" style="display: none;" />
+        </div>
+
+        <div id="cycle3" style="height: 200px; width: 300px; float: left;">
+            <p style="height: 180px; width: 260px; padding: 0.5em; background-color: #ffeeee; margin: 0;"><xar:mlstring>This is a <em>short</em> paragraph of text.</xar:mlstring></p>
+            <div style="height: 180px; width: 260px; padding: 10px; background-color: #eeffee;">
+                <p><strong><xar:mlstring>Two paragraphs in a division.</xar:mlstring></strong></p>
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam dolor tellus, vehicula ac, pretium eget, posuere ut, urna. Nullam in dolor ac arcu pellentesque luctus. Etiam condimentum, risus eget adipiscing.</p>
+            </div>
         </div>
 
         <div style="clear: both;"></div>
