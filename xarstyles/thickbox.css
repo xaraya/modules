@@ -1,7 +1,14 @@
 /* ----------------------------------------------------------------------------------------------------------------*/
 /* ---------->>> global settings needed for thickbox <<<-----------------------------------------------------------*/
 /* ----------------------------------------------------------------------------------------------------------------*/
-*{padding: 0; margin: 0;}
+/*
+    These global settings are a really bad idea.
+    I am not sure what the effect of removing them is, but if anything, we should
+    replace it with more specific selectors. I don't think Thickbox has had the TLC
+    that it really needs, and this ought to be fixable. Lack of side-effects is a
+    very important feature that jQuery plugins need to make central.
+*/
+/* *{padding: 0; margin: 0;} */
 
 /* ----------------------------------------------------------------------------------------------------------------*/
 /* ---------->>> thickbox specific link and font settings <<<------------------------------------------------------*/

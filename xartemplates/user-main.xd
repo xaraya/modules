@@ -275,8 +275,8 @@
         </div>
 
         <div id="cycle3" style="height: 200px; width: 300px; float: left;">
-            <p style="height: 180px; width: 260px; padding: 0.5em; background-color: #ffeeee; margin: 0;"><xar:mlstring>This is a <em>short</em> paragraph of text.</xar:mlstring></p>
-            <div style="height: 180px; width: 260px; padding: 10px; background-color: #eeffee;">
+            <p style="height: 180px; width: 260px; padding: 0.5em; background-color: #ff9999; margin: 0;"><xar:mlstring>This is a <em>short</em> paragraph of text.</xar:mlstring></p>
+            <div style="height: 180px; width: 260px; padding: 10px; background-color: #99ff99;">
                 <p><strong><xar:mlstring>Two paragraphs in a division.</xar:mlstring></strong></p>
                 <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam dolor tellus, vehicula ac, pretium eget, posuere ut, urna. Nullam in dolor ac arcu pellentesque luctus. Etiam condimentum, risus eget adipiscing.</p>
             </div>
