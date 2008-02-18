@@ -17,8 +17,11 @@
             <li><xar:mlstring>List loggers -- List the loggers that are currently configured. From here you can also edit the settings for each logger.</xar:mlstring></li>
             <li><xar:mlstring>Turn logging on/off -- Makes Xaraya log according to the loggers configured or not.</xar:mlstring></li>
         </ul>
+        <p>
+            <xar:mlstring>The Xaraya loggers are shipped with the core and are located in /includes/log/loggers</xar:mlstring>
+        </p>
 
-        <p><xar:mlstring>Fallback System:</xar:mlstring></p>
+        <h3><xar:mlstring>Fallback System:</xar:mlstring></h3>
         <p><xar:mlstring>If the logging is set to off in this module (if this module is not active, it turns off logging automatically) and there is no logging configuration in config.system.php (old configuration style) then there is a fallback system that will log to var/logs/log.txt whenever it is present .</xar:mlstring></p>
         <h3>
             <xar:mlstring>Available loggers</xar:mlstring>
@@ -32,7 +35,7 @@
             <li><xar:mlstring>The syslog logger</xar:mlstring></li>
         </ul>
         <h3>
-            <xar:mlstring>Notes</xar:mlstring>
+            <xar:mlstring>Notes on the sql logger</xar:mlstring>
         </h3>
         <p>
             <xar:mlstring>The sql logger needs a database table to write its data to. This table should be added to your database with the following code:</xar:mlstring>
@@ -49,6 +52,15 @@
             )
 
             </code>
+        <p>
+            <xar:mlstring>The sql logger will log all messages to a database table. Currently, there is no interface to manage the entries.</xar:mlstring>
+        </p>
+        <h3>
+            <xar:mlstring>Notes on the mail logger</xar:mlstring>
+        </h3>
+        <p>
+            <xar:mlstring>The mail logger will send you an email with the error message and some additional information. You cannot edit the lay-out and content of the message via the mail templates as the message is created by PHP code.</xar:mlstring>
+        </p>
         <p>
             <xar:mlstring>The logging level can be set with the dynamic "Logging Level" property.</xar:mlstring>
         </p>
