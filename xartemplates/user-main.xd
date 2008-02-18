@@ -253,7 +253,7 @@
     <p><xar:mlstring>Note also that block elements (e.g. &lt;p&gt;) inside the container <strong>must</strong> be given a height and width - even if 100% - since the width seems to be reset on <em>some</em> browsers once cycle starts operating.</xar:mlstring></p>
 
     <xar:template file="jquery.cycle" module="jquery" subdata="array('selector'=&gt;'div#cycle1','options'=&gt;'')" />
-    <xar:base-include-javascript type="code" code="jQuery(function(){jQuery('div#cycle2').cycle({fx: 'turnDown', delay: -3000, easing: 'bounceout'});});" />
+    <xar:base-include-javascript type="code" code="jQuery(function(){jQuery('div#cycle2').cycle({fx: 'turnDown', delay: -3000, easing: 'easeOutBounce'});});" />
     <xar:base-include-javascript type="code" code="jQuery(function(){jQuery('div#cycle3').cycle({fx: 'shuffle', delay: -3000});});" />
 
     <div>

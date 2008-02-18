@@ -6,18 +6,21 @@
     these compatibility plugins do introduce a whole new level of problems
     of their own.
 </xar:comment>
-
 <xar:comment>
 <xar:base-include-javascript filename="jquery.compat-1.1.js" module="jquery" />
 <xar:base-include-javascript filename="jquery.xpath.js" module="jquery" />
 <xar:base-include-javascript filename="jquery.color.js" module="jquery" />
 </xar:comment>
 
-
 <xar:comment>
     Include a few universal plugins by default.
 </xar:comment>
-
 <xar:base-include-javascript filename="date.js" module="jquery" />
 <xar:base-include-javascript filename="jquery.dimensions.pack.js" module="jquery" />
 <xar:base-include-javascript filename="jquery.easing.js" module="jquery" />
+
+<xar:comment>
+    To retain the easing function names of the easing plugin 1.1.x, enable the following
+    compatibility plugin.
+</xar:comment>
+<xar:comment><xar:base-include-javascript filename="jquery.easing.compatibility.js" module="jquery" /></xar:comment>
