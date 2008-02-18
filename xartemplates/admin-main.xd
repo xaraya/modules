@@ -14,7 +14,7 @@
         <p><xar:mlstring>From the menu, you have three choices. </xar:mlstring></p>
         <ul>
             <li><xar:mlstring>Add logger -- Allows you add a new logger to the configuration. You can choose the type most applicable to your situation.</xar:mlstring></li>
-            <li><xar:mlstring>List loggers -- List the loggers that are currently configured.</xar:mlstring></li>
+            <li><xar:mlstring>List loggers -- List the loggers that are currently configured. From here you can also edit the settings for each logger.</xar:mlstring></li>
             <li><xar:mlstring>Turn logging on/off -- Makes Xaraya log according to the loggers configured or not.</xar:mlstring></li>
         </ul>
 
