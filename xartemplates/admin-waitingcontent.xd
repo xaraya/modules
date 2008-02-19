@@ -1,0 +1,15 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<p><strong><xar:mlstring>In Uploads</xar:mlstring>:</strong></p>
+<xar:if condition="empty($count_submitted)">
+    <xar:mlstring>No Submitted Files</xar:mlstring>
+<xar:elseif condition="$count_submitted eq 1" />
+    <a href="#xarModURL('uploads','admin','view')#"><xar:mlstring>1 file submitted</xar:mlstring></a>
+<xar:else />
+    <a href="#xarModURL('uploads','admin','view')#">
+    <xar:ml>
+        <xar:mlstring>#(1) files submitted</xar:mlstring>
+        <xar:mlvar>#$count_submitted#</xar:mlvar>
+    </xar:ml>
+    </a>
+</xar:if>
+<br />
