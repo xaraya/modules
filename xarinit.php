@@ -187,14 +187,11 @@ function uploads_init()
         return;
     }
 
-    return true;
+    return uploads_upgrade('1.0.0');
 }
 
 /**
  * upgrade the uploads module from an old version
- */
-/**
- * upgrade the articles module from an old version
  */
 function uploads_upgrade($oldversion)
 {
@@ -561,7 +558,11 @@ function uploads_upgrade($oldversion)
             xarModSetVar('uploads', 'view.itemsperpage', 200);
             xarModSetVar('uploads', 'file.cache-expire', 0);
             xarModSetVar('uploads', 'file.allow-duplicate-upload', 0);
-
+        case '1.0.0':
+            if (!xarModRegisterHook('item', 'waitingcontent', 'GUI',
+                                   'uploads', 'admin', 'waitingcontent')) {
+                return false;
+            }
         default:
             return true;
     }
@@ -574,31 +575,17 @@ function uploads_upgrade($oldversion)
  */
 function uploads_delete()
 {
-    xarModDelVar('uploads', 'path.uploads-directory');
-    xarModDelVar('uploads', 'path.imports-directory');
-    xarModDelVar('uploads', 'file.maxsize');
-    xarModDelVar('uploads', 'file.delete-confirmation');
-    xarModDelVar('uploads', 'file.auto-purge');
-    xarModDelVar('uploads', 'file.obfuscate-on-import');
-    xarModDelVar('uploads', 'file.obfuscate-on-upload');
-    xarModDelVar('uploads', 'path.imports-cwd');
-    xarModDelVar('uploads', 'dd.fileupload.stored');
-    xarModDelVar('uploads', 'dd.fileupload.external');
-    xarModDelVar('uploads', 'dd.fileupload.upload');
-    xarModDelVar('uploads', 'dd.fileupload.trusted');
-    xarModDelVar('uploads', 'file.auto-approve');
-    xarModDelVar('uploads', 'view.filter');
-    xarModDelVar('uploads', 'view.itemsperpage');
-    xarModDelVar('uploads', 'file.cache-expire');
-    xarModDelVar('uploads', 'file.allow-duplicate-upload');
+    xarModDelAllVars('uploads');
+    xarRemoveMasks('uploads');
+    xarRemoveInstances('uploads');
 
-    xarUnregisterMask('ViewUploads');
-    xarUnregisterMask('AddUploads');
-    xarUnregisterMask('EditUploads');
-    xarUnregisterMask('DeleteUploads');
-    xarUnregisterMask('AdminUploads');
-
+/* Unregister each of the hooks that have been created */
     xarModUnregisterHook('item', 'transform', 'API', 'uploads', 'user', 'transformhook');
+
+    if (!xarModUnregisterHook('item', 'waitingcontent', 'GUI',
+                                   'uploads', 'admin', 'waitingcontent')) {
+        return false;
+    }
 /*
     xarModUnregisterHook('item', 'create', 'API', 'uploads', 'admin', 'createhook');
     xarModUnregisterHook('item', 'update', 'API', 'uploads', 'admin', 'updatehook');
