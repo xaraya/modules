@@ -64,5 +64,4 @@ function courses_adminapi_getmenulinks()
     }
     return $menulinks;
 }
-
 ?>

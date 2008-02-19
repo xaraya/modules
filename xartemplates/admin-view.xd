@@ -5,7 +5,10 @@
         <xar:mlstring>Courses Administration</xar:mlstring>
     </span>
 </div>
-<div class="xar-mod-body"><h2>#$menutitle#</h2><br />
+<div id="ajaxshow" class="xar-mod-body">
+  <xar:template type="module" module="courses" file="admin-menu" />
+
+    <h2>#$menutitle#</h2><br />
 
     <xar:if condition="!empty($menu)">
     #$menu#
