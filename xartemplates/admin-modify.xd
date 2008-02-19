@@ -15,7 +15,8 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>ITSP Administration</xar:mlstring></span>
 </div>
-<div class="xar-mod-body">
+<div id="ajaxshow" class="xar-mod-body">
+  <xar:template type="module" module="itsp" file="admin-menu" />
     <h2><xar:mlstring>Modify Plan</xar:mlstring></h2>
 
     <form method="post" action="&xar-modurl-itsp-admin-update;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">

@@ -3,7 +3,7 @@
  * Standard Utility function pass individual menu items to the main menu
  *
  * @package modules
- * @copyright (C) 2005-2007 The Digital Development Foundation
+ * @copyright (C) 2005-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -45,11 +45,14 @@ function itsp_adminapi_getmenulinks()
     /* Security Check */
     if (xarSecurityCheck('AdminITSP', 0)) {
         $menulinks[] = Array('url' => xarModURL('itsp','admin','modifyconfig'),
-            /* In order to display the tool tips and label in any language,
-             * we must encapsulate the calls in the xarML in the API.
-             */
             'title' => xarML('Modify the configuration for the module'),
             'label' => xarML('Modify Config'));
+    }
+    /* Security Check */
+    if (xarSecurityCheck('EditITSP', 0)) {
+        $menulinks[] = Array('url' => xarModURL('itsp','admin','overview'),
+            'title' => xarML('View main administration page'),
+            'label' => xarML('Overview'));
     }
     /* If we return nothing, then we need to tell PHP this, in order to avoid an ugly
      * E_ALL error.
