@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,14 +12,20 @@
  * @author Categories module development team
  */
 /**
- * the main user function
+ * The main user function
+ * Show a listing of categories
+ *
+ * @param int catid The category id in the form of a single category id.
+ * @return array with data for the template
  */
-function categories_user_main()
+function categories_user_main($args)
 {
-    $data = array();
+    // Extract the supplied arguments. This allows for the insertion of a catid into here
+    // MichelV: any reason this wasn't here before?
+    extract($args);
 
-    $out = '';
     if (!xarVarFetch('catid', 'isset', $catid, NULL, XARVAR_DONT_SET)) return;
+    // Why first not set it, and then check for integer and create a 0??
     if (empty($catid) || !is_numeric($catid)) {
         // for DMOZ-like URLs
         // xarModSetVar('categories','SupportShortURLs',1);
@@ -28,8 +34,9 @@ function categories_user_main()
     }
 
     if (!xarModAPILoad('categories','user')) return;
-
+    $data = array();
     $catcount = array();
+    $out = '';
 /*
     $catcount = xarModAPIFunc('categories','user','deepcount',
                               array('groupby' => 'category',
