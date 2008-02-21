@@ -1,9 +1,9 @@
 <object name="categories">
-  <objectid>46</objectid>
+  <objectid>12</objectid>
   <label>Categories</label>
   <parent>objects</parent>
   <moduleid>182</moduleid>
-  <itemtype>13</itemtype>
+  <itemtype>5</itemtype>
   <class>Category</class>
   <filepath>modules/categories/class/category.php</filepath>
   <urlparam>itemid</urlparam>
@@ -12,74 +12,84 @@
   <isalias>0</isalias>
   <properties>
     <property name="id">
-      <id>288</id>
+      <id>74</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
       <source>xar_categories.id</source>
       <status>65</status>
-      <seq>1</seq>
+      <seq>0</seq>
       <configuration></configuration>
     </property>
     <property name="name">
-      <id>289</id>
+      <id>75</id>
       <label>Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
       <source>xar_categories.name</source>
       <status>33</status>
-      <seq>3</seq>
+      <seq>0</seq>
       <configuration></configuration>
     </property>
     <property name="description">
-      <id>290</id>
+      <id>76</id>
       <label>Description</label>
       <type>textarea_medium</type>
       <defaultvalue></defaultvalue>
       <source>xar_categories.description</source>
       <status>34</status>
-      <seq>4</seq>
+      <seq>0</seq>
       <configuration></configuration>
     </property>
     <property name="image">
-      <id>291</id>
+      <id>77</id>
       <label>Image</label>
       <type>image</type>
       <defaultvalue></defaultvalue>
       <source>xar_categories.image</source>
       <status>34</status>
-      <seq>5</seq>
+      <seq>0</seq>
       <configuration></configuration>
     </property>
-    <property name="parent_id">
-      <id>292</id>
-      <label>Parent</label>
-      <type>dropdown</type>
+    <property name="reference_id">
+      <id>78</id>
+      <label>Reference</label>
+      <type>categories</type>
       <defaultvalue></defaultvalue>
-      <source>xar_categories.parent_id</source>
+      <source>dummy</source>
       <status>33</status>
-      <seq>6</seq>
-      <configuration>xarModAPIFunc('categories','user','getcat',array('dropdown' => true))</configuration>
+      <seq>0</seq>
+      <configuration></configuration>
     </property>
     <property name="left_id">
-      <id>293</id>
+      <id>79</id>
       <label>Left</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
       <source>xar_categories.left_id</source>
       <status>35</status>
-      <seq>7</seq>
+      <seq>0</seq>
       <configuration></configuration>
     </property>
     <property name="right_id">
-      <id>294</id>
+      <id>80</id>
       <label>Right</label>
       <type>integerbox</type>
       <defaultvalue></defaultvalue>
       <source>xar_categories.right_id</source>
       <status>35</status>
-      <seq>8</seq>
+      <seq>0</seq>
       <configuration></configuration>
+    </property>
+    <property name="position">
+      <id>471</id>
+      <label>Position</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>dummy</source>
+      <status>33</status>
+      <seq>8</seq>
+      <configuration>a:6:{s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:0:"";s:19:"initialization_file";s:0:"";s:25:"initialization_collection";s:0:"";s:22:"initialization_options";s:120:"1,Right before, in the same level;2,Right after, in the same level;3,The first child category;4,The last child category;";s:25:"initialization_other_rule";s:0:"";}</configuration>
     </property>
   </properties>
 </object>
