@@ -71,7 +71,7 @@ function categories_userapi_leftjoin($args)
     }
 
     // Security check
-    if (!xarSecurityCheck('ViewCategoryLink')) return;
+    if (!xarSecurityCheck('ViewCategoryLink',0)) return array();
 
 /*
     if (count($cids) > 0) {
