@@ -297,6 +297,23 @@ function categories_init()
     xarRegisterMask('EditCategoryLink','All','categories','Link','All:All:All:All','ACCESS_EDIT');
     xarRegisterMask('DeleteCategoryLink','All','categories','Link','All:All:All:All','ACCESS_DELETE');
 
+    xarRegisterPrivilege('ViewCategories','All','categories','Category','All','ACCESS_OVERVIEW');
+    xarRegisterPrivilege('ReadCategories','All','categories','Category','All','ACCESS_READ');
+    xarRegisterPrivilege('CommmentCategories','All','categories','Category','All','ACCESS_COMMENT');
+    xarRegisterPrivilege('ModerateCategories','All','categories','Category','All','ACCESS_MODERATE');
+    xarRegisterPrivilege('EditCategories','All','categories','Category','All','ACCESS_EDIT');
+    xarRegisterPrivilege('AddCategories','All','categories','Category','All','ACCESS_ADD');
+    xarRegisterPrivilege('ManageCategories','All','categories','Category','All:All','ACCESS_DELETE');
+    xarRegisterPrivilege('AdminCategories','All','categories','Category','All','ACCESS_ADMIN');
+    xarMakePrivilegeRoot('ViewCategories');
+    xarMakePrivilegeRoot('ReadCategories');
+    xarMakePrivilegeRoot('CommmentCategories');
+    xarMakePrivilegeRoot('ModerateCategories');
+    xarMakePrivilegeRoot('EditCategories');
+    xarMakePrivilegeRoot('AddCategories');
+    xarMakePrivilegeRoot('ManageCategories');
+    xarMakePrivilegeRoot('AdminCategories');
+
 # --------------------------------------------------------
 #
 # Set up modvars
