@@ -43,10 +43,11 @@ function sharecontent_user_sendbymail($args)
 		$tpldata['fromname'] = $author;
 		$tpldata['fromemail'] = $senderemail;
 		$tpldata['objectid'] = $objectid;
-		$tpldata['returnurl'] = $returnurl;
+		$tpldata['returnurl'] = rawurldecode($returnurl);
 		$tpldata['extrainfo'] = $extrainfo;
         $mailmodule = array();
         $mailmodule['message'] = xarTplModule('sharecontent','user','sendbymail',$tpldata,$template);
+        $mailmodule['htmlmessage'] = xarTplModule('sharecontent','user','sendbymail',$tpldata,$template.'-html');
 		$maxemails=xarModGetVar('sharecontent','maxemails');
         $emailsarray = explode(',',$emails);
 		
@@ -64,7 +65,7 @@ function sharecontent_user_sendbymail($args)
 	    }
 
         if (xarConfigGetVar('sharecontent','htmlmail')) {
-            if (!xarModAPIFunc('htmlmail','admin','sendmail',$mailmodule)) {
+            if (!xarModAPIFunc('mail','admin','sendhtmlmail',$mailmodule)) {
                return;
             }
         } else {
@@ -75,7 +76,7 @@ function sharecontent_user_sendbymail($args)
     }
 
     return xarResponseRedirect(xarModURL('sharecontent','user','mailsentmsg',
-	                      array('returnurl'=>$returnurl,
+	                      array('returnurl'=>rawurldecode($returnurl),
 						        'sentto'=>$mailmodule['recipients'])));
     //xarResponseRedirect($returnurl);
 
