@@ -96,7 +96,7 @@ function categories_adminapi_linkcat($args)
             // Security check
             foreach ($args['iids'] as $iid)
             {
-                if(!xarSecurityCheck('EditCategoryLink',1,'Link',"$args[modid]:$modtype:$iid:All")) return;
+                if(!xarSecurityCheck('SubmitCategoryLink',1,'Link',"$args[modid]:$modtype:$iid:All")) return;
             }
         }
     }
