@@ -4,6 +4,11 @@
             <a name="#$loop:item['xar_cid']#"></a>
             <xar:set name="item">#$loop:item#</xar:set>
             <xar:template file="action_buttons" />
+        <xar:if condition="!empty($hookoutput)">
+			<xar:foreach in="$hookoutput" key="$hookmodule">
+				#$hookoutput[$hookmodule]#
+		    </xar:foreach>
+		</xar:if>
         
             <xar:if condition="isset($package['transformed-title'])">
                 <h4>#$package['transformed-title']#</h4>
@@ -72,5 +77,6 @@
                 </xar:if>
             </xar:if>
         </div>
+
     </div>
 </xar:loop>
