@@ -101,6 +101,13 @@
              <xar:mlstring>This option will allow for a single upload, with external, uploaded and stored files, but not trusted ones. The basedir to look for stored files is the user dir, and new files will be placed there as well.</xar:mlstring>
 
         </p>
+        <p>
+            <xar:mlstring>The Uploads module does also provide a display hook with waiting content waiting content hook by going to </xar:mlstring>
+                 <a href="&xar-modurl-modules-admin-hooks;&amp;hook=uploads"><xar:mlstring>Modules - Configure Hooks - Uploads Module</xar:mlstring></a>.
+             <xar:mlstring>From there check the radio buttons next to the base module.</xar:mlstring><br />
+             <xar:mlstring>Then make sure you have the waiting content block available on your site. When a file is in submitted status, it will be shown in the block.</xar:mlstring>
+
+        </p>
     <h3><xar:mlstring>Further Information</xar:mlstring></h3>
     <p>
          <xar:mlstring>Further information on the Uploads module can be found at</xar:mlstring>
@@ -112,6 +119,6 @@
         <li><xar:mlstring>Related tutorials and documentation on Uploads found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/uploads/" title="#xarML('Related documentation on Uploads')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a></li>
     </ul>
     <p class="xar-sub">
-        <strong>&nbsp;<xar:mlstring>Uploads Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-03-08
+        <strong>&nbsp;<xar:mlstring>Uploads Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.1.0&nbsp; 2008-02-25
     </p>
 </div>
