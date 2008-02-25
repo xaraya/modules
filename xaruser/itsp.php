@@ -198,7 +198,6 @@ function itsp_user_itsp($args)
         $data['fullitems'] = array();
     }
 
-    $item['itemtype'] = 2;
     // Add the ITSP to the array
     $data['item'] = $item;
     // Get the plan
@@ -212,9 +211,9 @@ function itsp_user_itsp($args)
     /* Let any hooks know that we are displaying an item.
      */
     $item['returnurl'] = xarModURL('itsp',
-        'user',
-        'itsp',
-       array('itspid' => $itspid));
+                                    'user',
+                                    'itsp',
+                                   array('itspid' => $itspid));
     $item['itemtype'] = 99999;
     /* Call hooks */
     $hooks = xarModCallHooks('item',
@@ -237,9 +236,11 @@ function itsp_user_itsp($args)
         }
     }
     $data['canapprove'] = $canapprove;
-    $itspuser = xarUserGetVar('name', $item['userid']);
+    $itspuserid =  $item['userid'];
+    $itspuser = xarUserGetVar('name',$itspuserid);
     xarTplSetPageTitle(xarVarPrepForDisplay($itspuser));
     $data['uid'] = xarUserGetVar('uid');
+    $data['itspuserid'] = $itspuserid;
     $data['itspuser'] = $itspuser;
 
     /* Return the template variables defined in this function */

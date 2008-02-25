@@ -27,8 +27,9 @@
         </xar:ml>
     <xar:else />
         <xar:ml>
-            <xar:mlstring>Welcome #(1), you are reviewing the ITSP of #(2).</xar:mlstring>
+            <xar:mlstring>Welcome #(1), you are reviewing the ITSP of <a href="#(2)">#(3)</a>.</xar:mlstring>
             <xar:mlvar>#xarUserGetVar('name')#</xar:mlvar>
+            <xar:mlvar>#xarModURL('roles','user','display',array('uid'=>$itspuserid))#</xar:mlvar>
             <xar:mlvar>#$itspuser#</xar:mlvar>
         </xar:ml>
     </xar:if>
