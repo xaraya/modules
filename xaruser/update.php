@@ -3,7 +3,7 @@
  * Function to update a plan item
  *
  * @package modules
- * @copyright (C) 2006 The Digital Development Foundation
+ * @copyright (C) 2006-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -22,6 +22,8 @@
  * @param  int objectid universal identifier OPTIONAL
  * @param  int pitemid the number of the plan item to be updated
  * @param array invalid
+ * @return mixed bool with true for success or false for failure OR
+            array with information for the modify function
  * @since 20 feb 2006
  * @todo michelv: <1>why doesn't the sec check in here work?
  *

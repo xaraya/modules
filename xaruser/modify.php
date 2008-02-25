@@ -3,7 +3,7 @@
  * Modify an ITSP
  *
  * @package modules
- * @copyright (C) 2005-2007 The Digital Development Foundation
+ * @copyright (C) 2005-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -67,9 +67,12 @@ function itsp_user_modify($args)
     // See if the user can edit
     $canedit = false;
     $itspstatus = $itsp['itspstatus'];
-    if ($itspstatus < 4 || $itspstatus == 5) {
+
+    // Leave out the submitted status for now except if we have enough privileges to edit anyway.
+    if ($itspstatus < 4 || $itspstatus == 5 || xarSecurityCheck('DeleteITSP', 0) ) {
         $canedit = true;
     }
+    // If the user has
     $data['canedit'] = $canedit;
     // Check to see if we are already dealing with a planitem
     if (!empty($pitemid) && is_numeric($pitemid)) {

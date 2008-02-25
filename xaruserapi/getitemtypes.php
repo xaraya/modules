@@ -3,7 +3,7 @@
  * Utility function to retrieve the list of item types
  *
  * @package modules
- * @copyright (C) 2005-2007 The Digital Development Foundation
+ * @copyright (C) 2005-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -20,7 +20,7 @@
  * @author MichelV <michelv@xarayahosting.nl>
  *
  * @return array containing the item types and their description
- * @todo MichelV <1> decide on the setup in here
+ * @todo MichelV <1> decide on a better setup in here
  */
 function itsp_userapi_getitemtypes($args)
 {
