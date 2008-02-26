@@ -3,7 +3,7 @@
  * Helpdesk Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -66,14 +66,11 @@ function helpdesk_user_new()
 
         if( empty($name) ){ $name = xarUserGetVar('name', $openedby); }
         $tmp_email = xarUserGetVar('email', $openedby);
-        if( xarCurrentErrorID() == 'NOT_LOGGED_IN' )
-        {
+        if( xarCurrentErrorID() == 'NOT_LOGGED_IN' ) {
             // caused by anonymous users just use the email address already entered
             xarErrorHandled();
-        }
-        else if( $tmp_email != false )
-        {
-            // user was logged in we could get the an email address
+        } else if (( $tmp_email != false ) && ( empty($email) )) {
+            // user was logged in we could get the an email address AND there was no email address entered in the field
             $email = $tmp_email;
         }
 
