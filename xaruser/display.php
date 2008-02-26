@@ -253,7 +253,7 @@ function comments_user_display($args)
 			     'display',
 			     $comment['xar_cid'],
 			     $item);
-    if (empty($hooks)) {
+    if (empty($hookoutputs)) {
       $output['hookoutput'] = '';
     } else {
       /* You can use the output from individual hooks in your template too, e.g. with
