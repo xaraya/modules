@@ -137,14 +137,14 @@ function xarbb_init()
 
     // Register Masks
     // Mask = Categorie : Id : Name
-    xarRegisterMask('ReadxarBB','All','xarbb','Forum','All:All','ACCESS_READ');     // Allows reading Topics and Postings
     xarRegisterMask('ViewxarBB','All','xarbb','Read','All:All','ACCESS_OVERVIEW');    // Allows seeing Forum
+    xarRegisterMask('ReadxarBB','All','xarbb','Forum','All:All','ACCESS_READ');     // Allows reading Topics and Postings
+    xarRegisterMask('PostxarBB','All','xarbb','Forum','All:All','ACCESS_COMMENT');  // Allows Posting Replys and Topics
+    xarRegisterMask('ModxarBB','All','xarbb','Forum','All:All','ACCESS_MODERATE');    // Allows Editing + Deleting Replys + Topics
     xarRegisterMask('EditxarBB','All','xarbb','Forum','All:All','ACCESS_EDIT');
     xarRegisterMask('AddxarBB','All','xarbb','Forum','All:All','ACCESS_ADD');
     xarRegisterMask('DeletexarBB','All','xarbb','Forum','All:All','ACCESS_DELETE');
     xarRegisterMask('AdminxarBB','All','xarbb','Forum','All:All','ACCESS_ADMIN');    // Allows all ;D
-    xarRegisterMask('ModxarBB','All','xarbb','Forum','All:All','ACCESS_MODERATE');    // Allows Editing + Deleting Replys + Topics
-    xarRegisterMask('PostxarBB','All','xarbb','Forum','All:All','ACCESS_COMMENT');  // Allows Posting Replys and Topics
     // for what is moderate good?
 
      // Enable categories hooks for xarbb forums
@@ -160,6 +160,8 @@ function xarbb_init()
 
     // Note: comments should not be hooked to xarbb - it is accessed directly via APIs
 
+    // User preferences
+    xarModSetVar('xarbb', 'autosubscribe', 'none');
     // modvars
     xarModSetVar('xarbb', 'cookiename', 'xarbb');
     xarModSetVar('xarbb','masternntpsetting',false); //added 2006-04-09 : see admin new.php function
@@ -585,6 +587,13 @@ function xarbb_upgrade($oldversion)
                 // Last visited time.
                 xarModSetVar('xarbb', 'fr_' . $fid, '0');
             }
+
+        case '1.2.2':
+            // In this version (1.3.1) we have introduced a new user preferences page
+            // As it stands this includes just the one user variable
+            xarModSetVar('xarbb', 'autosubscribe', 'none');
+
+            // Fall through to next upgrade version
 
         default:
             break;

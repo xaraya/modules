@@ -1,0 +1,64 @@
+<xar:if condition="empty($errors)">
+    <h2>User Preferences</h2>
+    <div class="xarbb-user-preferences">
+        <form action="&xar-modurl-xarbb-user-preferences;&amp;phase=update" method="post">
+            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+            <div class="xar-form-input-wrapper">
+                <label for="autosubscribe" class="xar-form-label" title="#xarML('Default value for automatic user subscriptions to posts')#">
+                    <xar:mlstring>
+                        Auto subscribe
+                    </xar:mlstring>
+                </label>
+                <select name="autosubscribe" id="autosubscribe" size="1">
+                    <xar:if condition="$autosubscribe eq 'default'">
+                        <option value="default" selected="selected">
+                            <xar:ml>
+                                <xar:mlstring>Default (#(1))</xar:mlstring>
+                                <xar:mlvar>#$default.autosubscribe#</xar:mlvar>
+                            </xar:ml>
+                        </option>
+                        <option value="none"><xar:mlstring>Never</xar:mlstring></option>
+                        <option value="topics"><xar:mlstring>Own Topics</xar:mlstring></option>
+                        <option value="replies"><xar:mlstring>Replied Topics</xar:mlstring></option>
+                    <xar:elseif condition="$autosubscribe eq 'none'" />
+                        <option value="default">
+                            <xar:ml>
+                                <xar:mlstring>Default (#(1))</xar:mlstring>
+                                <xar:mlvar>#$default.autosubscribe#</xar:mlvar>
+                            </xar:ml>
+                        </option>
+                        <option value="none" selected="selected"><xar:mlstring>Never</xar:mlstring></option>
+                        <option value="topics"><xar:mlstring>Own Topics</xar:mlstring></option>
+                        <option value="replies"><xar:mlstring>Replied Topics</xar:mlstring></option>
+                    <xar:elseif condition="$autosubscribe eq 'topics'" />
+                        <option value="default">
+                            <xar:ml>
+                                <xar:mlstring>Default (#(1))</xar:mlstring>
+                                <xar:mlvar>#$default.autosubscribe#</xar:mlvar>
+                            </xar:ml>
+                        </option>
+                        <option value="none"><xar:mlstring>Never</xar:mlstring></option>
+                        <option value="topics" selected="selected"><xar:mlstring>Own Topics</xar:mlstring></option>
+                        <option value="replies"><xar:mlstring>Replied Topics</xar:mlstring></option>
+                    <xar:elseif condition="$autosubscribe eq 'replies'"/>
+                        <option value="default">
+                            <xar:ml>
+                                <xar:mlstring>Default (#(1))</xar:mlstring>
+                                <xar:mlvar>#$default.autosubscribe#</xar:mlvar>
+                            </xar:ml>
+                        <option value="none"><xar:mlstring>Never</xar:mlstring></option>
+                        <option value="topics"><xar:mlstring>Own Topics</xar:mlstring></option>
+                        <option value="replies" selected="selected"><xar:mlstring>Replied Topics</xar:mlstring></option>
+                    </xar:if> 
+                </select>
+            </div>
+            <div class="xar-form-input-wrapper-after">
+                <input type="submit" value="#xarML('Submit')#" />
+             </div>
+        </form>
+    </div>
+<xar:else />
+    <xar:loop name="$errors">
+        <p class="xar-error">#xarVarPrepForDisplay($loop:item)#</p>
+    </xar:loop>
+</xar:if>

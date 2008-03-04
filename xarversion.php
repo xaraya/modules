@@ -1,4 +1,5 @@
 <?php
+
 /**
  * XarBB - A lightweight BB for Xaraya
  *
@@ -14,7 +15,7 @@
 
 $modversion['name']         = 'xarbb';
 $modversion['id']           = '300';
-$modversion['version']      = '1.2.2';
+$modversion['version']      = '1.3.1';
 $modversion['displayname']  = xarML('xarBB');
 $modversion['description']  = 'A lightweight BB for Xaraya';
 $modversion['credits']      = 'xardocs/credits.txt';

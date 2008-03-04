@@ -42,6 +42,11 @@ function xarbb_admin_modifyconfig()
             $data['nntpport']        = !isset($settings['nntpport']) ? 119 :$settings['nntpport'];
             $data['nntpserver']      = !isset($settings['nntpserver']) ? 'news.xaraya.com' :$settings['nntpserver'];
             $data['nntpgroup']       = !isset($settings['nntpgroup']) ? '' :$settings['nntpgroup'];
+
+            // User preferences
+            $autosubscribe = xarModGetVar('xarbb', 'autosubscribe');
+            $data['autosubscribe']   = empty($autosubscribe) ? 'none' : $autosubscribe;
+
             $hooks                   = xarModCallHooks('module', 'modifyconfig', 'xarbb', array('module' => 'xarbb')); // forum
             if (empty($hooks)) {
                 $data['hooks'] = '';
@@ -81,6 +86,8 @@ function xarbb_admin_modifyconfig()
             if (!xarVarFetch('xarbbtitle', 'str:1:', $xarbbtitle, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('aliasname', 'str:1:', $aliasname, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('masternntpsetting', 'checkbox', $masternntpsetting, false, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('autosubscribe', 'enum:none:topics:replies', $autosubscribe, 'none', XARVAR_NOT_REQUIRED)) return;
+
             // Update module variables
             xarModSetVar('xarbb', 'SupportShortURLs', $supportshorturls);
             xarModSetVar('xarbb', 'xarbbtitle', $xarbbtitle);
@@ -91,6 +98,10 @@ function xarbb_admin_modifyconfig()
                 xarModSetVar('xarbb', 'useModuleAlias', 0);
             }
             xarModSetVar('xarbb', 'forumsperpage', $forumsperpage); //only required for admin view
+
+            // User preferences
+            xarModSetVar('xarbb', 'autosubscribe', $autosubscribe);
+
             // default settings for xarbb
             $settings = array();
             $settings['postsperpage']       = $postsperpage;

@@ -231,6 +231,39 @@
             </xar:if>
             </xar:comment>
         </fieldset>
+
+        <fieldset>
+            <legend>
+                <strong>
+                    <xar:mlstring>
+                        Default Values for User Preferences
+                    </xar:mlstring>
+                </strong>
+            </legend>
+            <div class="xar-form-input-wrapper">
+                <label for="autosubscribe" class="xar-form-label" title="#xarML('Default value for automatic user subscriptions to posts')#">
+                    <xar:mlstring>
+                        Auto subscribe
+                    </xar:mlstring>
+                </label>
+                <select name="autosubscribe" id="autosubscribe" size="1">
+                    <xar:if condition="$autosubscribe eq 'none'">
+                       <option value="none" selected="selected"><xar:mlstring>Never</xar:mlstring></option>
+                       <option value="topics"><xar:mlstring>Own Topics</xar:mlstring></option>
+                       <option value="replies"><xar:mlstring>Replied Topics</xar:mlstring></option>
+                    <xar:elseif condition="$autosubscribe eq 'topics'" />
+                       <option value="none"><xar:mlstring>Never</xar:mlstring></option>
+                       <option value="topics" selected="selected"><xar:mlstring>Own Topics</xar:mlstring></option>
+                       <option value="replies"><xar:mlstring>Replied Topics</xar:mlstring></option>
+                    <xar:elseif condition="$autosubscribe eq 'replies'"/>
+                       <option value="none"><xar:mlstring>Never</xar:mlstring></option>
+                       <option value="topics"><xar:mlstring>Own Topics</xar:mlstring></option>
+                       <option value="replies" selected="selected"><xar:mlstring>Replied Topics</xar:mlstring></option>
+                    </xar:if> 
+                </select>
+            </div>
+        </fieldset>
+
         <fieldset>
             <legend>
                     <xar:mlstring>

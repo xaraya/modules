@@ -200,6 +200,14 @@ function xarbb_user_newtopic()
                     )
                 );
 
+                // Check the auto subscription
+                $autosubscribe_setting = xarModGetUserVar('xarbb', 'autosubscribe');
+                $autosubscribe_default = xarModGetVar('xarbb', 'autosubscribe');
+                if ($autosubscribe_setting == 'topics' || ($autosubscribe_setting == 'default' && $autosubscribe_default == 'topics')) {
+                    // Subscribe this user to the topic
+                    xarModAPIFunc('xarbb', 'admin', 'subscribe', array('tid'=>$tid));
+                }
+
                 $settings   = unserialize(xarModGetVar('xarbb', 'settings.' . $fid));
 
                 // We don't want to update the forum counter on an updated reply.

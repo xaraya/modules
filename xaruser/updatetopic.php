@@ -92,6 +92,14 @@ function xarbb_user_updatetopic()
             )
         )) return;
 
+        // Check the auto subscription
+        $autosubscribe_setting = xarModGetUserVar('xarbb', 'autosubscribe');
+        $autosubscribe_default = xarModGetVar('xarbb', 'autosubscribe');
+        if ($autosubscribe_setting == 'replies' || ($autosubscribe_setting == 'default' && $autosubscribe_default == 'replies')) {
+            // Subscribe this user to the topic
+            xarModAPIFunc('xarbb', 'admin', 'subscribe', array('tid'=>$tid));
+        }
+
         // While we are here, let's send any subscribers notifications.
         // TODO: provide an option to queue the notificiations, because if there are lot of
         // subscribers, we don't want to delay the posting of a reply while the e-mails are sent.

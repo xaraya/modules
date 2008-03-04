@@ -46,6 +46,16 @@ function xarbb_userapi_getmenulinks()
         }
     }
 
+    // User preferences
+    // User must be logged in and able to view forums
+    if (xarUserIsLoggedIn() && xarSecurityCheck('ViewxarBB', 1, 'Forum')) {
+        $menulinks[] = array(
+            'url' => xarModURL('xarbb', 'user', 'preferences'),
+            'title' => 'User Preferences',
+            'label' => 'User Preferences',
+        );
+    }
+
     return $menulinks;
 }
 

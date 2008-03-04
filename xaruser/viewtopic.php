@@ -174,6 +174,12 @@ function xarbb_user_viewtopic($args)
         $reverse = false; // default normal Celko order
     }
 
+    // The startnum is quantised by numitems.
+    // If necessary, take the 1-indexed startnum to the start of a page of numitems.
+    if ((($startnum-1) % $postsperpage) <> 0) {
+        $startnum = floor(($startnum-1) / $postsperpage) * $postsperpage + 1;
+    }
+
     //
     // TODO: Fetch the replies from getallreplies(), once that has been implemented.
     //
