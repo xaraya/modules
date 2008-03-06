@@ -684,7 +684,11 @@ function xarpages_funcapi_multiform($args)
     if (!empty($dd['submit_labels']) && xarVarValidate('strlist:,:pre:trim:str', $dd['submit_labels'])) {
         $custom_labels = explode(',', $dd['submit_labels']);
         foreach(array('prev', 'save', 'next') as $key => $value) {
-            if (isset($custom_labels[$key]) && $custom_labels[$key] != '') $submit_labels[$value] = $custom_labels[$key];
+            // If a label is left out, then hide that button.
+            // The label 'default' can be used to preserve the default button.
+            if (isset($custom_labels[$key]) && $custom_labels[$key] != 'default') {
+                $submit_labels[$value] = $custom_labels[$key];
+            }
         }
     }
 

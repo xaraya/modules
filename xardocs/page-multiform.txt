@@ -1,0 +1,44 @@
+
+Multiform page type/plugin
+==========================
+
+This plugin for xarpages allows you to create multi-page forms. The key
+features of this plugin are:
+
+- Each form is defined through a dynamic data object, so can make us of
+  any dynamic data properties.
+- Each page in the multi-page form is attached to a xarpages page.
+- The order of the xarpages page defines the order of the multipage
+  form.
+- All data is cached in the user's session until one of the following
+  actions occur:
+  - The user cancels the form.
+  - A period of inactivity results in a timeout.
+  - The user completes the form.
+- A form page can contain:
+  - A form that can be updated.
+  - A read-only form.
+  - No form data (just static text).
+- The form pages must be completed in the correct order. Any attempt to
+  jump to a page further on in the sequence will result in the user being
+  taken back to the last page they were on.
+- Form pages can split and branch. This would depend on custom code to
+  make the branching decisions.
+- All custom code is placed into a single object that covers custom
+  functionality for all pages in a multipage form.
+- A history of pages is available, so users can go back to a previous page.
+- If a user goes back to a previous page, then they must go forward through
+  each subsequent form in order to get back to where they were (this is due
+  to the branching ability - after going back, the user may make an alteration
+  that results in a different branching pattern).
+- Hidden data may be passed from one page to another through the session (i.e.
+  hidden from the user, and not passed via the user forms).
+- When the form sequence is complete, the session form data will be flushed so
+  that it can't be seen by the next user of the machine.
+- The final page in the sequence can be passed completion data (e.g. a message,
+  an order number, a status) that is available as a one-off read. The form data
+  is still flushed before going to the final page (which could be a static page)
+  but data can then be read, and subsequently destroyed, by that final page,
+  leaving nothing behind in the session.
+
+(To be completed)
