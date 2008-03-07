@@ -132,7 +132,7 @@ class Query
         if (($result->fields) === false)
             $numfields = 0;
         else
-            $numfields = count($result->fields); // Better than the private var, fields should still be proteced
+            $numfields = count($result->fields); // Better than the private var, fields should still be protected
         $this->output = array();
         if ($display == 1) {
             if ($statement == '') {
