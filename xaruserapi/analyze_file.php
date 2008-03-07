@@ -3,7 +3,7 @@
  * Mime Module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -38,26 +38,31 @@ function mime_userapi_analyze_file( $args )
         $altFileName = $fileName;
     }
 
-    // Start off trying mime_content_type
-    if (function_exists('mime_content_type') && ini_get('mime_magic.magicfile')) {
-
-        $ftype = mime_content_type($fileName);
-
-        if (isset($ftype) && strlen($ftype)) {
-            return $ftype;
+    // Start off with admin selected test method
+    // Path to magic file without 'mime' extension is for windows, see http://pecl.php.net/bugs/bug.php?id=7555
+    $testMethod = xarModGetVar('mime', 'mimemethod');
+    $pathToMagic = xarModGetVar('mime', 'mimepath');
+    if ($testMethod == 'none') { 
+        //rely on php extension 'fileinfo' and xarayas own tests
+    } elseif ($testMethod == 'file_get_contents') {
+        // PHP5 approach from http://www.jellyandcustard.com/2006/01/19/php-mime-types-and-fileinfo/
+        $fi = new finfo(FILEINFO_MIME, $pathToMagic);
+        $mime_type = $fi->buffer(file_get_contents($fileName));
+        if (isset($mime_type) && strlen($mime_type)) {
+            return $mime_type;
+        }
+    } else {    
+        if (function_exists('mime_content_type') && ini_get('mime_magic.magicfile')) {
+            $ftype = mime_content_type($fileName);
+            if (isset($ftype) && strlen($ftype)) {
+                return $ftype;
+            }
         }
     }
-    /* MichelV: For PHP5 we could use the following:
-    // PHP5 approach from http://www.jellyandcustard.com/2006/01/19/php-mime-types-and-fileinfo/
-    $fi = new finfo(FILEINFO_MIME);
-    $mime_type = $fi->buffer(file_get_contents($fileName));
-    if (isset($mime_type) && strlen($mime_type)) {
-        return $mime_type;
-    }*/
 
     //try to use if disponible pecl fileinfo extension
     if(extension_loaded('fileinfo')) {
-        $res = finfo_open(FILEINFO_MIME);
+        $res = finfo_open(FILEINFO_MIME, $pathToMagic);
         $mime_type = finfo_file($res, $fileName);
         finfo_close($res);
         if (isset($mime_type) && strlen($mime_type)) {

@@ -1,0 +1,97 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>
+            Mime Module Administration
+        </xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2>
+        <xar:mlstring>
+            Modify Configuration
+        </xar:mlstring>
+    </h2>
+    <form action="&xar-modurl-mime-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset>
+            <legend>
+                <strong>
+                    <xar:mlstring>
+                        Settings
+                    </xar:mlstring>
+                </strong>
+            </legend>
+            <div class="xar-form-input-wrapper">
+                <label class="xar-form-label">
+                    <span class="help" title="#xarML('Select the PHP mime diagnosis method of the host system')#">
+                        <xar:mlstring>
+                            Method
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <p class="xar-form-input-wrapper">
+                    <xar:set name="mimefunction">xarModGetVar('mime', 'mimemethod')</xar:set>
+                    <xar:if condition="$mimefunction eq 'none'">
+                        <input type="radio" name="mimemethod" id="funcnone" value="none" checked="checked" />
+                            <label for="funcnone">
+                                <xar:mlstring>None</xar:mlstring>
+                            </label>
+                            <br />
+                        <input type="radio" name="mimemethod" id="funcmime" value="mime_content_type" />
+                            <label for="funcmime">
+                                <xar:mlstring>mime_content_type</xar:mlstring>
+                            </label>
+                            <br /> 
+                        <input type="radio" name="mimemethod" id="funcfile" value="file_get_contents" />
+                            <label for="funcfile">
+                                <xar:mlstring>file_get_contents (For PHP 5)</xar:mlstring> 
+                            </label>
+                    <xar:elseif condition="$mimefunction eq 'file_get_contents'" />
+                        <input type="radio" name="mimemethod" id="funcnone" value="none" checked="checked" />
+                            <label for="funcnone">
+                                <xar:mlstring>None</xar:mlstring>
+                            </label>
+                            <br />
+                        <input type="radio" name="mimemethod" id="funcmime" value="mime_content_type" />
+                            <label for="funcmime">
+                                <xar:mlstring>mime_content_type</xar:mlstring>
+                            </label>
+                            <br /> 
+                        <input type="radio" name="mimemethod" id="funcfile" value="file_get_contents" checked="checked" />
+                            <label for="funcfile">
+                                <xar:mlstring>file_get_contents (For PHP 5)</xar:mlstring> 
+                            </label>
+                    <xar:else />
+                        <input type="radio" name="mimemethod" id="funcnone" value="none" />
+                            <label for="funcnone">
+                                <xar:mlstring>None</xar:mlstring>
+                            </label>
+                            <br />
+                        <input type="radio" name="mimemethod" id="funcmime" value="mime_content_type"  checked="checked" />
+                            <label for="funcmime">
+                                <xar:mlstring>mime_content_type</xar:mlstring>
+                            </label>
+                            <br /> 
+                        <input type="radio" name="mimemethod" id="funcfile" value="file_get_contents" />
+                            <label for="funcfile">
+                                <xar:mlstring>file_get_contents (For PHP 5)</xar:mlstring> 
+                            </label>
+                    </xar:if>
+                </p>
+                <div class="xar-form-input-wrapper">
+                    <label for="mimepath" title="#xarML('Path with file name without extension')#" class="xar-form-label">
+                        <xar:mlstring>Path to magic.mime file:</xar:mlstring>
+                    </label>
+                    <input type="text" name="mimepath" id="mimepath" value="#xarModGetVar('mime', 'mimepath', 1)#" class="xar-form-textxlong" />
+                </div>
+                <div class="xar-form-input-wrapper-after">
+                    Some PHP 5 versions need the path to the magic file (http://pecl.php.net/bugs/bug.php?id=7555).
+                </div>
+
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="submit" value="#xarML('Submit')#" />
+            </div>
+        </fieldset>
+    </form>
+</div>
