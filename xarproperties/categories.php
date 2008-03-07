@@ -60,6 +60,7 @@ class CategoriesProperty extends SelectProperty
 
     public $baselist   = 'all';
     public $cidlist    = array();
+    public $itemid     = 0;
     public $showbase   = true;
 
     function __construct(ObjectDescriptor $descriptor)
@@ -89,8 +90,8 @@ class CategoriesProperty extends SelectProperty
             if (!is_array($categories)) $categories = array($categories);
         }
 
-        if (!xarVarFetch($name . '_categories_itemid', 'int', $itemid, 0, XARVAR_NOT_REQUIRED)) return;
-        if (!$itemid && isset($value)) $itemid = $value;
+        if (!xarVarFetch($name . '_categories_itemid', 'int', $itemid, NULL, XARVAR_DONT_SET)) return;
+        if (!isset($itemid)) $itemid = $this->itemid;
 
         if (!empty($itemid)) {
             $result = xarModAPIFunc('categories', 'admin', 'unlink',
@@ -99,6 +100,7 @@ class CategoriesProperty extends SelectProperty
                                     'modid' => $info['systemid']));
         }
 
+        echo $itemid;
         if (count($categories) > 0) {
             $checkcats= array();
             foreach ($categories as $category) {
