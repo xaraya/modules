@@ -216,7 +216,7 @@ class CategoriesProperty extends SelectProperty
 
             // Return an array of base categories we got from the tag
             } else {
-                $data['basecids'] = explode(',',$data['basecids']);
+                $data['basecids'] = explode(',',$data['bases']);
             }
         } else {
             // still todo: display manually entered basecat trees
