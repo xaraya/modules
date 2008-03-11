@@ -64,11 +64,6 @@
                             #
                         </a>
                     </p>
-				<xar:if condition="!empty($hookoutput)">
-			      <xar:foreach in="$hookoutput" key="$hookmodule">
-				    #$hookoutput[$hookmodule]#
-				  </xar:foreach>
-				</xar:if>
                     <xar:comment> FIXME: nested if's don't seem right here </xar:comment>
                     <xar:if condition="isset($loop:item['xar_branchout']) and $loop:item['xar_branchout'] eq 1">
                         <br />
@@ -152,11 +147,6 @@
                             #
                         </a>
                     </p>
-				<xar:if condition="!empty($hookoutput)">
-			      <xar:foreach in="$hookoutput" key="$hookmodule">
-				    #$hookoutput[$hookmodule]#
-				  </xar:foreach>
-				</xar:if>
                     <xar:comment> FIXME: nested if's don't seem right here </xar:comment>
                     <xar:if condition="isset($loop:item['xar_branchout']) and $loop:item['xar_branchout'] eq 1">
                         <br />

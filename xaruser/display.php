@@ -244,23 +244,6 @@ function comments_user_display($args)
     $receipt['action']                = 'display';
 
     $hooks = xarModAPIFunc('comments','user','formhooks');
-    $item['returnurl'] = xarModURL('comments',
-				   'user',
-				   'display',
-				   array('cid' => $comment['xar_cid']));
-    $item['module'] = 'comments';
-    $hookoutputs = xarModCallHooks('item',
-			     'display',
-			     $comment['xar_cid'],
-			     $item);
-    if (empty($hooks)) {
-      $output['hookoutput'] = '';
-    } else {
-      /* You can use the output from individual hooks in your template too, e.g. with
-       * $hookoutput['comments'], $hookoutput['hitcount'], $hookoutput['ratings'] etc.
-       */
-      $output['hookoutput'] = $hookoutputs;
-    }
 
     //if (time() - ($package['comments']['xar_date'] - ($package['settings']['edittimelimit'] * 60))) {
     //}
