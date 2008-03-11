@@ -13,7 +13,7 @@
  */
 $modversion['name']         = 'Headlines';
 $modversion['id']           = '777';
-$modversion['version']      = '1.1.0';
+$modversion['version']      = '1.2.0';
 $modversion['displayname']  = xarML('Headlines');
 $modversion['description']  = 'Generates a list of feeds.';
 $modversion['official']     = 1;

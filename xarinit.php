@@ -90,6 +90,19 @@ function headlines_init()
     xarModSetVar('headlines','importpubtype', 0);
     xarModSetVar('headlines','showfeeds', '');
     xarModSetVar('headlines', 'uniqueid', 'feed;link');
+    // added in 0.9.0
+    xarModSetVar('headlines', 'SupportShortURLs', 1);    
+    // added in 1.1.0
+    xarModSetVar('headlines', 'parser', 'default');
+    // added > 1.1.0
+    xarModSetVar('headlines', 'feeditemsperpage', 20);
+    xarModSetVar('headlines','maxdescription', 0);
+    xarModSetVar('headlines','showcomments', 0);
+    xarModSetVar('headlines', 'showratings', 0);
+    xarModSetVar('headlines', 'showhitcount', 0);
+    xarModSetVar('headlines','showkeywords', 0);
+    xarModSetVar('headlines','useModuleAlias', 0);
+    xarModSetVar('headlines', 'aliasname', '');
 
     // Register Masks
     xarRegisterMask('OverviewHeadlines','All','headlines','All','All','ACCESS_OVERVIEW');
@@ -192,7 +205,17 @@ function headlines_upgrade($oldVersion)
            xarModSetVar('headlines', 'parser', (!empty($magpie) ? $magpie : 'default'));
            xarModDelVar('headlines', 'magpie');
 
-       case '1.1.0': // Current version
+       case '1.1.0': // To 1.2.0
+            // Added module variables for new options
+            xarModSetVar('headlines', 'feeditemsperpage', 20);
+            xarModSetVar('headlines','maxdescription', 0);
+            xarModSetVar('headlines','showcomments', 0);
+            xarModSetVar('headlines', 'showratings', 0);
+            xarModSetVar('headlines', 'showhitcount', 0);
+            xarModSetVar('headlines','showkeywords', 0);
+            xarModSetVar('headlines','useModuleAlias', 0);
+            xarModSetVar('headlines', 'aliasname', '');
+       case '1.2.0': // Current version
            break;
     }
     // Update successful
@@ -226,7 +249,11 @@ function headlines_delete()
                        'unregister_block_type',
                        array('modName'  => 'headlines',
                              'blockType'=> 'rss'))) return;
-
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'unregister_block_type',
+                       array('modName'  => 'headlines',
+                             'blockType'=> 'cloud'))) return;
     xarModDelAllVars('headlines');
     xarRemoveMasks('headlines');
     xarRemoveInstances('headlines');

@@ -18,7 +18,7 @@
 
 function headlines_userapi_process($args)
 {
-    extract($args);
+     extract($args);
 
     // Require the xmlParser class
     require_once('modules/base/xarclass/xmlParser.php');
@@ -42,9 +42,8 @@ function headlines_userapi_process($args)
     );
 
     if (!$feeddata) {
-        $msg = xarML('There is a problem with a feed.');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
+        $msg = xarML('There is a problem with this feed.');
+		return array('warning' => $msg);
     }
 
     // Check what makes a headline unique
@@ -141,14 +140,14 @@ function headlines_userapi_process($args)
         $data['chanlink'] = $info['channel']['link'];
 
     } else {
-        $msg = xarML('There is a problem with a feed.');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
+        $msg = xarML('There is a problem with this feed.');
+		return array('warning' => $msg);
     }
 
     $data['feedcontent'] = $feedcontent;
 
     return $data;
 }
+
 
 ?>

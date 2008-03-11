@@ -34,6 +34,21 @@ function headlines_userapi_encode_shorturl($args)
     $join = '?';
     // we can't rely on xarModGetName() here -> you must specify the modname !
     $module = 'headlines';
+
+    // Alias for the module, set in the config screen.
+    $aliasisset = xarModGetVar($module, 'useModuleAlias');
+    $aliasname = xarModGetVar($module, 'aliasname');
+
+    if (!empty($aliasisset) && isset($aliasname)) {
+        $module_for_alias = xarModGetAlias($aliasname);
+
+        // If the alias is for this module, then
+        // use it instead of the module name.
+        if ($module_for_alias == $module) {
+            $module = $aliasname;
+        }
+    }
+
     // specify some short URLs relevant to your module
     if ($func == 'main') {
         $path = '/' . $module . '/';

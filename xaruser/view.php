@@ -11,11 +11,19 @@
  * @link http://www.xaraya.com/index.php/release/777.html
  * @author John Cox
  */
-function headlines_user_view()
+
+function headlines_user_view($args)
 {
+
     // Security Check
     if (!xarSecurityCheck('ReadHeadlines')) return;
-    if (!xarVarFetch('hid', 'id', $hid)) return;
+	if (!xarVarFetch('hid', 'id', $hid, NULL, XARVAR_NOT_REQUIRED)) return;
+	extract($args);	
+	if (!isset($hid) || empty($hid) || !is_numeric($hid)) {
+        $msg = xarML('No headline id specified.');
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        return;
+    }
 
     // The user API function is called
     $links = xarModAPIFunc('headlines', 'user', 'get', array('hid' => $hid));
@@ -30,6 +38,7 @@ function headlines_user_view()
 
     // TODO: This check is done in several places now. It should be hidden in an API.
     // TODO: Also need to check that these parser modules have not been disabled or uninstalled.
+    // TODO: Would be nice if we fell through to the default parser, if above check fails.
     if (xarModGetVar('headlines', 'parser') == 'simplepie') {
         $data = xarModAPIFunc(
             'simplepie', 'user', 'process',
@@ -48,12 +57,39 @@ function headlines_user_view()
     }
 
     if (!empty($data['warning'])){
+        // don't throw exception, let the display handle this
+        $data['chantitle'] = xarML('Feed unavailable');
+        $data['chandesc'] = xarML('There is a problem with this feed');
+        $data['chanlink'] = '#';
+        /*
         $msg = xarML('There is a problem with this feed : #(1)', $data['warning']);
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
+        */
     }
-
+        if (!empty($links['title'])){
+            $data['chantitle'] = $links['title'];
+        }
+        if (!empty($links['desc'])){
+            $data['chandesc'] = $links['desc'];
+        }
+    $numitems = xarModGetVar('headlines', 'feeditemsperpage');
+    if (!empty($numitems)) {
+	    // trim the array to just the items we were asked for 
+	    $data['feedcontent'] = array_slice($data['feedcontent'], 0, $numitems);
+    }
     xarTplSetPageTitle(xarVarPrepForDisplay($data['chantitle']));
+
+	/* optionally shorten descriptions */
+    $maxdesc = xarModGetVar('headlines', 'maxdescription');
+	if (!empty($maxdesc)) {
+		for ($i=0; $i < count($data['feedcontent']) ; $i++) {
+			// only transfrom descriptions longer than specified max
+			if (!empty($data['feedcontent'][$i]['description']) && (strlen($data['feedcontent'][$i]['description']) > $maxdesc)) {
+				$data['feedcontent'][$i]['description'] = substr($data['feedcontent'][$i]['description'], 0, $maxdesc).'...';
+			}
+		}
+	}
 
     if (isset($links['catid'])) {
         $data['catid'] = $links['catid'];

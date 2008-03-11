@@ -46,7 +46,26 @@
                             URL
                         </xar:mlstring>
                 </label>
-                <input type="text" name="url" id="url" value="" size="40" maxlength="200" />
+                <input type="text" name="url" id="url" value="#$url#" size="40" maxlength="255" />
+                <xar:if condition="!empty($warning)">
+                    <span class="xar-error">#$warning#</span>
+                </xar:if>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="title" class="xar-form-label" title="#xarML('This is an alternate title for the feed to be displayed on the user display')#">
+                        <xar:mlstring>
+                            Alt Title
+                        </xar:mlstring>
+                </label>
+                <input type="text" name="title" id="title" value="#$title#" size="40" maxlength="255" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="desc" class="xar-form-label" title="#xarML('This is an alternate description for the feed to be displayed on the user display')#">
+                        <xar:mlstring>
+                            Alt Description
+                        </xar:mlstring>
+                </label>
+                <input type="text" name="desc" id="desc" value="#$desc#" size="40" maxlength="255" />
             </div>
             </fieldset>
 

@@ -71,9 +71,13 @@ function headlines_user_main()
             }
             continue;
         } elseif (!empty($links[$i]['warning'])){
+            $links[$i]['chantitle'] = xarML('Feed unavailable');
+            $links[$i]['chandesc'] = xarML('There is a problem with this feed');
+            /*
             $msg = xarML('There is a problem with this feed : #(1)', $links[$i]['warning']);
             xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
             return;
+            */
         }
 
         if (!empty($link['title'])){
@@ -90,16 +94,12 @@ function headlines_user_main()
                                              'admin',
                                              'import',
                                              array('hid' => $link['hid']));
+        /* TODO: use the correct api funcs (getall etc) to grab lists of comments, hits, ratings, keywords */
 
-        // FIXME Reverse Logic here until I make a config setting.
-        if (!empty($settings['showcomments'])) {
-            $showcomments = 0;
-        } else {
-            $showcomments = 1;
-        }
+        $showcomments = xarModGetVar('headlines', 'showcomments');
 
         if ($showcomments) {
-            if (!xarModIsAvailable('comments')) {
+            if (!xarModIsAvailable('comments') || !xarModIsHooked('comments', 'headlines')) {
                 $showcomments = 0;
             }
         }
@@ -112,7 +112,7 @@ function headlines_user_main()
                                                          'objectid' => $link['hid']));
 
             if (!$links[$i]['comments']) {
-                $links[$i]['comments'] = '';
+                $links[$i]['comments'] = xarML('No comments');
             } elseif ($links[$i]['comments'] == 1) {
                 $links[$i]['comments'] .= ' ' . xarML('comment');
             } else {
@@ -122,6 +122,68 @@ function headlines_user_main()
             $links[$i]['comments'] = '';
         }
 
+        $showratings = xarModGetVar('headlines', 'showratings');
+
+        if ($showratings) {
+            if (!xarModIsAvailable('ratings') || !xarModIsHooked('ratings', 'headlines')) {
+                $showratings = 0;
+            }
+        }
+
+        if ($showratings) {
+            $links[$i]['ratings'] = xarModAPIFunc('ratings',
+                                                   'user',
+                                                   'get',
+                                                   array('modid' => xarModGetIDFromName('headlines'),
+                                                         'objectid' => $link['hid']));
+
+            if (!$links[$i]['ratings']) {
+                $links[$i]['ratings'] = xarML('Unrated');
+            } else {
+                $links[$i]['ratings'] = xarML('Rated ') . $links[$i]['ratings'];
+            }
+        } else {
+            $links[$i]['ratings'] = '';
+        }
+        
+        $showhitcount = xarModGetVar('headlines', 'showhitcount');
+
+        if ($showhitcount) {
+            if (!xarModIsAvailable('hitcount') || !xarModIsHooked('hitcount', 'headlines')) {
+                $showhitcount = 0;
+            }
+        }
+
+        if ($showhitcount) {
+            $links[$i]['hitcount'] = xarModAPIFunc('hitcount',
+                                                   'user',
+                                                   'get',
+                                                   array('modid' => xarModGetIDFromName('headlines'),
+                                                         'objectid' => $link['hid']));
+
+            if (!$links[$i]['hitcount']) {
+                $links[$i]['hitcount'] = xarML('No reads');
+            } elseif ($links[$i]['hitcount'] == 1) {
+                $links[$i]['hitcount'] .= ' ' . xarML('read');
+            } else {
+                $links[$i]['hitcount'] .= ' ' . xarML('reads');
+            }
+        } else {
+            $links[$i]['hitcount'] = '';
+        }
+
+        $showkeywords = xarModGetVar('headlines', 'showkeywords');
+
+        if ($showkeywords) {
+            if (!xarModIsAvailable('keywords') || !xarModIsHooked('keywords', 'headlines')) {
+                $showkeywords = 0;
+            }
+        }
+        if ($showkeywords) {
+            $links[$i]['keywords'] = xarModAPIFunc('keywords', 'user', 'getwords', 
+                                                    array('modid' => xarModGetIDFromName('headlines'),
+                                                            'itemid' => $link['hid']));
+        }
     }
 
     $data['indlinks'] = $links;
@@ -129,6 +191,8 @@ function headlines_user_main()
                                     xarModAPIFunc('headlines', 'user', 'countitems'),
                                     xarModURL('headlines', 'user', 'main', array('startnum' => '%%')),
                                     xarModGetVar('headlines', 'itemsperpage'));
+
+    xarTPLSetPageTitle(xarML('Syndicated Headlines'));
 
     return $data;
 }

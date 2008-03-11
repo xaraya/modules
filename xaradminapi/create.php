@@ -31,7 +31,8 @@ function headlines_adminapi_create($args)
     if(!xarSecurityCheck('AddHeadlines')) return;
 
     $order = xarModAPIFunc('headlines', 'user', 'countitems');
-
+    $title = !isset($title) || empty($title) || !is_string($title) || strlen($title) > 100 ? '' : $title;
+    $desc = !isset($desc) || empty($desc) || !is_string($desc) || strlen($desc) > 254 ? '' : $desc;
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -41,14 +42,18 @@ function headlines_adminapi_create($args)
     // Add item
     $query = "INSERT INTO $headlinestable (
               xar_hid,
+              xar_title,
+              xar_desc,
               xar_url,
               xar_order)
             VALUES (
               ?,
               ?,
+              ?,
+              ?,
               ?)";
 
-    $bindvars = array($nextId, $url, $order);
+    $bindvars = array($nextId, $title, $desc, $url, $order);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 

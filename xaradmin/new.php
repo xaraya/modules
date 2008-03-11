@@ -29,7 +29,9 @@ function headlines_admin_new()
     } else {
         $data['hooks'] = $hooks;
     }
-
+    $data['url'] = '';
+    $data['title'] = '';
+    $data['desc'] = '';
     $data['submitlabel'] = xarML('Submit');
     $data['authid'] = xarSecGenAuthKey();
 

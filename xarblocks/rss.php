@@ -106,11 +106,11 @@ function headlines_rssblock_display($blockinfo)
         $data = xarModAPIFunc('headlines', 'user', 'process', array('feedfile' => $feedfile));
     }
 
-    if (!empty($data['warning'])){
-        $msg = xarML('There is a problem with this feed : #(1)', $info['warning']);
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
-    }
+    if (!empty($data['warning'])) {
+		$blockinfo['title'] = xarML('Headlines');
+        $blockinfo['content'] = xarML('There is a problem with this feed');
+        return $blockinfo;
+	}
 
     $data['feedcontent'] = array_slice($data['feedcontent'], 0, $vars['maxitems']);
 
