@@ -37,15 +37,10 @@
                     <xar:mlvar>#$numcats#</xar:mlvar>
                     <xar:mlvar>#$numitems#</xar:mlvar>
                 </xar:ml>
-                <br /><br />
-                <input type="submit" name="confirm" id="confirmyes" value="#xarML('Submit')#" />
-                <input type="reset" value="#xarML('Cancel')#" onclick="javascript:history.go(-1)" />
             </div>
-        </fieldset>
-        <fieldset>
             <div>
                 <input type="submit" name="confirm" id="confirmyes" value="#xarML('Submit')#" />
-                #160;
+                &#160;
                 <input type="reset" value="#xarML('Cancel')#" onclick="javascript:history.go(-1)" />
             </div>
         </fieldset>
