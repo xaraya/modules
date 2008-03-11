@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -135,6 +135,7 @@ function articles_admin_new($args)
     $data['pubfilters'] = $pubfilters;
 
     // Array containing the different values (except the article fields)
+    // Hb: This variable is not used
     $values = array();
 
     // TODO - language
@@ -145,6 +146,7 @@ function articles_admin_new($args)
     $data['withupload'] = 0;
     if (!empty($ptid)) {
         $settings = unserialize(xarModGetVar('articles', 'settings.'.$ptid));
+        $data['defaultstatus'] = $settings['defaultstatus'];
     // TODO: make order dependent on pubtype or not ?
     //    foreach ($pubtypes[$ptid]['config'] as $field => $value) {}
         $pubfields = xarModAPIFunc('articles','user','getpubfields');
@@ -206,6 +208,7 @@ function articles_admin_new($args)
     $data['addlabel'] = xarVarPrepForDisplay(xarML('Add Article'));
     $data['authid'] = xarSecGenAuthKey('articles');
     $data['return_url'] = $return_url;
+    // Hb: This variable is not used
     $data['values'] = $values;
 
     if (!empty($ptid)) {

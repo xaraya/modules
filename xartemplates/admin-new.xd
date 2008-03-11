@@ -72,6 +72,9 @@
                         <input type="submit" name="save" id="save" value="#xarML('Save and Edit')#" />
                     </xar:if>
                     <input type="submit" value="#$addlabel#" />
+                    <xar:if condition="$defaultstatus gt 1"> 
+                      <input type="submit" name="view" id="view" value="#xarML('Save and View')#" />
+                    </xar:if>
                 </div>
             </div>
         </form>

@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -16,9 +16,10 @@
  *
  * @param id     ptid       The publication Type ID for this new article
  * @param array  new_cids   An array with the category ids for this new article (OPTIONAL)
- * @param string preview    Are we gonna see a preview?
- * @param string save       Call the save action
- * @param string return_url The URL to return to
+ * @param string preview    Are we gonna see a preview? (OPTIONAL) 
+ * @param string save       Call the save action, form stays open (OPTIONAL)
+ * @param string view       Call the view action, show newly created article (OPTIONAL)
+ * @param string return_url The URL to return to (OPTIONAL)
  * @throws BAD_PARAM
  * @return  bool true on success, or mixed on failure
  */
@@ -29,6 +30,7 @@ function articles_admin_create()
     if (!xarVarFetch('new_cids', 'array', $cids,    NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('preview',  'str',   $preview, NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('save',     'str',   $save, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('view',     'str',   $view,    NULL, XARVAR_NOT_REQUIRED)) {return;}    
     if (!xarVarFetch('return_url', 'str:1', $return_url, NULL, XARVAR_NOT_REQUIRED)) {return;}
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
@@ -171,6 +173,12 @@ function articles_admin_create()
             xarResponseRedirect(xarModURL('articles', 'user', 'view',
                                           array('ptid' => $ptid)));
         }
+    }
+    // Save and view the new article
+    if (isset($view)){
+        xarResponseRedirect(xarModURL('articles', 'user', 'display',
+                                      array('ptid' => $ptid,
+                                            'aid' => $aid)));   
     }
 
     if (!empty($return_url)) {
