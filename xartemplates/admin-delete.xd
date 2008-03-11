@@ -15,7 +15,7 @@
         </xar:mlstring>
     </h2>
     <form class="xar-formwidget" action="#xarModURL('categories','admin','deletecat')#" method="post"  enctype="application/x-www-form-urlencoded">
-        <fieldset class="formelements xar-norm">
+        <fieldset>
             <legend>
                 <strong>
                     <xar:ml>
@@ -31,7 +31,7 @@
             <input type="hidden" name="ok" id="ok" value="1" />
             <input type="hidden" name="cid" id="cid" value="#$cid#" />
             <input type="hidden" name="authid" id="authid" value="#$authkey#" />
-            <p class="param">
+            <div>
                 <xar:ml>
                     <xar:mlstring>This category has #(1) sub-categories and #(2) module items assigned to them.</xar:mlstring>
                     <xar:mlvar>#$numcats#</xar:mlvar>
@@ -40,7 +40,14 @@
                 <br /><br />
                 <input type="submit" name="confirm" id="confirmyes" value="#xarML('Submit')#" />
                 <input type="reset" value="#xarML('Cancel')#" onclick="javascript:history.go(-1)" />
-            </p>
+            </div>
+        </fieldset>
+        <fieldset>
+            <div>
+                <input type="submit" name="confirm" id="confirmyes" value="#xarML('Submit')#" />
+                #160;
+                <input type="reset" value="#xarML('Cancel')#" onclick="javascript:history.go(-1)" />
+            </div>
         </fieldset>
     </form>
 </div>
