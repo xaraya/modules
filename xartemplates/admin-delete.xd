@@ -39,7 +39,7 @@
                 </xar:ml>
             </div>
             <div>
-                <input type="submit" name="confirm" id="confirmyes" value="#xarML('Submit')#" />
+                <input type="submit" name="confirm" id="confirmyes" value="#xarML('Delete')#" />
                 &#160;
                 <input type="reset" value="#xarML('Cancel')#" onclick="javascript:history.go(-1)" />
             </div>
