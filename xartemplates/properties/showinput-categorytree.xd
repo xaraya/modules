@@ -97,9 +97,9 @@
         <tr>
             <td>
                 <form action="#xarModURL('categories','admin','viewcats',array())#" method="post">
-                    <xar:mlstring>Categories per page:</xar:mlstring>&#160;&#160;
+                    <xar:mlstring>Categories per page:</xar:mlstring>&#160;
                     <input type="hidden" name="startnum" id="startnum" value="#$startnum#" />
-                    <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsperpage#" size="5" />&#160;
+                    <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsperpage#" size="5" />&#160;&#160;
                     <input type="hidden" name="activetab" id="activetab" value="#$activetab#" size="5" />
                     <input type="submit" value="#xarML('Reload')#" />
                 </form>
