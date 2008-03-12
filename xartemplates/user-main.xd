@@ -319,6 +319,6 @@
         <div id="location_map" style="width: 100%; height: 300px; border: 2px solid #999999;"></div>
         <xar:template file="xar.googlemaps" module="jquery" />
         <xar:base-include-javascript filename="location_map.js" module="jquery" />
-        <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){if(GBrowserIsCompatible()){xar_MapsShowAddressLocation('10 Downing Street, SW1A, UK','The British Prime Minister');}});" />
+        <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){if(GBrowserIsCompatible()){xar_MapsShowAddressLocation('10 Downing Street, London, UK','The British Prime Minister');}});" />
     </xar:if>
 </div>
