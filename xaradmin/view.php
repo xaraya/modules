@@ -186,6 +186,8 @@ function articles_admin_view($args)
             }
             if ($showstatus) {
                 $item['status'] = $data['states'][$article['status']];
+                $item['statusnumeric'] = $article['status'];
+                
                 // pre-select all submitted items
                 if ($article['status'] == 0) {
                     $item['selected'] = 'checked';
