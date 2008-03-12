@@ -303,4 +303,22 @@
             <p><xar:mlstring>Multiple paragraphs can be included if required, along with any other kind of element or image.</xar:mlstring></p>
         </dd>
     </dl>
+
+    <h2><xar:mlstring>Google Maps</xar:mlstring></h2>
+    <xar:set name="apikey">xarModAPIFunc('jquery','user','get_googlemaps_key')</xar:set>
+    <xar:if condition="empty($apikey)">
+        <p class="xar-error"><xar:mlstring>Please add your Google Maps API keys to modules/jquery/xardata/googlemapskeys.txt</xar:mlstring></p>
+    <xar:else />
+        <form onsubmit="xar_MapsShowAddressLocation(this.address.value, 'Your tag'); return false;" action="#">
+            <label>
+                <xar:mlstring>Enter address or postcode:</xar:mlstring>
+                <input type="text" id="address" />
+            </label>
+            <input type="submit" value="#xarML('Show map')#" />
+        </form>
+        <div id="location_map" style="width: 100%; height: 300px; border: 2px solid #999999;"></div>
+        <xar:template file="xar.googlemaps" module="jquery" />
+        <xar:base-include-javascript filename="location_map.js" module="jquery" />
+        <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){if(GBrowserIsCompatible()){xar_MapsShowAddressLocation('10 Downing Street, SW1A, UK','The British Prime Minister');}});" />
+    </xar:if>
 </div>
