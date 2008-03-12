@@ -31,6 +31,10 @@ jQuery(document).ready(function(){
  * Note that a valid Google Maps key must be added to xarquery/xardata/googlemapskeys.txt
  *
  * The map and marker will then be inserted into div#location_map
+ *
+ * Override this JavaScript file to change the behaviour. For example, to take out
+ * the pop-up warnings when addresses are not found (may be better to put a default
+ * imnage into the map, or hide the map div altogether).
  */
 
 function xar_MapsShowAddressLocation(address, description) {
