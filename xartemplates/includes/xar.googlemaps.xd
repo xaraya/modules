@@ -1,0 +1,35 @@
+<xar:comment>
+    Initialise the xar.googlemaps plugin.
+    This plugin loads the Google Maps API.
+    Your Google Maps API key(s) must be placed into the file TBA.
+    Multiple keys can be added for multiple pages and sites, with the
+    correct key being chosen automatically at runtime.
+
+    This API just ensures the Google Maps API is loaded and will unload
+    correctly when the window ends. Other APIs or custom code must be
+    written to actually use the API.
+</xar:comment>
+
+<xar:comment>
+    Make sure jQuery is going to be loaded.
+</xar:comment>
+
+<xar:template file="jquery" module="jquery" />
+
+<xar:comment>
+    Main plugin.
+    We pass this direct to the core function xarTplAddJavaScript() since we are
+    including an external JavaScript file.
+</xar:comment>
+
+<xar:set name="key">xarModAPIFunc('jquery','user','get_googlemaps_key')</xar:set>
+
+<xar:if condition="!empty($key)">
+    <xar:set name="dummy">xarTplAddJavaScript('head', 'src', 'http://maps.google.com/maps?file=api&amp;v=2&amp;key=' . $key, 'maps.google.com/maps')</xar:set>
+
+    <xar:comment>
+        Unload the Google API when the window is unloaded. This helps with memory leaks.
+    </xar:comment>
+
+    <xar:base-include-javascript type="code" code="jQuery(window).unload(function(){GUnload();});" />
+</xar:if>

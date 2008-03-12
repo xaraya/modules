@@ -1,0 +1,27 @@
+;
+; Provides matching patterns for pages mapping
+; to Google Maps API.
+; Patterns are matched using the globbing rule.
+;
+; Check the PHP documentation for limitations on the
+; use of certain characters in keys and values.
+;
+; NOTE: rename this file, googlemapskeys.dist.txt, to googlemapskeys.txt
+; and add your own keys and matching patterns. Upgrades to this module
+; will not overwrite your renamed keys file.
+;
+
+[keypatterns]
+
+;
+; Example patterns and keys.
+;
+
+abc = 123
+*example.com/* = uIRumHCPABQIAAAAdoSaqZmI2Pjv5FGRkbJbNSsoYcBQ-BvSdlAcKjuBmKFbygMxv3zRUbENN8hSdo6kAeQUpX
+
+;
+; Default catch-all.
+;
+
+* = no_google_maps_key_found
