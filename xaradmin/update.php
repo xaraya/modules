@@ -31,7 +31,19 @@ function articles_admin_update()
     if(!xarVarFetch('save',         'isset', $save,      NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('return_url',  'str:1', $return_url, NULL, XARVAR_NOT_REQUIRED)) {return;}
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSecConfirmAuthKey()) {
+        if (xarCurrentErrorType() == XAR_USER_EXCEPTION) {
+            // Catch exception and fall back to preview
+            $msg = xarErrorRender('text');
+            $msg .= xarML('Article was <strong>NOT</strong> saved, please retry.');
+            xarErrorFree();
+            // Save the error message if we are not in preview
+            if (!$preview) {
+                xarSessionSetVar('statusmsg', $msg);
+            }
+            $preview = 1;
+        }
+    }
 
     if (empty($aid) || !is_numeric($aid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',

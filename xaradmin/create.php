@@ -33,7 +33,19 @@ function articles_admin_create()
     if (!xarVarFetch('view',     'str',   $view,    NULL, XARVAR_NOT_REQUIRED)) {return;}    
     if (!xarVarFetch('return_url', 'str:1', $return_url, NULL, XARVAR_NOT_REQUIRED)) {return;}
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSecConfirmAuthKey()) {
+        if (xarCurrentErrorType() == XAR_USER_EXCEPTION) {
+            // Catch exception and fall back to preview
+            $msg = xarErrorRender('text') . "<br />";
+            $msg .= xarML('Article was <strong>NOT</strong> saved, please retry.');
+            xarErrorFree();
+            // Save the error message if we are not in preview
+            if (!isset($preview)) {
+                xarSessionSetVar('statusmsg', $msg);
+            }
+            $preview = 1;
+        }
+    }
 
     $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
     if (!isset($pubtypes[$ptid])) {
