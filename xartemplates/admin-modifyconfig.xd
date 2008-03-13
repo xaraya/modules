@@ -126,6 +126,18 @@
                     </label>
                     [<a href="http://dev.mysql.com/doc/refman/4.1/en/fulltext-restrictions.html"><xar:mlstring>with restrictions</xar:mlstring></a>]
                 </div>
+                <div class="xar-form-input-wrapper-after">
+                    <xar:if condition="xarModGetVar('articles', 'ptypenamechange')">
+                        <input type="checkbox" name="ptypenamechange" id="ptypenamechange" value="1" checked="checked" />
+                        <xar:else />
+                        <input type="checkbox" name="ptypenamechange" id="ptypenamechange" value="1" />
+                    </xar:if>
+                    <label class="help" for="ptypenamechange" title="#xarML('Changing a publication types name must be followed by filename changes!')#">
+                        <xar:mlstring>
+                            Allow pubtype name change (Caution!)
+                        </xar:mlstring>
+                    </label>
+                </div>
                 </xar:if>
             </fieldset>
         </xar:if>

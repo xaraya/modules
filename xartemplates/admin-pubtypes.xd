@@ -141,7 +141,11 @@
                             </xar:mlstring>
                         </td>
                         <td class="xar-align-left">
+                          <xar:if condition="xarModGetVar('articles', 'ptypenamechange')">
+                            <input type="text" name="name" id="name" value="#xarVarPrepForDisplay($item['name'])#" size="20" maxlength="20" />
+                            <xar:else />
                             #$item['name']#
+                          </xar:if>
                         </td>
                     </tr>
                     <tr>

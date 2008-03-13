@@ -258,6 +258,7 @@ function articles_admin_modifyconfig()
 
     if (empty($ptid)) {
         $data['shorturls'] = xarModGetVar('articles','SupportShortURLs') ? true : false;
+        $data['ptypenamechange'] = xarModGetVar('articles','ptypenamechange') ? true : false;
 
         $data['defaultpubtype'] = xarModGetVar('articles', 'defaultpubtype');
         if (empty($data['defaultpubtype'])) {

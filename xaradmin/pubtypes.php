@@ -143,7 +143,7 @@ function articles_admin_pubtypes()
                               'admin',
                               'updatepubtype',
                               array('ptid' => $ptid,
-                              //      'name' => $name, /* not allowed here */
+                                    'name' => $name,  
                                     'descr' => $descr,
                                     'config' => $config))) {
                 return; // throw back

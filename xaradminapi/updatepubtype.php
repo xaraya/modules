@@ -15,7 +15,7 @@
  * Update a publication type
  *
  * @param id $args['ptid'] ID of the publication type
- * @param string $args['name'] name of the publication type (not allowed here)
+ * @param string $args['name'] name of the publication type
  * @param string $args['descr'] description of the publication type
  * @param array $args['config'] configuration of the publication type
  * @return bool true on success, false on failure
@@ -34,11 +34,9 @@ function articles_adminapi_updatepubtype($args)
     if (!isset($ptid) || !is_numeric($ptid) || $ptid < 1) {
         $invalid[] = 'publication type ID';
     }
-/*
     if (!isset($name) || !is_string($name) || empty($name)) {
         $invalid[] = 'name';
     }
-*/
     if (!isset($descr) || !is_string($descr) || empty($descr)) {
         $invalid[] = 'description';
     }
@@ -83,12 +81,18 @@ function articles_adminapi_updatepubtype($args)
     $xartable =& xarDBGetTables();
     $pubtypestable = $xartable['publication_types'];
 
-    // Update the publication type (don't allow updates on name)
+    // Overwrite input with old name if change is not allowed
+    if (!xarModGetVar('articles', 'ptypenamechange')) {
+        $name = $pubtypes[$ptid]['name'];
+    }
+
+    // Update the publication type 
     $query = "UPDATE $pubtypestable
             SET xar_pubtypedescr = ?,
+                xar_pubtypename = ?,
                 xar_pubtypeconfig = ?
             WHERE xar_pubtypeid = ?";
-    $bindvars = array($descr, serialize($config), $ptid);
+    $bindvars = array($descr, $name, serialize($config), $ptid);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 

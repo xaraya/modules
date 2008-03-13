@@ -250,6 +250,9 @@ function articles_init()
     // Enable/disable full-text search with MySQL (for all pubtypes and all text fields)
     xarModSetVar('articles', 'fulltextsearch', '');
 
+    // Allow changing the pubtype names, not recommended
+    xarModSetVar('articles', 'ptypenamechange', '');
+
     // Register blocks
     if (!xarModAPIFunc('blocks',
                        'admin',
@@ -451,6 +454,7 @@ function articles_upgrade($oldversion)
 
         case '1.5.2':
             // Code to upgrade from version 1.5.2 goes here
+            xarModSetVar('articles', 'ptypenamechange', '0');
 
         case '2.0.0':
             // Code to upgrade from version 2.0 goes here
@@ -512,6 +516,7 @@ function articles_delete()
     xarModDelVar('articles', 'settings.6');
 
     xarModDelVar('articles', 'defaultpubtype');
+    xarModDelVar('articles', 'ptypenamechange');
 
     // UnRegister blocks
     if (!xarModAPIFunc('blocks',
