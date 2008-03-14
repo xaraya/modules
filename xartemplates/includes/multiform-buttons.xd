@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:base-include-javascript module="base" filename="confirmlink.js" />
 
 <xar:comment>Display the form buttons</xar:comment>
@@ -20,3 +21,4 @@
         </a>
     </span>
 </div>
+</xar:template>

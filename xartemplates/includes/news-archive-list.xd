@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>
     Display a table or list of years and months for the the article/news archive.
 </xar:comment>
@@ -51,3 +52,4 @@
         </xar:loop>
     </table>
 </xar:if>
+</xar:template>

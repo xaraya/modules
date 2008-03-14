@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>
     Provide a simple text search box for use in 'news' page types.
     Query words are POSTed so as to retain any GET parameters already present in the URL.
@@ -18,3 +19,4 @@
         </form>
     </div>
 </xar:if>
+</xar:template>
