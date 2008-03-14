@@ -10,7 +10,7 @@ function xarpages_user_display($args)
     if (isset($args['pid'])) {
         $pid = $args['pid'];
     }
-    
+
     // Fetch the page ID.
     // This may have been calculated from a path in the
     // short URL decode function.
@@ -21,7 +21,7 @@ function xarpages_user_display($args)
 
     // If no PID supplied, get the default PID.
     if (empty($pid)) {
-        $pid = xarModGetVar('xarpages', 'defaultpage');
+        $pid = xarModVars::get('xarpages', 'defaultpage');
     }
 
     // Get the current page details.
@@ -38,7 +38,7 @@ function xarpages_user_display($args)
         // information to it, so it can render a sensible message or
         // make some choices.
         if (empty($current_page)) {
-            $pid = xarModGetVar('xarpages', 'notfoundpage');
+            $pid = xarModVars::get('xarpages', 'notfoundpage');
 
             if (!empty($pid)) {
                 $current_page = xarModAPIfunc(
@@ -53,7 +53,7 @@ function xarpages_user_display($args)
     // FIXME: this only checks the current page - the
     // tree fetch lower down will determine whether the page
     // has no privilege by virtue of an ancestor.
-    $noprivspage = xarModGetVar('xarpages', 'noprivspage');
+    $noprivspage = xarModVars::get('xarpages', 'noprivspage');
     if (!empty($current_page) && !xarSecurityCheck(
         'ReadXarpagesPage', (empty($noprivspage) ? 1 : 0), 'Page',
         $current_page['name'] . ':' . $current_page['pagetype']['name'], 'xarpages'
@@ -82,7 +82,7 @@ function xarpages_user_display($args)
         // Get the PID for the 'error' page.
         // We have a pid, but no page, so there must have been an error
         // attempting to fetch the page.
-        $pid = xarModGetVar('xarpages', 'errorpage');
+        $pid = xarModVars::get('xarpages', 'errorpage');
 
         if (!empty($pid)) {
             $current_page = xarModAPIfunc(
@@ -172,7 +172,7 @@ function xarpages_user_display($args)
     if (isset($data['current_page']['dd'])) {
         // If the fields have been limited for transform, then pass those
         // fields into the transform hook too.
-        $transformfields = xarModGetVar('xarpages', 'transformfields');
+        $transformfields = xarModVars::get('xarpages', 'transformfields');
         if (!empty($transformfields)) {
             $data['current_page']['dd']['transform'] = explode(' ', $transformfields);
             //var_dump($data['current_page']['dd']['transform']);
@@ -189,7 +189,7 @@ function xarpages_user_display($args)
     // Provide a 'rolled up' version of the current page (or page and
     // ancestors) that contain inherited values from the pages before it.
     // i.e. all ancestors and the current page layered over each other.
-    // TODO: we could save each step here in an array indexed by pid or key - 
+    // TODO: we could save each step here in an array indexed by pid or key -
     // just have a hunch it would be useful, but not sure how at this stage.
     $inherited = array();
     foreach ($data['ancestors'] as $ancestor) {
@@ -230,7 +230,9 @@ function xarpages_user_display($args)
         $functions = explode(';', $inherited['function']);
         foreach($functions as $function) {
             // Call up the function, suppressing errors in case it does not exist.
-            $data2 = xarModAPIfunc('xarpages', 'func', $function, $data, false);
+            try {
+                $data2 = xarModAPIfunc('xarpages', 'func', $function, $data, false);
+            } catch (Exception $e) {}
 
             if (!isset($data2)) {
                 // Try the next function if this one is not set (i.e. NULL)

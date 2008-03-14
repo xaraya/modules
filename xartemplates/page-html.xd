@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
 <xar:comment>
     This is a very simple example of a template for the 'html' page type.
@@ -21,3 +22,4 @@
     </xar:if>
     </xar:foreach>
 </xar:if>
+</xar:template>

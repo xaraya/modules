@@ -8,13 +8,13 @@
 <xar:comment>Change this from 'article' to some other prefix to use a different set of template prefixes</xar:comment>
 <xar:set name="template_prefix">'article'</xar:set>
 
-<xar:comment>
+<!--
     The following line caches the URL of the current index page.
     It should be referenced in the rss theme page template (example below)
     to provide a link to the index page of the feed, rather than a link
     to the home page of the site.
     <link>#xarVarGetCached('themes', 'rss_channel_link')#</link>
-</xar:comment>
+-->
 <xar:set name="dummy">#xarVarSetCached('themes','rss_channel_link',xarServerGetCurrentURL(array('theme'=&gt;NULL,'startnum'=&gt;NULL)))#</xar:set>
 
 <xar:comment>List of items</xar:comment>

@@ -18,17 +18,16 @@
 function xarpages_init()
 {
     // Set up database tables
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
-    $pagestable = $xartable['xarpages_pages'];
-    $typestable = $xartable['xarpages_types'];
+    $prefix = xarDB::getPrefix();
+    $pagestable = $prefix . "_xarpages_pages";
+    $typestable = $prefix . "_xarpages_types";
 
-    // Get a data dictionary object with item create methods.
-    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
-
-    /*
-        CREATE TABLE `xar_xarpages_pages` (
+    $query = "DROP TABLE IF EXISTS " . $pagestable;
+    $dbconn->Execute($query);
+    $query = "CREATE TABLE " . $pagestable ." (
           `xar_pid` int(11) NOT NULL auto_increment,
           `xar_name` varchar(100) NOT NULL default '',
           `xar_desc` text,
@@ -45,94 +44,81 @@ function xarpages_init()
           `xar_status` varchar(20) NOT NULL default 'ACTIVE',
           `xar_alias` tinyint(4) NOT NULL default '0',
           PRIMARY KEY  (`xar_pid`)
-        ) ;
-    */
-
-    $fields = "
-        xar_pid             I           AUTO    PRIMARY,
-        xar_name            C(100)      NotNull DEFAULT '',
-        xar_desc            X           Null,
-        xar_itemtype        I           NotNull DEFAULT 0,
-        xar_parent          I           NotNull DEFAULT 0,
-        xar_left            I           NotNull DEFAULT 0,
-        xar_right           I           NotNull DEFAULT 0,
-        xar_template        C(100)      Null,
-        xar_page_template   C(100)      Null,
-        xar_theme           C(100)      Null,
-        xar_encode_url      C(100)      Null,
-        xar_decode_url      C(100)      Null,
-        xar_function        C(100)      Null,
-        xar_status          C(20)       NotNull DEFAULT 'ACTIVE',
-        xar_alias           I1          NotNull DEFAULT 0
-    ";
-
-    // Create or alter the table as necessary.
-    $result = $datadict->changeTable($pagestable, $fields);
+        )" ;
+    $result = $dbconn->Execute($query);
     if (!$result) {return;}
 
-    // Create indexes.
-    $result = $datadict->createIndex(
-        'i_' . xarDBGetSiteTablePrefix() . '_xarpages_page_left',
-        $pagestable,
-        'xar_left'
-    );
+   sys::import('xaraya.tableddl');
+    $index = array('name' => 'i_' . $prefix . '_xarpages_page_left',
+                   'fields' => array('xar_left')
+                   );
+    $query = xarDBCreateIndex($pagestable, $index);
+    $result = $dbconn->Execute($query);
     if (!$result) {return;}
 
-    $result = $datadict->createIndex(
-        'i_' . xarDBGetSiteTablePrefix() . '_xarpages_page_name',
-        $pagestable,
-        'xar_name'
-    );
+    $index = array('name' => 'i_' . $prefix . '_xarpages_page_name',
+                   'fields' => array('xar_name')
+                   );
+    $query = xarDBCreateIndex($pagestable, $index);
+    $result = $dbconn->Execute($query);
     if (!$result) {return;}
 
-    $result = $datadict->createIndex(
-        'i_' . xarDBGetSiteTablePrefix() . '_xarpages_page_type',
+    $index = array('name' => 'i_' . $prefix . '_xarpages_page_type',
+                   'fields' => array('xar_itemtype')
+                   );
+    $query = xarDBCreateIndex($pagestable, $index);
+    $result = $dbconn->Execute($query);
+    if (!$result) {return;}
+
+/*    $result = $datadict->createIndex(
+        'i_' . xarDB::getPrefix() . '_xarpages_page_type',
         $pagestable,
         'xar_itemtype'
     );
     if (!$result) {return;}
+*/
 
-    /*
-        CREATE TABLE `xar_xarpages_types` (
+    $query = "DROP TABLE IF EXISTS " . $typestable;
+    $dbconn->Execute($query);
+    $query = "CREATE TABLE " . $typestable ." (
           `xar_ptid` int(11) NOT NULL auto_increment,
           `xar_name` varchar(100) NOT NULL default '',
           `xar_desc` varchar(200) default NULL,
           PRIMARY KEY  (`xar_ptid`)
-        ) ;
-    */
-
-    $fields = "
-        xar_ptid            I           AUTO    PRIMARY,
-        xar_name            C(100)      NotNull DEFAULT '',
-        xar_desc            C(200)      Null
-    ";
-
-    // Create or alter the table as necessary.
-    $result = $datadict->changeTable($typestable, $fields);
+        )" ;
+    $result = $dbconn->Execute($query);
     if (!$result) {return;}
 
-    // The page type name must be unique.
+    $index = array('name' => 'i_' . $prefix . '_xarpages_type_name',
+                   'fields' => array('xar_name'),
+                   'unique' => true
+                   );
+    $query = xarDBCreateIndex($typestable, $index);
+    $result = $dbconn->Execute($query);
+    if (!$result) {return;}
+
+/*    // The page type name must be unique.
     $result = $datadict->createIndex(
-        'i_' . xarDBGetSiteTablePrefix() . '_xarpages_type_name',
+        'i_' . xarDB::getPrefix() . '_xarpages_type_name',
         $typestable,
         'xar_name',
         array('UNIQUE' => true)
     );
     if (!$result) {return;}
-
+*/
 
     // Set up module variables.
-    xarModSetVar('xarpages', 'defaultpage', 0);
-    xarModSetVar('xarpages', 'errorpage', 0);
-    xarModSetVar('xarpages', 'notfoundpage', 0);
-    xarModSetVar('xarpages', 'noprivspage', 0);
-    xarModSetVar('xarpages', 'shortestpath', 1);
-    xarModSetVar('xarpages', 'transformref', 1);
-    xarModSetVar('xarpages', 'transformfields', 'body');
+    xarModVars::set('xarpages', 'defaultpage', 0);
+    xarModVars::set('xarpages', 'errorpage', 0);
+    xarModVars::set('xarpages', 'notfoundpage', 0);
+    xarModVars::set('xarpages', 'noprivspage', 0);
+    xarModVars::set('xarpages', 'shortestpath', 1);
+    xarModVars::set('xarpages', 'transformref', 1);
+    xarModVars::set('xarpages', 'transformfields', 'body');
 
     // Switch short URL support on by default, as that is largely
     // the purpose of this module.
-    xarModSetVar('xarpages', 'SupportShortURLs', 1);
+    xarModVars::set('xarpages', 'SupportShortURLs', 1);
 
     // Privileges.
 
@@ -279,8 +265,8 @@ function xarpages_init()
 function xarpages_upgrade($oldversion)
 {
     // Set up database tables
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     $pagestable = $xartable['xarpages_pages'];
     $typestable = $xartable['xarpages_types'];
@@ -299,7 +285,7 @@ function xarpages_upgrade($oldversion)
             $indexes = $datadict->getIndexes($pagestable);
 
             // Drop an erroneous unique index and recreate it non-unique.
-            $indexname = 'i_' . xarDBGetSiteTablePrefix() . '_xarpages_page_type';
+            $indexname = 'i_' . xarDB::getPrefix() . '_xarpages_page_type';
             if (isset($indexes[$indexname])) {
                 $result = $datadict->dropIndex($indexname, $pagestable);
             }
@@ -314,7 +300,7 @@ function xarpages_upgrade($oldversion)
             $indexes = $datadict->getIndexes($typestable);
 
             // The page type name must be unique.
-            $indexname = 'i_' . xarDBGetSiteTablePrefix() . '_xarpages_type_name';
+            $indexname = 'i_' . xarDB::getPrefix() . '_xarpages_type_name';
             if (!isset($indexes[$indexname])) {
                 $result = $datadict->createIndex(
                     $indexname, $typestable, 'xar_name', array('UNIQUE' => true)
@@ -354,7 +340,7 @@ function xarpages_upgrade($oldversion)
             // Update the sucurity masks table.
             $query_masks = 'UPDATE ' . $xartable['security_masks']
                 . ' SET xar_name = ?'
-                . ' WHERE xar_module = ? AND xar_name = ?';
+                . ' WHERE xar_modid = ? AND xar_name = ?';
 
             // Loop for each mask to change.
             $masks = array(
@@ -369,16 +355,18 @@ function xarpages_upgrade($oldversion)
                 'AdminPagetype' => 'AdminXarpagesPagetype'
             );
 
+            $info = xarMod::getBaseInfo('roles');
+            $sysid = $info['systemid'];
             foreach($masks as $old_mask => $new_mask) {
                 // Update the mask.
                 // TODO: not sure what affect this has cross-realm.
-                $dbconn->execute($query_masks, array($new_mask, 'xarpages', $old_mask));
+                $dbconn->execute($query_masks, array($new_mask, $sysid, $old_mask));
             }
 
         case '0.2.3':
         case '0.2.4':
             // Upgrade from 0.2.3 or 0.2.4 to 0.2.5
-            xarModSetVar('xarpages', 'shortestpath', 1);
+            xarModVars::set('xarpages', 'shortestpath', 1);
 
         case '0.2.5':
             // Upgrade to 0.2.6 - new crumbtrail block added.
@@ -402,8 +390,8 @@ function xarpages_upgrade($oldversion)
             ) {return;}
 
             // New module variables.
-            xarModSetVar('xarpages', 'transformfields', 'body');
-            xarModSetVar('xarpages', 'transformref', 1);
+            xarModVars::set('xarpages', 'transformfields', 'body');
+            xarModVars::set('xarpages', 'transformref', 1);
 
         break;
     }
@@ -418,9 +406,11 @@ function xarpages_upgrade($oldversion)
  */
 function xarpages_delete()
 {
+    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'xarpages'));
+
     // Set up database tables
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     $pagestable = $xartable['xarpages_pages'];
     $typestable = $xartable['xarpages_types'];
@@ -439,7 +429,7 @@ function xarpages_delete()
     // TODO: remove blocks
 
     // Delete module variables
-    xarModDelAllVars('xarpages');
+    xarModVars::delete_all('xarpages');
 
     // Drop privileges.
     xarRemoveMasks('xarpages');

@@ -42,8 +42,7 @@ function xarpages_funcapi_multiform($args)
     if (empty($master_page)) {
         // Without a master page, things get very difficult, so raise an error.
         $msg = xarML('No master page. A multiform sequence must sit under a type multiform_master page.');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new BadParemeterException(null,$msg);
     }
 
     // Tell xarCache not to cache this page.
@@ -202,8 +201,7 @@ function xarpages_funcapi_multiform($args)
 
             if (empty($formobject)) {
                 $msg = xarML('Could not fetch object with id "#(1)"', $formobjectid);
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-                return;
+                throw new BadParemeterException(null,$msg);
             }
         } else {
             $formobject = NULL;
@@ -223,7 +221,7 @@ function xarpages_funcapi_multiform($args)
 
         // We recognise a form submission by a hidden key.
         // The key is random, and lasts for the length of the multiform session.
-        // It is also used as validation, to prevent a user from jumping 
+        // It is also used as validation, to prevent a user from jumping
         // straight into the middle of a form sequence.
         xarVarFetch($multiform_key_name, 'str::100', $multiform_key, '', XARVAR_NOT_REQUIRED);
 
@@ -414,7 +412,7 @@ function xarpages_funcapi_multiform($args)
 
                                 // Compact the form object within the validation object (put the arrays back
                                 // onto the form object).
-                                // We do this regardless of whether 
+                                // We do this regardless of whether
                                 $formobject = $validation_object->compact_formobject();
 
                                 // If we have raised an explict fail here, or there are any invalid messages,
@@ -455,7 +453,7 @@ function xarpages_funcapi_multiform($args)
 
                                 // Compact the form object within the validation object (put the arrays back
                                 // onto the form object).
-                                // We do this regardless of whether 
+                                // We do this regardless of whether
                                 $formobject = $processing_object->compact_formobject();
 
                                 // Write any work data back to the session.

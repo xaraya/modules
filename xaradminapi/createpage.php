@@ -36,8 +36,7 @@ function xarpages_adminapi_createpage($args)
     // Name is mandatory, but does not have to be unique.
     if (trim($name) == '') {
         $msg = xarML('Missing page name');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new BadParemeterException(null,$msg);
     }
 
     // Get the itemtype.
@@ -49,8 +48,7 @@ function xarpages_adminapi_createpage($args)
     if (empty($pagetype)) {
         // Error - invalid page type.
         $msg = xarML('Invalid page type ID "#(1)"', $itemtype);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new BadParemeterException(null,$msg);
     }
 
     // Security check - can we create pages of this type?
@@ -58,8 +56,8 @@ function xarpages_adminapi_createpage($args)
         return;
     }
 
-    $xartable =& xarDBGetTables();
-    $dbconn =& xarDBGetConn();
+    $xartable = xarDB::getTables();
+    $dbconn = xarDB::getConn();
 
     $idname = 'xar_pid';
     $tablename = $xartable['xarpages_pages'];

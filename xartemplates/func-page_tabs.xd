@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:style scope="module" module="xarpages" file="func_page_tabs" />
 
 <div class="xar-xarpages-tabs">
@@ -18,5 +19,6 @@
    $tab is one-based, and the arrays are zero-based.
 </xar:comment>
 #$sections[$tab-1]#
+</xar:template>
 
 

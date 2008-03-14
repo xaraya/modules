@@ -32,8 +32,8 @@ function xarpages_adminapi_createtype($args)
 
     // TODO: validate name (mandatory and unique)
 
-    $xartable =& xarDBGetTables();
-    $dbconn =& xarDBGetConn();
+    $xartable = xarDB::getTables();
+    $dbconn = xarDB::getConn();
 
     $tablename = $xartable['xarpages_types'];
 
@@ -90,7 +90,7 @@ function xarpages_adminapi_createtype($args)
             // If the object was created correctly, then update its itemtype.
             // We also need to change the itemtype of all its properties.
             if (!empty($objectid)) {
-                Dynamic_Object_Master::updateObject(
+                DataObjectMaster::updateObject(
                     array('objectid' => $objectid, 'itemtype' => $ptid)
                 );
 
@@ -98,6 +98,7 @@ function xarpages_adminapi_createtype($args)
                 // TODO: either this needs to be done automatically when the object is
                 // updated, or the need for keeping an itemtype on the properties should
                 // be removed.
+                /*
                 xarModAPIFunc('dynamicdata', 'admin', 'syncprops',
                     array(
                         'objectid' => $objectid,
@@ -105,6 +106,7 @@ function xarpages_adminapi_createtype($args)
                         'itemtype' => $ptid
                     )
                 );
+                */
             }
         }
     }

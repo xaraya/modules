@@ -20,8 +20,8 @@ function xarpages_userapi_getpages($args)
 {
     extract($args);
 
-    $xartable =& xarDBGetTables();
-    $dbconn =& xarDBGetConn();
+    $xartable = xarDB::getTables();
+    $dbconn = xarDB::getConn();
 
     $where = array();
     $bind = array();
@@ -124,7 +124,7 @@ function xarpages_userapi_getpages($args)
     }
 
     $query .= ' FROM ' . $xartable['xarpages_pages'] . ' AS tpages';
-    
+
     // If the request is to fetch a tree that *contains* a particular
     // page, then add the extra sub-queries in here.
 
@@ -200,7 +200,7 @@ function xarpages_userapi_getpages($args)
             // To prevent broken trees, if a page is not assessible, prune
             // (ie discard) descendant pages of that page. Descendants will have
             // a left value between the left and right values of the
-            // inaccessible page. 
+            // inaccessible page.
 
             if (!empty($prune_left)) {
                 if ($left <= $prune_left) {

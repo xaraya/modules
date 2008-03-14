@@ -20,8 +20,8 @@ function xarpages_userapi_gettypes($args)
         $key = 'index';
     }
 
-    $xartable =& xarDBGetTables();
-    $dbconn =& xarDBGetConn();
+    $xartable = xarDB::getTables();
+    $dbconn = xarDB::getConn();
 
     $where = array();
     $bind = array();
@@ -60,7 +60,7 @@ function xarpages_userapi_gettypes($args)
     $types = array();
     $itemtype = 0;
     $index = 0;
-    
+
     while (!$result->EOF) {
         list($ptid, $name, $desc) = $result->fields;
 

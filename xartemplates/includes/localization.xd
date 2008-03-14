@@ -1,9 +1,9 @@
 <xar:if condition="empty($refpid)">
-    <xar:set name="$refpid">0</xar:set>
+    <xar:set name="refpid">0</xar:set>
     <xar:if condition="!empty($func) and $func eq 'modify'">
-        <xar:set name="$position">'before'</xar:set>
+        <xar:set name="position">'before'</xar:set>
     <xar:else/>
-        <xar:set name="$position">'after'</xar:set>
+        <xar:set name="position">'after'</xar:set>
     </xar:if>
 </xar:if>
 
@@ -22,10 +22,10 @@
                     selected="selected">#$loop:item.slash_separated#</option>
                 <xar:elseif condition="$loop:item.left eq $page.left-1" />
                     <option value="#$loop:item.pid#" selected="selected">#$loop:item.slash_separated#</option>
-                    <xar:set name="$position">'firstchild'</xar:set>
+                    <xar:set name="position">'firstchild'</xar:set>
                 <xar:elseif condition="$loop:item.right eq $page.left-1" />
                     <option value="#$loop:item.pid#" selected="selected">#$loop:item.slash_separated#</option>
-                    <xar:set name="$position">'after'</xar:set>
+                    <xar:set name="position">'after'</xar:set>
                 <xar:else />
                     <option value="#$loop:item.pid#">#$loop:item.slash_separated#</option>
                 </xar:if>

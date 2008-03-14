@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:style scope="module" module="xarpages" file="xarpages" />
 <xar:base-include-javascript module="base" filename="formcheck.js" />
@@ -33,7 +34,7 @@
                         <input type="checkbox" name="shorturl" id="shorturl" value="1" checked="checked" />
                     <xar:else />
                         <input type="checkbox" name="shorturl" id="shorturl" value="1" />
-                    </xar:if>        
+                    </xar:if>
                 </p>
 
                 <p class="param">
@@ -42,7 +43,7 @@
                         <input type="checkbox" name="shortestpath" id="shortestpath" value="1" checked="checked" />
                     <xar:else />
                         <input type="checkbox" name="shortestpath" id="shortestpath" value="1" />
-                    </xar:if>        
+                    </xar:if>
                 </p>
 
                 <p class="param">
@@ -51,7 +52,7 @@
                         <input type="checkbox" name="transformref" id="transformref" value="1" checked="checked" />
                     <xar:else />
                         <input type="checkbox" name="transformref" id="transformref" value="1" />
-                    </xar:if>        
+                    </xar:if>
                 </p>
 
                 <p class="param">
@@ -159,3 +160,4 @@
         </ul>
     </xar:if>
 </div>
+</xar:template>

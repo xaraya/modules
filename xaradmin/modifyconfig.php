@@ -36,18 +36,18 @@ function xarpages_admin_modifyconfig($args)
         // First visit to this form (nothing being submitted).
 
         // Get the current module values.
-        $data['defaultpage'] = xarModGetVar('xarpages', 'defaultpage');
-        $data['errorpage'] = xarModGetVar('xarpages', 'errorpage');
-        $data['notfoundpage'] = xarModGetVar('xarpages', 'notfoundpage');
-        $data['noprivspage'] = xarModGetVar('xarpages', 'noprivspage');
+        $data['defaultpage'] = xarModVars::get('xarpages', 'defaultpage');
+        $data['errorpage'] = xarModVars::get('xarpages', 'errorpage');
+        $data['notfoundpage'] = xarModVars::get('xarpages', 'notfoundpage');
+        $data['noprivspage'] = xarModVars::get('xarpages', 'noprivspage');
 
         // Boolean (1/0) flags.
-        $data['transformref'] = xarModGetVar('xarpages', 'transformref');
-        $data['shortestpath'] = xarModGetVar('xarpages', 'shortestpath');
-        $data['shorturl'] = xarModGetVar('xarpages', 'SupportShortURLs');
+        $data['transformref'] = xarModVars::get('xarpages', 'transformref');
+        $data['shortestpath'] = xarModVars::get('xarpages', 'shortestpath');
+        $data['shorturl'] = xarModVars::get('xarpages', 'SupportShortURLs');
 
         // Text fields
-        $data['transformfields'] = xarModGetVar('xarpages', 'transformfields');
+        $data['transformfields'] = xarModVars::get('xarpages', 'transformfields');
     } else {
         // Form has been submitted.
 
@@ -58,7 +58,7 @@ function xarpages_admin_modifyconfig($args)
         foreach(array('defaultpage', 'errorpage', 'notfoundpage', 'noprivspage') as $special_name) {
             unset($special_id);
             if (!xarVarFetch($special_name, 'id', $special_id, 0, XARVAR_NOT_REQUIRED)) {return;}
-            xarModSetVar('xarpages', $special_name, $special_id);
+            xarModVars::set('xarpages', $special_name, $special_id);
 
             // Save value for redisplaying in the form.
             $data[$special_name] = $special_id;
@@ -66,23 +66,23 @@ function xarpages_admin_modifyconfig($args)
 
         // Short URL flag.
         xarVarFetch('shorturl', 'int:0:1', $shorturl, 0, XARVAR_NOT_REQUIRED);
-        xarModSetVar('xarpages', 'SupportShortURLs', $shorturl);
+        xarModVars::set('xarpages', 'SupportShortURLs', $shorturl);
         $data['shorturl'] = $shorturl;
 
         // Shortest path flag.
         xarVarFetch('shortestpath', 'int:0:1', $shortestpath, 0, XARVAR_NOT_REQUIRED);
-        xarModSetVar('xarpages', 'shortestpath', $shortestpath);
+        xarModVars::set('xarpages', 'shortestpath', $shortestpath);
         $data['shortestpath'] = $shortestpath;
 
         // Enable internal references transform flag.
         // This transforms "#" anchors in content to an absolute URI for the page.
         xarVarFetch('transformref', 'int:0:1', $transformref, 0, XARVAR_NOT_REQUIRED);
-        xarModSetVar('xarpages', 'transformref', $transformref);
+        xarModVars::set('xarpages', 'transformref', $transformref);
         $data['transformref'] = $transformref;
 
         // Limit the DD fields that will be transformed.
         xarVarFetch('transformfields', 'strlist: ,;|:pre:trim:vtoken', $transformfields, '', XARVAR_NOT_REQUIRED);
-        xarModSetVar('xarpages', 'transformfields', $transformfields);
+        xarModVars::set('xarpages', 'transformfields', $transformfields);
         $data['transformfields'] = $transformfields;
     }
 

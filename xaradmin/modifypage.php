@@ -133,7 +133,7 @@ function xarpages_admin_modifypage($args)
 
             $hooks = xarModCallHooks(
                 'item', 'new', '',
-                array('module' => 'xarpages', 'itemtype' => $ptid, 'itemid' => '')
+                array('module' => 'xarpages', 'itemtype' => $ptid, 'itemid' => 0)
             );
 
             // Default data for the page form.
@@ -185,7 +185,7 @@ function xarpages_admin_modifypage($args)
     }
     $data['pages'] = $pages['pages'];
 
-    $modinfo = xarModGetInfo(xarModGetIDFromName('xarpages')); 
+    $modinfo = xarModGetInfo(xarModGetIDFromName('xarpages'));
 
     // Get lists of files in the various custom APIs.
     // Dynamicdata is a prerequisite for this module, so no need to check

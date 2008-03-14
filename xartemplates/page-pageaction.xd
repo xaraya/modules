@@ -1,5 +1,6 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>
-        
+
 </xar:comment>
   <h1>Pageaction Debugging</h1>
   <p>page name: #$current_page['name']#</p>
@@ -61,7 +62,7 @@
 <xar:if condition="!empty($current_page.dd.processing_php)">
 <pre>#$current_page.dd.processing_php#</pre>
 </xar:if>
-  
+
 <h2>Redirect url</h2>
 <xar:if condition="!empty($current_page.dd.redirect_nav)">
 <pre><a href="#$pageaction['nav'][$current_page.dd.redirect_nav]#">#$pageaction['nav'][$current_page.dd.redirect_nav]#</a></pre>
@@ -73,5 +74,6 @@
 <pre>
     <xar:set name="asdf">print_r($_SESSION)</xar:set>
 </pre>
+</xar:template>
  
       

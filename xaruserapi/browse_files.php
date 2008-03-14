@@ -77,7 +77,7 @@ function xarpages_userapi_browse_files($args)
             $rootdir = './modules/' . $modinfo['directory'];
         }
     }
-    
+
     // Get the base directory.
     // A relative base directory will be added to the [non-empty] root directory.
     // An absolute base directory will override the root directory.
@@ -123,6 +123,17 @@ function xarpages_userapi_browse_files($args)
                     // Skip this file if we only want writeable files and directories.
                     if ($is_writeable && !is_writeable($thisfile)) {continue;}
 
+                    // Hack to make sure fnmatch is available on windows
+                    if (!function_exists('fnmatch')) {
+                        function fnmatch($pattern, $string) 
+                        {
+                            return @preg_match(
+                                '/^' . strtr(addcslashes($pattern, '/\\.+^$(){}=!<>|'),
+                                array('*' => '.*', '?' => '.?')) . '$/i', $string
+                            );
+                        }
+                    }
+
                     // Check the filtering rules.
                     if (!empty($match_glob) && @fnmatch($match_glob, $filename) !== true) {continue;}
                     if (!empty($match_re) && @preg_match($match_preg, $filename) !== true) {continue;}
@@ -153,7 +164,7 @@ function xarpages_userapi_browse_files($args)
                 if (!empty($strip_re)) {
                     $filename = @preg_replace($strip_re, '', $filename);
                 }
-                
+
                 // If we have got this far, then we have a file or directory to return.
                 switch (strtolower($retpath)) {
                     case 'abs':

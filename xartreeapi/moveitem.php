@@ -14,8 +14,8 @@ function xarpages_treeapi_moveitem($args)
 {
     extract($args);
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     // Obtain current information on the reference item
     $refitem = xarModAPIFunc('xarpages', 'user', 'getpage', array('pid' => $refid));
@@ -29,8 +29,7 @@ function xarpages_treeapi_moveitem($args)
 
     if ($result->EOF) {
         $msg = xarML('Reference item "#(1)" does not exist', $refid);
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new DefaultUserException($msg));
-        return;
+        throw new BadParemeterException(null,$msg);
     }
     list($ref_left, $ref_right, $ref_parent) = $result->fields;
 
@@ -40,16 +39,14 @@ function xarpages_treeapi_moveitem($args)
 
     if ($result->EOF) {
         $msg = xarML('Moving item "#(1)" does not exist', $itemid);
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new DefaultUserException($msg));
-        return;
+        throw new BadParemeterException(null,$msg);
     }
     list($item_left, $item_right, $item_parent) = $result->fields;
 
     // Checking if the reference ID is of a child or itself
     if ($ref_left >= $item_left && $ref_left <= $item_right) {
         $msg = xarML('Group references siblings');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new DefaultUserException($msg));
-        return;
+        throw new BadParemeterException(null,$msg);
     }
 
     // Find the point of insertion.
@@ -68,8 +65,7 @@ function xarpages_treeapi_moveitem($args)
             break;
         default:
             $msg = xarML('Offset not "#(1)" valid', $offset);
-            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new DefaultUserException($msg));
-            return;
+            throw new BadParemeterException(null,$msg);
     };
 
     $size = $item_right - $item_left + 1;

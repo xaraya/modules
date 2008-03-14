@@ -29,8 +29,7 @@ function xarpages_adminapi_updatepage($args)
     if (!isset($pid) || ($moving == 1 && (!isset($insertpoint) || !isset($offset)))
     ) {
         $msg = xarML('Bad Parameters');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new BadParemeterException(null,$msg);
     }
 
     // Get current information on the page
@@ -38,8 +37,7 @@ function xarpages_adminapi_updatepage($args)
 
     if (empty($page)) {
         $msg = xarML('The page does not exist');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new BadParemeterException(null,$msg);
     }
 
     // Check we have minimum privs to edit this page.
@@ -77,8 +75,8 @@ function xarpages_adminapi_updatepage($args)
     }
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $tablename = $xartable['xarpages_pages'];
 
     // Move the item in the hierarchy/tree, if required.

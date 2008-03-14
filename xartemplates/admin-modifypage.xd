@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:style scope="module" module="xarpages" file="xarpages" />
 
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Page Administration</xar:mlstring></span></div>
@@ -127,7 +128,9 @@
 
                     <p class="param">
                         <label for="theme"><xar:mlstring>Theme</xar:mlstring></label>
-                        <xar:comment><input type="text" name="theme" id="theme" maxlength="100" value="#xarVarPrepForDisplay($page.theme)#" /></xar:comment>
+                        <!--
+                        <input type="text" name="theme" id="theme" maxlength="100" value="#xarVarPrepForDisplay($page.theme)#" />
+                        -->
                         <select name="theme">
                             <xar:if condition="$page.theme eq ''">
                                 <option value="" selected="selected">[<xar:mlstring>Inherited</xar:mlstring>]</option>
@@ -152,7 +155,9 @@
                     <p class="param">
                         <label for="function"><xar:mlstring>Custom Page Function</xar:mlstring></label>
                         <input type="text" name="function" id="function" maxlength="100" value="#xarVarPrepForDisplay($page.function)#" />
-                        <xar:comment><xar:data-input name="thisname" type="filelist" value="23" validation="modules/xarpages/xarimages" /></xar:comment>
+                        <!--
+                        <xar:data-input name="thisname" type="filelist" value="23" validation="modules/xarpages/xarimages" />
+                        -->
 
                         <xar:if condition="!empty($custom_apis.func)">
                             <xar:mlstring>or</xar:mlstring>
@@ -216,7 +221,7 @@
                             <input type="checkbox" name="alias" id="alias" value="1" checked="checked" />
                         <xar:else />
                             <input type="hidden" name="alias" value="0" />
-                        </xar:if>        
+                        </xar:if>
                     </p>
                 </fieldset>
 
@@ -274,3 +279,4 @@
         </xar:if>
     </div>
 </div>
+</xar:template>

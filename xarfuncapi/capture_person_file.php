@@ -60,7 +60,7 @@ function xarpages_funcapi_capture_person_file($args)
     // Write to var/xarpages/details.txt
     // Don't write any errors - this will either work or not.
     // The directory needs to exist and be writable.
-    $pathname = xarCoreGetVarDirPath() . '/xarpages' . '/details.txt';
+    $pathname = sys::varpath() . '/xarpages' . '/details.txt';
 
     if (!file_exists($pathname)) {
         // File does not exist - create it and write the header.

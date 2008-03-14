@@ -10,8 +10,8 @@ function xarpages_userapi_getaliases($args)
 {
     extract($args);
 
-    $xartable =& xarDBGetTables();
-    $dbconn =& xarDBGetConn();
+    $xartable = xarDB::getTables();
+    $dbconn = xarDB::getConn();
 
     if (empty($mincount) || !is_numeric($mincount)) $mincount = 1;
 

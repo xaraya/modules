@@ -13,7 +13,7 @@ function xarpages_funcapi_enforce_ssl($args)
     // Only do this if 'Allow SSL' option is set, because if not set,
     // then xarServerGetCurrentURL() tends to lie (it returns 'http'
     // even if the current page is 'https').
-    if (xarConfigGetVar('Site.Core.EnableSecureServer') != true) {
+    if (xarConfigVars::get(null,'Site.Core.EnableSecureServer') != true) {
         // Bail out if secure server is not enabled.
         return true;
     }

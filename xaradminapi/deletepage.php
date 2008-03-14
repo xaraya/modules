@@ -14,8 +14,7 @@ function xarpages_adminapi_deletepage($args)
     // Argument check
     if (empty($pid)) {
         $msg = xarML('Invalid page ID #(1)', $pid);
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return false;
+        throw new BadParemeterException(null,$msg);
     }
 
     // Obtain current information on the page we are going to delete.
@@ -26,7 +25,7 @@ function xarpages_adminapi_deletepage($args)
     if (empty($page)) {
         // No need to raise an error, as the page may already have been deleted.
         //$msg = xarML('Page does not exist.');
-        //xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        //throw new BadParemeterException(null,$msg);
         return true;
     }
 
@@ -46,14 +45,14 @@ function xarpages_adminapi_deletepage($args)
     // If the page was used as a special page anywhere, then reset that too,
     // so we don't have any special page orphans.
     foreach(array('default', 'error', 'notfound') as $special) {
-        if (xarModGetVar('xarpages', $special . 'page') == $pid) {
-            xarModSetVar('xarpages', $special . 'page', 0);
+        if (xarModVars::get('xarpages', $special . 'page') == $pid) {
+            xarModVars::set('xarpages', $special . 'page', 0);
         }
     }
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     // Deleting a page
 
@@ -79,7 +78,7 @@ function xarpages_adminapi_deletepage($args)
         $pids[] = $pid;
         $result->MoveNext();
     }
-    
+
     // Now the deletion query.
     $query = 'DELETE FROM ' . $table . ' WHERE xar_left BETWEEN ? AND ?';
 

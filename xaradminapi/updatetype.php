@@ -17,8 +17,7 @@ function xarpages_adminapi_updatetype($args)
     // Argument check
     if (!isset($ptid)) {
         $msg = xarML('Bad Parameters');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new BadParemeterException(null,$msg);
     }
 
     // Get current information on the page type
@@ -26,8 +25,7 @@ function xarpages_adminapi_updatetype($args)
 
     if (empty($type)) {
         $msg = xarML('The page type "#(1)" does not exist', $ptid);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new BadParemeterException(null,$msg);
     }
 
     // Security: allowed to create page types?
@@ -36,8 +34,8 @@ function xarpages_adminapi_updatetype($args)
     }
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $tablename = $xartable['xarpages_types'];
 
     // Data for the query.

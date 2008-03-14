@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>
     page-pageform template
 
@@ -7,10 +8,10 @@ use with custom page func: pageform
 you can make page specific versions of this template by copying it to page-pageform-[pagename].xt
 
 required fields:
-    data: item type of the DD object that defines the field properties on the form 
+    data: item type of the DD object that defines the field properties on the form
           Property type: object reference
           Validation: objects:name:itemtype
-          
+
 optional fields:
 if you add these additional fields, they'll be used in the custom func:
    required: comma-delimited list of fieldnames that are required and may not be left blank by the user when form is submitted
@@ -19,7 +20,7 @@ if you add these additional fields, they'll be used in the template:
     formlayout: alternative layout for the form, in the object's showform template
     page_title: sets the page title. If empty, uses description field
     body:   body content
-        
+
 </xar:comment>
 <xar:if condition="!empty($current_page.dd.page_title)">
     <xar:set name="ttl">#$current_page.dd.page_title#</xar:set>
@@ -29,7 +30,7 @@ if you add these additional fields, they'll be used in the template:
 
 <div style="padding:1em">
 <xar:if condition="isset($current_page.dd.body)">
-        <xar:comment><h1>#$ttl#</h1> this can be left out if you put header in the body</xar:comment>
+        <!-- <h1>#$ttl#</h1> this can be left out if you put header in the body -->
         #$current_page.dd.body#
 </xar:if>
 
@@ -43,9 +44,9 @@ if you add these additional fields, they'll be used in the template:
         <xar:else />
             <xar:data-form object="$pageform['object']" />
         </xar:if>
-		<xar:if condition="!empty($pageform['pf'])">
-		    <input type="hidden" name="pf" value="#$pageform['pf']#" />
-		</xar:if>
+        <xar:if condition="!empty($pageform['pf'])">
+            <input type="hidden" name="pf" value="#$pageform['pf']#" />
+        </xar:if>
         <xar:set name="submitlabel">"Submit"</xar:set>
         <xar:if condition="!empty($current_page.dd.submit_label)">
             <xar:set name="submitlabel">$current_page['dd']['submit_label']</xar:set>
@@ -82,4 +83,5 @@ if you add these additional fields, they'll be used in the template:
 <xar:if condition="!empty($ttl)">
     <xar:set name="dummy">#xarTplSetPageTitle($ttl)#</xar:set>
 </xar:if>
+</xar:template>
 

@@ -39,7 +39,7 @@ function xarpages_userapi_encode_shorturl($args)
         return;
     }
 
-    $use_shortest_paths = xarModGetVar('xarpages', 'shortestpath');
+    $use_shortest_paths = xarModVars::get('xarpages', 'shortestpath');
 
     // Consume the pid from the get parameters.
     unset($get['pid']);

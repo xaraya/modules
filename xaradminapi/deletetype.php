@@ -14,8 +14,7 @@ function xarpages_adminapi_deletetype($args)
     // Argument check
     if (empty($ptid)) {
         $msg = xarML('Invalid page type ID #(1)', $ptid);
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return false;
+        throw new BadParemeterException(null,$msg);
     }
 
     // Get the page type.
@@ -23,8 +22,7 @@ function xarpages_adminapi_deletetype($args)
 
     if (empty($type)) {
         $msg = xarML('Page type does not exist.');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new BadParemeterException(null,$msg);
     }
 
     // Security check
@@ -48,8 +46,8 @@ function xarpages_adminapi_deletetype($args)
     }
 
     // Get database setup.
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     $query = 'DELETE FROM ' . $xartable['xarpages_types'] . ' WHERE xar_ptid = ?';
 

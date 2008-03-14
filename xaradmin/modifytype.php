@@ -39,8 +39,7 @@ function xarpages_admin_modifytype($args)
         if (empty($type)) {
             // TODO: raise an error message.
             $msg = xarML('Page type "#(1)" not found.', $ptid);
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-            return;
+            throw new BadParemeterException(null,$msg);
         }
 
         // Security: check we are able to modify this page type.

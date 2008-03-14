@@ -16,7 +16,7 @@
 /**
  * Inclusion of common defines
  */
-    
+
 // Maximum allowable branch depth
 define('_XARPAGES_MAX_DEPTH', 20);
 
@@ -109,7 +109,7 @@ function xarpages_treeapi_array_maptree($items)
     $listsize = $total - 1;
 
     $depth_flags = array_pad(array(0 => 0), _XARPAGES_MAX_DEPTH, false);
-    
+
     // Create the matrix starting from the end and working our way towards
     // the beginning.
     // FIXME: the items array is not necessarily indexed by a sequential number.
@@ -208,7 +208,7 @@ function xarpages_treeapi_array_maptree($items)
  * @todo Wouldn't it be nice to be able to join these images together into a single image for each page and cache them?
  */
 
-function xarpages_treeapi_array_image_substitution($node) 
+function xarpages_treeapi_array_image_substitution($node)
 {
     static $image_list = NULL;
 
@@ -226,7 +226,7 @@ function xarpages_treeapi_array_image_substitution($node)
         $image_list[_XARPAGES_I_CONNECTOR] =
             '<img '.$style.' src="' . xarTplGetImage('n_sub_line.gif', 'xarpages') . '" alt="|" />';
         $image_list[_XARPAGES_BLANK_CONNECTOR] =
-            '<img '.$style.' src="' . xarTplGetImage('n_spacer.gif', 'xarpages') . '" alt="&nbsp;" />';
+            '<img '.$style.' src="' . xarTplGetImage('n_spacer.gif', 'xarpages') . '" alt="&#160;" />';
         $image_list[_XARPAGES_DASH_CONNECTOR] =
             '<img '.$style.' src="' . xarTplGetImage('n_sub_end.gif', 'xarpages') . '" alt="_" />';
         $image_list[_XARPAGES_NO_CONNECTOR] = '';
