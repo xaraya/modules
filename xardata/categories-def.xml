@@ -51,12 +51,12 @@
       <seq>0</seq>
       <configuration></configuration>
     </property>
-    <property name="reference_id">
+    <property name="parent_id">
       <id>78</id>
-      <label>Reference</label>
+      <label>Parent</label>
       <type>categories</type>
       <defaultvalue></defaultvalue>
-      <source>dummy</source>
+      <source>xar_categories.parent_id</source>
       <status>33</status>
       <seq>0</seq>
       <configuration></configuration>
