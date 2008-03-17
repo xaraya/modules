@@ -156,7 +156,7 @@ function helpdesk_user_new()
             $additional_emails = array();
             if( isset($assignable_reps) and count($assignable_reps) > 0 ){
                 foreach( $assignable_reps as $rid ){
-                    $additional_emails[] = xarUserGetVar('email', $rid);
+                    $additional_emails[$rid] = xarUserGetVar('email', $rid);
                 }
             }
 
@@ -325,4 +325,3 @@ function helpdesk_user_new()
     return xarTplModule('helpdesk', 'user', 'new', $data);
 }
 ?>
-
