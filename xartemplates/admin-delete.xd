@@ -1,40 +1,40 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:if condition="xarModVars::get('calendar','useModuleAlias')">
-            <xar:var scope="module" module="calendar" name="aliasname" />
-        <xar:else />
-            <xar:mlstring>Delete Calendar</xar:mlstring>
-        </xar:if>
-    </span>
-</div>
-<div class="xar-mod-body">
-    <h2>
-        <xar:ml>
-            <xar:mlstring>Delete Item #(1) in #(2)</xar:mlstring>
-            <xar:mlvar>#$object:itemid#</xar:mlvar>
-            <xar:mlvar>#$object:label#</xar:mlvar>
-        </xar:ml>
-    </h2>
-    <h3 class="xar-align-center">
-        <xar:mlstring>Confirm Deleting This Item?</xar:mlstring>
-    </h3>
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:if condition="xarModVars::get('calendar','useModuleAlias')">
+                <xar:var scope="module" module="calendar" name="aliasname" />
+            <xar:else />
+                <xar:mlstring>Delete Calendar</xar:mlstring>
+            </xar:if>
+        </span>
+    </div>
+    <div class="xar-mod-body">
+        <h2>
+            <xar:ml>
+                <xar:mlstring>Delete Item #(1) in #(2)</xar:mlstring>
+                <xar:mlvar>#$object:itemid#</xar:mlvar>
+                <xar:mlvar>#$object:label#</xar:mlvar>
+            </xar:ml>
+        </h2>
+        <h3 class="xar-align-center">
+            <xar:mlstring>Confirm Deleting This Item?</xar:mlstring>
+        </h3>
 
-    <xar:data-display object="$object" />
+        <xar:data-display object="$object" />
 
-    <form method="post" action="&xar-modurl-dynamicdata-admin-delete;">
-        <div class="xar-align-center">
-            <input type="hidden" name="authid" id="authid" value="#$authid#" />
-            <input type="hidden" name="objectid" id="objectid" value="#$object:objectid#" />
-            <input type="hidden" name="modid" id="modid" value="#$object:moduleid#" />
-            <input type="hidden" name="itemtype" id="itemtype" value="#$object:itemtype#" />
-            <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#" />
-            <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#" />
+        <form method="post" action="&xar-modurl-dynamicdata-admin-delete;">
+            <div class="xar-align-center">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="objectid" id="objectid" value="#$object:objectid#" />
+                <input type="hidden" name="modid" id="modid" value="#$object:moduleid#" />
+                <input type="hidden" name="itemtype" id="itemtype" value="#$object:itemtype#" />
+                <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#" />
+                <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#" />
 
-            <input type="submit" name="confirm" id="confirm" value="#xarML('Delete')#" class="xar-margin-thickright" />
-            <input type="submit" name="noconfirm" id="noconfirm" value="#xarML('Cancel')#" class="xar-margin-thickleft" />
-        </div>
-    </form>
-</div>
+                <input type="submit" name="confirm" id="confirm" value="#xarML('Delete')#" class="xar-margin-thickright" />
+                <input type="submit" name="noconfirm" id="noconfirm" value="#xarML('Cancel')#" class="xar-margin-thickleft" />
+            </div>
+        </form>
+    </div>
 </xar:template>

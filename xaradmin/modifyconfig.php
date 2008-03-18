@@ -65,14 +65,14 @@ function calendar_admin_modifyconfig()
                 xarModVars::set('calendar', 'day_end', $day_end);
             }
             $regid = xarModGetIDFromName($tabmodule);
-            xarModSetUserVar('calendar', 'windowwidth', $windowwidth, $regid);
-            xarModSetUserVar('calendar', 'minutesperunit', $minutesperunit, $regid);
-            xarModSetUserVar('calendar', 'unitheight', $unitheight, $regid);
+            xarModItemVars::set('calendar', 'windowwidth', $windowwidth, $regid);
+            xarModItemVars::set('calendar', 'minutesperunit', $minutesperunit, $regid);
+            xarModItemVars::set('calendar', 'unitheight', $unitheight, $regid);
 
-            xarModSetUserVar('calendar', 'default_view', $default_view, $regid);
-            xarModSetUserVar('calendar', 'cal_sdow', $cal_sdow, $regid);
-            xarModSetUserVar('calendar', 'day_start', $day_start, $regid);
-            xarModSetUserVar('calendar', 'day_end', $day_end, $regid);
+            xarModItemVars::set('calendar', 'default_view', $default_view, $regid);
+            xarModItemVars::set('calendar', 'cal_sdow', $cal_sdow, $regid);
+            xarModItemVars::set('calendar', 'day_start', $day_start, $regid);
+            xarModItemVars::set('calendar', 'day_end', $day_end, $regid);
 
             xarResponseRedirect(xarModURL('calendar', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
             return true;

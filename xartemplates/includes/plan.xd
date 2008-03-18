@@ -1,28 +1,28 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<h5>Todo</h5>
-    <ol>
-        <li>(roger working on this?) Getting the ics parser to work</li>
-        <li>(amoro working on this) Manage calendars through database
-          <ol>
-            <li>update init.php (done)</li>
-            <li>write interface and api to add calendar and their location to db (done)</li>
-            <li>return error when choosing name duplicates</li>
-            <li>write admin_get and admin_getall(done) function</li>
-            <li>write admin_edit function (allow to change cal name and cal location)</li>
-            <li>tie it to the parser</li>
-            <li>get it to work with categories (?)</li>
-            <li>handle privileges</li>
-          </ol>
-        </li>
-        <li>Create interface to add events to ics files</li>
-        <li>Allow storage of events in database
-          <ol>
-            <li>(Frank working on this?) create template to add events</li>
-            <li>Create database calls to add events</li>
-          </ol>
-        </li>
-    </ol>
-<h5>Done</h5>
+    <h5>Todo</h5>
+        <ol>
+            <li>(roger working on this?) Getting the ics parser to work</li>
+            <li>(amoro working on this) Manage calendars through database
+              <ol>
+                <li>update init.php (done)</li>
+                <li>write interface and api to add calendar and their location to db (done)</li>
+                <li>return error when choosing name duplicates</li>
+                <li>write admin_get and admin_getall(done) function</li>
+                <li>write admin_edit function (allow to change cal name and cal location)</li>
+                <li>tie it to the parser</li>
+                <li>get it to work with categories (?)</li>
+                <li>handle privileges</li>
+              </ol>
+            </li>
+            <li>Create interface to add events to ics files</li>
+            <li>Allow storage of events in database
+              <ol>
+                <li>(Frank working on this?) create template to add events</li>
+                <li>Create database calls to add events</li>
+              </ol>
+            </li>
+        </ol>
+    <h5>Done</h5>
     <ul>
         <li>Choosing a file parser</li>
     </ul>

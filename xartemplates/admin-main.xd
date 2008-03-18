@@ -1,75 +1,75 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:set name="adminIcon">xarTplGetImage('admin.gif', 'calendar')</xar:set>
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>Calendar</xar:mlstring>
-    </span>
-</div>
-<div class="xar-mod-body" style="display:block;">
-    <h2><xar:mlstring>Overview</xar:mlstring></h2>
-    <div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
-        <div style="float:right;display:block;background-color:#ffffff;padding:10px;">
-            <img src="#$adminIcon#" alt="official icon" width="96" height="96" />
-        </div>
-        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-            Battle plan (see file xartemplates/includes/plan.xd)
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:template file="plan" />
-        </div>
-        <br />
-        <div class="xar-mod-title" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-            <xar:mlstring>What is it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <em><xar:mlstring>Calendar for Xaraya.</xar:mlstring></em>
-            <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
-            <ul>
-                <li><xar:mlstring>Display a calendar for day, week, month or year.</xar:mlstring></li>
-                <li><xar:mlstring>Display events for a given date.</xar:mlstring></li>
-            </ul>
-        </div>
-        <br />
-        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-            <xar:mlstring>How to use it?</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>Use it like a calendar.</xar:mlstring>
-
-        </div>
-        <br />
-        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-            <xar:mlstring>Included Blocks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <ul>
-                <li><xar:mlstring>Month Calendar</xar:mlstring></li>
-                <li><xar:mlstring>Today's Events</xar:mlstring></li>
-                <li><xar:mlstring>Upcoming Events</xar:mlstring></li>
-            </ul>
-        </div>
-        <br />
-        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-            <xar:mlstring>Included Hooks</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <ul>
-                <li><xar:mlstring>usermenu -- Allows interface with the "My Account Page"</xar:mlstring></li>
-                <li><xar:mlstring>search -- Allows interface with Search Module</xar:mlstring></li>
-                <li><xar:mlstring>addevent -- Allows other modules to add an event</xar:mlstring></li>
-            </ul>
-        </div>
-        <br />
-        <xar:comment>
-        <div class="xar-accent" style="text-align: center; border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
-            <xar:mlstring>Extended information about this module can be found at</xar:mlstring>
-            <a href="http://www.xarcalendar.com">http://www.xarcalendar.com</a>
-        </div>
-        </xar:comment>
+    <xar:set name="adminIcon">xarTplGetImage('admin.gif', 'calendar')</xar:set>
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>Calendar</xar:mlstring>
+        </span>
     </div>
-</div>
+    <div class="xar-mod-body" style="display:block;">
+        <h2><xar:mlstring>Overview</xar:mlstring></h2>
+        <div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
+            <div style="float:right;display:block;background-color:#ffffff;padding:10px;">
+                <img src="#$adminIcon#" alt="official icon" width="96" height="96" />
+            </div>
+            <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+                Battle plan (see file xartemplates/includes/plan.xd)
+            </div>
+            <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+                <xar:template file="plan" />
+            </div>
+            <br />
+            <div class="xar-mod-title" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+                <xar:mlstring>What is it?</xar:mlstring>
+            </div>
+            <br />
+            <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+                <em><xar:mlstring>Calendar for Xaraya.</xar:mlstring></em>
+                <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
+                <ul>
+                    <li><xar:mlstring>Display a calendar for day, week, month or year.</xar:mlstring></li>
+                    <li><xar:mlstring>Display events for a given date.</xar:mlstring></li>
+                </ul>
+            </div>
+            <br />
+            <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+                <xar:mlstring>How to use it?</xar:mlstring>
+            </div>
+            <br />
+            <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+                <xar:mlstring>Use it like a calendar.</xar:mlstring>
+
+            </div>
+            <br />
+            <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+                <xar:mlstring>Included Blocks</xar:mlstring>
+            </div>
+            <br />
+            <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+                <ul>
+                    <li><xar:mlstring>Month Calendar</xar:mlstring></li>
+                    <li><xar:mlstring>Today's Events</xar:mlstring></li>
+                    <li><xar:mlstring>Upcoming Events</xar:mlstring></li>
+                </ul>
+            </div>
+            <br />
+            <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+                <xar:mlstring>Included Hooks</xar:mlstring>
+            </div>
+            <br />
+            <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+                <ul>
+                    <li><xar:mlstring>usermenu -- Allows interface with the "My Account Page"</xar:mlstring></li>
+                    <li><xar:mlstring>search -- Allows interface with Search Module</xar:mlstring></li>
+                    <li><xar:mlstring>addevent -- Allows other modules to add an event</xar:mlstring></li>
+                </ul>
+            </div>
+            <br />
+            <xar:comment>
+            <div class="xar-accent" style="text-align: center; border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+                <xar:mlstring>Extended information about this module can be found at</xar:mlstring>
+                <a href="http://www.xarcalendar.com">http://www.xarcalendar.com</a>
+            </div>
+            </xar:comment>
+        </div>
+    </div>
 </xar:template>

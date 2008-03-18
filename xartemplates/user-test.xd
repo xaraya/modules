@@ -1,9 +1,9 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<h2>iCal_Parser's benchmarks</h2>
-#$profile#
+    <h2>iCal_Parser's benchmarks</h2>
+    #$profile#
 
-<h2>Here we have what the resulting ical object looks like</h2>
-<pre>
-#$ical#
-</pre>
+    <h2>Here we have what the resulting ical object looks like</h2>
+    <pre>
+    #$ical#
+    </pre>
 </xar:template>

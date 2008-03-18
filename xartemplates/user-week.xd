@@ -1,84 +1,83 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:style scope="module" module="calendar" file="user-month" />
-<xar:comment> we want to add the textual decorator to the month class so we have day names and such </xar:comment>
+    <xar:style scope="module" module="calendar" file="user-month" />
+    <xar:comment> we want to add the textual decorator to the month class so we have day names and such </xar:comment>
 
 
-<xar:template file="navheader" />
-<xar:comment>
-    Define our navigation elements.
-    TODO: Make a nice API Function for creating the valid URLS
-</xar:comment>
-<xar:calendar-decorator object="$Week" decorator="Xaraya" name="$WeekURI" />
+    <xar:template file="navheader" />
+    <xar:comment>
+        Define our navigation elements.
+        TODO: Make a nice API Function for creating the valid URLS
+    </xar:comment>
+    <xar:calendar-decorator object="$Week" decorator="Xaraya" name="$WeekURI" />
 
-<xar:set name="prevYearTitle"><xar:mlstring>Previous Year</xar:mlstring></xar:set>
-<xar:set name="prevYearURL">$WeekURI->prev('year')</xar:set>
+    <xar:set name="prevYearTitle"><xar:mlstring>Previous Year</xar:mlstring></xar:set>
+    <xar:set name="prevYearURL">$WeekURI->prev('year')</xar:set>
 
-<xar:set name="prevWeekTitle"><xar:mlstring>Previous Week</xar:mlstring></xar:set>
-<xar:set name="prevWeekURL">$WeekURI->prev('week')</xar:set>
+    <xar:set name="prevWeekTitle"><xar:mlstring>Previous Week</xar:mlstring></xar:set>
+    <xar:set name="prevWeekURL">$WeekURI->prev('week')</xar:set>
 
-<xar:set name="nextWeekTitle"><xar:mlstring>Next Week</xar:mlstring></xar:set>
-<xar:set name="nextWeekURL">$WeekURI->next('week')</xar:set>
+    <xar:set name="nextWeekTitle"><xar:mlstring>Next Week</xar:mlstring></xar:set>
+    <xar:set name="nextWeekURL">$WeekURI->next('week')</xar:set>
 
-<xar:set name="nextYearTitle"><xar:mlstring>Next Year</xar:mlstring></xar:set>
-<xar:set name="nextYearURL">$WeekURI->next('year')</xar:set>
+    <xar:set name="nextYearTitle"><xar:mlstring>Next Year</xar:mlstring></xar:set>
+    <xar:set name="nextYearURL">$WeekURI->next('year')</xar:set>
 
-<xar:set name="startts">$Week->children[1]->getTimeStamp()</xar:set>
-<xar:set name="endts">$Week->children[7]->getTimeStamp()</xar:set>
-<table id="cal-calendar">
-    <tr>
-        <th class="cal-navigation" colspan="7">
-            <a href="#$prevYearURL#" title="#$prevYearTitle#">&lt;&lt;</a>
-            <a href="#$prevWeekURL#" title="#$prevWeekTitle#">&lt;</a>
-            #xarLocaleFormatDate('%B %d %Y',$startts)# -
-            #xarLocaleFormatDate('%B %d %Y',$endts)#
-            <a href="#$nextWeekURL#" title="#$nextWeekTitle#">&gt;</a>
-            <a href="#$nextYearURL#" title="#$nextYearTitle#">&gt;&gt;</a>
-        </th>
-    </tr>
-    <tr>
-    <xar:set name="Day">$Week->fetch()</xar:set>
-    <xar:while condition="$Day">
-        <xar:comment> we want to create a new Day object with Xaraya specifics </xar:comment>
-        <xar:calendar-decorator object="$Day" decorator="Xaraya" name="$DayURI" />
-
-        <xar:if condition="$Day:isFirst()">
-            <xar:comment> Start a new row </xar:comment>
-            <tr><td>&#160;<xar:comment> week info goes here </xar:comment></td>
-        </xar:if>
-        <xar:comment> populate the day </xar:comment>
-        <xar:set name="today">xarLocaleFormatDate('%Y%m%d')</xar:set>
-        <xar:set name="thisday">xarLocaleFormatDate('%Y%m%d',$Day->getTimeStamp())</xar:set>
-        <xar:if condition="$today eq $thisday">
-            <td class="xar-accent cal-day" style="width: 14%">
-        <xar:else />
-            <td class="cal-day" style="width: 14%">
-        </xar:if>
-        <xar:if condition="!$Day:isEmpty()">
-            <xar:comment> Display the date for this day </xar:comment>
-            <a href="#$DayURI->current('day')#">#$Day->thisDay()#</a>
-            <xar:set name="entries">$Day->getEntries()</xar:set>
-            <ul style="margin: 2px 2px 2px 2px">
-                <xar:foreach in="$entries" value="$entry">
-                    <li>#$entry['name']#</li>
-                </xar:foreach>
-            </ul>
-        <xar:else />
-            <xar:comment> Hide this day because it's not part of the month we are viewing </xar:comment>
-            &#160;
-        </xar:if>
-        </td>
-        <xar:if condition="$Day:isLast()">
-        <xar:comment> close out the row </xar:comment>
+    <xar:set name="startts">$Week->children[1]->getTimeStamp()</xar:set>
+    <xar:set name="endts">$Week->children[7]->getTimeStamp()</xar:set>
+    <table id="cal-calendar">
+        <tr>
+            <th class="cal-navigation" colspan="7">
+                <a href="#$prevYearURL#" title="#$prevYearTitle#">&lt;&lt;</a>
+                <a href="#$prevWeekURL#" title="#$prevWeekTitle#">&lt;</a>
+                #xarLocaleFormatDate('%B %d %Y',$startts)# -
+                #xarLocaleFormatDate('%B %d %Y',$endts)#
+                <a href="#$nextWeekURL#" title="#$nextWeekTitle#">&gt;</a>
+                <a href="#$nextYearURL#" title="#$nextYearTitle#">&gt;&gt;</a>
+            </th>
         </tr>
-        </xar:if>
-        <xar:set name="Day">$Week->fetch()</xar:set>
-    </xar:while>
-    </tr>
-</table>
+        <tr>
+        <xar:while condition="true">
+            <xar:set name="Day">$Week->fetch()</xar:set>
+            <xar:if condition="$Day">
+                <xar:comment> we want to create a new Day object with Xaraya specifics </xar:comment>
+                <xar:calendar-decorator object="$Day" decorator="Xaraya" name="$DayURI" />
 
-<xar:set name="eventcutoff">$endts + 86400</xar:set>
-<xar:data-input type="eventlist" start="$startts" end="$eventcutoff" />
+                <xar:if condition="$Day:isFirst()">
+                    <xar:comment> Start a new row </xar:comment>
+                    <tr><td>&#160;<xar:comment> week info goes here </xar:comment></td>
+                </xar:if>
+                <xar:comment> populate the day </xar:comment>
+                <xar:set name="today">xarLocaleFormatDate('%Y%m%d')</xar:set>
+                <xar:set name="thisday">xarLocaleFormatDate('%Y%m%d',$Day->getTimeStamp())</xar:set>
+                <xar:if condition="$today eq $thisday">
+                    <td class="xar-accent cal-day" style="width: 14%">
+                <xar:else />
+                    <td class="cal-day" style="width: 14%">
+                </xar:if>
+                <xar:if condition="!$Day:isEmpty()">
+                    <xar:comment> Display the date for this day </xar:comment>
+                    <a href="#$DayURI->current('day')#">#$Day->thisDay()#</a>
+                    <xar:set name="entries">$Day->getEntries()</xar:set>
+                    <ul style="margin: 2px 2px 2px 2px">
+                        <xar:foreach in="$entries" value="$entry">
+                            <li>#$entry['name']#</li>
+                        </xar:foreach>
+                    </ul>
+                <xar:else />
+                    <xar:comment> Hide this day because it's not part of the month we are viewing </xar:comment>
+                    &#160;
+                </xar:if>
+                </td>
+            <xar:else />
+                <xar:break />
+            </xar:if>
+        </xar:while>
+        </tr>
+    </table>
 
-<xar:comment> include the calendar footer </xar:comment>
-<xar:template file="todayfooter" />
+    <xar:set name="eventcutoff">$endts + 86400</xar:set>
+    <xar:data-input type="eventlist" start="$startts" end="$eventcutoff" />
+
+    <xar:comment> include the calendar footer </xar:comment>
+    <xar:template file="todayfooter" />
 </xar:template>

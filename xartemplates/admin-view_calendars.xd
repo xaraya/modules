@@ -1,41 +1,41 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+    <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>New Event</xar:mlstring></span></div>
-<div style="margin: auto;">
+    <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>New Event</xar:mlstring></span></div>
+    <div style="margin: auto;">
 
-<h2>Calendars</h2>
-<form method="post" action="&xar-modurl-calendar-admin-view_calendars;">
-  <input type="hidden" name="authid" id="authid" value="#$authid#" />
-  <table>
-    <tr>
-      <th><xar:mlstring>ID</xar:mlstring>
-      <th><xar:mlstring>Name</xar:mlstring></th>
-      <th><xar:mlstring>Location</xar:mlstring></th>
-      <th><xar:mlstring>Action</xar:mlstring></th>
-    </tr>
-    <xar:foreach in="$calendars" value="$calendar">
-      <tr>
-        <td>
-          #$calendar['cid']#
-        </td>
-        <td>
-          #$calendar['cname']#
-        </td>
-        <td>
-          #$calendar['cpath']#
-        </td>
-        <td>
-          <xar:mlstring> View </xar:mlstring>
-          <xar:mlstring> Edit </xar:mlstring>
-          <a href="&xar-modurl-calendar-admin-delete_calendar;&amp;calid=#$calendar['cid']#">
-            <xar:mlstring> Delete </xar:mlstring>
-          </a>
-        </td>
-      </tr>
-    </xar:foreach>
-  </table>
-</form>
-</div>
-</div>
+    <h2>Calendars</h2>
+    <form method="post" action="&xar-modurl-calendar-admin-view_calendars;">
+      <input type="hidden" name="authid" id="authid" value="#$authid#" />
+      <table>
+        <tr>
+          <th><xar:mlstring>ID</xar:mlstring>
+          <th><xar:mlstring>Name</xar:mlstring></th>
+          <th><xar:mlstring>Location</xar:mlstring></th>
+          <th><xar:mlstring>Action</xar:mlstring></th>
+        </tr>
+        <xar:foreach in="$calendars" value="$calendar">
+          <tr>
+            <td>
+              #$calendar['cid']#
+            </td>
+            <td>
+              #$calendar['cname']#
+            </td>
+            <td>
+              #$calendar['cpath']#
+            </td>
+            <td>
+              <xar:mlstring> View </xar:mlstring>
+              <xar:mlstring> Edit </xar:mlstring>
+              <a href="&xar-modurl-calendar-admin-delete_calendar;&amp;calid=#$calendar['cid']#">
+                <xar:mlstring> Delete </xar:mlstring>
+              </a>
+            </td>
+          </tr>
+        </xar:foreach>
+      </table>
+    </form>
+    </div>
+    </div>
 </xar:template>

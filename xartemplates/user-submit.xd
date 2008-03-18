@@ -1,13 +1,13 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<form name="cal_submit" method="post" action="#xarModURL('calendar','user','submit')#">
+    <form name="cal_submit" method="post" action="#xarModURL('calendar','user','submit')#">
 
-<p>
-    Title : <input type="text" name="title" id="title" value="#$event_title#"/>
-</p>
-<p>
-    Description : <br />
-    <textarea name="description" id="description">#$event_description#</textarea>
-</p>
+    <p>
+        Title : <input type="text" name="title" id="title" value="#$event_title#"/>
+    </p>
+    <p>
+        Description : <br />
+        <textarea name="description" id="description">#$event_description#</textarea>
+    </p>
 
-</form>
+    </form>
 </xar:template>

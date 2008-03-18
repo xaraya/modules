@@ -1,12 +1,11 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:if condition="!empty($calendars)">
-    <ul>
-    <xar:foreach in="$calendars" value="$calendar">
-        <li> <a href="#xarModURL('calendar','user','publish',array('calid' => $calendar['cid'],'calname' => $calendar['cname']))#">#$calendar['cname']#</a></li>
-    </xar:foreach>
-    </ul>
-<xar:else/>
-    <xar:mlstring>No calendars available</xar:mlstring>
-</xar:if>
+    <xar:if condition="!empty($calendars)">
+        <ul>
+        <xar:foreach in="$calendars" value="$calendar">
+            <li> <a href="#xarModURL('calendar','user','publish',array('calid' => $calendar['cid'],'calname' => $calendar['cname']))#">#$calendar['cname']#</a></li>
+        </xar:foreach>
+        </ul>
+    <xar:else/>
+        <xar:mlstring>No calendars available</xar:mlstring>
+    </xar:if>
 </xar:template>
-

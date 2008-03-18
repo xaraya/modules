@@ -293,7 +293,7 @@ function calendar_delete()
     if (!$result) return;
 
     // remove all module vars
-    xarModDelAllVars('calendar');
+    xarModVars::delete_all('calendar');
 
     // Remove Masks and Instances
     xarRemoveMasks('calendar');

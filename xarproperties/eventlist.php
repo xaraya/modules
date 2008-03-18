@@ -10,7 +10,7 @@
  * @author Marc Lutolf (mfl@netspan.ch)
  */
 
-sys::import("modules.xen.xarclasses.xenquery");
+sys::import('modules.query.class.query');
 
 class EventList extends DataProperty
 {
@@ -45,7 +45,7 @@ class EventList extends DataProperty
         }
 
         $xartable = xarDB::getTables();
-        $q = new xenQuery('SELECT', $xartable['calendar_event']);
+        $q = new Query('SELECT', $xartable['calendar_event']);
 
         if (empty($data¨['fields'])) {
             // we'll put fields into the output of the query that have status active in the object

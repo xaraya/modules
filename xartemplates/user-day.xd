@@ -1,96 +1,96 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:template file="navheader" />
-<xar:style scope="module" module="calendar" file="user-month" />
-<xar:style scope="module" module="calendar" file="default" />
-<!--
-    Define our navigation elements.
-    TODO: Make a nice API Function for creating the valid URLS
-    <xar:set name="prevYearURL">xarModURL('calendar','user','day',array('cal_sdow'=>$cal_sdow,'cal_date'=>$prevYear))</xar:set>
--->
-<xar:calendar-decorator object="$Day" decorator="Xaraya" name="$DayURI" />
+    <xar:template file="navheader" />
+    <xar:style scope="module" module="calendar" file="user-month" />
+    <xar:style scope="module" module="calendar" file="default" />
+    <!--
+        Define our navigation elements.
+        TODO: Make a nice API Function for creating the valid URLS
+        <xar:set name="prevYearURL">xarModURL('calendar','user','day',array('cal_sdow'=>$cal_sdow,'cal_date'=>$prevYear))</xar:set>
+    -->
+    <xar:calendar-decorator object="$Day" decorator="Xaraya" name="$DayURI" />
 
-<xar:set name="prevYearTitle"><xar:mlstring>Previous Year</xar:mlstring></xar:set>
-<xar:set name="prevYearURL">$DayURI->prev('year')</xar:set>
+    <xar:set name="prevYearTitle"><xar:mlstring>Previous Year</xar:mlstring></xar:set>
+    <xar:set name="prevYearURL">$DayURI->prev('year')</xar:set>
 
-<xar:set name="prevDayTitle"><xar:mlstring>Previous Day</xar:mlstring></xar:set>
-<xar:set name="prevDayURL">$DayURI->prev('day')</xar:set>
+    <xar:set name="prevDayTitle"><xar:mlstring>Previous Day</xar:mlstring></xar:set>
+    <xar:set name="prevDayURL">$DayURI->prev('day')</xar:set>
 
-<xar:set name="nextDayTitle"><xar:mlstring>Next Day</xar:mlstring></xar:set>
-<xar:set name="nextDayURL">$DayURI->next('day')</xar:set>
+    <xar:set name="nextDayTitle"><xar:mlstring>Next Day</xar:mlstring></xar:set>
+    <xar:set name="nextDayURL">$DayURI->next('day')</xar:set>
 
-<xar:set name="nextYearTitle"><xar:mlstring>Next Year</xar:mlstring></xar:set>
-<xar:set name="nextYearURL">$DayURI->next('year')</xar:set>
+    <xar:set name="nextYearTitle"><xar:mlstring>Next Year</xar:mlstring></xar:set>
+    <xar:set name="nextYearURL">$DayURI->next('year')</xar:set>
 
-<!--
-    Set some dimensions for the display.in pixels
--->
-<xar:set name="windowwidth">xarModVars::get('calendar','windowwidth')</xar:set>
-<xar:set name="hourcolwidth">98</xar:set>
-<xar:set name="displaywidth">$windowwidth-$hourcolwidth-4</xar:set>
-<xar:set name="unitheight">xarModVars::get('calendar','unitheight')</xar:set>
-<xar:set name="titlewidth">$windowwidth+2</xar:set>
-<xar:set name="minutesperunit">xarModVars::get('calendar','minutesperunit')</xar:set>
-<xar:set name="unitsperhour">60/$minutesperunit</xar:set>
-<xar:set name="day_start">(int)(xarModVars::get('calendar','day_start')/3600)</xar:set>
-<xar:set name="day_end">(int)(xarModVars::get('calendar','day_end')/3600)</xar:set>
+    <!--
+        Set some dimensions for the display.in pixels
+    -->
+    <xar:set name="windowwidth">xarModVars::get('calendar','windowwidth')</xar:set>
+    <xar:set name="hourcolwidth">98</xar:set>
+    <xar:set name="displaywidth">$windowwidth-$hourcolwidth-4</xar:set>
+    <xar:set name="unitheight">xarModVars::get('calendar','unitheight')</xar:set>
+    <xar:set name="titlewidth">$windowwidth+2</xar:set>
+    <xar:set name="minutesperunit">xarModVars::get('calendar','minutesperunit')</xar:set>
+    <xar:set name="unitsperhour">60/$minutesperunit</xar:set>
+    <xar:set name="day_start">(int)(xarModVars::get('calendar','day_start')/3600)</xar:set>
+    <xar:set name="day_end">(int)(xarModVars::get('calendar','day_end')/3600)</xar:set>
 
-<table id="cal-calendar" style="width: #$titlewidth#px">
-    <tr>
-        <th colspan="3" class="cal-navigation">
-            <a href="#$prevYearURL#" title="#$prevYearTitle#">&lt;&lt;</a>
-            <a href="#$prevDayURL#" title="#$prevDayTitle#">&lt;</a>
-            #xarLocaleFormatDate('%B %d %Y',$Day->getTimeStamp())#
-            <a href="#$nextDayURL#" title="#$nextDayTitle#">&gt;</a>
-            <a href="#$nextYearURL#" title="#$nextYearTitle#">&gt;&gt;</a>
-        </th>
-    </tr>
-</table>
+    <table id="cal-calendar" style="width: #$titlewidth#px">
+        <tr>
+            <th colspan="3" class="cal-navigation">
+                <a href="#$prevYearURL#" title="#$prevYearTitle#">&lt;&lt;</a>
+                <a href="#$prevDayURL#" title="#$prevDayTitle#">&lt;</a>
+                #xarLocaleFormatDate('%B %d %Y',$Day->getTimeStamp())#
+                <a href="#$nextDayURL#" title="#$nextDayTitle#">&gt;</a>
+                <a href="#$nextYearURL#" title="#$nextYearTitle#">&gt;&gt;</a>
+            </th>
+        </tr>
+    </table>
 
-<div style="border: 1px solid #A1A5A9; width: #$windowwidth#px" >
-    <xar:set name="Hour">$Day->fetch()</xar:set>
-
-    <xar:while condition="$Hour">
-        <xar:if condition="($Hour:thisHour() ge $day_start) and ($Hour:thisHour() le $day_end)" >
-            <div style="border-bottom: 1px solid #A1A5A9;" >
-                <div style="width: #$hourcolwidth#px; float: left; text-align: center">
-                        #$Hour:thisHour()#:#$Hour:thisMinute()#
-                </div>
-                <div style="position: relative; width: #$displaywidth#px; float: left; ">
-                    <div style="height:#$unitheight#px; border-top: 1px dashed #ccc; border-left: 2px solid #A1A5A9; border-top: 1px solid #A1A5A9;">
-                    </div>
-                    <xar:for start="$i = 0" test="$i lt $unitsperhour-1" iter="$i++">
-                        <div style="height:#$unitheight#px; border-top: 1px dashed #ccc; border-left: 2px solid #A1A5A9;">
-                        </div>
-                    </xar:for>
-                    <xar:if condition="$Hour:isSelected()">
-                        <xar:set name="entries">$Hour->getEntries()</xar:set>
-                        <xar:foreach in="$entries" value="$entry">
-<!--
-<xar:set name="foo">var_dump($entry)</xar:set>
--->
-                            <xar:set name="width">$displaywidth/$entry['neighbors']</xar:set>
-                            <xar:set name="thisslot">$entry['place']</xar:set>
-                            <xar:set name="widthoffset">$thisslot*$width+2</xar:set>
-                            <xar:set name="heightoffset">($entry['start']-$Hour->getTimestamp())/60/$minutesperunit*($unitheight+1)</xar:set>
-                            <xar:set name="height">($entry['end'] - $entry['start'])/60/$minutesperunit*($unitheight+1)-2</xar:set>
-                            <div style="z-index: 1000; padding: 1px; color: white; position: absolute; left: #$widthoffset#px; top: #$heightoffset#px; width: #$width#px; height: #$height#px; background-color: #ACCDAC" >
-                                &#160;
-                                <xar:if condition="$entry.recurring">
-                                    <img src="#xarTplGetImage('recurring.gif')#" />
-                                    &#160;
-                                </xar:if>
-                                #$entry.name#
-                            </div>
-                        </xar:foreach>
-                    </xar:if>
-                </div>
-            </div>
-            <div style="clear: both" ></div>
-        </xar:if>
+    <div style="border: 1px solid #A1A5A9; width: #$windowwidth#px" >
         <xar:set name="Hour">$Day->fetch()</xar:set>
-    </xar:while>
-</div>
 
-<xar:comment> include the calendar footer </xar:comment>
-<xar:template file="todayfooter" />
+        <xar:while condition="$Hour">
+            <xar:if condition="($Hour:thisHour() ge $day_start) and ($Hour:thisHour() le $day_end)" >
+                <div style="border-bottom: 1px solid #A1A5A9;" >
+                    <div style="width: #$hourcolwidth#px; float: left; text-align: center">
+                            #$Hour:thisHour()#:#$Hour:thisMinute()#
+                    </div>
+                    <div style="position: relative; width: #$displaywidth#px; float: left; ">
+                        <div style="height:#$unitheight#px; border-top: 1px dashed #ccc; border-left: 2px solid #A1A5A9; border-top: 1px solid #A1A5A9;">
+                        </div>
+                        <xar:for start="$i = 0" test="$i lt $unitsperhour-1" iter="$i++">
+                            <div style="height:#$unitheight#px; border-top: 1px dashed #ccc; border-left: 2px solid #A1A5A9;">
+                            </div>
+                        </xar:for>
+                        <xar:if condition="$Hour:isSelected()">
+                            <xar:set name="entries">$Hour->getEntries()</xar:set>
+                            <xar:foreach in="$entries" value="$entry">
+    <!--
+    <xar:set name="foo">var_dump($entry)</xar:set>
+    -->
+                                <xar:set name="width">$displaywidth/$entry['neighbors']</xar:set>
+                                <xar:set name="thisslot">$entry['place']</xar:set>
+                                <xar:set name="widthoffset">$thisslot*$width+2</xar:set>
+                                <xar:set name="heightoffset">($entry['start']-$Hour->getTimestamp())/60/$minutesperunit*($unitheight+1)</xar:set>
+                                <xar:set name="height">($entry['end'] - $entry['start'])/60/$minutesperunit*($unitheight+1)-2</xar:set>
+                                <div style="z-index: 1000; padding: 1px; color: white; position: absolute; left: #$widthoffset#px; top: #$heightoffset#px; width: #$width#px; height: #$height#px; background-color: #ACCDAC" >
+                                    &#160;
+                                    <xar:if condition="$entry.recurring">
+                                        <img src="#xarTplGetImage('recurring.gif')#" />
+                                        &#160;
+                                    </xar:if>
+                                    #$entry.name#
+                                </div>
+                            </xar:foreach>
+                        </xar:if>
+                    </div>
+                </div>
+                <div style="clear: both" ></div>
+            </xar:if>
+            <xar:set name="Hour">$Day->fetch()</xar:set>
+        </xar:while>
+    </div>
+
+    <xar:comment> include the calendar footer </xar:comment>
+    <xar:template file="todayfooter" />
 </xar:template>

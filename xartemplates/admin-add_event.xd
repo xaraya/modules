@@ -1,119 +1,119 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+    <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>New Event</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2>This functionality is still not inclulded <br />
-        You can play with the form (it's fun isn't it) but submitting it will do nothing</h2>
-<div style="margin: auto;">
+    <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>New Event</xar:mlstring></span></div>
+    <div class="xar-mod-body"><h2>This functionality is still not inclulded <br />
+            You can play with the form (it's fun isn't it) but submitting it will do nothing</h2>
+    <div style="margin: auto;">
 
-<!-- the specific template for the current admin function comes here -->
+    <!-- the specific template for the current admin function comes here -->
 
 
-<!--
-    // Start form - note the use of xarModURL() to create the recipient URL of
-    // this form.  All URLs should be generated through xarModURL() to ensure
-    // compatibility with future versions of Xaraya
--->
-<form method="post" action="&xar-modurl-calendar-admin-add_event;">
-<!--
-    // Add an authorisation ID - this adds a hidden field in the form that
-    // contains an authorisation ID.  The authorisation ID is very important in
-    // preventing certain attacks on the website
--->
-<input type="hidden" name="authid" id="authid" value="#$authid#" />
-<input type="submit" value="#$updatebutton#" />
+    <!--
+        // Start form - note the use of xarModURL() to create the recipient URL of
+        // this form.  All URLs should be generated through xarModURL() to ensure
+        // compatibility with future versions of Xaraya
+    -->
+    <form method="post" action="&xar-modurl-calendar-admin-add_event;">
+    <!--
+        // Add an authorisation ID - this adds a hidden field in the form that
+        // contains an authorisation ID.  The authorisation ID is very important in
+        // preventing certain attacks on the website
+    -->
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="submit" value="#$updatebutton#" />
 
-<fieldset>
-  <legend><xar:mlstring>Event</xar:mlstring></legend>
-  <table>
-    <tr>
-      <td><label for="title"><xar:mlstring>Title</xar:mlstring></label></td>
-      <td><input name="title" id="title"/></td>
-    </tr>
-    <tr>
-      <td><label for="location"><xar:mlstring>Location</xar:mlstring></label></td>
-      <td><input name="location" id="location"/></td>
-    </tr>
-    <tr>
-      <td><label for="start"><xar:mlstring>Start</xar:mlstring></label></td>
-      <td><input name="start" id="start" value="TODO: calendar popup"/> <input size=8 name="sttime" id="sttime"/></td>
-    </tr>
-    <tr>
-        <td><label for="end"><xar:mlstring>End</xar:mlstring></label></td>
-        <td><input name="end" id="end" value="TODO: calendar popup"/> <input size=8 name="endtime" id="endtime"/></td>
-    </tr>
-    <tr>
-      <td><label for="allDayEvent"><xar:mlstring>This event lasts all day</xar:mlstring></label></td>
-      <td><input type="checkbox" name="allDayEvent" id="allDayEvent" value="1"/></td>
-    </tr>
-    <tr>
-        <td><label for="note"><xar:mlstring>Note</xar:mlstring></label></td>
-        <td><textarea name="note" id="note" rows="2" cols="40"></textarea></td>
-    </tr>
-    <tr>
-      <td><label for="URL"><xar:mlstring>URL</xar:mlstring></label></td>
-      <td><input name="URL" id="URL"/><input type="submit" value="visit URL"></td>
-    </tr>
-    <tr>
-      <td><label for="title"><xar:mlstring>Categories</xar:mlstring></label></td>
-      <td>
-        <select multiple size = "3" name="categories" id="categories">
-          <xar:if condition="1">
-            <option value="day" selected="selected"><xar:mlstring>Need to pull categories from cat module</xar:mlstring></option>
-          <xar:else />
-            <option value="day"><xar:mlstring>Day</xar:mlstring></option>
-          </xar:if>
-      </td>
-    </tr>
-    <tr>
-      <td><label for="title"><xar:mlstring>Event status</xar:mlstring></label></td>
-      <td>
-        <select name="eventStatus" id="eventStatus">
-          <option value="tentative" selected="selected"><xar:mlstring>Tentative</xar:mlstring></option>
-          <option value="confirmed"><xar:mlstring>Confirmed</xar:mlstring></option>
-          <option value="cancelled"><xar:mlstring>Cancelled</xar:mlstring></option>
-        </select>
-      </td>
-    </tr>
-    <tr>
-      <td><label for="default_cal"><xar:mlstring>Calendar</xar:mlstring></label>
-      </td>
-      <td>
-        <xar:if condition="$thereAreIcs eq 0">
-          <xar:mlstring>No calendars found in var/calendar</xar:mlstring>
-        <xar:else />
-          <select multiple size="3" name="default_cal[]" id="default_cal">
-            <xar:foreach in="$icsfiles" key="$filenumber" value="$filename">
-              <xar:if condition="in_array($filename,$default_cal)">
-                <option value= "#$filename#" selected="selected">#$filename#</option>
-              <xar:else/>
-                <option value= "#$filename#">#$filename#</option>
+    <fieldset>
+      <legend><xar:mlstring>Event</xar:mlstring></legend>
+      <table>
+        <tr>
+          <td><label for="title"><xar:mlstring>Title</xar:mlstring></label></td>
+          <td><input name="title" id="title"/></td>
+        </tr>
+        <tr>
+          <td><label for="location"><xar:mlstring>Location</xar:mlstring></label></td>
+          <td><input name="location" id="location"/></td>
+        </tr>
+        <tr>
+          <td><label for="start"><xar:mlstring>Start</xar:mlstring></label></td>
+          <td><input name="start" id="start" value="TODO: calendar popup"/> <input size=8 name="sttime" id="sttime"/></td>
+        </tr>
+        <tr>
+            <td><label for="end"><xar:mlstring>End</xar:mlstring></label></td>
+            <td><input name="end" id="end" value="TODO: calendar popup"/> <input size=8 name="endtime" id="endtime"/></td>
+        </tr>
+        <tr>
+          <td><label for="allDayEvent"><xar:mlstring>This event lasts all day</xar:mlstring></label></td>
+          <td><input type="checkbox" name="allDayEvent" id="allDayEvent" value="1"/></td>
+        </tr>
+        <tr>
+            <td><label for="note"><xar:mlstring>Note</xar:mlstring></label></td>
+            <td><textarea name="note" id="note" rows="2" cols="40"></textarea></td>
+        </tr>
+        <tr>
+          <td><label for="URL"><xar:mlstring>URL</xar:mlstring></label></td>
+          <td><input name="URL" id="URL"/><input type="submit" value="visit URL"></td>
+        </tr>
+        <tr>
+          <td><label for="title"><xar:mlstring>Categories</xar:mlstring></label></td>
+          <td>
+            <select multiple size = "3" name="categories" id="categories">
+              <xar:if condition="1">
+                <option value="day" selected="selected"><xar:mlstring>Need to pull categories from cat module</xar:mlstring></option>
+              <xar:else />
+                <option value="day"><xar:mlstring>Day</xar:mlstring></option>
               </xar:if>
-            </xar:foreach>
-          </select>
-        </xar:if>
-      </td>
-    </tr>
-  </table>
-</fieldset>
-<fieldset>
-  <legend>Recurrence</legend>
-  <table>
-    <tr>
-      <td><input type="checkbox" name="repeatEvery" id="repeatEvery" value="1"/></td>
-      <td>
-        <label for="repeatEvery"><xar:mlstring>Repeat Every</xar:mlstring></label>
-        <input name="howManyRepeats" id="howManyRepeats" size="2"/>
-        <select name="eventStatus" id="eventStatus">
-          <option value="repEveryDay" selected="selected"><xar:mlstring>Day</xar:mlstring></option>
-          <option value="repEveryDay"><xar:mlstring>we need some javascript here</xar:mlstring></option>
-        </select>
-      </td>
-    </tr>
-  </table>
-</fieldset>
+          </td>
+        </tr>
+        <tr>
+          <td><label for="title"><xar:mlstring>Event status</xar:mlstring></label></td>
+          <td>
+            <select name="eventStatus" id="eventStatus">
+              <option value="tentative" selected="selected"><xar:mlstring>Tentative</xar:mlstring></option>
+              <option value="confirmed"><xar:mlstring>Confirmed</xar:mlstring></option>
+              <option value="cancelled"><xar:mlstring>Cancelled</xar:mlstring></option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td><label for="default_cal"><xar:mlstring>Calendar</xar:mlstring></label>
+          </td>
+          <td>
+            <xar:if condition="$thereAreIcs eq 0">
+              <xar:mlstring>No calendars found in var/calendar</xar:mlstring>
+            <xar:else />
+              <select multiple size="3" name="default_cal[]" id="default_cal">
+                <xar:foreach in="$icsfiles" key="$filenumber" value="$filename">
+                  <xar:if condition="in_array($filename,$default_cal)">
+                    <option value= "#$filename#" selected="selected">#$filename#</option>
+                  <xar:else/>
+                    <option value= "#$filename#">#$filename#</option>
+                  </xar:if>
+                </xar:foreach>
+              </select>
+            </xar:if>
+          </td>
+        </tr>
+      </table>
+    </fieldset>
+    <fieldset>
+      <legend>Recurrence</legend>
+      <table>
+        <tr>
+          <td><input type="checkbox" name="repeatEvery" id="repeatEvery" value="1"/></td>
+          <td>
+            <label for="repeatEvery"><xar:mlstring>Repeat Every</xar:mlstring></label>
+            <input name="howManyRepeats" id="howManyRepeats" size="2"/>
+            <select name="eventStatus" id="eventStatus">
+              <option value="repEveryDay" selected="selected"><xar:mlstring>Day</xar:mlstring></option>
+              <option value="repEveryDay"><xar:mlstring>we need some javascript here</xar:mlstring></option>
+            </select>
+          </td>
+        </tr>
+      </table>
+    </fieldset>
 
-</form>
-</div>
-</div>
+    </form>
+    </div>
+    </div>
 </xar:template>

@@ -1,231 +1,231 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:style scope="module" module="calendar" file="user-week" />
-<xar:comment> we want to add the textual decorator to the month class so we have day names and such </xar:comment>
-<xar:style scope="module" module="julian" />
+    <xar:style scope="module" module="calendar" file="user-week" />
+    <xar:comment> we want to add the textual decorator to the month class so we have day names and such </xar:comment>
+    <xar:style scope="module" module="julian" />
 
-<!--
-    <div class="xar-julian-cal">
-        <div class="xar-julian-cal-nav">
-            <div class="xar-julian-cal-nav-prev">
-                <a href="#xarModAPIFunc('julian','user','prev',array('cal_type'=>'week','cal_date'=>$cal_date))#"
-                   title="#xarML('Previous Week')#" class="arrow">&lt;</a>
+    <!--
+        <div class="xar-julian-cal">
+            <div class="xar-julian-cal-nav">
+                <div class="xar-julian-cal-nav-prev">
+                    <a href="#xarModAPIFunc('julian','user','prev',array('cal_type'=>'week','cal_date'=>$cal_date))#"
+                       title="#xarML('Previous Week')#" class="arrow">&lt;</a>
+                </div>
+                <div class="xar-julian-cal-nav-next">
+                    <a href="#xarModAPIFunc('julian','user','next',array('cal_type'=>'week','cal_date'=>$cal_date))#"
+                       title="#xarML('Next Week')#" class="arrow">&gt;</a>
+                </div>
+                <div class="xar-julian-cal-nav-current">
+                    <xar:set name="$startdate">date("F d, Y",$Week->children[1]->getTimeStamp())</xar:set>
+                    <xar:set name="$enddate">date("F d, Y", $Week->children[7]->getTimeStamp())</xar:set>
+                    #$startdate#&#160;-&#¦60;#$enddate#
+                </div>
             </div>
-            <div class="xar-julian-cal-nav-next">
-                <a href="#xarModAPIFunc('julian','user','next',array('cal_type'=>'week','cal_date'=>$cal_date))#"
-                   title="#xarML('Next Week')#" class="arrow">&gt;</a>
-            </div>
-            <div class="xar-julian-cal-nav-current">
-                <xar:set name="$startdate">date("F d, Y",$Week->children[1]->getTimeStamp())</xar:set>
-                <xar:set name="$enddate">date("F d, Y", $Week->children[7]->getTimeStamp())</xar:set>
-                #$startdate#&#160;-&#¦60;#$enddate#
+
+            <div class="tables">
+                <table class="month">
+                    <tr class="daynames">
+                        <xar:foreach in="$longDayNames" value="$dayName">
+                        <th>#$dayName#</th>
+                        </xar:foreach>
+                    </tr>
+                    <tr class="week">
+                        <xar:comment>START :: LOOP THROUGH EACH DAY OF THE WEEK</xar:comment>
+                        <xar:foreach in="$week" value="$date">
+                        <xar:set name="$yr">substr($date,0,4)</xar:set>
+                        <xar:set name="$mon">substr($date,-4,-2)</xar:set>
+                        <xar:set name="$day">substr($date,-2)</xar:set>
+                        <xar:set name="$dbdate">$yr."-".$mon."-".$day;</xar:set>
+                        <xar:comment>Color the cells differently for Sat and Sun</xar:comment>
+                        <xar:if condition="$date eq xarLocaleFormatDate('%Y%m%d') && substr($date,4,2) eq $selected_month">
+                            <xar:set name="$daycolor">"currentday"</xar:set>
+                        <xar:elseif condition="$calendar:isWeekend($date)" />
+                            <xar:set name="$daycolor">"weekend"</xar:set>
+                        <xar:else />
+                            <xar:set name="$daycolor">"weekday"</xar:set>
+                        </xar:if>
+                        <td class="day #$daycolor#">
+                            <div class="date">
+                                <a href="#xarModURL('julian','user','day',array('cal_date'=>$date))#">#$day#</a>
+                            </div>
+                            <div class="cal-icons">
+                                <xar:comment>Show Add icon (plus sign) on each day in the month and allow the administrator to add an event.</xar:comment>
+                                <xar:sec id="unique1" mask="EditJulian" catch="false">
+                                <a href="#xarModURL('julian','user','addevent',array('cal_date'=>$date))#">
+                                    <img src="#xarTplGetImage('new.gif')#" alt="#xarML('Add Event')#" />
+                                </a>
+                                </xar:sec>
+                            </div>
+                            <xar:if condition="isset($event_array[$dbdate])">
+                                <ul class="eventlist">
+                                    <xar:foreach in="$event_array[$dbdate]" key="$index">
+                                    <li style="color: #$event_array[$dbdate][$index]['color']#;">
+                                        <div class="li-content">
+                                            <xar:set name="$event_id">#$event_array[$dbdate][$index]['event_id']#</xar:set>
+                                            <div class="icons">
+                                               <xar:if condition="xarModVars::get('julian','ical_links')">
+                                                    <a href="#xarModURL('julian','user','export',array('event_id'=>$event_id))#">
+                                                        <img src="#xarTplGetImage('export.gif')#" alt="#xarML('Export Event')#" title="#xarML('Export event to desktop calendar')#" align="middle "/>
+                                                    </a>
+                                                </xar:if>
+                                            </div>
+                                            <xar:comment>Show a bullet with the color of the event category.</xar:comment>
+                                                <span style="font-size:large;color:#$event_array[$dbdate][$index]['color']#">#$Bullet#</span>
+                                            <xar:comment>Show popup when mouse over event name. If event is all day, don't show the time</xar:comment>
+                                            <xar:if condition="!$event_array[$dbdate][$index]['isallday']">
+                                                <span class="xar-julian-sub">#$event_array[$dbdate][$index]['time']#</span>
+                                            </xar:if>
+                                            <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$date,'event_id'=>$event_array[$dbdate][$index]['event_id']))#"
+                                               class="xar-julian-event">
+                                               <span class="tt">#$event_array[$dbdate][$index]['singlepopover']#</span>
+                                                #$event_array[$dbdate][$index]['summary']#
+                                            </a><br/>
+
+                                         <xar:comment> Old method with overlib. Here for reference only
+                                            <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$date,'event_id'=>$event_array[$dbdate][$index]['event_id']))#"
+                                               onmouseover="return overlib('#$event_array[$dbdate][$index]['singlepopover']#',CAPTION,'#$event_array[$dbdate][$index]['singlepopovercaption']#')"
+                                               onmouseout="return nd()"
+                                               class="xar-julian-event">
+                                                #$event_array[$dbdate][$index]['summary']#
+                                            </a><br>
+                                         </xar:comment>
+                                        </div>
+                                    </li>
+                                    </xar:foreach>
+                                </ul>
+                            </xar:if>
+
+                        </td>
+                        </xar:foreach>
+                        <xar:comment>END :: LOOP THROUGH EACH DAY OF THE WEEK</xar:comment>
+                    </tr>
+                </table>
+
             </div>
         </div>
+    -->
+    <xar:template file="navheader" />
+    <xar:comment>
+        Define our navigation elements.
+        TODO: Make a nice API Function for creating the valid URLS
+    </xar:comment>
+    <xar:calendar-decorator object="$Week" decorator="Xaraya" name="$WeekURI" />
 
-        <div class="tables">
-            <table class="month">
-                <tr class="daynames">
-                    <xar:foreach in="$longDayNames" value="$dayName">
-                    <th>#$dayName#</th>
-                    </xar:foreach>
-                </tr>
-                <tr class="week">
-                    <xar:comment>START :: LOOP THROUGH EACH DAY OF THE WEEK</xar:comment>
-                    <xar:foreach in="$week" value="$date">
-                    <xar:set name="$yr">substr($date,0,4)</xar:set>
-                    <xar:set name="$mon">substr($date,-4,-2)</xar:set>
-                    <xar:set name="$day">substr($date,-2)</xar:set>
-                    <xar:set name="$dbdate">$yr."-".$mon."-".$day;</xar:set>
-                    <xar:comment>Color the cells differently for Sat and Sun</xar:comment>
-                    <xar:if condition="$date eq xarLocaleFormatDate('%Y%m%d') && substr($date,4,2) eq $selected_month">
-                        <xar:set name="$daycolor">"currentday"</xar:set>
-                    <xar:elseif condition="$calendar:isWeekend($date)" />
-                        <xar:set name="$daycolor">"weekend"</xar:set>
-                    <xar:else />
-                        <xar:set name="$daycolor">"weekday"</xar:set>
-                    </xar:if>
-                    <td class="day #$daycolor#">
-                        <div class="date">
-                            <a href="#xarModURL('julian','user','day',array('cal_date'=>$date))#">#$day#</a>
-                        </div>
-                        <div class="cal-icons">
-                            <xar:comment>Show Add icon (plus sign) on each day in the month and allow the administrator to add an event.</xar:comment>
-                            <xar:sec id="unique1" mask="EditJulian" catch="false">
-                            <a href="#xarModURL('julian','user','addevent',array('cal_date'=>$date))#">
-                                <img src="#xarTplGetImage('new.gif')#" alt="#xarML('Add Event')#" />
-                            </a>
-                            </xar:sec>
-                        </div>
-                        <xar:if condition="isset($event_array[$dbdate])">
-                            <ul class="eventlist">
-                                <xar:foreach in="$event_array[$dbdate]" key="$index">
-                                <li style="color: #$event_array[$dbdate][$index]['color']#;">
-                                    <div class="li-content">
-                                        <xar:set name="$event_id">#$event_array[$dbdate][$index]['event_id']#</xar:set>
-                                        <div class="icons">
-                                           <xar:if condition="xarModVars::get('julian','ical_links')">
-                                                <a href="#xarModURL('julian','user','export',array('event_id'=>$event_id))#">
-                                                    <img src="#xarTplGetImage('export.gif')#" alt="#xarML('Export Event')#" title="#xarML('Export event to desktop calendar')#" align="middle "/>
-                                                </a>
-                                            </xar:if>
-                                        </div>
-                                        <xar:comment>Show a bullet with the color of the event category.</xar:comment>
-                                            <span style="font-size:large;color:#$event_array[$dbdate][$index]['color']#">#$Bullet#</span>
-                                        <xar:comment>Show popup when mouse over event name. If event is all day, don't show the time</xar:comment>
-                                        <xar:if condition="!$event_array[$dbdate][$index]['isallday']">
-                                            <span class="xar-julian-sub">#$event_array[$dbdate][$index]['time']#</span>
-                                        </xar:if>
-                                        <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$date,'event_id'=>$event_array[$dbdate][$index]['event_id']))#"
-                                           class="xar-julian-event">
-                                           <span class="tt">#$event_array[$dbdate][$index]['singlepopover']#</span>
-                                            #$event_array[$dbdate][$index]['summary']#
-                                        </a><br/>
+    <xar:set name="prevYearTitle"><xar:mlstring>Previous Year</xar:mlstring></xar:set>
+    <xar:set name="prevYearURL">#$WeekURI->prev('year')#</xar:set>
 
-                                     <xar:comment> Old method with overlib. Here for reference only
-                                        <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$date,'event_id'=>$event_array[$dbdate][$index]['event_id']))#"
-                                           onmouseover="return overlib('#$event_array[$dbdate][$index]['singlepopover']#',CAPTION,'#$event_array[$dbdate][$index]['singlepopovercaption']#')"
-                                           onmouseout="return nd()"
-                                           class="xar-julian-event">
-                                            #$event_array[$dbdate][$index]['summary']#
-                                        </a><br>
-                                     </xar:comment>
-                                    </div>
-                                </li>
-                                </xar:foreach>
-                            </ul>
-                        </xar:if>
+    <xar:set name="prevWeekTitle"><xar:mlstring>Previous Week</xar:mlstring></xar:set>
+    <xar:set name="prevWeekURL">#$WeekURI->prev('week')#</xar:set>
 
-                    </td>
-                    </xar:foreach>
-                    <xar:comment>END :: LOOP THROUGH EACH DAY OF THE WEEK</xar:comment>
-                </tr>
-            </table>
+    <xar:set name="nextWeekTitle"><xar:mlstring>Next Week</xar:mlstring></xar:set>
+    <xar:set name="nextWeekURL">#$WeekURI->next('week')#</xar:set>
 
-        </div>
-    </div>
--->
-<xar:template file="navheader" />
-<xar:comment>
-    Define our navigation elements.
-    TODO: Make a nice API Function for creating the valid URLS
-</xar:comment>
-<xar:calendar-decorator object="$Week" decorator="Xaraya" name="$WeekURI" />
+    <xar:set name="nextYearTitle"><xar:mlstring>Next Year</xar:mlstring></xar:set>
+    <xar:set name="nextYearURL">#$WeekURI->next('year')#</xar:set>
 
-<xar:set name="prevYearTitle"><xar:mlstring>Previous Year</xar:mlstring></xar:set>
-<xar:set name="prevYearURL">#$WeekURI->prev('year')#</xar:set>
-
-<xar:set name="prevWeekTitle"><xar:mlstring>Previous Week</xar:mlstring></xar:set>
-<xar:set name="prevWeekURL">#$WeekURI->prev('week')#</xar:set>
-
-<xar:set name="nextWeekTitle"><xar:mlstring>Next Week</xar:mlstring></xar:set>
-<xar:set name="nextWeekURL">#$WeekURI->next('week')#</xar:set>
-
-<xar:set name="nextYearTitle"><xar:mlstring>Next Year</xar:mlstring></xar:set>
-<xar:set name="nextYearURL">#$WeekURI->next('year')#</xar:set>
-
-<table>
-    <tr>
-        <th>
-            <a href="#$prevYearURL#" title="#$prevYearTitle#">&lt;&lt;</a>
-            <a href="#$prevWeekURL#" title="#$prevWeekTitle#">&lt;</a>
-        </th>
-        <th>
-            #xarLocaleFormatDate('%B %d %Y',$Week->children[1]->getTimeStamp())# -
-            #xarLocaleFormatDate('%B %d %Y',$Week->children[7]->getTimeStamp())#
-        </th>
-        <th>
-            <a href="#$nextWeekURL#" title="#$nextWeekTitle#">&gt;</a>
-            <a href="#$nextYearURL#" title="#$nextYearTitle#">&gt;&gt;</a>
-        </th>
-    </tr>
-</table>
-
-<table id="cal-calendar">
-    <tr>
-    <xar:set name="Day">$Week->fetch()</xar:set>
-    <xar:while condition="$Day">
-        <xar:comment> we want to create a new Day object with Xaraya specifics </xar:comment>
-        <xar:calendar-decorator object="$Day" decorator="Xaraya" name="$DayURI" />
-        <xar:calendar-decorator object="$Day" decorator="Weekday" name="$Weekday" />
-
-        <xar:if condition="$Day:isFirst()">
-        <xar:comment> Start a new row </xar:comment>
-        <tr><td>&#¦60;<xar:comment> week info goes here </xar:comment></td>
-        </xar:if>
-        <xar:comment> populate the day </xar:comment>
-
-        <xar:if condition="($Day:thisDay() eq $now['mday']) && ($Day:thisMonth() eq $now['mon']) && ($Day:thisYear() eq $now['year'])">
-            <xar:set name="$daycolor">"currentday"</xar:set>
-        <xar:elseif condition="in_array($Weekday:thisWeekDay(),array(0,1,2,3,4,))" />
-            <xar:set name="$daycolor">"weekend"</xar:set>
-        <xar:else />
-            <xar:set name="$daycolor">"weekday"</xar:set>
-        </xar:if>
-        <td width=60 class="day #$daycolor#">
-            <xar:if condition="!$Day:isEmpty()">
-                <xar:comment> Display the date for this day </xar:comment>
-                    <a href="#$DayURI:current('day')#">#$Day:thisDay()#</a>
-            <xar:else />
-                <xar:comment> Hide this day because it's not part of the month we are viewing </xar:comment>
-                &#¦60;
-            </xar:if>
-            <div class="cal-icons">
-                <xar:comment>Show Add icon (plus sign) on each day in the month and allow the administrator to add an event.</xar:comment>
-                <xar:sec id="unique2" mask="EditJulian" catch="false">
-                <a href="#xarModURL('julian','user','addevent',array('cal_date'=>$date))#">
-                    <img src="#xarTplGetImage('new.gif')#" alt="#xarML('Add Event')#" />
-                </a>
-                </xar:sec>
-            </div>
-            <!--
-                        <xar:if condition="isset($event_array[$dbdate])">
-                            <ul class="eventlist">
-                                <xar:foreach in="$event_array[$dbdate]" key="$index">
-                                <li style="color: #$event_array[$dbdate][$index]['color']#;">
-                                    <div class="li-content">
-                                        <xar:set name="$event_id">#$event_array[$dbdate][$index]['event_id']#</xar:set>
-                                        <div class="icons">
-                                           <xar:if condition="xarModVars::get('julian','ical_links')">
-                                                <a href="#xarModURL('julian','user','export',array('event_id'=>$event_id))#">
-                                                    <img src="#xarTplGetImage('export.gif')#" alt="#xarML('Export Event')#" title="#xarML('Export event to desktop calendar')#" align="middle "/>
-                                                </a>
-                                            </xar:if>
-                                        </div>
-                                        <xar:comment>Show a bullet with the color of the event category.</xar:comment>
-                                            <span style="font-size:large;color:#$event_array[$dbdate][$index]['color']#">#$Bullet#</span>
-                                        <xar:comment>Show popup when mouse over event name. If event is all day, don't show the time</xar:comment>
-                                        <xar:if condition="!$event_array[$dbdate][$index]['isallday']">
-                                            <span class="xar-julian-sub">#$event_array[$dbdate][$index]['time']#</span>
-                                        </xar:if>
-                                        <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$date,'event_id'=>$event_array[$dbdate][$index]['event_id']))#"
-                                           class="xar-julian-event">
-                                           <span class="tt">#$event_array[$dbdate][$index]['singlepopover']#</span>
-                                            #$event_array[$dbdate][$index]['summary']#
-                                        </a><br/>
-
-                                     <xar:comment> Old method with overlib. Here for reference only
-                                        <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$date,'event_id'=>$event_array[$dbdate][$index]['event_id']))#"
-                                           onmouseover="return overlib('#$event_array[$dbdate][$index]['singlepopover']#',CAPTION,'#$event_array[$dbdate][$index]['singlepopovercaption']#')"
-                                           onmouseout="return nd()"
-                                           class="xar-julian-event">
-                                            #$event_array[$dbdate][$index]['summary']#
-                                        </a><br>
-                                     </xar:comment>
-                                    </div>
-                                </li>
-                                </xar:foreach>
-                            </ul>
-                        </xar:if>
-                -->
-
-        </td>
-        <xar:if condition="$Day:isLast()">
-        <xar:comment> close out the row </xar:comment>
+    <table>
+        <tr>
+            <th>
+                <a href="#$prevYearURL#" title="#$prevYearTitle#">&lt;&lt;</a>
+                <a href="#$prevWeekURL#" title="#$prevWeekTitle#">&lt;</a>
+            </th>
+            <th>
+                #xarLocaleFormatDate('%B %d %Y',$Week->children[1]->getTimeStamp())# -
+                #xarLocaleFormatDate('%B %d %Y',$Week->children[7]->getTimeStamp())#
+            </th>
+            <th>
+                <a href="#$nextWeekURL#" title="#$nextWeekTitle#">&gt;</a>
+                <a href="#$nextYearURL#" title="#$nextYearTitle#">&gt;&gt;</a>
+            </th>
         </tr>
-        </xar:if>
+    </table>
+
+    <table id="cal-calendar">
+        <tr>
         <xar:set name="Day">$Week->fetch()</xar:set>
-    </xar:while>
-    </tr>
-</table>
-<xar:comment> include the calendar footer </xar:comment>
-<xar:template file="todayfooter" />
+        <xar:while condition="$Day">
+            <xar:comment> we want to create a new Day object with Xaraya specifics </xar:comment>
+            <xar:calendar-decorator object="$Day" decorator="Xaraya" name="$DayURI" />
+            <xar:calendar-decorator object="$Day" decorator="Weekday" name="$Weekday" />
+
+            <xar:if condition="$Day:isFirst()">
+            <xar:comment> Start a new row </xar:comment>
+            <tr><td>&#¦60;<xar:comment> week info goes here </xar:comment></td>
+            </xar:if>
+            <xar:comment> populate the day </xar:comment>
+
+            <xar:if condition="($Day:thisDay() eq $now['mday']) && ($Day:thisMonth() eq $now['mon']) && ($Day:thisYear() eq $now['year'])">
+                <xar:set name="$daycolor">"currentday"</xar:set>
+            <xar:elseif condition="in_array($Weekday:thisWeekDay(),array(0,1,2,3,4,))" />
+                <xar:set name="$daycolor">"weekend"</xar:set>
+            <xar:else />
+                <xar:set name="$daycolor">"weekday"</xar:set>
+            </xar:if>
+            <td width=60 class="day #$daycolor#">
+                <xar:if condition="!$Day:isEmpty()">
+                    <xar:comment> Display the date for this day </xar:comment>
+                        <a href="#$DayURI:current('day')#">#$Day:thisDay()#</a>
+                <xar:else />
+                    <xar:comment> Hide this day because it's not part of the month we are viewing </xar:comment>
+                    &#¦60;
+                </xar:if>
+                <div class="cal-icons">
+                    <xar:comment>Show Add icon (plus sign) on each day in the month and allow the administrator to add an event.</xar:comment>
+                    <xar:sec id="unique2" mask="EditJulian" catch="false">
+                    <a href="#xarModURL('julian','user','addevent',array('cal_date'=>$date))#">
+                        <img src="#xarTplGetImage('new.gif')#" alt="#xarML('Add Event')#" />
+                    </a>
+                    </xar:sec>
+                </div>
+                <!--
+                            <xar:if condition="isset($event_array[$dbdate])">
+                                <ul class="eventlist">
+                                    <xar:foreach in="$event_array[$dbdate]" key="$index">
+                                    <li style="color: #$event_array[$dbdate][$index]['color']#;">
+                                        <div class="li-content">
+                                            <xar:set name="$event_id">#$event_array[$dbdate][$index]['event_id']#</xar:set>
+                                            <div class="icons">
+                                               <xar:if condition="xarModVars::get('julian','ical_links')">
+                                                    <a href="#xarModURL('julian','user','export',array('event_id'=>$event_id))#">
+                                                        <img src="#xarTplGetImage('export.gif')#" alt="#xarML('Export Event')#" title="#xarML('Export event to desktop calendar')#" align="middle "/>
+                                                    </a>
+                                                </xar:if>
+                                            </div>
+                                            <xar:comment>Show a bullet with the color of the event category.</xar:comment>
+                                                <span style="font-size:large;color:#$event_array[$dbdate][$index]['color']#">#$Bullet#</span>
+                                            <xar:comment>Show popup when mouse over event name. If event is all day, don't show the time</xar:comment>
+                                            <xar:if condition="!$event_array[$dbdate][$index]['isallday']">
+                                                <span class="xar-julian-sub">#$event_array[$dbdate][$index]['time']#</span>
+                                            </xar:if>
+                                            <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$date,'event_id'=>$event_array[$dbdate][$index]['event_id']))#"
+                                               class="xar-julian-event">
+                                               <span class="tt">#$event_array[$dbdate][$index]['singlepopover']#</span>
+                                                #$event_array[$dbdate][$index]['summary']#
+                                            </a><br/>
+
+                                         <xar:comment> Old method with overlib. Here for reference only
+                                            <a href="#xarModURL('julian','user','viewevent',array('cal_date'=>$date,'event_id'=>$event_array[$dbdate][$index]['event_id']))#"
+                                               onmouseover="return overlib('#$event_array[$dbdate][$index]['singlepopover']#',CAPTION,'#$event_array[$dbdate][$index]['singlepopovercaption']#')"
+                                               onmouseout="return nd()"
+                                               class="xar-julian-event">
+                                                #$event_array[$dbdate][$index]['summary']#
+                                            </a><br>
+                                         </xar:comment>
+                                        </div>
+                                    </li>
+                                    </xar:foreach>
+                                </ul>
+                            </xar:if>
+                    -->
+
+            </td>
+            <xar:if condition="$Day:isLast()">
+            <xar:comment> close out the row </xar:comment>
+            </tr>
+            </xar:if>
+            <xar:set name="Day">$Week->fetch()</xar:set>
+        </xar:while>
+        </tr>
+    </table>
+    <xar:comment> include the calendar footer </xar:comment>
+    <xar:template file="todayfooter" />
 </xar:template>

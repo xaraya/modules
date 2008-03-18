@@ -1,375 +1,375 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:comment>
-    License: GPL http://www.gnu.org/copyleft/gpl.html
-</xar:comment>
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:if condition="xarModVars::get('calendar','useModuleAlias')">
-            <xar:var scope="module" module="calendar" name="aliasname" />
-        <xar:else />
-            <xar:mlstring>Calendar Administration</xar:mlstring>
-        </xar:if>
-    </span>
-</div>
-<div class="xar-mod-body">
-    <h2>
-        <xar:mlstring>
-            Modify Configuration
-        </xar:mlstring>
-    </h2>
-    <div>
-        <xar:template file="headerconfig" type="module"/>
-    </div>
-
-    <xar:comment> Begin General Options
+    <xar:comment>
+        License: GPL http://www.gnu.org/copyleft/gpl.html
     </xar:comment>
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:if condition="xarModVars::get('calendar','useModuleAlias')">
+                <xar:var scope="module" module="calendar" name="aliasname" />
+            <xar:else />
+                <xar:mlstring>Calendar Administration</xar:mlstring>
+            </xar:if>
+        </span>
+    </div>
+    <div class="xar-mod-body">
+        <h2>
+            <xar:mlstring>
+                Modify Configuration
+            </xar:mlstring>
+        </h2>
+        <div>
+            <xar:template file="headerconfig" type="module"/>
+        </div>
 
-    <form method="post" action="&xar-modurl-calendar-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
-        <xar:if condition="$tab eq 'calendar_general'">
-            <h3>
-                <xar:mlstring>
-                    General Options
-                </xar:mlstring>
-            </h3>
+        <xar:comment> Begin General Options
+        </xar:comment>
+
+        <form method="post" action="&xar-modurl-calendar-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
+            <xar:if condition="$tab eq 'calendar_general'">
+                <h3>
+                    <xar:mlstring>
+                        General Options
+                    </xar:mlstring>
+                </h3>
+                <fieldset>
+                    <legend>
+                        <xar:mlstring>
+                            Page Layout
+                        </xar:mlstring>
+                    </legend>
+                    <div class="xar-form-input-wrapper">
+                        <label for="itemsperpage" title="#xarML('Number of items to show on each page.')#" class="xar-form-label">
+                            <xar:mlstring>
+                                Items Per Page:
+                            </xar:mlstring>
+                        </label>
+                        <xar:set name="value"><xar:var scope="module" module="calendar" name="itemsperpage" /></xar:set>
+                        <input type="text" name="itemsperpage" id="itemsperpage" value="#$value#" maxlength="3" class="xar-form-textshort" />
+                    </div>
+                    <div class="xar-form-input-wrapper-after">
+                        <xar:if condition="xarModVars::get('calendar', 'supportshorturls')">
+                            <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
+                            <xar:else />
+                            <input type="checkbox" name="shorturls" id="shorturls" value="1" />
+                        </xar:if>
+                        <label for="shorturls" title="#xarML('Enable short URLs for Calendar module')#">
+                            <xar:mlstring>
+                                Enable Short URLs
+                            </xar:mlstring>
+                        </label>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for = "modulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
+                            <xar:mlstring>
+                                Use a module alias
+                            </xar:mlstring>
+                        </label>
+                        <xar:set name="checked">xarModVars::get('calendar','useModuleAlias')</xar:set>
+                        <xar:data-input type="checkbox" name="modulealias" id="modulealias" checked="$checked" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
+                                <xar:mlstring>
+                                    Module Alias Name
+                                </xar:mlstring>
+                        </label>
+                        <xar:set name="value"><xar:var scope="module" module="calendar" name="aliasname" /></xar:set>
+                        <input type="text" name="aliasname" id="aliasname" value="#$value#" size="32" maxlength="100" />
+                    </div>
+                </fieldset>
+            <xar:else />
+                <h3>
+                    <xar:set name="ucname">UCFirst($tabmodule)</xar:set>
+                    <xar:ml>
+                        <xar:mlstring>
+                            Module Defaults for #(1)
+                        </xar:mlstring>
+                        <xar:mlvar>#$ucname#</xar:mlvar>
+                    </xar:ml>
+                </h3>
+            </xar:if>
             <fieldset>
                 <legend>
                     <xar:mlstring>
-                        Page Layout
+                        Display Settings
                     </xar:mlstring>
                 </legend>
-                <div class="xar-form-input-wrapper">
-                    <label for="itemsperpage" title="#xarML('Number of items to show on each page.')#" class="xar-form-label">
-                        <xar:mlstring>
-                            Items Per Page:
-                        </xar:mlstring>
-                    </label>
-                    <xar:set name="value"><xar:var scope="module" module="calendar" name="itemsperpage" /></xar:set>
-                    <input type="text" name="itemsperpage" id="itemsperpage" value="#$value#" maxlength="3" class="xar-form-textshort" />
-                </div>
+                <xar:template file="display" />
+            </fieldset>
+            <fieldset>
                 <div class="xar-form-input-wrapper-after">
-                    <xar:if condition="xarModVars::get('calendar', 'supportshorturls')">
-                        <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
-                        <xar:else />
-                        <input type="checkbox" name="shorturls" id="shorturls" value="1" />
-                    </xar:if>
-                    <label for="shorturls" title="#xarML('Enable short URLs for Calendar module')#">
-                        <xar:mlstring>
-                            Enable Short URLs
-                        </xar:mlstring>
-                    </label>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for = "modulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
-                        <xar:mlstring>
-                            Use a module alias
-                        </xar:mlstring>
-                    </label>
-                    <xar:set name="checked">xarModVars::get('calendar','useModuleAlias')</xar:set>
-                    <xar:data-input type="checkbox" name="modulealias" id="modulealias" checked="$checked" />
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
-                            <xar:mlstring>
-                                Module Alias Name
-                            </xar:mlstring>
-                    </label>
-                    <xar:set name="value"><xar:var scope="module" module="calendar" name="aliasname" /></xar:set>
-                    <input type="text" name="aliasname" id="aliasname" value="#$value#" size="32" maxlength="100" />
+                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                    <input type="hidden" name="phase" id="phase" value="update" />
+                    <input type="hidden" name="tab" id="tab" value="#$tab#" />
+                    <input type="hidden" name="tabmodule" id="tabmodule" value="#$tabmodule#" />
+                    <input type="submit" value="#xarML('Update Configuration')#" />
                 </div>
             </fieldset>
-        <xar:else />
-            <h3>
-                <xar:set name="ucname">UCFirst($tabmodule)</xar:set>
-                <xar:ml>
-                    <xar:mlstring>
-                        Module Defaults for #(1)
-                    </xar:mlstring>
-                    <xar:mlvar>#$ucname#</xar:mlvar>
-                </xar:ml>
-            </h3>
-        </xar:if>
-        <fieldset>
-            <legend>
-                <xar:mlstring>
-                    Display Settings
-                </xar:mlstring>
-            </legend>
-            <xar:template file="display" />
-        </fieldset>
-        <fieldset>
-            <div class="xar-form-input-wrapper-after">
-                <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <input type="hidden" name="phase" id="phase" value="update" />
-                <input type="hidden" name="tab" id="tab" value="#$tab#" />
-                <input type="hidden" name="tabmodule" id="tabmodule" value="#$tabmodule#" />
-                <input type="submit" value="#xarML('Update Configuration')#" />
-            </div>
-        </fieldset>
-    </form>
-</div>
+        </form>
+    </div>
 
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<!-- common admin menu for this module - remove link to the current function -->
-<!-- the variables used in this menu come from example_admin_menu() -->
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Calendar Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2>#$menutitle#</h2><br />
-<div style="margin: auto;">
+    <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+    <!-- common admin menu for this module - remove link to the current function -->
+    <!-- the variables used in this menu come from example_admin_menu() -->
+    <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Calendar Administration</xar:mlstring></span></div>
+    <div class="xar-mod-body"><h2>#$menutitle#</h2><br />
+    <div style="margin: auto;">
 
-<!-- the specific template for the current admin function comes here -->
+    <!-- the specific template for the current admin function comes here -->
 
-<table width="100%" border="0" cellspacing="1" cellpadding="8">
-<!--
-    // Start form - note the use of xarModURL() to create the recipient URL of
-    // this form.  All URLs should be generated through xarModURL() to ensure
-    // compatibility with future versions of Xaraya
--->
-<form method="post" action="&xar-modurl-calendar-admin-updateconfig;">
-<!--
-    // Add an authorisation ID - this adds a hidden field in the form that
-    // contains an authorisation ID.  The authorisation ID is very important in
-    // preventing certain attacks on the website
--->
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <table width="100%" border="0" cellspacing="1" cellpadding="8">
+    <!--
+        // Start form - note the use of xarModURL() to create the recipient URL of
+        // this form.  All URLs should be generated through xarModURL() to ensure
+        // compatibility with future versions of Xaraya
+    -->
+    <form method="post" action="&xar-modurl-calendar-admin-updateconfig;">
+    <!--
+        // Add an authorisation ID - this adds a hidden field in the form that
+        // contains an authorisation ID.  The authorisation ID is very important in
+        // preventing certain attacks on the website
+    -->
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
 
-    <tr>
-        <td colspan="2" style="text-align: center; font-weight: 600; font-size: 120%"> OPTIONS THAT SHOULD WORK </td>
-    </tr>
-    <tr>
-        <td><label for="default_view"><xar:mlstring>Default view</xar:mlstring></label></td>
-        <td><select name="default_view" id="default_view">
-                <xar:if condition="$default_view eq 'day'">
-                    <option value="day" selected="selected"><xar:mlstring>Day</xar:mlstring></option>
-                <xar:else />
-                    <option value="day"><xar:mlstring>Day</xar:mlstring></option>
-                </xar:if>
-                <xar:if condition="$default_view eq 'week'">
-                    <option value="week" selected="selected"><xar:mlstring>Week</xar:mlstring></option>
-                <xar:else />
-                    <option value="week"><xar:mlstring>Week</xar:mlstring></option>
-                </xar:if>
-                <xar:if condition="$default_view eq 'month'">
-                    <option value="month" selected="selected"><xar:mlstring>Month</xar:mlstring></option>
-                <xar:else />
-                    <option value="month"><xar:mlstring>Month</xar:mlstring></option>
-                </xar:if>
-                <xar:if condition="$default_view eq 'year'">
-                    <option value="year" selected="selected"><xar:mlstring>Year</xar:mlstring></option>
-                <xar:else />
-                    <option value="year"><xar:mlstring>Year</xar:mlstring></option>
-                </xar:if>
-
-                <xar:comment> adapt to your own preferred custom view</xar:comment>
-                <xar:if condition="$default_view eq 'customview'">
-                    <option disabled value="customview" selected="selected"><xar:mlstring>Customized</xar:mlstring></option>
-                <xar:else />
-                    <option disabled value="customview"><xar:mlstring>Customized</xar:mlstring></option>
-                </xar:if>
-            </select>
-        </td>
-    </tr>
-    <tr>
-            <td><label for="cal_sdow"><xar:mlstring>Day of the week your week starts on</xar:mlstring></label></td>
-            <td><select name="cal_sdow" id="cal_sdow">
-                    <xar:if condition="$cal_sdow eq 0">
-                        <option value="0" selected="selected"><xar:mlstring>Sunday</xar:mlstring></option>
+        <tr>
+            <td colspan="2" style="text-align: center; font-weight: 600; font-size: 120%"> OPTIONS THAT SHOULD WORK </td>
+        </tr>
+        <tr>
+            <td><label for="default_view"><xar:mlstring>Default view</xar:mlstring></label></td>
+            <td><select name="default_view" id="default_view">
+                    <xar:if condition="$default_view eq 'day'">
+                        <option value="day" selected="selected"><xar:mlstring>Day</xar:mlstring></option>
                     <xar:else />
-                        <option value="0"><xar:mlstring>Sunday</xar:mlstring></option>
+                        <option value="day"><xar:mlstring>Day</xar:mlstring></option>
                     </xar:if>
-                    <xar:if condition="$cal_sdow eq 1">
-                        <option value="1" selected="selected"><xar:mlstring>Monday</xar:mlstring></option>
+                    <xar:if condition="$default_view eq 'week'">
+                        <option value="week" selected="selected"><xar:mlstring>Week</xar:mlstring></option>
                     <xar:else />
-                        <option value="1"><xar:mlstring>Monday</xar:mlstring></option>
+                        <option value="week"><xar:mlstring>Week</xar:mlstring></option>
                     </xar:if>
-                    <xar:if condition="$cal_sdow eq 2">
-                        <option value="2" selected="selected"><xar:mlstring>Tuesday</xar:mlstring></option>
+                    <xar:if condition="$default_view eq 'month'">
+                        <option value="month" selected="selected"><xar:mlstring>Month</xar:mlstring></option>
                     <xar:else />
-                        <option value="2"><xar:mlstring>Tuesday</xar:mlstring></option>
+                        <option value="month"><xar:mlstring>Month</xar:mlstring></option>
                     </xar:if>
-                    <xar:if condition="$cal_sdow eq 3">
-                        <option value="2" selected="selected"><xar:mlstring>Wednesday</xar:mlstring></option>
+                    <xar:if condition="$default_view eq 'year'">
+                        <option value="year" selected="selected"><xar:mlstring>Year</xar:mlstring></option>
                     <xar:else />
-                        <option value="2"><xar:mlstring>Wednesday</xar:mlstring></option>
-                    </xar:if>
-                    <xar:if condition="$cal_sdow eq 4">
-                        <option value="4" selected="selected"><xar:mlstring>Thursday</xar:mlstring></option>
-                    <xar:else />
-                        <option value="4"><xar:mlstring>Thursday</xar:mlstring></option>
-                    </xar:if>
-                    <xar:if condition="$cal_sdow eq 5">
-                        <option value="5" selected="selected"><xar:mlstring>Friday</xar:mlstring></option>
-                    <xar:else />
-                        <option value="5"><xar:mlstring>Friday</xar:mlstring></option>
-                    </xar:if>
-                    <xar:if condition="$cal_sdow eq 6">
-                        <option value="6" selected="selected"><xar:mlstring>Saturday</xar:mlstring></option>
-                    <xar:else />
-                        <option value="6"><xar:mlstring>Saturday</xar:mlstring></option>
+                        <option value="year"><xar:mlstring>Year</xar:mlstring></option>
                     </xar:if>
 
+                    <xar:comment> adapt to your own preferred custom view</xar:comment>
+                    <xar:if condition="$default_view eq 'customview'">
+                        <option disabled value="customview" selected="selected"><xar:mlstring>Customized</xar:mlstring></option>
+                    <xar:else />
+                        <option disabled value="customview"><xar:mlstring>Customized</xar:mlstring></option>
+                    </xar:if>
                 </select>
             </td>
-    </tr>
+        </tr>
+        <tr>
+                <td><label for="cal_sdow"><xar:mlstring>Day of the week your week starts on</xar:mlstring></label></td>
+                <td><select name="cal_sdow" id="cal_sdow">
+                        <xar:if condition="$cal_sdow eq 0">
+                            <option value="0" selected="selected"><xar:mlstring>Sunday</xar:mlstring></option>
+                        <xar:else />
+                            <option value="0"><xar:mlstring>Sunday</xar:mlstring></option>
+                        </xar:if>
+                        <xar:if condition="$cal_sdow eq 1">
+                            <option value="1" selected="selected"><xar:mlstring>Monday</xar:mlstring></option>
+                        <xar:else />
+                            <option value="1"><xar:mlstring>Monday</xar:mlstring></option>
+                        </xar:if>
+                        <xar:if condition="$cal_sdow eq 2">
+                            <option value="2" selected="selected"><xar:mlstring>Tuesday</xar:mlstring></option>
+                        <xar:else />
+                            <option value="2"><xar:mlstring>Tuesday</xar:mlstring></option>
+                        </xar:if>
+                        <xar:if condition="$cal_sdow eq 3">
+                            <option value="2" selected="selected"><xar:mlstring>Wednesday</xar:mlstring></option>
+                        <xar:else />
+                            <option value="2"><xar:mlstring>Wednesday</xar:mlstring></option>
+                        </xar:if>
+                        <xar:if condition="$cal_sdow eq 4">
+                            <option value="4" selected="selected"><xar:mlstring>Thursday</xar:mlstring></option>
+                        <xar:else />
+                            <option value="4"><xar:mlstring>Thursday</xar:mlstring></option>
+                        </xar:if>
+                        <xar:if condition="$cal_sdow eq 5">
+                            <option value="5" selected="selected"><xar:mlstring>Friday</xar:mlstring></option>
+                        <xar:else />
+                            <option value="5"><xar:mlstring>Friday</xar:mlstring></option>
+                        </xar:if>
+                        <xar:if condition="$cal_sdow eq 6">
+                            <option value="6" selected="selected"><xar:mlstring>Saturday</xar:mlstring></option>
+                        <xar:else />
+                            <option value="6"><xar:mlstring>Saturday</xar:mlstring></option>
+                        </xar:if>
+
+                    </select>
+                </td>
+        </tr>
 
 
-    <tr>
-        <td colspan="2" style="text-align: center; font-weight: 600; font-size: 120%"> OPTIONS THAT MAY NOT WORK (BUT CAN BE SET) </td>
-    </tr>
-    <tr>
-      <td><label for="default_cal"><xar:mlstring>Default calendar ics file(s)</xar:mlstring></label>
-          <xar:mlstring>(NOTE: put your ics files in var/calendar)</xar:mlstring>
-          <br /><b>NOTE TO DEVS: default filenames are stored in array xarModVars::get('calendar', 'default_cal'); the directory is
-          xarCoreGetVarDirPath() . '/calendar'</b>
-      </td>
-      <td>
-        <xar:if condition="$thereAreIcs eq 0">
-          <xar:mlstring>No calendars found in var/calendar</xar:mlstring>
-        <xar:else />
-          <select multiple size="3" name="default_cal[]" id="default_cal">
-            <xar:foreach in="$icsfiles" key="$filenumber" value="$filename">
-              <xar:if condition="in_array($filename,$default_cal)">
-                <option value= "#$filename#" selected="selected">#$filename#</option>
-              <xar:else/>
-                <option value= "#$filename#">#$filename#</option>
-              </xar:if>
-            </xar:foreach>
-          </select>
-        </xar:if>
-      </td>
-    </tr>
+        <tr>
+            <td colspan="2" style="text-align: center; font-weight: 600; font-size: 120%"> OPTIONS THAT MAY NOT WORK (BUT CAN BE SET) </td>
+        </tr>
+        <tr>
+          <td><label for="default_cal"><xar:mlstring>Default calendar ics file(s)</xar:mlstring></label>
+              <xar:mlstring>(NOTE: put your ics files in var/calendar)</xar:mlstring>
+              <br /><b>NOTE TO DEVS: default filenames are stored in array xarModVars::get('calendar', 'default_cal'); the directory is
+              xarCoreGetVarDirPath() . '/calendar'</b>
+          </td>
+          <td>
+            <xar:if condition="$thereAreIcs eq 0">
+              <xar:mlstring>No calendars found in var/calendar</xar:mlstring>
+            <xar:else />
+              <select multiple size="3" name="default_cal[]" id="default_cal">
+                <xar:foreach in="$icsfiles" key="$filenumber" value="$filename">
+                  <xar:if condition="in_array($filename,$default_cal)">
+                    <option value= "#$filename#" selected="selected">#$filename#</option>
+                  <xar:else/>
+                    <option value= "#$filename#">#$filename#</option>
+                  </xar:if>
+                </xar:foreach>
+              </select>
+            </xar:if>
+          </td>
+        </tr>
 
-    <tr>
-        <td><label for="minical_view"><xar:mlstring>Minical view (where do the mini-calendars go when clicked)?</xar:mlstring></label></td>
-        <td><select name="minical_view" id="minical_view">
-                <xar:if condition="$minical_view eq 'day'">
-                    <option value="day" selected="selected"><xar:mlstring>Day</xar:mlstring></option>
-                <xar:else />
-                    <option value="day"><xar:mlstring>Day</xar:mlstring></option>
-                </xar:if>
-                <xar:if condition="$minical_view eq 'week'">
-                    <option value="week" selected="selected"><xar:mlstring>Week</xar:mlstring></option>
-                <xar:else />
-                    <option value="week"><xar:mlstring>week</xar:mlstring></option>
-                </xar:if>
-                <xar:if condition="$minical_view eq 'month'">
-                    <option value="month" selected="selected"><xar:mlstring>Month</xar:mlstring></option>
-                <xar:else />
-                    <option value="month"><xar:mlstring>month</xar:mlstring></option>
-                </xar:if>
-                <xar:if condition="$minical_view eq 'year'">
-                    <option value="year" selected="selected"><xar:mlstring>Year</xar:mlstring></option>
-                <xar:else />
-                    <option value="year"><xar:mlstring>year</xar:mlstring></option>
-                </xar:if>
-                <xar:comment> adapt to your own preferred custom view</xar:comment>
-                <xar:if condition="$minical_view eq 'customview'">
-                    <option value="customview" selected="selected" disabled><xar:mlstring>Customized</xar:mlstring></option>
-                <xar:else />
-                    <option value="customview" disabled><xar:mlstring>Customized</xar:mlstring></option>
-                </xar:if>
-            </select>
-        </td>
-    </tr>
-    <tr>
-            <td><label for="day_start"><xar:mlstring>Start time for day grid</xar:mlstring></label></td>
-            <td><input name="day_start" id="day_start" value="#$day_start#"/>
+        <tr>
+            <td><label for="minical_view"><xar:mlstring>Minical view (where do the mini-calendars go when clicked)?</xar:mlstring></label></td>
+            <td><select name="minical_view" id="minical_view">
+                    <xar:if condition="$minical_view eq 'day'">
+                        <option value="day" selected="selected"><xar:mlstring>Day</xar:mlstring></option>
+                    <xar:else />
+                        <option value="day"><xar:mlstring>Day</xar:mlstring></option>
+                    </xar:if>
+                    <xar:if condition="$minical_view eq 'week'">
+                        <option value="week" selected="selected"><xar:mlstring>Week</xar:mlstring></option>
+                    <xar:else />
+                        <option value="week"><xar:mlstring>week</xar:mlstring></option>
+                    </xar:if>
+                    <xar:if condition="$minical_view eq 'month'">
+                        <option value="month" selected="selected"><xar:mlstring>Month</xar:mlstring></option>
+                    <xar:else />
+                        <option value="month"><xar:mlstring>month</xar:mlstring></option>
+                    </xar:if>
+                    <xar:if condition="$minical_view eq 'year'">
+                        <option value="year" selected="selected"><xar:mlstring>Year</xar:mlstring></option>
+                    <xar:else />
+                        <option value="year"><xar:mlstring>year</xar:mlstring></option>
+                    </xar:if>
+                    <xar:comment> adapt to your own preferred custom view</xar:comment>
+                    <xar:if condition="$minical_view eq 'customview'">
+                        <option value="customview" selected="selected" disabled><xar:mlstring>Customized</xar:mlstring></option>
+                    <xar:else />
+                        <option value="customview" disabled><xar:mlstring>Customized</xar:mlstring></option>
+                    </xar:if>
+                </select>
             </td>
-    </tr>
-    <tr>
-            <td><label for="day_end"><xar:mlstring>End time for day grid</xar:mlstring></label></td>
-            <td><input name="day_end" id="day_end" value="#$day_end#"/>
-            </td>
-    </tr>
-    <tr>
-            <td><label for="gridLength"><xar:mlstring>Grid distance in minutes for day view, multiples of 15 preferred</xar:mlstring></label></td>
-            <td><input name="gridLength" id="gridLength" value="#$gridLength#"/>
-            </td>
-    </tr>
-    <tr>
-            <td><label for="num_years"><xar:mlstring>Number of years to display in 'Jump to'</xar:mlstring></label></td>
-            <td><input name="num_years" id="num_years" value="#$num_years#"/>
-            </td>
-    </tr>
-    <tr>
-            <td><label for="month_event_lines"><xar:mlstring>Number of lines to wrap each event title in month view, 0 means display all lines.</xar:mlstring></label></td>
-            <td><input name="month_event_lines" id="month_event_lines" value="#$month_event_lines#"/>
-            </td>
-    </tr>
-    <tr>
-            <td><label for="tomorrows_event_lines"><xar:mlstring>Number of lines to wrap each event title in the 'Tommorrow's events' box, 0 means display all lines.</xar:mlstring></label></td>
-            <td><input name="tomorrows_event_lines" id="tomorrows_event_lines" value="#$tomorrows_events_lines#"/>
-            </td>
-    </tr>
-    <tr>
-            <td><label for="allday_week_lines"><xar:mlstring>Number of lines to wrap each event title in all-day events in week view, 0 means display all lines.</xar:mlstring></label></td>
-            <td><input name="allday_week_lines" id="allday_week_lines" value="#$allday_week_lines#"/>
-            </td>
-    </tr>
-    <tr>
-            <td><label for="week_events_lines"><xar:mlstring>Number of lines to wrap each event title in week view</xar:mlstring></label></td>
-            <td><input name="week_events_lines" id="week_events_lines" value="#$week_events_lines#"/>
-            </td>
-    </tr>
-    <tr>
-            <td><label for="second_offset"><xar:mlstring>The time in seconds between your time and your server's time.</xar:mlstring></label></td>
-            <td><input name="second_offset" id="second_offset" value="#$second_offset#"/>
-            </td>
-    </tr>
-    <tr>
-            <td><label for="bleed_time"><xar:mlstring>This allows events past midnight to just be displayed on the starting date, only good up to 24 hours. Range from '0000' to '2359'. Is automatically set to $day_start if left blank.</xar:mlstring></label></td>
-            <td><input name="bleed_time" id="bleed_time" value="#$bleed_time#"/>
-            </td>
-    </tr>
-    <tr><td><label for="display_custom_goto">In the 'Jump To' box, display the custom 'go to day' box</label></td>
-    <td><input type="checkbox" name="display_custom_goto" id="display_custom_goto" value="1" #$display_custom_gotochecked# /></td></tr>
-    <tr><td><label for="display_ical_list">In the 'Jump To' box, display the pop-up menu with the list of all calendars in the $calendar_path directory</label></td>
-    <td><input type="checkbox" name="display_ical_list" id="display_ical_list" value="1" #$display_ical_listchecked# /></td></tr>
-    <tr><td><label for="allow_webcals">Allow http:// and webcal:// prefixed URLs to be used as the $cal for remote viewing of "subscribe-able" calendars. This does not have to be enabled to allow specific ones below</label></td>
-    <td><input type="checkbox" name="allow_webcals" id="allow_webcals" value="1" #$allow_webcalschecked# /></td></tr>
-    <tr><td><label for="this_months_events">Display "This month's events" at the bottom off the month page</label></td>
-    <td><input type="checkbox" name="this_months_events" id="this_months_events" value="1" #$this_months_eventschecked# /></td></tr>
-    <tr><td><label for="use_color_cals">Display each calendar in the pop-up as a different color</label></td>
-    <td><input type="checkbox" name="use_color_cals" id="use_color_cals" value="1" #$use_color_calschecked# /></td></tr>
-    <tr><td><label for="daysofweek_dayview">Display the days of the week in day.php view</label></td>
-    <td><input type="checkbox" name="daysofweek_dayview" id="daysofweek_dayview" value="1" #$daysofweek_dayviewchecked# /></td></tr>
-    <tr><td><label for="enable_rss">Enable RSS access to your calendars (good thing)</label></td>
-    <td><input type="checkbox" name="enable_rss" id="enable_rss" value="1" #$enable_rsschecked# /></td></tr>
-    <tr><td><label for="show_search">Show the search box in the sidebar</label></td>
-    <td><input type="checkbox" name="show_search" id="show_search" value="1" #$show_searchchecked# /></td></tr>
-    <tr><td><label for="allow_preferences">Allow visitors to change various preferences via cookies</label></td>
-    <td><input type="checkbox" name="allow_preferences" id="allow_preferences" value="1" #$allow_preferenceschecked# /></td></tr>
-    <tr><td><label for="printview_default">Set print view as the default view. day, week, and month only supported views for $default_view (listed well above)</label></td>
-    <td><input type="checkbox" name="printview_default" id="printview_default" value="1" #$printview_defaultchecked# /></td></tr>
-    <tr><td><label for="show_todos">Show your todo list on the side of day and week view</label></td>
-    <td><input type="checkbox" name="show_todos" id="show_todos" value="1" #$show_todoschecked# /></td></tr>
-    <tr><td><label for="show_completed">Show completed todos on your todo list</label></td>
-    <td><input type="checkbox" name="show_completed" id="show_completed" value="1" #$show_completedchecked# /></td></tr>
-    <tr><td><label for="allow_login"> Check to prompt for login to unlock calendars.</label></td>
-    <td><input type="checkbox" name="allow_login" id="allow_login" value="1" #$allow_loginchecked# /></td></tr>
-    <tr><td><label for="shorturls">#$shorturlslabel#</label></td>
-    <td><input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# /></td></tr>
+        </tr>
+        <tr>
+                <td><label for="day_start"><xar:mlstring>Start time for day grid</xar:mlstring></label></td>
+                <td><input name="day_start" id="day_start" value="#$day_start#"/>
+                </td>
+        </tr>
+        <tr>
+                <td><label for="day_end"><xar:mlstring>End time for day grid</xar:mlstring></label></td>
+                <td><input name="day_end" id="day_end" value="#$day_end#"/>
+                </td>
+        </tr>
+        <tr>
+                <td><label for="gridLength"><xar:mlstring>Grid distance in minutes for day view, multiples of 15 preferred</xar:mlstring></label></td>
+                <td><input name="gridLength" id="gridLength" value="#$gridLength#"/>
+                </td>
+        </tr>
+        <tr>
+                <td><label for="num_years"><xar:mlstring>Number of years to display in 'Jump to'</xar:mlstring></label></td>
+                <td><input name="num_years" id="num_years" value="#$num_years#"/>
+                </td>
+        </tr>
+        <tr>
+                <td><label for="month_event_lines"><xar:mlstring>Number of lines to wrap each event title in month view, 0 means display all lines.</xar:mlstring></label></td>
+                <td><input name="month_event_lines" id="month_event_lines" value="#$month_event_lines#"/>
+                </td>
+        </tr>
+        <tr>
+                <td><label for="tomorrows_event_lines"><xar:mlstring>Number of lines to wrap each event title in the 'Tommorrow's events' box, 0 means display all lines.</xar:mlstring></label></td>
+                <td><input name="tomorrows_event_lines" id="tomorrows_event_lines" value="#$tomorrows_events_lines#"/>
+                </td>
+        </tr>
+        <tr>
+                <td><label for="allday_week_lines"><xar:mlstring>Number of lines to wrap each event title in all-day events in week view, 0 means display all lines.</xar:mlstring></label></td>
+                <td><input name="allday_week_lines" id="allday_week_lines" value="#$allday_week_lines#"/>
+                </td>
+        </tr>
+        <tr>
+                <td><label for="week_events_lines"><xar:mlstring>Number of lines to wrap each event title in week view</xar:mlstring></label></td>
+                <td><input name="week_events_lines" id="week_events_lines" value="#$week_events_lines#"/>
+                </td>
+        </tr>
+        <tr>
+                <td><label for="second_offset"><xar:mlstring>The time in seconds between your time and your server's time.</xar:mlstring></label></td>
+                <td><input name="second_offset" id="second_offset" value="#$second_offset#"/>
+                </td>
+        </tr>
+        <tr>
+                <td><label for="bleed_time"><xar:mlstring>This allows events past midnight to just be displayed on the starting date, only good up to 24 hours. Range from '0000' to '2359'. Is automatically set to $day_start if left blank.</xar:mlstring></label></td>
+                <td><input name="bleed_time" id="bleed_time" value="#$bleed_time#"/>
+                </td>
+        </tr>
+        <tr><td><label for="display_custom_goto">In the 'Jump To' box, display the custom 'go to day' box</label></td>
+        <td><input type="checkbox" name="display_custom_goto" id="display_custom_goto" value="1" #$display_custom_gotochecked# /></td></tr>
+        <tr><td><label for="display_ical_list">In the 'Jump To' box, display the pop-up menu with the list of all calendars in the $calendar_path directory</label></td>
+        <td><input type="checkbox" name="display_ical_list" id="display_ical_list" value="1" #$display_ical_listchecked# /></td></tr>
+        <tr><td><label for="allow_webcals">Allow http:// and webcal:// prefixed URLs to be used as the $cal for remote viewing of "subscribe-able" calendars. This does not have to be enabled to allow specific ones below</label></td>
+        <td><input type="checkbox" name="allow_webcals" id="allow_webcals" value="1" #$allow_webcalschecked# /></td></tr>
+        <tr><td><label for="this_months_events">Display "This month's events" at the bottom off the month page</label></td>
+        <td><input type="checkbox" name="this_months_events" id="this_months_events" value="1" #$this_months_eventschecked# /></td></tr>
+        <tr><td><label for="use_color_cals">Display each calendar in the pop-up as a different color</label></td>
+        <td><input type="checkbox" name="use_color_cals" id="use_color_cals" value="1" #$use_color_calschecked# /></td></tr>
+        <tr><td><label for="daysofweek_dayview">Display the days of the week in day.php view</label></td>
+        <td><input type="checkbox" name="daysofweek_dayview" id="daysofweek_dayview" value="1" #$daysofweek_dayviewchecked# /></td></tr>
+        <tr><td><label for="enable_rss">Enable RSS access to your calendars (good thing)</label></td>
+        <td><input type="checkbox" name="enable_rss" id="enable_rss" value="1" #$enable_rsschecked# /></td></tr>
+        <tr><td><label for="show_search">Show the search box in the sidebar</label></td>
+        <td><input type="checkbox" name="show_search" id="show_search" value="1" #$show_searchchecked# /></td></tr>
+        <tr><td><label for="allow_preferences">Allow visitors to change various preferences via cookies</label></td>
+        <td><input type="checkbox" name="allow_preferences" id="allow_preferences" value="1" #$allow_preferenceschecked# /></td></tr>
+        <tr><td><label for="printview_default">Set print view as the default view. day, week, and month only supported views for $default_view (listed well above)</label></td>
+        <td><input type="checkbox" name="printview_default" id="printview_default" value="1" #$printview_defaultchecked# /></td></tr>
+        <tr><td><label for="show_todos">Show your todo list on the side of day and week view</label></td>
+        <td><input type="checkbox" name="show_todos" id="show_todos" value="1" #$show_todoschecked# /></td></tr>
+        <tr><td><label for="show_completed">Show completed todos on your todo list</label></td>
+        <td><input type="checkbox" name="show_completed" id="show_completed" value="1" #$show_completedchecked# /></td></tr>
+        <tr><td><label for="allow_login"> Check to prompt for login to unlock calendars.</label></td>
+        <td><input type="checkbox" name="allow_login" id="allow_login" value="1" #$allow_loginchecked# /></td></tr>
+        <tr><td><label for="shorturls">#$shorturlslabel#</label></td>
+        <td><input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# /></td></tr>
 
-<!--
-
-
-<tr><td><label for="bold">#$boldlabel#</label></td>
-<td><input type="checkbox" name="bold" id="bold" value="1" #$boldchecked# /></td></tr>
-
-<tr><td><label for="itemsperpage">#$itemslabel#</label></td>
-<td><input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsvalue#" /></td></tr>
+    <!--
 
 
-<tr><td colspan="2">
-#$hooks#
-</td></tr>
+    <tr><td><label for="bold">#$boldlabel#</label></td>
+    <td><input type="checkbox" name="bold" id="bold" value="1" #$boldchecked# /></td></tr>
 
--->
+    <tr><td><label for="itemsperpage">#$itemslabel#</label></td>
+    <td><input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsvalue#" /></td></tr>
 
-<tr><td colspan="2" align="center">
-    <input type="submit" value="#$updatebutton#" /></td></tr>
-</form>
 
-</table>
-<br />
-</div>
-</div>
+    <tr><td colspan="2">
+    #$hooks#
+    </td></tr>
+
+    -->
+
+    <tr><td colspan="2" align="center">
+        <input type="submit" value="#$updatebutton#" /></td></tr>
+    </form>
+
+    </table>
+    <br />
+    </div>
+    </div>
 </xar:template>

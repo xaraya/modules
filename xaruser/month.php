@@ -6,7 +6,7 @@
     sys::import("modules.calendar.class.Calendar.Decorator.Xaraya");
     sys::import("modules.calendar.class.Calendar.Decorator.event");
     sys::import("modules.calendar.class.Calendar.Decorator.monthevent");
-    sys::import("modules.xen.xarclasses.xenquery");
+    sys::import('modules.query.class.query');
 
     function calendar_user_month()
     {
@@ -20,7 +20,7 @@
 
         // get all the events. need to improve this query
         $xartable = xarDB::getTables();
-        $q = new xenQuery('SELECT', $xartable['calendar_event']);
+        $q = new Query('SELECT', $xartable['calendar_event']);
 //        $q->qecho();
         if (!$q->run()) return;
         $events = $q->output();
