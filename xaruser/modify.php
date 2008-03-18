@@ -51,7 +51,11 @@ function ievents_user_modify($args)
     // Call up the main API to do the processing (including update and create hooks,
     // or just to return the current item if not saving).
     $data = xarModAPIfunc('ievents', 'admin', 'modify', $args);
-
+    
+    //Just in case there are no cals ensure eid is set
+	//Probably require suitable message to handle this instead of current no permission to submit
+	$data['eid'] = isset($data['eid'])?$data['eid']:0; 
+    
     // Redirect if necessary
     if ($data['result'] == 'SUCCESS' && (!empty($submit) || !empty($submitview))) {
         // Now redirect to where-ever, unless just saving, or there is an error
