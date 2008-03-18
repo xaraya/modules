@@ -258,7 +258,7 @@
       <order>250</order>
       <validation>0:255</validation>
     </property>
-    <property name="flags">
+    <property name="locks">
       <id>130</id>
       <label>Remote Update Lock</label>
       <type>dropdown</type>
