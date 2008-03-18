@@ -299,8 +299,8 @@ function ievents_init()
         array('file' => 'modules/' .$module. '/xardata/' .$module. '_events-def.xml', 'keepitemid' => false)
     );
 
-    // Initialisation successful.
-    return true;
+    //This initialization takes us to version 0.1.0 - continue in upgrade
+    return ievents_upgrade('0.1.0');
 }
 
 /**
@@ -324,7 +324,23 @@ function ievents_upgrade($oldversion)
     switch ($oldversion) {
         case '0.1.0':
             // Upgrading from 0.1.0
-
+			// Locks moved to their own property, and requires a table column added in ievents
+			// Consistent with init, use tablemaintenance api
+			
+		   xarDBLoadTableMaintenanceAPI();
+            // Update the topics table with a first post date tfpost field
+           $query = xarDBAlterTable($eventstable,
+                              array('command' => 'add',
+                                    'field'   => 'locks',
+                                    'type'    => 'varchar',
+                                    'null'    => false,
+                                    'size'    => '10',
+                                    'default' => ''));
+                                    
+            // Pass to ADODB, and send exception if the result isn't valid.
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;      
+            
         case '0.1.1':
             // Upgrading from 0.1.1
 
