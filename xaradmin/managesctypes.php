@@ -215,7 +215,8 @@ function sitecontact_admin_managesctypes()
 
     $data['newurl'] = xarModURL('sitecontact','admin','managesctypes',
                                array('action' => 'new'));
-
+	$propdata = isset($propdata)?$propdata:array();
+	
     // Fill in relevant variables
     if ($action == 'new') {
         xarSessionSetVar('statusmsg','');
@@ -379,8 +380,8 @@ function sitecontact_admin_managesctypes()
                 $propdata[$value['name']]['label']=$value['label'];
                 $propdata[$value['name']]['value']=$value['value'];
             }
-         }
-         $data['propdata'] = $propdata;
+        }
+        $data['propdata'] = $propdata;
       }
     }
 
