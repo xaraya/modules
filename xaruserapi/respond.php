@@ -118,8 +118,8 @@ function sitecontact_userapi_respond($args)
                $cas_antispam = $cas_text[$cas_antiselect];
                
             } else {
-               $md5code = xarModGetVar('formcaptcha',xarSessionGetID());
-               xarModDelVar('formcaptcha',xarSessionGetID());
+               $md5code = xarSessionGetVar('formcaptcha');
+               xarSessionDelVar('formcaptcha');
             }
 
             //Determine the correct word
