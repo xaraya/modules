@@ -179,14 +179,10 @@
                                 </option>
                             </xar:if>
                         </xar:foreach>
-                        </select>
-                        <input type="submit" value="#$changestatuslabel#" />
-<script type="text/javascript">
-    <![CDATA[
-    document.write("[ <a href=\"javascript:xar_base_checkall(document.getElementById('viewarticles'),true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
-    document.write("<a href=\"javascript:xar_base_checkall(document.getElementById('viewarticles'),false)\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
-    ]]>
-</script>
+                        </select>&#160;
+                        <input type="submit" value="#$changestatuslabel#" />&#160;
+                        <a href="javascript:xar_base_checkall(document.getElementById('viewarticles'),true)"><xar:mlstring>Check All</xar:mlstring></a>&#160;|&#160;
+                        <a href="javascript:xar_base_checkall(document.getElementById('viewarticles'),false)"><xar:mlstring>Uncheck All</xar:mlstring></a> ]
                     </p>
                 </xar:if>
             </div>

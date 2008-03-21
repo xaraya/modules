@@ -63,6 +63,9 @@
             'application/x-www-form-urlencoded'
         </xar:set>
     </xar:if>
+<!-- Remove bad attribute for BL2 (random)
+    <form method="post" name="post" id="post" action="&xar-modurl-articles-admin-update;" enctype="#$enctype#" #$formhooks['formaction']# >
+-->
     <form method="post" name="post" id="post" action="&xar-modurl-articles-admin-update;" enctype="#$enctype#" #$formhooks['formaction']# >
         <div class="xar-form-input-wrapper">
             <label class="help xar-form-label" title="#xarML('This is the publication type that this article will appear in.')#">
@@ -83,14 +86,14 @@
                 <xar:articles-field definition="$field['definition']" />
             </div>
         </xar:foreach>
-        <!--
+        
         <div class="xar-form-input-wrapper">
             <label class="xar-form-label help" title="#xarML('This is the allowed HTML that this website has configured.')#">
                 <xar:mlstring>Categories</xar:mlstring>
             </label>
-            <xar:data-input type="categories" name="categories" itemid="$id" itemtype="$ptid" returnitself="true" />
+            <xar:data-input type="categories" name="categories" itemid="$id" itemtype="$ptid" returnitself="true" value="$categories" />
         </div>
-        -->
+        
         <xar:if condition="!empty($formhooks['formdisplay'])">
             <div class="xar-form-input-wrapper">
                 <label class="help xar-form-label" title="#xarML('Form Controls as determined by hook selection.')#">
