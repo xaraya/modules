@@ -37,7 +37,7 @@
         </xar:set>
     </xar:if>
     <xar:if condition="!empty($ptid)">
-    <!--
+<!-- Remove bad attribute for BL2 (random)
         <form method="post" id="post" action="&xar-modurl-articles-admin-create;" enctype="#$enctype#" #$formhooks['formaction']# >
     -->
         <form method="post" id="post" action="&xar-modurl-articles-admin-create;" enctype="#$enctype#" >
