@@ -88,10 +88,10 @@
         </xar:foreach>
         
         <div class="xar-form-input-wrapper">
-            <label class="xar-form-label help" title="#xarML('This is the allowed HTML that this website has configured.')#">
+            <label class="xar-form-label help" title="#xarML('This is the category or categories this website is assigned to.')#">
                 <xar:mlstring>Categories</xar:mlstring>
             </label>
-            <xar:data-input type="categories" name="categories" itemid="$id" itemtype="$ptid" returnitself="true" value="$categories" />
+            <xar:data-input type="categories" name="categories" itemid="$id" itemtype="$ptid" returnitself="true" />
         </div>
         
         <xar:if condition="!empty($formhooks['formdisplay'])">
