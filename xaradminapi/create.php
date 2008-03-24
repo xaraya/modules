@@ -120,9 +120,9 @@ function articles_adminapi_create($args)
 
     // Get next ID in table
     if (empty($id) || !is_numeric($id) || $id == 0) {
-        $nextId = $dbconn->GenId($articlestable);
-    } else {
-        $nextId = $id;
+        $result = $dbconn->Execute("SELECT MAX(id) FROM $articlestable");
+        list($id) = $result->fields;
+        $id++;
     }
 
     // Add item
@@ -137,8 +137,8 @@ function articles_adminapi_create($args)
               notes,
               status,
               language)
-            VALUES (?,?,?,?,?,?,?,?,?,?)";
-    $bindvars = array($nextId,
+              VALUES (?,?,?,?,?,?,?,?,?,?)";
+    $bindvars = array($id,
                       (string)  $title,
                       (string)  $summary,
                       (string)  $body,
@@ -151,7 +151,7 @@ function articles_adminapi_create($args)
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
-    // Get id to return
+// Get id to return
     if (empty($id) || !is_numeric($id) || $id == 0) {
         $id = $dbconn->PO_Insert_ID($articlestable, 'id');
     }
