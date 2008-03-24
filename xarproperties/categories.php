@@ -100,7 +100,6 @@ class CategoriesProperty extends SelectProperty
                                     'modid' => $info['systemid']));
         }
 
-        echo $itemid;
         if (count($categories) > 0) {
             $checkcats= array();
             foreach ($categories as $category) {
