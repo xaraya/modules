@@ -92,6 +92,7 @@ class CategoriesProperty extends SelectProperty
 
         if (!xarVarFetch($name . '_categories_itemid', 'int', $itemid, NULL, XARVAR_DONT_SET)) return;
         if (!isset($itemid)) $itemid = $this->itemid;
+        if (!$itemid && isset($value)) $itemid = $value;
 
         if (!empty($itemid)) {
             $result = xarModAPIFunc('categories', 'admin', 'unlink',
