@@ -14,7 +14,7 @@
             </div>
         </form>
     </xar:sec>
-    <xar:if condition="xarUserIsLoggedIn()"> item uid #$item['xar_uid']#  package_uid #$package['uid']# 
+     <xar:if condition="xarUserIsLoggedIn()"> 
         <xar:if condition="xarSecurityCheck('Comments-Edit',0,'',$header['modid'].':'.$header['objectid'].':'.$item['xar_cid']) or $item['xar_uid'] eq $package['uid']">
              <xar:if condition="empty($package['settings']['edittimelimit']) or (time() le ($item['xar_date'] + ($package['settings']['edittimelimit'] * 60)) or xarSecurityCheck('Comments-Admin',0))">
             <form action="#xarModURL('comments', 'user', 'modify')#" method="post" class="xar-cm-actions">
