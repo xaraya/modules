@@ -121,13 +121,13 @@
     </select>
 </div>
 <div class="xar-form-input-wrapper">
-    <label for="editstamp" class="xar-form-label" title="#xarML('Length of time a user can edit their own comments')#">
+    <label for="editstamp" class="xar-form-label" title="#xarML('Length of time users can edit their own comments')#">
         <xar:mlstring>
             Edit time limit
         </xar:mlstring>
     </label>
     <input type="text" name="edittimelimit" id="edittimelimit" class="xar-form-textshort" value="#$edittimelimit#" />
-    <span><xar:mlstring>(In Minutes)</xar:mlstring></span>
+    <span><xar:mlstring>(In minutes, leave blank for unlimited time)</xar:mlstring></span>
 </div>
 <div class="xar-form-input-wrapper-after">
     <xar:if condition="$postanon eq 1">
@@ -137,7 +137,7 @@
     </xar:if>
     <label for="postanon" title="#xarML('Admin will see the name of who posted.')#">
         <xar:mlstring>
-            Allow anonymous posting
+            Allow anonymous posting for logged in users
         </xar:mlstring>
     </label>
 </div>

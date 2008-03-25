@@ -103,7 +103,7 @@ function comments_user_modify()
             
             if (empty($package['settings']['edittimelimit']) 
                or (time() <= ($package['comments'][0]['xar_date'] + ($package['settings']['edittimelimit'] * 60)))
-               or xarSecurityCheck('Comments-Admin')) {
+               or xarSecurityCheck('Comments-Admin', 0)) {
        
             $package = xarModCallHooks('item', 'transform-input', 0, $package,
                                        'comments', 0);
