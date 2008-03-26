@@ -3,7 +3,7 @@
  * Comments module - Allows users to post comments on items
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -257,7 +257,7 @@ function comments_user_displayall($args)
                                                 'modid'=>$modarray
                                                 )
                                             );
-        $output=xarTplBlock('comments', 'latestcommentsblock', $templateargs );
+        $output=xarTplBlock('comments', 'latestcommentsblock', $templateargs, $args['tplName']);
     }
 
     return $output;

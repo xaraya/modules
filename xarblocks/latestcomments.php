@@ -1,7 +1,7 @@
 <?php
 /**
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  * @author Andrea Moro
@@ -74,7 +74,11 @@ function comments_latestcommentsblock_display($blockinfo)
     $vars['first'] = 1;
     $vars['order'] = 'DESC';
 
-
+    if (empty($blockinfo['_bl_block_template'])) {
+        $vars['tplName'] = $blockinfo['name']; 
+    } else { 
+        $vars['tplName'] = $blockinfo['_bl_block_template']; 
+    }
     $blockinfo['content']=xarModFunc('comments', 'user', 'displayall', $vars) ;
 
     return $blockinfo;
