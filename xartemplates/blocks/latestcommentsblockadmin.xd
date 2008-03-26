@@ -216,7 +216,6 @@
     <xar:mlstring>Add date</xar:mlstring>
   </span>
   <span style="float: right; width: 78%; text-align: left;">
-    <input type="hidden" name="adddate" value="off"/>
     <xar:if condition="$adddate eq 'on'">
       <input type="checkbox" name="adddate" value="on" checked="checked" tabindex="9" />
       <xar:else/>
@@ -229,7 +228,6 @@
     <xar:mlstring>Add separator between comments posted in different days****</xar:mlstring>
   </span>
   <span style="float: right; width: 78%; text-align: left;">
-    <input type="hidden" name="adddaysep" value="off"/>
     <xar:if condition="$adddaysep eq 'on'">
       <input type="checkbox" name="adddaysep" value="on" checked="checked" tabindex="10" />
       <xar:else/>
@@ -242,7 +240,6 @@
     <xar:mlstring>Add link to older comments</xar:mlstring>
   </span>
   <span style="float: right; width: 78%; text-align: left;">
-    <input type="hidden" name="addprevious" value="off"/>
     <xar:if condition="$addprevious eq 'on'">
       <input type="checkbox" name="addprevious" value="on" checked="checked" tabindex="11" />
       <xar:else/>
