@@ -72,16 +72,18 @@ function comments_user_search( $args )
         $postinfo['header[text]'] = 0;
     }
 
+    //Hb: Why do we need a separate Author header/checkbox? 
+    //    If the author search field has a string we should search anyway.
     if (isset($header['author'])) {
         $postinfo['header[author]'] = 1;
         $header['author'] = 1;
-        // need to get the user's uid from the name
-        // MichelV: Using the official shortcut now
-        $roles = new xarRoles();
-        $user = $roles->ufindRole($author);
+        // Search the uid with the display name  
+        $user = xarFindRole($author);
 
-        $search['uid'] = $user;
-        $search['author'] = $author;
+        if (!empty($user)) {        
+            $search['uid'] = $user->getID();
+            $search['author'] = $author;
+        }
     } else {
         $postinfo['header[author]'] = 0;
         $header['author'] = 0;
@@ -113,6 +115,21 @@ function comments_user_search( $args )
         $receipt['returnurl']['encoded'] = rawurlencode($receipt['returnurl']['decoded']);
 
         $receipt['directurl'] = true;
+
+        if (!xarModLoad('comments','renderer')) {
+            $msg = xarML('Unable to load #(1) #(2)', 'comments', 'renderer');
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException($msg));
+            return;
+        }
+        $package['settings'] = xarModAPIFunc('comments','user','getoptions');
+        $package['comments'] = comments_renderer_array_prune_excessdepth(
+                                  array('array_list' => $package['comments'],
+                                        'cutoff'     => $package['settings']['depth'],
+                                        'modid'      => $header['modid'],
+                                        'itemtype'   => $header['itemtype'],
+                                        'objectid'   => $header['objectid'],
+                                  )
+                               );
 
         $data['package'] = $package;
         $data['receipt'] = $receipt;
