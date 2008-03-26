@@ -4,27 +4,47 @@
             Note: Comments are owned by the poster. We are not responsible for their content.
         </xar:mlstring>
     </p>
-    <xar:if condition="!empty($package['settings']['showoption'])">
-        <xar:if condition="xarModIsHooked('comments','roles', 0) and xarUserIsLoggedIn()">
+    <xar:if condition="empty($package['settings']['showoptions'])">
+      <xar:comment> 
+        Uncommenting this will show the link to the comments rendering options    
+        in User Settings even if "Show Rendering Options" is set to false.
+        <xar:if condition="xarModGetVar('comments','usersetrendering') and 
+                           xarUserIsLoggedIn()">
             <p class="xar-cm-note xar-sub">
                 <xar:mlstring>
                     Change Your Comments Rendering Settings 
                 </xar:mlstring>
-                <a href="#xarModURL('roles', 'user', 'account')#">
+                <a href="#xarModURL('roles', 'user', 'account', 
+                                    array('moduleload' => 'comments'))#">
                     <xar:mlstring>
                         here
                     </xar:mlstring>
                 </a>.
             </p>
         </xar:if>
+      </xar:comment>
     <xar:else />
-    <h4>
-        <xar:mlstring>
-            Comments Settings 
-        </xar:mlstring>
-    </h4>
-    <div class="xar-cm-wrapper xar-accent xar-norm-outline">
-        <form action="#$receipt['returnurl']['decoded']#" method="post">
+      <xar:if condition="xarModGetVar('comments','usersetrendering') and 
+                         xarUserIsLoggedIn()">
+        <p class="xar-cm-note xar-sub">
+            <xar:mlstring>
+                Change Your Comments Rendering Settings 
+            </xar:mlstring>
+            <a href="#xarModURL('roles', 'user', 'account', 
+                                array('moduleload' => 'comments'))#">
+                <xar:mlstring>
+                    here
+                </xar:mlstring>
+            </a>.
+        </p>
+      <xar:else />
+        <h4>
+            <xar:mlstring>
+                Comments Settings 
+            </xar:mlstring>
+        </h4>
+        <div class="xar-cm-wrapper xar-accent xar-norm-outline">
+          <form action="#$receipt['returnurl']['decoded']#" method="post">
             <div class="xar-cm-settings">
                 <label for="depth">
                     <xar:mlstring>
@@ -226,7 +246,8 @@
                 <input type="hidden" id="receipt-returnurl-decoded" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#" />
                 <input type="submit" value="#xarML('Refresh')#" />
             </div>
-        </form>
-    </div>
+          </form>
+        </div>
+      </xar:if>
     </xar:if>
 </div>

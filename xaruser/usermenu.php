@@ -63,7 +63,8 @@ function comments_user_usermenu($args)
             xarModAPIFunc('comments','user','setoptions',$settings);
 
             // Redirect
-            xarResponseRedirect(xarModURL('roles', 'user', 'account'));
+            xarResponseRedirect(xarModURL('roles', 'user', 'account', 
+                                          array('moduleload' => 'comments')));
 
             break;
         }
