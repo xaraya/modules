@@ -1,0 +1,39 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+    <xar:if condition="empty($descr)">
+        <h2>
+            <xar:mlstring>
+                Article Map by Grid
+            </xar:mlstring>
+        </h2>
+        <xar:else />
+        <h2>
+            <xar:ml>
+                <xar:mlstring>
+                    Article Map by Grid for #(1)
+                </xar:mlstring>
+                <xar:mlvar>
+                    #$descr#
+                </xar:mlvar>
+            </xar:ml>
+        </h2>
+    </xar:if>
+    <table border="1" cellpadding="3" cellspacing="0">
+        <xar:foreach in="$catgrid" key="$row">
+            <tr>
+                <xar:foreach in="$catgrid[$row]" key="$col">
+                    <xar:if condition="empty($col) or $row % 2 eq 0">
+                        <td class="xar-accent" align="center">
+                            #$catgrid[$row][$col]#
+                        </td>
+                        <xar:else />
+                        <td align="center">
+                            #$catgrid[$row][$col]#
+                        </td>
+                    </xar:if>
+                </xar:foreach>
+            </tr>
+        </xar:foreach>
+    </table>
+    <xar:template file="navtabs-user-map" type="module" />
+</xar:template>
