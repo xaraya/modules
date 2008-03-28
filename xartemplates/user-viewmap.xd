@@ -5,6 +5,6 @@
     <xar:elseif condition="count($catgrid) gt 0" />
         <xar:template file="mapbygrid" />
     <xar:else />
-        <xar:template file="mapgeneral" />
+        <xar:template file="mapbypubtype" />
     </xar:if>
 </xar:template>
