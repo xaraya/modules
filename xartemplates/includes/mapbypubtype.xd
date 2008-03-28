@@ -9,8 +9,9 @@
     <form method="post" action="#$maplink#">
         <div>
             <xar:mlstring>
-                Filter :
+                Filter:
             </xar:mlstring>
+            &#160;
             <select name="ptid" onchange="javascript:this.form.submit();">
                 <option value="">
                     <xar:mlstring>

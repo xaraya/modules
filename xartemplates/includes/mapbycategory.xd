@@ -5,15 +5,19 @@
             Article Map by Category
         </xar:mlstring>
     </h2>
+    <br />
     <form method="post" action="#$maplink#">
         <div>
             <xar:mlstring>
-                Filter :
+                Filter:
             </xar:mlstring>
+            &#160;
             <xar:data-input type="categories" bases="$basecids" />
-            &#160; <input type="submit" name="go" value="Go" />
+            &#160; 
+            <input type="submit" name="go" value="Go" />
         </div>
     </form>
+    <br />
     <xar:foreach in="$cattree" value="$childcats">
         <xar:foreach in="$childcats" value="$cat">
             #$cat['beforetags']#
