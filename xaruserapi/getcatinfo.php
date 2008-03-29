@@ -28,7 +28,8 @@ function categories_userapi_getcatinfo($args)
                         image,
                         parent_id,
                         left_id,
-                        right_id
+                        right_id,
+                        state
                    FROM $categoriestable ";
     if (isset($cid)) {
         $SQLquery .= "WHERE id = ?";
@@ -48,7 +49,7 @@ function categories_userapi_getcatinfo($args)
     }
 
     if (isset($cid)) {
-        list($cid, $name, $description, $image, $parent, $left, $right) = $result->fields;
+        list($cid, $name, $description, $image, $parent, $left, $right, $state) = $result->fields;
         $info = Array(
                       "cid"         => $cid,
                       "name"        => $name,
@@ -56,13 +57,14 @@ function categories_userapi_getcatinfo($args)
                       "image"       => $image,
                       "parent"      => $parent,
                       "left"        => $left,
-                      "right"       => $right
+                      "right"       => $right,
+                      "state"       => $state
                      );
         return $info;
     } else {
         $info = array();
         while (!$result->EOF) {
-            list($cid, $name, $description, $image, $parent, $left, $right) = $result->fields;
+            list($cid, $name, $description, $image, $parent, $left, $right, $state) = $result->fields;
             $info[$cid] = Array(
                                 "cid"         => $cid,
                                 "name"        => $name,
@@ -70,7 +72,8 @@ function categories_userapi_getcatinfo($args)
                                 "image"       => $image,
                                 "parent"      => $parent,
                                 "left"        => $left,
-                                "right"       => $right
+                                "right"       => $right,
+                                "state"       => $state
                                );
             $result->MoveNext();
         }

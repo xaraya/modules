@@ -34,29 +34,15 @@ function categories_init()
 
     $prefix = xarDB::getPrefix();
 
-    /* CREATE TABLE xar_categories (
-     *  id          int(11) NOT NULL auto_increment,
-     *  name         varchar(64) NOT NULL,
-     *  description  varchar(255) NOT NULL,
-     *  image        varchar(255) NOT NULL,
-     *  parent_id       int(11) NOT NULL default 0,
-     *  left_id         int(11) unsigned default NULL,
-     *  right_id        int(11) unsigned default NULL,
-     *  PRIMARY KEY (id),
-     *  KEY left_id (left_id),
-     *  KEY right_id (right_id),
-     *  KEY parent_id (parent_id)
-     * )
-    **/
-
     $fields = array(
         'id'         => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
         'name'        => array('type'=>'varchar','size'=>64,'null'=>false),
         'description' => array('type'=>'varchar','size'=>255,'null'=>false),
         'image'       => array('type'=>'varchar','size'=>255,'null'=>false),
-        'parent_id'      => array('type'=>'integer','null'=>false,'default'=>'0'),
-        'left_id'        => array('type'=>'integer','null'=>true,'unsigned'=>true),
-        'right_id'       => array('type'=>'integer','null'=>true,'unsigned'=>true)
+        'parent_id'   => array('type'=>'integer','null'=>false,'default'=>'0'),
+        'left_id'     => array('type'=>'integer','null'=>true,'unsigned'=>true),
+        'right_id'    => array('type'=>'integer','null'=>true,'unsigned'=>true),
+        'state'       => array('type'=>'integer','null'=>false,'default'=>'3')
     );
     $query = xarDBCreateTable($xartable['categories'],$fields);
 
@@ -89,16 +75,6 @@ function categories_init()
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-
-    /* CREATE TABLE $categorieslinkagetable (
-     *  category_id int(11) NOT NULL,
-     *  item_id int(11) NOT NULL,
-     *  modid int(11) NOT NULL,
-     *  KEY item_id (item_id),
-     *  KEY category_id (id),
-     *  KEY module_id (module_id)
-     * )
-    **/
 
     $fields = array(
         'category_id'   => array('type'=>'integer','null'=>false),
@@ -149,6 +125,20 @@ function categories_init()
     if (!$result) return;
 
     # --------------------------------------------------
+
+    /* Don't implement for now
+    $q = new xarQuery();
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_categories_linkage_summary";
+    if (!$q->run($query)) return;
+    $query = "CREATE TABLE " . $prefix . "_categories_linkage_summary (
+      category_id int(11) DEFAULT NULL,
+      module_id int(11) DEFAULT NULL,
+      itemtype int(11) DEFAULT NULL,
+      links int(11) DEFAULT NULL,
+      PRIMARY KEY  (category_id)
+    )";
+    if (!$q->run($query)) return;
+    */
 
     $q = new xarQuery();
     $query = "DROP TABLE IF EXISTS " . $prefix . "_categories_basecategories";
@@ -221,11 +211,6 @@ function categories_init()
                        'register_block_type',
                        array('modName'  => 'categories',
                              'blockType'=> 'navigation'))) return;
-
-    // Register BL tags
-    xarTplRegisterTag('categories', 'categories-navigation',
-                      array(),
-                      'categories_userapi_navigationTag');
 
     /*********************************************************************
     * Define instances for this module
@@ -528,59 +513,7 @@ function categories_upgrade($oldversion)
 */
 function categories_delete()
 {
-    xarTplUnregisterTag('categories-navigation');
     return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'categories'));
-
-/*    // Get database information
-    $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
-
-    // Delete categories table
-    $query = "DROP TABLE ".$xartable['categories'];
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    // Delete links table
-    $query = "DROP TABLE ".$xartable['categories_linkage'];
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    // Delete module variables
-//    xarModVars::delete('categories', 'bold');
-    xarModVars::delete('categories', 'catsperpage');
-
-    // Remove module hooks
-    if (!xarModUnregisterHook('item', 'new', 'GUI',
-                             'categories', 'admin', 'newhook')) return;
-    if (!xarModUnregisterHook('item', 'create', 'API',
-                             'categories', 'admin', 'createhook')) return;
-    if (!xarModUnregisterHook('item', 'modify', 'GUI',
-                             'categories', 'admin', 'modifyhook')) return;
-    if (!xarModUnregisterHook('item', 'update', 'API',
-                             'categories', 'admin', 'updatehook'))return;
-    if (!xarModUnregisterHook('item', 'delete', 'API',
-                             'categories', 'admin', 'deletehook'))return;
-    if (!xarModUnregisterHook('module', 'modifyconfig', 'GUI',
-                             'categories', 'admin', 'modifyconfighook'))return;
-    if (!xarModUnregisterHook('module', 'updateconfig', 'API',
-                             'categories', 'admin', 'updateconfighook'))return;
-    if (!xarModUnregisterHook('module', 'remove', 'API',
-                             'categories', 'admin', 'removehook')) return;
-
-    // UnRegister blocks
-    if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'unregister_block_type',
-                       array('modName'  => 'categories',
-                             'blockType'=> 'navigation'))) return;
-
-    // Remove Masks and Instances
-    xarRemoveMasks('categories');
-    xarRemoveInstances('categories');
-
-    // Deletion successful
-    return true;
-    */
 }
 
 ?>

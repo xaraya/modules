@@ -125,6 +125,32 @@ function categories_adminapi_linkcat($args)
        }
     }
 
+    /* Don't implement for now
+    // Remove the entries of these categories from the summary table
+    $categorieslinkagesummarytable = $xartable['categories_linkage_summary'];
+    $bindmarkers = '?' . str_repeat(',?',count($args['cids'])-1);
+    $sql = "DELETE FROM $categorieslinkagesummarytable
+            WHERE module_id = $args[modid] AND
+                  itemtype = $itemtype AND
+                  category_id IN ($bindmarkers)";
+    $result = $dbconn->Execute($sql,$args['cids']);
+
+    // Insert the entries of these categories from the summary table
+    foreach ($args['cids'] as $cid)
+    {
+      $sql = "INSERT INTO $categorieslinkagesummarytable (
+                category_id,
+                item_id,
+                itemtype,
+                module_id,
+                links)
+              VALUES(?,?,?,?,?)";
+      $bindvars = array($cid, $iid, $itemtype, $args['modid'], 0);
+      $result =& $dbconn->Execute($sql,$bindvars);
+      if (!$result) return;
+    }
+    */
+
     return true;
 }
 

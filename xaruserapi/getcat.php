@@ -70,7 +70,8 @@ function categories_userapi_getcat($args)
                         P1.image,
                         P1.parent_id,
                         P1.left_id,
-                        P1.right_id
+                        P1.right_id,
+                        P1.state
                    FROM $categoriestable P1,
                         $categoriestable P2
                   WHERE P1.left_id
@@ -211,7 +212,8 @@ function categories_userapi_getcat($args)
                 $image,
                 $parent,
                 $left,
-                $right
+                $right,
+                $state
                ) = $result->fields;
         $result->MoveNext();
 
@@ -240,7 +242,8 @@ function categories_userapi_getcat($args)
                 'image'       => $image,
                 'parent'      => $parent,
                 'left'        => $left,
-                'right'       => $right
+                'right'       => $right,
+                'state'       => $state
             );
         }
     }
