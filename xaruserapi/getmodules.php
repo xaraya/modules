@@ -60,12 +60,18 @@ function comments_userapi_getmodules($args)
     }
 
     // Get items
-    $sql = "SELECT $ctable[modid], $ctable[itemtype], COUNT(*), COUNT(DISTINCT $ctable[objectid])
-            FROM $commentstable
-            WHERE $where_status $where_mod
-            GROUP BY $ctable[modid], $ctable[itemtype]";
-
-    $result = $dbconn->Execute($sql);
+    if($dbconn->databaseType == 'sqlite') {
+        //Older sqlite versions don't allow COUNT(DISTINCT ..) and related subqueries
+        $sql = "SELECT $ctable[modid], $ctable[itemtype], COUNT(*), 0 ";
+    } else {
+        $sql = "SELECT $ctable[modid], $ctable[itemtype], COUNT(*), 
+                       COUNT(DISTINCT $ctable[objectid])";
+    }
+    $sql .= "FROM $commentstable
+             WHERE $where_status $where_mod
+             GROUP BY $ctable[modid], $ctable[itemtype]";
+    
+    $result =& $dbconn->Execute($sql);
     if (!$result) return;
 
     $modlist = array();
@@ -73,6 +79,17 @@ function comments_userapi_getmodules($args)
         list($modid,$itemtype,$numcomments,$numitems) = $result->fields;
         if (!isset($modlist[$modid])) {
             $modlist[$modid] = array();
+        }
+        if ($dbconn->databaseType == 'sqlite') {
+            $sql = "SELECT COUNT(*) 
+                    FROM (SELECT DISTINCT $ctable[objectid]
+                          FROM $commentstable
+                          WHERE $where_status AND 
+                                $ctable[modid] = $modid AND
+                                $ctable[itemtype] = $itemtype
+                    )";
+            $subresult =& $dbconn->Execute($sql); 
+            list($numitems) = $subresult->fields;
         }
         $modlist[$modid][$itemtype] = array('items' => $numitems, 'comments' => $numcomments);
         $result->MoveNext();
