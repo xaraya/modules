@@ -1,0 +1,12 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="$layout eq 'prevnext'">
+      <xar:template file="navigation-prevnext" />
+    <xar:elseif condition="$layout eq 'trails'" />
+      <xar:template file="navigation-trails" />
+    <xar:elseif condition="$layout eq 'tree'" />
+      <xar:template file="navigation-tree" />
+    <xar:else />
+      <xar:template file="navigation-tree" />
+    </xar:if>
+</xar:template>
+
