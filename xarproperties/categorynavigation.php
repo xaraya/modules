@@ -30,7 +30,7 @@ sys::import('modules.categories.xarproperties.categorytree');
 
 class CategoryNavigationProperty extends SelectProperty
 {
-    public $id         = 30072;
+    public $id         = 30073;
     public $name       = 'categorynavigation';
     public $desc       = 'Category Navigation';
     public $reqmodules = array('categories');
