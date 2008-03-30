@@ -15,7 +15,7 @@
     </h2>
     <table>
         <xar:comment>Create column headings</xar:comment>
-        <th scope="col"><a href="#xarServerGetCurrentURL(array('archive'=&gt;NULL,'startnum'=&gt;NULL))#" title="#xarML('View latest')#"><xar:mlstring>Year</xar:mlstring></a></th>
+        <th scope="col"><a href="#xarServerGetCurrentURL(array('archive'=&gt;NULL,'startnum'=&gt;NULL,'aid'=&gt;NULL))#" title="#xarML('View latest')#"><xar:mlstring>Year</xar:mlstring></a></th>
         <xar:for start="$i=1" test="$i<=12" iter="$i=$i+1">
             <th scope="col">#xarLocaleFormatDate('%b',strtotime('2000-'.$i.'-01'))#</th>
         </xar:for>
@@ -30,7 +30,7 @@
             <tr class="#$year_class#">
                 <xar:comment>The year link</xar:comment>
                 <th scope="row">
-                    #$loop:years:key# <a href="#xarServerGetCurrentURL(array('archive'=&gt;$loop:years:item.archive,'startnum'=&gt;NULL))#">(#$loop:years:item.count#)</a>
+                    #$loop:years:key# <a href="#xarServerGetCurrentURL(array('archive'=&gt;$loop:years:item.archive,'startnum'=&gt;NULL,'aid'=&gt;NULL))#">(#$loop:years:item.count#)</a>
                 </th>
 
                 <xar:comment>The month links</xar:comment>
@@ -43,7 +43,7 @@
 
                     <td class="#$month_class#">
                         <xar:if condition="!empty($loop:item)">
-                            <a href="#xarServerGetCurrentURL(array('archive'=&gt;$loop:item.archive,'startnum'=&gt;NULL))#">#$loop:item.count#</a>
+                            <a href="#xarServerGetCurrentURL(array('archive'=&gt;$loop:item.archive,'startnum'=&gt;NULL,'aid'=&gt;NULL))#">#$loop:item.count#</a>
                         </xar:if>
                     </td>
                 </xar:loop>
