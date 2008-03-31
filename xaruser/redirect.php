@@ -53,11 +53,23 @@ function articles_user_redirect($args)
         }
         if ($value['format'] == 'url' && !empty($article[$field]) && $article[$field] != 'http://') {
 // TODO: add some verifications here !
+            $hooks = xarModCallHooks('item', 'display', $id,
+                                     array('module'    => 'articles',
+                                           'itemtype'  => $ptid,
+                                          ),
+                                     'articles'
+                                    );
             xarResponseRedirect($article[$field]);
             return true;
         } elseif ($value['format'] == 'urltitle' && !empty($article[$field]) && substr($article[$field],0,2) == 'a:') {
             $array = unserialize($article[$field]);
             if (!empty($array['link']) && $array['link'] != 'http://') {
+                $hooks = xarModCallHooks('item', 'display', $id,
+                                         array('module'    => 'articles',
+                                               'itemtype'  => $ptid,
+                                              ),
+                                         'articles'
+                                        );
                 xarResponseRedirect($array['link']);
                 return true;
             }
