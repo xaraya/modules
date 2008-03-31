@@ -1,7 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:template file="publinks" type="module" />
-<xar:categories-navigation layout="trails" showchildren="1" module="articles" itemtype="$ptid" itemid="$id" cids="$cids" />
+<xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="articles" itemtype="$ptid" itemid="$id" cids="$cids" />
 <div class="xar-accent-outline xar-fullwidth">
     <div class="xar-accent-outline xar-fullwidth">
         <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
