@@ -28,7 +28,7 @@ function hitcount_userapi_getitems($args)
 {
     // Get arguments from argument array
     extract($args);
-    
+
     // Argument check
     if (!isset($modname) && !isset($modid)) {
         xarSessionSetVar('errormsg', _MODARGSERROR);
@@ -71,29 +71,29 @@ function hitcount_userapi_getitems($args)
     }
 
     // Database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $hitcounttable = $xartable['hitcount'];
 
     // Get items
     $bindvars = array();
-    $query = "SELECT xar_itemid, xar_hits
+    $query = "SELECT itemid, hits, lasthit 
             FROM $hitcounttable
-            WHERE xar_moduleid = ?
-              AND xar_itemtype = ?";
+            WHERE module_id = ?
+              AND itemtype = ?";
     $bindvars[] = (int) $modid;
     $bindvars[] = (int) $itemtype;
     if (count($itemids) > 0) {
         $bindmarkers = '?' . str_repeat(',?',count($itemids)-1);
-        $query .= " AND xar_itemid IN ($bindmarkers)";
+        $query .= " AND itemid IN ($bindmarkers)";
         foreach ($itemids as $itemid) {
             $bindvars[] = (int) $itemid;
         }
     }
     if ($sort == 'numhits') {
-        $query .= " ORDER BY xar_hits $sortorder, xar_itemid DESC";
+        $query .= " ORDER BY hits $sortorder, itemid DESC";
     } else {
-        $query .= " ORDER BY xar_itemid $sortorder";
+        $query .= " ORDER BY itemid $sortorder";
     }
 
     if (!empty($numitems) && !empty($startnum)) {

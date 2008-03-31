@@ -100,7 +100,7 @@ function hitcount_admin_view()
             $data['numitems'] = 0;
             $data['numhits'] = '';
         }
-        $numstats = xarModGetVar('hitcount','numstats');
+        $numstats = xarModVars::get('hitcount','numstats');
         if (empty($numstats)) {
             $numstats = 100;
         }
@@ -126,7 +126,7 @@ function hitcount_admin_view()
                                         'sort' => $sort,
                                         'sortorder' => $sortorder
                                         ));
-        $showtitle = xarModGetVar('hitcount','showtitle');
+        $showtitle = xarModVars::get('hitcount','showtitle');
         if (!empty($showtitle)) {
            $itemids = array_keys($getitems);
            $itemlinks = xarModAPIFunc($modinfo['name'],'user','getitemlinks',
@@ -180,7 +180,7 @@ function hitcount_admin_view()
                                                             'sort' => 'numhits',
                                                            'sortorder' => $sortorder
                                                             ));
- //       }   
+ //       }
  //       $data['sortorder'] = $sortorder;
     }
 

@@ -1,39 +1,41 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head">
-  <span class="xar-mod-title">
-    <xar:mlstring>Hit Count</xar:mlstring>
-  </span>
-</div>
-<div class="xar-mod-body">
-  <h2><xar:mlstring>Top Viewed Items</xar:mlstring></h2>
-  <xar:if condition="!xarSecurityCheck('AdminHitcount',0)">
-    <xar:set name="isadmin">0</xar:set>
-  <xar:else/>
-    <strong><xar:mlstring>Note: as administrator, you may also see unapproved items here</xar:mlstring></strong>
-    <xar:set name="isadmin">1</xar:set>
-  </xar:if>
-  <ul>
-  <xar:foreach in="$moditems" value="$moditem">
-    <xar:comment>
-      Note: if you still want to show modules without link information to everyone,
-            you should remove the following if condition
-    </xar:comment>
-    <xar:if condition="empty($moditem['toplinks']) and !$isadmin">
-      <xar:continue />
-    </xar:if>
-    <li> <a href="#$moditem['link']#">#$moditem['name']#</a> =&gt; #$moditem['numitems']# <xar:mlstring>items</xar:mlstring>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+    <div class="xar-mod-head">
+      <span class="xar-mod-title">
+        <xar:mlstring>Hit Count</xar:mlstring>
+      </span>
+    </div>
+    <div class="xar-mod-body">
+      <h2><xar:mlstring>Top Viewed Items</xar:mlstring></h2>
+      <xar:if condition="!xarSecurityCheck('AdminHitcount',0)">
+        <xar:set name="isadmin">0</xar:set>
+      <xar:else/>
+        <strong><xar:mlstring>Note: as administrator, you may also see unapproved items here</xar:mlstring></strong>
+        <xar:set name="isadmin">1</xar:set>
+      </xar:if>
       <ul>
-        <xar:if condition="!empty($moditem['toplinks'])">
-          <xar:foreach in="$moditem['toplinks']" value="$toplink">
-            <li> <a href="#$toplink['url']#" title="#$toplink['title']#">#$toplink['label']#</a> #$toplink['hits']# <xar:mlstring>hits</xar:mlstring> </li>
-          </xar:foreach>
-        <xar:else />
-          <xar:foreach in="$moditem['tophits']" value="$topitem">
-            <li> item #$topitem['itemid']# =&gt; #$topitem['hits']# <xar:mlstring>hits</xar:mlstring> </li>
-          </xar:foreach>
+      <xar:foreach in="$moditems" value="$moditem">
+        <xar:comment>
+          Note: if you still want to show modules without link information to everyone,
+                you should remove the following if condition
+        </xar:comment>
+        <xar:if condition="empty($moditem['toplinks']) and !$isadmin">
+          <xar:continue />
         </xar:if>
+        <li> <a href="#$moditem['link']#">#$moditem['name']#</a> =&gt; #$moditem['numitems']# <xar:mlstring>items</xar:mlstring>
+          <ul>
+            <xar:if condition="!empty($moditem['toplinks'])">
+              <xar:foreach in="$moditem['toplinks']" value="$toplink">
+                <li> <a href="#$toplink['url']#" title="#$toplink['title']#">#$toplink['label']#</a> #$toplink['hits']# <xar:mlstring>hits</xar:mlstring> </li>
+              </xar:foreach>
+            <xar:else />
+              <xar:foreach in="$moditem['tophits']" value="$topitem">
+                <li> item #$topitem['itemid']# =&gt; #$topitem['hits']# <xar:mlstring>hits</xar:mlstring> </li>
+              </xar:foreach>
+            </xar:if>
+          </ul>
+        </li>
+      </xar:foreach>
       </ul>
-    </li>
-  </xar:foreach>
-  </ul>
-</div>
+    </div>
+</xar:template>

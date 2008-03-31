@@ -1,158 +1,160 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>Hit Count Administration</xar:mlstring>
-    </span>
-</div>
-<div class="xar-mod-body">
-    <xar:template type="module" file="admin-menu" />
-    <h2><xar:mlstring>View Statistics</xar:mlstring></h2>
-<xar:if condition="empty($modid)">
-        <table class="xar-fullwidth">
-            <tr>
-                <th>
-                    <xar:mlstring>Module Name</xar:mlstring>
-                </th>
-                <th>
-                    <xar:mlstring>Module Items</xar:mlstring>
-                </th>
-                <th>
-                    <xar:mlstring>Total Hits</xar:mlstring>
-                </th>
-                <th>
-                    <xar:mlstring>Action</xar:mlstring>
-                </th>
-            </tr>
-            <xar:if condition="empty($moditems) or count($moditems) eq '0'">
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>Hit Count Administration</xar:mlstring>
+        </span>
+    </div>
+    <div class="xar-mod-body">
+        <xar:template type="module" file="admin-menu" />
+        <h2><xar:mlstring>View Statistics</xar:mlstring></h2>
+    <xar:if condition="empty($modid)">
+            <table class="xar-fullwidth">
                 <tr>
-                    <td colspan="4" >
-                        <xar:mlstring>
-                            There are currently no hit counts in the database...
-                        </xar:mlstring>
-                    </td>
+                    <th>
+                        <xar:mlstring>Module Name</xar:mlstring>
+                    </th>
+                    <th>
+                        <xar:mlstring>Module Items</xar:mlstring>
+                    </th>
+                    <th>
+                        <xar:mlstring>Total Hits</xar:mlstring>
+                    </th>
+                    <th>
+                        <xar:mlstring>Action</xar:mlstring>
+                    </th>
                 </tr>
-            <xar:else />
-                <xar:foreach in="$moditems" value="$moditem">
+                <xar:if condition="empty($moditems) or count($moditems) eq '0'">
                     <tr>
-                        <td class="xar-align-left">
-                            <a href="#$moditem['link']#">#$moditem['name']#</a>
+                        <td colspan="4" >
+                            <xar:mlstring>
+                                There are currently no hit counts in the database...
+                            </xar:mlstring>
+                        </td>
+                    </tr>
+                <xar:else />
+                    <xar:foreach in="$moditems" value="$moditem">
+                        <tr>
+                            <td class="xar-align-left">
+                                <a href="#$moditem['link']#">#$moditem['name']#</a>
+                            </td>
+                            <td class="xar-align-right">
+                                #$moditem['numitems']#
+                            </td>
+                            <td class="xar-align-right">
+                                #$moditem['numhits']#
+                            </td>
+                            <td class="xar-align-center">
+                                <a href="#$moditem['delete']#"><b><xar:mlstring>Delete</xar:mlstring></b></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                            </td>
+                        </tr>
+                    </xar:foreach>
+                    <tr>
+                        <td class="xar-align-center">
+                            <b><xar:mlstring>Grand Total</xar:mlstring></b>
                         </td>
                         <td class="xar-align-right">
-                            #$moditem['numitems']#
+                            <b>#$numitems#</b>
                         </td>
                         <td class="xar-align-right">
-                            #$moditem['numhits']#
+                            <b>#$numhits#</b>
                         </td>
                         <td class="xar-align-center">
-                            <a href="#$moditem['delete']#"><b><xar:mlstring>Delete</xar:mlstring></b></a>
+                            <a href="#$delete#"><xar:mlstring>Delete All</xar:mlstring></a>
                         </td>
                     </tr>
+                </xar:if>
+                <tr>
+                    <td colspan="4">
+                        <div class="xar-accent xar-norm-outline xar-padding-thick">
+                            <xar:mlstring>
+                                By clicking on <b>Delete</b> you can delete all hit counts associated with a particular
+                                module. Clicking on a module will take you to that module's statistics page containing
+                                the figures for each of that module's items that have hit counts associated with them.
+                                From there you can delete all hit counts associated with a particular item.
+                            </xar:mlstring>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+    <xar:else/>
+            <h3>
+                <xar:ml><xar:mlstring>Module #(1)</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar></xar:ml>
+            </h3>
+            <table class="xar-fullwidth">
+                <tr>
+                    <th>
+                        <a href="#$sortlink['itemid']#"><xar:mlstring>Item Id</xar:mlstring></a>
+                    </th>
+                    <th>
+                        <a href="#$sortlink['numhits']#"><xar:mlstring>Total Hits</xar:mlstring></a>
+                    </th>
+                    <th>
+                        <xar:mlstring>Action</xar:mlstring>
+                    </th>
+                </tr>
+                <xar:if condition="empty($moditems) or count($moditems) eq '0'">
                     <tr>
-                        <td colspan="5">
+                        <td colspan="3" align="center">
+                            <xar:mlstring>
+                                There are currently no hit counts attached to this module...
+                            </xar:mlstring>
                         </td>
                     </tr>
-                </xar:foreach>
-                <tr>
-                    <td class="xar-align-center">
-                        <b><xar:mlstring>Grand Total</xar:mlstring></b>
-                    </td>
-                    <td class="xar-align-right">
-                        <b>#$numitems#</b>
-                    </td>
-                    <td class="xar-align-right">
-                        <b>#$numhits#</b>
-                    </td>
-                    <td class="xar-align-center">
-                        <a href="#$delete#"><xar:mlstring>Delete All</xar:mlstring></a>
-                    </td>
-                </tr>
-            </xar:if>
-            <tr>
-                <td colspan="4">
-                    <div class="xar-accent xar-norm-outline xar-padding-thick">
-                        <xar:mlstring>
-                            By clicking on <b>Delete</b> you can delete all hit counts associated with a particular
-                            module. Clicking on a module will take you to that module's statistics page containing
-                            the figures for each of that module's items that have hit counts associated with them.
-                            From there you can delete all hit counts associated with a particular item.
-                        </xar:mlstring>
-                    </div>
-                </td>
-            </tr>
-        </table>
-<xar:else/>
-        <h3>
-            <xar:ml><xar:mlstring>Module #(1)</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar></xar:ml>
-        </h3>
-        <table class="xar-fullwidth">
-            <tr>
-                <th>
-                    <a href="#$sortlink['itemid']#"><xar:mlstring>Item Id</xar:mlstring></a>
-                </th>
-                <th>
-                    <a href="#$sortlink['numhits']#"><xar:mlstring>Total Hits</xar:mlstring></a>
-                </th>
-                <th>
-                    <xar:mlstring>Action</xar:mlstring>
-                </th>
-            </tr>
-            <xar:if condition="empty($moditems) or count($moditems) eq '0'">
-                <tr>
-                    <td colspan="3" align="center">
-                        <xar:mlstring>
-                            There are currently no hit counts attached to this module...
-                        </xar:mlstring>
-                    </td>
-                </tr>
-            <xar:else />
-                <xar:foreach in="$moditems" key="$itemid" value="$moditem">
-                    <tr>
-                        <xar:if condition="!empty($moditem['title']) and !empty($moditem['link'])">
-                                <td class="xar-align-left">
-                            #$itemid# - <a href="#$moditem['link']#">#$moditem['title']# </a>
-                        </td>
-                        <xar:else/>
+                <xar:else />
+                    <xar:foreach in="$moditems" key="$itemid" value="$moditem">
+                        <tr>
+                            <xar:if condition="!empty($moditem['title']) and !empty($moditem['link'])">
+                                    <td class="xar-align-left">
+                                #$itemid# - <a href="#$moditem['link']#">#$moditem['title']# </a>
+                            </td>
+                            <xar:else/>
+                                    <td class="xar-align-right">
+                                #$itemid#
+                            </td>
+                            </xar:if>
                                 <td class="xar-align-right">
-                            #$itemid#
+                                #$moditem['numhits']#
+                            </td>
+                                <td class="xar-align-center">
+                                <a href="#$moditem['delete']#"><b><xar:mlstring>Delete</xar:mlstring></b></a>
+                            </td>
+                        </tr>
+                    </xar:foreach>
+                <xar:if condition="!empty($pager)">
+                    <tr>
+                        <td colspan="3" align="center">
+                            #$pager#
                         </td>
-                        </xar:if>
+                    </tr>
+                </xar:if>
+                    <tr>
+                            <td class="xar-align-center">
+                            <b><xar:mlstring>Grand Total</xar:mlstring></b>:
+                        </td>
                             <td class="xar-align-right">
-                            #$moditem['numhits']#
+                            <b>#$numhits#</b>
                         </td>
                             <td class="xar-align-center">
-                            <a href="#$moditem['delete']#"><b><xar:mlstring>Delete</xar:mlstring></b></a>
+                            <a href="#$delete#"><xar:mlstring>Delete All</xar:mlstring></a>
                         </td>
                     </tr>
-                </xar:foreach>
-            <xar:if condition="!empty($pager)">
+                </xar:if>
                 <tr>
-                    <td colspan="3" align="center">
-                        #$pager#
+                    <td colspan="3">
+                            <div class="xar-accent xar-norm-outline xar-padding-thick">
+                            <xar:mlstring>
+                                By clicking on <b>Delete</b> you can delete all hit counts associated with a particular
+                                module's item.
+                            </xar:mlstring>
+                        </div>
                     </td>
                 </tr>
-            </xar:if>
-                <tr>
-                        <td class="xar-align-center">
-                        <b><xar:mlstring>Grand Total</xar:mlstring></b>:
-                    </td>
-                        <td class="xar-align-right">
-                        <b>#$numhits#</b>
-                    </td>
-                        <td class="xar-align-center">
-                        <a href="#$delete#"><xar:mlstring>Delete All</xar:mlstring></a>
-                    </td>
-                </tr>
-            </xar:if>
-            <tr>
-                <td colspan="3">
-                        <div class="xar-accent xar-norm-outline xar-padding-thick">
-                        <xar:mlstring>
-                            By clicking on <b>Delete</b> you can delete all hit counts associated with a particular
-                            module's item.
-                        </xar:mlstring>
-                    </div>
-                </td>
-            </tr>
-        </table>
-</xar:if>
-</div>
+            </table>
+    </xar:if>
+    </div>
+</xar:template>

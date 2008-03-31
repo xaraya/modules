@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Hitcount
  *
@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/177.html
  * @author Hitcount Module Development Team
  */
- 
+
 /*
  * Table information for hitcount module
  *
@@ -23,7 +23,7 @@ function hitcount_xartables()
     $xartable = array();
 
     // Name for hitcount database entities
-    $hitcount = xarDBGetSiteTablePrefix() . '_hitcount';
+    $hitcount = xarDB::getPrefix() . '_hitcount';
 
     // Table name
     $xartable['hitcount'] = $hitcount;

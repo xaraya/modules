@@ -14,7 +14,7 @@
 
 /**
  * return the field names and correct values for joining on hitcount table
- * example : SELECT ..., $moduleid, $itemid, $hits,...
+ * example : SELECT ..., $module_id, $itemid, $hits,...
  *           FROM ...
  *           LEFT JOIN $table
  *               ON $field = <name of itemid field>
@@ -27,13 +27,12 @@
  * @param $args['itemtype'] item type (optional) or array of itemtypes
  * @param $args['itemids'] optional array of itemids that we are selecting on
  * @return array('table' => '_hitcount',
- *               'field' => '_hitcount.xar_itemid',
- *               'where' => '_hitcount.xar_itemid IN (...)
- *                           AND _hitcount.xar_moduleid = 123',
- *               'moduleid'  => '_hitcount.xar_moduleid',
+ *               'field' => '_hitcount.itemid',
+ *               'where' => '_hitcount.itemid IN (...)
+ *                           AND _hitcount.module_id = 123',
+ *               'moduleid'  => '_hitcount.module_id',
  *               ...
- *               'hits'  => '_hitcount.xar_hits')
- * @todo MichelV Remove hardcoded table prefix xar_
+ *               'hits'  => '_hitcount.hits')
  */
 function hitcount_userapi_leftjoin($args)
 {
@@ -63,8 +62,8 @@ function hitcount_userapi_leftjoin($args)
     }
 
     // Table definition
-    $xartable =& xarDBGetTables();
-    $dbconn =& xarDBGetConn();
+    $xartable = xarDB::getTables();
+    $dbconn = xarDB::getConn();
     $userstable = $xartable['hitcount'];
 
     $leftjoin = array();
@@ -73,12 +72,12 @@ function hitcount_userapi_leftjoin($args)
     $leftjoin['table'] = $xartable['hitcount'];
     $leftjoin['field'] = '';
     if (!empty($modid)) {
-        $leftjoin['field'] .= $xartable['hitcount'] . '.xar_moduleid = ' . $modid;
+        $leftjoin['field'] .= $xartable['hitcount'] . '.module_id = ' . $modid;
         $leftjoin['field'] .= ' AND ';
     }
     if (isset($itemtype)) { // could be 0 (= most likely)
         if (is_numeric($itemtype)) {
-            $leftjoin['field'] .= $xartable['hitcount'] . '.xar_itemtype = ' . $itemtype;
+            $leftjoin['field'] .= $xartable['hitcount'] . '.itemtype = ' . $itemtype;
             $leftjoin['field'] .= ' AND ';
         } elseif (is_array($itemtype) && count($itemtype) > 0) {
             $seentype = array();
@@ -88,31 +87,31 @@ function hitcount_userapi_leftjoin($args)
             }
             if (count($seentype) == 1) {
                 $itemtypes = array_keys($seentype);
-                $leftjoin['field'] .= $xartable['hitcount'] . '.xar_itemtype = ' . $itemtypes[0];
+                $leftjoin['field'] .= $xartable['hitcount'] . '.itemtype = ' . $itemtypes[0];
                 $leftjoin['field'] .= ' AND ';
             } elseif (count($seentype) > 1) {
                 $itemtypes = join(', ', array_keys($seentype));
-                $leftjoin['field'] .= $xartable['hitcount'] . '.xar_itemtype IN (' . $itemtypes . ')';
+                $leftjoin['field'] .= $xartable['hitcount'] . '.itemtype IN (' . $itemtypes . ')';
                 $leftjoin['field'] .= ' AND ';
             }
         }
     }
-    $leftjoin['field'] .= $xartable['hitcount'] . '.xar_itemid';
+    $leftjoin['field'] .= $xartable['hitcount'] . '.itemid';
 
     if (count($itemids) > 0) {
         $allids = join(', ', $itemids);
-        $leftjoin['where'] = $xartable['hitcount'] . '.xar_itemid IN (' . $allids . ')';
+        $leftjoin['where'] = $xartable['hitcount'] . '.itemid IN (' . $allids . ')';
 /*
         if (!empty($modid)) {
             $leftjoin['where'] .= ' AND ' .
-                                  $xartable['hitcount'] . '.xar_moduleid = ' .
+                                  $xartable['hitcount'] . '.module_id = ' .
                                   $modid;
         }
 */
     } else {
 /*
         if (!empty($modid)) {
-            $leftjoin['where'] = $xartable['hitcount'] . '.xar_moduleid = ' .
+            $leftjoin['where'] = $xartable['hitcount'] . '.module_id = ' .
                                  $modid;
         } else {
             $leftjoin['where'] = '';
@@ -122,9 +121,9 @@ function hitcount_userapi_leftjoin($args)
     }
 
     // Add available columns in the hitcount table
-    $columns = array('moduleid','itemtype','itemid','hits');
+    $columns = array('module_id','itemtype','itemid','hits');
     foreach ($columns as $column) {
-        $leftjoin[$column] = $xartable['hitcount'] . '.xar_' . $column;
+        $leftjoin[$column] = $xartable['hitcount'] . '.' . $column;
     }
 
     return $leftjoin;

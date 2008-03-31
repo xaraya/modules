@@ -27,9 +27,7 @@ function hitcount_userapi_get($args)
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'object ID', 'user', 'get', 'Hitcount');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
 
     // When called via hooks, modname will be empty, but we get it from the
@@ -46,9 +44,7 @@ function hitcount_userapi_get($args)
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module name', 'user', 'get', 'Hitcount');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
     if (!isset($itemtype) || !is_numeric($itemtype)) {
          if (isset($extrainfo) && is_array($extrainfo) &&
@@ -64,16 +60,16 @@ function hitcount_userapi_get($args)
     if(!xarSecurityCheck('ViewHitcountItems',1,'Item',"$modname:$itemtype:$objectid")) return;
 
     // Database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $hitcounttable = $xartable['hitcount'];
 
     // Get items
-    $query = "SELECT xar_hits
+    $query = "SELECT hits, lasthit 
             FROM $hitcounttable
-            WHERE xar_moduleid = ?
-              AND xar_itemtype = ?
-              AND xar_itemid = ?";
+            WHERE module_id = ?
+              AND itemtype = ?
+              AND itemid = ?";
     $bindvars = array((int)$modid, (int)$itemtype, (int)$objectid);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;

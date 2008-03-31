@@ -29,15 +29,15 @@ function hitcount_admin_modifyconfig()
 
             // Quick Data Array
             $data['authid'] = xarSecGenAuthKey();
-            $data['numitems'] = xarModGetVar('hitcount','numitems');
+            $data['numitems'] = xarModVars::get('hitcount','numitems');
             if (empty($data['numitems'])) {
                 $data['numitems'] = 10;
             }
-            $data['numstats'] = xarModGetVar('hitcount','numstats');
+            $data['numstats'] = xarModVars::get('hitcount','numstats');
             if (empty($data['numstats'])) {
                 $data['numstats'] = 100;
             }
-            $data['showtitle'] = xarModGetVar('hitcount','showtitle');
+            $data['showtitle'] = xarModVars::get('hitcount','showtitle');
             if (!empty($data['showtitle'])) {
                 $data['showtitle'] = 1;
             }
@@ -51,10 +51,10 @@ function hitcount_admin_modifyconfig()
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
             // Update module variables
-            xarModSetVar('hitcount', 'countadmin', $countadmin);
-            xarModSetVar('hitcount', 'numitems', $numitems);
-            xarModSetVar('hitcount', 'numstats', $numstats);
-            xarModSetVar('hitcount', 'showtitle', $showtitle);
+            xarModVars::set('hitcount', 'countadmin', $countadmin);
+            xarModVars::set('hitcount', 'numitems', $numitems);
+            xarModVars::set('hitcount', 'numstats', $numstats);
+            xarModVars::set('hitcount', 'showtitle', $showtitle);
             xarResponseRedirect(xarModURL('hitcount', 'admin', 'modifyconfig'));
             // Return
             return true;

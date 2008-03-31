@@ -34,9 +34,7 @@ function hitcount_adminapi_delete($args)
         if (!is_numeric($objectid)) {
             $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                         'object ID', 'admin', 'delete', 'Hitcount');
-            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                            new SystemException($msg));
-            return false;
+            throw new Exception($msg);
         }
         $itemid = $objectid;
 
@@ -54,9 +52,7 @@ function hitcount_adminapi_delete($args)
         if (empty($modid)) {
             $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                         'module name', 'admin', 'delete', 'Hitcount');
-            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                           new SystemException($msg));
-            return false;
+            throw new Exception($msg);
         }
 
         if (!isset($itemtype) || !is_numeric($itemtype)) {
@@ -72,15 +68,15 @@ function hitcount_adminapi_delete($args)
     // avoid potential security holes or just too much wasted processing
         if(!xarSecurityCheck('DeleteHitcountItem',1,'Item',"$modname:$itemtype:$itemid")) return;
 
-        $dbconn =& xarDBGetConn();
-        $xartable =& xarDBGetTables();
+        $dbconn = xarDB::getConn();
+        $xartable = xarDB::getTables();
         $hitcounttable = $xartable['hitcount'];
 
         // Don't bother looking if the item exists here...
         $query = "DELETE FROM $hitcounttable
-                WHERE xar_moduleid = ?
-                  AND xar_itemtype = ?
-                  AND xar_itemid = ?";
+                WHERE module_id = ?
+                  AND itemtype = ?
+                  AND itemid = ?";
         $bindvars = array((int)$modid, (int)$itemtype, (int)$itemid);
         $result =& $dbconn->Execute($query,$bindvars);
         if (!$result) return;
@@ -99,8 +95,8 @@ function hitcount_adminapi_delete($args)
         if (!xarSecurityCheck('AdminHitcount')) return;
 
         // Database information
-        $dbconn =& xarDBGetConn();
-        $xartable =& xarDBGetTables();
+        $dbconn = xarDB::getConn();
+        $xartable = xarDB::getTables();
         $hitcounttable = $xartable['hitcount'];
 
         $bindvars = array();
@@ -109,19 +105,17 @@ function hitcount_adminapi_delete($args)
             if (!is_numeric($modid)) {
                 $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                              'module id', 'admin', 'delete', 'Hitcount');
-                xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                                new SystemException($msg));
-                return false;
+                throw new Exception($msg);
             }
             if (empty($itemtype) || !is_numeric($itemtype)) {
                 $itemtype = 0;
             }
-            $query .= " WHERE xar_moduleid = ?
-                          AND xar_itemtype = ?";
+            $query .= " WHERE module_id = ?
+                          AND itemtype = ?";
             $bindvars[] = (int) $modid;
             $bindvars[] = (int) $itemtype;
             if (!empty($itemid)) {
-                $query .= " AND xar_itemid = ?";
+                $query .= " AND itemid = ?";
                 $bindvars[] = (int) $itemid;
             }
         }

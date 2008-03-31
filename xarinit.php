@@ -11,9 +11,9 @@
  * @link http://xaraya.com/index.php/release/177.html
  * @author Hitcount Module Development Team
  */
- 
-/** 
- * initialise the hitcount module 
+
+/**
+ * initialise the hitcount module
  * Initialisation functions for hitcount
  *
  * @Author Original author: Jim McDonald
@@ -21,62 +21,66 @@
 function hitcount_init()
 {
     // Set ModVar
-    xarModSetVar('hitcount', 'countadmin', 0);
+    xarModVars::set('hitcount', 'countadmin', 0);
 
     // Get database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     //Load Table Maintenance API
-    xarDBLoadTableMaintenanceAPI();
+    sys::import('xaraya.tableddl');
 
     // Create tables
     $query = xarDBCreateTable($xartable['hitcount'],
-                             array('xar_hitcountid' => array('type'        => 'integer',
+                             array('id'         => array('type'        => 'integer',
                                                             'null'        => false,
                                                             'default'     => '0',
                                                             'increment'   => true,
                                                             'primary_key' => true),
 // TODO: replace with unique id
-                                   'xar_moduleid'   => array('type'        => 'integer',
+                                   'module_id'  => array('type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
                                                             'default'     => '0'),
-                                   'xar_itemtype'   => array('type'        => 'integer',
+                                   'itemtype'   => array('type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
                                                             'default'     => '0'),
-                                   'xar_itemid'     => array('type'        => 'integer',
+                                   'itemid'     => array('type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
                                                             'default'     => '0'),
-                                   'xar_hits'       => array('type'        => 'integer',
+                                   'hits'       => array('type'        => 'integer',
                                                             'null'        => false,
                                                             'size'        => 'big',
+                                                            'default'     => '0'),
+                                   'lasthit'    => array('type'        => 'integer',
+                                                            'unsigned'    => true,
+                                                            'null'        => false,
                                                             'default'     => '0')));
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
     $query = xarDBCreateIndex($xartable['hitcount'],
-                             array('name'   => 'i_' . xarDBGetSiteTablePrefix() . '_hitcombo',
-                                   'fields' => array('xar_moduleid','xar_itemtype', 'xar_itemid'),
+                             array('name'   => 'i_' . xarDB::getPrefix() . '_hitcombo',
+                                   'fields' => array('module_id','itemtype', 'itemid'),
                                    'unique' => false));
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
     $query = xarDBCreateIndex($xartable['hitcount'],
-                             array('name'   => 'i_' . xarDBGetSiteTablePrefix() . '_hititem',
-                                   'fields' => array('xar_itemid'),
+                             array('name'   => 'i_' . xarDB::getPrefix() . '_hititem',
+                                   'fields' => array('itemid'),
                                    'unique' => false));
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
     $query = xarDBCreateIndex($xartable['hitcount'],
-                             array('name'   => 'i_' . xarDBGetSiteTablePrefix() . '_hits',
-                                   'fields' => array('xar_hits'),
+                             array('name'   => 'i_' . xarDB::getPrefix() . '_hits',
+                                   'fields' => array('hits'),
                                    'unique' => false));
 
     $result =& $dbconn->Execute($query);
@@ -114,9 +118,9 @@ function hitcount_init()
     * setInstance(Module,Type,ModuleTable,IDField,NameField,ApplicationVar,LevelTable,ChildIDField,ParentIDField)
     *********************************************************************/
 
-    $query1 = "SELECT DISTINCT $xartable[modules].xar_name FROM $xartable[hitcount] LEFT JOIN $xartable[modules] ON $xartable[hitcount].xar_moduleid = $xartable[modules].xar_regid";
-    $query2 = "SELECT DISTINCT xar_itemtype FROM $xartable[hitcount]";
-    $query3 = "SELECT DISTINCT xar_itemid FROM $xartable[hitcount]";
+    $query1 = "SELECT DISTINCT $xartable[modules].name FROM $xartable[hitcount] LEFT JOIN $xartable[modules] ON $xartable[hitcount].module_id = $xartable[modules].regid";
+    $query2 = "SELECT DISTINCT itemtype FROM $xartable[hitcount]";
+    $query3 = "SELECT DISTINCT itemid FROM $xartable[hitcount]";
     $instances = array(
                         array('header' => 'Module Name:',
                                 'query' => $query1,
@@ -145,6 +149,14 @@ function hitcount_init()
     xarRegisterMask('DeleteHitcountItem','All','hitcount','Item','All:All:All','ACCESS_DELETE');
     xarRegisterMask('AdminHitcount','All','hitcount','All','All','ACCESS_ADMIN');
 
+    xarRegisterPrivilege('ViewHitcount','All','hitcount','All','All','ACCESS_OVERVIEW');
+    xarRegisterPrivilege('ReadHitcount','All','hitcount','All','All','ACCESS_READ');
+    xarRegisterPrivilege('CommmentHitcount','All','hitcount','All','All','ACCESS_COMMENT');
+    xarRegisterPrivilege('ModerateHitcount','All','hitcount','All','All','ACCESS_MODERATE');
+    xarRegisterPrivilege('EditHitcount','All','hitcount','All','All','ACCESS_EDIT');
+    xarRegisterPrivilege('AddHitcount','All','hitcount','All','All','ACCESS_ADD');
+    xarRegisterPrivilege('ManageHitcount','All','hitcount','All','All:All','ACCESS_DELETE');
+    xarRegisterPrivilege('AdminHitcount','All','hitcount','All','All','ACCESS_ADMIN');
 
     // Initialisation successful
     return true;
@@ -161,15 +173,15 @@ function hitcount_upgrade($oldversion)
             // Code to upgrade from version 1.0 goes here
 
             // Get database information
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
+            $dbconn = xarDB::getConn();
+            $xartable = xarDB::getTables();
 
             //Load Table Maintenance API
-            xarDBLoadTableMaintenanceAPI();
+            sys::import('xaraya.tableddl');
 
             $query = xarDBAlterTable($xartable['hitcount'],
                                      array('command'  => 'add',
-                                           'field'    => 'xar_itemtype',
+                                           'field'    => 'itemtype',
                                            'type'     => 'integer',
                                            'unsigned' => true,
                                            'null'     => false,
@@ -179,7 +191,7 @@ function hitcount_upgrade($oldversion)
             if (!$result) return;
 
         case '1.1':
-            xarModSetVar('hitcount', 'countadmin', 0);
+            xarModVars::set('hitcount', 'countadmin', 0);
             xarRegisterMask('AdminHitcount','All','hitcount','All','All','ACCESS_ADMIN');
             $modversion['admin']          = 1;
             // Code to upgrade from version 1.1 goes here
@@ -196,16 +208,16 @@ function hitcount_upgrade($oldversion)
 
         case '1.2.1':
             // Get database information
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
+            $dbconn = xarDB::getConn();
+            $xartable = xarDB::getTables();
 
             //Load Table Maintenance API
-            xarDBLoadTableMaintenanceAPI();
+            sys::import('xaraya.tableddl');
 
             $query = xarDBDropIndex(
                 $xartable['hitcount'],
                 array(
-                    'name' => 'i_' . xarDBGetSiteTablePrefix() . '_hitcombo',
+                    'name' => 'i_' . xarDB::getPrefix() . '_hitcombo',
                     ));
 
             $result =& $dbconn->Execute($query);
@@ -213,8 +225,8 @@ function hitcount_upgrade($oldversion)
 
             $query = xarDBCreateIndex($xartable['hitcount'],
                 array(
-                    'name'   => 'i_' . xarDBGetSiteTablePrefix() . '_hitcombo',
-                    'fields' => array('xar_moduleid','xar_itemtype', 'xar_itemid'),
+                    'name'   => 'i_' . xarDB::getPrefix() . '_hitcombo',
+                    'fields' => array('module_id','itemtype', 'itemid'),
                     'unique' => false));
 
             $result =& $dbconn->Execute($query);
@@ -233,8 +245,8 @@ function hitcount_upgrade($oldversion)
  */
 function hitcount_delete()
 {
-    
-    xarModDelVar('hitcount', 'countadmin');
+
+    xarModVars::delete('hitcount', 'countadmin');
     // Remove module hooks
     if (!xarModUnregisterHook('item', 'display', 'GUI',
                              'hitcount', 'user', 'display')) {
@@ -254,11 +266,11 @@ function hitcount_delete()
     }
 
     // Get database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     //Load Table Maintenance API
-    xarDBLoadTableMaintenanceAPI();
+    sys::import('xaraya.tableddl');
 
     // Delete tables
     $query = xarDBDropTable($xartable['hitcount']);

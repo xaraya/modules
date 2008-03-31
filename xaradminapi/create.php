@@ -30,9 +30,7 @@ function hitcount_adminapi_create($args)
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'object ID', 'admin', 'create', 'Hitcount');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
 
     // When called via hooks, modname will be empty, but we get it from the
@@ -49,9 +47,7 @@ function hitcount_adminapi_create($args)
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module name', 'admin', 'create', 'Hitcount');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
 
     if (!isset($itemtype) || !is_numeric($itemtype)) {
@@ -67,8 +63,8 @@ function hitcount_adminapi_create($args)
     // avoid potential security holes or just too much wasted processing
     if(!xarSecurityCheck('ReadHitcountItem',1,'Item',"$modname:$itemtype:$objectid")) return;
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $hitcounttable = $xartable['hitcount'];
 
     // Get a new hitcount ID
@@ -81,21 +77,22 @@ function hitcount_adminapi_create($args)
              $hits = 0;
          }
     }
-    $query = "INSERT INTO $hitcounttable(xar_hitcountid,
-                                       xar_moduleid,
-                                       xar_itemtype,
-                                       xar_itemid,
-                                       xar_hits)
-            VALUES (?,?,?,?,?)";
-    $bindvars = array($nextId, $modid, $itemtype, $objectid, $hits);
+    $query = "INSERT INTO $hitcounttable(id,
+                                       module_id,
+                                       itemtype,
+                                       itemid,
+                                       hits,
+                                       lasthit)
+            VALUES (?,?,?,?,?,?)";
+    $bindvars = array($nextId, $modid, $itemtype, $objectid, $hits, time());
 
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
-    $hcid = $dbconn->PO_Insert_ID($hitcounttable, 'xar_hitcountid');
+    $hcid = $dbconn->PO_Insert_ID($hitcounttable, 'id');
 
     // hmmm, I think we'll skip calling more hooks here... :-)
-    //xarModCallHooks('item', 'create', $hcid, 'hitcountid');
+    //xarModCallHooks('item', 'create', $hcid, 'id');
 
     // Return the extra info with the id of the newly created item
     // (not that this will be of any used when called via hooks, but

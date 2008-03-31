@@ -28,18 +28,14 @@ function hitcount_adminapi_deleteall($args)
     if (!isset($objectid) || !is_string($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'object ID (= module name)', 'admin', 'deleteall', 'Hitcount');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return false;
+        throw new Exception($msg);
     }
 
     $modid = xarModGetIDFromName($objectid);
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module ID', 'admin', 'deleteall', 'Hitcount');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return false;
+        throw new Exception($msg);
     }
 
 // TODO: re-evaluate this for hook calls !!
@@ -47,12 +43,12 @@ function hitcount_adminapi_deleteall($args)
     // avoid potential security holes or just too much wasted processing
     if(!xarSecurityCheck('DeleteHitcountItem',1,'Item',"All:All:$objectid")) return;
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $hitcounttable = $xartable['hitcount'];
 
     $query = "DELETE FROM $hitcounttable
-            WHERE xar_moduleid = ?";
+            WHERE module_id = ?";
     $result =& $dbconn->Execute($query,array((int)$modid));
     if (!$result) return;
 

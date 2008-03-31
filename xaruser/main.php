@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/177.html
  * @author Hitcount Module Development Team
  */
- 
+
 /**
  * the main user function (nothing interesting here - might be removed)
  */
@@ -27,7 +27,7 @@ function hitcount_user_main()
     $data['moditems'] = array();
     $moduleList = array();
 
-    $numitems = xarModGetVar('hitcount','numitems');
+    $numitems = xarModVars::get('hitcount','numitems');
     if (empty($numitems)) {
         $numitems = 10;
     }

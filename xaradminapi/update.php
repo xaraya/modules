@@ -29,9 +29,7 @@ function hitcount_adminapi_update($args)
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'object ID', 'admin', 'update', 'Hitcount');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
 
     // When called via hooks, modname will be empty, but we get it from the
@@ -48,9 +46,7 @@ function hitcount_adminapi_update($args)
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module name', 'admin', 'update', 'Hitcount');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
     if (!isset($itemtype) || !is_numeric($itemtype)) {
          if (isset($extrainfo) && is_array($extrainfo) &&
@@ -87,8 +83,8 @@ function hitcount_adminapi_update($args)
         }
     }
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $hitcounttable = $xartable['hitcount'];
 
     // set to the new hit count
@@ -96,14 +92,14 @@ function hitcount_adminapi_update($args)
     if (!empty($hits) && is_numeric($hits)) {
         $bhits = $hits;
     } else {
-        $bhits = 'xar_hits + 1';
+        $bhits = 'hits + 1';
         $hits = $oldhits + 1;
     }
     $query = "UPDATE $hitcounttable
-              SET xar_hits = $bhits
-              WHERE xar_moduleid = ?
-              AND xar_itemtype = ?
-              AND xar_itemid = ?";
+              SET hits = $bhits, lasthit = " . time() .
+              " WHERE module_id = ?
+              AND itemtype = ?
+              AND itemid = ?";
     $bindvars = array((int)$modid, (int)$itemtype, (int)$objectid);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;

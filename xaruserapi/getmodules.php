@@ -22,14 +22,14 @@ function hitcount_userapi_getmodules($args)
     if(!xarSecurityCheck('ViewHitcountItems')) return;
 
     // Database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $hitcounttable = $xartable['hitcount'];
 
     // Get items
-    $query = "SELECT xar_moduleid, xar_itemtype, COUNT(xar_itemid), SUM(xar_hits)
+    $query = "SELECT module_id, itemtype, COUNT(itemid), SUM(hits)
             FROM $hitcounttable
-            GROUP BY xar_moduleid, xar_itemtype";
+            GROUP BY module_id, itemtype";
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;

@@ -50,7 +50,7 @@ function hitcount_user_display($args)
     }
 
     if (xarVarIsCached('Hooks.hitcount','nocount') ||
-        (xarSecurityCheck('AdminHitcount', 0) && xarModGetVar('hitcount', 'countadmin') == FALSE) ) {
+        (xarSecurityCheck('AdminHitcount', 0) && xarModVars::get('hitcount', 'countadmin') == FALSE) ) {
         $hitcount = xarModAPIFunc('hitcount', 'user', 'get', $args);
     } else {
         $hitcount = xarModAPIFunc('hitcount', 'admin', 'update', $args);

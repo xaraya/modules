@@ -44,16 +44,16 @@ function hitcount_userapi_topitems($args)
     if(!xarSecurityCheck('ViewHitcountItems',1,'Item',"$modname:$itemtype:All")) return;
 
     // Database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $hitcounttable = $xartable['hitcount'];
 
     // Get items
-    $query = "SELECT xar_itemid, xar_hits
+    $query = "SELECT itemid, hits
             FROM $hitcounttable
-            WHERE xar_moduleid = ?
-              AND xar_itemtype = ?
-            ORDER BY xar_hits DESC";
+            WHERE module_id = ?
+              AND itemtype = ?
+            ORDER BY hits DESC";
     $bindvars = array((int)$modid, (int)$itemtype);
 
     if (!isset($numitems) || !is_numeric($numitems)) {
