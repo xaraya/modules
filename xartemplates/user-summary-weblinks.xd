@@ -48,11 +48,13 @@
                 )
             </xar:if>
         </xar:if>
-        | <a href="#$link#">
-            <xar:mlstring>
-                Rate / Comment
-            </xar:mlstring>
-        </a>
+        <xar:if condition="xarModIsHooked('ratings','articles',6)">
+            | <a href="#$link#">
+                <xar:mlstring>
+                    Rate / Comment
+                </xar:mlstring>
+            </a>
+        </xar:if>
         <div class="xar-articles-keywords">
             <xar:if condition="!empty($keywords)">
                 <xar:mlstring>

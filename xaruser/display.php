@@ -478,17 +478,17 @@ function articles_user_display($args)
     // in the variable cache.
     if (xarModIsHooked('hitcount','articles',$pubtypeid)) {
         xarVarSetCached('Hooks.hitcount','save',1);
-        $dohits = 1;
+        $data['dohitcount'] = 1;
     } else {
-        $dohits = 0;
+        $data['dohitcount'] = 0;
     }
 
     // Tell the ratings hook to save the rating in the variable cache.
     if (xarModIsHooked('ratings','articles',$pubtypeid)) {
         xarVarSetCached('Hooks.ratings','save',1);
-        $dorating = 1;
+        $data['doratings'] = 1;
     } else {
-        $dorating = 0;
+        $data['doratings'] = 0;
     }
 
     // Hooks
@@ -509,14 +509,14 @@ function articles_user_display($args)
     }
 
     // Retrieve the current hitcount from the variable cache
-    if ($dohits && xarVarIsCached('Hooks.hitcount','value')) {
+    if ($data['dohitcount'] && xarVarIsCached('Hooks.hitcount','value')) {
         $data['counter'] = xarVarGetCached('Hooks.hitcount','value');
     } else {
         $data['counter'] = '';
     }
 
     // Retrieve the current rating from the variable cache
-    if ($dorating && xarVarIsCached('Hooks.ratings','value')) {
+    if ($data['doratings'] && xarVarIsCached('Hooks.ratings','value')) {
         $data['rating'] = intval(xarVarGetCached('Hooks.ratings','value'));
     } else {
         $data['rating'] = '';

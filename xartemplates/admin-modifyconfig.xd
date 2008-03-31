@@ -48,11 +48,7 @@
                     </xar:mlstring>
                 </div>
                 <div class="xar-form-input-wrapper-after">
-                    <xar:if condition="$shorturls">
-                        <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
-                        <xar:else />
-                        <input type="checkbox" name="shorturls" id="shorturls" value="1" />
-                    </xar:if>
+                    <xar:data-input type="checkbox" name="shorturls" checked="$shorturls" />
                     <label class="help" for="shorturls" title="#xarML('Support short URLs ')#">
                         <xar:mlstring>
                             Support short URLs
@@ -137,11 +133,7 @@
             </legend>
             <input type="hidden" name="authid" id="authid" value="#$authid#" /> <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
             <div class="xar-form-input-wrapper-after">
-                <xar:if condition="$usealias">
-                    <input type="checkbox" name="usealias" id="usealias" checked="checked" />
-                    <xar:else />
-                    <input type="checkbox" name="usealias" id="usealias" />
-                </xar:if>
+                <xar:data-input type="checkbox" name="usealias" checked="$usealias" />
                 <label class="help" for="usealias" title="#xarML('Removes the articles module name from the short url.')#">
                     <xar:ml>
                         <xar:mlstring>
@@ -524,11 +516,7 @@
                     <em>($number)</em> </label> <input type="text" name="adminitemsperpage" id="adminitemsperpage" size="3" maxlength="3" value="#$adminitemsperpage#" />
             </div>
             <div class="xar-form-input-wrapper-after">
-                <xar:if condition="$showcategories">
-                    <input type="checkbox" name="showcategories" id="showcategories" value="1" checked="checked" />
-                    <xar:else />
-                    <input type="checkbox" name="showcategories" id="showcategories" value="1" />
-                </xar:if>
+                <xar:data-input type="checkbox" name="showcategories" checked="$showcategories" />
                 <label for="showcategories" class="help" title="#xarML('Show category links in article summaries .')#">
                     <xar:mlstring>
                         Show category links in article summaries
@@ -536,11 +524,7 @@
                     <em>($categories)</em></label>
             </div>
             <div class="xar-form-input-wrapper-after">
-                <xar:if condition="$showcatcount">
-                    <input type="checkbox" name="showcatcount" id="showcatcount" value="1" checked="checked" />
-                    <xar:else />
-                    <input type="checkbox" name="showcatcount" id="showcatcount" value="1" />
-                </xar:if>
+                <xar:data-input type="checkbox" name="showcatcount" checked="$showcatcount" />
                 <label for="showcatcount" class="help" title="#xarML('Show number of articles in category navigation.')#">
                     <xar:mlstring>
                         Show number of articles in category navigation
@@ -548,11 +532,7 @@
                     <em>($showcatcount)</em> </label>
             </div>
             <div class="xar-form-input-wrapper-after">
-                <xar:if condition="$showprevnext">
-                    <input type="checkbox" name="showprevnext" id="showprevnext" value="1" checked="checked" />
-                    <xar:else />
-                    <input type="checkbox" name="showprevnext" id="showprevnext" value="1" />
-                </xar:if>
+                <xar:data-input type="checkbox" name="showprevnext" checked="$showprevnext" />
                 <label for="showprevnext" class="help" title="#xarML('Show previous/next category.')#">
                     <xar:mlstring>
                         Show previous/next category
@@ -561,11 +541,7 @@
             </div>
             <xar:if condition="$showcommentsoptions">
                 <div class="xar-form-input-wrapper-after">
-                    <xar:if condition="$showcomments">
-                        <input type="checkbox" name="showcomments" id="showcomments" value="1" checked="checked" />
-                        <xar:else />
-                        <input type="checkbox" name="showcomments" id="showcomments" value="1" />
-                    </xar:if>
+                    <xar:data-input type="checkbox" name="showcomments" checked="$showcomments" />
                     <label for="showcomments" class="help" title="#xarML('Show comments on view page.')#">
                         <xar:mlstring>
                             Show number of comments
@@ -586,11 +562,7 @@
             </xar:if>
             <xar:if condition="$showkeywordsoptions">
                 <div class="xar-form-input-wrapper-after">
-                    <xar:if condition="$showkeywords">
-                        <input type="checkbox" name="showkeywords" id="showkeywords" value="1" checked="checked" />
-                        <xar:else />
-                        <input type="checkbox" name="showkeywords" id="showkeywords" value="1" />
-                    </xar:if>
+                    <xar:data-input type="checkbox" name="showkeywords" checked="$showkeywords" />
                     <label for="showkeywords" class="help" title="#xarML('Show keywords on view page.')#">
                         <xar:mlstring>
                             Show Keywords
@@ -611,11 +583,7 @@
             </xar:if>
             <xar:if condition="$showhitcountsoptions">
                 <div class="xar-form-input-wrapper-after">
-                    <xar:if condition="$showhitcounts">
-                        <input type="checkbox" name="showhitcounts" id="showhitcounts" value="1" checked="checked" />
-                        <xar:else />
-                        <input type="checkbox" name="showhitcounts" id="showhitcounts" value="1" />
-                    </xar:if>
+                    <xar:data-input type="checkbox" name="showhitcounts" checked="$showhitcounts" />
                     <label for="showhitcounts" class="help" title="#xarML('Show hit counts on view page.')#">
                         <xar:mlstring>
                             Show Hit Counts
@@ -636,11 +604,7 @@
             </xar:if>
             <xar:if condition="$showratingsoptions">
                 <div class="xar-form-input-wrapper-after">
-                    <xar:if condition="$showratings">
-                        <input type="checkbox" name="showratings" id="showratings" value="1" checked="checked" />
-                        <xar:else />
-                        <input type="checkbox" name="showratings" id="showratings" value="1" />
-                    </xar:if>
+                    <xar:data-input type="checkbox" name="showratings" checked="$showratings" />
                     <label for="showratings" class="help" title="#xarML('Show ratings on view page.')#">
                         <xar:mlstring>
                             Show Ratings
@@ -660,11 +624,7 @@
                 </div>
             </xar:if>
             <div class="xar-form-input-wrapper-after">
-                <xar:if condition="$showpublinks">
-                    <input type="checkbox" name="showpublinks" id="showpublinks" value="1" checked="checked" />
-                    <xar:else />
-                    <input type="checkbox" name="showpublinks" id="showpublinks" value="1" />
-                </xar:if>
+                <xar:data-input type="checkbox" name="showpublinks" checked="$showpublinks" />
                 <label for="showpublinks" class="help" title="#xarML('Show links to publication types.')#">
                     <xar:mlstring>
                         Show links to publication types
@@ -672,11 +632,7 @@
                     <em>($showpublinks + includes/publinks.xd)</em> </label>
             </div>
             <div class="xar-form-input-wrapper-after">
-                <xar:if condition="$showpubcount">
-                    <input type="checkbox" name="showpubcount" id="showpubcount" value="1" checked="checked" />
-                    <xar:else />
-                    <input type="checkbox" name="showpubcount" id="showpubcount" value="1" />
-                </xar:if>
+                <xar:data-input type="checkbox" name="showpubcount" checked="$showpubcount" />
                 <label for="showpubcount" class="help" title="#xarML('Show links to publication types.')#">
                     <xar:mlstring>
                         Show number of articles in publication links
@@ -684,11 +640,7 @@
                     <em>($showpubcount)</em> </label>
             </div>
             <div class="xar-form-input-wrapper-after">
-                <xar:if condition="$showarchives">
-                    <input type="checkbox" name="showarchives" id="showarchives" value="1" checked="checked" />
-                    <xar:else />
-                    <input type="checkbox" name="showarchives" id="showarchives" value="1" />
-                </xar:if>
+                <xar:data-input type="checkbox" name="showarchives" checked="$showarchives" />
                 <label for="showarchives" class="help" title="#xarML('Show link to archives.')#">
                     <xar:mlstring>
                         Show link to archives
@@ -696,11 +648,7 @@
                     <em>($showpubcount)</em></label>
             </div>
             <div class="xar-form-input-wrapper-after">
-                <xar:if condition="$showmap">
-                    <input type="checkbox" name="showmap" id="showmap" value="1" checked="checked" />
-                    <xar:else />
-                    <input type="checkbox" name="showmap" id="showmap" value="1" />
-                </xar:if>
+                <xar:data-input type="checkbox" name="showmap" checked="$showmap" />
                 <label for="showmap" class="help" title="#xarML('Show link to article map.')#">
                     <xar:mlstring>
                         Show link to article map
@@ -708,11 +656,7 @@
                     <em>($maplink + $maplabel)</em> </label>
             </div>
             <div class="xar-form-input-wrapper-after">
-                <xar:if condition="$dotransform">
-                    <input type="checkbox" name="dotransform" id="dotransform" value="1" checked="checked" />
-                    <xar:else />
-                    <input type="checkbox" name="dotransform" id="dotransform" value="1" />
-                </xar:if>
+                <xar:data-input type="checkbox" name="dotransform" checked="$dotransform" />
                 <label for="dotransform" class="help" title="#xarML('Call transform hooks in summaries.')#">
                     <xar:mlstring>
                         Call transform hooks in summaries
@@ -720,11 +664,7 @@
                 </label>
             </div>
             <div class="xar-form-input-wrapper-after">
-                <xar:if condition="$titletransform">
-                    <input type="checkbox" name="titletransform" id="titletransform" value="1" checked="checked" />
-                    <xar:else />
-                    <input type="checkbox" name="titletransform" id="titletransform" value="1" />
-                </xar:if>
+                <xar:data-input type="checkbox" name="titletransform" checked="$titletransform" />
                 <label for="titletransform" class="help" title="#xarML('Call transform hooks in titles.')#">
                     <xar:mlstring>
                         Call transform hooks in titles
@@ -741,11 +681,7 @@
                 </strong>
             </legend>
             <div class="xar-form-input-wrapper-after">
-                <xar:if condition="$prevnextart">
-                    <input type="checkbox" name="prevnextart" id="prevnextart" value="1" checked="checked" />
-                    <xar:else />
-                    <input type="checkbox" name="prevnextart" id="prevnextart" value="1" />
-                </xar:if>
+                <xar:data-input type="checkbox" name="prevnextart" checked="$prevnextart" />
                 <label for="prevnextart" class="help" title="#xarML('Show link to previous/next article in display.')#">
                     <xar:mlstring>
                         Show link to previous/next article in display
