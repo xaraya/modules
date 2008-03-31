@@ -13,8 +13,8 @@
  * @param $args['showchildren'] integer show children of the current category (0 = no, 1 = immediate children, 2 = all descendants)
  * @param $args['showempty'] integer show empty categories (0 = no, 1 = yes)
  * @param $args['urlmodule'] string module name to use in URLs (default $module)
- * @param $args['type'] string type to use in URLs (default 'user')
- * @param $args['func'] string function to use in URLs (default 'view')
+ * @param $args['urltype'] string type to use in URLs (default 'user')
+ * @param $args['urlfunc'] string function to use in URLs (default 'view')
  * @param $args['urlparam'] string extra parameter name to use in URLs (default 'itemtype')
  * @param $args['urlvalue'] string extra parameter value to use in URLs (default $itemtype)
  * @param $args['urlextra'] array extra arguments to use in URLs (default none)
@@ -151,20 +151,20 @@ class CategoryNavigationProperty extends SelectProperty
         }
 
         // Specify type=... & func = ... arguments for xarModURL()
-        if (empty($type)) {
-            if (xarVarIsCached('Blocks.categories','type')) {
-                $type = xarVarGetCached('Blocks.categories','type');
+        if (empty($urltype)) {
+            if (xarVarIsCached('Blocks.categories','urltype')) {
+                $urltype = xarVarGetCached('Blocks.categories','urltype');
             }
-            if (empty($type)) {
-                $type = 'user';
+            if (empty($urltype)) {
+                $urltype = 'user';
             }
         }
-        if (empty($func)) {
-            if (xarVarIsCached('Blocks.categories','func')) {
-                $func = xarVarGetCached('Blocks.categories','func');
+        if (empty($urlfunc)) {
+            if (xarVarIsCached('Blocks.categories','urlfunc')) {
+                $urlfunc = xarVarGetCached('Blocks.categories','urlfunc');
             }
-            if (empty($func)) {
-                $func = 'view';
+            if (empty($urlfunc)) {
+                $urlfunc = 'view';
             }
         }
 
@@ -267,8 +267,8 @@ class CategoryNavigationProperty extends SelectProperty
 
         // pass information about current function to template
         $data['urlmodule'] = $urlmodule;
-        $data['type'] = $type;
-        $data['func'] = $func;
+        $data['urltype'] = $urltype;
+        $data['urlfunc'] = $urlfunc;
         $data['urlparam'] = $urlparam;
         $data['urlvalue'] = $urlvalue;
         $data['urlextra'] = $urlextra;
@@ -319,7 +319,7 @@ class CategoryNavigationProperty extends SelectProperty
                             $label = xarVarPrepForDisplay($cat['name']);
                         // TODO: now this is a tricky part...
                             $urlargs['catid'] = $cat['cid'];
-                            $link = xarModURL($urlmodule,$type,$func,
+                            $link = xarModURL($urlmodule,$urltype,$urlfunc,
                                               $urlargs);
 
                             if ($cat['cid'] == $cid) {
@@ -367,7 +367,7 @@ class CategoryNavigationProperty extends SelectProperty
                             $label = xarVarPrepForDisplay($cat['name']);
                         // TODO: now this is a tricky part...
                             $urlargs['catid'] = $cat['cid'];
-                            $link = xarModURL($urlmodule,$type,$func,
+                            $link = xarModURL($urlmodule,$urltype,$urlfunc,
                                               $urlargs);
                             if ($cat['cid'] == $cid) {
                                 $catparents[] = array('catlabel' => $label,
@@ -414,7 +414,7 @@ class CategoryNavigationProperty extends SelectProperty
                             $cat = $parents[$parentid];
                             $label = xarVarPrepForDisplay($cat['name']);
                             $urlargs['catid'] = $cat['cid'];
-                            $link = xarModURL($urlmodule,$type,$func,
+                            $link = xarModURL($urlmodule,$urltype,$urlfunc,
                                               $urlargs);
                             if (!empty($catcount[$cat['cid']])) {
                                 $count = $catcount[$cat['cid']];
@@ -440,7 +440,7 @@ class CategoryNavigationProperty extends SelectProperty
                         foreach ($siblings as $cat) {
                             $label = xarVarPrepForDisplay($cat['name']);
                             $urlargs['catid'] = $cat['cid'];
-                            $link = xarModURL($urlmodule,$type,$func,
+                            $link = xarModURL($urlmodule,$urltype,$urlfunc,
                                               $urlargs);
                             if (!empty($catcount[$cat['cid']])) {
                                 $count = $catcount[$cat['cid']];
@@ -459,7 +459,7 @@ class CategoryNavigationProperty extends SelectProperty
                                         $clabel = xarVarPrepForDisplay($cat['name']);
                                     // TODO: now this is a tricky part...
                                         $urlargs['catid'] = $cat['cid'];
-                                        $clink = xarModURL($urlmodule,$type,$func,
+                                        $clink = xarModURL($urlmodule,$urltype,$urlfunc,
                                                            $urlargs);
                                         if (!empty($catcount[$cat['cid']])) {
                                             $ccount = $catcount[$cat['cid']];
@@ -507,7 +507,7 @@ class CategoryNavigationProperty extends SelectProperty
                         // TODO: now this is a tricky part...
                         $urlargs['catid'] = $cat['cid'];
                         $link = xarModURL(
-                            $urlmodule,$type,$func,
+                            $urlmodule,$urltype,$urlfunc,
                             $urlargs
                         );
                         $label = xarVarPrepForDisplay($cat['name']);
@@ -576,7 +576,7 @@ class CategoryNavigationProperty extends SelectProperty
                         $label = xarML('All');
                         unset($urlargs['catid']);
                         $link = xarModURL(
-                            $urlmodule,$type,$func,
+                            $urlmodule,$urltype,$urlfunc,
                             $urlargs
                         );
                         $join = '';
@@ -631,7 +631,7 @@ class CategoryNavigationProperty extends SelectProperty
                             } else {
                                 $urlargs['catid'] = $cat['cid'];
                                 $link = xarModURL(
-                                    $urlmodule, $type, $func,
+                                    $urlmodule, $urltype, $urlfunc,
                                     $urlargs
                                 );
                             }
@@ -673,7 +673,7 @@ class CategoryNavigationProperty extends SelectProperty
                         } else {
                             $urlargs['catid'] = '_' . $cid;
                             $viewall = xarModURL(
-                                $urlmodule, $type, $func,
+                                $urlmodule, $urltype, $urlfunc,
                                 $urlargs
                             );
                         }
@@ -706,7 +706,7 @@ class CategoryNavigationProperty extends SelectProperty
                             $label = xarML('Any of these categories');
                             $urlargs['catid'] = join('-', $sortcids);
                             $link = xarModURL(
-                                $urlmodule,$type,$func,
+                                $urlmodule,$urltype,$urlfunc,
                                 $urlargs
                             );
                             $join = '';
@@ -722,7 +722,7 @@ class CategoryNavigationProperty extends SelectProperty
                             $label = xarML('All of these categories');
                             $urlargs['catid'] = join('+', $sortcids);
                             $link = xarModURL(
-                                $urlmodule, $type, $func,
+                                $urlmodule, $urltype, $urlfunc,
                                 $urlargs
                             );
                             if (!empty($itemid)) {
@@ -779,7 +779,7 @@ class CategoryNavigationProperty extends SelectProperty
                         $curcat['itemid'] = $cids[0];
                         $urlargs['catid'] = $cids[0];
                         $curcat['returnurl'] = xarModURL(
-                            $urlmodule, $type, $func,
+                            $urlmodule, $urltype, $urlfunc,
                             $urlargs
                         );
                         // pass along the current module & itemtype for pubsub (urgh)
@@ -833,7 +833,7 @@ class CategoryNavigationProperty extends SelectProperty
                             $label = xarVarPrepForDisplay($info['name']);
                             $urlargs['catid'] = $info['id'];
                             $link = xarModURL(
-                                $urlmodule, $type, $func,
+                                $urlmodule, $urltype, $urlfunc,
                                 $urlargs
                             );
                             if (!empty($catcount[$info['id']])) {
@@ -886,7 +886,7 @@ class CategoryNavigationProperty extends SelectProperty
                             $label = xarVarPrepForDisplay($cat['name']);
                             $urlargs['catid'] = $cat['cid'];
                             $link = xarModURL(
-                                $urlmodule, $type, $func,
+                                $urlmodule, $urltype, $urlfunc,
                                 $urlargs
                             );
                             if (!empty($cat['description']) && $cat['description'] != $cat['name']) {
@@ -968,20 +968,20 @@ class CategoryNavigationProperty extends SelectProperty
     //                        $data['uplabel'] = $neighbour['name'];
     //                        $data['upcid'] = $neighbour['cid'];
     //                        $urlargs['catid'] = $neighbour['cid'];
-    //                        $data['uplink'] = xarModURL($urlmodule,$type,$func,
+    //                        $data['uplink'] = xarModURL($urlmodule,$urltype,$urlfunc,
     //                                                    $urlargs);
     //                    } elseif ($neighbour['link'] == 'previous') {
                         if ($neighbour['link'] == 'previous') {
                             $data['prevlabel'] = $neighbour['name'];
                             $data['prevcid'] = $neighbour['cid'];
                             $urlargs['catid'] = $neighbour['cid'];
-                            $data['prevlink'] = xarModURL($urlmodule,$type,$func,
+                            $data['prevlink'] = xarModURL($urlmodule,$urltype,$urlfunc,
                                                           $urlargs);
                         } elseif ($neighbour['link'] == 'next') {
                             $data['nextlabel'] = $neighbour['name'];
                             $data['nextcid'] = $neighbour['cid'];
                             $urlargs['catid'] = $neighbour['cid'];
-                            $data['nextlink'] = xarModURL($urlmodule,$type,$func,
+                            $data['nextlink'] = xarModURL($urlmodule,$urltype,$urlfunc,
                                                           $urlargs);
                         }
                     }
