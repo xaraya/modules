@@ -1,193 +1,193 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>
-            Articles Administration
-        </xar:mlstring>
-    </span>
-</div>
-<div class="xar-mod-body">
-      <xar:template type="module" file="admin-menu" />
-    <h2>
-        <xar:mlstring>
-            Manage Articles
-        </xar:mlstring>
-    </h2>
+    <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>
+                Articles Administration
+            </xar:mlstring>
+        </span>
+    </div>
+    <div class="xar-mod-body">
+          <xar:template type="module" file="admin-menu" />
+        <h2>
+            <xar:mlstring>
+                Manage Articles
+            </xar:mlstring>
+        </h2>
 
-    <xar:comment>
-        You can use different admin-view-[pubtype].xd templates for different pubtypes
-    </xar:comment>
+        <xar:comment>
+            You can use different admin-view-[pubtype].xd templates for different pubtypes
+        </xar:comment>
 
-    <div>
-        <xar:template file="navtabs" type="module" />
-        <xar:template file="navtabs-status" type="module" />
-        <xar:if condition="!empty($authorid) or !empty($language) or !empty($pubdate)">
-            <h3>
-            <xar:if condition="!empty($pubdate)">
-                <xar:ml>
-                    <xar:mlstring>
-                        Publication Date : #(1)
-                    </xar:mlstring>
-                    <xar:mlvar>
-                        #$pubdate#
-                    </xar:mlvar>
-                </xar:ml>
-            </xar:if>
-            <xar:if condition="!empty($authorid)">
-                <xar:ml>
-                    <xar:mlstring>
-                        By Author : #(1)
-                    </xar:mlstring>
-                    <xar:mlvar>
-                        #xarUserGetVar('name',$authorid)#
-                    </xar:mlvar>
-                </xar:ml>
-            </xar:if>
-            <xar:if condition="!empty($language)">
-                <xar:ml>
-                    <xar:mlstring>
-                        Language : #(1)
-                    </xar:mlstring>
-                    <xar:mlvar>
-                        #$language#
-                    </xar:mlvar>
-                </xar:ml>
-            </xar:if>
-            </h3>
-        </xar:if>
-        <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="articles" type="admin" itemtype="$ptid" catid="$catid" />
-        <xar:base-include-javascript module="base" filename="checkall.js" />
-            <form method="post" id="viewarticles" action="#xarModURL('articles','admin','updatestatus')#">
-                <div>
-                    <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
-                    <input type="hidden" name="catid" id="catid" value="#$catid#" />
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-                <xar:if condition="$shownewlink">
-                    <h3>
-                        <a href="#$newurl#">
-                            <xar:mlstring>
-                                New Article
-                            </xar:mlstring>
-                        </a>
-                    </h3>
+        <div>
+            <xar:template file="navtabs" type="module" />
+            <xar:template file="navtabs-status" type="module" />
+            <xar:if condition="!empty($authorid) or !empty($language) or !empty($pubdate)">
+                <h3>
+                <xar:if condition="!empty($pubdate)">
+                    <xar:ml>
+                        <xar:mlstring>
+                            Publication Date : #(1)
+                        </xar:mlstring>
+                        <xar:mlvar>
+                            #$pubdate#
+                        </xar:mlvar>
+                    </xar:ml>
                 </xar:if>
-                <div style="width: 100%">
-                <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
-                    <tr>
-                        <th>
-                            #$labels['title']#
-                        </th>
-                        <xar:if condition="$showdate">
-                            <th>
-                                #$labels['pubdate']#
-                            </th>
-                        </xar:if>
-                        <xar:if condition="$showstatus">
-                            <th colspan="2">
-                                #$labels['status']#
-                            </th>
-                        </xar:if>
-                        <th>
-                            <xar:mlstring>
-                                Options
-                            </xar:mlstring>
-                        </th>
-                    </tr>
-                    <xar:foreach in="$items" value="$item">
+                <xar:if condition="!empty($authorid)">
+                    <xar:ml>
+                        <xar:mlstring>
+                            By Author : #(1)
+                        </xar:mlstring>
+                        <xar:mlvar>
+                            #xarUserGetVar('name',$authorid)#
+                        </xar:mlvar>
+                    </xar:ml>
+                </xar:if>
+                <xar:if condition="!empty($language)">
+                    <xar:ml>
+                        <xar:mlstring>
+                            Language : #(1)
+                        </xar:mlstring>
+                        <xar:mlvar>
+                            #$language#
+                        </xar:mlvar>
+                    </xar:ml>
+                </xar:if>
+                </h3>
+            </xar:if>
+            <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="articles" urltype="admin" itemtype="$ptid" catid="$catid" />
+            <xar:base-include-javascript module="base" filename="checkall.js" />
+                <form method="post" id="viewarticles" action="#xarModURL('articles','admin','updatestatus')#">
+                    <div>
+                        <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
+                        <input type="hidden" name="catid" id="catid" value="#$catid#" />
+                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                    <xar:if condition="$shownewlink">
+                        <h3>
+                            <a href="#$newurl#">
+                                <xar:mlstring>
+                                    New Article
+                                </xar:mlstring>
+                            </a>
+                        </h3>
+                    </xar:if>
+                    <div style="width: 100%">
+                    <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
                         <tr>
-                            <td class="xar-norm">
-                                #$item['title']#
-                            </td>
+                            <th>
+                                #$labels['title']#
+                            </th>
                             <xar:if condition="$showdate">
-                                <td class="xar-norm">
-                                    #xarLocaleFormatDate('%x %X %z',$item['pubdate'])#
-                                </td>
+                                <th>
+                                    #$labels['pubdate']#
+                                </th>
                             </xar:if>
                             <xar:if condition="$showstatus">
+                                <th colspan="2">
+                                    #$labels['status']#
+                                </th>
+                            </xar:if>
+                            <th>
+                                <xar:mlstring>
+                                    Options
+                                </xar:mlstring>
+                            </th>
+                        </tr>
+                        <xar:foreach in="$items" value="$item">
+                            <tr>
                                 <td class="xar-norm">
-                                    <label for="ids[#$item['id']#]">
-                                        #$item['status']#
-                                    </label>
+                                    #$item['title']#
                                 </td>
-                                <td class="xar-norm">
-                                    <xar:if condition="!empty($item['editurl'])">
-                                        <input type="checkbox" name="ids[#$item['id']#]" id="ids[#$item['id']#]" value="1" checked="#$item['selected']#" />
+                                <xar:if condition="$showdate">
+                                    <td class="xar-norm">
+                                        #xarLocaleFormatDate('%x %X %z',$item['pubdate'])#
+                                    </td>
+                                </xar:if>
+                                <xar:if condition="$showstatus">
+                                    <td class="xar-norm">
+                                        <label for="ids[#$item['id']#]">
+                                            #$item['status']#
+                                        </label>
+                                    </td>
+                                    <td class="xar-norm">
+                                        <xar:if condition="!empty($item['editurl'])">
+                                            <input type="checkbox" name="ids[#$item['id']#]" id="ids[#$item['id']#]" value="1" checked="#$item['selected']#" />
+                                        </xar:if>
+                                    </td>
+                                </xar:if>
+                                <td class="xar-align-center xar-norm">
+                                    <xar:if condition="empty($item['viewurl'])">
+                                        #$item['viewtitle']#
+                                        <xar:else />
+                                        <a href="#$item['viewurl']#">
+                                            #$item['viewtitle']#
+                                        </a>
+                                    </xar:if>
+                                    |
+                                    <xar:if condition="empty($item['editurl'])">
+                                        #$item['edittitle']#
+                                        <xar:else />
+                                        <a href="#$item['editurl']#">
+                                            #$item['edittitle']#
+                                        </a>
+                                    </xar:if>
+                                    |
+                                    <xar:if condition="empty($item['deleteurl'])">
+                                        #$item['deletetitle']#
+                                        <xar:else />
+                                        <a href="#$item['deleteurl']#">
+                                            #$item['deletetitle']#
+                                        </a>
                                     </xar:if>
                                 </td>
-                            </xar:if>
-                            <td class="xar-align-center xar-norm">
-                                <xar:if condition="empty($item['viewurl'])">
-                                    #$item['viewtitle']#
-                                    <xar:else />
-                                    <a href="#$item['viewurl']#">
-                                        #$item['viewtitle']#
-                                    </a>
-                                </xar:if>
-                                |
-                                <xar:if condition="empty($item['editurl'])">
-                                    #$item['edittitle']#
-                                    <xar:else />
-                                    <a href="#$item['editurl']#">
-                                        #$item['edittitle']#
-                                    </a>
-                                </xar:if>
-                                |
-                                <xar:if condition="empty($item['deleteurl'])">
-                                    #$item['deletetitle']#
-                                    <xar:else />
-                                    <a href="#$item['deleteurl']#">
-                                        #$item['deletetitle']#
-                                    </a>
-                                </xar:if>
-                            </td>
-                        </tr>
-                    </xar:foreach>
-                </table>
-                </div>
-                <xar:if condition="!empty($showstatus) and count($items) gt 0">
-                    <p>
-                        <label for="status">
-                            <xar:mlstring>
-                                Change checked article status to
-                            </xar:mlstring>
-                            :</label>&#160;
-                        <select name="status" id="status">
-                        <xar:if condition="xarSecurityCheck('DeleteArticles',0,'Article',$ptid.':All:All:All')">
-                            <option value="-1">
+                            </tr>
+                        </xar:foreach>
+                    </table>
+                    </div>
+                    <xar:if condition="!empty($showstatus) and count($items) gt 0">
+                        <p>
+                            <label for="status">
                                 <xar:mlstring>
-                                    [Delete All]
+                                    Change checked article status to
                                 </xar:mlstring>
-                            </option>
-                        </xar:if>
-                        <xar:foreach in="$states" key="$id" value="$name">
-                            <xar:if condition="$id eq 2">
-                                <xar:comment>Approved</xar:comment>
-                                <option value="#$id#" selected="selected">
-                                    #$name#
+                                :</label>&#160;
+                            <select name="status" id="status">
+                            <xar:if condition="xarSecurityCheck('DeleteArticles',0,'Article',$ptid.':All:All:All')">
+                                <option value="-1">
+                                    <xar:mlstring>
+                                        [Delete All]
+                                    </xar:mlstring>
                                 </option>
-                            <xar:elseif condition="$id eq 3"/>
-                                <xar:comment>Frontpage</xar:comment>
-                                <xar:if condition="xarModVars::get('articles','defaultpubtype') eq $ptid or xarModVars::get('articles','defaultpubtype') eq ''">
+                            </xar:if>
+                            <xar:foreach in="$states" key="$id" value="$name">
+                                <xar:if condition="$id eq 2">
+                                    <xar:comment>Approved</xar:comment>
+                                    <option value="#$id#" selected="selected">
+                                        #$name#
+                                    </option>
+                                <xar:elseif condition="$id eq 3"/>
+                                    <xar:comment>Frontpage</xar:comment>
+                                    <xar:if condition="xarModVars::get('articles','defaultpubtype') eq $ptid or xarModVars::get('articles','defaultpubtype') eq ''">
+                                        <option value="#$id#">
+                                            #$name#
+                                        </option>
+                                    </xar:if>
+                                <xar:else/>
                                     <option value="#$id#">
                                         #$name#
                                     </option>
                                 </xar:if>
-                            <xar:else/>
-                                <option value="#$id#">
-                                    #$name#
-                                </option>
-                            </xar:if>
-                        </xar:foreach>
-                        </select>&#160;
-                        <input type="submit" value="#$changestatuslabel#" />&#160;
-                        <a href="javascript:xar_base_checkall(document.getElementById('viewarticles'),true)"><xar:mlstring>Check All</xar:mlstring></a>&#160;|&#160;
-                        <a href="javascript:xar_base_checkall(document.getElementById('viewarticles'),false)"><xar:mlstring>Uncheck All</xar:mlstring></a> ]
-                    </p>
-                </xar:if>
-            </div>
-        </form>
-        #$pager#
+                            </xar:foreach>
+                            </select>&#160;
+                            <input type="submit" value="#$changestatuslabel#" />&#160;
+                            <a href="javascript:xar_base_checkall(document.getElementById('viewarticles'),true)"><xar:mlstring>Check All</xar:mlstring></a>&#160;|&#160;
+                            <a href="javascript:xar_base_checkall(document.getElementById('viewarticles'),false)"><xar:mlstring>Uncheck All</xar:mlstring></a> ]
+                        </p>
+                    </xar:if>
+                </div>
+            </form>
+            #$pager#
+        </div>
     </div>
-</div>
 </xar:template>
