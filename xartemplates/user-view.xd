@@ -85,7 +85,7 @@
     </div>
 
     <xar:if condition="!empty($showprevnext)">
-        <xar:categories-navigation layout="prevnext" />
+        <xar:data-output type="categorynavigation" layout="prevnext" />
     </xar:if>
 </xar:template>
 

@@ -24,7 +24,7 @@
     </xar:comment>
     <xar:comment>
         If you want to let users pre-select a category first, before selecting a publication type, you can use the following tag. Note that this only makes sense if you have a single base category for your articles
-<!-- xar:categories-navigation layout="trails" showchildren="1" module="articles" type="admin" func="new" itemtype="$ptid" catid="$catid" /-->
+<!-- xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="articles" type="admin" func="new" itemtype="$ptid" catid="$catid" /-->
     </xar:comment>
     <xar:template file="navtabs" type="module" />
     <xar:if condition="!empty($withupload)">
