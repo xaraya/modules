@@ -27,6 +27,6 @@ $modversion['author'] = 'Jim McDonald';
 $modversion['contact'] = 'http://www.mcdee.net/';
 $modversion['admin'] = 1;
 $modversion['user'] = 1;
-$modversion['class'] = 'Utility';
-$modversion['category'] = 'Content';
+$modversion['class'] = 'Complete';
+$modversion['category'] = 'Utility';
 ?>

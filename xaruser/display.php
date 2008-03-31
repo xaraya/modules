@@ -48,7 +48,6 @@ function hitcount_user_display($args)
              $args['itemtype'] = 0;
          }
     }
-
     if (xarVarIsCached('Hooks.hitcount','nocount') ||
         (xarSecurityCheck('AdminHitcount', 0) && xarModVars::get('hitcount', 'countadmin') == FALSE) ) {
         $hitcount = xarModAPIFunc('hitcount', 'user', 'get', $args);
