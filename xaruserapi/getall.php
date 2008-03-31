@@ -167,8 +167,7 @@ function articles_userapi_getall($args)
         if (empty($usersdef)) return;
     }
 
-    $info = xarMod::getBaseInfo('articles');
-    $sysid = $info['systemid'];
+    $sysid = xarMod::getID('articles');
 
     if (!empty($required['cids'])) {
         // Load API
