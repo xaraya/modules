@@ -43,7 +43,7 @@ function hitcount_adminapi_create($args)
             $modname = xarModGetName();
         }
     }
-    $modid = xarModGetIDFromName($modname);
+    $modid = xarMod::getID($modname);
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module name', 'admin', 'create', 'Hitcount');

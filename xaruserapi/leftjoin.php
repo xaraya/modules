@@ -43,7 +43,7 @@ function hitcount_userapi_leftjoin($args)
     if (!isset($modname)) {
         $modname = '';
     } else {
-        $modid = xarModGetIDFromName($modname);
+        $modid = xarMod::getID($modname);
     }
     if (!isset($modid)) {
         $modid = '';
