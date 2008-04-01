@@ -109,7 +109,7 @@
         </xar:if>
 
         <xar:set name="urlextra">array('modid' => $modid)</xar:set>
-        <xar:categories-navigation module="$module" itemtype="$itemtype" catid="$catid" urlmodule="categories" type="admin" func="stats" urlextra="$urlextra" showcatcount="2" />
+        <xar:data-output type="categorynavigation" module="$module" itemtype="$itemtype" catid="$catid" urlmodule="categories" urltype="admin" urlfunc="stats" urlextra="$urlextra" showcatcount="2" />
 
         <table border="0" width="100%" cellpadding="0" cellspacing="0">
             <tr>

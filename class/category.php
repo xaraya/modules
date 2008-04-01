@@ -13,22 +13,22 @@
             $entry = isset($entry) ? $entry : array();
 
             if (isset($args['parent_id'])) {
-            	// If this is an import replace parentid imported with the local ones
-				$parentindex = $args['parent_id'];
-				if (in_array($parentindex,array_keys($this->parentindices))) {
-					$args['parent_id'] = $this->parentindices[$parentindex];
-				} else {
-					// there could be more than 1 entry point, therefore the array
-					if (count($entry > 0)) {
-						$this->parentindices[$parentindex] = array_shift($entry);
-						$args['parent_id'] = $this->parentindices[$parentindex];
-					} else {
-						$args['parent_id'] = 0;
-					}
-				}
-				$args['left_id'] = null;
-				$args['right_id'] = null;
-			}
+                // If this is an import replace parentid imported with the local ones
+                $parentindex = $args['parent_id'];
+                if (in_array($parentindex,array_keys($this->parentindices))) {
+                    $args['parent_id'] = $this->parentindices[$parentindex];
+                } else {
+                    // there could be more than 1 entry point, therefore the array
+                    if (count($entry > 0)) {
+                        $this->parentindices[$parentindex] = array_shift($entry);
+                        $args['parent_id'] = $this->parentindices[$parentindex];
+                    } else {
+                        $args['parent_id'] = 0;
+                    }
+                }
+                $args['left_id'] = null;
+                $args['right_id'] = null;
+            }
 
             // we have all the values, do it
             $id = parent::createItem($args);
@@ -44,18 +44,18 @@
         {
             $id = isset($args['itemid']) ? $args['itemid'] : $this->itemid;
             $this->getItem(array('itemid' => $id));
-            $old_parentid = $this->properties['cat_parent']->value;
-		    $isvalid = $this->checkInput();
+            $old_parentid = $this->properties['parent_id']->value;
+            $isvalid = $this->checkInput();
             $id = parent::updateItem($args);
 
-            list($isvalid,$new_parentid) = $this->properties['cat_parent']->fetchValue();
+            list($isvalid,$new_parentid) = $this->properties['parent_id']->fetchValue();
             // CHECKME: do we need to bail if isvalid not true?
 
             // only update Celko if the parent has changed
             if (($old_parentid - $new_parentid) != 0) {
-				return xarModAPIFunc('categories','admin','updatecelkolinks',array('cid' => $id));
+                return xarModAPIFunc('categories','admin','updatecelkolinks',array('cid' => $id));
             } else {
-				return true;
+                return true;
             }
         }
     }

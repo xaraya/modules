@@ -290,14 +290,6 @@ function categories_init()
     xarRegisterPrivilege('AddCategories','All','categories','Category','All','ACCESS_ADD');
     xarRegisterPrivilege('ManageCategories','All','categories','Category','All:All','ACCESS_DELETE');
     xarRegisterPrivilege('AdminCategories','All','categories','Category','All','ACCESS_ADMIN');
-    xarMakePrivilegeRoot('ViewCategories');
-    xarMakePrivilegeRoot('ReadCategories');
-    xarMakePrivilegeRoot('CommmentCategories');
-    xarMakePrivilegeRoot('ModerateCategories');
-    xarMakePrivilegeRoot('EditCategories');
-    xarMakePrivilegeRoot('AddCategories');
-    xarMakePrivilegeRoot('ManageCategories');
-    xarMakePrivilegeRoot('AdminCategories');
 
 # --------------------------------------------------------
 #
