@@ -1,11 +1,13 @@
+<xar:if condition="!empty($article)">
 
 <xar:if condition="xarModIsAvailable('jquery')">
-    <xar:set name="cluetip_subdata">array("selector"=>"a.resource", "options"=>"width: 500, attribute: 'href', local: true, hideLocal: false, sticky: true, activation: 'toggle'")</xar:set>
+    <xar:set name="cluetip_subdata">array("selector"=>"a.resource", "options"=>"width: 600, attribute: 'href', local: true, hideLocal: false, sticky: true, activation: 'toggle'")</xar:set>
     <xar:template file="jquery.cluetip" subdata="#$cluetip_subdata#" module="jquery" />
 </xar:if>
 
 <xar:style file="mag" scope="module" module="mag" module="mag" />
 <xar:style file="mag-custom" scope="module" module="mag" />
+<xar:style file="mag-wysiwyg" scope="module" module="mag" />
 
 <xar:template file="custom-navbar" module="mag" />
 
@@ -92,3 +94,7 @@
 
 </div>
 </div>
+
+<xar:else />
+    <xar:template file="error-no-article" module="mag" />
+</xar:if>

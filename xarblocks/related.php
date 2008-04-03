@@ -22,6 +22,7 @@ function mag_relatedblock_init()
 {
     return array(
         'magazine' => 0,
+        'currentissue' => 0,
         'relatedby' => 'magazine',
         'display' => 0,
         'numitems' => 5,
@@ -113,14 +114,31 @@ function mag_relatedblock_display($blockinfo)
         'sort' => $sort,
     );
 
+    $display = $vars['display'];
+
+    // Check if the articles are limited to the current issue
+    if ($vars['currentissue'] == 1) {
+        $iid = xarVarGetCached('mag', 'iid');
+        if (empty($iid) && ($display == 0)) return;
+        $params['iid'] = $iid;
+
+        // Pass the issue details into the template for automated titles (e.g. "Other articles in issue X").
+        $issue = xarVarGetCached($module, 'issue');
+        if (empty($issue)) {
+            $issues = xarModAPIfunc($module, 'user', 'getissues', array('iid' =>$iid));
+            if (!empty($issues)) $issue = reset($issues);
+        }
+        if (!empty($issue)) $vars['issue'] = $issue;
+    }
+
     // Article Relationships
     // Display Options:
     //    0: Hide if empty
     //    1: Use if available, i.e. if we have context
     //    2: Force use, regardless of current page (TODO)
-    $display = $vars['display'];
 
     switch($vars['relatedby']) {
+        /*
         case 'issue':
             // Articles in the same issue
             $iid = xarVarGetCached('mag', 'iid');
@@ -138,7 +156,7 @@ function mag_relatedblock_display($blockinfo)
                 if (!empty($issue)) $vars['issue'] = $issue;
             }
             break;
-
+        */
         case 'series':
             // Articles from the same series
             $sid = xarVarGetCached($module, 'sid');

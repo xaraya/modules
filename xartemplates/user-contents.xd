@@ -16,8 +16,9 @@
             <xar:template file="error-no-issue" module="mag" />
         <xar:else />
             <div class="mag-issue-banner">
+                <div class="mag-issue-banner-inner">
                 <xar:if condition="!empty($issue.cover_img_path)">
-                    <img src="#$issue.cover_img_path#" alt="#xarML('Front cover')#" />
+                        <img src="#$issue.cover_img_path#" alt="#xarML('Front cover')#" class="mag-issue-banner-image" />
                 </xar:if>
                 <h1>
                     <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'mags','mag'=&gt;$mag.ref))#">
@@ -47,6 +48,7 @@
                     </div>
                 </xar:if>
                 <div style="clear: both;"></div>
+                </div>
             </div>
 
             <xar:comment>

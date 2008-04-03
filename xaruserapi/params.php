@@ -106,6 +106,7 @@ function mag_userapi_params($args)
         $params['sort_default_articles'] = 'page ASC';
         $params['sort_default_articles_toc'] = 'page ASC';
         $params['sort_default_series'] = 'display_order ASC';
+        $params['sort_default_authors'] = 'articles DESC, name ASC';
         
         // Numbers of items when displaying magazines and issues.
         $params['default_numitems_mags'] = 20;

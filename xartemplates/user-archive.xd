@@ -31,10 +31,12 @@
                     </xar:comment>
 
                     <h2 class="mag-grouping">
+                        <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'archive','mag'=&gt;$mag.ref,'year'=&gt;$loop:years:key))#">
                         <xar:ml>
                             <xar:mlstring>Archive year: #(1)</xar:mlstring>
                             <xar:mlvar>#$loop:years:key#</xar:mlvar>
                         </xar:ml>
+                        </a>
                     </h2>
 
                     <xar:loop name="$loop:years:item" id="months">

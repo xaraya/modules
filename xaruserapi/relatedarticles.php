@@ -79,10 +79,10 @@ function mag_userapi_relatedarticles($args)
 
     // Link to the authors if we an author ID has been passed in for selection.
     if ((!empty($auid) && is_numeric($auid)) || (!empty($auids) && is_array($auids))) {
-        $sql .= ' INNER JOIN ' . $tables['mag_authors'] . ' AS a'
-            . ' ON a.auid = aa.author_id'
-            . ' INNER JOIN ' . $tables['mag_articles_authors'] . ' AS aa'
-            . ' ON art.aid = aa.article_id';
+        $sql .= ' INNER JOIN ' . $tables['mag_articles_authors'] . ' AS aa'
+            . ' ON art.aid = aa.article_id'
+            . ' INNER JOIN ' . $tables['mag_authors'] . ' AS a'
+            . ' ON a.auid = aa.author_id';
     }
 
     $sql .= ' INNER JOIN ' . $tables['mag_issues'] . ' AS i'

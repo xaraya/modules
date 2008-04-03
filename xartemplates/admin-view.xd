@@ -181,7 +181,7 @@
                                     <tr>
                                         <td>#$loop:item.aid#</td>
                                         <td>
-                                            <a href="#xarModURL('mag','user','article',array('mid'=&gt;$mid,'iid'=&gt;$iid,'aid'=&gt;$loop:item.aid,'show'=&gt;'preview'))#" title="#xarML('Preview article')#"><xar:mlstring>Preview</xar:mlstring></a> |
+                                            <a href="#xarModAPIFunc('mag', 'user', 'url', array('func'=&gt;'article', 'mid'=&gt;$mid, 'iid'=&gt;$iid, 'aid'=&gt;$loop:item.aid, 'show'=&gt;'preview'))#" title="#xarML('Preview article')#"><xar:mlstring>Preview</xar:mlstring></a> |
                                             <a href="#xarModURL('mag','admin','modify',array('aid'=&gt;$loop:item.aid,'return_url'=&gt;xarServerGetCurrentURL(array(),false,'article-id-'.$loop:item.aid)))#" title="#xarML('Edit article')#" id="article-id-#$loop:item.aid#">
                                                 #xarVarPrepForDisplay($loop:item.title)#
                                             </a>

@@ -2,17 +2,17 @@
 
 <xar:if condition="!empty($article.refs) or !empty($article.footer)">
     <div class="mag-article-footer">
+        <xar:if condition="!empty($article.footer)">
+            <xar:comment>TODO: force this to HTML</xar:comment>
+            <div class="mag-article-footer-text">#$article.footer#</div>
+        </xar:if>
+
         <xar:if condition="!empty($article.refs)">
             <xar:comment>TODO: force this to HTML</xar:comment>
             <div class="mag-article-refs">
                 <h2><xar:mlstring>References:</xar:mlstring></h2>
                 #$article.refs#
             </div>
-        </xar:if>
-
-        <xar:if condition="!empty($article.footer)">
-            <xar:comment>TODO: force this to HTML</xar:comment>
-            <div class="mag-article-footer-text">#$article.footer#</div>
         </xar:if>
     </div>
 </xar:if>

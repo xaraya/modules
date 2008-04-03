@@ -2,20 +2,22 @@
     <div class="mag-article-authors">
         <div class="mag-footer-authors">
             <xar:if condition="count($article_authors) eq 1">
-                <h2><xar:mlstring>About the Author</xar:mlstring></h2>
+                <h2><xar:mlstring>Contributor</xar:mlstring></h2>
             <xar:else />
-                <h2><xar:mlstring>About the Authors</xar:mlstring></h2>
+                <h2><xar:mlstring>Contributors</xar:mlstring></h2>
             </xar:if>
             <xar:loop name="$article_authors">
                 <div class="mag-article-author">
+                    <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'authors','mag'=&gt;$mag.ref,'iid'=&gt;$iid,'auid'=&gt;$loop:item.auid))#">
                     <xar:if condition="!empty($loop:item.photo_icon)">
-                        <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'authors','mag'=&gt;$mag.ref,'auid'=&gt;$loop:item.auid))#">
                             <img src="#xarVarPrepForDisplay($loop:item.photo_icon)#" alt="#xarVarPrepForDisplay($loop:item.name)#" />
+                        <xar:else />
+                            <img src="#xarTplGetImage('icon-nophoto-small.gif', 'mag')#" alt="#xarVarPrepForDisplay($loop:item.name)#" />
+                        </xar:if>
                         </a>
-                    </xar:if>
                     <xar:comment>TODO: force mini-bio to be text</xar:comment>
                     <h3>
-                        <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'authors','mag'=&gt;$mag.ref,'auid'=&gt;$loop:item.auid))#">
+                        <a href="#xarModAPIfunc('mag','user','url',array('func'=&gt;'authors','mag'=&gt;$mag.ref,'iid'=&gt;$iid,'auid'=&gt;$loop:item.auid))#">
                             #xarVarPrepForDisplay($loop:item.name)#
                         </a>
                     </h3>

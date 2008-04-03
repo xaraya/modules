@@ -13,7 +13,7 @@
  * @param status_group string PUBLISHED or DRAFT (default PUBLISHED)
  * @param docount boolean If set, speficies that a count should be returned instead.
  * @param groupby string Indicates grouping of the authors. Values include 
- * @param sort string List of sortcriteria (opetions: name [ASC|DESC], auid [ASC|DESC])
+ * @param sort string List of sortcriteria (options: name [ASC|DESC], auid [ASC|DESC], articles [ASC|DESC])
  *
  * Return a list of authors based on one of a number of criteria:
  * - writing for a particular article
@@ -38,7 +38,7 @@ function mag_userapi_getauthors($args)
     // Get module parameters
     extract(xarModAPIfunc('mag', 'user', 'params',
         array(
-            'knames' => 'module,modid,itemtype_authors,image_author_photo_vpath,image_author_icon_vpath'
+            'knames' => 'module,modid,itemtype_authors,image_author_photo_vpath,image_author_icon_vpath,sort_default_authors'
         )
     ));
 
@@ -57,9 +57,24 @@ function mag_userapi_getauthors($args)
     // Handle sorting, which can include data in other tables.
     // Note: can only sort by columns that are selected in some databases.
     // TODO: include the ability to sort by article ID and article publication dates
-    if (!empty($sort) && xarVarValidate('strlist:,:pre:trim:lower:passthru:enum:name:name asc:name desc:auid:auid asc:auid desc', $sort, true)) {
+    if (!empty($sort) && xarVarValidate('strlist:,:pre:trim:lower:passthru:enum:name:name asc:name desc:auid:auid asc:auid desc:articles: articles asc:articles desc', $sort, true)) {
         // COnvert the keywords into column names.
         $sorting = str_replace(array('name', 'auid'), array('a.name', 'a.auid'), $sort);
+    } else {
+        $sorting = strtolower($sort_default_authors);
+    }
+
+    // Set a flag to say we're sorting by the author's article count
+    $sortby_articles = 0;
+    if (preg_match('/.*articles.*/', $sorting)) {
+        $sorting = str_replace('articles','article_count', $sorting);
+        $sortby_articles = 1;
+    }
+
+    // If group by is to article then ignore sorting
+    if ($groupby == "article") {
+        unset($sorting);
+        $sortby_articles = 0;
     }
     
     $bind = array();
@@ -71,6 +86,7 @@ function mag_userapi_getauthors($args)
     } else {
         $sql = 'SELECT DISTINCT a.auid';
         if ($groupby == 'article') $sql .= ', art.aid';
+        if ($sortby_articles == 1) $sql .= ', COUNT( DISTINCT art.aid ) AS article_count';
     }
 
     $sql .= ' FROM ' . $tables['mag_authors'] . ' AS a';
@@ -160,6 +176,8 @@ function mag_userapi_getauthors($args)
     }
 
     if (!empty($where)) $sql .= ' WHERE ' . implode(' AND ', $where);
+    
+    if ($sortby_articles == 1) $sql .= ' GROUP BY a.auid';
 
     if (!empty($sorting)) $sql .= ' ORDER BY ' . $sorting;
 

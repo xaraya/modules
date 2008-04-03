@@ -60,7 +60,7 @@ div.mag-contents div.mag-issue-banner {
     background-color: #eeeeee;
     margin: 0.5em 0;
 }
-div.mag-contents div.mag-issue-banner img {
+div.mag-contents div.mag-issue-banner img.mag-issue-banner-image {
     width: 75px;
     float: left;
     margin-right: 1em;
@@ -212,39 +212,36 @@ div.mag-article div.mag-article-authors p {
 
 
 /* Article display page thumbnail */
-div.mag-article div.mag-article-body div.thumbnail-wrapper,
-div.mag-article div.mag-article-intro-block div.thumbnail-wrapper{
+div.mag-article div.mag-article-body .thumbnail-wrapper,
+div.mag-article div.mag-article-intro-block .thumbnail-wrapper {
     width: 200px;
     padding: 0.25em;
     border: 1px solid #333333;
     background-color: #ffffff;
 }
-div.mag-article div.mag-article-body div.thumbnail-wrapper img,
-div.mag-article div.mag-article-intro-block div.thumbnail-wrapper img {
+div.mag-article div.mag-article-body .thumbnail-wrapper img,
+div.mag-article div.mag-article-intro-block .thumbnail-wrapper img {
     width: 200px;
     border: none;
 }
-div.mag-article div.mag-article-body div.thumbnail-wrapper a,
-div.mag-article div.mag-article-intro-block div.thumbnail-wrapper a{
+div.mag-article div.mag-article-body .thumbnail-wrapper a,
+div.mag-article div.mag-article-intro-block .thumbnail-wrapper a{
     text-decoration: none;
 }
 /* Extra classes for aligning the thumbnail images. Also falls back to non-thumbnailed images. */
-div.mag-article div.mag-article-body div.thumbnailed-right, div.mag-article div.mag-article-intro-block div.thumbnailed-right,
-div.mag-article div.mag-article-body img.thumbnailed-right, div.mag-article div.mag-article-intro-block img.thumbnailed-right {
+div.mag-article div.mag-article-body .thumbnailed-right, div.mag-article div.mag-article-intro-block .thumbnailed-right {
     float: right;
     margin-left: 1em;
     margin-top: 1em;
     margin-bottom: 1em;
 }
-div.mag-article div.mag-article-body div.thumbnailed-left,
-div.mag-article div.mag-article-body img.thumbnailed-left {
+div.mag-article div.mag-article-body .thumbnailed-left{
     float: left;
     margin-right: 1em;
     margin-top: 1em;
     margin-bottom: 1em;
 }
-div.mag-article div.mag-article-body div.thumbnailed-centre,
-div.mag-article div.mag-article-body img.thumbnailed-centre {
+div.mag-article div.mag-article-body .thumbnailed-centre {
     float: none !important;
     clear: both !important;
     margin-left: auto;
@@ -260,7 +257,6 @@ div.mag-article div.mag-article-body img.thumbnailed-centre {
 
 div.mag_authors {
 }
-
 div.mag-authors div.mag-author-detail img.mag-author-photo {
     border: 1px solid #666666;
     padding: 3px;
@@ -286,10 +282,19 @@ div.mag-authors div.mag-author-summary img.mag-author-photo {
     clear: left;
     margin: 0 1em 1em 0;
 }
+
+/* Author summary page */
 div.mag-authors div.mag-author-summary {
     margin: 1em 0;
     padding: 0 0 0.25em;
     border-bottom: 1px solid #aaaaaa;
+}
+div.mag-authors div.mag-author-summary h2 {
+    margin-bottom: 0;
+}
+div.mag-authors div.mag-author-summary p.mag-show-author-articles {
+    font-size: 90%;
+    margin-top: 0;
 }
 
 
@@ -363,7 +368,19 @@ div.magblock-latestissue {
 }
 div.magblock-latestissue h4 {
     font-size: 100%;
+    font-weight: normal;
+    margin: 0 0 4px;
+    padding: 0;
 }
+div.magblock-latestissue p {
+    margin: 4px 0 0;
+    padding: 0;
+}
+/* Hide the top title, for now */
+div.magblock-latestissue h4 {
+    display: none;
+}
+/* The list is no longer used in the latest article block */
 div.magblock-latestissue ul {
     font-size: 90%;
     padding: 0 0 0 1em;

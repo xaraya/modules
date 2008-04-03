@@ -30,7 +30,6 @@ function mag_relatedblock_modify($blockinfo)
     // Related by options
     $vars['relatedby_types'] = array(
         'magazine' => xarML('Magazine'), 
-        'issue' => xarML('Issue'),
         'series' => xarML('Series'),
         'author' => xarML('Author'),
     );
@@ -71,6 +70,9 @@ function mag_relatedblock_update($blockinfo)
     // Set the parameters
     if (xarVarFetch('magazine', 'int:0', $magazine, 0, XARVAR_NOT_REQUIRED)) {
         $vars['magazine'] = $magazine;
+    }
+    if (xarVarFetch('currentissue', 'enum:0:1', $currentissue, '', XARVAR_NOT_REQUIRED)) {
+        $vars['currentissue'] = $currentissue;
     }
     if (xarVarFetch('relatedby', 'str', $relatedby, '', XARVAR_NOT_REQUIRED)) {
         $vars['relatedby'] = $relatedby;

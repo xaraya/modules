@@ -3,9 +3,9 @@
         <label for="related_magazine_#$bid#" class="xar-form-label"><xar:mlstring>Articles from: </xar:mlstring></label>
         <select name="magazine" id="related_magazine_#$bid#">
             <xar:if condition="$magazine eq '0'">
-                <option value="current" selected="selected">-- <xar:mlstring>Current Displayed Magazine</xar:mlstring> --</option>
+                <option value="current" selected="selected">-- <xar:mlstring>Current Magazine</xar:mlstring> --</option>
             <xar:else />
-                <option value="0">-- <xar:mlstring>Current Displayed Magazine</xar:mlstring> --</option>
+                <option value="0">-- <xar:mlstring>Current Magazine</xar:mlstring> --</option>
             </xar:if>
             <xar:loop name="$mag_types">
                 <xar:if condition="$magazine eq $loop:item.mid">
@@ -18,7 +18,7 @@
     </div>
 
     <div class="xar-form-input-wrapper">
-        <label for="related_currentissue_#$bid#" class="xar-form-label"><xar:mlstring>Limit to current displayed issue?</xar:mlstring></label>
+        <label for="related_currentissue_#$bid#" class="xar-form-label"><xar:mlstring>Limit to current issue?: </xar:mlstring></label>
         <xar:if condition="$currentissue eq '1'">
             <input type="checkbox" name="currentissue" id="related_currentissue_#$bid#" value="1" checked="yes" />
         <xar:else />
