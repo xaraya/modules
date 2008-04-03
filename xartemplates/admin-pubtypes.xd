@@ -144,7 +144,8 @@
                           <xar:if condition="xarModGetVar('articles', 'ptypenamechange')">
                             <input type="text" name="name" id="name" value="#xarVarPrepForDisplay($item['name'])#" size="20" maxlength="20" />
                             <xar:else />
-                            #$item['name']#
+                            <input type="hidden" name="name" id="name" value="#xarVarPrepForDisplay($item['name'])#" />
+                            #xarVarPrepForDisplay($item['name'])#
                           </xar:if>
                         </td>
                     </tr>
