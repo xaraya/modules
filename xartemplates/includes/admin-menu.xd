@@ -1,26 +1,29 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:comment>Common Administration menu</xar:comment>
-<xar:style scope="module" module="base" file="navtabs" />
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+    <xar:comment>Common Administration menu</xar:comment>
+    <xar:style scope="module" module="base" file="navtabs" />
 
-<xar:set name="activetab">$_bl_module_func</xar:set>
-<div>
-  <dl class="xar-tabs">
-    <dt class="help" title="Choose an action to perform">
-      <xar:mlstring>Actions:</xar:mlstring>
-    </dt>
+    <xar:set name="request">xarRequestGetInfo()</xar:set>
+    <xar:set name="activetab">#$request.2#</xar:set>
+    <div>
+      <dl class="xar-tabs">
+        <dt class="help" title="Choose an action to perform">
+          <xar:mlstring>Actions:</xar:mlstring>
+        </dt>
 
-        <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
+            <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
+            <dd class="#$tabclass#">
+              <a href="&xar-modurl-weather-admin-modifyconfig;">
+                <xar:mlstring>Modify Config</xar:mlstring>
+              </a>
+            </dd>
+        <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
         <dd class="#$tabclass#">
-          <a href="&xar-modurl-weather-admin-modifyconfig;">
-            <xar:mlstring>Modify Config</xar:mlstring>
+          <a href="&xar-modurl-weather-admin-overview;">
+            <xar:mlstring>Overview</xar:mlstring>
           </a>
         </dd>
-    <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
-    <dd class="#$tabclass#">
-      <a href="&xar-modurl-weather-admin-overview;">
-        <xar:mlstring>Overview</xar:mlstring>
-      </a>
-    </dd>
 
-  </dl>
-</div>
+      </dl>
+    </div>
+</xar:template>

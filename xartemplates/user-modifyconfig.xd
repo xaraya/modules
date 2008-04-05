@@ -1,64 +1,66 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<xar:set name="pagename"><xar:mlstring>Modify Weather Config</xar:mlstring></xar:set>
-<xar:set name="dummy">#xarTplSetPageTitle($pagename)#</xar:set>
+    <xar:set name="pagename"><xar:mlstring>Modify Weather Config</xar:mlstring></xar:set>
+    <xar:set name="dummy">#xarTplSetPageTitle($pagename)#</xar:set>
 
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>Weather Forecast</xar:mlstring>
-    </span>
-</div>
-
-<div class="xar-mod-body">
-
-    <xar:template type="module" module="weather" file="user-menu" />
-
-    <!-- the weather.com links are required -->
-    <a href="http://www.weather.com"><img src="#xarTplGetImage('TWClogo_64px.png','weather')#" class="xar-module-icon" alt="weather.com&reg;" /></a>
-
-    <h2>#$pagename#</h2>
-    <div>
-        <form action="#xarModURL('weather','user','updateconfig')#" method="post">
-            <table>
-                <tr>
-                    <td><xar:mlstring>Default Location</xar:mlstring> : </td>
-                    <td><input size="15" type="text" name="default_location" value="#$default_location#" /></td>
-                </tr>
-                <tr>
-                    <td><xar:mlstring>Number of Days for Extended Forecasts</xar:mlstring> : </td>
-                    <td>
-                        <select name="extdays">
-                            <xar:for start="$i = 1" test="$i le 10" iter="$i++">
-                                <xar:if condition="$extdays eq $i">
-                                    <option value="#$i#" selected="selected">#$i#</option>
-                                <xar:else />
-                                    <option value="#$i#">#$i#</option>
-                                </xar:if>
-                            </xar:for>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td><xar:mlstring>Measurement Units</xar:mlstring> : </td>
-                    <td>
-                        <select name="units">
-                            <xar:set name="$StandardUnits"><xar:mlstring>Standard</xar:mlstring></xar:set>
-                            <xar:set name="$MetricUnits"><xar:mlstring>Metric</xar:mlstring></xar:set>
-                            <xar:if condition="$units eq 's'">
-                                <option value="s" selected="selected">#$StandardUnits#</option>
-                            <xar:else />
-                                <option value="s">#$StandardUnits#</option>
-                            </xar:if>
-                            <xar:if condition="$units eq 'm'">
-                                <option value="m" selected="selected">#$MetricUnits#</option>
-                            <xar:else />
-                                <option value="m">#$MetricUnits#</option>
-                            </xar:if>
-                        </select>
-                    </td>
-                </tr>
-            </table>
-            <p><input type="submit" name="submit" value="#xarML('Modify Config')#" /></p>
-        </form>    
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>Weather Forecast</xar:mlstring>
+        </span>
     </div>
-</div>
+
+    <div class="xar-mod-body">
+
+        <xar:template type="module" module="weather" file="user-menu" />
+
+        <!-- the weather.com links are required -->
+        <a href="http://www.weather.com"><img src="#xarTplGetImage('TWClogo_64px.png','weather')#" class="xar-module-icon" alt="weather.com&reg;" /></a>
+
+        <h2>#$pagename#</h2>
+        <div>
+            <form action="#xarModURL('weather','user','updateconfig')#" method="post">
+                <table>
+                    <tr>
+                        <td><xar:mlstring>Default Location</xar:mlstring> : </td>
+                        <td><input size="15" type="text" name="default_location" value="#$default_location#" /></td>
+                    </tr>
+                    <tr>
+                        <td><xar:mlstring>Number of Days for Extended Forecasts</xar:mlstring> : </td>
+                        <td>
+                            <select name="extdays">
+                                <xar:for start="$i = 1" test="$i le 10" iter="$i++">
+                                    <xar:if condition="$extdays eq $i">
+                                        <option value="#$i#" selected="selected">#$i#</option>
+                                    <xar:else />
+                                        <option value="#$i#">#$i#</option>
+                                    </xar:if>
+                                </xar:for>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><xar:mlstring>Measurement Units</xar:mlstring> : </td>
+                        <td>
+                            <select name="units">
+                                <xar:set name="$StandardUnits"><xar:mlstring>Standard</xar:mlstring></xar:set>
+                                <xar:set name="$MetricUnits"><xar:mlstring>Metric</xar:mlstring></xar:set>
+                                <xar:if condition="$units eq 's'">
+                                    <option value="s" selected="selected">#$StandardUnits#</option>
+                                <xar:else />
+                                    <option value="s">#$StandardUnits#</option>
+                                </xar:if>
+                                <xar:if condition="$units eq 'm'">
+                                    <option value="m" selected="selected">#$MetricUnits#</option>
+                                <xar:else />
+                                    <option value="m">#$MetricUnits#</option>
+                                </xar:if>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                <p><input type="submit" name="submit" value="#xarML('Modify Config')#" /></p>
+            </form>    
+        </div>
+    </div>
+</xar:template>

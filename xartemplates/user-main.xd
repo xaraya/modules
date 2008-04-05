@@ -1,204 +1,206 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<xar:set name="pagename">#$wData.observStation#</xar:set>
-<xar:set name="dummy">#xarTplSetPageTitle($pagename)#</xar:set>
+    <xar:set name="pagename">#$wData.observStation#</xar:set>
+    <xar:set name="dummy">#xarTplSetPageTitle($pagename)#</xar:set>
 
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>Weather Forecast</xar:mlstring>
-    </span>
-</div>
-
-<div class="xar-mod-body">
-
-    <xar:template type="module" module="weather" file="user-menu" />
-
-    <!-- Uncomment next line if you want a search form in the main page -->
-    <!--<xar:template file="weatherdotcomsearch" /> -->
-
-    <!-- the weather.com links are required -->
-    <a href="http://www.weather.com"><img src="#xarTplGetImage('TWClogo_64px.png','weather')#" class="xar-module-icon" alt="weather.com&reg;" /></a>
-
-    <div id="currentweather">
-        <h2 id="weatherCurrentHeader">
-            <xar:ml>
-                <xar:mlstring>Currently in #(1)</xar:mlstring>
-                <xar:mlvar>#$wData.observStation#</xar:mlvar>
-            </xar:ml>
-        </h2>
-        <table>
-            <tr>
-                <td class="xar-align-center xar-valign-middle"><img src="#xarTplGetImage('icons/default/128/'.$wData.icon.'.png','weather')#" alt="#$wData.icon#" /></td>
-                <td class="xar-align-center xar-valign-middle"><h1>#$wData.temp#&deg;#$wData.unitsTemp#</h1></td>
-            </tr>
-            <tr>
-                <td class="xar-align-center xar-valign-middle"><strong>#$wData.conditions#</strong></td>
-                <td class="xar-align-center xar-valign-middle">
-                    <strong><xar:mlstring>Feels Like</xar:mlstring><br />
-                    #$wData.feelsLike#&deg;#$wData.unitsTemp#</strong>
-                </td>
-            </tr>
-        </table>
-        <br />
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>Weather Forecast</xar:mlstring>
+        </span>
     </div>
 
+    <div class="xar-mod-body">
 
-    <div id="currentdetail">
-        <table>
-            <tr>
-                <th><xar:mlstring>Today</xar:mlstring></th>
-                <th><xar:mlstring>Tonight</xar:mlstring></th>
-            </tr>
-            <tr>
-                <td class="xar-align-center xar-valign-middle">
-                    <img src="#xarTplGetImage('icons/default/32/'.$eData.0.part.d.icon.'.png','weather')#" alt="#$eData.0.part.d.icon#" />
-                    <br />
-                    <strong>#$eData[0]['part']['d']['cond']#</strong><br />
-                </td>
-                <td class="xar-align-center xar-valign-middle">
-                    <img src="#xarTplGetImage('icons/default/32/'.$eData.0.part.n.icon.'.png','weather')#" alt="#$eData.0.part.n.icon#" />
-                    <br />
-                    <strong>#$eData[0]['part']['n']['cond']#</strong><br />
-                </td>
-            </tr>
-            <tr>
-                <th><xar:mlstring>Daytime High</xar:mlstring>  (&deg;#$eData[0]['unitsTemp']#)</th>
-                <th><xar:mlstring>Overnight Low</xar:mlstring>  (&deg;#$eData[0]['unitsTemp']#)</th>
-            </tr>
-            <tr>
-                <td valign="top" align="center">
-                    <strong style="color:red;">#$eData[0]['hi']#&deg;</strong>
-                </td>
-                <td valign="top" align="center">
-                    <strong style="color:blue;">#$eData[0]['lo']#&deg;</strong>
-                </td>
-            </tr>
-            <tr>
-                <th><xar:mlstring>Sunrise</xar:mlstring></th>
-                <th><xar:mlstring>Sunset</xar:mlstring></th>
-            </tr>
-            <tr>
-                <td valign="top" align="center">
-                    <strong>#$eData[0]['sunr']#</strong>
-                </td>
-                <td valign="top" align="center">
-                    <strong>#$eData[0]['suns']#</strong>
-                </td>
-            </tr>
-            <tr>
-                <th>&nbsp;</th>
-                <th>&nbsp;</th>
-            </tr>
-            <tr>
-                <td class="xar-align-right"><strong><xar:mlstring>UV Index</xar:mlstring> : </strong></td>
-                <td class="xar-align-left">#$wData.uv#&nbsp;#$wData.uvDesc#</td>
-            </tr>
-            <tr>
-                <td class="xar-align-right"><strong><xar:mlstring>Visibility</xar:mlstring> : </strong></td>
-                <td class="xar-align-left">#$wData.visibility#</td>
-            </tr>
-            <tr>
-                <td class="xar-align-right"><strong><xar:mlstring>Dew Point</xar:mlstring> : </strong></td>
-                <td class="xar-align-left">#$wData.dewPoint#&deg;#$wData.unitsTemp#</td>
-            </tr>
-            <tr>
-                <td class="xar-align-right"><strong><xar:mlstring>Humidity</xar:mlstring> : </strong></td>
-                <td class="xar-align-left">#$wData.humidity#%</td>
-            </tr>
-            <tr>
-                <td class="xar-align-right"><strong><xar:mlstring>Pressure</xar:mlstring> : </strong></td>
-                <td class="xar-align-left">
-                    <xar:ml>
-                        <xar:mlstring>#(1) #(2) and #(3)</xar:mlstring>
-                        <xar:mlvar>#$wData.barometer#</xar:mlvar>
-                        <xar:mlvar>#$wData.tempPressure#</xar:mlvar>
-                        <xar:mlvar>#$wData.barometerDesc#</xar:mlvar>
-                    </xar:ml>
-                </td>
-            </tr>
-            <tr>
-                <td class="xar-align-right"><strong><xar:mlstring>Wind</xar:mlstring> : </strong></td>
-                <td class="xar-align-left">
-                    <xar:ml>
-                        <xar:mlstring>#(1) at #(2) #(3)</xar:mlstring>
-                        <xar:mlvar>#$wData.windDirname#</xar:mlvar>
-                        <xar:mlvar>#$wData.wind#</xar:mlvar>
-                        <xar:mlvar>#$wData.unitsSpeed#</xar:mlvar>
-                    </xar:ml>
-                </td>
-            </tr>
-            <tr>
-                <td class="xar-align-right"><strong><xar:mlstring>Wind Gusts</xar:mlstring> : </strong></td>
-                <td class="xar-align-left">#$wData.windGust#&nbsp;#$wData.unitsSpeed#</td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center">
-                    <p style="font-size:90%;">
-                    <xar:ml>
-                        <xar:mlstring>As reported at #(1). Last Updated #(2)</xar:mlstring>
-                        <xar:mlvar>#$wData.observStation#</xar:mlvar>
-                        <xar:mlvar>#$wData.lastUpdate#</xar:mlvar>
-                    </xar:ml>
-                    </p>
-                </td>
-            </tr>
-        </table>
-        <br />
-    </div>
+        <xar:template type="module" module="weather" file="user-menu" />
 
-    <xar:set name="$maxdays">#xarModGetUserVar('weather','extdays')#</xar:set>
-    <div id="extendedforecast">
-        <h2>
-            <xar:ml>
-            <xar:mlstring>#(1)-Day Forecast</xar:mlstring>
-            <xar:mlvar>#$maxdays#</xar:mlvar>    
-            </xar:ml>
-        </h2>
-        <table>
-            <tr>
-                <th colspan="3">&nbsp;</th>
-                <th>
-                    <xar:mlstring>Daytime High</xar:mlstring> / <br />
-                    <xar:mlstring>Overnight Low</xar:mlstring><br />
-                    (&deg;#$eData[0]['unitsTemp']#)
-                </th>
-                <th><xar:mlstring>Precip. %</xar:mlstring></th>
-            </tr>
-            <!-- today's details -->
-            <tr>
-                <td>
-                    <strong>
-                    <a href="#xarModURL('weather','user','details',array('xwday'=>0))#">#$eData[0]['wkday']#</a>
-                    </strong><br />#$eData[0]['date']#</td>
-                <td valign="middle" align="center"><img src="#xarTplGetImage('icons/default/32/'.$eData.0.part.d.icon.'.png','weather')#" alt="#$eData.0.part.d.icon#" /></td>
-                <td valign="middle" align="center">#$eData[0]['part']['d']['cond']#</td>
-                <td valign="middle" align="center"><strong>#$eData[0]['hi']#&deg;/#$eData[0]['lo']#&deg;</strong></td>
-                <td valign="middle" align="center">#$eData[0]['part']['d']['ppcp']#%</td>
-            </tr>
-            <!-- extended forecast details -->
-            <xar:for start="$i=1" test="$i le $maxdays-1" iter="$i++">
-                <xar:if condition="(($i + 1) % 2)">
-                    <xar:set name="item_class">'xar-norm'</xar:set>
-                <xar:else/>
-                    <xar:set name="item_class">'xar-accent'</xar:set>
-                </xar:if>
-                <tr class="#$item_class#">
+        <!-- Uncomment next line if you want a search form in the main page -->
+        <!--<xar:template file="weatherdotcomsearch" /> -->
+
+        <!-- the weather.com links are required -->
+        <a href="http://www.weather.com"><img src="#xarTplGetImage('TWClogo_64px.png','weather')#" class="xar-module-icon" alt="weather.com&reg;" /></a>
+
+        <div id="currentweather">
+            <h2 id="weatherCurrentHeader">
+                <xar:ml>
+                    <xar:mlstring>Currently in #(1)</xar:mlstring>
+                    <xar:mlvar>#$wData.observStation#</xar:mlvar>
+                </xar:ml>
+            </h2>
+            <table>
+                <tr>
+                    <td class="xar-align-center xar-valign-middle"><img src="#xarTplGetImage('icons/default/128/'.$wData.icon.'.png','weather')#" alt="#$wData.icon#" /></td>
+                    <td class="xar-align-center xar-valign-middle"><h1>#$wData.temp#&deg;#$wData.unitsTemp#</h1></td>
+                </tr>
+                <tr>
+                    <td class="xar-align-center xar-valign-middle"><strong>#$wData.conditions#</strong></td>
+                    <td class="xar-align-center xar-valign-middle">
+                        <strong><xar:mlstring>Feels Like</xar:mlstring><br />
+                        #$wData.feelsLike#&deg;#$wData.unitsTemp#</strong>
+                    </td>
+                </tr>
+            </table>
+            <br />
+        </div>
+
+
+        <div id="currentdetail">
+            <table>
+                <tr>
+                    <th><xar:mlstring>Today</xar:mlstring></th>
+                    <th><xar:mlstring>Tonight</xar:mlstring></th>
+                </tr>
+                <tr>
+                    <td class="xar-align-center xar-valign-middle">
+                        <img src="#xarTplGetImage('icons/default/32/'.$eData.0.part.d.icon.'.png','weather')#" alt="#$eData.0.part.d.icon#" />
+                        <br />
+                        <strong>#$eData[0]['part']['d']['cond']#</strong><br />
+                    </td>
+                    <td class="xar-align-center xar-valign-middle">
+                        <img src="#xarTplGetImage('icons/default/32/'.$eData.0.part.n.icon.'.png','weather')#" alt="#$eData.0.part.n.icon#" />
+                        <br />
+                        <strong>#$eData[0]['part']['n']['cond']#</strong><br />
+                    </td>
+                </tr>
+                <tr>
+                    <th><xar:mlstring>Daytime High</xar:mlstring>  (&deg;#$eData[0]['unitsTemp']#)</th>
+                    <th><xar:mlstring>Overnight Low</xar:mlstring>  (&deg;#$eData[0]['unitsTemp']#)</th>
+                </tr>
+                <tr>
+                    <td valign="top" align="center">
+                        <strong style="color:red;">#$eData[0]['hi']#&deg;</strong>
+                    </td>
+                    <td valign="top" align="center">
+                        <strong style="color:blue;">#$eData[0]['lo']#&deg;</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <th><xar:mlstring>Sunrise</xar:mlstring></th>
+                    <th><xar:mlstring>Sunset</xar:mlstring></th>
+                </tr>
+                <tr>
+                    <td valign="top" align="center">
+                        <strong>#$eData[0]['sunr']#</strong>
+                    </td>
+                    <td valign="top" align="center">
+                        <strong>#$eData[0]['suns']#</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                </tr>
+                <tr>
+                    <td class="xar-align-right"><strong><xar:mlstring>UV Index</xar:mlstring> : </strong></td>
+                    <td class="xar-align-left">#$wData.uv#&nbsp;#$wData.uvDesc#</td>
+                </tr>
+                <tr>
+                    <td class="xar-align-right"><strong><xar:mlstring>Visibility</xar:mlstring> : </strong></td>
+                    <td class="xar-align-left">#$wData.visibility#</td>
+                </tr>
+                <tr>
+                    <td class="xar-align-right"><strong><xar:mlstring>Dew Point</xar:mlstring> : </strong></td>
+                    <td class="xar-align-left">#$wData.dewPoint#&deg;#$wData.unitsTemp#</td>
+                </tr>
+                <tr>
+                    <td class="xar-align-right"><strong><xar:mlstring>Humidity</xar:mlstring> : </strong></td>
+                    <td class="xar-align-left">#$wData.humidity#%</td>
+                </tr>
+                <tr>
+                    <td class="xar-align-right"><strong><xar:mlstring>Pressure</xar:mlstring> : </strong></td>
+                    <td class="xar-align-left">
+                        <xar:ml>
+                            <xar:mlstring>#(1) #(2) and #(3)</xar:mlstring>
+                            <xar:mlvar>#$wData.barometer#</xar:mlvar>
+                            <xar:mlvar>#$wData.tempPressure#</xar:mlvar>
+                            <xar:mlvar>#$wData.barometerDesc#</xar:mlvar>
+                        </xar:ml>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="xar-align-right"><strong><xar:mlstring>Wind</xar:mlstring> : </strong></td>
+                    <td class="xar-align-left">
+                        <xar:ml>
+                            <xar:mlstring>#(1) at #(2) #(3)</xar:mlstring>
+                            <xar:mlvar>#$wData.windDirname#</xar:mlvar>
+                            <xar:mlvar>#$wData.wind#</xar:mlvar>
+                            <xar:mlvar>#$wData.unitsSpeed#</xar:mlvar>
+                        </xar:ml>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="xar-align-right"><strong><xar:mlstring>Wind Gusts</xar:mlstring> : </strong></td>
+                    <td class="xar-align-left">#$wData.windGust#&nbsp;#$wData.unitsSpeed#</td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <p style="font-size:90%;">
+                        <xar:ml>
+                            <xar:mlstring>As reported at #(1). Last Updated #(2)</xar:mlstring>
+                            <xar:mlvar>#$wData.observStation#</xar:mlvar>
+                            <xar:mlvar>#$wData.lastUpdate#</xar:mlvar>
+                        </xar:ml>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+            <br />
+        </div>
+
+        <xar:set name="$maxdays">#xarModGetUserVar('weather','extdays')#</xar:set>
+        <div id="extendedforecast">
+            <h2>
+                <xar:ml>
+                <xar:mlstring>#(1)-Day Forecast</xar:mlstring>
+                <xar:mlvar>#$maxdays#</xar:mlvar>    
+                </xar:ml>
+            </h2>
+            <table>
+                <tr>
+                    <th colspan="3">&nbsp;</th>
+                    <th>
+                        <xar:mlstring>Daytime High</xar:mlstring> / <br />
+                        <xar:mlstring>Overnight Low</xar:mlstring><br />
+                        (&deg;#$eData[0]['unitsTemp']#)
+                    </th>
+                    <th><xar:mlstring>Precip. %</xar:mlstring></th>
+                </tr>
+                <!-- today's details -->
+                <tr>
                     <td>
                         <strong>
-                        <a href="#xarModURL('weather','user','details',array('xwday'=>$i))#">#$eData[$i]['wkday']#</a>
-                        </strong><br />#$eData[$i]['date']#</td>
-                    <td valign="middle" align="center"><img src="#xarTplGetImage('icons/default/32/'.$eData.$i.part.d.icon.'.png','weather')#" alt="#$eData.$i.part.d.icon#" /></td>
-                    <td valign="middle" align="center">#$eData[$i]['part']['d']['cond']#</td>
-                    <td valign="middle" align="center"><strong>#$eData[$i]['hi']#&deg;/#$eData[$i]['lo']#&deg;</strong></td>
-                    <td valign="middle" align="center">#$eData[$i]['part']['d']['ppcp']#%</td>
+                        <a href="#xarModURL('weather','user','details',array('xwday'=>0))#">#$eData[0]['wkday']#</a>
+                        </strong><br />#$eData[0]['date']#</td>
+                    <td valign="middle" align="center"><img src="#xarTplGetImage('icons/default/32/'.$eData.0.part.d.icon.'.png','weather')#" alt="#$eData.0.part.d.icon#" /></td>
+                    <td valign="middle" align="center">#$eData[0]['part']['d']['cond']#</td>
+                    <td valign="middle" align="center"><strong>#$eData[0]['hi']#&deg;/#$eData[0]['lo']#&deg;</strong></td>
+                    <td valign="middle" align="center">#$eData[0]['part']['d']['ppcp']#%</td>
                 </tr>
-            </xar:for>
-        </table>
-        <br />
+                <!-- extended forecast details -->
+                <xar:for start="$i=1" test="$i le $maxdays-1" iter="$i++">
+                    <xar:if condition="(($i + 1) % 2)">
+                        <xar:set name="item_class">'xar-norm'</xar:set>
+                    <xar:else/>
+                        <xar:set name="item_class">'xar-accent'</xar:set>
+                    </xar:if>
+                    <tr class="#$item_class#">
+                        <td>
+                            <strong>
+                            <a href="#xarModURL('weather','user','details',array('xwday'=>$i))#">#$eData[$i]['wkday']#</a>
+                            </strong><br />#$eData[$i]['date']#</td>
+                        <td valign="middle" align="center"><img src="#xarTplGetImage('icons/default/32/'.$eData.$i.part.d.icon.'.png','weather')#" alt="#$eData.$i.part.d.icon#" /></td>
+                        <td valign="middle" align="center">#$eData[$i]['part']['d']['cond']#</td>
+                        <td valign="middle" align="center"><strong>#$eData[$i]['hi']#&deg;/#$eData[$i]['lo']#&deg;</strong></td>
+                        <td valign="middle" align="center">#$eData[$i]['part']['d']['ppcp']#%</td>
+                    </tr>
+                </xar:for>
+            </table>
+            <br />
+        </div>
     </div>
-</div>
 
-<div class="xar-mod-foot">
-    <!-- the weather.com links are required -->
-    <xar:template file="weatherdotcomfooter" />
-</div>
+    <div class="xar-mod-foot">
+        <!-- the weather.com links are required -->
+        <xar:template file="weatherdotcomfooter" />
+    </div>
+</xar:template>

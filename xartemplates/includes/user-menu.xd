@@ -1,32 +1,35 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:comment>Common User menu</xar:comment>
-<xar:style scope="module" module="base" file="navtabs" />
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+    <xar:comment>Common User menu</xar:comment>
+    <xar:style scope="module" module="base" file="navtabs" />
 
-<xar:set name="activetab">$_bl_module_func</xar:set>
-<div>
-    <dl class="xar-tabs">
-        <dt class="help" title="Choose an action to perform">
-            <xar:mlstring>Actions:</xar:mlstring>
-        </dt>
-        <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
-        <dd class="#$tabclass#">
-            <a href="&xar-modurl-weather-user-main;">
-                <xar:mlstring>Forecast</xar:mlstring>
-            </a>
-        </dd>
-        <xar:set name="tabclass">$activetab=='search'?'active':''</xar:set>
-        <dd class="#$tabclass#">
-            <a href="&xar-modurl-weather-user-search;">
-                <xar:mlstring>Location Search</xar:mlstring>
-            </a>
-        </dd>
-        <xar:if condition="xarUserIsLoggedIn()">
-            <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
+    <xar:set name="request">xarRequestGetInfo()</xar:set>
+    <xar:set name="activetab">#$request.2#</xar:set>
+    <div>
+        <dl class="xar-tabs">
+            <dt class="help" title="Choose an action to perform">
+                <xar:mlstring>Actions:</xar:mlstring>
+            </dt>
+            <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
             <dd class="#$tabclass#">
-                <a href="&xar-modurl-weather-user-modifyconfig;">
-                    <xar:mlstring>Modify Configuration</xar:mlstring>
+                <a href="&xar-modurl-weather-user-main;">
+                    <xar:mlstring>Forecast</xar:mlstring>
                 </a>
             </dd>
-        </xar:if>
-    </dl>
-</div>
+            <xar:set name="tabclass">$activetab=='search'?'active':''</xar:set>
+            <dd class="#$tabclass#">
+                <a href="&xar-modurl-weather-user-search;">
+                    <xar:mlstring>Location Search</xar:mlstring>
+                </a>
+            </dd>
+            <xar:if condition="xarUserIsLoggedIn()">
+                <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
+                <dd class="#$tabclass#">
+                    <a href="&xar-modurl-weather-user-modifyconfig;">
+                        <xar:mlstring>Modify Configuration</xar:mlstring>
+                    </a>
+                </dd>
+            </xar:if>
+        </dl>
+    </div>
+</xar:template>

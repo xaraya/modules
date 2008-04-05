@@ -1,15 +1,17 @@
-<div id="weatherdotcomsearch">
-    <xar:if condition="!isset($loc)">
-        <xar:set name="$loc">''</xar:set>
-    </xar:if>
-    <form method="get" action="index.php">
-        <div>        
-            <label for="loc"><xar:mlstring>Enter in a City or US Zip:</xar:mlstring></label>
-            <input id="loc" type="text" name="loc" value="#$loc#"/> 
-            <input type="hidden" name="module" value="weather" />
-            <input type="hidden" name="func" value="search" />
-            <input type="hidden" name="type" value="user" />
-            <input type="submit" name="Submit" value="Search"/>
-        </div>
-    </form>
-</div>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div id="weatherdotcomsearch">
+        <xar:if condition="!isset($loc)">
+            <xar:set name="$loc">''</xar:set>
+        </xar:if>
+        <form method="get" action="index.php">
+            <div>        
+                <label for="loc"><xar:mlstring>Enter in a City or US Zip:</xar:mlstring></label>
+                <input id="loc" type="text" name="loc" value="#$loc#"/> 
+                <input type="hidden" name="module" value="weather" />
+                <input type="hidden" name="func" value="search" />
+                <input type="hidden" name="type" value="user" />
+                <input type="submit" name="Submit" value="Search"/>
+            </div>
+        </form>
+    </div>
+</xar:template>
