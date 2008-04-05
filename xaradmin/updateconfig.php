@@ -28,29 +28,29 @@ function weather_admin_updateconfig()
     
     
     if(isset($partner_id)) {
-        xarModSetVar('weather','partner_id',$partner_id);
+        xarModVars::set('weather','partner_id',$partner_id);
     }
     
     if(isset($license_key)) {
-        xarModSetVar('weather','license_key',$license_key);
+        xarModVars::set('weather','license_key',$license_key);
     }
     
     if(isset($default_location)) {
-        xarModSetVar('weather','default_location',$default_location);
+        xarModVars::set('weather','default_location',$default_location);
     }
     
     if(isset($units)) {
-        xarModSetVar('weather','units',$units);
+        xarModVars::set('weather','units',$units);
     }
     
     if(isset($extdays)) {
-        xarModSetVar('weather','extdays',$extdays);
+        xarModVars::set('weather','extdays',$extdays);
     }
     
     if(isset($cc_cache_time)) {
         if($cc_cache_time >= 30) {
             $cc_cache_time *= 60; // time coming in is in minutes
-            xarModSetVar('weather','cc_cache_time',$cc_cache_time);
+            xarModVars::set('weather','cc_cache_time',$cc_cache_time);
         } else {
             xarErrorSet(
                 XAR_USER_EXCEPTION,
@@ -63,7 +63,7 @@ function weather_admin_updateconfig()
     if(isset($ext_cache_time)) {
         if($ext_cache_time >= 2) {
             $ext_cache_time *= (60*60); // time coming in is in hours
-            xarModSetVar('weather','ext_cache_time',$ext_cache_time);
+            xarModVars::set('weather','ext_cache_time',$ext_cache_time);
         } else {
             xarErrorSet(
                 XAR_USER_EXCEPTION,
@@ -75,7 +75,7 @@ function weather_admin_updateconfig()
     
     // set the shorturl support (only do this on FORM submit)
     xarVarFetch('shorturls','int:0:1',$shorturls,0);
-    xarModSetVar('weather','SupportShortURLs',$shorturls);
+    xarModVars::set('weather','SupportShortURLs',$shorturls);
     
     xarResponseRedirect(xarModURL('weather','admin','modifyconfig'));
 }

@@ -75,11 +75,11 @@
                         <table>
                             <tr>
                                 <td><strong><xar:mlstring>Wind Speed</xar:mlstring> : </strong></td>
-                                <td>#$eData[$day]['part']['d']['windspeed']#&nbsp;#$eData[0]['unitsSpeed']#</td>
+                                <td>#$eData[$day]['part']['d']['windspeed']#&#160;#$eData[0]['unitsSpeed']#</td>
                             </tr>
                             <tr>
                                 <td><strong><xar:mlstring>Wind Gusts</xar:mlstring> : </strong></td>
-                                <td>#$eData[$day]['part']['d']['windgust']# &nbsp;#$eData[0]['unitsSpeed']#</td>
+                                <td>#$eData[$day]['part']['d']['windgust']# &#160;#$eData[0]['unitsSpeed']#</td>
                             </tr>
                             <tr>
                                 <td><strong><xar:mlstring>Wind Direction</xar:mlstring> : </strong></td>
@@ -87,7 +87,7 @@
                             </tr>
                             <tr>
                                 <td><strong><xar:mlstring>Precipitation</xar:mlstring> : </strong></td>
-                                <td>#$eData[$day]['part']['d']['ppcp']#&nbsp;#$eData[0]['unitsPrecip']#</td>
+                                <td>#$eData[$day]['part']['d']['ppcp']#&#160;#$eData[0]['unitsPrecip']#</td>
                             </tr>
                             <tr>
                                 <td><strong><xar:mlstring>Humidity</xar:mlstring> : </strong></td>
@@ -99,11 +99,11 @@
                         <table>
                             <tr>
                                 <td><strong><xar:mlstring>Wind Speed</xar:mlstring> : </strong></td>
-                                <td>#$eData[$day]['part']['n']['windspeed']#&nbsp;#$eData[0]['unitsSpeed']#</td>
+                                <td>#$eData[$day]['part']['n']['windspeed']#&#160;#$eData[0]['unitsSpeed']#</td>
                             </tr>
                             <tr>
                                 <td><strong><xar:mlstring>Wind Gusts</xar:mlstring> : </strong></td>
-                                <td>#$eData[$day]['part']['n']['windgust']#&nbsp;#$eData[0]['unitsSpeed']#</td>
+                                <td>#$eData[$day]['part']['n']['windgust']#&#160;#$eData[0]['unitsSpeed']#</td>
                             </tr>
                             <tr>
                                 <td><strong><xar:mlstring>Wind Direction</xar:mlstring> : </strong></td>
@@ -111,7 +111,7 @@
                             </tr>
                             <tr>
                                 <td><strong><xar:mlstring>Precipitation</xar:mlstring> : </strong></td>
-                                <td>#$eData[$day]['part']['n']['ppcp']#&nbsp;#$eData[0]['unitsPrecip']#</td>
+                                <td>#$eData[$day]['part']['n']['ppcp']#&#160;#$eData[0]['unitsPrecip']#</td>
                             </tr>
                             <tr>
                                 <td><strong><xar:mlstring>Humidity</xar:mlstring> : </strong></td>

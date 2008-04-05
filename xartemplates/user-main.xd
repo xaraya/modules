@@ -87,12 +87,12 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
+                    <th>&#160;</th>
+                    <th>&#160;</th>
                 </tr>
                 <tr>
                     <td class="xar-align-right"><strong><xar:mlstring>UV Index</xar:mlstring> : </strong></td>
-                    <td class="xar-align-left">#$wData.uv#&nbsp;#$wData.uvDesc#</td>
+                    <td class="xar-align-left">#$wData.uv#&#160;#$wData.uvDesc#</td>
                 </tr>
                 <tr>
                     <td class="xar-align-right"><strong><xar:mlstring>Visibility</xar:mlstring> : </strong></td>
@@ -130,7 +130,7 @@
                 </tr>
                 <tr>
                     <td class="xar-align-right"><strong><xar:mlstring>Wind Gusts</xar:mlstring> : </strong></td>
-                    <td class="xar-align-left">#$wData.windGust#&nbsp;#$wData.unitsSpeed#</td>
+                    <td class="xar-align-left">#$wData.windGust#&#160;#$wData.unitsSpeed#</td>
                 </tr>
                 <tr>
                     <td colspan="2" align="center">
@@ -147,7 +147,7 @@
             <br />
         </div>
 
-        <xar:set name="$maxdays">#xarModGetUserVar('weather','extdays')#</xar:set>
+        <xar:set name="maxdays">#xarModGetUserVar('weather','extdays')#</xar:set>
         <div id="extendedforecast">
             <h2>
                 <xar:ml>
@@ -157,7 +157,7 @@
             </h2>
             <table>
                 <tr>
-                    <th colspan="3">&nbsp;</th>
+                    <th colspan="3">&#160;</th>
                     <th>
                         <xar:mlstring>Daytime High</xar:mlstring> / <br />
                         <xar:mlstring>Overnight Low</xar:mlstring><br />

@@ -17,13 +17,13 @@
  */
 function weather_admin_modifyconfig()
 {
-    $partner_id = xarModGetVar('weather','partner_id');
-    $license_key = xarModGetVar('weather','license_key');
-    $default_location = xarModGetVar('weather','default_location');
-    $units = xarModGetVar('weather','units');
-    $extdays = xarModGetVar('weather','extdays');
-    $cc_cache_time = xarModGetVar('weather','cc_cache_time');
-    $ext_cache_time = xarModGetVar('weather','ext_cache_time');
+    $partner_id = xarModVars::get('weather','partner_id');
+    $license_key = xarModVars::get('weather','license_key');
+    $default_location = xarModVars::get('weather','default_location');
+    $units = xarModVars::get('weather','units');
+    $extdays = xarModVars::get('weather','extdays');
+    $cc_cache_time = xarModVars::get('weather','cc_cache_time');
+    $ext_cache_time = xarModVars::get('weather','ext_cache_time');
     
     return array(
         'partner_id'=>$partner_id,

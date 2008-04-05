@@ -23,7 +23,7 @@
  */
 
 // use xaraya's Generic XML Parser
-require_once 'includes/xarXML.php';
+sys::import('modules.weather.class.xarXML');
 
 class xoapWeather
 {
@@ -50,13 +50,13 @@ class xoapWeather
      */
     function xoapWeather()
     {
-        $this->xoapKey = xarModGetVar('weather','license_key');
-        $this->xoapPar = xarModGetVar('weather','partner_id');
-        $this->defaultLocation = xarModGetVar('weather','default_location');
-        $this->defaultUnits = xarModGetVar('weather','units');
-        $this->currentCondCache = xarModGetVar('weather','cc_cache_time');
-        $this->multiDayforecastCache = xarModGetVar('weather','ext_cache_time');
-        $this->forecastDays = xarModGetVar('weather','extdays');
+        $this->xoapKey = xarModVars::get('weather','license_key');
+        $this->xoapPar = xarModVars::get('weather','partner_id');
+        $this->defaultLocation = xarModVars::get('weather','default_location');
+        $this->defaultUnits = xarModVars::get('weather','units');
+        $this->currentCondCache = xarModVars::get('weather','cc_cache_time');
+        $this->multiDayforecastCache = xarModVars::get('weather','ext_cache_time');
+        $this->forecastDays = xarModVars::get('weather','extdays');
         $this->statusCheck();
         $this->setUnits();
         $this->setLocation();
@@ -223,7 +223,7 @@ class xoapWeather
         /*
         Grabbing the Current XML data for the Current Condition and the Current Conditions details
         */
-        $p =& new xarXmlParser();
+        $p = new xarXmlParser();
         $xmi =& $this->getFile('forecast',$this->units,$cache);
         if(!$p->parseString($xmi)) {
             // try again
@@ -324,7 +324,7 @@ class xoapWeather
         /*
         Grabbing the Current XML data for the Current Condition and the Current Conditions details
         */
-        $p =& new xarXmlParser();
+        $p = new xarXmlParser();
         $xmi =& $this->getFile('cc',$this->units,$cache);
         if(!$p->parseString($xmi)) {
             // try again
@@ -415,7 +415,7 @@ class xoapWeather
             return;
         }
 
-        $p =& new xarXmlParser();
+        $p = new xarXmlParser();
         if(!$p->parseString($data)) {
             // try again
             return $this->locData($loc);

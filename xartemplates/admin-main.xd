@@ -6,21 +6,21 @@
     </div>
     <div class="xar-mod-body">
         <xar:template type="module" module="weather" file="admin-menu" />
-        <a href="http://www.weather.com"><img src="#xarTplGetImage('TWClogo_64px.png','weather')#" border="0"  class="xar-module-icon" alt="weather.com&reg;" width="86" height="64" /></a>
+        <a href="http://www.weather.com"><img src="#xarTplGetImage('TWClogo_64px.png','weather')#" border="0"  class="xar-module-icon" alt="weather.com&#38;reg;" width="86" height="64" /></a>
 
         <h2><xar:mlstring>Overview</xar:mlstring></h2>
 
         <h3><xar:mlstring>What is it?</xar:mlstring></h3>
 
-        <p><em><xar:mlstring><strong>weather.com&reg;</strong> XML Data Feed</xar:mlstring></em>
+        <p><em><xar:mlstring><strong>weather.com&#38;reg;</strong> XML Data Feed</xar:mlstring></em>
             <ul>
-                <li><xar:mlstring>Downloads the <strong>weather.com&reg;</strong> xml data feeds and presents your forecast.</xar:mlstring></li>
-                <li><xar:mlstring>Implements the guidelines defined in the <strong>weather.com&reg;</strong> SDK.</xar:mlstring></li>
+                <li><xar:mlstring>Downloads the <strong>weather.com&#38;reg;</strong> xml data feeds and presents your forecast.</xar:mlstring></li>
+                <li><xar:mlstring>Implements the guidelines defined in the <strong>weather.com&#38;reg;</strong> SDK.</xar:mlstring></li>
             </ul>
         </p>
         <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
         <p><xar:mlstring>
-            You need to register at <strong>weather.com&reg;</strong> in order to use this module.  This seems like
+            You need to register at <strong>weather.com&#38;reg;</strong> in order to use this module.  This seems like
             a fair trade since you will be using their feeds and they do cover the entire planet.  Just follow the
             steps below and you should be up and running in no time.
             </xar:mlstring>
@@ -50,7 +50,7 @@
             </li>
         </ul>
         <p class="xar-sub">
-            <strong>&nbsp;<xar:mlstring>Weather Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.1.1&nbsp; 2007-12-01
+            <strong>&#160;<xar:mlstring>Weather Module Overview</xar:mlstring></strong><br />&#160;<xar:mlstring>Version</xar:mlstring> 1.1.1&#160; 2007-12-01
         </p>
     </div>
 </xar:template>

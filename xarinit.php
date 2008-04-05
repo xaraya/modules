@@ -23,13 +23,13 @@
 function weather_init()
 {
     /* Set up initial values for module variables. */
-    xarModSetVar('weather','partner_id','');
-    xarModSetVar('weather','license_key','');
-    xarModSetVar('weather','default_location','');
-    xarModSetVar('weather','cc_cache_time',60*30); // 30 minutes - these should not be changed
-    xarModSetVar('weather','ext_cache_time',60*60*2); // 2 hours - these should not be changed
-    xarModSetVar('weather','units','m');
-    xarModSetVar('weather','extdays',10);
+    xarModVars::set('weather','partner_id','');
+    xarModVars::set('weather','license_key','');
+    xarModVars::set('weather','default_location','');
+    xarModVars::set('weather','cc_cache_time',60*30); // 30 minutes - these should not be changed
+    xarModVars::set('weather','ext_cache_time',60*60*2); // 2 hours - these should not be changed
+    xarModVars::set('weather','units','m');
+    xarModVars::set('weather','extdays',10);
     
     /* Register blocks. */
     if (!xarModAPIFunc('blocks','admin','register_block_type',

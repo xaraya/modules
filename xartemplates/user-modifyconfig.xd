@@ -43,8 +43,8 @@
                         <td><xar:mlstring>Measurement Units</xar:mlstring> : </td>
                         <td>
                             <select name="units">
-                                <xar:set name="$StandardUnits"><xar:mlstring>Standard</xar:mlstring></xar:set>
-                                <xar:set name="$MetricUnits"><xar:mlstring>Metric</xar:mlstring></xar:set>
+                                <xar:set name="StandardUnits"><xar:mlstring>Standard</xar:mlstring></xar:set>
+                                <xar:set name="MetricUnits"><xar:mlstring>Metric</xar:mlstring></xar:set>
                                 <xar:if condition="$units eq 's'">
                                     <option value="s" selected="selected">#$StandardUnits#</option>
                                 <xar:else />

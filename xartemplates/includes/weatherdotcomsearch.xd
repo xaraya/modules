@@ -1,7 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <div id="weatherdotcomsearch">
         <xar:if condition="!isset($loc)">
-            <xar:set name="$loc">''</xar:set>
+            <xar:set name="loc">''</xar:set>
         </xar:if>
         <form method="get" action="index.php">
             <div>        
