@@ -36,16 +36,16 @@ class CategoryMenuProperty extends CategoryTreeProperty
             $trees = array_shift($trees);
             $data['layout'] = 'tree';
         } else {
-        	// the top level of categories need not have a common parent
-			xarMod::loadDbInfo('categories');
-			$xartable = xarDB::getTables();
-			sys::import('modules.roles.class.xarQuery');
-			$q = new xarQuery('SELECT',$xartable['categories']);
-			$q->addfield('id');
-			$q->addfield('name');
-			$q->addfield('parent_id');
-			$q->eq('parent_id',$data['parent']);
-			if (!$q->run()) return;
+            // the top level of categories need not have a common parent
+            xarMod::loadDbInfo('categories');
+            $xartable = xarDB::getTables();
+            sys::import('modules.roles.class.xarQuery');
+            $q = new xarQuery('SELECT',$xartable['categories']);
+            $q->addfield('id');
+            $q->addfield('name');
+            $q->addfield('parent_id');
+            $q->eq('parent_id',$data['parent']);
+            if (!$q->run()) return;
             $trees = $q->output();
             $data['layout'] = 'toplevel';
         }

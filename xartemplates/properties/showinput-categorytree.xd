@@ -42,7 +42,7 @@
                     <td class="#$displayclass#" style="text-align: left; margin-left: 5px;">#$description#</td>
                     <td class="#$displayclass#"><xar:if condition="empty($image)">&#160;<xar:else />#$image#</xar:if></td>
                     <td class="#$displayclass#" style="text-align: center;">
-                        <a href="#xarModURL('categories', 'admin', 'modifycat', array('cid' => $cid))#">
+                        <a href="#xarModURL('categories', 'admin', 'modify', array('cid' => $cid))#">
                             <xar:mlstring>Modify</xar:mlstring>
                         </a>
                         &#160;|&#160;

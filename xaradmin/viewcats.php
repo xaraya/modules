@@ -20,7 +20,6 @@ function categories_admin_viewcats()
     } else {
         $data['useJSdisplay'] = $useJSdisplay;
     }
-
     return xarTplModule('categories','admin','viewcats-render',$data);
 }
 

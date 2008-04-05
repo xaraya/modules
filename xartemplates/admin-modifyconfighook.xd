@@ -17,7 +17,7 @@
                 Categories
             </xar:mlstring>
             <xar:if condition="!empty($newcat)">
-                [ <a href="&xar-modurl-categories-admin-modifycat;">
+                [ <a href="&xar-modurl-categories-admin-modify;">
                     <xar:mlstring>
                         Add
                     </xar:mlstring>

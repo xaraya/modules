@@ -201,7 +201,7 @@ function categories_userapi_getcat($args)
         return Array();
     }
 
-    $categories = Array();
+    $categories = array();
 
     $index = -1;
     while (!$result->EOF) {

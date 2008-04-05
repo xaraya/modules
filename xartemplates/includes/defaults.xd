@@ -5,6 +5,15 @@
         <xar:set name="regid">0</xar:set>
     </xar:if>
     <div class="xar-form-input-wrapper">
+        <label for="itemsperpage" title="#xarML('Object to use to model a category')#" class="xar-form-label">
+            <xar:mlstring>
+                Categories object:
+            </xar:mlstring>
+        </label>
+        <xar:set name="value"><xar:var scope="module" module="categories" name="categoriesobject" /></xar:set>
+        <xar:data-input type="object" name="categoriesobject" value="$value" />
+    </div>
+    <div class="xar-form-input-wrapper">
         <label for="bar" title="#xarML('The categories can be navigated in an explorer style interface.')#" class="xar-form-label">
             <xar:mlstring>
                 Windows Explorer style tree

@@ -50,12 +50,14 @@
                 if (!xarVarFetch('numstats', 'int', $numstats, xarModVars::get('categories', 'numstats'), XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('showtitle', 'checkbox', $showtitle, xarModVars::get('categories', 'showtitle'), XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('allowbatch', 'checkbox', $allowbatch, xarModVars::get('categories', 'allowbatch'), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('categoriesobject', 'str', $categoriesobject, xarModVars::get('categories', 'categoriesobject'), XARVAR_NOT_REQUIRED)) return;
 
                 $modvars = array(
                                 'usejsdisplay',
                                 'numstats',
                                 'showtitle',
                                 'allowbatch',
+                                'categoriesobject',
                                 );
 
                 if ($data['tab'] == 'categories_general') {

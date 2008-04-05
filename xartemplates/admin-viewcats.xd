@@ -19,7 +19,7 @@
             <td>#$loop:item['description']#</td>
             <td><xar:if condition="empty($loop:item['image'])">&#160;<xar:else />#$loop:item['image']#</xar:if></td>
             <td style="text-align: center;">
-                <a href="#xarModURL('categories', 'admin', 'modifycat', array('cid' => $loop:item['cid']))#">
+                <a href="#xarModURL('categories', 'admin', 'modify', array('cid' => $loop:item['cid']))#">
                     <xar:mlstring>Modify</xar:mlstring>
                 </a>
                 &#160;|&#160;
@@ -41,11 +41,11 @@
               #$hooks#
             </td>
             <td class="xar-accent" style="text-align: center;">
-                <a href="#xarModURL('categories', 'admin', 'modifycat', array('cid' => $loop:item['cid']))#">
+                <a href="#xarModURL('categories', 'admin', 'modify', array('cid' => $loop:item['cid']))#">
                     <xar:mlstring>Modify</xar:mlstring>
                 </a>
                 &#160;|&#160;
-                <a href="#xarModURL('categories', 'admin', 'deletecat', array('cid' => $loop:item['cid']))#">
+                <a href="#xarModURL('categories', 'admin', 'delete', array('cid' => $loop:item['cid']))#">
                     <xar:mlstring>Delete</xar:mlstring>
                 </a>
             </td>

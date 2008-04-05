@@ -54,8 +54,7 @@ function categories_adminapi_updatecat($args)
     }
 
     // Obtain current information on the category
-    if(!xarModAPILoad('categories', 'user')) return;
-    $cat = xarModAPIFunc('categories', 'user', 'getcatinfo', Array('cid'=>$cid));
+    $cat = xarModAPIFunc('categories', 'user', 'getcatinfo', array('cid'=>$cid));
 
     if ($cat == false) {
        xarSession::setVar('errormsg', xarML('That category does not exist'));

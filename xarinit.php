@@ -299,6 +299,7 @@ function categories_init()
     xarModVars::set('categories', 'usejsdisplay', 0);
     xarModVars::set('categories', 'numstats', 100);
     xarModVars::set('categories', 'showtitle', 1);
+    xarModVars::set('categories', 'categoriesobject', 'categories');
 
 # --------------------------------------------------------
 #

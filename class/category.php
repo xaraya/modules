@@ -7,39 +7,44 @@
 
         function createItem(Array $args = array())
         {
-            extract($args);
+            if (isset($args['entry'])) {
+                extract($args);
 
-            // there may not be an entry point passed
-            $entry = isset($entry) ? $entry : array();
+                // there may not be an entry point passed
+                $entry = isset($entry) ? $entry : array();
 
-            if (isset($args['parent_id'])) {
-                // If this is an import replace parentid imported with the local ones
-                $parentindex = $args['parent_id'];
-                if (in_array($parentindex,array_keys($this->parentindices))) {
-                    $args['parent_id'] = $this->parentindices[$parentindex];
-                } else {
-                    // there could be more than 1 entry point, therefore the array
-                    if (count($entry > 0)) {
-                        $this->parentindices[$parentindex] = array_shift($entry);
+                if (isset($args['parent_id'])) {
+                    // If this is an import replace parentid imported with the local ones
+                    $parentindex = $args['parent_id'];
+                    if (in_array($parentindex,array_keys($this->parentindices))) {
                         $args['parent_id'] = $this->parentindices[$parentindex];
                     } else {
-                        $args['parent_id'] = 0;
+                        // there could be more than 1 entry point, therefore the array
+                        if (count($entry > 0)) {
+                            $this->parentindices[$parentindex] = array_shift($entry);
+                            $args['parent_id'] = $this->parentindices[$parentindex];
+                        } else {
+                            $args['parent_id'] = 0;
+                        }
                     }
+                    $args['left_id'] = null;
+                    $args['right_id'] = null;
                 }
-                $args['left_id'] = null;
-                $args['right_id'] = null;
+
+                // we have all the values, do it
+                $id = parent::createItem($args);
+
+                // add this category to the list of known parents
+                if (isset($args['parent_id'])) $this->parentindices[$args['id']] = $id;
+
+                // do the Celko dance and update all the left/right values
+                return xarModAPIFunc('categories','admin','updatecelkolinks',array('cid' => $id, 'type' => 'create'));
+            } else {
+                $id = parent::createItem($args);
             }
-
-            // we have all the values, do it
-            $id = parent::createItem($args);
-
-            // add this category to the list of known parents
-            if (isset($args['parent_id'])) $this->parentindices[$args['id']] = $id;
-
-            // do the Celko dance and update all the left/right values
-            return xarModAPIFunc('categories','admin','updatecelkolinks',array('cid' => $id, 'type' => 'create'));
         }
 
+/*
         function updateItem(Array $args = array())
         {
             $id = isset($args['itemid']) ? $args['itemid'] : $this->itemid;
@@ -59,5 +64,6 @@
                 return true;
             }
         }
+*/
     }
 ?>

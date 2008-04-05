@@ -38,44 +38,17 @@
         <label for="position[#$cid#]" class="xar-form-label help" title="#xarML('Position of this category.')#">
             <xar:mlstring>Position</xar:mlstring>
         </label>
-        <select name="position[#$cid#]" id="position_#$cid#">
-            <xar:if condition="$position eq 1">
-                <option value="1" selected="selected">
-                    <xar:mlstring>Right before, in the same level</xar:mlstring>
-                </option>
-                <xar:else />
-                <option value="1">
-                    <xar:mlstring>Right before, in the same level</xar:mlstring>
-                </option>
-            </xar:if>
-            <xar:if condition="$position eq 2">
-                <option value="2" selected="selected">
-                    <xar:mlstring>Right after, in the same level</xar:mlstring>
-                </option>
-                <xar:else />
-                <option value="2">
-                    <xar:mlstring>Right after, in the same level</xar:mlstring>
-                </option>
-            </xar:if>
-            <xar:if condition="$position eq 4">
-                <option value="4" selected="selected">
-                    <xar:mlstring>The first child category</xar:mlstring>
-                </option>
-                <xar:else />
-                <option value="4">
-                    <xar:mlstring>The first child category</xar:mlstring>
-                </option>
-            </xar:if>
-            <xar:if condition="$position eq 3">
-                <option value="3" selected="selected">
-                    <xar:mlstring>The last child category</xar:mlstring>
-                </option>
-                <xar:else />
-                <option value="3">
-                    <xar:mlstring>The last child category</xar:mlstring>
-                </option>
-            </xar:if>
-        </select>
+        <xar:set name="options">
+            array(
+                array('id' => '1', 'name' => xarML('Right before, in the same level')),
+                array('id' => '2', 'name' => xarML('Right after, in the same level')),
+                array('id' => '4', 'name' => xarML('The first child category')),
+                array('id' => '3', 'name' => xarML('The last child category')),
+            )
+        </xar:set>
+        <xar:set name="ddname">'position[' . $cid . ']'</xar:set>
+        <xar:set name="ddid">'position_' . $cid</xar:set>
+        <xar:data-input type="dropdown" name="$ddname" id="$ddid" value="$position" options="$options" />
         <div style="clear: both;">&#160;</div>
     </div>
 </xar:if>

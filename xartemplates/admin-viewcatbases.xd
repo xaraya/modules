@@ -96,7 +96,7 @@
             </xar:if>
 
             <td>
-                <a href="#xarModURL('categories', 'admin', 'modifycat', array('cid' => $loop:item['cid']))#" title="#xarML('Modify category')#">#$loop:item['catname']#</a>
+                <a href="#xarModURL('categories', 'admin', 'modify', array('cid' => $loop:item['cid']))#" title="#xarML('Modify category')#">#$loop:item['catname']#</a>
             </td>
             <td style="text-align: center;">
                 <xar:comment> Pass the module and itemtype in for now - eventually just the bid will be sufficient </xar:comment>
