@@ -17,9 +17,9 @@
  */
 function weather_user_modifyconfig()
 {
-    $default_location = xarModGetUserVar('weather','default_location');
-    $units = xarModGetUserVar('weather','units');
-    $extdays = xarModGetUserVar('weather','extdays');
+    $default_location = xarModUserVars::get('weather','default_location');
+    $units = xarModUserVars::get('weather','units');
+    $extdays = xarModUserVars::get('weather','extdays');
     
     return array(
         'default_location'=>$default_location,

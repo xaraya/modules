@@ -52,11 +52,8 @@ function weather_admin_updateconfig()
             $cc_cache_time *= 60; // time coming in is in minutes
             xarModVars::set('weather','cc_cache_time',$cc_cache_time);
         } else {
-            xarErrorSet(
-                XAR_USER_EXCEPTION,
-                xarML('Current Conditions Cache time isn\'t long enough'),
-                xarML('Please enter a Cache Time longer than or equal to 30 minutes for the Current Conditions Cache Time.')
-                );
+            $msg = xarML('Current Conditions Cache time isn\'t long enough') . xarML('Please enter a Cache Time longer than or equal to 30 minutes for the Current Conditions Cache Time.');
+            throw new Exception($msg);
         }
     }
     
@@ -65,11 +62,8 @@ function weather_admin_updateconfig()
             $ext_cache_time *= (60*60); // time coming in is in hours
             xarModVars::set('weather','ext_cache_time',$ext_cache_time);
         } else {
-            xarErrorSet(
-                XAR_USER_EXCEPTION,
-                xarML('Extended Forecast Cache time isn\'t long enough'),
-                xarML('Please enter a Cache Time longer than or equal to 2 hours for the Extended Forecast Cache Time.')
-                );
+            $msg = xarML('Extended Forecast Cache time isn\'t long enough') . xarML('Please enter a Cache Time longer than or equal to 2 hours for the Extended Forecast Cache Time.');
+            throw new Exception($msg);
         }
     }
     

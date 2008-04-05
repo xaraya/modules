@@ -77,7 +77,7 @@ class xoapWeather
         } else {
             if(xarUserIsLoggedIn()) {
                 // grab the user's location setting if available
-                $loc = xarModGetUserVar('weather','default_location');
+                $loc = xarModUserVars::get('weather','default_location');
             }
             if(!isset($loc) || empty($loc)) {
                 // use the admin drefault location
@@ -103,7 +103,7 @@ class xoapWeather
         } else {
             if(xarUserIsLoggedIn()) {
                 // grab the user's location setting if available
-                $units = xarModGetUserVar('weather','units');
+                $units = xarModUserVars::get('weather','units');
             }
             if(!isset($units) || empty($units)) {
                 // use the admin drefault location
@@ -125,25 +125,16 @@ class xoapWeather
     function statusCheck()
     {
         if($this->defaultLocation == "") {
-            xarErrorSet(
-                XAR_USER_EXCEPTION,
-                xarML('No Default Location'),
-                xarML('Please enter a valid location id or zip code.')
-            );
+            $msg = xarML('No Default Location') . xarML('Please enter a valid location id or zip code.');
+            throw new Exception($msg);
         }
         if($this->xoapKey == "") {
-            xarErrorSet(
-                XAR_USER_EXCEPTION,
-                xarML('Your License Key is Invalid!'),
-                xarML('Please enter a valid License Key or Visit http://www.weather.com/services/xmloap.html and sign-up for thier xoapXML Services.')
-            );
+            $msg = xarML('Your License Key is Invalid!') . xarML('Please enter a valid License Key or Visit http://www.weather.com/services/xmloap.html and sign-up for thier xoapXML Services.');
+            throw new Exception($msg);
         }
         if($this->xoapPar == "") {
-            xarErrorSet(
-                XAR_USER_EXCEPTION,
-                xarML('Your Partner ID is Invalid!'),
-                xarML('Please enter a valid Partner ID or Visit http://www.weather.com/services/xmloap.html and sign-up for their xoapXML Services.')
-            );
+            $msg = xarML('Your Partner ID is Invalid!') . xarML('Please enter a valid Partner ID or Visit http://www.weather.com/services/xmloap.html and sign-up for their xoapXML Services.');
+            throw new Exception($msg);
         }
         return true;
     }
@@ -165,11 +156,8 @@ class xoapWeather
 
             if($this->error['type'] != "" or $this->error['number'] != ""){
                 $this->error['exists'] = true;
-                xarErrorSet(
-                    XAR_USER_EXCEPTION,
-                    $this->error['number'],
-                    $this->error['type']
-                );
+                $msg = $this->error['number'] . $this->error['type'];
+                throw new Exception($msg);
             }
         }
         return false;

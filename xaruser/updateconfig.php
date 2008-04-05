@@ -24,15 +24,15 @@ function weather_user_updateconfig()
     
     
     if(isset($default_location)) {
-        xarModSetUserVar('weather','default_location',$default_location);
+        xarModUserVars::set('weather','default_location',$default_location);
     }
     
     if(isset($units)) {
-        xarModSetUserVar('weather','units',$units);
+        xarModUserVars::set('weather','units',$units);
     }
     
     if(isset($extdays)) {
-        xarModSetUserVar('weather','extdays',$extdays);
+        xarModUserVars::set('weather','extdays',$extdays);
     }
     
     xarResponseRedirect(xarModURL('weather','user','modifyconfig'));

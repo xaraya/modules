@@ -147,7 +147,7 @@
             <br />
         </div>
 
-        <xar:set name="maxdays">#xarModGetUserVar('weather','extdays')#</xar:set>
+        <xar:set name="maxdays">#xarModUserVars::get('weather','extdays')#</xar:set>
         <div id="extendedforecast">
             <h2>
                 <xar:ml>
