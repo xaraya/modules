@@ -48,11 +48,17 @@ class xoapWeather
      * @author  Roger Raymond <roger@xaraya.com>
      * @access  public
      */
-    function xoapWeather()
+    function __construct()
     {
         $this->xoapKey = xarModVars::get('weather','license_key');
         $this->xoapPar = xarModVars::get('weather','partner_id');
-        $this->defaultLocation = xarModVars::get('weather','default_location');
+        $locationdata = xarModVars::get('weather','default_location');
+        try {
+            $location = unserialize($locationdata);
+        } catch (Exception $e) {
+            $location['city'] = "USCA0982";
+        }
+        $this->defaultLocation = $location['city'];
         $this->defaultUnits = xarModVars::get('weather','units');
         $this->currentCondCache = xarModVars::get('weather','cc_cache_time');
         $this->multiDayforecastCache = xarModVars::get('weather','ext_cache_time');
@@ -77,14 +83,17 @@ class xoapWeather
         } else {
             if(xarUserIsLoggedIn()) {
                 // grab the user's location setting if available
-                $loc = xarModUserVars::get('weather','default_location');
+                try {
+                    $locationdata = xarModUserVars::get('weather','default_location');
+                    $location = unserialize($locationdata);
+                } catch (Exception $e) {}
             }
-            if(!isset($loc) || empty($loc)) {
+            if(!isset($location) || empty($location)) {
                 // use the admin drefault location
                 $this->location =& $this->defaultLocation;
             } else {
                 // use the user setting
-                $this->location =& $loc;
+                $this->location = $location['city'];
             }
         }
     }
@@ -460,10 +469,10 @@ class xoapWeather
     {
         if(stristr($link,'par=xoap')) {
             // weather.com's feed is wrong so we'll fix it to comply with the TOS
-            $link = str_replace('par=xoap','prod=xoap&amp;par='.$this->xoapPar,$link);
+            $link = str_replace('par=xoap','prod=xoap&#38;par='.$this->xoapPar,$link);
         } elseif(stristr($link,'prod=xoap')) {
             // the feed is correct, append the partner id
-            $link .= '&amp;par='.$this->xoapPar;
+            $link .= '&#38;par='.$this->xoapPar;
         }
         return $link;
     }

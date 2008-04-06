@@ -1,87 +1,83 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <div class="xar-mod-head">
-        <span class="xar-mod-title">
-            <xar:mlstring>Weather</xar:mlstring>
-        </span>
+<xar:comment>
+    License: GPL http://www.gnu.org/copyleft/gpl.html
+</xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:if condition="xarModVars::get('weather','useModuleAlias')">
+            <xar:var scope="module" module="weather" name="aliasname" />
+        <xar:else />
+            <xar:mlstring>Weather Administration</xar:mlstring>
+        </xar:if>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2>
+        <xar:mlstring>
+            Modify Configuration
+        </xar:mlstring>
+    </h2>
+    <div>
+        <dl class="xar-tabs">
+            <dt class="help">
+                <xar:mlstring>
+                    Applies to:
+                </xar:mlstring>
+            </dt>
+            <xar:if condition="$tab eq 'general'">
+                <dd class="active">
+                    <a href="&xar-modurl-weather-admin-modifyconfig;&amp;tab=general">
+                        <xar:mlstring>
+                            General
+                        </xar:mlstring>
+                    </a>
+                </dd>
+                <xar:else />
+                <dd>
+                    <a href="&xar-modurl-weather-admin-modifyconfig;&amp;tab=general">
+                        <xar:mlstring>
+                            General
+                        </xar:mlstring>
+                    </a>
+                </dd>
+            </xar:if>
+        </dl>
     </div>
-    <div class="xar-mod-body">
-        <xar:template type="module" module="weather" file="admin-menu" />
-        <h2><xar:mlstring>Modify Config</xar:mlstring></h2>
-
-           <form name="Weather" action="&xar-modurl-weather-admin-updateconfig;" method="post">
+    <xar:comment>
+         - - - - - - - - - - - - - - - - - - - Begin General Options  - - - - - - - - - - - - - - - - - - -
+    </xar:comment>
+    <xar:if condition="$tab eq 'general'">
+        <form method="post" action="&xar-modurl-weather-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
+            <h3>
+                <xar:mlstring>
+                    General Options
+                </xar:mlstring>
+            </h3>
             <fieldset>
                 <legend>
-                    <xar:mlstring>Weather configuration options</xar:mlstring>
+                    <xar:mlstring>
+                        Page Layout
+                    </xar:mlstring>
                 </legend>
-                <a href="http://www.weather.com"><img class="xar-module-icon"
-                    src="modules/weather/xarimages/TWClogo_64px.png"
-                    alt="weather.com&#38;reg;" width="86" height="64" /></a>
-                <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label" for="partner_id"><xar:mlstring>Partner ID</xar:mlstring> : </label>
-                    <input size="25" type="text" name="partner_id" value="#$partner_id#" />
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label" for="license_key"><xar:mlstring>License Key</xar:mlstring> : </label>
-                    <input size="25" type="text" name="license_key" value="#$license_key#" />
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label" for="default_location"><xar:mlstring>Default Location</xar:mlstring> : </label>
-                    <input size="25" type="text" name="default_location" value="#$default_location#" />
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label" for="extdays"><xar:mlstring>Number of Days for Extended Forecasts</xar:mlstring> : </label>
-
-                        <select name="extdays">
-                            <xar:for start="$i = 1" test="$i le 10" iter="$i++">
-                                <xar:if condition="$extdays eq $i">
-                                    <option value="#$i#" selected="selected">#$i#</option>
-                                <xar:else />
-                                    <option value="#$i#">#$i#</option>
-                                </xar:if>
-                            </xar:for>
-                        </select>
-                  </div>
-                  <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label" for="units"><xar:mlstring>Measurement Units</xar:mlstring> : </label>
-                        <select name="units">
-                            <xar:set name="StandardUnits"><xar:mlstring>Standard</xar:mlstring></xar:set>
-                            <xar:set name="MetricUnits"><xar:mlstring>Metric</xar:mlstring></xar:set>
-                            <xar:if condition="$units eq 's'">
-                                <option value="s" selected="selected">#$StandardUnits#</option>
-                            <xar:else />
-                                <option value="s">#$StandardUnits#</option>
-                            </xar:if>
-                            <xar:if condition="$units eq 'm'">
-                                <option value="m" selected="selected">#$MetricUnits#</option>
-                            <xar:else />
-                                <option value="m">#$MetricUnits#</option>
-                            </xar:if>
-                        </select>
-                  </div>
-                  <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label" for="cc_cache_time"><xar:mlstring>Current Conditions Cache Time</xar:mlstring> : </label>
-                    <input type="text" name="cc_cache_time" value="#$cc_cache_time#" /> in minutes (minimum = 30)
-                  </div>
-
-                  <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label" for="ext_cache_time"><xar:mlstring>Extended Forecast Cache Time</xar:mlstring> : </label>
-                    <input type="text" name="ext_cache_time" value="#$ext_cache_time#" /> in hours (minimum = 2)
-                  </div>
-
-                  <div class="xar-form-input-wrapper-after">
-                        <xar:if condition="xarModVars::get('weather','SupportShortURLs') eq 1">
-                            <input type="checkbox" id="shorturls" name="shorturls" value="1" checked="checked" />
-                        <xar:else />
-                            <input type="checkbox" id="shorturls" name="shorturls" value="1" />
-                        </xar:if>
-                    <label for="shorturls"><xar:mlstring>Enable Short URLs?</xar:mlstring></label>
-                  </div>
+                <xar:template file="general" />
             </fieldset>
-
-            <div class="xar-form-input-wrapper-after">
-                <input type="submit" name="submit" value="#xarML('Modify Config')#" />
-            </div>
-            </form>
-
-    </div>
+            <fieldset>
+                <legend>
+                    <xar:mlstring>
+                        Defaults
+                    </xar:mlstring>
+                </legend>
+                <xar:template file="defaults" />
+            </fieldset>
+            <fieldset>
+                <div class="xar-form-input-wrapper-after">
+                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                    <input type="hidden" name="tab" id="tab" value="#$tab#" />
+                    <input type="submit" value="#xarML('Update Weather Configuration')#" />
+                </div>
+            </fieldset>
+        </form>
+    </xar:if>
+</div>
 </xar:template>

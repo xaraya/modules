@@ -18,14 +18,19 @@
 function weather_user_search()
 {
     // grab the location we're searching for
-    xarVarFetch('loc','str::',$loc,null,XARVAR_NOT_REQUIRED);
+    if (!xarVarFetch('default_location_math_city', 'str', $default_location,  null, XARVAR_NOT_REQUIRED)) return;
+    if (isset($default_location)){
+        $loc = $default_location;   
+    } else {
+        $loc = null;
+    }
+
     $w = xarModAPIFunc('weather','user','factory');
 
     // perform the search
     $matches=null;
 
-    //echo $loc; die();
-    if(isset($loc) && !empty($loc)) {
+    if(isset($loc) && !empty($loc)) {;
         $matches = $w->locData($loc);
         $error = false;
     }
@@ -41,14 +46,18 @@ function weather_user_search()
         }
     } 
     
-    if(count($matches) == 1) {
-        xarResponseRedirect(xarModURL('weather','user','main',array('xwloc'=>$matches[0]['zip'])));
+// Ignore the match search because we used dropdowns, so the choice is valid
+
+//    if(count($matches) == 1) {
+//        xarResponseRedirect(xarModURL('weather','user','main',array('xwloc'=>$matches[0]['zip'])));
+    if(isset($loc) && !empty($loc)) {;
+        xarResponseRedirect(xarModURL('weather','user','main',array('xwloc'=>$loc)));
     } else {
-        return array(
-            'loc'=>$loc,
-            'matches'=>$matches,
-            'error'=>$error
-            );
+        $data['default_location'] = null;
+        $data['loc'] = $loc;
+        $data['error'] = $error;
+        $data['matches'] = $matches;
+        return $data;
     }
 }
 ?>

@@ -13,27 +13,33 @@
  */
 
 /**
- * @author Roger Raymond
+ * @author Marc Lutolf
  */
-function weather_admin_modifyconfig()
-{
-    $partner_id = xarModVars::get('weather','partner_id');
-    $license_key = xarModVars::get('weather','license_key');
-    $default_location = xarModVars::get('weather','default_location');
-    $units = xarModVars::get('weather','units');
-    $extdays = xarModVars::get('weather','extdays');
-    $cc_cache_time = xarModVars::get('weather','cc_cache_time');
-    $ext_cache_time = xarModVars::get('weather','ext_cache_time');
-    
-    return array(
-        'partner_id'=>$partner_id,
-        'license_key'=>$license_key,
-        'default_location'=>$default_location,
-        'cc_cache_time'=>($cc_cache_time/60),
-        'ext_cache_time'=>($ext_cache_time/60/60),
-        'units'=>$units,
-        'extdays'=>$extdays
-        );
-}
 
+    function weather_admin_modifyconfig()
+    {
+        // Security Check
+        if (!xarSecurityCheck('AdminWeather')) return;
+        if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+        if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
+        switch (strtolower($phase)) {
+            case 'modify':
+            default:
+                switch ($data['tab']) {
+                    case 'general':
+                        if (!xarVarFetch('default_location', 'str', $data['default_location'],  xarModVars::get('weather', 'default_location'), XARVAR_NOT_REQUIRED)) return;
+                        break;
+                    default:
+                        break;
+                }
+
+                break;
+
+            case 'update':
+                break;
+
+        }
+        $data['authid'] = xarSecGenAuthKey();
+        return $data;
+    }
 ?>

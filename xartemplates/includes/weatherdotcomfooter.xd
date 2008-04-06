@@ -1,9 +1,9 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:set name="weatherdotcomurl">'<a href="http://www.weather.com?prod=xoap&amp;par='.xarModVars::get('weather','partner_id').'"><strong>weather.com&reg;</strong></a>'</xar:set>
-    <xar:set name="linkOne">str_replace("&","&amp;",$wData['linkOne']);</xar:set>
-    <xar:set name="linkTwo">str_replace("&","&amp;",$wData['linkTwo']);</xar:set>
-    <xar:set name="linkThree">str_replace("&","&amp;",$wData['linkThree']);</xar:set>
-    <xar:set name="linkFour">str_replace("&","&amp;",$wData['linkFour']);</xar:set>
+    <xar:set name="weatherdotcomurl">'<a href="http://www.weather.com?prod=xoap&#38;par='.xarModVars::get('weather','partner_id').'"><strong>weather.com&#174;</strong></a>'</xar:set>
+    <xar:set name="linkOne">$wData['linkOne']</xar:set>
+    <xar:set name="linkTwo">$wData['linkTwo']</xar:set>
+    <xar:set name="linkThree">$wData['linkThree']</xar:set>
+    <xar:set name="linkFour">$wData['linkFour']</xar:set>
 
     <div class="weatherdotcomfooter" style="text-align: center;">
         <div class="weatherdotcomlinks" style="text-align: center; font-size : 85%; border-bottom: 1px solid black;">

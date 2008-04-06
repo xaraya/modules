@@ -23,8 +23,11 @@ function weather_user_updateconfig()
     xarVarFetch('extdays','int::',$extdays,null,XARVAR_NOT_REQUIRED);
     
     
-    if(isset($default_location)) {
-        xarModUserVars::set('weather','default_location',$default_location);
+    sys::import('modules.dynamicdata.class.properties.base');
+    $location = DataPropertyMaster::getProperty(array('name' => 'citylocation'));
+    $isvalid = $location->checkInput('default_location');
+    if ($isvalid) {
+        xarModUserVars::set('weather','default_location',$location->value);
     }
     
     if(isset($units)) {

@@ -18,7 +18,7 @@
         <!--<xar:template file="weatherdotcomsearch" /> -->
 
         <!-- the weather.com links are required -->
-        <a href="http://www.weather.com"><img src="#xarTplGetImage('TWClogo_64px.png','weather')#" class="xar-module-icon" alt="weather.com&reg;" /></a>
+        <a href="http://www.weather.com"><img src="#xarTplGetImage('TWClogo_64px.png','weather')#" class="xar-module-icon" alt="weather.com&#174;" /></a>
 
         <div id="currentweather">
             <h2 id="weatherCurrentHeader">
@@ -30,13 +30,13 @@
             <table>
                 <tr>
                     <td class="xar-align-center xar-valign-middle"><img src="#xarTplGetImage('icons/default/128/'.$wData.icon.'.png','weather')#" alt="#$wData.icon#" /></td>
-                    <td class="xar-align-center xar-valign-middle"><h1>#$wData.temp#&deg;#$wData.unitsTemp#</h1></td>
+                    <td class="xar-align-center xar-valign-middle"><h1>#$wData.temp#&#176;#$wData.unitsTemp#</h1></td>
                 </tr>
                 <tr>
                     <td class="xar-align-center xar-valign-middle"><strong>#$wData.conditions#</strong></td>
                     <td class="xar-align-center xar-valign-middle">
                         <strong><xar:mlstring>Feels Like</xar:mlstring><br />
-                        #$wData.feelsLike#&deg;#$wData.unitsTemp#</strong>
+                        #$wData.feelsLike#&#176;#$wData.unitsTemp#</strong>
                     </td>
                 </tr>
             </table>
@@ -63,15 +63,15 @@
                     </td>
                 </tr>
                 <tr>
-                    <th><xar:mlstring>Daytime High</xar:mlstring>  (&deg;#$eData[0]['unitsTemp']#)</th>
-                    <th><xar:mlstring>Overnight Low</xar:mlstring>  (&deg;#$eData[0]['unitsTemp']#)</th>
+                    <th><xar:mlstring>Daytime High</xar:mlstring>  (&#176;#$eData[0]['unitsTemp']#)</th>
+                    <th><xar:mlstring>Overnight Low</xar:mlstring>  (&#176;#$eData[0]['unitsTemp']#)</th>
                 </tr>
                 <tr>
                     <td valign="top" align="center">
-                        <strong style="color:red;">#$eData[0]['hi']#&deg;</strong>
+                        <strong style="color:red;">#$eData[0]['hi']#&#176;</strong>
                     </td>
                     <td valign="top" align="center">
-                        <strong style="color:blue;">#$eData[0]['lo']#&deg;</strong>
+                        <strong style="color:blue;">#$eData[0]['lo']#&#176;</strong>
                     </td>
                 </tr>
                 <tr>
@@ -100,7 +100,7 @@
                 </tr>
                 <tr>
                     <td class="xar-align-right"><strong><xar:mlstring>Dew Point</xar:mlstring> : </strong></td>
-                    <td class="xar-align-left">#$wData.dewPoint#&deg;#$wData.unitsTemp#</td>
+                    <td class="xar-align-left">#$wData.dewPoint#&#176;#$wData.unitsTemp#</td>
                 </tr>
                 <tr>
                     <td class="xar-align-right"><strong><xar:mlstring>Humidity</xar:mlstring> : </strong></td>
@@ -161,7 +161,7 @@
                     <th>
                         <xar:mlstring>Daytime High</xar:mlstring> / <br />
                         <xar:mlstring>Overnight Low</xar:mlstring><br />
-                        (&deg;#$eData[0]['unitsTemp']#)
+                        (&#176;#$eData[0]['unitsTemp']#)
                     </th>
                     <th><xar:mlstring>Precip. %</xar:mlstring></th>
                 </tr>
@@ -173,7 +173,7 @@
                         </strong><br />#$eData[0]['date']#</td>
                     <td valign="middle" align="center"><img src="#xarTplGetImage('icons/default/32/'.$eData.0.part.d.icon.'.png','weather')#" alt="#$eData.0.part.d.icon#" /></td>
                     <td valign="middle" align="center">#$eData[0]['part']['d']['cond']#</td>
-                    <td valign="middle" align="center"><strong>#$eData[0]['hi']#&deg;/#$eData[0]['lo']#&deg;</strong></td>
+                    <td valign="middle" align="center"><strong>#$eData[0]['hi']#&#176;/#$eData[0]['lo']#&#176;</strong></td>
                     <td valign="middle" align="center">#$eData[0]['part']['d']['ppcp']#%</td>
                 </tr>
                 <!-- extended forecast details -->
@@ -190,7 +190,7 @@
                             </strong><br />#$eData[$i]['date']#</td>
                         <td valign="middle" align="center"><img src="#xarTplGetImage('icons/default/32/'.$eData.$i.part.d.icon.'.png','weather')#" alt="#$eData.$i.part.d.icon#" /></td>
                         <td valign="middle" align="center">#$eData[$i]['part']['d']['cond']#</td>
-                        <td valign="middle" align="center"><strong>#$eData[$i]['hi']#&deg;/#$eData[$i]['lo']#&deg;</strong></td>
+                        <td valign="middle" align="center"><strong>#$eData[$i]['hi']#&#176;/#$eData[$i]['lo']#&#176;</strong></td>
                         <td valign="middle" align="center">#$eData[$i]['part']['d']['ppcp']#%</td>
                     </tr>
                 </xar:for>

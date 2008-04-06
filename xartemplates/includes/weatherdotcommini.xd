@@ -1,5 +1,5 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:set name="weatherdotcomurl">'<a href="http://www.weather.com?prod=xoap&amp;par='.xarModVars::get('weather','partner_id').'"><strong>weather.com&reg;</strong></a>'</xar:set>
+    <xar:set name="weatherdotcomurl">'<a href="http://www.weather.com?prod=xoap&#38;par='.xarModVars::get('weather','partner_id').'"><strong>weather.com&#174;</strong></a>'</xar:set>
 
     <div class="weatherdotcomfooter" style="text-align: center; font-size:85%;">
         <div class="weatherdotcomnotice">

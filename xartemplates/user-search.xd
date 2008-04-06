@@ -15,7 +15,7 @@
         <xar:template type="module" module="weather" file="user-menu" />
 
         <!-- the weather.com links are required -->
-        <a href="http://www.weather.com"><img src="#xarTplGetImage('TWClogo_64px.png','weather')#" class="xar-module-icon" alt="weather.com&reg;" /></a>
+        <a href="http://www.weather.com"><img src="#xarTplGetImage('TWClogo_64px.png','weather')#" class="xar-module-icon" alt="weather.com&#174;" /></a>
 
         <h2>#$pagename#</h2>
         <xar:template file="weatherdotcomsearch" />

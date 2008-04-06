@@ -14,9 +14,9 @@
                     <strong>#$wData.conditions#</strong>
                 </td>
                 <td class="xar-align-center xar-valign-middle">
-                    <h2>#$wData.temp#&deg;#$wData.unitsTemp#</h2>
+                    <h2>#$wData.temp#&#176;#$wData.unitsTemp#</h2>
                     <strong><xar:mlstring>Feels Like</xar:mlstring><br />
-                    #$wData.feelsLike#&deg;#$wData.unitsTemp#</strong>
+                    #$wData.feelsLike#&#176;#$wData.unitsTemp#</strong>
                 </td>
             </tr>
         </table> 
@@ -27,7 +27,7 @@
             </tr>
             <tr>
                 <td class="xar-valign-top"><xar:mlstring>Dew Point</xar:mlstring> : </td>
-                <td class="xar-valign-top">#$wData.dewPoint#&deg;#$wData.unitsTemp#</td>
+                <td class="xar-valign-top">#$wData.dewPoint#&#176;#$wData.unitsTemp#</td>
             </tr>
             <tr>
                 <td class="xar-valign-top"><xar:mlstring>Humidity</xar:mlstring> : </td>

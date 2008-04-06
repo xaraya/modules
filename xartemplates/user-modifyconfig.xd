@@ -15,7 +15,7 @@
         <xar:template type="module" module="weather" file="user-menu" />
 
         <!-- the weather.com links are required -->
-        <a href="http://www.weather.com"><img src="#xarTplGetImage('TWClogo_64px.png','weather')#" class="xar-module-icon" alt="weather.com&reg;" /></a>
+        <a href="http://www.weather.com"><img src="#xarTplGetImage('TWClogo_64px.png','weather')#" class="xar-module-icon" alt="weather.com&#174;" /></a>
 
         <h2>#$pagename#</h2>
         <div>
@@ -23,7 +23,10 @@
                 <table>
                     <tr>
                         <td><xar:mlstring>Default Location</xar:mlstring> : </td>
-                        <td><input size="15" type="text" name="default_location" value="#$default_location#" /></td>
+                        <td>
+                            <xar:set name="value"><xar:var scope="module" type="user" module="weather" name="default_location" /></xar:set>
+                            <xar:data-input type="citylocation" name="default_location" value="$default_location" />
+                        </td>
                     </tr>
                     <tr>
                         <td><xar:mlstring>Number of Days for Extended Forecasts</xar:mlstring> : </td>

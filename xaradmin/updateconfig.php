@@ -17,61 +17,52 @@
  */
 function weather_admin_updateconfig()
 {
-    // grab the following form variables
-    xarVarFetch('partner_id','str::',$partner_id,null,XARVAR_NOT_REQUIRED);
-    xarVarFetch('license_key','str::',$license_key,null,XARVAR_NOT_REQUIRED);
-    xarVarFetch('default_location','str::',$default_location,null,XARVAR_NOT_REQUIRED);
-    xarVarFetch('cc_cache_time','int::',$cc_cache_time,null,XARVAR_NOT_REQUIRED);
-    xarVarFetch('ext_cache_time','int::',$ext_cache_time,null,XARVAR_NOT_REQUIRED);
-    xarVarFetch('units','str::',$units,null,XARVAR_NOT_REQUIRED);
-    xarVarFetch('extdays','int::',$extdays,null,XARVAR_NOT_REQUIRED);
-    
-    
-    if(isset($partner_id)) {
-        xarModVars::set('weather','partner_id',$partner_id);
-    }
-    
-    if(isset($license_key)) {
-        xarModVars::set('weather','license_key',$license_key);
-    }
-    
-    if(isset($default_location)) {
-        xarModVars::set('weather','default_location',$default_location);
-    }
-    
-    if(isset($units)) {
-        xarModVars::set('weather','units',$units);
-    }
-    
-    if(isset($extdays)) {
-        xarModVars::set('weather','extdays',$extdays);
-    }
-    
-    if(isset($cc_cache_time)) {
-        if($cc_cache_time >= 30) {
-            $cc_cache_time *= 60; // time coming in is in minutes
+    // Security Check
+    if (!xarSecurityCheck('AdminWeather')) return;
+    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
+
+    // Confirm authorisation code
+    if (!xarSecConfirmAuthKey()) return;
+    switch ($data['tab']) {
+        case 'general':
+            if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, xarModVars::get('weather', 'itemsperpage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+            if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('weather', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('weather', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('partner_id', 'str', $partner_id,  xarModVars::get('weather', 'partner_id'), XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('license_key', 'str', $license_key,  xarModVars::get('weather', 'license_key'), XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('units', 'str', $units,  xarModVars::get('weather', 'units'), XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('extdays', 'str', $extdays,  xarModVars::get('weather', 'extdays'), XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('cc_cache_time', 'str', $cc_cache_time,  xarModVars::get('weather', 'cc_cache_time'), XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('ext_cache_time', 'str', $ext_cache_time,  xarModVars::get('weather', 'ext_cache_time'), XARVAR_NOT_REQUIRED)) return;
+
+            sys::import('modules.dynamicdata.class.properties.base');
+            $location = DataPropertyMaster::getProperty(array('name' => 'citylocation'));
+            $isvalid = $location->checkInput('default_location');
+            if ($isvalid) {
+                xarModVars::set('weather','default_location',$location->value);
+            }
+
+            xarModVars::set('weather', 'itemsperpage', $itemsperpage);
+            xarModVars::set('weather', 'SupportShortURLs', $shorturls);
+            xarModVars::set('weather', 'useModuleAlias', $useModuleAlias);
+            xarModVars::set('weather', 'aliasname', $aliasname);
+
+            xarModVars::set('weather','partner_id',$partner_id);
+            xarModVars::set('weather','license_key',$license_key);
+            xarModVars::set('weather','units',$units);
+            xarModVars::set('weather','extdays',$extdays);
             xarModVars::set('weather','cc_cache_time',$cc_cache_time);
-        } else {
-            $msg = xarML('Current Conditions Cache time isn\'t long enough') . xarML('Please enter a Cache Time longer than or equal to 30 minutes for the Current Conditions Cache Time.');
-            throw new Exception($msg);
-        }
-    }
-    
-    if(isset($ext_cache_time)) {
-        if($ext_cache_time >= 2) {
-            $ext_cache_time *= (60*60); // time coming in is in hours
             xarModVars::set('weather','ext_cache_time',$ext_cache_time);
-        } else {
-            $msg = xarML('Extended Forecast Cache time isn\'t long enough') . xarML('Please enter a Cache Time longer than or equal to 2 hours for the Extended Forecast Cache Time.');
-            throw new Exception($msg);
-        }
+            break;
+        default:
+            break;
     }
-    
-    // set the shorturl support (only do this on FORM submit)
-    xarVarFetch('shorturls','int:0:1',$shorturls,0);
-    xarModVars::set('weather','SupportShortURLs',$shorturls);
-    
-    xarResponseRedirect(xarModURL('weather','admin','modifyconfig'));
+
+    xarResponseRedirect(xarModURL('weather', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
+    // Return
+    return true;
 }
 
 ?>

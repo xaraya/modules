@@ -22,44 +22,67 @@
 
 function weather_init()
 {
-    /* Set up initial values for module variables. */
-    xarModVars::set('weather','partner_id','');
-    xarModVars::set('weather','license_key','');
-    xarModVars::set('weather','default_location','');
-    xarModVars::set('weather','cc_cache_time',60*30); // 30 minutes - these should not be changed
-    xarModVars::set('weather','ext_cache_time',60*60*2); // 2 hours - these should not be changed
-    xarModVars::set('weather','units','m');
-    xarModVars::set('weather','extdays',10);
-    
-    /* Register blocks. */
-    if (!xarModAPIFunc('blocks','admin','register_block_type',
-            array('modName' => 'weather',
-                'blockType' => 'current'))) return;
-    
-    /* Define instances for this module. */
-    $xartable =& xarDBGetTables();
-    $query = "SELECT DISTINCT i.xar_title 
-              FROM $xartable[block_instances] i, $xartable[block_types] t 
-              WHERE t.xar_id = i.xar_type_id AND t.xar_module = 'weather'";
-    $instances = array(
-        array(
-            'header' => 'Weather Block Title:',
-            'query' => $query,
-            'limit' => 20
-            )
-        );
-    xarDefineInstance('weather', 'Block', $instances);
-    
-    /* First for the blocks */
-    xarRegisterMask('ReadWeatherBlock', 'All', 'weather', 'Block', 'All', 'ACCESS_OVERVIEW');
-    /* Then for all operations */
-    xarRegisterMask('ViewWeather', 'All', 'weather', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadWeather', 'All', 'weather', 'Item', 'All:All:All', 'ACCESS_READ');
-    xarRegisterMask('AdminWeather', 'All', 'wethear', 'Item', 'All:All:All', 'ACCESS_ADMIN');
-    return true;
+    # --------------------------------------------------------
+    #
+    # Set up masks
+    #
+        xarRegisterMask('ViewWeather','All','weather','All','All','ACCESS_OVERVIEW');
+        xarRegisterMask('ReadWeather','All','weather','All','All','ACCESS_READ');
+        xarRegisterMask('ManageWeather','All','weather','All','All','ACCESS_DELETE');
+        xarRegisterMask('AdminWeather','All','weather','All','All','ACCESS_ADMIN');
 
-    /* This init function brings our module to version 1.0.1, run the upgrades for the rest of the initialisation */
-    return weather_upgrade('1.1.1');
+    # --------------------------------------------------------
+    #
+    # Set up privileges
+    #
+        xarRegisterPrivilege('ReadWeather','All','weather','All','All','ACCESS_READ');
+        xarRegisterPrivilege('ManageWeather','All','weather','All','All','ACCESS_DELETE');
+        xarRegisterPrivilege('AdminWeather','All','weather','All','All','ACCESS_ADMIN');
+        xarRegisterMask('ReadWeatherBlock', 'All', 'weather', 'Block', 'All', 'ACCESS_OVERVIEW');
+
+    # --------------------------------------------------------
+    #
+    # Set up privilege instances
+    #
+        $xartable =& xarDBGetTables();
+        $query = "SELECT DISTINCT i.xar_title 
+                  FROM $xartable[block_instances] i, $xartable[block_types] t 
+                  WHERE t.xar_id = i.xar_type_id AND t.xar_module = 'weather'";
+        $instances = array(
+            array(
+                'header' => 'Weather Block Title:',
+                'query' => $query,
+                'limit' => 20
+                )
+            );
+        xarDefineInstance('weather', 'Block', $instances);
+
+    # --------------------------------------------------------
+    #
+    # Set up modvars
+    #
+        xarModVars::set('weather', 'itemsperpage', 20);
+        xarModVars::set('weather', 'useModuleAlias',0);
+        xarModVars::set('weather', 'aliasname','Weather');
+        
+        xarModVars::set('weather', 'partner_id','xxx');
+        xarModVars::set('weather', 'license_key','xxx');
+        xarModVars::set('weather', 'default_location','a:3:{s:7:"country";s:2:"us";s:6:"region";s:10:"California";s:4:"city";s:8:"USCA0982";}');
+        xarModVars::set('weather', 'cc_cache_time',60*30); // 30 minutes - these should not be changed
+        xarModVars::set('weather', 'ext_cache_time',60*60*2); // 2 hours - these should not be changed
+        xarModVars::set('weather', 'units','m');
+        xarModVars::set('weather', 'extdays',10);
+
+
+    # --------------------------------------------------------
+    #
+    # Register blocks
+    #
+        if (!xarModAPIFunc('blocks','admin','register_block_type',
+                array('modName' => 'weather',
+                    'blockType' => 'weather'))) return;
+
+    return true;
 }
 
 
@@ -89,27 +112,61 @@ function weather_upgrade($oldversion)
  */
 function weather_delete()
 {
-    /* Delete any module variables */
-    xarModDelAllVars('weather');
-    /* UnRegister all blocks that the module uses*/
-    if (!xarModAPIFunc('blocks',
-            'admin',
-            'unregister_block_type',
-            array('modName' => 'weather',
-                'blockType' => 'current'))) return;
+        // Only change the next line. No need for anything else
+        $this_module = 'weather';
 
-    if (!xarModAPIFunc('blocks',
-            'admin',
-            'unregister_block_type',
-            array('modName' => 'weather',
-                'blockType' => 'forecast'))) return;
+    # --------------------------------------------------------
+    #
+    # Remove database tables
+    #
+        // Load table maintenance API
+        sys::import('xaraya.tableddl');
 
+        // Generate the SQL to drop the table using the API
+        $prefix = xarDB::getPrefix();
+        $table = $prefix . "_" . $this_module;
+        $query = xarDBDropTable($table);
+        if (empty($query)) return; // throw back
 
-    /* Remove Masks and Instances. */
-    xarRemoveMasks('weather');
-    xarRemoveInstances('weather');
+    # --------------------------------------------------------
+    #
+    # Remove block types
+    #
+        if (!xarModAPIFunc('blocks', 'admin', 'unregister_block_type', array('modName'  => 'myxaraya', 'blockType'=> 'myxaraya_link'))) return;
 
-    /* Deletion successful*/
-    return true;
+    # --------------------------------------------------------
+    #
+    # Remove block groups
+    #
+
+    # --------------------------------------------------------
+    #
+    # Delete all DD objects created by this module
+    #
+        try {
+            $dd_objects = unserialize(xarModVars::get($this_module,$this_module . '_objects'));
+            foreach ($dd_objects as $key => $value)
+                $result = xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $value));
+        } catch (Exception $e) {}
+
+    # --------------------------------------------------------
+    #
+    # Remove the categories
+    #
+        try {
+            xarModAPIFunc('categories', 'admin', 'deletecat',
+                                 array('cid' => xarModVars::get($this_module, 'basecategory'))
+                                );
+        } catch (Exception $e) {}
+
+    # --------------------------------------------------------
+    #
+    # Remove modvars, masks and privilege instances
+    #
+        xarRemoveMasks($this_module);
+        xarRemoveInstances($this_module);
+        xarModVars::delete_all($this_module);
+
+        return true;
 }
 ?>

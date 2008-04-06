@@ -18,7 +18,7 @@
         <!--<xar:template file="weatherdotcomsearch" /> -->
 
         <!-- the weather.com links are required -->
-        <a href="http://www.weather.com"><img src="#xarTplGetImage('TWClogo_64px.png','weather')#" class="xar-module-icon" alt="weather.com&reg;" /></a>
+        <a href="http://www.weather.com"><img src="#xarTplGetImage('TWClogo_64px.png','weather')#" class="xar-module-icon" alt="weather.com&#174;" /></a>
 
         <div id="currentweather">
 
@@ -47,15 +47,15 @@
                     </td>
                 </tr>
                 <tr>
-                    <th><xar:mlstring>Daytime High</xar:mlstring>  (&deg;#$eData[0]['unitsTemp']#)</th>
-                    <th><xar:mlstring>Overnight Low</xar:mlstring>  (&deg;#$eData[0]['unitsTemp']#)</th>
+                    <th><xar:mlstring>Daytime High</xar:mlstring>  (&#176;#$eData[0]['unitsTemp']#)</th>
+                    <th><xar:mlstring>Overnight Low</xar:mlstring>  (&#176;#$eData[0]['unitsTemp']#)</th>
                 </tr>
                 <tr>
                     <td valign="top" align="center">
-                        <strong style="color:red;">#$eData[$day]['hi']#&deg;</strong>
+                        <strong style="color:red;">#$eData[$day]['hi']#&#176;</strong>
                     </td>
                     <td valign="top" align="center">
-                        <strong style="color:blue;">#$eData[$day]['lo']#&deg;</strong>
+                        <strong style="color:blue;">#$eData[$day]['lo']#&#176;</strong>
                     </td>
                 </tr>
                 <tr>
