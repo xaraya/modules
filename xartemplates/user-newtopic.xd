@@ -3,7 +3,7 @@
 </xar:comment>
 
 <xar:comment>
-    minimum use of tables for layout - a css-driven template 
+    minimum use of tables for layout - a css-driven template
 </xar:comment>
 
 <xar:style module="xarbb" scope="module" file="xarbb-layout" />
@@ -26,7 +26,7 @@
         </a>
         <span style="font-size: larger;">&#187;</span>
         <a href="&xar-modurl-xarbb-user-viewforum;&amp;fid=#$fid#">
-            #$fname# 
+            #$fname#
         </a>
     </span>
 
@@ -97,7 +97,7 @@
                     <xar:mlstring>Name:</xar:mlstring>
                 </td>
                 <td class="xar-norm newtopicfield">
-                    #xarUserGetVar('name')# / 
+                    #xarUserGetVar('name')# /
                     <xar:if condition="xarUserIsLoggedIn()">
                         <a href="#xarModUrl('roles', 'user', 'account')#">
                             <xar:mlstring>Your Account</xar:mlstring>
@@ -123,7 +123,7 @@
                         <xar:mlstring>Form Controls:</xar:mlstring>
                     </td>
                     <td class="xar-norm newtopicfield">
-                        #$formhooks.formdisplay# 
+                        #$formhooks.formdisplay#
                     </td>
                 </tr>
             </xar:if>
@@ -139,7 +139,7 @@
 
             <tr>
                 <td class="xar-accent xar-title newtopictitle">
-                    <xar:mlstring>Options:</xar:mlstring> 
+                    <xar:mlstring>Options:</xar:mlstring>
                     <div class="xar-sub">
                         <xar:comment>
                             FIXME: not translatable
@@ -252,7 +252,7 @@
             <input type="hidden" name="redirect" id="redirect" value="#$redirect#" />
 
             <input type="submit" id="preview" name="preview" value="#xarML('Preview')#" />
-            &nbsp; 
+            &nbsp;
             <input type="submit" name="submit" value="#xarML('Submit')#" tabindex="3" />
         </div>
     </form>
@@ -260,6 +260,9 @@
 
 <div class="xarbb-noteswrapper">
     <span class="xar-sub rightnote">
-        <xar:mlstring>All times are GMT</xar:mlstring>
+        <xar:ml>
+            <xar:mlstring>All times are GMT #(1)</xar:mlstring>
+            <xar:mlvar>#xarLocaleFormatDate('%z')#</xar:mlvar>
+        </xar:ml>
     </span>
 </div>
