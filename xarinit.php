@@ -67,7 +67,7 @@ function weather_init()
         
         xarModVars::set('weather', 'partner_id','xxx');
         xarModVars::set('weather', 'license_key','xxx');
-        xarModVars::set('weather', 'default_location','a:3:{s:7:"country";s:2:"us";s:6:"region";s:10:"California";s:4:"city";s:8:"USCA0982";}');
+        xarModVars::set('weather', 'default_location','a:3:{s:7:"country";s:2:"us";s:6:"region";s:10:"California";s:4:"city";a:2:{s:4:"name";s:8:"La Jolla";s:4:"code";s:8:"USCA0565";}}');
         xarModVars::set('weather', 'cc_cache_time',60*30); // 30 minutes - these should not be changed
         xarModVars::set('weather', 'ext_cache_time',60*60*2); // 2 hours - these should not be changed
         xarModVars::set('weather', 'units','m');
