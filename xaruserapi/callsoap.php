@@ -28,7 +28,7 @@
      
      include_once('modules/soapserver/lib/nusoap.php');
      
-     $soapclient =& new soapclient($endpoint['site'].$endpoint['path']);
+     $soapclient =& new nusoap_client($endpoint['site'].$endpoint['path']);
      
      if($err = $soapclient->getError()){
          echo 'Request: <xmp>'.$soapclient->request.'</xmp>';
@@ -49,4 +49,5 @@
      unset($soapclient); 
      
  }
+
 ?>

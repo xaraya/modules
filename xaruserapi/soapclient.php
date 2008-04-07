@@ -27,23 +27,23 @@ function soapserver_userapi_soapclient($args)
     include_once('modules/soapserver/lib/nusoap.php');
 
     if (!isset($endpoint)) {
-        $soapclient =& new soapclient();
+        $soapclient = new nusoap_client();
     } elseif (!isset($wsdl)) {
-        $soapclient =& new soapclient($endpoint);
+        $soapclient = new nusoap_client($endpoint);
     } elseif (!isset($proxyhost)) {
-        $soapclient =& new soapclient($endpoint, $wsdl);
+        $soapclient = new nusoap_client($endpoint, $wsdl);
     } elseif (!isset($proxyport)) {
-        $soapclient =& new soapclient($endpoint, $wsdl, $proxyhost);
+        $soapclient = new nusoap_client($endpoint, $wsdl, $proxyhost);
     } elseif (!isset($proxyusername)) {
-        $soapclient =& new soapclient($endpoint, $wsdl, $proxyhost, $proxyport);
+        $soapclient = new nusoap_client($endpoint, $wsdl, $proxyhost, $proxyport);
     } elseif (!isset($proxypassword)) {
-        $soapclient =& new soapclient($endpoint, $wsdl, $proxyhost, $proxyport, $proxyusername);
+        $soapclient = new nusoap_client($endpoint, $wsdl, $proxyhost, $proxyport, $proxyusername);
     } elseif (!isset($timeout)) {
-        $soapclient =& new soapclient($endpoint, $wsdl, $proxyhost, $proxyport, $proxyusername, $proxypassword);
+        $soapclient = new nusoap_client($endpoint, $wsdl, $proxyhost, $proxyport, $proxyusername, $proxypassword);
     } elseif (!isset($response_timeout)) {
-        $soapclient =& new soapclient($endpoint, $wsdl, $proxyhost, $proxyport, $proxyusername, $proxypassword, $timeout);
+        $soapclient = new nusoap_client($endpoint, $wsdl, $proxyhost, $proxyport, $proxyusername, $proxypassword, $timeout);
     } else {
-        $soapclient =& new soapclient($wsdl, $wsdl, $proxyhost, $proxyport, $proxyusername, $proxypassword, $timeout, $response_timeout);
+        $soapclient = new nusoap_client($wsdl, $wsdl, $proxyhost, $proxyport, $proxyusername, $proxypassword, $timeout, $response_timeout);
     }
 
     //$soapclient-> = 'UTF-8';

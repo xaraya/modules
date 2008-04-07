@@ -49,23 +49,28 @@ fclose($fd);
     
 
     if (empty($module)) {
-        return new soap_fault('Client', 'Xaraya', 'Must supply a module name', ''); 
+        $error = new nusoap_fault('Client', 'Xaraya', 'Must supply a module name', ''); 
+        return $error;
     }
     
     if (empty($type)) {
-        return new soap_fault('Client', 'Xaraya', 'Must supply a type', ''); 
+        $error = new nusoap_fault('Client', 'Xaraya', 'Must supply a type', ''); 
+        return $error;
     }
     
     if (empty($func)) {
-        return new soap_fault('Client', 'Xaraya', 'Must supply a function', ''); 
+        $error = new nusoap_fault('Client', 'Xaraya', 'Must supply a function', ''); 
+        return $error;
     }
     
     if (empty($username)) {
-        return new soap_fault('Client', 'Xaraya', 'Must supply a user name', ''); 
+        $error = new nusoap_fault('Client', 'Xaraya', 'Must supply a user name', ''); 
+        return $error;
     }
     
     if (empty($password)) {
-        return new soap_fault('Client', 'Xaraya', 'Must supply a password', ''); 
+        $error = new nusoap_fault('Client', 'Xaraya', 'Must supply a password', ''); 
+        return $error;
     }
 
     if(!isset($args) || !is_array($args)) { 
@@ -74,9 +79,10 @@ fclose($fd);
     
     // Try to login
     if (!xarUserLogin($username,$password)) {
-        return new soap_fault('Server', 'Xaraya',
+        $error = new nusoap_fault('Server', 'Xaraya',
             "Invalid username or password for ($username) to access API methods"
         ); 
+        return $error;
     }
 
     // TODO: at this point, decide whether the user is actually allowed to call this API.
@@ -92,7 +98,8 @@ fclose($fd);
         // If we have at least one match, then the API is allowed
         // TODO: we then need to check the role groups for each line matched.
         if (empty($api_matches)) {
-            return new soap_fault('Server', 'Xaraya', "Access to API '$module:$type:func' is not permitted"); 
+            $error = new nusoap_fault('Server', 'Xaraya', "Access to API '$module:$type:func' is not permitted");
+            return $error;
         }
     }
 
@@ -102,9 +109,10 @@ fclose($fd);
     // CHECKME: the result is largely irrelevent. It is the exception that tells us
     // something went wrong. Remove the 'isset' check?
     if (!isset($result) || xarCurrentErrorType() != XAR_NO_EXCEPTION) {
-        return new soap_fault('Server', 'Xaraya',
+        $error = new nusoap_fault('Server', 'Xaraya',
             xarErrorRender('text') . " for module '$module' type '$type' func '$func' with args " . join('-', $args), ''
         ); 
+        return $error;
     } else {
         // Determine how to encode the return value.
         if (is_string($result)) {

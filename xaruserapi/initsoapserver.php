@@ -31,7 +31,7 @@ function soapserver_userapi_initsoapserver()
     ini_set('display_errors', 0);
  
     // Create a new soap server
-    $server =& new soap_server();
+    $server = new nusoap_server();
 
     // Set the encoding type to the default for the site
     $locale = explode('.', xarMLSGetSiteLocale());
@@ -93,7 +93,8 @@ function soapserver_userapi_initsoapserver()
     );
 
     if (!$server) {
-        return new soap_fault('Server', '', 'Unable to create server', ''); 
+        $error = new nesoap_fault('Server', '', 'Unable to create server', ''); 
+        return $error;
     }
  
     return $server;

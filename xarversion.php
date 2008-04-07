@@ -2,7 +2,7 @@
 // $Id$
 $modversion['name'] = 'SOAP server';
 $modversion['id'] = '748';
-$modversion['version'] = '0.1.0';
+$modversion['version'] = '0.1.1';
 $modversion['displayname']    = xarML('SoapServer');
 $modversion['description'] = 'SOAP server implementation';
 $modversion['credits'] = 'xardocs/credits.txt';
