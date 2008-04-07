@@ -1,0 +1,78 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:comment>
+        License: GPL http://www.gnu.org/copyleft/gpl.html 
+    </xar:comment>
+
+    <xar:set name="i">0</xar:set>
+    <xar:foreach in="$wDataArray" value="$wData">
+        <xar:set name="i">$i+1</xar:set>
+        <xar:if condition="isset($blockstoshow) AND $i gt $blockstoshow">
+            <xar:break />
+        </xar:if>
+        <div class="weather">
+            <table class="xar-fullwidth" style="border : 0;">
+                <tr>
+                    <td class="xar-align-center xar-valign-middle">
+                        <img src="#xarTplGetImage('icons/default/64/'.$wData.icon.'.png','weather')#" alt="#$wData.icon#" />
+                        <!--Change above image to /32/ if column is too narrow-->
+                        <!--<img src="modules/weather/xarimages/icons/default/64/#$wData.icon#.png" />-->
+                        <br />
+                        <strong>#$wData.conditions#</strong>
+                    </td>
+                    <td class="xar-align-center xar-valign-middle">
+                        <h2>#$wData.temp#&#176;#$wData.unitsTemp#</h2>
+                        <strong><xar:mlstring>Feels Like</xar:mlstring><br />
+                        #$wData.feelsLike#&#176;#$wData.unitsTemp#</strong>
+                    </td>
+                </tr>
+            </table> 
+            <table class="xar-fullwidth" style="border : 0;">
+                <tr>
+                    <td class="xar-valign-top"><xar:mlstring>UV Index</xar:mlstring>:</td>
+                    <td class="xar-valign-top">#$wData.uv#&#160;#$wData.uvDesc#</td>
+                </tr>
+                <tr>
+                    <td class="xar-valign-top" nowrap="nowrap"><xar:mlstring>Dew Point</xar:mlstring>:</td>
+                    <td class="xar-valign-top">#$wData.dewPoint#&#176;#$wData.unitsTemp#</td>
+                </tr>
+                <tr>
+                    <td class="xar-valign-top"><xar:mlstring>Humidity</xar:mlstring>:</td>
+                    <td class="xar-valign-top">#$wData.humidity#%</td>
+                </tr>
+                <tr>
+                    <td class="xar-valign-top"><xar:mlstring>Pressure</xar:mlstring> : </td>
+                    <td class="xar-valign-top">
+                        <span>#$wData.barometer# #$wData.tempPressure#
+                        <xar:mlstring>
+                            and
+                        </xar:mlstring>
+                        #$wData.barometerDesc#</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="xar-valign-top"><xar:mlstring>Wind</xar:mlstring> : </td>
+                    <td class="xar-valign-top">#$wData.windDirname# <xar:mlstring>at</xar:mlstring> #$wData.wind# #$wData.unitsSpeed#</td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <p style="font-size:85%;"><em><xar:mlstring>As reported at</xar:mlstring> 
+                            #$wData.observStation#<br />
+                            #$wData.lastUpdate#</em>
+                        </p>
+                        <p style="font-size:85%;">
+                            <a href="#xarModURL('weather','user','main')#">More...</a>
+                        </p>
+                    </td>
+                </tr>
+            </table> 
+
+            <!-- the weather.com links are required -->
+            <xar:template file="weatherdotcommini" />
+        </div>
+    </xar:foreach>
+        <xar:if condition="isset($blockstoshow) AND $i gt $blockstoshow">
+            <div style="text-align: center">
+            <a href="#xarModURL('myxaraya','user','forecasts')#">More...</a>
+            </div>
+        </xar:if>
+</xar:template>
