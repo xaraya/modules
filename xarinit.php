@@ -132,7 +132,7 @@ function weather_delete()
     #
     # Remove block types
     #
-        if (!xarModAPIFunc('blocks', 'admin', 'unregister_block_type', array('modName'  => 'myxaraya', 'blockType'=> 'myxaraya_link'))) return;
+        if (!xarModAPIFunc('blocks', 'admin', 'unregister_block_type', array('modName'  => 'weather', 'blockType'=> 'weather'))) return;
 
     # --------------------------------------------------------
     #

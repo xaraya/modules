@@ -18,7 +18,7 @@
 function weather_user_search()
 {
     // grab the location we're searching for
-    if (!xarVarFetch('default_location_math_city', 'str', $default_location,  null, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('city_default_location', 'str', $default_location,  null, XARVAR_NOT_REQUIRED)) return;
     if (isset($default_location)){
         $loc = $default_location;   
     } else {

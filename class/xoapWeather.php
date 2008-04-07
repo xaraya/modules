@@ -93,7 +93,7 @@ class xoapWeather
                 $this->location =& $this->defaultLocation;
             } else {
                 // use the user setting
-                $this->location = $location['city'];
+                $this->location = $location['city']['code'];
             }
         }
     }
