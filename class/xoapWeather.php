@@ -88,9 +88,9 @@ class xoapWeather
                     $location = unserialize($locationdata);
                 } catch (Exception $e) {}
             }
-            if(!isset($location) || empty($location)) {
-                // use the admin drefault location
-                $this->location =& $this->defaultLocation;
+            if(!isset($loc) || empty($loc)) {
+                // use the admin default location
+                $this->location = $this->defaultLocation['code'];
             } else {
                 // use the user setting
                 $this->location = $location['city']['code'];
