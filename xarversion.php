@@ -13,7 +13,7 @@
  */
 $modversion['name']           = 'weather';
 $modversion['id']             = '662';
-$modversion['version']        = '1.1.1';
+$modversion['version']        = '1.1.2';
 $modversion['displayname']    = xarML('Weather');
 $modversion['description']    = 'Weather.com XML Weather Feed Module';
 $modversion['credits']        = 'xardocs/credits.txt';
