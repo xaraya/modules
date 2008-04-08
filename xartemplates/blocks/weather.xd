@@ -60,7 +60,7 @@
                             #$wData.lastUpdate#</em>
                         </p>
                         <p style="font-size:85%;">
-                            <a href="#xarModURL('weather','user','forecasts',array('tab' => $wData.location))#">More...</a>
+                            <a href="#xarModURL('myxaraya','user','forecasts',array('tab' => $wData.location))#">More...</a>
                         </p>
                     </td>
                 </tr>
