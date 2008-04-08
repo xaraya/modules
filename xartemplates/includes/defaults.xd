@@ -1,0 +1,71 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div class="xar-form-input-wrapper">
+        <label for="itemsperpage" title="#xarML('Partner ID from www.weather.com')#" class="xar-form-label">
+            <xar:mlstring>
+                Partner ID:
+            </xar:mlstring>
+        </label>
+        <xar:set name="value"><xar:var scope="module" module="weather" name="partner_id" /></xar:set>
+        <xar:data-input type="textbox" name="partner_id" value="$value" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="itemsperpage" title="#xarML('License key from www.weather.com')#" class="xar-form-label">
+            <xar:mlstring>
+                License Key:
+            </xar:mlstring>
+        </label>
+        <xar:set name="value"><xar:var scope="module" module="weather" name="license_key" /></xar:set>
+        <xar:data-input type="textbox" name="license_key" value="$value" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="itemsperpage" title="#xarML('Default location to show weather information for')#" class="xar-form-label">
+            <xar:mlstring>
+                Default Location:
+            </xar:mlstring>
+        </label>
+        <xar:set name="value"><xar:var scope="module" module="weather" name="default_location" /></xar:set>
+        <xar:data-input type="citylocation" name="default_location" value="$default_location" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="itemsperpage" title="#xarML('Units of measurtement in metric or US systems')#" class="xar-form-label">
+            <xar:mlstring>
+                Measurement Units:
+            </xar:mlstring>
+        </label>
+        <xar:set name="options">
+            array(
+                array('id' => 's', 'name' => 'Standard'),
+                array('id' => 'm', 'name' => 'Metric'),
+            )
+        </xar:set>
+        <xar:set name="value"><xar:var scope="module" module="weather" name="units" /></xar:set>
+        <xar:data-input type="dropdown" name="units" value="$value" options="$options" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="itemsperpage" title="#xarML('Number of Days for Extended Forecasts')#" class="xar-form-label">
+            <xar:mlstring>
+                Forecast Days:
+            </xar:mlstring>
+        </label>
+        <xar:set name="value"><xar:var scope="module" module="weather" name="extdays" /></xar:set>
+        <xar:data-input type="integerbox" name="extdays" value="$value" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="itemsperpage" title="#xarML('Time the current conditions information is cached')#" class="xar-form-label">
+            <xar:mlstring>
+                Current Cache Time:
+            </xar:mlstring>
+        </label>
+        <xar:set name="value"><xar:var scope="module" module="weather" name="cc_cache_time" /></xar:set>
+        <xar:data-input type="integerbox" name="cc_cache_time" value="$value" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="itemsperpage" title="#xarML('Time the extended forecast information is cached')#" class="xar-form-label">
+            <xar:mlstring>
+                Forecast Cache Time:
+            </xar:mlstring>
+        </label>
+        <xar:set name="value"><xar:var scope="module" module="weather" name="ext_cache_time" /></xar:set>
+        <xar:data-input type="integerbox" name="ext_cache_time" value="$value" />
+    </div>
+</xar:template>

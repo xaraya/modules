@@ -1,0 +1,37 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div class="xar-form-input-wrapper">
+        <label for="itemsperpage" title="#xarML('Number of items to show on each page.')#" class="xar-form-label">
+            <xar:mlstring>
+                Items Per Page:
+            </xar:mlstring>
+        </label>
+        <xar:set name="value"><xar:var scope="module" module="weather" name="itemsperpage" /></xar:set>
+        <xar:data-input type="textbox" name="itemsperpage" value="$value" class="xar-form-textshort" />
+    </div>
+    <div class="xar-form-input-wrapper-after">
+        <xar:set name="checked">xarModVars::get('weather','SupportShortURLs')</xar:set>
+        <xar:data-input type="checkbox" name="shorturls" id="shorturls" checked="$checked" />
+        <label for="shorturls" title="#xarML('Enable short URLs for Weather module')#">
+            <xar:mlstring>
+                Enable Short URLs
+            </xar:mlstring>
+        </label>
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for = "modulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
+            <xar:mlstring>
+                Use a module alias
+            </xar:mlstring>
+        </label>
+        <xar:data-input type="checkbox" name="modulealias" id="modulealias" checked="$checked" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
+                <xar:mlstring>
+                    Module Alias Name
+                </xar:mlstring>
+        </label>
+        <xar:set name="value"><xar:var scope="module" module="weather" name="aliasname" /></xar:set>
+        <xar:data-input type="textbox" name="aliasname" value="$value" size="32" maxlength="100" />
+    </div>
+</xar:template>
