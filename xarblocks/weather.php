@@ -30,6 +30,12 @@
                     $w->setLocation($location['city']['code']);
                     $data['content']['wDataArray'][] = $w->ccData();
                 }
+                if (empty($data['content']['wDataArray'])) {
+                    $data['content']['blockstoshow'] = 1;
+                    $location = unserialize(xarModUserVars::get('weather','default_location'));
+                    $w->setLocation($location['city']['code']);
+                    $data['content']['wDataArray'] = array($w->ccData());
+                }
                 if (empty($data['content']['wDataArray'])) $data['content'] = "";
             } catch (Exception $e) {
                 $data['content']['blockstoshow'] = 1;
