@@ -23,6 +23,7 @@
             try {
                 $data['content']['blockstoshow'] = xarModUserVars::get('math','locationnumber');
                 $locations = $blocks['locations'];
+                $data['content']['wDataArray'] = array();
                 foreach ($locations as $locationinfo) {
                     $location = unserialize($locationinfo);
                     if (empty($location['city']['code']))continue;
