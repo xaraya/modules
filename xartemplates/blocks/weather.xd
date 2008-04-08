@@ -60,7 +60,7 @@
                             #$wData.lastUpdate#</em>
                         </p>
                         <p style="font-size:85%;">
-                            <a href="#xarModURL('weather','user','main')#">More...</a>
+                            <a href="#xarModURL('weather','user','main',array('tab' => $wData.location)#">More...</a>
                         </p>
                     </td>
                 </tr>
@@ -72,7 +72,7 @@
     </xar:foreach>
         <xar:if condition="isset($blockstoshow) AND $i gt $blockstoshow">
             <div style="text-align: center">
-            <a href="#xarModURL('myxaraya','user','forecasts')#">More...</a>
+            <a href="#xarModURL('myxaraya','user','forecasts'))#">More...</a>
             </div>
         </xar:if>
 </xar:template>
