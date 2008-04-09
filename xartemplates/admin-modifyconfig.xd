@@ -89,10 +89,10 @@
     <xar:comment> Begin Release Options </xar:comment>
     <xar:elseif condition="$tab eq 'release'" />
         <form action="&xar-modurl-translations-admin-updateconfig;" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
-           <fieldset>
+            <fieldset>
                 <legend><xar:mlstring>Translations storage</xar:mlstring></legend>
-            <p class="xar-form-input-wrapper-before">
-                <p><xar:mlstring>The translated information for xaraya and her modules can be stored in different back-ends. The following back-ends are supported:</xar:mlstring></p>
+                <p class="xar-form-input-wrapper-before">
+                <xar:mlstring>The translated information for xaraya and her modules can be stored in different back-ends. The following back-ends are supported:</xar:mlstring></p>
 
             <div class="xar-form-input-wrapper">
                 <label for="releasebackend" class="xar-form-label" title="#xarML('Release Backend')#">
@@ -109,6 +109,7 @@
                 </select>
                 <xar:mlstring>(only PHP allowed for now)</xar:mlstring>
             </div>
+            </fieldset>
             <div class="xar-form-input-wrapper">
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="tab" id="tab" value="#$tab#" />
