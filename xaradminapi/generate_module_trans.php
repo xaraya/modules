@@ -37,7 +37,7 @@ function translations_adminapi_generate_module_trans($args)
     $time = explode(' ', microtime());
     $startTime = $time[1] + $time[0];
 
-    if (xarConfigGetVar('Site.MLS.TranslationsBackend') == 'xml2php') {
+    if (xarConfigVars::get(null,'Site.MLS.TranslationsBackend') == 'xml2php') {
         $l = xarLocaleGetInfo($locale);
         if ($l['charset'] == 'utf-8') {
             $ref_locale = $locale;
@@ -73,7 +73,7 @@ function translations_adminapi_generate_module_trans($args)
     foreach ($dirnames as $dirname) {
         if (!preg_match('!^templates!i', $dirname, $matches))
             $pattern = '/^([a-z0-9\-_]+)\.php$/i';
-        else 
+        else
             $pattern = '/^([a-z0-9\-_]+)\.xd$/i';
         $subnames = xarModAPIFunc('translations','admin','get_module_files',
                               array('moddir'=>"modules/$moddir/xar$dirname",'pattern'=>$pattern));

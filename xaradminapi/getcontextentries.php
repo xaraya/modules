@@ -56,14 +56,14 @@ function translations_adminapi_getcontextentries($args)
         $en_backend =& $backend;
     }
 
-    $maxReferences = xarModGetVar('translations', 'maxreferences');
+    $maxReferences = xarModVars::get('translations', 'maxreferences');
 
     if (!$parsedWorkingLocale = xarMLS__parseLocaleString($locale)) return false;
     if (!$parsedSiteLocale = xarMLS__parseLocaleString(xarMLSGetCurrentLocale())) return false;
     $workingCharset = $parsedWorkingLocale['charset'];
     $siteCharset = $parsedSiteLocale['charset'];
     if ($siteCharset != $workingCharset) {
-        require_once "includes/transforms/xarCharset.php";
+        sys::import('xaraya.transforms.xarCharset');
         $newEncoding = new xarCharset;
     }
 
@@ -124,7 +124,7 @@ function translations_adminapi_getcontextentries($args)
         'numEntries'=> $numEntries,
         'numEmptyEntries'=>$numEmptyEntries,
         'keyEntries'=>$keyEntries,
-        'numKeyEntries'=> $numKeyEntries, 
+        'numKeyEntries'=> $numKeyEntries,
         'numEmptyKeyEntries'=> $numEmptyKeyEntries,);
 }
 
@@ -132,7 +132,7 @@ function translations_grab_source_code($references, $maxReferences = NULL)
 {
     $result = array();
     //static $files = array(); <-- this just takes too much memory
-    $showContext = xarModGetVar('translations','showcontext');
+    $showContext = xarModVars::get('translations','showcontext');
     if(!$showContext) {
         $result[] = xarML('References have been disabled');
         return $result;
@@ -143,7 +143,7 @@ function translations_grab_source_code($references, $maxReferences = NULL)
     $currentFileData = '';
     $currentFileName = '';
     $referencesCount = count($references);
-    $maxCodeLines = xarModGetVar('translations', 'maxcodelines');
+    $maxCodeLines = xarModVars::get('translations', 'maxcodelines');
     if ($maxReferences == NULL) {
         $maxReferences = $referencesCount;
     }

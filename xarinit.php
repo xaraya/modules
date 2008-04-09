@@ -16,14 +16,14 @@
  */
 function translations_init()
 {
-    xarModSetVar('translations', 'work_backend_type', 'xml');
-    xarModSetVar('translations', 'release_backend_type', 'php');
-    xarModSetVar('translations', 'archiver_path', '/bin/tar');
-    xarModSetVar('translations', 'archiver_flags', 'czf %f %d');
+    xarModVars::set('translations', 'work_backend_type', 'xml');
+    xarModVars::set('translations', 'release_backend_type', 'php');
+    xarModVars::set('translations', 'archiver_path', '/bin/tar');
+    xarModVars::set('translations', 'archiver_flags', 'czf %f %d');
 
-    xarModSetVar('translations', 'showcontext', 0);
-    xarModSetVar('translations', 'maxreferences', 5);
-    xarModSetVar('translations', 'maxcodelines', 5);
+    xarModVars::set('translations', 'showcontext', 0);
+    xarModVars::set('translations', 'maxreferences', 5);
+    xarModVars::set('translations', 'maxcodelines', 5);
 
     xarRegisterMask('ReadTranslations', 'All', 'translations', 'All', 'All', 'ACCESS_READ');
     xarRegisterMask('AdminTranslations', 'All', 'translations', 'All', 'All', 'ACCESS_ADMIN');
@@ -38,14 +38,14 @@ function translations_upgrade($oldversion)
 {
     switch($oldversion){
         case '0.1.0':
-            xarModSetVar('translations', 'showcontext', 0);
-            xarModSetVar('translations', 'maxreferences', 5);
-            xarModSetVar('translations', 'maxcodelines', 5);
+            xarModVars::set('translations', 'showcontext', 0);
+            xarModVars::set('translations', 'maxreferences', 5);
+            xarModVars::set('translations', 'maxcodelines', 5);
         case '0.1.1':
             xarRegisterMask('ReadTranslations', 'All', 'translations', 'All', 'All', 'ACCESS_READ');
-            xarModSetVar('translations', 'maxreferences', 0);
+            xarModVars::set('translations', 'maxreferences', 0);
         case '0.1.2':
-            xarModSetVar('translations', 'maxreferences', 0);
+            xarModVars::set('translations', 'maxreferences', 0);
         case '0.1.3':
     }
     return true;
@@ -56,14 +56,7 @@ function translations_upgrade($oldversion)
  */
 function translations_delete()
 {
-    xarModDelVar('translations', 'work_backend_type');
-    xarModDelVar('translations', 'release_backend_type');
-    xarModDelVar('translations', 'archiver_path');
-    xarModDelVar('translations', 'archiver_flags');
-
-    xarModDelVar('translations', 'showcontext');
-    xarModDelVar('translations', 'maxreferences');
-    xarModDelVar('translations', 'maxcodelines');
+    xarModVars::delete_all('translations');
 
     // Remove Masks and Instances
     xarRemoveMasks('translations');

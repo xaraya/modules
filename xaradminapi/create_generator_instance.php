@@ -28,13 +28,13 @@ function translations_adminapi_create_generator_instance($args)
     if (!$bt) return;
     switch ($bt) {
         case 'php':
-            include_once 'modules/translations/class/PHPTransGenerator.php';
+            sys::import('modules.translations.class.PHPTransGenerator');
             return new PHPTranslationsGenerator($locale);
         case 'xml':
-            include_once 'modules/translations/class/XMLTransSkelsGenerator.php';
+            sys::import('modules.translations.class.XMLTransSkelsGenerator');
             return new XMLTranslationsSkelsGenerator($locale);
         case 'xml2php':
-            include_once 'modules/translations/class/PHPTransGenerator.php';
+            sys::import('modules.translations.class.PHPTransGenerator');
             return new PHPTranslationsGenerator($locale);
     }
     xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');

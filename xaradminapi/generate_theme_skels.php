@@ -37,7 +37,7 @@ function translations_adminapi_generate_theme_skels($args)
     if(!xarSecurityCheck('AdminTranslations')) return;
 
     // {ML_dont_parse 'modules/translations/class/TPLParser.php'}
-    include 'modules/translations/class/TPLParser.php';
+    sys::import('modules.translations.class.TPLParser');
 
     $time = explode(' ', microtime());
     $startTime = $time[1] + $time[0];
@@ -71,7 +71,7 @@ function translations_adminapi_generate_theme_skels($args)
             $parser = new TPLParser();
             $parser->parse("themes/$themedir/$dirname/$subname.$xtype");
             ${$dirname . "names"}[] = $subname;
-            
+
             $transEntriesCollection[$dirname.'::'.$subname] = $parser->getTransEntries();
             $transKeyEntriesCollection[$dirname.'::'.$subname] = $parser->getTransKeyEntries();
         }
@@ -113,13 +113,13 @@ function translations_adminapi_generate_theme_skels($args)
 
     // Create skels
     $subnames = array_keys($transEntriesCollection);
-    if (xarConfigGetVar('Site.MLS.TranslationsBackend') == 'xml2php') {
+    if (xarConfigVars::get(null,'Site.MLS.TranslationsBackend') == 'xml2php') {
         if (!$parsedLocale = xarMLS__parseLocaleString($locale)) return false;
         $genLocale = $parsedLocale['lang'].'_'.$parsedLocale['country'].'.utf-8';
     } else {
         $genLocale = $locale;
     }
-         
+
     $gen = xarModAPIFunc('translations','admin','create_generator_instance',array('interface' => 'ReferencesGenerator', 'locale' => $genLocale));
     if (!isset($gen)) return;
     if (!$gen->bindDomain(XARMLS_DNTYPE_THEME, $themedir)) return;

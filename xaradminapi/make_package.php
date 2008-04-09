@@ -39,7 +39,7 @@ function translations_adminapi_make_package($args)
         $ext = 'unknown';
     }
     $filename = "$basefilename-{$version}_i18n-$locale.$ext";
-    $filepath = xarCoreGetVarDirPath().'/cache/'.$filename;
+    $filepath = sys::varpath().'/cache/'.$filename;
 
     $archiver_flags = str_replace('%f', $filepath, $archiver_flags);
     $archiver_flags = str_replace('%d', $dirpath, $archiver_flags);

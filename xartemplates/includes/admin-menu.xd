@@ -1,17 +1,18 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- include the module header on all admin pages -->
 
 <xar:if condition="isset($dnType)">
-<xar:if condition="$dnType == XARMLS_DNTYPE_CORE"><xar:set name="$menu_dntypetext">'core'</xar:set></xar:if>
-<xar:if condition="$dnType == XARMLS_DNTYPE_THEME"><xar:set name="$menu_dntypetext">'theme'</xar:set></xar:if>
-<xar:if condition="$dnType == XARMLS_DNTYPE_MODULE"><xar:set name="$menu_dntypetext">'module'</xar:set></xar:if>
+<xar:if condition="$dnType == XARMLS_DNTYPE_CORE"><xar:set name="menu_dntypetext">'core'</xar:set></xar:if>
+<xar:if condition="$dnType == XARMLS_DNTYPE_THEME"><xar:set name="menu_dntypetext">'theme'</xar:set></xar:if>
+<xar:if condition="$dnType == XARMLS_DNTYPE_MODULE"><xar:set name="menu_dntypetext">'module'</xar:set></xar:if>
 <xar:else />
-<xar:set name="$menu_dntypetext">''</xar:set>
+<xar:set name="menu_dntypetext">''</xar:set>
 </xar:if>
 
 <xar:if condition="isset($dnName)">
-<xar:set name="$menu_dnnametext">$dnName</xar:set>
+<xar:set name="menu_dnnametext">$dnName</xar:set>
 <xar:else />
-<xar:set name="$menu_dnnametext">''</xar:set>
+<xar:set name="menu_dnnametext">''</xar:set>
 </xar:if>
 
 
@@ -34,7 +35,7 @@
             <xar:mlstring>Translating</xar:mlstring>
             <span class="xar-title">
         <!-- TODO: we are using the session var here, but it is really the directory, to cater for name/dir independence -->
-                #$menu_dntypetext#&nbsp;#$menu_dnnametext#
+                #$menu_dntypetext#&#160;#$menu_dnnametext#
             </span>
             <xar:mlstring>to:</xar:mlstring>
             <span class="xar-title">
@@ -42,29 +43,29 @@
                     #xarSessionGetVar('translations_working_locale')#
                 </a>
             </span>
-<xar:comment>
+<!--
             <br/>
             <xar:mlstring>Translation Backend</xar:mlstring>:
             <span class="xar-title">
                 <a href="#xarModURL('translations','admin','modifyconfig')#">
-                    #xarConfigGetVar('Site.MLS.TranslationsBackend')#
+                    <xar:var scope="config" name="Site.MLS.TranslationsBackend" />
                 </a>
             </span>
             <br/>
             <xar:mlstring>Release Backend</xar:mlstring>:
             <span class="xar-title">
                 <a href="#xarModURL('translations','admin','modifyconfig')#">
-                    #xarModGetVar('translations', 'release_backend_type')#
+                <xar:var scope="module" module="translations" name="release_backend_type" />
                 </a>
             </span>
-</xar:comment>
+-->
         </td>
 
         <td width="45%" valign="top">
             <xar:mlstring>Site Display Locale</xar:mlstring>:
             <span class="xar-title">
                 <a href="#xarModURL('base','admin','modifyconfig', array('tab' => 'locales'))#">
-                    #xarConfigGetVar('Site.MLS.DefaultLocale')#
+                    <xar:var scope="config" name="Site.MLS.DefaultLocale" />
                 </a>
             </span>
             <xar:mlstring>(recommended: utf)</xar:mlstring>
@@ -72,7 +73,7 @@
             <xar:mlstring>MLS Mode</xar:mlstring>:
             <span class="xar-title">
                 <a href="#xarModURL('base','admin','modifyconfig', array('tab' => 'locales'))#">
-                    #xarConfigGetVar('Site.MLS.MLSMode')#
+                    <xar:var scope="config" name="Site.MLS.MLSMode" />
                 </a>
             </span>
             <br/>
@@ -80,4 +81,4 @@
     </tr>
 </table>
 </fieldset>
-
+</xar:template>

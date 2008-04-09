@@ -29,15 +29,15 @@ function translations_adminapi_create_backend_instance($args)
     switch ($bt) {
     case 'php':
         xarLogMessage("MLS: Creating PHP backend");
-        include_once 'includes/xarMLSPHPBackend.php';
+        sys::import('xaraya.mlsbackends.php');
         return new xarMLS__PHPTranslationsBackend(array($locale));
     case 'xml':
         xarLogMessage("MLS: Creating XML backend");
-        include_once 'includes/xarMLSXMLBackend.php';
+        sys::import('xaraya.mlsbackends.xml');
         return new xarMLS__XMLTranslationsBackend(array($locale));
     case 'xml2php':
         xarLogMessage("MLS: Creating XML2PHP backend");
-        include_once 'includes/xarMLSXML2PHPBackend.php';
+        sys::import('xaraya.mlsbackends.xml2php');
         return new xarMLS__XML2PHPTranslationsBackend(array($locale));
     }
     xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');

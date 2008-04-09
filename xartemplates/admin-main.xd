@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
   <span class="xar-mod-title"><xar:mlstring>Translations Administration</xar:mlstring></span>
@@ -54,6 +55,7 @@
         <li><xar:mlstring>Related tutorials and documentation on Translations found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/translations/" title="#xarML('Related documentation on Translations')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a></li>
     </ul>
     <p class="xar-sub">
-        <strong>&nbsp;<xar:mlstring>Translations Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-03-08
+        <strong>&#160;<xar:mlstring>Translations Module Overview</xar:mlstring></strong><br />&#160;<xar:mlstring>Version</xar:mlstring> 1.0.0&#160; 2006-03-08
     </p>
 </div>
+</xar:template>

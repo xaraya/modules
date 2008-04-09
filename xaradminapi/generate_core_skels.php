@@ -31,9 +31,9 @@ function translations_adminapi_generate_core_skels($args)
     if(!xarSecurityCheck('AdminTranslations')) return;
 
     // {ML_dont_parse 'modules/translations/class/PHPParser.php'}
-    include 'modules/translations/class/PHPParser.php';
+    sys::import('modules.translations.class.PHPParser');
     // {ML_dont_parse 'modules/translations/class/TPLParser.php'}
-    include 'modules/translations/class/TPLParser.php';
+    sys::import('modules.translations.class.TPLParser');
 
     $time = explode(' ', microtime());
     $startTime = $time[1] + $time[0];
@@ -56,7 +56,7 @@ function translations_adminapi_generate_core_skels($args)
         !$core_backend->loadContext('core:', 'core')) return;
 
     // Generate translations skels
-    if (xarConfigGetVar('Site.MLS.TranslationsBackend') == 'xml2php') {
+    if (xarConfigVars::get(null,'Site.MLS.TranslationsBackend') == 'xml2php') {
        if (!$parsedLocale = xarMLS__parseLocaleString($locale)) return false;
        $genLocale = $parsedLocale['lang'].'_'.$parsedLocale['country'].'.utf-8';
     } else {

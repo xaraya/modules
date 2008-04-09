@@ -20,7 +20,7 @@ function translations_admin_generate_trans_info()
     if (!xarVarFetch('dnName','str:1:',$dnName)) return;
     if (!xarVarFetch('extid','int',$extid)) return;
 
-    $tplData['locales'] = xarConfigGetVar('Site.MLS.AllowedLocales');
+    $tplData['locales'] = xarConfigVars::get(null,'Site.MLS.AllowedLocales');
     $tplData['release_locale'] = translations_release_locale();
     $tplData['archiver_path'] = xarModAPIFunc('translations','admin','archiver_path');
 

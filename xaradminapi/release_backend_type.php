@@ -17,7 +17,7 @@ function translations_adminapi_release_backend_type($args = NULL)
     if (isset($args['type'])) {
         $type = $args['type'];
     } elseif ($type == NULL) {
-        $type = xarModGetVar('translations', 'release_backend_type');
+        $type = xarModVars::get('translations', 'release_backend_type');
     }
     return $type;
 }

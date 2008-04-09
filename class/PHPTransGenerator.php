@@ -29,7 +29,7 @@ class PHPTranslationsGenerator
 
     function bindDomain($dnType, $dnName='xaraya')
     {
-        $varDir = xarCoreGetVarDirPath();
+        $varDir = sys::varpath();
         $locales_dir = "$varDir/locales";
         $locale_dir = "$locales_dir/{$this->locale}";
         $php_dir = "$locale_dir/php";

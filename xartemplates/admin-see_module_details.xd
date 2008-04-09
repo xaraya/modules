@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 #$druidbar#
 <br />
 <xar:mlstring>Module name</xar:mlstring>: #$displayname#<br />
@@ -7,3 +8,4 @@
 <xar:mlstring>Make a choice</xar:mlstring>:<br />
 <br />
 #$opbar#
+</xar:template>

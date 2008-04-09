@@ -27,7 +27,7 @@ function translations_admin_translate_update()
     //}
     //$regexstring = 'regexp:/^(' . $regexstring . ')$/';
     //if (!xarVarFetch('subtype', $regexstring, $subtype)) return;
-    
+
     if (!xarVarFetch('subtype', 'str:1:', $subtype)) return;
     if (!xarVarFetch('subname', 'str:1:', $subname)) return;
     if (!xarVarFetch('numEntries', 'int:0:', $numEntries)) return;
@@ -64,7 +64,7 @@ function translations_admin_translate_update()
     $workingCharset = $parsedWorkingLocale['charset'];
     $siteCharset = $parsedSiteLocale['charset'];
     if ($siteCharset != $workingCharset) {
-        require_once "includes/transforms/xarCharset.php";
+        sys::import('xaraya.transforms.xarCharset');
         $newEncoding = new xarCharset;
     }
 
@@ -94,13 +94,13 @@ function translations_admin_translate_update()
 
     $gen->close();
 
-    // voll    
+    // voll
     // xarResponseRedirect(xarModURL('translations', 'admin', 'translate_subtype', array('subtype'=>$subtype, 'subname'=>$subname)));
-    xarResponseRedirect(xarModURL('translations', 'admin', 'translate_subtype', 
+    xarResponseRedirect(xarModURL('translations', 'admin', 'translate_subtype',
        array(
-           'dnType' => $dnType,  
-           'dnName' => $dnName,  
-           'extid' => $extid,  
+           'dnType' => $dnType,
+           'dnName' => $dnName,
+           'extid' => $extid,
            'defaultcontext'=>$subtype.':'.$subname)));
 }
 

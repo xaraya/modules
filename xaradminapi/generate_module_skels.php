@@ -37,9 +37,9 @@ function translations_adminapi_generate_module_skels($args)
     if(!xarSecurityCheck('AdminTranslations')) return;
 
     // {ML_dont_parse 'modules/translations/class/PHPParser.php'}
-    include 'modules/translations/class/PHPParser.php';
+    sys::import('modules.translations.class.PHPParser');
     // {ML_dont_parse 'modules/translations/class/TPLParser.php'}
-    include 'modules/translations/class/TPLParser.php';
+    sys::import('modules.translations.class.TPLParser');
 
     $time = explode(' ', microtime());
     $startTime = $time[1] + $time[0];
@@ -68,6 +68,7 @@ function translations_adminapi_generate_module_skels($args)
         if (file_exists($filename)) {
             $parser = new PHPParser();
             $parser->parse($filename);
+//            die("XX");
 
             $transEntriesCollection[$subname] = $parser->getTransEntries();
             $transKeyEntriesCollection[$subname] = $parser->getTransKeyEntries();
@@ -83,7 +84,7 @@ function translations_adminapi_generate_module_skels($args)
             $pattern = '/^([a-z0-9\-_]+)\.php$/i';
             $xtype = 'php';
         }
-        else { 
+        else {
             $pattern = '/^([a-z0-9\-_]+)\.xd$/i';
             $xtype = 'xd';
         }
@@ -137,13 +138,13 @@ function translations_adminapi_generate_module_skels($args)
 
     // Create skels
     $subnames = array_keys($transEntriesCollection);
-    if (xarConfigGetVar('Site.MLS.TranslationsBackend') == 'xml2php') {
+    if (xarConfigVars::get(null,'Site.MLS.TranslationsBackend') == 'xml2php') {
         if (!$parsedLocale = xarMLS__parseLocaleString($locale)) return false;
         $genLocale = $parsedLocale['lang'].'_'.$parsedLocale['country'].'.utf-8';
     } else {
         $genLocale = $locale;
     }
-         
+
     $gen = xarModAPIFunc('translations','admin','create_generator_instance',array('interface' => 'ReferencesGenerator', 'locale' => $genLocale));
     if (!isset($gen)) return;
     if (!$gen->bindDomain(XARMLS_DNTYPE_MODULE, $modname)) return;
@@ -155,7 +156,7 @@ function translations_adminapi_generate_module_skels($args)
             $ctxtype1 = '';
             $ctxname1 = $subname;
         }
-        
+
         $fileAlreadyOpen = false;
 
         $statistics[$subname] = array('entries'=>0, 'keyEntries'=>0);

@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
   <span class="xar-mod-title"><xar:mlstring>Translations Administration</xar:mlstring></span>
@@ -14,8 +15,9 @@
 <ul>
 <xar:loop name="$modlist">
   <li><a href="#xarModURL('translations', 'admin', 'module_overview', array('extid' => $loop:item['regid']))#">
-    #$loop:item['name']#&nbsp;-&nbsp;#$loop:item['displayname']#
+    #$loop:item['name']#&#160;-&#160;#$loop:item['displayname']#
   </a></li>
 </xar:loop>
 </ul>
 </div>
+</xar:template>

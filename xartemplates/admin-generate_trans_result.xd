@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:template type="module" file="admin-menu"/>
 
 <xar:template type="module" file="druidbar" />
@@ -28,3 +29,4 @@
 </p>
 <br />
 <xar:template type="module" file="opbar" />
+</xar:template>

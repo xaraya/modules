@@ -9,13 +9,13 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class XMLTranslationsSkelsGenerator 
+class XMLTranslationsSkelsGenerator
 {
     var $locale;
     var $fp;
     var $fileName;
     var $baseDir;
-                
+
     function XMLTranslationsSkelsGenerator($locale)
     {
         $this->locale = $locale;
@@ -23,7 +23,7 @@ class XMLTranslationsSkelsGenerator
 
     function bindDomain($dnType, $dnName='xaraya')
     {
-        $varDir = xarCoreGetVarDirPath();
+        $varDir = sys::varpath();
         $locales_dir = "$varDir/locales";
         $locale_dir = "$locales_dir/{$this->locale}";
         $xml_dir = "$locale_dir/xml";
@@ -209,7 +209,7 @@ class XMLTranslationsSkelsGenerator
         fwrite($this->fp, "<entry>");
         fwrite($this->fp, "<string>".$string."</string>");
         fwrite($this->fp, "<translation>".$translation."</translation>");
-        if (xarModGetVar('translations', 'maxreferences')) {
+        if (xarModVars::get('translations', 'maxreferences')) {
             fwrite($this->fp, "\t\t<references>\n");
             foreach($references as $reference) {
                 fwrite($this->fp, "\t\t\t<reference file=\"$reference[file]\" line=\"$reference[line]\" />\n");
@@ -227,7 +227,7 @@ class XMLTranslationsSkelsGenerator
         fwrite($this->fp, "<keyEntry>");
         fwrite($this->fp, "<key>".$key."</key>");
         fwrite($this->fp, "<translation>".$translation."</translation>");
-        if (xarModGetVar('translations', 'maxreferences')) {
+        if (xarModVars::get('translations', 'maxreferences')) {
             fwrite($this->fp, "\t\t<references>\n");
             foreach($references as $reference) {
                 fwrite($this->fp, "\t\t\t<reference file=\"$reference[file]\" line=\"$reference[line]\" />\n");

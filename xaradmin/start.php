@@ -23,7 +23,7 @@ function translations_admin_start()
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
-    if (xarConfigGetVar('Site.MLS.TranslationsBackend') == 'xml2php') {
+    if (xarConfigVars::get(null,'Site.MLS.TranslationsBackend') == 'xml2php') {
         $locales = $GLOBALS['xarMLS_allowedLocales'];
         foreach ($locales as $locale) {
             $l = xarMLS__parseLocaleString($locale);

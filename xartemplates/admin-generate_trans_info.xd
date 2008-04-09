@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:template type="module" file="admin-menu"/>
 
 <h4><xar:mlstring>Generating a translated package</xar:mlstring></h4>
@@ -41,3 +42,4 @@
 </form>
 <br />
 <xar:template type="module" file="opbar" />
+</xar:template>

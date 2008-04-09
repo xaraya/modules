@@ -17,7 +17,7 @@ function translations_adminapi_archiver_flags($args = NULL)
     if (isset($args['archiver_flags'])) {
         $archiver_flags = $args['archiver_flags'];
     } elseif ($archiver_flags == NULL) {
-        $archiver_flags = xarModGetVar('translations', 'archiver_flags');
+        $archiver_flags = xarModVars::get('translations', 'archiver_flags');
     }
     return $archiver_flags;
 }

@@ -17,7 +17,7 @@ function translations_adminapi_archiver_path($args = NULL)
     if (isset($args['archiver_path'])) {
         $archiver_path = $args['archiver_path'];
     } elseif ($archiver_path == NULL) {
-        $archiver_path = xarModGetVar('translations', 'archiver_path');
+        $archiver_path = xarModVars::get('translations', 'archiver_path');
     }
     return $archiver_path;
 }

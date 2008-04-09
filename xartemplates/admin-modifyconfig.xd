@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:base-include-javascript module="base" filename="formcheck.js" />
 <xar:style file="navtabs" module="base" scope="module" />
@@ -43,7 +44,7 @@
     </dl>
 
     
-    <xar:comment> ----------------- Begin Display Options ------------------- </xar:comment>
+    <xar:comment> Begin Display Options </xar:comment>
     <xar:if condition="$tab eq 'display'">
         <form action="&xar-modurl-translations-admin-updateconfig;" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
             <fieldset>
@@ -85,7 +86,7 @@
             </div>
         </form>
 
-    <xar:comment> ----------------- Begin Release Options ------------------- </xar:comment>
+    <xar:comment> Begin Release Options </xar:comment>
     <xar:elseif condition="$tab eq 'release'" />
         <form action="&xar-modurl-translations-admin-updateconfig;" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
            <fieldset>
@@ -98,10 +99,10 @@
                     <xar:mlstring>Release Backend</xar:mlstring>
                 </label>:
                 <select name="releasebackend" id="releasebackend" size="1">
-                    <xar:if condition="xarModGetVar('translations', 'release_backend_type') eq 'xml'">
+                    <xar:if condition="xarModVars::get('translations', 'release_backend_type') eq 'xml'">
                         <option value="xml" selected="selected"><xar:mlstring>XML (good for interoperability)</xar:mlstring></option>
                         <option value="php"><xar:mlstring>PHP (good for programmed access)</xar:mlstring></option>
-                    <xar:elseif condition="xarModGetVar('translations', 'release_backend_type') eq 'php'" />
+                    <xar:elseif condition="xarModVars::get('translations', 'release_backend_type') eq 'php'" />
                         <option value="xml"><xar:mlstring>XML (good for interoperability)</xar:mlstring></option>
                         <option value="php" selected="selected"><xar:mlstring>PHP (good for programmed access)</xar:mlstring></option>
                     </xar:if>
@@ -117,3 +118,4 @@
     </xar:if>
 
 </div>
+</xar:template>

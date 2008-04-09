@@ -42,7 +42,7 @@ function translations_admin_release_result()
         xarResponseRedirect(xarModURL('translations', 'admin', 'release_info'));
     }
 
-    $tplData['url'] = xarServerGetBaseURL().xarCoreGetVarDirPath().'/cache/'.$filename;
+    $tplData['url'] = xarServerGetBaseURL().sys::varpath().'/cache/'.$filename;
 
     $druidbar = translations_create_druidbar(REL, $dnType, $dnName, $extid);
     $opbar = translations_create_opbar(RELEASE, $dnType, $dnName, $extid);
