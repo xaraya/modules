@@ -42,7 +42,7 @@
                 <tr>
                     <td class="xar-valign-top"><xar:mlstring>Pressure</xar:mlstring> : </td>
                     <td class="xar-valign-top">
-                        <span>#$wData.barometer# #$wData.tempPressure#
+                        <span>#$wData.barometer#&#160;#$wData.tempPressure#
                         <xar:mlstring>
                             and
                         </xar:mlstring>
@@ -51,7 +51,7 @@
                 </tr>
                 <tr>
                     <td class="xar-valign-top"><xar:mlstring>Wind</xar:mlstring> : </td>
-                    <td class="xar-valign-top">#$wData.windDirname# <xar:mlstring>at</xar:mlstring> #$wData.wind# #$wData.unitsSpeed#</td>
+                    <td class="xar-valign-top">#$wData.windDirname#<xar:mlstring>&#160;at&#160;</xar:mlstring>#$wData.wind# #$wData.unitsSpeed#</td>
                 </tr>
                 <tr>
                     <td colspan="2" align="center">
