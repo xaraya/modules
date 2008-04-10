@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     <xar:blockgroup name="header" id="header" />
@@ -229,3 +230,4 @@
     </td></tr></table>
 </body>
 </html>
+</xar:template>

@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:base-include-javascript filename="switchImport.js" />
 <xar:style scope="module" module="uploads" file="uploads" />
 <div class="xar-form-container-after">
@@ -52,3 +53,4 @@
     <input type="hidden" name="#$id#_attach_type" id="#$id#_attach_type" value="#$getAction['STORED']#" />
 
 </div>
+</xar:template>

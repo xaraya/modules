@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>File Uploads Administration</xar:mlstring>
@@ -152,3 +153,4 @@
     </tr>
 </table>
 </div>
+</xar:template >

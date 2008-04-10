@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:style scope="module" module="uploads" file="uploads" />
 <xar:base-include-javascript filename="openDialog.js" /> 
 <div class="xar-uploads-attachment-wrapper xar-accent-outline">
@@ -15,3 +16,4 @@
         #xarML('Add / Remove Attachments')#
     </a>
 </xar:sec>
+</xar:template>

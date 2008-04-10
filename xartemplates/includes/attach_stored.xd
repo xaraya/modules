@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="isset($storedList) AND count($storedList)">
         <xar:mlstring>Attach previously stored file:</xar:mlstring><br />
 
@@ -32,3 +33,4 @@
     <xar:mlstring>No files to display</xar:mlstring><br />
     <input type="hidden" name="#$id#_attach_stored[]" value="" style="display: none;" />
 </xar:if>
+</xar:template>

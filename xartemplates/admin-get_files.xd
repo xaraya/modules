@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>File Administration</xar:mlstring>
@@ -15,3 +16,4 @@
     <h2><xar:mlstring>Import Local File(s)</xar:mlstring></h2>
     <xar:template file="local-import-form" type="module" />
 </div>
+</xar:template >

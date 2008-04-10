@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>File Uploads Administration</xar:mlstring></span></div>
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
@@ -7,3 +8,4 @@
         #$successmessage#
     </div>
 </div>
+</xar:template >
