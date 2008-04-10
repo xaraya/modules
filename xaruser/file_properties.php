@@ -46,7 +46,7 @@ function uploads_user_file_properties( $args )
 
         $instance[0] = $fileInfo['fileTypeInfo']['typeId'];
         $instance[1] = $fileInfo['fileTypeInfo']['subtypeId'];
-        $instance[2] = xarSessionGetVar('uid');
+        $instance[2] = xarSession::getVar('uid');
         $instance[3] = $fileId;
 
         $instance = implode(':', $instance);

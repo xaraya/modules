@@ -34,8 +34,8 @@ function uploads_admin_updateconfig()
             }
             // check to make sure that the value passed in is
             // a real uploads module variable
-            if (NULL !== xarModGetVar('uploads', 'file.'.$varname)) {
-                xarModSetVar('uploads', 'file.' . $varname, $value);
+            if (NULL !== xarModVars::get('uploads', 'file.'.$varname)) {
+                xarModVars::set('uploads', 'file.' . $varname, $value);
             }
         }
     }
@@ -44,17 +44,15 @@ function uploads_admin_updateconfig()
             // check to make sure that the value passed in is
             // a real uploads module variable
             $value = trim(ereg_replace('\/$', '', $value));
-            if (NULL !== xarModGetVar('uploads', 'path.' . $varname)) {
+            if (NULL !== xarModVars::get('uploads', 'path.' . $varname)) {
                 if (!file_exists($value) || !is_dir($value)) {
                     $msg = xarML('Location [#(1)] either does not exist or is not a valid directory!', $value);
-                    xarErrorSet(XAR_USER_EXCEPTION, 'INVALID_DIRECTORY', new DefaultUserException($msg));
-                    return;
+                    throw new BadParameterException(null,$msg);
                 } elseif (!is_writable($value)) {
                     $msg = xarML('Location [#(1)] can not be written to - please check permissions and try again!', $value);
-                    xarErrorSet(XAR_USER_EXCEPTION, 'NOT_WRITABLE', new DefaultUserException($msg));
-                    return;
+                    throw new BadParameterException(null,$msg);
                 } else {
-                    xarModSetVar('uploads', 'path.' . $varname, $value);
+                    xarModVars::set('uploads', 'path.' . $varname, $value);
                 }
             }
         }
@@ -65,40 +63,40 @@ function uploads_admin_updateconfig()
             // a real uploads module variable
 // TODO: add other view.* variables later ?
             if ($varname != 'itemsperpage') continue;
-            xarModSetVar('uploads', 'view.' . $varname, $value);
+            xarModVars::set('uploads', 'view.' . $varname, $value);
         }
     }
 
     if (isset($ddprop['trusted'])) {
-        xarModSetVar('uploads', 'dd.fileupload.trusted', 1);
+        xarModVars::set('uploads', 'dd.fileupload.trusted', 1);
     } else {
-        xarModSetVar('uploads', 'dd.fileupload.trusted', 0);
+        xarModVars::set('uploads', 'dd.fileupload.trusted', 0);
     }
 
     if (isset($ddprop['external'])) {
-        xarModSetVar('uploads', 'dd.fileupload.external', 1);
+        xarModVars::set('uploads', 'dd.fileupload.external', 1);
     } else {
-        xarModSetVar('uploads', 'dd.fileupload.external', 0);
+        xarModVars::set('uploads', 'dd.fileupload.external', 0);
     }
 
     if (isset($ddprop['stored'])) {
-        xarModSetVar('uploads', 'dd.fileupload.stored', 1);
+        xarModVars::set('uploads', 'dd.fileupload.stored', 1);
     } else {
-        xarModSetVar('uploads', 'dd.fileupload.stored', 0);
+        xarModVars::set('uploads', 'dd.fileupload.stored', 0);
     }
 
     if (isset($ddprop['upload'])) {
-        xarModSetVar('uploads', 'dd.fileupload.upload', 1);
+        xarModVars::set('uploads', 'dd.fileupload.upload', 1);
     } else {
-        xarModSetVar('uploads', 'dd.fileupload.upload', 0);
+        xarModVars::set('uploads', 'dd.fileupload.upload', 0);
     }
 
     // FIXME: change only if the imports-directory was changed? <rabbitt>
     // Now update the 'current working imports directory' in case the
     // imports directory was changed. We do this by first deleting the modvar
     // and then recreating it to ensure that the user's version is cleared
-    // xarModDelVar('uploads', 'path.imports-cwd');
-    xarModSetVar('uploads', 'path.imports-cwd', xarModGetVar('uploads', 'path.imports-directory'));
+    // xarModVars::delete('uploads', 'path.imports-cwd');
+    xarModVars::set('uploads', 'path.imports-cwd', xarModVars::get('uploads', 'path.imports-directory'));
 
     xarModCallHooks('module', 'updateconfig', 'uploads',
                     array('module'   => 'uploads',

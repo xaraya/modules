@@ -55,7 +55,7 @@ function uploads_admin_view( )
     if (!isset($mimetype) || !isset($subtype) || !isset($status) || !isset($inverse)) {
         // if the filter settings are empty, then
         // grab the users last view filter
-        $options  = unserialize(xarModGetUserVar('uploads','view.filter'));
+        $options  = unserialize(xarModUserVars::get('uploads','view.filter'));
         $data     = $options['data'];
         $filter   = $options['filter'];
         unset($options);
@@ -110,8 +110,8 @@ function uploads_admin_view( )
                     break;
             case _UPLOADS_STATUS_REJECTED:
                 xarModAPIFunc('uploads','user','db_change_status', $args + array('newStatus'   => _UPLOADS_STATUS_REJECTED));
-                if (xarModGetVar('uploads', 'file.auto-purge')) {
-                    if (xarModGetVar('uploads', 'file.delete-confirmation')) {
+                if (xarModVars::get('uploads', 'file.auto-purge')) {
+                    if (xarModVars::get('uploads', 'file.delete-confirmation')) {
                         return xarModFunc('uploads', 'admin', 'purge_rejected', array('confirmation' => FALSE, 'authid' => xarSecGenAuthKey('uploads')));
                     } else {
                         return xarModFunc('uploads', 'admin', 'purge_rejected', array('confirmation' => TRUE, 'authid' => xarSecGenAuthKey('uploads')));
@@ -129,7 +129,7 @@ function uploads_admin_view( )
      */
 
     if (!isset($numitems)) {
-        $numitems = xarModGetVar('uploads','view.itemsperpage');
+        $numitems = xarModVars::get('uploads','view.itemsperpage');
         $skipnum = 1;
     }
 
@@ -157,7 +157,7 @@ function uploads_admin_view( )
         $data['diskUsage']['stored_size_filtered'] = xarModAPIFunc('uploads', 'user', 'db_diskusage', $filter);
         $data['diskUsage']['stored_size_total']    = xarModAPIFunc('uploads', 'user', 'db_diskusage');
 
-        $uploadsdir = realpath(xarModGetVar('uploads', 'path.uploads-directory'));
+        $uploadsdir = realpath(xarModVars::get('uploads', 'path.uploads-directory'));
         $data['diskUsage']['device_free']  = @disk_free_space($uploadsdir);
         $data['diskUsage']['device_total'] = @disk_total_space($uploadsdir);
         $data['diskUsage']['device_used']  = $data['diskUsage']['device_total'] - $data['diskUsage']['device_free'];
@@ -176,7 +176,7 @@ function uploads_admin_view( )
         unset($instance);
         $instance[0] = $fileInfo['fileTypeInfo']['typeId'];
         $instance[1] = $fileInfo['fileTypeInfo']['subtypeId'];
-        $instance[2] = xarSessionGetVar('uid');
+        $instance[2] = xarSession::getVar('uid');
         $instance[3] = $fileInfo['fileId'];
 
         if (is_array($instance)) {

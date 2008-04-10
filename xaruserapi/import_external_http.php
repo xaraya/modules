@@ -37,11 +37,11 @@ function uploads_userapi_import_external_http( $args )
     if (isset($obfuscate) && $obfuscate) {
         $obfuscate_fileName = TRUE;
     } else {
-        $obfuscate_fileName = xarModGetVar('uploads','file.obfuscate-on-upload');
+        $obfuscate_fileName = xarModVars::get('uploads','file.obfuscate-on-upload');
     }
 
     if (!isset($savePath)) {
-        $savePath = xarModGetVar('uploads', 'path.uploads-directory');
+        $savePath = xarModVars::get('uploads', 'path.uploads-directory');
     }
 
     // if no port, use the default port (21)
@@ -65,7 +65,7 @@ function uploads_userapi_import_external_http( $args )
         $uri['fragment'] = '';
     }
     $total = 0;
-    $maxSize = xarModGetVar('uploads', 'file.maxsize');
+    $maxSize = xarModVars::get('uploads', 'file.maxsize');
 
     // create the URI in the event we don't have the http library
     $httpURI = "$uri[scheme]://$uri[host]:$uri[port]$uri[path]$uri[query]$uri[fragment]";

@@ -37,8 +37,8 @@ function uploads_userapi_db_delete_file( $args )
 
     //add to uploads table
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     // table and column definitions
     $fileEntry_table   = $xartable['file_entry'];

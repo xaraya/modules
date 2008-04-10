@@ -10,7 +10,19 @@
  * @subpackage Uploads Module
  * @link http://xaraya.com/index.php/release/666.html
  * @author Uploads Module Development Team
+ *//**
+ * Purpose of File
+ *
+ * @package modules
+ * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Uploads Module
+ * @link http://xaraya.com/index.php/release/666.html
+ * @author Uploads Module Development Team
  */
+
 /**
  * View statistics about file associations (adapted from categories stats)
  */
@@ -164,7 +176,7 @@ function uploads_admin_assoc()
             $data['numitems'] = 0;
             $data['numlinks'] = '';
         }
-        $numstats = xarModGetVar('uploads','numstats');
+        $numstats = xarModVars::get('uploads','numstats');
         if (empty($numstats)) {
             $numstats = 100;
         }
@@ -197,7 +209,7 @@ function uploads_admin_assoc()
                                         'startnum' => $startnum,
                                         'sort' => $sort,
                                         'fileId' => $fileId));
-        //$showtitle = xarModGetVar('uploads','showtitle');
+        //$showtitle = xarModVars::get('uploads','showtitle');
         $showtitle = true;
         if (!empty($getitems) && !empty($showtitle)) {
            $itemids = array_keys($getitems);

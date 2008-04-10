@@ -10,16 +10,14 @@
  * @subpackage Uploads Module
  * @link http://xaraya.com/index.php/release/666.html
  * @author Uploads Module Development Team
- */
-/**
- * Generate a string even if the parameter $fileUpload is an array
- */
-function uploads_userapi_uploadmagic($args)
+ */function uploads_userapi_uploadmagic($args)
 {
     $fileUpload = xarModAPIFunc('uploads','user','upload',$args);
 
-    if( is_array($fileUpload) ) {
+    if( is_array($fileUpload) )
+    {
         return '#file:' . $fileUpload['ulid'] . '#';
+
     } else {
         return $fileUpload;
     }

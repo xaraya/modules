@@ -5,7 +5,7 @@
         <span>
           <strong>
             <xar:mlstring>Current Directory:</xar:mlstring>
-            &nbsp;#xarModGetVar('uploads', 'path.imports-directory')##$curDir#
+            &#160;<xar:var scope="module" module="uploads" name="path.imports-directory" />#$curDir#
           </strong>
         </span>
       </p>
@@ -26,9 +26,9 @@
     <xar:if condition="isset($noPrevDir) AND ($noPrevDir eq FALSE)">
       <tr>
         <td width="10%" class="xar-norm" align="center">
-          &nbsp;
+          &#160;
         </td>
-        <td width="65%" class="xar-norm" align="left">&nbsp;
+        <td width="65%" class="xar-norm" align="left">&#160;
           <a href="#xarModURL('uploads', 'admin', 'get_files', array('inode' => '...', 'action' => $getAction['REFRESH']))#"
              alt="#xarML('Open Folder')#"
              title="#xarML('Open Folder')#">
@@ -39,7 +39,7 @@
           </a>
         </td>
         <td width="25%" class="xar-norm" align="right">
-          &nbsp;<xar:mlstring>N/A</xar:mlstring>
+          &#160;<xar:mlstring>N/A</xar:mlstring>
         </td>
       </tr>
     </xar:if>
@@ -49,12 +49,12 @@
           <input type="checkbox" name="file_all" id="file_all" onclick="CheckAll();" />
         </xar:if>
       </td>
-      <td width="65%" align="left">&nbsp;
-        <img src="#xarTplGetImage('folder.png', 'uploads')#" width="16" height="18">&nbsp;
+      <td width="65%" align="left">&#160;
+        <img src="#xarTplGetImage('folder.png', 'uploads')#" width="16" height="18">&#160;
           <xar:mlstring><strong>Current Folder</strong></xar:mlstring>
       </td>
       <td width="25%" align="right">
-        &nbsp;<xar:mlstring>N/A</xar:mlstring>
+        &#160;<xar:mlstring>N/A</xar:mlstring>
       </td>
     </tr>
     
@@ -69,7 +69,7 @@
           <td width="10%" class="#$rowclass#" align="center">
             <input type="checkbox" name="fileList[]" id="file_#$loop:index#" value="#$loop:item['fileName']#" />
           </td>
-          <td width="65%" class="#$rowclass#" align="left">&nbsp;
+          <td width="65%" class="#$rowclass#" align="left">&#160;
             <xar:if condition="$loop:item['inodeType'] eq $inodeType['DIRECTORY']">
               <a href="#$local_import_post_url#&amp;inode=#$loop:item['fileName']#&amp;action=#$getAction['REFRESH']#"
                  alt="#xarML('Open Folder')#"
@@ -79,14 +79,14 @@
               </a>
               <xar:else />
               <img src="#xarModAPIFunc('mime', 'user', 'get_mime_image', array('mimeType' => $loop:item['fileType']))#"
-                   width="16" height="18" />&nbsp;
+                   width="16" height="18" />&#160;
               #$loop:item['fileName']#
             </xar:if>
           </td>
           <xar:if condition="is_array($loop:item['fileSize'])">
-            <td width="25%" class="#$rowclass#" align="right">&nbsp;#$loop:item['fileSize']['long']#</td>
+            <td width="25%" class="#$rowclass#" align="right">&#160;#$loop:item['fileSize']['long']#</td>
             <xar:else />
-            <td width="25%" class="#$rowclass#" align="right">&nbsp;#$loop:item['fileSize']#</td>
+            <td width="25%" class="#$rowclass#" align="right">&#160;#$loop:item['fileSize']#</td>
           </xar:if>
         </tr>
       </xar:loop>

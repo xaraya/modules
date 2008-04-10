@@ -33,7 +33,7 @@ function uploads_admin_get_files()
 
 
     // now make sure someone hasn't tried to change our maxsize on us ;-)
-    $file_maxsize = xarModGetVar('uploads', 'file.maxsize');
+    $file_maxsize = xarModVars::get('uploads', 'file.maxsize');
 
     if (!isset($action)) {
         $action = NULL;
@@ -66,7 +66,7 @@ function uploads_admin_get_files()
                 $args['bAction'] = (!empty($addbutton)) ? $addbutton : $delbutton;
             }
 
-            $cwd = xarModGetUserVar('uploads', 'path.imports-cwd');
+            $cwd = xarModUserVars::get('uploads', 'path.imports-cwd');
             foreach ($fileList as $file) {
                 $args['fileList']["$cwd/$file"] = xarModAPIFunc('uploads', 'user', 'file_get_metadata',
                                                                  array('fileLocation' => "$cwd/$file"));
@@ -96,8 +96,8 @@ function uploads_admin_get_files()
             $data['fileList'] = xarModAPIFunc('uploads', 'user', 'import_get_filelist',
                                                array('fileLocation' => $cwd, 'onlyNew' => TRUE));
 
-            $data['curDir'] = str_replace(xarModGetVar('uploads', 'path.imports-directory'), '', $cwd);
-            $data['noPrevDir'] = (xarModGetVar('uploads', 'path.imports-directory') == $cwd) ? TRUE : FALSE;
+            $data['curDir'] = str_replace(xarModVars::get('uploads', 'path.imports-directory'), '', $cwd);
+            $data['noPrevDir'] = (xarModVars::get('uploads', 'path.imports-directory') == $cwd) ? TRUE : FALSE;
             // reset the CWD for the local import
             // then only display the: 'check for new imports' button
             $data['authid'] = xarSecGenAuthKey();

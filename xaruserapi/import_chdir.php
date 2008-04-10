@@ -28,30 +28,30 @@ function uploads_userapi_import_chdir( $args )
         $dirName = NULL;
     }
 
-    $cwd = xarModGetUserVar('uploads', 'path.imports-cwd');
-    $importDir = xarModGetVar('uploads', 'path.imports-directory');
+    $cwd = xarModUserVars::get('uploads', 'path.imports-cwd');
+    $importDir = xarModVars::get('uploads', 'path.imports-directory');
 
     if (!empty($dirName)) {
         if ($dirName == '...') {
             if (stristr($cwd, $importDir) && strlen($cwd) > strlen($importDir)) {
                 $cwd = dirname($cwd);
-                xarModSetUserVar('uploads', 'path.imports-cwd', $cwd);
+                xarModUserVars::set('uploads', 'path.imports-cwd', $cwd);
             }
         } else {
             if (file_exists("$cwd/$dirName") && is_dir("$cwd/$dirName")) {
                 $cwd = "$cwd/$dirName";
-                xarModSetUserVar('uploads', 'path.imports-cwd', $cwd);
+                xarModUserVars::set('uploads', 'path.imports-cwd', $cwd);
             }
         }
     } else {
         // if dirName is empty, then reset the cwd to the top level directory
-        $cwd = xarModGetVar('uploads', 'path.imports-directory');
-        xarModSetUserVar('uploads', 'path.imports-cwd', $cwd);
+        $cwd = xarModVars::get('uploads', 'path.imports-directory');
+        xarModUserVars::set('uploads', 'path.imports-cwd', $cwd);
     }
 
     if (!stristr($cwd, $importDir)) {
         $cwd = $importDir;
-        xarModSetUserVar('uploads', 'path.imports-cwd', $importDir);
+        xarModUserVars::set('uploads', 'path.imports-cwd', $importDir);
     }
 
     return $cwd;

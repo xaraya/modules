@@ -18,10 +18,10 @@ function uploads_adminapi_dd_configure($confString = NULL)
     $multiple = TRUE;
     // Grab the sitewide defaults for the methods
     $methods = array(
-            'trusted'  => xarModGetVar('uploads', 'dd.fileupload.trusted')  ? TRUE : FALSE,
-            'external' => xarModGetVar('uploads', 'dd.fileupload.external') ? TRUE : FALSE,
-            'upload'   => xarModGetVar('uploads', 'dd.fileupload.upload')   ? TRUE : FALSE,
-            'stored'   => xarModGetVar('uploads', 'dd.fileupload.stored')   ? TRUE : FALSE
+            'trusted'  => xarModVars::get('uploads', 'dd.fileupload.trusted')  ? TRUE : FALSE,
+            'external' => xarModVars::get('uploads', 'dd.fileupload.external') ? TRUE : FALSE,
+            'upload'   => xarModVars::get('uploads', 'dd.fileupload.upload')   ? TRUE : FALSE,
+            'stored'   => xarModVars::get('uploads', 'dd.fileupload.stored')   ? TRUE : FALSE
             );
     $basedir = null;
     $importdir = null;

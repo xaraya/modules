@@ -30,8 +30,8 @@ function uploads_userapi_db_group_associations($args)
     }
 
     // Database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $fileassoctable = $xartable['file_associations'];
 
     if($dbconn->databaseType == 'sqlite') {

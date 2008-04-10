@@ -11,6 +11,6 @@
     </xar:loop>
 <xar:else />
     <xar:mlstring>
-        &nbsp;There are no attachments for this item.
+        &#160;There are no attachments for this item.
     </xar:mlstring>
 </xar:if>

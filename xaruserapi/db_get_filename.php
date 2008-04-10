@@ -41,8 +41,8 @@ function uploads_userapi_db_get_filename( $args )
     }
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
         // table and column definitions
     $fileEntry_table = $xartable['file_entry'];

@@ -48,11 +48,11 @@ function uploads_userapi_db_add_file( $args )
     }
 
     if (!isset($userId)) {
-        $userId = xarSessionGetVar('uid');
+        $userId = xarSession::getVar('uid');
     }
 
     if (!isset($fileStatus)) {
-        $autoApprove = xarModGetVar('uploads', 'file.auto-approve');
+        $autoApprove = xarModVars::get('uploads', 'file.auto-approve');
 
         if ($autoApprove == _UPLOADS_APPROVE_EVERYONE ||
            ($autoApprove == _UPLOADS_APPROVE_ADMIN && xarSecurityCheck('AdminUploads', 0))) {
@@ -95,13 +95,13 @@ function uploads_userapi_db_add_file( $args )
 
     //add to uploads table
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
 
     // table and column definitions
     $fileEntry_table = $xartable['file_entry'];
-    $file_id    = $dbconn->GenID($fileEntry_table);
+    $file_id    = $dbconn->genID($fileEntry_table);
 
     // insert value into table
     $sql = "INSERT INTO $fileEntry_table

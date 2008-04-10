@@ -64,7 +64,7 @@ function uploads_userapi_validate_upload( $args )
             break;
     }
 
-    $maxsize = xarModGetVar('uploads', 'file.maxsize');
+    $maxsize = xarModVars::get('uploads', 'file.maxsize');
     $maxsize = $maxsize > 0 ? $maxsize : 0;
 
     if ($fileInfo['size'] > $maxsize) {

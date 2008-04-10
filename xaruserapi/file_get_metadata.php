@@ -64,7 +64,7 @@ function uploads_userapi_file_get_metadata( $args )
         }
 
     // CHECKME: use 'imports' name like in db_get_file() ?
-        $relative_path = str_replace(xarModGetVar('uploads', 'path.imports-directory'), '/trusted', $file);
+        $relative_path = str_replace(xarModVars::get('uploads', 'path.imports-directory'), '/trusted', $file);
 
         $fileInfo = array('inodeType'    => $type,
                           'fileName'     => $name,

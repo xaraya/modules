@@ -46,7 +46,7 @@ function uploads_adminapi_validatevalue($args)
         $multiple = true;
     }
     if (empty($maxsize)) {
-        $maxsize = xarModGetVar('uploads', 'file.maxsize');
+        $maxsize = xarModVars::get('uploads', 'file.maxsize');
     }
     if (empty($methods)) {
         $methods = null;
@@ -81,9 +81,9 @@ function uploads_adminapi_validatevalue($args)
         $typeCheck .= ':-2'; // clear value
     } else {
         $typeCheck = 'enum:0:' . _UPLOADS_GET_STORED;
-        $typeCheck .= (xarModGetVar('uploads', 'dd.fileupload.external') == TRUE) ? ':' . _UPLOADS_GET_EXTERNAL : '';
-        $typeCheck .= (xarModGetVar('uploads', 'dd.fileupload.trusted') == TRUE) ? ':' . _UPLOADS_GET_LOCAL : '';
-        $typeCheck .= (xarModGetVar('uploads', 'dd.fileupload.upload') == TRUE) ? ':' . _UPLOADS_GET_UPLOAD : '';
+        $typeCheck .= (xarModVars::get('uploads', 'dd.fileupload.external') == TRUE) ? ':' . _UPLOADS_GET_EXTERNAL : '';
+        $typeCheck .= (xarModVars::get('uploads', 'dd.fileupload.trusted') == TRUE) ? ':' . _UPLOADS_GET_LOCAL : '';
+        $typeCheck .= (xarModVars::get('uploads', 'dd.fileupload.upload') == TRUE) ? ':' . _UPLOADS_GET_UPLOAD : '';
         $typeCheck .= ':-2'; // clear value
     }
 
@@ -97,7 +97,7 @@ function uploads_adminapi_validatevalue($args)
     switch ($action) {
         case _UPLOADS_GET_UPLOAD:
 
-            $file_maxsize = xarModGetVar('uploads', 'file.maxsize');
+            $file_maxsize = xarModVars::get('uploads', 'file.maxsize');
             $file_maxsize = $file_maxsize > 0 ? $file_maxsize : $maxsize;
 
             if (!xarVarFetch('MAX_FILE_SIZE', "int::$file_maxsize", $maxsize)) return;
@@ -128,7 +128,7 @@ function uploads_adminapi_validatevalue($args)
 
         // CHECKME: use 'imports' name like in db_get_file() ?
             // replace /trusted coming from showinput() again
-            $importDir = xarModGetVar('uploads', 'path.imports-directory');
+            $importDir = xarModVars::get('uploads', 'path.imports-directory');
             foreach ($fileList as $file) {
                 $file = str_replace('/trusted', $importDir, $file);
                 $args['fileList']["$file"] = xarModAPIFunc('uploads', 'user', 'file_get_metadata',

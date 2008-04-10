@@ -12,7 +12,7 @@
  * @author Uploads Module Development Team
  */
 
-/**
+/*
  * Original Author of file: Marie Altobelli (Ladyofdragons)
  * Set various PARAM values
  */

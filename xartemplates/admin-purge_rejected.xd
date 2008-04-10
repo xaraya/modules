@@ -7,7 +7,7 @@
      <xar:template type="module" file="admin-menu" />
     <h2><xar:mlstring>Purge Rejected Files</xar:mlstring></h2>
             <xar:if condition="!count($fileList)">
-                <p class="xar-norm xar-align-left">&nbsp;
+                <p class="xar-norm xar-align-left">&#160;
                     <xar:mlstring>
                         There are no files marked as rejected.
                     </xar:mlstring>
@@ -22,7 +22,7 @@
                             <label for="confirmdelete" class="xar-form-label" title="#xarML('Confirm deletion of this rejected file')#">
                                 <xar:mlstring>
                                     Are you sure you want to delete the following files?
-                                </xar:mlstring>&nbsp;
+                                </xar:mlstring>&#160;
                             </label>
 
                             <input type="submit" name="submit" value="#xarML('Delete')#" />

@@ -44,7 +44,7 @@ function uploads_user_purge_rejected( $args )
         return;
 
 
-    if ((isset($confirmation) && $confirmation) || !xarModGetVar('uploads', 'file.delete-confirmation')) {
+    if ((isset($confirmation) && $confirmation) || !xarModVars::get('uploads', 'file.delete-confirmation')) {
         $fileList = xarModAPIFunc('uploads', 'user', 'db_get_file',
                                    array('fileStatus' => _UPLOADS_STATUS_REJECTED));
 

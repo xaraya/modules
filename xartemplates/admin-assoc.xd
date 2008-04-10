@@ -18,7 +18,7 @@
             <xar:else/>
                 <xar:set name="fileName">''</xar:set>
             </xar:if>
-            <xar:set name="fileLink">'PropertiesDialog(\'' . xarModURL('uploads','user','file_properties', array('fileId' => $fileId)) . '\'); return false;'</xar:set>
+            <xar:set name="fileLink">'PropertiesDialog(&#39;' . xarModURL('uploads','user','file_properties', array('fileId' => $fileId)) . '&#39;); return false;'</xar:set>
             <xar:mlstring>For File</xar:mlstring> <a style="cursor:pointer;" onclick="#$fileLink#">[#$fileId#] #$fileName#</a>
         </h3>
     </xar:if>
@@ -167,7 +167,7 @@
 
             <tr>
                 <td colspan="3">
-                    &nbsp;
+                    &#160;
                 </td>
             </tr>
 

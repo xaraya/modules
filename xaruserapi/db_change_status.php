@@ -65,8 +65,8 @@ function uploads_userapi_db_change_status( $args )
 
     //add to uploads table
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     $fileEntry_table = $xartable['file_entry'];
 

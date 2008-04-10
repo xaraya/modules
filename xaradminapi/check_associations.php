@@ -23,8 +23,8 @@
 function uploads_adminapi_check_associations( $args )
 {
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     // table definitions
     $file_assoc_table = $xartable['file_associations'];

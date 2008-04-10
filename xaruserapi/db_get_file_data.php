@@ -38,8 +38,8 @@ function uploads_userapi_db_get_file_data( $args )
     }
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     // table definition
     $fileData_table = $xartable['file_data'];

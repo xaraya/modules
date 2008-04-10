@@ -53,11 +53,11 @@ function uploads_userapi_prepare_uploads( $args )
     if (isset($obfuscate) && $obfuscate) {
         $obfuscate_fileName = TRUE;
     } else {
-        $obfuscate_fileName = xarModGetVar('uploads','file.obfuscate-on-upload');
+        $obfuscate_fileName = xarModVars::get('uploads','file.obfuscate-on-upload');
     }
 
     if (!isset($savePath)) {
-        $savePath = xarModGetVar('uploads', 'path.uploads-directory');
+        $savePath = xarModVars::get('uploads', 'path.uploads-directory');
     }
 
     // If we don't have the right data structure, then we can't do much

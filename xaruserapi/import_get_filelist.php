@@ -35,7 +35,7 @@ function uploads_userapi_import_get_filelist( $args )
 
     if (!empty($cacheExpire) && is_numeric($cacheExpire)) {
         $cachekey = md5(serialize($args));
-        $cacheinfo = xarModGetVar('uploads','file.cachelist.'.$cachekey);
+        $cacheinfo = xarModVars::get('uploads','file.cachelist.'.$cachekey);
         if (!empty($cacheinfo)) {
             $cacheinfo = @unserialize($cacheinfo);
             if (!empty($cacheinfo['time']) && $cacheinfo['time'] > time() - $cacheExpire) {
@@ -228,7 +228,7 @@ function uploads_userapi_import_get_filelist( $args )
         $cacheinfo = array('time' => time(),
                            'list' => $fileList);
         $cacheinfo = serialize($cacheinfo);
-        xarModSetVar('uploads','file.cachelist.'.$cachekey,$cacheinfo);
+        xarModVars::set('uploads','file.cachelist.'.$cachekey,$cacheinfo);
     }
 
     return $fileList;

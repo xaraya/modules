@@ -59,8 +59,8 @@ function uploads_userapi_db_get_associations( $args )
     }
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     // table and column definitions
     $file_assoc_table = $xartable['file_associations'];
@@ -88,7 +88,7 @@ function uploads_userapi_db_get_associations( $args )
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
 
-        $fileAssoc['fileId']   = $row['xar_fileentry_id'];
+        $fileAssoc['fileId']   = $row['xar_fileEntry_id'];
         $fileAssoc['modid']    = $row['xar_modid'];
         $fileAssoc['itemtype'] = $row['xar_itemtype'];
         $fileAssoc['itemid']   = $row['xar_objectid'];

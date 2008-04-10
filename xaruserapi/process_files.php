@@ -58,11 +58,11 @@ function uploads_userapi_process_files( $args )
                 @touch($upload_directory . '/index.html');
             } else {
             // CHECKME: fall back to common uploads directory, or fail ?
-                $upload_directory = xarModGetVar('uploads','path.uploads-directory');
+                $upload_directory = xarModVars::get('uploads','path.uploads-directory');
             }
         }
     } else {
-        $upload_directory = xarModGetVar('uploads','path.uploads-directory');
+        $upload_directory = xarModVars::get('uploads','path.uploads-directory');
     }
 
     // Check for override of upload obfuscation and set accordingly
@@ -81,7 +81,7 @@ function uploads_userapi_process_files( $args )
                 return;
             }
 
-            $allow_duplicate = xarModGetVar('uploads', 'file.allow-duplicate-upload');
+            $allow_duplicate = xarModVars::get('uploads', 'file.allow-duplicate-upload');
             if (empty($allow_duplicate)) {
                 $allow_duplicate = 0;
             }
@@ -137,7 +137,7 @@ function uploads_userapi_process_files( $args )
 
             if (isset($getAll) && !empty($getAll)) {
                 // current working directory for the user, set by import_chdir() when using the get_files() GUI
-                $cwd = xarModGetUserVar('uploads', 'path.imports-cwd');
+                $cwd = xarModUserVars::get('uploads', 'path.imports-cwd');
 
                 $fileList = xarModAPIFunc('uploads', 'user', 'import_get_filelist', array('fileLocation' => $cwd, 'descend' => TRUE));
 

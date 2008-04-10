@@ -20,6 +20,7 @@
  */
 function uploads_adminapi_getmenulinks()
 {
+    $menulinks = array();
     if (xarSecurityCheck('EditUploads')) {
      $menulinks[] = Array('url'   => xarModURL('uploads',
                                                   'admin',
@@ -43,9 +44,6 @@ function uploads_adminapi_getmenulinks()
                                                   'modifyconfig'),
                              'title' => xarML('Edit the Uploads Configuration'),
                              'label' => xarML('Modify Config'));
-    }
-    if (empty($menulinks)){
-        $menulinks = '';
     }
     return $menulinks;
 }

@@ -59,7 +59,7 @@ function uploads_user_display_attachments($args)
 
     // save the current attachment info for use later on if the
     // user decides to add / remove attachments for this item
-    xarModSetUserVar('uploads', 'save.attachment-info', serialize($args));
+    xarModUserVars::set('uploads', 'save.attachment-info', serialize($args));
 
     // Run API function
     $associations = xarModAPIFunc('uploads', 'user', 'db_get_associations', $args);

@@ -26,27 +26,27 @@ function uploads_admin_modifyconfig()
     // get the current module variables for display
     // *********************************************
     // Global
-    $data['path']['uploads-directory']      = xarModGetVar('uploads', 'path.uploads-directory');
-    $data['path']['imports-directory']      = xarModGetVar('uploads', 'path.imports-directory');
-    $data['file']['maxsize']                = number_format(xarModGetVar('uploads', 'file.maxsize'));
-    $data['file']['delete-confirmation']    = xarModGetVar('uploads', 'file.delete-confirmation');
-    $data['file']['auto-purge']             = xarModGetVar('uploads', 'file.auto-purge');
-    $data['file']['auto-approve']           = xarModGetVar('uploads', 'file.auto-approve');
-    $data['file']['obfuscate-on-import']    = xarModGetVar('uploads', 'file.obfuscate-on-import');
-    $data['file']['obfuscate-on-upload']    = xarModGetVar('uploads', 'file.obfuscate-on-upload');
-    $data['file']['cache-expire']           = xarModGetVar('uploads', 'file.cache-expire');
+    $data['path']['uploads-directory']      = xarModVars::get('uploads', 'path.uploads-directory');
+    $data['path']['imports-directory']      = xarModVars::get('uploads', 'path.imports-directory');
+    $data['file']['maxsize']                = number_format(xarModVars::get('uploads', 'file.maxsize'));
+    $data['file']['delete-confirmation']    = xarModVars::get('uploads', 'file.delete-confirmation');
+    $data['file']['auto-purge']             = xarModVars::get('uploads', 'file.auto-purge');
+    $data['file']['auto-approve']           = xarModVars::get('uploads', 'file.auto-approve');
+    $data['file']['obfuscate-on-import']    = xarModVars::get('uploads', 'file.obfuscate-on-import');
+    $data['file']['obfuscate-on-upload']    = xarModVars::get('uploads', 'file.obfuscate-on-upload');
+    $data['file']['cache-expire']           = xarModVars::get('uploads', 'file.cache-expire');
     if (!isset($data['file']['cache-expire'])) {
-        xarModSetVar('uploads', 'file.cache-expire', 0);
+        xarModVars::set('uploads', 'file.cache-expire', 0);
     }
-    $data['file']['allow-duplicate-upload'] = xarModGetVar('uploads', 'file.allow-duplicate-upload');
+    $data['file']['allow-duplicate-upload'] = xarModVars::get('uploads', 'file.allow-duplicate-upload');
     if (!isset($data['file']['allow-duplicate-upload'])) {
-        xarModSetVar('uploads', 'file.allow-duplicate-upload', 0);
+        xarModVars::set('uploads', 'file.allow-duplicate-upload', 0);
         $data['file']['allow-duplicate-upload'] = 0;
     }
-    $data['ddprop']['trusted']              = xarModGetVar('uploads', 'dd.fileupload.trusted');
-    $data['ddprop']['external']             = xarModGetVar('uploads', 'dd.fileupload.external');
-    $data['ddprop']['stored']               = xarModGetVar('uploads', 'dd.fileupload.stored');
-    $data['ddprop']['upload']               = xarModGetVar('uploads', 'dd.fileupload.upload');
+    $data['ddprop']['trusted']              = xarModVars::get('uploads', 'dd.fileupload.trusted');
+    $data['ddprop']['external']             = xarModVars::get('uploads', 'dd.fileupload.external');
+    $data['ddprop']['stored']               = xarModVars::get('uploads', 'dd.fileupload.stored');
+    $data['ddprop']['upload']               = xarModVars::get('uploads', 'dd.fileupload.upload');
     $data['authid']                         = xarSecGenAuthKey();
 
     $data['approveList']['noone']      = _UPLOADS_APPROVE_NOONE;

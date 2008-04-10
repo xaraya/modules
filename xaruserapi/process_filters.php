@@ -23,7 +23,7 @@ function uploads_userapi_process_filters( $args )
         $storeOptions = TRUE;
     }
 
-    $options   =  unserialize(xarModGetVar('uploads', 'view.filter'));
+    $options   =  unserialize(xarModVars::get('uploads', 'view.filter'));
 
     $data      =  $options['data'];
     $filter    =  $options['filter'];
@@ -127,7 +127,7 @@ function uploads_userapi_process_filters( $args )
 
     if ($storeOptions) {
         // Save the filter settings for later use
-        xarModSetUserVar('uploads','view.filter', serialize($filterInfo));
+        xarModUserVars::set('uploads','view.filter', serialize($filterInfo));
     }
 
     return $filterInfo;

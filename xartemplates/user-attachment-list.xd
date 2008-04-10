@@ -29,6 +29,6 @@
                 <br />
             </xar:if>
         </xar:loop>
-        <div class="xar-uploads-clearer">&nbsp;</div>
+        <div class="xar-uploads-clearer">&#160;</div>
     </xar:if>
 </xar:if>

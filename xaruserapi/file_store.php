@@ -45,7 +45,7 @@ function uploads_userapi_file_store( $args )
     $instance = array();
     $instance[0] = $typeInfo['typeId'];
     $instance[1] = $typeInfo['subtypeId'];
-    $instance[2] = xarSessionGetVar('uid');
+    $instance[2] = xarSession::getVar('uid');
     $instance[3] = 'All';
 
     $instance = implode(':', $instance);

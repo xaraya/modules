@@ -24,11 +24,11 @@ function uploads_userapi_prepare_imports( $args )
     }
 
     if (!isset($import_directory)) {
-        $import_directory = xarModGetVar('uploads', 'path.imports-directory');
+        $import_directory = xarModVars::get('uploads', 'path.imports-directory');
     }
 
     if (!isset($import_obfuscate)) {
-        $import_obfuscate = xarModGetVar('uploads', 'file.obfuscate-on-import');
+        $import_obfuscate = xarModVars::get('uploads', 'file.obfuscate-on-import');
     }
 
     /**

@@ -73,10 +73,10 @@ function uploads_adminapi_showinput($args)
         );
     } else {
         $data['methods'] = array(
-            'trusted'  => xarModGetVar('uploads', 'dd.fileupload.trusted')  ? TRUE : FALSE,
-            'external' => xarModGetVar('uploads', 'dd.fileupload.external') ? TRUE : FALSE,
-            'upload'   => xarModGetVar('uploads', 'dd.fileupload.upload')   ? TRUE : FALSE,
-            'stored'   => xarModGetVar('uploads', 'dd.fileupload.stored')   ? TRUE : FALSE
+            'trusted'  => xarModVars::get('uploads', 'dd.fileupload.trusted')  ? TRUE : FALSE,
+            'external' => xarModVars::get('uploads', 'dd.fileupload.external') ? TRUE : FALSE,
+            'upload'   => xarModVars::get('uploads', 'dd.fileupload.upload')   ? TRUE : FALSE,
+            'stored'   => xarModVars::get('uploads', 'dd.fileupload.stored')   ? TRUE : FALSE
         );
     }
 
@@ -88,20 +88,20 @@ function uploads_adminapi_showinput($args)
     $data['getAction']['STORED']      = _UPLOADS_GET_STORED;
     $data['getAction']['REFRESH']     = _UPLOADS_GET_REFRESH_LOCAL;
     $data['id']                       = $id;
-    $data['file_maxsize'] = xarModGetVar('uploads', 'file.maxsize');
+    $data['file_maxsize'] = xarModVars::get('uploads', 'file.maxsize');
     if ($data['methods']['trusted']) {
         // if there is an override['import']['path'], try to use that
         if (!empty($override['import']['path'])) {
             $trusted_dir = $override['import']['path'];
             if (!file_exists($trusted_dir)) {
             // CHECKME: fall back to common trusted directory, or fail here ?
-                $trusted_dir = xarModGetVar('uploads', 'path.imports-directory');
+                $trusted_dir = xarModVars::get('uploads', 'path.imports-directory');
             //  return xarML('Unable to find trusted directory #(1)', $trusted_dir);
             }
         } else {
-            $trusted_dir = xarModGetVar('uploads', 'path.imports-directory');
+            $trusted_dir = xarModVars::get('uploads', 'path.imports-directory');
         }
-        $cacheExpire = xarModGetVar('uploads','file.cache-expire');
+        $cacheExpire = xarModVars::get('uploads','file.cache-expire');
 
     // CHECKME: use 'imports' name like in db_get_file() ?
         // Note: for relativePath, the (main) import directory is replaced by /trusted in file_get_metadata()

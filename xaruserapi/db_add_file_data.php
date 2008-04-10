@@ -53,13 +53,13 @@ function uploads_userapi_db_add_file_data( $args )
 
     //add to uploads table
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
 
     // table and column definitions
     $fileData_table = $xartable['file_data'];
-    $fileDataID    = $dbconn->GenID($fileData_table);
+    $fileDataID    = $dbconn->genID($fileData_table);
 
     // insert value into table
     $sql = "INSERT INTO $fileData_table
@@ -79,7 +79,7 @@ function uploads_userapi_db_add_file_data( $args )
     if (!$result) {
         return FALSE;
     } else {
-        $id = $dbconn->PO_Insert_ID($xartable['file_data'], 'xar_cid');
+        $id = $dbconn->PO_Insert_ID($xartable['file_data'], 'id');
         return $id;
     }
 }

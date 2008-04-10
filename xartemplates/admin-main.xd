@@ -119,6 +119,6 @@
         <li><xar:mlstring>Related tutorials and documentation on Uploads found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/uploads/" title="#xarML('Related documentation on Uploads')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a></li>
     </ul>
     <p class="xar-sub">
-        <strong>&nbsp;<xar:mlstring>Uploads Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.1.0&nbsp; 2008-02-25
+        <strong>&#160;<xar:mlstring>Uploads Module Overview</xar:mlstring></strong><br />&#160;<xar:mlstring>Version</xar:mlstring> 1.0.0&#160; 2006-03-08
     </p>
 </div>

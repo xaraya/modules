@@ -30,8 +30,8 @@ function uploads_userapi_db_getall_files( $args )
     extract($args);
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     // table and column definitions
     $fileEntry_table = $xartable['file_entry'];
@@ -124,8 +124,8 @@ function uploads_userapi_db_getall_files( $args )
         return array();
     }
 
-    $importDir = xarModGetVar('uploads','path.imports-directory');
-    $uploadDir = xarModGetVar('uploads','path.uploads-directory');
+    $importDir = xarModVars::get('uploads','path.imports-directory');
+    $uploadDir = xarModVars::get('uploads','path.uploads-directory');
 
     // remove the '/' at the end of the path
     $importDir = eregi_replace('/$', '', $importDir);
@@ -146,7 +146,7 @@ function uploads_userapi_db_getall_files( $args )
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
 
-        $fileInfo['fileId']        = $row['xar_fileentry_id'];
+        $fileInfo['fileId']        = $row['xar_fileEntry_id'];
         $fileInfo['userId']        = $row['xar_user_id'];
         if (!isset($usercache[$fileInfo['userId']])) {
             $usercache[$fileInfo['userId']] = xarUserGetVar('name',$fileInfo['userId']);
@@ -209,7 +209,7 @@ function uploads_userapi_db_getall_files( $args )
         $instance = array();
         $instance[0] = $fileInfo['fileTypeInfo']['typeId'];
         $instance[1] = $fileInfo['fileTypeInfo']['subtypeId'];
-        $instance[2] = xarSessionGetVar('uid');
+        $instance[2] = xarSession::getVar('uid');
         $instance[3] = $fileInfo['fileId'];
 
         $instance = implode(':', $instance);

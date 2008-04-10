@@ -52,8 +52,8 @@ function uploads_userapi_db_add_association( $args )
 
     //add to uploads table
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     // table and column definitions
     $file_assoc_table = $xartable['file_associations'];
