@@ -1469,7 +1469,11 @@ class Query
         $this->setusebinding($bind);
         return substr($clause, 6);;
     }
-
+    function setconditions($q)
+    {
+        $this->clearconditions();
+        $this->addconditions($q);
+    }
     function seteqop($x='=')
     {
         if( in_array($x,array('=','eq'))) $this->eqoperator = $x;

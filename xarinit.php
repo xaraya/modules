@@ -21,7 +21,6 @@ function query_init()
 # Set up privileges
 #
     xarRegisterPrivilege('AdminQuery','All','query','All','All','ACCESS_ADMIN');
-    xarMakePrivilegeRoot('AdminQuery');
 
 # --------------------------------------------------------
 #
