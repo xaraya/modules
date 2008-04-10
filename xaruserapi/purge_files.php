@@ -29,8 +29,7 @@ function uploads_userapi_purge_files( $args )
     if (!isset($fileList)) {
         $msg = xarML('Missing required parameter [#(1)] for API function [#(2)] in module [#(3)]',
                      'fileList', 'purge_files', 'uploads');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new Exception($msg);             
     }
 
     foreach ($fileList as $fileName => $fileInfo) {

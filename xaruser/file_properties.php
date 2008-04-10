@@ -32,8 +32,7 @@ function uploads_user_file_properties( $args )
     if (!isset($fileId)) {
         $msg = xarML('Missing paramater [#(1)] for GUI function [#(2)] in module [#(3)].',
                      'fileId', 'file_properties', 'uploads');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new Exception($msg);             
     }
 
     $fileInfo = xarModAPIFunc('uploads','user','db_get_file', array('fileId' => $fileId));
@@ -68,17 +67,14 @@ function uploads_user_file_properties( $args )
                 if (!xarModAPIFunc('uploads', 'user', 'db_modify_file', $args)) {
                     $msg = xarML('Unable to change filename for file: #(1) with file Id #(2)',
                                   $fileInfo['fileName'], $fileInfo['fileId']);
-                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN_ERROR', new SystemException($msg));
-                    return;
+                    throw new Exception($msg);             
                 }
                 xarResponseRedirect(xarModURL('uploads', 'user', 'file_properties', array('fileId' => $fileId)));
                 return;
             } else {
                 xarErrorHandled();
                 $msg = xarML('You do not have the necessary permissions for this object.');
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION', new SystemException($msg));
-                // No access - so return the exception
-                return;
+                throw new Exception($msg);             
             }
         }
 
@@ -158,9 +154,7 @@ function uploads_user_file_properties( $args )
         } else {
             xarErrorHandled();
             $msg = xarML('You do not have the necessary permissions for this object.');
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION', new SystemException($msg));
-            // No access - so return the exception
-            return;
+            throw new Exception($msg);             
         }
     }
 

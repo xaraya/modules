@@ -31,15 +31,13 @@ function uploads_userapi_db_add_association( $args )
     if (!isset($fileId)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
                      'fileId','db_add_assocation','uploads');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return FALSE;
+        throw new Exception($msg);             
     }
 
     if (!isset($modid)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
                      'modid','db_add_assocation','uploads');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return FALSE;
+        throw new Exception($msg);             
     }
 
     if (!isset($itemtype)) {

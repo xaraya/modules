@@ -31,8 +31,7 @@ function uploads_userapi_db_count_data( $args )
     if (!isset($fileId)) {
         $msg = xarML('Missing parameter [#(1)] for API function [#(2)] in module [#(3)]',
                      'fileId','db_count_data','uploads');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return FALSE;
+        throw new Exception($msg);             
     }
 
     // Get database setup

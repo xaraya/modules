@@ -30,8 +30,7 @@ function uploads_init()
     //Not needed anymore with the dependency checks.
     if (!xarModIsAvailable('mime')) {
         $msg = xarML('The mime module should be activated first');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY', new SystemException($msg));
-        return;
+        throw new Exception($msg);             
     }
 
     // load the predefined constants
@@ -157,25 +156,21 @@ function uploads_init()
 /*
     if (!xarModRegisterHook('item', 'create', 'API', 'uploads', 'admin', 'createhook')) {
          $msg = xarML('Could not register hook');
-         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-         return;
+        throw new Exception($msg);             
     }
     if (!xarModRegisterHook('item', 'update', 'API', 'uploads', 'admin', 'updatehook')) {
          $msg = xarML('Could not register hook');
-         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-         return;
+        throw new Exception($msg);             
     }
     if (!xarModRegisterHook('item', 'delete', 'API', 'uploads', 'admin', 'deletehook')) {
          $msg = xarML('Could not register hook');
-         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-         return;
+        throw new Exception($msg);             
     }
     // when a whole module is removed, e.g. via the modules admin screen
     // (set object ID to the module name !)
     if (!xarModRegisterHook('module', 'remove', 'API', 'uploads', 'admin', 'removehook')) {
          $msg = xarML('Could not register hook');
-         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-         return;
+        throw new Exception($msg);             
     }
 
     if (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
@@ -267,8 +262,7 @@ function uploads_upgrade($oldversion)
             //Not needed anymore with the dependency checks.
             if (!xarModIsAvailable('mime')) {
                 $msg = xarML('The mime module should be activated first');
-                xarErrorSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY', new SystemException($msg));
-                return;
+                throw new Exception($msg);             
             }
 
             xarModAPILoad('uploads','user');

@@ -19,8 +19,7 @@ function uploads_userapi_prepare_imports( $args )
     if (!isset($importFrom)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
                      'importFrom','prepare_imports','uploads');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return FALSE;
+        throw new Exception($msg);             
     }
 
     if (!isset($import_directory)) {

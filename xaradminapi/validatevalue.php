@@ -201,9 +201,7 @@ function uploads_adminapi_validatevalue($args)
                 $storeList[] = $fileInfo['fileId'];
             } else {
                 $msg = xarML('Error Found: #(1)', $fileInfo['errors'][0]['errorMesg']);
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN_ERROR', new SystemException($msg));
-
-                return;
+                throw new Exception($msg);             
             }
         }
         if (is_array($storeList) && count($storeList)) {

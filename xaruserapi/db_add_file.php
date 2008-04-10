@@ -36,15 +36,13 @@ function uploads_userapi_db_add_file( $args )
     if (!isset($fileName)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
                      'filename','db_add_file','uploads');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return FALSE;
+        throw new Exception($msg);             
     }
 
     if (!isset($fileLocation)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
                      'fileLocation','db_add_file','uploads');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return FALSE;
+        throw new Exception($msg);             
     }
 
     if (!isset($userId)) {

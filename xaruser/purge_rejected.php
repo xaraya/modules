@@ -56,8 +56,7 @@ function uploads_user_purge_rejected( $args )
                                      array('fileList'   => $fileList));
             if (!$result) {
                 $msg = xarML('Unable to purge rejected files!');
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_NO_PURGE', new SystemException($msg));
-                return;
+                throw new Exception($msg);             
             }
         }
     } else {

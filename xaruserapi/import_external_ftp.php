@@ -116,12 +116,12 @@ function uploads_userapi_import_external_ftp( $args )
             // the temporary file and log and return an exception
             $msg = xarML('Unable to connect to host [#(1):#(2)] to retrieve file [#(3)]',
                           $uri['host'], $uri['port'], basename($uri['path']));
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, '_UPLOADS_ERR_NO_CONNECT', new SystemException($msg));
+            throw new Exception($msg);             
         } else {
             if (($tmpId = fopen($tmpName, 'wb')) === FALSE) {
                 $msg = xarML('Unable to open temp file to store remote host [#(1):#(2)] file [#(3)]',
                             $uri['host'], $uri['port'], basename($uri['path']));
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, '_UPLOADS_ERR_NO_OPEN', new SystemException($msg));
+                throw new Exception($msg);             
             } else {
 
                 if (!empty($mimeType) && substr($mimeType,0,4) == 'text') {
@@ -136,7 +136,7 @@ function uploads_userapi_import_external_ftp( $args )
                 if (!ftp_fget($ftpId, $tmpId, $uri['path'], $ftpMode)) {
                     $msg = xarML('Unable to connect to host [#(1):#(2)] to retrieve file [#(3)]',
                                 $uri['host'], $uri['port'], basename($uri['path']));
-                    xarErrorSet(XAR_SYSTEM_EXCEPTION, '_UPLOADS_ERR_NO_READ', new SystemException($msg));
+                    throw new Exception($msg);             
                 } else {
                     if (is_resource($tmpId)) {
                         @fclose($tmpId);
@@ -152,12 +152,12 @@ function uploads_userapi_import_external_ftp( $args )
         if (($ftpId = fopen($ftpURI, 'rb')) === FALSE) {
             $msg = xarML('Unable to connect to host [#(1):#(2)] to retrieve file [#(3)]',
                           $uri['host'], $uri['port'], basename($uri['path']));
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, '_UPLOADS_ERR_NO_CONNECT', new SystemException($msg));
+            throw new Exception($msg);             
         } else {
             if (($tmpId = fopen($tmpName, 'wb')) === FALSE) {
                 $msg = xarML('Unable to open temp file to store remote host [#(1):#(2)] file [#(3)]',
                             $uri['host'], $uri['port'], basename($uri['path']));
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, '_UPLOADS_ERR_NO_OPEN', new SystemException($msg));
+                throw new Exception($msg);             
             } else {
 
                 // Note that this is a -blocking- process - the connection will
@@ -170,7 +170,7 @@ function uploads_userapi_import_external_ftp( $args )
                     } else {
                         if (fwrite($tmpId, $data, strlen($data)) !== strlen($data)) {
                             $msg = xarML('Unable to write to temp file!');
-                            xarErrorSet(XAR_SYSTEM_EXCEPTION, '_UPLOADS_ERR_NO_WRITE', new SystemException($msg));
+                            throw new Exception($msg);             
                             break;
                         }
                     }

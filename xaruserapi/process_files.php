@@ -37,8 +37,7 @@ function uploads_userapi_process_files( $args )
 
     if (!isset($action)) {
         $msg = xarML("Missing parameter [#(1)] to API function [#(2)] in module [#(3)].", 'action', 'process_files', 'uploads');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new Exception($msg);             
     }
 
     // If not store type defined, default to DB ENTRY AND FILESYSTEM STORE
@@ -77,8 +76,7 @@ function uploads_userapi_process_files( $args )
         case _UPLOADS_GET_UPLOAD:
             if (!isset($upload) || empty($upload)) {
                 $msg = xarML('Missing parameter [#(1)] to API function [#(2)] in module [#(3)].', 'upload', 'process_files', 'uploads');
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-                return;
+                throw new Exception($msg);             
             }
 
             $allow_duplicate = xarModVars::get('uploads', 'file.allow-duplicate-upload');
@@ -165,8 +163,7 @@ function uploads_userapi_process_files( $args )
 
             if (!isset($import)) {
                 $msg = xarML('Missing parameter [#(1)] to API function [#(2)] in module [#(3)].', 'import', 'process_files', 'uploads');
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-                return;
+                throw new Exception($msg);             
             }
 
             // Setup the uri structure so we have defaults if parse_url() doesn't create them
@@ -205,14 +202,12 @@ function uploads_userapi_process_files( $args )
                 default:
                     // ERROR
                     $msg = xarML('Import via scheme \'#(1)\' is not currently supported', $uri['scheme']);
-                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NOT_SUPPORTED', new SystemException($msg));
-                    return;
+                    throw new Exception($msg);             
             }
             break;
         default:
             $msg = xarML("Invalid parameter [#(1)] to API function [#(2)] in module [#(3)].", 'action', 'process_files', 'uploads');
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-            return;
+            throw new Exception($msg);             
 
     }
 

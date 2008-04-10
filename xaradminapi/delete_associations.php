@@ -37,8 +37,7 @@ function uploads_adminapi_delete_associations( $args )
     // we only accept deleting file associations for a particular module + itemtype
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'modid', 'admin', 'delete_associations', 'uploads');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new Exception($msg);             
     }
     if (empty($itemtype)) {
         $itemtype = 0;

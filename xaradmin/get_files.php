@@ -60,8 +60,7 @@ function uploads_admin_get_files()
 
             if (empty($addbutton) && empty($delbutton)) {
                 $msg = xarML('Unsure how to proceed - missing button action!');
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-                return;
+                throw new Exception($msg);             
             } else {
                 $args['bAction'] = (!empty($addbutton)) ? $addbutton : $delbutton;
             }

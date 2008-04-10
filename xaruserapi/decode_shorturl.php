@@ -44,8 +44,7 @@ function uploads_userapi_decode_shorturl($params)
 
         if (!$fileExists) {
             $msg = xarML('Unable to display - file \'#(1)\' does not exist!', $params[1] );
-            xarErrorSet(XAR_USER_EXCEPTION, 'FILE_NOT_EXIST', new DefaultUserException($msg));
-            return;
+            throw new Exception($msg);             
         } else {
             $args['fileId'] = $fileId;
             return array('download', $args);

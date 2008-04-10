@@ -54,8 +54,7 @@ function uploads_admin_purge_rejected( $args )
             $result = xarModAPIFunc('uploads', 'user', 'purge_files', array('fileList' => $fileList));
             if (!$result) {
                 $msg = xarML('Unable to purge rejected files!');
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_NO_PURGE', new SystemException($msg));
-                return;
+                throw new Exception($msg);             
             }
         }
     } else {

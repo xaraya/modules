@@ -31,8 +31,7 @@ function uploads_userapi_db_delete_file( $args )
     if (!isset($fileId)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
                      'file_id','db_delete_file','uploads');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return FALSE;
+        throw new Exception($msg);             
     }
 
     //add to uploads table

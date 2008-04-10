@@ -37,8 +37,7 @@ function uploads_userapi_file_store( $args )
     if (!isset($fileInfo)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
                      'fileInfo','file_store','uploads');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return FALSE;
+        throw new Exception($msg);             
     }
 
     $typeInfo = xarModAPIFunc('mime', 'user', 'get_rev_mimetype', array('mimeType' => $fileInfo['fileType']));

@@ -32,21 +32,18 @@ function uploads_userapi_db_add_file_data( $args )
     if (!isset($fileId)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
                      'fileId','db_add_file_data','uploads');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return FALSE;
+        throw new Exception($msg);             
     }
 
     if (!isset($fileData)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module (#3)]',
                      'location','db_add_file_data','uploads');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return FALSE;
+        throw new Exception($msg);             
     }
 
     if (sizeof($fileData) >= (1024 * 64)) {
         $msg = xarML('#(1) exceeds maximum storage limit of 64KB per data chunk.', 'fileData');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATA_GT_BUFFER', SystemException($msg));
-        return FALSE;
+        throw new Exception($msg);             
     }
 
     $fileData = base64_encode($fileData);
