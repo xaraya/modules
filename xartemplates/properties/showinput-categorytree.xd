@@ -61,11 +61,12 @@
             <tr>
                 <td>
                     <xar:for start="$i = 1" test="$i le ($pagertotal - $itemsperpage)" iter="$i += $itemsperpage">
+                        <xar:set name="endrow">$i+$itemsperpage-1</xar:set>
                         <xar:if condition="$i le $startnum  AND ($i + $itemsperpage) gt $startnum">
-                            #$i#-#$i+$itemsperpage-1#
+                            #$i#-#$endrow#
                         <xar:else />
                             <a href="#xarModURL('categories', 'admin', 'viewcats', array('activetab' => $activetab,'startnum' => $i, 'itemsperpage' => $itemsperpage))#">
-                                #$i#-#$i+$itemsperpage-1#
+                                #$i#-#$endrow#
                             </a>
                         </xar:if>
                         <xar:if condition="(($i%100) eq 1) and ($i ne 1)">
