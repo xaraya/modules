@@ -162,7 +162,7 @@ function registration_user_register()
             }
 
 */
-			if (xarModGetVar('roles','uniqueemail')) {
+			if (xarModVars::get('roles','uniqueemail')) {
                 $user = xarModAPIFunc('roles','user', 'get', array('email' => $email));
                 if ($user) throw new DuplicateException(array('email',$email));
             }
