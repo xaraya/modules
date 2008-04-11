@@ -58,54 +58,56 @@
     <xar:if condition="count($options) eq 1">
         <xar:set name="activetab">$options[0]['cid']</xar:set>
         <table border="0" cellspacing="0" cellpadding="2" style="text-align: center;margin: auto;">
-            <tr>
-                <td>
-                    <xar:for start="$i = 1" test="$i le ($pagertotal - $itemsperpage)" iter="$i += $itemsperpage">
-                        <xar:set name="endrow">$i+$itemsperpage-1</xar:set>
-                        <xar:if condition="$i le $startnum  AND ($i + $itemsperpage) gt $startnum">
-                            #$i#-#$endrow#
-                        <xar:else />
-                            <a href="#xarModURL('categories', 'admin', 'viewcats', array('activetab' => $activetab,'startnum' => $i, 'itemsperpage' => $itemsperpage))#">
+            <xar:if condition="$displayindex">
+                <tr>
+                    <td>
+                        <xar:for start="$i = 1" test="$i le ($pagertotal - $itemsperpage)" iter="$i += $itemsperpage">
+                            <xar:set name="endrow">$i+$itemsperpage-1</xar:set>
+                            <xar:if condition="$i le $startnum  AND ($i + $itemsperpage) gt $startnum">
                                 #$i#-#$endrow#
-                            </a>
-                        </xar:if>
-                        <xar:if condition="(($i%100) eq 1) and ($i ne 1)">
-                            <br />
-                        <xar:else />
-                            &#160;|&#160;
-                        </xar:if>
-                    </xar:for>
-                    <xar:if condition="$i eq $pagertotal">
-                        <xar:if condition="$i le $startnum  AND ($i + $itemsperpage) gt $startnum">
-                            #$i#
-                        <xar:else />
-                            <a href="#xarModURL('categories', 'admin', 'viewcats', array('activetab' => $activetab,'startnum' => $i, 'itemsperpage' => $itemsperpage))#">
+                            <xar:else />
+                                <a href="#xarModURL('categories', 'admin', 'viewcats', array('activetab' => $activetab,'startnum' => $i, 'itemsperpage' => $itemsperpage))#">
+                                    #$i#-#$endrow#
+                                </a>
+                            </xar:if>
+                            <xar:if condition="(($i%100) eq 1) and ($i ne 1)">
+                                <br />
+                            <xar:else />
+                                &#160;|&#160;
+                            </xar:if>
+                        </xar:for>
+                        <xar:if condition="$i eq $pagertotal">
+                            <xar:if condition="$i le $startnum  AND ($i + $itemsperpage) gt $startnum">
                                 #$i#
-                            </a>
+                            <xar:else />
+                                <a href="#xarModURL('categories', 'admin', 'viewcats', array('activetab' => $activetab,'startnum' => $i, 'itemsperpage' => $itemsperpage))#">
+                                    #$i#
+                                </a>
+                            </xar:if>
                         </xar:if>
-                    </xar:if>
-                    <xar:if condition="$i lt $pagertotal">
-                        <xar:if condition="$i le $startnum  AND ($i + $itemsperpage) gt $startnum">
-                            #$i#-#$pagertotal#
-                        <xar:else />
-                            <a href="#xarModURL('categories', 'admin', 'viewcats', array('activetab' => $activetab,'startnum' => $i, 'itemsperpage' => $itemsperpage))#">
+                        <xar:if condition="$i lt $pagertotal">
+                            <xar:if condition="$i le $startnum  AND ($i + $itemsperpage) gt $startnum">
                                 #$i#-#$pagertotal#
-                            </a>
+                            <xar:else />
+                                <a href="#xarModURL('categories', 'admin', 'viewcats', array('activetab' => $activetab,'startnum' => $i, 'itemsperpage' => $itemsperpage))#">
+                                    #$i#-#$pagertotal#
+                                </a>
+                            </xar:if>
                         </xar:if>
-                    </xar:if>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <form action="#xarModURL('categories','admin','viewcats',array())#" method="post">
-                        <xar:mlstring>Categories per page:</xar:mlstring>&#160;
-                        <input type="hidden" name="startnum" id="startnum" value="#$startnum#" />
-                        <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsperpage#" size="5" />&#160;&#160;
-                        <input type="hidden" name="activetab" id="activetab" value="#$activetab#" size="5" />
-                        <input type="submit" value="#xarML('Reload')#" />
-                    </form>
-                </td>
-            </tr>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <form action="#xarModURL('categories','admin','viewcats',array())#" method="post">
+                            <xar:mlstring>Categories per page:</xar:mlstring>&#160;
+                            <input type="hidden" name="startnum" id="startnum" value="#$startnum#" />
+                            <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsperpage#" size="5" />&#160;&#160;
+                            <input type="hidden" name="activetab" id="activetab" value="#$activetab#" size="5" />
+                            <input type="submit" value="#xarML('Reload')#" />
+                        </form>
+                    </td>
+                </tr>
+            </xar:if>
             <tr>
                 <td>
                     <xar:mlstring>Categories Total:</xar:mlstring>&#160;&#160;#$pagertotal#
