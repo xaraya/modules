@@ -390,10 +390,12 @@ function articles_user_display($args)
             foreach (array_keys($properties) as $field) {
                 $data[$field] = $properties[$field]->getValue();
                 // POOR mans flagging for transform hooks
+                try {
                 $validation = $properties[$field]->validation;
                 if(substr($validation,0,10) == 'transform:') {
                     $data['transform'][] = $field;
                 }
+                } catch (Exception $e) {}
                 // TODO: clean up this temporary fix
                 $data[$field.'_output'] = $properties[$field]->showOutput();
             }

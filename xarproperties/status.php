@@ -36,12 +36,16 @@ class StatusProperty extends SelectProperty
 
     function getOptions()
     {
-        $options = array(
-             array('id' => 0, 'name' => xarML('Submitted')),
-             array('id' => 1, 'name' => xarML('Rejected')),
-             array('id' => 2, 'name' => xarML('Approved')),
-             array('id' => 3, 'name' => xarML('Front Page')),
-         );
+        $options = $this->getFirstline();
+        if (count($this->options) > 0) {
+            if (!empty($firstline)) $this->options = array_merge($options,$this->options);
+            return $this->options;
+        }
+        
+        $options[] = array('id' => 0, 'name' => xarML('Submitted'));
+        $options[] = array('id' => 1, 'name' => xarML('Rejected'));
+        $options[] = array('id' => 2, 'name' => xarML('Approved'));
+        $options[] = array('id' => 3, 'name' => xarML('Front Page'));
         return $options;
     }
 }
