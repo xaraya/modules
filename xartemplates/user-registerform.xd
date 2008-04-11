@@ -37,7 +37,7 @@
                 </span>
                 <label for="agreetoterms" title="#xarML('Please check to agree to the website requirements')#">
                     <xar:mlstring>I agree to be bound by this website's </xar:mlstring>
-                    <a href="&xar-modurl-registration-user-terms;"><xar:mlstring>Terms of Use</xar:mlstring></a>.
+                    <a href="&xar-modurl-registration-user-terms;" target="_blank"><xar:mlstring>Terms of Use</xar:mlstring></a>.
                 </label>
                 <xar:if condition="isset($termsmsg)">
                     <span class="xar-error">Please agree to the terms</span>
@@ -50,7 +50,7 @@
                 </span>
                 <label for="agreetoterms"  title="#xarML('Please check to agree to the website requirements')#">
                     <xar:mlstring>I agree to be bound by this website's&#160;</xar:mlstring>
-                    <a href="&xar-modurl-registration-user-terms;"><xar:mlstring>Terms of Use</xar:mlstring></a>&#160;<xar:mlstring>and</xar:mlstring>&#160;<a href="&xar-modurl-registration-user-privacy;"><xar:mlstring>Privacy Policy</xar:mlstring></a>.
+                    <a href="&xar-modurl-registration-user-terms;" target="_blank"><xar:mlstring>Terms of Use</xar:mlstring></a>&#160;<xar:mlstring>and</xar:mlstring>&#160;<a href="&xar-modurl-registration-user-privacy;"><xar:mlstring>Privacy Policy</xar:mlstring></a>.
                  </label>
             </div>
                 <xar:if condition="isset($termsmsg)">
@@ -82,9 +82,8 @@
             <div class="xar-form-input-wrapper-after">
                 <input type="submit" value="#xarML('Submit')#" />
             </div>
-
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <input type="hidden" name="phase" id="phase" value="checkregistration" />
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="phase" id="phase" value="checkregistration" />
         </fieldset>
     </form>
 </div>

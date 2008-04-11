@@ -38,10 +38,6 @@ function registration_init()
     xarRegisterPrivilege('ViewRegistrationLogin','All','registration','BlockItem','All','ACCESS_OVERVIEW','View the User Access block');
     xarRegisterPrivilege('ViewRegistration','All','registration','All','All','ACCESS_OVERVIEW','View access to the registration module');
     xarRegisterPrivilege('ReadRegistration','All','registration','All','All','ACCESS_READ','Read access to the registration module');
-    xarMakePrivilegeRoot('ViewRegistrationLogin');
-    xarMakePrivilegeRoot('ViewRegistration');
-    xarMakePrivilegeRoot('ReadRegistration');
-    xarMakePrivilegeRoot('AdminRegistration');
 
 # --------------------------------------------------------
 #
@@ -80,15 +76,15 @@ function registration_init()
 
     // Make the default group of this module that of Roles for starters
     $defaultgroup = xarModVars::get('roles','defaultgroup');
-	xarModVars::set('registration','defaultgroup',$defaultgroup);
+    xarModVars::set('registration','defaultgroup',$defaultgroup);
 
-	// If Roles has no default registrtion module, make this it
+    // If Roles has no default registrtion module, make this it
     $defaultregmodule = xarModVars::get('roles','defaultregmodule');
     if (empty($defaultregmodule)) {
         xarModVars::set('roles','defaultregmodule','registration');
     }
 
-	xarModVars::set('registration','defaultuserstate',xarRoles::ROLES_STATE_ACTIVE);
+    xarModVars::set('registration','defaultuserstate',xarRoles::ROLES_STATE_ACTIVE);
 
     $regobject = DataObjectMaster::getObjectInfo(array('name' => 'registration_users'));
     xarModVars::set('registration', 'registrationobject', $regobject['objectid']);

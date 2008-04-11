@@ -50,7 +50,7 @@ function registration_user_register()
         return;
     }
 
-     //Check for site lock . We don't want people  registering during this period
+    //we could turn of registration, but let's check for site lock . We don't want people  registering during this period
      $lockvars = unserialize(xarModVars::get('roles','lockdata'));
      if ($lockvars['locked'] ==1) {
         xarErrorSet(XAR_SYSTEM_MESSAGE,
@@ -60,13 +60,20 @@ function registration_user_register()
      }
 
     xarTplSetPageTitle(xarML('New Account'));
-    if (!xarVarFetch('phase','str:1:100',$phase,'registerform',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('phase','str:1:100',$phase,'request',XARVAR_NOT_REQUIRED)) return;
 
 
     $regobjectid = xarModVars::get('registration', 'registrationobject');
-	$authid = xarSecGenAuthKey();
+    $authid = xarSecGenAuthKey();
 
     switch(strtolower($phase)) {
+
+        case 'choices':
+            xarTplSetPageTitle(xarML('Log In'));
+            $loginlabel = xarML('Sign In');
+            $data       = xarTplModule('authsystem','user', 'choices', array('loginlabel' => $loginlabel));
+            break;
+
         case 'checkage':
             $minage     = xarModVars::get('registration', 'minage');
             $submitlink = xarModURL('registration', 'user', 'register',array('phase' => 'registerform'));
@@ -77,13 +84,14 @@ function registration_user_register()
 
         case 'registerformcycle':
             $fieldvalues = xarSessionGetVar('Registration.UserInfo');
+        case 'registerform': //Make this default now login is handled by authsystem
         default:
 
             $object = DataObjectMaster::getObject(array('objectid' => $regobjectid));
             if(empty($object)) return;
 
             if (isset($fieldvalues)) {
-				$object->setFieldValues($fieldvalues);
+                $object->setFieldValues($fieldvalues);
             }
 
             /* Call hooks here, others than just dyn data
@@ -120,7 +128,7 @@ function registration_user_register()
             }
 
             $object = DataObjectMaster::getObject(array('objectid' => $regobjectid));
-			$isvalid = $object->checkInput();
+            $isvalid = $object->checkInput();
 
             /* Call hooks here, others than just dyn data
              * We pass the phase in here to tell the hook it should check the data
@@ -137,12 +145,12 @@ function registration_user_register()
                  $hookoutput = $hooks;
             }
 
-			if (!$isvalid || !$agreetoterms) {
-				$data = array('authid'     => $authid,
-				  			  'object'     => $object,
-							  'hookoutput' => $hookoutput);
-				if (!$agreetoterms) $data['termsmsg'] = true;
-				return xarTplModule('registration','user', 'registerform',$data);
+            if (!$isvalid || !$agreetoterms) {
+                $data = array('authid'     => $authid,
+                              'object'     => $object,
+                              'hookoutput' => $hookoutput);
+                if (!$agreetoterms) $data['termsmsg'] = true;
+                return xarTplModule('registration','user', 'registerform',$data);
             }
             // invalid fields (we'll check this below)
             $invalid = array();
@@ -162,7 +170,7 @@ function registration_user_register()
             }
 
 */
-			if (xarModVars::get('roles','uniqueemail')) {
+            if (xarModVars::get('roles','uniqueemail')) {
                 $user = xarModAPIFunc('roles','user', 'get', array('email' => $email));
                 if ($user) throw new DuplicateException(array('email',$email));
             }
@@ -217,7 +225,7 @@ function registration_user_register()
 
             // Do we need admin activation of the account?
             if (xarModVars::get('registration', 'explicitapproval')) {
-            	$fieldvalues['state'] = xarRoles::ROLES_STATE_PENDING;
+                $fieldvalues['state'] = xarRoles::ROLES_STATE_PENDING;
             }
 
             //Get the default auth module data
@@ -228,7 +236,7 @@ function registration_user_register()
             $authmodule          = $defaultauthdata['defaultauthmodname'];
 
             //jojo - should just use authsystem now as we used to pre 1.1 merge
-            $loginlink = xarModURL($defaultloginmodname,'user','main');
+            $loginlink =xarModURL($defaultloginmodname,'user','main');
 
             //variables required for display of correct validation template to users, depending on registration options
             $data['loginlink'] = $loginlink;
@@ -243,35 +251,30 @@ function registration_user_register()
 
             // Do we require user validation of account by email?
             if (xarModVars::get('registration', 'requirevalidation')) {
-            	$fieldvalues['state'] = xarRoles::ROLES_STATE_NOTVALIDATED;
+                $fieldvalues['state'] = xarRoles::ROLES_STATE_NOTVALIDATED;
 
-				// Create confirmation code
+                // Create confirmation code
                 $confcode = xarModAPIFunc('roles', 'user', 'makepass');
             } else {
                 $confcode = '';
             }
 
 
-			// Update the field values and create the user
-			$object->setFieldValues($fieldvalues,1);
+            // Update the field values and create the user
+            $object->setFieldValues($fieldvalues,1);
             $id = $object->createItem();
-            $isvalid = $object->checkInput($userdata);
-            debug($userdata);
-            if (!$isvalid) return;*/
-            $id = $object->createItem($userdata);
 
-            $values['id'] = $id;
-
+            if (empty($id)) return;
             xarModVars::set('roles', 'lastuser', $id);
 
-            // @todo we prolly shouldn't need to call this if roles create returned the object
-            xarModSetUserVar('roles','allowemail', false, $id);
+            //Make sure the user email setting is off unless the user sets it
+            xarModUserVars::set('roles','allowemail', false, $id);
 
             $hookdata = $fieldvalues;
             $hookdata['itemtype'] = xarRoles::ROLES_USERTYPE;
             $hookdata['module'] = 'registration';
-			$hookdata['itemid'] = $id;
-			xarModCallHooks('item', 'create', $id, $hookdata);
+            $hookdata['itemid'] = $id;
+            xarModCallHooks('item', 'create', $id, $hookdata);
 
             // go to appropriate page, based on state
             if ($fieldvalues['state'] == xarRoles::ROLES_STATE_ACTIVE) {
