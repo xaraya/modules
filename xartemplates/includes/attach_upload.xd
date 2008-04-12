@@ -1,5 +1,5 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:mlstring>Attach File: </xar:mlstring><br />
-    <input type="hidden" name="MAX_FILE_SIZE" value="#$file_maxsize#" />
+    <input type="hidden" name="MAX_FILE_SIZE" value="#$max_file_size#" />
     <input type="file" name="#$id#_attach_upload" id="#$id#_attach_upload_id" />
 </xar:template>

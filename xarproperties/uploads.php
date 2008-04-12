@@ -32,18 +32,21 @@ class UploadProperty extends DataProperty
     public $reqmodules = array('uploads');
 
     public $display_size                      = 40;
-    public $validation_max_file_size          = 1000000;
+    public $validation_max_file_size          = 0;
 //    public $validation_file_extensions      = 'gif|jpg|jpeg|png|bmp|pdf|doc|txt';
 //    public $initialization_basepath         = null;
     public $initialization_basedirectory      = 'var/uploads';
     public $initialization_import_directory   = null;
     public $initialization_multiple_files     = TRUE;
     public $initialization_directory_name     = 'User_';
-    public $initialization_file_input_methods = array(
-                                                'trusted'  => false,
-                                                'external' => false,
-                                                'upload'   => false,
-                                                'stored'   => false);
+    public $initialization_file_input_methods = array(1,2,3,4);
+
+    /*
+    Trusted/local  --> 1
+    External       --> 2
+    Uploads        --> 3
+    Stored         --> 4
+    */
 
     // this is used by DataPropertyMaster::addProperty() to set the $object->upload flag
     var $upload = true;
@@ -58,23 +61,24 @@ class UploadProperty extends DataProperty
         // this is used by DD's importpropertytypes() function
         if (empty($args['skipInit'])) {                            // this parameter is not found in the core code
             // Note : {user} will be replaced by the current user uploading the file - e.g. var/uploads/{user} -&gt; var/uploads/myusername_123
+            $uid = xarSession::getVar('role_id');
             if (!empty($this->initialization_basedirectory) && preg_match('/\{user\}/',$this->initialization_basedirectory)) {
-                $uid = xarUserGetVar('uid');
                 // Note: we add the userid just to make sure it's unique e.g. when filtering
                 // out unwanted characters through xarVarPrepForOS, or if the database makes
                 // a difference between upper-case and lower-case and the OS doesn't...
-                $udir = xarVarPrepForOS($initialization_directory_name) . $uid;
+                $udir = xarVarPrepForOS($this->initialization_directory_name) . $uid;
                 $this->initialization_basedirectory = preg_replace('/\{user\}/',$udir,$this->initialization_basedirectory);
             }
             if (!empty($this->initialization_import_directory) && preg_match('/\{user\}/',$this->initialization_import_directory)) {
-                $uid = xarUserGetVar('uid');
                 // Note: we add the userid just to make sure it's unique e.g. when filtering
                 // out unwanted characters through xarVarPrepForOS, or if the database makes
                 // a difference between upper-case and lower-case and the OS doesn't...
-                $udir = xarVarPrepForOS($initialization_directory_name) . $uid;
+                $udir = xarVarPrepForOS($this->initialization_directory_name) . $uid;
                 $this->initialization_import_directory = preg_replace('/\{user\}/',$udir,$this->initialization_import_directory);
             }
         }
+        $this->validation_max_file_size = xarModVars::get('uploads', 'file.maxsize');
+        $this->initialization_import_directory = xarModVars::get('uploads', 'path.imports-directory');
     }
     /**
      * Check the input into the uploads property
@@ -100,117 +104,316 @@ class UploadProperty extends DataProperty
         if (isset($this->fieldname)) $name = $this->fieldname;
         else $name = 'dd_'.$this->id;
 
-        // convert old Upload values if necessary
-//        if (!isset($value)) {
-//            $value = $this->getValue();
-//        }
-
         // retrieve new value for preview + new/modify combinations
         if (xarVarIsCached('DynamicData.Upload',$name)) {
             $this->value = xarVarGetCached('DynamicData.Upload',$name);
             return true;
         }
 
-        // set override for the upload/import paths if necessary
-        if (!empty($this->initialization_basedirectory) || !empty($this->initialization_import_directory)) {
-            $override = array();
-            if (!empty($this->initialization_basedirectory)) {
-                $override['upload'] = array('path' => $this->initialization_basedirectory);
-            }
-            if (!empty($this->initialization_import_directory)) {
-                $override['import'] = array('path' => $this->initialization_import_directory);
-            }
+        xarModAPILoad('uploads','user');
+
+        if (!empty($this->initialization_file_input_methods)) {
+            $typeCheck = 'enum:0:' . _UPLOADS_GET_STORED;
+            $typeCheck .= (in_array(2,$this->initialization_file_input_methods))  ? ':' . _UPLOADS_GET_EXTERNAL : '';
+            $typeCheck .= (in_array(1,$this->initialization_file_input_methods)) ? ':' . _UPLOADS_GET_LOCAL : '';
+            $typeCheck .= (in_array(3,$this->initialization_file_input_methods)) ? ':' . _UPLOADS_GET_UPLOAD : '';
+            $typeCheck .= ':-2'; // clear value
         } else {
-            $override = null;
+            $typeCheck = 'enum:0:' . _UPLOADS_GET_STORED;
+            $typeCheck .= (xarModVars::get('uploads', 'dd.fileupload.external') == TRUE) ? ':' . _UPLOADS_GET_EXTERNAL : '';
+            $typeCheck .= (xarModVars::get('uploads', 'dd.fileupload.trusted') == TRUE) ? ':' . _UPLOADS_GET_LOCAL : '';
+            $typeCheck .= (xarModVars::get('uploads', 'dd.fileupload.upload') == TRUE) ? ':' . _UPLOADS_GET_UPLOAD : '';
+            $typeCheck .= ':-2'; // clear value
         }
 
-        $return = xarModAPIFunc('uploads','admin','validatevalue',
-                                array('id' => $name, // not $this->id
-                                      'value' => $value,
-                                      // pass the module id, item type and item id (if available) for associations
-                                      'moduleid' => $this->_moduleid,
-                                      'itemtype' => $this->_itemtype,
-                                      'itemid'   => !empty($this->_itemid) ? $this->_itemid : null,
-                                      'multiple' => $this->initialization_multiple_files,
-                                      'format' => 'upload',
-                                      'methods' => $this->initialization_file_input_methods,
-                                      'override' => $override,
-                                      'maxsize' => $this->validation_max_file_size));
-        if (!isset($return) || !is_array($return) || count($return) < 2) {
-            $this->value = null;
-            return false;
+        xarVarFetch($name . '_attach_type', $typeCheck, $data['action'], -3, XARVAR_NOT_REQUIRED);
+
+        switch ($data['action']) {
+            case _UPLOADS_GET_UPLOAD:
+                if (!xarVarFetch('MAX_FILE_SIZE', "int::$this->validation_max_file_size", $maxsize)) return;
+                if (!xarVarValidate('array:1:', $_FILES[$name . '_attach_upload'])) return;
+
+                $upload         =& $_FILES[$name . '_attach_upload'];
+                $data['upload'] =& $_FILES[$name . '_attach_upload'];
+                break;
+            case _UPLOADS_GET_EXTERNAL:
+                // minimum external import link must be: ftp://a.ws  <-- 10 characters total
+
+                if (!xarVarFetch($name . '_attach_external', 'regexp:/^([a-z]*).\/\/(.{7,})/', $import, 0, XARVAR_NOT_REQUIRED)) return;
+
+                if (empty($import)) {
+                    // synchronize file associations with empty list
+                    if (!empty($moduleid) && !empty($itemid)) {
+                        uploads_sync_associations($moduleid, $itemtype, $itemid);
+                    }
+                    $this->value = null;
+                    xarVarSetCached('DynamicData.Upload',$name,$this->value);
+                    return true;
+                }
+
+                $data['import'] = $import;
+                break;
+            case _UPLOADS_GET_LOCAL:
+
+                if (!xarVarFetch($name . '_attach_trusted', 'list:regexp:/(?<!\.{2,2}\/)[\w\d]*/', $fileList)) return;
+
+            // CHECKME: use 'imports' name like in db_get_file() ?
+                // replace /trusted coming from showinput() again
+                $importDir = $this->initialization_import_directory;
+                foreach ($fileList as $file) {
+                    $file = str_replace('/trusted', $importDir, $file);
+                    $data['fileList']["$file"] = xarModAPIFunc('uploads', 'user', 'file_get_metadata',
+                                                                array('fileLocation' => "$file"));
+                    if (isset($args['fileList']["$file"]['fileSize']['long'])) {
+                        $data['fileList']["$file"]['fileSize'] = $args['fileList']["$file"]['fileSize']['long'];
+                    }
+                }
+                break;
+            case _UPLOADS_GET_STORED:
+
+                if (!xarVarFetch($name . '_attach_stored', 'list:int:1:', $fileList, 0, XARVAR_NOT_REQUIRED)) return;
+
+                // If we've made it this far, then fileList was empty to start,
+                // so don't complain about it being empty now
+                if (empty($fileList) || !is_array($fileList)) {
+                    // synchronize file associations with empty list
+                    if (!empty($moduleid) && !empty($itemid)) {
+                        uploads_sync_associations($moduleid, $itemtype, $itemid);
+                    }
+                    $this->value = null;
+                    xarVarSetCached('DynamicData.Upload',$name,$this->value);
+                    return true;
+                }
+
+                // We prepend a semicolon onto the list of fileId's so that
+                // we can tell, in the future, that this is a list of fileIds
+                // and not just a filename
+                $this->value = ';' . implode(';', $fileList);
+
+                // synchronize file associations with file list
+                if (!empty($moduleid) && !empty($itemid)) {
+                    uploads_sync_associations($moduleid, $itemtype, $itemid, $fileList);
+                }
+
+                    return true;
+                break;
+            case '-1':
+                    return true;
+                break;
+            case '-2':
+                // clear stored value
+                    $this->value = null;
+                    xarVarSetCached('DynamicData.Upload',$name,$this->value);
+                    return true;
+                break;
+            default:
+                if (isset($value)) {
+                    if (strlen($value) && $value{0} == ';') {
+                        return true;
+                    } else {
+                    $this->value = null;
+                    return false;
+                    }
+                } else {
+                    // If we have managed to get here then we have a NULL value
+                    // and $action was most likely either null or something unexpected
+                    // So let's keep things that way :-)
+                        $this->value = null;
+                        return true;
+                }
+                break;
         }
-        if (empty($return[0])) {
-            $this->value = null;
-            $this->invalid = xarML('value');
-            return false;
-        } else {
-            if (empty($return[1])) {
-                $this->value = '';
-            } else {
-                $this->value = $return[1];
+
+        if (!empty($data['action'])) {
+
+            if (isset($storeType)) $data['storeType'] = $storeType;
+
+            $list = xarModAPIFunc('uploads','user','process_files', $data);
+            $storeList = array();
+            foreach ($list as $file => $fileInfo) {
+                if (!isset($fileInfo['errors'])) {
+                    $storeList[] = $fileInfo['fileId'];
+                } else {
+                    $msg = xarML('Error Found: #(1)', $fileInfo['errors'][0]['errorMesg']);
+                    throw new Exception($msg);             
+                }
             }
-            // save new value for preview + new/modify combinations
-            xarVarSetCached('DynamicData.Upload',$name,$this->value);
-            return true;
+            if (is_array($storeList) && count($storeList)) {
+                // We prepend a semicolon onto the list of fileId's so that
+                // we can tell, in the future, that this is a list of fileIds
+                // and not just a filename
+                $value = ';' . implode(';', $storeList);
+
+                // synchronize file associations with store list
+                if (!empty($moduleid) && !empty($itemid)) {
+                    uploads_sync_associations($moduleid, $itemtype, $itemid, $storeList);
+                }
+
+            } else {
+                $this->value = null;
+                return false;
+            }
+        } else {
+            return false;
         }
+
+        xarVarSetCached('DynamicData.Upload',$name,$this->value);
+        return true;
     }
 
 //    function showInput($name = '', $value = null, $size = 0, $maxsize = 0, $id = '', $tabindex = '')
     /**
      * Show the input form
      */
-    function showInput(Array $args = array())
+    function showInput(Array $data = array())
     {
-        extract($args);
-
-        if (empty($name)) $name = 'dd_'.$this->id;
-
-        // convert old Upload values if necessary
-        if (!isset($value)) $value = $this->getValue();
-
         // inform anyone that we're showing a file upload field, and that they need to use
         // <form ... enctype="multipart/form-data" ... > in their input form
         xarVarSetCached('Hooks.dynamicdata','withupload',1);
 
-        // set override for the upload/import paths if necessary
-        if (!empty($this->initialization_basedirectory) || !empty($this->initialization_import_directory)) {
-            $override = array();
-            if (!empty($this->initialization_basedirectory)) {
-                $override['upload'] = array('path' => $this->initialization_basedirectory);
+        if (!empty($data['name'])) $this->name = $data['name'];
+        if (empty($data['name'])) $data['name'] = 'dd_'.$this->id;
+        if (!empty($data['value'])) $this->value = $data['value'];
+        if (!empty($data['basedir'])) $this->initialization_basedirectory = $data['basedir'];
+        if (!empty($data['importdir'])) $this->initialization_import_directory = $data['importdir'];
+        if (!empty($data['file_maxsize'])) $this->validation_max_file_size = $data['file_maxsize'];
+        if (!empty($data['methods'])) {
+            if (!is_array($data['methods'])) {
+                $data['methods'] = explode(',',$data['methods']);                
             }
-            if (!empty($this->initialization_import_directory)) {
-                $override['import'] = array('path' => $this->initialization_import_directory);
+            $this->initialization_file_input_methods = $data['methods'];
+        }
+        
+        $descend = TRUE;
+
+        xarModAPILoad('uploads','user');
+        $data['getAction']['LOCAL']       = _UPLOADS_GET_LOCAL;
+        $data['getAction']['EXTERNAL']    = _UPLOADS_GET_EXTERNAL;
+        $data['getAction']['UPLOAD']      = _UPLOADS_GET_UPLOAD;
+        $data['getAction']['STORED']      = _UPLOADS_GET_STORED;
+        $data['getAction']['REFRESH']     = _UPLOADS_GET_REFRESH_LOCAL;
+    //    $data['id']                       = $id;
+
+        // Set up the trusted method
+        if (in_array(1,$this->initialization_file_input_methods)) {
+            if (!file_exists($this->initialization_import_directory)) {
+                $msg = xarML('Unable to find trusted directory #(1)', $trusted_dir);
+                throw new Exception($msg);
             }
+            $cacheExpire = xarModVars::get('uploads','file.cache-expire');
+
+        // CHECKME: use 'imports' name like in db_get_file() ?
+            // Note: for relativePath, the (main) import directory is replaced by /trusted in file_get_metadata()
+            $data['fileList']     = xarModAPIFunc('uploads', 'user', 'import_get_filelist',
+                                                  array('fileLocation' => $this->initialization_import_directory,
+                                                        'descend'      => $descend,
+                                                        // no need to analyze the mime type here
+                                                        'analyze'      => FALSE,
+                                                        // cache the results if configured
+                                                        'cacheExpire'  => $cacheExpire));
         } else {
-            $override = null;
+            $data['fileList']     = array();
         }
 
-        return xarModAPIFunc('uploads','admin','showinput',
-                             array('id' => $name, // not $this->id
-                                   'value' => $value,
-                                   'multiple' => $this->initialization_multiple_files,
-                                   'methods' => $this->initialization_file_input_methods,
-                                   'override' => $override,
-                                   'format' => 'upload',
-                                   'invalid' => $this->invalid));
+        // Set up the stored method
+        if (in_array(2,$this->initialization_file_input_methods)) {
+            // if there is an override['upload']['path'], try to use that
+            if (!empty($this->initialization_basedirectory)) {
+                if (file_exists($this->initialization_basedirectory)) {
+                    $data['storedList']   = xarModAPIFunc('uploads', 'user', 'db_get_file',
+                        // find all files located under that upload directory
+                        array('fileLocation' => $this->initialization_basedirectory . '/%'));
+                } else {
+                    // Note: the parent directory must already exist
+                    $result = @mkdir($this->initialization_basedirectory);
+                    if ($result) {
+                        // create dummy index.html in case it's web-accessible
+                        @touch($this->initialization_basedirectory . '/index.html');
+                        // the upload directory is still empty for the moment
+                        $data['storedList']   = array();
+                    } else {
+                    // CHECKME: fall back to common uploads directory, or fail here ?
+                    //  $data['storedList']   = xarModAPIFunc('uploads', 'user', 'db_getall_files');
+                        $msg = xarML('Unable to create an upload directory #(1)', $this->initialization_basedirectory);
+                        throw new Exception($msg);
+                    }
+                }
+            } else {
+                $data['storedList']   = xarModAPIFunc('uploads', 'user', 'db_getall_files');
+            }
+        } else {
+            $data['storedList']   = array();
+        }
+
+        // used to allow selection of multiple files
+        $data['multiple_' . $this->id] = $this->initialization_multiple_files;
+
+        if (!empty($this->value)) {
+            // We use array_filter to remove any values from
+            // the array that are empty, null, or false
+            $aList = array_filter(explode(';', $this->value));
+
+            if (is_array($aList) && count($aList)) {
+                $data['inodeType']['DIRECTORY']   = _INODE_TYPE_DIRECTORY;
+                $data['inodeType']['FILE']        = _INODE_TYPE_FILE;
+                $data['Attachments'] = xarModAPIFunc('uploads', 'user', 'db_get_file',
+                                                      array('fileId' => $aList));
+                $list = xarModAPIFunc('uploads','user','showoutput',
+                                      array('value' => $value, 'style' => 'icon', 'multiple' => $multiple));
+
+                foreach ($aList as $fileId) {
+                    if (!empty($data['storedList'][$fileId])) {
+                        $data['storedList'][$fileId]['selected'] = TRUE;
+                    } elseif (!empty($data['Attachments'][$fileId])) {
+                        // add it to the list (e.g. from another user's upload directory - we need this when editing)
+                        $data['storedList'][$fileId] = $data['Attachments'][$fileId];
+                        $data['storedList'][$fileId]['selected'] = TRUE;
+                    } else {
+                        // missing data for $fileId
+                    }
+                }
+            }
+        }
+        return parent::showInput($data);
     }
+    
     /**
      * Show the output: a link to the file
      */
-    function showOutput(Array $args = array())
+    function showOutput(Array $data = array())
     {
-        extract($args);
+            var_dump($data['value']);
+        if (empty($data['value'])) $data['value'] = $this->value;
+        if (empty($data['multiple'])) $data['multiple'] = $this->initialization_multiple_files;
+        if (empty($data['format'])) $data['format'] = 'fileupload';
 
-        // convert old Upload values if necessary
-        if (!isset($value)) {
-            $value = $this->getValue();
+        // The explode will create an empty indice,
+        // so we get rid of it with array_filter :-)
+        $data['value'] = array_filter(explode(';', $data['value']));
+        if (!$data['multiple']) $data['value'] = array(current($data['value']));
+
+        // make sure to remove any indices which are empty
+        $data['value'] = array_filter($data['value']);
+
+        if (empty($data['value'])) return array();
+
+    // FIXME: Quick Fix - Forcing return of raw array of fileId's with their metadata for now
+    // Rabbitt :: March 29th, 2004
+
+        if (!empty($data['outputstyle']) && $data['outputstyle'] = 'icon') {
+            if (is_array($data['value']) && count($data['value'])) {
+                $data['attachments'] = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $data['value']));
+            } else {
+                $data['attachments'] = '';
+            }
+
+        } else {
+            // return a raw array for now
+            var_dump(xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $data['value'])));
+            return xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $data['value']));
         }
 
-        return xarModAPIFunc('uploads','user','showoutput',
-                             array('value' => $value,
-                                   'format' => 'upload',
-                                   'multiple' => $this->initialization_multiple_files));
+        return parent::showOutput($data);
     }
 
     /**

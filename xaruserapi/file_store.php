@@ -145,7 +145,7 @@ function uploads_userapi_file_store( $args )
     }
     // If there were any errors generated while attempting to add this file,
     // we run through and grab them, adding them to this file
-    while (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
+/*    while (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
 
         $errorObj = xarCurrentError();
 
@@ -167,7 +167,7 @@ function uploads_userapi_file_store( $args )
         xarErrorHandled();
 
     }
-
+*/
     return $fileInfo;
 }
 ?>

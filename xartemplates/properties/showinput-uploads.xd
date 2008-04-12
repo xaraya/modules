@@ -1,25 +1,28 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:base-include-javascript filename="switchImport.js" />
+    <xar:base-include-javascript module="uploads" filename="switchImport.js" />
     <xar:style scope="module" module="uploads" file="uploads" />
     <div class="xar-form-container-after">
         <xar:mlstring>Attach file(s) from source:</xar:mlstring><br />
+        <xar:if condition="!empty($invalid)">
+            <span class="xar-error">#$invalid#</span>
+        </xar:if>
 
-        <xar:if condition="$methods['trusted'] eq TRUE">
+        <xar:if condition="in_array(1,$file_input_methods)">
             <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(1, #$getAction['LOCAL']#, '#$id#');true;" 
                name="attach_trusted_#$id#" title="#xarML('Attach file from Trusted Directory')#"><xar:mlstring>Trusted</xar:mlstring></a> |
         </xar:if>
 
-        <xar:if condition="$methods['external'] eq TRUE">
+        <xar:if condition="in_array(2,$file_input_methods)">
             <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(2, #$getAction['EXTERNAL']#, '#$id#');true;" 
                name="attach_external_#$id#" title="#xarML('Attach file from external source (http(s)|ftp)')#"><xar:mlstring>External</xar:mlstring></a> |
         </xar:if>
 
-        <xar:if condition="$methods['upload'] eq TRUE">
+        <xar:if condition="in_array(3,$file_input_methods)">
             <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(3, #$getAction['UPLOAD']#, '#$id#');true;" 
                name="attach_upload_#$id#" title="#xarML('Attach uploaded file')#"><xar:mlstring>Upload</xar:mlstring></a> |
         </xar:if>
 
-        <xar:if condition="$methods['stored'] eq TRUE AND (isset($storedList) AND count($storedList))">
+        <xar:if condition="in_array(4,$file_input_methods) AND (isset($storedList) AND count($storedList))">
             <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(4, #$getAction['STORED']#, '#$id#');true;" 
                name="attach_stored_#$id#" title="#xarML('Attach previously stored file')#"><xar:mlstring>Stored</xar:mlstring></a> |
         </xar:if>
@@ -48,6 +51,6 @@
         </div>
 
         <input type="hidden" name="#$id#_attach_type" id="#$id#_attach_type" value="#$getAction['STORED']#" />
+
     </div>
-    <xar:template file="dataproperty_additions" module="base" />
 </xar:template>
