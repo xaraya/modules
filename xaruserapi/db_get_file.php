@@ -57,8 +57,12 @@ function uploads_userapi_db_get_file( $args )
 
     if (isset($fileId)) {
         if (is_array($fileId)) {
-            $where[] = 'xar_fileEntry_id IN (' . implode(',', $fileId) . ')';
-        } elseif (!empty($fileId)) {
+            // ignore IDs which are not numbers, like filenames
+            $ids = array();
+            foreach ($fileId as $id) if (is_numeric($id)) $ids[] = $id;
+            if (empty($ids)) return array();
+            $where[] = 'xar_fileEntry_id IN (' . implode(',', $ids) . ')';
+        } elseif (!empty($fileId) && is_numeric($fileId)) {
             $where[] = "xar_fileEntry_id = $fileId";
         } else {
             // fileId == 0 so return an empty array.

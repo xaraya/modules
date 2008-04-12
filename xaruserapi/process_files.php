@@ -80,9 +80,6 @@ function uploads_userapi_process_files( $args )
             }
 
             $allow_duplicate = xarModVars::get('uploads', 'file.allow-duplicate-upload');
-            if (empty($allow_duplicate)) {
-                $allow_duplicate = 0;
-            }
 
             if (isset($upload['name']) && !empty($upload['name'])) {
                 // make sure we look in the right directory :-)

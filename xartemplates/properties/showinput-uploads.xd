@@ -53,4 +53,5 @@
         <input type="hidden" name="#$id#_attach_type" id="#$id#_attach_type" value="#$getAction['STORED']#" />
 
     </div>
+    <xar:template file="dataproperty_additions" module="base" />
 </xar:template>

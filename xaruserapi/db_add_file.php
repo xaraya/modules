@@ -46,7 +46,7 @@ function uploads_userapi_db_add_file( $args )
     }
 
     if (!isset($userId)) {
-        $userId = xarSession::getVar('uid');
+        $userId = xarSession::getVar('role_id');
     }
 
     if (!isset($fileStatus)) {

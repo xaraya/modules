@@ -33,7 +33,7 @@ class UploadProperty extends DataProperty
 
     public $display_size                      = 40;
     public $validation_max_file_size          = 0;
-//    public $validation_file_extensions      = 'gif|jpg|jpeg|png|bmp|pdf|doc|txt';
+    public $validation_file_extensions      = 'gif|jpg|jpeg|png|bmp|pdf|doc|txt';
 //    public $initialization_basepath         = null;
     public $initialization_basedirectory      = 'var/uploads';
     public $initialization_import_directory   = null;
@@ -228,6 +228,8 @@ class UploadProperty extends DataProperty
 
             if (isset($storeType)) $data['storeType'] = $storeType;
 
+            // This is where the actual saves happen
+            $data['override']['upload']['path'] = $this->initialization_basedirectory;
             $list = xarModAPIFunc('uploads','user','process_files', $data);
             $storeList = array();
             foreach ($list as $file => $fileInfo) {
@@ -242,13 +244,12 @@ class UploadProperty extends DataProperty
                 // We prepend a semicolon onto the list of fileId's so that
                 // we can tell, in the future, that this is a list of fileIds
                 // and not just a filename
-                $value = ';' . implode(';', $storeList);
+                $this->value = ';' . implode(';', $storeList);
 
                 // synchronize file associations with store list
                 if (!empty($moduleid) && !empty($itemid)) {
                     uploads_sync_associations($moduleid, $itemtype, $itemid, $storeList);
                 }
-
             } else {
                 $this->value = null;
                 return false;
@@ -256,7 +257,6 @@ class UploadProperty extends DataProperty
         } else {
             return false;
         }
-
         xarVarSetCached('DynamicData.Upload',$name,$this->value);
         return true;
     }
@@ -382,7 +382,6 @@ class UploadProperty extends DataProperty
      */
     function showOutput(Array $data = array())
     {
-            var_dump($data['value']);
         if (empty($data['value'])) $data['value'] = $this->value;
         if (empty($data['multiple'])) $data['multiple'] = $this->initialization_multiple_files;
         if (empty($data['format'])) $data['format'] = 'fileupload';
@@ -395,22 +394,25 @@ class UploadProperty extends DataProperty
         // make sure to remove any indices which are empty
         $data['value'] = array_filter($data['value']);
 
-        if (empty($data['value'])) return array();
-
-    // FIXME: Quick Fix - Forcing return of raw array of fileId's with their metadata for now
-    // Rabbitt :: March 29th, 2004
-
-        if (!empty($data['outputstyle']) && $data['outputstyle'] = 'icon') {
-            if (is_array($data['value']) && count($data['value'])) {
-                $data['attachments'] = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $data['value']));
-            } else {
-                $data['attachments'] = '';
+        if (is_array($data['value']) && count($data['value'])) {
+            $data['attachments'] = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $data['value']));
+            if (empty($data['attachments'])) {
+                // We probably have just a single file name
+                $data['attachments'][] = array('fileDownload' => $this->initialization_basedirectory . "/" . $data['value'][0],
+                                             'fileName' => $data['value'][0],
+                                             'DownloadLabel' => $data['value'][0],
+                                             );
             }
-
         } else {
-            // return a raw array for now
-            var_dump(xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $data['value'])));
-            return xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $data['value']));
+            if (empty($data['value'])) {
+                $data['attachments'] = array();
+            } else {
+                 // We probably have just a single file name
+                $data['attachments'][] = array('fileDownload' => $this->initialization_basedirectory . "/" . $data['value'][0],
+                                             'fileName' => $data['value'][0],
+                                             'DownloadLabel' => $data['value'][0],
+                                             );
+           }
         }
 
         return parent::showOutput($data);
@@ -447,6 +449,7 @@ class UploadProperty extends DataProperty
     }
 
 
+/*
     function parseValidation($validation = '')
     {
         list($multiple, $methods, $basedir, $importdir) = xarModAPIFunc('uploads', 'admin', 'dd_configure', $validation);
@@ -541,5 +544,6 @@ class UploadProperty extends DataProperty
         // tell the calling function that everything is OK
         return true;
     }
+    */
 }
 ?>
