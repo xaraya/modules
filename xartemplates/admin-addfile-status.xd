@@ -1,156 +1,156 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>File Uploads Administration</xar:mlstring>
-    </span>
-</div>
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>File Uploads Administration</xar:mlstring>
+        </span>
+    </div>
 
-<div class="xar-mod-body">
-   <xar:template type="module" file="admin-menu" />
-    <h2>
-        <xar:mlstring>Upload/Import Status</xar:mlstring>
-    </h2>
+    <div class="xar-mod-body">
+       <xar:template type="module" file="admin-menu" />
+        <h2>
+            <xar:mlstring>Upload/Import Status</xar:mlstring>
+        </h2>
 
-    <table width="100%">
-    <tr>
-        <td colspan="2">
-            <h3>
-                <xar:mlstring>File Upload/Import Status List</xar:mlstring>
-            </h3>
-        </td>
-    </tr>
-    <tr>
-        <td>
-               <table width="100%">
-                <tr>
-                    <th><xar:mlstring>File Name</xar:mlstring></th>
-                    <th><xar:mlstring>Status</xar:mlstring></th>
-                </tr>
-                <xar:loop name="$fileList">
+        <table width="100%">
+        <tr>
+            <td colspan="2">
+                <h3>
+                    <xar:mlstring>File Upload/Import Status List</xar:mlstring>
+                </h3>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                   <table width="100%">
                     <tr>
-                        <td width="25%" class="xar-accent">
-                            #$loop:item['fileName']#
-                        </td>
-                        <xar:if condition="(($loop:index + 1) % 2)">
-                            <xar:if condition="isset($loop:item['fileId'])">
-                                <td width="75%" class="xar-norm">
-                                    <xar:mlstring>
-                                        File has been added with ID: 
-                                    </xar:mlstring> #$loop:item['fileId']#
-                                    <br />
-                                    <xar:mlstring>
-                                        This ID can be used in the content field of any module that this module is hooked to,
-                                        in the format: 
-                                    </xar:mlstring>
-                                        <pre>##file:#$loop:item['fileId']###</pre>
-                                    <xar:mlstring>
-                                        Doing so will create a link to the item for downloading purposes.
-                                    </xar:mlstring>
-                                </td>
-                            <xar:elseif condition="isset($loop:item['errors'])" />
-                                <td width="75%" class="xar-norm">
-                                    <strong>
-                                        <xar:mlstring>
-                                            The following errors were detected while attempting to add this file:
-                                        </xar:mlstring>
-                                    </strong>
-                                    <br />
-                                    <table width="100%" cellspacing="1" cellpadding="1" border="0">
-                                        <tr>
-                                            <xar:loop name="$loop:item['errors']">
-                                                <xar:if condition="(($loop:index + 1) % 2)">
-                                                    <td width="65%" class="xar-norm">
-                                                        &#160;
-                                                        #$loop:item['errorMesg']#
-                                                    </td>
-                                                <xar:else />
-                                                    <td width="65%" class="xar-accent">
-                                                        &#160;
-                                                        #$loop:item['errorMesg']#
-                                                    </td>
-                                                </xar:if>                                                
-                                            </xar:loop>
-                                        </tr>
-                                    </table>
-                                </td>
-                            <xar:else />
-                                <td width="75%" class="xar-accent">
-                                    <xar:mlstring>
-                                        File not added and no errors were detected. Please submit a bug report 
-                                        as you might have found a bug. (<a href="http://bugs.xaraya.com">bugs.xaraya.com</a>)
-                                    </xar:mlstring>
-                                    <br />
-                                </td>
-                            </xar:if>
-                        <xar:else />
-                            <xar:if condition="isset($loop:item['fileId'])">
-                                <td width="75%" class="xar-accent">
-                                    <xar:mlstring>
-                                        File has been added with ID: 
-                                    </xar:mlstring> #$loop:item['fileId']#
-                                    <br />
-                                    <xar:mlstring>
-                                        This ID can be used in the content field of any module that this module is hooked to,
-                                        in the format: 
-                                    </xar:mlstring>
-                                        <pre>##file:#$loop:item['fileId']###</pre>
-                                    <xar:mlstring>
-                                        Doing so will create a link to the item for downloading purposes.
-                                    </xar:mlstring>
-                                </td>
-                            <xar:elseif condition="isset($loop:item['errors'])" />
-                                <td width="75%" class="xar-accent">
-                                    <strong>
-                                        <xar:mlstring>
-                                            The following errors were detected while attempting to add this file:
-                                        </xar:mlstring>
-                                    </strong>
-                                    <br />
-                                    <table width="100%" cellspacing="1" cellpadding="1" border="0">
-                                        <tr>
-                                            <xar:loop name="$loop:item['errors']">
-                                                <xar:if condition="(($loop:index + 1) % 2)">
-                                                    <td width="65%" class="xar-norm">
-                                                        &#160;
-                                                        #$loop:item['errorMesg']#
-                                                    </td>
-                                                <xar:else />
-                                                    <td width="65%" class="xar-accent">
-                                                        &#160;
-                                                        #$loop:item['errorMesg']#
-                                                    </td>
-                                                </xar:if>                                                
-                                            </xar:loop>
-                                        </tr>
-                                    </table>
-                                </td>
-                            <xar:else />
-                                <td width="75%" class="xar-accent">
-                                    <xar:mlstring>
-                                        File not added and no errors were detected. Please submit a bug report 
-                                        as you might have found a bug. (<a href="http://bugs.xaraya.com">bugs.xaraya.com</a>)
-                                    </xar:mlstring>
-                                    <br />
-                                </td>
-                            </xar:if>
-                        </xar:if>
+                        <th><xar:mlstring>File Name</xar:mlstring></th>
+                        <th><xar:mlstring>Status</xar:mlstring></th>
                     </tr>
-                </xar:loop>
-            </table>
-            <br />
-            <a href="#xarModURL('uploads', 'admin', 'get_files')#" alt="#xarML('Add more files.')#">
-                <xar:mlstring>
-                    Add Files
-                </xar:mlstring>
-            </a>
-            &#160;|&#160;
-            <a href="#xarModURL('uploads', 'admin', 'view')#" alt="#xarML('View files.')#">
-                <xar:mlstring>
-                    View files
-                </xar:mlstring>
-            </a>
-        </td>
-    </tr>
-</table>
-</div>
+                    <xar:loop name="$fileList">
+                        <tr>
+                            <td width="25%" class="xar-accent">
+                                #$loop:item['fileName']#
+                            </td>
+                            <xar:if condition="(($loop:index + 1) % 2)">
+                                <xar:if condition="isset($loop:item['fileId'])">
+                                    <td width="75%" class="xar-norm">
+                                        <xar:mlstring>
+                                            File has been added with ID: 
+                                        </xar:mlstring> #$loop:item['fileId']#
+                                        <br />
+                                        <xar:mlstring>
+                                            This ID can be used in the content field of any module that this module is hooked to,
+                                            in the format: 
+                                        </xar:mlstring>
+                                            <pre>##file:#$loop:item['fileId']###</pre>
+                                        <xar:mlstring>
+                                            Doing so will create a link to the item for downloading purposes.
+                                        </xar:mlstring>
+                                    </td>
+                                <xar:elseif condition="isset($loop:item['errors'])" />
+                                    <td width="75%" class="xar-norm">
+                                        <strong>
+                                            <xar:mlstring>
+                                                The following errors were detected while attempting to add this file:
+                                            </xar:mlstring>
+                                        </strong>
+                                        <br />
+                                        <table width="100%" cellspacing="1" cellpadding="1" border="0">
+                                            <tr>
+                                                <xar:loop name="$loop:item['errors']">
+                                                    <xar:if condition="(($loop:index + 1) % 2)">
+                                                        <td width="65%" class="xar-norm">
+                                                            &#160;
+                                                            #$loop:item['errorMesg']#
+                                                        </td>
+                                                    <xar:else />
+                                                        <td width="65%" class="xar-accent">
+                                                            &#160;
+                                                            #$loop:item['errorMesg']#
+                                                        </td>
+                                                    </xar:if>                                                
+                                                </xar:loop>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                <xar:else />
+                                    <td width="75%" class="xar-accent">
+                                        <xar:mlstring>
+                                            File not added and no errors were detected. Please submit a bug report 
+                                            as you might have found a bug. (<a href="http://bugs.xaraya.com">bugs.xaraya.com</a>)
+                                        </xar:mlstring>
+                                        <br />
+                                    </td>
+                                </xar:if>
+                            <xar:else />
+                                <xar:if condition="isset($loop:item['fileId'])">
+                                    <td width="75%" class="xar-accent">
+                                        <xar:mlstring>
+                                            File has been added with ID: 
+                                        </xar:mlstring> #$loop:item['fileId']#
+                                        <br />
+                                        <xar:mlstring>
+                                            This ID can be used in the content field of any module that this module is hooked to,
+                                            in the format: 
+                                        </xar:mlstring>
+                                            <pre>##file:#$loop:item['fileId']###</pre>
+                                        <xar:mlstring>
+                                            Doing so will create a link to the item for downloading purposes.
+                                        </xar:mlstring>
+                                    </td>
+                                <xar:elseif condition="isset($loop:item['errors'])" />
+                                    <td width="75%" class="xar-accent">
+                                        <strong>
+                                            <xar:mlstring>
+                                                The following errors were detected while attempting to add this file:
+                                            </xar:mlstring>
+                                        </strong>
+                                        <br />
+                                        <table width="100%" cellspacing="1" cellpadding="1" border="0">
+                                            <tr>
+                                                <xar:loop name="$loop:item['errors']">
+                                                    <xar:if condition="(($loop:index + 1) % 2)">
+                                                        <td width="65%" class="xar-norm">
+                                                            &#160;
+                                                            #$loop:item['errorMesg']#
+                                                        </td>
+                                                    <xar:else />
+                                                        <td width="65%" class="xar-accent">
+                                                            &#160;
+                                                            #$loop:item['errorMesg']#
+                                                        </td>
+                                                    </xar:if>                                                
+                                                </xar:loop>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                <xar:else />
+                                    <td width="75%" class="xar-accent">
+                                        <xar:mlstring>
+                                            File not added and no errors were detected. Please submit a bug report 
+                                            as you might have found a bug. (<a href="http://bugs.xaraya.com">bugs.xaraya.com</a>)
+                                        </xar:mlstring>
+                                        <br />
+                                    </td>
+                                </xar:if>
+                            </xar:if>
+                        </tr>
+                    </xar:loop>
+                </table>
+                <br />
+                <a href="#xarModURL('uploads', 'admin', 'get_files')#" alt="#xarML('Add more files.')#">
+                    <xar:mlstring>
+                        Add Files
+                    </xar:mlstring>
+                </a>
+                &#160;|&#160;
+                <a href="#xarModURL('uploads', 'admin', 'view')#" alt="#xarML('View files.')#">
+                    <xar:mlstring>
+                        View files
+                    </xar:mlstring>
+                </a>
+            </td>
+        </tr>
+    </table>
+    </div>
 </xar:template >

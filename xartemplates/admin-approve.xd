@@ -14,7 +14,7 @@
                     <label for="approval" class="xar-form-label"">
                         <xar:mlstring>Are you sure?</xar:mlstring>
                     </label>
-                         <xar:set name="$MLApprove"><xar:mlstring>Approve</xar:mlstring></xar:set>                    
+                         <xar:set name="MLApprove"><xar:mlstring>Approve</xar:mlstring></xar:set>                    
         </fieldset>
         
         <div class="xar-form-input-wrapper">

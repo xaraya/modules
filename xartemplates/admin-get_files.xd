@@ -6,7 +6,7 @@
 </div>
 <div class="xar-mod-body">
    <xar:template type="module" file="admin-menu" />
-    <xar:set name="$orientation">'horizontal'</xar:set>
+    <xar:set name="orientation">'horizontal'</xar:set>
     <h2><xar:mlstring>Upload File</xar:mlstring></h2>
     <xar:template file="upload-form" type="module" />
 

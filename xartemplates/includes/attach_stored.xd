@@ -2,7 +2,7 @@
 <xar:if condition="isset($storedList) AND count($storedList)">
         <xar:mlstring>Attach previously stored file:</xar:mlstring><br />
 
-        <xar:set name="$multiple"> 
+        <xar:set name="multiple"> 
             "multiple_{$id}"
         </xar:set>
         
