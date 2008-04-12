@@ -17,7 +17,6 @@
       <xar:comment>TODO: split this, with an included template so this file can be valid xml</xar:comment>
       <xar:if condition="isset($fileList) AND count($fileList)">
         <form name="local_import_form" id="local_import_form" action="#$local_import_post_url#" method="post">
-      </xar:if>
       <table summary="Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent xar-accent-outline">
         <tr>
           <th width="10%"><xar:mlstring>Select</xar:mlstring></th>
@@ -51,7 +50,7 @@
             </xar:if>
           </td>
           <td width="65%" align="left">&#160;
-            <img src="#xarTplGetImage('folder.png', 'uploads')#" width="16" height="18">&#160;
+            <img src="#xarTplGetImage('folder.png', 'uploads')#" width="16" height="18" />&#160;
               <xar:mlstring><strong>Current Folder</strong></xar:mlstring>
           </td>
           <td width="25%" align="right">
@@ -75,7 +74,7 @@
                   <a href="#$local_import_post_url#&amp;inode=#$loop:item['fileName']#&amp;action=#$getAction['REFRESH']#"
                      alt="#xarML('Open Folder')#"
                      title="#xarML('Open Folder')#">
-                    <img src="#xarTplGetImage('folder.png', 'uploads')#" width="16" height="18">
+                    <img src="#xarTplGetImage('folder.png', 'uploads')#" width="16" height="18" />
                       <strong>#$loop:item['fileName']#</strong>
                   </a>
                   <xar:else />
@@ -107,5 +106,6 @@
       </table>
       <br />                    
       </form>
+    </xar:if>
     </div>
 </xar:template>
