@@ -359,7 +359,7 @@ class UploadProperty extends DataProperty
                 $data['Attachments'] = xarModAPIFunc('uploads', 'user', 'db_get_file',
                                                       array('fileId' => $aList));
                 $list = xarModAPIFunc('uploads','user','showoutput',
-                                      array('value' => $value, 'style' => 'icon', 'multiple' => $multiple));
+                                      array('value' => $this->value, 'style' => 'icon', 'multiple' => $multiple));
 
                 foreach ($aList as $fileId) {
                     if (!empty($data['storedList'][$fileId])) {
