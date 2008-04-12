@@ -87,11 +87,7 @@
         </xar:loop>
                 <tr>
                     <td colspan="7" class="xar-norm xar-align-center" >
-<script type="text/javascript"><![CDATA[
-    document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewfiles'],true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
-    document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewfiles'],false)\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
-]]>
-</script>
+[&#160;<a href="javascript:xar_base_checkall(document.forms['viewfiles'],true)"><xar:mlstring>Check All</xar:mlstring></a>&#160;|&#160;<a href="javascript:xar_base_checkall(document.forms['viewfiles'],false)"><xar:mlstring>Uncheck All</xar:mlstring></a>&#160;]
              #$pager#
                     </td>
                 </tr>
