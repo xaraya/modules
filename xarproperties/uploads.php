@@ -24,7 +24,7 @@ sys::import('modules.base.xarproperties.fileupload');
  *
  * @package dynamicdata
  */
-class UploadProperty extends DataProperty
+class UploadProperty extends FileUploadProperty
 {
     public $id         = 105;
     public $name       = 'uploads';
@@ -33,7 +33,6 @@ class UploadProperty extends DataProperty
 
     public $display_size                      = 40;
     public $validation_max_file_size          = 0;
-    public $validation_file_extensions      = 'gif|jpg|jpeg|png|bmp|pdf|doc|txt';
 //    public $initialization_basepath         = null;
     public $initialization_basedirectory      = 'var/uploads';
     public $initialization_import_directory   = null;
@@ -80,26 +79,14 @@ class UploadProperty extends DataProperty
         $this->validation_max_file_size = xarModVars::get('uploads', 'file.maxsize');
         $this->initialization_import_directory = xarModVars::get('uploads', 'path.imports-directory');
     }
-    /**
-     * Check the input into the uploads property
-     */
-    function checkInput($name='', $value = null)
-    {
-        if (empty($name)) $name = 'dd_'.$this->id;
 
-        // store the fieldname for validations who need them (e.g. file uploads)
-        $this->fieldname = $name;
-        if (!isset($value)) {
-            if (!xarVarFetch($name, 'isset', $value,  NULL, XARVAR_DONT_SET)) {return;}
-        }
-        return $this->validateValue($value);
-    }
     /**
      * Validate the value entered
      */
     function validateValue($value = null)
     {
-        if (!parent::validateValue($value)) return false;
+        // TODO: move some of this to the parent
+        //if (!parent::validateValue($value)) return false;
 
         if (isset($this->fieldname)) $name = $this->fieldname;
         else $name = 'dd_'.$this->id;
@@ -135,6 +122,11 @@ class UploadProperty extends DataProperty
 
                 $upload         =& $_FILES[$name . '_attach_upload'];
                 $data['upload'] =& $_FILES[$name . '_attach_upload'];
+                if (!$this->validateExtension($upload['name'])) {
+                    $this->invalid = xarML('The file type is not allowed');
+                    $this->value = null;
+                    return false;
+                }
                 break;
             case _UPLOADS_GET_EXTERNAL:
                 // minimum external import link must be: ftp://a.ws  <-- 10 characters total
@@ -374,7 +366,8 @@ class UploadProperty extends DataProperty
                 }
             }
         }
-        return parent::showInput($data);
+        // Jump over the direct parent for now
+        return DataProperty::showInput($data);
     }
     
     /**
@@ -415,7 +408,8 @@ class UploadProperty extends DataProperty
            }
         }
 
-        return parent::showOutput($data);
+        // Jump over the direct parent because it uses text string field names as file entries
+        return DataProperty::showOutput($data);
     }
 
     /**

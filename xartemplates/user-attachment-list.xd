@@ -1,7 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="isset($Attachments) AND is_array($Attachments) AND count($Attachments)">
     <xar:if condition="!empty($format) and $format eq 'textupload'">
-        <xar:loop name="$Attachments">#file:#$loop:item['fileId']## </xar:loop>
+        <xar:loop name="$Attachments">file:&#160;#$loop:item['fileId']#&#160;</xar:loop>
     <xar:else/>
         <xar:style module="uploads" scope="module" file="uploads" />
         <xar:loop name="$Attachments">
