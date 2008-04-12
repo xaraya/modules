@@ -3,10 +3,6 @@
     <xar:style scope="module" module="uploads" file="uploads" />
     <div class="xar-form-container-after">
         <xar:mlstring>Attach file(s) from source:</xar:mlstring><br />
-        <xar:if condition="!empty($invalid)">
-            <span class="xar-error">#$invalid#</span>
-        </xar:if>
-
         <xar:if condition="in_array(1,$file_input_methods)">
             <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(1, #$getAction['LOCAL']#, '#$id#');true;" 
                name="attach_trusted_#$id#" title="#xarML('Attach file from Trusted Directory')#"><xar:mlstring>Trusted</xar:mlstring></a> |
@@ -44,6 +40,9 @@
 
         <div id="#$id#_attach_upload" style="display: none;">
             <xar:template file="attach_upload" type="module" />
+            <xar:if condition="!empty($file_extensions)">
+                <br /><xar:ml><xar:mlstring>Allowed file types : #(1)</xar:mlstring><xar:mlvar>#$file_extensions#</xar:mlvar></xar:ml>
+            </xar:if>
         </div>
 
         <div id="#$id#_attach_stored" style="display: none;">

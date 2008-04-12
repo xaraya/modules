@@ -18,7 +18,7 @@
  * @subpackage properties
  */
 /* Include parent class */
-sys::import('modules.dynamicdata.class.properties');
+sys::import('modules.base.xarproperties.fileupload');
 /**
  * Class to handle file upload properties
  *
@@ -130,7 +130,7 @@ class UploadProperty extends DataProperty
 
         switch ($data['action']) {
             case _UPLOADS_GET_UPLOAD:
-                if (!xarVarFetch('MAX_FILE_SIZE', "int::$this->validation_max_file_size", $maxsize)) return;
+                if (!xarVarFetch('MAX_FILE_SIZE', "int::$this->validation_max_file_size", $this->validation_max_file_size)) return;
                 if (!xarVarValidate('array:1:', $_FILES[$name . '_attach_upload'])) return;
 
                 $upload         =& $_FILES[$name . '_attach_upload'];
@@ -236,11 +236,11 @@ class UploadProperty extends DataProperty
                 if (!isset($fileInfo['errors'])) {
                     $storeList[] = $fileInfo['fileId'];
                 } else {
-                    $msg = xarML('Error Found: #(1)', $fileInfo['errors'][0]['errorMesg']);
-                    throw new Exception($msg);             
+                    $this->invalid .= xarML('Invalid upload: #(1)', $fileInfo['fileName'] . " " . $fileInfo['errors'][0]['errorMesg']);
                 }
             }
-            if (is_array($storeList) && count($storeList)) {
+            if (!empty($this->invalid)) return false;
+            if (!empty($storeList)) {
                 // We prepend a semicolon onto the list of fileId's so that
                 // we can tell, in the future, that this is a list of fileIds
                 // and not just a filename

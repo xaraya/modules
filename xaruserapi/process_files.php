@@ -221,7 +221,6 @@ function uploads_userapi_process_files( $args )
                                       array('fileInfo'  => $fileInfo,
                                             'storeType' => $storeType));
     }
-
     return $storeList;
 }
 
