@@ -1,126 +1,126 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>File Uploads Administration</xar:mlstring>
-    </span>
-</div>
-<div class="xar-mod-body">
-   <xar:template type="module" file="admin-menu" />
-   <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
-   <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>File Uploads Administration</xar:mlstring>
+        </span>
+    </div>
+    <div class="xar-mod-body">
+       <xar:template type="module" file="admin-menu" />
+       <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+       <h2><xar:mlstring>Overview</xar:mlstring></h2>
 
-   <h3><xar:mlstring>What is it?</xar:mlstring></h3>
-        <p><em><xar:mlstring>Uploads is a Xaraya Utility Module.</xar:mlstring></em>
-            <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
-            <ul>
-                <li><xar:mlstring>Allows for the importing of files into the Xaraya system either locally or externally.</xar:mlstring></li>
-                <li><xar:mlstring>Allows the managing of access to files via privileges.</xar:mlstring></li>
-                <li>...</li>
-            </ul>
-        </p>
-        <h2><xar:mlstring>How to use it?</xar:mlstring></h2>
-        <h3>
-            <xar:mlstring>External Imports and Uploads</xar:mlstring>
-        </h3>
-        <p>
-            <xar:mlstring>
-                Files that are uploaded or imported from external locations can be saved in the database (DB)
-                or stored in the filesystem (FS). Use the options (FS/DB) under each form to select the
-                storage location for your file.
-            </xar:mlstring>
-        </p>
-        <p>
-            <xar:mlstring>
-                The import engine will try to make a best guess for the name of the file you are trying to import.
-                In the event that it cannot figure out what the file name is it will use the following methods:
-            </xar:mlstring>
-            <ul>
-                <li>
-                    <xar:mlstring><strong>HTTP and HTTPS</strong></xar:mlstring>
-                    <p>
-                        <xar:mlstring>
-                            In the event that the filename for an HTTP import can not be determined, the file will be
-                            named based on the host name of the server the file was imported from. For example, importing
-                            http://www.xaraya.com/ would return a file with the name of www_xaraya_com.html
-                        </xar:mlstring>
-                    </p>
-                </li>
-                <li>
-                    <strong>FTP</strong>
-                    <p>
-                        <xar:mlstring>
-                            Due to the underlying nature of the FTP protocol, it is impossible to successfully access a file
-                            on a system without providing a viable file name. In this case, no file name 'guessing' will be
-                            attempted and the import will fail.
-                        </xar:mlstring>
-                    </p>
-                </li>
-            </ul>
-        </p>
+       <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+            <p><em><xar:mlstring>Uploads is a Xaraya Utility Module.</xar:mlstring></em>
+                <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
+                <ul>
+                    <li><xar:mlstring>Allows for the importing of files into the Xaraya system either locally or externally.</xar:mlstring></li>
+                    <li><xar:mlstring>Allows the managing of access to files via privileges.</xar:mlstring></li>
+                    <li>...</li>
+                </ul>
+            </p>
+            <h2><xar:mlstring>How to use it?</xar:mlstring></h2>
+            <h3>
+                <xar:mlstring>External Imports and Uploads</xar:mlstring>
+            </h3>
+            <p>
+                <xar:mlstring>
+                    Files that are uploaded or imported from external locations can be saved in the database (DB)
+                    or stored in the filesystem (FS). Use the options (FS/DB) under each form to select the
+                    storage location for your file.
+                </xar:mlstring>
+            </p>
+            <p>
+                <xar:mlstring>
+                    The import engine will try to make a best guess for the name of the file you are trying to import.
+                    In the event that it cannot figure out what the file name is it will use the following methods:
+                </xar:mlstring>
+                <ul>
+                    <li>
+                        <xar:mlstring><strong>HTTP and HTTPS</strong></xar:mlstring>
+                        <p>
+                            <xar:mlstring>
+                                In the event that the filename for an HTTP import can not be determined, the file will be
+                                named based on the host name of the server the file was imported from. For example, importing
+                                http://www.xaraya.com/ would return a file with the name of www_xaraya_com.html
+                            </xar:mlstring>
+                        </p>
+                    </li>
+                    <li>
+                        <strong>FTP</strong>
+                        <p>
+                            <xar:mlstring>
+                                Due to the underlying nature of the FTP protocol, it is impossible to successfully access a file
+                                on a system without providing a viable file name. In this case, no file name 'guessing' will be
+                                attempted and the import will fail.
+                            </xar:mlstring>
+                        </p>
+                    </li>
+                </ul>
+            </p>
 
-        <h3>
-            <xar:mlstring>Local Imports Sandbox</xar:mlstring>
-        </h3>
-        <p>
-            <xar:mlstring>
-                Files can be inserted into your local import sandbox and used immediately by users with sufficient access to
-                add files and attach them to hooked objects (articles, comments, etc). Files you place in your local import
-                sandbox can be seen in the 'Import Local Files' form immediately upon adding them.
-            </xar:mlstring>
-        </p>
-        <h3>
-            <xar:mlstring>Privileges</xar:mlstring>
-        </h3>
-        <p>
-            <xar:mlstring>
-                Uploads has the following privilege levels:
-            </xar:mlstring>
-            <ul>
-                <li>ViewUploads with the READ level of access to a file</li>
-                <li>AddUploads with the ADD level of access to add files to the uploads system</li>
-                <li>EditUploads with the EDIT level to edit files that have been added to the uploads system</li>
-                <li>DeleteUploads with the Delete level to remove files from the uploads system.</li>
-                <li>AdminUploads for the admin access. Only site administrators need this level</li>
-            </ul>
-            <xar:mlstring>
-            A role needs the ViewUploads privilege to view a file that has been uploaded and approved by the admin/editor.
-            If the file has not been approved, but submitted, the Edit privilege is needed to access the file.
-            You can use the autoapprove option to automatically approve all files uploaded by a certain user.
-            </xar:mlstring>
-        </p>
-        <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
-        <p><xar:mlstring>There are no included blocks.</xar:mlstring></p>
-        <br />
+            <h3>
+                <xar:mlstring>Local Imports Sandbox</xar:mlstring>
+            </h3>
+            <p>
+                <xar:mlstring>
+                    Files can be inserted into your local import sandbox and used immediately by users with sufficient access to
+                    add files and attach them to hooked objects (articles, comments, etc). Files you place in your local import
+                    sandbox can be seen in the 'Import Local Files' form immediately upon adding them.
+                </xar:mlstring>
+            </p>
+            <h3>
+                <xar:mlstring>Privileges</xar:mlstring>
+            </h3>
+            <p>
+                <xar:mlstring>
+                    Uploads has the following privilege levels:
+                </xar:mlstring>
+                <ul>
+                    <li>ViewUploads with the READ level of access to a file</li>
+                    <li>AddUploads with the ADD level of access to add files to the uploads system</li>
+                    <li>EditUploads with the EDIT level to edit files that have been added to the uploads system</li>
+                    <li>DeleteUploads with the Delete level to remove files from the uploads system.</li>
+                    <li>AdminUploads for the admin access. Only site administrators need this level</li>
+                </ul>
+                <xar:mlstring>
+                A role needs the ViewUploads privilege to view a file that has been uploaded and approved by the admin/editor.
+                If the file has not been approved, but submitted, the Edit privilege is needed to access the file.
+                You can use the autoapprove option to automatically approve all files uploaded by a certain user.
+                </xar:mlstring>
+            </p>
+            <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+            <p><xar:mlstring>There are no included blocks.</xar:mlstring></p>
+            <br />
 
-        <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
-        <p>
-            <xar:mlstring>The Uploads module does provide a transform hook. You can activate the uploads hook for a module or itemtype by going to </xar:mlstring>
-                 <a href="&xar-modurl-modules-admin-hooks;&amp;hook=uploads"><xar:mlstring>Modules - Configure Hooks - Uploads Module</xar:mlstring></a>.
-             <xar:mlstring> From there check the radio buttons next to the modules and itemtypes where you wish to activate the uploads module hooks.</xar:mlstring><br />
-             <xar:mlstring>If you combine the hook with the upload property, then you can add parameters to the dynamic property. Set the options with:</xar:mlstring>
-             <em>single;methods(-trusted,+external,+upload,+stored);basedir(/tothedir/uploads/{user});importdir(/tothedir/uploads/{user})</em><br />
-             <xar:mlstring>This option will allow for a single upload, with external, uploaded and stored files, but not trusted ones. The basedir to look for stored files is the user dir, and new files will be placed there as well.</xar:mlstring>
+            <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+            <p>
+                <xar:mlstring>The Uploads module does provide a transform hook. You can activate the uploads hook for a module or itemtype by going to </xar:mlstring>
+                     <a href="&xar-modurl-modules-admin-hooks;&amp;hook=uploads"><xar:mlstring>Modules - Configure Hooks - Uploads Module</xar:mlstring></a>.
+                 <xar:mlstring> From there check the radio buttons next to the modules and itemtypes where you wish to activate the uploads module hooks.</xar:mlstring><br />
+                 <xar:mlstring>If you combine the hook with the upload property, then you can add parameters to the dynamic property. Set the options with:</xar:mlstring>
+                 <em>single;methods(-trusted,+external,+upload,+stored);basedir(/tothedir/uploads/{user});importdir(/tothedir/uploads/{user})</em><br />
+                 <xar:mlstring>This option will allow for a single upload, with external, uploaded and stored files, but not trusted ones. The basedir to look for stored files is the user dir, and new files will be placed there as well.</xar:mlstring>
 
-        </p>
-        <p>
-            <xar:mlstring>The Uploads module does also provide a display hook with waiting content waiting content hook by going to </xar:mlstring>
-                 <a href="&xar-modurl-modules-admin-hooks;&amp;hook=uploads"><xar:mlstring>Modules - Configure Hooks - Uploads Module</xar:mlstring></a>.
-             <xar:mlstring>From there check the radio buttons next to the base module.</xar:mlstring><br />
-             <xar:mlstring>Then make sure you have the waiting content block available on your site. When a file is in submitted status, it will be shown in the block.</xar:mlstring>
+            </p>
+            <p>
+                <xar:mlstring>The Uploads module does also provide a display hook with waiting content waiting content hook by going to </xar:mlstring>
+                     <a href="&xar-modurl-modules-admin-hooks;&amp;hook=uploads"><xar:mlstring>Modules - Configure Hooks - Uploads Module</xar:mlstring></a>.
+                 <xar:mlstring>From there check the radio buttons next to the base module.</xar:mlstring><br />
+                 <xar:mlstring>Then make sure you have the waiting content block available on your site. When a file is in submitted status, it will be shown in the block.</xar:mlstring>
 
+            </p>
+        <h3><xar:mlstring>Further Information</xar:mlstring></h3>
+        <p>
+             <xar:mlstring>Further information on the Uploads module can be found at</xar:mlstring>
         </p>
-    <h3><xar:mlstring>Further Information</xar:mlstring></h3>
-    <p>
-         <xar:mlstring>Further information on the Uploads module can be found at</xar:mlstring>
-    </p>
-    <ul>
-        <li><xar:mlstring>Uploads Extension page at</xar:mlstring> <a title="#xarML('Uploads Module - Xaraya Extension 666')#" href="http://www.xaraya.com/index.php/release/36.html">Xaraya Extension and Releases</a>.
-            <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
-        </li>
-        <li><xar:mlstring>Related tutorials and documentation on Uploads found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/uploads/" title="#xarML('Related documentation on Uploads')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a></li>
-    </ul>
-    <p class="xar-sub">
-        <strong>&#160;<xar:mlstring>Uploads Module Overview</xar:mlstring></strong><br />&#160;<xar:mlstring>Version</xar:mlstring> 1.0.0&#160; 2006-03-08
-    </p>
-</div>
+        <ul>
+            <li><xar:mlstring>Uploads Extension page at</xar:mlstring> <a title="#xarML('Uploads Module - Xaraya Extension 666')#" href="http://www.xaraya.com/index.php/release/36.html">Xaraya Extension and Releases</a>.
+                <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+            </li>
+            <li><xar:mlstring>Related tutorials and documentation on Uploads found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/uploads/" title="#xarML('Related documentation on Uploads')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a></li>
+        </ul>
+        <p class="xar-sub">
+            <strong>&#160;<xar:mlstring>Uploads Module Overview</xar:mlstring></strong><br />&#160;<xar:mlstring>Version</xar:mlstring> 1.0.0&#160; 2006-03-08
+        </p>
+    </div>
 </xar:template >

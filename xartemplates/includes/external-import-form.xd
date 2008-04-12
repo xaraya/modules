@@ -1,28 +1,28 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<div>
-    <form id="external_import_form" action="#$external_import_post_url#" method="post">
-        <table summary="Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent xar-accent-outline">
-            <tr>
-                <th align="center"><xar:mlstring>External File URL:</xar:mlstring></th>
-                <th align="center"><xar:mlstring>Save Location<br />DB / FS</xar:mlstring></th>
-                <th align="center"><xar:mlstring>Action</xar:mlstring></th>
-            </tr>
-            <tr>
-                <td class="xar-norm" align="left" width="45%">
-                    <input type="text" name="import" value="" size="40" id="import" maxlength="128" />
-                </td>
-                <td class="xar-norm" align="center" width="28%">
-                    <input type="radio" name="storeType" id="storeType" value="#$storeType['DB_FULL']#"  /> 
-                    <input type="radio" name="storeType" id="storeType" value="#$storeType['FSDB']#" checked="checked"  />
-                </td>
-                <td class="xar-norm" align="center" width="27%">
-                    <input type="submit" name="button" id="button" value="#xarML('Import')#" />
-                    <input type="hidden" name="action" id="action" value="2" />
-                    <input type="hidden" name="authid" value="#$authid#" />
-                </td>
-            </tr>
-        </table>
-        <br />
-    </form>
-</div>
+    <div>
+        <form id="external_import_form" action="#$external_import_post_url#" method="post">
+            <table summary="Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent xar-accent-outline">
+                <tr>
+                    <th align="center"><xar:mlstring>External File URL:</xar:mlstring></th>
+                    <th align="center"><xar:mlstring>Save Location<br />DB / FS</xar:mlstring></th>
+                    <th align="center"><xar:mlstring>Action</xar:mlstring></th>
+                </tr>
+                <tr>
+                    <td class="xar-norm" align="left" width="45%">
+                        <input type="text" name="import" value="" size="40" id="import" maxlength="128" />
+                    </td>
+                    <td class="xar-norm" align="center" width="28%">
+                        <input type="radio" name="storeType" id="storeType" value="#$storeType['DB_FULL']#"  /> 
+                        <input type="radio" name="storeType" id="storeType" value="#$storeType['FSDB']#" checked="checked"  />
+                    </td>
+                    <td class="xar-norm" align="center" width="27%">
+                        <input type="submit" name="button" id="button" value="#xarML('Import')#" />
+                        <input type="hidden" name="action" id="action" value="2" />
+                        <input type="hidden" name="authid" value="#$authid#" />
+                    </td>
+                </tr>
+            </table>
+            <br />
+        </form>
+    </div>
 </xar:template>

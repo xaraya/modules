@@ -1,36 +1,36 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:if condition="isset($Attachments) AND is_array($Attachments) AND count($Attachments)">
-    <xar:if condition="!empty($format) and $format eq 'textupload'">
-        <xar:loop name="$Attachments">file:&#160;#$loop:item['fileId']#&#160;</xar:loop>
-    <xar:else/>
-        <xar:style module="uploads" scope="module" file="uploads" />
-        <xar:loop name="$Attachments">
-            <xar:if condition="isset($style) AND $style eq 'icon'">
-                <div class="xar-uploads-icon">
+    <xar:if condition="isset($Attachments) AND is_array($Attachments) AND count($Attachments)">
+        <xar:if condition="!empty($format) and $format eq 'textupload'">
+            <xar:loop name="$Attachments">file:&#160;#$loop:item['fileId']#&#160;</xar:loop>
+        <xar:else/>
+            <xar:style module="uploads" scope="module" file="uploads" />
+            <xar:loop name="$Attachments">
+                <xar:if condition="isset($style) AND $style eq 'icon'">
+                    <div class="xar-uploads-icon">
+                        <a href="#$loop:item['fileDownload']#" alt="#$loop:item['fileName']#" title="#$loop:item['DownloadLabel']#">
+                                <img src="#$loop:item['mimeImage']#" alt="#$loop:item['fileType']#" />
+                                #$loop:item['fileName']#
+                        </a>
+                    </div>
+                <xar:elseif condition="isset($style) AND $style eq 'transform'"/>
+                    <xar:comment>do something special when working through transform hooks, e.g. show images directly</xar:comment>
+                    <xar:set name="filetype">#$loop:item['fileType']#</xar:set>
+                    <xar:if condition="substr($filetype,0,5) eq 'image'">
+                        <img src="#$loop:item['fileDownload']#" alt="#$loop:item['fileName']#" border="0"/>
+                    <xar:else/>
+                        <a href="#$loop:item['fileDownload']#" alt="#$loop:item['fileName']#" title="#$loop:item['DownloadLabel']#">
+                        #$loop:item['fileName']#
+                        </a>
+                    </xar:if>
+                    <br />
+                <xar:else />
                     <a href="#$loop:item['fileDownload']#" alt="#$loop:item['fileName']#" title="#$loop:item['DownloadLabel']#">
-                            <img src="#$loop:item['mimeImage']#" alt="#$loop:item['fileType']#" />
-                            #$loop:item['fileName']#
+                        #$loop:item['fileName']#
                     </a>
-                </div>
-            <xar:elseif condition="isset($style) AND $style eq 'transform'"/>
-                <xar:comment>do something special when working through transform hooks, e.g. show images directly</xar:comment>
-                <xar:set name="filetype">#$loop:item['fileType']#</xar:set>
-                <xar:if condition="substr($filetype,0,5) eq 'image'">
-                    <img src="#$loop:item['fileDownload']#" alt="#$loop:item['fileName']#" border="0"/>
-                <xar:else/>
-                    <a href="#$loop:item['fileDownload']#" alt="#$loop:item['fileName']#" title="#$loop:item['DownloadLabel']#">
-                    #$loop:item['fileName']#
-                    </a>
+                    <br />
                 </xar:if>
-                <br />
-            <xar:else />
-                <a href="#$loop:item['fileDownload']#" alt="#$loop:item['fileName']#" title="#$loop:item['DownloadLabel']#">
-                    #$loop:item['fileName']#
-                </a>
-                <br />
-            </xar:if>
-        </xar:loop>
-        <div class="xar-uploads-clearer">&#160;</div>
+            </xar:loop>
+            <div class="xar-uploads-clearer">&#160;</div>
+        </xar:if>
     </xar:if>
-</xar:if>
 </xar:template>

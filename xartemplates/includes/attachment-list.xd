@@ -1,18 +1,18 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:style scope="module" module="uploads" file="uploads" />
+    <xar:style scope="module" module="uploads" file="uploads" />
 
-<xar:if condition="isset($fileList) AND is_array($fileList) AND count($fileList)">
-    <xar:loop name="$Attachments">
-        <div class="xar-uploads-icon">
-            <a href="#$loop:item['fileDownload']#" alt="#$loop:item['fileName']#" title="#$loop:item['DownloadLabel']#">
-                    <img src="#$loop:item['mimeImage']#" alt="#$loop:item['fileType']#" />
-                    #$loop:item['fileName']#
-            </a>
-        </div>
-    </xar:loop>
-<xar:else />
-    <xar:mlstring>
-        &#160;There are no attachments for this item.
-    </xar:mlstring>
-</xar:if>
+    <xar:if condition="isset($fileList) AND is_array($fileList) AND count($fileList)">
+        <xar:loop name="$Attachments">
+            <div class="xar-uploads-icon">
+                <a href="#$loop:item['fileDownload']#" alt="#$loop:item['fileName']#" title="#$loop:item['DownloadLabel']#">
+                        <img src="#$loop:item['mimeImage']#" alt="#$loop:item['fileType']#" />
+                        #$loop:item['fileName']#
+                </a>
+            </div>
+        </xar:loop>
+    <xar:else />
+        <xar:mlstring>
+            &#160;There are no attachments for this item.
+        </xar:mlstring>
+    </xar:if>
 </xar:template>

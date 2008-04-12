@@ -1,56 +1,56 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>File Upload Administration</xar:mlstring>
-    </span>
-</div>
-<div class="xar-mod-body">
-     <xar:template type="module" file="admin-menu" />
-    <h2><xar:mlstring>Purge Rejected Files</xar:mlstring></h2>
-            <xar:if condition="!count($fileList)">
-                <p class="xar-norm xar-align-left">&#160;
-                    <xar:mlstring>
-                        There are no files marked as rejected.
-                    </xar:mlstring>
-                </p>
-            <xar:else />
-                <form action="#xarModUrl('uploads','admin','purge_rejected')#" method="post">
-                    <fieldset>
-                        <legend>
-                            <xar:mlstring>Delete confirmation</xar:mlstring>
-                        </legend>
-                        <div class="xar-form-input-wrapper">
-                            <label for="confirmdelete" class="xar-form-label" title="#xarML('Confirm deletion of this rejected file')#">
-                                <xar:mlstring>
-                                    Are you sure you want to delete the following files?
-                                </xar:mlstring>&#160;
-                            </label>
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>File Upload Administration</xar:mlstring>
+        </span>
+    </div>
+    <div class="xar-mod-body">
+         <xar:template type="module" file="admin-menu" />
+        <h2><xar:mlstring>Purge Rejected Files</xar:mlstring></h2>
+                <xar:if condition="!count($fileList)">
+                    <p class="xar-norm xar-align-left">&#160;
+                        <xar:mlstring>
+                            There are no files marked as rejected.
+                        </xar:mlstring>
+                    </p>
+                <xar:else />
+                    <form action="#xarModUrl('uploads','admin','purge_rejected')#" method="post">
+                        <fieldset>
+                            <legend>
+                                <xar:mlstring>Delete confirmation</xar:mlstring>
+                            </legend>
+                            <div class="xar-form-input-wrapper">
+                                <label for="confirmdelete" class="xar-form-label" title="#xarML('Confirm deletion of this rejected file')#">
+                                    <xar:mlstring>
+                                        Are you sure you want to delete the following files?
+                                    </xar:mlstring>&#160;
+                                </label>
 
-                            <input type="submit" name="submit" value="#xarML('Delete')#" />
-                        </div>
-                        <div class="xar-form-input-wrapper-before">
-                            <ul>
-                            <xar:loop name="$fileList">
-                                <!-- TODO: reformulate this -->
-                           <li style="list-type-style:none;">
-                            <a onclick="MyWindow=window.open('#xarModURL('uploads','user','file_properties')#&amp;fileId=#$loop:item['fileId']#',
-                                                            '#$loop:item['fileName']#',
-                                                            'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,width=500,height=375,left=20,top=20');
-                                                            return false;">
-                                #$loop:item['fileName']#
-                            </a>
-                           </li>
-                            </xar:loop>
-                            </ul>
-                        </div>
-                        </fieldset>
-                        <div class="xar-form-input-wrapper">
-                            <input type="hidden" name="authid" value="#$authid#" />
-                            <input type="hidden" name="confirmation" value="1" />
+                                <input type="submit" name="submit" value="#xarML('Delete')#" />
+                            </div>
+                            <div class="xar-form-input-wrapper-before">
+                                <ul>
+                                <xar:loop name="$fileList">
+                                    <!-- TODO: reformulate this -->
+                               <li style="list-type-style:none;">
+                                <a onclick="MyWindow=window.open('#xarModURL('uploads','user','file_properties')#&amp;fileId=#$loop:item['fileId']#',
+                                                                '#$loop:item['fileName']#',
+                                                                'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,width=500,height=375,left=20,top=20');
+                                                                return false;">
+                                    #$loop:item['fileName']#
+                                </a>
+                               </li>
+                                </xar:loop>
+                                </ul>
+                            </div>
+                            </fieldset>
+                            <div class="xar-form-input-wrapper">
+                                <input type="hidden" name="authid" value="#$authid#" />
+                                <input type="hidden" name="confirmation" value="1" />
 
-                            <input type="submit" name="submit" value="#xarML('Cancel')#" onclick="javascript:window.location='#xarModURL('uploads', 'admin', 'view')#'; return false;" />
-                        </div>
-                        </form>
-            </xar:if>
-</div>
+                                <input type="submit" name="submit" value="#xarML('Cancel')#" onclick="javascript:window.location='#xarModURL('uploads', 'admin', 'view')#'; return false;" />
+                            </div>
+                            </form>
+                </xar:if>
+    </div>
 </xar:template>

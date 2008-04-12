@@ -1,125 +1,125 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<table width="100%" border="0" class="xar-norm xar-accent-outline">
-    <tr>
-        <th colspan="6">
-            <h4><xar:mlstring>Filtering Options</xar:mlstring></h4>
-        </th>
-    </tr>
-    <tr>
-        <form action="#xarModUrl('uploads','admin','view')#" method="post">
-        <td width="15%" align="center">
-            <label for="inverse">
-                <xar:mlstring>
-                    Invert Filter
-                </xar:mlstring>
-            </label>
-            <br />
-            <xar:if condition="$filters['inverse'] eq TRUE">
-                <input type="checkbox" name="inverse" id="inverse" value="invert" checked="checked" />
-            <xar:else />
-                <input type="checkbox" name="inverse" id="inverse" value="invert" />
-            </xar:if>
-        </td>
-        <td width="10%" align="center">
-            <label for="mimetype">
-                <xar:mlstring>
-                    MIME Type
-                </xar:mlstring>
-            </label>
-            <br />
-            <select name="mimetype" id="mimetype" onchange="this.form.submit();">
-                <xar:foreach in="$filters['mimetypes']" key="$key" value="$type">
-                    <xar:if condition="isset($type['selected'])">
-                        <option value="#$type['typeId']#" selected="selected">
-                            #$type['typeName']# 
-                        </option>
-                    <xar:else />
-                        <option value="#$type['typeId']#">
-                            #$type['typeName']# 
-                        </option>
-                    </xar:if>
-                </xar:foreach>
-            </select>
-        </td>
-        <td width="25%" align="center">
-            <label for="subtypes">
-                <xar:mlstring>
-                    MIME SubType
-                </xar:mlstring>
-            </label>
-            <br />
-            <select name="subtype" id="subtypes" onchange="this.form.submit();">
-                <xar:foreach in="$filters['subtypes']" key="$key" value="$subtype">
-                    <xar:if condition="isset($subtype['selected'])">
-                        <option value="#$subtype['subtypeId']#" selected="selected">
-                            #$subtype['subtypeName']# 
-                        </option>
-                    <xar:else />
-                        <option value="#$subtype['subtypeId']#">
-                            #$subtype['subtypeName']# 
-                        </option>
-                    </xar:if>
-                </xar:foreach>
-            </select>
-        </td>
-        <td width="15%" align="center">
-            <label for="status">
-                <xar:mlstring>
-                    File Status
-                </xar:mlstring>
-            </label>
-            <br />
-            <select name="status" id="status" onchange="this.form.submit();">
-                <xar:foreach in="$filters['status']" key="$key" value="$status">
-                    <xar:if condition="isset($status['selected'])">
-                        <option value="#$status['statusId']#" selected="selected">
-                            #$status['statusName']# 
-                        </option>
-                    <xar:else />
-                        <option value="#$status['statusId']#">
-                            #$status['statusName']# 
-                        </option>
-                    </xar:if>
-                </xar:foreach>
-            </select>
-        </td>
-        <td width="25%" align="center">
-            <label for="action">
-                <xar:mlstring>
-                    action
-                </xar:mlstring>
-            </label>
-            <br />
-            <select name="action" id="action" onchange="this.form.submit();">
-                <xar:foreach in="$filters['status']" key="$key" value="$status">
-                    <xar:if condition="$key eq '0'">
-                        <option value="#$status['statusId']#" selected="selected">
-                            Change View
-                        </option>
-                    <xar:else />
-                        <option value="#$status['statusId']#">
-                            Change all to #$status['statusName']# 
-                        </option>
-                    </xar:if>
-                </xar:foreach>
-            </select>
-        </td>
-        <td width="10%" align="center">
-            <br />
-            <xar:if condition="!empty($catid)">
-                <input type="hidden" name="catid" value="#$catid#" />
-            </xar:if>
-            <input type="submit" name="do_it" value="#xarML('Refresh')#"/>
-        </td>
-        </form>
-    </tr>
-    <xar:if condition="xarModIsAvailable('categories') and xarModIsHooked('categories','uploads',1)">
-    <tr>
-        <td colspan="6">
-            <xar:template file="catnavigation" type="module" />
-        </td>
-    </tr>
-    </xar:if>
-</table>
-<br />
+    <table width="100%" border="0" class="xar-norm xar-accent-outline">
+        <tr>
+            <th colspan="6">
+                <h4><xar:mlstring>Filtering Options</xar:mlstring></h4>
+            </th>
+        </tr>
+        <tr>
+            <form action="#xarModUrl('uploads','admin','view')#" method="post">
+            <td width="15%" align="center">
+                <label for="inverse">
+                    <xar:mlstring>
+                        Invert Filter
+                    </xar:mlstring>
+                </label>
+                <br />
+                <xar:if condition="$filters['inverse'] eq TRUE">
+                    <input type="checkbox" name="inverse" id="inverse" value="invert" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="inverse" id="inverse" value="invert" />
+                </xar:if>
+            </td>
+            <td width="10%" align="center">
+                <label for="mimetype">
+                    <xar:mlstring>
+                        MIME Type
+                    </xar:mlstring>
+                </label>
+                <br />
+                <select name="mimetype" id="mimetype" onchange="this.form.submit();">
+                    <xar:foreach in="$filters['mimetypes']" key="$key" value="$type">
+                        <xar:if condition="isset($type['selected'])">
+                            <option value="#$type['typeId']#" selected="selected">
+                                #$type['typeName']# 
+                            </option>
+                        <xar:else />
+                            <option value="#$type['typeId']#">
+                                #$type['typeName']# 
+                            </option>
+                        </xar:if>
+                    </xar:foreach>
+                </select>
+            </td>
+            <td width="25%" align="center">
+                <label for="subtypes">
+                    <xar:mlstring>
+                        MIME SubType
+                    </xar:mlstring>
+                </label>
+                <br />
+                <select name="subtype" id="subtypes" onchange="this.form.submit();">
+                    <xar:foreach in="$filters['subtypes']" key="$key" value="$subtype">
+                        <xar:if condition="isset($subtype['selected'])">
+                            <option value="#$subtype['subtypeId']#" selected="selected">
+                                #$subtype['subtypeName']# 
+                            </option>
+                        <xar:else />
+                            <option value="#$subtype['subtypeId']#">
+                                #$subtype['subtypeName']# 
+                            </option>
+                        </xar:if>
+                    </xar:foreach>
+                </select>
+            </td>
+            <td width="15%" align="center">
+                <label for="status">
+                    <xar:mlstring>
+                        File Status
+                    </xar:mlstring>
+                </label>
+                <br />
+                <select name="status" id="status" onchange="this.form.submit();">
+                    <xar:foreach in="$filters['status']" key="$key" value="$status">
+                        <xar:if condition="isset($status['selected'])">
+                            <option value="#$status['statusId']#" selected="selected">
+                                #$status['statusName']# 
+                            </option>
+                        <xar:else />
+                            <option value="#$status['statusId']#">
+                                #$status['statusName']# 
+                            </option>
+                        </xar:if>
+                    </xar:foreach>
+                </select>
+            </td>
+            <td width="25%" align="center">
+                <label for="action">
+                    <xar:mlstring>
+                        action
+                    </xar:mlstring>
+                </label>
+                <br />
+                <select name="action" id="action" onchange="this.form.submit();">
+                    <xar:foreach in="$filters['status']" key="$key" value="$status">
+                        <xar:if condition="$key eq '0'">
+                            <option value="#$status['statusId']#" selected="selected">
+                                Change View
+                            </option>
+                        <xar:else />
+                            <option value="#$status['statusId']#">
+                                Change all to #$status['statusName']# 
+                            </option>
+                        </xar:if>
+                    </xar:foreach>
+                </select>
+            </td>
+            <td width="10%" align="center">
+                <br />
+                <xar:if condition="!empty($catid)">
+                    <input type="hidden" name="catid" value="#$catid#" />
+                </xar:if>
+                <input type="submit" name="do_it" value="#xarML('Refresh')#"/>
+            </td>
+            </form>
+        </tr>
+        <xar:if condition="xarModIsAvailable('categories') and xarModIsHooked('categories','uploads',1)">
+        <tr>
+            <td colspan="6">
+                <xar:template file="catnavigation" type="module" />
+            </td>
+        </tr>
+        </xar:if>
+    </table>
+    <br />
 </xar:template>

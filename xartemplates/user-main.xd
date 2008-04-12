@@ -1,6 +1,6 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:mlstring>This file has not been approved.  
-Please check back at a later time to see if it has been approved.
-If you have any questions, please contact the site administrator.
-</xar:mlstring>
+    <xar:mlstring>This file has not been approved.  
+    Please check back at a later time to see if it has been approved.
+    If you have any questions, please contact the site administrator.
+    </xar:mlstring>
 </xar:template >

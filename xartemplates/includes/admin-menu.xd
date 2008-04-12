@@ -1,53 +1,53 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:comment>Common Administration menu</xar:comment>
-<xar:style scope="module" module="base" file="navtabs" />
+    <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+    <xar:comment>Common Administration menu</xar:comment>
+    <xar:style scope="module" module="base" file="navtabs" />
 
-<xar:set name="request">xarRequestGetInfo()</xar:set>
-<xar:set name="activetab">#$request.2#</xar:set>
-<div>
-  <dl class="xar-tabs">
-    <dt class="help" title="Choose an action to perform">
-      <xar:mlstring>Actions:</xar:mlstring>
-    </dt>
-    <xar:sec mask="EditUploads" catch="false">
-        <xar:set name="tabclass">$activetab=='view'?'active':''</xar:set>
+    <xar:set name="request">xarRequestGetInfo()</xar:set>
+    <xar:set name="activetab">#$request.2#</xar:set>
+    <div>
+      <dl class="xar-tabs">
+        <dt class="help" title="Choose an action to perform">
+          <xar:mlstring>Actions:</xar:mlstring>
+        </dt>
+        <xar:sec mask="EditUploads" catch="false">
+            <xar:set name="tabclass">$activetab=='view'?'active':''</xar:set>
+            <dd class="#$tabclass#">
+              <a href="&xar-modurl-uploads-admin-view;">
+                <xar:mlstring>View Files</xar:mlstring>
+              </a>
+            </dd>
+            <xar:if condition="$activetab eq 'get_files' or $activetab eq 'addfile-status' or $activetab eq 'purge_rejected'">
+                <xar:set name="tabclass">'active'</xar:set>
+            <xar:else />
+                <xar:set name="tabclass">''</xar:set>
+            </xar:if>
+            <dd class="#$tabclass#">
+                <a href="&xar-modurl-uploads-admin-get_files;" >
+                    <xar:mlstring>Add File</xar:mlstring>
+                </a>
+            </dd>
+            <xar:set name="tabclass">$activetab=='assoc'?'active':''</xar:set>
+            <dd class="#$tabclass#">
+                <a href="&xar-modurl-uploads-admin-assoc;" >
+                    <xar:mlstring>View Associations</xar:mlstring>
+                </a>
+            </dd>
+        </xar:sec>
+        <xar:sec mask="AdminUploads" catch="false">
+            <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
+            <dd class="#$tabclass#">
+              <a href="&xar-modurl-uploads-admin-modifyconfig;">
+                <xar:mlstring>Modify Config</xar:mlstring>
+              </a>
+            </dd>
+        </xar:sec>
+        <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
         <dd class="#$tabclass#">
-          <a href="&xar-modurl-uploads-admin-view;">
-            <xar:mlstring>View Files</xar:mlstring>
+          <a href="&xar-modurl-uploads-admin-overview;">
+            <xar:mlstring>Overview</xar:mlstring>
           </a>
         </dd>
-        <xar:if condition="$activetab eq 'get_files' or $activetab eq 'addfile-status' or $activetab eq 'purge_rejected'">
-            <xar:set name="tabclass">'active'</xar:set>
-        <xar:else />
-            <xar:set name="tabclass">''</xar:set>
-        </xar:if>
-        <dd class="#$tabclass#">
-            <a href="&xar-modurl-uploads-admin-get_files;" >
-                <xar:mlstring>Add File</xar:mlstring>
-            </a>
-        </dd>
-        <xar:set name="tabclass">$activetab=='assoc'?'active':''</xar:set>
-        <dd class="#$tabclass#">
-            <a href="&xar-modurl-uploads-admin-assoc;" >
-                <xar:mlstring>View Associations</xar:mlstring>
-            </a>
-        </dd>
-    </xar:sec>
-    <xar:sec mask="AdminUploads" catch="false">
-        <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
-        <dd class="#$tabclass#">
-          <a href="&xar-modurl-uploads-admin-modifyconfig;">
-            <xar:mlstring>Modify Config</xar:mlstring>
-          </a>
-        </dd>
-    </xar:sec>
-    <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
-    <dd class="#$tabclass#">
-      <a href="&xar-modurl-uploads-admin-overview;">
-        <xar:mlstring>Overview</xar:mlstring>
-      </a>
-    </dd>
-  </dl>
-</div>
+      </dl>
+    </div>
 </xar:template>

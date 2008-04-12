@@ -1,36 +1,36 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:if condition="isset($storedList) AND count($storedList)">
-        <xar:mlstring>Attach previously stored file:</xar:mlstring><br />
+    <xar:if condition="isset($storedList) AND count($storedList)">
+            <xar:mlstring>Attach previously stored file:</xar:mlstring><br />
 
-        <xar:set name="multiple"> 
-            "multiple_{$id}"
-        </xar:set>
-        
-        <xar:if condition="isset($$multiple) AND $$multiple eq TRUE">
-            <select name="#$id#_attach_stored[]" id="#$id#_attach_stored_id" multiple="multiple" size="5">
+            <xar:set name="multiple"> 
+                "multiple_{$id}"
+            </xar:set>
+
+            <xar:if condition="isset($$multiple) AND $$multiple eq TRUE">
+                <select name="#$id#_attach_stored[]" id="#$id#_attach_stored_id" multiple="multiple" size="5">
+                    <!-- TODO: consider putting this in an separate template -->
+                    <xar:loop name="$storedList">
+                        <xar:if condition="isset($loop:item['selected'])">
+                            <option value="#$loop:item['fileId']#" selected="selected">#$loop:item['fileHashRealName']#</option>
+                        <xar:else />
+                            <option value="#$loop:item['fileId']#">#$loop:item['fileHashRealName']#</option>
+                        </xar:if>
+                    </xar:loop>
+                </select>
+            <xar:else />
                 <!-- TODO: consider putting this in an separate template -->
-                <xar:loop name="$storedList">
-                    <xar:if condition="isset($loop:item['selected'])">
-                        <option value="#$loop:item['fileId']#" selected="selected">#$loop:item['fileHashRealName']#</option>
-                    <xar:else />
-                        <option value="#$loop:item['fileId']#">#$loop:item['fileHashRealName']#</option>
-                    </xar:if>
-                </xar:loop>
-            </select>
-        <xar:else />
-            <!-- TODO: consider putting this in an separate template -->
-            <select name="#$id#_attach_stored[]" id="#$id#_attach_stored_id" size="5">
-                <xar:loop name="$storedList">
-                    <xar:if condition="isset($loop:item['selected'])">
-                        <option value="#$loop:item['fileId']#" selected="selected">#$loop:item['fileHashRealName']#</option>
-                    <xar:else />
-                        <option value="#$loop:item['fileId']#">#$loop:item['fileHashRealName']#</option>
-                    </xar:if>
-                </xar:loop>
-            </select>
-        </xar:if>
-<xar:else />
-    <xar:mlstring>No files to display</xar:mlstring><br />
-    <input type="hidden" name="#$id#_attach_stored[]" value="" style="display: none;" />
-</xar:if>
+                <select name="#$id#_attach_stored[]" id="#$id#_attach_stored_id" size="5">
+                    <xar:loop name="$storedList">
+                        <xar:if condition="isset($loop:item['selected'])">
+                            <option value="#$loop:item['fileId']#" selected="selected">#$loop:item['fileHashRealName']#</option>
+                        <xar:else />
+                            <option value="#$loop:item['fileId']#">#$loop:item['fileHashRealName']#</option>
+                        </xar:if>
+                    </xar:loop>
+                </select>
+            </xar:if>
+    <xar:else />
+        <xar:mlstring>No files to display</xar:mlstring><br />
+        <input type="hidden" name="#$id#_attach_stored[]" value="" style="display: none;" />
+    </xar:if>
 </xar:template>

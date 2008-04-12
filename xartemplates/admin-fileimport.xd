@@ -1,42 +1,42 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Uploads Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2>
-   <xar:template type="module" file="admin-menu" />
-    <xar:mlstring>Import Files</xar:mlstring></h2>
-    <xar:if condition="isset($file2import) AND ($file2import != '')">
-        #$file2import# imported successfully.
+    <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Uploads Administration</xar:mlstring></span></div>
+    <div class="xar-mod-body"><h2>
+       <xar:template type="module" file="admin-menu" />
+        <xar:mlstring>Import Files</xar:mlstring></h2>
+        <xar:if condition="isset($file2import) AND ($file2import != '')">
+            #$file2import# imported successfully.
+        </xar:if>
+
+    <xar:if condition="is_array($files) AND count($files)">
+    <form method="post" action="&xar-modurl-uploads-admin-fileimport;">
+        <table summary="Imported Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
+        <tr>
+            <th><xar:mlstring>File</xar:mlstring><input type="hidden" name="authid" value="#$authid#" /></th>
+            <th><xar:mlstring>In System As</xar:mlstring></th>
+            <th><xar:mlstring>Import</xar:mlstring></th>
+        </tr>
+
+        <xar:loop name="$files">
+            <tr>
+                    <xar:if condition="$loop:item['insystem'] == 'No'">
+                <td class="xar-norm"><label for="file2import[#$loop:item['filename']#]">#$loop:item['filename']#</label></td>
+                        <td class="xar-norm"><input type="checkbox" name="file2import[#$loop:item['filename']#]" id="file2import[#$loop:item['filename']#]" value="1" /></td>
+                        <td class="xar-norm"><a href="#$loop:item['importlink']#"><xar:mlstring>Import</xar:mlstring></a></td>
+                    <xar:else/>
+                <td class="xar-norm">#$loop:item['filename']#</td>
+                        <td class="xar-norm">#$loop:item['ulfile']#</td>
+                        <td class="xar-norm"></td>
+                    </xar:if>
+            </tr>
+        </xar:loop>
+        <tr>
+            <td colspan="3" align="center"><input type="submit" name="submit" value="Import" /></td>
+        </tr>
+        </table>
+    </form>
+    <xar:else />
+        <xar:mlstring>No files found to import.</xar:mlstring>
     </xar:if>
 
-<xar:if condition="is_array($files) AND count($files)">
-<form method="post" action="&xar-modurl-uploads-admin-fileimport;">
-    <table summary="Imported Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
-    <tr>
-        <th><xar:mlstring>File</xar:mlstring><input type="hidden" name="authid" value="#$authid#" /></th>
-        <th><xar:mlstring>In System As</xar:mlstring></th>
-        <th><xar:mlstring>Import</xar:mlstring></th>
-    </tr>
-
-    <xar:loop name="$files">
-        <tr>
-                <xar:if condition="$loop:item['insystem'] == 'No'">
-            <td class="xar-norm"><label for="file2import[#$loop:item['filename']#]">#$loop:item['filename']#</label></td>
-                    <td class="xar-norm"><input type="checkbox" name="file2import[#$loop:item['filename']#]" id="file2import[#$loop:item['filename']#]" value="1" /></td>
-                    <td class="xar-norm"><a href="#$loop:item['importlink']#"><xar:mlstring>Import</xar:mlstring></a></td>
-                <xar:else/>
-            <td class="xar-norm">#$loop:item['filename']#</td>
-                    <td class="xar-norm">#$loop:item['ulfile']#</td>
-                    <td class="xar-norm"></td>
-                </xar:if>
-        </tr>
-    </xar:loop>
-    <tr>
-        <td colspan="3" align="center"><input type="submit" name="submit" value="Import" /></td>
-    </tr>
-    </table>
-</form>
-<xar:else />
-    <xar:mlstring>No files found to import.</xar:mlstring>
-</xar:if>
-
-</div>
+    </div>
 </xar:template >
