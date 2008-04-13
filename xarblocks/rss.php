@@ -27,6 +27,7 @@ function headlines_rssblock_init()
         'showdescriptions' => false,
         'show_chantitle' => 1,
         'show_chandesc' => 1,
+        'truncate' => 0, // added for bug 4545
         'refresh' => 3600,
         'nocache' => 0, // cache by default
         'pageshared' => 1, // don't share across pages here
@@ -124,7 +125,18 @@ function headlines_rssblock_display($blockinfo)
 	}
  
     $data['feedcontent'] = array_slice($data['feedcontent'], 0, $vars['maxitems']);
- 
+    
+    // Bug [4545] FR add option to truncate item descriptions
+    if ($vars['showdescriptions'] && !empty($vars['truncate'])) {
+        for ($i = 0; $i < count($data['feedcontent']); $i++) {
+            $feeditem = $data['feedcontent'][$i];
+            if (strlen($feeditem['description']) > $vars['truncate']+3) {
+                $data['feedcontent'][$i]['description'] = substr($feeditem['description'], 0, $vars['truncate']).'...';
+            }
+        }
+    }
+    
+
     $blockinfo['content'] = array(
         'feedcontent'  => $data['feedcontent'],
         'blockid'      => $blockinfo['bid'],
@@ -200,6 +212,8 @@ function headlines_rssblock_modify($blockinfo)
     if (!isset($vars['showdescriptions'])) $vars['showdescriptions'] = $defaults['showdescriptions'];
     if (!isset($vars['maxitems'])) $vars['maxitems'] = $defaults['maxitems'];
     if (!isset($vars['refresh'])) $vars['refresh'] = $defaults['refresh'];
+    // bug [4545]
+    if (!isset($vars['truncate'])) $vars['truncate'] = $defaults['truncate'];
  
     $vars['blockid'] = $blockinfo['bid'];
  
@@ -235,7 +249,9 @@ function headlines_rssblock_insert($blockinfo)
     if (!xarVarFetch('show_chantitle', 'checkbox', $vars['show_chantitle'], $defaults['show_chantitle'], XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('show_chandesc', 'checkbox', $vars['show_chandesc'], $defaults['show_chandesc'], XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('refresh', 'int:0', $vars['refresh'], $defaults['refresh'], XARVAR_NOT_REQUIRED)) {return;}
- 
+    // bug [4545]
+    if (!xarVarFetch('truncate', 'int:0', $vars['truncate'], $defaults['truncate'], XARVAR_NOT_REQUIRED)) return;
+
     $blockinfo['content'] = $vars;
     return $blockinfo;
 }

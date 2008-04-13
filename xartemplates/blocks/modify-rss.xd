@@ -58,7 +58,13 @@
         <label for="showdescriptions#$blockid#"><xar:mlstring>Display article descriptions</xar:mlstring></label>
     </span>
 </p>
-
+<p>
+    <span class="help" title="#xarML('Truncate long item descriptions.')#">
+        <label for="truncate#$blockid#"><xar:mlstring>Truncate long descriptions to:</xar:mlstring></label>
+    </span>
+    <input type="text" name="truncate" id="truncate#$blockid#" size="3" maxlength="5" value="#$truncate#" />
+    <xar:mlstring>characters</xar:mlstring>
+</p>
 <p>
     <span class="help" title="#xarML('Number of items to show.')#">
         <label for="maxitems#$blockid#"><xar:mlstring>Max Headlines to display:</xar:mlstring></label>
