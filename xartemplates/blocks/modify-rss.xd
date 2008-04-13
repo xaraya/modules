@@ -1,10 +1,8 @@
 <xar:comment>Keep the markup simple and the inline styles to a minimum.</xar:comment>
-
-<p>
-    <span class="help" title="#xarML('Select the RSS file to syndicate.  This option is configured within the Headlines module')#">
-        <label for="rssurl#$blockid#"><xar:mlstring>RSS URL:</xar:mlstring></label>
-    </span>
-
+<div class="xar-form-input-wrapper">
+    <label for="rssurl#$blockid#" class="xar-form-label help" title="#xarML('Select the RSS file to syndicate.  This option is configured within the Headlines module')#">
+        <xar:mlstring>RSS URL</xar:mlstring>
+    </label>
     <select name="rssurl" id="rssurl#$blockid#">
         <xar:if condition="!empty($otherrssurl)">
             <option value="" selected="selected"><xar:mlstring>-- Alternate URL --</xar:mlstring></option>
@@ -17,63 +15,100 @@
             </xar:if>
         </xar:loop>
     </select>
-</p>
-
-<p>
-    <span class="help" title="#xarML('Alternate RSS URL, not pre-configured in the headlines module.')#">
-        <label for="otherrssurl#$blockid#"><xar:mlstring>Alternate RSS URL:</xar:mlstring></label>
-    </span>
-    <input type="text" name="otherrssurl" id="otherrssurl#$blockid#" style="width: 90%;" maxlength="200" value="#xarVarPrepForDisplay($otherrssurl)#" />
-</p>
-
-<p>
+</div>
+<div class="xar-form-input-wrapper-after">
+    <xar:if condition="!empty($otherrssurl)">
+        <input type="checkbox" name="linkhid" id="linkhid#$blockid#" value="1" disabled="disabled" />
+    <xar:elseif condition="$linkhid" />
+        <input type="checkbox" name="linkhid" id="linkhid#$blockid#" value="1" checked="checked" />
+    <xar:else />
+        <input type="checkbox" name="linkhid" id="linkhid#$blockid#" value="1" />
+    </xar:if>
+    <label for="linkhid#$blockid#">
+        <xar:mlstring>Show link to headlines feed</xar:mlstring>
+    </label>
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="otherrssurl#$blockid#" class="xar-form-label help" title="#xarML('Alternate RSS URL, not pre-configured in the headlines module.')#">
+        <xar:mlstring>Alternate RSS URL</xar:mlstring>
+    </label>
+    <input type="text" name="otherrssurl" id="otherrssurl#$blockid#" size="60" maxlength="254" value="#xarVarPrepForDisplay($otherrssurl)#" />
+</div>
+<xar:if condition="!empty($otherrssurl)">
+    <div class="xar-form-input-wrapper-after">
+        <em>(<xar:mlstring>empty this field when selecting a headline feed</xar:mlstring>)</em>
+    </div>
+</xar:if>
+<div class="xar-form-input-wrapper-after">
     <xar:if condition = "$show_chantitle eq 1">
         <input id="show_chantitle#$blockid#" type="checkbox" name="show_chantitle" value="1" checked="checked" />
     <xar:else />
         <input id="show_chantitle#$blockid#" type="checkbox" name="show_chantitle" value="1" />
     </xar:if>
-    <span class="help" title="#xarML('Select this option if you want to show the channel title')#">
-        <label for="show_chantitle#$blockid#"><xar:mlstring>Display channel title</xar:mlstring></label>
-    </span>
-</p>
-
-<p>
+    <label for="show_chantitle#$blockid#" class="help" title="#xarML('Select this option if you want to show the channel title')#">
+        <xar:mlstring>Display channel title</xar:mlstring>
+    </label>
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="alt_chantitle#$blockid#" class="xar-form-label help" title="#xarML('This is an alternate title for the feed to be displayed on the user display')#">
+            <xar:mlstring>
+                Alt Channel Title
+            </xar:mlstring>
+    </label>
+    <input type="text" name="alt_chantitle" id="alt_chantitle#$blockid#" value="#$alt_chantitle#" size="60" maxlength="254" />
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="alt_chanlink#$blockid#" class="xar-form-label help" title="#xarML('This is an alternate link for the channel to be displayed on the user display')#">
+            <xar:mlstring>
+                Alt Channel Link
+            </xar:mlstring>
+    </label>
+    <input type="text" name="alt_chanlink" id="alt_chanlink#$blockid#" value="#$alt_chanlink#" size="60" maxlength="254" />
+</div>
+<div class="xar-form-input-wrapper-after">
     <xar:if condition = "$show_chandesc eq 1">
         <input id="show_chandesc#$blockid#" type="checkbox" name="show_chandesc" value="1" checked="checked"/>
     <xar:else />
         <input id="show_chandesc#$blockid#" type="checkbox" name="show_chandesc" value="1"/>
     </xar:if>
-    <span class="help" title="#xarML('Select this option if you want to show the channel descriptions')#">
-        <label for="show_chandesc#$blockid#"><xar:mlstring>Display channel descriptions</xar:mlstring></label>
-    </span>
-</p>
-
-<p>
+    <label for="show_chandesc#$blockid#" class="help" title="#xarML('Select this option if you want to show the channel descriptions')#">
+        <xar:mlstring>Display channel description</xar:mlstring>
+    </label>
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="alt_chandesc#$blockid#" class="xar-form-label help" title="#xarML('This is an alternate description for the feed to be displayed on the user display')#">
+            <xar:mlstring>
+                Alt Channel Description
+            </xar:mlstring>
+    </label>
+    <input type="text" name="alt_chandesc" id="alt_chandesc#$blockid#" value="#$alt_chandesc#" size="60" maxlength="254" />
+</div>
+<div class="xar-form-input-wrapper-after">
     <xar:if condition = "$showdescriptions eq 1">
         <input id="showdescriptions#$blockid#" type="checkbox" name="showdescriptions" value="1" checked="checked"/>
     <xar:else />
         <input id="showdescriptions#$blockid#" type="checkbox" name="showdescriptions" value="1"/>
     </xar:if>
-    <span class="help" title="#xarML('Select this option if you want to show article descriptions, depending on the RSS version of the incoming feed.')#">
-        <label for="showdescriptions#$blockid#"><xar:mlstring>Display article descriptions</xar:mlstring></label>
-    </span>
-</p>
-<p>
-    <span class="help" title="#xarML('Truncate long item descriptions.')#">
-        <label for="truncate#$blockid#"><xar:mlstring>Truncate long descriptions to:</xar:mlstring></label>
-    </span>
-    <input type="text" name="truncate" id="truncate#$blockid#" size="3" maxlength="5" value="#$truncate#" />
-    <xar:mlstring>characters</xar:mlstring>
-</p>
-<p>
-    <span class="help" title="#xarML('Number of items to show.')#">
-        <label for="maxitems#$blockid#"><xar:mlstring>Max Headlines to display:</xar:mlstring></label>
-    </span>
+    <label for="showdescriptions#$blockid#" class="help" title="#xarML('Select this option if you want to show article descriptions, depending on the RSS version of the incoming feed.')#">
+        <xar:mlstring>Display item descriptions</xar:mlstring>
+    </label>
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="truncate#$blockid#" class="xar-form-label help" title="#xarML('Limit descriptions to a maximum number of characters')#">
+        <xar:mlstring>Truncate long descriptions to no more than</xar:mlstring>
+    </label>
+    <input type="text" name="truncate" id="truncate#$blockid#" size="5" maxlength="5" value="#$truncate#" /> characters.
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="maxitems#$blockid#" class="xar-form-label help" title="#xarML('Number of items to show.')#">
+        <xar:mlstring>Max Headlines to display</xar:mlstring>
+    </label>
     <input type="text" name="maxitems" id="maxitems#$blockid#" size="3" maxlength="3" value="#$maxitems#" />
-</p>
+</div>
 
-<p>
-    <span class="help" title="#xarML('Number of seconds before refreshing the feed.')#"><label for="refresh#$blockid#"><xar:mlstring>Refresh Rate</xar:mlstring></label>:</span>
-        <input type="text" name="refresh" id="refresh#$blockid#" size="5" maxlength="5" value="#$refresh#" />
-    </span>
-</p>
+<div class="xar-form-input-wrapper">
+    <label for="refresh#$blockid#" class="xar-form-label help" title="#xarML('Number of seconds before refreshing the feed.')#">
+        <xar:mlstring>Refresh Rate</xar:mlstring>
+    </label>
+    <input type="text" name="refresh" id="refresh#$blockid#" size="5" maxlength="5" value="#$refresh#" />
+</div>

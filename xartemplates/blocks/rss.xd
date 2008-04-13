@@ -32,6 +32,11 @@
             </xar:loop>
         </ul>
     </xar:if>
+    <xar:if condition="isset($linkhid) && !empty($linkhid)">
+        <div class="xar-align-right xar-sub">
+            [<a href="#xarModURL('headlines', 'user', 'view', array('hid' => $linkhid))#"><xar:mlstring>Browse Headlines</xar:mlstring></a>]
+        </div>
+    </xar:if>
 <xar:else />
     <div>#xarVarPrepForDisplay($warning)#</div>
 </xar:if>

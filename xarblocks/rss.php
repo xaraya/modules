@@ -28,6 +28,10 @@ function headlines_rssblock_init()
         'show_chantitle' => 1,
         'show_chandesc' => 1,
         'truncate' => 0, // added for bug 4545
+        'alt_chantitle' => '',  // FR - alt channel title
+        'alt_chandesc' => '',   // FR - alt channel desc
+        'alt_chanlink' => '',   // FR - alt channel link
+        'linkhid' => false,     // FR - link to headline feed
         'refresh' => 3600,
         'nocache' => 0, // cache by default
         'pageshared' => 1, // don't share across pages here
@@ -95,6 +99,7 @@ function headlines_rssblock_display($blockinfo)
     if (!isset($vars['show_chantitle'])) $vars['show_chantitle'] = $defaults['show_chantitle'];
     if (!isset($vars['show_chandesc'])) $vars['show_chandesc'] = $defaults['show_chandesc'];
     if (empty($vars['refresh'])) $vars['refresh'] = $defaults['refresh'];
+    if (!isset($vars['linkhid'])) $vars['linkhid'] = $defaults['linkhid'];
 
     if (xarModGetVar('headlines', 'parser') == 'simplepie') {
         // Use the SimplePie parser
@@ -135,7 +140,17 @@ function headlines_rssblock_display($blockinfo)
             }
         }
     }
+    // FR: add alt channel title/desc/link
+    if (!isset($vars['alt_chantitle'])) $vars['alt_chantitle'] = $defaults['alt_chantitle'];
+    if (!isset($vars['alt_chandesc'])) $vars['alt_chandesc'] = $defaults['alt_chandesc'];
+    if (!isset($vars['alt_chanlink'])) $vars['alt_chanlink'] = $defaults['alt_chanlink'];
+    if (!empty($vars['alt_chantitle'])) $data['chantitle'] = $vars['alt_chantitle'];
+    if (!empty($vars['alt_chandesc'])) $data['chandesc'] = $vars['alt_chandesc'];
+    if (!empty($vars['alt_chanlink'])) $data['chanlink'] = $vars['alt_chanlink'];
     
+    if ($vars['linkhid'] && is_numeric($vars['rssurl'])) {
+        $vars['linkhid'] = $vars['rssurl'];
+    }
 
     $blockinfo['content'] = array(
         'feedcontent'  => $data['feedcontent'],
@@ -145,7 +160,8 @@ function headlines_rssblock_display($blockinfo)
         'chandesc'     => $data['chandesc'],
         'show_desc'     => $vars['showdescriptions'],
         'show_chantitle' => $vars['show_chantitle'],
-        'show_chandesc'  => $vars['show_chandesc']
+        'show_chandesc'  => $vars['show_chandesc'],
+        'linkhid' => $vars['linkhid']
     );
  
     return $blockinfo;
@@ -183,6 +199,7 @@ function headlines_rssblock_modify($blockinfo)
 
     // Defaults
     if (!isset($vars['rssurl'])) $vars['rssurl'] = $defaults['rssurl'];
+    // todo: eval requirement for this here, added to block update function
     if (!ereg("^http://|https://|ftp://", $vars['rssurl'])) $vars['rssurl'] = $defaults['rssurl'];
      
     // bug[ 5322 ]
@@ -214,6 +231,12 @@ function headlines_rssblock_modify($blockinfo)
     if (!isset($vars['refresh'])) $vars['refresh'] = $defaults['refresh'];
     // bug [4545]
     if (!isset($vars['truncate'])) $vars['truncate'] = $defaults['truncate'];
+    // FR: add alt title/description/link 
+    if (!isset($vars['alt_chantitle'])) $vars['alt_chantitle'] = $defaults['alt_chantitle'];
+    if (!isset($vars['alt_chandesc'])) $vars['alt_chandesc'] = $defaults['alt_chandesc'];
+    if (!isset($vars['alt_chanlink'])) $vars['alt_chanlink'] = $defaults['alt_chanlink'];
+    if (!isset($vars['linkhid'])) $vars['linkhid'] = $defaults['linkhid'];
+
  
     $vars['blockid'] = $blockinfo['bid'];
  
@@ -235,7 +258,21 @@ function headlines_rssblock_insert($blockinfo)
     if (!xarVarFetch('rssurl', 'str:1:', $vars['rssurl'], $defaults['rssurl'], XARVAR_NOT_REQUIRED)) {return;}
     // The 'otherrssurl' can override the 'rssurl'
     if (!xarVarFetch('otherrssurl', 'str:1:', $otherrssurl, $defaults['rssurl'], XARVAR_NOT_REQUIRED)) {return;}
-    if (!empty($otherrssurl) && $otherrssurl != $defaults['rssurl']) $vars['rssurl'] = $otherrssurl;
+    // FR: added check for correct url format, including local urls
+    if (!empty($otherrssurl) && $otherrssurl != $defaults['rssurl']) {
+        if (strstr($otherrssurl,'://')) {
+            if (ereg("^http://|https://|ftp://", $otherrssurl)) {            
+                $vars['rssurl'] = $otherrssurl;
+            } 
+        } elseif (substr($otherrssurl,0,1) == '/') {
+            $server = xarServerGetHost();
+            $protocol = xarServerGetProtocol();
+            $vars['rssurl'] = $protocol . '://' . $server . $otherrssurl;
+        } else {
+            $baseurl = xarServerGetBaseURL();
+            $vars['rssurl'] = $baseurl . $otherrssurl;
+        }
+    }
     // bug[ 5322 ] replace url value with numeric hid 
     // allowing changes to module feeds to be reflected in blocks
     if (!empty($vars['rssurl']) && is_numeric($vars['rssurl'])) {
@@ -243,7 +280,7 @@ function headlines_rssblock_insert($blockinfo)
         if (empty($headline)) {
             $vars['rssurl'] = $defaults['rssurl'];
         }
-    } 
+    }
     if (!xarVarFetch('maxitems', 'int:0', $vars['maxitems'], $defaults['maxitems'], XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('showdescriptions', 'checkbox', $vars['showdescriptions'], $defaults['showdescriptions'], XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('show_chantitle', 'checkbox', $vars['show_chantitle'], $defaults['show_chantitle'], XARVAR_NOT_REQUIRED)) {return;}
@@ -251,6 +288,12 @@ function headlines_rssblock_insert($blockinfo)
     if (!xarVarFetch('refresh', 'int:0', $vars['refresh'], $defaults['refresh'], XARVAR_NOT_REQUIRED)) {return;}
     // bug [4545]
     if (!xarVarFetch('truncate', 'int:0', $vars['truncate'], $defaults['truncate'], XARVAR_NOT_REQUIRED)) return;
+    // FR: add alt title/description/link 
+    if (!xarVarFetch('alt_chantitle', 'str:1:', $vars['alt_chantitle'], $defaults['alt_chantitle'], XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('alt_chandesc', 'str:1:', $vars['alt_chandesc'], $defaults['alt_chandesc'], XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('alt_chanlink', 'str:1:', $vars['alt_chanlink'], $defaults['alt_chanlink'], XARVAR_NOT_REQUIRED)) return;
+    if (!ereg("^http://|https://|ftp://", $vars['alt_chanlink'])) $vars['alt_chanlink'] = $defaults['alt_chanlink'];
+    if (!xarVarFetch('linkhid', 'checkbox', $vars['linkhid'], $defaults['linkhid'], XARVAR_NOT_REQUIRED)) return;
 
     $blockinfo['content'] = $vars;
     return $blockinfo;
