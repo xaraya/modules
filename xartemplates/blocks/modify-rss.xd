@@ -11,9 +11,9 @@
         </xar:if>
         <xar:loop name="$items">
             <xar:if condition="$rssurl eq $loop:item.url">
-                <option value="#xarVarPrepForDisplay($loop:item.url)#" selected="selected">#$loop:item.hid#: #xarVarPrepForDisplay($loop:item.url)#</option>
+                <option value="#xarVarPrepForDisplay($loop:item.hid)#" selected="selected">#$loop:item.hid#: #xarVarPrepForDisplay($loop:item.url)#</option>
             <xar:else />
-                <option value="#xarVarPrepForDisplay($loop:item.url)#">#$loop:item.hid#: #xarVarPrepForDisplay($loop:item.url)#</option>
+                <option value="#xarVarPrepForDisplay($loop:item.hid)#">#$loop:item.hid#: #xarVarPrepForDisplay($loop:item.url)#</option>
             </xar:if>
         </xar:loop>
     </select>
