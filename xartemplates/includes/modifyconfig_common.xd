@@ -121,7 +121,7 @@
     </select>
 </div>
 <div class="xar-form-input-wrapper">
-    <label for="editstamp" class="xar-form-label" title="#xarML('Length of time users can edit their own comments')#">
+    <label for="edittimelimit" class="xar-form-label" title="#xarML('Length of time users can edit their own comments')#">
         <xar:mlstring>
             Edit time limit
         </xar:mlstring>

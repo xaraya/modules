@@ -28,7 +28,7 @@ function comments_admin_updateconfig()
     if (!xarVarFetch('render', 'str:1:', $render, _COM_VIEW_THREADED, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sortby', 'str:1:', $sortby, _COM_SORTBY_THREAD, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('order', 'str:1:', $order, _COM_SORT_ASC, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('editstamp','checkbox',$editstamp,0,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('editstamp','int:0:2',$editstamp,0,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('wrap','checkbox', $wrap, false,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('edittimelimit','str:1:', $edittimelimit, '',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('authorize', 'checkbox', $authorize, false, XARVAR_NOT_REQUIRED)) return;
