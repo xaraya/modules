@@ -21,7 +21,31 @@ function headlines_admin_create($args)
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
 
-    if (!ereg("^http://|https://|ftp://", $url)) {
+    // FR: added this routine to support local urls
+    $invalid = false;
+    $islocal = false;
+    if (empty($url)) {
+        $invalid = true;
+    } elseif (strstr($url,'://')) {
+        if (!ereg("^http://|https://|ftp://", $url)) {            
+            $invalid = true;
+        }
+        $server = xarServerGetHost();
+        if (preg_match("!://($server|localhost|127\.0\.0\.1)(:\d+|)/!",$url)) {
+            $islocal = true;
+        }
+    } elseif (substr($url,0,1) == '/') {
+        $server = xarServerGetHost();
+        $protocol = xarServerGetProtocol();
+        $url = $protocol . '://' . $server . $url;
+        $islocal = true;
+    } else {
+        $baseurl = xarServerGetBaseURL();
+        $url = $baseurl . $url;
+        $islocal = true;
+    }
+
+    if ($invalid) {
       $data['warning'] = xarML('Invalid Address for Feed');
     } else {
         // Lets Create the Cache Right now to save processing later.
