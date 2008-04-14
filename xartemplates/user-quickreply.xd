@@ -5,13 +5,15 @@
     minimum use of tables for layout - a css-driven template 
 </xar:comment>
 <xar:style scope="module" module="xarbb" file="xarbb-layout" />
-<script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
+<xar:comment>
+    fieldRequired = Array with names of mandatory fields
+    fieldDescription = Array with labels of mandatory fields
+</xar:comment>
 <script type="text/javascript">
 <!--
-    // Enter name of mandatory fields
-    var fieldRequired = Array("ttitle", "tpost");
-    // Enter field description to appear in the dialog box
-    var fieldDescription = Array("Topic Subject", "Topic body text");
+    var fieldRequired = Array("package[text]");
+    var fieldDescription = Array("Quick Reply");
 //-->
 </script>
 <h1>
@@ -19,7 +21,7 @@
         Submit the following?
     </xar:mlstring>
 </h1>
-<form action="#xarModUrl('comments', 'user', 'reply', array('tid' => $tid))#" method="post" name="post" id="post" onsubmit="return formCheck(this, fieldRequired, fieldDescription); closewindow();">
+<form action="#xarModUrl('comments', 'user', 'reply', array('tid' => $tid))#" method="post" name="post" id="post" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
     <p>
         <div class="xar-sub">
             <xar:mlstring>

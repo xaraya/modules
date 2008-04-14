@@ -9,13 +9,14 @@
 
 <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
 <xar:base-include-javascript module="xarbb" filename="popup.js" position="head" />
-
+<xar:comment>
+    fieldRequired = Array with names of mandatory fields
+    fieldDescription = Array with labels of mandatory fields
+</xar:comment>
 <script type="text/javascript">
 <!--
-    // Enter name of mandatory fields
     var fieldRequired = Array("package[title]", "package[text]");
-    // Enter field description to appear in the dialog box
-    var fieldDescription = Array("Reply Post Subject", "Reply Post body text");
+    var fieldDescription = Array("Subject", "Body");
 //-->
 </script>
 
@@ -44,7 +45,7 @@
 </div>
 
 <div class="xarbb-tablewrapper">
-    <form action="#$receipt.post_url#" method="post" name="post" id="post" onsubmit="return xar_base_formcheck(this, fieldRequired, fieldDescription);">
+    <form action="#$receipt.post_url#" method="post" name="post" id="post" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
         <table>
             <tr>
                 <th colspan="2">
