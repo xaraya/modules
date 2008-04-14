@@ -21,7 +21,6 @@
     # Set up privileges
     #
         xarRegisterPrivilege('AdminFoo','All','foo','All','All','ACCESS_ADMIN');
-        xarMakePrivilegeRoot('AdminFoo');
 
     # --------------------------------------------------------
     #
