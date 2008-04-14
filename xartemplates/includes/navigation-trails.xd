@@ -79,7 +79,7 @@
 
     <xar:if condition="!empty($catlines) and count($catlines) gt 0">
         <br />
-        <table border="0">
+        <table border="0" cellpadding="8" cellspacing="0">
             <tr>
                 <td valign="top">
                 <xar:loop id="catlines" name="$catlines">
