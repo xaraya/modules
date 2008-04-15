@@ -341,6 +341,8 @@ class UploadProperty extends FileUploadProperty
         $data['multiple_' . $this->id] = $this->initialization_multiple_files;
 
         if (!empty($this->value)) {
+            $data['value'] = $this->value;
+            
             // We use array_filter to remove any values from
             // the array that are empty, null, or false
             $aList = array_filter(explode(';', $this->value));
