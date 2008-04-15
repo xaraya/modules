@@ -14,12 +14,14 @@
     #
         xarRegisterMask('ViewFoo','All','foo','All','All','ACCESS_OVERVIEW');
         xarRegisterMask('ReadFoo','All','foo','All','All','ACCESS_READ');
+        xarRegisterMask('ManageFoo','All','foo','All','All','ACCESS_DELETE');
         xarRegisterMask('AdminFoo','All','foo','All','All','ACCESS_ADMIN');
 
     # --------------------------------------------------------
     #
     # Set up privileges
     #
+        xarRegisterPrivilege('ManageFoo','All','foo','All','All','ACCESS_DELETE');
         xarRegisterPrivilege('AdminFoo','All','foo','All','All','ACCESS_ADMIN');
 
     # --------------------------------------------------------
