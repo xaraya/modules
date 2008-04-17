@@ -18,7 +18,13 @@
         <xar:set name="showimport">0</xar:set>
     </xar:if>
     <xar:set name="magpie">xarModGetVar('headlines','magpie')</xar:set>
-
+    <xar:if condition="isset($image) && !empty($image)">
+        <div>
+            <a href="#$image['link']#" title="#$image['title']#">
+                <img src="#$image['url']#" width="#$image['width']#" height="#$image['height']#" alt="#$image['title']#" />
+            </a>
+        </div>
+    </xar:if>
     <xar:if condition="!empty($chandesc)">
          <div class="xar-standard-box-padding"><strong><em>#$chandesc#</em></strong></div>
     </xar:if>
@@ -29,8 +35,19 @@
             <xar:else />
                 <h3>#$loop:item['title']#</h3>
             </xar:if>
+            <xar:if condition="isset($loop:item['categories']) && !empty($loop:item['categories'])">
+                <div class="xar-standard-box-padding">|
+                <xar:foreach in="$loop:item['categories']" key="$catkey" value="$chancat">
+                    <xar:if condition="!empty($chancat-&gt;term)">
+                        #xarVarPrepForDisplay($chancat-&gt;term)# |
+                    </xar:if>
+                </xar:foreach>
+                </div>
+            </xar:if>
             <xar:if condition="!empty($loop:item['description'])">
-                <div class="xar-standard-box-padding">#$loop:item['description']#</div>
+                <div class="xar-standard-box-padding">
+                    #$loop:item['description']#
+                </div>
                 <xar:if condition="!empty($showimport)">
                     <xar:set name="$implabel"><xar:mlstring>Import to News Queue</xar:mlstring></xar:set>
                     <p class="xar-sub">
