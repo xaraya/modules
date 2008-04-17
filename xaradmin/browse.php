@@ -57,16 +57,15 @@ function images_admin_browse()
     $data['getprev'] = $getprev;
 
     // Check if we can cache the image list
-    $data['cacheExpire'] = xarModGetVar('images', 'file.cache-expire');
+    $data['cacheExpire'] = xarModVars::get('images', 'file.cache-expire');
 
-    $data['pager'] = '';
     if (!empty($fileId)) {
         $data['images'] = xarModAPIFunc('images','admin','getimages',
                                         $data);
     } else {
         $params = $data;
         if (!isset($numitems)) {
-            $params['numitems'] = xarModGetVar('images','view.itemsperpage');
+            $params['numitems'] = xarModVars::get('images','view.itemsperpage');
         }
         // Check if we need to refresh the cache anyway
         if (!xarVarFetch('refresh',     'int:0:',     $refresh,          NULL, XARVAR_DONT_SET)) return;
@@ -89,18 +88,16 @@ function images_admin_browse()
         $countitems = xarModAPIFunc('images','admin','countimages',
                                     $params);
 
-        // Add pager
-        if (!empty($params['numitems']) && $countitems > $params['numitems']) {
-            $data['pager'] = xarTplGetPager($startnum,
-                                            $countitems,
-                                            xarModURL('images', 'admin', 'browse',
+    }
+        // Add pager variables
+        $data['startnum'] = "%%";
+        $data['countitems'] = $countitems;
+        $data['numitems'] = $params['numitems'];
+        $data['url'] = xarModURL('images', 'admin', 'browse',
                                                       array('bid'      => $baseId,
                                                             'startnum' => '%%',
                                                             'numitems' => $data['numitems'],
-                                                            'sort'     => $data['sort'])),
-                                            $params['numitems']);
-        }
-    }
+                                                            'sort'     => $data['sort']));
 
     $data['basedirs'] = $basedirs;
 

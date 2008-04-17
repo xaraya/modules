@@ -45,7 +45,7 @@ function images_admin_uploads($args)
     $data['sort'] = ($sort != 'name') ? $sort : null;
 
     if (!isset($numitems)) {
-        $numitems = xarModGetVar('images','view.itemsperpage');
+        $numitems = xarModVars::get('images','view.itemsperpage');
     }
 
     $data['pager'] = '';

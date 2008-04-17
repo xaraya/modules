@@ -1,4 +1,4 @@
-<?php
+0<?php
 /**
  * Images Module
  *
@@ -33,29 +33,24 @@ function images_userapi_resize($args)
 
     if (!isset($src) || empty($src)) {
         $msg = xarML("Required parameter '#(1)' is missing or empty.", 'src');
-        xarErrorSet(XAR_USER_EXCEPTION, xarML('Invalid Parameter'), new DefaultUserException($msg));
-        return FALSE;
+        throw new BadParameterException(null,$msg);
     }
 
     if (!isset($label) || empty($label)) {
         $msg = xarML("Required parameter '#(1)' is missing or empty.", 'label');
-        xarErrorSet(XAR_USER_EXCEPTION, xarML('Invalid Parameter'), new DefaultUserException($msg));
-        return FALSE;
+        throw new BadParameterException(null,$msg);
     }
 
     if (!isset($width) && !isset($height) && !isset($setting) && !isset($params)) {
         $msg = xarML("Required parameters '#(1)', '#(2)', '#(3)' or '#(4)' for tag <xar:image> are missing. See tag documentation.",
                      'width', 'height', 'setting', 'params');
-        xarErrorSet(XAR_USER_EXCEPTION, xarML('Missing Parameters'), new DefaultUserException($msg));
-        return FALSE;
+        throw new BadParameterException(null,$msg);
     } elseif (isset($height) && !xarVarValidate('regexp:/[0-9]+(px|%)/:', $height)) {
         $msg = xarML("'#(1)' parameter is incorrectly formatted.", 'height');
-        xarErrorSet(XAR_USER_EXCEPTION, xarML('Invalid Parameter'), new DefaultUserException($msg));
-        return FALSE;
+        throw new BadParameterException(null,$msg);
     } elseif (isset($width) && !xarVarValidate('regexp:/[0-9]+(px|%)/:', $width)) {
         $msg = xarML("'#(1)' parameter is incorrectly formatted.", 'width');
-        xarErrorSet(XAR_USER_EXCEPTION, xarML('Invalid Parameter'), new DefaultUserException($msg));
-        return FALSE;
+        throw new BadParameterException(null,$msg);
     }
 
     if( !isset($returnpath) ){ $returnpath = false; }
@@ -130,7 +125,7 @@ function images_userapi_resize($args)
 
                 // or if it's an absolute URL, try to get rid of it
                 } elseif (substr($location,0,1) == '/' || substr($location,1,1) == ':') {
-                    $thumbsdir = xarModGetVar('images', 'path.derivative-store');
+                    $thumbsdir = xarModVars::get('images', 'path.derivative-store');
                     $url = $thumbsdir . '/' . basename($location);
                 }
                 // if it's an absolute URL, try to get rid of it
@@ -179,7 +174,7 @@ function images_userapi_resize($args)
 
             // or if it's an absolute URL, try to get rid of it
             } elseif (substr($location,0,1) == '/' || substr($location,1,1) == ':') {
-                $thumbsdir = xarModGetVar('images', 'path.derivative-store');
+                $thumbsdir = xarModVars::get('images', 'path.derivative-store');
                 $url = $thumbsdir . '/' . basename($location);
 
             }
@@ -287,7 +282,7 @@ function images_userapi_resize($args)
 
         // or if it's an absolute URL, try to get rid of it
         } elseif (substr($location,0,1) == '/' || substr($location,1,1) == ':') {
-            $thumbsdir = xarModGetVar('images', 'path.derivative-store');
+            $thumbsdir = xarModVars::get('images', 'path.derivative-store');
             $url = $thumbsdir . '/' . basename($location);
 
         }

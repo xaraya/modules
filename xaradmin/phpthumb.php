@@ -48,7 +48,7 @@ function images_admin_phpthumb($args)
 
     // we're dealing with a derivative image here
     } elseif (preg_match('/^[0-9a-f]{32}$/i',$fileId)) {
-        $data['thumbsdir'] = xarModGetVar('images', 'path.derivative-store');
+        $data['thumbsdir'] = xarModVars::get('images', 'path.derivative-store');
         $data['images'] = xarModAPIFunc('images','admin','getderivatives',
                                         array('thumbsdir' => $data['thumbsdir'],
                                               'fileId'    => $fileId));
@@ -173,7 +173,7 @@ function images_admin_phpthumb($args)
         include_once('modules/images/xarclass/phpthumb.class.php');
         $phpThumb = new phpThumb();
 
-        $imagemagick = xarModGetVar('images', 'file.imagemagick');
+        $imagemagick = xarModVars::get('images', 'file.imagemagick');
         if (!empty($imagemagick) && file_exists($imagemagick)) {
             $phpThumb->config_imagemagick_path = realpath($imagemagick);
         }
@@ -193,7 +193,7 @@ function images_admin_phpthumb($args)
                 $phpThumb->setSourceData($src);
 
                 if (empty($save)) {
-                    $tmpdir = xarModGetVar('uploads', 'path.uploads-directory');
+                    $tmpdir = xarModVars::get('uploads', 'path.uploads-directory');
                     if (is_dir($tmpdir) && is_writable($tmpdir)) {
                         $save = tempnam($tmpdir, 'xarimage-');
                     } else {

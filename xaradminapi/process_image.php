@@ -95,7 +95,7 @@ function images_adminapi_process_image($args)
 
             case 0: // derivative
             default:
-                $thumbsdir = xarModGetVar('images', 'path.derivative-store');
+                $thumbsdir = xarModVars::get('images', 'path.derivative-store');
                 // Use MD5 hash of file location here
                 $save = realpath($thumbsdir) . '/' . md5($image['fileLocation']);
                 // Add the setting to the filename
@@ -119,7 +119,7 @@ function images_adminapi_process_image($args)
     } elseif (is_numeric($image['fileId']) && xarModIsAvailable('uploads') && xarModAPILoad('uploads','user',0) &&
               defined('_UPLOADS_STORE_DB_DATA') && ($image['storeType'] & _UPLOADS_STORE_DB_DATA)) {
 
-        $uploadsdir = xarModGetVar('uploads', 'path.uploads-directory');
+        $uploadsdir = xarModVars::get('uploads', 'path.uploads-directory');
         switch ($saveas) {
             case 1: // [image]_new.[ext] // CHECKME: not in the database ?
                 $save = realpath($uploadsdir) . '/' . $image['fileName'];
@@ -141,7 +141,7 @@ function images_adminapi_process_image($args)
 
             case 0: // derivative
             default:
-                $thumbsdir = xarModGetVar('images', 'path.derivative-store');
+                $thumbsdir = xarModVars::get('images', 'path.derivative-store');
                 // Use file id here
                 $save = realpath($thumbsdir) . '/' . $image['fileId'];
                 // Add the setting to the filename
@@ -281,7 +281,7 @@ function &images_get_thumb()
     include_once('modules/images/xarclass/phpthumb.class.php');
     $phpThumb = new phpThumb();
 
-    $imagemagick = xarModGetVar('images', 'file.imagemagick');
+    $imagemagick = xarModVars::get('images', 'file.imagemagick');
     if (!empty($imagemagick) && file_exists($imagemagick)) {
         $phpThumb->config_imagemagick_path = realpath($imagemagick);
     }

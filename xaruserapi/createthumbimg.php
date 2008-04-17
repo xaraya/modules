@@ -23,7 +23,7 @@ function uploads_userapi_createthumbimg($args)
 {
     extract($args);
 
-    $netpbm_path = xarModGetVar('uploads', 'netpbm_path');
+    $netpbm_path = xarModVars::get('uploads', 'netpbm_path');
 
     if( isset($netpbm_path) && ($netpbm_path != '') )
     {
@@ -226,7 +226,7 @@ function ImageCopyResampleBicubic (&$dst_img, &$src_img, $dst_x,
 function createthumbnetpbm( $file, $thumbwidth, $thumbheight, $newfile )
 {
     // Path to NetPBM installation
-    $bin_path = xarModGetVar('uploads', 'netpbm_path');
+    $bin_path = xarModVars::get('uploads', 'netpbm_path');
 
     // Create thumb from $file and store it as $newfile
     $absname = $file;

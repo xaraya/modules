@@ -33,7 +33,7 @@ function images_adminapi_countderivatives($args)
     }
 
     if (empty($thumbsdir)) {
-        $thumbsdir = xarModGetVar('images', 'path.derivative-store');
+        $thumbsdir = xarModVars::get('images', 'path.derivative-store');
     }
     if (empty($thumbsdir)) {
         return 0;

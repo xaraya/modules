@@ -28,7 +28,7 @@ function images_adminapi_getderivatives($args)
 {
     extract($args);
     if (empty($thumbsdir)) {
-        $thumbsdir = xarModGetVar('images', 'path.derivative-store');
+        $thumbsdir = xarModVars::get('images', 'path.derivative-store');
     }
     if (empty($thumbsdir)) {
         return array();
@@ -66,7 +66,7 @@ function images_adminapi_getderivatives($args)
     } else {
         $cachekey = md5(serialize($params));
         if (!empty($cacheExpire) && is_numeric($cacheExpire) && empty($cacheRefresh)) {
-            $cacheinfo = xarModGetVar('images','file.cachederiv.'.$cachekey);
+            $cacheinfo = xarModVars::get('images','file.cachederiv.'.$cachekey);
             if (!empty($cacheinfo)) {
                 $cacheinfo = @unserialize($cacheinfo);
                 if (!empty($cacheinfo['time']) && $cacheinfo['time'] > time() - $cacheExpire) {
@@ -169,7 +169,7 @@ function images_adminapi_getderivatives($args)
             $cacheinfo = array('time' => time(),
                                'list' => $imagelist);
             $cacheinfo = serialize($cacheinfo);
-            xarModSetVar('images','file.cachederiv.'.$cachekey,$cacheinfo);
+            xarModVars::set('images','file.cachederiv.'.$cachekey,$cacheinfo);
             unset($cacheinfo);
         }
     }

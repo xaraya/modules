@@ -36,9 +36,9 @@ function images_admin_derivatives()
     $data['sort'] = ($sort != 'name') ? $sort : null;
 
     // Check if we can cache the image list
-    $data['cacheExpire'] = xarModGetVar('images', 'file.cache-expire');
+    $data['cacheExpire'] = xarModVars::get('images', 'file.cache-expire');
 
-    $data['thumbsdir'] = xarModGetVar('images', 'path.derivative-store');
+    $data['thumbsdir'] = xarModVars::get('images', 'path.derivative-store');
 
     $data['pager'] = '';
     if (!empty($fileId)) {
@@ -48,7 +48,7 @@ function images_admin_derivatives()
     } else {
         $params = $data;
         if (!isset($numitems)) {
-            $params['numitems'] = xarModGetVar('images','view.itemsperpage');
+            $params['numitems'] = xarModVars::get('images','view.itemsperpage');
         }
         // Check if we need to refresh the cache anyway
         if (!xarVarFetch('refresh',     'int:0:',     $refresh,          NULL, XARVAR_DONT_SET)) return;

@@ -122,7 +122,7 @@ function images_adminapi_resize_image($args)
     }
 
     if (empty($thumbsdir)) {
-        $thumbsdir = xarModGetVar('images', 'path.derivative-store');
+        $thumbsdir = xarModVars::get('images', 'path.derivative-store');
     }
 
     $image = xarModAPIFunc('images', 'user', 'load_image', array('fileId' => $fileId,

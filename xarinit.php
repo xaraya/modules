@@ -28,11 +28,11 @@ function images_init()
 
 
     // Set up module variables
-    xarModSetVar('images', 'type.graphics-library', _IMAGES_LIBRARY_GD);
-    xarModSetVar('images', 'path.derivative-store', 'Put a real directory in here...!');
-    xarModSetVar('images', 'view.itemsperpage', 200);
-    xarModSetVar('images', 'file.cache-expire', 60);
-    xarModSetVar('images', 'file.imagemagick', '');
+    xarModVars::set('images', 'type.graphics-library', _IMAGES_LIBRARY_GD);
+    xarModVars::set('images', 'path.derivative-store', 'Put a real directory in here...!');
+    xarModVars::set('images', 'view.itemsperpage', 200);
+    xarModVars::set('images', 'file.cache-expire', 60);
+    xarModVars::set('images', 'file.imagemagick', '');
 
 /*
     xarRegisterMask('ViewUploads',  'All','images','Image','All','ACCESS_READ');
@@ -70,9 +70,9 @@ function images_upgrade($oldversion)
     switch($oldversion) {
         case '1.0.0':
             // Code to upgrade from version 1.0.0 goes here
-            $thumbsdir = xarModGetVar('images', 'path.derivative-store');
+            $thumbsdir = xarModVars::get('images', 'path.derivative-store');
             if (!empty($thumbsdir) && is_dir($thumbsdir)) {
-                xarModSetVar('images','upgrade-1.0.0',1);
+                xarModVars::set('images','upgrade-1.0.0',1);
                 // remove all old-style derivatives
             /* skip this - too risky depending on site config
                 $images = xarModAPIFunc('images','admin','getderivatives');
@@ -106,7 +106,7 @@ function images_delete()
     // Unregister the hook
     xarModUnregisterHook('item', 'transform', 'API', 'images', 'user', 'transformhook');
     // Delete module variables
-    xarModDelAllVars('images');
+    xarModVars::delete_all('images');
     // Deletion successful
     return true;
 }

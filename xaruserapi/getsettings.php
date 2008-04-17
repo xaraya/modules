@@ -18,13 +18,13 @@
  */
 function images_userapi_getsettings()
 {
-    $settings = xarModGetVar('images','phpthumb-settings');
+    $settings = xarModVars::get('images','phpthumb-settings');
     if (empty($settings)) {
         $settings = array();
         $settings['JPEG 800 x 600'] = array('w' => 800,
                                             'h' => 600,
                                             'f' => 'jpg');
-        xarModSetVar('images', 'phpthumb-settings', serialize($settings));
+        xarModVars::set('images', 'phpthumb-settings', serialize($settings));
     } else {
         $settings = unserialize($settings);
     }

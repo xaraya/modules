@@ -25,9 +25,9 @@ function images_admin_updateconfig()
     if (!xarVarFetch('shortURLs', 'checkbox', $shortURLs, TRUE)) return;
 
     if (isset($shortURLs) && $shortURLs) {
-        xarModSetVar('images', 'SupportShortURLs', TRUE);
+        xarModVars::set('images', 'SupportShortURLs', TRUE);
     } else {
-        xarModSetVar('images', 'SupportShortURLs', FALSE);
+        xarModVars::set('images', 'SupportShortURLs', FALSE);
     }
 
     // Confirm authorisation code.
@@ -37,8 +37,8 @@ function images_admin_updateconfig()
         foreach ($libtype as $varname => $value) {
             // check to make sure that the value passed in is
             // a real images module variable
-            if (NULL !== xarModGetVar('images', 'type.'.$varname)) {
-                xarModSetVar('images', 'type.' . $varname, $value);
+            if (NULL !== xarModVars::get('images', 'type.'.$varname)) {
+                xarModVars::set('images', 'type.' . $varname, $value);
             }
         }
     }
@@ -46,8 +46,8 @@ function images_admin_updateconfig()
         foreach ($file as $varname => $value) {
             // check to make sure that the value passed in is
             // a real images module variable
-            if (NULL !== xarModGetVar('images', 'file.'.$varname)) {
-                xarModSetVar('images', 'file.' . $varname, $value);
+            if (NULL !== xarModVars::get('images', 'file.'.$varname)) {
+                xarModVars::set('images', 'file.' . $varname, $value);
             }
         }
     }
@@ -56,7 +56,7 @@ function images_admin_updateconfig()
             // check to make sure that the value passed in is
             // a real images module variable
             $value = trim(ereg_replace('\/$', '', $value));
-            if (NULL !== xarModGetVar('images', 'path.' . $varname)) {
+            if (NULL !== xarModVars::get('images', 'path.' . $varname)) {
                 if (!file_exists($value) || !is_dir($value)) {
                     $msg = xarML('Location [#(1)] either does not exist or is not a valid directory!', $value);
                     xarErrorSet(XAR_USER_EXCEPTION, 'INVALID_DIRECTORY', new DefaultUserException($msg));
@@ -66,7 +66,7 @@ function images_admin_updateconfig()
                     xarErrorSet(XAR_USER_EXCEPTION, 'NOT_WRITABLE', new DefaultUserException($msg));
                     return;
                 } else {
-                    xarModSetVar('images', 'path.' . $varname, $value);
+                    xarModVars::set('images', 'path.' . $varname, $value);
                 }
             }
         }
@@ -77,7 +77,7 @@ function images_admin_updateconfig()
             // a real images module variable
 // TODO: add other view.* variables later ?
             if ($varname != 'itemsperpage') continue;
-            xarModSetVar('images', 'view.' . $varname, $value);
+            xarModVars::set('images', 'view.' . $varname, $value);
         }
     }
 
@@ -95,7 +95,7 @@ function images_admin_updateconfig()
                                    'recursive' => (!empty($info['recursive']) ? true : false));
             $idx++;
         }
-        xarModSetVar('images','basedirs',serialize($newdirs));
+        xarModVars::set('images','basedirs',serialize($newdirs));
     }
 
     xarModCallHooks('module', 'updateconfig', 'images', array('module' => 'images'));

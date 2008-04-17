@@ -18,6 +18,7 @@
  */
 function images_adminapi_getmenulinks()
 {
+    $menulinks = array();
     if (xarSecurityCheck('AdminImages')) {
         if (xarModIsAvailable('uploads') && xarSecurityCheck('AdminUploads',0)) {
             $menulinks[] = Array('url'   => xarModURL('images',
@@ -46,9 +47,6 @@ function images_adminapi_getmenulinks()
                                                   'modifyconfig'),
                              'title' => xarML('Edit the Images Configuration'),
                              'label' => xarML('Modify Config'));
-    }
-    if (empty($menulinks)){
-        $menulinks = '';
     }
     return $menulinks;
 }

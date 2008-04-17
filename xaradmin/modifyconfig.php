@@ -24,22 +24,22 @@ function images_admin_modifyconfig()
     // *********************************************
     // Global
     $data['gdextension'] = extension_loaded ('gd'); // True or false
-    $data['libtype']['graphics-library']    = xarModGetVar('images', 'type.graphics-library'); // return gd
-    $data['path']['derivative-store']       = xarModGetVar('images', 'path.derivative-store');
-    $data['file']['cache-expire']           = xarModGetVar('images', 'file.cache-expire');
+    $data['libtype']['graphics-library']    = xarModVars::get('images', 'type.graphics-library'); // return gd
+    $data['path']['derivative-store']       = xarModVars::get('images', 'path.derivative-store');
+    $data['file']['cache-expire']           = xarModVars::get('images', 'file.cache-expire');
     if (!isset($data['file']['cache-expire'])) {
-        xarModSetVar('images', 'file.cache-expire', 60);
+        xarModVars::set('images', 'file.cache-expire', 60);
     }
-    $data['file']['imagemagick']            = xarModGetVar('images', 'file.imagemagick');
+    $data['file']['imagemagick']            = xarModVars::get('images', 'file.imagemagick');
     if (!isset($data['file']['imagemagick'])) {
-        xarModSetVar('images', 'file.imagemagick', '');
+        xarModVars::set('images', 'file.imagemagick', '');
     }
     $data['authid']                         = xarSecGenAuthKey();
     $data['library']   = array('GD'          => _IMAGES_LIBRARY_GD,
                                'ImageMagick' => _IMAGES_LIBRARY_IMAGEMAGICK,
                                'NetPBM'      => _IMAGES_LIBRARY_NETPBM);
 
-    $shortURLs = xarModGetVar('images', 'SupportShortURLs');
+    $shortURLs = xarModVars::get('images', 'SupportShortURLs');
 
     $data['shortURLs'] = empty($shortURLs) ? 0 : 1;
 

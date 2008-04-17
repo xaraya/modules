@@ -151,8 +151,8 @@ function images_user_display( $args )
 
     // Make sure to check the browser / os type - IE 5.x on Mac (os9 / osX / etc) does
     // not like headers being sent for iamges - so leave them out for those particular cases
-    $osName      = xarSessionGetVar('osname');
-    $browserName = xarSessionGetVar('browsername');
+    $osName      = xarSession::getVar('osname');
+    $browserName = xarSession::getVar('browsername');
 
     if (empty($osName) || $osName != 'mac' || ($osName == 'mac' && !stristr($browserName, 'internet explorer'))) {
         header("Pragma: ");

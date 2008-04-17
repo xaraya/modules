@@ -1,598 +1,599 @@
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>Images Administration</xar:mlstring>
-    </span>
-</div>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>Images Administration</xar:mlstring>
+        </span>
+    </div>
 
-<div class="xar-mod-body">
-  <xar:template type="module" file="admin-menu" module="images" />
-    <h2>
-        <xar:mlstring>Image Processing with phpThumb()</xar:mlstring>
-    </h2>
+    <div class="xar-mod-body">
+      <xar:template type="module" file="admin-menu" module="images" />
+        <h2>
+            <xar:mlstring>Image Processing with phpThumb()</xar:mlstring>
+        </h2>
 
 
-    <xar:if condition="!empty($message)">
-        <p><strong>#$message#</strong></p>
-    </xar:if>
-
-    <a name="config"></a>
-    <fieldset>
-        <legend>
-            <xar:mlstring>Settings</xar:mlstring>
-        </legend>
-        <div class="xar-form-input-wrapper">
-
-        <strong><xar:mlstring>Configure</xar:mlstring></strong>
-        <xar:if condition="!empty($selimage['filePreview'])">
-        |
-        <a href="#xarServerGetCurrentURL()##preview"><xar:mlstring>Preview Image</xar:mlstring></a>
+        <xar:if condition="!empty($message)">
+            <p><strong>#$message#</strong></p>
         </xar:if>
-        <xar:if condition="!empty($selimage['fileDownload'])">
-        |
-        <a href="#xarServerGetCurrentURL()##original"><xar:mlstring>Original Image</xar:mlstring></a>
-        </xar:if>
-    </p>
-    <form method="post" name="post" id="post" action="#xarModURL('images', 'admin', 'phpthumb')#">
-    <table class="xar-fullwidth xar-accent">
-    <xar:if condition="!empty($selimage)">
-        <tr>
-            <th colspan="4" class="xar-accent" align="center">
-                <xar:mlstring>Image</xar:mlstring>
-            </th>
-        </tr>
-        <tr>
-            <td class="xar-accent">
-                <xar:mlstring>Filename</xar:mlstring>
-            </td>
-            <td>
-                #$selimage['fileName']#
-            </td>
-            <td class="xar-accent">
-                <xar:mlstring>Modified</xar:mlstring>
-            </td>
-            <td>
-                #xarLocaleGetFormattedDate('short',$selimage['fileModified'])#
-            </td>
-        </tr>
-        <tr>
-            <td class="xar-accent">
-                <xar:mlstring>Filetype</xar:mlstring>
-            </td>
-            <td>
-                #$selimage['fileType']#
-            </td>
-            <td class="xar-accent">
-                <xar:mlstring>Size</xar:mlstring>
-            </td>
-            <td>
-                #$selimage['fileSize']#
-            </td>
-        </tr>
-        <tr>
-            <td class="xar-accent">
-                <xar:mlstring>Width</xar:mlstring>
-            </td>
-            <td>
-                #$selimage['width']#
-            </td>
-            <td class="xar-accent">
-                <xar:mlstring>Height</xar:mlstring>
-            </td>
-            <td>
-                #$selimage['height']#
-            </td>
-        </tr>
-    </xar:if>
-        <tr>
-            <th colspan="4" class="xar-accent" align="center">
+
+        <a name="config"></a>
+        <fieldset>
+            <legend>
                 <xar:mlstring>Settings</xar:mlstring>
-            </th>
-        </tr>
-        <tr>
-            <td colspan="4">
-                <input type="submit" name="load" value="#xarML('Load')#" />
-                <select name="setting" id="setting">
-                    <option value=""><xar:mlstring>[ New Settings --&gt; ]</xar:mlstring></option>
-                    <xar:foreach in="$settings" key="$name">
-                        <xar:if condition="!empty($setting) and $name eq $setting">
-                            <option value="#xarVarPrepForDisplay($name)#" selected="selected">#$name#</option>
-                        <xar:else/>
-                            <option value="#xarVarPrepForDisplay($name)#">#$name#</option>
-                        </xar:if>
-                    </xar:foreach>
-                </select>
-                <input type="text" name="newset" id="newset" value="" />
-                <input type="submit" name="store" value="#xarML('Store')#" />
-            </td>
-        </tr>
-        <tr>
-            <th colspan="4" class="xar-accent" align="center">
-                <xar:mlstring>Resize</xar:mlstring>
-            </th>
-        </tr>
-        <tr>
-            <td class="xar-accent">
-                <label for="w">
-                <xar:mlstring>Width</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="w" id="w" value="#$w#" size="3" />
-            </td>
-            <td class="xar-accent">
-                <label for="h">
-                <xar:mlstring>Height</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="h" id="h" value="#$h#" size="3" />
-            </td>
-        </tr>
-        <tr>
-            <th colspan="4" class="xar-accent" align="center">
-                <xar:mlstring>Crop</xar:mlstring>
-            </th>
-        </tr>
-        <tr>
-            <td class="xar-accent">
-                <label for="sx">
-                <xar:mlstring>Crop Left</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="sx" id="sx" value="#$sx#" size="3" />
-            </td>
-            <td class="xar-accent">
-                <label for="sy">
-                <xar:mlstring>Crop Top</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="sy" id="sy" value="#$sy#" size="3" />
-            </td>
-        </tr>
-        <tr>
-            <td class="xar-accent">
-                <label for="sw">
-                <xar:mlstring>Crop Width</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="sw" id="sw" value="#$sw#" size="3" />
-            </td>
-            <td class="xar-accent">
-                <label for="sh">
-                <xar:mlstring>Crop Height</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="sh" id="sh" value="#$sh#" size="3" />
-            </td>
-        </tr>
-        <tr>
-            <th colspan="4" class="xar-accent" align="center">
-                <xar:mlstring>Rotate</xar:mlstring>
-            </th>
-        </tr>
-        <tr>
-            <td class="xar-accent">
-                <label for="ra">
-                <xar:mlstring>Angle</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="ra" id="ra" value="#$ra#" size="3" />
-                -360 - 360
-            </td>
-            <td class="xar-accent">
-                <label for="ar">
-                <xar:mlstring>Auto</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <xar:set name="options">
-                array('p' => xarML('Portrait Left'),
-                      'P' => xarML('Portrait Right'),
-                      'L' => xarML('Landscape Left'),
-                      'l' => xarML('Landscape Right'),
-                      'x' => xarML('EXIF Orientation'),
-                )
-                </xar:set>
-                <select name="ar" id="ar">
-                    <option value=""> </option>
-                    <xar:foreach in="$options" key="$id" value="$val">
-                        <xar:if condition="!empty($ar) and $ar eq $id">
-                            <option value="#$id#" selected="selected">#$val#</option>
-                        <xar:else/>
-                            <option value="#$id#">#$val#</option>
-                        </xar:if>
-                    </xar:foreach>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <th colspan="4" class="xar-accent" align="center">
-                <xar:mlstring>Flip</xar:mlstring>
-            </th>
-        </tr>
-        <tr>
-            <td class="xar-accent">
-                <label for="filter_flip_x">
-                <xar:mlstring>Horizontal</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <xar:if condition="!empty($filter['flip']) and in_array('x',$filter['flip'])">
-                    <input type="checkbox" name="filter[flip][0]" id="filter_flip_x" value="x" checked="checked" />
-                <xar:else/>
-                    <input type="checkbox" name="filter[flip][0]" id="filter_flip_x" value="x" />
-                </xar:if>
-            </td>
-            <td class="xar-accent">
-                <label for="filter_flip_y">
-                <xar:mlstring>Vertical</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <xar:if condition="!empty($filter['flip']) and in_array('y',$filter['flip'])">
-                    <input type="checkbox" name="filter[flip][0]" id="filter_flip_y" value="y" checked="checked" />
-                <xar:else/>
-                    <input type="checkbox" name="filter[flip][0]" id="filter_flip_y" value="y" />
-                </xar:if>
-            </td>
-        </tr>
-        <tr>
-            <th colspan="4" class="xar-accent" align="center">
-                <xar:mlstring>Color Correction</xar:mlstring>
-            </th>
-        </tr>
-        <tr>
-            <td class="xar-accent">
-                <label for="filter_gam_0">
-                <xar:mlstring>Gamma</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="filter[gam][0]" id="filter_gam_0" value="#$filter['gam'][0]#" size="3" />
-                0 - 10
-            </td>
-            <td class="xar-accent">
-                <label for="filter_ds_0">
-                <xar:mlstring>De-saturate</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="filter[ds][0]" id="filter_ds_0" value="#$filter['ds'][0]#" size="3" />
-                0 - 100
-            </td>
-        </tr>
-        <tr>
-            <th colspan="4" class="xar-accent" align="center">
-                <xar:mlstring>Watermark Image</xar:mlstring>
-            </th>
-        </tr>
-        <tr>
-            <td class="xar-accent">
-                <label for="filter_wmi_0">
-                <xar:mlstring>Filename</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="filter[wmi][0]" id="filter_wmi_0" value="#$filter['wmi'][0]#" />
-            </td>
-            <td class="xar-accent">
-                <label for="filter_wmi_2">
-                <xar:mlstring>Opacity</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="filter[wmi][2]" id="filter_wmi_2" value="#$filter['wmi'][2]#" size="3" />
-                0 - 100
-            </td>
-        </tr>
-        <tr>
-            <td class="xar-accent">
-                <label for="filter_wmi_1">
-                <xar:mlstring>Alignment</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <xar:set name="options">
-                array('BR' => xarML('Bottom Right'),
-                      'BL' => xarML('Bottom Left'),
-                      'TR' => xarML('Top Right'),
-                      'TL' => xarML('Top Left'),
-                      'C'  => xarML('Center'),
-                      'R'  => xarML('Right'),
-                      'L'  => xarML('Left'),
-                      'T'  => xarML('Top'),
-                      'B'  => xarML('Bottom'),
-                      '*'  => xarML('Tile'),
-                )
-                </xar:set>
-                <select name="filter[wmi][1]" id="filter_wmi_1">
-                    <option value=""> </option>
-                    <xar:foreach in="$options" key="$id" value="$val">
-                        <xar:if condition="!empty($filter['wmi'][1]) and $filter['wmi'][1] eq $id">
-                            <option value="#$id#" selected="selected">#$val#</option>
-                        <xar:else/>
-                            <option value="#$id#">#$val#</option>
-                        </xar:if>
-                    </xar:foreach>
-                </select>
-            </td>
-            <td class="xar-accent">
-                <label for="filter_wmi_3">
-                <xar:mlstring>Margin</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="filter[wmi][3]" id="filter_wmi_3" value="#$filter['wmi'][3]#" size="3" />
-                %
-            </td>
-        </tr>
-        <tr>
-            <th colspan="4" class="xar-accent" align="center">
-                <xar:mlstring>Watermark Text</xar:mlstring>
-            </th>
-        </tr>
-        <tr>
-            <td class="xar-accent">
-                <label for="filter_wmt_0">
-                <xar:mlstring>Text</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="filter[wmt][0]" id="filter_wmt_0" value="#xarVarPrepForDisplay($filter['wmt'][0])#" />
-            </td>
-            <td class="xar-accent">
-                <label for="filter_wmt_5">
-                <xar:mlstring>Opacity</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="filter[wmt][5]" id="filter_wmt_5" value="#$filter['wmt'][5]#" size="3" />
-                0 - 100
-            </td>
-        </tr>
-        <tr>
-            <td class="xar-accent">
-                <label for="filter_wmt_2">
-                <xar:mlstring>Alignment</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <xar:set name="options">
-                array('BR' => xarML('Bottom Right'),
-                      'BL' => xarML('Bottom Left'),
-                      'TR' => xarML('Top Right'),
-                      'TL' => xarML('Top Left'),
-                      'C'  => xarML('Center'),
-                      'R'  => xarML('Right'),
-                      'L'  => xarML('Left'),
-                      'T'  => xarML('Top'),
-                      'B'  => xarML('Bottom'),
-                      '*'  => xarML('Tile'),
-                )
-                </xar:set>
-                <select name="filter[wmt][2]" id="filter_wmt_2">
-                    <option value=""> </option>
-                    <xar:foreach in="$options" key="$id" value="$val">
-                        <xar:if condition="!empty($filter['wmt'][2]) and $filter['wmt'][2] eq $id">
-                            <option value="#$id#" selected="selected">#$val#</option>
-                        <xar:else/>
-                            <option value="#$id#">#$val#</option>
-                        </xar:if>
-                    </xar:foreach>
-                </select>
-            </td>
-            <td class="xar-accent">
-                <label for="filter_wmt_6">
-                <xar:mlstring>Margin</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="filter[wmt][6]" id="filter_wmt_6" value="#$filter['wmt'][6]#" size="3" />
-                %
-            </td>
-        </tr>
-        <tr>
-            <td class="xar-accent">
-                <label for="filter_wmt_1">
-                <xar:mlstring>Font Size</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="filter[wmt][1]" id="filter_wmt_1" value="#$filter['wmt'][1]#" size="3" />
-                1 - 5
-            </td>
-            <td class="xar-accent">
-                <label for="filter_wmt_4">
-                <xar:mlstring>TTF File</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="filter[wmt][4]" id="filter_wmt_4" value="#$filter['wmt'][4]#" />
-            </td>
-        </tr>
-        <tr>
-            <td class="xar-accent">
-                <label for="filter_wmt_3">
-                <xar:mlstring>Hex Color</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <xar:data-input type="tcolorpicker" name="filter[wmt][3]" id="filter_wmt_3" value="$filter['wmt'][3]" />
-            </td>
-            <td class="xar-accent">
-                <label for="filter_wmt_7">
-                <xar:mlstring>Angle</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="filter[wmt][7]" id="filter_wmt_7" value="#$filter['wmt'][7]#" size="3" />
-                -360 - 360
-            </td>
-        </tr>
-<xar:comment>
-To be continued (any volunteers ?) - we'll let people specify filters by hand below.
-Perhaps we could provide a separate (javascript-based) page to fill in those fields ?
-</xar:comment>
-        <tr>
-            <th colspan="4" class="xar-accent" align="center">
-                <xar:mlstring>Other Filters</xar:mlstring>
-                <br/>
-                [<a href="modules/images/xardocs/phpthumb.readme.txt" target="readme"><xar:mlstring>see description of 'fltr' parameter in readme.txt</xar:mlstring></a>]
-            </th>
-        </tr>
-        <tr>
-            <td class="xar-accent">
-                <label for="fltr_0">
-                <xar:mlstring>Filter</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="fltr[0]" id="fltr_0" value="#xarVarPrepForDisplay($fltr[0])#" />
-            </td>
-            <td class="xar-accent">
-                <label for="fltr_1">
-                <xar:mlstring>Filter</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="fltr[1]" id="fltr_1" value="#xarVarPrepForDisplay($fltr[1])#" />
-            </td>
-        </tr>
-        <tr>
-            <td class="xar-accent">
-                <label for="fltr_2">
-                <xar:mlstring>Filter</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="fltr[2]" id="fltr_2" value="#xarVarPrepForDisplay($fltr[2])#" />
-            </td>
-            <td class="xar-accent">
-                <label for="fltr_3">
-                <xar:mlstring>Filter</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="fltr[3]" id="fltr_3" value="#xarVarPrepForDisplay($fltr[3])#" />
-            </td>
-        </tr>
-        <tr>
-            <th colspan="4" class="xar-accent" align="center">
-                <xar:mlstring>Output</xar:mlstring>
-            </th>
-        </tr>
-        <tr>
-            <td class="xar-accent">
-                <label for="f">
-                <xar:mlstring>Format</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <xar:set name="options">
-                array('jpeg' => 'JPEG',
-                      'png'  => 'PNG',
-                      'gif'  => 'GIF',
-                )
-                </xar:set>
-                <select name="f" id="f">
-                    <xar:foreach in="$options" key="$id" value="$val">
-                        <xar:if condition="!empty($f) and $f eq $id">
-                            <option value="#$id#" selected="selected">#$val#</option>
-                        <xar:else/>
-                            <option value="#$id#">#$val#</option>
-                        </xar:if>
-                    </xar:foreach>
-                </select>
-            </td>
-            <td class="xar-accent">
-                <label for="q">
-                <xar:mlstring>Quality</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <select name="q" id="q">
-                    <option value=""> </option>
-                    <xar:for start="$i = 1" iter="$i++" test="$i le 95">
-                        <xar:if condition="!empty($q) and $q eq $i">
-                            <option value="#$i#" selected="selected"> #$i# </option>
-                        <xar:else/>
-                            <option value="#$i#"> #$i# </option>
-                        </xar:if>
-                    </xar:for>
-                </select>
-            </td>
-        </tr>
-    <xar:if condition="!empty($selimage)">
-        <tr>
-            <td class="xar-accent">
-                <label for="save">
-                <xar:mlstring>Save As</xar:mlstring>
-                </label>
-            </td>
-            <td colspan="3">
-                <input type="text" name="save" id="save" value="#$save#" size="60" />
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4" align="center">
-                <input type="hidden" name="authid" value="#$authid#"/>
-                <input type="hidden" name="bid" value="#$baseId#"/>
-                <input type="hidden" name="fid" value="#$fileId#"/>
-                <input type="submit" value="#xarML('Preview')#"/>
-                <input type="submit" name="confirm" value="#xarML('Save')#"/>
-            </td>
-        </tr>
+            </legend>
+            <div class="xar-form-input-wrapper">
+
+            <strong><xar:mlstring>Configure</xar:mlstring></strong>
+            <xar:if condition="!empty($selimage['filePreview'])">
+            |
+            <a href="#xarServerGetCurrentURL()##preview"><xar:mlstring>Preview Image</xar:mlstring></a>
+            </xar:if>
+            <xar:if condition="!empty($selimage['fileDownload'])">
+            |
+            <a href="#xarServerGetCurrentURL()##original"><xar:mlstring>Original Image</xar:mlstring></a>
+            </xar:if>
+            </div>
+        </fieldset>
+        <form method="post" name="post" id="post" action="#xarModURL('images', 'admin', 'phpthumb')#">
+        <table class="xar-fullwidth xar-accent">
+        <xar:if condition="!empty($selimage)">
+            <tr>
+                <th colspan="4" class="xar-accent" align="center">
+                    <xar:mlstring>Image</xar:mlstring>
+                </th>
+            </tr>
+            <tr>
+                <td class="xar-accent">
+                    <xar:mlstring>Filename</xar:mlstring>
+                </td>
+                <td>
+                    #$selimage['fileName']#
+                </td>
+                <td class="xar-accent">
+                    <xar:mlstring>Modified</xar:mlstring>
+                </td>
+                <td>
+                    #xarLocaleGetFormattedDate('short',$selimage['fileModified'])#
+                </td>
+            </tr>
+            <tr>
+                <td class="xar-accent">
+                    <xar:mlstring>Filetype</xar:mlstring>
+                </td>
+                <td>
+                    #$selimage['fileType']#
+                </td>
+                <td class="xar-accent">
+                    <xar:mlstring>Size</xar:mlstring>
+                </td>
+                <td>
+                    #$selimage['fileSize']#
+                </td>
+            </tr>
+            <tr>
+                <td class="xar-accent">
+                    <xar:mlstring>Width</xar:mlstring>
+                </td>
+                <td>
+                    #$selimage['width']#
+                </td>
+                <td class="xar-accent">
+                    <xar:mlstring>Height</xar:mlstring>
+                </td>
+                <td>
+                    #$selimage['height']#
+                </td>
+            </tr>
+        </xar:if>
+            <tr>
+                <th colspan="4" class="xar-accent" align="center">
+                    <xar:mlstring>Settings</xar:mlstring>
+                </th>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <input type="submit" name="load" value="#xarML('Load')#" />
+                    <select name="setting" id="setting">
+                        <option value=""><xar:mlstring>[ New Settings --&gt; ]</xar:mlstring></option>
+                        <xar:foreach in="$settings" key="$name">
+                            <xar:if condition="!empty($setting) and $name eq $setting">
+                                <option value="#xarVarPrepForDisplay($name)#" selected="selected">#$name#</option>
+                            <xar:else/>
+                                <option value="#xarVarPrepForDisplay($name)#">#$name#</option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                    <input type="text" name="newset" id="newset" value="" />
+                    <input type="submit" name="store" value="#xarML('Store')#" />
+                </td>
+            </tr>
+            <tr>
+                <th colspan="4" class="xar-accent" align="center">
+                    <xar:mlstring>Resize</xar:mlstring>
+                </th>
+            </tr>
+            <tr>
+                <td class="xar-accent">
+                    <label for="w">
+                    <xar:mlstring>Width</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="w" id="w" value="#$w#" size="3" />
+                </td>
+                <td class="xar-accent">
+                    <label for="h">
+                    <xar:mlstring>Height</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="h" id="h" value="#$h#" size="3" />
+                </td>
+            </tr>
+            <tr>
+                <th colspan="4" class="xar-accent" align="center">
+                    <xar:mlstring>Crop</xar:mlstring>
+                </th>
+            </tr>
+            <tr>
+                <td class="xar-accent">
+                    <label for="sx">
+                    <xar:mlstring>Crop Left</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="sx" id="sx" value="#$sx#" size="3" />
+                </td>
+                <td class="xar-accent">
+                    <label for="sy">
+                    <xar:mlstring>Crop Top</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="sy" id="sy" value="#$sy#" size="3" />
+                </td>
+            </tr>
+            <tr>
+                <td class="xar-accent">
+                    <label for="sw">
+                    <xar:mlstring>Crop Width</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="sw" id="sw" value="#$sw#" size="3" />
+                </td>
+                <td class="xar-accent">
+                    <label for="sh">
+                    <xar:mlstring>Crop Height</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="sh" id="sh" value="#$sh#" size="3" />
+                </td>
+            </tr>
+            <tr>
+                <th colspan="4" class="xar-accent" align="center">
+                    <xar:mlstring>Rotate</xar:mlstring>
+                </th>
+            </tr>
+            <tr>
+                <td class="xar-accent">
+                    <label for="ra">
+                    <xar:mlstring>Angle</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="ra" id="ra" value="#$ra#" size="3" />
+                    -360 - 360
+                </td>
+                <td class="xar-accent">
+                    <label for="ar">
+                    <xar:mlstring>Auto</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <xar:set name="options">
+                    array('p' => xarML('Portrait Left'),
+                          'P' => xarML('Portrait Right'),
+                          'L' => xarML('Landscape Left'),
+                          'l' => xarML('Landscape Right'),
+                          'x' => xarML('EXIF Orientation'),
+                    )
+                    </xar:set>
+                    <select name="ar" id="ar">
+                        <option value=""> </option>
+                        <xar:foreach in="$options" key="$id" value="$val">
+                            <xar:if condition="!empty($ar) and $ar eq $id">
+                                <option value="#$id#" selected="selected">#$val#</option>
+                            <xar:else/>
+                                <option value="#$id#">#$val#</option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th colspan="4" class="xar-accent" align="center">
+                    <xar:mlstring>Flip</xar:mlstring>
+                </th>
+            </tr>
+            <tr>
+                <td class="xar-accent">
+                    <label for="filter_flip_x">
+                    <xar:mlstring>Horizontal</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <xar:if condition="!empty($filter['flip']) and in_array('x',$filter['flip'])">
+                        <input type="checkbox" name="filter[flip][0]" id="filter_flip_x" value="x" checked="checked" />
+                    <xar:else/>
+                        <input type="checkbox" name="filter[flip][0]" id="filter_flip_x" value="x" />
+                    </xar:if>
+                </td>
+                <td class="xar-accent">
+                    <label for="filter_flip_y">
+                    <xar:mlstring>Vertical</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <xar:if condition="!empty($filter['flip']) and in_array('y',$filter['flip'])">
+                        <input type="checkbox" name="filter[flip][0]" id="filter_flip_y" value="y" checked="checked" />
+                    <xar:else/>
+                        <input type="checkbox" name="filter[flip][0]" id="filter_flip_y" value="y" />
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <th colspan="4" class="xar-accent" align="center">
+                    <xar:mlstring>Color Correction</xar:mlstring>
+                </th>
+            </tr>
+            <tr>
+                <td class="xar-accent">
+                    <label for="filter_gam_0">
+                    <xar:mlstring>Gamma</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="filter[gam][0]" id="filter_gam_0" value="#$filter['gam'][0]#" size="3" />
+                    0 - 10
+                </td>
+                <td class="xar-accent">
+                    <label for="filter_ds_0">
+                    <xar:mlstring>De-saturate</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="filter[ds][0]" id="filter_ds_0" value="#$filter['ds'][0]#" size="3" />
+                    0 - 100
+                </td>
+            </tr>
+            <tr>
+                <th colspan="4" class="xar-accent" align="center">
+                    <xar:mlstring>Watermark Image</xar:mlstring>
+                </th>
+            </tr>
+            <tr>
+                <td class="xar-accent">
+                    <label for="filter_wmi_0">
+                    <xar:mlstring>Filename</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="filter[wmi][0]" id="filter_wmi_0" value="#$filter['wmi'][0]#" />
+                </td>
+                <td class="xar-accent">
+                    <label for="filter_wmi_2">
+                    <xar:mlstring>Opacity</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="filter[wmi][2]" id="filter_wmi_2" value="#$filter['wmi'][2]#" size="3" />
+                    0 - 100
+                </td>
+            </tr>
+            <tr>
+                <td class="xar-accent">
+                    <label for="filter_wmi_1">
+                    <xar:mlstring>Alignment</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <xar:set name="options">
+                    array('BR' => xarML('Bottom Right'),
+                          'BL' => xarML('Bottom Left'),
+                          'TR' => xarML('Top Right'),
+                          'TL' => xarML('Top Left'),
+                          'C'  => xarML('Center'),
+                          'R'  => xarML('Right'),
+                          'L'  => xarML('Left'),
+                          'T'  => xarML('Top'),
+                          'B'  => xarML('Bottom'),
+                          '*'  => xarML('Tile'),
+                    )
+                    </xar:set>
+                    <select name="filter[wmi][1]" id="filter_wmi_1">
+                        <option value=""> </option>
+                        <xar:foreach in="$options" key="$id" value="$val">
+                            <xar:if condition="!empty($filter['wmi'][1]) and $filter['wmi'][1] eq $id">
+                                <option value="#$id#" selected="selected">#$val#</option>
+                            <xar:else/>
+                                <option value="#$id#">#$val#</option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                </td>
+                <td class="xar-accent">
+                    <label for="filter_wmi_3">
+                    <xar:mlstring>Margin</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="filter[wmi][3]" id="filter_wmi_3" value="#$filter['wmi'][3]#" size="3" />
+                    %
+                </td>
+            </tr>
+            <tr>
+                <th colspan="4" class="xar-accent" align="center">
+                    <xar:mlstring>Watermark Text</xar:mlstring>
+                </th>
+            </tr>
+            <tr>
+                <td class="xar-accent">
+                    <label for="filter_wmt_0">
+                    <xar:mlstring>Text</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="filter[wmt][0]" id="filter_wmt_0" value="#xarVarPrepForDisplay($filter['wmt'][0])#" />
+                </td>
+                <td class="xar-accent">
+                    <label for="filter_wmt_5">
+                    <xar:mlstring>Opacity</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="filter[wmt][5]" id="filter_wmt_5" value="#$filter['wmt'][5]#" size="3" />
+                    0 - 100
+                </td>
+            </tr>
+            <tr>
+                <td class="xar-accent">
+                    <label for="filter_wmt_2">
+                    <xar:mlstring>Alignment</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <xar:set name="options">
+                    array('BR' => xarML('Bottom Right'),
+                          'BL' => xarML('Bottom Left'),
+                          'TR' => xarML('Top Right'),
+                          'TL' => xarML('Top Left'),
+                          'C'  => xarML('Center'),
+                          'R'  => xarML('Right'),
+                          'L'  => xarML('Left'),
+                          'T'  => xarML('Top'),
+                          'B'  => xarML('Bottom'),
+                          '*'  => xarML('Tile'),
+                    )
+                    </xar:set>
+                    <select name="filter[wmt][2]" id="filter_wmt_2">
+                        <option value=""> </option>
+                        <xar:foreach in="$options" key="$id" value="$val">
+                            <xar:if condition="!empty($filter['wmt'][2]) and $filter['wmt'][2] eq $id">
+                                <option value="#$id#" selected="selected">#$val#</option>
+                            <xar:else/>
+                                <option value="#$id#">#$val#</option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                </td>
+                <td class="xar-accent">
+                    <label for="filter_wmt_6">
+                    <xar:mlstring>Margin</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="filter[wmt][6]" id="filter_wmt_6" value="#$filter['wmt'][6]#" size="3" />
+                    %
+                </td>
+            </tr>
+            <tr>
+                <td class="xar-accent">
+                    <label for="filter_wmt_1">
+                    <xar:mlstring>Font Size</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="filter[wmt][1]" id="filter_wmt_1" value="#$filter['wmt'][1]#" size="3" />
+                    1 - 5
+                </td>
+                <td class="xar-accent">
+                    <label for="filter_wmt_4">
+                    <xar:mlstring>TTF File</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="filter[wmt][4]" id="filter_wmt_4" value="#$filter['wmt'][4]#" />
+                </td>
+            </tr>
+            <tr>
+                <td class="xar-accent">
+                    <label for="filter_wmt_3">
+                    <xar:mlstring>Hex Color</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <xar:data-input type="tcolorpicker" name="filter[wmt][3]" id="filter_wmt_3" value="$filter['wmt'][3]" />
+                </td>
+                <td class="xar-accent">
+                    <label for="filter_wmt_7">
+                    <xar:mlstring>Angle</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="filter[wmt][7]" id="filter_wmt_7" value="#$filter['wmt'][7]#" size="3" />
+                    -360 - 360
+                </td>
+            </tr>
+    <xar:comment>
+    To be continued (any volunteers ?) - we'll let people specify filters by hand below.
+    Perhaps we could provide a separate (javascript-based) page to fill in those fields ?
+    </xar:comment>
+            <tr>
+                <th colspan="4" class="xar-accent" align="center">
+                    <xar:mlstring>Other Filters</xar:mlstring>
+                    <br/>
+                    [<a href="modules/images/xardocs/phpthumb.readme.txt" target="readme"><xar:mlstring>see description of 'fltr' parameter in readme.txt</xar:mlstring></a>]
+                </th>
+            </tr>
+            <tr>
+                <td class="xar-accent">
+                    <label for="fltr_0">
+                    <xar:mlstring>Filter</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="fltr[0]" id="fltr_0" value="#xarVarPrepForDisplay($fltr[0])#" />
+                </td>
+                <td class="xar-accent">
+                    <label for="fltr_1">
+                    <xar:mlstring>Filter</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="fltr[1]" id="fltr_1" value="#xarVarPrepForDisplay($fltr[1])#" />
+                </td>
+            </tr>
+            <tr>
+                <td class="xar-accent">
+                    <label for="fltr_2">
+                    <xar:mlstring>Filter</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="fltr[2]" id="fltr_2" value="#xarVarPrepForDisplay($fltr[2])#" />
+                </td>
+                <td class="xar-accent">
+                    <label for="fltr_3">
+                    <xar:mlstring>Filter</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="fltr[3]" id="fltr_3" value="#xarVarPrepForDisplay($fltr[3])#" />
+                </td>
+            </tr>
+            <tr>
+                <th colspan="4" class="xar-accent" align="center">
+                    <xar:mlstring>Output</xar:mlstring>
+                </th>
+            </tr>
+            <tr>
+                <td class="xar-accent">
+                    <label for="f">
+                    <xar:mlstring>Format</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <xar:set name="options">
+                    array('jpeg' => 'JPEG',
+                          'png'  => 'PNG',
+                          'gif'  => 'GIF',
+                    )
+                    </xar:set>
+                    <select name="f" id="f">
+                        <xar:foreach in="$options" key="$id" value="$val">
+                            <xar:if condition="!empty($f) and $f eq $id">
+                                <option value="#$id#" selected="selected">#$val#</option>
+                            <xar:else/>
+                                <option value="#$id#">#$val#</option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                </td>
+                <td class="xar-accent">
+                    <label for="q">
+                    <xar:mlstring>Quality</xar:mlstring>
+                    </label>
+                </td>
+                <td>
+                    <select name="q" id="q">
+                        <option value=""> </option>
+                        <xar:for start="$i = 1" iter="$i++" test="$i le 95">
+                            <xar:if condition="!empty($q) and $q eq $i">
+                                <option value="#$i#" selected="selected"> #$i# </option>
+                            <xar:else/>
+                                <option value="#$i#"> #$i# </option>
+                            </xar:if>
+                        </xar:for>
+                    </select>
+                </td>
+            </tr>
+        <xar:if condition="!empty($selimage)">
+            <tr>
+                <td class="xar-accent">
+                    <label for="save">
+                    <xar:mlstring>Save As</xar:mlstring>
+                    </label>
+                </td>
+                <td colspan="3">
+                    <input type="text" name="save" id="save" value="#$save#" size="60" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" align="center">
+                    <input type="hidden" name="authid" value="#$authid#"/>
+                    <input type="hidden" name="bid" value="#$baseId#"/>
+                    <input type="hidden" name="fid" value="#$fileId#"/>
+                    <input type="submit" value="#xarML('Preview')#"/>
+                    <input type="submit" name="confirm" value="#xarML('Save')#"/>
+                </td>
+            </tr>
+        </xar:if>
+        </table>
+        </form>
+
+    <xar:if condition="!empty($params)">
+        <p><xar:ml><xar:mlstring><strong>Parameters :</strong> #(1)</xar:mlstring><xar:mlvar>#$params#</xar:mlvar></xar:ml></p>
     </xar:if>
-    </table>
-    </form>
 
-<xar:if condition="!empty($params)">
-    <p><xar:ml><xar:mlstring><strong>Parameters :</strong> #(1)</xar:mlstring><xar:mlvar>#$params#</xar:mlvar></xar:ml></p>
-</xar:if>
+    <xar:if condition="!empty($selimage['filePreview'])">
+        <a name="preview"></a>
 
-<xar:if condition="!empty($selimage['filePreview'])">
-    <a name="preview"></a>
+        <hr/>
+        <p>
+            <a href="#xarServerGetCurrentURL()##config"><xar:mlstring>Configure</xar:mlstring></a>
+            |
+            <strong><xar:mlstring>Preview Image</xar:mlstring></strong>
+            <xar:if condition="!empty($selimage['fileDownload'])">
+            |
+            <a href="#xarServerGetCurrentURL()##original"><xar:mlstring>Original Image</xar:mlstring></a>
+            </xar:if>
+        </p>
+        <p><img src="#$selimage['filePreview']#" border="0" /></p>
+    </xar:if>
 
-    <hr/>
-    <p>
-        <a href="#xarServerGetCurrentURL()##config"><xar:mlstring>Configure</xar:mlstring></a>
-        |
-        <strong><xar:mlstring>Preview Image</xar:mlstring></strong>
-        <xar:if condition="!empty($selimage['fileDownload'])">
-        |
-        <a href="#xarServerGetCurrentURL()##original"><xar:mlstring>Original Image</xar:mlstring></a>
-        </xar:if>
-    </p>
-    <p><img src="#$selimage['filePreview']#" border="0" /></p>
-</xar:if>
+    <xar:if condition="!empty($selimage['fileDownload'])">
+        <a name="original"></a>
 
-<xar:if condition="!empty($selimage['fileDownload'])">
-    <a name="original"></a>
-
-    <hr/>
-    <p>
-        <a href="#xarServerGetCurrentURL()##config"><xar:mlstring>Configure</xar:mlstring></a>
-        <xar:if condition="!empty($selimage['filePreview'])">
-        |
-        <a href="#xarServerGetCurrentURL()##preview"><xar:mlstring>Preview Image</xar:mlstring></a>
-        </xar:if>
-        |
-        <strong><xar:mlstring>Original Image</xar:mlstring></strong>
-    </p>
-    <p><img src="#$selimage['fileDownload']#" border="0" /></p>
-</xar:if>
+        <hr/>
+        <p>
+            <a href="#xarServerGetCurrentURL()##config"><xar:mlstring>Configure</xar:mlstring></a>
+            <xar:if condition="!empty($selimage['filePreview'])">
+            |
+            <a href="#xarServerGetCurrentURL()##preview"><xar:mlstring>Preview Image</xar:mlstring></a>
+            </xar:if>
+            |
+            <strong><xar:mlstring>Original Image</xar:mlstring></strong>
+        </p>
+        <p><img src="#$selimage['fileDownload']#" border="0" /></p>
+    </xar:if>
 
     </div>
-</div>
-    <div>
-        <p><i>
-            <xar:set name="ref">'<a href="http://phpthumb.sourceforge.net/">phpThumb()</a>'</xar:set>
-            <xar:ml><xar:mlstring>Based on #(1) by James Heinrich</xar:mlstring><xar:mlvar>#$ref#</xar:mlvar></xar:ml>
-        </i></p>
-    </div>
-
+        <div>
+            <p><i>
+                <xar:set name="ref">'<a href="http://phpthumb.sourceforge.net/">phpThumb()</a>'</xar:set>
+                <xar:ml><xar:mlstring>Based on #(1) by James Heinrich</xar:mlstring><xar:mlvar>#$ref#</xar:mlvar></xar:ml>
+            </i></p>
+        </div>
+</xar:template>
