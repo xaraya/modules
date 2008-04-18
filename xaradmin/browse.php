@@ -59,14 +59,15 @@ function images_admin_browse()
     // Check if we can cache the image list
     $data['cacheExpire'] = xarModVars::get('images', 'file.cache-expire');
 
+    $params = $data;
+    if (!isset($numitems)) {
+        $params['numitems'] = xarModVars::get('images','view.itemsperpage');
+    }
+
     if (!empty($fileId)) {
         $data['images'] = xarModAPIFunc('images','admin','getimages',
                                         $data);
     } else {
-        $params = $data;
-        if (!isset($numitems)) {
-            $params['numitems'] = xarModVars::get('images','view.itemsperpage');
-        }
         // Check if we need to refresh the cache anyway
         if (!xarVarFetch('refresh',     'int:0:',     $refresh,          NULL, XARVAR_DONT_SET)) return;
         $params['cacheRefresh'] = $refresh;
@@ -84,11 +85,11 @@ function images_admin_browse()
             return true;
         }
 
+    }
         // Note: this must be called *after* getimages() to benefit from caching
         $countitems = xarModAPIFunc('images','admin','countimages',
                                     $params);
 
-    }
         // Add pager variables
         $data['startnum'] = "%%";
         $data['countitems'] = $countitems;
