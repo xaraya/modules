@@ -45,8 +45,7 @@ function images_adminapi_replace_image($args)
     if (!is_writable($checkwrite)) {
         $mesg = xarML('Unable to replace #(1) - please check your file permissions',
                       $fileLocation);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
-        return;
+        throw new Exception($mesg);
     }
 
 // TODO: replace files stored in xar_file_data too

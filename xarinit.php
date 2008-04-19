@@ -43,9 +43,8 @@ function images_init()
     xarRegisterMask('AdminImages', 'All','images','Image','All','ACCESS_ADMIN');
 
     if (!xarModRegisterHook('item', 'transform', 'API', 'images', 'user', 'transformhook')) {
-         $msg = xarML('Could not register hook.');
-         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-         return;
+        $msg = xarML('Could not register hook.');
+        throw new Exception($msg);
     }
     // Register the tag
     $imageAttributes = array(new xarTemplateAttribute('src',         XAR_TPL_REQUIRED | XAR_TPL_STRING),

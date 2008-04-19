@@ -59,12 +59,10 @@ function images_admin_updateconfig()
             if (NULL !== xarModVars::get('images', 'path.' . $varname)) {
                 if (!file_exists($value) || !is_dir($value)) {
                     $msg = xarML('Location [#(1)] either does not exist or is not a valid directory!', $value);
-                    xarErrorSet(XAR_USER_EXCEPTION, 'INVALID_DIRECTORY', new DefaultUserException($msg));
-                    return;
+                    throw new Exception($msg);
                 } elseif (!is_writable($value)) {
                     $msg = xarML('Location [#(1)] can not be written to - please check permissions and try again!', $value);
-                    xarErrorSet(XAR_USER_EXCEPTION, 'NOT_WRITABLE', new DefaultUserException($msg));
-                    return;
+                    throw new Exception($msg);
                 } else {
                     xarModVars::set('images', 'path.' . $varname, $value);
                 }

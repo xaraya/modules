@@ -30,8 +30,7 @@ function images_userapi_handle_image_tag($args)
 
     if (!isset($width) && !isset($height) && !isset($setting) && !isset($params)) {
         $msg = xarML("Required attributes '#(1)', '#(2)', '#(3)' or '#(4)' for tag <xar:image> are missing. See tag documentation.", 'width', 'height', 'setting', 'params');
-        xarErrorSet(XAR_USER_EXCEPTION, xarML('Missing Attributes'), new DefaultUserException($msg));
-        return '';
+        throw new Exception($msg);
     }
 
     $format = 'array(%s)';

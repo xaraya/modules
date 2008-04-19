@@ -51,10 +51,7 @@ function images_adminapi_process_image($args)
             // The calling GUI needs to stop processing here
             return true;
         } else {
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                        new SystemException($msg));
-            // Throw back the error
-            return;
+            throw new Exception($msg);
         }
     }
 
@@ -167,10 +164,7 @@ function images_adminapi_process_image($args)
                 // The calling GUI needs to stop processing here
                 return true;
             } else {
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                            new SystemException($msg));
-                // Throw back the error
-                return;
+                throw new Exception($msg);
             }
         }
 
@@ -189,10 +183,7 @@ function images_adminapi_process_image($args)
             // The calling GUI needs to stop processing here
             return true;
         } else {
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                        new SystemException($msg));
-            // Throw back the error
-            return;
+            throw new Exception($msg);
         }
     }
 
@@ -215,10 +206,7 @@ function images_adminapi_process_image($args)
             // The calling GUI needs to stop processing here
             return true;
         } else {
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                        new SystemException($msg));
-            // Throw back the error
-            return;
+            throw new Exception($msg);
         }
     }
 
@@ -234,20 +222,14 @@ function images_adminapi_process_image($args)
     if (empty($save)) {
         $msg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                       'save', 'process_image', 'images');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                    new SystemException($msg));
-        // Throw back the error
-        return;
+            throw new Exception($msg);
     }
 
     $result = $phpThumb->RenderToFile($save);
 
     if (empty($result)) {
         $msg = implode("\n\n", $phpThumb->debugmessages);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                    new SystemException($msg));
-        // Throw back the error
-        return;
+        throw new Exception($msg);
     }
 
 // TODO: add file entry to uploads when saveas == 1 ?

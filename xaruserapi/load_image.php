@@ -26,18 +26,15 @@ function & images_userapi_load_image( $args )
     if (empty($fileId) && empty($fileLocation)) {
         $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                       '', 'load_image', 'images');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
-        return;
+        throw new Exception($mesg);
     } elseif (!empty($fileId) && !is_string($fileId)) {
         $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                       'fileId', 'load_image', 'images');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
-        return;
+        throw new Exception($mesg);
     } elseif (!empty($fileLocation) && !is_string($fileLocation)) {
         $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                       'fileLocation', 'load_image', 'images');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
-        return;
+        throw new Exception($mesg);
     }
 
     // if both arguments are specified, give priority to fileId
@@ -68,8 +65,7 @@ function & images_userapi_load_image( $args )
         } else {
             $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                           'fileLocation', 'load_image', 'images');
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
-            return;
+            throw new Exception($mesg);
         }
 
     } else {

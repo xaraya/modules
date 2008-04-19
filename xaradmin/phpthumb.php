@@ -220,10 +220,7 @@ function images_admin_phpthumb($args)
                 if (!$phpThumb->RenderToFile($save)) {
                     // do something with debug/error messages
                     $msg = implode("\n\n", $phpThumb->debugmessages);
-                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                                new SystemException($msg));
-                    // Throw back the error
-                    return;
+                    throw new Exception($msg);
                 } else {
                     if (!empty($dbfile) || realpath($save) == realpath($data['selimage']['fileLocation'])) {
                         // update the uploads file entry if we overwrite a file !
@@ -284,10 +281,7 @@ function images_admin_phpthumb($args)
                 // Stop processing here
                 exit;
             } else {
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                            new SystemException($msg));
-                // Throw back the error
-                return;
+                throw new Exception($msg);
             }
         }
     }

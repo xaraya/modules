@@ -94,8 +94,7 @@ function images_user_display( $args )
 
     if (is_null($fileLocation)) {
         $msg = xarML('Unable to find file: [#(1)]', $fileId);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILE_MISSING', new SystemException($msg));
-        return FALSE;
+        throw new Exception($msg);
     }
 
     // Close the buffer, saving it's current contents for possible future use
