@@ -42,7 +42,7 @@ function images_userapi_resize($args)
     }
 
     if (!isset($width) && !isset($height) && !isset($setting) && !isset($params)) {
-        $msg = xarML("Required parameters '#(1)', '#(2)', '#(3)' or '#(4)' for tag <xar:image> are missing. See tag documentation.",
+        $msg = xarML("Required parameters '#(1)', '#(2)', '#(3)' or '#(4)' for imageresize property are missing. See the documentation.",
                      'width', 'height', 'setting', 'params');
         throw new BadParameterException(null,$msg);
     } elseif (isset($height) && !xarVarValidate('regexp:/[0-9]+(px|%)/:', $height)) {
@@ -307,6 +307,8 @@ function images_userapi_resize($args)
         return $url;
     }
 
+    return array('url' => $url, 'label' => $label, 'attributes' => $attribs);
+    
     $imgTag = sprintf('<img src="%s" alt="%s" %s />', $url, $label, $attribs);
 
     return $imgTag;
