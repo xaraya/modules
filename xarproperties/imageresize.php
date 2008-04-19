@@ -19,7 +19,7 @@ class ImageResizeProperty extends ImageProperty
     {
         parent::__construct($descriptor);
         $this->tplmodule = 'images';
-        $this->template = 'imageresize';
+//        $this->template = 'imageresize';
         $this->filepath   = 'modules/images/xarproperties';
     }
 
@@ -38,6 +38,7 @@ class ImageResizeProperty extends ImageProperty
         if (($this->initialization_image_source == 'local') || ($this->initialization_image_source == 'upload')) {
             $data['value'] = $this->initialization_basedirectory . "/" . $data['value'];
         }
+        if (!empty($data['src'])) $data['value'] = $data['src'];
         if (empty($data['imagetext'])) $data['imagetext'] = $this->imagetext;
         if (empty($data['label'])) $data['label'] = $this->imagealt;
         if (empty($data['height']) && empty($data['height'])) {
@@ -46,6 +47,10 @@ class ImageResizeProperty extends ImageProperty
             $data['height'] = $sizeinfo[1] . "px";
         }
         $data = array_merge($data,xarModAPIFunc('images', 'user', 'resize', $data));
+        if (isset($sizeinfo)) {
+            $data['width'] = $sizeinfo[0];
+            $data['height'] = $sizeinfo[1];
+        }
         return parent::showOutput($data);
     }
 

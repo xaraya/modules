@@ -59,10 +59,8 @@
                     <a href="#xarModURL('images','admin','browse',array('action' => $action,'bid' => $baseId,'getprev' => $selimage['fileId']))#">&lt;&lt;</a>&#160;&#160;&#160;
                     <xar:if condition="!empty($width) or !empty($height)">
                         <xar:data-output type="imageresize" src="$selimage['fileDownload']" width="$width" height="$height" class="xar-noborder xar-valign-top" />
-                        <img src="#$selimage['fileDownload']#" width="#$width#" height="#$height#" class="xar-noborder xar-valign-top" />
                     <xar:else/>
                         <xar:data-output type="imageresize" src="$selimage['fileDownload']" class="xar-noborder xar-valign-top" alt="" />
-                        <img src="#$selimage['fileDownload']#" class="xar-noborder xar-valign-top" alt="" />
                    </xar:if>
                    &#160;&#160; &#160;<a href="#xarModURL('images','admin','browse',array('action' => $action,'bid' => $baseId,'getnext' => $selimage['fileId']))#">&gt;&gt;</a>
                  </p>
