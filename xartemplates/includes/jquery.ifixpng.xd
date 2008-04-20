@@ -1,0 +1,36 @@
+<xar:comment>
+    Initialise the jquery.ifixpng tool (previously known as pngFix).
+    Just include this script and PNG transparency will be fixed for IE5.5 and IE6
+    See: http://jquery.khurshid.com/ifixpng.php
+</xar:comment>
+
+<xar:comment>
+    Make sure jQuery is going to be loaded.
+</xar:comment>
+
+<xar:template file="jquery" module="jquery" />
+
+<xar:comment>
+    Load the main plugin javascript.
+</xar:comment>
+
+<xar:base-include-javascript filename="jquery.ifixpng.js" module="jquery" />
+
+<xar:comment>
+    Point to the pixel image required by this plugin.
+    TODO: don't hard-code.
+</xar:comment>
+<xar:set name="ifixpng_image">#xarTplGetImage('pixel.gif','jquery')#</xar:set>
+<xar:base-include-javascript type="code" code="jQuery.ifixpng('$ifixpng_image');" />
+
+<xar:comment>
+    Set up a 'ready' function so PNGs are fixed automatically.
+    By default this fixes all PNGs in the body, but can be narrowed down
+    if there is a desire to not fix some PNGs.
+</xar:comment>
+
+<xar:if condition="!empty($selector)">
+    <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').ifixpng();});" />
+<xar:else />
+    <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('body').ifixpng();});" />
+</xar:if>
