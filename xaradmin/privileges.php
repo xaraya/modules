@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -36,6 +36,7 @@ function categories_admin_privileges($args)
     if (!xarVarFetch('extcomponent', 'isset', $extcomponent, NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('extinstance',  'isset', $extinstance,  NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('extlevel',     'isset', $extlevel,     NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('pparentid',    'isset', $pparentid,    NULL, XARVAR_DONT_SET)) {return;}
 
     // 'Category' component = All:cid (catname is unused)
     if (!empty($extcomponent) && $extcomponent == 'Category') {
@@ -85,7 +86,8 @@ function categories_admin_privileges($args)
 
         if (!empty($apply)) {
             // create/update the privilege
-            $pid = xarReturnPrivilege($extpid,$extname,$extrealm,$extmodule,$extcomponent,$newinstance,$extlevel);
+            $pid = xarReturnPrivilege($extpid,$extname,$extrealm,$extmodule,$extcomponent,
+                                      $newinstance,$extlevel,$pparentid);
             if (empty($pid)) {
                 return; // throw back
             }
@@ -105,7 +107,8 @@ function categories_admin_privileges($args)
                       'extcomponent' => $extcomponent,
                       'extlevel'     => $extlevel,
                       'extinstance'  => xarVarPrepForDisplay(join(':',$newinstance)),
-                     );
+                      'pparentid'    => $pparentid,
+                      );
 
         $seencid = array();
         if (!empty($cid)) {
@@ -204,7 +207,8 @@ function categories_admin_privileges($args)
 
     if (!empty($apply)) {
         // create/update the privilege
-        $pid = xarReturnPrivilege($extpid,$extname,$extrealm,$extmodule,$extcomponent,$newinstance,$extlevel);
+        $pid = xarReturnPrivilege($extpid,$extname,$extrealm,$extmodule,$extcomponent,
+                                  $newinstance,$extlevel,$pparentid);
         if (empty($pid)) {
             return; // throw back
         }
@@ -240,6 +244,7 @@ function categories_admin_privileges($args)
                   'extcomponent' => $extcomponent,
                   'extlevel'     => $extlevel,
                   'extinstance'  => xarVarPrepForDisplay(join(':',$newinstance)),
+                  'pparentid'    => $pparentid,
                  );
 
     $catlist = array();

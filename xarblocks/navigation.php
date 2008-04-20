@@ -3,7 +3,7 @@
  * Categories module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -396,6 +396,7 @@ function categories_navigationblock_display($blockinfo)
                                      array('itemtype' => $itemtype,
                                            'catid' => $cat['cid']));
                     $label = xarVarPrepForDisplay($cat['name']);
+                    $desc = xarVarPrepForDisplay($cat['description']);
                     $data['catitems'][] = array('catlabel' => $label,
                                                 'catid' => $cat['cid'],
                                                 'catlink' => $link,
