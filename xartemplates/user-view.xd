@@ -1,12 +1,22 @@
+<xar:if condition="xarModGetVar('headlines', 'userajax')">
+  <xar:if condition="!xarModIsAvailable('dojo')">
+    <xar:base-include-javascript filename="xmlhttprequest.js" module="base" position="body"/>
+  </xar:if>
+  <xar:set name="onclick">"return loadContent(this.href,'notsogoodbutok');"</xar:set>
+<xar:else/>
+  <xar:set name="onclick">"return true;"</xar:set>
+</xar:if>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>Headlines Module</xar:mlstring>
     </span>
 </div>
-<div class="xar-mod-body">
+<div id="notsogoodbutok" class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
     <xar:if condition="empty($warning)">
-    <h2><xar:mlstring>Headlines from</xar:mlstring>:
+    <h2><a href="#xarModURL('headlines', 'user', 'main')#" title="#xarML('Return to main headlines')#" onclick="#$onclick#">
+        <xar:mlstring>Headlines</xar:mlstring>
+    </a>:
         <a href = "#$chanlink#" title="#$chantitle#" rel="external"> #$chantitle# </a>
     </h2>
     <xar:if condition="xarModIsHooked('categories','headlines')">
@@ -21,7 +31,7 @@
     <xar:if condition="isset($image) && !empty($image)">
         <div>
             <a href="#$image['link']#" title="#$image['title']#">
-                <img src="#$image['url']#" width="#$image['width']#" height="#$image['height']#" alt="#$image['title']#" />
+                <img src="#$image['url']#" alt="#$image['title']#" />
             </a>
         </div>
     </xar:if>
@@ -35,7 +45,7 @@
             <xar:else />
                 <h3>#$loop:item['title']#</h3>
             </xar:if>
-            <xar:if condition="isset($loop:item['categories']) && !empty($loop:item['categories'])">
+             <xar:if condition="isset($loop:item['categories']) && !empty($loop:item['categories'])">
                 <div class="xar-standard-box-padding">|
                 <xar:foreach in="$loop:item['categories']" key="$catkey" value="$chancat">
                     <xar:if condition="!empty($chancat-&gt;term)">
@@ -45,9 +55,7 @@
                 </div>
             </xar:if>
             <xar:if condition="!empty($loop:item['description'])">
-                <div class="xar-standard-box-padding">
-                    #$loop:item['description']#
-                </div>
+                <div class="xar-standard-box-padding">#$loop:item['description']#</div>
                 <xar:if condition="!empty($showimport)">
                     <xar:set name="$implabel"><xar:mlstring>Import to News Queue</xar:mlstring></xar:set>
                     <p class="xar-sub">
@@ -67,7 +75,7 @@
 <xar:else />
     #$warning#
 </xar:if>
-    <p><a href="#xarModURL('headlines', 'user', 'main')#" title="#xarML('Return to main headlines')#">
+    <p><a href="#xarModURL('headlines', 'user', 'main')#" title="#xarML('Return to main headlines')#" onclick="#$onclick#">
         <xar:mlstring>Back to main headlines</xar:mlstring>
     </a></p>
     <xar:if condition="!empty($hooks)">

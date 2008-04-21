@@ -29,11 +29,15 @@ function headlines_admin_updateconfig()
     if (!xarVarFetch('showkeywords', 'checkbox', $showkeywords, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('feeditemsperpage', 'int:1', $feeditems, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('maxdescription', 'int:1', $maxdescription, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('adminajax', 'checkbox', $adminajax, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('userajax', 'checkbox', $userajax, 0, XARVAR_NOT_REQUIRED)) return;
     xarModSetVar('headlines', 'itemsperpage', $itemsperpage);
     xarModSetVar('headlines', 'SupportShortURLs', $shorturls);
     xarModSetVar('headlines', 'useModuleAlias', $modulealias);
     xarModSetVar('headlines', 'feeditemsperpage', $feeditems);
     xarModSetVar('headlines', 'maxdescription', $maxdescription);
+    xarModSetVar('headlines', 'adminajax', $adminajax);
+    xarModSetVar('headlines', 'userajax', $userajax);
 
     // The magpie var is no longer needed
     if (xarModGetVar('headlines', 'magpie')) xarModDelVar('headlines', 'magpie');

@@ -8,7 +8,14 @@
     var fieldDescription = Array("URL");
 //-->
 </script>
-
+<xar:if condition="xarModGetVar('headlines', 'adminajax')">
+  <xar:if condition="!xarModIsAvailable('dojo')">
+    <xar:base-include-javascript filename="xmlhttprequest.js" module="base" position="body"/>
+  </xar:if>
+  <xar:set name="onclick">"return loadContent(this.href,'notsogoodbutok');"</xar:set>
+<xar:else/>
+  <xar:set name="onclick">"return true;"</xar:set>
+</xar:if>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>
@@ -16,12 +23,14 @@
         </xar:mlstring>
     </span>
 </div>
-<div class="xar-mod-body">
+<div id="notsogoodbutok" class="xar-mod-body">
 <xar:template type="module" file="admin-menu" />
     <h2>
+        <a href="#xarModURL('headlines', 'admin', 'new')#" title="#xarML('permalink')#">
         <xar:mlstring>
-            Add Headlines
+            New Headline
         </xar:mlstring>
+        </a>
     </h2>
     <p>
         <a href="http://www.syndic8.com">

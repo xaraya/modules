@@ -2,9 +2,9 @@
 <div class="xar-mod-head">
   <span class="xar-mod-title"><xar:mlstring>Headlines Administration</xar:mlstring></span>
 </div>
-<div class="xar-mod-body">
+<div id="notsogoodbutok" class="xar-mod-body">
   <xar:template type="module" file="admin-menu" />
-  <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
+  <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="#xarML('official icon')#" width="96" height="96" class="xar-module-icon" />
   <h2>
     <xar:mlstring>Overview</xar:mlstring>
   </h2>
@@ -22,13 +22,13 @@
   <p>
       <xar:mlstring>You can use the headlines module in two main ways.</xar:mlstring>
       <ol>
-          <li><xar:mlstring>Enter the URL to one or more feeds in the administration area, and allow 
+          <li><xar:mlstring>Enter the URL to one or more feeds in the administration area, and allow
               your users to browse those headlines from the main Headline user menu option.
               </xar:mlstring>
           </li>
           <li><xar:mlstring>In addition to the above user browsing throught the main Headlines user page,
-              you can selectively import headline articles into one of your Article publication types. 
-              This can be done in a batch, or by browsing and selecting which headline item to import. 
+              you can selectively import headline articles into one of your Article publication types.
+              This can be done in a batch, or by browsing and selecting which headline item to import.
               </xar:mlstring>
           </li>
       </ol>
@@ -63,7 +63,7 @@
   </h4>
   <p>
       <xar:mlstring>The default News publication type in Articles, or similar is ideal for use with the Headlines module.
-      The following fields and field types should be setup in your News publication type, or whichever is to be used for your Headlines. 
+      The following fields and field types should be setup in your News publication type, or whichever is to be used for your Headlines.
       Fields in your publication type such as status and pubdate are used in their usual function in the publication type, but not in the headline import process.
       </xar:mlstring>
   </p>
@@ -106,7 +106,7 @@
             <xar:mlstring>Credits</xar:mlstring>
         </h3>
       <p>
-            <xar:mlstring>The RSS Block is using </xar:mlstring><a href="http://freshmeat.net/projects/phpfeedparser/?topic_id=914"> <xar:mlstring> PHP feedParser </xar:mlstring> </a><xar:mlstring> as its backend.   The notes for the feedParser by Reverend Jim are as follows</xar:mlstring>:
+            <xar:mlstring>The RSS Block is using </xar:mlstring><a href="http://freshmeat.net/projects/phpfeedparser/?topic_id=914" rel="external"> <xar:mlstring> PHP feedParser </xar:mlstring> </a><xar:mlstring> as its backend.   The notes for the feedParser by Reverend Jim are as follows</xar:mlstring>:
     </p>
     <p>
             <xar:mlstring>
@@ -119,10 +119,10 @@
       <ul>
           <li><xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
           </li>
-          <li><xar:mlstring>Related tutorials and documentation on Headlines found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/headlines/" title="#xarML('Related documentation on Headlines')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+          <li><xar:mlstring>Related tutorials and documentation on Headlines found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/headlines/" title="#xarML('Related documentation on Headlines')#" rel="external"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
           </li>
       </ul>
       <p class="xar-sub">
-         <strong>&nbsp;<xar:mlstring>Headlines module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.3&nbsp; 2006-09-28
+         <strong>&nbsp;<xar:mlstring>Headlines module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.2.0&nbsp; 2008-04-15
   </p>
 </div>

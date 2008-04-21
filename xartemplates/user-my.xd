@@ -1,5 +1,13 @@
+<xar:if condition="xarModGetVar('headlines', 'userajax') eq '1'">
+  <xar:if condition="!xarModIsAvailable('dojo')">
+    <xar:base-include-javascript filename="xmlhttprequest.js" module="base" position="body"/>
+  </xar:if>
+  <xar:set name="onclick">"return loadContent(this.href,'notsogoodbutok');"</xar:set>
+<xar:else/>
+  <xar:set name="onclick">"return true;"</xar:set>
+</xar:if>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Headlines</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>My Headlines</xar:mlstring></h2>
+<div id="notsogoodbutok" class="xar-mod-body"><h2><xar:mlstring>My Headlines</xar:mlstring></h2>
 <div style="margin: auto;">
 
 <xar:if condition="!empty($config)">
@@ -36,9 +44,9 @@
 
 <p>
 [
-<a href="#xarModURL('headlines','user','my',array('config' => 1))#"><xar:mlstring>Configure my headlines</xar:mlstring></a>
+<a href="#xarModURL('headlines','user','my',array('config' => 1))#" onclick="#$onclick#"><xar:mlstring>Configure my headlines</xar:mlstring></a>
 |
-<a href="#xarModURL('headlines', 'user', 'main')#"><xar:mlstring>Back to main headlines</xar:mlstring></a>
+<a href="#xarModURL('headlines', 'user', 'main')#" onclick="#$onclick#"><xar:mlstring>Back to main headlines</xar:mlstring></a>
 ]
 </p>
 </div>

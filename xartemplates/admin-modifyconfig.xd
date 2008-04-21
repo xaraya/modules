@@ -1,12 +1,20 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="xarModGetVar('headlines', 'adminajax')">
+  <xar:if condition="!xarModIsAvailable('dojo')">
+    <xar:base-include-javascript filename="xmlhttprequest.js" module="base" position="body"/>
+  </xar:if>
+  <xar:set name="onclick">"return loadContent(this.href,'notsogoodbutok');"</xar:set>
+<xar:else/>
+  <xar:set name="onclick">"return true;"</xar:set>
+</xar:if>
 
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Headlines Administration</xar:mlstring></span>
 </div>
 
-<div class="xar-mod-body">
+<div id="notsogoodbutok" class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
-    <h2><xar:mlstring>Modify Configuration</xar:mlstring>
+    <h2><a href="#xarModURL('headlines', 'admin', 'modifyconfig')#" title="#xarML('permalink')#"><xar:mlstring>Modify Configuration</xar:mlstring></a>
     </h2>
     <form class="xar-formwidget" action="#xarModURL('headlines', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded">
         <fieldset class="xar-norm">
@@ -72,6 +80,31 @@
                     </xar:if>
                     </xar:if>
                 </select>
+            </div>
+             <div class="xar-form-input-wrapper">
+                <label for = "adminajax" class="xar-form-label" title="#xarML('Turn on simple AJAX support for admin functions')#">
+                        <xar:mlstring>
+                            Use AJAX in admin display
+                        </xar:mlstring>
+                </label>
+                <xar:if condition="xarModGetVar('headlines', 'adminajax')">
+                    <input type="checkbox" name="adminajax" id="adminajax" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="adminajax" id="adminajax" value="1" />
+                </xar:if>
+            </div>
+
+             <div class="xar-form-input-wrapper">
+                <label for = "userajax" class="xar-form-label" title="#xarML('Turn on simple AJAX support for user functions')#">
+                        <xar:mlstring>
+                            Use AJAX in user display
+                        </xar:mlstring>
+                </label>
+                <xar:if condition="xarModGetVar('headlines', 'userajax')">
+                    <input type="checkbox" name="userajax" id="userajax" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="userajax" id="userajax" value="1" />
+                </xar:if>
             </div>
         </fieldset>
         <fieldset>

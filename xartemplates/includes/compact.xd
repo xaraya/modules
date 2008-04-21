@@ -10,7 +10,7 @@
         <xar:if condition="(($loop:index + 1) % 2)">
             <div class="xar-accent-outline" style="position:relative;left:0px;width:49%;height:1.5em;border-width:0px 0px 1px 0px;">
                 <div class="xar-sub" style="float:right;width:auto;height:1.5em;text-align:right;">
-                    [ <a href="#$loop:item['editurl']#">
+                    [ <a href="#$loop:item['editurl']#" onclick="#$onclick#">
                             <xar:mlstring>
                                 E
                             </xar:mlstring>
@@ -19,14 +19,14 @@
                                 R
                             </xar:mlstring>
                         </a>
-                    ] 
+                    ]
                 </div>
                 #$loop:item['url']#
             </div>
             <xar:else />
             <div class="xar-accent-outline" style="position:relative;top:-1.5em;left:51%;width:49%;height:1.5em;margin-bottom:-1.3em;border-width:0px 0px 1px 0px;">
                 <div class="xar-sub" style="float:right;width:auto;height:1.5em;text-align:right;">
-                    [ <a href="#$loop:item['editurl']#">
+                    [ <a href="#$loop:item['editurl']#" onclick="#$onclick#">
                             <xar:mlstring>
                                 E
                             </xar:mlstring>
@@ -35,7 +35,7 @@
                                 R
                             </xar:mlstring>
                         </a>
-                    ] 
+                    ]
                 </div>
                 #$loop:item['url']#
             </div>

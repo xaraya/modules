@@ -1,4 +1,12 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="xarModGetVar('headlines', 'adminajax')">
+  <xar:if condition="!xarModIsAvailable('dojo')">
+    <xar:base-include-javascript filename="xmlhttprequest.js" module="base" position="body"/>
+  </xar:if>
+  <xar:set name="onclick">"return loadContent(this.href,'notsogoodbutok');"</xar:set>
+<xar:else/>
+  <xar:set name="onclick">"return true;"</xar:set>
+</xar:if>
 <xar:style scope="module" module="headlines" file="forms" />
 <xar:base-include-javascript module="base" filename="formcheck.js" />
 <script type="text/javascript">
@@ -16,15 +24,17 @@
         </xar:mlstring>
     </span>
 </div>
-<div class="xar-mod-body">
+<div id="notsogoodbutok" class="xar-mod-body">
 <xar:template type="module" file="admin-menu" />
     <h2>
+        <a href="#xarModURL('headlines', 'admin', 'modify', array('hid' => $hid))#" title="#xarML('permalink')#">
         <xar:mlstring>
-            Edit Headlines
-        </xar:mlstring>
+            Edit Headline
+        </xar:mlstring>: [#$hid#]
+        </a>
     </h2>
     <p>
-        <a href="http://www.syndic8.com">
+        <a href="http://www.syndic8.com" rel="external">
             <xar:mlstring>
                 List of available feeds
             </xar:mlstring>
@@ -89,7 +99,7 @@
             </fieldset>
             <div class="xar-form-input-wrapper">
                 <div class="xar-form-container-after">
-                    <input type="submit" value="#xarML('Submit')#" />
+                    <input type="submit" value="#xarML('Submit')#"  onsubmit="#$onclick#" />
                 </div>
             </div>
     </form>
