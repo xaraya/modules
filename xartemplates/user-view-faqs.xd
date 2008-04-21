@@ -102,26 +102,26 @@
         </ul>
     </xar:if>
 
-    <xar:comment>
     <!-- old way - see suggested formatting above -->
-        <xar:if condition="!empty($maplink) or !empty($archivelink)">
-    <div style="text-align: left; padding: 10px">
-        <xar:if condition="!empty($maplink)">
-        <span style="text-align: left; padding: 50px">
-            <a href="#$maplink#">#$maplabel#</a>
-        </span>
-        </xar:if>
-        <xar:if condition="!empty($submitlink)">
-        <span style="text-align: center; padding: 50px">
-            <a href="#$submitlink#" title="Submit Article"><xar:mlstring>Contribute</xar:mlstring></a>
-        </span>
-        </xar:if>
-        <xar:if condition="!empty($archivelink)">
-        <span style="text-align: right; padding: 50px">
-            <a href="#$archivelink#">#$archivelabel#</a>
-        </span>
-        </xar:if>
-    </div>
+    <!--
+    <xar:if condition="!empty($maplink) or !empty($archivelink)">
+        <div style="text-align: left; padding: 10px">
+            <xar:if condition="!empty($maplink)">
+            <span style="text-align: left; padding: 50px">
+                <a href="#$maplink#">#$maplabel#</a>
+            </span>
+            </xar:if>
+            <xar:if condition="!empty($submitlink)">
+            <span style="text-align: center; padding: 50px">
+                <a href="#$submitlink#" title="Submit Article"><xar:mlstring>Contribute</xar:mlstring></a>
+            </span>
+            </xar:if>
+            <xar:if condition="!empty($archivelink)">
+            <span style="text-align: right; padding: 50px">
+                <a href="#$archivelink#">#$archivelabel#</a>
+            </span>
+            </xar:if>
+        </div>
     </xar:if>
-    </xar:comment>
+    -->
 </xar:template>

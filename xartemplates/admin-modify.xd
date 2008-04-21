@@ -19,16 +19,17 @@
             #$preview#
         </div>
     </xar:if>
+    <!--
     <xar:comment>
         You can use different admin-modify-[pubtype].xd templates for different pubtypes
     </xar:comment>
     <xar:comment>
         retrieve the previous article in publication type ptid (with any status here)
     </xar:comment>
-    <xar:comment>
         <xar:set name="prevartinfo">
             #xarModAPIFunc('articles','user','getprevious',array('ptid' => $ptid, 'id' => $id, 'status' => array(0,1,2,3)))#
         </xar:set>
+    <xar:comment>
     </xar:comment>
     <xar:comment>
         retrieve the next article in publication type ptid (with any status here)
@@ -42,9 +43,6 @@
         show a link to modify the previous article with title
     </xar:comment>
     <xar:comment>
-        <xar:if condition="!empty($prevartinfo['id'])">
-            <a href="#xarModURL('articles','admin','modify',array('id' => $prevartinfo['id']))#">&lt;&lt; #xarVarPrepHTMLDisplay($prevartinfo['title'])#</a>
-        </xar:if>
     </xar:comment>
     <xar:comment>
         show a link to modify the next article with title
@@ -54,6 +52,7 @@
             <a href="#xarModURL('articles','admin','modify',array('id' => $nextartinfo['id']))#">#xarVarPrepHTMLDisplay($nextartinfo['title'])# &gt;&gt;</a>
         </xar:if>
     </xar:comment>
+    -->
     <xar:if condition="!empty($withupload)">
         <xar:set name="enctype">
             'multipart/form-data'
