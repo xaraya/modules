@@ -44,7 +44,7 @@ function registration_admin_modifyconfig()
                         }
                     }
                     $data['groups'] = $groups;
-\
+
                     $notifyemail = xarModVars::get('registration','notifyemail');
                     if (!isset($notifyemail) || trim ($notifyemail)== '') $notifyemail = xarModVars::get('mail','adminmail');
                     $data['notifyemail']=$notifyemail;
