@@ -32,6 +32,7 @@ function headlines_rssblock_init()
         'alt_chandesc' => '',   // FR - alt channel desc
         'alt_chanlink' => '',   // FR - alt channel link
         'linkhid' => false,     // FR - link to headline feed
+        'show_warning' => 1,      // TODO: FR - option to hide block/display warning on failed feed
         'refresh' => 3600,
         'nocache' => 0, // cache by default
         'pageshared' => 1, // don't share across pages here
@@ -100,32 +101,19 @@ function headlines_rssblock_display($blockinfo)
     if (!isset($vars['show_chandesc'])) $vars['show_chandesc'] = $defaults['show_chandesc'];
     if (empty($vars['refresh'])) $vars['refresh'] = $defaults['refresh'];
     if (!isset($vars['linkhid'])) $vars['linkhid'] = $defaults['linkhid'];
-
-    if (xarModGetVar('headlines', 'parser') == 'simplepie') {
-        // Use the SimplePie parser
-        // CHECKME: is the cacheing for the block in seconds?
-        $data = xarModAPIFunc(
-            'simplepie', 'user', 'process',
-            array('feedfile' => $feedfile, 'cache_max_minutes' => round($vars['refresh'] / (2*60)))
-        );
-    } elseif (xarModGetVar('headlines', 'magpie') || xarModGetVar('headlines', 'parser') == 'magpie') {
-        // Set some globals to bring Magpie into line with
-        // site and headlines settngs.
-        if (!defined('MAGPIE_OUTPUT_ENCODING')) {
-            define('MAGPIE_OUTPUT_ENCODING', xarMLSGetCharsetFromLocale(xarMLSGetCurrentLocale()));
-        }
-        // Set the Magpie cache lower than the block cache, so we always fetch something.
-        if (!defined('MAGPIE_CACHE_AGE')) {
-            define('MAGPIE_CACHE_AGE', round($vars['refresh'] / 2));
-        }
-        $data = xarModAPIFunc('magpie', 'user', 'process', array('feedfile' => $feedfile));
-    } else {
-        $data = xarModAPIFunc('headlines', 'user', 'process', array('feedfile' => $feedfile));
-    }
- 
+    
+    // CHECKME: this forces early refresh regardless of caching options, why do we do that? old code below
+    // define('MAGPIE_CACHE_AGE', round($refresh/2)); // set lower than block cache so we always get something
+    // simplepie'cache_max_minutes' => round($refresh/2*60) - bug, simplepie caching is in seconds
+    // this only happens in the rss block, need to work out if it's necessary
+    $refresh = $vars['refresh']/2;
+    
+    // call api function to get the parsed feed (or warning)
+    $data = xarModAPIFunc('headlines', 'user', 'getparsed', array('feedfile' => $feedfile, 'refresh' => $refresh));
+    // TODO: option to hide block here instead
     if (!empty($data['warning'])) {
 		$blockinfo['title'] = xarML('Headlines');
-        $blockinfo['content'] = xarML('There is a problem with this feed');
+        $blockinfo['content'] = xarVarPrepForDisplay($data['warning']);
         return $blockinfo;
 	}
  

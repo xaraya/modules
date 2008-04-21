@@ -16,60 +16,16 @@ function headlines_admin_create($args)
     if (!xarVarFetch('url','str:1:255',$url)) return;
     if (!xarVarFetch('title', 'str:1:255', $title, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('desc', 'str:1:255', $desc, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('return_url', 'str:1:', $return_url, '', XARVAR_NOT_REQUIRED)) return;
     extract($args);
 
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
 
-    // FR: added this routine to support local urls
-    $invalid = false;
-    $islocal = false;
-    if (empty($url)) {
-        $invalid = true;
-    } elseif (strstr($url,'://')) {
-        if (!ereg("^http://|https://|ftp://", $url)) {            
-            $invalid = true;
-        }
-        $server = xarServerGetHost();
-        if (preg_match("!://($server|localhost|127\.0\.0\.1)(:\d+|)/!",$url)) {
-            $islocal = true;
-        }
-    } elseif (substr($url,0,1) == '/') {
-        $server = xarServerGetHost();
-        $protocol = xarServerGetProtocol();
-        $url = $protocol . '://' . $server . $url;
-        $islocal = true;
-    } else {
-        $baseurl = xarServerGetBaseURL();
-        $url = $baseurl . $url;
-        $islocal = true;
-    }
+    // call api function to get the parsed feed (or warning)
+    $data = xarModAPIFunc('headlines', 'user', 'getparsed', 
+            array('feedfile' => $url));
 
-    if ($invalid) {
-      $data['warning'] = xarML('Invalid Address for Feed');
-    } else {
-        // Lets Create the Cache Right now to save processing later.
-
-        // TODO: This check is done in several places now. It should be hidden in an API.
-        // TODO: Also need to check that these parser modules have not been disabled or uninstalled.
-        if (xarModGetVar('headlines', 'parser') == 'simplepie') {
-            // Use the SimplePie parser
-            $data = xarModAPIFunc(
-                'simplepie', 'user', 'process',
-                array('feedfile' => $url)
-            );
-        } elseif (xarModGetVar('headlines', 'magpie') || xarModGetVar('headlines', 'parser') == 'magpie') {
-            $data = xarModAPIFunc(
-                'magpie', 'user', 'process',
-                array('feedfile' => $url)
-            );
-        } else {
-            $data = xarModAPIFunc(
-                'headlines', 'user', 'process',
-                array('feedfile' => $url)
-            );
-        }
-    }
     if (!empty($data['warning'])){
         $item = array();
         $item['module'] = 'headlines';
@@ -97,8 +53,11 @@ function headlines_admin_create($args)
     $hid = xarModAPIFunc('headlines', 'admin', 'create', array('url' => $url, 'title' => $title, 'desc' => $desc));
 
     if ($hid == false) return;
-
-    xarResponseRedirect(xarModURL('headlines', 'admin', 'view'));
+    
+    if (empty($return_url)) {
+        $return_url = xarModURL('headlines', 'admin', 'view');
+    }
+    xarResponseRedirect($return_url);
 
     // Return
     return true;

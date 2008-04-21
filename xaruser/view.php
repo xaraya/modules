@@ -35,44 +35,25 @@ function headlines_user_view($args)
         return true;
     }
     $feedfile = $links['url'];
+    
+    // CHECKME: should we provida a configurable cache time here?
+    // $refresh = $links['refresh'];
 
-    // TODO: This check is done in several places now. It should be hidden in an API.
-    // TODO: Also need to check that these parser modules have not been disabled or uninstalled.
-    // TODO: Would be nice if we fell through to the default parser, if above check fails.
-    if (xarModGetVar('headlines', 'parser') == 'simplepie') {
-        $data = xarModAPIFunc(
-            'simplepie', 'user', 'process',
-            array('feedfile' => $feedfile)
-        );
-    } elseif (xarModGetVar('headlines', 'magpie') || xarModGetVar('headlines', 'parser') == 'magpie') {
-        $data = xarModAPIFunc(
-            'magpie', 'user', 'process',
-            array('feedfile' => $feedfile)
-        );
-    } else {
-        $data = xarModAPIFunc(
-            'headlines', 'user', 'process',
-            array('feedfile' => $feedfile)
-        );
-    }
+    // call api function to get the parsed feed (or warning)
+    $data = xarModAPIFunc('headlines', 'user', 'getparsed', array('feedfile' => $feedfile));
 
     if (!empty($data['warning'])){
         // don't throw exception, let the display handle this
         $data['chantitle'] = xarML('Feed unavailable');
-        $data['chandesc'] = xarML('There is a problem with this feed');
+        $data['chandesc'] = $data['warning'];
         $data['chanlink'] = '#';
-        /*
-        $msg = xarML('There is a problem with this feed : #(1)', $data['warning']);
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
-        */
     }
-        if (!empty($links['title'])){
-            $data['chantitle'] = $links['title'];
-        }
-        if (!empty($links['desc'])){
-            $data['chandesc'] = $links['desc'];
-        }
+    if (!empty($links['title'])){
+        $data['chantitle'] = $links['title'];
+    }
+    if (!empty($links['desc'])){
+        $data['chandesc'] = $links['desc'];
+    }
     $numitems = xarModGetVar('headlines', 'feeditemsperpage');
     if (!empty($numitems)) {
 	    // trim the array to just the items we were asked for 
@@ -90,7 +71,9 @@ function headlines_user_view($args)
 			}
 		}
 	}
-
+    // TODO: support channel images, cats,
+    if (!isset($data['image'])) $data['image'] = array();
+    
     if (isset($links['catid'])) {
         $data['catid'] = $links['catid'];
     } else {

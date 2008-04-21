@@ -29,7 +29,8 @@ function headlines_userapi_process($args)
     // some people can be very mean.
     $feedfile = preg_replace("/\.\./", "donthackthis", $feedfile);
     $feedfile = preg_replace("/^\//", "ummmmno", $feedfile);
-
+    // don't suppress errors by default
+    $superrors = isset($superrors) ? $superrors : false;
     // Get the feed file (from cache or from the remote site)
     $feeddata = xarModAPIFunc('base', 'user', 'getfile',
         array(
@@ -37,7 +38,8 @@ function headlines_userapi_process($args)
             'cached' => true,
             'cachedir' => 'cache/rss',
             'refresh' => (isset($refresh) ? $refresh : 3600),
-            'extension' => '.xml'
+            'extension' => '.xml',
+            'superrors' => $superrors // added for bug 5490
         )
     );
 

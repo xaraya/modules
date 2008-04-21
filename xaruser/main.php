@@ -18,47 +18,42 @@ function headlines_user_main()
 
     // Security Check
     if(!xarSecurityCheck('OverviewHeadlines')) return;
-
+    
+    $numitems = xarModGetVar('headlines', 'itemsperpage');
     // The user API function is called
     $links = xarModAPIFunc('headlines', 'user', 'getall',
         array(
             'catid' => $data['catid'],
             'startnum' => $startnum,
-            'numitems' => xarModGetVar('headlines', 'itemsperpage')
+            'numitems' => $numitems
         )
     );
-
     //if (empty($links)) return
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($links); $i++) {
         $link = $links[$i];
-
         // Check and see if a feed has been supplied to us.
         if (empty($link['url'])) {
             continue;
         }
         $feedfile = $link['url'];
+        /** we're only interested in the title, description and link here
+         *  as these are unlikely to have changed in the last 24 hours we set that as cache time.
+         *  This reduces the chance of all the feeds getting updated at the same time since
+         *  it's unlikely that none of the feeds will have been visited within a 24 hour period. 
+         *  This means we rely on RSS and Cloud block, plus actual user view of a feed
+         *  to take care of re-caching individual feeds as required within that period. 
+         *  adapt to the needs of your site, higher for a site with few page views, lower for a busy one
+         *  TODO: is it worth making this admin configurable, or is 24 hours a reasonable default?
+         */
+        $links[$i] = xarModAPIFunc(
+            'headlines', 'user', 'getparsed',
+            array('feedfile' => $feedfile, 'refresh' => 86400)
+        );
 
-        // TODO: This check is done in several places now. It should be hidden in an API.
-        // TODO: Also need to check that these parser modules have not been disabled or uninstalled.
-        if (xarModGetVar('headlines', 'parser') == 'simplepie') {
-            $links[$i] = xarModAPIFunc(
-                'simplepie', 'user', 'process',
-                array('feedfile' => $feedfile)
-            );
-        } elseif (xarModGetVar('headlines', 'magpie') || xarModGetVar('headlines', 'parser') == 'magpie') {
-            $links[$i] = xarModAPIFunc(
-                'magpie', 'user', 'process',
-                array('feedfile' => $feedfile)
-            );
-        } else {
-            $links[$i] = xarModAPIFunc(
-                'headlines', 'user', 'process',
-                array('feedfile' => $feedfile)
-            );
-        }
 
         if (!isset($links[$i])) {
+            // CHECKME: What exactly does this catch?
             // Catch any exceptions.
             if (xarCurrentErrorType() <> XAR_NO_EXCEPTION) {
                 // 'text' rendering returns the exception as an array.
@@ -71,13 +66,9 @@ function headlines_user_main()
             }
             continue;
         } elseif (!empty($links[$i]['warning'])){
+            // TODO: option to hide broken feeds for all/admin/user
             $links[$i]['chantitle'] = xarML('Feed unavailable');
-            $links[$i]['chandesc'] = xarML('There is a problem with this feed');
-            /*
-            $msg = xarML('There is a problem with this feed : #(1)', $links[$i]['warning']);
-            xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-            return;
-            */
+            $links[$i]['chandesc'] = $links[$i]['warning'];
         }
 
         if (!empty($link['title'])){
@@ -86,6 +77,7 @@ function headlines_user_main()
         if (!empty($link['desc'])){
             $links[$i]['chandesc'] = $link['desc'];
         }
+        // TODO: Check individual permissions for View / Import / Edit / Delete
         $links[$i]['viewlink'] = xarModURL('headlines',
                                            'user',
                                            'view',
@@ -190,7 +182,7 @@ function headlines_user_main()
     $data['pager'] = xarTplGetPager($startnum,
                                     xarModAPIFunc('headlines', 'user', 'countitems'),
                                     xarModURL('headlines', 'user', 'main', array('startnum' => '%%')),
-                                    xarModGetVar('headlines', 'itemsperpage'));
+                                    $numitems);
 
     xarTPLSetPageTitle(xarML('Syndicated Headlines'));
 

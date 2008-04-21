@@ -26,27 +26,16 @@ function headlines_admin_update()
     if (!xarVarFetch('desc','str:1:',$data['desc'],'',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('order','str:1:',$data['order'],'',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('url','str:1:',$data['url'],'http://www.xaraya.com/?theme=rss',XARVAR_NOT_REQUIRED)) return;
-
+    if (!xarVarFetch('return_url', 'str:1:', $return_url, '', XARVAR_NOT_REQUIRED)) return;
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
-    // FR: added this routine to support local urls
-    $invalid = false;
-    if (empty($data['url'])) {
-        $invalid = true;
-    } elseif (strstr($data['url'],'://')) {
-        if (!ereg("^http://|https://|ftp://", $data['url'])) {            
-            $invalid = true;
-        }
-    } elseif (substr($data['url'],0,1) == '/') {
-        $server = xarServerGetHost();
-        $protocol = xarServerGetProtocol();
-        $data['url'] = $protocol . '://' . $server . $data['url'];
-    } else {
-        $baseurl = xarServerGetBaseURL();
-        $data['url'] = $baseurl . $data['url'];
-    }
-    if ($invalid) {
-        $data['warning'] = xarVarPrepForDisplay(xarML('Invalid feed URL'));
+
+    // call api function to get the parsed feed (or warning)
+    $getfeed = xarModAPIFunc('headlines', 'user', 'getparsed', 
+            array('feedfile' => $data['url']));
+
+    if (!empty($getfeed['warning'])) {
+        $data['warning'] = xarVarPrepForDisplay($getfeed['warning']);
         $data['module']         = 'headlines';
         $data['itemtype']       = NULL; // forum
         $data['itemid']         = $data['hid'];
@@ -75,7 +64,10 @@ function headlines_admin_update()
                             'url'   => $data['url'],
                             'order' => $data['order']))) return;
 
-    xarResponseRedirect(xarModURL('headlines', 'admin', 'view'));
+    if (empty($return_url)) {
+        $return_url = xarModURL('headlines', 'admin', 'view');
+    }
+    xarResponseRedirect($return_url);
 
     // Return
     return true;
