@@ -73,10 +73,14 @@ function registration_admin_modifyconfig()
                 default:
                     if (!xarVarFetch('showterms',   'checkbox', $showterms,   false, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('showprivacy', 'checkbox', $showprivacy, false, XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('termslink',   'str',      $termslink,   xarModVars::get('registration', 'termslink'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+                    if (!xarVarFetch('privacylink', 'str',      $privacylink, xarModVars::get('registration', 'privacylink'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
 
                     xarModVars::set('registration', 'SupportShortURLs', $shorturls);
                     xarModVars::set('registration', 'showterms', $showterms);
                     xarModVars::set('registration', 'showprivacy', $showprivacy);
+                    xarModVars::set('registration', 'termslink', $termslink);
+                    xarModVars::set('registration', 'privacylink', $privacylink);
 
                     break;
                 case 'registration':
@@ -90,7 +94,7 @@ function registration_admin_modifyconfig()
                     if (!xarVarFetch('requirevalidation', 'checkbox', $requirevalidation, false, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('sendwelcomeemail',  'checkbox', $sendwelcomeemail,  false, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('notifyemail',       'str:1:150',$notifyemail,       xarModVars::get('mail', 'adminmail'), XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('regobjectid',      'int',    $regobjectid,     xarModVars::get('registration', 'registrationobject'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+                    if (!xarVarFetch('regobjectid',       'int',    $regobjectid,     xarModVars::get('registration', 'registrationobject'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
 
                     xarModVars::set('registration', 'chooseownpassword', $chooseownpassword);
                     xarModVars::set('registration', 'defaultgroup', $defaultgroup);
@@ -102,7 +106,7 @@ function registration_admin_modifyconfig()
                     xarModVars::set('registration', 'explicitapproval', $explicitapproval? true:false);
                     xarModVars::set('registration', 'requirevalidation', $requirevalidation);
                     xarModVars::set('registration', 'sendwelcomeemail', $sendwelcomeemail);
-				    xarModVars::set('registration', 'registrationobject', $regobjectid);
+                    xarModVars::set('registration', 'registrationobject', $regobjectid);
                     break;
                 case 'filtering':
                     if (!xarVarFetch('disallowednames',  'str:1', $disallowednames,  '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;

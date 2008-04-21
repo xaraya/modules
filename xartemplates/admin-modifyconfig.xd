@@ -118,6 +118,24 @@
                         </xar:mlstring>
                     </label>
                 </div>
+                <div class="xar-form-input-wrapper">
+                    <xar:set name="value">xarModVars::get('registration', 'termslink')</xar:set>
+                    <label for="showprivacy" title="#xarML('Where to display a custom terms of use statement from')#">
+                        <xar:mlstring>
+                            Terms Link
+                        </xar:mlstring>
+                    </label>
+                    <xar:data-input type="textbox" name="termslink" value="$value" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <xar:set name="value">xarModVars::get('registration', 'privacylink')</xar:set>
+                    <label for="showprivacy" title="#xarML('Where to display a custom privacy statement from')#">
+                        <xar:mlstring>
+                            Privacy Link
+                        </xar:mlstring>
+                    </label>
+                    <xar:data-input type="textbox" name="privacylink" value="$value" />
+                </div>
             </fieldset>
             <fieldset>
                 <div class="xar-form-input-wrapper-after">

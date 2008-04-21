@@ -62,6 +62,8 @@ function registration_init()
     xarModVars::set('registration', 'askpendingemail', true); // not in reg atm, leave in roles?
     xarModVars::set('registration', 'askpasswordemail', true);// not in reg atm, leave in roles?
     xarModVars::set('registration', 'minage', 13);
+    xarModVars::set('registration', 'termslink', '');
+    xarModVars::set('registration', 'privacylink', '');
 
     //we need these too
     xarModVars::set('registration', 'SupportShortURLs', false);

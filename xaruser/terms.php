@@ -20,6 +20,21 @@ function registration_user_terms()
     // Security check
     if (!xarSecurityCheck('ViewRegistration')) return;
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Terms of Usage')));
-    return array();
+    $data['link'] = '';
+    
+    /*$link = xarModVars::get('registration','termslink');
+    if (!empty($link)) {
+        $url_parts = parse_url($link);
+        if (!isset($url_parts['host'])) {
+            $truecurrenturl = xarServerGetCurrentURL(array(), false);
+            $urldata = xarModAPIFunc('roles','user','parseuserhome',array('url'=>$link,'truecurrenturl'=>$truecurrenturl));
+            $link = $urldata['redirecturl'];
+        }
+        $link = parse_url($link);
+        var_dump($link);exit;
+        $data['link']    = (!empty($link) && $link != 'http://') ? $link : '';
+    }
+    */
+    return $data;
 }
 ?>
