@@ -33,6 +33,9 @@ function headlines_rssblock_init()
         'alt_chanlink' => '',   // FR - alt channel link
         'linkhid' => false,     // FR - link to headline feed
         'show_warning' => 1,      // TODO: FR - option to hide block/display warning on failed feed
+        'show_chanimage' => 0,    // added for SimplePie
+        'show_itemimage' => 0,    // added for SimpePie
+        'show_itemcats' => 0,     // added for SimpePie
         'refresh' => 3600,
         'nocache' => 0, // cache by default
         'pageshared' => 1, // don't share across pages here
@@ -109,16 +112,15 @@ function headlines_rssblock_display($blockinfo)
     $refresh = $vars['refresh']/2;
     
     // call api function to get the parsed feed (or warning)
-    $data = xarModAPIFunc('headlines', 'user', 'getparsed', array('feedfile' => $feedfile, 'refresh' => $refresh));
+    $data = xarModAPIFunc('headlines', 'user', 'getparsed', array('feedfile' => $feedfile, 'refresh' => $refresh, 'numitems' => $vars['maxitems']));
     // TODO: option to hide block here instead
     if (!empty($data['warning'])) {
 		$blockinfo['title'] = xarML('Headlines');
         $blockinfo['content'] = xarVarPrepForDisplay($data['warning']);
         return $blockinfo;
 	}
- 
-    $data['feedcontent'] = array_slice($data['feedcontent'], 0, $vars['maxitems']);
     
+    // TODO: move this to getparsed function
     // Bug [4545] FR add option to truncate item descriptions
     if ($vars['showdescriptions'] && !empty($vars['truncate'])) {
         for ($i = 0; $i < count($data['feedcontent']); $i++) {
@@ -135,7 +137,16 @@ function headlines_rssblock_display($blockinfo)
     if (!empty($vars['alt_chantitle'])) $data['chantitle'] = $vars['alt_chantitle'];
     if (!empty($vars['alt_chandesc'])) $data['chandesc'] = $vars['alt_chandesc'];
     if (!empty($vars['alt_chanlink'])) $data['chanlink'] = $vars['alt_chanlink'];
-    
+    // optionally show images and cats if available (SimplePie required)
+    if (!isset($vars['show_chanimage'])) $vars['show_chanimage'] = $defaults['show_chanimage'];
+    if (!isset($vars['show_itemimage'])) $vars['show_itemimage'] = $defaults['show_itemimage'];
+    if (!isset($vars['show_itemcats'])) $vars['show_itemcats'] = $defaults['show_itemcats'];
+    // make sure SimplePie's available
+    if (!xarModIsAvailable('simplepie')) {
+        $vars['show_chanimage'] = $defaults['show_chanimage'];
+        $vars['show_itemimage'] = $defaults['show_itemimage'];
+        $vars['show_itemcats'] = $defaults['show_itemcats'];
+    }
     if ($vars['linkhid'] && is_numeric($vars['rssurl'])) {
         $vars['linkhid'] = $vars['rssurl'];
     }
@@ -146,9 +157,13 @@ function headlines_rssblock_display($blockinfo)
         'chantitle'    => $data['chantitle'],
         'chanlink'     => $data['chanlink'],
         'chandesc'     => $data['chandesc'],
+        'chanimage'    => $data['image'],
         'show_desc'     => $vars['showdescriptions'],
         'show_chantitle' => $vars['show_chantitle'],
         'show_chandesc'  => $vars['show_chandesc'],
+        'show_chanimage' => $vars['show_chanimage'],
+        'show_itemimage' => $vars['show_itemimage'],
+        'show_itemcats' => $vars['show_itemcats'],
         'linkhid' => $vars['linkhid']
     );
  
@@ -224,6 +239,23 @@ function headlines_rssblock_modify($blockinfo)
     if (!isset($vars['alt_chandesc'])) $vars['alt_chandesc'] = $defaults['alt_chandesc'];
     if (!isset($vars['alt_chanlink'])) $vars['alt_chanlink'] = $defaults['alt_chanlink'];
     if (!isset($vars['linkhid'])) $vars['linkhid'] = $defaults['linkhid'];
+    // get the current parser
+    $vars['parser'] = xarModGetVar('headlines', 'parser');
+    // check for legacy magpie code, checkme: is this still necessary?
+    if (xarModGetVar('headlines', 'magpie')) $vars['parser'] = 'magpie';
+    // check module available if not default parser
+    if ($vars['parser'] != 'default' && !xarModIsAvailable($vars['parser'])) $vars['parser'] = 'default';
+    if ($vars['parser'] == 'simplepie') {
+        // optionally show images and cats if available (SimplePie only)
+        if (!isset($vars['show_chanimage'])) $vars['show_chanimage'] = $defaults['show_chanimage'];
+        if (!isset($vars['show_itemimage'])) $vars['show_itemimage'] = $defaults['show_itemimage'];
+        if (!isset($vars['show_itemcats'])) $vars['show_itemcats'] = $defaults['show_itemcats'];
+    } else {
+        // otherwise set false (defaults)
+        $vars['show_chanimage'] = $defaults['show_chanimage'];
+        $vars['show_itemimage'] = $defaults['show_itemimage'];
+        $vars['show_itemcats'] = $defaults['show_itemcats'];
+    }
 
  
     $vars['blockid'] = $blockinfo['bid'];
@@ -282,6 +314,9 @@ function headlines_rssblock_insert($blockinfo)
     if (!xarVarFetch('alt_chanlink', 'str:1:', $vars['alt_chanlink'], $defaults['alt_chanlink'], XARVAR_NOT_REQUIRED)) return;
     if (!ereg("^http://|https://|ftp://", $vars['alt_chanlink'])) $vars['alt_chanlink'] = $defaults['alt_chanlink'];
     if (!xarVarFetch('linkhid', 'checkbox', $vars['linkhid'], $defaults['linkhid'], XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('show_chanimage', 'checkbox', $vars['show_chanimage'], $defaults['show_chanimage'], XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('show_itemimage', 'checkbox', $vars['show_itemimage'], $defaults['show_itemimage'], XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('show_itemcats', 'checkbox', $vars['show_itemcats'], $defaults['show_itemcats'], XARVAR_NOT_REQUIRED)) return;
 
     $blockinfo['content'] = $vars;
     return $blockinfo;

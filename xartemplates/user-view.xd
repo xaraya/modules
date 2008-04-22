@@ -28,7 +28,7 @@
         <xar:set name="showimport">0</xar:set>
     </xar:if>
     <xar:set name="magpie">xarModGetVar('headlines','magpie')</xar:set>
-    <xar:if condition="isset($image) && !empty($image)">
+    <xar:if condition="isset($image) && !empty($image) && xarModGetVar('headlines', 'showchanimage')">
         <div>
             <a href="#$image['link']#" title="#$image['title']#">
                 <img src="#$image['url']#" alt="#$image['title']#" />
@@ -45,14 +45,24 @@
             <xar:else />
                 <h3>#$loop:item['title']#</h3>
             </xar:if>
-             <xar:if condition="isset($loop:item['categories']) && !empty($loop:item['categories'])">
+             <xar:if condition="isset($loop:item['categories']) && !empty($loop:item['categories']) && xarModGetVar('headlines', 'showitemcats')">
                 <div class="xar-standard-box-padding">|
                 <xar:foreach in="$loop:item['categories']" key="$catkey" value="$chancat">
-                    <xar:if condition="!empty($chancat-&gt;term)">
-                        #xarVarPrepForDisplay($chancat-&gt;term)# |
+                    <xar:if condition="!empty($chancat['term'])">
+                        #xarVarPrepForDisplay($chancat['term'])# |
                     </xar:if>
                 </xar:foreach>
                 </div>
+            </xar:if>
+            <xar:if condition="isset($loop:item['enclosures']) && !empty($loop:item['enclosures']) && xarModGetVar('headlines', 'showitemimage')">
+                <xar:foreach in="$loop:item['enclosures']" key="$enckey" value="$encval">
+                    <xar:if condition="substr($encval['type'], 'image') === false">
+                        <xar:continue />
+                    </xar:if>
+                    <xar:if condition="isset($encval['link'])">
+                        <img src="#$encval['link']#" alt="#$loop:item['title']#" />
+                    </xar:if>
+                </xar:foreach>
             </xar:if>
             <xar:if condition="!empty($loop:item['description'])">
                 <div class="xar-standard-box-padding">#$loop:item['description']#</div>

@@ -25,7 +25,7 @@
     <xar:loop name="$indlinks">
         <xar:if condition="!empty($loop:item['chanlink'])">
         <h3><a href="#$loop:item['chanlink']#" title="#$loop:item['chantitle']#">#$loop:item['chantitle']#</a></h3>
-        <xar:if condition="isset($loop:item['image']) && !empty($loop:item['image'])">
+        <xar:if condition="isset($loop:item['image']) && !empty($loop:item['image']) && xarModGetVar('headlines', 'showchanimage')">
             <div>
                 <a href="#$loop:item['image']['link']#" title="#$loop:item['image']['title']#">
                     <img src="#$loop:item['image']['url']#" alt="#$loop:item['image']['title']#" />

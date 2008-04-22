@@ -14,7 +14,10 @@
 
 <div id="notsogoodbutok" class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
-    <h2><a href="#xarModURL('headlines', 'admin', 'modifyconfig')#" title="#xarML('permalink')#"><xar:mlstring>Modify Configuration</xar:mlstring></a>
+    <h2>
+        <a href="#xarModURL('headlines', 'admin', 'modifyconfig')#" title="#xarML('permalink')#">
+            <xar:mlstring>Modify Configuration</xar:mlstring>
+        </a>
     </h2>
     <form class="xar-formwidget" action="#xarModURL('headlines', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded">
         <fieldset class="xar-norm">
@@ -52,35 +55,6 @@
                 </label>
                 <input type="text" name="aliasname" id="aliasname" value="#xarModGetVar('headlines', 'aliasname')#" size="32" maxlength="100" />
             </div>
-              <div class="xar-form-input-wrapper">
-                <label for="parser" class="xar-form-label" title="#xarML('Select the parser to use')#">
-                    <xar:mlstring>Parser</xar:mlstring>
-                </label>
-
-                <select name="parser" id="parser">
-                    <xar:if condition="$parser eq 'default'">
-                        <option value="default" selected="selected"><xar:mlstring>Default</xar:mlstring></option>
-                    <xar:else />
-                        <option value="default"><xar:mlstring>Default</xar:mlstring></option>
-                    </xar:if>
-
-                    <xar:if condition="xarModIsAvailable('magpie')">
-                    <xar:if condition="$parser eq 'magpie'">
-                        <option value="magpie" selected="selected"><xar:mlstring>Magpie</xar:mlstring></option>
-                    <xar:else />
-                        <option value="magpie"><xar:mlstring>Magpie</xar:mlstring></option>
-                    </xar:if>
-                    </xar:if>
-
-                    <xar:if condition="xarModIsAvailable('simplepie')">
-                    <xar:if condition="$parser eq 'simplepie'">
-                        <option value="simplepie" selected="selected"><xar:mlstring>SimplePie</xar:mlstring></option>
-                    <xar:else />
-                        <option value="simplepie"><xar:mlstring>SimplePie</xar:mlstring></option>
-                    </xar:if>
-                    </xar:if>
-                </select>
-            </div>
              <div class="xar-form-input-wrapper">
                 <label for = "adminajax" class="xar-form-label" title="#xarML('Turn on simple AJAX support for admin functions')#">
                         <xar:mlstring>
@@ -106,6 +80,13 @@
                     <input type="checkbox" name="userajax" id="userajax" value="1" />
                 </xar:if>
             </div>
+        </fieldset>
+        <fieldset>
+            <legend>
+                <xar:mlstring>
+                    Parser Options
+                </xar:mlstring>
+            </legend>
         </fieldset>
         <fieldset>
             <legend>
@@ -190,6 +171,51 @@
             <legend>
                 <xar:mlstring>Feed Display Configuration</xar:mlstring>
             </legend>
+            <div class="xar-form-input-wrapper">
+                <label for="parser" class="xar-form-label" title="#xarML('Select the parser to use')#">
+                    <xar:mlstring>Parser</xar:mlstring>
+                </label>
+
+                <select name="parser" id="parser" onchange="this.form.submit()">
+                    <xar:foreach in="$parsers" key="$optval" value="$optlabel">
+                    <xar:if condition="$parser eq $optval">
+                        <option value="#$optval#" selected="selected">#$optlabel#</option>
+                    <xar:else />
+                        <option value="#$optval#">#$optlabel#</option>
+                    </xar:if>
+                    </xar:foreach>
+                </select>
+            </div>
+            <xar:if condition="$parser eq 'simplepie'">
+                <div class="xar-form-input-wrapper-before">
+                    <strong><xar:mlstring>These settings allow you to take advantage of SimplePie content.</xar:mlstring></strong>
+                </div>
+                <div class="xar-form-input-wrapper-after">
+                    <xar:if condition="xarModGetVar('headlines', 'showchanimage')">
+                        <input type="checkbox" value="1" name="showchanimage" id="showchanimage" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" value="1" name="showchanimage" id="showchanimage" />
+                    </xar:if>
+                    <label for="showchanimage" class="help" title="#xarML('Display the channel image supplied with a feed')#"><xar:mlstring>Show channel images (if available)</xar:mlstring></label>
+                    </div>
+                <div class="xar-form-input-wrapper-after">
+                    <xar:if condition="xarModGetVar('headlines', 'showitemimage')">
+                        <input type="checkbox" value="1" name="showitemimage" id="showitemimage" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" value="1" name="showitemimage" id="showitemimage" />
+                    </xar:if>
+                    <label for="showitemimage" class="help" title="#xarML('Display the image supplied with channel items')#"><xar:mlstring>Show item images (if available)</xar:mlstring></label>
+                    </div>
+                <div class="xar-form-input-wrapper-after">
+                    <xar:if condition="xarModGetVar('headlines', 'showitemcats')">
+                        <input type="checkbox" value="1" name="showitemcats" id="showitemcats" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" value="1" name="showitemcats" id="showitemcats" />
+                    </xar:if>
+                    <label for="showitemcats" class="help" title="#xarML('Display the categories supplied with channel items')#"><xar:mlstring>Show item categories (if available)</xar:mlstring></label>
+                </div>
+             </xar:if>
+
             <div class="xar-form-input-wrapper">
                 <label for="feeditemsperpage" class="xar-form-label" title="#xarML('Number of feed items per page to show')#">
                     <xar:mlstring>Maximum Items Per Feed</xar:mlstring>

@@ -25,6 +25,7 @@ function headlines_userapi_getparsed($args)
 { 
     extract($args); 
     $data = array();
+    $numitems = isset($numitems) && is_numeric($numitems) ? $numitems : 0;
     // this validation is done at create and update and in blocks, 
     // as well as in display functions, probably not really necessary here
     $invalid = '';
@@ -94,11 +95,31 @@ function headlines_userapi_getparsed($args)
                 array('feedfile' => $feedfile, 'superrors' => true));
             break;
     } 
-
+    
     if (!isset($data['feedcontent']) || empty($data['feedcontent'])) {
         // $data['warning'] = xarML('#(1) feed failed to load', $location);
         $data['warning'] = xarML('Feed failed to load');
     }
+    
+    if (!empty($numitems)) {
+	    // trim the array to just the items we were asked for 
+	    $data['feedcontent'] = array_slice($data['feedcontent'], 0, $numitems);
+    }
+
+    if ($curparser == 'simplepie') {
+        for ($i = 0; $i < count($data['feedcontent']); $i++) {
+            $chanitem = $data['feedcontent'][$i];
+            if (isset($chanitem['categories']) && !empty($chanitem['categories'])) {
+                foreach ($chanitem['categories'] as $catkey => $catobject) {
+                    if (!isset($catobject)) continue;
+                    $chanitem['categories'][$catkey] = array('term' => $catobject->term, 
+                        'scheme' => $catobject->scheme, 'label' => $catobject->label );
+                }
+            }
+            $data['feedcontent'][$i] = $chanitem;
+        }
+    }
+
     // image handling included here for consistency
     if (!isset($data['image'])) $data['image'] = array();
     

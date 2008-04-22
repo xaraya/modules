@@ -41,7 +41,18 @@ function headlines_admin_updateconfig()
 
     // The magpie var is no longer needed
     if (xarModGetVar('headlines', 'magpie')) xarModDelVar('headlines', 'magpie');
-
+    // make sure we don't set a parser that isn't available
+    if ($parser != 'default') {
+        if (!xarModIsAvailable($parser)) $parser = 'default';
+        if ($parser == 'simplepie') { // take advantage of SimplePie 
+            if (!xarVarFetch('showchanimage', 'checkbox', $showchanimage, 0, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('showitemimage', 'checkbox', $showitemimage, 0, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('showitemcats', 'checkbox', $showitemcats, 0, XARVAR_NOT_REQUIRED)) return;
+            xarModSetVar('headlines', 'showchanimage', $showchanimage);
+            xarModSetVar('headlines', 'showitemimage', $showitemimage);
+            xarModSetVar('headlines', 'showitemcats', $showitemcats);
+        }
+    }
     xarModSetVar('headlines', 'parser', $parser);
     xarModSetVar('headlines', 'importpubtype', $importpubtype);
     xarModSetVar('headlines', 'uniqueid', $uniqueid);

@@ -8,6 +8,13 @@
             <xar:if condition="$show_chandesc and !empty($chandesc)">
                 <p class="xar-sub">#xarVarPrepForDisplay($chandesc)#</p>
             </xar:if>
+            <xar:if condition="$show_chanimage && !empty($chanimage)">
+                <div>
+                    <a href="#$chanimage['link']#" title="#$chanimage['title']#">
+                        <img src="#$chanimage['url']#" alt="#$chanimage['title']#" />
+                    </a>
+                </div>
+            </xar:if>
         </div>
     </xar:if>
 
@@ -15,17 +22,38 @@
         <ul>
             <xar:loop name="$feedcontent">
                 <li>
+                   <xar:if condition="isset($loop:item['enclosures']) && !empty($loop:item['enclosures']) && $show_itemimage">
+                        <xar:foreach in="$loop:item['enclosures']" key="$enckey" value="$encval">
+                            <xar:if condition="substr($encval['type'], 'image') === false">
+                                <xar:continue />
+                            </xar:if>
+                            <xar:if condition="isset($encval['link'])">
+                                <img src="#$encval['link']#" alt="#$loop:item['title']#" />
+                            </xar:if>
+                        </xar:foreach>
+                    </xar:if>
                     <xar:if condition="!empty($loop:item.link)">
                         <a href="#xarVarPrepForDisplay($loop:item.link)#">#$loop:item.title#</a>
                     <xar:else />
                         <strong>#xarVarPrepHTMLDisplay($loop:item.title)#</strong>
                     </xar:if>
                     <xar:if condition="!empty($loop:item.date)">
+                        <p>
                         #xarLocaleGetFormattedDate('long',$loop:item.date)#
+                        </p>
+                    </xar:if>
+                    <xar:if condition="!empty($loop:item['categories']) && $show_itemcats">
+                    <p class="xar-sub">|
+                    <xar:foreach in="$loop:item['categories']" key="$catkey" value="$chancat">
+                        <xar:if condition="!empty($chancat['term'])">
+                            #xarVarPrepForDisplay($chancat['term'])# |
+                        </xar:if>
+                    </xar:foreach>
+                    </p>
                     </xar:if>
                     <xar:if condition="!empty($show_desc)">
                         <xar:if condition="!empty($loop:item.description)">
-                            <div class="xar-sub">#xarVarPrepHTMLDisplay($loop:item.description)#</div>
+                            <p class="xar-sub">#xarVarPrepHTMLDisplay($loop:item.description)#</p>
                         </xar:if>
                     </xar:if>
                 </li>

@@ -48,24 +48,23 @@ function headlines_admin_modifyconfig()
 
     $data['parser']             = xarModGetVar('headlines', 'parser');
     if (empty($data['parser'])) $data['parser'] = ($data['magpiechecked'] ? 'magpie' : 'default');
-
-    /* TODO: present per parser options to show whatever each parser presents as data
-    /* is this the best way? check existing parser module options (simplepie, magpie)
-    /* do we want to provide per feed parsing otions in the future? 
-    switch ($data['parser']) {
-        case 'default':
-            default:
-                // alt title, description, link, truncate, show link, TODO: what else? php5 XML parser?
-            break;
-        case 'magpie':
-                // TODO: evaluate data returned by magpie, images, etc.
-            break;
-        case 'simplepie':
-                // TODO: evaluate data returned by simplepie, images, cats, etc.
-
-            break;
+    // build array of available parsers
+    $data['parsers'] = array();
+    $data['parsers']['default'] = 'Default';
+    if (xarModIsAvailable('magpie')) { // only add parser if available
+        $data['parsers']['magpie'] = 'Magpie';
+    } else { // if not available, check parser isn't selected (ie module removed)
+        if ($data['parser'] == 'magpie') { 
+            $data['parser'] = 'default';
+        }
     }
-    */
+    if (xarModIsAvailable('simplepie')) { // ony show parser if available
+        $data['parsers']['simplepie'] = 'SimplePie';
+    } else { // if not available, check parser isn't selected (ie module removed)
+        if ($data['parser'] == 'simplepie') { 
+            $data['parser'] = 'default';
+        }
+    }
 
     $data['authid']             = xarSecGenAuthKey();
     $data['pubtypes']           = xarModAPIFunc('articles', 'user', 'getpubtypes');

@@ -38,9 +38,11 @@ function headlines_user_view($args)
     
     // CHECKME: should we provida a configurable cache time here?
     // $refresh = $links['refresh'];
+    $numitems = xarModGetVar('headlines', 'feeditemsperpage');
 
     // call api function to get the parsed feed (or warning)
-    $data = xarModAPIFunc('headlines', 'user', 'getparsed', array('feedfile' => $feedfile));
+    $data = xarModAPIFunc('headlines', 'user', 'getparsed', 
+        array('feedfile' => $feedfile, 'numitems' => $numitems));
 
     if (!empty($data['warning'])){
         // don't throw exception, let the display handle this
@@ -54,11 +56,7 @@ function headlines_user_view($args)
     if (!empty($links['desc'])){
         $data['chandesc'] = $links['desc'];
     }
-    $numitems = xarModGetVar('headlines', 'feeditemsperpage');
-    if (!empty($numitems)) {
-	    // trim the array to just the items we were asked for 
-	    $data['feedcontent'] = array_slice($data['feedcontent'], 0, $numitems);
-    }
+
     xarTplSetPageTitle(xarVarPrepForDisplay($data['chantitle']));
 
 	/* optionally shorten descriptions */

@@ -65,6 +65,7 @@
     </label>
     <input type="text" name="alt_chanlink" id="alt_chanlink#$blockid#" value="#$alt_chanlink#" size="60" maxlength="254" />
 </div>
+
 <div class="xar-form-input-wrapper-after">
     <xar:if condition = "$show_chandesc eq 1">
         <input id="show_chandesc#$blockid#" type="checkbox" name="show_chandesc" value="1" checked="checked"/>
@@ -112,3 +113,34 @@
     </label>
     <input type="text" name="refresh" id="refresh#$blockid#" size="5" maxlength="5" value="#$refresh#" />
 </div>
+<xar:if condition="$parser eq 'simplepie'">
+    <fieldset>
+        <legend>
+            <xar:mlstring>SimplePie Options</xar:mlstring>
+        </legend>
+        <div class="xar-form-input-wrapper-after">
+            <xar:if condition="$show_chanimage">
+                <input type="checkbox" name="show_chanimage" id="show_chanimage#$blockid#"  value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="show_chanimage" id="show_chanimage#$blockid#"  value="1" />
+            </xar:if>
+            <label for="show_chanimage#$blockid#" title="#xarML('Display the channel image supplied with this feed (if available)')#">Display channel image (if available)</label>
+        </div>
+        <div class="xar-form-input-wrapper-after">
+            <xar:if condition="$show_itemimage">
+                <input type="checkbox" name="show_itemimage" id="show_itemimage#$blockid#"  value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="show_itemimage" id="show_itemimage#$blockid#"  value="1" />
+            </xar:if>
+            <label for="show_itemimage#$blockid#" title="#xarML('Display item images supplied with this feed (if available)')#">Display item images (if available)</label>
+        </div>
+        <div class="xar-form-input-wrapper-after">
+            <xar:if condition="$show_itemimage">
+                <input type="checkbox" name="show_itemcats" id="show_itemcats#$blockid#"  value="1" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="show_itemcats" id="show_itemcats#$blockid#"  value="1" />
+            </xar:if>
+            <label for="show_itemcats#$blockid#" title="#xarML('Display item categories supplied with this feed (if available)')#">Display item categories (if available)</label>
+        </div>
+    </fieldset>
+</xar:if>
