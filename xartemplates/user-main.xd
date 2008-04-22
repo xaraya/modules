@@ -88,14 +88,14 @@
 
     <p><xar:mlstring>Fixes transparency of PNGs in IE5.5 and IE6</xar:mlstring></p>
 
-    <xar:template file="jquery.ifixpng" module="jquery" subdata="array('selector'=&gt;'#ifixpngwrapper img, div#ifixpngdiv')" />
+    <xar:template file="jquery.ifixpng" module="jquery" subdata="array('selector'=&gt;'#ifixpngwrapper img[@src$=.png], #ifixpngwrapper div')" />
 
-    <p style="background: url('modules/jquery/xarimages/ps-back.gif') repeat;" id="ifixpngwrapper">
-        <div id="ifixpngdiv" style="background: url('modules/jquery/xarimages/pngtest-alpha.png'); width: 173px; height: 173px; float: left; display: block;">As a background image</div>
+    <div style="background: url('modules/jquery/xarimages/ps-back.gif') repeat;" id="ifixpngwrapper">
+        <div style="background: url('modules/jquery/xarimages/pngtest-alpha.png'); width: 173px; height: 173px; float: left; display: block;">As a background image</div>
         <img src="modules/jquery/xarimages/pngtest.png" width="173" height="173" alt="This is the alt-Text" style="float: left" />
         <img src="modules/jquery/xarimages/pngtest-alpha.png" width="173" height="173" alt="This is the alt-Text" style="float: left" />
-        <div style="clear: both"></div>
-    </p>
+        <div style="clear: both;"></div>
+    </div>
 
     <h2><xar:mlstring>jCarouselLite - little brother to jCarousel</xar:mlstring></h2>
 

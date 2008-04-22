@@ -26,6 +26,9 @@ jQuery.fn.pngFix = function() {
 	if (jQuery.browser.msie && (ie55 || ie6)) {
 
 		jQuery(this).find("img[@src$=.png]").each(function() {
+			var base = jQuery('base').attr('href').replace(/\/[^\/]+$/,'/');
+			var imageSrc = jQuery(this).attr('src');
+			imageSrc = (base && imageSrc.search(/^(\/|http:)/i)) ? base + imageSrc : imageSrc;
 
 			var prevStyle = '';
 			var strNewHTML = '';
@@ -52,7 +55,7 @@ jQuery.fn.pngFix = function() {
 			strNewHTML += '<span '+imgId+imgClass+imgTitle+imgAlt;
 			strNewHTML += 'style="position:relative;white-space:pre-line;display:inline-block;background:transparent;'+imgAlign+imgHand;
 			strNewHTML += 'width:' + jQuery(this).width() + 'px;' + 'height:' + jQuery(this).height() + 'px;';
-			strNewHTML += 'filter:progid:DXImageTransform.Microsoft.AlphaImageLoader' + '(src=\'' + jQuery(this).attr('src') + '\', sizingMethod=\'scale\');';
+			strNewHTML += 'filter:progid:DXImageTransform.Microsoft.AlphaImageLoader' + '(src=\'' + imageSrc + '\', sizingMethod=\'scale\');';
 			strNewHTML += imgStyle+'"></span>';
 			if (prevStyle != ''){
 				strNewHTML = '<span style="position:relative;display:inline-block;'+prevStyle+imgHand+'width:' + jQuery(this).width() + 'px;' + 'height:' + jQuery(this).height() + 'px;'+'">' + strNewHTML + '</span>';
@@ -60,7 +63,6 @@ jQuery.fn.pngFix = function() {
 
 			jQuery(this).hide();
 			jQuery(this).after(strNewHTML);
-			
 		});
 
 	}
