@@ -1,8 +1,20 @@
 <xar:comment> for this module specific css rules look at comments/xarstyles/comments.css file [andyv] </xar:comment>
-<script type="text/javascript" src="modules/base/xartemplates/includes/submitonce.js"></script>
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
+<xar:base-include-javascript module="xarbb" filename="popup.js" position="head" />
+<xar:comment>
+    fieldRequired = Array with names of mandatory fields
+    fieldDescription = Array with labels of mandatory fields
+</xar:comment>
+<script type="text/javascript">
+<!--
+    var fieldRequired = Array("package[title]", "package[text]");
+    var fieldDescription = Array("Titel", "Comment");
+//-->
+</script>
+
 <xar:sec mask="Comments-Reply" catch="false">
   <h3>#$header['input-title']#</h3> 
-  <form action="#$receipt['post_url']#" method="post" name="post" id="post" onsubmit="submitonce(this)" #$hooks['formaction']# >
+  <form action="#$receipt['post_url']#" method="post" name="post" id="post" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);" #$hooks['formaction']# >
     <div class="xar-ib-wrapper xar-accent-outline">
       <xar:if condition="$hooks['formdisplay'] ne ''">
         <div class="xar-ib-actionpanel xar-accent">
@@ -89,8 +101,8 @@
           <input type="hidden" name="receipt[returnurl][decoded]" id="receipt-returnurl-decoded" value="#$receipt['returnurl']['decoded']#" />
           <!--<input type="hidden" name="receipt[returnurl][encoded]" id="receipt-returnurl-encoded" value="#$receipt['returnurl']['encoded']#" />-->
           <input type="hidden" name="receipt[action]" id="receipt-action" /> 
-          <input type="submit" id="receipt-action-preview" onclick="document.getElementById('receipt-action').value='preview'" value="#xarML('Preview')#" /> 
-          <input type="submit" id="receipt-action-submit" onclick="document.getElementById('receipt-action').value='submit'" value="#xarML('Submit')#" />
+          <input type="submit" id="receipt-action-preview" onclick="document.getElementById('receipt-action').value='preview'" value="#xarML('Preview')#" tabindex="3" />
+          <input type="submit" id="receipt-action-submit" onclick="document.getElementById('receipt-action').value='submit'" value="#xarML('Submit')#" tabindex="4" />
         </div>
       <xar:else/>
         <div class="xar-ib-leftpanel">
@@ -166,8 +178,8 @@
           <input type="hidden" name="receipt[returnurl][decoded]" id="receipt-returnurl-decoded" value="#$receipt['returnurl']['decoded']#" /> 
           <!--<input type="hidden" name="receipt[returnurl][encoded]" id="receipt-returnurl-encoded" value="#$receipt['returnurl']['encoded']#" />-->
           <input type="hidden" name="receipt[action]" id="receipt-action"/> 
-          <input type="submit" id="receipt-action-preview" onclick="document.getElementById('receipt-action').value='preview'" value="#xarML('Preview')#" /> 
-          <input type="submit" id="receipt-action-submit" onclick="document.getElementById('receipt-action').value='submit'" value="#xarML('Submit')#" />
+          <input type="submit" id="receipt-action-preview" onclick="document.getElementById('receipt-action').value='preview'" value="#xarML('Preview')#" tabindex="3" />
+          <input type="submit" id="receipt-action-submit" onclick="document.getElementById('receipt-action').value='submit'" value="#xarML('Submit')#" tabindex="4" />
         </div>
       </xar:if>
     </div>
