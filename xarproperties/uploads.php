@@ -86,7 +86,7 @@ class UploadProperty extends FileUploadProperty
     function validateValue($value = null)
     {
         // TODO: move some of this to the parent
-        //if (!parent::validateValue($value)) return false;
+//        if (!parent::validateValue($value)) return false;
 
         if (isset($this->fieldname)) $name = $this->fieldname;
         else $name = 'dd_'.$this->id;
@@ -122,7 +122,11 @@ class UploadProperty extends FileUploadProperty
 
                 $upload         =& $_FILES[$name . '_attach_upload'];
                 $data['upload'] =& $_FILES[$name . '_attach_upload'];
-                if (!$this->validateExtension($upload['name'])) {
+                if (empty($upload['name'])) {
+                    // No file name entered, ignore
+                    $this->value = '';
+                    return true;
+                } elseif (!$this->validateExtension($upload['name'])) {
                     $this->invalid = xarML('The file type is not allowed');
                     $this->value = null;
                     return false;
