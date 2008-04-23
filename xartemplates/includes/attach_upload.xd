@@ -2,4 +2,12 @@
     <xar:mlstring>Attach File: </xar:mlstring><br />
     <input type="hidden" name="MAX_FILE_SIZE" value="#$max_file_size#" />
     <input type="file" name="#$id#_attach_upload" id="#$id#_attach_upload_id" />
+    <xar:if condition="!empty($Attachments)">
+        <span style="margin-left: 10px;">
+            Current file:&#160;
+            <xar:foreach in="$Attachments" value="$attachment">
+                #$attachment.fileName#&#160;
+            </xar:foreach>
+        </span>
+    </xar:if>
 </xar:template>

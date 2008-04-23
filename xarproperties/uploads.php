@@ -340,7 +340,6 @@ class UploadProperty extends FileUploadProperty
         } else {
             $data['storedList']   = array();
         }
-
         // used to allow selection of multiple files
         $data['multiple_' . $this->id] = $this->initialization_multiple_files;
 
