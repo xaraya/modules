@@ -18,6 +18,8 @@ function headlines_user_view($args)
     // Security Check
     if (!xarSecurityCheck('ReadHeadlines')) return;
 	if (!xarVarFetch('hid', 'id', $hid, NULL, XARVAR_NOT_REQUIRED)) return;
+    // TODO: optional force cache refresh, admin only option
+    if (!xarVarFetch('renew', 'isset', $renew, 0, XARVAR_NOT_REQUIRED)) return; 
 	extract($args);	
 	if (!isset($hid) || empty($hid) || !is_numeric($hid)) {
         $msg = xarML('No headline id specified.');
@@ -34,15 +36,31 @@ function headlines_user_view($args)
         xarResponseRedirect(xarModURL('headlines', 'user', 'main'));
         return true;
     }
-    $feedfile = $links['url'];
     
-    // CHECKME: should we provida a configurable cache time here?
-    // $refresh = $links['refresh'];
-    $numitems = xarModGetVar('headlines', 'feeditemsperpage');
+    $settings = array();
+    // TODO: Get the settings for this feed
+    $setstring = isset($links['settings']) ? $links['settings'] : array();
+    if (!empty($setstring)) {
+        if (is_string($setstring)) {
+            $settings = unserialize($setstring);
+        } elseif (is_array($setstring)) {
+            $settings = $setstring;
+        }
+    } 
+    // set params based on feed settings falling back to module defaults if none found
+    $numitems = isset($settings['numitems']) ? $settings['numitems'] : xarModGetVar('headlines', 'feeditemsperpage');
+    $truncate = isset($settings['truncate']) ? $settings['truncate'] : xarModGetVar('headlines', 'maxdescription'); 
+    $refresh = isset($settings['refresh']) ? $settings['refresh'] : 3600;
+    // TODO: admin only force cache refresh option
+    if ($renew) {
+        $refresh = '0';
+    }
+
+    $feedfile = $links['url'];
 
     // call api function to get the parsed feed (or warning)
     $data = xarModAPIFunc('headlines', 'user', 'getparsed', 
-        array('feedfile' => $feedfile, 'numitems' => $numitems));
+        array('feedfile' => $feedfile, 'numitems' => $numitems, 'truncate' => $truncate, 'refresh' => $refresh));
 
     if (!empty($data['warning'])){
         // don't throw exception, let the display handle this
@@ -50,27 +68,14 @@ function headlines_user_view($args)
         $data['chandesc'] = $data['warning'];
         $data['chanlink'] = '#';
     }
-    if (!empty($links['title'])){
-        $data['chantitle'] = $links['title'];
+    if (!empty($links['title'])){ // optionally over-rides title with alt_title
+        $data['chantitle'] = $links['title']; 
     }
-    if (!empty($links['desc'])){
+    if (!empty($links['desc'])){  // optionally over-rides description with alt_description
         $data['chandesc'] = $links['desc'];
     }
 
-    xarTplSetPageTitle(xarVarPrepForDisplay($data['chantitle']));
-
-	/* optionally shorten descriptions */
-    $maxdesc = xarModGetVar('headlines', 'maxdescription');
-	if (!empty($maxdesc)) {
-		for ($i=0; $i < count($data['feedcontent']) ; $i++) {
-			// only transfrom descriptions longer than specified max
-			if (!empty($data['feedcontent'][$i]['description']) && (strlen($data['feedcontent'][$i]['description']) > $maxdesc)) {
-				$data['feedcontent'][$i]['description'] = substr($data['feedcontent'][$i]['description'], 0, $maxdesc).'...';
-			}
-		}
-	}
-    // TODO: support channel images, cats,
-    if (!isset($data['image'])) $data['image'] = array();
+    xarTplSetPageTitle($data['chantitle']);
     
     if (isset($links['catid'])) {
         $data['catid'] = $links['catid'];

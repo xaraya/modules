@@ -108,11 +108,15 @@ function headlines_rssblock_display($blockinfo)
     // CHECKME: this forces early refresh regardless of caching options, why do we do that? old code below
     // define('MAGPIE_CACHE_AGE', round($refresh/2)); // set lower than block cache so we always get something
     // simplepie'cache_max_minutes' => round($refresh/2*60) - bug, simplepie caching is in seconds
-    // this only happens in the rss block, need to work out if it's necessary
+    // this only happens in the rss block, need to work out if it's necessary 
     $refresh = $vars['refresh']/2;
-    
+    if (!$vars['showdescriptions']) {
+        $vars['truncate'] = 0; // no point doing extra work for nothing :)
+    }
     // call api function to get the parsed feed (or warning)
-    $data = xarModAPIFunc('headlines', 'user', 'getparsed', array('feedfile' => $feedfile, 'refresh' => $refresh, 'numitems' => $vars['maxitems']));
+    $data = xarModAPIFunc('headlines', 'user', 'getparsed', 
+                array('feedfile' => $feedfile, 'refresh' => $refresh, 
+                      'numitems' => $vars['maxitems'], 'truncate' => $vars['truncate']));
     // TODO: option to hide block here instead
     if (!empty($data['warning'])) {
 		$blockinfo['title'] = xarML('Headlines');
@@ -120,16 +124,6 @@ function headlines_rssblock_display($blockinfo)
         return $blockinfo;
 	}
     
-    // TODO: move this to getparsed function
-    // Bug [4545] FR add option to truncate item descriptions
-    if ($vars['showdescriptions'] && !empty($vars['truncate'])) {
-        for ($i = 0; $i < count($data['feedcontent']); $i++) {
-            $feeditem = $data['feedcontent'][$i];
-            if (strlen($feeditem['description']) > $vars['truncate']+3) {
-                $data['feedcontent'][$i]['description'] = substr($feeditem['description'], 0, $vars['truncate']).'...';
-            }
-        }
-    }
     // FR: add alt channel title/desc/link
     if (!isset($vars['alt_chantitle'])) $vars['alt_chantitle'] = $defaults['alt_chantitle'];
     if (!isset($vars['alt_chandesc'])) $vars['alt_chandesc'] = $defaults['alt_chandesc'];

@@ -3,10 +3,10 @@
         <div>
             <xar:if condition="$show_chantitle">
                 <h4><xar:mlstring>Headlines from:</xar:mlstring></h4>
-                <a href="#xarVarPrepForDisplay($chanlink)#">#xarVarPrepForDisplay($chantitle)#</a>
+                <a href="#xarVarPrepForDisplay($chanlink)#">#$chantitle#</a>
             </xar:if>
             <xar:if condition="$show_chandesc and !empty($chandesc)">
-                <p class="xar-sub">#xarVarPrepForDisplay($chandesc)#</p>
+                <p class="xar-sub">#$chandesc#</p>
             </xar:if>
             <xar:if condition="$show_chanimage && !empty($chanimage)">
                 <div>
@@ -22,15 +22,14 @@
         <ul>
             <xar:loop name="$feedcontent">
                 <li>
-                   <xar:if condition="isset($loop:item['enclosures']) && !empty($loop:item['enclosures']) && $show_itemimage">
-                        <xar:foreach in="$loop:item['enclosures']" key="$enckey" value="$encval">
-                            <xar:if condition="substr($encval['type'], 'image') === false">
-                                <xar:continue />
-                            </xar:if>
-                            <xar:if condition="isset($encval['link'])">
-                                <img src="#$encval['link']#" alt="#$loop:item['title']#" />
-                            </xar:if>
-                        </xar:foreach>
+                   <xar:if condition="$show_itemimage">
+                        <xar:if condition="isset($loop:item['thumbnails']) && !empty($loop:item['thumbnails'])">
+                            <xar:foreach in="$loop:item['thumbnails']" value="$thumblink">
+                                <img src="#$thumblink#" alt="#$loop:item['title']#" />
+                            </xar:foreach>
+                        <xar:elseif condition="isset($loop:item['image']) && !empty($loop:item['image'])" />
+                            <img src="#$loop:item['image']#" alt="#$loop:item['title']#" />
+                        </xar:if>
                     </xar:if>
                     <xar:if condition="!empty($loop:item.link)">
                         <a href="#xarVarPrepForDisplay($loop:item.link)#">#$loop:item.title#</a>

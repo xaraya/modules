@@ -54,16 +54,22 @@
                 </xar:foreach>
                 </div>
             </xar:if>
-            <xar:if condition="isset($loop:item['enclosures']) && !empty($loop:item['enclosures']) && xarModGetVar('headlines', 'showitemimage')">
-                <xar:foreach in="$loop:item['enclosures']" key="$enckey" value="$encval">
-                    <xar:if condition="substr($encval['type'], 'image') === false">
-                        <xar:continue />
-                    </xar:if>
-                    <xar:if condition="isset($encval['link'])">
-                        <img src="#$encval['link']#" alt="#$loop:item['title']#" />
-                    </xar:if>
-                </xar:foreach>
+            <xar:if condition="xarModGetVar('headlines', 'showitemimage')">
+                <xar:if condition="isset($loop:item['thumbnails']) && !empty($loop:item['thumbnails'])">
+                    <xar:foreach in="$loop:item['thumbnails']" value="$thumblink">
+                        <img src="#$thumblink#" alt="#$loop:item['title']#" />
+                    </xar:foreach>
+                <xar:elseif condition="isset($loop:item['image']) && !empty($loop:item['image'])" />
+                    <img src="#$loop:item['image']#" alt="#$loop:item['title']#" />
+                </xar:if>
             </xar:if>
+<xar:comment>
+                        <xar:sec mask="AdminPanel" catch="false">
+            <xar:if condition="isset($loop:item['embed'])">
+                #$loop:item['embed']#
+            </xar:if>
+            </xar:sec>
+            </xar:comment>
             <xar:if condition="!empty($loop:item['description'])">
                 <div class="xar-standard-box-padding">#$loop:item['description']#</div>
                 <xar:if condition="!empty($showimport)">
@@ -85,6 +91,13 @@
 <xar:else />
     #$warning#
 </xar:if>
+    <div class="xar-align-center xar-sub">
+        <xar:ml>
+            <xar:mlstring>Showing last #(1) from a total of #(2) items.</xar:mlstring>
+            <xar:mlvar>#$numitems#</xar:mlvar>
+            <xar:mlvar>#$count#</xar:mlvar>
+        </xar:ml>
+    </div>
     <p><a href="#xarModURL('headlines', 'user', 'main')#" title="#xarML('Return to main headlines')#" onclick="#$onclick#">
         <xar:mlstring>Back to main headlines</xar:mlstring>
     </a></p>
