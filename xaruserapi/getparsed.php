@@ -66,6 +66,8 @@ function headlines_userapi_getparsed($args)
     // check for legacy magpie code, checkme: is this still necessary?
     if (xarModGetVar('headlines', 'magpie')) $curparser = 'magpie';
     // check module available, if not use default parser
+    // CHECKME: added this for first run, clean install, value from init doesn't appear to get set
+    if (empty($curparser)) $curparser = 'default';
     if ($curparser != 'default' && !xarModIsAvailable($curparser)) $curparser = 'default';
 
     switch ($curparser) {

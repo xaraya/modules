@@ -23,21 +23,29 @@
         <xar:set name="showimport">0</xar:set>
     </xar:if>
     <xar:loop name="$indlinks">
-        <xar:if condition="!empty($loop:item['chanlink'])">
-        <h3><a href="#$loop:item['chanlink']#" title="#$loop:item['chantitle']#">#$loop:item['chantitle']#</a></h3>
+        <div class="xar-alt-outline xar-margin-thickbottom">
+        <div class="xar-standard-box-padding xar-clearboth">
         <xar:if condition="isset($loop:item['image']) && !empty($loop:item['image']) && xarModGetVar('headlines', 'showchanimage')">
-            <div>
-                <a href="#$loop:item['image']['link']#" title="#$loop:item['image']['title']#">
-                    <img src="#$loop:item['image']['url']#" alt="#$loop:item['image']['title']#" />
-                </a>
-            </div>
+            <a href="#$loop:item['image']['link']#" title="#$loop:item['image']['title']#">
+                <img class="xar-floatleft" style="padding:0px 1em 1em 0px;" src="#$loop:item['image']['url']#" alt="#$loop:item['image']['title']#" />
+            </a>
         </xar:if>
+        <xar:if condition="!empty($loop:item['chanlink'])">
+            <h3>
+                <a href="#$loop:item['chanlink']#" title="#$loop:item['chantitle']#">
+                    #$loop:item['chantitle']#
+                </a>
+            </h3>
             <div class="xar-standard-box-padding">#$loop:item['chandesc']#</div>
         <xar:else/>
-        <h3>#$loop:item['chantitle']#</h3>
+            <h3>
+                #$loop:item['chantitle']#
+            </h3>
             <div class="xar-standard-box-padding">#$loop:item['chandesc']#</div>
         </xar:if>
-        <p class="xar-sub">[
+        </div>
+
+        <div class="xar-alt xar-clearboth">[
         <xar:if condition="!empty($loop:item['viewlink'])">
             <xar:if condition="$showimport ne '1'">
                 <xar:set name="headlink"><xar:mlstring>Browse Latest Headlines</xar:mlstring></xar:set>
@@ -69,7 +77,8 @@
                 </xar:if>
             </xar:loop>
         </xar:if>
-        &nbsp;]</p>
+        &nbsp;]</div>
+        </div>
     </xar:loop>
     <p>#$pager#</p>
     <xar:comment>
