@@ -32,6 +32,17 @@ function headlines_admin_new()
     $data['url'] = '';
     $data['title'] = '';
     $data['desc'] = '';
+    // show per feed options when adding a feed
+    $data['itemsperpage'] = xarModGetVar('headlines', 'feeditemsperpage');
+    $data['maxdescription'] = xarModGetVar('headlines', 'maxdescription');
+    $data['parser'] = xarModGetVar('headlines', 'parser');
+    // see if we're using simplepie
+    if ($data['parser'] == 'simplepie') {
+        $data['showchanimage'] = xarModGetVar('headlines', 'showchanimage');
+        $data['showitemimage'] = xarModGetVar('headlines', 'showitemimage');
+        $data['showitemcats'] = xarModGetVar('headlines', 'showitemcats');
+    }    
+    
     $data['submitlabel'] = xarML('Submit');
     $data['authid'] = xarSecGenAuthKey();
 

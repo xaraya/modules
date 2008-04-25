@@ -83,13 +83,6 @@
         </fieldset>
         <fieldset>
             <legend>
-                <xar:mlstring>
-                    Parser Options
-                </xar:mlstring>
-            </legend>
-        </fieldset>
-        <fieldset>
-            <legend>
                 <xar:mlstring>Overview Configuration</xar:mlstring>
             </legend>
             <div class="xar-form-input-wrapper">
@@ -220,13 +213,13 @@
                 <label for="feeditemsperpage" class="xar-form-label" title="#xarML('Number of feed items per page to show')#">
                     <xar:mlstring>Maximum Items Per Feed</xar:mlstring>
                 </label>
-                <input type="text" name="feeditemsperpage" id="feeditemsperpage" size="3" maxlength="3" value="#xarModGetVar('headlines', 'feeditemsperpage', 1)#" />
+                <input type="text" name="feeditemsperpage" id="feeditemsperpage" size="3" maxlength="3" value="#xarModGetVar('headlines', 'feeditemsperpage', 1)#" /><em>(<xar:mlstring>0 = show all</xar:mlstring>)</em>
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="maxdescription" class="xar-form-label">
                     <xar:mlstring>Truncate long descriptions to no more than</xar:mlstring>
                 </label>
-                <input type="text" name="maxdescription" id="maxdescription" size="5" maxlength="5" value="#$maxdescription#" /> characters.
+                <input type="text" name="maxdescription" id="maxdescription" size="5" maxlength="5" value="#$maxdescription#" /><xar:mlstring> characters.</xar:mlstring> <em>(<xar:mlstring>0 = don't truncate</xar:mlstring>)</em>
             </div>
         </fieldset>
         <fieldset>

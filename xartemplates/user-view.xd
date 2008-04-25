@@ -15,7 +15,7 @@
     <xar:template type="module" file="admin-menu" />
     <xar:if condition="empty($warning)">
     <div class="xar-fullwidth">
-         <xar:if condition="isset($image) && !empty($image) && xarModGetVar('headlines', 'showchanimage')">
+         <xar:if condition="isset($image) && !empty($image) && $showchanimage">
             <div class="xar-floatright">
                 <a href="#$image['link']#" title="#$image['title']#">
                     <img src="#$image['url']#" alt="#$image['title']#" />
@@ -47,7 +47,7 @@
         <xar:loop name="$feedcontent">
             <div class="xar-accent-outline xar-margin-thickbottom">
                 <div class="xar-standard-box-padding">
-                <xar:if condition="xarModGetVar('headlines', 'showitemimage')">
+                <xar:if condition="$showitemimage">
                     <xar:if condition="isset($loop:item['thumbnails']) && !empty($loop:item['thumbnails'])">
                         <xar:foreach in="$loop:item['thumbnails']" value="$thumblink">
                             <img class="xar-floatleft"  style="padding:0px 1em 1em 0px;" src="#$thumblink#" alt="#$loop:item['title']#" />
@@ -64,7 +64,7 @@
                 <xar:else />
                     <h3>#$loop:item['title']#</h3>
                 </xar:if>
-                    <xar:if condition="isset($loop:item['categories']) && !empty($loop:item['categories']) && xarModGetVar('headlines', 'showitemcats')">
+                    <xar:if condition="isset($loop:item['categories']) && !empty($loop:item['categories']) && $showitemcats">
                     |
                     <xar:foreach in="$loop:item['categories']" key="$catkey" value="$chancat">
                         <xar:if condition="!empty($chancat['term'])">

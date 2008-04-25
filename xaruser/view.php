@@ -38,7 +38,7 @@ function headlines_user_view($args)
     }
     
     $settings = array();
-    // TODO: Get the settings for this feed
+    // Get the settings for this feed
     $setstring = isset($links['settings']) ? $links['settings'] : array();
     if (!empty($setstring)) {
         if (is_string($setstring)) {
@@ -48,8 +48,8 @@ function headlines_user_view($args)
         }
     } 
     // set params based on feed settings falling back to module defaults if none found
-    $numitems = isset($settings['numitems']) ? $settings['numitems'] : xarModGetVar('headlines', 'feeditemsperpage');
-    $truncate = isset($settings['truncate']) ? $settings['truncate'] : xarModGetVar('headlines', 'maxdescription'); 
+    $maxdescription = isset($settings['maxdescription']) ? $settings['maxdescription'] : xarModGetVar('headlines', 'maxdescription');
+    $itemsperpage = isset($settings['itemsperpage']) ? $settings['itemsperpage'] : xarModGetVar('headlines', 'feeditemsperpage'); 
     $refresh = isset($settings['refresh']) ? $settings['refresh'] : 3600;
     // TODO: admin only force cache refresh option
     if ($renew) {
@@ -60,7 +60,14 @@ function headlines_user_view($args)
 
     // call api function to get the parsed feed (or warning)
     $data = xarModAPIFunc('headlines', 'user', 'getparsed', 
-        array('feedfile' => $feedfile, 'numitems' => $numitems, 'truncate' => $truncate, 'refresh' => $refresh));
+        array('feedfile' => $feedfile, 'numitems' => $itemsperpage, 'truncate' => $maxdescription, 'refresh' => $refresh));
+    
+    // see if we're using simplepie
+    if ($data['parser'] == 'simplepie') {
+        $data['showchanimage'] = isset($settings['showchanimage']) ? $settings['showchanimage'] : xarModGetVar('headlines', 'showchanimage');
+        $data['showitemimage'] = isset($settings['showitemimage']) ? $settings['showitemimage'] : xarModGetVar('headlines', 'showitemimage');
+        $data['showitemcats'] = isset($settings['showitemcats']) ? $settings['showitemcats'] : xarModGetVar('headlines', 'showitemcats');
+    }
 
     if (!empty($data['warning'])){
         // don't throw exception, let the display handle this

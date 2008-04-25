@@ -19,6 +19,7 @@
  */
 function headlines_admin_update()
 {
+    $settings = array();
     // Get parameters from whatever input we need
     if (!xarVarFetch('hid','int:1:',$data['hid'])) return;
     if (!xarVarFetch('obid','str:1:',$obid,$data['hid'],XARVAR_NOT_REQUIRED)) return;
@@ -27,6 +28,14 @@ function headlines_admin_update()
     if (!xarVarFetch('order','str:1:',$data['order'],'',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('url','str:1:',$data['url'],'http://www.xaraya.com/?theme=rss',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('return_url', 'str:1:', $return_url, '', XARVAR_NOT_REQUIRED)) return;
+    // per feed settings
+    if (!xarVarFetch('itemsperpage', 'int:1', $settings['itemsperpage'], 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('maxdescription', 'int:1', $settings['maxdescription'], 0, XARVAR_NOT_REQUIRED)) return;
+    // fetch any simplepie options too
+    if (!xarVarFetch('showchanimage', 'checkbox', $settings['showchanimage'], 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('showitemimage', 'checkbox', $settings['showitemimage'], 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('showitemcats', 'checkbox', $settings['showitemcats'], 0, XARVAR_NOT_REQUIRED)) return;
+
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
 
@@ -47,13 +56,20 @@ function headlines_admin_update()
         } else {
             $data['hooks']      = $hooks;
         }
-
+        $data['parser'] = $getfeed['parser'];
+        $data['itemsperpage'] = $settings['itemsperpage'];
+        $data['maxdescription'] = $settings['maxdescription'];
+        $data['showchanimage'] = $settings['showchanimage'];
+        $data['showitemimage'] = $settings['showitemimage'];
+        $data['showitemcats'] = $settings['showitemcats'];
         $data['submitlabel']    = xarML('Submit');
         $data['authid']         = xarSecGenAuthKey();
         return xarTPLModule('headlines', 'admin', 'modify', $data);
     }
     $data['transform'] = array('desc');
     $data = xarModCallHooks('item', 'transform-input', 0, $data, 'headlines', 0);
+    
+    $data['settings'] = serialize($settings);
 
     if(!xarModAPIFunc('headlines',
                       'admin',
@@ -62,7 +78,8 @@ function headlines_admin_update()
                             'title' => $data['title'],
                             'desc'  => $data['desc'],
                             'url'   => $data['url'],
-                            'order' => $data['order']))) return;
+                            'order' => $data['order'],
+                            'settings' => $data['settings']))) return;
 
     if (empty($return_url)) {
         $return_url = xarModURL('headlines', 'admin', 'view');

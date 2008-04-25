@@ -17,6 +17,13 @@ function headlines_admin_create($args)
     if (!xarVarFetch('title', 'str:1:255', $title, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('desc', 'str:1:255', $desc, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('return_url', 'str:1:', $return_url, '', XARVAR_NOT_REQUIRED)) return;
+    // per feed settings
+    if (!xarVarFetch('itemsperpage', 'int:1', $settings['itemsperpage'], 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('maxdescription', 'int:1', $settings['maxdescription'], 0, XARVAR_NOT_REQUIRED)) return;
+    // fetch any simplepie options too
+    if (!xarVarFetch('showchanimage', 'checkbox', $settings['showchanimage'], 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('showitemimage', 'checkbox', $settings['showitemimage'], 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('showitemcats', 'checkbox', $settings['showitemcats'], 0, XARVAR_NOT_REQUIRED)) return;
     extract($args);
 
     // Confirm authorisation code.
@@ -40,7 +47,11 @@ function headlines_admin_create($args)
         } else {
         $data['hooks'] = $hooks;
         }
-        
+        $data['itemsperpage'] = $settings['itemsperpage'];
+        $data['maxdescription'] = $settings['maxdescription'];
+        $data['showchanimage'] = $settings['showchanimage'];
+        $data['showitemimage'] = $settings['showitemimage'];
+        $data['showitemcats'] = $settings['showitemcats'];        
         $data['url'] = $url;
         $data['title'] = $title;
         $data['desc'] = $desc;
@@ -49,8 +60,9 @@ function headlines_admin_create($args)
 
         return xarTPLModule('headlines', 'admin', 'new', $data);
     }
+    $data['settings'] = serialize($settings);
     // The API function is called
-    $hid = xarModAPIFunc('headlines', 'admin', 'create', array('url' => $url, 'title' => $title, 'desc' => $desc));
+    $hid = xarModAPIFunc('headlines', 'admin', 'create', array('url' => $url, 'title' => $title, 'desc' => $desc, 'settings' => $data['settings']));
 
     if ($hid == false) return;
     

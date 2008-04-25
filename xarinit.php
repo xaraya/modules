@@ -61,7 +61,8 @@ function headlines_init()
                                    'xar_date'       => array('type'        => 'integer',
                                                              'unsigned'    => TRUE,
                                                              'null'        => FALSE,
-                                                             'default'     => '0')));
+                                                             'default'     => '0'),
+                                   'xar_settings'   => array ('type' => 'text')));
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
@@ -103,6 +104,9 @@ function headlines_init()
     xarModSetVar('headlines','showkeywords', 0);
     xarModSetVar('headlines','useModuleAlias', 0);
     xarModSetVar('headlines', 'aliasname', '');
+    // added in 1.2.1
+    xarModSetVar('headlines', 'adminajax', 0);
+    xarModSetVar('headlines', 'userajax', 0);
 
     // Register Masks
     xarRegisterMask('OverviewHeadlines','All','headlines','All','All','ACCESS_OVERVIEW');
@@ -215,7 +219,19 @@ function headlines_upgrade($oldVersion)
             xarModSetVar('headlines','showkeywords', 0);
             xarModSetVar('headlines','useModuleAlias', 0);
             xarModSetVar('headlines', 'aliasname', '');
-       case '1.2.0': // Current version
+       case '1.2.0': // To 1.2.1
+            xarModSetVar('headlines', 'adminajax', 0);
+            xarModSetVar('headlines', 'userajax', 0);
+            // New column for per feed settings
+            $query = xarDBAlterTable(array('table' => $headlinestable,
+                                           'command' => 'add',
+                                           'field' => 'xar_settings',
+                                           'type' => 'text'));
+
+            // Pass to ADODB, and send exception if the result isn't valid.
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+        case '1.2.1': // Current version
            break;
     }
     // Update successful

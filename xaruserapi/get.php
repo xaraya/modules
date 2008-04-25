@@ -38,21 +38,27 @@ function headlines_userapi_get($args)
                      xar_title,
                      xar_desc,
                      xar_url,
-                     xar_order
+                     xar_order,
+                     xar_string,
+                     xar_date,
+                     xar_settings
             FROM $headlinestable
             WHERE xar_hid = ?";
     $bindvars = array($hid);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
-    list($hid, $title, $desc, $url, $order) = $result->fields;
+    list($hid, $title, $desc, $url, $order, $string, $date, $settings) = $result->fields;
     $result->Close();
 
     $link = array('hid'     => $hid,
                   'title'   => $title,
                   'desc'    => $desc,
                   'url'     => $url,
-                  'order'   => $order);
+                  'order'   => $order,
+                  'string'  => $string,
+                  'date'    => $date,
+                  'settings' => $settings);
 
     // Get categories (if any)
     if (xarModIsHooked('categories','headlines')) {

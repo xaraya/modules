@@ -36,6 +36,8 @@ function headlines_adminapi_update($args)
                           array('hid' => $hid));
 
     if ($link == false) return;
+
+    $settings = isset($settings) ? $settings : serialize(array());
     // Security Check
     if(!xarSecurityCheck('EditHeadlines')) return;
     // Get datbase setup
@@ -48,9 +50,10 @@ function headlines_adminapi_update($args)
             SET xar_url = ?,
                 xar_title = ?,
                 xar_desc = ?,
-                xar_order = ?
+                xar_order = ?,
+                xar_settings = ?
             WHERE xar_hid = ?";
-    $bindvars = array($url, $title, $desc, $order, $hid);
+    $bindvars = array($url, $title, $desc, $order, $settings, $hid);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     // Let the calling process know that we have finished successfully

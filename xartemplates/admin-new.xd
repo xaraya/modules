@@ -77,7 +77,54 @@
                 <input type="text" name="desc" id="desc" value="#$desc#" size="40" maxlength="255" />
             </div>
             </fieldset>
-
+       <fieldset>
+            <legend>
+                <xar:mlstring>Feed Display Configuration</xar:mlstring>
+            </legend>
+            <div class="xar-form-input-wrapper-before">
+                <em><xar:mlstring>These settings over-ride global settings</xar:mlstring></em>
+            <div class="xar-form-input-wrapper">
+                <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of items per page to show')#">
+                    <xar:mlstring>Maximum Items Per Feed</xar:mlstring>
+                </label>
+                <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsperpage#" /><em>(<xar:mlstring>0 = show all</xar:mlstring>)</em>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="maxdescription" class="xar-form-label">
+                    <xar:mlstring>Truncate long descriptions to no more than</xar:mlstring>
+                </label>
+                <input type="text" name="maxdescription" id="maxdescription" size="5" maxlength="5" value="#$maxdescription#" /><xar:mlstring> characters.</xar:mlstring> <em>(<xar:mlstring>0 = don't truncate</xar:mlstring>)</em>
+            </div>
+             <xar:if condition="$parser eq 'simplepie'">
+                <div class="xar-form-input-wrapper-before">
+                    <strong><xar:mlstring>These settings allow you to take advantage of SimplePie content.</xar:mlstring></strong>
+                </div>
+                <div class="xar-form-input-wrapper-after">
+                    <xar:if condition="$showchanimage">
+                        <input type="checkbox" value="1" name="showchanimage" id="showchanimage" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" value="1" name="showchanimage" id="showchanimage" />
+                    </xar:if>
+                    <label for="showchanimage" class="help" title="#xarML('Display the channel image supplied with a feed')#"><xar:mlstring>Show channel images (if available)</xar:mlstring></label>
+                    </div>
+                <div class="xar-form-input-wrapper-after">
+                    <xar:if condition="$showitemimage">
+                        <input type="checkbox" value="1" name="showitemimage" id="showitemimage" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" value="1" name="showitemimage" id="showitemimage" />
+                    </xar:if>
+                    <label for="showitemimage" class="help" title="#xarML('Display the image supplied with channel items')#"><xar:mlstring>Show item images (if available)</xar:mlstring></label>
+                    </div>
+                <div class="xar-form-input-wrapper-after">
+                    <xar:if condition="$showitemcats">
+                        <input type="checkbox" value="1" name="showitemcats" id="showitemcats" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" value="1" name="showitemcats" id="showitemcats" />
+                    </xar:if>
+                    <label for="showitemcats" class="help" title="#xarML('Display the categories supplied with channel items')#"><xar:mlstring>Show item categories (if available)</xar:mlstring></label>
+                </div>
+             </xar:if>
+            </fieldset>
             <fieldset>
                 <legend>
                     <strong>
