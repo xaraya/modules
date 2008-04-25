@@ -144,7 +144,7 @@ function headlines_upgrade($oldVersion)
             // in version 0.2
 
             // Add a column to the table
-            $query = xarDBAlterTable(array('table' => $headlinestable,
+            $query = xarDBAlterTable(array('table' => $headlinesTable,
                                            'command' => 'add',
                                            'field' => 'xar_order',
                                            'type' => 'integer',
@@ -223,7 +223,7 @@ function headlines_upgrade($oldVersion)
             xarModSetVar('headlines', 'adminajax', 0);
             xarModSetVar('headlines', 'userajax', 0);
             // New column for per feed settings
-            $query = xarDBAlterTable(array('table' => $headlinestable,
+            $query = xarDBAlterTable($headlinesTable,array(
                                            'command' => 'add',
                                            'field' => 'xar_settings',
                                            'type' => 'text'));
