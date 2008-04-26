@@ -25,7 +25,8 @@
             <td class="xar-norm-outline" style="vertical-align: middle; text-align: left; padding-left: 10px; margin:auto; height: 20px;border-width: 0px 0px 1px 0px;border-style: dotted;">
                 #$loop:item['order']#
             </td>
-            <td class="xar-norm-outline" style="text-align: center; width: 100px;border-width: 0px 0px 1px 0px;border-style: dotted;">
+            <td class="xar-norm-outline" style="text-align: center; width: 150px;border-width: 0px 0px 1px 0px;border-style: dotted;">
+                <a href="#xarModURL('headlines', 'user', 'view', array('hid' => $loop:item['hid']))#" onclick="#$onclick#"><xar:mlstring>View</xar:mlstring></a> |
                 <a href="#$loop:item['editurl']#"  onclick="#$onclick#"><xar:mlstring>Edit</xar:mlstring></a>  |
                 <a href="#$loop:item['deleteurl']#" onclick="#$loop:item['javascript']# "><xar:mlstring>Delete</xar:mlstring></a>
             </td>

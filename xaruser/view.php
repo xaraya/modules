@@ -62,25 +62,36 @@ function headlines_user_view($args)
     $data = xarModAPIFunc('headlines', 'user', 'getparsed', 
         array('feedfile' => $feedfile, 'numitems' => $itemsperpage, 'truncate' => $maxdescription, 'refresh' => $refresh));
     
-    // see if we're using simplepie
-    if ($data['parser'] == 'simplepie') {
+
         $data['showchanimage'] = isset($settings['showchanimage']) ? $settings['showchanimage'] : xarModGetVar('headlines', 'showchanimage');
         $data['showitemimage'] = isset($settings['showitemimage']) ? $settings['showitemimage'] : xarModGetVar('headlines', 'showitemimage');
         $data['showitemcats'] = isset($settings['showitemcats']) ? $settings['showitemcats'] : xarModGetVar('headlines', 'showitemcats');
-    }
+
 
     if (!empty($data['warning'])){
         // don't throw exception, let the display handle this
         $data['chantitle'] = xarML('Feed unavailable');
         $data['chandesc'] = $data['warning'];
         $data['chanlink'] = '#';
+    } else {
+        // here we see if this feed has been updated by comparing the stored hash against the 
+        // hash provided by the getparsed function, if they're different, we update the feed
+        // with the new hash, and the time of the last item in the feed, or the current time
+        // this means the feeds can now be sorted reliably by date ala. the cloud block
+        if (isset($data['compare']) && ($links['string'] != $data['compare'])) {
+            // call api function to update our feed item
+            if (!xarModAPIFunc('headlines', 'user', 'update', array('hid' => $links['hid'], 'date' => $data['lastitem'], 'string' => $data['compare']))) return;
+        }
     }
+    // if the feed hasn't changed we display the last time it did
+    $data['lastseen'] = !empty($data['lastitem']) ? $data['lastitem'] : $links['date'];
     if (!empty($links['title'])){ // optionally over-rides title with alt_title
         $data['chantitle'] = $links['title']; 
     }
     if (!empty($links['desc'])){  // optionally over-rides description with alt_description
         $data['chandesc'] = $links['desc'];
     }
+
 
     xarTplSetPageTitle($data['chantitle']);
     

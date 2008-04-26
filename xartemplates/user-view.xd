@@ -28,11 +28,21 @@
             </a> :
             <a href = "#$chanlink#" title="#$chantitle#" rel="external"> #$chantitle# </a>
         </h2>
+        <xar:if condition="!empty($chandesc) || !empty($lastseen)">
         <xar:if condition="!empty($chandesc)">
-            <div class="xar-standard-box-padding"><strong><em>#$chandesc#</em></strong></div>
+            <div class="xar-standard-box-padding">
+                <strong><em>
+                    #$chandesc#
+                </em></strong>
+             </div>
+        </xar:if>
+           <xar:if condition="!empty($lastseen)">
+                <div class="xar-sub">
+                    <xar:mlstring>Last updated</xar:mlstring> #xarLocaleGetFormattedDate('medium',$lastseen)# #xarLocaleGetFormattedTime('medium',$lastseen)#
+                </div>
+            </xar:if>
         </xar:if>
     </div>
-    <br class="xar-clearboth" />
     <xar:if condition="xarModIsHooked('categories','headlines')">
          <xar:categories-navigation layout="trails" showchildren="1" module="headlines" func="main" showcatcount="1" catid="$catid" itemid="$hid" />
     </xar:if>
@@ -73,6 +83,8 @@
                     </xar:foreach>
                 </xar:if>
                 </div>
+                <br class="xar-clearboth" />
+
             <xar:if condition="!empty($loop:item['description'])">
                 <div class="xar-standard-box-padding xar-accent">
                     #$loop:item['description']#

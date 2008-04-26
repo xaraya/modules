@@ -3,14 +3,14 @@
         <div>
             <xar:if condition="$show_chantitle">
                 <h4><xar:mlstring>Headlines from:</xar:mlstring></h4>
-                <a href="#xarVarPrepForDisplay($chanlink)#">#$chantitle#</a>
+                <a href="#xarVarPrepForDisplay($chanlink)#" title="#$chantitle#" rel="external">#$chantitle#</a>
             </xar:if>
             <xar:if condition="$show_chandesc and !empty($chandesc)">
                 <p class="xar-sub">#$chandesc#</p>
             </xar:if>
             <xar:if condition="$show_chanimage && !empty($chanimage)">
                 <div>
-                    <a href="#$chanimage['link']#" title="#$chanimage['title']#">
+                    <a href="#$chanimage['link']#" title="#$chanimage['title']#" rel="external">
                         <img src="#$chanimage['url']#" alt="#$chanimage['title']#" />
                     </a>
                 </div>
@@ -32,7 +32,7 @@
                         </xar:if>
                     </xar:if>
                     <xar:if condition="!empty($loop:item.link)">
-                        <a href="#xarVarPrepForDisplay($loop:item.link)#">#$loop:item.title#</a>
+                        <a href="#xarVarPrepForDisplay($loop:item.link)#" title="#$loop:item.title#" rel="external">#$loop:item.title#</a>
                     <xar:else />
                         <strong>#xarVarPrepHTMLDisplay($loop:item.title)#</strong>
                     </xar:if>

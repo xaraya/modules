@@ -122,7 +122,16 @@ function headlines_rssblock_display($blockinfo)
 		$blockinfo['title'] = xarML('Headlines');
         $blockinfo['content'] = xarVarPrepForDisplay($data['warning']);
         return $blockinfo;
-	}
+	} else {
+        // here we see if this feed has been updated by comparing the stored hash against the 
+        // hash provided by the getparsed function, if they're different, we update the feed
+        // with the new hash, and the time of the last item in the feed, or the current time
+        // this means the feeds can now be sorted reliably by date ala. the cloud block
+        if (isset($headline['string']) && ($headline['string'] != $data['compare'])) {
+            // call api function to update our feed item
+            if (!xarModAPIFunc('headlines', 'user', 'update', array('hid' => $headline['hid'], 'date' => $data['lastitem'], 'string' => $data['compare']))) return;
+        }
+    }
     
     // FR: add alt channel title/desc/link
     if (!isset($vars['alt_chantitle'])) $vars['alt_chantitle'] = $defaults['alt_chantitle'];

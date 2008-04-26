@@ -34,6 +34,8 @@ function headlines_adminapi_create($args)
     $title = !isset($title) || empty($title) || !is_string($title) || strlen($title) > 100 ? '' : $title;
     $desc = !isset($desc) || empty($desc) || !is_string($desc) || strlen($desc) > 254 ? '' : $desc;
     $settings = isset($settings) ? $settings : serialize(array());
+    $date = !isset($date) || empty($date) || !is_numeric($date) ? time() : $date;
+    $string = !isset($string) || !is_string($string) ? '' : $string;
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -47,6 +49,8 @@ function headlines_adminapi_create($args)
               xar_desc,
               xar_url,
               xar_order,
+              xar_string,
+              xar_date,
               xar_settings)
             VALUES (
               ?,
@@ -54,9 +58,11 @@ function headlines_adminapi_create($args)
               ?,
               ?,
               ?,
+              ?,
+              ?,
               ?)";
 
-    $bindvars = array($nextId, $title, $desc, $url, $order, $settings);
+    $bindvars = array($nextId, $title, $desc, $url, $order, $string, $date, $settings);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 

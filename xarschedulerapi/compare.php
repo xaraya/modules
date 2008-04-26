@@ -21,17 +21,25 @@ function headlines_schedulerapi_compare()
 {
     // Security Check
     if(!xarSecurityCheck('OverviewHeadlines')) return;
+    // get all headlines from module
     $links  = xarModAPIFunc('headlines', 'user', 'getall');
+    // loop headlines
     foreach ($links as $link){
         // We need to grab the current url right now for the string and the date
         // Get the feed file (from cache or from the remote site)
         $filedata = xarModAPIFunc('base', 'user', 'getfile',
                                   array('url'       =>  $link['url'],
                                         'cached'    =>  false));
-
+        // CHECKME: hashing the whole file doesn't make sense, the page may have changed without
+        // any of the items changing, it'd be better to hash the feedcontent itself 
+        /* 
+            $compare['string'] = md5($filedata['feedcontent']);
+        */
         $compare['string']     = md5($filedata);
+        // CHECKME: should we really be adding the current date and updating?
+        // if nothing's changed better to keep last update time surely?
         $compare['date']       = time();
-
+        // TODO: this could be done in getparsed, removing the need for a scheduler function
         if ($compare['string'] != $link['string']){
             // Get datbase setup
             $dbconn =& xarDBGetConn();

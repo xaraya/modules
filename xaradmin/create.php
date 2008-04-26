@@ -61,8 +61,11 @@ function headlines_admin_create($args)
         return xarTPLModule('headlines', 'admin', 'new', $data);
     }
     $data['settings'] = serialize($settings);
+    $data['compare'] = !isset($data['compare']) ? '' : $data['compare'];
+    // set the date to the time of the last item if we have it, otherwise, set it to now
+    $date = !empty($data['lastitem']) ? $data['lastitem'] : time();
     // The API function is called
-    $hid = xarModAPIFunc('headlines', 'admin', 'create', array('url' => $url, 'title' => $title, 'desc' => $desc, 'settings' => $data['settings']));
+    $hid = xarModAPIFunc('headlines', 'admin', 'create', array('url' => $url, 'title' => $title, 'desc' => $desc, 'settings' => $data['settings'], 'string' => $data['compare'], 'date' => $date));
 
     if ($hid == false) return;
     

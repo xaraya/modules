@@ -43,8 +43,11 @@
             </h3>
             <div class="xar-standard-box-padding">#$loop:item['chandesc']#</div>
         </xar:if>
+        <div class="xar-sub">
+            <xar:set name="$lastseen">#$loop:item['lastitem']#</xar:set>
+            <xar:mlstring>Last updated</xar:mlstring> #xarLocaleGetFormattedDate('medium',$lastseen)# #xarLocaleGetFormattedTime('medium',$lastseen)#
         </div>
-
+        </div>
         <div class="xar-alt xar-clearboth">[
         <xar:if condition="!empty($loop:item['viewlink'])">
             <xar:if condition="$showimport ne '1'">
@@ -80,8 +83,9 @@
         &nbsp;]</div>
         </div>
     </xar:loop>
-    <p>#$pager#</p>
+    <div class="xar-align-center">#$pager#</div>
     <xar:comment>
+    <xar:template type="module" file="user-menu" />
     <p>
     <a href="&xar-modurl-headlines-user-my;"><xar:mlstring>My headlines</xar:mlstring></a>
     </p>

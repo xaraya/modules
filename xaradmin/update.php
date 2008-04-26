@@ -79,7 +79,9 @@ function headlines_admin_update()
                             'desc'  => $data['desc'],
                             'url'   => $data['url'],
                             'order' => $data['order'],
-                            'settings' => $data['settings']))) return;
+                            'settings' => $data['settings'],
+                            'string' => $getfeed['compare'],
+                            'date' => $getfeed['lastitem']))) return;
 
     if (empty($return_url)) {
         $return_url = xarModURL('headlines', 'admin', 'view');

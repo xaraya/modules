@@ -31,7 +31,8 @@ function headlines_userapi_getparsed($args)
     $truncate = isset($truncate) && is_numeric($truncate) ? $truncate : 0;
     // set the refresh - all parsers default to 1 hour
     $refresh = isset($refresh) && is_numeric($refresh) ? $refresh : 3600;
-    
+    // TODO: make the snip marker configurable
+    $truncmark = '[...]'; // xarModGetVar('headlines', 'truncmark');    
     $invalid = '';
     // $location = 'Remote'; // feed location.
     if (empty($feedfile)) {
@@ -63,7 +64,7 @@ function headlines_userapi_getparsed($args)
     }
     // get the current parser
     $curparser = xarModGetVar('headlines', 'parser');
-    // check for legacy magpie code, checkme: is this still necessary?
+    // check for legacy magpie code
     if (xarModGetVar('headlines', 'magpie')) $curparser = 'magpie';
     // check module available, if not use default parser
     // CHECKME: added this for first run, clean install, value from init doesn't appear to get set
@@ -97,57 +98,78 @@ function headlines_userapi_getparsed($args)
                 array('feedfile' => $feedfile, 'superrors' => true));
             break;
     } 
-    
+    // channel image handling included here for consistency
+    if (!isset($data['image'])) $data['image'] = array();
+    // pass the parser used back too
+    $data['parser'] = $curparser;    
     if (!isset($data['feedcontent']) || empty($data['feedcontent'])) {
         // $data['warning'] = xarML('#(1) feed failed to load', $location);
+        $data['numitems'] = 0;
+        $data['count'] = 0;
         $data['warning'] = xarML('Feed failed to load');
+        return $data;
     }
+    if (!isset($data['warning'])) {
+        // hash the feedcontent before it gets sliced
+        $data['compare'] = md5(serialize($data['feedcontent']));
+    }
+    // display the total feed items we actually found
     $data['count'] = count($data['feedcontent']);
     if (!empty($numitems)) {
 	    // trim the array to just the items we were asked for 
 	    $data['feedcontent'] = array_slice($data['feedcontent'], 0, $numitems);
     }
+    // display the total feed items we're actually displaying
     $data['numitems'] = count($data['feedcontent']);
-    if ($curparser == 'simplepie' || !empty($truncate)) {
-        for ($i = 0; $i < count($data['feedcontent']); $i++) {
-            $chanitem = $data['feedcontent'][$i]; // current feed item
-            if ($curparser == 'simplepie') { // parse item categories
-                if (isset($chanitem['categories']) && !empty($chanitem['categories'])) {
-                    foreach ($chanitem['categories'] as $catkey => $catobject) {
-                        if (!isset($catobject)) continue;
-                        $chanitem['categories'][$catkey] = array('term' => $catobject->term, 
-                            'scheme' => $catobject->scheme, 'label' => $catobject->label );
-                    }
-                }
-                // handle RSS enclosures while we're here
-                if (!empty($chanitem['enclosure'])) {
-                    $encobj = $chanitem['enclosure'];
-                    // if there are any thumbnails, add them to this item
-                    $chanitem['thumbnails'] = $encobj->thumbnails;
-                    // see if this object is an image
-                    if (strpos($encobj->type, 'image') !== false) {
-                        $chanitem['image'] = $encobj->link;
-                    } else {
-                        // TODO: handle output of other mime types here
-                        // $chanitem['embed'] = $encobj->native_embed();
-                    }
+    // any extra processing per item should be carried out in this loop
+    for ($i = 0; $i < $data['numitems']; $i++) {
+        $chanitem = $data['feedcontent'][$i]; // current feed item
+        // SimplePie Handling
+        if ($curparser == 'simplepie') { // parse item categories
+            if (isset($chanitem['categories']) && !empty($chanitem['categories'])) {
+                foreach ($chanitem['categories'] as $catkey => $catobject) {
+                    if (!isset($catobject)) continue;
+                    $chanitem['categories'][$catkey] = array('term' => $catobject->term, 
+                        'scheme' => $catobject->scheme, 'label' => $catobject->label );
                 }
             }
-            if (!empty($truncate)) { // truncate long descriptions
-                // only transfrom descriptions longer than specified max
-                if (!empty($chanitem['description']) && (strlen($chanitem['description'])+3 > $truncate)) {
-                    $chanitem['description'] = substr($chanitem['description'], 0, $truncate).'...';
+            // handle RSS enclosures while we're here
+            if (!empty($chanitem['enclosure'])) {
+                $encobj = $chanitem['enclosure'];
+                // if there are any thumbnails, add them to this item
+                $chanitem['thumbnails'] = $encobj->thumbnails;
+                // see if this object is an image
+                if (strpos($encobj->type, 'image') !== false) {
+                    $chanitem['image'] = $encobj->link;
+                } else {
+                    // TODO: handle output of other mime types here
+                    // $chanitem['embed'] = $encobj->native_embed();
                 }
             }
-            
-            $data['feedcontent'][$i] = $chanitem;
         }
-    }
+        // Truncate option
+        if (!empty($truncate)) { // truncate long descriptions
+            // only transform descriptions longer than specified max
+            // TODO: some feeds display html markup, cutting crudely like this could cause 
+            // formatting and validation issues, need to add strip_tags or something here
+            if (!empty($chanitem['description']) && (strlen($chanitem['description'])+5 > $truncate)) {
+                $chanitem['description'] = substr($chanitem['description'], 0, $truncate).$truncmark;
+            }
+        }
 
-    // channel image handling included here for consistency
-    if (!isset($data['image'])) $data['image'] = array();
-    // pass the parser used back too
-    $data['parser'] = $curparser;
+        
+        $data['feedcontent'][$i] = $chanitem;
+        // get the date of the most recent item
+        if ($i == 0 && isset($chanitem['date'])) {
+            $lastitem = $chanitem['date'];
+        }
+        // we can stop here if we were only getting the last item
+        if ($curparser != 'simplepie' && empty($truncate)) break;
+    }
+    // some feeds don't provide a date for each item, so we use now instead
+    // CHECKME: do the parsers return the time the file was cached? if so we could use that
+    $data['lastitem'] = isset($lastitem) && is_numeric($lastitem) && !empty($lastitem) ? $lastitem : '';
+
     
     return $data;
 

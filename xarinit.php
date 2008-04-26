@@ -231,7 +231,9 @@ function headlines_upgrade($oldVersion)
             // Pass to ADODB, and send exception if the result isn't valid.
             $result =& $dbconn->Execute($query);
             if (!$result) return;
-        case '1.2.1': // Current version
+        case '1.2.1': // Current Version To 1.2.2  
+
+        case '1.2.2': // Next Version
            break;
     }
     // Update successful

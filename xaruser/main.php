@@ -15,17 +15,22 @@ function headlines_user_main()
 {
     xarVarFetch('startnum', 'id', $startnum, '1', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY);
     xarVarFetch('catid', 'str:0:', $data['catid'], '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY);
+    xarVarFetch('sort', 'enum:default:date:title', $sort, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY);
 
     // Security Check
     if(!xarSecurityCheck('OverviewHeadlines')) return;
     
     $numitems = xarModGetVar('headlines', 'itemsperpage');
+    // TODO: admin configurable sort
+    // $showsort = xarModGetVar('headlines', 'showsort'); // show sort options to users
+    $sort = !empty($sort) ? $sort : xarModGetVar('headlines', 'sortorder'); // default sort order
     // The user API function is called
     $links = xarModAPIFunc('headlines', 'user', 'getall',
         array(
             'catid' => $data['catid'],
             'startnum' => $startnum,
-            'numitems' => $numitems
+            'numitems' => $numitems,
+            'sort' => $sort
         )
     );
     //if (empty($links)) return
@@ -76,6 +81,12 @@ function headlines_user_main()
         }
         if (!empty($link['desc'])){
             $links[$i]['chandesc'] = $link['desc'];
+        }
+        if (empty($link['date'])) {
+            $link['date'] = time();
+        }
+        if (empty($links[$i]['lastitem'])) {
+            $links[$i]['lastitem'] = $link['date'];
         }
         // TODO: Check individual permissions for View / Import / Edit / Delete
         $links[$i]['viewlink'] = xarModURL('headlines',

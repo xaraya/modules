@@ -27,6 +27,10 @@ function headlines_userapi_getall($args)
     if (!isset($numitems)) {
         $numitems = -1;
     }
+    
+    if (!isset($sort)) {
+        $sort = 'default';
+    }
 
     $links = array();
 
@@ -35,7 +39,7 @@ function headlines_userapi_getall($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $headlinestable = $xartable['headlines'];
-
+    // CHECKME: will any functions need xar_settings while we're here?
     // Get links
     $query = "SELECT xar_hid,
                      xar_title,
@@ -61,8 +65,18 @@ function headlines_userapi_getall($args)
             }
         }
     }
+    
+    switch ($sort) {
+        case 'date':
+            $query .= " ORDER BY xar_date DESC";
+        break;
+        case 'default':
+            default:
+            $query .= " ORDER BY xar_order";
+        break;
+    }
 
-    $query .= " ORDER BY xar_order";
+    // $query .= " ORDER BY xar_order";
 
     $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
     if (!$result) return;

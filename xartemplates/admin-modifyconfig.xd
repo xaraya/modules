@@ -86,6 +86,37 @@
                 <xar:mlstring>Overview Configuration</xar:mlstring>
             </legend>
             <div class="xar-form-input-wrapper">
+                <label for="sortorder" class="xar-form-label" title="#xarML('Default sort order for user main')#">
+                    <xar:mlstring>Sort Order</xar:mlstring>
+                </label>
+                <select name="sortorder" id="sortorder">
+                    <xar:if condition="xarModGetVar('headlines', 'sortorder') == 'date'">
+                        <option value="default">
+                            <xar:mlstring>
+                                Default: Sort by Order field
+                            </xar:mlstring>
+                        </option>
+                        <option value="date" selected="selected">
+                            <xar:mlstring>
+                                Date: Latest first
+                            </xar:mlstring>
+                        </option>
+                    <xar:else />
+                        <option value="default" selected="selected">
+                            <xar:mlstring>
+                                Default: Sort by Order field
+                            </xar:mlstring>
+                        </option>
+                        <option value="date">
+                            <xar:mlstring>
+                                Date: Latest first
+                            </xar:mlstring>
+                        </option>
+                    </xar:if>
+                </select>
+            </div>
+
+            <div class="xar-form-input-wrapper">
                 <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of items per page to show')#">
                     <xar:mlstring>Items Per Page</xar:mlstring>
                 </label>

@@ -31,6 +31,8 @@ function headlines_admin_updateconfig()
     if (!xarVarFetch('maxdescription', 'int:1', $maxdescription, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('adminajax', 'checkbox', $adminajax, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('userajax', 'checkbox', $userajax, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sortorder', 'enum:default:date', $sortorder, 'default', XARVAR_NOT_REQUIRED)) return;
+
     xarModSetVar('headlines', 'itemsperpage', $itemsperpage);
     xarModSetVar('headlines', 'SupportShortURLs', $shorturls);
     xarModSetVar('headlines', 'useModuleAlias', $modulealias);
@@ -38,7 +40,7 @@ function headlines_admin_updateconfig()
     xarModSetVar('headlines', 'maxdescription', $maxdescription);
     xarModSetVar('headlines', 'adminajax', $adminajax);
     xarModSetVar('headlines', 'userajax', $userajax);
-
+    xarModSetVar('headlines', 'sortorder', $sortorder);
     // The magpie var is no longer needed
     if (xarModGetVar('headlines', 'magpie')) xarModDelVar('headlines', 'magpie');
     // make sure we don't set a parser that isn't available
