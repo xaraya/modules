@@ -109,10 +109,7 @@ function headlines_userapi_getparsed($args)
         $data['warning'] = xarML('Feed failed to load');
         return $data;
     }
-    if (!isset($data['warning'])) {
-        // hash the feedcontent before it gets sliced
-        $data['compare'] = md5(serialize($data['feedcontent']));
-    }
+
     // display the total feed items we actually found
     $data['count'] = count($data['feedcontent']);
     if (!empty($numitems)) {
@@ -160,16 +157,22 @@ function headlines_userapi_getparsed($args)
         
         $data['feedcontent'][$i] = $chanitem;
         // get the date of the most recent item
-        if ($i == 0 && isset($chanitem['date'])) {
-            $lastitem = $chanitem['date'];
+        if ($i == 0) {
+            if (isset($chanitem['date'])) {
+                $lastitem = $chanitem['date'];
+            }
+            if (isset($chanitem['title'])) {
+                $compare = md5($chanitem['title']);
+            }
         }
+
         // we can stop here if we were only getting the last item
         if ($curparser != 'simplepie' && empty($truncate)) break;
     }
     // some feeds don't provide a date for each item, so we use now instead
     // CHECKME: do the parsers return the time the file was cached? if so we could use that
     $data['lastitem'] = isset($lastitem) && is_numeric($lastitem) && !empty($lastitem) ? $lastitem : '';
-
+    $data['compare'] = isset($compare) && !empty($compare) && is_string($compare) ? $compare : '';
     
     return $data;
 
