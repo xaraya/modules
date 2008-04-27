@@ -29,7 +29,6 @@
                         checkregistration
                         createuser
  * @return array
- * @TODO jojodee - rethink and provide cleaner separation between roles, authsystem/authentication and registration
  */
 sys::import('modules.dynamicdata.class.objects.master');
 

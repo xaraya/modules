@@ -1,0 +1,55 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Review User Account</xar:mlstring></span>
+</div>
+
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Registration</xar:mlstring></h2>
+
+    <xar:set name="isupload">#$object:upload#</xar:set>
+    <xar:if condition="!empty($isupload)">
+        <xar:set name="enc_type">'multipart/form-data'</xar:set>
+    <xar:else/>
+        <xar:set name="enc_type">'application/x-www-form-urlencoded'</xar:set>
+    </xar:if>
+
+    <form method="post" action="&xar-modurl-dynamicdata-admin-update;" enctype="#$enc_type#">
+        <fieldset>
+        <legend><xar:mlstring>Review Registration Profile</xar:mlstring></legend>
+            <xar:data-form object="$object" tplmodule="registration" />
+        </fieldset>
+        <xar:if condition="!empty($hookoutput)">
+            <fieldset>
+                <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                <xar:foreach in="$hookoutput" key="$hookmodule">
+                    <!--
+                    You can display individual hooks if you want using xar:if statements
+
+                    <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
+                        #$hookoutput['categories']#
+                    </xar:if>
+
+                    or display them all with one command as follows
+                    -->
+                    #$hookoutput[$hookmodule]#
+                </xar:foreach>
+            </fieldset>
+        </xar:if>
+        <fieldset>
+            <div class="xar-align-center">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="modid" id="modid" value="#$object:moduleid#" />
+                <input type="hidden" name="itemtype" id="itemtype" value="#$object:itemtype#" />
+                <input type="hidden" name="objectid" id="objectid" value="#$object:objectid#" />
+                <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#" />
+                <input type="hidden" name="tplmodule" id="tplmodule" value="registration" />
+                <xar:if condition="!empty($return_url)">
+                  <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
+                </xar:if>
+                <input type="submit" value="#xarML('Update')#" class="xar-margin-thickleft" />
+            </div>
+        </fieldset>
+    </form>
+</div>
+</xar:template>

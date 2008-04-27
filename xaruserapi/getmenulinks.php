@@ -26,6 +26,9 @@ function registration_userapi_getmenulinks()
                                  'title' => xarML('Register'),
                                  'label' => xarML('Register'));
         }
+        $menulinks[] = array('url'   => xarModURL('registration', 'user', 'review'),
+                             'title' => xarML('Review the registration data'),
+                             'label' => xarML('Review Registration'));
     }
     if (xarModVars::get('registration', 'showprivacy')){
         $menulinks[] = array('url'   => xarModURL('registration', 'user', 'privacy'),
