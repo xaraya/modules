@@ -3,126 +3,250 @@
   <span class="xar-mod-title"><xar:mlstring>Headlines Administration</xar:mlstring></span>
 </div>
 <div id="notsogoodbutok" class="xar-mod-body">
-  <xar:template type="module" file="admin-menu" />
-  <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="#xarML('official icon')#" width="96" height="96" class="xar-module-icon" />
-  <h2>
-    <xar:mlstring>Overview</xar:mlstring>
-  </h2>
-  <h3>
-    <xar:mlstring>What is it?</xar:mlstring>
-  </h3>
-  <p>
-      <xar:mlstring>The Headlines module allows you to syndicate content from other websites.
-      It also allows you to use hooks such as Category, Scheduler, or Ping from those Xaraya
-      modules to extend functionality or display of headlines to your site visitors.</xar:mlstring>
-  </p>
-  <h3>
-    <xar:mlstring>How to use it?</xar:mlstring>
-  </h3>
-  <p>
-      <xar:mlstring>You can use the headlines module in two main ways.</xar:mlstring>
-      <ol>
-          <li><xar:mlstring>Enter the URL to one or more feeds in the administration area, and allow
-              your users to browse those headlines from the main Headline user menu option.
-              </xar:mlstring>
-          </li>
-          <li><xar:mlstring>In addition to the above user browsing throught the main Headlines user page,
-              you can selectively import headline articles into one of your Article publication types.
-              This can be done in a batch, or by browsing and selecting which headline item to import.
-              </xar:mlstring>
-          </li>
-      </ol>
-  </p>
-  <h4>
-    <xar:mlstring>Adding Feeds and Configuration</xar:mlstring>
-  </h4>
-  <p>
-            <xar:mlstring>
+    <xar:template type="module" file="admin-menu" />
+    <img src="#xarTplGetImage('admin_generic.gif', 'base')#" alt="#xarML('official icon')#" width="96" height="96" class="xar-module-icon" />
+    <h2>
+        <xar:mlstring>Overview</xar:mlstring>
+    </h2>
+    <h3>
+        <xar:mlstring>What is it?</xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>
+            The Headlines module allows you to syndicate content from other websites.
+            It also allows you to use hooks such as Category, Scheduler, or Ping from those Xaraya
+            modules to extend functionality or display of headlines to your site visitors.
+        </xar:mlstring>
+    </p>
+    <h3>
+        <xar:mlstring>How to use it?</xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>
+            You can use the headlines module in two main ways.
+        </xar:mlstring>
+        <ol>
+            <li>
+                <xar:mlstring>
+                    Enter the URL to one or more feeds in the administration area, and allow
+                    your users to browse those headlines from the main Headline user menu option.
+                </xar:mlstring>
+            </li>
+            <li>
+                <xar:mlstring>
+                    In addition to the above user browsing throught the main Headlines user page,
+                    you can selectively import headline articles into one of your Article publication types.
+                    This can be done in a batch, or by browsing and selecting which headline item to import.
+                </xar:mlstring>
+            </li>
+        </ol>
+    </p>
+    <h4>
+        <xar:mlstring>Adding Feeds and Configuration</xar:mlstring>
+    </h4>
+    <p>
+        <xar:mlstring>
             From the menu, you have three choices:
-            </xar:mlstring>
-            <ol>
-                <li><xar:mlstring><strong>Add Headlines</strong>: Add a new syndication headline for processing.</xar:mlstring></li>
-                <li><xar:mlstring><strong>Manage Headlines</strong>: View, edit and delete headlines that you have added to your site.
-                        Add alternative titles and headlines for your feeds, and order the display of the feeds
-                    </xar:mlstring>
-                </li>
-                <li><xar:mlstring><strong>Modify Configuration</strong>: Update the global configuration for the module.
-                         Here you can set </xar:mlstring>
-                         <ul>
-                           <li><xar:mlstring>the number of feeds per page.</xar:mlstring></li>
-                           <li><xar:mlstring>optionally select an Article module publication type to import the feed items. You will need a title and summary field in your publication type to import feed items (see Preparing Your Pubtype for Headline Import below).</xar:mlstring></li>
-                           <li><xar:mlstring>choose which content to import to your selected publication type. Feed, Title, Description and an optional link to the originating feed item can also be added in your publication type summary field.
-                              </xar:mlstring></li>
-                           </ul>
-                </li>
-             </ol>
-
-       </p>
-  <h4>
-    <xar:mlstring>Preparing Your Article Pubtype for Headline Import</xar:mlstring>
-  </h4>
-  <p>
-      <xar:mlstring>The default News publication type in Articles, or similar is ideal for use with the Headlines module.
-      The following fields and field types should be setup in your News publication type, or whichever is to be used for your Headlines.
-      Fields in your publication type such as status and pubdate are used in their usual function in the publication type, but not in the headline import process.
-      </xar:mlstring>
-  </p>
-      <ol>
-          <li><xar:mlstring><strong>Title</strong>: textbox - used to hold the imported headline title and link to the original feed item and source.</xar:mlstring></li>
-          <li><xar:mlstring><strong>Summary</strong>: textarea - used to hold the imported summary of the headline item.</xar:mlstring></li>
-          <li><xar:mlstring><strong>Body</strong>: textbox or URL property - used to hold the imported URL of the imported headline feed source site.
-              You will need to custom format this field as required for display in your pubtype display and summary template.</xar:mlstring></li>
-          <li><xar:mlstring><strong>Notes</strong>: URL/Title property. By changing this to a URL/Title property it will automatically display the feed source and feed title as a
-              clickable link on display of your imported headline item. However, you can format this as you need in your template. The content is imported and stored as a serialized array containing
-              the URL of the feedsource and the title of your headline feed source (not the item headline title).
-          </xar:mlstring></li>
-      </ol>
-      <p><xar:mlstring>Future enhancements of this module may include mapping of pubtype fields to imported headline fields.</xar:mlstring></p>
-<h4>
-    <xar:mlstring>Extending the display of Headlines</xar:mlstring>
-  </h4>
-        <p>
+        </xar:mlstring>
+        <ol>
+            <li>
+                <xar:mlstring>
+                    <strong>Add Headlines</strong>: Add a new syndication headline for processing.
+                </xar:mlstring>
+            </li>
+            <li>
+                <xar:mlstring>
+                    <strong>Manage Headlines</strong>: View, edit and delete headlines that you have added to your site. Add alternative titles and headlines for your feeds, and order the display of the feeds.
+                </xar:mlstring>
+            </li>
+            <li>
+                <xar:mlstring>
+                    <strong>Modify Configuration</strong>: Configure module options. You have these options to choose from...
+                </xar:mlstring>
+                <ul>
+                    <li>
+                        <xar:mlstring>
+                            <strong>Global Configuration</strong>:
+                        </xar:mlstring>
+                        <ul>
+                            <li>
+                                <xar:mlstring>
+                                    Support Short URLs: use this if you want headlines to use shorturls.
+                                </xar:mlstring>
+                            </li>
+                            <li>
+                                <xar:mlstring>
+                                    Use a module alias: when you want to use a different name for the module in shorturls
+                                </xar:mlstring>
+                            </li>
+                            <li>
+                                <xar:mlstring>
+                                    Use AJAX: Headlines module includes a very simple AJAX implementation (cfr. Example Module Admin GUI) for both Admin and User GUI functions. Here You can turn the option on or off for those  functions.
+                                </xar:mlstring>
+                            </li>
+                         </ul>
+                    </li>
+                    <li>
+                        <xar:mlstring>
+                            <strong>Overview Configuration</strong>: these settings control how Headlines User Main GUI displays to your users
+                        </xar:mlstring>
+                        <ul>
+                            <li>
+                                <xar:mlstring>
+                                    Sort Order: the list of Headlines can either be displayed according to the order field defined in the Headline itself, or by date order, last updated first.
+                                </xar:mlstring>
+                            </li>
+                            <li>
+                                <xar:mlstring>
+                                    Items Per Page: specify the number of headlines t display per page
+                                </xar:mlstring>
+                            </li>
+                            <li>
+                                <xar:mlstring>
+                                    Hook displays: As well as Categories, Headlines recognises Comments, Hitcount, Keywords and Ratings hooks. Here you can select to display or hide the output from those hooks. (Functionality is similar to the hook display functions in Articles module pubtype configuration).
+                                 </xar:mlstring>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <xar:mlstring>
+                            <strong>Feed Display Configuration</strong>: these settings control how Headlines User View GUI displays to your users. These provide a global default which can be over-ridden by the settings in the Headline item itself.
+                        </xar:mlstring>
+                        <ul>
+                            <li>
+                                <xar:mlstring>
+                                    Parser: Headlines module comes with only one Parser. Headlines module is capable of using 2 other parsers, which are available as Xaraya Modules, Magpie module, and SimplePie module (see notes below*). Installing either of these will automatically make them available in this list. **note: this option cannot be over-ridden per feed
+                                </xar:mlstring>
+                            </li>
+                            <li>
+                                <xar:mlstring>
+                                    Maximum Items Per Feed: this option will limit the number of items displayed, unlike Items per page, this function does not add a pager for further items, although this may be considered at a later time.
+                                 </xar:mlstring>
+                            </li>
+                            <li>
+                                <xar:mlstring>
+                                    Truncate long descriptions: this option allows you to trim long channel item descriptions to a set number of characters.
+                                </xar:mlstring>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <xar:mlstring>
+                            <strong>Import Configuration</strong>:
+                        </xar:mlstring>
+                        <ul>
+                            <li>
+                                <xar:mlstring>
+                                    optionally select an Article module publication type to import the feed items. You will need a title and summary field in your publication type to import feed items (see Preparing Your Pubtype for Headline Import below).
+                                </xar:mlstring>
+                            </li>
+                            <li>
+                                <xar:mlstring>
+                                    choose which content to import to your selected publication type. Feed, Title, Description and an optional link to the originating feed item can also be added in your publication type summary field.
+                                </xar:mlstring>
+                            </li>
+                        </ul>
+                    </li>
+                 </ul>
+            </li>
+        </ol>
+    </p>
+    <h4>
+        <xar:mlstring>Preparing Your Article Pubtype for Headline Import</xar:mlstring>
+    </h4>
+    <p>
+        <xar:mlstring>
+            The default News publication type in Articles, or similar is ideal for use with the Headlines module.
+            The following fields and field types should be setup in your News publication type, or whichever is to be used for your Headlines. Fields in your publication type such as status and pubdate are used in their usual function in the publication type, but not in the headline import process.
+        </xar:mlstring>
+    </p>
+    <ol>
+        <li>
             <xar:mlstring>
-            Hook the Categories module to Headlines to classify your feeds by category on display.
+                <strong>Title</strong>: textbox - used to hold the imported headline title and link to the original feed item and source.
             </xar:mlstring>
-        </p>
-  <h3>
-    <xar:mlstring>Included Blocks</xar:mlstring>
-  </h3>
-  <p>
-            <ul>
-                <li><xar:mlstring><strong>RSS Block</strong> allows you to provide selected feeds in blocks on your site and define number of items, title, and refresh times.</xar:mlstring></li>
-                <li><xar:mlstring><strong>Cloud Block</strong> Creates a cloud block from blog feeds, using Ping module to notify of updates and Scheduler module to update.</xar:mlstring></li>
-
-            </ul>
-       </p>
-  <h3>
-    <xar:mlstring>Included Hooks</xar:mlstring>
-  </h3>
-  <p>
-            <xar:mlstring>There are no included hooks with Headlines</xar:mlstring>
-  </p>
-        <h3>
-            <xar:mlstring>Credits</xar:mlstring>
-        </h3>
-      <p>
-            <xar:mlstring>The RSS Block is using </xar:mlstring><a href="http://freshmeat.net/projects/phpfeedparser/?topic_id=914" rel="external"> <xar:mlstring> PHP feedParser </xar:mlstring> </a><xar:mlstring> as its backend.   The notes for the feedParser by Reverend Jim are as follows</xar:mlstring>:
+        </li>
+        <li>
+            <xar:mlstring>
+                <strong>Summary</strong>: textarea - used to hold the imported summary of the headline item.
+            </xar:mlstring>
+        </li>
+        <li>
+            <xar:mlstring>
+                <strong>Body</strong>: textbox or URL property - used to hold the imported URL of the imported headline feed source site. You will need to custom format this field as required for display in your pubtype display and summary template.
+            </xar:mlstring>
+        </li>
+        <li>
+            <xar:mlstring>
+                <strong>Notes</strong>: URL/Title property. By changing this to a URL/Title property it will automatically display the feed source and feed title as a clickable link on display of your imported headline item. However, you can format this as you need in your template. The content is imported and stored as a serialized array containing the URL of the feedsource and the title of your headline feed source (not the item headline title).
+            </xar:mlstring>
+        </li>
+    </ol>
+    <p>
+        <xar:mlstring>Future enhancements of this module may include mapping of pubtype fields to imported headline fields.</xar:mlstring>
+    </p>
+    <h4>
+        <xar:mlstring>Extending the display of Headlines</xar:mlstring>
+    </h4>
+    <p>
+        <xar:mlstring>
+            Hook the Categories module to Headlines to classify your feeds by category on display.
+        </xar:mlstring>
+    </p>
+    <h3>
+        <xar:mlstring>Included Blocks</xar:mlstring>
+    </h3>
+    <p>
+        <ul>
+            <li>
+                <xar:mlstring>
+                    <strong>RSS Block</strong> allows you to provide selected feeds in blocks on your site and define number of items, title, and refresh times.
+                </xar:mlstring>
+            </li>
+            <li>
+                <xar:mlstring>
+                    <strong>Cloud Block</strong> Creates a cloud block from blog feeds, showing feeds listed in the order they were last updated. Uses Scheduler module to check for updated feed items.
+                </xar:mlstring>
+            </li>
+        </ul>
+    </p>
+    <h3>
+        <xar:mlstring>Included Hooks</xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>There are no included hooks with Headlines</xar:mlstring>
+    </p>
+    <h3>
+        <xar:mlstring>Notes</xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>
+            Headlines module comes with a relatively basic feed parser. If you wish to get more from your feeds you should consider using the SimplePie module.  Headlines module supports display of a lot of the extra content provided when used with the SimplePie parser. With SimplePie selected as parser, extra options become available to the Headlines module allowing you to optionally display channel images, item images, and item categories (if the feed provided them of course).
+        </xar:mlstring>
+    </p>
+    <h3>
+        <xar:mlstring>Credits</xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>The Headlines Module uses </xar:mlstring><a href="http://freshmeat.net/projects/phpfeedparser/?topic_id=914" rel="external"> <xar:mlstring> PHP feedParser </xar:mlstring> </a><xar:mlstring> as its default backend.   The notes for the feedParser by Reverend Jim are as follows</xar:mlstring>:
     </p>
     <p>
-            <xar:mlstring>
-            feedParser was created due to the lack of a good, flexible, class-based RSS feed parser for PHP. It has been built as a class, and currently handles RSS 0.91, RSS 0.92, RSS 0.93, RSS 1.0, and RSS 2.0 feeds. For channels it grabs the title, description, link, and creator. For items it grabs the title, description, link, and date. It also provides a form of the date converted into the local timezone to facilitate chronological sorting of items. The dates are provided in UNIX timestamp format for easy manipulation by other PHP functions. </xar:mlstring>
+        <xar:mlstring>
+        feedParser was created due to the lack of a good, flexible, class-based RSS feed parser for PHP. It has been built as a class, and currently handles RSS 0.91, RSS 0.92, RSS 0.93, RSS 1.0, and RSS 2.0 feeds. For channels it grabs the title, description, link, and creator. For items it grabs the title, description, link, and date. It also provides a form of the date converted into the local timezone to facilitate chronological sorting of items. The dates are provided in UNIX timestamp format for easy manipulation by other PHP functions. </xar:mlstring>
     </p>
-        <h3><xar:mlstring>Further Information</xar:mlstring></h3>
-  <p>
-       <xar:mlstring>Extended information about this module can be found at </xar:mlstring><a title="#xarML('Headlines Module - Xaraya Extension 777')#" href="http://www.xaraya.com/index.php/release/777.html">Xaraya Extension and Releases</a>.
-       </p>
-      <ul>
-          <li><xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
-          </li>
-          <li><xar:mlstring>Related tutorials and documentation on Headlines found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/headlines/" title="#xarML('Related documentation on Headlines')#" rel="external"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
-          </li>
-      </ul>
-      <p class="xar-sub">
-         <strong>&nbsp;<xar:mlstring>Headlines module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.2.0&nbsp; 2008-04-15
-  </p>
+    <h3><xar:mlstring>Further Information</xar:mlstring></h3>
+    <p>
+        <xar:mlstring>Extended information about this module can be found at </xar:mlstring><a title="#xarML('Headlines Module - Xaraya Extension 777')#" href="http://www.xaraya.com/index.php/release/777.html">Xaraya Extension and Releases</a>.
+    </p>
+    <ul>
+        <li>
+            <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+        </li>
+        <li>
+            <xar:mlstring>Related tutorials and documentation on Headlines found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/headlines/" title="#xarML('Related documentation on Headlines')#" rel="external"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+        </li>
+    </ul>
+    <p class="xar-sub">
+        <strong>&nbsp;<xar:mlstring>Headlines module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.2.1&nbsp; 2008-04-24
+    </p>
 </div>
