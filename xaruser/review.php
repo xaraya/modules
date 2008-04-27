@@ -13,8 +13,15 @@ function registration_user_review()
 {
     if (!xarSecurityCheck('ReadRegistration')) return;
 
+    // Get the object we need
+    $listobject = DataObjectMaster::getObjectList(array('name' => xarModVars::get('registration', 'reviewobject')));
+    $where ='id eq '. xarSession::getVar('role_id');
+    $responses = $listobject->getItems(
+                             array('where'    => $where,
+                                   ));
+                                   
     // Check if thsi is allowed
-    if (!xarUserIsLoggedIn() || !xarModVars::get('registration','allowreview')) {
+    if (!xarUserIsLoggedIn() || !xarModVars::get('registration','allowreview') || count($responses) == 0) {
         xarResponseRedirect(xarModURL('roles', 'user', 'account'));
         return true;
     }
@@ -24,14 +31,14 @@ function registration_user_review()
     xarSession::setVar('ddcontext.' . $modulename, array('return_url' => xarServerGetCurrentURL()));
 
     xarTplSetPageTitle(xarML('Review Profile'));
-    if (!xarVarFetch('phase','str:1:100',$phase,'request',XARVAR_NOT_REQUIRED)) return;
 
     // Get the object we need
     $data['object'] = DataObjectMaster::getObject(array('name' => xarModVars::get('registration', 'reviewobject')));
-    $item = $data['object']->getItem(array('itemid' => xarSession::getVar('role_id')));
+    $item = current($responses);
+    $item = $data['object']->getItem(array('itemid' => $item['id']));
+
     $data['authid'] = xarSecGenAuthKey('dynamicdata');
     $data['return_url'] = xarServerGetCurrentURL();
-
     return $data;
 }
 ?>
