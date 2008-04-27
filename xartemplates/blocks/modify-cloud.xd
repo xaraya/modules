@@ -1,0 +1,17 @@
+<xar:comment>Keep the markup simple and the inline styles to a minimum.</xar:comment>
+<div class="xar-form-input-wrapper">
+    <label for="maxitems#$blockid#" class="xar-form-label help" title="#xarML('Number of items to show.')#">
+        <xar:mlstring>Max Headlines to display</xar:mlstring>
+    </label>
+    <input type="text" name="maxitems" id="maxitems#$blockid#" size="3" maxlength="3" value="#$maxitems#" />
+</div>
+<div class="xar-form-input-wrapper-after">
+    <xar:if condition = "$showdescriptions eq 1">
+        <input id="showdescriptions#$blockid#" type="checkbox" name="showdescriptions" value="1" checked="checked"/>
+    <xar:else />
+        <input id="showdescriptions#$blockid#" type="checkbox" name="showdescriptions" value="1"/>
+    </xar:if>
+    <label for="showdescriptions#$blockid#" class="help" title="#xarML('Select this option if you want to show channel descriptions (if supplied by the feed).')#">
+        <xar:mlstring>Display descriptions</xar:mlstring>
+    </label>
+</div>

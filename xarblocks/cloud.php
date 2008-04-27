@@ -49,11 +49,21 @@ function headlines_cloudblock_info()
  */
 function headlines_cloudblock_display($blockinfo)
 {
-    // TODO: provide config options, link to last item, link to headline, show image/cats/date, numitems
-    $numitems = 10;
+     // Keep all the default values in one place.
+    $defaults = headlines_cloudblock_init();
+    // Break out options from our content field.
+    if (!is_array($blockinfo['content'])) {
+        $vars = unserialize($blockinfo['content']);
+    } else {
+        $vars = $blockinfo['content'];
+    }
+    $blockinfo['content'] = '';
+    // TODO: provide config options, link to last item, link to headline, show image/cats/date
+    $maxitems = isset($vars['maxitems']) ? $vars['maxitems'] : $defaults['maxitems'];
+    $showdescriptions = isset($vars['showdescriptions']) ? $vars['showdescriptions'] : $defaults['showdescriptions'];
     $links = xarModAPIFunc('headlines', 'user', 'getall',
         array(
-            'numitems' => $numitems,
+            'numitems' => $maxitems,
             'sort' => 'date'
         )
     );
@@ -83,10 +93,47 @@ function headlines_cloudblock_display($blockinfo)
 
         $feedcontent[] = array('title' => $links[$i]['chantitle'], 'url' => $links[$i]['chanlink'], 'channel' => $links[$i]['chandesc']);
     }
-    
     $blockinfo['content'] = array(
-        'feedcontent'  => $feedcontent
+        'feedcontent'  => $feedcontent,
+        'showdescriptions' => $showdescriptions
     );
     return $blockinfo;
 }
+/**
+ * Modify Function to the Blocks Admin
+ * @param $blockinfo array containing title,content
+ */
+function headlines_cloudblock_modify($blockinfo)
+{
+    // Keep all the default values in one place.
+    $defaults = headlines_cloudblock_init();
+    // Break out options from our content field.
+    // Prepare for when content is passed in as an array.
+    if (!is_array($blockinfo['content'])) {
+        $vars = unserialize($blockinfo['content']);
+    } else {
+        $vars = $blockinfo['content'];
+    }
+    // TODO:
+    $vars['maxitems'] = isset($vars['maxitems']) ? $vars['maxitems'] : $defaults['maxitems'];
+    $vars['showdescriptions'] = isset($vars['showdescriptions']) ? $vars['showdescriptions'] : $defaults['showdescriptions'];    
+    $vars['blockid'] = $blockinfo['bid'];
+     // Just return the template variables.
+    return $vars;
+}
+/**
+ * Updates the Block config from the Blocks Admin
+ * @param $blockinfo array containing title,content
+ */
+function headlines_cloudblock_insert($blockinfo)
+{
+    // Keep all the default values in one place.
+    $defaults = headlines_cloudblock_init();
+    $vars = array();
+    if (!xarVarFetch('maxitems', 'int:0', $vars['maxitems'], $defaults['maxitems'], XARVAR_NOT_REQUIRED)) {return;} 
+    if (!xarVarFetch('showdescriptions', 'checkbox', $vars['showdescriptions'], $defaults['showdescriptions'], XARVAR_NOT_REQUIRED)) {return;}    
+    $blockinfo['content'] = $vars;
+    return $blockinfo;
+}
+
 ?>
