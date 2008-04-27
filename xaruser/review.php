@@ -35,10 +35,10 @@ function registration_user_review()
     // Get the object we need
     $data['object'] = DataObjectMaster::getObject(array('name' => xarModVars::get('registration', 'reviewobject')));
     $item = current($responses);
-    $item = $data['object']->getItem(array('itemid' => $item['roles_id']));
+    $id = isset($item['roles_id']) ? $item['roles_id'] : $item['id'];
+    $item = $data['object']->getItem(array('itemid' => $id));
 
     $data['authid'] = xarSecGenAuthKey('dynamicdata');
-    $data['return_url'] = xarServerGetCurrentURL();
     return $data;
 }
 ?>
