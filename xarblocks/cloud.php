@@ -49,35 +49,41 @@ function headlines_cloudblock_info()
  */
 function headlines_cloudblock_display($blockinfo)
 {
-    // In order to have the list up to date, we need to call the var again.
-    // Otherwise the search term is one off of the searches.
-    $search = xarModGetVar('headlines', 'rsscloud');
-    $feedcontent=array();
-    if (empty($search)){
-        $insert['title'] = 'None Configured';
-        $insert['link'] = 'None Configured';
-        $insert['channel']  = 'None Configured';
-        //We are simply throwing something into the modvar so we don't get ugly errors.
-        // This is really only run once.  TODO, throw this in the init and upgrade for
-        // The search to remove this processing.
-        $firstsearch = $insert['title'] . '|' . $insert['link'] . '|' . $insert['channel'];
-        $firstsearch = serialize($firstsearch);
-        xarModSetVar('headlines', 'rsscloud', $firstsearch);
-    } else {
-        // Lets Prep It All For Display Now.
-        $search = unserialize($search);
-        $searchitems = array();
-        if (!empty($search)) {
-            $searchlines = explode("LINESPLIT", $search);
-            foreach ($searchlines as $searchline) {
-                $link = explode('|', $searchline);
-                $title = xarVarPrepForDisplay($link[0]);
-                $url = xarVarPrepForDisplay($link[1]);
-                $channel  = xarVarPrepForDisplay($link[2]);
-                $feedcontent[] = array('title' => $title, 'url' => $url, 'channel' => $channel);
-            }
+    // TODO: provide config options, link to last item, link to headline, show image/cats/date, numitems
+    $numitems = 10;
+    $links = xarModAPIFunc('headlines', 'user', 'getall',
+        array(
+            'numitems' => $numitems,
+            'sort' => 'date'
+        )
+    );
+    $feedcontent = array();
+    //if (empty($links)) return
+    // Check individual permissions for Edit / Delete
+    for ($i = 0; $i < count($links); $i++) {
+        $link = $links[$i];
+        // Check and see if a feed has been supplied to us.
+        if (empty($link['url'])) {
+            continue;
         }
+        $feedfile = $link['url'];
+        // TODO: make refresh configurable
+        $links[$i] = xarModAPIFunc(
+            'headlines', 'user', 'getparsed',
+            array('feedfile' => $feedfile)
+        );
+        // Check and see if a valid feed has been supplied to us.
+        if (!isset($links[$i]) || isset($links[$i]['warning'])) continue;
+        if (!empty($link['title'])){
+            $links[$i]['chantitle'] = $link['title'];
+        }
+        if (!empty($link['desc'])){
+            $links[$i]['chandesc'] = $link['desc'];
+        }
+
+        $feedcontent[] = array('title' => $links[$i]['chantitle'], 'url' => $links[$i]['chanlink'], 'channel' => $links[$i]['chandesc']);
     }
+    
     $blockinfo['content'] = array(
         'feedcontent'  => $feedcontent
     );

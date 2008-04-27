@@ -42,18 +42,10 @@ function headlines_user_main()
             continue;
         }
         $feedfile = $link['url'];
-        /** we're only interested in the title, description and link here
-         *  as these are unlikely to have changed in the last 24 hours we set that as cache time.
-         *  This reduces the chance of all the feeds getting updated at the same time since
-         *  it's unlikely that none of the feeds will have been visited within a 24 hour period. 
-         *  This means we rely on RSS and Cloud block, plus actual user view of a feed
-         *  to take care of re-caching individual feeds as required within that period. 
-         *  adapt to the needs of your site, higher for a site with few page views, lower for a busy one
-         *  TODO: is it worth making this admin configurable, or is 24 hours a reasonable default?
-         */
+        // TODO: make refresh configurable
         $links[$i] = xarModAPIFunc(
             'headlines', 'user', 'getparsed',
-            array('feedfile' => $feedfile, 'refresh' => 86400)
+            array('feedfile' => $feedfile, 'refresh' => 7200)
         );
 
 
@@ -75,7 +67,6 @@ function headlines_user_main()
             $links[$i]['chantitle'] = xarML('Feed unavailable');
             $links[$i]['chandesc'] = $links[$i]['warning'];
         }
-
         if (!empty($link['title'])){
             $links[$i]['chantitle'] = $link['title'];
         }
@@ -88,6 +79,7 @@ function headlines_user_main()
         if (empty($links[$i]['lastitem'])) {
             $links[$i]['lastitem'] = $link['date'];
         }
+
         // TODO: Check individual permissions for View / Import / Edit / Delete
         $links[$i]['viewlink'] = xarModURL('headlines',
                                            'user',

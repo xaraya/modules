@@ -23,106 +23,32 @@ function headlines_schedulerapi_compare()
     if(!xarSecurityCheck('OverviewHeadlines')) return;
     // get all headlines from module
     $links  = xarModAPIFunc('headlines', 'user', 'getall');
-    // loop headlines
-    foreach ($links as $link){
-        // We need to grab the current url right now for the string and the date
-        // Get the feed file (from cache or from the remote site)
-        $filedata = xarModAPIFunc('base', 'user', 'getfile',
-                                  array('url'       =>  $link['url'],
-                                        'cached'    =>  false));
-        // CHECKME: hashing the whole file doesn't make sense, the page may have changed without
-        // any of the items changing, it'd be better to hash the feedcontent itself 
-        /* 
-            $compare['string'] = md5($filedata['feedcontent']);
-        */
-        $compare['string']     = md5($filedata);
-        // CHECKME: should we really be adding the current date and updating?
-        // if nothing's changed better to keep last update time surely?
-        $compare['date']       = time();
-        // TODO: this could be done in getparsed, removing the need for a scheduler function
-        if ($compare['string'] != $link['string']){
-            // Get datbase setup
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
-            $headlinestable = $xartable['headlines'];
 
-            // Update the link
-            $query = "UPDATE $headlinestable
-                      SET xar_string   = ?,
-                          xar_date     = ?
-                      WHERE xar_hid     = ?";
-            $bindvars = array($compare['string'], $compare['date'], $link['hid']);
-            $result =& $dbconn->Execute($query,$bindvars);
-            if (!$result) return;
+    if (empty($links)) return;
 
-            // Require the xmlParser class
-            require_once('modules/base/xarclass/xmlParser.php');
-
-            // Require the feedParser class
-            require_once('modules/base/xarclass/feedParser.php');
-
-            // Now that the compare is done, we need to actually update the list.
-            // Create a need feedParser object
-            $p = new feedParser();
-
-            // Tell feedParser to parse the data
-            $info = $p->parseFeed($filedata);
-
-            if (empty($info['warning'])){
-                foreach ($info as $content){
-                $content = array_slice($content, 0, 1);
-                     foreach ($content as $newline){
-                            if(is_array($newline)) {
-                                if (isset($newline['description'])){
-                                    $description = $newline['description'];
-                                } else {
-                                    $description = '';
-                                }
-                                if (isset($newline['title'])){
-                                    $title = $newline['title'];
-                                } else {
-                                    $title = '';
-                                }
-                                if (isset($newline['link'])){
-                                    $link = $newline['link'];
-                                } else {
-                                    $link = '';
-                                }
-
-                                $imports[] = array('title' => $title, 'link' => $link, 'description' => $description);
-                        }
-                    }
-                }
-                // E_ALL Check for an empty array or insert latest search.
-                $oldsearch = xarModGetVar('headlines', 'rsscloud');
-                // Now comes the fun part.  Updating our modvar with the lastes stuff.  Probably needs a var to capture the number of items to store.
-                foreach ($imports as $import){
-                    $content = array();
-                    // A little more complicated than the first search.  We need to get what's out
-                    // there first so we can process it.
-                    $oldsearch = unserialize($oldsearch);
-                    $searchitems = array();
-                    // Similar to what we are doing to display, only we are just creating a single
-                    // entity of the old search terms.
-                    $searchlines = explode("LINESPLIT", $oldsearch);
-                    foreach ($searchlines as $searchline) {
-                        $link = explode('|', $searchline);
-                        $content[] .= $link[0] . '|' . $link[1] . '|' . $link[2];
-                    }
-                    // Now we are just processing the new search terms.
-                    $content[] .= $import['title'] . '|' . $import['link'] . '|' . $info['channel']['title'];
-                    // While we are in a readible array, we might as well pop it now.
-                    $searchnum = count($content);
-                    if ($searchnum >= 10) {
-                        $dropsearch = array_shift($content);
-                    }
-                    $newsearch = implode("LINESPLIT", $content);
-                    $newsearch = serialize($newsearch);
-                    xarModSetVar('headlines', 'rsscloud', $newsearch);
-                }
-            }
+    for ($i = 0; $i < count($links); $i++) {
+        $link = $links[$i];
+        // Check and see if a feed has been supplied to us.
+        if (empty($link['url'])) {
+            continue;
+        }
+        $feedfile = $link['url'];
+        $links[$i] = xarModAPIFunc(
+            'headlines', 'user', 'getparsed',
+            array('feedfile' => $feedfile)
+        );
+        // Check and see if a valid feed has been supplied to us.
+        if (!isset($links[$i]) || isset($links[$i]['warning'])) continue;
+        // here we see if this feed has been updated by comparing the stored hash against the 
+        // hash provided by the getparsed function, if they're different, we update the feed
+        // with the new hash, and the time of the last item in the feed, or the current time
+        if (isset($links[$i]['compare']) && ($link['string'] != $links[$i]['compare'])) {
+            // call api function to update our feed item
+            if (!xarModAPIFunc('headlines', 'user', 'update', array('hid' => $link['hid'], 'date' => $links[$i]['lastitem'], 'string' => $links[$i]['compare']))) return;
         }
     }
+
+
     return true;
 }
 ?>
