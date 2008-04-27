@@ -179,8 +179,8 @@
                             Registration Object:
                         </xar:mlstring>
                     </label>
-                    <xar:set name="regobjectid">xarModVars::get('registration', 'registrationobject')</xar:set>
-                    <xar:data-input type="object" name="regobjectid" value="$regobjectid" />
+                    <xar:set name="value">xarModVars::get('registration', 'registrationobject')</xar:set>
+                    <xar:data-input type="object" name="regobjectname" store_prop="name" value="$value" />
                 </div>
                 <div class="xar-form-input-wrapper">
                     <label for="defaultgroup" title="#xarML('New Users automatically get assigned to this Group')#" class="xar-form-label">
@@ -258,6 +258,24 @@
                             Require Validation Of New Users
                         </xar:mlstring>
                     </label>
+                </div>
+                <div class="xar-form-input-wrapper-after">
+                    <xar:set name="checked">xarModVars::get('registration', 'allowreview')</xar:set>
+                    <xar:data-input type="checkbox" name="allowreview" checked="$checked" />
+                    <label for="allowreview" title="#xarML('Users can review and modify their registration information')#">
+                        <xar:mlstring>
+                            Allow review of profile
+                        </xar:mlstring>
+                    </label>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="reviewobject" title="#xarML('Select the DD object used for reviews (if allowed)')#" class="xar-form-label">
+                        <xar:mlstring>
+                            Review Object:
+                        </xar:mlstring>
+                    </label>
+                    <xar:set name="value">xarModVars::get('registration', 'reviewobject')</xar:set>
+                    <xar:data-input type="object" name="reviewobjectname" store_prop="name" value="$value" />
                 </div>
             </fieldset>
             <fieldset>

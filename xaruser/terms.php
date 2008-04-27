@@ -31,7 +31,6 @@ function registration_user_terms()
             $link = $urldata['redirecturl'];
         }
         $link = parse_url($link);
-        var_dump($link);exit;
         $data['link']    = (!empty($link) && $link != 'http://') ? $link : '';
     }
     */

@@ -94,7 +94,9 @@ function registration_admin_modifyconfig()
                     if (!xarVarFetch('requirevalidation', 'checkbox', $requirevalidation, false, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('sendwelcomeemail',  'checkbox', $sendwelcomeemail,  false, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('notifyemail',       'str:1:150',$notifyemail,       xarModVars::get('mail', 'adminmail'), XARVAR_NOT_REQUIRED)) return;
-                    if (!xarVarFetch('regobjectid',       'int',    $regobjectid,     xarModVars::get('registration', 'registrationobject'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+                    if (!xarVarFetch('regobjectname',     'str',      $regobjectname,     xarModVars::get('registration', 'registrationobject'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+                    if (!xarVarFetch('allowreview',       'checkbox', $allowreview,       false, XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('reviewobjectname',  'str',      $reviewobjectname,  xarModVars::get('registration', 'registrationobject'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
 
                     xarModVars::set('registration', 'chooseownpassword', $chooseownpassword);
                     xarModVars::set('registration', 'defaultgroup', $defaultgroup);
@@ -106,7 +108,9 @@ function registration_admin_modifyconfig()
                     xarModVars::set('registration', 'explicitapproval', $explicitapproval? true:false);
                     xarModVars::set('registration', 'requirevalidation', $requirevalidation);
                     xarModVars::set('registration', 'sendwelcomeemail', $sendwelcomeemail);
-                    xarModVars::set('registration', 'registrationobject', $regobjectid);
+                    xarModVars::set('registration', 'registrationobject', $regobjectname);
+                    xarModVars::set('registration', 'allowreview', $allowreview);
+                    xarModVars::set('registration', 'reviewobject', $reviewobjectname);
                     break;
                 case 'filtering':
                     if (!xarVarFetch('disallowednames',  'str:1', $disallowednames,  '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;

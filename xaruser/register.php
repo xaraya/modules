@@ -63,7 +63,7 @@ function registration_user_register()
     if (!xarVarFetch('phase','str:1:100',$phase,'request',XARVAR_NOT_REQUIRED)) return;
 
 
-    $regobjectid = xarModVars::get('registration', 'registrationobject');
+    $regobjectname = xarModVars::get('registration', 'registrationobject');
     $authid = xarSecGenAuthKey();
 
     switch(strtolower($phase)) {
@@ -87,7 +87,7 @@ function registration_user_register()
         case 'registerform': //Make this default now login is handled by authsystem
         default:
 
-            $object = DataObjectMaster::getObject(array('objectid' => $regobjectid));
+            $object = DataObjectMaster::getObject(array('name' => $regobjectname));
             if(empty($object)) return;
 
             if (isset($fieldvalues)) {
@@ -127,7 +127,7 @@ function registration_user_register()
                 return;
             }
 
-            $object = DataObjectMaster::getObject(array('objectid' => $regobjectid));
+            $object = DataObjectMaster::getObject(array('name' => $regobjectname));
             $isvalid = $object->checkInput();
 
             /* Call hooks here, others than just dyn data
@@ -220,7 +220,7 @@ function registration_user_register()
             if (!xarSecConfirmAuthKey()) return;
             $fieldvalues = xarSessionGetVar('Registration.UserInfo');
 
-            $object = DataObjectMaster::getObject(array('objectid' => $regobjectid));
+            $object = DataObjectMaster::getObject(array('name' => $regobjectname));
             if(empty($object)) return;
 
             // Do we need admin activation of the account?

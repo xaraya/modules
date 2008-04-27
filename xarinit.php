@@ -89,7 +89,9 @@ function registration_init()
     xarModVars::set('registration','defaultuserstate',xarRoles::ROLES_STATE_ACTIVE);
 
     $regobject = DataObjectMaster::getObjectInfo(array('name' => 'registration_users'));
-    xarModVars::set('registration', 'registrationobject', $regobject['objectid']);
+    xarModVars::set('registration', 'registrationobject', $regobject['name']);
+    xarModVars::set('registration', 'allowreview', 0);
+    xarModVars::set('registration', 'reviewobject', $regobject['name']);
 
 /** ---------------------------------------------------------------
  * Set disallowed names
