@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -427,9 +427,8 @@ function articles_user_display($args)
     $data = xarModCallHooks('item', 'transform', $aid, $data, 'articles');
 
     if (!empty($data['title'])) {
-        // CHECKME: <rabbit> Strip tags out of the title - the <title> tag shouldn't have any other tags in it.
         $title = strip_tags($data['title']);
-        xarTplSetPageTitle(xarVarPrepForDisplay($title), xarVarPrepForDisplay($pubtypes[$pubtypeid]['descr']));
+        xarTplSetPageTitle($title, xarVarPrepForDisplay($pubtypes[$pubtypeid]['descr']));
 
         // Save some variables to (temporary) cache for use in blocks etc.
         xarVarSetCached('Comments.title','title',$data['title']);
