@@ -14,7 +14,7 @@ function registration_user_review()
     if (!xarSecurityCheck('ReadRegistration')) return;
 
     // Get the object we need
-    $listobject = DataObjectMaster::getObjectList(array('name' => xarModVars::get('registration', 'reviewobject')));
+    $listobject = DataObjectMaster::getObjectList(array('name' => 'roles_users'));
     $where ='id eq '. xarSession::getVar('role_id');
     $responses = $listobject->getItems(
                              array('where'    => $where,
