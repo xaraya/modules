@@ -275,6 +275,15 @@ function registration_user_register()
             $hookdata['itemid'] = $id;
             xarModCallHooks('item', 'create', $id, $hookdata);
 
+            // We allow "state" or "roles_state"
+            if (!isset($fieldvalues['state'])) {
+                if (!isset($fieldvalues['roles_state'])) {
+                    $fieldvalues['state'] = $fieldvalues['roles_state'];
+                } else {
+                    throw new Exception("Missing a 'state' property for the registration data");
+                }
+            } 
+            
             // go to appropriate page, based on state
             if ($fieldvalues['state'] == xarRoles::ROLES_STATE_ACTIVE) {
                 // log in and redirect
