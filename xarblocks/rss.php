@@ -298,12 +298,15 @@ function headlines_rssblock_insert($blockinfo)
     }
     // bug[ 5322 ] replace url value with numeric hid 
     // allowing changes to module feeds to be reflected in blocks
-    if (!empty($vars['rssurl']) && is_numeric($vars['rssurl'])) {
+    if (is_numeric($vars['rssurl'])) {
         $headline = xarModAPIFunc('headlines', 'user', 'get', array('hid' => $vars['rssurl']));
-        if (empty($headline)) {
+        // bug [] // store url, not hid
+        if (!empty($headline)) {
+            $vars['rssurl'] = $headline['url'];
+        } else {
             $vars['rssurl'] = $defaults['rssurl'];
         }
-    }
+    } 
     if (!xarVarFetch('maxitems', 'int:0', $vars['maxitems'], $defaults['maxitems'], XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('showdescriptions', 'checkbox', $vars['showdescriptions'], $defaults['showdescriptions'], XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('show_chantitle', 'checkbox', $vars['show_chantitle'], $defaults['show_chantitle'], XARVAR_NOT_REQUIRED)) {return;}
