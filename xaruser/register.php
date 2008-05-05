@@ -155,20 +155,6 @@ function registration_user_register()
             $invalid = array();
 
             $values = $object->getFieldValues();
-/*            $uname  = $values['uname'];
-            $email  = $values['email'];
-            $name   = $values['name'];
-            $pass   = $values['password'];
-
-            // check for duplicate username// check for duplicate username
-            $user = xarModAPIFunc('roles', 'user','get',
-                            array('uname' => $uname));
-
-            if ($user) {
-                throw new DuplicateException(array('user',$uname));
-            }
-
-*/
             if (xarModVars::get('roles','uniqueemail')) {
                 $user = xarModAPIFunc('roles','user', 'get', array('email' => $email));
                 if ($user) throw new DuplicateException(array('email',$email));
@@ -241,13 +227,6 @@ function registration_user_register()
             $data['loginlink'] = $loginlink;
             $data['pending']   = xarModVars::get('registration', 'explicitapproval');
 
-
-            // Create a password if the user can't create one himself
-            if (!xarModVars::get('registration', 'chooseownpassword')){
-                $pass = xarModAPIFunc('roles', 'user', 'makepass');
-                $fieldvalues['password'] = $pass;
-            }
-
             // Do we require user validation of account by email?
             if (xarModVars::get('registration', 'requirevalidation')) {
                 $fieldvalues['state'] = xarRoles::ROLES_STATE_NOTVALIDATED;
@@ -258,9 +237,17 @@ function registration_user_register()
                 $confcode = '';
             }
 
-
             // Update the field values and create the user
             $object->setFieldValues($fieldvalues,1);
+
+            // Create a password and add it if the user can't create one himself
+            if (!xarModVars::get('registration', 'chooseownpassword')){
+                $fielddvalues = array();
+                $pass = xarModAPIFunc('roles', 'user', 'makepass');
+                $fieldvalues['password'] = $pass;
+                $object->setFieldValues($fieldvalues);
+            }
+
             $id = $object->createItem();
 
             if (empty($id)) return;
