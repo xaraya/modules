@@ -90,6 +90,7 @@ function headlines_rssblock_display($blockinfo)
         $headline = xarModAPIFunc('headlines', 'user', 'get', array('hid' => $vars['rssurl']));
         if (!empty($headline)) {
             $feedfile = $headline['url'];
+            $thishid = $headline['hid'];
         } else {
             $blockinfo['title'] = xarML('Headlines');
             $blockinfo['content'] = xarML('No Feed URL Specified');
@@ -150,8 +151,8 @@ function headlines_rssblock_display($blockinfo)
         $vars['show_itemimage'] = $defaults['show_itemimage'];
         $vars['show_itemcats'] = $defaults['show_itemcats'];
     }
-    if ($vars['linkhid'] && is_numeric($vars['rssurl'])) {
-        $vars['linkhid'] = $vars['rssurl'];
+    if ($vars['linkhid'] && (isset($thishid)&& !empty($thishid))) {
+        $vars['linkhid'] = $thishid;
     }
 
     $blockinfo['content'] = array(
@@ -202,22 +203,20 @@ function headlines_rssblock_modify($blockinfo)
     // The user API function is called
     $links = xarModAPIFunc('headlines', 'user', 'getall');
     $vars['items'] = $links;
-
+    
     // Defaults
     if (!isset($vars['rssurl'])) $vars['rssurl'] = $defaults['rssurl'];
-    // todo: eval requirement for this here, added to block update function
-    if (!ereg("^http://|https://|ftp://", $vars['rssurl'])) $vars['rssurl'] = $defaults['rssurl'];
-     
-    // bug[ 5322 ]
+
+    // bug[ 5322 ] - check for hid
     if (is_numeric($vars['rssurl'])) {
         $headline = xarModAPIFunc('headlines', 'user', 'get', array('hid' => $vars['rssurl']));
-        if (!empty($headline)) {
+        if (!empty($headline)) { // found headline, use that url
             $vars['rssurl'] = $headline['url'];
-        } else {
+        } else { 
             $vars['rssurl'] = $defaults['rssurl'];
         }
     } 
- 
+    
     // If the current URL is not in the headlines list, then pass it in as 'custom'
     $vars['otherrssurl'] = $vars['rssurl'];
     if (is_array($links) && $vars['rssurl'] != $defaults['rssurl']) {
@@ -300,13 +299,13 @@ function headlines_rssblock_insert($blockinfo)
     // allowing changes to module feeds to be reflected in blocks
     if (is_numeric($vars['rssurl'])) {
         $headline = xarModAPIFunc('headlines', 'user', 'get', array('hid' => $vars['rssurl']));
-        // bug [] // store url, not hid
-        if (!empty($headline)) {
-            $vars['rssurl'] = $headline['url'];
-        } else {
+        if (empty($headline)) {
             $vars['rssurl'] = $defaults['rssurl'];
         }
     } 
+    // TODO: check for duplicates
+    // TODO: check otherrssurl against stored headlines
+
     if (!xarVarFetch('maxitems', 'int:0', $vars['maxitems'], $defaults['maxitems'], XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('showdescriptions', 'checkbox', $vars['showdescriptions'], $defaults['showdescriptions'], XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('show_chantitle', 'checkbox', $vars['show_chantitle'], $defaults['show_chantitle'], XARVAR_NOT_REQUIRED)) {return;}
