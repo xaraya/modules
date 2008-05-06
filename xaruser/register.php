@@ -221,7 +221,7 @@ function registration_user_register()
             $authmodule          = $defaultauthdata['defaultauthmodname'];
 
             //jojo - should just use authsystem now as we used to pre 1.1 merge
-            $loginlink =xarModURL($defaultloginmodname,'user','main');
+            $loginlink = xarModURL($defaultloginmodname,'user','main');
 
             //variables required for display of correct validation template to users, depending on registration options
             $data['loginlink'] = $loginlink;
@@ -248,7 +248,8 @@ function registration_user_register()
                 $object->setFieldValues($fieldvalues);
             }
 
-            $id = $object->createItem();
+            // Create the group, assigning it to a parent
+            $id = $object->createItem(array('parentid' => xarModVars::get('registration','defaultgroup')));
 
             if (empty($id)) return;
             xarModVars::set('roles', 'lastuser', $id);
