@@ -68,7 +68,6 @@ function translations_adminapi_generate_module_skels($args)
         if (file_exists($filename)) {
             $parser = new PHPParser();
             $parser->parse($filename);
-//            die("XX");
 
             $transEntriesCollection[$subname] = $parser->getTransEntries();
             $transKeyEntriesCollection[$subname] = $parser->getTransKeyEntries();

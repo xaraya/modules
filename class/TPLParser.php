@@ -11,37 +11,11 @@
 
 class TPLParser
 {
-    var $transEntries = array();
-    var $transKeyEntries = array();
-
-    var $_fd;
-    var $_offs;
-    var $_pos;
-    var $_len;
-    var $_buf;
-    var $_line;
-    var $_token;
-    var $_right;
-    var $_string;
-    var $filename;
-
-    var $tokenarray;
-    var $endtokenarray;
-    var $isfunctiontokenarray;
-    var $iskeytokenarray;
-    var $strlentokenarray;
-    var $strlenendtokenarray;
-    var $lasttokenarray;
+    public $transEntries    = array();
+    public $transKeyEntries = array();
 
     function TPLParser()
     {
-        $this->tokenarray = array("<xar:mlstring>", "<xar:mlkey>", "xarML('", "xarMLByKey('", 'xarML("', 'xarMLByKey("');
-        $this->endtokenarray = array(array("</xar:mlstring>"), array("</xar:mlkey>"), array("')","',"), array("')","',"), array('")','",'), array('")','",'));
-        $this->isfunctiontokenarray = array(0, 0, 1, 1, 1, 1);
-        $this->iskeytokenarray = array(0, 1, 0, 1, 0, 1);
-        $this->strslasharray = array(0, 0, 1, 1, 0, 0);
-        $this->strlentokenarray = array(14, 11, 7, 12, 7, 12);
-        $this->strlenendtokenarray = array(15, 12, 2, 2, 2, 2);
     }
 
     function getTransEntries()
@@ -54,86 +28,6 @@ class TPLParser
         return $this->transKeyEntries;
     }
 
-    function _get_token() 
-    {
-        $found = false;
-        // if (defined('TPLPARSERDEBUG'))
-           // printf("Getting line %d\n"."for %s token %d<br />\n", $this->_line, $this->_right?'end':'begin', $this->_token);
-        $this->_pos = -1;
-        foreach( $this->lasttokenarray as $n => $v )
-        {
-            $p = strpos( $this->_buf, $v, $this->_offs );
-            if ($p===FALSE)
-                continue;
-            if (($p<$this->_pos)||($this->_pos==-1)) {
-                $this->_pos = $p;
-                if ($this->_right != true) $this->_token = $n;
-            }
-        }
-        if ($this->_pos != -1) {
-            // if (defined('TPLPARSERDEBUG'))
-                // printf("Found %s token %s[%d] at pos %d<br />\n", $this->_right?'end':'begin', htmlspecialchars(substr($this->_buf, $this->_pos, strlen($this->tokenarray[$this->_token]))), $this->_token, $this->_pos);
-            if ($this->_right)
-                $this->_string .= substr($this->_buf, $this->_offs, $this->_pos - $this->_offs);
-            if ($this->_right)
-                $this->_offs = $this->_pos + $this->strlenendtokenarray[$this->_token];
-            else
-                $this->_offs = $this->_pos + $this->strlentokenarray[$this->_token];
-            if ($this->_offs > $this->_len) $this->_offs = $this->_len;
-            $found = true;
-            if(!$this->_right) {
-                // ParseClose
-                $this->_string ='';
-                $this->_right = true;
-                $this->lasttokenarray = $this->endtokenarray[$this->_token];
-                $token = $this->_token;
-                if ($this->_get_token()) {
-                    // if (defined('TPLPARSERDEBUG'))
-                        // printf("Result: %s<br />\n", $this->_string);
-//                  if (!$this->isfunctiontokenarray[$token]) {
-                    // Delete extra whitespaces and spaces around newline
-                    $this->_string = trim($this->_string);
-                    $this->_string = preg_replace('/[\t ]+/',' ',$this->_string);
-                    $this->_string = preg_replace('/\s*\n\s*/',"\n",$this->_string);
-                    if ($this->strslasharray[$token]) {
-                        $this->_string = str_replace('\\\'','\'',$this->_string);
-                    }
-//                  }
-                    if ($this->iskeytokenarray[$token]) {
-                        if (!isset($this->transKeyEntries[$this->_string])) {
-                            $this->transKeyEntries[$this->_string] = array();
-                        }
-                        $this->transKeyEntries[$this->_string][] = array('line' => $this->_line, 'file' => $this->filename);
-                    } else {
-                        if (!isset($this->transEntries[$this->_string])) {
-                            $this->transEntries[$this->_string] = array();
-                        }
-                        $this->transEntries[$this->_string][] = array('line' => $this->_line, 'file' => $this->filename);
-                    }
-                    $this->lasttokenarray = $this->tokenarray;
-                    $this->_right = false;
-                    $this->_get_token();
-                }
-            }
-        } else {
-            $found = false;
-            if ($this->_right) {
-                $this->_string .= substr($this->_buf, $this->_offs);
-                while (!feof($this->_fd)) {
-                    $this->_buf = fgets($this->_fd, 1024);
-                    $this->_len = strlen($this->_buf);
-                    $this->_line++;
-                    $this->_offs = 0;
-                    if (!$this->_get_token()) continue;
-                    $found = true;
-                    break;
-                }
-            }
-            $this->_offs = 0;
-        }
-        return $found;
-    }
-
     function parse($filename)
     {
         if (!file_exists($filename)) return;
@@ -144,23 +38,30 @@ class TPLParser
             xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException($msg));
             return;
         }
-        if (!$filesize = filesize($filename)) return;
-
-        $this->_offs = 0;
-        $this->_len = 0;
-        $this->_right = false;
-        $this->_line = 0;
-        $this->lasttokenarray = $this->tokenarray;
-
-        while (!feof($this->_fd)) {
-            $this->_buf = fgets($this->_fd, 1024);
-            $this->_len = strlen($this->_buf);
-            $this->_line++;
-            $this->_offs = 0;
-            $this->_get_token();
+        
+        $filestring = file_get_contents($filename);
+        $filestring = preg_replace("/&xar([\-A-Za-z\d.]{2,41});/","xar-entity",$filestring);
+        $reader = new XMLReader();
+        $reader->xml($filestring);
+        $nodes = array();
+        $i = 0;
+        while ($reader->read()) {
+            $i++;
+            if ($reader->nodeType == XMLReader::TEXT) {
+               $string = $reader->value;
+            }
+            else if ($reader->name == "xar::mlstring") {
+               $string = $reader->value;
+            } else {
+                continue;
+            }
+            $string = trim($string);
+            $string = preg_replace('/[\t ]+/',' ',$string);
+            $string = preg_replace('/\s*\n\s*/',"\n",$string);
+            $this->transEntries[$string][] = array('line' => $i, 'file' => $this->filename);
         }
+        $reader->close();
 
-        fclose($this->_fd);
     }
 }
 ?>

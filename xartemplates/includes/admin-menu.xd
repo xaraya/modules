@@ -35,9 +35,9 @@
             <xar:mlstring>Translating</xar:mlstring>
             <span class="xar-title">
         <!-- TODO: we are using the session var here, but it is really the directory, to cater for name/dir independence -->
-                #$menu_dntypetext#&#160;#$menu_dnnametext#
+                &#160;#$menu_dntypetext#&#160;#$menu_dnnametext#&#160;
             </span>
-            <xar:mlstring>to:</xar:mlstring>
+            <xar:mlstring>to:</xar:mlstring>&#160;
             <span class="xar-title">
                 <a href="#xarModURL('translations','admin','start')#">
                     #xarSessionGetVar('translations_working_locale')#
@@ -63,15 +63,15 @@
 
         <td width="45%" valign="top">
             <xar:mlstring>Site Display Locale</xar:mlstring>:
-            <span class="xar-title">
+            <span class="xar-title">&#160;
                 <a href="#xarModURL('base','admin','modifyconfig', array('tab' => 'locales'))#">
                     <xar:var scope="config" name="Site.MLS.DefaultLocale" />
                 </a>
-            </span>
+            </span>&#160;
             <xar:mlstring>(recommended: utf)</xar:mlstring>
             <br/>
             <xar:mlstring>MLS Mode</xar:mlstring>:
-            <span class="xar-title">
+            <span class="xar-title">&#160;
                 <a href="#xarModURL('base','admin','modifyconfig', array('tab' => 'locales'))#">
                     <xar:var scope="config" name="Site.MLS.MLSMode" />
                 </a>
