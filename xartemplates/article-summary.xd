@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>
     Fallback summary template for the 'news' page type, called up
     for each news item displayed by the 'page-news' template, while
@@ -27,3 +28,4 @@
         <div class="news-footer"><a href="#xarServerGetCurrentURL(array('aid'=&gt;$aid))#" class="readmore">Read more...</a></div>
     </xar:if>
 </div>
+</xar:template>

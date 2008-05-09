@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
 <xar:comment>
     Default page for the 'multiform' page display.
@@ -80,3 +81,4 @@
         <xar:template file="multiform-debug" />
     </xar:if>
 </xar:if>
+</xar:template>

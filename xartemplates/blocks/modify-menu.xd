@@ -18,13 +18,13 @@
                 <option value="AUTO"><xar:mlstring>Automatic - set by the current module</xar:mlstring></option>
             </xar:if>
 
-	    <xar:if condition="$current_source eq 'AUTODEFAULT'">
+        <xar:if condition="$current_source eq 'AUTODEFAULT'">
                 <option value="AUTODEFAULT" selected="selected"><xar:mlstring>Automatic - use default outside roots</xar:mlstring></option>
             <xar:else />
                 <option value="AUTODEFAULT"><xar:mlstring>Automatic - use default outside roots</xar:mlstring></option>
             </xar:if>
 
-	    <xar:if condition="$current_source eq 'DEFAULT'">
+        <xar:if condition="$current_source eq 'DEFAULT'">
                 <option value="DEFAULT" selected="selected"><xar:mlstring>Default - force use of the default page</xar:mlstring></option>
             <xar:else />
                 <option value="DEFAULT"><xar:mlstring>Default - force use of the default page</xar:mlstring></option>

@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
 <xar:comment>
     This template is used to handle the starting page (though that is optional), 
@@ -50,3 +51,4 @@
         </p>
     </xar:if>
 </xar:if>
+</xar:template>

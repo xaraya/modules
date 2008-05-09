@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
 <xar:comment>Common navbar stuff</xar:comment>
 <xar:template file="user-navbar" module="xarpages" />
@@ -45,7 +46,7 @@
         </xar:if>
     </div>
 </xar:if>
-
+</xar:template>
 <xar:comment>Individual item</xar:comment>
 <xar:if condition="!empty($extra.aid)">
     <xar:if condition="!empty($article)">

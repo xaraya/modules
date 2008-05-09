@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
 <div class="xarpages-crumbtrail">
     <xar:comment><xar:mlstring>You are here:</xar:mlstring></xar:comment>
@@ -23,3 +24,4 @@
         [<a href="#xarModURL('xarpages','admin','modifypage',array('pid'=>$pid,'return_url'=>xarServerGetCurrentURL(array(),false)))#">edit</a>]
     </xar:if>
 </div>
+</xar:template>

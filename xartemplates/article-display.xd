@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>
     Fallback news display template.
     This is displayed by the 'page-news' template, for publications not having
@@ -32,3 +33,4 @@
 </div>
 
 <xar:set name="dummy">#xarTplSetPageTitle($title)#</xar:set>
+</xar:template>

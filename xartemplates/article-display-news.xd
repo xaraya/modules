@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>
     Example news display template.
     This is displayed by the 'page-news' template, for publication type 'news'.
@@ -37,4 +38,4 @@
 </div>
 
 <xar:set name="dummy">#xarTplSetPageTitle($title)#</xar:set>
-
+</xar:template>

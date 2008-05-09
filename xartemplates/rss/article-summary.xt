@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <item>
     <title>#xarVarPrepForDisplay($title)#</title>
     <link>#xarModURL('xarpages', 'user', 'display', array('pid'=&gt;$pid, 'aid'=&gt;$aid))#</link>
@@ -23,3 +24,4 @@
         </xar:loop>
     </xar:if>
 </item>
+</xar:template>

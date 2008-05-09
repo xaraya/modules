@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
 <xar:comment>
     Menu for side columns.
@@ -12,3 +13,4 @@
 <xar:if condition="trim($menu) ne ''">
     <div class="fixed1-side-menu">#$menu#</div>
 </xar:if>
+</xar:template>

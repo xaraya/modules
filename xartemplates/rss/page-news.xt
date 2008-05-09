@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
 <xar:if condition="!empty($current_page.dd.page_title)">
     <xar:set name="dummy">#xarTplSetPageTitle($current_page.dd.page_title)#</xar:set>
@@ -33,5 +34,4 @@
         <xar:set name="summary">#xarTplModule('xarpages', $template_prefix, 'summary', $article, $pubtypes[$article.pubtypeid]['name'])#</xar:set>
         #$summary#
 </xar:if>
-
-
+</xar:template>

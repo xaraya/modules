@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
 <xar:comment>
     TODO: The CSS loaded will depend on what kind of menu you want.
@@ -30,3 +31,4 @@
     <xar:set name="menu_level">0</xar:set>
     <xar:template file="menu-css-side-menu1" subdata="array('parent'=&gt;$root_page,'pages'=&gt;$pages,'max_level'=&gt;$max_level,'menu_level'=&gt;$menu_level)" />
 </div>
+</xar:template>

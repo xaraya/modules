@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
 <xar:comment>
     This template can be used for displaying the contents of other modules.
@@ -11,3 +12,4 @@
 <xar:else />
     <p class="xar-error"><xar:mlstring>No 'content' value passed in.</xar:mlstring>
 </xar:if>
+</xar:template>
