@@ -157,45 +157,45 @@ class DDQuery extends Query
         sleep(1);
         $this->subalias = "sub".time();
         parent::addtable($this->table, $this->subalias);
-        parent::join($this->initalias . '.dd_itemid', $this->subalias . '.dd_itemid');
+        parent::join($this->initalias . '.itemid', $this->subalias . '.itemid');
         parent::eq($this->subalias . '.propid',$this->columnnames[$field]);
     }
     function join($field1,$field2)
     {
         // Nice try, but this doesn't work
         $this->adjunctclause($field1);
-        parent::join($this->subalias . '.dd_value',$field2);
+        parent::join($this->subalias . '.value',$field2);
     }
     function eq($field1,$field2)
     {
         $this->adjunctclause($field1);
-        parent::eq($this->subalias . '.dd_value',$field2);
+        parent::eq($this->subalias . '.value',$field2);
     }
     function ne($field1,$field2)
     {
         $this->adjunctclause($field1);
-        parent::ne($this->subalias . '.dd_value',$field2);
+        parent::ne($this->subalias . '.value',$field2);
     }
     function ge($field1,$field2)
     {
         $this->adjunctclause($field1);
-        parent::ge($this->subalias . '.dd_value',$field2);
+        parent::ge($this->subalias . '.value',$field2);
     }
     function le($field1,$field2)
     {
         $this->adjunctclause($field1);
-        parent::le($this->subalias . '.dd_value',$field2);
+        parent::le($this->subalias . '.value',$field2);
     }
     function like($field1,$field2)
     {
         $this->adjunctclause($field1);
-        parent::like($this->subalias . '.dd_value',$field2);
+        parent::like($this->subalias . '.value',$field2);
     }
 
     function addorder($x = '',$y = 'ASC')
     {
         $this->adjunctclause($x);
-        parent::addorder($this->subalias . '.dd_value',$y);
+        parent::addorder($this->subalias . '.value',$y);
     }
 
     // Disable this for the moment
