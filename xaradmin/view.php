@@ -1,9 +1,9 @@
 <?php
 /**
- * Purpose of File
+ * Manage uploaded files
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,7 +13,7 @@
  */
 xarModAPILoad('uploads','user');
 /**
- * The view function for the site admin
+ * The view function for users with edit privileges
  *
  * @param int mimetype
  * @param int subtype
@@ -31,7 +31,7 @@ xarModAPILoad('uploads','user');
 function uploads_admin_view( )
 {
     //security check
-    if (!xarSecurityCheck('AdminUploads')) return;
+    if (!xarSecurityCheck('EditUploads')) return;
 
     /**
      *  Validate variables passed back
@@ -52,8 +52,8 @@ function uploads_admin_view( )
     /**
      *  Determine the filter settings to use for this view
      */
-    if (!isset($mimetype) || !isset($subtype) || !isset($status) || !isset($inverse)) {
-        // if the filter settings are empty, then
+    if (!(isset($mimetype) || isset($status) )) {
+        // if mimetype and status settings are both empty, then
         // grab the users last view filter
         $options  = unserialize(xarModGetUserVar('uploads','view.filter'));
         $data     = $options['data'];

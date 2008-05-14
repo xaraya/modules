@@ -3,9 +3,10 @@
 <xar:if condition="empty($count_submitted)">
     <xar:mlstring>No Submitted Files</xar:mlstring>
 <xar:elseif condition="$count_submitted eq 1" />
-    <a href="#xarModURL('uploads','admin','view')#"><xar:mlstring>1 file submitted</xar:mlstring></a>
+    <a href="#xarModURL('uploads','admin','view', array('status' => 1))#">
+    <xar:mlstring>1 file submitted</xar:mlstring></a>
 <xar:else />
-    <a href="#xarModURL('uploads','admin','view')#">
+    <a href="#xarModURL('uploads','admin','view', array('status' => 1))#">
     <xar:ml>
         <xar:mlstring>#(1) files submitted</xar:mlstring>
         <xar:mlvar>#$count_submitted#</xar:mlvar>
