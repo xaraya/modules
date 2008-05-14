@@ -50,6 +50,7 @@ function sitecontact_user_respond($args)
     if (!xarVarFetch('customcontact', 'str:0:',   $customcontact, '',  XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('return_url',     'str:0:',  $return_url,   '',   XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('blockurl',       'str:0:',     $blockurl,     '',   XARVAR_NOT_REQUIRED)) {return;}
+
     /* Confirm authorisation code. */
     if (!xarSecConfirmAuthKey()) return;
 
@@ -124,6 +125,7 @@ function sitecontact_user_respond($args)
                  'antiword'        => $antiword,
                  'antibotcode'     => $antibotcode,
                  'invalid'         => $invalid,
+                 'customcontact'   => $customcontact,
                  'return_url'      => $return_url,
                  'blockurl'        => $blockurl
                 );

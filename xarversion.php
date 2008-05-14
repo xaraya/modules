@@ -18,11 +18,10 @@
   * @return version information of this module
   */
 $modversion['name']           = 'sitecontact';
-$modversion['displayname']    = xarML('Site Contact');
 $modversion['id']             = '890';
 $modversion['version']        = '1.1.0';
-$modversion['displayname']    = xarML('SiteContact');
-$modversion['description']    = xarML('Contact site admin by email');
+$modversion['displayname']    = 'SiteContact';
+$modversion['description']    = 'Contact site admin by email';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
 $modversion['changelog']      = 'xardocs/changelog.txt';

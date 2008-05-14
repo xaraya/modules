@@ -60,6 +60,7 @@ function sitecontact_userapi_respond($args)
            $newadminemail=$customcontact;
     }else {
            $newadminemail='';
+           $customcontact = '';
     }
     
     $data['submit']  = xarML('Submit');
@@ -285,7 +286,8 @@ function sitecontact_userapi_respond($args)
                       'isvalid'        => $isvalid,
                       'invalid'        => $invalid,
                       'return_url'     => $return_url,
-                      'blockurl'       => $blockurl
+                      'blockurl'       => $blockurl,
+                      'customcontact'  => $customcontact	
                      );
 
     if (($isvalid == FALSE) || ($antibotinvalid == TRUE) || ($badcaptcha == TRUE) || is_array($invalid)) {
@@ -413,6 +415,11 @@ function sitecontact_userapi_respond($args)
         $setmail = $formdata['scdefaultemail'];;
     }
     $data['setmail']=$setmail;
+    //now override with specific admin email from location data
+    if (!empty($newadminemail)) {
+        $setmail=$newadminemail;
+        $data['setmail']=$setmail;
+    }
     
     $today = getdate();
     $month = $today['month'];
@@ -534,6 +541,7 @@ function sitecontact_userapi_respond($args)
         } else {
             $docopy = false;
         }
+        
         if ($docopy) { //either they are anon and allowed, or logged in and their email is correct
             /* let's send a copy of the feedback form to the sender
                               * if it is permitted by admin, and the user wants it */

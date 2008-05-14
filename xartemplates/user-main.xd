@@ -52,7 +52,7 @@
 
         <form name="contactform" action="#xarModURL('sitecontact','user','respond')#" method="post" enctype="multipart/form-data" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
 
-                <legend>#$contacttitle#</legend>
+            <legend>#$contacttitle#</legend>
             <div class="xar-form-input-wrapper">
                 <label for="username" class="xar-form-label" title="#xarML('Enter your name')#">
                         <xar:mlstring>Your Name:</xar:mlstring>
