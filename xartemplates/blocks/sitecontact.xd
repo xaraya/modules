@@ -55,7 +55,7 @@
                     <input type="hidden" name="username" id="username" size="40" value="#xarUserGetVar('name')#" />
                     #xarUserGetVar('name')#
                 <xar:else />
-                    <xar:data-input type="textbox" id="username" name="username" value="$namevalue" />&#160;<xar:mlstring>(required)</xar:mlstring>
+                    <xar:data-input type="textbox" id="username" name="username" value="$namevalue" tabindex="1"/>&#160;<xar:mlstring>(required)</xar:mlstring>
                 </xar:if>
             </div>
             <div class="xar-blockform-input-wrapper">
@@ -67,7 +67,7 @@
                    <input type="hidden" name="useremail" id="useremail" value="#xarUserGetVar('email')#" />
                        #xarUserGetVar('email')#
                 <xar:else />
-                   <xar:data-input type="email" id="useremail" name="useremail" value="$emailvalue" />&#160;<xar:mlstring>(required)</xar:mlstring>
+                   <xar:data-input type="email" id="useremail" name="useremail" value="$emailvalue" tabindex="2"/>&#160;<xar:mlstring>(required)</xar:mlstring>
                 </xar:if>
                 <!-- we want a valid email -->
                 <xar:if condition="isset($invalid['useremail']) and !empty($invalid['useremail'])">
@@ -80,7 +80,7 @@
                         <xar:mlstring>Subject:</xar:mlstring>
                 </label>
 
-                <select class="xar-blockinput" id="requesttext" name="requesttext">
+                <select class="xar-blockinput" id="requesttext" name="requesttext" tabindex="3">
                 <xar:foreach in="$optionitems" value="$optionrequest" key="$key" >
 
                     <xar:set name="optionKey">trim($optionrequest[0])</xar:set>
@@ -99,14 +99,14 @@
                 <label for="company" class="xar-blockform-label-short" title="#xarML('Enter your organization')#">
                     <xar:mlstring>Company:</xar:mlstring>
                 </label>
-                <xar:data-input type="textbox" name="company" id="company" size="34" value="$company"/>
+                <xar:data-input type="textbox" name="company" id="company" size="34" value="$company"  tabindex="4"/>
             </div>
             <xar:if condition="$allowccs">
                 <div class="xar-blockform-input-wrapper">
                     <label for="ccrecipients" class="xar-blockform-label-short" title="#xarML('Enter your CC Recipient email list')#">
                         <xar:mlstring>CC:</xar:mlstring>
                     </label>
-                    <xar:data-input type="textbox" name="ccrecipients" id="ccrecipients" size="25" maxlength="150" value=""/>
+                    <xar:data-input type="textbox" name="ccrecipients" id="ccrecipients" size="25" maxlength="150" value=""  tabindex="5"/>
                 </div>
             </xar:if>
 
@@ -115,7 +115,7 @@
                 <label for="bccrecipients" class="xar-blockform-label-short" title="#xarML('Blind copy recipient list')#">
                         <xar:mlstring>BCC:</xar:mlstring>
                 </label>
-                    <xar:data-input type="textbox" name="bccrecipients" id="bccrecipients" size="25" maxlength="150" value=""/>
+                    <xar:data-input type="textbox" name="bccrecipients" id="bccrecipients" size="25" maxlength="150" value="" tabindex="6"/>
 
                 </div>
             </xar:if>
@@ -129,11 +129,12 @@
                         <xar:mlstring>Message:</xar:mlstring>
                 </label>
                 <xar:if condition="isset($usermessage) AND !empty($usermessage)">
-                    <textarea name="usermessage" id="usermessage" rows="4" cols="22">#$usermessage#</textarea>
+                    <textarea name="usermessage" id="usermessage" rows="4" cols="22" tabindex="7">#$usermessage#</textarea>
                 <xar:else />
-                    <textarea name="usermessage" id="usermessage" rows="4" cols="22"></textarea>
+                    <textarea name="usermessage" id="usermessage" rows="4" cols="22"  tabindex="7"></textarea>
                 </xar:if>
             </div>
+            <xar:set name="counter">8</xar:set>
             <xar:if  condition="xarModIsHooked('dynamicdata','sitecontact',$scid) and $showdd" >
                 <xar:if condition="!isset($properties)">
                    <xar:data-getitem name="$properties" module="sitecontact" itemtype="$scid" itemid="0" />
@@ -143,14 +144,16 @@
                     <div class="xar-form-input-wrapper">
                         <xar:data-label property="$properties[$name]" label="id" />
                         <xar:set name="propvalue">$properties[$name]->value</xar:set>
-                        <xar:data-input class="xar-form-textxlong" property="$properties[$name]" value="$propvalue" />
+                        <xar:data-input class="xar-form-textxlong" property="$properties[$name]" value="$propvalue"  tabindex="$counter"/>
                     </div>
+                    <xar:set name="counter">++$counter</xar:set>
                     </xar:foreach>
                 </xar:if>
             </xar:if>
             <xar:if condition="($allowcopy eq 1 and xarUserIsLoggedIn()) or ($allowcopy eq 1 and $allowanoncopy eq 1)">
             <div class="xar-blockform-input-wrapper-after">
-                 <input type="checkbox" name="sendcopy" id="sendcopy" value="1" checked="checked" />
+                <input type="checkbox" name="sendcopy" id="sendcopy" value="1" checked="checked"  tabindex="$counter"/>
+                <xar:set name="counter">++$counter</xar:set>
                 <label for="sendcopy" title="#xarML('Would you like to have a copy of the message sent to your email')#">
                         <xar:mlstring>
                             Copy email to you?
@@ -160,12 +163,9 @@
             </xar:if>
             <xar:if condition="$savedata and $permissioncheck">
                 <div class="xar-blockform-input-wrapper-after">
-                <xar:if condition="$permission">
-                    <input type="checkbox" name="permission" id="permission" value="1" checked="checked" />
-                <xar:else />
-                    <input type="checkbox" name="permission" id="permission" value="1" />
-                </xar:if>
-                     <label for="permission" title="#xarML('May we save your response to this form?')#">
+                   <xar:data-input type="checkbox" name="permission" id="permission"  tabindex="$counter"/>
+                   <xar:set name="counter">++$counter</xar:set>
+                   <label for="permission" title="#xarML('May we save your response to this form?')#">
                         <xar:mlstring>
                             Save your response?
                         </xar:mlstring>
@@ -196,7 +196,8 @@
                             src="#xarModURL('formantibot', 'user', 'image')#"
                             onclick="this.src = this.src + '?' + (new Date()).getTime(); return true;" />
                         <br />
-                        <input type="text" name="antibotcode" id="antibotcode" size="10" value="" maxlength="10"  />
+                        <input type="text" name="antibotcode" id="antibotcode" size="10" value="" maxlength="10"  tabindex="#$counter#" />
+                        <xar:set name="counter">++$counter</xar:set>
                         <xar:mlstring>Please enter the Anti-Bot Code</xar:mlstring>
                         <p class="xar-form-input">
                             <xar:mlstring>Can't read it? Click the image to generate a new code.</xar:mlstring>
@@ -213,10 +214,11 @@
                     <label class="xar-formblock-labelshort">#$antilabel#</label>
                     <xar:set name="cas_antiselect">rand(1, $cas_textcount)</xar:set>
                     <div class="xar-form-container">
-                        <input type="text" name="antiword" id="antiword" size="30" maxlength="10">
+                        <input type="text" name="antiword" id="antiword" size="30" maxlength="10" tabindex="#$counter#" >
                         <xar:set name="rndnum">rand(1,35565 )</xar:set>
                         <xar:set name="imgurl">#xarModURL('formcaptcha','user','antispam',array('antiselect'=>$cas_antiselect,'rnd'=>$rndnum))#</xar:set>
                         <br />#$cas_hintText#
+                        <xar:set name="counter">++$counter</xar:set>
                         <xar:if condition="isset($casmsg)">
                             <br /><span class="xar-error" style="color:red">#$casmsg#</span>
                            </xar:if>
@@ -239,7 +241,7 @@
                    <input type="hidden" name="permissioncheck" id="permissioncheck" value="#$permissioncheck#" />
                    <input type="hidden" name="message" id="message" value="1" />
                    <input type="hidden" name="blockurl" id="blockurl" value="#$blockurl#" />
-                   <input type="submit" value="#xarML('Send')#" />
+                   <input type="submit" value="#xarML('Send')#" tabindex="#$counter#" />
         </div>
       </form>
 </xar:if>
