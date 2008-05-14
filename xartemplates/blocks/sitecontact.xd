@@ -134,21 +134,17 @@
                     <textarea name="usermessage" id="usermessage" rows="4" cols="22"></textarea>
                 </xar:if>
             </div>
-            <xar:if  condition="xarModIsHooked('dynamicdata','sitecontact',$scid)" >
+            <xar:if  condition="xarModIsHooked('dynamicdata','sitecontact',$scid) and $showdd" >
                 <xar:if condition="!isset($properties)">
                    <xar:data-getitem name="$properties" module="sitecontact" itemtype="$scid" itemid="0" />
                 </xar:if>
                 <xar:if condition="isset($properties) and count($properties) gt 0">
                     <xar:foreach in="$properties" key="$name">
-                        <xar:set name="propname">$properties[$name]->name</xar:set>
-                        <xar:set name="proplabel">$properties[$name]->label</xar:set>
-                        <div class="xar-form-input-wrapper">
-                            <label for="#$propname#" class="xar-blockform-label-short" >
-                                #$proplabel#
-                            </label>
-                            <xar:set name="propvalue">$properties[$name]->value</xar:set>
-                            <xar:data-input class="xar-form-textxlong" property="$properties[$name]" value="$propvalue" />
-                        </div>
+                    <div class="xar-form-input-wrapper">
+                        <xar:data-label property="$properties[$name]" label="id" />
+                        <xar:set name="propvalue">$properties[$name]->value</xar:set>
+                        <xar:data-input class="xar-form-textxlong" property="$properties[$name]" value="$propvalue" />
+                    </div>
                     </xar:foreach>
                 </xar:if>
             </xar:if>
