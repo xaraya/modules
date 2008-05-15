@@ -24,8 +24,7 @@ function sitecontact_user_main($args)
     extract($args);
 
     $defaultformid=(int)xarModGetVar('sitecontact','defaultform');
-    if (!isset($customcontact) ) $customcontact='';
-    
+   
     if(!xarVarFetch('company',       'str:1:',  $company,        NULL,    XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if(!xarVarFetch('message',       'isset',   $message,        NULL,    XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('antibotinvalid','int:0:1', $antibotinvalid, NULL,    XARVAR_NOT_REQUIRED)) {return;}
@@ -38,7 +37,7 @@ function sitecontact_user_main($args)
     if (!xarVarFetch('userreferer',  'str:1:',  $userreferer,    '',      XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('casmsg',       'str:1',   $casmsg,         '',      XARVAR_NOT_REQUIRED)) {return;} //formcaptcha
     if (!xarVarFetch('submitted',    'int:0:1', $submitted,      0,       XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('customcontact', 'str:0:', $customcontact,  $customcontact,    XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+    if (!xarVarFetch('customcontact', 'str:0:', $customcontact,  '',    XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     $formdata=array();
 
     if (isset($scform) && !empty($scform)) $sctypename = $scform; //provide alternate entry name
@@ -201,10 +200,13 @@ function sitecontact_user_main($args)
     }
     $data['scform']=$data['sctypename'];
     //include custom functions for preprocessing data
-    $customfunc = 'modules/sitecontact/xarworkflowapi/'.$sctypename.'.php';
+
+    $customfunc = 'modules/sitecontact/xarworkflowapi/'.$data['sctypename'].'.php';
+
     if (file_exists($customfunc)) {
          include_once($customfunc);
     }
+
     //backward compatibility
     if (xarModIsAvailable('formantibot')) {
         $data['AntiBot_Available'] = TRUE;

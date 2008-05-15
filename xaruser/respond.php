@@ -78,7 +78,10 @@ function sitecontact_user_respond($args)
         $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $defaultformid));
     }
     $formdata=$formdata[0];
-
+    $customfunc = 'modules/sitecontact/xarworkflowapi/'.$formdata['sctypename'].'.php';
+    if (file_exists($customfunc)) {
+        include_once($customfunc);
+    }
     if ($formdata['scactive'] !=1) { //form but not active
         $msg = xarML('The form requested is not available');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
@@ -129,13 +132,14 @@ function sitecontact_user_respond($args)
                  'return_url'      => $return_url,
                  'blockurl'        => $blockurl
                 );
+                
 
     $checkdata = xarModAPIFunc('sitecontact','user','respond', $item);
     $sctypename=$formdata['sctypename'];
 
     if ($checkdata['isvalid'] != TRUE) {
         // we need to include this again .... we cannot assume we have all vars
-        $customfunc = 'modules/sitecontact/xarworkflowapi/'.$sctypename.'.php';
+        $customfunc = 'modules/sitecontact/xarworkflowapi/'.$formdata['sctypename'].'.php';
         if (file_exists($customfunc)) {
             include_once($customfunc);
         }

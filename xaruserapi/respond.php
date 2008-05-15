@@ -16,7 +16,7 @@
  * 
  * @ Author Jo Dalle Nogare <icedlava@2skies.com>
  * @ Param username, useremail, requesttext,company, usermessage,useripaddress,userreferer,altmail
- * @ param customemail (optional) will be used if passed in and override the default admin email set for the form
+ * @ param customcontact (optional) will be used if passed in and override the default admin email set for the form
  */
   
 
@@ -49,12 +49,18 @@ function sitecontact_userapi_respond($args)
         $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $defaultformid));
     }
     $formdata=$formdata[0];
-
+	
     if ($formdata['scactive'] !=1) { //form but not active
         $msg = xarML('The form requested is not available');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
+    
+    $customfunc = 'modules/sitecontact/xarworkflowapi/'.$formdata['sctypename'].'.php';
+    if (file_exists($customfunc)) {
+            include_once($customfunc);
+    }
+
     //we use the value customcontact field if it exists - this overrides the set admin email.
     if (isset($customcontact) && !empty($customcontact)){
            $newadminemail=$customcontact;
@@ -420,7 +426,7 @@ function sitecontact_userapi_respond($args)
         $setmail=$newadminemail;
         $data['setmail']=$setmail;
     }
-    
+
     $today = getdate();
     $month = $today['month'];
     $mday  = $today['mday'];
@@ -523,7 +529,6 @@ function sitecontact_userapi_respond($args)
         xarErrorHandled();
         $usertextmessage= xarTplModule('sitecontact', 'user', 'usermail-text',$userhtmlarray);
     }
-
 
 
     if (($allowcopy ) and ($sendcopy)) { //the user wants to copy to self and it is allowed by admin
