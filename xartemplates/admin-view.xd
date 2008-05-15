@@ -86,11 +86,6 @@
         </xar:loop>
                 <tr>
                     <td colspan="7" class="xar-norm xar-align-center" >
-<script type="text/javascript"><![CDATA[
-    document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewfiles'],true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
-    document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewfiles'],false)\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
-]]>
-</script>
              #$pager#
                     </td>
                 </tr>
@@ -98,8 +93,11 @@
                     <td colspan="7" >
                         <table summary="Commands" width="100%" border="0" cellpadding="0" cellspacing="0" class="xar-norm">
                         <tr>
-                            <td width="100%">
-                                Change selected files to:&nbsp;
+                            <td>
+                              <xar:mlstring>
+                                Change selected files to:
+                              </xar:mlstring>
+                              <span class="xar-nowrap">
                                 <select name="action" id="action">
                                     <xar:foreach in="$filters['status']" key="$key" value="$status">
                                         <xar:if condition="$key eq '0'">
@@ -112,13 +110,21 @@
                                     </xar:foreach>
                                 </select>
                                 <input type="submit" name="fileDo" id="file_change" value="#xarML('Change')#"/>
+                              </span>
+                            </td>
+                            <td>
+<script language="JavaScript" type="text/javascript">
+    document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewfiles'],true)\" class=\"xar-nowrap\"><xar:mlstring>Check All</xar:mlstring></a> | ");
+    document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewfiles'],false)\" class=\"xar-nowrap\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
+</script>
                             </td>
                         </tr>
                         </table>
                     </td>
                 </tr>
             </form>
-            <tr>
+            <xar:sec mask="DeleteUploads" catch="false">
+              <tr>
                 <td colspan="7" style="text-align:right;">
                     <xar:if condition="!xarModGetVar('uploads','file.auto-purge')">
                     <form action="#xarModUrl('uploads','admin','purge_rejected')#" method="post">
@@ -129,7 +135,8 @@
                         &nbsp;
                     </xar:if>
                 </td>
-            </tr>
+              </tr>
+            </xar:sec>
         <xar:else />
             <tr>
                 <td class="xar-norm" colspan="7" align="center">

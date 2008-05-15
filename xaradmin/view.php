@@ -152,7 +152,7 @@ function uploads_admin_view( )
                                           array('fileId' => array_keys($items)));
     }
 
-    if (xarSecurityCheck('EditUploads', 0)) {
+    if (xarSecurityCheck('DeleteUploads', 0)) {
 
         $data['diskUsage']['stored_size_filtered'] = xarModAPIFunc('uploads', 'user', 'db_diskusage', $filter);
         $data['diskUsage']['stored_size_total']    = xarModAPIFunc('uploads', 'user', 'db_diskusage');
