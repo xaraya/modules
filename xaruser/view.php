@@ -17,11 +17,11 @@ function headlines_user_view($args)
 
     // Security Check
     if (!xarSecurityCheck('ReadHeadlines')) return;
-	if (!xarVarFetch('hid', 'id', $hid, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hid', 'id', $hid, NULL, XARVAR_NOT_REQUIRED)) return;
     // TODO: optional force cache refresh, admin only option
     if (!xarVarFetch('renew', 'isset', $renew, 0, XARVAR_NOT_REQUIRED)) return; 
-	extract($args);	
-	if (!isset($hid) || empty($hid) || !is_numeric($hid)) {
+    extract($args); 
+    if (!isset($hid) || empty($hid) || !is_numeric($hid)) {
         $msg = xarML('No headline id specified.');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;

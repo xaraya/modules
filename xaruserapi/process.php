@@ -45,7 +45,7 @@ function headlines_userapi_process($args)
 
     if (!$feeddata) {
         $msg = xarML('There is a problem with this feed.');
-		return array('warning' => $msg);
+        return array('warning' => $msg);
     }
 
     // Check what makes a headline unique
@@ -143,7 +143,7 @@ function headlines_userapi_process($args)
 
     } else {
         $msg = xarML('There is a problem with this feed.');
-		return array('warning' => $msg);
+        return array('warning' => $msg);
     }
 
     $data['feedcontent'] = $feedcontent;

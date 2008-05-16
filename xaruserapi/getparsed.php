@@ -113,8 +113,8 @@ function headlines_userapi_getparsed($args)
     // display the total feed items we actually found
     $data['count'] = count($data['feedcontent']);
     if (!empty($numitems)) {
-	    // trim the array to just the items we were asked for 
-	    $data['feedcontent'] = array_slice($data['feedcontent'], 0, $numitems);
+        // trim the array to just the items we were asked for 
+        $data['feedcontent'] = array_slice($data['feedcontent'], 0, $numitems);
     }
     // display the total feed items we're actually displaying
     $data['numitems'] = count($data['feedcontent']);

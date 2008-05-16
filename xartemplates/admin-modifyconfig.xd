@@ -126,7 +126,7 @@
                 <label for="showcomments" class="xar-form-label">
                     <xar:mlstring>Show number of comments</xar:mlstring>
                 </label>
-                <xar:if condition="xarModIsAvailable('comments') && xarModIsHooked('comments', 'headlines')">
+                <xar:if condition="xarModIsAvailable('comments') and xarModIsHooked('comments', 'headlines')">
                     <xar:if condition="$showcomments">
                     <input type="checkbox" value="1" name="showcomments" id="showcomments" checked="checked" />
                     <xar:else />
@@ -143,7 +143,8 @@
                 <label for="showratings" class="xar-form-label">
                     <xar:mlstring>Show rating</xar:mlstring>
                 </label>
-                <xar:if condition="xarModIsAvailable('ratings') && xarModIsHooked('ratings', 'headlines')">
+                <xar:if condition="xarModIsAvailable('ratings') and xarModIsHooked('ratings', 
+'headlines')">
                     <xar:if condition="$showratings">
                     <input type="checkbox" value="1" name="showratings" id="showratings" checked="checked" />
                     <xar:else />
@@ -160,7 +161,7 @@
                 <label for="showhitcount" class="xar-form-label">
                     <xar:mlstring>Show number of hits</xar:mlstring>
                 </label>
-                <xar:if condition="xarModIsAvailable('hitcount') && xarModIsHooked('hitcount', 'headlines')">
+                <xar:if condition="xarModIsAvailable('hitcount') and xarModIsHooked('hitcount', 'headlines')">
                     <xar:if condition="$showhitcount">
                     <input type="checkbox" value="1" name="showhitcount" id="showhitcount" checked="checked" />
                     <xar:else />
@@ -177,7 +178,7 @@
                 <label for="showkeywords" class="xar-form-label">
                     <xar:mlstring>Show keywords</xar:mlstring>
                 </label>
-                <xar:if condition="xarModIsAvailable('keywords') && xarModIsHooked('keywords', 'headlines')">
+                <xar:if condition="xarModIsAvailable('keywords') and xarModIsHooked('keywords', 'headlines')">
                     <xar:if condition="$showkeywords">
                     <input type="checkbox" value="1" name="showkeywords" id="showkeywords" checked="checked" />
                     <xar:else />
