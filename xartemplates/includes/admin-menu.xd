@@ -23,7 +23,7 @@
                 <xar:set name="tabclass">''</xar:set>
             </xar:if>
             <dd class="#$tabclass#">
-                <a href="&xar-modurl-uploads-admin-get_files;" >
+                <a href="#xarModURL('uploads','admin','get_files')#" >
                     <xar:mlstring>Add File</xar:mlstring>
                 </a>
             </dd>
