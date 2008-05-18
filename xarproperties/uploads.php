@@ -86,6 +86,7 @@ class UploadProperty extends FileUploadProperty
     function validateValue($value = null)
     {
         // TODO: move some of this to the parent
+        // problematic, because the field names are different here and for the parent
 //        if (!parent::validateValue($value)) return false;
 
         if (isset($this->fieldname)) $name = $this->fieldname;
