@@ -195,10 +195,11 @@
                             <span class="xar-error">
                                 <xar:mlstring>Anti-bot code entry was incorrect - please try again...</xar:mlstring>
                             </span>
+                            <br />
                         </xar:if>
-                        <image id="antibotimage" name="antibotimage"
-                            src="#xarModURL('formantibot', 'user', 'image')#"
-                            onclick="this.src = this.src + '?' + (new Date()).getTime(); return true;" />
+                        <img id="antibotimage" name="antibotimage"                        
+                            src="#xarModURL('formantibot', 'user', 'image')#" 
+                            onclick="this.src = this.src + '?' + (new Date()).getTime(); return true;" alt="antibotimage" title="#xarML('secure antibot image')#"/>
                         <br />
                         <input type="text" name="antibotcode" id="antibotcode" size="10" value="" maxlength="10"  />
                         <xar:mlstring>Please enter the Anti-Bot Code</xar:mlstring>

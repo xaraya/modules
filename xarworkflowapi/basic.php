@@ -26,10 +26,11 @@
         $customname= $custom;
   $data['custom'] = $custom;
     }
-} else { //if we are not in the main user function then just grab the name that has been set
+} elseif (isset($customname) && !empty($customname)) { 
+   //if we are not in the main user function then just grab the name that has been set if one is set
    $customname = xarSessionGetVar('sitecontactcustom'); 
    $userinfo = xarModAPIFunc('roles','user','get',array('uname'=>$customname));
    //provide some variables so we carry our required field through to the api
-   $customcontact =  $userinfo['email'];
+   $customcontact =  isset($userinfo['email'])?$userinfo['email']:'';
 }
 ?>
