@@ -1,7 +1,7 @@
 <?php
 /**
  * @package modules
- * @copyright (C) 2005-2007 The Digital Development Foundation
+ * @copyright (C) 2005-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,6 +12,7 @@
  * initialise the Recommend Module
  * @author John Cox
  * @author jojodee
+ * @return mixed upgrade instruction
  */
 function recommend_init()
 {
@@ -34,6 +35,7 @@ Site URL: %%siteurl%%';
     // Register Masks
     xarRegisterMask('OverviewRecommend','All','recommend','All','All','ACCESS_OVERVIEW');
     xarRegisterMask('EditRecommend','All','recommend','All','All','ACCESS_EDIT');
+    xarRegisterMask('ReadRecommend','All','recommend','All','All','ACCESS_READ');
 
     xarTplRegisterTag(
         'recommend', 'recommend-sendtofriend', array(),
@@ -46,6 +48,8 @@ Site URL: %%siteurl%%';
 
 /**
  * upgrade the send to friend module from an old version
+ * @param string oldversion
+ * @return bool true if upgrade was successfull
  */
 function recommend_upgrade($oldversion)
 {
@@ -181,7 +185,22 @@ function recommend_delete()
     xarRemoveMasks('recommend');
     xarRemoveInstances('recommend');
     xarTplUnregisterTag('recommend-sendtofriend');
+     // Get the database information
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    xarDBLoadTableMaintenanceAPI();
+    // unregister the hook for storing hook data
+            if (!xarModUnRegisterHook('item', 'create', 'API',
+                                   'recommend', 'admin', 'credithook')) {
+                return false;
+            }
+    // Generate the SQL to drop the table using the API
+    $query = xarDBDropTable($xartable['recommend_recipients'] );
+    if (empty($query)) return; // throw back
 
+    // Drop the table and send exception if returns false.
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
     return true;
 }
 
