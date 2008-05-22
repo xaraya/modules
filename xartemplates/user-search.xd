@@ -55,7 +55,7 @@
                     <xar:break />
                   </xar:if>
             </xar:while>
-            </xd>
+            </td>
             <xar:if condition="empty($publications)">
                 <xar:break />
             </xar:if>
