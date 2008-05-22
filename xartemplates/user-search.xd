@@ -118,13 +118,24 @@
     <xar:if condition="count($categories) eq 0">
         <table border="0" cellpadding="4" cellspacing="0">
           <xar:set name="i">0</xar:set>
+          <xar:while condition="1 eq  1">
           <tr>
-            <xar:foreach in="$categories" value="$cat">
-              <td valign="top" align="right">#$cat['cattitle']# : </td>
-              <td valign="top">#$cat['catselect']# </td>
-              <xar:if condition="$i++ and $i % 2 eq 0"></tr><tr></xar:if>
-          </xar:foreach>
+            <xar:while condition="1 eq  1">
+                <xar:if condition="empty($categories)">
+                    <xar:break />
+                </xar:if>
+                <xar:set name="cat">array_pop($categories)</xar:set>
+                  <td valign="top" align="right">#$cat['cattitle']# : </td>
+                  <td valign="top">#$cat['catselect']# </td>
+                  <xar:if condition="$i++ and $i % 2 eq 0">
+                    <xar:break />
+                  </xar:if>
+            </xar:while>
           </tr>
+            <xar:if condition="empty($categories)">
+                <xar:break />
+            </xar:if>
+          </xar:while>
         </table>
     </xar:if>
     </form>
