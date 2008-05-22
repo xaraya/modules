@@ -62,7 +62,7 @@ function articles_admin_showpropval($args)
         if (!xarVarFetch($data['name'],'isset',$value,NULL,XARVAR_NOT_REQUIRED)) return;
 
         // pass the current value as validation rule
-        $data['validation'] = isset($value) ? $value : '';
+        $data['configuration'] = isset($value) ? $value : '';
 
         $isvalid = $property->updateConfiguration($data);
 
