@@ -11,7 +11,7 @@
     <h2>
         <xar:ml>
             <xar:mlstring>
-                Validation for #(1) in #(2)
+                Configuration for #(1) in #(2)
             </xar:mlstring>
             <xar:mlvar>
                 #$label#
@@ -59,10 +59,10 @@
                 </tr>
                 <tr align="left" valign="middle">
                     <td align="right">
-                        <strong>Validation :</strong>
+                        <strong>Configuration :</strong>
                     </td>
                     <td align="left">
-                        #$validation#
+                        #$configuration#
                     </td>
                 </tr>
             </table>
