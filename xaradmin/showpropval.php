@@ -67,14 +67,14 @@ function articles_admin_showpropval($args)
         $isvalid = $property->updateConfiguration($data);
 
         if ($isvalid) {
-            // store the updated validation rule back in the value
-            $validation = $property->validation;
+            // store the updated configuration rule back in the value
+            $configuration = $property->configuration;
             if (!empty($confirm)) {
                 if (!xarSecConfirmAuthKey()) return;
 
                 $descr = $pubtypes[$ptid]['descr'];
                 $config = $pubtypes[$ptid]['config'];
-                $config[$field]['validation'] = $validation;
+                $config[$field]['validation'] = $configuration;
 
                 if (!xarModAPIFunc('articles', 'admin', 'updatepubtype',
                                    array('ptid' => $ptid,
