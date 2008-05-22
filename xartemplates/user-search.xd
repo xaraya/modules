@@ -107,27 +107,26 @@
         <input type="checkbox" name="by" id="filterbycat" value="cat" onChange="javascript:this.form.submit();" />
         <label for="filterbycat"><xar:mlstring>Filter by category</xar:mlstring></label>
       </td>
-  </tr>
-</table>
-<xar:else />
-<td>
-  <input type="checkbox" name="by" id="filterbycat" value="cat" onChange="javascript:this.form.submit();" checked="checked" />
-  <label for="filterbycat"><xar:mlstring>Filter by category</xar:mlstring></label></td>
-</tr>
-</table>
+    <xar:else />
+    <td>
+        <input type="checkbox" name="by" id="filterbycat" value="cat" onChange="javascript:this.form.submit();" checked="checked" />
+        <label for="filterbycat"><xar:mlstring>Filter by category</xar:mlstring></label></td>
+    <(xar:if>
+    </tr>
+    </table>
 
-<table border="0" cellpadding="4" cellspacing="0">
-  <xar:set name="i">0</xar:set>
-  <tr>
-    <xar:foreach in="$categories" value="$cat">
-      <td valign="top" align="right">#$cat['cattitle']# : </td>
-      <td valign="top">#$cat['catselect']# </td>
-      <xar:if condition="$i++ and $i % 2 eq 0"></tr><tr></xar:if>
-  </xar:foreach>
-  </tr>
-</table>
-
-</xar:if>
+    <xar:if condition="count($categories) eq 0">
+        <table border="0" cellpadding="4" cellspacing="0">
+          <xar:set name="i">0</xar:set>
+          <tr>
+            <xar:foreach in="$categories" value="$cat">
+              <td valign="top" align="right">#$cat['cattitle']# : </td>
+              <td valign="top">#$cat['catselect']# </td>
+              <xar:if condition="$i++ and $i % 2 eq 0"></tr><tr></xar:if>
+          </xar:foreach>
+          </tr>
+        </table>
+    </xar:if>
     </form>
 
 <xar:foreach in="$results" value="$result">
