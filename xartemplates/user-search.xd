@@ -7,8 +7,8 @@
     <xar:set name="fulltextfields">explode(',',$fulltext)</xar:set>
 </xar:if>
 
-<table border="0" cellpadding="4" cellspacing="0">
 <form method="post" action="&xar-modurl-articles-user-search;">
+<table border="0" cellpadding="4" cellspacing="0">
   <xar:if condition="empty($ishooked)">
         <tr>
           <td><label for="q"><xar:mlstring>Search for</xar:mlstring></label></td>
@@ -42,7 +42,8 @@
       <table border="0" cellpadding="0" cellspacing="3"><tr><td valign="top"><xar:set name="i">0</xar:set>
         <input type="hidden" name="ptids[]" value="0"/>
         <xar:foreach in="$publications" value="$pubtype">
-          <input type="checkbox" name="ptids[]" id="#$pubtype['pubdescr']#" value="#$pubtype['pubid']#"#$pubtype['pubchecked']# />
+<!--          <input type="checkbox" name="ptids[]" id="#$pubtype['pubdescr']#" value="#$pubtype['pubid']#"#$pubtype['pubchecked']# /> -->
+          <input type="checkbox" name="ptids[]" id="#$pubtype['pubdescr']#" value="#$pubtype['pubid']#" />
           <label for="#$pubtype['pubdescr']#">#$pubtype['pubdescr']#</label> <br />
           <xar:if condition="$i++ and $i % 2 eq 0"></td><td valign="top"></xar:if>
         </xar:foreach>
