@@ -39,7 +39,8 @@
   <tr>
     <td><xar:mlstring>Publications</xar:mlstring></td>
     <td>
-      <table border="0" cellpadding="0" cellspacing="3"><tr><td valign="top"><xar:set name="i">0</xar:set>
+      <table border="0" cellpadding="0" cellspacing="3">
+        <xar:set name="i">0</xar:set>
         <tr>
         <input type="hidden" name="ptids[]" value="0"/>
         <xar:while condition="1 eq  1">
