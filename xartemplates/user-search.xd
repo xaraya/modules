@@ -42,8 +42,8 @@
       <table border="0" cellpadding="0" cellspacing="3"><tr><td valign="top"><xar:set name="i">0</xar:set>
         <input type="hidden" name="ptids[]" value="0"/>
         <xar:while condition="1 eq  1">
+            <td valign="top">
             <xar:while condition="1 eq  1">
-                <td valign="top">
                 <xar:if condition="empty($publications)">
                     <xar:break />
                 </xar:if>
