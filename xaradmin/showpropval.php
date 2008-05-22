@@ -109,10 +109,10 @@ function articles_admin_showpropval($args)
     } else {
         $value = null;
     }
-    $data['validation'] = $value;
+    $data['configuration'] = $value;
 
     // call its showValidation() method and return
-    $data['showval'] = $property->showValidation($data);
+    $data['showval'] = $property->showConfiguration($data);
 
     $data['ptid'] = $ptid;
     $data['field'] = $field;
