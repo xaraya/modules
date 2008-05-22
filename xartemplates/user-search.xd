@@ -41,13 +41,26 @@
     <td>
       <table border="0" cellpadding="0" cellspacing="3"><tr><td valign="top"><xar:set name="i">0</xar:set>
         <input type="hidden" name="ptids[]" value="0"/>
-        <xar:foreach in="$publications" value="$pubtype">
-<!--          <input type="checkbox" name="ptids[]" id="#$pubtype['pubdescr']#" value="#$pubtype['pubid']#"#$pubtype['pubchecked']# /> -->
-          <input type="checkbox" name="ptids[]" id="#$pubtype['pubdescr']#" value="#$pubtype['pubid']#" />
-          <label for="#$pubtype['pubdescr']#">#$pubtype['pubdescr']#</label> <br />
-          <xar:if condition="$i++ and $i % 2 eq 0"></td><td valign="top"></xar:if>
-        </xar:foreach>
-      </td></tr></table>
+        <xar:while condition="1 eq  1">
+            <xar:while condition="1 eq  1">
+                <td valign="top">
+                <xar:if condition="empty($publications)">
+                    <xar:break />
+                </xar:if>
+                <xar:set name="pubtype">array_pop($publications)</xar:set>
+        <!--          <input type="checkbox" name="ptids[]" id="#$pubtype['pubdescr']#" value="#$pubtype['pubid']#"#$pubtype['pubchecked']# /> -->
+                  <input type="checkbox" name="ptids[]" id="#$pubtype['pubdescr']#" value="#$pubtype['pubid']#" />
+                  <label for="#$pubtype['pubdescr']#">#$pubtype['pubdescr']#</label> <br />
+                  <xar:if condition="$i++ and $i % 2 eq 0">
+                    <xar:break />
+                  </xar:if>
+            </xar:while>
+            </xd>
+            <xar:if condition="empty($publications)">
+                <xar:break />
+            </xar:if>
+        </xar:while>
+      </tr></table>
     </td>
   </tr>
   <tr>
