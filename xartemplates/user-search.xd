@@ -8,8 +8,8 @@
 </xar:if>
 
 <table border="0" cellpadding="4" cellspacing="0">
+<form method="post" action="&xar-modurl-articles-user-search;">
   <xar:if condition="empty($ishooked)">
-    <form method="post" action="&xar-modurl-articles-user-search;">
         <tr>
           <td><label for="q"><xar:mlstring>Search for</xar:mlstring></label></td>
           <td><input type="text" name="q" id="q" value="#$q#" size="20" />
@@ -23,37 +23,16 @@
         <tr>
           <td><label for="searchtype"><xar:mlstring>Search type</xar:mlstring></label></td>
           <td>
-            <select name="searchtype" id="searchtype">
-              <option value=""></option>
-              <xar:if condition="!empty($searchtype) and $searchtype eq 'start'">
-                <option value="start" selected="selected"><xar:mlstring>starts with</xar:mlstring></option>
-                <xar:else/>
-                <option value="start"><xar:mlstring>starts with</xar:mlstring></option>
-              </xar:if>
-              <xar:if condition="!empty($searchtype) and $searchtype eq 'end'">
-                <option value="end" selected="selected"><xar:mlstring>ends with</xar:mlstring></option>
-                <xar:else/>
-                <option value="end"><xar:mlstring>ends with</xar:mlstring></option>
-              </xar:if>
-              <xar:if condition="!empty($searchtype) and $searchtype eq 'eq'">
-                <option value="eq" selected="selected"><xar:mlstring>equal to</xar:mlstring></option>
-                <xar:else/>
-                <option value="eq"><xar:mlstring>equal to</xar:mlstring></option>
-              </xar:if>
-              <xar:comment> Use MySQL full-text search </xar:comment>
-              <xar:if condition="!empty($fulltext)">
-                <xar:if condition="!empty($searchtype) and $searchtype eq 'fulltext'">
-                  <option value="fulltext" selected="selected"><xar:mlstring>full-text</xar:mlstring></option>
-                  <xar:else/>
-                  <option value="fulltext"><xar:mlstring>full-text</xar:mlstring></option>
-                </xar:if>
-                <xar:if condition="!empty($searchtype) and $searchtype eq 'fulltext boolean'">
-                  <option value="fulltext boolean" selected="selected"><xar:mlstring>full-text boolean</xar:mlstring></option>
-                  <xar:else/>
-                  <option value="fulltext boolean"><xar:mlstring>full-text boolean</xar:mlstring></option>
-                </xar:if>
-              </xar:if>
-            </select>
+            <xar:set name="options">
+                array(
+                    array('id' => 'start', 'name' => xarML('starts with')),
+                    array('id' => 'end', 'name' => xarML('ends with')),
+                    array('id' => 'eq', 'name' => xarML('equal to')),
+                    array('id' => 'fulltext', 'name' => xarML('full-text')),
+                    array('id' => 'fulltext boolean', 'name' => xarML('full-text boolean')),
+                )             
+            </xar:set>
+            <xar:data-input name="searchtype" options="$options" value="$searchtype" />
           </td>
         </tr>
   </xar:if>
@@ -133,10 +112,7 @@
 </table>
 
 </xar:if>
-<xar:if condition="empty($ishooked)">
-   <!-- </div>-->
     </form>
-</xar:if>
 
 <xar:foreach in="$results" value="$result">
   <h3>#$result['description']#:</h3>
