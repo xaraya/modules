@@ -111,7 +111,7 @@
     <td>
         <input type="checkbox" name="by" id="filterbycat" value="cat" onChange="javascript:this.form.submit();" checked="checked" />
         <label for="filterbycat"><xar:mlstring>Filter by category</xar:mlstring></label></td>
-    <(xar:if>
+    </xar:if>
     </tr>
     </table>
 
