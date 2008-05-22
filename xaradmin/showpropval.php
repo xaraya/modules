@@ -111,7 +111,7 @@ function articles_admin_showpropval($args)
     }
     $data['configuration'] = $value;
 
-    // call its showValidation() method and return
+    // call its showConfiguration() method and return
     $data['showval'] = $property->showConfiguration($data);
 
     $data['ptid'] = $ptid;
