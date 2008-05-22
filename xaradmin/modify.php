@@ -109,7 +109,7 @@ function articles_admin_modify($args)
         $input['type'] = $value['format'];
         $input['value'] = $article[$field];
         if (isset($value['validation'])) {
-            $input['validation'] = $value['validation'];
+            $input['configuration'] = $value['validation'];
         }
 
         if ($input['type'] == 'fileupload' || $input['type'] == 'textupload' ) {
