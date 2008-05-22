@@ -74,7 +74,7 @@ function articles_admin_update()
             $properties[$field] = xarModAPIFunc('dynamicdata','user','getproperty',
                                                  array('name' => $field,
                                                        'type' => $value['format'],
-                                                       'validation' => $value['validation'],
+                                                       'configuration' => $value['validation'],
                                                        'value' => $article[$field],
                                                        // fake DD property from articles (for now)
                                                        '_moduleid' => $modid,
