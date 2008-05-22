@@ -64,7 +64,7 @@ function articles_admin_showpropval($args)
         // pass the current value as validation rule
         $data['validation'] = isset($value) ? $value : '';
 
-        $isvalid = $property->updateValidation($data);
+        $isvalid = $property->updateConfiguration($data);
 
         if ($isvalid) {
             // store the updated validation rule back in the value
