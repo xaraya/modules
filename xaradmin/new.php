@@ -163,7 +163,7 @@ function articles_admin_new($args)
                 $input['value'] = '';
             }
             if (isset($value['validation'])) {
-                $input['validation'] = $value['validation'];
+                $input['configuration'] = $value['validation'];
             }
 
             if ($input['type'] == 'fileupload' || $input['type'] == 'textupload' ) {
