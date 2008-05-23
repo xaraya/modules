@@ -1,0 +1,59 @@
+/**
+ * Tab menu - clickable tabs at the top
+ */
+div.tabwrapper div.tabmenu {
+    position: relative;
+    border-bottom: 1px solid #8B5CB8;
+    border-top: 1px solid #ffffff; /* Stops the contents from breaking out */
+    width: 100%;
+    float: left;
+}
+div.tabwrapper div.tabmenu ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+div.tabwrapper div.tabmenu ul li {
+    float: left;
+    display: block;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+div.tabwrapper div.tabmenu ul li a {
+    display: block;
+    vertical-align: middle;
+    position: relative;
+    top: 1px;
+    margin-left: 2px;
+    margin-right: 2px;
+    border-width: 1px 1px 0;
+    border-style: solid;
+    border-color: #999999;
+    border-bottom: 1px solid #8B5CB8;
+    padding: 1em;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+div.tabwrapper div.tabmenu ul li a.active {
+    border-color: #8B5CB8;
+    border-bottom-color: #ffffff;
+}
+
+
+/**
+ * Tab content - the bottom area 
+ */
+div.tabwrapper div.tabcontent div {
+    /*display: none;*/
+    position: relative;
+    clear: both;
+    overflow: auto;
+    border-width: 0 1px 1px;
+    border-style: solid;
+    border-color: #8B5CB8;
+    padding: 5px;
+}
+div.tabwrapper div.tabcontent div.active {
+    /*display: block;*/
+}

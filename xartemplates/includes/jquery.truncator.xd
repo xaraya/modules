@@ -1,0 +1,33 @@
+<xar:comment>
+    Initialise the nifty corners cube tool.
+</xar:comment>
+
+<xar:comment>
+    Make sure jQuery is going to be loaded.
+</xar:comment>
+
+<xar:template file="jquery" module="jquery" />
+
+<xar:comment>
+    Required stylesheet.
+</xar:comment>
+
+<xar:style file='nifty' scope="module" module="jquery" />
+
+<xar:comment>
+    Load the main plugin.
+</xar:comment>
+
+<xar:base-include-javascript filename="jquery.truncator.js" module="jquery" />
+
+<xar:comment>
+    Handle the selector and options.
+</xar:comment>
+
+<xar:if condition="!empty($selector)">
+    <xar:if condition="!empty($options)">
+        <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').truncate('$options');});" />
+    <xar:else />
+        <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').truncate('');});" />
+    </xar:if>
+</xar:if>

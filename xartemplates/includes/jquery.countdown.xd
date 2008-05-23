@@ -1,0 +1,33 @@
+<xar:comment>
+    Initialise the jquery.countdown plugin.
+    See http://keith-wood.name/countdown.html for details of this plugin
+</xar:comment>
+
+<xar:comment>
+    Make sure jQuery is going to be loaded.
+    Do this through another template that can keep track of status,
+    and perhaps be used to switch between different versions and allow
+    global options to be introduced.
+</xar:comment>
+
+<xar:template file="jquery" module="jquery" />
+
+<xar:comment>
+    Load the stylesheet.
+</xar:comment>
+
+<xar:style file='jquery.countdown' scope="module" module="jquery" />
+
+<xar:comment>
+    Load the javascript.
+</xar:comment>
+
+<xar:base-include-javascript filename="jquery.countdown.pack.js" module="jquery" />
+
+<xar:if condition="!empty($selector)">
+    <xar:if condition="!empty($options)">
+        <xar:base-include-javascript type="code" code="jQuery(function(){jQuery('$selector').countdown({ $options });});" />
+    <xar:else />
+        <xar:base-include-javascript type="code" code="jQuery(function(){jQuery('$selector').countdown();});" />
+    </xar:if>
+</xar:if>

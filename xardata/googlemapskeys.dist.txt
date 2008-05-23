@@ -10,6 +10,8 @@
 ; and add your own keys and matching patterns. Upgrades to this module
 ; will not overwrite your renamed keys file.
 ;
+; Note you need to include the protocol (e.g. http://) in the pattern, or use a '*' wildcard.
+;
 
 [keypatterns]
 
@@ -17,8 +19,10 @@
 ; Example patterns and keys.
 ;
 
-abc = 123
+http://abc/123 = 123456789
 *example.com/* = uIRumHCPABQIAAAAdoSaqZmI2Pjv5FGRkbJbNSsoYcBQ-BvSdlAcKjuBmKFbygMxv3zRUbENN8hSdo6kAeQUpX
+*demo.xaraya.com = ABQIAAAAdI2uIRumbNSsoSaqZmoYcBQ3JYEHaJ5-wOxoZ05vbXCJ_ztx-hTBo5q1FRLsG5CJusozIfVZR0KaYA
+*www.xaraya.com = ABQIAAAAdI2uIRumbNSsoSaqZmoYcBR77wBQhZHEXvjAKtd4KSBSIO_wMhSnHGQbF4H2cFyJrECqGf3ZH8ruNg
 
 ;
 ; Default catch-all.

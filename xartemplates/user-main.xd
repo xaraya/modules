@@ -266,8 +266,8 @@
     <p><xar:mlstring>Note also that block elements (e.g. &lt;p&gt;) inside the container <strong>must</strong> be given a height and width - even if 100% - since the width seems to be reset on <em>some</em> browsers once cycle starts operating.</xar:mlstring></p>
 
     <xar:template file="jquery.cycle" module="jquery" subdata="array('selector'=&gt;'div#cycle1','options'=&gt;'')" />
-    <xar:base-include-javascript type="code" code="jQuery(function(){jQuery('div#cycle2').cycle({fx: 'turnDown', delay: -3000, easing: 'easeOutBounce'});});" />
-    <xar:base-include-javascript type="code" code="jQuery(function(){jQuery('div#cycle3').cycle({fx: 'shuffle', delay: -3000});});" />
+    <xar:base-include-javascript type="code" code="jQuery(function(){jQuery('div#cycle2').cycle({fx: 'turnDown', delay: -6000, easing: 'easeOutBounce'});});" />
+    <xar:base-include-javascript type="code" code="jQuery(function(){jQuery('div#cycle3').cycle({fx: 'shuffle', delay: -6000});});" />
 
     <div>
         <xar:comment>
@@ -334,4 +334,49 @@
         <xar:base-include-javascript filename="location_map.js" module="jquery" />
         <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){if(GBrowserIsCompatible()){xar_MapsShowAddressLocation('10 Downing Street, London, UK','The British Prime Minister');}});" />
     </xar:if>
+
+    <h2><xar:mlstring>Text Truncator</xar:mlstring></h2>
+
+    <xar:template file="jquery.truncator" module="jquery" subdata="array('selector'=&gt;'div.truncate','options'=&gt;'')" />
+
+    <div class="truncate">
+    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. <strong>Nulla eu velit sit amet velit interdum lobortis.</strong> Proin non neque sit amet libero congue consectetuer. Donec a nunc non enim pulvinar.</p>
+    <p><em>It handles elements being cut in half by closing any open tags, so the strong tag above is closed correctly even when the trruncation happpens halfway through the element.</em>
+    Proin non neque sit amet libero congue consectetuer. Donec a nunc non enim pulvinar.</p>
+    </div>
+
+<xar:comment>
+    <h2><xar:mlstring>Minitabs</xar:mlstring></h2>
+    <xar:template file="jquery.minitabs" module="jquery" subdata="array('selector'=&gt;'div.tabwrapper', 'options'=&gt;'{fullwidth:true, flush:true, tabmenu:\'div.tabmenu\'}')" />
+    <div class="tabwrapper">
+        <div class="tabmenu">
+            <ul>
+                <li><a href="#" title="tab1" class="active">Tab 1</a></li>
+                <li><a href="#" title="tab2">Tab2</a></li>
+                <li><a href="#" title="tab3">Tab3</a></li>
+            </ul>
+            <div style="clear:both;"></div>
+        </div>
+        <div class="tabcontent">
+            <div id="tab1">
+                <p><xar:mlstring>Tab content 1</xar:mlstring></p>
+                <img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg" alt="Image 1" />
+            </div>
+            <div id="tab2">
+                <p><xar:mlstring>Tab content 2</xar:mlstring></p>
+                <img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg" alt="Image 2" />
+            </div>
+            <div id="tab3">
+                <p><xar:mlstring>Tab content 3</xar:mlstring></p>
+                <img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg" alt="Image 3" />
+            </div>
+        </div>
+    </div>
+</xar:comment>
+
+    <h2><xar:mlstring>Countdown</xar:mlstring></h2>
+    <xar:set name="options">"until: new Date(2020, 6 - 1, 18, 11, 20, 0), description: 'Countdown <strong>Until 2020</strong>'"</xar:set>
+    <xar:template file="jquery.countdown" module="jquery" subdata="array('selector'=&gt;'div#countdown1', 'options'=&gt;$options)" />
+    <div id="countdown1">Countdown</div>
+
 </div>
