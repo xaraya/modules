@@ -273,7 +273,7 @@ class UploadProperty extends FileUploadProperty
         if (!empty($data['value'])) $this->value = $data['value'];
         if (!empty($data['basedir'])) $this->initialization_basedirectory = $data['basedir'];
         if (!empty($data['importdir'])) $this->initialization_import_directory = $data['importdir'];
-        if (!empty($data['file_maxsize'])) $this->validation_max_file_size = $data['file_maxsize'];
+        if (!empty($data['max_file_size'])) $this->validation_max_file_size = $data['file_maxsize'];
         if (!empty($data['methods'])) {
             if (!is_array($data['methods'])) {
                 $data['methods'] = explode(',',$data['methods']);                
@@ -294,7 +294,7 @@ class UploadProperty extends FileUploadProperty
         // Set up the trusted method
         if (in_array(1,$this->initialization_file_input_methods)) {
             if (!file_exists($this->initialization_import_directory)) {
-                $msg = xarML('Unable to find trusted directory #(1)', $trusted_dir);
+                $msg = xarML('Unable to find trusted directory #(1)', $this->initialization_import_directory);
                 throw new Exception($msg);
             }
             $cacheExpire = xarModVars::get('uploads','file.cache-expire');
@@ -372,6 +372,8 @@ class UploadProperty extends FileUploadProperty
                 }
             }
         }
+        $data['file_input_methods'] = $this->initialization_file_input_methods;
+        $data['max_file_size'] = $this->validation_max_file_size;
         // Jump over the direct parent for now
         return DataProperty::showInput($data);
     }
@@ -480,7 +482,7 @@ class UploadProperty extends FileUploadProperty
         }
 
         $data['multiple'] = $this->initialization_multiple_files;
-        $data['methods'] = $this->initialization_file_input_methods;
+        $data['file_input_methods'] = $this->initialization_file_input_methods;
         $data['basedir'] = $this->initialization_basedirectory;
         $data['importdir'] = $this->initialization_import_directory;
         $data['other'] = '';
