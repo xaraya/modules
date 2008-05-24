@@ -19,7 +19,7 @@ function categories_admin_create()
 
     sys::import('modules.dynamicdata.class.objects.master');
     for ($i=1;$i<=$data['repeat'];$i++) {
-        $data['objects'][$i] = DataObjectMaster::getObject(array('objectid' => xarModVars::get('categories','categoriesobject'), 'fieldprefix' => $i));
+        $data['objects'][$i] = DataObjectMaster::getObject(array('name' => xarModVars::get('categories','categoriesobject'), 'fieldprefix' => $i));
         $isvalid = $data['objects'][$i]->checkInput();
     }
 

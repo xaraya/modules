@@ -20,7 +20,7 @@ function categories_admin_update()
     //Look at bug #997
 
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObject(array('objectid' => xarModVars::get('categories','categoriesobject')));
+    $data['object'] = DataObjectMaster::getObject(array('name' => xarModVars::get('categories','categoriesobject')));
     $isvalid = $data['object']->checkInput();
 
     if (!$isvalid) {

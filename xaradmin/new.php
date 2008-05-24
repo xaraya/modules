@@ -22,7 +22,7 @@
 
         sys::import('modules.dynamicdata.class.objects.master');
         for ($i=1;$i<=$data['repeat'];$i++) {
-            $data['objects'][$i] = DataObjectMaster::getObject(array('objectid' => xarModVars::get('categories','categoriesobject'), 'fieldprefix' => $i));
+            $data['objects'][$i] = DataObjectMaster::getObject(array('name' => xarModVars::get('categories','categoriesobject'), 'fieldprefix' => $i));
         }
 
         // Setting up necessary data.

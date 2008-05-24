@@ -28,7 +28,7 @@ function categories_admin_modify()
 
     // Setting up necessary data.
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObject(array('objectid' => xarModVars::get('categories','categoriesobject')));
+    $data['object'] = DataObjectMaster::getObject(array('name' => xarModVars::get('categories','categoriesobject')));
     $data['object']->getItem(array('itemid' => $data['itemid']));
 
     $data['category'] = $data['object']->getFieldValues();
