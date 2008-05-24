@@ -11,7 +11,7 @@
             </xar:mlstring>
         </label>
         <xar:set name="value"><xar:var scope="module" module="categories" name="categoriesobject" /></xar:set>
-        <xar:data-input type="object" name="categoriesobject" value="$value" />
+        <xar:data-input type="object" name="categoriesobject" value="$value" store_prop="name" />
     </div>
     <div class="xar-form-input-wrapper">
         <label for="bar" title="#xarML('The categories can be navigated in an explorer style interface.')#" class="xar-form-label">
