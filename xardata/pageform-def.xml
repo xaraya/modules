@@ -1,7 +1,7 @@
 <object name="xarpages_pageform">
   <objectid>0</objectid>
   <label>Xarpages_Pageform</label>
-  <moduleid>160</moduleid>
+  <module_id>160</module_id>
   <itemtype>0</itemtype>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
