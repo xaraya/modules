@@ -100,14 +100,6 @@ function calendar_init()
     xarRegisterPrivilege('AddCalendar','All','calendar','All','All','ACCESS_ADD');
     xarRegisterPrivilege('DeleteCalendar','All','calendar','All','All','ACCESS_DELETE');
     xarRegisterPrivilege('AdminCalendar','All','calendar','All','All','ACCESS_ADMIN');
-    xarMakePrivilegeRoot('ViewCalendar');
-    xarMakePrivilegeRoot('ReadCalendar');
-    xarMakePrivilegeRoot('CommentCalendar');
-    xarMakePrivilegeRoot('ModerateCalendar');
-    xarMakePrivilegeRoot('EditCalendar');
-    xarMakePrivilegeRoot('AddCalendar');
-    xarMakePrivilegeRoot('DeleteCalendar');
-    xarMakePrivilegeRoot('AdminCalendar');
 
 # --------------------------------------------------------
 #

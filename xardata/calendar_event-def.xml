@@ -2,7 +2,7 @@
   <objectid>25</objectid>
   <label>Events</label>
   <parent>objects</parent>
-  <moduleid>182</moduleid>
+  <module_id>182</module_id>
   <itemtype>13</itemtype>
   <class>DataObject</class>
   <filepath></filepath>

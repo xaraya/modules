@@ -2,7 +2,7 @@
   <objectid>47</objectid>
   <label>Calendars</label>
   <parent>objects</parent>
-  <moduleid>182</moduleid>
+  <module_id>182</module_id>
   <itemtype>20</itemtype>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>

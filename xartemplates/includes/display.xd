@@ -50,7 +50,7 @@
         <xar:data-input type="dropdown" name="cal_sdow" id="cal_sdow" validation="$weekdays" value="$value" />
     </div>
     <div class="xar-form-input-wrapper">
-        <label for="default_view" title="#xarML('The calendar\'s default view')#" class="xar-form-label">
+        <label for="default_view" title="#xarML('The calendar&#39;s default view')#" class="xar-form-label">
             <xar:mlstring>
                 Default view
             </xar:mlstring>
