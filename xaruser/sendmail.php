@@ -3,7 +3,7 @@
  * Helpdesk Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -20,7 +20,10 @@
  *
  * @author jojodee/Michel V.
  *
- * @param $mailaction: what e-mail to send
+ * @param string mailaction: what e-mail to send
+ * @param int tid Ticket id
+ * @param int uid The user id of...?
+ * @param array additional_emails OPTIONAL
  */
 function helpdesk_user_sendmail($args)
 {

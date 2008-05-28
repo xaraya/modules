@@ -15,7 +15,7 @@
   Creates a new ticket
 
   @author Brian McGilligan
-  @returns A new ticket form
+  @return array A new ticket form
 */
 function helpdesk_user_new()
 {
