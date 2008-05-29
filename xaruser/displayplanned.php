@@ -217,6 +217,8 @@ function courses_user_displayplanned($args)
     $data['authid'] = xarSecGenAuthKey();
     // Set the page name according to the coursename
     xarTplSetPageTitle(xarVarPrepForDisplay($course['name']));
+    // cache the courseid for the header
+    xarVarSetCached('courses','courseid',$courseid);
     // Return the template variables defined in this function
     return $data;
 }

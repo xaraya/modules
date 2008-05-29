@@ -178,6 +178,8 @@ function courses_user_display($args)
     $data['authid'] = xarSecGenAuthKey();
     // Set page name
     xarTplSetPageTitle(xarVarPrepForDisplay($item['name']));
+    // cache the courseid for the header
+    xarVarSetCached('courses','courseid',$courseid);
     // Return the template variables defined in this function
     return $data;
 }

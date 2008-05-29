@@ -19,10 +19,8 @@
     <h2><xar:mlstring>Modify</xar:mlstring></h2>
 
     <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
-        <p>#xarSessionGetVar('statusmsg')#</p>
+        <div class="xar-mod-statusmsg">#xarSessionGetVar('statusmsg')#</div>
     </xar:if>
-
-
     <form method="post" action="&xar-modurl-courses-admin-updatetype;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
         <fieldset>
             <legend>

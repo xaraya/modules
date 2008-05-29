@@ -3,15 +3,15 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Courses Administration</xar:mlstring></span>
 </div>
-<div class="xar-mod-body">
+<div id="ajaxshow" class="xar-mod-body">
+  <xar:template type="module" module="courses" file="admin-menu" />
     <h2><xar:mlstring>Course types</xar:mlstring></h2>
-
     <!--
         // display a status message to the user if an action has been
         // taken on an item
     -->
     <xar:if condition="xarSessionGetVar('statusmsg') != ''">
-        <p>#xarSessionGetVar('statusmsg')#</p>
+        <div class="xar-mod-statusmsg">#xarSessionGetVar('statusmsg')#</div>
     </xar:if>
    <!-- the specific template for the current admin function comes here -->
 

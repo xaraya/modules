@@ -5,13 +5,16 @@
         <xar:mlstring>Courses Administration</xar:mlstring>
     </span>
 </div>
-<div class="xar-mod-body"><h2>#$menutitle#</h2><br />
+<div id="ajaxshow" class="xar-mod-body">
+  <xar:template type="module" module="courses" file="admin-menu" />
+
+    <h2>#$menutitle#</h2><br />
 
     <xar:if condition="!empty($menu)">
     #$menu#
     </xar:if>
     <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
-        <p>#xarSessionGetVar('statusmsg')#</p>
+        <div class="xar-mod-statusmsg">#xarSessionGetVar('statusmsg')#</div>
     </xar:if>
     <xar:data-getitems name="$properties" value="$values" module="courses" itemtype="$itemtype" numitems="$itemsperpage" startnum="$startnum" />
 

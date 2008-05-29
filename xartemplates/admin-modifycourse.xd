@@ -20,7 +20,7 @@
         <h2>#$menutitle#</h2>
         <br />
         <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
-            <p>#xarSessionGetVar('statusmsg')#</p>
+            <div class="xar-mod-statusmsg">#xarSessionGetVar('statusmsg')#</div>
         </xar:if>
         <div class="xar-courses-contents">
 

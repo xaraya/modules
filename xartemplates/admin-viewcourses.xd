@@ -3,7 +3,8 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Courses Administration</xar:mlstring></span>
 </div>
-<div class="xar-mod-body">
+<div id="ajaxshow" class="xar-mod-body">
+  <xar:template type="module" module="courses" file="admin-menu" />
     <h2>#$menutitle#</h2><br />
     <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
         <div class="xar-mod-statusmsg">#xarSessionGetVar('statusmsg')#</div>

@@ -8,7 +8,7 @@
 
     <h3><xar:mlstring>Please confirm copying the following planned course to a new one</xar:mlstring></h3>
     <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
-        <p>#xarSessionGetVar('statusmsg')#</p>
+        <div class="xar-mod-statusmsg">#xarSessionGetVar('statusmsg')#</div>
     </xar:if>
     <form method="post" action="&xar-modurl-courses-admin-copyplanned;">
         <fieldset>

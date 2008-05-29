@@ -91,22 +91,30 @@ function courses_upcomingblock_display($blockinfo)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $courses_planning = $xartable['courses_planning'];
+    $courses_table = $xartable['courses'];
     // Only get hidden courses for admin
     if (xarSecurityCheck('AdminCourses', 0)) {
     $where = "0, 1";
     } else {
     $where = "0";
     }
+
     // Query
-    $sql = "SELECT xar_planningid,
-                   xar_courseid,
-                   xar_startdate,
-                   xar_enddate
+    $sql = "SELECT $courses_planning.xar_planningid,
+                   $courses_planning.xar_courseid,
+                   $courses_planning.xar_startdate,
+                   $courses_planning.xar_enddate
             FROM $courses_planning
-            WHERE  (xar_startdate <'". $today ."' AND xar_enddate > '".$today."')
-               OR (xar_startdate > '" . $today . "' AND xar_enddate < '" .$endblockdate ."')
-               AND xar_hideplanning in ($where)
-            ORDER by xar_startdate ASC ";
+            INNER JOIN $courses_table
+                        ON $courses_table.xar_courseid = $courses_planning.xar_courseid
+            WHERE  ((xar_startdate <'". $today ."' AND xar_enddate > '".$today."')
+               OR (xar_startdate > '" . $today . "' AND xar_enddate < '" .$endblockdate ."'))
+               AND xar_hideplanning in ($where)";
+    if (isset($vars['CourseTypes']) && ( strcasecmp($vars['CourseTypes'], 'All'))) {
+        $str_ctypes = $vars['CourseTypes'];
+        $sql .= " AND $courses_table.xar_type IN ($str_ctypes) ";
+    }
+    $sql .= " ORDER by xar_startdate ASC ";
     $result = $dbconn->SelectLimit($sql, $vars['numitems'], $startnum-1 );
 
     if ($dbconn->ErrorNo() != 0) {
