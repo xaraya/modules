@@ -46,7 +46,14 @@ function soapserver_userapi_soapclient($args)
         $soapclient = new nusoap_client($wsdl, $wsdl, $proxyhost, $proxyport, $proxyusername, $proxypassword, $timeout, $response_timeout);
     }
 
-    //$soapclient-> = 'UTF-8';
+    // Use the default site encoding to send.
+    $locale = explode('.', xarMLSGetSiteLocale());
+    if (!empty($locale[1])) {
+       $soapclient->soap_defencoding = strtoupper($locale[1]);
+    }
+
+    // Don't create entities out of UTF-8 characters.
+    $soapclient->charencoding = false;
 
     return $soapclient;
 }
