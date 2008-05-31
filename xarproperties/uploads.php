@@ -41,7 +41,7 @@ class UploadProperty extends FileUploadProperty
     public $initialization_file_input_methods = array(1,2,3,4);
 
     /*
-    Trusted/local  --> 1
+    Trusted/local  --> 5  chekc xaruserapi.php for the list of all allowed constants. The stuff here is not accurate.
     External       --> 2
     Uploads        --> 3
     Stored         --> 4
