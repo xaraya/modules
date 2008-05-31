@@ -47,8 +47,11 @@ class UploadProperty extends FileUploadProperty
     Stored         --> 4
     */
 
+    // the file data stored by this property
+    public $filedata = array();
+    
     // this is used by DataPropertyMaster::addProperty() to set the $object->upload flag
-    var $upload = true;
+    public $upload = true;
 
     function __construct(ObjectDescriptor $descriptor)
     {
@@ -102,8 +105,8 @@ class UploadProperty extends FileUploadProperty
 
         if (!empty($this->initialization_file_input_methods)) {
             $typeCheck = 'enum:0:' . _UPLOADS_GET_STORED;
-            $typeCheck .= (in_array(2,$this->initialization_file_input_methods))  ? ':' . _UPLOADS_GET_EXTERNAL : '';
             $typeCheck .= (in_array(1,$this->initialization_file_input_methods)) ? ':' . _UPLOADS_GET_LOCAL : '';
+            $typeCheck .= (in_array(2,$this->initialization_file_input_methods))  ? ':' . _UPLOADS_GET_EXTERNAL : '';
             $typeCheck .= (in_array(3,$this->initialization_file_input_methods)) ? ':' . _UPLOADS_GET_UPLOAD : '';
             $typeCheck .= ':-2'; // clear value
         } else {
@@ -161,8 +164,8 @@ class UploadProperty extends FileUploadProperty
                     $file = str_replace('/trusted', $importDir, $file);
                     $data['fileList']["$file"] = xarModAPIFunc('uploads', 'user', 'file_get_metadata',
                                                                 array('fileLocation' => "$file"));
-                    if (isset($args['fileList']["$file"]['fileSize']['long'])) {
-                        $data['fileList']["$file"]['fileSize'] = $args['fileList']["$file"]['fileSize']['long'];
+                    if (isset($data['fileList']["$file"]['fileSize']['long'])) {
+                        $data['fileList']["$file"]['fileSize'] = $data['fileList']["$file"]['fileSize']['long'];
                     }
                 }
                 break;
@@ -229,15 +232,21 @@ class UploadProperty extends FileUploadProperty
             $data['override']['upload']['path'] = $this->initialization_basedirectory;
             $list = xarModAPIFunc('uploads','user','process_files', $data);
             $storeList = array();
+            $storeListData = array();
             foreach ($list as $file => $fileInfo) {
                 if (!isset($fileInfo['errors'])) {
                     $storeList[] = $fileInfo['fileId'];
+                    $storeListData[] = $fileInfo;
                 } else {
                     $this->invalid .= xarML('Invalid upload: #(1)', $fileInfo['fileName'] . " " . $fileInfo['errors'][0]['errorMesg']);
                 }
             }
-            if (!empty($this->invalid)) return false;
+            if (!empty($this->invalid)) {
+                $this->value = null;
+                return false;
+            }
             if (!empty($storeList)) {
+                $this->filedata = $storeListData;
                 // We prepend a semicolon onto the list of fileId's so that
                 // we can tell, in the future, that this is a list of fileIds
                 // and not just a filename
@@ -258,7 +267,6 @@ class UploadProperty extends FileUploadProperty
         return true;
     }
 
-//    function showInput($name = '', $value = null, $size = 0, $maxsize = 0, $id = '', $tabindex = '')
     /**
      * Show the input form
      */
