@@ -47,6 +47,8 @@ class nusoap_parser extends nusoap_base {
 	var $multirefs = array();
 	// toggle for auto-decoding element content
 	var $decode_utf8 = true;
+	// Encode an ISO stream to UTF-8 if required.
+	var $encode_utf8 = false;
 
 	/**
 	* constructor that actually does the parsing
@@ -57,12 +59,13 @@ class nusoap_parser extends nusoap_base {
 	* @param    string $decode_utf8 whether to decode UTF-8 to ISO-8859-1
 	* @access   public
 	*/
-	function nusoap_parser($xml,$encoding='UTF-8',$method='',$decode_utf8=true){
+	function nusoap_parser($xml,$encoding='UTF-8',$method='',$decode_utf8=true,$encode_utf8=false){
 		parent::nusoap_base();
 		$this->xml = $xml;
 		$this->xml_encoding = $encoding;
 		$this->method = $method;
 		$this->decode_utf8 = $decode_utf8;
+		$this->encode_utf8 = $encode_utf8;
 
 		// Check whether content has been read.
 		if(!empty($xml)){
@@ -416,6 +419,12 @@ class nusoap_parser extends nusoap_base {
 			// TODO: this can also be handled with xml_parser_set_option($this->parser, XML_OPTION_TARGET_ENCODING, "ISO-8859-1");
 			if($this->decode_utf8){
 				$data = utf8_decode($data);
+			}
+		}
+		if ($this->xml_encoding == 'ISO-8859-1') {
+			// Decode ISO-8859-1 to UTF-8 if required.
+			if ($this->encode_utf8) {
+				$data = utf8_encode($data);
 			}
 		}
         $this->message[$pos]['cdata'] .= $data;

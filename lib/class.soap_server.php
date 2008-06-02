@@ -85,7 +85,8 @@ class nusoap_server extends nusoap_base {
 	 * @var boolean
 	 * @access public
 	 */
-    var $decode_utf8 = true;
+	var $decode_utf8 = true;
+	var $encode_utf8 = false;
 
 	/**
 	 * HTTP headers of response
@@ -816,7 +817,7 @@ class nusoap_server extends nusoap_base {
 		}
 		$this->debug('Use encoding: ' . $this->xml_encoding . ' when creating nusoap_parser');
 		// parse response, get soap parser obj
-		$parser = new nusoap_parser($data,$this->xml_encoding,'',$this->decode_utf8);
+		$parser = new nusoap_parser($data,$this->xml_encoding,'',$this->decode_utf8,$this->encode_utf8);
 		// parser debug
 		$this->debug("parser debug: \n".$parser->getDebug());
 		// if fault occurred during message parsing

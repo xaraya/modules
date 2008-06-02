@@ -44,6 +44,9 @@ function soapserver_userapi_initsoapserver()
         // to ISO-8859-1 on receipt by default. This is a kind of 'output encoding'
         // flag, though a bit of a rough one.
         $server->decode_utf8 = false;
+        // Set the parser to convert any incoming ISO-8859-1 streams into UTF-8, since
+        // that is what our local site will be expecting.
+        $server->encode_utf8 = true;
     }
 
     // Declare the entry point for use in the WSDL file
