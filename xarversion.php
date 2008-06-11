@@ -13,7 +13,7 @@
  */
 $modversion['name']           = 'Ratings';
 $modversion['id']             = '41';
-$modversion['version']        = '1.2.1';
+$modversion['version']        = '1.3.0';
 $modversion['displayname']    = xarML('Ratings');
 $modversion['description']    = 'Rate Xaraya items';
 $modversion['credits']        = 'xardocs/credits.txt';

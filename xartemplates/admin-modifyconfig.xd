@@ -9,21 +9,23 @@
 <div class="xar-mod-body">
     <xar:template type="module" module="ratings" file="admin-menu" />
 
-    <form id="post" action="&xar-modurl-ratings-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
-        <fieldset>
-                <legend>
-                    <xar:mlstring>Modify Configuration</xar:mlstring>
-                </legend>
+	<h2>
+		<xar:mlstring>Modify Configuration</xar:mlstring>
+	</h2>
 
+    <form action="&xar-modurl-ratings-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
+
+	<xar:set name="confcounter">1</xar:set>
     <xar:foreach in="$settings" key="$modname" value="$config">
+		<fieldset>
+			<legend>
+				#$config['label']#
+			</legend>
             <div class="xar-form-input-wrapper">
-                <p>
-                    <strong>#$config['label']#</strong>
-                </p>
-                <label for="ratstyle" class="xar-form-label">
+                <label for="style_#$confcounter#" class="xar-form-label">
                     <xar:mlstring>Rating Style</xar:mlstring>:
                 </label>
-                <select name="style[#$modname#]" id="style[#$modname#]">
+                <select name="style[#$modname#]" id="style_#$confcounter#">
                 <xar:foreach in="$styleoptions" value="$option">
                     <xar:if condition="$option['id'] eq $config['style']">
                         <option value="#$option['id']#" selected="selected">#$option['name']#</option>
@@ -34,10 +36,10 @@
                 </select>
             </div>
             <div class="xar-form-input-wrapper">
-              <label for="seclev" class="xar-form-label">
+              <label for="seclevel_#$confcounter#" class="xar-form-label">
                     <xar:mlstring>Security Level</xar:mlstring>:
                 </label>
-                <select name="seclevel[#$modname#]" id="seclevel[#$modname#]">
+                <select name="seclevel[#$modname#]" id="seclevel_#$confcounter#">
                 <xar:foreach in="$secleveloptions" value="$option">
                     <xar:if condition="$option['id'] eq $config['seclevel']">
                         <option value="#$option['id']#" selected="selected">#$option['name']#</option>
@@ -47,11 +49,22 @@
                 </xar:foreach>
                 </select>
             </div>
-    </xar:foreach>
+			<div class="xar-form-input-wrapper-after">
+				<xar:if condition="$config['shownum'] eq 1">
+					<input type="checkbox" name="shownum[#$modname#]" id="shownum_#$confcounter#" value="1" checked="checked" />
+				<xar:else />
+					<input type="checkbox" name="shownum[#$modname#]" id="shownum_#$confcounter#" value="1" />
+				</xar:if>
+				<label for="shownum_#$confcounter#">
+                    <xar:mlstring>Show number of ratings</xar:mlstring>
+                </label>
+			</div>
         </fieldset>
-        <div class="xar-form-input-after">
-           <input type="hidden" name="authid" id="authid" value="#$authid#" />
-           <input type="submit" value="#xarML('Save config')#" />
-        </div>
+		<xar:set name="confcounter">$confcounter + 1</xar:set>
+    </xar:foreach>
+    <div class="xar-form-input-after">
+       <input type="hidden" name="authid" id="authid" value="#$authid#" />
+       <input type="submit" value="#xarML('Save config')#" />
+    </div>
     </form>
 </div>

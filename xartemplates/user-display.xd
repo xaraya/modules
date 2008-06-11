@@ -1,25 +1,37 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:mlstring>Ratings</xar:mlstring>
+<div>
+<xar:mlstring>Ratings</xar:mlstring>&nbsp;
 <xar:if condition="$style eq 'percentage'">
    #$rating# %
+
 <xar:elseif condition="$style eq 'outoffive'" />
    #$rating#/5
+
 <xar:elseif condition="$style eq 'outoffivestars'" />
-   <xar:for start="$i = 0" test="$i lt $intrating" iter="$i++">
-       <img src="modules/ratings/xarimages/star.gif" alt="star" />
+   <xar:for start="$i = 1" test="$i le 5" iter="$i++">
+		<xar:if condition="$i le $intrating">
+			<img src="modules/ratings/xarimages/star.gif" alt="#xarML('star')#" />
+		<xar:elseif condition="(($i - 1) eq $intrating) and $fracrating ge 10" />
+			<img src="modules/ratings/xarimages/halfstar.gif" alt="#xarML('half star')#" />
+		<xar:else />
+			<img src="modules/ratings/xarimages/nostar.gif" alt="#xarML('no star')#" />
+		</xar:if>
    </xar:for>
-   <xar:if condition="$fracrating ge 5">
-       <img src="modules/ratings/xarimages/halfstar.gif" alt="half star" />
-   </xar:if>
+
 <xar:elseif condition="$style eq 'outoften'" />
    #$rating#/10
+
 <xar:elseif condition="$style eq 'outoftenstars'" />
-   <xar:for start="$i = 0" test="$i lt $intrating" iter="$i++">
-       <img src="modules/ratings/xarimages/star.gif" alt="star" />
+   <xar:for start="$i = 1" test="$i le 10" iter="$i++">
+		<xar:if condition="$i le $intrating">
+			<img src="modules/ratings/xarimages/star.gif" alt="#xarML('star')#" />
+		<xar:elseif condition="(($i - 1) eq $intrating) and $fracrating ge 5" />
+			<img src="modules/ratings/xarimages/halfstar.gif" alt="#xarML('half star')#" />
+		<xar:else />
+			<img src="modules/ratings/xarimages/nostar.gif" alt="#xarML('no star')#" />
+		</xar:if>
    </xar:for>
-   <xar:if condition="$fracrating ge 5">
-       <img src="modules/ratings/xarimages/halfstar.gif" alt="half star" />
-   </xar:if>
+
 <xar:elseif condition="$style eq 'customised'" />
     <xar:if condition="$rating gt 80">
        <strong><xar:mlstring>Excellent</xar:mlstring></strong>
@@ -33,16 +45,20 @@
        <strong><xar:mlstring>Very Bad</xar:mlstring></strong>
     </xar:if>
 </xar:if>
-<xar:if condition = "!empty($numratings)">
-   <xar:ml>
-        <xar:mlstring>Number of ratings: #(1)</xar:mlstring>
-        <xar:mlvar>#$numratings#</xar:mlvar>
-   </xar:ml>
-</xar:if>
 
+<xar:if condition="!empty($numratings) and $shownum eq 1">
+	<div>
+	   <xar:ml>
+	        <xar:mlstring>Number of ratings: #(1)</xar:mlstring>
+	        <xar:mlvar>#$numratings#</xar:mlvar>
+	   </xar:ml>
+	</div>
+</xar:if>
+<xar:set name="rated">''</xar:set>
 <xar:if condition="empty($rated)">
     <xar:if condition="xarSecurityCheck('CommentRatings',0)">
         <form method="post" action="&xar-modurl-ratings-user-rate;" id="post" enctype="application/x-www-form-urlencoded" >
+			<div>
             <input type="submit" value="#xarML('Rate this Item')#"  />
 
             <xar:if condition="$style eq 'percentage'">
@@ -109,6 +125,8 @@
             <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
             <input type="hidden" name="objectid" id="objectid" value="#$objectid#" />
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
+			</div>
         </form>
     </xar:if>
 </xar:if>
+</div>

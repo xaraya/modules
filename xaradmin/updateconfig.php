@@ -17,38 +17,64 @@
 function ratings_admin_updateconfig()
 {
     // Get parameters
-    if(!xarVarFetch('style',    'isset', $style,    'outoffivestars', XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('seclevel', 'isset', $seclevel, 'medium', XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('style',    'array', $style,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('seclevel', 'array', $seclevel, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('shownum', 'array', $shownum, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) return;
+//    if (!xarSecConfirmAuthKey()) return;
     // Security Check
-    if (!xarSecurityCheck('AdminRatings')) return;
+//    if (!xarSecurityCheck('AdminRatings')) return;
 
-    // Update default style
-    if (!is_array($style)) {
-        xarModSetVar('ratings', 'defaultstyle', $style);
-    } else {
-        foreach ($style as $modname => $value) {
-            if ($modname == 'default') {
-                xarModSetVar('ratings', 'defaultstyle', $value);
+    $settings = array('default');
+    
+    $hookedmodules = xarModAPIFunc('modules', 'admin', 'gethookedmodules',
+                                   array('hookModName' => 'ratings'));
+
+    if (isset($hookedmodules) && is_array($hookedmodules)) {
+        foreach ($hookedmodules as $modname => $value) {
+            // we have hooks for individual item types here
+            if (!isset($value[0])) {
+                // Get the list of all item types for this module (if any)
+                $mytypes = xarModAPIFunc($modname,'user','getitemtypes',
+                                         // don't throw an exception if this function doesn't exist
+                                         array(), 0);
+                foreach ($value as $itemtype => $val) {
+                    $settings[] = "$modname.$itemtype";
+                }
             } else {
-                xarModSetVar('ratings', 'style.' . $modname, $value);
+                $settings[] = $modname;
             }
         }
     }
-    // Update security level
-    if (!is_array($seclevel)) {
-        xarModSetVar('ratings', 'seclevel', $seclevel);
-    } else {
-        foreach ($seclevel as $modname => $value) {
-            if ($modname == 'default') {
-                xarModSetVar('ratings', 'seclevel', $value);
-            } else {
-                xarModSetVar('ratings', 'seclevel.' . $modname, $value);
-            }
-        }
-    }
+
+	foreach($settings as $modname) {
+		if($modname == 'default') {
+			if(isset($style['default'])) {
+				xarModSetVar('ratings','defaultstyle', $style['default']);
+			}
+			if(isset($seclevel['default'])) {
+				xarModSetVar('ratings','seclevel', $seclevel['default']);
+			}
+			if(!isset($shownum['default']) || $shownum['default'] != 1) {
+				xarModSetVar('ratings','shownum', 0);
+			} else {
+				xarModSetVar('ratings','shownum', 1);
+			}
+		} else {
+			if(isset($style[$modname])) {
+				xarModSetVar('ratings',"style.$modname", $style[$modname]);
+			}
+			if(isset($seclevel[$modname])) {
+				xarModSetVar('ratings',"seclevel.$modname", $seclevel[$modname]);
+			}
+			if(!isset($shownum[$modname]) || $shownum[$modname] != 1) {
+				xarModSetVar('ratings',"shownum.$modname", 0);
+			} else {
+				xarModSetVar('ratings',"shownum.$modname", 1);
+			}
+		}
+	}
 
     xarResponseRedirect(xarModURL('ratings', 'admin', 'modifyconfig'));
 

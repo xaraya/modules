@@ -16,6 +16,7 @@
  * @param $args['objectid'] ID of the item this rating is for
  * @param $args['extrainfo'] URL to return to if user chooses to rate
  * @param $args['style'] style to display this rating in (optional)
+ * @param $args['shownum'] style to display this rating in (optional)
  * @param $args['itemtype'] item type
  * @return array output with rating information $numratings, $rating, $rated, $authid
  */
@@ -58,9 +59,22 @@ function ratings_user_display($args)
             $style = xarModGetVar('ratings', 'defaultstyle');
         }
     }
+    if (!isset($shownum)) {
+        if (!empty($itemtype)) {
+            $shownum = xarModGetVar('ratings', "shownum.$modname.$itemtype");
+        }
+        if (!isset($shownum)) {
+            $shownum = xarModGetVar('ratings', 'shownum.'.$modname);
+        }
+        if (!isset($shownum)) {
+            $shownum = xarModGetVar('ratings', 'shownum');
+        }
+    }
+
     $data['style'] = $style;
     $data['modname'] = $modname;
     $data['itemtype'] = $itemtype;
+    $data['shownum'] = $shownum;
 
     // Run API function
     // Bug 6160 Use getitems at first, then get if we get weird results
@@ -71,47 +85,47 @@ function ratings_user_display($args)
     // Select the way to get the rating
     if (!empty($rating[$objectid])) {
         $key_id = array_keys($rating);
-        $data['rating'] = $rating[$key_id[0]]['rating'];
+        $data['rawrating'] = $rating[$key_id[0]]['rating'];
         $data['numratings'] = $rating[$key_id[0]]['numratings'];
     } else {
         // Use old fashioned way
-        $data['rating'] = xarModAPIFunc('ratings',
+        $data['rawrating'] = xarModAPIFunc('ratings',
                            'user',
                            'get',
                            $args);
         $data['numratings'] = '';
     }
-    if (isset($data['rating'])) {
+    if (isset($data['rawrating'])) {
         // Set the cached variable if requested
         if (xarVarIsCached('Hooks.ratings','save') &&
             xarVarGetCached('Hooks.ratings','save') == true) {
-            xarVarSetCached('Hooks.ratings','value',$data['rating']);
+            xarVarSetCached('Hooks.ratings','value',$data['rawrating']);
         }
 
         // Display current rating
         switch($data['style']) {
             case 'percentage':
-                $data['rating'] = sprintf("%.1f",$data['rating']);
+                $data['rating'] = sprintf("%.1f",$data['rawrating']);
                 break;
             case 'outoffive':
-                $data['rating'] = (int)(($data['rating']+10)/20);
+                $data['rating'] = round($data['rawrating']/20);
                 break;
             case 'outoffivestars':
-                $data['rating'] = (int)($data['rating']/2);
-                $data['intrating'] = (int)($data['rating']/10);
-                $data['fracrating'] = $data['rating'] - (10*$data['intrating']);
+                $data['rating'] = round($data['rawrating']/20);
+                $data['intrating'] = (int)($data['rawrating']/20);
+                $data['fracrating'] = $data['rawrating'] - (20 * $data['intrating']);
                 break;
             case 'outoften':
-                $data['rating'] = (int)(($data['rating']+5)/10);
+                $data['rating'] = (int)($data['rawrating']/10);
                 break;
             case 'outoftenstars':
-                $data['intrating'] = (int)($data['rating']/10);
-                $data['fracrating'] = $data['rating'] - (10*$data['intrating']);
-                $data['rating'] = sprintf("%.1f",$data['rating']);
+                $data['rating'] = sprintf("%.1f",$data['rawrating']);
+                $data['intrating'] = (int)($data['rawrating']/10);
+                $data['fracrating'] = $data['rawrating'] - (10 * $data['intrating']);
                 break;
             case 'customised':
             default:
-                $data['rating'] = sprintf("%.1f",$data['rating']);
+                $data['rating'] = sprintf("%.1f",$data['rawrating']);
                 break;
         }
     } else {
@@ -120,7 +134,7 @@ function ratings_user_display($args)
         $data['fracrating'] = 0;
     }
 
-    // Multipe rate check
+    // Multiple rate check
     if (!empty($itemtype)) {
         $seclevel = xarModGetVar('ratings', "seclevel.$modname.$itemtype");
         if (!isset($seclevel)) {

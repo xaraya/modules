@@ -112,7 +112,7 @@ function ratings_userapi_rate($args)
 
         // Calculate new rating
         $newnumratings = $numratings + 1;
-        $newrating = (int)((($currating*$numratings) + $rating)/$newnumratings);
+        $newrating = (($currating*$numratings) + $rating)/$newnumratings;
 
         // Insert new rating
         $query = "UPDATE $ratingstable

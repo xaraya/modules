@@ -171,6 +171,44 @@ function ratings_upgrade($oldversion)
                 }
             }
 
+        case '1.2.1':
+            // Set up shownum modvar, including for existing hooked modules
+            xarModSetVar('ratings', 'shownum', 1);
+            $hookedmodules = xarModAPIFunc('modules', 'admin', 'gethookedmodules',
+                                   array('hookModName' => 'ratings'));
+            if (isset($hookedmodules) && is_array($hookedmodules)) {
+                foreach ($hookedmodules as $modname => $value) {
+                    // we have hooks for individual item types here
+                    if (!isset($value[0])) {
+                        // Get the list of all item types for this module (if any)
+                        $mytypes = xarModAPIFunc($modname,'user','getitemtypes',
+                                                 // don't throw an exception if this function doesn't exist
+                                                 array(), 0);
+                        foreach ($value as $itemtype => $val) {
+                            xarModSetVar('ratings',"shownum.$modname.$itemtype", 1);
+                        }
+                    } else {
+                        xarModSetVar('ratings', 'shownum.' . $modname, 1);
+                    }
+                }
+            }
+
+            // modify field xar_ratings.xar_rating
+            // Get database information
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            // Load Table Maintainance API
+            xarDBLoadTableMaintenanceAPI();
+            $args = array('command' => 'modify',
+                          'type' => 'float',
+                          'size' => 'double',
+                          'width' => 8,
+                          'decimals' => 5,
+                          'default' => '0.00000',
+                          'null' => false);
+            $query = xarDBAlterTable($xartable['ratings'], $fields);
+            if (empty($query)) return; // throw back
+
     }
     return true;
 }

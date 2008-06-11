@@ -28,11 +28,13 @@ function ratings_admin_modifyconfig()
 
     $defaultstyle = xarModGetVar('ratings', 'defaultstyle');
     $defaultseclevel = xarModGetVar('ratings', 'seclevel');
+    $defaultshownum = xarModGetVar('ratings', 'shownum');
 
     $data['settings'] = array();
     $data['settings']['default'] = array('label' => xarML('Default configuration'),
                                          'style' => $defaultstyle,
-                                         'seclevel' => $defaultseclevel);
+                                         'seclevel' => $defaultseclevel,
+                                         'shownum' => $defaultshownum);
 
     $hookedmodules = xarModAPIFunc('modules', 'admin', 'gethookedmodules',
                                    array('hookModName' => 'ratings'));
@@ -54,6 +56,11 @@ function ratings_admin_modifyconfig()
                     if (empty($seclevel)) {
                         $seclevel = $defaultseclevel;
                     }
+                    $shownum = xarModGetVar('ratings', "shownum.$modname.$itemtype");
+                    if (empty($shownum)) {
+                        $shownum = $defaultshownum;
+                        xarModSetVar('ratings',"shownum.$modname.$itemtype", $defaultshownum);
+                    }
                     if (isset($mytypes[$itemtype])) {
                         $type = $mytypes[$itemtype]['label'];
                         $link = $mytypes[$itemtype]['url'];
@@ -63,7 +70,8 @@ function ratings_admin_modifyconfig()
                     }
                     $data['settings']["$modname.$itemtype"] = array('label' => xarML('Configuration for #(1) module - <a href="#(2)">#(3)</a>', $modname, $link, $type),
                                                                     'style' => $style,
-                                                                    'seclevel' => $seclevel);
+                                                                    'seclevel' => $seclevel,
+                                                                    'shownum' => $shownum);
                 }
             } else {
                 $style = xarModGetVar('ratings', 'style.' . $modname);
@@ -74,10 +82,16 @@ function ratings_admin_modifyconfig()
                 if (empty($seclevel)) {
                     $seclevel = $defaultseclevel;
                 }
+                $shownum = xarModGetVar('ratings', 'shownum.' . $modname);
+                if (empty($shownum)) {
+                    $shownum = $defaultshownum;
+                    xarModSetVar('ratings',"shownum.$modname", $defaultshownum);
+                }
                 $link = xarModURL($modname,'user','main');
                 $data['settings'][$modname] = array('label' => xarML('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
                                                     'style' => $style,
-                                                    'seclevel' => $seclevel);
+                                                    'seclevel' => $seclevel,
+                                                    'shownum' => $shownum);
             }
         }
     }
