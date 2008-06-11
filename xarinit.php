@@ -170,6 +170,10 @@ function xarpages_init()
     // xarSecurityCheck($mask, $showException, $component, $instance, $module, ...)
     // xarRegisterMask($name, $realm, $module, $component, $instance, $level, $description='')
     xarRegisterMask(
+        'ViewXarpagesPage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_OVERVIEW',
+        xarML('See that a page exists')
+    );
+    xarRegisterMask(
         'ReadXarpagesPage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_READ',
         xarML('Read or view a page')
     );
@@ -404,6 +408,13 @@ function xarpages_upgrade($oldversion)
             // New module variables.
             xarModSetVar('xarpages', 'transformfields', 'body');
             xarModSetVar('xarpages', 'transformref', 1);
+
+        case '0.2.7':
+            // Upgrade to 0.2.8 - new overview privilege on a page.
+            xarRegisterMask(
+                'ViewXarpagesPage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_OVERVIEW',
+                xarML('See that a page exists')
+            );
 
         break;
     }

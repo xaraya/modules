@@ -212,8 +212,16 @@ function xarpages_userapi_getpages($args)
                 }
             }
 
+            // JDJ 2008-06-11: now only need ViewXarpagesPage to be able to select the page,
+            // but ReadXarpagesPage to actually read it.
+            // The lowest privilege will be inherited, so one page with only View privilege
+            // will cause all descendent pages to have, at most, view privilege.
+            // We still need to fetch full details of these view-only pages, but we must flag
+            // then up in some way (status?). Displaying any of these pages would instead just
+            // show the 'no privs' page.
+
             $typename = $pagetypes[$itemtype]['name'];
-            if (!xarSecurityCheck('ReadXarpagesPage', 0, 'Page', $name . ':' . $typename, 'xarpages')) {
+            if (!xarSecurityCheck('ViewXarpagesPage', 0, 'Page', $name . ':' . $typename, 'xarpages')) {
                 // Save the right value. We need to skip all subsequent
                 // pages until we get to a page to the right of this one.
                 // The pages will be in 'left' order, so the descendants
@@ -222,6 +230,17 @@ function xarpages_userapi_getpages($args)
 
                 // Skip to the next page.
                 continue;
+            }
+
+            if (!empty($overview_only_left) && $left <= $overview_only_left) {
+                // We have got past the overview-only page, so can reset the flag.
+                $overview_only_left = 0;
+            }
+
+            if (!xarSecurityCheck('ReadXarpagesPage', 0, 'Page', $name . ':' . $typename, 'xarpages')) {
+                // We have reached a page that allows only overview access.
+                // Flag all pages with the restricted view until we get past this page.
+                $overview_only_left = $right;
             }
 
             // Note: ['parent_pid'] is the parent page ID,
@@ -256,9 +275,9 @@ function xarpages_userapi_getpages($args)
                 'encode_url' => $encode_url,
                 'decode_url' => $decode_url,
                 'function' => $function,
-                'pagetype' => &$pagetypes[$itemtype]
+                'pagetype' => &$pagetypes[$itemtype],
+                'viewpriv' => (empty($overview_only_left) ? 'READ' : 'OVERVIEW'),
             );
-
             $index += 1;
         }
 
