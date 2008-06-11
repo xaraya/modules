@@ -22,9 +22,9 @@ function ratings_admin_updateconfig()
     if(!xarVarFetch('shownum', 'array', $shownum, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // Confirm authorisation code
-//    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSecConfirmAuthKey()) return;
     // Security Check
-//    if (!xarSecurityCheck('AdminRatings')) return;
+    if (!xarSecurityCheck('AdminRatings')) return;
 
     $settings = array('default');
     

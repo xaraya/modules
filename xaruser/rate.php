@@ -37,8 +37,8 @@ function ratings_user_rate($args)
 
     if (isset($newrating)) {
         // Success
-//            xarSessionSetVar('ratings_statusmsg', xarML('Thank you for rating this item.',
-//                    'ratings'));
+            xarSessionSetVar('ratings_statusmsg', xarML('Thank you for rating this item.',
+                    'ratings'));
     }
 
     xarResponseRedirect($returnurl);
