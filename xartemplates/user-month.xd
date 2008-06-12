@@ -57,8 +57,10 @@
                 <xar:set name="WeekUrl">xarModURL('calendar','user','week',array('cal_date'=>$WeekDate))</xar:set>
                 <xar:set name="WeekNum">xarModAPIFunc('calendar','user','getWeekNumber',array('cal_date'=>$WeekDate))</xar:set>
                 <tr>
-                    <th class="cal-week"><a href="#$WeekUrl#">#xarLocaleFormatDate('%U',$Day->getTimeStamp())#</a></th>
-                    <xar:while condition="1">
+                    <th class="cal-week">
+                        <a href="#$WeekUrl#">#xarLocaleFormatDate('%U',$Day->getTimeStamp())#</a>
+                    </th>
+                    <xar:while condition="1">                        
                         <xar:comment> populate the day </xar:comment>
                         <xar:set name="today">xarLocaleFormatDate('%Y%m%d')</xar:set>
                         <xar:set name="thisday">xarLocaleFormatDate('%Y%m%d',$Day->getTimeStamp())</xar:set>
@@ -85,9 +87,11 @@
                             <xar:comment> close out the row </xar:comment>
                             <xar:break />
                         </xar:if>
-                     </xar:while>
+                    <xar:set name="Day">$Month->fetch()</xar:set>
+                                        </xar:while>
                 </tr>
             </xar:if>
+            <xar:set name="Day">$Month->fetch()</xar:set>
         </xar:while>
     </table>
     <xar:comment> include the calendar footer </xar:comment>
