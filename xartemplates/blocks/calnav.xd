@@ -1,5 +1,5 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:calendar-decorator object="$Calendar" decorator="Textual" name="$CalText"/>
     <xar:set name="months">array()</xar:set>
     <xar:set name="montharray">$CalText->monthNames()</xar:set>
@@ -29,8 +29,8 @@
                     <!-- switch show_search off -->
                     <!-- switch show_goto on -->
                     <form style="margin-bottom:0;" action="day.php" method="get">
-                        <input type="hidden" name="cal" value="{URL_CAL}">
-                        <input type="text" style="width:160px; font-size:10px" name="jumpto_day">
+                        <input type="hidden" name="cal" value="{URL_CAL}"/>
+                        <input type="text" style="width:160px; font-size:10px" name="jumpto_day"/>
                         <input type="submit" value="Go"/>
                     </form>
                     <!-- switch show_goto off -->

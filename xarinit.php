@@ -20,7 +20,7 @@ function calendar_init()
     $query = "DROP TABLE IF EXISTS " . $prefix . "_calendar_calendar";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_calendar_calendar (
-      id          int(10) unsigned NOT NULL auto_increment,
+      id          integer unsigned NOT NULL auto_increment,
       itemid      int(11) unsigned default null,
       itemtype    int(11) unsigned default null,
       modid       int(11) unsigned default null,
@@ -33,7 +33,7 @@ function calendar_init()
     $query = "DROP TABLE IF EXISTS " . $prefix . "_calendar_event";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_calendar_event (
-      id              int NOT NULL auto_increment,
+      id              integer unsigned NOT NULL auto_increment,
       itemtype        int(4) NULL,
       name            varchar(80) DEFAULT '' NOT NULL,
       description     text,
@@ -56,7 +56,7 @@ function calendar_init()
 /*    $query = "DROP TABLE IF EXISTS " . $prefix . "_bookings_repeat";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_bookings_repeat (
-      id          int NOT NULL auto_increment,
+      id          integer unsigned NOT NULL auto_increment,
       start_time  int DEFAULT '0' NOT NULL,
       end_time    int DEFAULT '0' NOT NULL,
       rep_type    int DEFAULT '0' NOT NULL,
@@ -174,7 +174,7 @@ function calendar_init()
 //TODO::Register our blocklayout tags to allow using Objects in the templates
 //<xar:calendar-decorator object="$Month" decorator="Xaraya" name="$MonthURI" />
 //<xar:calendar-build object="$Month" />
-//<xar:set name="$Month">& $Year->fetch()</xar:set>
+//<xar:set name="Month">& $Year->fetch()</xar:set>
 
     xarModVars::set('calendar', 'SupportShortURLs', true);
 

@@ -27,9 +27,9 @@
 
         <xar:comment> adapt to your own preferred custom view</xar:comment>
         <xar:if condition="$default_view eq 'customview'">
-            <option disabled value="customview" selected="selected"><xar:mlstring>Customized</xar:mlstring></option>
+            <option disabled="disabled" value="customview" selected="selected"><xar:mlstring>Customized</xar:mlstring></option>
         <xar:else />
-            <option disabled value="customview"><xar:mlstring>Customized</xar:mlstring></option>
+            <option disabled="disabled" value="customview"><xar:mlstring>Customized</xar:mlstring></option>
         </xar:if>
     </select>
     </p>

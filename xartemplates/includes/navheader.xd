@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!--
 
 <xar:set name="navDayUrl">#xarModURL('calendar','user','day',array('cal_date'=>$cal_date,'cal_sdow'=>$cal_sdow))#</xar:set>
@@ -33,3 +34,4 @@
     </xar:if>
 </ul>
 -->
+</xar:template>

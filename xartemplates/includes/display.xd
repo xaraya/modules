@@ -10,7 +10,7 @@
                 Calendar Window Width
             </xar:mlstring>
         </label>
-        <xar:set name="value">xarModUserVars::get('calendar', 'windowwidth', $regid)</xar:set>
+        <xar:set name="value">xarModItemVars::get('calendar', 'windowwidth', $regid)</xar:set>
         <input type="text" name="windowwidth" id="windowwidth" value="#$value#" />&#160;px
     </div>
     <div class="xar-form-input-wrapper">
@@ -19,7 +19,7 @@
                 Grid Unit
             </xar:mlstring>
         </label>
-        <xar:set name="value">xarModUserVars::get('calendar', 'minutesperunit', $regid)</xar:set>
+        <xar:set name="value">xarModItemVars::get('calendar', 'minutesperunit', $regid)</xar:set>
         <xar:set name="options">
             array(
                 array('id' => 5, 'name' => 5),
@@ -37,7 +37,7 @@
                 Unit height
             </xar:mlstring>
         </label>
-        <xar:set name="value">xarModUserVars::get('calendar', 'unitheight', $regid)</xar:set>
+        <xar:set name="value">xarModItemVars::get('calendar', 'unitheight', $regid)</xar:set>
         <input type="text" name="unitheight" id="unitheight" value="#$value#" />&#160;px
     </div>
     <div class="xar-form-input-wrapper">
@@ -46,11 +46,11 @@
                 Week starts
             </xar:mlstring>
         </label>
-        <xar:set name="value">xarModUserVars::get('calendar', 'cal_sdow', $regid)</xar:set>
+        <xar:set name="value">xarModItemVars::get('calendar', 'cal_sdow', $regid)</xar:set>
         <xar:data-input type="dropdown" name="cal_sdow" id="cal_sdow" validation="$weekdays" value="$value" />
     </div>
     <div class="xar-form-input-wrapper">
-        <label for="default_view" title="#xarML('The calendar&#39;s default view')#" class="xar-form-label">
+        <label for="default_view" title="#xarML('The calendar default view')#" class="xar-form-label">
             <xar:mlstring>
                 Default view
             </xar:mlstring>
@@ -62,7 +62,7 @@
                                 array('id' => 'year', 'name' => 'Year'),
                                 )
         </xar:set>
-        <xar:set name="value">xarModUserVars::get('calendar', 'default_view', $regid)</xar:set>
+        <xar:set name="value">xarModItemVars::get('calendar', 'default_view', $regid)</xar:set>
         <xar:data-input type="dropdown" name="default_view" id="default_view" options="$options" value="$value" />
     </div>
     <div class="xar-form-input-wrapper">

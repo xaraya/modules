@@ -3,7 +3,7 @@
     <div class="xar-mod-body"><h2><xar:mlstring>Delete Calendar</xar:mlstring></h2>
     <div style="margin: auto;text-align: center;">
     <h3><xar:mlstring>Delete this calendar?</xar:mlstring></h3>
-    <form method="post" action="&xar-modurl-calendar-admin-delete_calendar;">
+    <form method="post" action="#xarModURL('calendar','admin','delete_calendar')#">
     <div>
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="confirm" id="confirm" value="true" />
@@ -13,7 +13,7 @@
     </div>
     </form>
     <br />
-    <a href="&xar-modurl-calendar-admin-view_calendars;"><xar:mlstring>Cancel Delete</xar:mlstring></a><br />
+    <a href="#xarModURL('calendar','admin','view_calendars')#"><xar:mlstring>Cancel Delete</xar:mlstring></a><br />
     </div>
     <xar:if condition="!empty($preview)">
       <div style="width: 100%;padding: 3px;">

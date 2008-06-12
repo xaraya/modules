@@ -7,7 +7,7 @@
         TODO: Make a nice API Function for creating the valid URLS
     </xar:comment>
 
-    <xar:calendar-decorator object="$Month" decorator="Xaraya" name="$MonthURI" />
+    <xar:calendar-decorator object="$Month" decorator="Xaraya" name="MonthURI" />
     <xar:set name="prevYearTitle"><xar:mlstring>Previous Year</xar:mlstring></xar:set>
     <xar:set name="prevYearURL">#$MonthURI->prev('year')#</xar:set>
 
@@ -32,7 +32,7 @@
         </tr>
 
     <xar:comment> we want to add the textual decorator to the month class so we have day names and such </xar:comment>
-    <xar:calendar-decorator object="$Month" decorator="Textual" name="$MonthText"/>
+    <xar:calendar-decorator object="$Month" decorator="Textual" name="MonthText"/>
 
         <tr>
             <th class="cal-week-title"><xar:mlstring>wk</xar:mlstring></th>
@@ -44,47 +44,50 @@
         <xar:set name="Day">$Month->fetch()</xar:set>
         <xar:while condition="$Day">
             <xar:comment> we want to create a new Day object with Xaraya specifics </xar:comment>
-            <xar:calendar-decorator object="$Day" decorator="Xaraya" name="$DayURI" />
+            <xar:calendar-decorator object="$Day" decorator="Xaraya" name="DayURI" />
 
             <xar:if condition="$Day:isFirst()">
-            <xar:comment> Start a new row </xar:comment>
+                <xar:comment> Start a new row </xar:comment>
 
-            <xar:comment>
-                Week URLs are more difficult to set up than regular URLs for the Calendar.
-                Below is currently the best way to set up a Week URL for the Calendar
-            </xar:comment>
-            <xar:set name="WeekDate">xarLocaleFormatDate('%Y%m%d',$Day->getTimeStamp())</xar:set>
-            <xar:set name="WeekUrl">xarModURL('calendar','user','week',array('cal_date'=>$WeekDate))</xar:set>
-            <xar:set name="WeekNum">xarModAPIFunc('calendar','user','getWeekNumber',array('cal_date'=>$WeekDate))</xar:set>
-            <tr>
-                <th class="cal-week"><a href="#$WeekUrl#">#xarLocaleFormatDate('%U',$Day->getTimeStamp())#</a></th>
+                <xar:comment>
+                    Week URLs are more difficult to set up than regular URLs for the Calendar.
+                    Below is currently the best way to set up a Week URL for the Calendar
+                </xar:comment>
+                <xar:set name="WeekDate">xarLocaleFormatDate('%Y%m%d',$Day->getTimeStamp())</xar:set>
+                <xar:set name="WeekUrl">xarModURL('calendar','user','week',array('cal_date'=>$WeekDate))</xar:set>
+                <xar:set name="WeekNum">xarModAPIFunc('calendar','user','getWeekNumber',array('cal_date'=>$WeekDate))</xar:set>
+                <tr>
+                    <th class="cal-week"><a href="#$WeekUrl#">#xarLocaleFormatDate('%U',$Day->getTimeStamp())#</a></th>
+                    <xar:while condition="1">
+                        <xar:comment> populate the day </xar:comment>
+                        <xar:set name="today">xarLocaleFormatDate('%Y%m%d')</xar:set>
+                        <xar:set name="thisday">xarLocaleFormatDate('%Y%m%d',$Day->getTimeStamp())</xar:set>
+                        <xar:if condition="$today eq $thisday">
+                            <xar:set name="accentclass">'xar-accent'</xar:set>
+                        <xar:else />
+                            <xar:set name="accentclass">''</xar:set>
+                        </xar:if>
+                        <td class="$accentclass cal-day">
+                            <xar:if condition="!$Day:isEmpty()">
+                                <xar:comment> Display the date for this day </xar:comment>
+                                <a class="xar-accent" href="#$DayURI->current('day')#">#$Day->thisDay()#</a>
+                                <xar:set name="entries">$Day->getEntries()</xar:set>
+                                <ul style="margin: 2px 2px 2px 2px">
+                                    <xar:foreach in="$entries" value="$entry">
+                                        <li>#$entry['name']#</li>
+                                    </xar:foreach>
+                                </ul>
+                            <xar:else />
+                                &#160;
+                            </xar:if>
+                        </td>
+                        <xar:if condition="$Day:isLast()">
+                            <xar:comment> close out the row </xar:comment>
+                            <xar:break />
+                        </xar:if>
+                     </xar:while>
+                </tr>
             </xar:if>
-            <xar:comment> populate the day </xar:comment>
-            <xar:set name="today">xarLocaleFormatDate('%Y%m%d')</xar:set>
-            <xar:set name="thisday">xarLocaleFormatDate('%Y%m%d',$Day->getTimeStamp())</xar:set>
-            <xar:if condition="$today eq $thisday">
-                <td class="xar-accent cal-day">
-            <xar:else />
-                <td class="cal-day">
-            </xar:if>
-            <xar:if condition="!$Day:isEmpty()">
-                <xar:comment> Display the date for this day </xar:comment>
-                <a class="xar-accent" href="#$DayURI->current('day')#">#$Day->thisDay()#</a>
-                <xar:set name="entries">$Day->getEntries()</xar:set>
-                <ul style="margin: 2px 2px 2px 2px">
-                    <xar:foreach in="$entries" value="$entry">
-                        <li>#$entry['name']#</li>
-                    </xar:foreach>
-                </ul>
-            <xar:else />
-                &#160;
-            </xar:if>
-            </td>
-            <xar:if condition="$Day:isLast()">
-            <xar:comment> close out the row </xar:comment>
-            </tr>
-            </xar:if>
-            <xar:set name="Day">$Month->fetch()</xar:set>
         </xar:while>
     </table>
     <xar:comment> include the calendar footer </xar:comment>

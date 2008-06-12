@@ -7,7 +7,7 @@
         TODO: Make a nice API Function for creating the valid URLS
         <xar:set name="prevYearURL">xarModURL('calendar','user','day',array('cal_sdow'=>$cal_sdow,'cal_date'=>$prevYear))</xar:set>
     -->
-    <xar:calendar-decorator object="$Day" decorator="Xaraya" name="$DayURI" />
+    <xar:calendar-decorator object="$Day" decorator="Xaraya" name="DayURI" />
 
     <xar:set name="prevYearTitle"><xar:mlstring>Previous Year</xar:mlstring></xar:set>
     <xar:set name="prevYearURL">$DayURI->prev('year')</xar:set>
@@ -46,7 +46,7 @@
         </tr>
     </table>
 
-    <div style="border: 1px solid #A1A5A9; width: #$windowwidth#px" >
+    <div style="border: 1px solid ##A1A5A9; width: #$windowwidth#px" >
         <xar:set name="Hour">$Day->fetch()</xar:set>
 
         <xar:while condition="$Hour">
@@ -56,10 +56,10 @@
                             #$Hour:thisHour()#:#$Hour:thisMinute()#
                     </div>
                     <div style="position: relative; width: #$displaywidth#px; float: left; ">
-                        <div style="height:#$unitheight#px; border-top: 1px dashed #ccc; border-left: 2px solid #A1A5A9; border-top: 1px solid #A1A5A9;">
+                        <div style="height:#$unitheight#px; border-top: 1px dashed ##ccc; border-left: 2px solid ##A1A5A9; border-top: 1px solid ##A1A5A9;">
                         </div>
                         <xar:for start="$i = 0" test="$i lt $unitsperhour-1" iter="$i++">
-                            <div style="height:#$unitheight#px; border-top: 1px dashed #ccc; border-left: 2px solid #A1A5A9;">
+                            <div style="height:#$unitheight#px; border-top: 1px dashed ##ccc; border-left: 2px solid ##A1A5A9;">
                             </div>
                         </xar:for>
                         <xar:if condition="$Hour:isSelected()">

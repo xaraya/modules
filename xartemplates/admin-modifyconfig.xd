@@ -108,7 +108,7 @@
         </form>
     </div>
 
-    <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <!-- common admin menu for this module - remove link to the current function -->
     <!-- the variables used in this menu come from example_admin_menu() -->
     <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Calendar Administration</xar:mlstring></span></div>
@@ -160,9 +160,9 @@
 
                     <xar:comment> adapt to your own preferred custom view</xar:comment>
                     <xar:if condition="$default_view eq 'customview'">
-                        <option disabled value="customview" selected="selected"><xar:mlstring>Customized</xar:mlstring></option>
+                        <option disabled="disabled" value="customview" selected="selected"><xar:mlstring>Customized</xar:mlstring></option>
                     <xar:else />
-                        <option disabled value="customview"><xar:mlstring>Customized</xar:mlstring></option>
+                        <option disabled="disabled" value="customview"><xar:mlstring>Customized</xar:mlstring></option>
                     </xar:if>
                 </select>
             </td>
@@ -224,7 +224,7 @@
             <xar:if condition="$thereAreIcs eq 0">
               <xar:mlstring>No calendars found in var/calendar</xar:mlstring>
             <xar:else />
-              <select multiple size="3" name="default_cal[]" id="default_cal">
+              <select multiple="multiple" size="3" name="default_cal[]" id="default_cal">
                 <xar:foreach in="$icsfiles" key="$filenumber" value="$filename">
                   <xar:if condition="in_array($filename,$default_cal)">
                     <option value= "#$filename#" selected="selected">#$filename#</option>
@@ -262,9 +262,9 @@
                     </xar:if>
                     <xar:comment> adapt to your own preferred custom view</xar:comment>
                     <xar:if condition="$minical_view eq 'customview'">
-                        <option value="customview" selected="selected" disabled><xar:mlstring>Customized</xar:mlstring></option>
+                        <option value="customview" selected="selected" disabled="disabled"><xar:mlstring>Customized</xar:mlstring></option>
                     <xar:else />
-                        <option value="customview" disabled><xar:mlstring>Customized</xar:mlstring></option>
+                        <option value="customview" disabled="disabled"><xar:mlstring>Customized</xar:mlstring></option>
                     </xar:if>
                 </select>
             </td>
@@ -320,33 +320,33 @@
                 </td>
         </tr>
         <tr><td><label for="display_custom_goto">In the 'Jump To' box, display the custom 'go to day' box</label></td>
-        <td><input type="checkbox" name="display_custom_goto" id="display_custom_goto" value="1" #$display_custom_gotochecked# /></td></tr>
+        <td><input type="checkbox" name="display_custom_goto" id="display_custom_goto" value="1" checked="#$display_custom_gotochecked#" /></td></tr>
         <tr><td><label for="display_ical_list">In the 'Jump To' box, display the pop-up menu with the list of all calendars in the $calendar_path directory</label></td>
-        <td><input type="checkbox" name="display_ical_list" id="display_ical_list" value="1" #$display_ical_listchecked# /></td></tr>
+        <td><input type="checkbox" name="display_ical_list" id="display_ical_list" value="1" checked="#$display_ical_listchecked#" /></td></tr>
         <tr><td><label for="allow_webcals">Allow http:// and webcal:// prefixed URLs to be used as the $cal for remote viewing of "subscribe-able" calendars. This does not have to be enabled to allow specific ones below</label></td>
-        <td><input type="checkbox" name="allow_webcals" id="allow_webcals" value="1" #$allow_webcalschecked# /></td></tr>
+        <td><input type="checkbox" name="allow_webcals" id="allow_webcals" value="1" checked="#$allow_webcalschecked#" /></td></tr>
         <tr><td><label for="this_months_events">Display "This month's events" at the bottom off the month page</label></td>
-        <td><input type="checkbox" name="this_months_events" id="this_months_events" value="1" #$this_months_eventschecked# /></td></tr>
+        <td><input type="checkbox" name="this_months_events" id="this_months_events" value="1" checked="#$this_months_eventschecked#" /></td></tr>
         <tr><td><label for="use_color_cals">Display each calendar in the pop-up as a different color</label></td>
-        <td><input type="checkbox" name="use_color_cals" id="use_color_cals" value="1" #$use_color_calschecked# /></td></tr>
+        <td><input type="checkbox" name="use_color_cals" id="use_color_cals" value="1" checked="#$use_color_calschecked#" /></td></tr>
         <tr><td><label for="daysofweek_dayview">Display the days of the week in day.php view</label></td>
-        <td><input type="checkbox" name="daysofweek_dayview" id="daysofweek_dayview" value="1" #$daysofweek_dayviewchecked# /></td></tr>
+        <td><input type="checkbox" name="daysofweek_dayview" id="daysofweek_dayview" value="1" checked="#$daysofweek_dayviewchecked#" /></td></tr>
         <tr><td><label for="enable_rss">Enable RSS access to your calendars (good thing)</label></td>
-        <td><input type="checkbox" name="enable_rss" id="enable_rss" value="1" #$enable_rsschecked# /></td></tr>
+        <td><input type="checkbox" name="enable_rss" id="enable_rss" value="1" checked="#$enable_rsschecked#" /></td></tr>
         <tr><td><label for="show_search">Show the search box in the sidebar</label></td>
-        <td><input type="checkbox" name="show_search" id="show_search" value="1" #$show_searchchecked# /></td></tr>
+        <td><input type="checkbox" name="show_search" id="show_search" value="1" checked="#$show_searchchecked#" /></td></tr>
         <tr><td><label for="allow_preferences">Allow visitors to change various preferences via cookies</label></td>
-        <td><input type="checkbox" name="allow_preferences" id="allow_preferences" value="1" #$allow_preferenceschecked# /></td></tr>
+        <td><input type="checkbox" name="allow_preferences" id="allow_preferences" value="1" checked="#$allow_preferenceschecked#" /></td></tr>
         <tr><td><label for="printview_default">Set print view as the default view. day, week, and month only supported views for $default_view (listed well above)</label></td>
-        <td><input type="checkbox" name="printview_default" id="printview_default" value="1" #$printview_defaultchecked# /></td></tr>
+        <td><input type="checkbox" name="printview_default" id="printview_default" value="1" checked="#$printview_defaultchecked#" /></td></tr>
         <tr><td><label for="show_todos">Show your todo list on the side of day and week view</label></td>
-        <td><input type="checkbox" name="show_todos" id="show_todos" value="1" #$show_todoschecked# /></td></tr>
+        <td><input type="checkbox" name="show_todos" id="show_todos" value="1" checked="#$show_todoschecked#" /></td></tr>
         <tr><td><label for="show_completed">Show completed todos on your todo list</label></td>
-        <td><input type="checkbox" name="show_completed" id="show_completed" value="1" #$show_completedchecked# /></td></tr>
+        <td><input type="checkbox" name="show_completed" id="show_completed" value="1" checked="#$show_completedchecked#" /></td></tr>
         <tr><td><label for="allow_login"> Check to prompt for login to unlock calendars.</label></td>
-        <td><input type="checkbox" name="allow_login" id="allow_login" value="1" #$allow_loginchecked# /></td></tr>
+        <td><input type="checkbox" name="allow_login" id="allow_login" value="1" checked="#$allow_loginchecked#" /></td></tr>
         <tr><td><label for="shorturls">#$shorturlslabel#</label></td>
-        <td><input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# /></td></tr>
+        <td><input type="checkbox" name="shorturls" id="shorturls" value="1" checked="#$shorturlschecked#" /></td></tr>
 
     <!--
 
