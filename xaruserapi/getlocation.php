@@ -17,13 +17,13 @@
  *
  */
 
-sys::import('modules.xen.xarclasses.xenddquery');
+sys::import('modules.query.class.ddquery');
 
 function maps_userapi_getlocation($args)
 {
     extract($args);
 
-    $q = new xenDDQuery('maps_locations');
+    $q = new DDQuery('maps_locations');
     if (isset($id)) $q->eq('id',$id);
     if (isset($name)) $q->eq('name',$name);
     if (!$q->run()) return;

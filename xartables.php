@@ -26,7 +26,7 @@ function maps_xartables()
     // Initialise table array
     $xartable = array();
 
-//    $maps = xarDBGetSiteTablePrefix() . '_maps';
+//    $maps = xarDB::getPrefix() . '_maps';
 
     // Set the table name
 //    $xartable['maps'] = $maps;

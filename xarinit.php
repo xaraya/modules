@@ -17,7 +17,7 @@
  *
  */
 
-include_once 'modules/xen/xarclasses/xenobject.class.php';
+sys::import('modules.query.class.query');
 
 function maps_init()
 {
@@ -26,34 +26,34 @@ function maps_init()
 # Create database tables
 #
 
-    $q = new xenQuery();
-	$prefix = xarDBGetSiteTablePrefix();
-	$query = "DROP TABLE IF EXISTS " . $prefix . "_maps_directory";
-	if (!$q->run($query)) return;
+    $q = new Query();
+    $prefix = xarDB::getPrefix();
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_maps_directory";
+    if (!$q->run($query)) return;
 
-	$query = "CREATE TABLE " . $prefix . "_maps_directory (
-	  id int(11) NOT NULL auto_increment,
-	  postal_code varchar(255) NOT NULL default '',
-	  latitude varchar(255) NOT NULL default '',
-	  longitude varchar(255) NOT NULL default '',
-	  city varchar(255) NOT NULL default '',
-	  state varchar(255) NOT NULL default '',
-	  county varchar(255) NOT NULL default '',
-	  pc_class varchar(255) NOT NULL default '',
-	PRIMARY KEY  (id)
-	) TYPE=MyISAM";
-	if (!$q->run($query)) return;
+    $query = "CREATE TABLE " . $prefix . "_maps_directory (
+      id integer unsigned NOT NULL auto_increment,
+      postal_code varchar(255) NOT NULL default '',
+      latitude varchar(255) NOT NULL default '',
+      longitude varchar(255) NOT NULL default '',
+      city varchar(255) NOT NULL default '',
+      state varchar(255) NOT NULL default '',
+      county varchar(255) NOT NULL default '',
+      pc_class varchar(255) NOT NULL default '',
+    PRIMARY KEY  (id)
+    ) TYPE=MyISAM";
+    if (!$q->run($query)) return;
 
 // Load the data as a csv import using phpmyadmin for mysql. It's a lot faster
-/*	include "modules/maps/xardata/maps_directory-dat.php";
-	$rows = maps_dat1();
-	foreach ($rows as $row) {
-		if (!$q->run($row)) return;
-	}
-	$rows = maps_dat2();
-	foreach ($rows as $row) {
-		if (!$q->run($row)) return;
-	}
+/*  include "modules/maps/xardata/maps_directory-dat.php";
+    $rows = maps_dat1();
+    foreach ($rows as $row) {
+        if (!$q->run($row)) return;
+    }
+    $rows = maps_dat2();
+    foreach ($rows as $row) {
+        if (!$q->run($row)) return;
+    }
 */
 # --------------------------------------------------------
 #
@@ -61,9 +61,9 @@ function maps_init()
 #
     $module = 'maps';
     $objects = array(
-					 'maps_locations',
-					 );
-    if(!xarModAPIFunc('xen','admin','install',array('module' => $module, 'objects' => $objects))) return;
+                     'maps_locations',
+                     );
+    if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
 
 # --------------------------------------------------------
 #
@@ -90,14 +90,6 @@ function maps_init()
     xarRegisterPrivilege('AddMaps','All','maps','All','All','ACCESS_ADD');
     xarRegisterPrivilege('DeleteMaps','All','maps','All','All','ACCESS_DELETE');
     xarRegisterPrivilege('AdminMaps','All','maps','All','All','ACCESS_ADMIN');
-    xarMakePrivilegeRoot('ViewMaps');
-    xarMakePrivilegeRoot('ReadMaps');
-    xarMakePrivilegeRoot('CommentMaps');
-    xarMakePrivilegeRoot('ModerateMaps');
-    xarMakePrivilegeRoot('EditMaps');
-    xarMakePrivilegeRoot('AddMaps');
-    xarMakePrivilegeRoot('DeleteMaps');
-    xarMakePrivilegeRoot('AdminMaps');
 
 # --------------------------------------------------------
 #
@@ -152,7 +144,7 @@ function maps_upgrade()
 
 function maps_delete()
 {
-    return xarModAPIFunc('xen','admin','deinstall',array('module' => 'maps'));
+    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'maps'));
 }
 
 ?>

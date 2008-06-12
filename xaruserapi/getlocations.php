@@ -17,7 +17,7 @@
  *
  */
 
-sys::import('modules.xen.xarclasses.xenddquery');
+sys::import('modules.query.class.ddquery');
 
 function maps_userapi_getlocations($args)
 {
@@ -26,7 +26,7 @@ function maps_userapi_getlocations($args)
     if (isset($conditions)) {
     	$q = $conditions;
     } else {
-	    $q = new xenDDQuery('maps_locations');
+	    $q = new DDQuery('maps_locations');
 	}
 	$q->addorder('name');
     if (!$q->run()) return;

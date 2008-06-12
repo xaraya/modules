@@ -35,9 +35,9 @@ $modversion['class']          = 'Complete';
 $modversion['category']       = 'Utility';
 $modversion['dependency']     = array();
 $modversion['securityschema'] = array();
-$modversion['dependency'] = array(147, 3005);
+$modversion['dependency'] = array(147, 30049);
 $modversion['dependencyinfo'] = array(
 									  147 => 'categories',
-									  3005  => 'xen',
+									  30049  => 'query',
 									  );
 ?>

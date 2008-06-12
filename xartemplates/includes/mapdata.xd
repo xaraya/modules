@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="$tabmodule ne 'maps'">
     <xar:set name="regid">xarModGetIDFromName($tabmodule)</xar:set>
 <xar:else />
@@ -20,3 +21,4 @@
     </xar:set>
     <xar:data-input type="checkboxlist" name="uselocations" id="uselocations" value="$value" options="$options" />
 </div>
+</xar:template>

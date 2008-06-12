@@ -1,109 +1,111 @@
-<xar:comment>
-    License: GPL http://www.gnu.org/copyleft/gpl.html 
-</xar:comment>
-<xar:style scope="module" module="base" file="navtabs" />
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>
-            Maps Administration 
-        </xar:mlstring>
-    </span>
-</div>
-<div class="xar-mod-body">
-    <h2>
-        <xar:mlstring>
-            Modify Configuration 
-        </xar:mlstring>
-    </h2>
-    <div>
-        <xar:template file="headerconfig" type="module"/>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:style scope="module" module="base" file="navtabs" />
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>
+                Maps Administration 
+            </xar:mlstring>
+        </span>
     </div>
-    <xar:comment>
-         - - - - - - - - - - - - - - - - - - - Begin General Options  - - - - - - - - - - - - - - - - - - - 
-    </xar:comment>
-    <form method="post" action="&xar-modurl-maps-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
-    <xar:if condition="$tab eq 'maps_general'">
-            <h3>
-                <xar:mlstring>
-                    General Options 
-                </xar:mlstring>
-            </h3>
-            <fieldset>
-                <legend>
+    <div class="xar-mod-body">
+        <h2>
+            <xar:mlstring>
+                Modify Configuration 
+            </xar:mlstring>
+        </h2>
+        <div>
+            <xar:template file="headerconfig" type="module"/>
+        </div>
+        <xar:comment>
+             - - - - - - - - - - - - - - - - - - - Begin General Options  - - - - - - - - - - - - - - - - - - - 
+        </xar:comment>
+        <form method="post" action="&xar-modurl-maps-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
+        <xar:if condition="$tab eq 'maps_general'">
+                <h3>
                     <xar:mlstring>
-                        Keys 
+                        General Options 
                     </xar:mlstring>
-                </legend>
-                <div class="xar-form-input-wrapper">
-                    <label for="latitude" title="#xarML('Site key to use Google Maps')#" class="xar-form-label">
+                </h3>
+                <fieldset>
+                    <legend>
                         <xar:mlstring>
-                            Google Maps Key: 
+                            Keys 
                         </xar:mlstring>
-                    </label>
-                    <textarea name="gmapskey" id="gmapskey">#xarModGetVar('maps', 'gmapskey')#</textarea>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="latitude" title="#xarML('Site key to use Yahoo Maps')#" class="xar-form-label">
+                    </legend>
+                    <div class="xar-form-input-wrapper">
+                        <label for="latitude" title="#xarML('Site key to use Google Maps')#" class="xar-form-label">
+                            <xar:mlstring>
+                                Google Maps Key: 
+                            </xar:mlstring>
+                        </label>
+                        <xar:set name="value"><xar:var scope="module" module="maps" name="gmapskey" /></xar:set>
+                        <textarea name="gmapskey" id="gmapskey">#$value#</textarea>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="latitude" title="#xarML('Site key to use Yahoo Maps')#" class="xar-form-label">
+                            <xar:mlstring>
+                                Yahoo Maps Key: 
+                            </xar:mlstring>
+                        </label>
+                        <xar:set name="value"><xar:var scope="module" module="maps" name="ymapskey" /></xar:set>
+                        <textarea name="ymapskey" id="ymapskey">#$value#</textarea>
+                    </div>
+                </fieldset>
+            <xar:else />
+                <h3>
+                    <xar:set name="ucname">UCFirst($tabmodule)</xar:set>
+                    <xar:ml>
                         <xar:mlstring>
-                            Yahoo Maps Key: 
+                            Module Defaults for #(1)
                         </xar:mlstring>
-                    </label>
-                    <textarea name="ymapskey" id="ymapskey">#xarModGetVar('maps', 'ymapskey')#</textarea>
+                        <xar:mlvar>#$ucname#</xar:mlvar>
+                    </xar:ml>
+                </h3>
+            </xar:if>
+            <fieldset>
+                <legend>
+                    <xar:mlstring>
+                        Map Layout  
+                    </xar:mlstring>
+                </legend>
+                <xar:template file="layout" />
+            </fieldset>
+            <xar:if condition="$tabmodule ne 'maps'">
+                <fieldset>
+                    <legend>
+                        <xar:mlstring>
+                            Map Data  
+                        </xar:mlstring>
+                    </legend>
+                    <xar:template file="mapdata" />
+                </fieldset>
+                <fieldset>
+                    <legend>
+                        <xar:mlstring>
+                            Map Display  
+                        </xar:mlstring>
+                    </legend>
+                    <xar:template file="mapdisplay" />
+                </fieldset>
+            </xar:if>
+            <fieldset>
+                <legend>
+                    <xar:mlstring>
+                        Controls 
+                    </xar:mlstring>
+                </legend>
+                <xar:template file="controls" />
+            </fieldset>
+            <fieldset>
+                <div class="xar-form-input-wrapper-after">
+                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                    <input type="hidden" name="phase" id="phase" value="update" />
+                    <input type="hidden" name="tab" id="tab" value="#$tab#" />
+                    <input type="hidden" name="tabmodule" id="tabmodule" value="#$tabmodule#" />
+                    <input type="submit" value="#xarML('Update Maps Configuration')#" />
                 </div>
             </fieldset>
-        <xar:else />
-            <h3>
-                <xar:set name="ucname">UCFirst($tabmodule)</xar:set>
-                <xar:ml>
-                    <xar:mlstring>
-                        Module Defaults for #(1)
-                    </xar:mlstring>
-                    <xar:mlvar>#$ucname#</xar:mlvar>
-                </xar:ml>
-            </h3>
-        </xar:if>
-        <fieldset>
-            <legend>
-                <xar:mlstring>
-                    Map Layout  
-                </xar:mlstring>
-            </legend>
-            <xar:template file="layout" />
-        </fieldset>
-        <xar:if condition="$tabmodule ne 'maps'">
-            <fieldset>
-                <legend>
-                    <xar:mlstring>
-                        Map Data  
-                    </xar:mlstring>
-                </legend>
-                <xar:template file="mapdata" />
-            </fieldset>
-            <fieldset>
-                <legend>
-                    <xar:mlstring>
-                        Map Display  
-                    </xar:mlstring>
-                </legend>
-                <xar:template file="mapdisplay" />
-            </fieldset>
-        </xar:if>
-        <fieldset>
-            <legend>
-                <xar:mlstring>
-                    Controls 
-                </xar:mlstring>
-            </legend>
-            <xar:template file="controls" />
-        </fieldset>
-        <fieldset>
-            <div class="xar-form-input-wrapper-after">
-                <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <input type="hidden" name="phase" id="phase" value="update" />
-                <input type="hidden" name="tab" id="tab" value="#$tab#" />
-                <input type="hidden" name="tabmodule" id="tabmodule" value="#$tabmodule#" />
-                <input type="submit" value="#xarML('Update Maps Configuration')#" />
-            </div>
-        </fieldset>
-    </form>
-</div>
+        </form>
+    </div>
+</xar:template>

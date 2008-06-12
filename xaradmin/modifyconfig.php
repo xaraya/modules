@@ -91,17 +91,17 @@ function maps_admin_modifyconfig()
 				xarModVars::set('maps', 'uselocations', serialize($uselocations));
 			}
 			$regid = xarModGetIDFromName($tabmodule);
-			xarModSetUserVar('maps', 'zoomlevel', $zoomlevel, $regid);
-			xarModSetUserVar('maps', 'centerlongitude', $centerlongitude, $regid);
-			xarModSetUserVar('maps', 'centerlatitude', $centerlatitude, $regid);
-			xarModSetUserVar('maps', 'mapwidth', $mapwidth, $regid);
-			xarModSetUserVar('maps', 'mapheight', $mapheight, $regid);
-			xarModSetUserVar('maps', 'glargemapcontrol', $glargemapcontrol, $regid);
-			xarModSetUserVar('maps', 'gsmallmapcontrol', $gsmallmapcontrol, $regid);
-			xarModSetUserVar('maps', 'gsmallzoomcontrol', $gsmallzoomcontrol, $regid);
-			xarModSetUserVar('maps', 'gscalecontrol', $gscalecontrol, $regid);
-			xarModSetUserVar('maps', 'gmaptypecontrol', $gmaptypecontrol, $regid);
-			xarModSetUserVar('maps', 'goverviewmapcontrol', $goverviewmapcontrol, $regid);
+			xarModItemVars::set('maps', 'zoomlevel', $zoomlevel, $regid);
+			xarModItemVars::set('maps', 'centerlongitude', $centerlongitude, $regid);
+			xarModItemVars::set('maps', 'centerlatitude', $centerlatitude, $regid);
+			xarModItemVars::set('maps', 'mapwidth', $mapwidth, $regid);
+			xarModItemVars::set('maps', 'mapheight', $mapheight, $regid);
+			xarModItemVars::set('maps', 'glargemapcontrol', $glargemapcontrol, $regid);
+			xarModItemVars::set('maps', 'gsmallmapcontrol', $gsmallmapcontrol, $regid);
+			xarModItemVars::set('maps', 'gsmallzoomcontrol', $gsmallzoomcontrol, $regid);
+			xarModItemVars::set('maps', 'gscalecontrol', $gscalecontrol, $regid);
+			xarModItemVars::set('maps', 'gmaptypecontrol', $gmaptypecontrol, $regid);
+			xarModItemVars::set('maps', 'goverviewmapcontrol', $goverviewmapcontrol, $regid);
 			xarModVars::set('maps', 'uselocations', serialize($uselocations), $regid);
 
             xarResponseRedirect(xarModURL('maps', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));

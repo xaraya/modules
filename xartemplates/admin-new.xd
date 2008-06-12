@@ -1,30 +1,32 @@
-<script src="http://maps.google.com/maps?file=api&v=2&amp;key=#$mapskey#" type="text/javascript"></script>
-<xar:base-include-javascript position="head" module="maps" filename="map_init.js" />
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=#$mapskey#" type="text/javascript">&#160;</script>
+    <xar:base-include-javascript position="head" module="maps" filename="map_init.js" />
 
-<script type="text/javascript">
-    //<![CDATA[
-    if (window.attachEvent) {
-        window.attachEvent("onload", function() {
-            mapnumber = mapInit('maps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Internet Explorer
-            makeMapDataEntryMap(mapnumber,'maps_address','maps_latitude','maps_longitude','maps_latitude2','maps_longitude2');
-        });
-    } else {
-        window.addEventListener("load", function() {
-            mapnumber = mapInit('maps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Firefox and standard browsers
-            makeMapDataEntryMap(mapnumber,'maps_address','maps_latitude','maps_longitude','maps_latitude2','maps_longitude2');
-        }, false);
-    }
-    //]]>
-</script>
+    <script type="text/javascript">
+        //<![CDATA[
+        if (window.attachEvent) {
+            window.attachEvent("onload", function() {
+                mapnumber = mapInit('maps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Internet Explorer
+                makeMapDataEntryMap(mapnumber,'maps_address','maps_latitude','maps_longitude','maps_latitude2','maps_longitude2');
+            });
+        } else {
+            window.addEventListener("load", function() {
+                mapnumber = mapInit('maps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Firefox and standard browsers
+                makeMapDataEntryMap(mapnumber,'maps_address','maps_latitude','maps_longitude','maps_latitude2','maps_longitude2');
+            }, false);
+        }
+        //]]>
+    </script>
 
-<form method="post" action="#xarModURL('maps','admin','create')#">
-    <xar:comment>TODO: There may be multiple map divs on the same screen.  Need to ID each one uniquely</xar:comment>
-    Location:<br/>
-    <textarea id="maps_address"></textarea><input type="button" value="Map Location" onclick="getGeoCode(mapnumber,'maps_address','maps_latitude','maps_longitude');return false;">
-    <div id="maps_map" style="width: #$mapwidth#px; height: #$mapheight#px"></div>
-    <input type="text" name="maps_latitude" id="maps_latitude" value="" />
-    <input type="text" name="maps_longitude" id="maps_longitude" value="" />
-    <input type="text" name="maps_latitude2" id="maps_latitude2" value="" />
-    <input type="text" name="maps_longitude2" id="maps_longitude2" value="" />
-    <input type="submit" value="Save" />
-</form>
+    <form method="post" action="#xarModURL('maps','admin','create')#">
+        <xar:comment>TODO: There may be multiple map divs on the same screen.  Need to ID each one uniquely</xar:comment>
+        Location:<br/>
+        <textarea id="maps_address"></textarea><input type="button" value="Map Location" onclick="getGeoCode(mapnumber,'maps_address','maps_latitude','maps_longitude');return false;"/>
+        <div id="maps_map" style="width: #$mapwidth#px; height: #$mapheight#px"></div>
+        <input type="text" name="maps_latitude" id="maps_latitude" value="" />
+        <input type="text" name="maps_longitude" id="maps_longitude" value="" />
+        <input type="text" name="maps_latitude2" id="maps_latitude2" value="" />
+        <input type="text" name="maps_longitude2" id="maps_longitude2" value="" />
+        <input type="submit" value="Save" />
+    </form>
+</xar:template>

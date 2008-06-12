@@ -1,26 +1,30 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:set name="compare">xarServerGetCurrentURL()</xar:set>
-<xar:set name="stub">basename(xarServerGetCurrentURL())</xar:set>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:set name="compare">xarServerGetCurrentURL()</xar:set>
+    <xar:set name="stub">basename(xarServerGetCurrentURL())</xar:set>
 
-<xar:if condition="$stub eq 'tab1'">
-    <dd class="active">
-<xar:else />
-    <dd class="inactive">
-</xar:if>
-    <a href="#$current#/tab1">
-        <xar:mlstring>
-            Tab 1
-        </xar:mlstring>
-    </a>
-</dd>    
-<xar:if condition="$stub eq 'tab2'">
-    <dd class="active">
-<xar:else />
-    <dd class="inactive">
-</xar:if>
-    <a href="#$current#/tab2">
-        <xar:mlstring>
-            Tab 2
-        </xar:mlstring>
-    </a>
-</dd>    
+    <xar:if condition="$stub eq 'tab1'">
+        <xar:set name="class">"active"</xar:set>
+    <xar:else />
+        <xar:set name="class">"inactive"</xar:set>
+    </xar:if>
+    <dd class="$class">
+        <a href="#$current#/tab1">
+            <xar:mlstring>
+                Tab 1
+            </xar:mlstring>
+        </a>
+    </dd>    
+    <xar:if condition="$stub eq 'tab2'">
+        <xar:set name="class">"active"</xar:set>
+    <xar:else />
+        <xar:set name="class">"inactive"</xar:set>
+    </xar:if>
+    <dd class="$class">
+        <a href="#$current#/tab2">
+            <xar:mlstring>
+                Tab 2
+            </xar:mlstring>
+        </a>
+    </dd>    
+</xar:template>

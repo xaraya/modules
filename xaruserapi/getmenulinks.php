@@ -19,6 +19,7 @@
 
 function maps_userapi_getmenulinks()
 {
+    $menulinks = array();
 
     if (xarSecurityCheck('ViewMaps',0)) {
         $menulinks[] = Array('url'   => xarModURL('maps',
@@ -42,9 +43,6 @@ function maps_userapi_getmenulinks()
                               'label' => xarML('Manage'));
     }
 
-    if (empty($menulinks)){
-        $menulinks = '';
-    }
     return $menulinks;
 }
 

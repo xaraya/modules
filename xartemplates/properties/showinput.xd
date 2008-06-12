@@ -1,93 +1,95 @@
-<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=#$mapskey#" type="text/javascript"></script>
-<xar:base-include-javascript position="head" module="maps" filename="map_init.js" />
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=#$mapskey#" type="text/javascript"></script>
+    <xar:base-include-javascript position="head" module="maps" filename="map_init.js" />
 
-<script type="text/javascript">
-    //<![CDATA[
-    var mapnumber
-    if (window.attachEvent) {
-        window.attachEvent("onload", function() {
-            mapnumber = mapInit('maps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Internet Explorer
-            makeMapDataEntryMap(mapnumber,'maps_address','maps_latitude','maps_longitude','maps_latitude2','maps_longitude2');
-            fillmap();
-        });
-    } else {
-        window.addEventListener("load", function() {
-            mapnumber = mapInit('maps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Firefox and standard browsers
-            makeMapDataEntryMap(mapnumber,'maps_address','maps_latitude','maps_longitude','maps_latitude2','maps_longitude2');
-            fillmap();
-        }, false);
-    }
-    //]]>
-</script>
+    <script type="text/javascript">
+        //<![CDATA[
+        var mapnumber
+        if (window.attachEvent) {
+            window.attachEvent("onload", function() {
+                mapnumber = mapInit('maps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Internet Explorer
+                makeMapDataEntryMap(mapnumber,'maps_address','maps_latitude','maps_longitude','maps_latitude2','maps_longitude2');
+                fillmap();
+            });
+        } else {
+            window.addEventListener("load", function() {
+                mapnumber = mapInit('maps_map',#$latitude#,#$longitude#,#$zoomlevel#); // Firefox and standard browsers
+                makeMapDataEntryMap(mapnumber,'maps_address','maps_latitude','maps_longitude','maps_latitude2','maps_longitude2');
+                fillmap();
+            }, false);
+        }
+        //]]>
+    </script>
 
-<script type="text/javascript">
-  function fillmap(){
-    <xar:foreach in="$locations" value="$location">
-        <xar:if condition="empty($location['latitude2'])">
-            point = new GLatLng(#$location['latitude']#,#$location['longitude']#);
-            marker = createMarker(mapnumber,point,"#$location['windowtext']#");
-            maps[mapnumber].addOverlay(marker);
-        <xar:else />
-            var points = new Array();
-            points[1] = new GLatLng(#$location['latitude']#,#$location['longitude']#);
-            points[2] = new GLatLng(#$location['latitude2']#,#$location['longitude2']#);
-            var bounds = new GBounds(points);
-            polyline = new GPolyline([new GPoint(bounds.maxX, bounds.maxY), new GPoint(bounds.maxX, bounds.minY), new GPoint(bounds.minX, bounds.minY), new GPoint(bounds.minX,bounds.maxY), new GPoint(bounds.maxX,bounds.maxY)], "#00ff00", 5, 0.5);
-            maps[mapnumber].addOverlay(polyline);
+    <script type="text/javascript">
+      function fillmap(){
+        <xar:foreach in="$locations" value="$location">
+            <xar:if condition="empty($location['latitude2'])">
+                point = new GLatLng(#$location['latitude']#,#$location['longitude']#);
+                marker = createMarker(mapnumber,point,"#$location['windowtext']#");
+                maps[mapnumber].addOverlay(marker);
+            <xar:else />
+                var points = new Array();
+                points[1] = new GLatLng(#$location['latitude']#,#$location['longitude']#);
+                points[2] = new GLatLng(#$location['latitude2']#,#$location['longitude2']#);
+                var bounds = new GBounds(points);
+                polyline = new GPolyline([new GPoint(bounds.maxX, bounds.maxY), new GPoint(bounds.maxX, bounds.minY), new GPoint(bounds.minX, bounds.minY), new GPoint(bounds.minX,bounds.maxY), new GPoint(bounds.maxX,bounds.maxY)], "#00ff00", 5, 0.5);
+                maps[mapnumber].addOverlay(polyline);
+            </xar:if>
+        </xar:foreach>
+      }
+    </script>
+
+    <form method="post" action="#xarModURL('maps','admin','create')#">
+        <xar:comment>TODO: There may be multiple map divs on the same screen.  Need to ID each one uniquely</xar:comment>
+        <input type="hidden" name="longitude2" id="maps_longitude2" value="" />
+        <input type="hidden" name="latitude2" id="maps_latitude2" value="" />
+        <input type="hidden" name="longitude" id="maps_longitude" value="" />
+        <input type="hidden" name="latitude" id="maps_latitude" value="" />
+        <fieldset>
+            <legend>
+                <xar:mlstring>
+                    Add a Location to the Map
+                </xar:mlstring>
+            </legend>
+            <div class="xar-form-input-wrapper">
+                <label for="maps_name" title="#xarML('The name you want to give this location')#" class="xar-form-label">
+                    <xar:mlstring>
+                        Location Name:
+                    </xar:mlstring>
+                </label>
+                <input type="text" name="name" id="maps_name" value="" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="maps_address" title="#xarML('Latitude 1')#" class="xar-form-label">
+                    <xar:mlstring>
+                        Coordinates:
+                    </xar:mlstring>
+                </label>
+                <textarea name="maps_address" id="maps_address">&#160;</textarea>&#160;<input type="button" value="Place on Map" onclick="getGeoCode(mapnumber,'maps_address','maps_latitude','maps_longitude');return false;"/>
+            </div>
+            <div class="xar-form-input-wrapper-after">
+                <input type="submit" value="Save this Location" />
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>
+                <xar:mlstring>
+                    Available Locations
+                </xar:mlstring>
+            </legend>
+            <div class="xar-form-input-wrapper">
+                <label for="maps_name" title="#xarML('The name you want to give this location')#" class="xar-form-label">
+                    <xar:mlstring>
+                        Saved in the database:
+                    </xar:mlstring>
+                </label>
+                <xar:data-input type="maplocation" name="locations" id="maps_locations" />
+            </div>
+        </fieldset>
+        <xar:if condition="!isset($style)">
+            <xar:set name="style">""</xar:set>
         </xar:if>
-    </xar:foreach>
-  }
-</script>
-
-<form method="post" action="#xarModURL('maps','admin','create')#">
-    <xar:comment>TODO: There may be multiple map divs on the same screen.  Need to ID each one uniquely</xar:comment>
-    <input type="hidden" name="longitude2" id="maps_longitude2" value="" />
-    <input type="hidden" name="latitude2" id="maps_latitude2" value="" />
-    <input type="hidden" name="longitude" id="maps_longitude" value="" />
-    <input type="hidden" name="latitude" id="maps_latitude" value="" />
-    <fieldset>
-        <legend>
-            <xar:mlstring>
-                Add a Location to the Map
-            </xar:mlstring>
-        </legend>
-        <div class="xar-form-input-wrapper">
-            <label for="maps_name" title="#xarML('The name you want to give this location')#" class="xar-form-label">
-                <xar:mlstring>
-                    Location Name:
-                </xar:mlstring>
-            </label>
-            <input type="text" name="name" id="maps_name" value="" />
-        </div>
-        <div class="xar-form-input-wrapper">
-            <label for="maps_address" title="#xarML('Latitude 1')#" class="xar-form-label">
-                <xar:mlstring>
-                    Coordinates:
-                </xar:mlstring>
-            </label>
-            <textarea name="maps_address" id="maps_address"></textarea>&#160;<input type="button" value="Place on Map" onclick="getGeoCode(mapnumber,'maps_address','maps_latitude','maps_longitude');return false;">
-        </div>
-        <div class="xar-form-input-wrapper-after">
-            <input type="submit" value="Save this Location" />
-        </div>
-    </fieldset>
-    <fieldset>
-        <legend>
-            <xar:mlstring>
-                Available Locations
-            </xar:mlstring>
-        </legend>
-        <div class="xar-form-input-wrapper">
-            <label for="maps_name" title="#xarML('The name you want to give this location')#" class="xar-form-label">
-                <xar:mlstring>
-                    Saved in the database:
-                </xar:mlstring>
-            </label>
-            <xar:data-input type="maplocation" name="locations" id="maps_locations" />
-        </div>
-    </fieldset>
-    <xar:if condition="!isset($style)">
-        <xar:set name="style">""</xar:set>
-    </xar:if>
-    <div id="maps_map" style="width: #$mapwidth#; height: #$mapheight#; #$style#" ></div>
-</form>
+        <div id="maps_map" style="width: #$mapwidth#; height: #$mapheight#; #$style#" ></div>
+    </form>
+</xar:template>

@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:base-include-javascript filename="joomla.javascript.js" position="head"/>
 <div class="xar-form-input-wrapper">
     <xar:set name="categoryoptions">array()</xar:set>
@@ -20,3 +21,4 @@
     <xar:set name="categoryoptionkeys">""</xar:set>
     <input type="hidden" name="categoryimplodedlist" id="categoryimplodedlist" value="#$categoryoptionkeys#" />
 </div>
+</xar:template>

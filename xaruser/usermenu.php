@@ -37,50 +37,50 @@ function maps_user_usermenu($args)
             break;
         case 'form':
 
-		    $stub = basename(xarServerGetCurrentURL());
+            $stub = basename(xarServerGetCurrentURL());
 
-			switch(strtolower($stub)) {
-				case 'tab1':
-					// get some roles properties, might be useful
-					$uname = xarUserGetVar('uname');
-					$name = xarUserGetVar('name');
-					$uid = xarUserGetVar('uid');
-					$email = xarUserGetVar('email');
-					$role = xarUFindRole($uname);
-					$home = $role->getHome();
-					$authid = xarSecGenAuthKey();
-					$submitlabel = xarML('Submit');
-					$item['module'] = 'roles';
+            switch(strtolower($stub)) {
+                case 'tab1':
+                    // get some roles properties, might be useful
+                    $uname = xarUserGetVar('uname');
+                    $name = xarUserGetVar('name');
+                    $id = xarUserGetVar('id');
+                    $email = xarUserGetVar('email');
+                    $role = xarUFindRole($uname);
+                    $home = $role->getHome();
+                    $authid = xarSecGenAuthKey();
+                    $submitlabel = xarML('Submit');
+                    $item['module'] = 'roles';
 
-					$hooks = xarModCallHooks('item','modify',$uid,$item);
-					if (isset($hooks['dynamicdata'])) {
-						unset($hooks['dynamicdata']);
-					}
+                    $hooks = xarModCallHooks('item','modify',$id,$item);
+                    if (isset($hooks['dynamicdata'])) {
+                        unset($hooks['dynamicdata']);
+                    }
 
-					$data = xarTplModule('maps','user', 'user_menu_tab1',
-										  array('authid'       => $authid,
-										  'withupload'   => $withupload,
-										  'name'         => $name,
-										  'uname'        => $uname,
-										  'home'         => $home,
-										  'hooks'        => $hooks,
-										  'emailaddress' => $email,
-										  'submitlabel'  => $submitlabel,
-										  'uid'          => $uid));
-					break;
+                    $data = xarTplModule('maps','user', 'user_menu_tab1',
+                                          array('authid'       => $authid,
+                                          'withupload'   => $withupload,
+                                          'name'         => $name,
+                                          'uname'        => $uname,
+                                          'home'         => $home,
+                                          'hooks'        => $hooks,
+                                          'emailaddress' => $email,
+                                          'submitlabel'  => $submitlabel,
+                                          'id'          => $id));
+                    break;
 
-				case 'tab2':
-					$data = xarTplModule('maps','user', 'user_menu_tab2');
-					break;
-			}
-			break;
+                case 'tab2':
+                    $data = xarTplModule('maps','user', 'user_menu_tab2');
+                    break;
+            }
+            break;
 
         case 'updatebasic':
 
             // Confirm authorisation code.
 //            if (!xarSecConfirmAuthKey()) return;
 
-    		xarModCallHooks('item', 'update', $uid, $item);
+            xarModCallHooks('item', 'update', $id, $item);
 
             // Redirect
             xarResponseRedirect(xarModURL('roles', 'user', 'account'));
