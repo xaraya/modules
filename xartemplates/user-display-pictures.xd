@@ -51,10 +51,10 @@
                 <xar:if condition="!empty($prevart) || !empty($nextart)">
                     <ul id="fullplate-navigation">
                         <xar:if condition="!empty($prevart)">
-                            <li id="previous"><a href="#$prevart#">&laquo;</a></li>
+                            <li id="previous"><a href="#$prevart#">&#171;</a></li>
                         </xar:if>
                         <xar:if condition="!empty($nextart)">
-                            <li id="next"><a href="#$nextart#">&raquo;</a></li>
+                            <li id="next"><a href="#$nextart#">&#187;</a></li>
                         </xar:if>
                     </ul>
                 </xar:if>

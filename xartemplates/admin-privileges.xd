@@ -55,7 +55,8 @@
                             <xar:mlstring>Author</xar:mlstring>
                         </th>
                         <td>
-                            <xar:data-input type="dropdown" name="uid" options="$authorlist" value="$uid" firstline="All / Other --&gt" onchange="javascript:this.form.submit();" />
+                            <xar:set name="onchange">javascript:this.form.submit();</xar:set>
+                            <xar:data-input type="dropdown" name="uid" options="$authorlist" value="$uid" firstline="All / Other -->" onchange="$onchange" />
                             <input type="text" name="author" id="author" value="#$author#" size="15" onchange="javascript:this.form.submit();" />
                         </td>
                     </tr>

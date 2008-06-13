@@ -48,7 +48,8 @@ function articles_init()
             )";
 */
     $fields = array(
-        'id'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
+//        'id'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         'title'=>array('type'=>'varchar','size'=>254,'null'=>FALSE,'default'=>''),
         'summary'=>array('type'=>'text'),
         'body'=>array('type'=>'text'),
@@ -126,7 +127,8 @@ function articles_init()
             PRIMARY KEY(pubtypeid))";
 */
     $fields = array(
-        'pubtypeid'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'pubtypeid' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
+//        'pubtypeid'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         'pubtypename'=>array('type'=>'varchar','size'=>30,'null'=>FALSE,'default'=>''),
         'pubtypedescr'=>array('type'=>'varchar','size'=>254,'null'=>FALSE,'default'=>''),
         'pubtypeconfig'=>array('type'=>'text')

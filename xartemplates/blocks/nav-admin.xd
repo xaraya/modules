@@ -27,6 +27,7 @@
     <xar:set name="optgroup">
         0
     </xar:set>
+    <!--  Review this!!
     <select name="startmodule" id="startmodule#$blockid#">
         <xar:loop name="$modules">
             <xar:if condition="!empty($loop:item.label)">
@@ -53,6 +54,7 @@
         </optgroup>
     </xar:if>
 </select>
+-->
 </div>
 <div class="xar-form-input-wrapper-after">
     <xar:if condition="!empty($showempty)">
@@ -84,25 +86,27 @@
             Show count per category
         </xar:mlstring>
     </label>
-    <xar:loop name="$catcounts">
-        <xar:if condition="$showcatcount eq $loop:item['id']">
-            <option value="#$loop:item['id']#" selected="selected">
-                #$loop:item['name']#
-            </option>
-            <xar:else />
-            <option value="#$loop:item['id']#">
-                #$loop:item['name']#
-            </option>
-        </xar:if>
-    </xar:loop>
-</select>
+    <select name="showcatcount" id="showcatcount#$blockid#">
+        <xar:loop name="$catcounts">
+            <xar:if condition="$showcatcount eq $loop:item['id']">
+                <option value="#$loop:item['id']#" selected="selected">
+                    #$loop:item['name']#
+                </option>
+                <xar:else />
+                <option value="#$loop:item['id']#">
+                    #$loop:item['name']#
+                </option>
+            </xar:if>
+        </xar:loop>
+    </select>
 </div>
 <div class="xar-form-input-wrapper">
     <label class="xar-form-label" for="showchildren#$blockid#">
         <xar:mlstring>
             Show children
         </xar:mlstring>
-    </label><select name="showchildren" id="showchildren#$blockid#">
+    </label>
+    <select name="showchildren" id="showchildren#$blockid#">
         <xar:loop name="$children">
             <xar:if condition="$showchildren eq $loop:item['id']">
                 <option value="#$loop:item['id']#" selected="selected">
