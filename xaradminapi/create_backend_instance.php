@@ -40,7 +40,7 @@ function translations_adminapi_create_backend_instance($args)
         sys::import('xaraya.mlsbackends.xml2php');
         return new xarMLS__XML2PHPTranslationsBackend(array($locale));
     }
-    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
+    throw new Exception('Unknown');
 }
 
 ?>

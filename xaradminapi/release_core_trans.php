@@ -25,16 +25,14 @@ function translations_adminapi_release_core_trans($args)
 
     if ($bt != 'php') {
         $msg = xarML('Unsupported backend type \'#(1)\'. Don\'t know how to generate release package for that backend.', $bt);
-        xarErrorSet(XAR_USER_EXCEPTION, 'UnsupportedReleaseBackend', new DefaultUserException($msg));
-        return;
+        throw new Exception($msg);
     }
 
     $dirpath = "var/locales/$locale/php/core/";
     if (!file_exists($dirpath.'core.php')) {
         $msg = xarML('Before releasing translations package you must first generate translations.');
         $link = array(xarML('Click here to proceed.'), xarModURL('translations', 'admin', 'update_info', array('dntype' => 'core')));
-        xarErrorSet(XAR_USER_EXCEPTION, 'MissingTranslations', new DefaultUserException($msg, $link));
-        return;
+        throw new Exception($msg);
     }
 
     // return translations_make_package('xaraya', XARCORE_VERSION_NUM, $dirpath, $locale);

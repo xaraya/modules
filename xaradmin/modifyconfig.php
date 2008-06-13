@@ -19,7 +19,7 @@ function translations_admin_modifyconfig()
 
     $localehome = "var/locales";
     if (!file_exists($localehome)) {
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'LOCALE_NOT_AVAILABLE', new SystemException('The locale directory was not found.'));
+        throw new Exception('The locale directory was not found.');
     }
     $dd = opendir($localehome);
     $locales = array();

@@ -37,7 +37,7 @@ function translations_adminapi_create_generator_instance($args)
             sys::import('modules.translations.class.PHPTransGenerator');
             return new PHPTranslationsGenerator($locale);
     }
-    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
+    throw new Exception('Unknown');
 }
 
 ?>

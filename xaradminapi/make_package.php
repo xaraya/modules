@@ -21,8 +21,7 @@ function translations_adminapi_make_package($args)
     if (!$archiver_path = xarModAPIFunc('translations','admin','archiver_path')) return;
     if (!file_exists($archiver_path) || !is_executable($archiver_path)) {
         $msg = xarML('Cannot execute \'#(1)\'.', $archiver_path);
-        xarErrorSet(XAR_USER_EXCEPTION, 'UnsupportedReleaseBackend', new DefaultUserException($msg));
-        return;
+        throw new Exception($msg);
     }
     if (!$archiver_flags = xarModAPIFunc('translations','admin','archiver_flags')) return;
 

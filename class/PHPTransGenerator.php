@@ -94,8 +94,7 @@ class PHPTranslationsGenerator
 
         if (!$canWrite) {
             $msg = xarML("The directories under #(1) must be writeable by PHP.", $locales_dir);
-            xarErrorSet(XAR_USER_EXCEPTION, 'WrongPermissions', new DefaultUserException($msg));
-            return;
+            throw new Exception($msg);
         }
 
         switch ($dnType) {
