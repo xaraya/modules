@@ -197,17 +197,11 @@ function ratings_upgrade($oldversion)
             // Get database information
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
-            // Load Table Maintainance API
-            xarDBLoadTableMaintenanceAPI();
-            $args = array('command' => 'modify',
-                          'type' => 'float',
-                          'size' => 'double',
-                          'width' => 8,
-                          'decimals' => 5,
-                          'default' => '0.00000',
-                          'null' => false);
-            $query = xarDBAlterTable($xartable['ratings'], $fields);
-            if (empty($query)) return; // throw back
+            $query= "ALTER TABLE " . $xartable['ratings'] . "
+                           MODIFY COLUMN xar_rating double(8,5) NOT NULL default '0.00000'";
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
 
     }
     return true;
