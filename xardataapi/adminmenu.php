@@ -18,10 +18,10 @@
  */
 
 // TODO: turn this into an xml file
-	function maps_dataapi_adminmenu() {
-		return array(
+    function maps_dataapi_adminmenu() {
+        return array(
             array('includes' => array('main','overview'), 'target' => 'main', 'label' => xarML('Maps Overview')),
-            array('mask' => 'AdminAuthsystem', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the Maps configuration'), 'label' => xarML('Modify Configuration')),
-		);
-	}
+            array('mask' => 'AdminMaps', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the Maps configuration'), 'label' => xarML('Modify Configuration')),
+        );
+    }
 ?>
