@@ -14,6 +14,10 @@
     #
         xarRegisterMask('ViewFoo','All','foo','All','All','ACCESS_OVERVIEW');
         xarRegisterMask('ReadFoo','All','foo','All','All','ACCESS_READ');
+        xarRegisterMask('CommentFoo','All','foo','All','All','ACCESS_COMMENT');
+        xarRegisterMask('ModerateFoo','All','foo','All','All','ACCESS_MODERATE');
+        xarRegisterMask('EditFoo','All','foo','All','All','ACCESS_EDIT');
+        xarRegisterMask('AddFoo','All','foo','All','All','ACCESS_ADD');
         xarRegisterMask('ManageFoo','All','foo','All','All','ACCESS_DELETE');
         xarRegisterMask('AdminFoo','All','foo','All','All','ACCESS_ADMIN');
 
@@ -21,6 +25,12 @@
     #
     # Set up privileges
     #
+        xarRegisterPrivilege('ViewFoo','All','foo','All','All','ACCESS_OVERVIEW');
+        xarRegisterPrivilege('ReadFoo','All','foo','All','All','ACCESS_READ');
+        xarRegisterPrivilege('CommentFoo','All','foo','All','All','ACCESS_COMMENT');
+        xarRegisterPrivilege('ModerateFoo','All','foo','All','All','ACCESS_MODERATE');
+        xarRegisterPrivilege('EditFoo','All','foo','All','All','ACCESS_EDIT');
+        xarRegisterPrivilege('AddFoo','All','foo','All','All','ACCESS_ADD');
         xarRegisterPrivilege('ManageFoo','All','foo','All','All','ACCESS_DELETE');
         xarRegisterPrivilege('AdminFoo','All','foo','All','All','ACCESS_ADMIN');
 
