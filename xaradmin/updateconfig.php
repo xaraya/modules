@@ -103,17 +103,30 @@ function sitecontact_admin_updateconfig()
     $hasalias= xarModGetAlias($currentalias);
     $useAliasName= xarModGetVar('sitecontact','useModuleAlias');
 
-    if (($useAliasName==1) && !empty($newalias)){
-        /* we want to use an aliasname */
-        /* First check for old alias and delete it */
-        if (isset($hasalias) && ($hasalias =='sitecontact')){
-            xarModDelAlias($currentalias,'sitecontact');
-        }
-        /* now set the new alias if it's a new one */
-          xarModSetAlias($newalias,'sitecontact');
+    if ($useAliasName && !empty($newalias)) {
+         if ($aliasname != $currentalias)
+         /* First check for old alias and delete it */
+            if (isset($hasalias) && ($hasalias =='sitecontact')){
+                xarModDelAlias($currentalias,'sitecontact');
+            }
+            /* now set the new alias if it's a new one */
+            $newalias = xarModSetAlias($newalias,'sitecontact');
+            if (!$newalias) { //name already taken so unset
+                 xarModSetVar('sitecontact', 'aliasname', '');
+                 xarModSetVar('sitecontact', 'useModuleAlias', false);
+            } else { //it's ok to set the new alias name
+                xarModSetVar('sitecontact', 'aliasname', $aliasname);
+                xarModSetVar('sitecontact', 'useModuleAlias', $modulealias);
+            }
+    } else {
+       //remove any existing alias and set the vars to none and false
+            if (isset($hasalias) && ($hasalias =='sitecontact')){
+                xarModDelAlias($currentalias,'sitecontact');
+            }
+            xarModSetVar('sitecontact', 'aliasname', '');
+            xarModSetVar('sitecontact', 'useModuleAlias', false);
     }
-    /* now set the alias modvar */
-    xarModSetVar('sitecontact', 'aliasname', $newalias);
+
 
     xarModCallHooks('module','updateconfig','sitecontact',
               array('module' => 'sitecontact'));
