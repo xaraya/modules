@@ -7,18 +7,18 @@
       <h2>#$message#</h2>
     </xar:if>
     <h2><xar:mlstring>Add a calendar to the database</xar:mlstring></h2>
-    <form method="post" action="&xar-modurl-calendar-admin-create_calendars;">
+    <form method="post" action="#xarModURL('calendar','admin','create_calendars)#">
       <input type="hidden" name="authid" id="authid" value="#$authid#" />
       <table>
         <tr>
           <td><xar:mlstring>Calendar name</xar:mlstring></td>
           <td>
-              <input type="text" name="calname" value="Calendar name">
+              <input type="text" name="calname" value="Calendar name"/>
           </td>
         </tr>
         <tr><td colspan="2"><xar:mlstring>Please specify a file or an URI:</xar:mlstring></td></tr>
         <tr>
-          <td><xar:mlstring>Database calendar</xar:mlstring><input type="radio" name="addtype" value="db" checked /></td>
+          <td><xar:mlstring>Database calendar</xar:mlstring><input type="radio" name="addtype" value="db" checked="checked" /></td>
           <td>
           </td>
         </tr>
@@ -44,7 +44,7 @@
         <tr>
           <td>Url<input type="radio" name="addtype" value="uri" /></td>
           <td>
-              <input type="text" name="uri" size="50" maxlength="255" value="webcal://">
+              <input type="text" name="uri" size="50" maxlength="255" value="webcal://" />
           </td>
         </tr>
         <tr>
@@ -54,6 +54,5 @@
         </tr>
       </table>
     </form>
-    </div>
     </div>
 </xar:template>
