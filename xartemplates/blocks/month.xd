@@ -1,6 +1,6 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:calendar-decorator object="$MonthCal" decorator="Xaraya" name="$MonthURI" />
-    <xar:calendar-decorator object="$MonthCal" decorator="Textual" name="$MonthText" />
+    <xar:calendar-decorator object="$MonthCal" decorator="Xaraya" name="MonthURI" />
+    <xar:calendar-decorator object="$MonthCal" decorator="Textual" name="MonthText" />
     <xar:set name="monthtitle">#$MonthText->thisMonthName('long')#</xar:set>
     <xar:set name="prevMonthTitle"><xar:mlstring>Previous Month</xar:mlstring></xar:set>
     <xar:set name="prevMonthURL">#$MonthURI->prev('month')#</xar:set>
@@ -24,19 +24,23 @@
                     <xar:set name="Day">$MonthCal->fetch()</xar:set>
                     <xar:while condition="$Day">
                         <xar:set name="WeekDate">xarLocaleFormatDate('%Y%m%d',$Day->getTimeStamp())</xar:set>
-                        <xar:calendar-decorator object="$Day" decorator="Xaraya" name="$DayURI" />
+                        <xar:calendar-decorator object="$Day" decorator="Xaraya" name="DayURI" />
                         <xar:if condition="$Day:isFirst()">
-                           <!-- <tr align="center"> -->
-                        </xar:if>
-                        <xar:if condition="$Day:isSelected()">
-                            <td class="selected"><a href="#xarServerGetCurrentURL(array('cal_date'=>$WeekDate))#">#$Day:thisDay()#</a></td>
-                        <xar:elseif condition="$Day:isEmpty()" />
-                            <td>&#160;</td>
-                        <xar:else />
-                            <td class="xar-accent"><a href="#xarServerGetCurrentURL(array('cal_date'=>$WeekDate))#">#$Day:thisDay()#</a></td>
-                        </xar:if>
-                        <xar:if condition="$Day:isLast()">
-                           <!-- </tr> -->
+                            <tr>
+                                <xar:while condition="1">                        
+                                    <xar:if condition="$Day:isSelected()">
+                                        <td class="selected"><a href="#xarServerGetCurrentURL(array('cal_date'=>$WeekDate))#">#$Day:thisDay()#</a></td>
+                                    <xar:elseif condition="$Day:isEmpty()" />
+                                        <td>&#160;</td>
+                                    <xar:else />
+                                        <td class="xar-accent"><a href="#xarServerGetCurrentURL(array('cal_date'=>$WeekDate))#">#$Day:thisDay()#</a></td>
+                                    </xar:if>
+                                    <xar:if condition="$Day:isLast()">
+                                        <xar:break />
+                                    </xar:if>
+                                    <xar:set name="Day">$MonthCal->fetch()</xar:set>
+                                </xar:while>                            
+                            </tr>
                         </xar:if>
                         <xar:set name="Day">$MonthCal->fetch()</xar:set>
                     </xar:while>

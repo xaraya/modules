@@ -87,8 +87,8 @@
                             <xar:comment> close out the row </xar:comment>
                             <xar:break />
                         </xar:if>
-                    <xar:set name="Day">$Month->fetch()</xar:set>
-                                        </xar:while>
+                        <xar:set name="Day">$Month->fetch()</xar:set>
+                    </xar:while>
                 </tr>
             </xar:if>
             <xar:set name="Day">$Month->fetch()</xar:set>

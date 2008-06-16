@@ -1,64 +1,38 @@
 <?php
-//sys::import('xaraya.structures.descriptor');
-//sys::import('modules.calendar.class.month');
 
-function calendar_monthblock_init()
-{
-    return array(
-        'nocache' => 1, // don't cache by default
-        'pageshared' => 1, // share across pages
-        'usershared' => 0, // don't share across users
-        'cacheexpire' => null);
-        $descriptor = new ObjectDescriptor(array(
-                                        'nocache' => 1,
-                                        'usershared' => 0,
-                                        'text_type' => 'Month',
-                                        'text_type_long' => 'Month selection',
-                                        'module' => 'calendar',
-                                        ));
-        $block = new MonthBlock($descriptor);
-        return $block->getArgs();
-}
+    sys::import('xaraya.structures.containers.blocks.basicblock');
 
-/**
- * get information on block
- */
-function calendar_monthblock_info()
-{
-    return array(
-        'text_type' => 'Month',
-        'module' => 'calendar',
-        'text_type_long' => 'Month selection'
-    );
-}
+    class MonthBlock extends BasicBlock
+    {
+        public $name                = 'Month';
+        public $module              = 'calendar';
+        public $text_type_long      = 'Month selection';
+        public $show_preview        = true;
+        public $no_cache            = 1;        // don't cache by default
+        public $usershared          = 0;        // don't share across users
+        public $cacheexpire         = null;
 
-/**
- * Display func.
- * @param $blockinfo array containing title,content
- */
-function calendar_monthblock_display($blockinfo)
-{
-    // Security check
-    if (!xarSecurityCheck('ReadCalendar', 0, 'Block', "All:" . $blockinfo['title'] . ":" . $blockinfo['bid'])) {return;}
+        function display(Array $data=array())
+        {
+            $data = parent::display($data);
 
-    if (!defined('CALENDAR_ROOT')) {
-        define('CALENDAR_ROOT', xarModVars::get('calendar','pearcalendar_root'));
+            if (!defined('CALENDAR_ROOT')) {
+                define('CALENDAR_ROOT', xarModVars::get('calendar','pearcalendar_root'));
+            }
+            include_once(CALENDAR_ROOT.'Month/Weekdays.php');
+            include_once(CALENDAR_ROOT.'Decorator/Textual.php');
+            sys::import("modules.calendar.class.Calendar.Decorator.Xaraya");
+
+            // Build the month
+            $data['content'] = xarModAPIFunc('calendar','user','getuserdatetimeinfo');
+            $data['content']['MonthCal'] = new Calendar_Month_Weekdays(
+                $data['content']['cal_year'],
+                $data['content']['cal_month'],
+                CALENDAR_FIRST_DAY_OF_WEEK);
+            $data['content']['MonthCal']->build();
+
+            return $data;            
+        }
     }
-    include_once(CALENDAR_ROOT.'Month/Weekdays.php');
-    include_once(CALENDAR_ROOT.'Decorator/Textual.php');
-    sys::import("modules.calendar.class.Calendar.Decorator.Xaraya");
-
-    // Build the month
-    $data = xarModAPIFunc('calendar','user','getUserDateTimeInfo');
-    $data['MonthCal'] = new Calendar_Month_Weekdays(
-        $data['cal_year'],
-        $data['cal_month'],
-        CALENDAR_FIRST_DAY_OF_WEEK);
-    $data['MonthCal']->build();
-
-    $blockinfo['content'] = $data;
-
-    return $blockinfo;
-}
 
 ?>
