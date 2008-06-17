@@ -15,7 +15,7 @@
     <end_location></end_location>
     <object>0</object>
     <owner>3</owner>
-    <state>1</state>
+    <state>3</state>
     <timestamp>0</timestamp>
   </calendar_event>
   <calendar_event itemid="2">
@@ -34,7 +34,7 @@
     <end_location></end_location>
     <object>0</object>
     <owner>3</owner>
-    <state>1</state>
+    <state>3</state>
     <timestamp>0</timestamp>
   </calendar_event>
   <calendar_event itemid="3">
@@ -53,7 +53,7 @@
     <end_location></end_location>
     <object>0</object>
     <owner>3</owner>
-    <state>1</state>
+    <state>3</state>
     <timestamp>0</timestamp>
   </calendar_event>
   <calendar_event itemid="4">
@@ -72,7 +72,7 @@
     <end_location></end_location>
     <object>0</object>
     <owner>3</owner>
-    <state>1</state>
+    <state>3</state>
     <timestamp>0</timestamp>
   </calendar_event>
   <calendar_event itemid="5">
@@ -91,7 +91,7 @@
     <end_location></end_location>
     <object>0</object>
     <owner>3</owner>
-    <state>1</state>
+    <state>3</state>
     <timestamp>0</timestamp>
   </calendar_event>
   <calendar_event itemid="6">
@@ -110,7 +110,7 @@
     <end_location></end_location>
     <object>0</object>
     <owner>3</owner>
-    <state>1</state>
+    <state>3</state>
     <timestamp>0</timestamp>
   </calendar_event>
   <calendar_event itemid="7">
@@ -129,7 +129,7 @@
     <end_location></end_location>
     <object>0</object>
     <owner>3</owner>
-    <state>1</state>
+    <state>3</state>
     <timestamp>0</timestamp>
   </calendar_event>
 </items>
