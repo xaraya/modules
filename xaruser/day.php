@@ -31,24 +31,24 @@
         $eventcount = count($events);
         for ($j=0;$j<$eventcount;$j++) {
             // make sure events don't go past the end of the day
-            $events[$j]['end'] = min($events[$j]['end'], $day_endts);
+            $events[$j]['end_time'] = min($events[$j]['end_time'], $day_endts);
 
             $placed = false;
             $slotcount = count($slots);
             for ($i=0;$i<$slotcount;$i++) {
-                if ($events[$j]['start'] >= $slots[$i][1]) {
+                if ($events[$j]['start_time'] >= $slots[$i][1]) {
                         foreach ($slots as $slot) {
                             $events[$slot[0]]['neighbors'] = $slotcount;
                         }
                     $thisslot = $i;
-                    $slots = array(0 => array($j,$events[$j]['end']));
+                    $slots = array(0 => array($j,$events[$j]['end_time']));
                     $placed = true;
                     break;
                 }
             }
             if (!$placed) {
                 $thisslot = $slotcount;
-                $slots[] = array($j,$events[$j]['end']);
+                $slots[] = array($j,$events[$j]['end_time']);
             }
             $events[$j]['place'] = $thisslot;
         }
@@ -59,7 +59,7 @@
         $selection = array();
         foreach ( $entries as $entry ) {
             $Hour = new Calendar_Hour(2000,1,1,1);
-            $Hour->setTimeStamp($entry['start']);
+            $Hour->setTimeStamp($entry['start_time']);
 
             // Create the decorator, passing it the Hour
             $event = new Event($Hour);

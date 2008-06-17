@@ -1,145 +1,175 @@
 <object name="calendar_event">
-  <objectid>25</objectid>
-  <label>Events</label>
-  <parent>objects</parent>
-  <module_id>182</module_id>
-  <itemtype>13</itemtype>
-  <class>DataObject</class>
-  <filepath></filepath>
-  <urlparam>itemid</urlparam>
-  <maxid>0</maxid>
-  <config></config>
-  <isalias>1</isalias>
-  <properties>
-    <property name="id">
-      <id>180</id>
-      <label>ID</label>
-      <type>itemid</type>
-      <default></default>
-      <source>xar_calendar_event.id</source>
-      <status>33</status>
-      <order>1</order>
-      <validation></validation>
-    </property>
-    <property name="itemtype">
-      <id>181</id>
-      <label>Type</label>
-      <type>integerbox</type>
-      <default></default>
-      <source>xar_calendar_event.itemtype</source>
-      <status>33</status>
-      <order>2</order>
-      <validation></validation>
-    </property>
-    <property name="name">
-      <id>182</id>
-      <label>Name</label>
-      <type>textbox</type>
-      <default></default>
-      <source>xar_calendar_event.name</source>
-      <status>33</status>
-      <order>3</order>
-      <validation></validation>
-    </property>
-    <property name="description">
-      <id>183</id>
-      <label>Description</label>
-      <type>textarea_medium</type>
-      <default></default>
-      <source>xar_calendar_event.description</source>
-      <status>34</status>
-      <order>4</order>
-      <validation></validation>
-    </property>
-    <property name="start">
-      <id>184</id>
-      <label>Start Time</label>
-      <type>jscalendardate</type>
-      <default></default>
-      <source>xar_calendar_event.start</source>
-      <status>33</status>
-      <order>5</order>
-      <validation></validation>
-    </property>
-    <property name="end">
-      <id>185</id>
-      <label>End Time</label>
-      <type>jscalendardate</type>
-      <default></default>
-      <source>xar_calendar_event.end</source>
-      <status>33</status>
-      <order>6</order>
-      <validation></validation>
-    </property>
-    <property name="recurring">
-      <id>185</id>
-      <label>Recurring</label>
-      <type>checkbox</type>
-      <default></default>
-      <source>xar_calendar_event.recurring</source>
-      <status>34</status>
-      <order>7</order>
-      <validation></validation>
-    </property>
-    <property name="start_location">
-      <id>186</id>
-      <label>Start Location</label>
-      <type>textbox</type>
-      <default></default>
-      <source>xar_calendar_event.start_location</source>
-      <status>34</status>
-      <order>8</order>
-      <validation></validation>
-    </property>
-    <property name="end_location">
-      <id>187</id>
-      <label>End Location</label>
-      <type>textbox</type>
-      <default></default>
-      <source>xar_calendar_event.end_location</source>
-      <status>34</status>
-      <order>9</order>
-      <validation></validation>
-    </property>
-    <property name="object">
-      <id>188</id>
-      <label>Object</label>
-      <type>integerbox</type>
-      <default></default>
-      <source>xar_calendar_event.objectid</source>
-      <status>34</status>
-      <order>10</order>
-      <validation></validation>
-    </property>
-    <property name="owner">
-      <id>189</id>
-      <label>Owner</label>
-      <type>username</type>
-      <default></default>
-      <source>xar_calendar_event.owner</source>
-      <status>34</status>
-      <order>11</order>
-      <validation></validation>
-    </property>
-    <property name="status">
-      <id>190</id>
-      <label>Status</label>
-      <type>integerbox</type>
-      <default></default>
-      <source>xar_calendar_event.status</source>
-      <status>33</status>
-      <order>12</order>
-      <validation></validation>
-    </property>
-    <property name="timestamp">
-      <id>191</id>
-      <label>Timestamp</label>
-      <type>jscalendardate</type>
-      <default></default>
-      <source>xar_calendar_event.timestamp</source>
-      <status>66</status>
-      <order>13</order>
-      <validation></validation>
-    </property>
-  </properties>
+<objectid>131</objectid>
+<label>Events</label>
+<parent>objects</parent>
+<module_id>182</module_id>
+<itemtype>47</itemtype>
+<class>DataObject</class>
+<filepath></filepath>
+<urlparam>itemid</urlparam>
+<maxid>0</maxid>
+<config></config>
+<isalias>1</isalias>
+<properties>
+<property name="id">
+<id>1292</id>
+<label>ID</label>
+<type>itemid</type>
+<defaultvalue></defaultvalue>
+<source>xar_calendar_event.id</source>
+<status>33</status>
+<seq>0</seq>
+<configuration></configuration>
+</property>
+<property name="name">
+<id>1293</id>
+<label>Name</label>
+<type>textbox</type>
+<defaultvalue></defaultvalue>
+<source>xar_calendar_event.name</source>
+<status>33</status>
+<seq>0</seq>
+<configuration></configuration>
+</property>
+<property name="description">
+<id>1294</id>
+<label>Description</label>
+<type>textarea_medium</type>
+<defaultvalue></defaultvalue>
+<source>xar_calendar_event.description</source>
+<status>34</status>
+<seq>0</seq>
+<configuration></configuration>
+</property>
+<property name="start_time">
+<id>1295</id>
+<label>Start Time</label>
+<type>jscalendardate</type>
+<defaultvalue></defaultvalue>
+<source>xar_calendar_event.start_time</source>
+<status>33</status>
+<seq>0</seq>
+<configuration></configuration>
+</property>
+<property name="end_time">
+<id>1296</id>
+<label>End Time</label>
+<type>jscalendardate</type>
+<defaultvalue></defaultvalue>
+<source>xar_calendar_event.end_time</source>
+<status>33</status>
+<seq>0</seq>
+<configuration></configuration>
+</property>
+<property name="recurring_code">
+<id>1297</id>
+<label>Recurring Code</label>
+<type>dropdown</type>
+<defaultvalue></defaultvalue>
+<source>xar_calendar_event.recurring_code</source>
+<status>34</status>
+<seq>0</seq>
+<configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:154:"0,No recurring;1,Daily;2,Bi-daily;10,Weekly;11,Every 10 days;15,Bi-weekly;16,Every 3 weeks;20,Monthly;21,Bi-monthly;25,Quarterly;30,Half-yearly;40,Yearly;";}</configuration>
+</property>
+<property name="recurring_span">
+<id>1298</id>
+<label>Recurring Code</label>
+<type>integerbox</type>
+<defaultvalue></defaultvalue>
+<source>xar_calendar_event.recurring_span</source>
+<status>34</status>
+<seq>0</seq>
+<configuration></configuration>
+</property>
+<property name="start_location">
+<id>1299</id>
+<label>Start Location</label>
+<type>textbox</type>
+<defaultvalue></defaultvalue>
+<source>xar_calendar_event.start_location</source>
+<status>34</status>
+<seq>0</seq>
+<configuration></configuration>
+</property>
+<property name="end_location">
+<id>1300</id>
+<label>End Location</label>
+<type>textbox</type>
+<defaultvalue></defaultvalue>
+<source>xar_calendar_event.end_location</source>
+<status>34</status>
+<seq>0</seq>
+<configuration></configuration>
+</property>
+<property name="object">
+<id>1301</id>
+<label>Object</label>
+<type>integerbox</type>
+<defaultvalue></defaultvalue>
+<source>xar_calendar_event.object_id</source>
+<status>34</status>
+<seq>0</seq>
+<configuration></configuration>
+</property>
+<property name="module_id">
+<id>1302</id>
+<label>Module</label>
+<type>module</type>
+<defaultvalue></defaultvalue>
+<source>xar_calendar_event.module_id</source>
+<status>35</status>
+<seq>0</seq>
+<configuration></configuration>
+</property>
+<property name="itemtype">
+<id>1303</id>
+<label>Type</label>
+<type>integerbox</type>
+<defaultvalue></defaultvalue>
+<source>xar_calendar_event.itemtype</source>
+<status>35</status>
+<seq>0</seq>
+<configuration></configuration>
+</property>
+<property name="itemid">
+<id>1304</id>
+<label>Item ID</label>
+<type>integerbox</type>
+<defaultvalue></defaultvalue>
+<source>xar_calendar_event.item_id</source>
+<status>35</status>
+<seq>0</seq>
+<configuration></configuration>
+</property>
+<property name="owner">
+<id>1305</id>
+<label>Owner</label>
+<type>username</type>
+<defaultvalue>xarUserGetVar('uname')</defaultvalue>
+<source>xar_calendar_event.role_id</source>
+<status>34</status>
+<seq>0</seq>
+<configuration>a:6:{s:16:"display_linkrule";s:1:"0";s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:20:"validation_existrule";s:1:"0";s:25:"initialization_store_type";s:2:"id";}</configuration>
+</property>
+<property name="state">
+<id>1306</id>
+<label>State</label>
+<type>dropdown</type>
+<defaultvalue>3</defaultvalue>
+<source>xar_calendar_event.state</source>
+<status>33</status>
+<seq>0</seq>
+<configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:29:"0,Delete;1,Inactive;3,Active;";}</configuration>
+</property>
+<property name="timestamp">
+<id>1307</id>
+<label>Timestamp</label>
+<type>jscalendardate</type>
+<defaultvalue></defaultvalue>
+<source>xar_calendar_event.timestamp</source>
+<status>66</status>
+<seq>0</seq>
+<configuration></configuration>
+</property>
+</properties>
 </object>

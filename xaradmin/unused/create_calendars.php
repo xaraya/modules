@@ -23,8 +23,7 @@ function calendar_admin_create_calendars()
     if (!empty($checkname)) {
         $msg = xarML('Calendar name "#(1)" already exists. Please go back and enter a
                       different name', $calname);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
     
     if ($addtype == 'db')  {    

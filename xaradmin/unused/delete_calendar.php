@@ -17,9 +17,7 @@ function calendar_admin_delete_calendar()
     if (!isset($calendar) || $calendar == false) {
         $msg = xarML('Unable to find #(1) item #(2)',
                      'Calendar', xarVarPrepForDisplay($calid));
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                        new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
 
     // Security check
@@ -31,9 +29,7 @@ function calendar_admin_delete_calendar()
     if (!xarModAPIFunc('calendar','user','checksecurity',$input)) {
         $msg = xarML('You have no permission to delete item #(1)',
                      xarVarPrepForDisplay($calid));
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
 */
     // Check for confirmation

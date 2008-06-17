@@ -25,8 +25,7 @@ function calendar_userapi_get($args)
     if (!isset($calname) && ( !isset($calid) || !is_numeric($calid) ) ) {
         $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)',
                              'calid or calname', 'userapi', 'get', 'calendar');
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
 
     // Security check

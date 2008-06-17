@@ -19,11 +19,7 @@ function calendar_adminapi_create_calendars($args)
     // argument check
     if (!isset($calname)) {
         $msg = xarML('Calendar name not specified','admin','create','calendar');
-        xarErrorSet(
-            XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-            new SystemException($msg)
-        );
-        return;
+        throw new Exception($msg);
     }
 
     // TODO: should I move these two issets to the admin function

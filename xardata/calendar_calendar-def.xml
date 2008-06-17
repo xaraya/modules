@@ -19,14 +19,14 @@
       <order>1</order>
       <validation></validation>
     </property>
-    <property name="itemid">
-      <id>326</id>
-      <label>ItemID</label>
-      <type>integerbox</type>
+    <property name="name">
+      <id>329</id>
+      <label>Name</label>
+      <type>textbox</type>
       <default></default>
-      <source>xar_calendar_calendar.itemid</source>
+      <source>xar_calendar_calendar.name</source>
       <status>33</status>
-      <order>2</order>
+      <order>5</order>
       <validation></validation>
     </property>
     <property name="modid">
@@ -34,7 +34,7 @@
       <label>Module</label>
       <type>module</type>
       <default></default>
-      <source>xar_calendar_calendar.modid</source>
+      <source>xar_calendar_calendar.module_id</source>
       <status>33</status>
       <order>3</order>
       <validation></validation>
@@ -49,14 +49,14 @@
       <order>4</order>
       <validation></validation>
     </property>
-    <property name="name">
-      <id>329</id>
-      <label>Name</label>
-      <type>textbox</type>
+    <property name="itemid">
+      <id>326</id>
+      <label>ItemID</label>
+      <type>integerbox</type>
       <default></default>
-      <source>xar_calendar_calendar.name</source>
+      <source>xar_calendar_calendar.item_id</source>
       <status>33</status>
-      <order>5</order>
+      <order>2</order>
       <validation></validation>
     </property>
     <property name="description">

@@ -71,8 +71,8 @@
                                 <xar:set name="width">$displaywidth/$entry['neighbors']</xar:set>
                                 <xar:set name="thisslot">$entry['place']</xar:set>
                                 <xar:set name="widthoffset">$thisslot*$width+2</xar:set>
-                                <xar:set name="heightoffset">($entry['start']-$Hour->getTimestamp())/60/$minutesperunit*($unitheight+1)</xar:set>
-                                <xar:set name="height">($entry['end'] - $entry['start'])/60/$minutesperunit*($unitheight+1)-2</xar:set>
+                                <xar:set name="heightoffset">($entry['start_time']-$Hour->getTimestamp())/60/$minutesperunit*($unitheight+1)</xar:set>
+                                <xar:set name="height">($entry['end_time'] - $entry['start_time'])/60/$minutesperunit*($unitheight+1)-2</xar:set>
                                 <div style="z-index: 1000; padding: 1px; color: white; position: absolute; left: #$widthoffset#px; top: #$heightoffset#px; width: #$width#px; height: #$height#px; background-color: #ACCDAC" >
                                     &#160;
                                     <xar:if condition="$entry.recurring">

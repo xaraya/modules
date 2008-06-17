@@ -5,16 +5,9 @@ function calendar_adminapi_getmenulinks()
     if (xarSecurityCheck('AdminCalendar',0)) {
         $menulinks[] = array('url'   => xarModURL('calendar',
                                                   'admin',
-                                                  'view',
-                                                  array('name' => 'calendar_calendar')),
-                                                                  'title' => xarML('View the calendars'),
-                                                                  'label' => xarML('Calendars'));
-        $menulinks[] = array('url'   => xarModURL('calendar',
-                                                  'admin',
-                                                  'view',
-                                                  array('name' => 'calendar_event')),
-                                                                  'title' => xarML('View the events'),
-                                                                  'label' => xarML('Events'));
+                                                  'view'),
+                              'title' => xarML('Manage the Master Tables  of this module'),
+                              'label' => xarML('Master Tables'));
         $menulinks[] = array('url'   => xarModURL('calendar',
                                                   'admin',
                                                   'modifyconfig'),

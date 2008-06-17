@@ -30,9 +30,7 @@ function calendar_adminapi_delete_calendar($args)
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'calendar ID', 'admin', 'delete',
                     'Calendar');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return false;
+        throw new Exception($msg);
     }
 
     // TODO: Security check
@@ -43,9 +41,7 @@ function calendar_adminapi_delete_calendar($args)
     if (!xarModAPIFunc('calendar','user','checksecurity',$args)) {
         $msg = xarML('Not authorized to delete #(1) items',
                     'Calendar');
-        xarErrorSet(XAR_USER_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException($msg));
-        return false;
+        throw new Exception($msg);
     }
 */
     // Call delete hooks for categories, hitcount etc.

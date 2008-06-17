@@ -21,11 +21,11 @@ function calendar_init()
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_calendar_calendar (
       id          integer unsigned NOT NULL auto_increment,
-      itemid      int(11) unsigned default null,
-      itemtype    int(11) unsigned default null,
-      modid       int(11) unsigned default null,
       name        varchar(60) default '' NOT NULL,
       description text,
+      module_id       integer unsigned default null,
+      itemtype    integer unsigned default null,
+      item_id      integer unsigned default null,
     PRIMARY KEY  (id)
     ) TYPE=MyISAM";
     if (!$q->run($query)) return;
@@ -33,23 +33,25 @@ function calendar_init()
     $query = "DROP TABLE IF EXISTS " . $prefix . "_calendar_event";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_calendar_event (
-      id              integer unsigned NOT NULL auto_increment,
-      itemtype        int(4) NULL,
-      name            varchar(80) DEFAULT '' NOT NULL,
-      description     text,
-      start           int(11) NULL,
-      end             int(11) NULL,
-      recurring       int(4) default 0 NOT NULL,
-      start_location  varchar(20) NULL,
-      end_location    varchar(20) NULL,
-      objectid        int(4) NULL,
-      owner           int(11) NULL,
-      status          int(4) default 0 NOT NULL,
-      timestamp       int(11) default 0 NOT NULL,
-
+      id                   integer unsigned NOT NULL auto_increment,
+      name                 varchar(64) NULL,
+      description          text,
+      start_time           integer NULL,
+      end_time             integer NULL,
+      recurring_code       integer NULL,
+      recurring_span       integer NULL,
+      start_location       varchar(64) NULL,
+      end_location         varchar(64) NULL,
+      object_id            integer NULL,
+      module_id            integer NULL,
+      itemtype             integer NULL,
+      item_id              integer NULL,
+      role_id              integer NULL,
+      state                tinyint default 0 NOT NULL,
+      timestamp            integer default 0 NOT NULL,
       PRIMARY KEY (id),
-      KEY i_start (start),
-      KEY i_end   (end)
+      KEY i_start (start_time),
+      KEY i_end   (end_time)
     ) TYPE=MyISAM";
     if (!$q->run($query)) return;
 
@@ -63,10 +65,10 @@ function calendar_init()
       end_date    int DEFAULT '0' NOT NULL,
       rep_opt     varchar(32) DEFAULT '' NOT NULL,
       objectid     int DEFAULT '1' NOT NULL,
-      timestamp int(11) default 0 NOT NULL,
-      owner int(11) default 0 NOT NULL,
+      timestamp integer default 0 NOT NULL,
+      owner integer default 0 NOT NULL,
       name        varchar(80) DEFAULT '' NOT NULL,
-      status int(11) default 0 NOT NULL,
+      status integer default 0 NOT NULL,
       description text,
       rep_num_weeks smallint NULL,
 
@@ -85,7 +87,7 @@ function calendar_init()
     xarRegisterMask('ModerateCalendar','All','calendar','All','All','ACCESS_MODERATE');
     xarRegisterMask('EditCalendar','All','calendar','All','All','ACCESS_EDIT');
     xarRegisterMask('AddCalendar','All','calendar','All','All','ACCESS_ADD');
-    xarRegisterMask('DeleteCalendar','All','calendar','All','All','ACCESS_DELETE');
+    xarRegisterMask('ManageCalendar','All','calendar','All','All','ACCESS_DELETE');
     xarRegisterMask('AdminCalendar','All','calendar','All','All','ACCESS_ADMIN');
 
 # --------------------------------------------------------
@@ -98,7 +100,7 @@ function calendar_init()
     xarRegisterPrivilege('ModerateCalendar','All','calendar','All','All','ACCESS_MODERATE');
     xarRegisterPrivilege('EditCalendar','All','calendar','All','All','ACCESS_EDIT');
     xarRegisterPrivilege('AddCalendar','All','calendar','All','All','ACCESS_ADD');
-    xarRegisterPrivilege('DeleteCalendar','All','calendar','All','All','ACCESS_DELETE');
+    xarRegisterPrivilege('ManageCalendar','All','calendar','All','All','ACCESS_DELETE');
     xarRegisterPrivilege('AdminCalendar','All','calendar','All','All','ACCESS_ADMIN');
 
 # --------------------------------------------------------
@@ -178,10 +180,11 @@ function calendar_init()
 
     xarModVars::set('calendar', 'SupportShortURLs', true);
 
-    xarTplRegisterTag(
+/*    xarTplRegisterTag(
         'calendar', 'calendar-decorator', array(),
         'calendar_userapi_handledecoratortag'
     );
+    */
 
 # --------------------------------------------------------
 #
@@ -261,7 +264,12 @@ function calendar_upgrade($oldversion)
 function calendar_delete()
 {
 
-    xarTplUnregisterTag('calendar-decorator');
+    # --------------------------------------------------------
+    #
+    # Remove block types
+    #
+        if (!xarModAPIFunc('blocks', 'admin', 'unregister_block_type', array('modName'  => 'calendar', 'blockType'=> 'month'))) return;
+
     return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'calendar'));
 /*
     // Remove all tables (see example module for comments)
@@ -292,7 +300,7 @@ function calendar_delete()
     xarRemoveInstances('calendar');
 
     // remove registered template tags
-    xarTplUnregisterTag('calendar-decorator');
+//    xarTplUnregisterTag('calendar-decorator');
 
     return true;
     */

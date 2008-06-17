@@ -4,14 +4,18 @@
     <itemtype>0</itemtype>
     <name>Important meeting</name>
     <description></description>
-    <start>1170324000</start>
-    <end>1170342000</end>
-    <recurring>0</recurring>
+    <start_time>1170324000</start_time>
+    <end_time>1170342000</end_time>
+    <recurring_code>0</recurring_code>
+    <recurring_span>0</recurring_span>
+    <module_id>2</module_id>
+    <itemtype>0</itemtype>
+    <item_id>0</item_id>
     <start_location></start_location>
     <end_location></end_location>
     <object>0</object>
     <owner>3</owner>
-    <status>1</status>
+    <state>1</state>
     <timestamp>0</timestamp>
   </calendar_event>
   <calendar_event itemid="2">
@@ -19,14 +23,18 @@
     <itemtype>0</itemtype>
     <name>Very important meeting</name>
     <description></description>
-    <start>1170338400</start>
-    <end>1170345600</end>
-    <recurring>0</recurring>
+    <start_time>1170338400</start_time>
+    <end_time>1170345600</end_time>
+    <recurring_code>0</recurring_code>
+    <recurring_span>0</recurring_span>
+    <module_id>2</module_id>
+    <itemtype>0</itemtype>
+    <item_id>0</item_id>
     <start_location></start_location>
     <end_location></end_location>
     <object>0</object>
     <owner>3</owner>
-    <status>1</status>
+    <state>1</state>
     <timestamp>0</timestamp>
   </calendar_event>
   <calendar_event itemid="3">
@@ -34,14 +42,18 @@
     <itemtype>0</itemtype>
     <name>Extremely important meeting</name>
     <description></description>
-    <start>1170339600</start>
-    <end>1170349200</end>
-    <recurring>0</recurring>
+    <start_time>1170339600</start_time>
+    <end_time>1170349200</end_time>
+    <recurring_code>0</recurring_code>
+    <recurring_span>0</recurring_span>
+    <module_id>2</module_id>
+    <itemtype>0</itemtype>
+    <item_id>0</item_id>
     <start_location></start_location>
     <end_location></end_location>
     <object>0</object>
     <owner>3</owner>
-    <status>1</status>
+    <state>1</state>
     <timestamp>0</timestamp>
   </calendar_event>
   <calendar_event itemid="4">
@@ -49,14 +61,18 @@
     <itemtype>0</itemtype>
     <name>Dinner with the boss</name>
     <description></description>
-    <start>1170363600</start>
-    <end>1170374340</end>
-    <recurring>0</recurring>
+    <start_time>1170363600</start_time>
+    <end_time>1170374340</end_time>
+    <recurring_code>0</recurring_code>
+    <recurring_span>0</recurring_span>
+    <module_id>2</module_id>
+    <itemtype>0</itemtype>
+    <item_id>0</item_id>
     <start_location></start_location>
     <end_location></end_location>
     <object>0</object>
     <owner>3</owner>
-    <status>1</status>
+    <state>1</state>
     <timestamp>0</timestamp>
   </calendar_event>
   <calendar_event itemid="5">
@@ -64,14 +80,18 @@
     <itemtype>0</itemtype>
     <name>Holidays!</name>
     <description></description>
-    <start>1170669600</start>
-    <end>1171151940</end>
-    <recurring>0</recurring>
+    <start_time>1170669600</start_time>
+    <end_time>1171151940</end_time>
+    <recurring_code>0</recurring_code>
+    <recurring_span>0</recurring_span>
+    <module_id>2</module_id>
+    <itemtype>0</itemtype>
+    <item_id>0</item_id>
     <start_location></start_location>
     <end_location></end_location>
     <object>0</object>
     <owner>3</owner>
-    <status>1</status>
+    <state>1</state>
     <timestamp>0</timestamp>
   </calendar_event>
   <calendar_event itemid="6">
@@ -79,14 +99,18 @@
     <itemtype>0</itemtype>
     <name>Anniversary!</name>
     <description></description>
-    <start>1171533600</start>
-    <end>1171533600</end>
-    <recurring>0</recurring>
+    <start_time>1171533600</start_time>
+    <end_time>1171533600</end_time>
+    <recurring_code>0</recurring_code>
+    <recurring_span>0</recurring_span>
+    <module_id>2</module_id>
+    <itemtype>0</itemtype>
+    <item_id>0</item_id>
     <start_location></start_location>
     <end_location></end_location>
     <object>0</object>
     <owner>3</owner>
-    <status>1</status>
+    <state>1</state>
     <timestamp>0</timestamp>
   </calendar_event>
   <calendar_event itemid="7">
@@ -94,14 +118,18 @@
     <itemtype>0</itemtype>
     <name>Business Trip</name>
     <description></description>
-    <start>1171879200</start>
-    <end>1172138400</end>
-    <recurring>0</recurring>
+    <start_time>1171879200</start_time>
+    <end_time>1172138400</end_time>
+    <recurring_code>0</recurring_code>
+    <recurring_span>0</recurring_span>
+    <module_id>2</module_id>
+    <itemtype>0</itemtype>
+    <item_id>0</item_id>
     <start_location></start_location>
     <end_location></end_location>
     <object>0</object>
     <owner>3</owner>
-    <status>1</status>
+    <state>1</state>
     <timestamp>0</timestamp>
   </calendar_event>
 </items>

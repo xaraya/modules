@@ -65,15 +65,15 @@
                 $stamp1 = $this->cE->dateToStamp($this->year, $this->month, $this->day, $i);
                 $stamp2 = $this->cE->dateToStamp($this->year, $this->month, $this->day, $i+1);
                 foreach ($events as $event) {
-                if (($stamp1 <= $event['start'] && $stamp2 > $event['start'])) {
+                if (($stamp1 <= $event['end_time'] && $stamp2 > $event['end_time'])) {
                         $this->children[$i]->addEntry1($event);
                         $this->children[$i]->setSelected();
                     }
                 }
                 /*
-                    if (($stamp1 >= $event['start'] && $stamp1 < $event['end']) ||
-                        ($stamp2 >= $event['start'] && $stamp2 < $event['end']) ||
-                        ($stamp1 <= $event['start'] && $stamp2 > $event['end'])
+                    if (($stamp1 >= $event['end_time'] && $stamp1 < $event['end_time']) ||
+                        ($stamp2 >= $event['end_time'] && $stamp2 < $event['end_time']) ||
+                        ($stamp1 <= $event['end_time'] && $stamp2 > $event['end_time'])
                     ) {
                         $this->children[$i]->addEntry1($event);
                         $this->children[$i]->setSelected();

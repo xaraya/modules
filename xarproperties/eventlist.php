@@ -62,12 +62,12 @@ class EventList extends DataProperty
             $data['fields'] = $activefields;
         }
 
-        $a[] = $q->plt('start',$data['start']);
-        $a[] = $q->pge('end',$data['start']);
-        $b[] = $q->plt('start',$data['end']);
-        $b[] = $q->pge('end',$data['end']);
-        $c[] = $q->pgt('start',$data['start']);
-        $c[] = $q->ple('end',$data['end']);
+        $a[] = $q->plt('start_time',$data['start']);
+        $a[] = $q->pge('end_time',$data['start']);
+        $b[] = $q->plt('start_time',$data['end']);
+        $b[] = $q->pge('end_time',$data['end']);
+        $c[] = $q->pgt('start_time',$data['start']);
+        $c[] = $q->ple('end_time',$data['end']);
 
         $d[] = $q->pqand($a);
         $d[] = $q->pqand($b);
