@@ -37,6 +37,7 @@ function calendar_init()
       name                 varchar(64) NULL,
       description          text,
       start_time           integer NULL,
+      duration             integer NULL,
       end_time             integer NULL,
       recurring_code       integer NULL,
       recurring_span       integer NULL,
@@ -150,6 +151,7 @@ function calendar_init()
     xarModVars::set('calendar','unitheight', 12);
 
     xarModVars::set('calendar','default_view', 'week');
+    xarModVars::set('calendar','event_duration', 60*60);
     xarModVars::set('calendar','cal_sdow', 0);
     xarModVars::set('calendar','day_start', 25200);
     xarModVars::set('calendar','day_end', 82800);

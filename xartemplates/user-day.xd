@@ -75,7 +75,7 @@
                                 <xar:set name="height">($entry['end_time'] - $entry['start_time'])/60/$minutesperunit*($unitheight+1)-2</xar:set>
                                 <div style="z-index: 1000; padding: 1px; color: white; position: absolute; left: #$widthoffset#px; top: #$heightoffset#px; width: #$width#px; height: #$height#px; background-color: #ACCDAC" >
                                     &#160;
-                                    <xar:if condition="$entry.recurring">
+                                    <xar:if condition="$entry.recurring_code">
                                         <img src="#xarTplGetImage('recurring.gif')#" />
                                         &#160;
                                     </xar:if>

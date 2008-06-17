@@ -61,7 +61,7 @@
         function setSelection($events)
         {
             $hoursInDay = $this->cE->getHoursInDay($this->year, $this->month, $this->day);
-            for ($i=1; $i<=$hoursInDay; $i++) {
+            for ($i=0; $i<$hoursInDay; $i++) {
                 $stamp1 = $this->cE->dateToStamp($this->year, $this->month, $this->day, $i);
                 $stamp2 = $this->cE->dateToStamp($this->year, $this->month, $this->day, $i+1);
                 foreach ($events as $event) {

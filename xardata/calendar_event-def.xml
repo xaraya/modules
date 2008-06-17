@@ -18,7 +18,7 @@
 <defaultvalue></defaultvalue>
 <source>xar_calendar_event.id</source>
 <status>33</status>
-<seq>0</seq>
+<seq>1</seq>
 <configuration></configuration>
 </property>
 <property name="name">
@@ -28,7 +28,7 @@
 <defaultvalue></defaultvalue>
 <source>xar_calendar_event.name</source>
 <status>33</status>
-<seq>0</seq>
+<seq>2</seq>
 <configuration></configuration>
 </property>
 <property name="description">
@@ -38,7 +38,7 @@
 <defaultvalue></defaultvalue>
 <source>xar_calendar_event.description</source>
 <status>34</status>
-<seq>0</seq>
+<seq>3</seq>
 <configuration></configuration>
 </property>
 <property name="start_time">
@@ -48,7 +48,17 @@
 <defaultvalue></defaultvalue>
 <source>xar_calendar_event.start_time</source>
 <status>33</status>
-<seq>0</seq>
+<seq>4</seq>
+<configuration></configuration>
+</property>
+<property name="duration">
+<id>1308</id>
+<label>Duration</label>
+<type>formattedtimeperiod</type>
+<defaultvalue>xarModVars::get('calendar','event_duration')</defaultvalue>
+<source>xar_calendar_event.duration</source>
+<status>34</status>
+<seq>5</seq>
 <configuration></configuration>
 </property>
 <property name="end_time">
@@ -58,7 +68,7 @@
 <defaultvalue></defaultvalue>
 <source>xar_calendar_event.end_time</source>
 <status>33</status>
-<seq>0</seq>
+<seq>6</seq>
 <configuration></configuration>
 </property>
 <property name="recurring_code">
@@ -68,7 +78,7 @@
 <defaultvalue></defaultvalue>
 <source>xar_calendar_event.recurring_code</source>
 <status>34</status>
-<seq>0</seq>
+<seq>7</seq>
 <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:154:"0,No recurring;1,Daily;2,Bi-daily;10,Weekly;11,Every 10 days;15,Bi-weekly;16,Every 3 weeks;20,Monthly;21,Bi-monthly;25,Quarterly;30,Half-yearly;40,Yearly;";}</configuration>
 </property>
 <property name="recurring_span">
@@ -78,7 +88,7 @@
 <defaultvalue></defaultvalue>
 <source>xar_calendar_event.recurring_span</source>
 <status>34</status>
-<seq>0</seq>
+<seq>8</seq>
 <configuration></configuration>
 </property>
 <property name="start_location">
@@ -88,7 +98,7 @@
 <defaultvalue></defaultvalue>
 <source>xar_calendar_event.start_location</source>
 <status>34</status>
-<seq>0</seq>
+<seq>9</seq>
 <configuration></configuration>
 </property>
 <property name="end_location">
@@ -98,7 +108,7 @@
 <defaultvalue></defaultvalue>
 <source>xar_calendar_event.end_location</source>
 <status>34</status>
-<seq>0</seq>
+<seq>10</seq>
 <configuration></configuration>
 </property>
 <property name="object">
@@ -108,7 +118,7 @@
 <defaultvalue></defaultvalue>
 <source>xar_calendar_event.object_id</source>
 <status>34</status>
-<seq>0</seq>
+<seq>11</seq>
 <configuration></configuration>
 </property>
 <property name="module_id">
@@ -118,7 +128,7 @@
 <defaultvalue></defaultvalue>
 <source>xar_calendar_event.module_id</source>
 <status>35</status>
-<seq>0</seq>
+<seq>12</seq>
 <configuration></configuration>
 </property>
 <property name="itemtype">
@@ -128,7 +138,7 @@
 <defaultvalue></defaultvalue>
 <source>xar_calendar_event.itemtype</source>
 <status>35</status>
-<seq>0</seq>
+<seq>13</seq>
 <configuration></configuration>
 </property>
 <property name="itemid">
@@ -138,7 +148,7 @@
 <defaultvalue></defaultvalue>
 <source>xar_calendar_event.item_id</source>
 <status>35</status>
-<seq>0</seq>
+<seq>14</seq>
 <configuration></configuration>
 </property>
 <property name="owner">
@@ -148,7 +158,7 @@
 <defaultvalue>xarUserGetVar('uname')</defaultvalue>
 <source>xar_calendar_event.role_id</source>
 <status>34</status>
-<seq>0</seq>
+<seq>15</seq>
 <configuration>a:6:{s:16:"display_linkrule";s:1:"0";s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:20:"validation_existrule";s:1:"0";s:25:"initialization_store_type";s:2:"id";}</configuration>
 </property>
 <property name="state">
@@ -158,7 +168,7 @@
 <defaultvalue>3</defaultvalue>
 <source>xar_calendar_event.state</source>
 <status>33</status>
-<seq>0</seq>
+<seq>16</seq>
 <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:29:"0,Delete;1,Inactive;3,Active;";}</configuration>
 </property>
 <property name="timestamp">
@@ -168,7 +178,7 @@
 <defaultvalue></defaultvalue>
 <source>xar_calendar_event.timestamp</source>
 <status>66</status>
-<seq>0</seq>
+<seq>17</seq>
 <configuration></configuration>
 </property>
 </properties>
