@@ -6,7 +6,10 @@
 	can change this value by either;
 	  a) supplying one via CSS
 	  b) passing the "zIndex" parameter. e.g.  jQuery(window).jqm({zIndex: 500}); */
-	
+
+/* The modal window will inherit only the styles of the html element, so make
+   sure layout and formatting of text is a sensible default here. */
+
 .jqmWindow {
     display: none;
     
@@ -21,6 +24,8 @@
     color: #333333;
     border: 1px solid #000000;
     padding: 12px;
+
+    text-align: left;
 }
 
 .jqmOverlay {
