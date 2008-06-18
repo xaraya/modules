@@ -1,90 +1,91 @@
 /* global */
 #cluetip-close img {
-  border: 0;
+    border: 0;
 }
 #cluetip-title #cluetip-close {
-  float: right;
-  position: relative;
+    float: right;
+    position: relative;
 }
 #cluetip-waitimage {
-  width: 43px;
-  height: 11px;
-  position: absolute;
-  background-image: url(../xarimages/cluetip/wait.gif);
+    width: 43px;
+    height: 11px;
+    position: absolute;
+    background-image: url(../xarimages/cluetip/wait.gif);
 }
 /***************************************
    =cluetipClass: 'default' 
 -------------------------------------- */
 
 .cluetip-default {
-  background-color: #d9d9c2;
+    background-color: #d9d9c2;
+    text-align: left;
 }
 .cluetip-default #cluetip-outer {
-  position: relative;
-  margin: 0;
-  background-color: #d9d9c2;
+    position: relative;
+    margin: 0;
+    background-color: #d9d9c2;
 }
 .cluetip-default h3#cluetip-title {
-  margin: 0 0 5px;
-  padding: 8px 10px 4px;
-  font-size: 1.1em;
-  font-weight: normal;
-  background-color: #87876a;
-  color: #fff;
+    margin: 0 0 5px;
+    padding: 8px 10px 4px;
+    font-size: 1.1em;
+    font-weight: normal;
+    background-color: #87876a;
+    color: #ffffff;
 }
 .cluetip-default #cluetip-title a {
-  color: #d9d9c2;
-  font-size: 0.95em;
+    color: #d9d9c2;
+    font-size: 0.95em;
 }  
 .cluetip-default #cluetip-inner {
-  padding: 10px;
+    padding: 10px;
 }
 .cluetip-default div#cluetip-close { 
-  text-align: right;
-  margin: 0 5px 5px;
-  color: #900;
+    text-align: right;
+    margin: 0 5px 5px;
+    color: #990000;
 }
 
 /***************************************
    =cluetipClass: 'jtip'
 -------------------------------------- */
 .cluetip-jtip {
-  background-color: #fff;
+    background-color: #ffffff;
 }
 .clue-right-jtip {
-  background-image: url(../xarimages/cluetip/arrowleft.gif);
-  background-repeat: no-repeat;
-  padding-left: 10px;
+    background-image: url(../xarimages/cluetip/arrowleft.gif);
+    background-repeat: no-repeat;
+    padding-left: 10px;
 }
 .clue-left-jtip {
-  background-image: url(../xarimages/cluetip/arrowright.gif);
-  background-repeat: no-repeat;
-  padding-right: 10px;
+    background-image: url(../xarimages/cluetip/arrowright.gif);
+    background-repeat: no-repeat;
+    padding-right: 10px;
 }
 
 .cluetip-jtip #cluetip-outer {
-  border: 2px solid #ccc;
-  position: relative;
-  background-color: #fff;
+    border: 2px solid #cccccc;
+    position: relative;
+    background-color: #ffffff;
 }
 
 .cluetip-jtip h3#cluetip-title {
-  margin: 0 0 5px;
-  padding: 2px 5px;
-  font-size: 16px;
-  font-weight: normal;
-  background-color: #ccc;
-  color: #333;
+    margin: 0 0 5px;
+    padding: 2px 5px;
+    font-size: 16px;
+    font-weight: normal;
+    background-color: #cccccc;
+    color: #333333;
 }
 
 .cluetip-jtip #cluetip-inner {
-  padding: 0 5px 5px;
-  display: inline-block;
+    padding: 0 5px 5px;
+    display: inline-block;
 }
 .cluetip-jtip div#cluetip-close { 
-  text-align: right;
-  margin: 0 5px 5px;
-  color: #900;
+    text-align: right;
+    margin: 0 5px 5px;
+    color: #990000;
 }
 
 /***************************************
@@ -92,39 +93,39 @@
 -------------------------------------- */
 
 .cluetip-rounded {
-  background: transparent url(../xarimages/cluetip/bl.gif) no-repeat 0 100%;
-  margin-top: 10px;
+    background: transparent url(../xarimages/cluetip/bl.gif) no-repeat 0 100%;
+    margin-top: 10px;
 }
 
 .cluetip-rounded #cluetip-outer {
-  background: transparent url(../xarimages/cluetip/tl.gif) no-repeat 0 0;
-  margin-top: -12px;
+    background: transparent url(../xarimages/cluetip/tl.gif) no-repeat 0 0;
+    margin-top: -12px;
 }
 
 .cluetip-rounded #cluetip-title {
-  background: transparent url(../xarimages/cluetip/tr.gif) no-repeat 100% 0;
-  padding: 12px 12px 0;
-  margin: 0 -12px 0 0;
-  position: relative;
+    background: transparent url(../xarimages/cluetip/tr.gif) no-repeat 100% 0;
+    padding: 12px 12px 0;
+    margin: 0 -12px 0 0;
+    position: relative;
 }
 .cluetip-rounded #cluetip-inner {
-  background: url(../xarimages/cluetip/br.gif) no-repeat 100% 100%;
-  padding: 5px 12px 12px;
-  margin: 0 -12px 0 0;
-  position: relative;
+    background: url(../xarimages/cluetip/br.gif) no-repeat 100% 100%;
+    padding: 5px 12px 12px;
+    margin: 0 -12px 0 0;
+    position: relative;
 }
 
 .cluetip-rounded div#cluetip-close { 
-  text-align: right;
-  margin: 0 5px 5px;
-  color: #009;
-  background: transparent;
+    text-align: right;
+    margin: 0 5px 5px;
+    color: #000099;
+    background: transparent;
 }
 .cluetip-rounded div#cluetip-close a {
-  color: #777;
+    color: #777777;
 }
 /* stupid IE6 HasLayout hack */
 .cluetip-rounded #cluetip-title,
 .cluetip-rounded #cluetip-inner {
-  zoom: 1;
+    zoom: 1;
 }
