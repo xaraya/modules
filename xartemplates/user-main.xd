@@ -379,4 +379,32 @@
     <xar:template file="jquery.countdown" module="jquery" subdata="array('selector'=&gt;'div#countdown1', 'options'=&gt;$options)" />
     <div id="countdown1">Countdown</div>
 
+    <h2><xar:mlstring>jqModal</xar:mlstring></h2>
+    <xar:template file="jqModal" module="jquery" subdata="array('selector'=&gt;'#dialog1','options'=&gt;'modal: false, toTop: true')" />
+
+    <xar:set name="options">"ajax: 'modules/jquery/xarhtml/cluetip-ajax.html', trigger: 'a.jqModal2', onShow: function(h){h.w.fadeIn(1000)}, toTop: true"</xar:set>
+    <xar:base-include-javascript type="code" code="jQuery().ready(function(){jQuery('#dialog2').jqm({ $options });});" />
+
+    <p>
+        <a href="#fallback-url-if-no-javascript" class="jqModal">view modal dialog</a>
+        | <a href="#" class="jqModal2">view AJAX dialog</a>
+    </p>
+
+    <xar:comment>Local content of the modal window.</xar:comment>
+    <div class="jqmWindow" id="dialog1">
+        <a href="#" class="jqmClose">Close</a>
+        <h2>READ ME</h2>
+        <p>This is a "vanilla plain" jqModal window. Behavior and appeareance extend far beyond this.
+        The demonstrations on this page will show off a few possibilites. I recommend walking
+        through each one to get an understanding of jqModal <em>before</em> using it.</p>
+        <p><em>NOTE:</em> You can close windows by clicking the tinted background known as the "overlay".
+        Clicking the overlay will have no effect if the "modal" parameter is passed, or if the
+        overlay is disabled.</p>
+    </div>
+
+    <xar:comment>Temporary content of the modal window, while loading the AJAX page</xar:comment>
+    <div class="jqmWindow" id="dialog2">
+        <p><img src="modules/jquery/xarimages/loadingAnimation.gif" alt="loading" /><br />Please wait...</p>
+    </div>
+
 </div>

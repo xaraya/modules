@@ -36,5 +36,5 @@
 <xar:base-include-javascript filename="jquery.tooltip.pack.js" module="jquery" />
 
 <xar:if condition="!empty($selector)">
-    <xar:base-include-javascript type="code" code="jQuery(function(){jQuery('$selector').Tooltip();});" />
+    <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').Tooltip();});" />
 </xar:if>

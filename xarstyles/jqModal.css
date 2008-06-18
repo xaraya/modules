@@ -5,7 +5,7 @@
 	the Window's z-index value will be set to 3000 by default (in jqModal.js). You
 	can change this value by either;
 	  a) supplying one via CSS
-	  b) passing the "zIndex" parameter. E.g.  (window).jqm({zIndex: 500}); */
+	  b) passing the "zIndex" parameter. e.g.  jQuery(window).jqm({zIndex: 500}); */
 	
 .jqmWindow {
     display: none;
@@ -17,13 +17,15 @@
     margin-left: -300px;
     width: 600px;
     
-    background-color: #EEE;
-    color: #333;
-    border: 1px solid black;
+    background-color: #eeeeee;
+    color: #333333;
+    border: 1px solid #000000;
     padding: 12px;
 }
 
-.jqmOverlay { background-color: #000; }
+.jqmOverlay {
+    background-color: #000000;
+}
 
 /* Background iframe styling for IE6. Prevents ActiveX bleed-through (<select> form elements, etc.) */
 * iframe.jqm {position:absolute;top:0;left:0;z-index:-1;

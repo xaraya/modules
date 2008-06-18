@@ -1,0 +1,31 @@
+<xar:comment>
+    Initialise the jqModal dialogue and modal pop-up handler.
+    See http://dev.iceburg.net/jquery/jqModal/ for details of this plugin
+</xar:comment>
+
+<xar:comment>
+    Make sure jQuery is going to be loaded.
+</xar:comment>
+
+<xar:template file="jquery" module="jquery" />
+
+<xar:comment>
+    Required stylesheet.
+</xar:comment>
+
+<xar:style file='jqModal' scope="module" module="jquery" />
+
+<xar:comment>
+    Load the main plugin.
+</xar:comment>
+
+<xar:base-include-javascript filename="jqModal.js" module="jquery" />
+
+<xar:if condition="!empty($selector)">
+    <xar:if condition="!empty($options)">
+        <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').jqm({ $options });});" />
+    <xar:else />
+        <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').jqm();});" />
+    </xar:if>
+</xar:if>
+
