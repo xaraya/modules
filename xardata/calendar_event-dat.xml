@@ -13,7 +13,7 @@
     <item_id>0</item_id>
     <start_location></start_location>
     <end_location></end_location>
-    <object>0</object>
+    <object_id>0</object_id>
     <owner>3</owner>
     <state>3</state>
     <timestamp>0</timestamp>
@@ -32,7 +32,7 @@
     <item_id>0</item_id>
     <start_location></start_location>
     <end_location></end_location>
-    <object>0</object>
+    <object_id>0</object_id>
     <owner>3</owner>
     <state>3</state>
     <timestamp>0</timestamp>
@@ -51,7 +51,7 @@
     <item_id>0</item_id>
     <start_location></start_location>
     <end_location></end_location>
-    <object>0</object>
+    <object_id>0</object_id>
     <owner>3</owner>
     <state>3</state>
     <timestamp>0</timestamp>
@@ -70,7 +70,7 @@
     <item_id>0</item_id>
     <start_location></start_location>
     <end_location></end_location>
-    <object>0</object>
+    <object_id>0</object_id>
     <owner>3</owner>
     <state>3</state>
     <timestamp>0</timestamp>
@@ -89,7 +89,7 @@
     <item_id>0</item_id>
     <start_location></start_location>
     <end_location></end_location>
-    <object>0</object>
+    <object_id>0</object_id>
     <owner>3</owner>
     <state>3</state>
     <timestamp>0</timestamp>
@@ -108,7 +108,7 @@
     <item_id>0</item_id>
     <start_location></start_location>
     <end_location></end_location>
-    <object>0</object>
+    <object_id>0</object_id>
     <owner>3</owner>
     <state>3</state>
     <timestamp>0</timestamp>
@@ -127,7 +127,7 @@
     <item_id>0</item_id>
     <start_location></start_location>
     <end_location></end_location>
-    <object>0</object>
+    <object_id>0</object_id>
     <owner>3</owner>
     <state>3</state>
     <timestamp>0</timestamp>

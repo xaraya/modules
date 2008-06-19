@@ -11,11 +11,11 @@
                               'title' => xarML('View ToDo'),
                               'url'   => xarModURL('calendar','user','view')
                              );
-        $itemtypes[3] = array('label' => xarML('alarm'),
+        $itemtypes[3] = array('label' => xarML('Alarm'),
                               'title' => xarML('View Alarm'),
                               'url'   => xarModURL('calendar','user','view')
                              );
-        $itemtypes[4] = array('label' => xarML('freebusy'),
+        $itemtypes[4] = array('label' => xarML('FreeBusy'),
                               'title' => xarML('View FreeBusy'),
                               'url'   => xarModURL('calendar','user','view')
                              );

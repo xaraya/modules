@@ -47,20 +47,21 @@ class EventList extends DataProperty
         $xartable = xarDB::getTables();
         $q = new Query('SELECT', $xartable['calendar_event']);
 
-        if (empty($data¨['fields'])) {
-            // we'll put fields into the output of the query that have status active in the object
-            $myobject = xarModApiFunc('dynamicdata','user','getobject', array('name' => 'calendar_event'));
-            $data['properties'] = $myobject->getProperties();
-            $activefields = array();
-            foreach ($data['properties'] as $property) {
-                if ($property->getDisplayStatus() != DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE) continue;
-                // Ignore fields with dd storage for now
-                if ($property->source == 'dynamic_data') continue;
-                $q->addfield($property->name);
-                $activefields[$property->name] = $property->label;
-            }
-            $data['fields'] = $activefields;
+        if (!empty($data['fields'])) if (!is_array($data['fields'])) $data['fields'] = explode(',',$data['fields']);
+
+        // we'll put fields into the output of the query that have status active in the object
+        $myobject = xarModAPIFunc('dynamicdata','user','getobject', array('name' => 'calendar_event'));
+        $data['properties'] = $myobject->getProperties();
+        $activefields = array();
+        foreach ($data['properties'] as $property) {
+            if ($property->getDisplayStatus() != DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE) continue;
+            // Ignore fields with dd storage for now
+            if ($property->source == 'dynamic_data') continue;
+            if (!empty($data['fields']) && !in_array($property->name,$data['fields'])) continue;
+            $q->addfield($property->name);
+            $activefields[$property->name] = $property->label;
         }
+        $data['fields'] = $activefields;
 
         $a[] = $q->plt('start_time',$data['start']);
         $a[] = $q->pge('end_time',$data['start']);
@@ -74,7 +75,7 @@ class EventList extends DataProperty
         $d[] = $q->pqand($c);
         $q->qor($d);
 
-//        $q->qecho();
+//        $q->qecho();exit;
         if (!$q->run()) return;
         $data['events'] = $q->output();
         $data['keyfieldalias'] = 'name';

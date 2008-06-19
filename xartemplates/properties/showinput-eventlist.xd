@@ -2,7 +2,7 @@
     <table id="cal-calendar">
         <tr>
             <xar:foreach in="$fields" key="$column" value="$field">
-                <xar:if condition="$column eq 'id'">
+                <xar:if condition="$column eq 'id' OR $column eq 'return_link'">
                     <xar:continue />
                 </xar:if>
                 <th>
@@ -21,15 +21,21 @@
             </xar:if>
             <tr class="#$item_class#">
                 <xar:foreach in="$fields" key="$column" value="$field">
-                    <xar:if condition="$column eq 'id'">
+                    <xar:if condition="$column eq 'id' OR $column eq 'return_link'">
                         <xar:continue />
                     </xar:if>
                     <td>
                         <xar:set name="value">$loop->item[$column]</xar:set>
                         <xar:if condition="$column eq $keyfieldalias">
-                            <a href="#xarModURL($localmodule,'user','display',array('itemid' =>$loop->item['id']))#">
-                                <xar:data-output property="$properties[$column]" value="$value" />
-                            </a>
+                            <xar:if condition="empty($loop->item['return_link'])">
+                                <a href="#xarModURL($localmodule,'user','display',array('itemid' =>$loop->item['id']))#">
+                                    <xar:data-output property="$properties[$column]" value="$value" />
+                                </a>
+                            <xar:else />
+                                <a href="#$loop->item['return_link']#">
+                                    <xar:data-output property="$properties[$column]" value="$value" />
+                                </a>
+                            </xar:if>
                         <xar:else />
                             <xar:data-output property="$properties[$column]" value="$value" />
                         </xar:if>

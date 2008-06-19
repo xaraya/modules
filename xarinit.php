@@ -48,6 +48,7 @@ function calendar_init()
       itemtype             integer NULL,
       item_id              integer NULL,
       role_id              integer NULL,
+      return_link          varchar(254) NULL,
       state                tinyint default 0 NOT NULL,
       timestamp            integer default 0 NOT NULL,
       PRIMARY KEY (id),
@@ -163,12 +164,6 @@ function calendar_init()
     //xarModVars::set('calendar','adminNotify',false);
     //xarModVars::set('calendar','adminEmail','none@none.org');
 
-//TODO::Figure out all the permissions stuff
-    // allow users to see the calendar w/ events
-    xarRegisterMask('ViewCalendar','All','calendar','All','All','ACCESS_READ');
-    // allow full admin of the calendar
-    xarRegisterMask('AdminCalendar','All','calendar','All','All','ACCESS_ADMIN');
-
 # --------------------------------------------------------
 #  Register block types
 #
@@ -187,6 +182,19 @@ function calendar_init()
         'calendar_userapi_handledecoratortag'
     );
     */
+
+# --------------------------------------------------------
+#
+# Set up hooks
+#
+
+    sys::import('xaraya.structures.hooks.observer');
+    $observer = new BasicObserver('calendar','admin','hookcreate');
+    $observer->register('item', 'create', 'API');
+    $observer = new BasicObserver('calendar','admin','hookupdate');
+    $observer->register('item', 'update', 'API');
+    $observer = new BasicObserver('calendar','admin','hookdelete');
+    $observer->register('item', 'delete', 'API');
 
 # --------------------------------------------------------
 #
