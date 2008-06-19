@@ -1,0 +1,41 @@
+<xar:comment>
+    Initialise the superfish menu plugin.
+    See http://users.tpg.com.au/j_birch/plugins/superfish/ for details of this plugin
+</xar:comment>
+
+<xar:comment>
+    Make sure jQuery is going to be loaded.
+</xar:comment>
+
+<xar:template file="jquery" module="jquery" />
+
+<xar:comment>
+    Required stylesheet.
+    Additional stylesheets may be overlaid for specific menu types.
+    These stylesheets use a base class of 'nav', which is also a bit generic.
+    Update: the way the stylesheets are written, they cannot be overlaid.
+</xar:comment>
+
+<xar:comment><xar:style file='superfish' scope="module" module="jquery" /></xar:comment>
+
+<xar:comment>
+    HoverIntend plugin is usefult here (no template for it, since it is a service plugin
+    used by other plugins).
+</xar:comment>
+
+<xar:base-include-javascript filename="jquery.hoverIntent.js" module="jquery" />
+
+<xar:comment>
+    Load the main plugin.
+</xar:comment>
+
+<xar:base-include-javascript filename="superfish.js" module="jquery" />
+
+<xar:if condition="!empty($selector)">
+    <xar:if condition="!empty($options)">
+        <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').superfish({ $options });});" />
+    <xar:else />
+        <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').superfish();});" />
+    </xar:if>
+</xar:if>
+

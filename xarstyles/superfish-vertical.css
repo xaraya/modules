@@ -1,0 +1,83 @@
+.superfish-nav-vert, .superfish-nav-vert * {
+	margin:0;
+	padding:0;
+}
+.superfish-nav-vert {
+	line-height:1.0;
+	margin-bottom:1.5em;
+	width: 9.45em;
+}
+.superfish-nav-vert ul {
+	background:#fff; /*IE6 needs this*/
+	width: 9.45em;
+}
+.superfish-nav-vert li {
+	background:#BDD2FF;
+	border-left:1px solid #fff;
+	border-top:1px solid #CFDEFF;
+	float: left;
+	list-style:none;
+	position:relative;
+	width: 9.45em;
+	z-index:999;
+}
+.superfish-nav-vert a {
+	color: #13a;
+	display:block;
+	padding: .75em 0 .75em 2em;
+	text-decoration:none;
+	width:7.45em;
+}
+.superfish-nav-vert li ul {
+	top:-999em;
+	position:absolute;
+	width:9.55em;
+}
+.superfish-nav-vert li:hover,
+.superfish-nav-vert li.sfHover,
+.superfish-nav-vert a:focus, .superfish-nav-vert a:hover, .superfish-nav-vert a:active {
+	background:#CFDEFF;
+}
+.superfish-nav-vert li:hover ul, /* pure CSS hover is removed below */
+ul.superfish-nav-vert li.sfHover ul {
+	left:9.45em;
+	top:-1px;
+}
+
+.superfish-nav-vert li:hover li ul,
+.superfish-nav-vert li.sfHover li ul {
+	top:-999em;
+}
+.superfish-nav-vert li li:hover ul, /* pure CSS hover is removed below */
+ul.superfish-nav-vert li li.sfHover ul {
+	left:9.45em;
+	top:-1px;
+}
+.superfish-nav-vert li li:hover li ul,
+.superfish-nav-vert li li.sfHover li ul {
+	top:-999em;
+}
+.superfish-nav-vert li li li:hover ul, /* pure CSS hover is removed below */
+ul.superfish-nav-vert li li li.sfHover ul {
+	left:9.45em;
+	top:-1px;
+}
+/*following rule negates pure CSS hovers
+so submenu remains hidden and JS controls
+when and how it appears*/
+.superfish li:hover ul,
+.superfish li li:hover ul,
+.superfish li li li:hover ul {
+	top: -999em;
+}
+.superfish-nav-vert li li {
+	background:#AABDE6;
+	width:9.45em;
+}
+.superfish-nav-vert li li li {
+	background:#9AAEDB;
+}
+.superfish-nav-vert li li a {
+	padding-right:0;
+	width:7.45em;
+}

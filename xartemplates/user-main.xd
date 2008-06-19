@@ -10,6 +10,142 @@
     <p><xar:mlstring>Note: the Xaraya_Classic theme causes most of these plugins to fail one way or another.
     We don't know where the fault lies, but it is something to bear in mind when trying this demo out.</xar:mlstring></p>
 
+    <h2><xar:mlstring>Superfish - suckerfish-inspired menus</xar:mlstring></h2>
+
+    <xar:set name="options">"pathClass: 'current', animation: {opacity:'show'}, delay: 1000"</xar:set>
+    <xar:template file="superfish" module="jquery" subdata="array('selector'=&gt;'ul.superfish-nav-hor','options'=&gt;$options)" />
+    <xar:style file='superfish-horizontal' scope="module" module="jquery" />
+
+    <xar:set name="options">""</xar:set>
+    <xar:template file="superfish" module="jquery" subdata="array('selector'=&gt;'ul.superfish-nav-vert','options'=&gt;$options)" />
+    <xar:style file='superfish-vertical' scope="module" module="jquery" />
+
+    <ul class="superfish-nav-hor">
+        <li>
+            <a href="#">menu item &#8595;</a>
+            <ul>
+                <li><a href="#">subitem 1a</a></li>
+                <li><a href="#">subitem 1b</a></li>
+                <li><a href="#">subitem 1c</a></li>
+                <li><a href="#">subitem 1d</a></li>
+                <li><a href="#">subitem 1e</a></li>
+            </ul>
+        </li>
+        <li class="current">
+            <a href="#">menu item &#8595;</a>
+            <ul>
+                <li><a href="#">subitem 2a</a></li>
+                <li class="current"><a href="#">* current *</a></li>
+                <li><a href="#">subitem 2c</a></li>
+                <li><a href="#">subitem 2d</a></li>
+                <li><a href="#">subitem 2e</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">menu item &#8595;</a>
+            <ul>
+                <li><a href="#">subitem 3a</a></li>
+                <li><a href="#">subitem 3b</a></li>
+                <li><a href="#">subitem 3c</a></li>
+                <li><a href="#">subitem 3d</a></li>
+                <li><a href="#">subitem 3e</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">menu item &#8595;</a>
+            <ul>
+                <li><a href="#">subitem 4a</a></li>
+                <li><a href="#">subitem 4b</a></li>
+                <li><a href="#">subitem 4c</a></li>
+                <li><a href="#">subitem 4d</a></li>
+                <li><a href="#">subitem 4e</a></li>
+                <li><a href="#">subitem 4f</a></li>
+                <li><a href="#">subitem 4g</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">menu item &#8595;</a>
+        </li>
+        <li>
+            <a href="#">menu item &#8595;</a>
+            <ul>
+                <li><a href="#">subitem 5a</a></li>
+                <li><a href="#">subitem 5b</a></li>
+                <li><a href="#">subitem 5c</a></li>
+                <li><a href="#">subitem 5d</a></li>
+                <li><a href="#">subitem 5e</a></li>
+            </ul>
+        </li>
+    </ul>
+    <div style="clear: both;"></div>
+
+    <ul class="superfish-nav-vert">
+        <li>
+            <a href="#">menu item &#8595;</a>
+            <ul>
+                <li><a href="#">subitem 1a</a></li>
+                <li><a href="#">subitem 1b</a></li>
+                <li><a href="#">subitem 1c</a></li>
+                <li><a href="#">subitem 1d</a></li>
+                <li><a href="#">subitem 1e</a></li>
+            </ul>
+        </li>
+        <li class="current">
+            <a href="#">menu item &#8595;</a>
+            <ul>
+                <li><a href="#">subitem 2a</a></li>
+                <li class="current"><a href="#">* current *</a></li>
+                <li><a href="#">subitem 2c</a></li>
+                <li><a href="#">subitem 2d</a></li>
+                <li><a href="#">subitem 2e</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">menu item &#8595;</a>
+            <ul>
+                <li><a href="#">subitem 3a</a></li>
+                <li><a href="#">subitem 3b</a></li>
+                <li><a href="#">subitem 3c</a></li>
+                <li><a href="#">subitem 3d</a></li>
+                <li><a href="#">subitem 3e</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">menu item &#8595;</a>
+            <ul>
+                <li><a href="#">subitem 4a --&gt;</a>
+                     <ul>
+                        <li><a href="#">subitem 4a-1</a></li>
+                        <li><a href="#">subitem 4b-1</a></li>
+                        <li><a href="#">subitem 4c-1</a></li>
+                        <li><a href="#">subitem 4d-1</a></li>
+                        <li><a href="#">subitem 4e-1</a></li>
+                        <li><a href="#">subitem 4f-1</a></li>
+                        <li><a href="#">subitem 4g-1</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">subitem 4b</a></li>
+                <li><a href="#">subitem 4c</a></li>
+                <li><a href="#">subitem 4d</a></li>
+                <li><a href="#">subitem 4e</a></li>
+                <li><a href="#">subitem 4f</a></li>
+                <li><a href="#">subitem 4g</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">menu item &#8595;</a>
+            <ul>
+                <li><a href="#">subitem 5a</a></li>
+                <li><a href="#">subitem 5b</a></li>
+                <li><a href="#">subitem 5c</a></li>
+                <li><a href="#">subitem 5d</a></li>
+                <li><a href="#">subitem 5e</a></li>
+            </ul>
+        </li>
+    </ul>
+    <div style="clear: both;"></div>
+
+
     <h2><xar:mlstring>Calendar - jquery-calendar</xar:mlstring></h2>
 
     <p><xar:mlstring>Basic calendar pop-up</xar:mlstring></p>
@@ -17,6 +153,7 @@
     <xar:template file="jquery-calendar" module="jquery" subdata="array('selector'=&gt;'#jquery-calendar-item')" />
 
     <form><input type="text" id="jquery-calendar-item" /></form>
+
 
     <h2><xar:mlstring>Calendar - datePicker</xar:mlstring></h2>
 
@@ -28,6 +165,7 @@
 
     <xar:comment>The datePicker seems to use a float that needs to be cleared</xar:comment>
     <div style="clear: both;"></div>
+
 
     <h2><xar:mlstring>Gallery - jqGalView</xar:mlstring></h2>
 

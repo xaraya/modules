@@ -1,0 +1,103 @@
+.superfish-nav-hor a {
+    font-weight: normal;
+}
+.superfish-nav-hor, .superfish-nav-hor * {
+	margin: 0;
+	padding: 0;
+}
+.superfish-nav-hor {
+    padding-bottom: 2.5em;
+	height: 2.5em;
+	float: left;
+    width: 100%;
+	line-height: 1.0;
+	margin-bottom: 1.5em;
+	position: relative;
+    clear: both;
+}
+.superfish-nav-hor ul {
+	background: #ffffff; /*IE6 needs this*/
+	float: left;
+	position: relative;
+}
+.superfish-nav-hor ul {
+    /*border-top: 1px solid #333333;*/
+}
+.superfish-nav-hor li {
+	float: left;
+	list-style: none;
+	z-index: 999;
+    margin: 0 2px;
+    border-top: 1px solid #333333;
+    border-left: 1px solid #333333;
+    border-right: 1px solid #333333;
+}
+.superfish-nav-hor li.current ul {
+	z-index: 999;
+}
+.superfish-nav-hor li.sfHover ul,
+ul.superfish-nav-hor li:hover ul {
+	z-index: 1000;
+}
+.superfish-nav-hor li li {
+	background: #CCFFCC;
+    border: none;
+}
+.superfish-nav-hor a {
+	border-bottom: 1px solid #CFDEFF;
+	display: block;
+	float: left;
+	padding: 0.5em 1em;
+	text-decoration: none;
+	width: auto;
+}
+.superfish-nav-hor li ul li a {
+    width: auto;
+}
+.superfish-nav-hor li ul {
+	left: 0;
+	top: -999em;
+	position: absolute;
+	width: 100%;
+}
+.superfish-nav-hor li:hover,
+.superfish-nav-hor li.sfHover,
+.superfish-nav-hor li.current,
+.superfish-nav-hor a:focus, .superfish-nav-hor a:hover, .superfish-nav-hor a:active {
+	background: #CCFFFF;
+}
+.superfish-nav-hor li.current a {
+}
+.superfish-nav-hor li.sfHover a,
+.superfish-nav-hor li.current a,
+.superfish-nav-hor a:focus, .superfish-nav-hor a:hover, .superfish-nav-hor a:active {
+	/*border-bottom: none;*/
+}
+.superfish-nav-hor li li.current a {
+	font-weight: bold;
+}
+.superfish-nav-hor li li:hover,
+.superfish-nav-hor li li a:focus, .superfish-nav-hor li li a:hover, .superfish-nav-hor li li a:active {
+	background: #CCFFFF;
+}
+.superfish-nav-hor li:hover ul, /* pure CSS hover is removed below */
+body .superfish-nav-hor li.current ul, /* this must be more specific than the .superfish override below */
+ul.superfish-nav-hor li.sfHover ul {
+	top: 2.5em;
+}
+
+.superfish-nav-hor li:hover li ul,
+.superfish-nav-hor li.sfHover li ul {
+	top: -999em;
+}
+.superfish-nav-hor li li:hover ul, /* pure CSS hover is removed below */
+ul.superfish-nav-hor li li.sfHover ul {
+	top: 2.5em;
+}
+/*following rule negates pure CSS hovers
+so submenu remains hidden and JS controls
+when and how it appears*/
+.superfish li:hover ul,
+.superfish li li:hover ul {
+	top: -999em;
+}
