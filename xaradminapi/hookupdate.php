@@ -4,7 +4,6 @@
 
     function calendar_adminapi_hookupdate($data)
     {
-        return xarModAPIFunc('calendar','admin','hookcreate',$data);
         if (!isset($data['extrainfo']) || !is_array($data['extrainfo'])) $data['extrainfo'] = array();
 
         // When called via hooks, modname will be empty, but we get it from the
@@ -40,6 +39,7 @@
         $data['extrainfo']['end_location'] = isset($data['extrainfo']['end_location']) ? $data['extrainfo']['end_location'] : null;
         $data['extrainfo']['object_id'] = isset($data['extrainfo']['object_id']) ? $data['extrainfo']['object_id'] : 0;
         $data['extrainfo']['role_id'] = isset($data['extrainfo']['role_id']) ? $data['extrainfo']['role_id'] : xarSession::getVar('role_id');
+        $data['extrainfo']['return_link'] = isset($data['extrainfo']['return_link']) ? $data['extrainfo']['return_link'] : '';
         $data['extrainfo']['state'] = isset($data['extrainfo']['state']) ? $data['extrainfo']['state'] : 3;
         $data['extrainfo']['timestamp'] = isset($data['extrainfo']['timestamp']) ? $data['extrainfo']['timestamp'] : time();
 

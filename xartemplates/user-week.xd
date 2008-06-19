@@ -76,6 +76,7 @@
 
     <xar:set name="eventcutoff">$endts + 86400</xar:set>
     <xar:data-input type="eventlist" start="$startts" end="$eventcutoff" fields="id,name,start_time,end_time,return_link"/>
+    <xar:data-input type="listingslist" start="$startts" end="$eventcutoff" fields="id,name,start_time,end_time,return_link"/>
 
     <xar:comment> include the calendar footer </xar:comment>
     <xar:template file="todayfooter" />

@@ -196,6 +196,14 @@ function calendar_init()
     $observer = new BasicObserver('calendar','admin','hookdelete');
     $observer->register('item', 'delete', 'API');
 
+    // Register config hook
+    $observer = new BasicObserver('quotas','admin','getconfighook');
+    $observer->register('module', 'getconfig', 'API');
+    
+    // Set up the hook to listings
+    $subject = new HookSubject('listings');
+    $subject->attach($observer);
+
 # --------------------------------------------------------
 #
 # Create DD objects
