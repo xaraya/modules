@@ -57,11 +57,21 @@
                             <xar:comment> Display the date for this day </xar:comment>
                             <a href="#$DayURI->current('day')#">#$Day->thisDay()#</a>
                             <xar:set name="entries">$Day->getEntries()</xar:set>
+                            <!--
                             <ul style="margin: 2px 2px 2px 2px">
                                 <xar:foreach in="$entries" value="$entry">
                                     <li>#$entry['name']#</li>
                                 </xar:foreach>
                             </ul>
+                            -->
+                            <table style="border: none; width: 100%">
+                                <xar:foreach in="$entries" value="$entry">
+                                    <tr>
+                                        <td style="line-height: 10px;text-align: left">#$entry['name']#</td>
+                                        <td style="line-height: 10px;text-align: right"><xar:data-output type="formattedtime" value="$entry['start_time']" /></td>
+                                    </tr>
+                                </xar:foreach>
+                            </table>
                         <xar:else />
                             <xar:comment> Hide this day because it's not part of the month we are viewing </xar:comment>
                             &#160;
@@ -74,8 +84,6 @@
         </tr>
     </table>
 
-    <xar:set name="eventcutoff">$endts + 86400</xar:set>
-    <xar:data-input type="eventlist" start="$startts" end="$eventcutoff" fields="id,name,start_time,end_time,return_link"/>
     <xar:data-input type="listingslist" conditions="$conditions" object="calendar_event" fields="id,name,start_time,end_time,return_link" tplmodule="calendar"/>
 
     <xar:comment> include the calendar footer </xar:comment>
