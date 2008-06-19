@@ -24,6 +24,11 @@
         if (!$q->run()) return;
         $events = $q->output();
 
+        $WeekDecorator = new WeekEvent_Decorator($WeekEvents);
+        $WeekDecorator->build($events);
+        $data['Week'] =& $WeekDecorator; // pass a reference to the object to the template
+        $data['cal_sdow'] = CALENDAR_FIRST_DAY_OF_WEEK;
+
         $q = new Query('SELECT');
         $a[] = $q->plt('start_time',$start_time);
         $a[] = $q->pge('end_time',$start_time);
@@ -38,10 +43,6 @@
         $q->qor($d);
         $data['conditions'] = $q;
 
-        $WeekDecorator = new WeekEvent_Decorator($WeekEvents);
-        $WeekDecorator->build($events);
-        $data['Week'] =& $WeekDecorator; // pass a reference to the object to the template
-        $data['cal_sdow'] = CALENDAR_FIRST_DAY_OF_WEEK;
         return $data;
     }
 ?>

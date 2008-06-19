@@ -1,5 +1,5 @@
 <object name="calendar_event">
-<objectid>139</objectid>
+<objectid>143</objectid>
 <label>Events</label>
 <parent>objects</parent>
 <module_id>182</module_id>
@@ -12,7 +12,7 @@
 <isalias>1</isalias>
 <properties>
 <property name="id">
-<id>1401</id>
+<id>1449</id>
 <label>ID</label>
 <type>itemid</type>
 <defaultvalue></defaultvalue>
@@ -22,7 +22,7 @@
 <configuration></configuration>
 </property>
 <property name="name">
-<id>1402</id>
+<id>1450</id>
 <label>Name</label>
 <type>textbox</type>
 <defaultvalue></defaultvalue>
@@ -32,7 +32,7 @@
 <configuration></configuration>
 </property>
 <property name="description">
-<id>1403</id>
+<id>1451</id>
 <label>Description</label>
 <type>textarea_medium</type>
 <defaultvalue></defaultvalue>
@@ -42,7 +42,7 @@
 <configuration></configuration>
 </property>
 <property name="start_time">
-<id>1404</id>
+<id>1452</id>
 <label>Start Time</label>
 <type>jscalendardate</type>
 <defaultvalue></defaultvalue>
@@ -52,7 +52,7 @@
 <configuration></configuration>
 </property>
 <property name="duration">
-<id>1405</id>
+<id>1453</id>
 <label>Duration</label>
 <type>formattedtimeperiod</type>
 <defaultvalue>xarModVars::get('calendar','event_duration')</defaultvalue>
@@ -62,7 +62,7 @@
 <configuration></configuration>
 </property>
 <property name="end_time">
-<id>1406</id>
+<id>1454</id>
 <label>End Time</label>
 <type>jscalendardate</type>
 <defaultvalue></defaultvalue>
@@ -72,7 +72,7 @@
 <configuration></configuration>
 </property>
 <property name="recurring_code">
-<id>1407</id>
+<id>1455</id>
 <label>Recurring Code</label>
 <type>dropdown</type>
 <defaultvalue></defaultvalue>
@@ -82,7 +82,7 @@
 <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:154:"0,No recurring;1,Daily;2,Bi-daily;10,Weekly;11,Every 10 days;15,Bi-weekly;16,Every 3 weeks;20,Monthly;21,Bi-monthly;25,Quarterly;30,Half-yearly;40,Yearly;";}</configuration>
 </property>
 <property name="recurring_span">
-<id>1408</id>
+<id>1456</id>
 <label>Recurring Code</label>
 <type>integerbox</type>
 <defaultvalue></defaultvalue>
@@ -92,7 +92,7 @@
 <configuration></configuration>
 </property>
 <property name="start_location">
-<id>1409</id>
+<id>1457</id>
 <label>Start Location</label>
 <type>textbox</type>
 <defaultvalue></defaultvalue>
@@ -102,7 +102,7 @@
 <configuration></configuration>
 </property>
 <property name="end_location">
-<id>1410</id>
+<id>1458</id>
 <label>End Location</label>
 <type>textbox</type>
 <defaultvalue></defaultvalue>
@@ -112,17 +112,17 @@
 <configuration></configuration>
 </property>
 <property name="object_id">
-<id>1411</id>
+<id>1459</id>
 <label>Object</label>
 <type>integerbox</type>
 <defaultvalue></defaultvalue>
 <source>xar_calendar_event.object_id</source>
-<status>34</status>
+<status>35</status>
 <seq>11</seq>
 <configuration></configuration>
 </property>
 <property name="module_id">
-<id>1412</id>
+<id>1460</id>
 <label>Module</label>
 <type>module</type>
 <defaultvalue></defaultvalue>
@@ -132,7 +132,7 @@
 <configuration></configuration>
 </property>
 <property name="itemtype">
-<id>1413</id>
+<id>1461</id>
 <label>Type</label>
 <type>integerbox</type>
 <defaultvalue></defaultvalue>
@@ -142,7 +142,7 @@
 <configuration></configuration>
 </property>
 <property name="item_id">
-<id>1414</id>
+<id>1462</id>
 <label>Item ID</label>
 <type>integerbox</type>
 <defaultvalue></defaultvalue>
@@ -152,7 +152,7 @@
 <configuration></configuration>
 </property>
 <property name="owner">
-<id>1415</id>
+<id>1463</id>
 <label>Owner</label>
 <type>username</type>
 <defaultvalue>xarUserGetVar('uname')</defaultvalue>
@@ -162,7 +162,7 @@
 <configuration>a:6:{s:16:"display_linkrule";s:1:"0";s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:20:"validation_existrule";s:1:"0";s:25:"initialization_store_type";s:2:"id";}</configuration>
 </property>
 <property name="return_link">
-<id>1418</id>
+<id>1464</id>
 <label>Return Link</label>
 <type>textbox</type>
 <defaultvalue></defaultvalue>
@@ -172,7 +172,7 @@
 <configuration></configuration>
 </property>
 <property name="state">
-<id>1416</id>
+<id>1465</id>
 <label>State</label>
 <type>dropdown</type>
 <defaultvalue>3</defaultvalue>
@@ -182,7 +182,7 @@
 <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:29:"0,Delete;1,Inactive;3,Active;";}</configuration>
 </property>
 <property name="timestamp">
-<id>1417</id>
+<id>1466</id>
 <label>Timestamp</label>
 <type>jscalendardate</type>
 <defaultvalue></defaultvalue>

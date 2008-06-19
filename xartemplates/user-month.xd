@@ -94,6 +94,9 @@
             <xar:set name="Day">$Month->fetch()</xar:set>
         </xar:while>
     </table>
+
+    <xar:data-input type="listingslist" conditions="$conditions" object="calendar_event" fields="id,name,start_time,end_time,return_link" tplmodule="calendar"/>
+
     <xar:comment> include the calendar footer </xar:comment>
     <xar:template file="todayfooter" />
 </xar:template>
