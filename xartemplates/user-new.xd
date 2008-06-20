@@ -20,23 +20,22 @@
           </fieldset>
           <fieldset>
             <div class="xar-align-center">
-              <input type="hidden" name="authid" id="authid" value="#$authid#" />
-              <input type="hidden" name="objectid" id="objectid" value="#$object:objectid#" />
-              <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#" />
-              <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#" />
-              <input type="hidden" name="id" id="id" value="0" />
-              <input type="hidden" name="object_id" id="object_id" value="0" />
-              <input type="hidden" name="module_id" id="module_id" value="#xarMod::getID('calendar')#" />
-              <input type="hidden" name="itemtype" id="itemtype" value="0" />
-              <input type="hidden" name="owner" id="owner" value="#xarUserGetVar('uname')#" />
-              <input type="hidden" name="return_link" id="return_link" value="" />
-              <input type="hidden" name="state" id="state" value="3" />
-              <input type="hidden" name="timestamp" id="timestamp" value="" />
-              <xar:if condition="!empty($return_url)">
-                <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
-              </xar:if>
-              <input type="hidden" name="return_url" id="return_url_standard" value="#xarServerGetCurrentURL()#" />
-              <input type="submit" value="#xarML('Create')#" class="xar-margin-thickleft" />
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="objectid" id="objectid" value="#$object:objectid#" />
+                <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#" />
+                <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#" />
+                <xar:set name="properties">$object->getProperties()</xar:set>
+                <xar:data-input property="$properties['id']" hidden="hidden"/>
+                <xar:data-input property="$properties['object_id']" hidden="hidden"/>
+                <xar:data-input property="$properties['module_id']" hidden="hidden"/>
+                <xar:data-input property="$properties['itemtype']" hidden="hidden"/>
+                <xar:data-input property="$properties['item_id']" hidden="hidden"/>
+                <xar:data-input property="$properties['owner']" hidden="hidden"/>
+                <xar:data-input property="$properties['return_link']" hidden="hidden"/>
+                <xar:data-input property="$properties['state']" hidden="hidden"/>
+                <xar:data-input property="$properties['timestamp']" hidden="hidden"/>
+                <input type="hidden" name="return_url" id="return_url_standard" value="#xarModURL('calendar','user',$page,array('page' => $page))#" />
+                <input type="submit" value="#xarML('Create Event')#" class="xar-margin-thickleft" />
             </div>
           </fieldset>
         </form>
