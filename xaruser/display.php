@@ -16,7 +16,9 @@
  * @param $args['objectid'] ID of the item this rating is for
  * @param $args['extrainfo'] URL to return to if user chooses to rate
  * @param $args['style'] style to display this rating in (optional)
- * @param $args['shownum'] style to display this rating in (optional)
+ * @param $args['shownum'] bool to show number of ratings (optional)
+ * @param $args['showdisplay'] bool to show rating result (optional)
+ * @param $args['showinput'] bool to show rating form (optional)
  * @param $args['itemtype'] item type
  * @return array output with rating information $numratings, $rating, $rated, $authid
  */
@@ -37,6 +39,20 @@ function ratings_user_display($args)
         }
         if (isset($extrainfo['returnurl']) && is_string($extrainfo['returnurl'])) {
             $data['returnurl'] = $extrainfo['returnurl'];
+        }
+        if (isset($extrainfo['style']) && is_string($extrainfo['style'])) {
+            if(in_array($style, array('outoffive','outoffivestars','outoften','outoftenstars','customised'))) {
+                $style = $extrainfo['style'];
+            }
+        }
+        if (isset($extrainfo['shownum']) && ($extrainfo['shownum'] == 0 || $extrainfo['shownum'] == 1)) {
+            $shownum = $extrainfo['shownum'];
+        }
+        if (isset($extrainfo['showdisplay']) && ($extrainfo['showdisplay'] == 0 || $extrainfo['showdisplay'] == 1)) {
+            $showdisplay = $extrainfo['showdisplay'];
+        }
+        if (isset($extrainfo['showinput']) && ($extrainfo['showinput'] == 0 || $extrainfo['showinput'] == 0)) {
+            $showinput = $extrainfo['showinput'];
         }
     } else {
         $data['returnurl'] = $extrainfo;
@@ -71,10 +87,28 @@ function ratings_user_display($args)
         }
     }
 
+    if(isset($showdisplay) && $showdisplay != true) {
+        $showdisplay = false;
+    } else {
+        $showdisplay = true;
+    }
+    if(isset($showinput) && $showinput != true) {
+        $showinput = false;
+    } else {
+        $showinput = true;
+    }
+
+    // if we're not showing anything, bail out early
+    if($shownum == false && $showdisplay == false && $showinput == false) {
+        return;
+    }
+
     $data['style'] = $style;
     $data['modname'] = $modname;
     $data['itemtype'] = $itemtype;
     $data['shownum'] = $shownum;
+    $data['showdisplay'] = $showdisplay;
+    $data['showinput'] = $showinput;
 
     // Run API function
     // Bug 6160 Use getitems at first, then get if we get weird results
@@ -93,7 +127,7 @@ function ratings_user_display($args)
                            'user',
                            'get',
                            $args);
-        $data['numratings'] = '';
+        $data['numratings'] = 0;
     }
     if (isset($data['rawrating'])) {
         // Set the cached variable if requested
