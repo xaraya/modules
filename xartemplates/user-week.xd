@@ -84,7 +84,8 @@
         </tr>
     </table>
 
-    <xar:data-input type="listingslist" conditions="$conditions" object="calendar_event" fields="id,name,start_time,end_time,return_link" tplmodule="calendar"/>
+    <xar:set name="page">'week'</xar:set>
+    <xar:data-input type="listingslist" conditions="$conditions" object="calendar_event" fields="id,name,start_time,end_time,return_link" tplmodule="calendar" page="$page"/>
 
     <xar:comment> include the calendar footer </xar:comment>
     <xar:template file="todayfooter" />

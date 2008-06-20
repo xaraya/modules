@@ -44,7 +44,7 @@
 <property name="start_time">
 <id>1452</id>
 <label>Start Time</label>
-<type>jscalendardate</type>
+<type>formatteddatetime</type>
 <defaultvalue></defaultvalue>
 <source>xar_calendar_event.start_time</source>
 <status>33</status>
@@ -64,7 +64,7 @@
 <property name="end_time">
 <id>1454</id>
 <label>End Time</label>
-<type>jscalendardate</type>
+<type>formatteddatetime</type>
 <defaultvalue></defaultvalue>
 <source>xar_calendar_event.end_time</source>
 <status>33</status>
@@ -184,7 +184,7 @@
 <property name="timestamp">
 <id>1466</id>
 <label>Timestamp</label>
-<type>jscalendardate</type>
+<type>formatteddatetime</type>
 <defaultvalue></defaultvalue>
 <source>xar_calendar_event.timestamp</source>
 <status>66</status>
