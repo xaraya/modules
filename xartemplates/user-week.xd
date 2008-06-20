@@ -68,9 +68,15 @@
                                 <xar:foreach in="$entries" value="$entry">
                                     <tr>
                                         <td style="line-height: 12px;text-align: left">
-                                            <a href="#$entry['return_link']#">
-                                                #$entry['name']#
-                                            </a>
+                                            <xar:if condition="empty($entry['return_link'])">
+                                                <a href="#xarModURL('calendar','user','display',array('itemid' => $entry['id'], 'name' => 'calendar_event'))#">
+                                                    #$entry['name']#
+                                                </a>
+                                            <xar:else />
+                                                <a href="#$entry['return_link']#">
+                                                    #$entry['name']#
+                                                </a>
+                                            </xar:if>
                                         </td>
                                         <td style="line-height: 10px;text-align: right"><xar:data-output type="formattedtime" value="$entry['start_time']" /></td>
                                     </tr>
