@@ -1,0 +1,19 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <tr>
+        <xar:template file="listingslist_headerprefix" module="$localmodule,listings" />
+        <xar:foreach in="$fields" key="$column" value="$field">
+            <xar:if condition="(($column eq $primaryalias) AND !$showprimary) OR strpos($column,'return_link')">
+                <xar:continue />
+            </xar:if>
+            <th>
+                <xar:set name="url">xarServerGetCurrentURL(array('letter' => $letter, 'search' => $search, 'order' => $column, 'op' => 'column'))</xar:set>
+                <a href="#$url#" alt="Click to order by this field" title="Order by #$field#">
+                    #$field#
+                </a>
+                <xar:set name="subdata">array_merge($params,array('column' => $column))</xar:set>
+                <xar:template module="listings" file="sortarrows" subdata="$subdata" />
+            </th>
+        </xar:foreach>
+        <xar:template file="listingslist_headersuffix" module="$localmodule,listings" />
+    </tr>
+</xar:template>

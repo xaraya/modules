@@ -1,0 +1,20 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:set name="thispageno">count($items);</xar:set>
+    <div class="xar-clearleft xar-floatleft xar-padding-thick xar-halfwidth" style="float: left; padding-top:1em;">
+        <xar:if condition="$total gt $rowstodisplay">
+          <xar:ml>
+              <xar:mlstring>Displaying #(1) of #(2) selected</xar:mlstring>
+          <xar:mlvar>#$thispageno#</xar:mlvar>
+            <xar:mlvar>#$total#</xar:mlvar>
+          </xar:ml>
+        <xar:else />
+           Total selected: #$total#
+        </xar:if>
+    </div>
+    <div class="xar-floatright xar-padding-thick xar-halfwidth xar-align-right" style="padding-top:1em;">
+        <xar:sec mask="AddListings" catch="false">
+            <xar:set name="returnurl">xarModURL('listings','user','view')</xar:set>
+            <a style="font-weight:bold;" href ="#xarModURL('calendar','user','new',array('name'=> $objectname, 'tplmodule'=> $localmodule, 'page' => $page))#">Add A New Event</a>
+        </xar:sec>
+    </div>
+</xar:template>
