@@ -67,7 +67,11 @@
                             <table style="border: none; width: 100%">
                                 <xar:foreach in="$entries" value="$entry">
                                     <tr>
-                                        <td style="line-height: 10px;text-align: left">#$entry['name']#</td>
+                                        <td style="line-height: 12px;text-align: left">
+                                            <a href="#$entry['return_link']#">
+                                                #$entry['name']#
+                                            </a>
+                                        </td>
                                         <td style="line-height: 10px;text-align: right"><xar:data-output type="formattedtime" value="$entry['start_time']" /></td>
                                     </tr>
                                 </xar:foreach>

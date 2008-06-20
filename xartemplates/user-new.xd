@@ -13,7 +13,7 @@
         <h2>
             Create New Event
         </h2>
-        <form method="post" action="&xar-modurl-dynamicdata-admin-create;">
+        <form method="post" action="&xar-modurl-calendar-admin-create;">
           <fieldset>
             <legend><xar:mlstring>Event details</xar:mlstring></legend>
             <xar:data-form object="$object" fieldlist="name,description,start_time,end_time,duration,recurring_code,recurring_span,start_location,end_location"/>
