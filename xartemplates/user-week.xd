@@ -52,7 +52,7 @@
                     <xar:else />
                         <xar:set name="accentclass">''</xar:set>
                     </xar:if>
-                    <td class="$accentclass cal-day" style="width: 14%">
+                    <td class="#$accentclass# cal-day" style="width: 14%">
                         <xar:if condition="!$Day:isEmpty()">
                             <xar:comment> Display the date for this day </xar:comment>
                             <a href="#$DayURI->current('day')#">#$Day->thisDay()#</a>
