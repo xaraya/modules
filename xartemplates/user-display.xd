@@ -1,18 +1,18 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:set name="dummy">xarTplAddStyleLink('sharecontent','sharecontent')</xar:set>
+<xar:style scope="module" module="sharecontent" file="sharecontent" />
 <xar:if condition="sizeof($websites) ge 1">
 <div style="margin: 4px 0">
   <xar:mlstring>Share:</xar:mlstring>
   <ul class="sharecontent">
   <xar:foreach in="$websites" key="$key" value="$website">
     <li>
-	  <a href="#$website['submiturl']#" 
-	     title="#xarML('submit to')# #$website['title']#"
+      <a href="#$website['submiturl']#" 
+         title="#xarML('submit to')# #$website['title']#"
       ><img src="#$website['image']#" 
-	        title="#$website['title']#" 
-			alt="#$website['title']#" 
-	  /></a>
-	</li>
+            title="#$website['title']#" 
+            alt="#$website['title']#" 
+      /></a>
+    </li>
   </xar:foreach>
   </ul>
 </div>
@@ -29,7 +29,7 @@
   </xar:if>
   <form class="sharecontent" method="post" 
         action="&xar-modurl-sharecontent-user-sendbymail;" 
- 		enctype="application/x-www-form-urlencoded">
+        enctype="application/x-www-form-urlencoded">
     <xar:mlstring>Recipient </xar:mlstring><input type="text" name="emails" size="30" />
     <xar:mlstring>From </xar:mlstring><input type="text" value="#$username#" name="author" size="15" />
     <xar:mlstring>Sender's mail </xar:mlstring><input type="text" value="#$useremail#" name="senderemail" size="30" />
