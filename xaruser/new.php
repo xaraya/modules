@@ -8,6 +8,8 @@
         if (!xarSecurityCheck('AddCalendar')) return;
 
         if (!xarVarFetch('page',  'str:1',  $data['page'], 'week', XARVAR_NOT_REQUIRED)) return;
+        xarSession::setVar('ddcontext.calendar', array('page' => $page,
+                                                        ));
         $data['object'] = DataobjectMaster::getObject(array('name' => 'calendar_event'));
         $data['tplmodule'] = 'calendar';
         $data['authid'] = xarSecGenAuthKey();
