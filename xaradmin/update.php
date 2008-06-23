@@ -9,7 +9,7 @@
         if(!xarVarFetch('itemid',     'isset', $itemid,      NULL, XARVAR_DONT_SET)) {return;}
         if(!xarVarFetch('join',       'isset', $join,        NULL, XARVAR_DONT_SET)) {return;}
         if(!xarVarFetch('table',      'isset', $table,       NULL, XARVAR_DONT_SET)) {return;}
-        if(!xarVarFetch('tplmodule',  'isset', $tplmodule,   'dynamicdata', XARVAR_NOT_REQUIRED)) {return;}
+        if(!xarVarFetch('tplmodule',  'isset', $tplmodule,   'calendar', XARVAR_NOT_REQUIRED)) {return;}
         if(!xarVarFetch('return_url', 'isset', $return_url,  NULL, XARVAR_DONT_SET)) {return;}
         if(!xarVarFetch('preview',    'isset', $preview,     0, XARVAR_NOT_REQUIRED)) {return;}
 
@@ -57,7 +57,7 @@
             $hooks = xarModCallHooks('item', 'modify', $myobject->itemid, $item, $modinfo['name']);
             $data['hooks'] = $hooks;
 
-            return xarTplModule($tplmodule,'admin','modify', $data);
+            return xarTplModule($tplmodule,'user','modify', $data);
         }
 
         // Valid and not previewing, update the object
