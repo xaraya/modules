@@ -67,7 +67,7 @@
                                             <xar:else />
                                                 <xar:set name="accentclass">''</xar:set>
                                             </xar:if>
-                                            <td class="$accentclass cal-day">
+                                            <td class="#$accentclass# cal-day">
                                                 <xar:set name="DayUrl">xarModURL('calendar','user','day',array('cal_date'=>$thisday))</xar:set>
                                                 <xar:if condition="!$Day:isEmpty()">
                                                     <xar:comment> Display the date for this day </xar:comment>
