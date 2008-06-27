@@ -1,0 +1,13 @@
+/* DEPRECATED */
+
+@import url('ability.jquery.ability.css');
+
+body, body.m {
+	background: #fff;
+	color: #000;
+	font: 76% "Lucida Grande", Verdana, sans-serif;
+}
+
+body.l {font-size: 90%; }
+body.xl {font-size: 110%; }
+body.xxl {font-size: 130%; }
