@@ -15,6 +15,7 @@
 
         $start_time = $WeekEvents->thisWeek;
         $end_time = $WeekEvents->nextWeek;
+        
         // get all the events. need to improve this query and combine it with the uery in the template
         $xartable = xarDB::getTables();
         $q = new Query('SELECT', $xartable['calendar_event']);
