@@ -47,10 +47,14 @@ class CalendarDisplayProperty extends DataProperty
         switch ($timeframe) {
             case 'week':
                 include_once(CALENDAR_ROOT.'Week.php');
+                sys::import("modules.calendar.class.Calendar.Decorator.event");
+                sys::import("modules.calendar.class.Calendar.Decorator.weekevent");
                 break;
             case 'month':
                 include_once(CALENDAR_ROOT.'Month/Weekdays.php');
                 include_once(CALENDAR_ROOT.'Day.php');
+                sys::import("modules.calendar.class.Calendar.Decorator.event");
+                sys::import("modules.calendar.class.Calendar.Decorator.monthevent");
                 break;
             case 'year':
                 include_once(CALENDAR_ROOT.'Year.php');
@@ -74,7 +78,6 @@ class CalendarDisplayProperty extends DataProperty
                 $WeekDecorator->build($events);
                 $data['Week'] =& $WeekDecorator; // pass a reference to the object to the template
                 $data['cal_sdow'] = CALENDAR_FIRST_DAY_OF_WEEK;
-                $data['conditions'] = $this->getEventConditions($start_time, $end_time);
                 break;
             case 'month':
                 $MonthEvents = new Calendar_Month_Weekdays(
@@ -93,7 +96,6 @@ class CalendarDisplayProperty extends DataProperty
                 $MonthDecorator = new MonthEvent_Decorator($MonthEvents);
                 $MonthDecorator->build($events);
                 $data['Month'] =& $MonthDecorator;
-                $data['conditions'] = $this->getEventConditions($start_time, $end_time);
                 break;
             case 'year':
                 $Year = new Calendar_Year($data['cal_year']);
