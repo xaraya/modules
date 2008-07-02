@@ -24,6 +24,8 @@
         $d[] = $q->pqand($b);
         $d[] = $q->pqand($c);
         $q->qor($d);
+
+        $q->eq('role_id',xarSession::getVar('role_id'));
         $data['conditions'] = $q;
 
         return $data;
