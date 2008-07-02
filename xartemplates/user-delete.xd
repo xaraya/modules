@@ -12,16 +12,15 @@
     <div class="xar-mod-body">
         <h2>
             <xar:ml>
-                <xar:mlstring>Delete Item #(1) in #(2)</xar:mlstring>
+                <xar:mlstring>Delete Event #(1)</xar:mlstring>
                 <xar:mlvar>#$object:itemid#</xar:mlvar>
-                <xar:mlvar>#$object:label#</xar:mlvar>
             </xar:ml>
         </h2>
         <h3 class="xar-align-center">
             <xar:mlstring>Confirm Deleting This Event?</xar:mlstring>
         </h3>
 
-        <xar:data-display object="$object" tplmodule="$tplmodule" fieldlist="name,description,start_time,start_location"/>
+        <xar:data-display object="$object" tplmodule="$tplmodule"/>
 
         <form method="post" action="&xar-modurl-dynamicdata-admin-delete;">
             <div class="xar-align-center">
