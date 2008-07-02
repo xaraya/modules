@@ -20,11 +20,11 @@
 
         $q = new Query('SELECT');
         $a[] = $q->plt('start_time',$start_time);
-        $a[] = $q->pge('end_time',$start_time);
+        $a[] = $q->pge('start_time + duration',$start_time);
         $b[] = $q->plt('start_time',$end_time);
-        $b[] = $q->pge('end_time',$end_time);
+        $b[] = $q->pge('start_time + duration',$end_time);
         $c[] = $q->pgt('start_time',$start_time);
-        $c[] = $q->ple('end_time',$end_time);
+        $c[] = $q->ple('start_time + duration',$end_time);
 
         $d[] = $q->pqand($a);
         $d[] = $q->pqand($b);
