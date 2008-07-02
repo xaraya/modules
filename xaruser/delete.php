@@ -55,7 +55,7 @@ function calendar_user_delete($args)
     $myobject->getItem();
 
     if (empty($confirm)) {
-        $data['authid'] = xarSecGenAuthKey(); echo $data['authid'];
+        $data['authid'] = xarSecGenAuthKey();
         $data['object'] = $myobject;
 
         if (file_exists('modules/' . $data['tplmodule'] . '/xartemplates/user-delete.xd') ||
