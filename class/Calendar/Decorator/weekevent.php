@@ -76,7 +76,6 @@
             }
 
             return true;
-
         }
 
         function setSelection($events)
@@ -95,9 +94,10 @@
                 $stamp1 = $this->cE->dateToStamp($this->year, $this->month, $day);
                 $stamp2 = $this->cE->dateToStamp($this->year, $this->month, $day+1);
                 foreach ($events as $event) {
-                    if (($stamp1 >= $event['start_time'] && $stamp1 < $event['end_time']) ||
-                        ($stamp2 >= $event['start_time'] && $stamp2 < $event['end_time']) ||
-                        ($stamp1 <= $event['start_time'] && $stamp2 > $event['end_time'])
+                    $end_time = $event['start_time'] + $event['duration'];
+                    if (($stamp1 >= $event['start_time'] && $stamp1 < $end_time) ||
+                        ($stamp2 >= $event['start_time'] && $stamp2 < $end_time) ||
+                        ($stamp1 <= $event['start_time'] && $stamp2 > $end_time)
                     ) {
                         $this->children[$i]->addEntry1($event);
                         $this->children[$i]->setSelected();
