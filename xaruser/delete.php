@@ -56,6 +56,7 @@ function calendar_user_delete($args)
 
     if (empty($confirm)) {
         $data['authid'] = xarSecGenAuthKey(); echo $data['authid'];
+        $data['object'] = $myobject;
 
         if (file_exists('modules/' . $data['tplmodule'] . '/xartemplates/user-delete.xd') ||
             file_exists('modules/' . $data['tplmodule'] . '/xartemplates/admin-delete-' . $data['template'] . '.xd')) {
@@ -67,7 +68,6 @@ function calendar_user_delete($args)
 
     // If we get here it means that the user has confirmed the action
 
-    var_dump($_POST);exit;
     if (!xarSecConfirmAuthKey()) return;
 
     $itemid = $myobject->deleteItem();
