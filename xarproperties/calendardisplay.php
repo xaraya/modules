@@ -22,6 +22,7 @@ class CalendarDisplayProperty extends DataProperty
     public $reqmodules = array('calendar');
     
     public $timeframe  = 'week';
+    public $owner      ;
 
     function __construct(ObjectDescriptor $descriptor)
     {
@@ -30,15 +31,17 @@ class CalendarDisplayProperty extends DataProperty
         // Set for runtime
         $this->tplmodule = 'calendar';
         $this->filepath   = 'modules/calendar/xarproperties';
+        $this->owner = xarSession::getVar('role_id');
     }
 
     public function showInput(Array $data = array())
     {
+        if (!empty($data['role_id'])) $data['role_id'] = $this->owner;
         if (empty($data['timeframe'])) $data['timeframe'] = $this->timeframe;
         $this->template = 'calendardisplay_' . $data['timeframe'];
         $this->includes($data['timeframe']); 
 
-        $data = array_merge($data, $this->setup($data['timeframe']));
+        $data = array_merge($data, $this->setup($data['timeframe'],$data['role_id']));
         return parent::showInput($data);
     }
 
@@ -63,7 +66,7 @@ class CalendarDisplayProperty extends DataProperty
         sys::import("modules.calendar.class.Calendar.Decorator.Xaraya");
     }
     
-    public function setup($timeframe)
+    public function setup($timeframe, $role_id)
     {
         $data = xarModAPIFunc('calendar','user','getUserDateTimeInfo');
         switch ($timeframe) {
@@ -72,7 +75,7 @@ class CalendarDisplayProperty extends DataProperty
                 $start_time = $WeekEvents->thisWeek;
                 $end_time = $WeekEvents->nextWeek;
 
-                $events = $this->getEvents($start_time, $end_time); 
+                $events = $this->getEvents($start_time, $end_time, $role_id); 
 
                 $WeekDecorator = new WeekEvent_Decorator($WeekEvents);
                 $WeekDecorator->build($events);
@@ -91,7 +94,7 @@ class CalendarDisplayProperty extends DataProperty
                     xarModVars::get('calendar', 'cal_sdow'));
                 $end_time = $MonthEvents->getTimestamp();
 
-                $events = $this->getEvents($start_time, $end_time); 
+                $events = $this->getEvents($start_time, $end_time, $role_id); 
 
                 $MonthDecorator = new MonthEvent_Decorator($MonthEvents);
                 $MonthDecorator->build($events);
@@ -107,33 +110,17 @@ class CalendarDisplayProperty extends DataProperty
         return $data;
     }
 
-    public function getEvents($start_time, $end_time)
+    public function getEvents($start_time, $end_time, $role_id)
     {
         // get all the events. need to improve this query and combine it with the query in the template
         $xartable = xarDB::getTables();
         $q = new Query('SELECT', $xartable['calendar_event']);
         $q->ge('start_time', $start_time);
         $q->lt('start_time', $end_time);
+        $q->eq('role_id',$role_id);
 //        $q->qecho();
         if (!$q->run()) return;
         return $q->output();
-    }
-
-    public function getEventConditions($start_time, $end_time)
-    {
-        $q = new Query('SELECT');
-        $a[] = $q->plt('start_time',$start_time);
-        $a[] = $q->pge('end_time',$start_time);
-        $b[] = $q->plt('start_time',$end_time);
-        $b[] = $q->pge('end_time',$end_time);
-        $c[] = $q->pgt('start_time',$start_time);
-        $c[] = $q->ple('end_time',$end_time);
-
-        $d[] = $q->pqand($a);
-        $d[] = $q->pqand($b);
-        $d[] = $q->pqand($c);
-        $q->qor($d);
-        return $q;
     }
 }
 
