@@ -52,20 +52,10 @@ function calendar_user_delete($args)
     //xarSession::setVar('ddcontext.' . $tplmodule, array('tplmodule' => $tplmodule));
     extract($data);
 
-
     $myobject->getItem();
 
     if (empty($confirm)) {
-        // TODO: is this needed?
-        $data = array_merge($data,xarModAPIFunc('dynamicdata','admin','menu'));
-        $data['object'] = & $myobject;
-        if ($data['objectid'] == 1) {
-            $mylist = & DataObjectMaster::getObjectList(array('objectid' => $data['itemid'], 'extend' => false));
-            if (count($mylist->properties) > 0) {
-                $data['related'] = xarML('Warning : there are #(1) properties and #(2) items associated with this object !', count($mylist->properties), $mylist->countItems());
-            }
-        }
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSecGenAuthKey(); echo $data['authid'];
 
         if (file_exists('modules/' . $data['tplmodule'] . '/xartemplates/user-delete.xd') ||
             file_exists('modules/' . $data['tplmodule'] . '/xartemplates/admin-delete-' . $data['template'] . '.xd')) {
@@ -77,6 +67,7 @@ function calendar_user_delete($args)
 
     // If we get here it means that the user has confirmed the action
 
+    var_dump($_POST);exit;
     if (!xarSecConfirmAuthKey()) return;
 
     $itemid = $myobject->deleteItem();
