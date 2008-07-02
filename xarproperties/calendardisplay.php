@@ -10,9 +10,10 @@
  * @author Marc Lutolf (mfl@netspan.ch)
  */
 
-/* Include parent class */
+/* Include files needed */
 sys::import('modules.dynamicdata.class.properties');
 sys::import('modules.query.class.query');
+xarModAPILoad('calendar','user');
 
 class CalendarDisplayProperty extends DataProperty
 {
