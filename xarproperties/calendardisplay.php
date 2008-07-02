@@ -36,7 +36,7 @@ class CalendarDisplayProperty extends DataProperty
 
     public function showInput(Array $data = array())
     {
-        if (!empty($data['role_id'])) $data['role_id'] = $this->owner;
+        if (empty($data['role_id'])) $data['role_id'] = $this->owner;
         if (empty($data['timeframe'])) $data['timeframe'] = $this->timeframe;
         $this->template = 'calendardisplay_' . $data['timeframe'];
         $this->includes($data['timeframe']); 
