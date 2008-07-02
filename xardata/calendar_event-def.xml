@@ -75,7 +75,7 @@
 <id>1455</id>
 <label>Recurring Code</label>
 <type>dropdown</type>
-<defaultvalue></defaultvalue>
+<defaultvalue>0</defaultvalue>
 <source>xar_calendar_event.recurring_code</source>
 <status>34</status>
 <seq>7</seq>

@@ -12,7 +12,7 @@
         </xar:if>
     </div>
     <div class="xar-floatright xar-padding-thick xar-halfwidth xar-align-right" style="padding-top:1em;">
-        <xar:sec mask="AddListings" catch="false">
+        <xar:sec mask="AddCalendar" catch="false">
             <xar:set name="returnurl">xarModURL('listings','user','view')</xar:set>
             <a style="font-weight:bold;" href ="#xarModURL('calendar','user','new',array('name'=> $objectname, 'tplmodule'=> $localmodule, 'page' => $page))#">Add A New Event</a>
         </xar:sec>

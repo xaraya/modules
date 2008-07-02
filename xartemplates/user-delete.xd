@@ -5,7 +5,7 @@
             <xar:if condition="xarModVars::get('calendar','useModuleAlias')">
                 <xar:var scope="module" module="calendar" name="aliasname" />
             <xar:else />
-                <xar:mlstring>Delete Calendar</xar:mlstring>
+                <xar:mlstring>Delete Event</xar:mlstring>
             </xar:if>
         </span>
     </div>
@@ -18,10 +18,10 @@
             </xar:ml>
         </h2>
         <h3 class="xar-align-center">
-            <xar:mlstring>Confirm Deleting This Item?</xar:mlstring>
+            <xar:mlstring>Confirm Deleting This Event?</xar:mlstring>
         </h3>
 
-        <xar:data-display object="$object" />
+        <xar:data-display object="$object" tplmodule="$tplmodule" fieldlist="name,description,start_time,start_location"/>
 
         <form method="post" action="&xar-modurl-dynamicdata-admin-delete;">
             <div class="xar-align-center">
