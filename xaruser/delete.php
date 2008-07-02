@@ -75,6 +75,20 @@ function calendar_user_delete($args)
         }
     }
 
+    // If we get here it means that the user has confirmed the action
+
+    if (!xarSecConfirmAuthKey()) return;
+
+    $itemid = $myobject->deleteItem();
+    if (!empty($return_url)) {
+        xarResponseRedirect($return_url);
+    } else {
+        $default = xarModVars::get('calendar','default_view');
+        xarResponseRedirect(xarModURL('calendar', 'user', $default,
+                                      array(
+                                      'page' => $default
+                                      )));
+    }
     return true;
 }
 
