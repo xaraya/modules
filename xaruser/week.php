@@ -26,7 +26,6 @@
         $q->qor($d);
 
         $q->eq('role_id',xarSession::getVar('role_id'));
-        $q->qecho();
         $data['conditions'] = $q;
 
         return $data;
