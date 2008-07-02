@@ -22,7 +22,7 @@
 
         <xar:data-display object="$object" tplmodule="$tplmodule"/>
 
-        <form method="post" action="&xar-modurl-dynamicdata-admin-delete;">
+        <form method="post" action="&xar-modurl-calendar-user-delete;">
             <div class="xar-align-center">
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="objectid" id="objectid" value="#$object:objectid#" />
