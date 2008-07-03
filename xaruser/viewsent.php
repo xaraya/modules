@@ -19,22 +19,22 @@ function messages_user_viewsent( $args )
         return $data['error'] = xarML('You are not permitted to view messages.');
     }
 
-    if (!xarVarFetch('mid', 'int:1:', $mid)) return;
+    if (!xarVarFetch('id', 'int:1:', $id)) return;
 
-    $messages = xarModAPIFunc('messages','user','get',array('mid' => $mid, 'status' => 2));
+    $messages = xarModAPIFunc('messages','user','get',array('id' => $id, 'status' => 2));
 
     if (!count($messages) || !is_array($messages)) {
         $data['error'] = xarML('Message ID nonexistant!');
         return $data;
     }
 
-    if ($messages[0]['recipient_id'] != xarUserGetVar('uid') &&
-        $messages[0]['sender_id'] != xaruserGetVar('uid')) {
+    if ($messages[0]['recipient_id'] != xarUserGetVar('id') &&
+        $messages[0]['sender_id'] != xaruserGetVar('id')) {
             $data['error'] = xarML("You are NOT authorized to view someone else's mail!");
             return $data;
     }
 
-    $read_messages = xarModGetUserVar('messages','read_messages');
+    $read_messages = xarModUserVars::get('messages','read_messages');
 
 
     if (!empty($read_messages)) {
@@ -59,16 +59,16 @@ function messages_user_viewsent( $args )
     // added call to transform text srg 09/22/03
     list($data['message']['body']) = xarModCallHooks('item',
          'transform',
-         $mid,
+         $id,
          array($data['message']['body']));
 
     /*
      * Add this message id to the list of 'seen' messages
      * if it's not already in there :)
      */
-    if (!in_array($data['message']['mid'], $read_messages)) {
-        array_push($read_messages, $data['message']['mid']);
-        xarmodSetUserVar('messages','read_messages',serialize($read_messages));
+    if (!in_array($data['message']['id'], $read_messages)) {
+        array_push($read_messages, $data['message']['id']);
+        xarModUserVars::set('messages','read_messages',serialize($read_messages));
     }
 
     return $data;

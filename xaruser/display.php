@@ -44,7 +44,6 @@ function messages_user_display( )
     } else {
         $list = array();
     }
-
     if (xarUserIsLoggedIn()) {
         if (!xarVarFetch('away','str',$away,null,XARVAR_NOT_REQUIRED)) return;
         if (isset($away)) {
@@ -55,7 +54,7 @@ function messages_user_display( )
         $data['away_message'] = '';
     }
 
-	$data['folder'] = xarML(ucfirst($folder));
+    $data['folder'] = xarML(ucfirst($folder));
 
     return $data;
 }

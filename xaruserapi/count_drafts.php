@@ -18,7 +18,7 @@ function messages_userapi_count_drafts()
                             'get_author_count',
                              array('modid'  => xarModGetIDFromName('messages'),
                                    'status' => 1,
-                                   'author' => xarUserGetVar('uid')));
+                                   'author' => xarUserGetVar('id')));
 
     return $total;
 }

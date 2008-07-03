@@ -26,7 +26,7 @@ function messages_userapi_getall( $args )
                                    'user',
                                    'get_multiple',
                                     array('modid'       => xarModGetIDFromName('messages'),
-                                          'objectid'    => xarUserGetVar('uid'),
+                                          'objectid'    => xarUserGetVar('id'),
                                           'status'      => 2));
             break;
         case 'sent':
@@ -34,7 +34,7 @@ function messages_userapi_getall( $args )
                                    'user',
                                    'get_multiple',
                                     array('modid'       => xarModGetIDFromName('messages'),
-                                          'author'      => xarUserGetVar('uid'),
+                                          'author'      => xarUserGetVar('id'),
                                           'status'      => 2));
             break;
         case 'drafts':
@@ -42,7 +42,7 @@ function messages_userapi_getall( $args )
                                    'user',
                                    'get_multiple',
                                     array('modid'       => xarModGetIDFromName('messages'),
-                                          'author'      => xarUserGetVar('uid'),
+                                          'author'      => xarUserGetVar('id'),
                                           'status'      => 1));
             break;
     }
@@ -65,8 +65,8 @@ function messages_userapi_getall( $args )
         $message['raw_date']      = $node['datetime'];
         $message['date']          = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', $node['datetime']);
         $message['body']          = $node['text'];
-        $message['receipient']    = xarUserGetVar('name');
-        $message['reciepient_id'] = xarSession::getVar('role_id');
+        $message['recipient']     = xarUserGetVar('name');
+        $message['recipient_id']  = xarSession::getVar('role_id');
 
         if($folder == 'inbox'){
             if (!in_array($message['id'], $read_messages)) {
@@ -85,13 +85,12 @@ function messages_userapi_getall( $args )
             $message['status_image'] = xarTplGetImage('sent.gif');
             $message['status_alt']   = xarML('sent');
         }
-
         if($folder == 'inbox'){
             $message['user_link']     = xarModURL('roles','user','display',
                                                    array('id' => $node['role_id']));
             $message['view_link']     = xarModURL('messages','user', 'view',
                                                    array('id'    => $node['id']));
-        else {
+        } else {
             $message['user_link']     = xarModURL('roles','user','display',
                                                    array('id' => $message['recipient_id']));
             $message['view_link']     = xarModURL('messages','user', 'viewsent',

@@ -40,17 +40,17 @@ function messages_userapi_get( $args )
     $messages = array();
 
     foreach ($list as $key => $node) {
-        $message['id']           = $node['id'];
+        $message['id']            = $node['id'];
         $message['sender']        = $node['author'];
         $message['sender_id']     = $node['role_id'];
-        $message['recipient']    = xarUserGetVar('name',$node['objectid']);
-        $message['recipient_id'] = $node['objectid'];
+        $message['recipient']     = xarUserGetVar('name',$node['objectid']);
+        $message['recipient_id']  = $node['objectid'];
         $message['posting_host']  = $node['hostname'];
         $message['raw_date']      = $node['datetime'];
         $message['date']          = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', $node['datetime']);
         $message['subject']       = $node['title'];
         $message['body']          = $node['text'];
-        $message['draft']        = ($node['xar_status'] == 1 ? true : false);
+        $message['draft']         = ($node['status'] == 1 ? true : false);
         if (!in_array($message['id'], $read_messages)) {
             $message['status_image'] = xarTplGetImage('unread.gif');
             $message['status_alt']   = xarML('unread');

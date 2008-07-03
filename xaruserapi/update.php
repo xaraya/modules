@@ -15,7 +15,7 @@ function messages_userapi_update( $args )
 {
     extract($args);
 
-    if (!is_numeric($mid)) {
+    if (!is_numeric($id)) {
         $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
                      'message ID', 'userapi', 'update', 'messages');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
@@ -43,14 +43,14 @@ function messages_userapi_update( $args )
         return;
     }
 
-	if (!isset($draft) || $draft != true) {
-		$draft = false;
-	}
+    if (!isset($draft) || $draft != true) {
+        $draft = false;
+    }
 
     // check the authorisation key
     if (!xarSecConfirmAuthKey()) return; // throw back
 
-    $messages = xarModAPIFunc('messages','user','get',array('mid' => $mid, 'status' => 1));
+    $messages = xarModAPIFunc('messages','user','get',array('id' => $id, 'status' => 1));
 
     if (!count($messages) || !is_array($messages)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -59,22 +59,22 @@ function messages_userapi_update( $args )
         return;
     }
 
-    $mid = xarModAPIFunc('comments',
+    $id = xarModAPIFunc('comments',
                          'user',
                          'modify',
-                          array('cid'         => $mid,
+                          array('id'          => $id,
                                 'modid'       => xarModGetIDFromName('messages'),
                                 'objectid'    => $recipient,
                                 'title'       => $subject,
                                 'date'        => time(),
                                 'text'        => $body,
-                                'authorid'    => xarUserGetVar('uid'),
+                                'authorid'    => xarUserGetVar('id'),
                                 'status'      => ($draft ? 1 : 2),
                                 'postanon'    => 0,
                                 'useeditstamp'=> 0));
 
 
-	return $mid;
+    return $id;
 }
 
 ?>

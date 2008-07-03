@@ -28,7 +28,7 @@ function messages_user_view( $args )
         return $data;
     }
 
-    if ($messages[0]['receipient_id'] != xarSession::getVar('role_id') &&
+    if ($messages[0]['recipient_id'] != xarSession::getVar('role_id') &&
         $messages[0]['sender_id'] != xarSession::getVar('role_id')) {
             $data['error'] = xarML("You are NOT authorized to view someone else's mail!");
             return $data;

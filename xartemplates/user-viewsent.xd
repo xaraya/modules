@@ -1,10 +1,12 @@
-<div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Private Messages</xar:mlstring></span>
-</div>
-<div class="xar-mod-body">
-    <xar:template type="module" file="user-menu" />
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div class="xar-mod-head">
+        <span class="xar-mod-title"><xar:mlstring>Private Messages</xar:mlstring></span>
+    </div>
+    <div class="xar-mod-body">
+        <xar:template type="module" file="user-menu" />
 
-	<h2><xar:mlstring>View Messages</xar:mlstring></h2>
+        <h2><xar:mlstring>View Messages</xar:mlstring></h2>
 
-    <xar:template file="view-message" type="module" />
-</div>
+        <xar:template file="view-message" type="module" />
+    </div>
+</xar:template>
