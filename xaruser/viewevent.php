@@ -3,7 +3,7 @@
  * Displays an event
  *
  * @package modules
- * @copyright (C) 2005-2007 The Digital Development Foundation
+ * @copyright (C) 2005-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -172,7 +172,7 @@ function julian_user_viewevent()
                 'Occurs every #(1) #(2) on #(3) #(4)',
                 $bl_data['recur_freq'],
                 $intervals[$rrule],
-                date('l', $bl_data['dtstart']['unixtime']),
+                xarLocaleFormatDate('%A', $bl_data['dtstart']['unixtime']),
                 $eff
             );
         } else {
