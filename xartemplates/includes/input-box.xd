@@ -1,89 +1,85 @@
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<div class="xar-accent" style="padding: 1px;">
-    <div style="padding: 3px;">
-        <h3 style="display: inline;">#$input_title#</h3>
-    </div>
-    <div class="xar-norm" style="padding: 4px;">
-        <form name="inputbox" action="#$post_url#" method="post" enctype="multipart/form-data" style="display: inline;">
-            <table width="100%" border="0" cellspacing="0" cellpadding="2">
-                <tr>
-                    <td width="70">
-                        <xar:mlstring>From:</xar:mlstring>
-                    </td>
-                    <td>
-                        #xarUserGetVar('name')#
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <xar:mlstring>To:</xar:mlstring>
-                    </td>
-                    <td>
-                        <xar:if condition="isset($no_receipient)">
-                            <span style="color: red;">
-                                <xar:mlstring>Missing!</xar:mlstring>
-                            </span>
-                        </xar:if>
-                        <select name="receipient" id="receipient">
-                            <xar:loop name="$users">
-                                <xar:if condition="isset($receipient) and $loop:item['id'] eq $receipient">
-                                    <option value="#$loop:item['id']#" selected="selected">
-                                        #$loop:item['name']# (#$loop:item['uname']#)
-                                    </option>
-                                <xar:else />
-                                    <option value="#$loop:item['id']#">
-                                        #$loop:item['name']# (#$loop:item['uname']#)
-                                    </option>
-                                </xar:if>
-                            </xar:loop>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <xar:mlstring>Subject:</xar:mlstring>
-                    </td>
-                    <td>
-                        <xar:if condition="isset($no_subject)">
-                            <span style="color: red;">
-                                <xar:mlstring>Missing!</xar:mlstring>
-                            </span>
-                        </xar:if>
-                        <xar:if condition="!empty($subject)">
-                            <input type="text" name="subject" id="subject" size="50" maxlength="85" value="#xarVarPrepForDisplay($subject)#" tabindex="1" />
-                        <xar:else />
-                            <input type="text" name="subject" id="subject" size="50" maxlength="85" value="" tabindex="1" />
-                        </xar:if>
-                    </td>
-                </tr>
-                <tr>
-                    <td valign="top">
-                        <xar:mlstring>Message:</xar:mlstring>
-                    </td>
-                    <td>
-                        <xar:if condition="isset($no_body)">
-                            <span style="color: red;">
-                                <xar:mlstring>Missing!</xar:mlstring>
-                            </span>
-                        </xar:if>
-                        <xar:if condition="isset($body)">
-                            <textarea cols="57" rows="10" name="body" id="body" tabindex="2">#xarVarPrepForDisplay($body)#</textarea>
-                        <xar:else />
-                            <textarea cols="57" rows="10" name="body" id="body" tabindex="2">&#160;</textarea>
-                        </xar:if>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <br />
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-                        <input type="submit" name="preview" id="preview" value="#xarML('preview')#" />&#160;&#160;
-                        <input type="submit" name="confirm" id="confirm" value="#xarML('submit')#" />&#160;&#160;
-                    </td>
-                </tr>
-            </table>
-        </form>
-    </div>
-</div>
-<br />
-</xar:template>
+<h3>#$input_title#</h3>
+<form id="inputbox" action="#$post_url#" method="post" enctype="multipart/form-data">
+	<div class="xar-form-input-wrapper">
+	    <label class="xar-form-label">
+	        <xar:mlstring>From:</xar:mlstring>
+	    </label>
+	    #xarUserGetVar('name')#
+	</div>
+
+	<div class="xar-form-input-wrapper">
+	    <label for="recipient" title="#xarML('To whom the message will be sent')#" class="xar-form-label">
+	        <xar:mlstring>To:</xar:mlstring>
+	    </label>
+        <select name="recipient" id="recipient">
+            <xar:loop name="$users">
+                <xar:if condition="isset($recipient) and $loop:item['uid'] eq $recipient">
+                    <option value="#$loop:item['uid']#" selected="selected">
+                        #$loop:item['name']# (#$loop:item['uname']#)
+                    </option>
+                <xar:else />
+                    <option value="#$loop:item['uid']#">
+                        #$loop:item['name']# (#$loop:item['uname']#)
+                    </option>
+                </xar:if>
+            </xar:loop>
+        </select>
+        <xar:if condition="isset($no_recipient)">
+            <span class="xar-error">
+                <xar:mlstring>Missing!</xar:mlstring>
+            </span>
+        </xar:if>
+	</div>
+
+	<div class="xar-form-input-wrapper">
+	    <label for="subject" title="#xarML('Message subject')#" class="xar-form-label">
+	        <xar:mlstring>Subject:</xar:mlstring>
+	    </label>
+        <xar:if condition="!empty($subject)">
+            <input type="text" name="subject" id="subject" class="xar-form-textxlong" maxlength="85" value="#xarVarPrepForDisplay($subject)#" tabindex="1" />
+        <xar:else />
+            <input type="text" name="subject" id="subject" class="xar-form-textxlong" maxlength="85" value="" tabindex="1" />
+        </xar:if>
+        <xar:if condition="isset($no_subject)">
+            <span class="xar-error">
+                <xar:mlstring>Missing!</xar:mlstring>
+            </span>
+        </xar:if>
+	</div>
+
+	<div class="xar-form-input-wrapper">
+	    <label for="body" title="#xarML('Message text')#" class="xar-form-label">
+	        <xar:mlstring>Message:</xar:mlstring>
+	    </label>
+        <xar:if condition="isset($no_body)">
+            <span class="xar-error">
+                <xar:mlstring>Missing!</xar:mlstring>
+            </span>
+        </xar:if>
+        <xar:if condition="isset($body)">
+            <textarea cols="" rows="" name="body" id="body" class="xar-form-textarealarge" tabindex="2">#xarVarPrepForDisplay($body)#</textarea>
+        <xar:else />
+            <textarea cols="" rows="" name="body" id="body" class="xar-form-textarealarge" tabindex="2"></textarea>
+        </xar:if>
+	</div>
+
+	<div class="xar-form-input-wrapper-after">
+		<xar:if condition="isset($draft) and $draft eq true">
+			<input type="checkbox" name="draft" id="draft" value="1" checked="checked" />
+		<xar:else />
+			<input type="checkbox" name="draft" id="draft" value="1" />
+		</xar:if>
+	    <label for="draft" title="#xarML('Save this message to be sent later')#">
+	        <xar:mlstring>Save as draft</xar:mlstring>
+	    </label>
+	</div>
+
+	<div class="xar-align-center xar-margin-thick">
+        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+		<xar:if condition="isset($mid)">
+	        <input type="hidden" name="mid" id="mid" value="#$mid#" />
+		</xar:if>
+        <input type="submit" name="preview" id="preview" value="#xarML('Preview')#" class="xar-margin-thickright" />
+        <input type="submit" name="confirm" id="confirm" value="#xarML('Submit')#" class="xar-margin-thickleft" />
+	</div>
+</form>

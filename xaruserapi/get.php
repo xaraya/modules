@@ -22,9 +22,9 @@ function messages_userapi_get( $args )
         throw new Exception($msg);
     }
 
-	if(!isset($status) || !in_array($status, array(1,2,3))){
-		$status = 2;
-	}
+    if(!isset($status) || !in_array($status, array(1,2,3))){
+        $status = 2;
+    }
 
     $list = xarModAPIFunc('comments',
                            'user',
@@ -58,7 +58,11 @@ function messages_userapi_get( $args )
             $message['status_image'] = xarTplGetImage('read.gif');
             $message['status_alt']   = xarML('read');
         }
-
+        
+        /* insert somehow?
+        $message['status_image'] = xarTplGetImage('draft.gif');
+        $message['status_alt']   = xarML('draft');
+        */
         $message['user_link']     = xarModURL('roles','user','display',
                                                array('id' => $node['role_id']));
         $message['view_link']     = xarModURL('messages','user', 'view',

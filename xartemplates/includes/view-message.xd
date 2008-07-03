@@ -1,29 +1,47 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:if condition="!isset($error)">
-    <div class="xar-norm" style="padding: 1px;margin-bottom: 4px;">
-        <div class="xar-accent" style="padding: 4px;" align="left">
-            <!-- <xar:mlstring>Message-Posting-Host:</xar:mlstring> #$message['posting-host']# -->
-            <span class="xar-sub">
-                <h4 style="display: inline;">
-                    <xar:mlstring>Subject:</xar:mlstring> #xarVarPrepForDisplay($message['subject'])#
-                </h4>
-                <br />
-                <xar:mlstring>From:</xar:mlstring> #$message['sender']#
-                <br />
-                <xar:mlstring>To:</xar:mlstring> #$message['receipient']#
-                <br />
-                <xar:mlstring>Date:</xar:mlstring> #xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', $message['raw_date'])#
-                <br />
+    <xar:style scope="module" module="messages" file="messages" />
+    <xar:if condition="!isset($error)">
+        <xar:comment>
+        <!-- <xar:mlstring>Message-Posting-Host:</xar:mlstring> #$message['posting-host']# -->
+        </xar:comment>
+
+        <div class="xar-form-input-wrapper">
+            <span class="xar-form-label">
+                <xar:mlstring>From:</xar:mlstring>
             </span>
+            #$message['sender']#
         </div>
-        <div class="xar-norm" style="padding: 4px;" align="left">
-            #xarVarPrepHTMLDisplay($message['body'])# <br />
+
+        <div class="xar-form-input-wrapper">
+            <span class="xar-form-label">
+                <xar:mlstring>To:</xar:mlstring>
+            </span>
+            #$message['recipient']#
         </div>
-        <xar:if condition="isset($action) AND $action ne 'preview' AND $action ne 'check'">
-            <div class="xar-norm" style="padding: 4px;" align="left">
-                <br />
-                <br />
-                <a href="#$message['reply_link']#" title="#xarML('Reply to Message')#"><xar:mlstring>Reply</xar:mlstring></a> |
+
+        <div class="xar-form-input-wrapper">
+            <span class="xar-form-label">
+                <xar:mlstring>Date:</xar:mlstring>
+            </span>
+            #xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', $message['raw_date'])#
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <span class="xar-form-label">
+                <xar:mlstring>Subject:</xar:mlstring>
+            </span>
+            #xarVarPrepForDisplay($message['subject'])#
+        </div>
+
+        <hr class="xar-clearboth" />
+        <div>
+            #xarVarPrepHTMLDisplay($message['body'])#
+        </div>
+        <xar:if condition="isset($action) and $action ne 'preview' and $action ne 'check' and $action ne 'modify'">
+            <div class="xar-margin-thicktop">
+                <xar:if condition="$action ne 'viewsent'">
+                    <a href="#$message['reply_link']#" title="#xarML('Reply to Message')#"><xar:mlstring>Reply</xar:mlstring></a> |
+                </xar:if>
                 <xar:if condition="xarSecurityCheck('DeleteMessages', 0)">
                     <a href="#$message['delete_link']#" title="#xarML('Delete Message')#"><xar:mlstring>Delete</xar:mlstring></a>
                 <xar:else/>
@@ -31,11 +49,10 @@
                 </xar:if>
             </div>
         </xar:if>
-    </div>
-<xar:else />
-    <br />
-    <div class="xar-norm">
-        #$error#
-    </div>
-</xar:if>
+    <xar:else />
+        <br />
+        <div class="xar-norm">
+            #$error#
+        </div>
+    </xar:if>
 </xar:template>
