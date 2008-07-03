@@ -27,7 +27,7 @@ function messages_user_delete()
     }
 
     if (!xarVarFetch('action', 'enum:confirmed:check', $action)) return;
-    if (!xarVarFetch('mid', 'int:1', $mid)) return;
+    if (!xarVarFetch('id', 'int:1', $id)) return;
 
 
     /*
@@ -35,15 +35,15 @@ function messages_user_delete()
      * try to delete it - otherwise, all sorts of crazy
      * could happen!
      */
-    $messages = xarModAPIFunc('messages', 'user', 'get', array('mid' => $mid));
+    $messages = xarModAPIFunc('messages', 'user', 'get', array('id' => $id));
 
     if (!count($messages)) {
         $data['error']  = xarML('Message id refers to a nonexistant message!');
         return $data;
     }
 
-    if ($messages[0]['recipient_id'] != xarUserGetVar('uid') &&
-        $messages[0]['sender_id'] != xaruserGetVar('uid')) {
+    if ($messages[0]['receipient_id'] != xarSession::getVar('role_id') &&
+        $messages[0]['sender_id'] != xarSession::getVar('role_id')) {
         $data['error'] = xarML("You are NOT authorized to view someone else's mail!");
         return $data;
     }
@@ -55,7 +55,7 @@ function messages_user_delete()
              * First, make sure we remove the message id from
              * the read messages list, if this message has been seen.
              */
-            $read_messages = xarModGetUserVar('messages','read_messages');
+            $read_messages = xarModUserVars::get('messages','read_messages');
             if (!empty($read_messages)) {
                 $read_messages = unserialize($read_messages);
             } else {
@@ -63,9 +63,9 @@ function messages_user_delete()
             }
 
 
-            if ( ($key = array_search($mid, $read_messages)) !== FALSE) {
+            if ( ($key = array_search($id, $read_messages)) !== FALSE) {
                 unset($read_messages[$key]);
-                xarmodSetUserVar('messages', 'read_messages', serialize($read_messages));
+                xarModUserVars::set('messages', 'read_messages', serialize($read_messages));
             }
 
             /*
@@ -74,13 +74,13 @@ function messages_user_delete()
             xarModAPIFunc('messages',
                           'user',
                           'delete',
-                           array('mid' => $mid));
+                           array('id' => $id));
             xarResponseRedirect(xarModURL('messages','user','display'));
             break;
 
         case "check":
             $data['message']    = $messages[0];
-            $data['mid']        = $mid;
+            $data['id']         = $id;
             $data['action']     = $action;
             $data['post_url']   = xarModURL('messages','user','delete');
             break;

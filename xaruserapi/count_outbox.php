@@ -20,7 +20,7 @@ function messages_userapi_count_outbox()
                             'user',
                             'get_author_count',
                              array('modid'  => xarModGetIDFromName('messages'),
-                                   'author' => xarUserGetVar('uid'),
+                                   'author' => xarSession::getVar('role_id'),
                                    'status' => _COM_STATUS_OFF
                                   )
                             );

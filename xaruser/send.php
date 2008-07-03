@@ -21,7 +21,6 @@ function messages_user_send()
 
     xarVarFetch('preview', 'checkbox', $preview, false, XARVAR_NOT_REQUIRED);
     xarVarFetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED);
-    xarVarFetch('draft',   'checkbox', $draft,   false, XARVAR_NOT_REQUIRED);
 
     if ($preview === true) {
         $action = 'preview';
@@ -33,7 +32,6 @@ function messages_user_send()
 
     $data['post_url']       = xarModURL('messages','user','send');
     $data['action']         = $action;
-    $data['draft']          = $draft;
 
     if($action != 'submit') {
         $users = xarModAPIFunc('roles',
@@ -47,95 +45,52 @@ function messages_user_send()
 
     switch($action) {
         case "submit":
+            if (!xarVarFetch('subject', 'str:1', $subject)) return;
+            if (!xarVarFetch('body', 'str:1', $body)) return;
+            if (!xarVarFetch('receipient', 'int:1', $receipient)) return;
 
-            if (!xarVarFetch('subject', 'str:1', $subject)) {
-                $data['no_subject'] = 1;
-                xarErrorHandled();
-            }
-            if (!xarVarFetch('body', 'str:1', $body)){
-                $data['no_body'] = 1;
-                xarErrorHandled();
-            }
-            if (!xarVarFetch('recipient', 'int:1', $recipient)){
-                $data['no_recipient'] = 1;
-                xarErrorHandled();
-            }
-
-			if(isset($data['no_subject']) || isset($data['no_body']) || isset($data['no_recipient'])){
-
-	            xarTplSetPageTitle( xarML('Post Message') );
-
-		        $users = xarModAPIFunc('roles',
-		                               'user',
-		                               'getall',
-		                                array('state'   => 3,
-		                                      'include_anonymous' => false,
-		                                      'include_myself' => false));
-		        $data['users']          = $users;
-	            $data['input_title']                = xarML('Compose Message');
-	            $data['action']                     = 'post';
-	
-	            $data['message']['sender']          = xarUserGetVar('name');
-	            $data['message']['senderid']        = xarUserGetVar('uid');
-	            $data['message']['recipient']      = xarUserGetVar('name',$recipient);
-	            $data['message']['recipient_id']   = $recipient;
-	            $data['message']['subject']         = $subject;
-	            $data['message']['date']            = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', time());
-	            $data['message']['raw_date']        = time();
-	            $data['message']['body']            = $body;
-	
-	            $data['recipient']                 = $recipient;
-	            $data['subject']                    = $subject;
-	            $data['body']                       = $body;
-
-				return $data;
-			}
-
-            $mid = xarModAPIFunc('messages',
+            xarModAPIFunc('messages',
                           'user',
                           'create',
                            array('subject' => $subject,
                                  'body'  => $body,
-                                 'recipient'    => $recipient,
-                                 'draft' => $draft));
+                                 'receipient'    => $receipient));
             // see if the recipient has set an away message
-			if(!$draft){
-	            $isaway = xarModGetUserVar('messages','away_message',$recipient);
-	            if (!empty($isaway)) {
-	                $data['recipient'] = $recipient;
-	                $data['away_message'] = $isaway;
-	                return xarTplModule('messages','user','away',$data);
-	            }
-			}
+            $isaway = xarModUserVars::get('messages','away_message',$receipient);
+            if (!empty($isaway)) {
+                $data['receipient'] = $receipient;
+                $data['away_message'] = $isaway;
+                return xarTplModule('messages','user','away',$data);
+            }
             xarResponseRedirect(xarModURL('messages','user','display'));
             return true;
             break;
 
         case "reply":
-            if (!xarVarFetch('mid', 'int:1', $mid)) return;
+            if (!xarVarFetch('id', 'int:1', $id)) return;
             xarTplSetPageTitle( xarML('Messages :: Reply') );
 
-            $messages = xarModAPIFunc('messages', 'user', 'get', array('mid' => $mid));
+            $messages = xarModAPIFunc('messages', 'user', 'get', array('id' => $id));
 
             if (!count($messages) || !is_array($messages)) {
                 $data['error'] = xarML('Message ID nonexistant!');
                 return $data;
             }
 
-            if ($messages[0]['recipient_id'] != xarUserGetVar('uid') &&
-                $messages[0]['sender_id'] != xaruserGetVar('uid')) {
+            if ($messages[0]['receipient_id'] != xarSession::getVar('role_id') &&
+                $messages[0]['sender_id'] != xarSession::getVar('role_id')) {
                     $data['error'] = xarML("You are NOT authorized to view someone else's mail!");
                     return $data;
             }
             $data['post_url']       = xarModURL('messages', 'user', 'send');
             $data['input_title']    = xarML('Reply to a Message');
-            $data['recipient']     = $messages[0]['sender_id'];
+            $data['receipient']     = $messages[0]['sender_id'];
             $data['message']        = $messages[0];
 
             break;
         case "preview":
-            if (!xarVarFetch('mid', 'int:1', $mid)) {
-                $data['mid'] = 1;
+            if (!xarVarFetch('id', 'int:1', $id)) {
+                $data['id'] = 1;
                 xarErrorHandled();
             }
 
@@ -147,37 +102,35 @@ function messages_user_send()
                 $data['no_body'] = 1;
                 xarErrorHandled();
             }
-            if (!xarVarFetch('recipient', 'int:1', $recipient)){
-                $data['no_recipient'] = 1;
+            if (!xarVarFetch('receipient', 'int:1', $receipient)){
+                $data['no_receipient'] = 1;
                 xarErrorHandled();
             }
             // added call to transform text srg 09/22/03
             list($body) = xarModCallHooks('item',
                                           'transform',
-                                           $mid,
+                                           $id,
                                            array($body));
 
-            xarTplSetPageTitle( xarML('Post Message') );
-
-            $data['input_title']                = xarML('Compose Message');
+            $data['input_title']                = xarML('Preview your Message');
             $data['action']                     = 'preview';
 
             $data['message']['sender']          = xarUserGetVar('name');
-            $data['message']['senderid']        = xaruserGetVar('uid');
-            $data['message']['recipient']      = xarUserGetVar('name',$recipient);
-            $data['message']['recipient_id']   = $recipient;
+            $data['message']['senderid']        = xarSession::getVar('role_id');
+            $data['message']['receipient']      = xarUserGetVar('name',$receipient);
+            $data['message']['receipient_id']   = $receipient;
             $data['message']['subject']         = $subject;
             $data['message']['date']            = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', time());
             $data['message']['raw_date']        = time();
             $data['message']['body']            = $body;
 
-            $data['recipient']                 = $recipient;
+            $data['receipient']                 = $receipient;
             $data['subject']                    = $subject;
             $data['body']                       = $body;
 
             break;
         case "post":
-            xarTplSetPageTitle( xarML('Post Message') );
+            xarTplSetPageTitle( xarML('Messages :: Post Message') );
 
             $data['input_title']    = xarML('Compose Message');
             break;

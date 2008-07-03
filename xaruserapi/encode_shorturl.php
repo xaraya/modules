@@ -16,7 +16,7 @@ function messages_userapi_encode_shorturl( $args )
 
     $func       = NULL;
     $module     = NULL;
-    $mid        = NULL;
+    $id        = NULL;
     $rest       = array();
     //print_r($args);
     //exit();
@@ -27,8 +27,8 @@ function messages_userapi_encode_shorturl( $args )
             case 'module':
                 $module = $value;
                 break;
-            case 'mid':
-                $mid = $value;
+            case 'id':
+                $id = $value;
                 break;
             case 'func':
                 $func = $value;
@@ -64,15 +64,15 @@ function messages_userapi_encode_shorturl( $args )
         case 'main':
         default:
             $path .= '/Inbox';
-            if (isset($mid)) {
-                $path .= '/' . $mid;
-                unset($mid);
+            if (isset($id)) {
+                $path .= '/' . $id;
+                unset($id);
             }
             break;
     }
 
-    if (isset($mid)) {
-        $rest['mid'] = $mid;
+    if (isset($id)) {
+        $rest['id'] = $id;
     }
 
     $add = array();

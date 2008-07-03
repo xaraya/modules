@@ -18,22 +18,19 @@ function messages_userapi_create( $args )
     if (!isset($subject)) {
         $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
                      'subject', 'userapi', 'create', 'messages');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
 
     if (!isset($body)) {
         $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
                      'body', 'userapi', 'create', 'messages');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
 
     if (!isset($recipient)) {
         $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
                      'recipient', 'userapi', 'create', 'messages');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
 
 	if (!isset($draft) || $draft != true) {
@@ -43,25 +40,25 @@ function messages_userapi_create( $args )
     // check the authorisation key
     if (!xarSecConfirmAuthKey()) return; // throw back
 
-    $mid =  xarModAPIFunc('comments',
+    $id =  xarModAPIFunc('comments',
                          'user',
                          'add',
                           array('modid'       => xarModGetIDFromName('messages'),
                                 'objectid'    => $recipient,
                                 'title'       => $subject,
                                 'comment'     => $body,
-                                'author'      => xarUserGetVar('uid')));
+                                'author'      => xarSession::getVar('role_id')));
 
-	if($mid !== false && $draft == true) {
+	if($id !== false && $draft == true) {
     	xarModAPIFunc('comments',
                          'user',
                          'deactivate',
-                          array('cid'       => $mid));
+                          array('id'       => $id));
 	
 	}
 
 
-	return $mid;
+	return $id;
 }
 
 ?>

@@ -45,7 +45,7 @@ function messages_newmessagesblock_display($blockinfo)
     $itemtype=1;
 
     // Get Logged in Users ID
-    $uid = xarUserGetVar('uid');
+    $role_id = xarSession::getVar('role_id');
 
     // Count total Messages
      $numitems = xarModAPIFunc(
@@ -83,8 +83,8 @@ function messages_newmessagesblock_display($blockinfo)
 
 
 //pulling unread messages will go here
-// $read_messages = unserialize(xarModGetUserVar('messages','read_messages'));
-//if (!in_array($data['message']['mid'], $read_messages)) {
+// $read_messages = unserialize(xarModUserVars::get('messages','read_messages'));
+//if (!in_array($data['message']['id'], $read_messages)) {
 // add to unread list
 // }
 

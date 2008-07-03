@@ -72,13 +72,13 @@ function messages_adminapi_modify( $args )
 
     $data['authid'] = xarSecGenAuthKey();
     $data['_bl_template'] = 'messages';
-    $uid = xarUserGetVar('uid');
+    $role_id = xarSession::getVar('role_id');
     $to_userid = $object->properties['from_userid']->getValue();
     $object->properties['to_userid']->setValue($to_userid);
     $subject = $object->properties['subject']->getValue();
     $subject = xarML('Re:') . $subject;
     $object->properties['subject']->setValue($subject);
-    $object->properties['from_userid']->setValue($uid);
+    $object->properties['from_userid']->setValue($role_id);
     $message = $object->properties['msg_text']->getValue();
     $message = add_quoting($message);
     $object->properties['msg_text']->setValue($message);

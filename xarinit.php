@@ -18,23 +18,23 @@
  */
 function messages_init()
 {
-    xarModSetVar('messages', 'buddylist', 0);
-    xarModSetVar('messages', 'itemsperpage', 10);
-    xarModSetVar('messages', 'limitsaved', 12);
-    xarModSetVar('messages', 'limitout', 10);
-    xarModSetVar('messages', 'limitinbox', 10);
-    xarModSetVar('messages', 'mailsubject', 'You have a new private message !');
-    xarModSetVar('messages', 'fromname', 'Webmaster');
-    xarModSetVar('messages', 'from', 'Webmaster@YourSite.com');
-    xarModSetVar('messages', 'inboxurl', 'http://www.yoursite.com/index.php?module=messages&type=user&func=view');
-    xarModSetVar('messages', 'serverpath', '/home/yourdir/public_html/modules/messages');
-    xarModSetVar('messages', 'SupportShortURLs', false );
+    xarModVars::set('messages', 'buddylist', 0);
+    xarModVars::set('messages', 'itemsperpage', 10);
+    xarModVars::set('messages', 'limitsaved', 12);
+    xarModVars::set('messages', 'limitout', 10);
+    xarModVars::set('messages', 'limitinbox', 10);
+    xarModVars::set('messages', 'mailsubject', 'You have a new private message !');
+    xarModVars::set('messages', 'fromname', 'Webmaster');
+    xarModVars::set('messages', 'from', 'Webmaster@YourSite.com');
+    xarModVars::set('messages', 'inboxurl', 'http://www.yoursite.com/index.php?module=messages&type=user&func=view');
+    xarModVars::set('messages', 'serverpath', '/home/yourdir/public_html/modules/messages');
+    xarModVars::set('messages', 'SupportShortURLs', false );
 
     // read_messages is intended only for users
     // it will store the message id of each message that
     // the user has seen
-    xarModSetVar('messages', 'read_messages', serialize(array()));
-    xarModSetVar('messages', 'away_message', '');
+    xarModVars::set('messages', 'read_messages', serialize(array()));
+    xarModVars::set('messages', 'away_message', '');
 
     /*
      * REGISTER BLOCKS
@@ -73,7 +73,7 @@ function messages_init()
                               array('file' => 'modules/messages/messages.data.xml'));
     if (empty($objectid)) return;
     // save the object id for later
-    xarModSetVar('messages','objectid',$objectid);
+    xarModVars::set('messages','objectid',$objectid);
 */
 
     /*
@@ -96,9 +96,7 @@ function messages_init()
     * register(Name,Realm,Module,Component,Instance,Level,Description)
     *********************************************************************/
     xarRegisterPrivilege('DeleteMessages','All','messages','All','All','ACCESS_DELETE',xarML('Delete access to messages'));
-    xarMakePrivilegeRoot('DeleteMessages');
     xarRegisterPrivilege('DenyReadMessages','All','messages','All','All','ACCESS_NONE',xarML('Deny access to messages'));
-    xarMakePrivilegeRoot('DenyReadMessages');
     /*********************************************************************
     * Assign the default privileges to groups/users
     * Format is
@@ -128,7 +126,7 @@ function messages_upgrade($oldversion)
         case '1.8':
         case '1.8.0':
             // compatability upgrade
-            xarModSetVar('messages', 'away_message', '');
+            xarModVars::set('messages', 'away_message', '');
         case '1.8.1':
             // nothing to do for this rev
             break;
@@ -155,7 +153,7 @@ function messages_delete()
     /*
      * REMOVE MODULE VARS
      */
-    if ( !xarModDelAllVars( 'messages' ) )
+    if ( !xarModVars::delete_all( 'messages' ) )
         return;
 
     /*

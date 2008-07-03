@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Private Messages</xar:mlstring></span>
 </div>
@@ -13,12 +14,15 @@
 
         <xar:template file="delete-message" type="module" />
     <xar:else />
-        <h3>
-            <xar:mlstring>Error</xar:mlstring>
-        </h3>
+        <div class="xar-mod-head">
+            <span class="xar-mod-title">
+                <xar:mlstring>Messages</xar:mlstring>
+            </span>
+        </div>
 
-        <div>
+        <div class="xar-norm">
             #$error#
         </div>
     </xar:if>
 </div>
+</xar:template>

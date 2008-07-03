@@ -1,4 +1,6 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="!isset($error)">
+
     <div class="xar-mod-head">
         <span class="xar-mod-title">
             <xar:mlstring>Messages</xar:mlstring>
@@ -19,7 +21,9 @@
             <xar:mlstring>Messages</xar:mlstring>
         </span>
     </div>
-    <div>
+    <br />
+    <div class="xar-norm">
         #$error#
     </div>
 </xar:if>
+</xar:template>

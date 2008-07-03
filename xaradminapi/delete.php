@@ -71,8 +71,8 @@ function messages_adminapi_delete($args)
     // we currently just want the first item, which is the official
     // database handle.  For pnDBGetTables() we want to keep the entire
     // tables array together for easy reference later on
-    $dbconn =& xarDBGetConn();;
-    $pntable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();;
+    $pntable = xarDB::getTables();
 
     // It's good practice to name the table and column definitions you
     // are getting - $table and $column don't cut it in more complex

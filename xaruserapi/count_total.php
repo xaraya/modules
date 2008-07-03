@@ -17,7 +17,7 @@ function messages_userapi_count_total()
                             'user',
                             'get_count',
                              array('modid'      => xarModGetIDFromName('messages'),
-                                   'objectid'   => xarUserGetVar('uid'),
+                                   'objectid'   => xarSession::getVar('role_id'),
                                    'status'     => 2));
 
     return $total;

@@ -28,7 +28,7 @@ function messages_adminapi_config( $args )
             $itemsperpage = 10;
         }
 
-        xarModSetVar('messages', 'itemsperpage.' . $itemtype, $itemsperpage );
+        xarModVars::set('messages', 'itemsperpage.' . $itemtype, $itemsperpage );
 
         /*
          * call the hook 'module:updateconfig:GUI'
@@ -56,7 +56,7 @@ function messages_adminapi_config( $args )
 
     $data['itemtype']       = $itemtype;
     $data['itemtype_label'] = $itemtype;
-    $data['itemsperpage']   = xarModGetVar('messages', 'itemsperpage.' . $itemtype );
+    $data['itemsperpage']   = xarModVars::get('messages', 'itemsperpage.' . $itemtype );
     /*
      * Populate the rest of the template
      */

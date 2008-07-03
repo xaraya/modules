@@ -1,18 +1,25 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="!isset($error)">
-        <form action="#$post_url#" method="post" enctype="application/x-www-form-urlencoded">
-            <p><xar:mlstring>Are you sure you want to delete this message?</xar:mlstring></p>
-			<div class="xar-margin-thick xar-align-center">
-	           <input type="hidden" name="mid" id="mid" value="#$mid#" />
-	           <input type="hidden" name="action" id="action" value="confirmed" />
-	           <input type="submit" name="confirmed" id="delete" value="#xarML('Delete')#" />
-	           <input type="button" value="#xarML('Cancel')#" onclick="javascript:history.go(-1);" />
-			</div>
+    <div style="width: 100%; text-align: center;">
+        <form action="#$post_url#" method="post" enctype="application/x-www-form-urlencoded" >
+           <xar:mlstring>Are you sure you want to delete this message?</xar:mlstring>
+            <br />
+            <input type="hidden" name="id" id="id" value="#$id#" />
+            <input type="hidden" name="action" id="action" value="confirmed" />
+            <input type="submit" name="confirmed" id="delete" value="#xarML('Delete')#" />
+            <input type="button" value="#xarML('Cancel')#" onclick="javascript:history.go(-1);" />
         </form>
+    </div>
+    <br />
 <xar:else />
-    <h2>
-        <xar:mlstring>Messages</xar:mlstring>
-    </h2>
-    <div>
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>Messages</xar:mlstring>
+        </span>
+    </div>
+    <br />
+    <div class="xar-norm">
         #$error#
     </div>
 </xar:if>
+</xar:template>

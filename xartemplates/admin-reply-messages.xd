@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
 
 <xar:template xmlns:xar="dd" xmlns="http://www.w3.org/TR/xhtml1/strict" file="admin-header" type="module"/>
@@ -60,3 +61,4 @@ function initEditor()
         <input type="submit" name="preview" value="Preview"/>
         <input type="submit" name="cancel" value="Cancel"/>
 </form>
+</xar:template>

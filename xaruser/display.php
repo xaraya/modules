@@ -20,7 +20,7 @@ function messages_user_display( )
 
     if (!xarVarFetch('folder', 'enum:inbox:sent:drafts', $folder, 'inbox')) return;
 
-    $read_messages = xarModGetUserVar('messages','read_messages');
+    $read_messages = xarModUserVars::get('messages','read_messages');
     if (!empty($read_messages)) {
         $read_messages = unserialize($read_messages);
     } else {
@@ -48,9 +48,9 @@ function messages_user_display( )
     if (xarUserIsLoggedIn()) {
         if (!xarVarFetch('away','str',$away,null,XARVAR_NOT_REQUIRED)) return;
         if (isset($away)) {
-            xarModSetUserVar('messages','away_message',$away);
+            xarModUserVars::set('messages','away_message',$away);
         }
-        $data['away_message'] = xarModGetUserVar('messages','away_message');
+        $data['away_message'] = xarModUserVars::get('messages','away_message');
     } else {
         $data['away_message'] = '';
     }

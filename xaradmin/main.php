@@ -33,7 +33,7 @@ function messages_admin_common( $title = 'Undefined' )
          $common['menu'] = array();
 
          // Initialize the statusmessage
-         $statusmsg = xarSessionGetVar( 'messages_statusmsg' );
+         $statusmsg = xarSession::getVar( 'messages_statusmsg' );
          if ( isset($statusmsg)){
               xarSessionDelVar('messages_statusmsg');
          }

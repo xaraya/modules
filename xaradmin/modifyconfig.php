@@ -32,25 +32,25 @@ function messages_admin_modifyconfig()
 
     // Specify some labels and values for display
 
-    $data['itemsperpage'] = xarModGetVar('messages', 'itemsperpage');
-    $data['buddylist'] = xarModGetVar('messages', 'buddylist');
-    $data['limitsaved'] = xarModGetVar('messages', 'limitsaved');
-    $data['limitinbox'] = xarModGetVar('messages', 'limitinbox');
-    $data['limitoutbox'] = xarModGetVar('messages', 'limitout');
-    $data['smilies'] = xarModGetVar('messages', 'smilies');
-    $data['allow_html'] = xarModGetVar('messages', 'allow_html');
-    $data['allow_bbcode'] = xarModGetVar('messages', 'allow_bbcode');
-    $data['mailsubject'] = xarModGetVar('messages', 'mailsubject');
-    $data['fromname'] = xarModGetVar('messages', 'fromname');
-    $data['from'] = xarModGetVar('messages', 'from');
-    $data['inboxurl'] = xarModGetVar('messages', 'inboxurl');
-    $data['serverpath'] = xarModGetVar('messages', 'serverpath');
+    $data['itemsperpage'] = xarModVars::get('messages', 'itemsperpage');
+    $data['buddylist'] = xarModVars::get('messages', 'buddylist');
+    $data['limitsaved'] = xarModVars::get('messages', 'limitsaved');
+    $data['limitinbox'] = xarModVars::get('messages', 'limitinbox');
+    $data['limitoutbox'] = xarModVars::get('messages', 'limitout');
+    $data['smilies'] = xarModVars::get('messages', 'smilies');
+    $data['allow_html'] = xarModVars::get('messages', 'allow_html');
+    $data['allow_bbcode'] = xarModVars::get('messages', 'allow_bbcode');
+    $data['mailsubject'] = xarModVars::get('messages', 'mailsubject');
+    $data['fromname'] = xarModVars::get('messages', 'fromname');
+    $data['from'] = xarModVars::get('messages', 'from');
+    $data['inboxurl'] = xarModVars::get('messages', 'inboxurl');
+    $data['serverpath'] = xarModVars::get('messages', 'serverpath');
     $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration'));
 
     // Note : if you don't plan on providing encode/decode functions for
     // short URLs (see xaruserapi.php), you should remove these from your
     // admin-modifyconfig.xard template !
-    $data['shorturls'] = xarModGetVar('messages','SupportShortURLs');
+    $data['shorturls'] = xarModVars::get('messages','SupportShortURLs');
 
     $hooks = xarModCallHooks('module', 'modifyconfig', 'messages',
                             array('module' => 'messages'));

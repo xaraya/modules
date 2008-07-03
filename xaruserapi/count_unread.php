@@ -18,10 +18,10 @@ function messages_userapi_count_unread()
                             'user',
                             'get_count',
                              array('modid'      => xarModGetIDFromName('messages'),
-                                   'objectid'   => xarUserGetVar('uid'),
+                                   'objectid'   => xarSession::getVar('role_id'),
                                    'status'     => 2));
 
-    $read_messages = xarModGetUserVar('messages','read_messages');
+    $read_messages = xarModUserVars::get('messages','read_messages');
     if (!empty($read_messages)) {
         $read_messages = unserialize($read_messages);
     } else {
@@ -41,6 +41,6 @@ function messages_userapi_count_unread()
         $total -= $total_read;
     }
 
-    return $total; //"::" . print_r($read_messages,1) . ": $total_read / $total::";
+    return $total;
 }
 ?>

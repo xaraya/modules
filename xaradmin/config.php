@@ -49,12 +49,12 @@ function messages_adminpriv_config( $args )
         /* The user confirmed the form. So save the results.         */
 
         if (!xarSecConfirmAuthKey()) return;
-        
+
         if ( empty( $supportshorturls ) or !is_numeric( $supportshorturls ) ) {
             $supportshorturls = 0;
         }
 
-        xarModSetVar('messages','SupportShortURLs',$supportshorturls );
+        xarModVars::set('messages','SupportShortURLs',$supportshorturls );
 
         /*
          * Finished. Back to the sender!
@@ -72,7 +72,7 @@ function messages_adminpriv_config( $args )
      */
     $data['action']     = xarModURL('messages','admin','config' );
     $data['authid']     = xarSecGenAuthKey();
-    $data['supportshorturls']   = xarModGetVar('messages', 'SupportShortURLs');
+    $data['supportshorturls']   = xarModVars::get('messages', 'SupportShortURLs');
     return $data;
 
 }
