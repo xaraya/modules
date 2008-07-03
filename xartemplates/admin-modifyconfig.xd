@@ -132,9 +132,9 @@
                         <xar:else />
                         <input type="checkbox" name="ptypenamechange" id="ptypenamechange" value="1" />
                     </xar:if>
-                    <label class="help" for="ptypenamechange" title="#xarML('Changing a publication types name must be followed by filename changes!')#">
+                    <label class="help" for="ptypenamechange" title="#xarML('Allows to change the names of the pubtypes')#">
                         <xar:mlstring>
-                            Allow pubtype name change (Caution!)
+                            Allow changing pubtype names (Template filenames for each publication type are based on the pubtype's name. Rename the template files accordingly.)
                         </xar:mlstring>
                     </label>
                 </div>

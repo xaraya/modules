@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -407,7 +407,7 @@ function articles_upgrade($oldversion)
                 }
                 if (!xarModAPIFunc('articles', 'admin', 'updatepubtype',
                                    array('ptid' => $ptid,
-                                   //      'name' => $name, /* not allowed here */
+                                         'name' => $pubtype['name'],
                                          'descr' => $pubtype['descr'],
                                          'config' => $config))) {
                     return false;

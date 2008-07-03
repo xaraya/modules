@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -74,12 +74,14 @@ function articles_admin_showpropval($args)
             if (!empty($confirm)) {
                 if (!xarSecConfirmAuthKey()) return;
 
+                $name = $pubtypes[$ptid]['name'];
                 $descr = $pubtypes[$ptid]['descr'];
                 $config = $pubtypes[$ptid]['config'];
                 $config[$field]['validation'] = $validation;
 
                 if (!xarModAPIFunc('articles', 'admin', 'updatepubtype',
                                    array('ptid' => $ptid,
+                                         'name' => $name,
                                          'descr' => $descr,
                                          'config' => $config))) {
                     return; // throw back
