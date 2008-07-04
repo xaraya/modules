@@ -814,9 +814,11 @@
                    editor_selector : "yourtriggerclassname",</code>
                 <br /></li>
                 <li><strong><xar:mlstring>Do not</xar:mlstring></strong><xar:mlstring> use the default </xar:mlstring>
-                   <strong><code>class="mceEditor"</code></strong><xar:mlstring> as the trigger name.</xar:mlstring><br /></li>
+                   <strong><code>class="mceEditor"</code></strong><xar:mlstring> as the trigger name.</xar:mlstring></li>
                 <li><xar:mlstring>You can set multiple instances here.To use a specific configuration add the trigger class name to
-                   your div or textarea where you want the wysiwyg instance eg</xar:mlstring> <strong><code>class="MyEditorConfig"</code></strong><br /></li>
+                   your div or textarea where you want the wysiwyg instance eg</xar:mlstring> <strong><code>class="MyEditorConfig"</code></strong></li>
+                <li><xar:mlstring>For Articles fields or TinyMCE Dynamic Data properties, enter the <strong><code>editor_selector</code></strong> 
+                   value into the "Editor Selector" box in the field's validation.  If this is not set in validation, <strong><code>mceEditor</code></strong> will be used as a default.<xar:mlstring></li>
                 <li><xar:mlstring>Please <strong>check the final tinymce config code</strong> in the code display at the end of this screen before use!</xar:mlstring></li>
                 </ul>
             </div>
