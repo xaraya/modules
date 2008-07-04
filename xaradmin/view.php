@@ -1,13 +1,13 @@
 <?php
 /**
- * View items of the foo object
+ * View items of the karma object
  *
  */
-    function foo_admin_view($args)
+    function karma_admin_view($args)
     {
-        if (!xarSecurityCheck('EditFoo')) return;
+        if (!xarSecurityCheck('EditKarma')) return;
 
-        $data['object'] = xarModApiFunc('dynamicdata','user','getobjectlist', array('name' => 'foo'));
+        $data['object'] = xarModApiFunc('dynamicdata','user','getobjectlist', array('name' => 'karma'));
         $data['object']->getItems();
         return $data;
     }

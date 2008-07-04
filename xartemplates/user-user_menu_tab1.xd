@@ -12,13 +12,13 @@
     </xar:set>
 </xar:if>
 <div class="xar-mod-body fixer">
-    <form action="&xar-modurl-foo-user-usermenu;" method="post" id="post" name="post" enctype="#$enc_type#" class="fixer">
+    <form action="&xar-modurl-karma-user-usermenu;" method="post" id="post" name="post" enctype="#$enc_type#" class="fixer">
         <fieldset>
             <legend>
                 Legend for Tab 1 with an example DD property
             </legend>
              <div class="xar-form-input-wrapper">
-                    <xar:data-label type="grouplist" label="id" />
+                    <xar:data-label type="grouplist" for="id" />
                     <xar:data-input property="$properties['dancepartner']" />
             </div>
         </fieldset>

@@ -2,8 +2,8 @@
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:if condition="xarModVars::get('foo','useModuleAlias')">
-            <xar:var scope="module" module="foo" name="aliasname" />
+        <xar:if condition="xarModVars::get('karma','useModuleAlias')">
+            <xar:var scope="module" module="karma" name="aliasname" />
         <xar:else />
             <xar:mlstring>Create Item</xar:mlstring>
         </xar:if>
@@ -25,6 +25,7 @@
       <fieldset>
         <div class="xar-align-center">
           <input type="hidden" name="authid" id="authid" value="#$authid#" />
+          <input type="hidden" name="objectid" id="modid" value="#$object:objectid#" />
           <input type="hidden" name="modid" id="modid" value="#$object:moduleid#" />
           <input type="hidden" name="itemtype" id="itemtype" value="#$object:itemtype#" />
           <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#" />

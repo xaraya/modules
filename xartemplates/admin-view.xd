@@ -1,8 +1,8 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:if condition="xarModVars::get('foo','useModuleAlias')">
-            <xar:var scope="module" module="foo" name="aliasname" />
+        <xar:if condition="xarModVars::get('karma','useModuleAlias')">
+            <xar:var scope="module" module="karma" name="aliasname" />
         <xar:else />
             <xar:mlstring>View Items</xar:mlstring>
         </xar:if>
@@ -10,7 +10,7 @@
 </div>
 <div class="xar-mod-body">
     <div class="xar-alt-outline" style="margin:2em; text-align:center; padding: 0 5px 0 5px;">
-        <xar:data-list object="$object" tplmodule="foo" />
+        <xar:data-view object="$object" tplmodule="karma" />
     </div>
 </div>
 </xar:template>

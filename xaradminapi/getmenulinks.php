@@ -4,9 +4,9 @@
  *
  */
 
-    function foo_adminapi_getmenulinks()
+    function karma_adminapi_getmenulinks()
     {
-        return xarModAPIFunc('base','admin','menuarray',array('module' => 'foo'));
+        return xarModAPIFunc('base','admin','menuarray',array('module' => 'karma'));
     }
 
 ?>

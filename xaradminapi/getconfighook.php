@@ -4,15 +4,15 @@
  *
  */
 
-    function foo_adminapi_getconfighook($args)
+    function karma_adminapi_getconfighook($args)
     {
         extract($args);
         if (!isset($extrainfo['tabs'])) $extrainfo['tabs'] = array();
-        $module = 'foo';
+        $module = 'karma';
         $tabinfo = array(
                 'module'  => $module,
                 'configarea'  => 'general',
-                'configtitle'  => xarML('Foo'),
+                'configtitle'  => xarML('Karma'),
                 'configcontent' => ''
         );
         $extrainfo['tabs'][] = $tabinfo;
