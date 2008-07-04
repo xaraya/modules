@@ -125,8 +125,10 @@ function articles_user_display($args)
         $input['article'] = $article;
         $input['mask'] = 'EditArticles';
         if (xarModAPIFunc('articles','user','checksecurity',$input)) {
+            $return_url = xarServerGetCurrentURL(array(), false);
             $data['editurl'] = xarModURL('articles', 'admin', 'modify',
-                                         array('aid' => $article['aid']));
+                                         array('aid' => $article['aid'],
+                                               'return_url' => $return_url));
         // don't show unapproved articles to non-editors
         } elseif ($article['status'] < 2) {
             $status = xarModAPIFunc('articles', 'user', 'getstatusname',
