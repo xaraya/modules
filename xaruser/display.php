@@ -428,6 +428,7 @@ function articles_user_display($args)
 
     if (!empty($data['title'])) {
         $title = strip_tags($data['title']);
+        $title = str_Replace('&shy;', '', $title);
         xarTplSetPageTitle($title, xarVarPrepForDisplay($pubtypes[$pubtypeid]['descr']));
 
         // Save some variables to (temporary) cache for use in blocks etc.
