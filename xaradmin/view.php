@@ -10,15 +10,15 @@
         $modulename = 'foo';
 
         // Define which object will be shown
-        if (!xarVarFetch('objectname', 'str', $objectname, 'foo_foo', XARVAR_DONT_SET)) return;
-        if (!empty($objectname)) xarModVars::set($modulename,'mastertable', $objectname);
+        if (!xarVarFetch('objectname', 'str', $objectname, null, XARVAR_DONT_SET)) return;
+        if (!empty($objectname)) xarModUserVars::set($modulename,'currentmastertable', $objectname);
 
         // Set a return url
         xarSession::setVar('ddcontext.' . $modulename, array('return_url' => xarServerGetCurrentURL()));
 
         // Get the available dropdown options
         $object = DataObjectMaster::getObjectList(array('objectid' => 1));
-        $data['objectname'] = xarModVars::get($modulename,'mastertable');
+        $data['objectname'] = xarModUserVars::get($modulename,'currentmastertable');
         $items = $object->getItems();
         $options = array();
         foreach ($items as $item)

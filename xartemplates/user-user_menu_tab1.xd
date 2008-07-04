@@ -18,7 +18,7 @@
                 Legend for Tab 1 with an example DD property
             </legend>
              <div class="xar-form-input-wrapper">
-                    <xar:data-label type="grouplist" label="id" />
+                    <xar:data-label type="grouplist" for="id" />
                     <xar:data-input property="$properties['dancepartner']" />
             </div>
         </fieldset>
