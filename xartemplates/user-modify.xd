@@ -35,7 +35,7 @@
                 <xar:data-input property="$properties['state']" hidden="hidden"/>
                 <xar:data-input property="$properties['timestamp']" hidden="hidden"/>
                 <input type="hidden" name="return_url" id="return_url_standard" value="#xarModURL('calendar','user',$page,array('page' => $page))#" />
-                <xar:var name="var">Create Event</xar:var>
+                <xar:var name="var">Save Changes</xar:var>
                 <input type="submit" value="#$var#" class="xar-margin-thickleft" />
             </div>
           </fieldset>
