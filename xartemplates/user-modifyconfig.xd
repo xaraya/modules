@@ -35,7 +35,7 @@
     </p>
 
     <p>
-    <label for="cal_sdow">First day the the Week</label>
+    <label for="cal_sdow">First day of the Week</label>
     <select name="cal_sdow" id="cal_sdow">
         <xar:if condition="$cal_sdow eq 0">
             <option value="0" selected="selected"><xar:mlstring>Sunday</xar:mlstring></option>

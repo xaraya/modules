@@ -4,11 +4,14 @@
         <xar:if condition="$total gt $rowstodisplay">
           <xar:ml>
               <xar:mlstring>Displaying #(1) of #(2) selected</xar:mlstring>
-          <xar:mlvar>#$thispageno#</xar:mlvar>
+              <xar:mlvar>#$thispageno#</xar:mlvar>
             <xar:mlvar>#$total#</xar:mlvar>
           </xar:ml>
         <xar:else />
-           Total selected: #$total#
+          <xar:ml>
+            Total selected: ##(1)
+            <xar:mlvar>#$total#</xar:mlvar>
+          </xar:ml>           
         </xar:if>
     </div>
     <div class="xar-floatright xar-padding-thick xar-halfwidth xar-align-right" style="padding-top:1em;">
