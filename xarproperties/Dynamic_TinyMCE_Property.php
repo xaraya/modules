@@ -3,7 +3,7 @@
  * Dynamic data tinymce WYSIWYG GUI property
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -19,24 +19,23 @@
  * @author jojodee
  * @package dynamicdata
  */
-include_once "modules/dynamicdata/class/properties.php";
-class Dynamic_TinyMCE_Property extends Dynamic_Property
+include_once "modules/base/xarproperties/Dynamic_TextArea_Property.php";
+
+class Dynamic_TinyMCE_Property extends  Dynamic_TextArea_Property
 {
-    var $rows = 10;
-    var $cols = 50;
+    var $rows = 8;
+    var $cols = 35;
     var $wrap = 'soft';
+    var $classname='mceEditor'; 
+    var $defaultclass='mceEditor';       
+    
   function Dynamic_TinyMCE_Property($args)
   {
-         $this->Dynamic_Property($args);
+        $this->Dynamic_Property($args);
+         
         /* check validation for allowed rows/cols (or values) */
-        if (!empty($this->validation) && strchr($this->validation,':')) {
-            list($rows,$cols) = explode(':',$this->validation);
-            if ($rows !== '' && is_numeric($rows)) {
-                $this->rows = $rows;
-            }
-            if ($cols !== '' && is_numeric($cols)) {
-                $this->cols = $cols;
-            }
+        if (!empty($this->validation)) {
+            $this->parseValidation($this->validation);
         }
     }
 
@@ -45,7 +44,7 @@ class Dynamic_TinyMCE_Property extends Dynamic_Property
         if (empty($name)) {
             $name = 'dd_'.$this->id;
         }
-        // store the fieldname for validations who need them (e.g. file uploads)
+        // store the fieldname for any validations that needs it (e.g. file uploads)
         $this->fieldname = $name;
         if (!isset($value)) {
             if (!xarVarFetch($name, 'isset', $value,  NULL, XARVAR_DONT_SET)) {return;}
@@ -57,7 +56,7 @@ class Dynamic_TinyMCE_Property extends Dynamic_Property
         if (!isset($value)) {
             $value = $this->value;
         }
-       /*  allowable HTML handled by tinymce */
+       /*  allowable HTML is handled by tinymce */
         $this->value = $value;
         return true;
     }
@@ -85,11 +84,12 @@ class Dynamic_TinyMCE_Property extends Dynamic_Property
         $data['invalid']  = !empty($this->invalid) ? xarML('Invalid #(1)', $this->invalid) :'';
         $data['rows']     = !empty($rows) ? $rows : $this->rows;
         $data['cols']     = !empty($cols) ? $cols : $this->cols;
-
-
-        $template="";
-
-      return xarTplProperty('tinymce', 'tinymce', 'showinput', $data);
+        //we allow GUI to override a template class
+        $data['class']    = !empty($this->classname) ? $this->classname : (!empty($class) ?$class : $this->defaultclass);
+        
+        $template = (isset($template) && !empty($template)) ? $template : 'tinymce';
+        
+        return xarTplProperty('tinymce', $template, 'showinput', $data);
     }
 
     function showOutput($args = array())
@@ -102,8 +102,9 @@ class Dynamic_TinyMCE_Property extends Dynamic_Property
          } else {
                 $data['value'] = xarVarPrepHTMLDisplay($this->value);
          }
-         $template="";
-         return xarTplProperty('tinymce', 'tinymce', 'showoutput', $data );
+        
+        $template = (isset($template) && !empty($template)) ? $template : 'tinymce';
+        return xarTplProperty('tinymce', $template, 'showoutput', $data );
     }
 
 
@@ -116,7 +117,7 @@ class Dynamic_TinyMCE_Property extends Dynamic_Property
      function getBasePropertyInfo()
      {
         $args = array();
-           $baseInfo = array(
+        $baseInfo =   array(
                             'id'         => 205,
                             'name'       => 'xartinymce',
                             'label'      => 'TinyMCE GUI Editor',
@@ -126,13 +127,11 @@ class Dynamic_TinyMCE_Property extends Dynamic_Property
                             'dependancies' => '',
                             'requiresmodule' => 'tinymce',
                             'aliases'        => '',
-                            'args' => serialize( $args ),
-                            // ...
-                           );
+                            'args' => serialize( $args )
+                            );
 
         return $baseInfo;
      }
 }
-
 
 ?>
