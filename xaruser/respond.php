@@ -32,7 +32,6 @@ function sitecontact_user_respond($args)
     if (!xarVarFetch('company',       'str:1:',   $company,     '',    XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('usermessage',   'str:1:',   $usermessage, '',    XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('userreferer',   'str:1:',   $userreferer, '',    XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('useripaddress', 'str:1:',   $useripaddress,  '', XARVAR_NOT_REQUIRED)) return;        
     if (!xarVarFetch('sendcopy',      'checkbox', $sendcopy,    true,  XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sctypename',    'str:0:',   $sctypename,  NULL,  XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('scform',        'str:0:',   $scform,      NULL,  XARVAR_NOT_REQUIRED)) {return;}
@@ -119,7 +118,6 @@ function sitecontact_user_respond($args)
                  'company'         => $company,
                  'usermessage'     => $usermessage,
                  'userreferer'     => $userreferer,
-                 'useripaddress'   => $useripaddress,
                  'sendcopy'        => $sendcopy,
                  'savedata'        => $savedata,
                  'permission'      => $permission,

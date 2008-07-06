@@ -35,7 +35,6 @@ function sitecontact_user_main($args)
     if(!xarVarFetch('botreset',      'bool',    $botreset,       false,   XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('scid',          'int:1:',  $scid,           $defaultformid, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('userreferer',  'str:1:',  $userreferer,    '',      XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('useripaddress','str:1:',  $useripaddress,  '',      XARVAR_NOT_REQUIRED)) return;    
     if (!xarVarFetch('casmsg',       'str:1',   $casmsg,         '',      XARVAR_NOT_REQUIRED)) {return;} //formcaptcha
     if (!xarVarFetch('submitted',    'int:0:1', $submitted,      0,       XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('customcontact', 'str:0:', $customcontact,  '',    XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
@@ -136,11 +135,8 @@ function sitecontact_user_main($args)
         if (isset($data['userreferer']) && !empty($data['userreferer'])) {
             $data['userreferer']=xarVarPrepForDisplay($data['userreferer']);
         }    
-        //this is where we actually capture the current user ipaddress
-        $data['useripaddress'] = xarModAPIFunc('sitecontact','admin','getcurrentip');        
     } else {
         $data['userreferer']=$userreferer;
-        $data['useripaddress'] = $useripaddress;
     }
 
     $setmail='';

@@ -236,7 +236,6 @@
 
        <div class="xar-form-input-wrapper-after xar-padding-thicktop">
             <input type="hidden" name="userreferer" value="#$userreferer#" />
-            <input type="hidden" name="useripaddress" value="#$useripaddress#" />            
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <input type="hidden" name="scid" id="scid" value="#$scid#" />
             <input type="hidden" name="savedata" id="savedata" value="#$savedata#" />

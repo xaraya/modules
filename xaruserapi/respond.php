@@ -49,7 +49,7 @@ function sitecontact_userapi_respond($args)
         $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $defaultformid));
     }
     $formdata=$formdata[0];
-
+	
     if ($formdata['scactive'] !=1) { //form but not active
         $msg = xarML('The form requested is not available');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
@@ -172,7 +172,8 @@ function sitecontact_userapi_respond($args)
     }
 
     //set some dd property values not captured in post vars
-
+    //this is where we actually capture the current user ipaddress
+    $useripaddress = xarModAPIFunc('sitecontact','admin','getcurrentip');
     $responsetime = time();
     
       /* process CC Recipient list */
@@ -292,7 +293,7 @@ function sitecontact_userapi_respond($args)
                       'invalid'        => $invalid,
                       'return_url'     => $return_url,
                       'blockurl'       => $blockurl,
-                      'customcontact'  => $customcontact    
+                      'customcontact'  => $customcontact	
                      );
 
     if (($isvalid == FALSE) || ($antibotinvalid == TRUE) || ($badcaptcha == TRUE) || is_array($invalid)) {
