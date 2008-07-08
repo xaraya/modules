@@ -380,7 +380,6 @@ function tinymce_admin_updateconfig()
        $buttonswitch .= ' { if (tinyMCE.get(form_element_id).isHidden()) {';
        $buttonswitch .= ' tinyMCE.get(form_element_id).show();';
        $buttonswitch .= 'button_o.value = "'.$buttonon.'";';
-          $buttonswitch .= 'alert(tinyMCE.activeEditor);';
        $buttonswitch .= '    } else {';
        $buttonswitch .= ' tinyMCE.get(form_element_id).hide();';
        $buttonswitch .= ' button_o.value = "'.$buttonoff.'";';
