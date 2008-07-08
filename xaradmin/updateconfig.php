@@ -379,10 +379,10 @@ function tinymce_admin_updateconfig()
        $buttonswitch  = 'function mce_button_toggle(form_element_id, button_o)';
        $buttonswitch .= ' { if (tinyMCE.get(form_element_id).isHidden()) {';
        $buttonswitch .= ' tinyMCE.get(form_element_id).show();';
-       $buttonswitch .= 'button_o.value = "'.$buttonon.'";';
+       $buttonswitch .= 'button_o.value = "'.$buttonoff.'";';
        $buttonswitch .= '    } else {';
        $buttonswitch .= ' tinyMCE.get(form_element_id).hide();';
-       $buttonswitch .= ' button_o.value = "'.$buttonoff.'";';
+       $buttonswitch .= ' button_o.value = "'.$buttonon.'";';
        $buttonswitch .= '    }';
        $buttonswitch .= 'return false;';
        $buttonswitch .= '}';
