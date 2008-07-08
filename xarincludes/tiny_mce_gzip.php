@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: tiny_mce_gzip.php 198 2007-02-12 14:10:07Z spocke $
+ * $Id: tiny_mce_gzip.php 315 2007-10-25 14:03:43Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2005-2006, Moxiecode Systems AB, All rights reserved.
@@ -20,30 +20,9 @@
 	$diskCache = getParam("diskcache", "") == "true";
 	$isJS = getParam("js", "") == "true";
 	$compress = getParam("compress", "true") == "true";
+	$core = getParam("core", "true") == "true";
 	$suffix = getParam("suffix", "_src") == "_src" ? "_src" : "";
-//Start Xaraya changes .. gee what can we do here
-    if(isset($_SERVER['DOCUMENT_ROOT'])) {
-        $root_path = $_SERVER['DOCUMENT_ROOT'];
-    } elseif(isset($HTTP_SERVER_VARS['DOCUMENT_ROOT'])) {
-        $root_path = $HTTP_SERVER_VARS['DOCUMENT_ROOT'];
-    } else {
-        $root_path = getenv('DOCUMENT_ROOT');
-    }
-    if(isset($_SERVER['PHP_SELF'])) {
-        $scriptpath= dirname($_SERVER['PHP_SELF']);
-    } elseif(isset($HTTP_SERVER_VARS['PHP_SELF'])) {
-        $scriptpath = dirname($HTTP_SERVER_VARS['PHP_SELF']);
-    } else {
-        $scriptpath= dirname(getenv('PHP_SELF'));
-    }
-    $scriptpath=parse_url($scriptpath);
-    $scriptbase=preg_replace("/index\.php.*|\/modules.*|/is",'',$scriptpath['path']);
-    $realpath=$root_path.$scriptbase;
-    $realpath=str_replace('//','/',$realpath);
-
-    $cachePath = $realpath.'/var/cache/templates';  //ToDo: we need to set this for tinymce
-    //realpath("."); // Cache path, this is where the .gz files will be stored
-    //finish Xaraya changes
+	$cachePath = realpath("."); // Cache path, this is where the .gz files will be stored
 	$expiresOffset = 3600 * 24 * 10; // Cache for 10 days in browser cache
 	$content = "";
 	$encodings = array();
@@ -106,10 +85,12 @@
 	}
 
 	// Add core
-	$content .= getFileContents("tiny_mce" . $suffix . ".js");
+	if ($core == "true") {
+		$content .= getFileContents("tiny_mce" . $suffix . ".js");
 
-	// Patch loading functions
-	$content .= "tinyMCE_GZ.start();";
+		// Patch loading functions
+		$content .= "tinyMCE_GZ.start();";
+	}
 
 	// Add core languages
 	foreach ($languages as $lang)
@@ -136,7 +117,8 @@
 		$content .= getFileContents($file);
 
 	// Restore loading functions
-	$content .= "tinyMCE_GZ.end();";
+	if ($core == "true")
+		$content .= "tinyMCE_GZ.end();";
 
 	// Generate GZIP'd content
 	if ($supportsGzip) {
