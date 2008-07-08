@@ -41,15 +41,13 @@ function tinymce_admin_modifyconfig()
     $data['tinybuild3'] = xarModGetVar('tinymce', 'tinybuild3');
     $data['tinybuttonsremove'] = xarModGetVar('tinymce', 'tinybuttonsremove');
     $data['tinytoolbar'] = xarModGetVar('tinymce', 'tinytoolbar');
-    $data['tinywidth'] = xarModGetVar('tinymce', 'tinywidth');
-    $data['tinyheight'] = xarModGetVar('tinymce', 'tinyheight');
     $data['tinyinlinestyle'] = xarModGetVar('tinymce', 'tinyinlinestyle');
     $data['tinyundolevel'] = xarModGetVar('tinymce', 'tinyundolevel');
     $data['defaulteditor'] = xarModGetVar('base','editor');
     $data['tinydirection'] = xarModGetVar('tinymce','tinydirection');
     $data['tinyshowpath'] = xarModGetVar('tinymce','tinyshowpath');
     $data['tinyencode'] = xarModGetVar('tinymce','tinyencode');
-    //$data['tinyentities'] = xarModGetVar('tinymce','tinyentities'); Uses default
+
     $data['tinyentity_encoding'] = xarModGetVar('tinymce','tinyentity_encoding');
     $data['tinyplugins'] = xarModGetVar('tinymce','tinyplugins');
     $data['tinydate']=xarModGetVar('tinymce', 'tinydate');
@@ -58,7 +56,7 @@ function tinymce_admin_modifyconfig()
     $data['tinypara'] = xarModGetVar('tinymce','tinypara');
     $data['tinyinvalid']=xarModGetVar('tinymce', 'tinyinvalid');
     $data['tinyadvformat']=xarModGetVar('tinymce', 'tinyadvformat');
-    //$data['useibrowser']=xarModGetVar('tinymce', 'useibrowser');
+
     $data['editorcss']=xarModGetVar('tinymce', 'tinyeditorcss');
     $data['tinynowrap']=xarModGetVar('tinymce', 'tinynowrap');
     $data['tinyloadmode']=xarModGetVar('tinymce', 'tinyloadmode');

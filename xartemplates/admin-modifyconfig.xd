@@ -309,21 +309,6 @@
            </div>
 
            <div class="xar-form-input-wrapper">
-                <label for="tinywidth" class="xar-form-label" title="#xarML('Defaults to width of individual textareas if left blank')#">
-                    <xar:mlstring>Override width:</xar:mlstring>
-                </label>
-                <input type="text" name="tinywidth" id="tinywidth" value="#$tinywidth#" size="8" maxlength="8" />
-                 <xar:mlstring>Affects all textareas (enter in px eg 450). Turn off resizing.</xar:mlstring>
-            </div>
-           <div class="xar-form-input-wrapper">
-                <label for="tinyheight" class="xar-form-label" title="#xarML('Defaults to height of individual textareas if left blank')#">
-                    <xar:mlstring>Override height:</xar:mlstring>
-            </label>
-                <input type="text" name="tinyheight" id="tinyheigh" value="#$tinyheight#" size="8" maxlength="8" />
-                <xar:mlstring>Affects all textareas (enter in px eg 450). Turn off resizing.</xar:mlstring>
-           </div>
-
-           <div class="xar-form-input-wrapper">
                 <label for="tinyundolevel" class="xar-form-label" title="#xarML('Defaults to unlimited undo levels if left blank')#">
                     <xar:mlstring>Max # of undo levels :</xar:mlstring>
                 </label>
@@ -342,19 +327,7 @@
                 <xar:mlstring>(ON by default).</xar:mlstring>
             </div>
 
-           <div class="xar-form-input-wrapper-after">
-                <xar:if condition="$tinybr">
-                    <input type="checkbox" name="tinybr" id="tinybr" value="1" checked="checked"/>
-                <xar:else/>
-                    <input type="checkbox" name="tinybr" id="tinybr" value="1" />
-                </xar:if>
-
-                <label for="tinybr" title="#xarML('Convert all new lines to &lt;br /&gt; tags instead of &lt;p&gt; tags')#">
-                    <xar:mlstring>Convert new lines to &lt;br /&gt;</xar:mlstring>
-                </label>
-                <xar:mlstring>(OFF by default).</xar:mlstring>
-              </div>
-              <div class="xar-form-input-wrapper-after">
+                  <div class="xar-form-input-wrapper-after">
                 <xar:if condition="$tinypara">
                     <input type="checkbox" name="tinypara" id="tinypara" value="1" checked="checked"/>
                 <xar:else/>
@@ -385,8 +358,21 @@
                 <label for="sourceformat" title="#xarML('Apply formatting to source')#">
                     <xar:mlstring>Apply source formatting</xar:mlstring>
                </label>
-                    <xar:mlstring>(OFF by default).</xar:mlstring>
+                    <xar:mlstring>(ON by default).</xar:mlstring>
             </div>
+           <div class="xar-form-input-wrapper-after">
+                <xar:if condition="$tinybr">
+                    <input type="checkbox" name="tinybr" id="tinybr" value="1" checked="checked"/>
+                <xar:else/>
+                    <input type="checkbox" name="tinybr" id="tinybr" value="1" />
+                </xar:if>
+
+                <label for="tinybr" title="#xarML('Convert all new lines to &lt;br /&gt; tags instead of &lt;p&gt; tags')#">
+                    <xar:mlstring>Convert new lines to &lt;br /&gt; on Enter [Mozilla/Firefox]</xar:mlstring>
+                </label>
+                <xar:mlstring>(OFF by default).</xar:mlstring>
+              </div>
+    
            </fieldset>
          <!-- language options -->
         <fieldset>
