@@ -2,8 +2,8 @@ List Style Plugin for the TinyMCE Editor
 ----------------------------------------
 
 By Scott Eade (seade at policypoint dot net)
-March 25, 2006
-Version 1.1.1
+May 7, 2008
+Version 3.0
 
 The List Style plugin allows you to set the list-style-type CSS property on
 lists within the TinyMCE editor.
@@ -26,9 +26,25 @@ Initialization example
         theme_advanced_buttons3_add : "liststyle"
     });
 
+Usage Instructions
+------------------
+
+* Position the cursor on an item in the list whose style you wish to alter and
+  click the liststyle button.
+* Select the list style type and click "Update".
+* The plugin supports nested lists - the style of the list at the level of the
+  item at the cursor position is altered, not the others.
+
 History
 -------
 
+* 2008-05-07: Version 3.0 released.
+  - Updated for TinyMCE 3.x.
+* 2007-11-28: Version 1.1.3 released.
+  - Tweaked the popup window height to allow for IE7 security address bar.
+* 2006-08-25: Version 1.1.2 released.
+  - Added Usage instructions.
+  - Added support for undo and redo.
 * 2006-03-25: Version 1.1.1 released.
   - Fixed Javascript error under IE.  Thanks to Bryan Costin for highlighting
     this issue.
@@ -50,5 +66,5 @@ History
 Copyright and license
 ---------------------
 
-* Copyright 2005-2006 PolicyPoint Technologies Pty. Ltd.
-* License: LGPL
+* Copyright 2005-2008 PolicyPoint Technologies Pty. Ltd.
+* License: LGPL 2.0

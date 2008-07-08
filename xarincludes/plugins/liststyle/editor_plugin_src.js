@@ -1,80 +1,88 @@
 /**
  * $Id$
  *
- * @author Scott Eade
- * @copyright Copyright 2005-2006, PolicyPoint Technologies Pty. Ltd.
+ * @author PolicyPoint Technologies Pty. Ltd.
+ * @copyright Copyright 2005-2008, PolicyPoint Technologies Pty. Ltd.
  */
 
-/* Import plugin specific language pack */ 
-tinyMCE.importPluginLanguagePack('liststyle', 'en,sv');
+(function() {
+	
+	// Load language pack
+	tinymce.PluginManager.requireLangPack("liststyle");
+	
+	tinymce.create("tinymce.plugins.ListStylePlugin", {
+		init: function(ed, url) {
 
-var TinyMCE_ListStylePlugin = {
-	getInfo : function() {
-		return {
-			longname : 'List style',
-			author : 'Scott Eade - PolicyPoint Technologies Pty. Ltd.',
-			authorurl : 'http://policypoint.net',
-			infourl : 'http://policypoint.net/tinymce/docs/plugin_liststyle.html',
-			version : '1.1.1'
-		};
-	},
-
-	initInstance : function(inst) {
-	},
-
-	getControlHTML : function(cn) {
-		switch (cn) {
-			case 'liststyle':
-				//return '<a href="javascript:tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceListStyle\');" target="_self" onmousedown="return false;"><img id="{$editor_id}_liststyle" src="{$pluginurl}/images/liststyle.gif" title="{$lang_liststyle_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" /></a>';
-				return tinyMCE.getButtonHTML(cn, 'lang_liststyle_desc', '{$pluginurl}/images/liststyle.gif', 'mceListStyle', true);
-		}
-		return '';
-	},
-
-	execCommand : function(editor_id, element, command, user_interface, value) {
-		// Handle commands
-		switch (command) {
-			case 'mceListStyle':
-				var template = new Array();
-				template['file']   = '../../plugins/liststyle/liststyle.htm';
-				template['width']  = 300;
-				template['height'] = 230;
-				var listStyleType = '', list = '';
-				var inst = tinyMCE.getInstanceById(editor_id);
-				var selectedElement = inst.getFocusElement();
-				while (selectedElement != null && selectedElement.nodeName != 'LI')
-					selectedElement = selectedElement.parentNode;
-				if (selectedElement != null) {
-					var listElement = tinyMCE.getParentElement(selectedElement, 'ol,ul');
-					if (listElement != null) {
-						list = listElement.nodeName.toLowerCase();
-						listStyleType = listElement.style.listStyleType ? listElement.style.listStyleType : list == 'ol' ? 'decimal' : 'disc';
-						//alert('listStyleType = ' + listStyleType);
-					}
-					tinyMCE.openWindow(template, {editor_id : editor_id, listStyleType : listStyleType, list : list, mceDo : 'update'});
+			// Register mceListStyle command
+			ed.addCommand("mceListStyle", function(ui, v) {
+				var listStyleType = '', list = '', listStart;
+				var se = ed.selection.getNode(); // selectedElement
+				var p = ed.dom.getParent(se, 'ol,ul'); // parent
+				if (p) {
+					list = p.nodeName.toLowerCase();
+					listStyleType = p.style.listStyleType ? p.style.listStyleType : list == 'ol' ? 'decimal' : 'disc';
+					//alert('listStyleType = ' + listStyleType);
+					// Select the node so it can be used after the command exits.
+					// Was seeing if this could be used to select the list rather
+					// than the items in IE, but no joy.
+					//ed.selection.select(p);
+					listStart = parseInt(p.start);
+					if (listStart < 1)
+						listStart = 1;
+					ed.windowManager.open({
+						url : url + '/liststyle.htm',
+						width : 340 + parseInt(ed.getLang('liststyle.delta_width', 0)),
+						height : 300 + (tinymce.isIE ? 40 : 0) + parseInt(ed.getLang('liststyle.delta_height', 0)),
+						inline : 1
+					}, {
+						plugin_url : url,
+						listStyleType : listStyleType,
+						list : list,
+						start : listStart,
+						classAttr : p.className,
+						isIE : tinymce.isIE
+					});
 				}
-				return true;
+			});
+
+			ed.onInit.add(function() {
+				if (ed && ed.plugins.contextmenu) {
+					ed.plugins.contextmenu.onContextMenu.add(function(th, m, e) {
+						var p = ed.dom.getParent(ed.selection.getNode(), 'ol,ul');
+
+						if (p) {
+							//m.removeAll();
+							m.add({title : 'liststyle.desc', cmd : 'mceListStyle', ui : true});
+						}
+					});
+				}
+			});
+
+			ed.onNodeChange.add(function(ed, cm, n) {
+				var p = ed.dom.getParent(n, 'ol,ul');
+				cm.setDisabled('liststyle', !p);
+			});
+
+			// Register liststyle button
+			ed.addButton("liststyle", {
+				title: "liststyle.desc",
+				cmd: "mceListStyle",
+				image: url + "/images/liststyle.gif"
+			});
+		},
+
+		getInfo : function() {
+			return {
+				longname: "ListStyle",
+				author : 'PolicyPoint Technologies Pty. Ltd.',
+				authorurl : 'http://policypoint.net/',
+				infourl : 'http://policypoint.net/tinymce/docs/plugin_liststyle.html',
+				version: "3.0"
+			};
 		}
 
-		// Pass to next handler in chain
-		return false;
-	},
+	});
 
-	handleNodeChange : function(editor_id, node, undo_index, undo_levels, visual_aid, any_selection) {
-		//tinyMCE.switchClassSticky(editor_id + '_liststyle', 'mceButtonDisabled');
-		tinyMCE.switchClass(editor_id + '_liststyle', 'mceButtonNormal');
-		if (node == null)
-			return;
-		do {
-			if (node.nodeName == 'LI') {
-				//tinyMCE.switchClassSticky(editor_id + '_liststyle', 'mceButtonNormal');
-				tinyMCE.switchClass(editor_id + '_liststyle', 'mceButtonSelected');
-				// Stop once LI is found.
-				return;
-			}
-		} while ((node = node.parentNode));
-	}
-
-};
-
-tinyMCE.addPlugin('liststyle', TinyMCE_ListStylePlugin);
+	// Register plugin
+	tinymce.PluginManager.add("liststyle", tinymce.plugins.ListStylePlugin);
+})();
