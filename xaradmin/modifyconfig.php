@@ -3,29 +3,23 @@
  * Admin Configuration function
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage xartinymce module
- * @link http://xaraya.com/index.php/release/63.html
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @copyright (C) 2002-2008 2skies.com
+ * @link http://xarigami.com/projects/xartinymce
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 
 /**
  * This is a standard function to modify the configuration parameters of the
  * module
- *
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
  */
 function tinymce_admin_modifyconfig()
 {
     if (!xarSecurityCheck('AdminTinyMCE')) return;
     if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'basic', XARVAR_NOT_REQUIRED)) return;
-    
-    /* No admin menu on page
-     * $data = xarModAPIFunc('tinymce', 'admin', 'menu');
-     */
 
     $data['authid'] = xarSecGenAuthKey();
     // Specify some labels and values for display
@@ -173,7 +167,7 @@ function tinymce_admin_modifyconfig()
 
     $themelist=array();
     $handle=opendir($tinythemepath);
-    $skip_array = array('.','..','SCCS','CVS','index.htm','index.html','readme.txt');
+    $skip_array = array('.','..','SCCS','CVS','.svn','.DS_Store','_MTN','index.htm','index.html','readme.txt');
     while (false !== ($file = readdir($handle))) {
         /* check the skip array and add files in it to array */
         if (!in_array($file,$skip_array)) {

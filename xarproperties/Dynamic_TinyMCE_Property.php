@@ -1,15 +1,15 @@
 <?php
 /**
  * Dynamic data tinymce WYSIWYG GUI property
- *
+ 
  * @package modules
- * @copyright (C) 2002-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage xartinymce module
- * @link http://xaraya.com/index.php/release/63.html
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @copyright (C) 2002-2008 2skies.com
+ * @link http://xarigami.com/projects/xartinymce
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 
 /**
@@ -74,8 +74,8 @@ class Dynamic_TinyMCE_Property extends  Dynamic_TextArea_Property
         $data = array();
 
         static $loadedjavascript;
-               $xarbaseurl=xarServerGetBaseURL();
-              $editorpath = "'.$xarbaseurl.'modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce";
+        $xarbaseurl=xarServerGetBaseURL();
+        $editorpath = "'.$xarbaseurl.'modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce";
  
         $data['name']     = $name;
         $data['id']       = $id;

@@ -3,32 +3,31 @@
  * xarTinyMCE initialization
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage xartinymce module
- * @link http://xaraya.com/index.php/release/63.html
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @copyright (C) 2002-2008 2skies.com
+ * @link http://xarigami.com/projects/xartinymce
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 
-$modversion['name'] = 'tinymce';
-$modversion['id'] = '63';
-$modversion['version'] = '1.1.5';
-$modversion['displayname']    = xarML('XarTinyMCE');
-$modversion['description'] = 'Integration of TinyMCE, a fast and configurable wysiwyg editor for Xaraya';
-$modversion['credits'] = 'xardocs/credits.txt';
-$modversion['help'] = 'xardocs/help.txt';
-$modversion['changelog'] = 'xardocs/changelog.txt';
-$modversion['license'] = 'xardocs/license.txt';
-$modversion['official'] = 1;
-$modversion['author'] = 'Jo Dalle Nogare (jojodee)';
-$modversion['contact'] = 'jo@2skies.com, http://xarigami.com';
-$modversion['admin'] = 1;
-$modversion['user'] = 0;
-$modversion['class'] = 'Complete';
-$modversion['category'] = 'Miscellaneous';
-// this module depends on the html module
-$modversion['dependency'] = array(779); /* Dependency on html module */
+$modversion['name']         = 'tinymce';
+$modversion['id']           = '63';
+$modversion['version']      = '1.1.5';
+$modversion['displayname']  = 'XarTinyMCE';
+$modversion['description']  = 'Integration of TinyMCE, a fast and configurable wysiwyg editor for Xaraya';
+$modversion['credits']      = 'xardocs/credits.txt';
+$modversion['help']         = 'xardocs/help.txt';
+$modversion['changelog']    = 'xardocs/changelog.txt';
+$modversion['license']      = 'xardocs/license.txt';
+$modversion['official']     = 1;
+$modversion['author']       = 'Jo Dalle Nogare (jojodee)';
+$modversion['contact']      = 'http://xarigami.com';
+$modversion['admin']        = 1;
+$modversion['user']         = 0;
+$modversion['class']        = 'Complete';
+$modversion['category']     = 'Miscellaneous';
+$modversion['dependency']   = array(779); /* Dependency on html module */
 
 ?>

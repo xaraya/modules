@@ -3,13 +3,13 @@
  * Update of Configuration 
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage xartinymce module
- * @link http://xaraya.com/index.php/release/63.html
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @copyright (C) 2002-2008 2skies.com
+ * @link http://xarigami.com/projects/xartinymce
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 /**
  * Update configuration parameters to relevant vars in database
@@ -167,12 +167,7 @@ function tinymce_admin_updateconfig()
     $xarbaseurl=xarServerGetBaseURL();
     //This is not used anymore we use the loading in the include template
     $tinybasepath="'.$xarbaseurl.'modules/tinymce/xarincludes/tiny_mce.js";
-    //Calculate baseurl
-    if (strlen(xarCore_getSystemVar('BaseModURL',true))==0) {
-        $basemodurl='index.php';
-    } else {
-        $basemodurl=xarCore_getSystemVar('BaseModURL',true);
-    }
+
     /* Turn our settings into javascript for insert into template
      *Let's call the variable jstext
      */
@@ -181,10 +176,8 @@ function tinymce_admin_updateconfig()
     $tinymode = xarModGetVar('tinymce','tinymode');
     $jstext = 'mode : "'.$tinymode.'",';
     $jstext .='theme : "'.xarModGetVar('tinymce','tinytheme').'",';
-    //$jstext .='document_base_url : "'.xarServerGetBaseURL().'",';
+    $jstext .='document_base_url : "'.xarServerGetBaseURL().'",';
 
-    $jstext .='document_base_url : "'.xarServerGetBaseURL().$basemodurl.'",';
-        
     $tinyeditorselector = xarModGetVar('tinymce','tinyeditorselector');
 
     $tinyeditorselector=isset($tinyeditorselector) ? $tinyeditorselector: 'mceEditor';
@@ -239,7 +232,7 @@ function tinymce_admin_updateconfig()
     //else{
     // $jstext .='cleanup: true,';
     //}
-    // $jstext .=	'safari_warning: "false",'; now false by default
+    // $jstext .=   'safari_warning: "false",'; now false by default
 
 
     if (xarModGetVar('tinymce','tinybr')==1){
@@ -381,13 +374,15 @@ function tinymce_admin_updateconfig()
     /* let's set button or popup */
     $buttonon=xarML('Turn On');
     $buttonoff=xarML('Turn Off');
-    if (xarModGetVar('tinymce','usebutton') == 1 && xarModGetVar('tinymce','tinymode') =='specific_textareas') {
+   
+   if (xarModGetVar('tinymce','usebutton') == 1 && xarModGetVar('tinymce','tinymode') =='specific_textareas') {
        $buttonswitch  = 'function mce_button_toggle(form_element_id, button_o)';
-       $buttonswitch .= ' { if(editor_id = tinyMCE.getEditorId(form_element_id)) {';
-       $buttonswitch .= 'tinyMCE.removeMCEControl(editor_id);';
+       $buttonswitch .= ' { if (tinyMCE.get(form_element_id).isHidden()) {';
+       $buttonswitch .= ' tinyMCE.get(form_element_id).show();';
        $buttonswitch .= 'button_o.value = "'.$buttonon.'";';
+          $buttonswitch .= 'alert(tinyMCE.activeEditor);';
        $buttonswitch .= '    } else {';
-       $buttonswitch .= ' tinyMCE.addMCEControl(document.getElementById(form_element_id), form_element_id);';
+       $buttonswitch .= ' tinyMCE.get(form_element_id).hide();';
        $buttonswitch .= ' button_o.value = "'.$buttonoff.'";';
        $buttonswitch .= '    }';
        $buttonswitch .= 'return false;';
