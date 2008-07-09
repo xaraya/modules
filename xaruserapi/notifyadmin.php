@@ -73,7 +73,7 @@ function registration_userapi_notifyadmin ($args)
                        'messagetitle' => $messagetitle,
                        'rolelink'     => $rolelink,
                        'sitename'     => $sitename,
-                       'values'      => $values
+                       'values'       => $values
                       );
 
     //Prepare the text message
