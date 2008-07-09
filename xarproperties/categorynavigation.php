@@ -139,7 +139,7 @@ class CategoryNavigationProperty extends SelectProperty
                     // We want to display only children category counts.
                     $catcount = xarModAPIFunc(
                         'categories','user', 'groupcount',
-                        array('modid' => $data['modid'], 'itemtype' => $data['itemtype'])
+                        array('modid' => $$modid, 'itemtype' => $data['itemtype'])
                     );
                 } else {
                     // We want to display the deep counts.
