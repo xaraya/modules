@@ -21,8 +21,8 @@ class RegisteredUser extends DataObject
         //TODO: move this into the user property?
         // Confirm that this group or user does not already exist
         $q = new xarQuery('SELECT',$this->rolestable);
-		if (empty($data['uname'])) $data['uname'] = $this->properties['user_name']->value;
-		$q->eq('uname',$data['uname']);
+        if (empty($data['uname'])) $data['uname'] = $this->properties['user_name']->value;
+        $q->eq('uname',$data['uname']);
         if (!$q->run()) return;
 
         if ($q->getrows() > 0) {
@@ -49,14 +49,15 @@ class RegisteredUser extends DataObject
             xarModItemVars::set('roles',$key, $value, $id);
         }
 
-		// Let's finish by sending emails to those that require it based on options - the user or the admin
-		// and redirecting to appropriate pages that depend on user state and options set in the registration config
-		// note: dont email password if user chose his own (should this condition be in the createnotify api instead?)
+        // Let's finish by sending emails to those that require it based on options - the user or the admin
+        // and redirecting to appropriate pages that depend on user state and options set in the registration config
+        // note: dont email password if user chose his own (should this condition be in the createnotify api instead?)
 
-		$emailargs = $this->getFieldValues();
-		$emailargs['password'] = xarModVars::get('registration', 'chooseownpassword') ? '' : $this->properties['password']->value;
-		$ret = xarModAPIFunc('registration','user','createnotify',$emailargs);
-		if (!$ret) return;
+        $emailargs = $this->getFieldValues();
+        $emailargs['password'] = xarModVars::get('registration', 'chooseownpassword') ? '' : $this->properties['password']->value;
+        $emailargs['emailvalues'] = $emailargs;
+        $ret = xarModAPIFunc('registration','user','createnotify',$emailargs);
+        if (!$ret) return;
 
 
         // Let any hooks know that we have created a new user.

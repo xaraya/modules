@@ -89,7 +89,7 @@
       <source>xar_roles.state</source>
       <status>35</status>
       <seq>8</seq>
-      <configuration>xarModAPIFunc('roles','user','getstates')</configuration>
+      <configuration>a:2:{s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:41:"xarModAPIFunc('roles','user','getstates')";}</configuration>
     </property>
     <property name="validationcode">
       <id>115</id>

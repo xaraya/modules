@@ -59,7 +59,7 @@ function registration_userapi_createnotify($args)
             $emailargs = array(
                             'adminname'     => xarModVars::get('mail', 'adminname'),
                             'adminemail'    => xarModVars::get('registration', 'notifyemail'),
-                            'values'  => $values,
+                            'values'        => $emailvalues,
                             'terms'         => $terms);
 
             if (!xarModAPIFunc('registration', 'user', 'notifyadmin', $emailargs)) {
