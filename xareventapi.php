@@ -3,13 +3,13 @@
  * xarTinyMCE eventapi
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage xartinymce module
- * @link http://xaraya.com/index.php/release/63.html
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @copyright (C) 2002-2008 2skies.com
+ * @link http://xarigami.com/projects/xartinymce
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 
 /**
@@ -26,7 +26,7 @@
 function tinymce_eventapi_OnServerRequest()
 {
 
-    if (xarModGetVar('base','editor') == 'tinymce' && (xarModIsAvailable('tinymce')) && (xarModGetVar('tinymce','tinyloadmode')<>'manual')) {
+    if (xarModGetVar('tinymce','activetinymce') == 1 && (xarModIsAvailable('tinymce')) && (xarModGetVar('tinymce','tinyloadmode')<>'manual')) {
         $data=array();
         xarTpl_includeModuleTemplate('tinymce','tinymce_insert',$data);
     }

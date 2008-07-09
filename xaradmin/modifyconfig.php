@@ -43,7 +43,7 @@ function tinymce_admin_modifyconfig()
     $data['tinytoolbar'] = xarModGetVar('tinymce', 'tinytoolbar');
     $data['tinyinlinestyle'] = xarModGetVar('tinymce', 'tinyinlinestyle');
     $data['tinyundolevel'] = xarModGetVar('tinymce', 'tinyundolevel');
-    $data['defaulteditor'] = xarModGetVar('base','editor');
+    $data['activetinymce'] = xarModGetVar('tinymce','activetinymce');
     $data['tinydirection'] = xarModGetVar('tinymce','tinydirection');
     $data['tinyshowpath'] = xarModGetVar('tinymce','tinyshowpath');
     $data['tinyencode'] = xarModGetVar('tinymce','tinyencode');

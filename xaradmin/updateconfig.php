@@ -24,10 +24,10 @@ function tinymce_admin_updateconfig()
 
     switch ($data['tab']) {
         case 'basic':
-            if (!xarVarFetch('defaulteditor','str:1:',$defaulteditor,'',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('activetinymce','checkbox',$activetinymce,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinymode','str:1:',$tinymode,'textareas',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyloadmode','str:1:',$tinyloadmode,'auto',XARVAR_NOT_REQUIRED)) return;
-                xarModSetVar('base','editor', $defaulteditor);
+                xarModSetVar('tinymce','activetinymce', $activetinymce);
                 xarModSetVar('tinymce', 'tinymode', $tinymode);
                 xarModSetVar('tinymce', 'tinyloadmode', $tinyloadmode);
 
@@ -221,7 +221,6 @@ function tinymce_admin_updateconfig()
     }
 
     if (xarModGetVar('tinymce','tinybr')==1){
-        //$jstext .='force_br_newlines: true,';
         $jstext .='convert_newlines_to_brs: "true",';
     }
 

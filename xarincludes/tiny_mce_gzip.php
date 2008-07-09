@@ -22,7 +22,29 @@
 	$compress = getParam("compress", "true") == "true";
 	$core = getParam("core", "true") == "true";
 	$suffix = getParam("suffix", "_src") == "_src" ? "_src" : "";
-	$cachePath = realpath("."); // Cache path, this is where the .gz files will be stored
+//Start Xaraya changes .. gee what can we do here
+    if(isset($_SERVER['DOCUMENT_ROOT'])) {
+        $root_path = $_SERVER['DOCUMENT_ROOT'];
+    } elseif(isset($HTTP_SERVER_VARS['DOCUMENT_ROOT'])) {
+        $root_path = $HTTP_SERVER_VARS['DOCUMENT_ROOT'];
+    } else {
+        $root_path = getenv('DOCUMENT_ROOT');
+    }
+    if(isset($_SERVER['PHP_SELF'])) {
+        $scriptpath= dirname($_SERVER['PHP_SELF']);
+    } elseif(isset($HTTP_SERVER_VARS['PHP_SELF'])) {
+        $scriptpath = dirname($HTTP_SERVER_VARS['PHP_SELF']);
+    } else {
+        $scriptpath= dirname(getenv('PHP_SELF'));
+    }
+    $scriptpath=parse_url($scriptpath);
+    $scriptbase=preg_replace("/index\.php.*|\/modules.*|/is",'',$scriptpath['path']);
+    $realpath=$root_path.$scriptbase;
+    $realpath=str_replace('//','/',$realpath);
+
+    $cachePath = $realpath.'/var/cache/templates';  //ToDo: we need to set this for tinymce
+    //realpath("."); // Cache path, this is where the .gz files will be stored
+    //finish Xaraya changes
 	$expiresOffset = 3600 * 24 * 10; // Cache for 10 days in browser cache
 	$content = "";
 	$encodings = array();

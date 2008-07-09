@@ -3,13 +3,13 @@
  * xarTinyMCE initialization
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage xartinymce module
- * @link http://xaraya.com/index.php/release/63.html
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @copyright (C) 2002-2008 2skies.com
+ * @link http://xarigami.com/projects/xartinymce
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 
 /**
@@ -37,7 +37,7 @@ function tinymce_init()
    xarModSetVar('tinymce', 'tinyheight','');
    xarModSetVar('tinymce', 'tinydirection','ltr');
    xarModSetVar('tinymce', 'tinyencode',0);
-   //xarModSetVar('tinymce', 'tinyentities',''); uses the default string if tinyeentity_encoding is named
+
    xarModSetVar('tinymce', 'tinyentity_encoding','raw');
    xarModSetVar('tinymce', 'tinyinlinestyle',1);
    xarModSetVar('tinymce', 'tinyundolevel',10);
@@ -54,9 +54,7 @@ function tinymce_init()
     xarModSetVar('tinymce', 'tinypara', 1);
     xarModSetVar('tinymce', 'tinyinvalid', '');
     xarModSetVar('tinymce', 'tinyadvformat', 'p,address,pre,h1,h2,h3,h4,h5,h6,div,blockquote,dt,dd,code,samp');
-    //xarModSetVar('tinymce', 'useibrowser', 0);
     xarModSetVar('tinymce', 'tinyeditorcss','');
-    //xarModSetVar('tinymce', 'tinynowrap',0);
     xarModSetVar('tinymce', 'tinyloadmode','manual');
     xarModSetVar('tinymce', 'multiconfig','');
     xarModSetVar('tinymce', 'usemulticonfig',0);
@@ -65,12 +63,12 @@ function tinymce_init()
     xarModSetVar('tinymce', 'tinyenablepath',1);
     xarModSetVar('tinymce', 'tinyresizehorizontal',0);
     xarModSetVar('tinymce', 'tinyeditorselector','mceEditor');
-    xarModSetVar('tinymce', 'tinyeditordeselector','');
+    xarModSetVar('tinymce', 'tinyeditordeselector','mceNoEditor');
     xarModSetVar('tinymce', 'tinycompressor',0);
     xarModSetVar('tinymce', 'tinycleanup',1);
     xarModSetVar('tinymce', 'striplinebreaks',1);
     xarModSetVar('tinymce',  'sourceformat',1);
-        xarModSetVar('tinymce',  'usefilebrowser',0);
+    xarModSetVar('tinymce',  'usefilebrowser',0);
    /* Set masks */
     xarRegisterMask('ViewTinyMCE','All','tinymce','All','All:All','ACCESS_OVERVIEW');
     xarRegisterMask('ReadTinyMCE','All','tinymce','All','All:All','ACCESS_READ');
@@ -129,8 +127,8 @@ function tinymce_upgrade($oldversion)
     case '1.0.2':
            xarModSetVar('tinymce', 'tinyentity_encoding','raw');
 
-    case '1.0.3': //current version
-        xarModSetVar('tinymce', 'striplinebreaks',1);
+    case '1.0.3':
+        xarModSetVar('tinymce',  'striplinebreaks',1);
         xarModSetVar('tinymce',  'sourceformat',1);
         xarModSetVar('tinymce',  'usefilebrowser',0);
 
@@ -140,7 +138,9 @@ function tinymce_upgrade($oldversion)
     case '1.1.0': 
     case '1.1.1':
 
-    case '1.1.2': //current version
+    case '1.1.2': 
+        xarModSetVar('tinymce',  'activetinymce',true);
+    case '1.5.0': //current version
        break;
     }
     return true;

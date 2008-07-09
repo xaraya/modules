@@ -1,7 +1,7 @@
-INSTALLATION AND USE - XarTinyMCE Version 1.1.5
+INSTALLATION AND USE - XarTinyMCE Version 2.0.0
 
-UPGRADES to 1.1.5:
-IMPORTANT!! PLEASE SEE SPECIAL UPGRADE CONSIDERATIONS AT THE END OF THIS DOCUMENT
+UPGRADES to 2.0.0:
+PLEASE SEE UPGRADE CONSIDERATIONS AT THE END OF THIS DOCUMENT
 
 XarTinyMCE is a configurable, lightweight WYSIWYG editor.
 See the documentation included in the docs directory of the module for
@@ -108,10 +108,10 @@ trusted directory of Uploads.
 ******************************
 
 Feature requests and bug reports to:
-http://bugs.xaraya.com
+http://xarigami.com/contrails/displayproject/xtm
 
-Miscellaneous Xaraya discussion, news and downloads:
-http://xarigami.com
+Resources, downloads, news, development discussion on xartinymce:
+http://xarigami.com/project/xartinymce
 
 Thanks
 Jo :)

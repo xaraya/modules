@@ -11,23 +11,23 @@
     <xar:set name="useragent">#xarServerGetVar('HTTP_USER_AGENT')#</xar:set>
     <xar:set name="usewysiwyg">0</xar:set>
     <xar:foreach in="$tinybrowsers" value="$browsername">
-
-    <xar:if condition="eregi($browsername,$useragent)">
-        <xar:set name="usewysiwyg">1</xar:set>
-    </xar:if>
+       <xar:if condition="eregi($browsername,$useragent)">
+            <xar:set name="usewysiwyg">1</xar:set>
+        </xar:if>
     </xar:foreach>
-
 
     <xar:comment>Include the dynamic JavaScript, if not already included.</xar:comment>
     <xar:set name="tinyloaded">xarTplGetJavaScript('head', 'tinymce')</xar:set>
-    <xar:if condition="$tinyloaded ne 1">
+    <xar:if condition="!$tinyloaded">
         <xar:comment>Include the static JavaScript</xar:comment>
         <xar:if condition="!$compressit">
             <xar:base-include-javascript position="head" module="tinymce" filename="../../xarincludes/tiny_mce.js" />
         <xar:else />
             <xar:base-include-javascript position="head" module="tinymce" filename="../../xarincludes/tiny_mce_gzip.php" />
         </xar:if>
-        <xar:base-include-javascript position="head" module="tinymce" filename="../../xarincludes/xarfilebrowsercallback.js" />
+        <xar:if condition="xarModGetVar('tinymce','usefilebrowser') eq 1">
+            <xar:base-include-javascript position="head" module="tinymce" filename="../../xarincludes/xarfilebrowsercallback.js" />
+        </xar:if>
         <xar:set name="jsstring">xarModGetVar('tinymce','jstext')</xar:set>
         <xar:set name="jsconfigstring">xarModGetVar('tinymce','multiconfig')</xar:set>
         <xar:set name="buttonjs">xarModGetVar('tinymce','buttonstring')</xar:set>

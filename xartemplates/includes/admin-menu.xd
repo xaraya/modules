@@ -17,7 +17,7 @@
         </dd>
 
     
-    <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
+    <xar:set name="tabclass">$activetab=='overview'?'active':''</xar:set>
     <dd class="#$tabclass#">
       <a href="&xar-modurl-tinymce-admin-overview;">
         <xar:mlstring>Overview</xar:mlstring>
