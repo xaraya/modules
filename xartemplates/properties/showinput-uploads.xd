@@ -38,7 +38,7 @@
             <xar:template file="attach_external" type="module" />
         </div>
 
-        <div id="#$id#_attach_upload" style="display: none;">
+        <div id="#$id#_attach_upload" style="display: block;">
             <xar:template file="attach_upload" type="module" />
             <xar:if condition="!empty($file_extensions)">
                 <br /><xar:ml><xar:mlstring>Allowed file types : #(1)</xar:mlstring><xar:mlvar>#$file_extensions#</xar:mlvar></xar:ml>

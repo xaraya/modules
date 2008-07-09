@@ -79,7 +79,7 @@
                     <li>ViewUploads with the READ level of access to a file</li>
                     <li>AddUploads with the ADD level of access to add files to the uploads system</li>
                     <li>EditUploads with the EDIT level to edit files that have been added to the uploads system</li>
-                    <li>DeleteUploads with the Delete level to remove files from the uploads system.</li>
+                    <li>ManageUploads with the Delete level to remove files from the uploads system.</li>
                     <li>AdminUploads for the admin access. Only site administrators need this level</li>
                 </ul>
                 <xar:mlstring>

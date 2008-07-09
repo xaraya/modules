@@ -30,7 +30,7 @@ function uploads_user_purge_rejected( $args )
 
     extract ($args);
 
-    if (!xarSecurityCheck('DeleteUploads')) return;
+    if (!xarSecurityCheck('ManageUploads')) return;
 
     if (isset($authid)) {
         $_GET['authid'] = $authid;

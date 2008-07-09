@@ -140,11 +140,19 @@ function uploads_init()
 
     xarDefineInstance('uploads', 'File', $instances);
 
-    xarRegisterMask('ViewUploads',  'All','uploads','File','All:All:All:All','ACCESS_READ');
-    xarRegisterMask('AddUploads',   'All','uploads','File','All:All:All:All','ACCESS_ADD');
-    xarRegisterMask('EditUploads',  'All','uploads','File','All:All:All:All','ACCESS_EDIT');
-    xarRegisterMask('DeleteUploads','All','uploads','File','All:All:All:All','ACCESS_DELETE');
-    xarRegisterMask('AdminUploads', 'All','uploads','File','All:All:All:All','ACCESS_ADMIN');
+    xarRegisterMask('ViewUploads',  'All','uploads','File','All','ACCESS_VIEW');
+    xarRegisterMask('ReadUploads',  'All','uploads','File','All','ACCESS_READ');
+    xarRegisterMask('EditUploads',  'All','uploads','File','All','ACCESS_EDIT');
+    xarRegisterMask('AddUploads',   'All','uploads','File','All','ACCESS_ADD');
+    xarRegisterMask('ManageUploads','All','uploads','File','All','ACCESS_DELETE');
+    xarRegisterMask('AdminUploads', 'All','uploads','File','All','ACCESS_ADMIN');
+
+    xarRegisterPrivilege('ViewUploads',  'All','uploads','File','All','ACCESS_VIEW');
+    xarRegisterPrivilege('ReadUploads',  'All','uploads','File','All','ACCESS_READ');
+    xarRegisterPrivilege('EditUploads',  'All','uploads','File','All','ACCESS_EDIT');
+    xarRegisterPrivilege('AddUploads',   'All','uploads','File','All','ACCESS_ADD');
+    xarRegisterPrivilege('ManageUploads','All','uploads','File','All','ACCESS_DELETE');
+    xarRegisterPrivilege('AdminUploads', 'All','uploads','File','All','ACCESS_ADMIN');
 
     /**
      * Register hooks
@@ -269,12 +277,6 @@ function uploads_upgrade($oldversion)
 
             xarRemoveMasks('uploads');
             xarRemoveInstances('uploads');
-
-            xarRegisterMask('ViewUploads',  'All','uploads','File','All:All:All:All','ACCESS_READ');
-            xarRegisterMask('AddUploads',   'All','uploads','File','All:All:All:All','ACCESS_ADD');
-            xarRegisterMask('EditUploads',  'All','uploads','File','All:All:All:All','ACCESS_EDIT');
-            xarRegisterMask('DeleteUploads','All','uploads','File','All:All:All:All','ACCESS_DELETE');
-            xarRegisterMask('AdminUploads', 'All','uploads','File','All:All:All:All','ACCESS_ADMIN');
 
             $xartable = xarDB::getTables();
             $instances[0]['header'] = 'external';
