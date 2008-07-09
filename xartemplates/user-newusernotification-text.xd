@@ -5,15 +5,15 @@
 <xar:mlstring>A user registered with the following details at: </xar:mlstring> #$sitename#
 
 
-<xar:mlstring>Status: </xar:mlstring>#$pending#
+<xar:mlstring>Status: </xar:mlstring>#$state#
 
 <xar:mlstring>User ID: </xar:mlstring>#$id#
 
-<xar:mlstring>User Display Name: </xar:mlstring>#$userrealname#
+<xar:mlstring>User Display Name: </xar:mlstring>#$name#
 
-<xar:mlstring>Username: </xar:mlstring>#$username#
+<xar:mlstring>Username: </xar:mlstring>#$user_name#
 
-<xar:mlstring>User email: </xar:mlstring>#$useremail#
+<xar:mlstring>User email: </xar:mlstring>#$email#
 
 #$terms#
 
