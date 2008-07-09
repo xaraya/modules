@@ -36,9 +36,9 @@ function registration_userapi_notifyadmin ($args)
     $state = $values['state'];
     $requireapproval = xarModVars::get('registration','explicitapproval');
     if ($requireapproval) {
-        $messagetitle = xarML('A New user - #(1) - has registered and requires approval',$values['uname']);
+        $messagetitle = xarML('A New user - #(1) - has registered and requires approval',$values['user_name']);
     } else {
-        $messagetitle = xarML('A new user has registered: #(1) "#(2)"', $values['uname'], $values['name']);
+        $messagetitle = xarML('A new user has registered: #(1) "#(2)"', $values['user_name'], $values['name']);
     }
     $rolelink = xarModURL('roles','admin','modify',array('id'=>$id),false);
 
