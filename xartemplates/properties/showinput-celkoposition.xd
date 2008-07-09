@@ -9,6 +9,7 @@
     </xar:if>
     <fieldset style="border: none">
     <xar:if condition="count($categories) eq 0">
+        No categories defined yet
         <input type="hidden" name="#$name#_refcid" id="#$name#_refcid" value="#$refcid#" />
         <input type="hidden" name="#$name#_position" id="#$name#_position" value="#$position#" />
     <xar:else />

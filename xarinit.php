@@ -35,7 +35,8 @@ function categories_init()
     $prefix = xarDB::getPrefix();
 
     $fields = array(
-        'id'         => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
+        'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
+//        'id'         => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
         'name'        => array('type'=>'varchar','size'=>64,'null'=>false),
         'description' => array('type'=>'varchar','size'=>255,'null'=>false),
         'image'       => array('type'=>'varchar','size'=>255,'null'=>false),
@@ -144,7 +145,7 @@ function categories_init()
     $query = "DROP TABLE IF EXISTS " . $prefix . "_categories_basecategories";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_categories_basecategories (
-      id int NOT NULL auto_increment,
+      id integer unsigned NOT NULL auto_increment,
       category_id int(11) DEFAULT '1' NOT NULL,
       module_id int(11) DEFAULT NULL,
       itemtype int(11) DEFAULT NULL,
