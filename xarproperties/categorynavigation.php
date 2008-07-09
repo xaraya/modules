@@ -123,7 +123,7 @@ class CategoryNavigationProperty extends SelectProperty
                 } else {
                     $deepcount = xarModAPIFunc(
                         'categories', 'user', 'deepcount',
-                        array('modid' => $data['module_id'], 'itemtype' => $data['itemtype'])
+                        array('modid' => $modid, 'itemtype' => $data['itemtype'])
                     );
                     xarVarSetCached('Blocks.categories','deepcount', $deepcount);
                 }
