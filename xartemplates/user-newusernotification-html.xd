@@ -9,11 +9,11 @@
     <xar:mlstring>A user with the following details has registered at: </xar:mlstring> #$sitename#
 </p>
 <p>
-    <xar:mlstring>Status: </xar:mlstring>#$pending#<br />
-    <xar:mlstring>User ID: </xar:mlstring>#$id#<br />
-    <xar:mlstring>Display Name: </xar:mlstring>#$userrealname#<br />
-    <xar:mlstring>User Name: </xar:mlstring>#$username#<br />
-    <xar:mlstring>User Email: </xar:mlstring>#$useremail#<br />
+    <xar:mlstring>Status: </xar:mlstring>#$values['state']#<br />
+    <xar:mlstring>User ID: </xar:mlstring>#$values['id']#<br />
+    <xar:mlstring>Display Name: </xar:mlstring>#$values['name']#<br />
+    <xar:mlstring>User Name: </xar:mlstring>#$values['user_name']#<br />
+    <xar:mlstring>User Email: </xar:mlstring>#$values['email']#<br />
 </p>
 
 <xar:if condition="!empty($terms)">
