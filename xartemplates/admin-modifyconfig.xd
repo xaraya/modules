@@ -252,38 +252,21 @@
         </xar:comment>
 
            <div class="xar-form-input-wrapper-after">
-                <xar:if condition="$tinyask">
-                    <input type="checkbox" name="tinyask" id="tinyask" value="1" checked="checked" />
-                <xar:else/>
-                    <input type="checkbox" name="tinyask" id="tinyask" value="1" />
-                </xar:if>
+                <xar:data-input type="checkbox" name="tinyask" id="tinyask" checked="$tinyask" />
                 <label for="tinyask" title="#xarML('WYSIWYG is on by default, unless you check to ask user if they wish to use WYSIWYG for each text area')#">
                     <xar:mlstring>Prompt to use WYSIWYG (popup prompt or on by default)?</xar:mlstring>
                 </label>
             </div>
-            <!--<xar:if condition="$tinyask and (xarModGetVar('tinymce','tinymode') eq 'specific_textareas')">-->
             <div class="xar-form-input-wrapper-after">
-             <xar:if condition="$usebutton">
-                    <input type="checkbox" name="usebutton" id="usebutton" value="1" checked="checked"/>
-                <xar:else/>
-                    <input type="checkbox" name="usebutton" id="usebutton" value="1" />
-                </xar:if>
+                <xar:data-input type="checkbox" name="usebutton" id="usebutton" checked="$usebutton"/>
                 <label for="usebutton" title="#xarML('Use an on/off toggle button to prompt for WYSIWYG')#">
                     <xar:mlstring>Display an On/Off Toggle button for WYSIWYG?</xar:mlstring>
                 </label>
                 <xar:mlstring>(xartinymce DD property only)</xar:mlstring>
             </div>
-            <!--
-            <xar:else />
-                <xar:set name="usebutton">0</xar:set>
-            </xar:if>
-            -->
+
             <div class="xar-form-input-wrapper-after">
-                <xar:if condition="$tinytilemap">
-                    <input type="checkbox" name="tinytilemap" id="tinytilemap" value="1" checked="checked"/>
-                <xar:else/>
-                    <input type="checkbox" name="tinytilemap" id="tinytilemap" value="1" />
-                </xar:if>
+                <xar:data-input type="checkbox" name="tinytilemap" id="tinytilemap" checked="$tinytilemap"/>
                 <label for="tinytilemap" title="#xarML('Use tiled images instead of individual for faster loading.')#">
                     <xar:mlstring>Use icon map?</xar:mlstring>
                 </label>
@@ -291,15 +274,11 @@
             </div>
 
             <div class="xar-form-input-wrapper-after">
-              <xar:if condition="$tinycompressor">
-                  <input type="checkbox" name="tinycompressor" id="tinycompressor" value="1" checked="checked"/>
-              <xar:else/>
-                  <input type="checkbox" name="tinycompressor" id="tinycompressor" value="1" />
-              </xar:if>
+                <xar:data-input type ="checkbox" name="tinycompressor" id="tinycompressor" checked="$tinycompressor"/>
                 <label for="tinycompressor" title="#xarML('Use compressed js to increase preformance?')#">
                       <xar:mlstring>Use compressor?</xar:mlstring>
                 </label>
-                 <xar:mlstring>(Faster loading, may not work in all setups)</xar:mlstring>
+                 <xar:mlstring>(Faster loading, will NOT work if zlib compression is enabled in php.ini)</xar:mlstring>
            </div>
 
            <div class="xar-form-input-wrapper">
@@ -310,11 +289,7 @@
                 <xar:mlstring>Unlimited if blank</xar:mlstring>
            </div>
             <div class="xar-form-input-wrapper-after">
-                <xar:if condition="$tinycleanup">
-                    <input type="checkbox" name="tinycleanup" id="tinycleanup" value="1" checked="checked"/>
-                <xar:else/>
-                    <input type="checkbox" name="tinycleanup" id="tinycleanup" value="1" />
-                </xar:if>
+                <xar:data-input type="checkbox" name="tinycleanup" id="tinycleanup" checked="$tinycleanup"/>
                 <label for="tinycleanup" title="#xarML('Set cleanup functionality that enables you to specify what elements and attributes are allowed.')#">
                     <xar:mlstring>Use content cleanup? T</xar:mlstring>
                 </label>
@@ -322,49 +297,31 @@
                 <p>
                     <xar:mlstring>Cleanup fixes various XHTML compliance issues and allows you to specify what elements and attributes are allowed.</xar:mlstring>
                 </p>
-
             </div>
 
              <div class="xar-form-input-wrapper-after">
-                <xar:if condition="$stripbreaks">
-                    <input type="checkbox" name="stripbreaks" id="stripbreaks" value="1" checked="checked"/>
-                <xar:else/>
-                    <input type="checkbox" name="stripbreaks" id="stripbreaks" value="1" />
-                </xar:if>
+                <xar:data-input type="checkbox" name="stripbreaks" id="stripbreaks" checked="$stripbreaks"/>
                 <label for="stripbreaks" title="#xarML('Strip all newlines')#">
                     <xar:mlstring>Strip all newlines from HTML output</xar:mlstring>
                </label>
                     <xar:mlstring>(ON by default).</xar:mlstring>
             </div>
              <div class="xar-form-input-wrapper-after">
-                <xar:if condition="$sourceformat">
-                    <input type="checkbox" name="sourceformat" id="sourceformat" value="1" checked="checked"/>
-                <xar:else/>
-                    <input type="checkbox" name="sourceformat" id="sourceformat" value="1" />
-                </xar:if>
+                <xar:data-input type="checkbox" name="sourceformat" id="sourceformat" checked="$sourceformat"/>
                 <label for="sourceformat" title="#xarML('Apply formatting to source')#">
                     <xar:mlstring>Apply source code formatting in HTML editor window</xar:mlstring>
                </label>
                     <xar:mlstring>(ON by default).</xar:mlstring>
             </div>
            <div class="xar-form-input-wrapper-after">
-                <xar:if condition="$tinybr">
-                    <input type="checkbox" name="tinybr" id="tinybr" value="1" checked="checked"/>
-                <xar:else/>
-                    <input type="checkbox" name="tinybr" id="tinybr" value="1" />
-                </xar:if>
-
+                <xar:data-input type="checkbox" name="tinybr" id="tinybr" checked="$tinybr"/>
                 <label for="tinybr" title="#xarML('Convert all new lines to &lt;br /&gt; tags instead of &lt;p&gt; tags')#">
                     <xar:mlstring>Convert new lines to &lt;br /&gt; </xar:mlstring>
                 </label>
                 <xar:mlstring>(OFF by default).</xar:mlstring>
               </div>
             <div class="xar-form-input-wrapper-after">
-                <xar:if condition="$tinypara">
-                    <input type="checkbox" name="tinypara" id="tinypara" value="1" checked="checked"/>
-                <xar:else/>
-                    <input type="checkbox" name="tinypara" id="tinypara" value="1" />
-                </xar:if>
+                <xar:data-input type="checkbox" name="tinypara" id="tinypara" checked="$tinypara"/>
                 <label for="tinypara" title="#xarML('Convert all newline chars to &lt;p&gt; tags')#">
                     <xar:mlstring>Convert all new line chars to &lt;p /&gt; on Enter [For Mozilla/Firefox]</xar:mlstring>
                </label>
@@ -411,12 +368,7 @@
                 <xar:mlstring>Default is Left to right.</xar:mlstring>
            </div>
            <div class="xar-form-input-wrapper-after">
-                <xar:if condition="$tinyencode">
-                    <input type="checkbox" name="tinyencode" id="tinyencode" value="1" checked="checked"/>
-                <xar:else/>
-                    <input type="checkbox" name="tinyencode" id="tinyencode" value="1" />
-                </xar:if>
-
+                <xar:data-input type="checkbox" name="tinyencode" id="tinyencode" checked="$tinyencode"/>
                 <label for="tinyencode" title="#xarML('Convert to a XML escaping entities eg ')#&amp;amp; &amp;quote; &amp;lt;">
                     <xar:mlstring>Convert to XML escaped character entities</xar:mlstring>
                 </label>
@@ -463,20 +415,12 @@
 
   <xar:elseif condition="$tab eq 'cssplug'" />
        <form action="&xar-modurl-tinymce-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" >
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <input type="hidden" name="tab" id="tab" value="#$tab#" />
-
         <fieldset>
             <legend>
                 <strong><xar:mlstring>Set CSS and Style Options</xar:mlstring></strong>
             </legend>
            <div class="xar-form-input-wrapper-after">
-                <xar:if condition="$tinyinlinestyle">
-                    <input type="checkbox" name="tinyinlinestyle" id="tinyinlinestyle" value="1" checked="checked" />
-                <xar:else/>
-                    <input type="checkbox" name="tinyinlinestyle" id="tinyinlinestyle" value="1" />
-                </xar:if>
-
+                <xar:data-input type="checkbox" name="tinyinlinestyle" id="tinyinlinestyle" checked="$tinyinlinestyle" />
                 <label for="tinyinlinestyle" title="#xarML('Converts attributes like width, height, border, to inline styles eg style= ....')#">
                     <xar:mlstring>Convert attributes to inline style?</xar:mlstring>
                 </label>
@@ -486,7 +430,6 @@
                 <label for="tinyextended" class="xar-form-label" title="#xarML('Additional html tags, forced or alternate attributes and so on, separated by commas')#">
                     <xar:mlstring>Additional tags or attributes:</xar:mlstring>
                 </label>
-                <!--<input type="text" name="tinyextended" id="tinyextended" value="#$tinyextended#" size="70" maxlength="250" />-->
                 <textarea class="mceNoEditor" name="tinyextended" id="tinyextended" cols="50" rows="3" >#$tinyextended#</textarea>
             </div>
               <div class="xar-form-input-wrapper-after">
@@ -524,7 +467,9 @@
 
          <fieldset>
             <div class="xar-form-input-wrapper-after">
-                 <input type="submit" value="#$updatebutton#" />
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="tab" id="tab" value="#$tab#" />
+                <input type="submit" value="#$updatebutton#" />
             </div>
          </fieldset>
     </form>
@@ -532,8 +477,6 @@
 <xar:comment> ************************ Advanced Theme Options********************</xar:comment>
     <xar:elseif condition="$tab eq 'customadvanced'" />
         <form action="&xar-modurl-tinymce-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" >
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <input type="hidden" name="tab" id="tab" value="#$tab#" />
         <fieldset>
             <legend>
                 <strong><xar:mlstring>Advanced Theme Editor Options</xar:mlstring></strong>
@@ -567,35 +510,22 @@
                 </xar:if>
                 </select>
                 &nbsp;&nbsp;
-               <xar:if condition="$tinyenablepath">
-                   <input type="checkbox" name="tinyenablepath" id="tinyenablepath" value="1" checked="checked" />
-               <xar:else />
-                   <input type="checkbox" name="tinyenablepath" id="tinyenablepath" value="1" />
-               </xar:if>
-               <label for="tinyenablepath" title="#xarML('Enable or disable the status bar path')#">
+                <xar:data-input type="checkbox" name="tinyenablepath" id="tinyenablepath" checked="$tinyenablepath" />
+                <label for="tinyenablepath" title="#xarML('Enable or disable the status bar path')#">
                        <xar:mlstring>Display css rule path in status bar?</xar:mlstring>
                </label>
             </div>
             <div class="xar-form-input-wrapper-after">
-               <xar:if condition="$tinyadvresize">
-                   <input type="checkbox" name="tinyadvresize" id="tinyadvresize" value="1" checked="checked" />
-               <xar:else />
-                   <input type="checkbox" name="tinyadvresize" id="tinyadvresize" value="1" />
-               </xar:if>
-               <label for="tinyadvresize" title="#xarML('Enable vertical resizing of editor?')#">
+                <xar:data-input type="checkbox" name="tinyadvresize" id="tinyadvresize" value="1" checked="$tinyadvresize" />
+                <label for="tinyadvresize" title="#xarML('Enable vertical resizing of editor?')#">
                        <xar:mlstring>Allow vertical resizing of editor?</xar:mlstring>
-               </label>
-
+                </label>
            </div>
            <div class="xar-form-input-wrapper-after">
-               <xar:if condition="$tinyresizehorizontal">
-                   <input type="checkbox" name="tinyresizehorizontal" id="tinyresizehorizontal" value="1" checked="checked" />
-               <xar:else />
-                   <input type="checkbox" name="tinyresizehorizontal" id="tinyresizehorizontal" value="1" />
-               </xar:if>
-               <label for="tinyresizehorizontal" title="#xarML('Enable horizontal resizing of editor?')#">
-                   <xar:mlstring>Allow horizontal resizing of editor?</xar:mlstring>
-               </label>
+                <xar:data-input type="checkbox" name="tinyresizehorizontal" id="tinyresizehorizontal" checked="$tinyresizehorizontal" />
+                <label for="tinyresizehorizontal" title="#xarML('Enable horizontal resizing of editor?')#">
+                    <xar:mlstring>Allow horizontal resizing of editor?</xar:mlstring>
+                </label>
 
            </div>
         <xar:comment>jojodee - Fix this when i get time
@@ -662,11 +592,7 @@
              </div>
              </xar:if>
           <div class="xar-form-input-wrapper-after">
-               <xar:if condition="$usefilebrowser">
-                   <input type="checkbox" name="usefilebrowser" id="usefilebrowser" value="1" checked="checked" />
-               <xar:else />
-                   <input type="checkbox" name="usefilebrowser" id="usefilebrowser" value="1" />
-               </xar:if>
+               <xar:data-input type="checkbox" name="usefilebrowser" id="usefilebrowser" checked="$usefilebrowser" />
                <label for="usefilebrowser" title="#xarML('Use the filebrowser for advanced image, link or flash plugins?')#">
                        <xar:mlstring>Use integrated <strong>Filebrowser</strong> for file browsing and uploading for eg images, links, flash plugins ?</xar:mlstring>
                </label>
@@ -771,7 +697,9 @@
        </fieldset>
        <fieldset>
             <div class="xar-form-input-wrapper-after">
-                 <input type="submit" value="#$updatebutton#" />
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="tab" id="tab" value="#$tab#" />            
+                <input type="submit" value="#$updatebutton#" />
             </div>
        </fieldset>
    </form>
@@ -779,23 +707,18 @@
 <xar:comment> ************************ Custom Config Option********************</xar:comment>
     <xar:elseif condition="$tab eq 'customconfig'" />
         <form action="&xar-modurl-tinymce-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" >
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <input type="hidden" name="tab" id="tab" value="#$tab#" />
+
         <fieldset>
             <legend>
                 <xar:mlstring>Multiple Configuration Instances</xar:mlstring>
             </legend>
             <div class="xar-form-input-wrapper xar-padding-medium">
-                    <xar:if condition="$dousemulticonfig">
-                        <input type="checkbox" name="dousemulticonfig" id="dousemulticonfig" value="1" checked="checked" />
-                    <xar:else />
-                        <input type="checkbox" name="dousemulticonfig" id="dousemulticonfig" value="1" />
-                    </xar:if>
-                    <label for="usemulticonfig" title="#xarML('Would you like to use multiple configuration settings?')#">
-                            <xar:mlstring>
-                                <strong>Use multiple configurations?</strong> (Must be checked for activation of custom config options below).
-                            </xar:mlstring>
-                    </label>
+                <xar:data-input type="checkbox" name="dousemulticonfig" id="dousemulticonfig" checked="$dousemulticonfig" />
+                <label for="usemulticonfig" title="#xarML('Would you like to use multiple configuration settings?')#">
+                    <xar:mlstring>
+                        <strong>Use multiple configurations?</strong> (Must be checked for activation of custom config options below).
+                    </xar:mlstring>
+                </label>
             </div>
             <div class="xar-form-input-wrapper xar-padding-medium" >
                 <ul>
@@ -852,6 +775,8 @@
             </fieldset>
             <fieldset>
                 <div class="xar-form-input-wrapper-after">
+                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                    <input type="hidden" name="tab" id="tab" value="#$tab#" />                
                     <input type="submit" value="#$updatebutton#" />
                </div>
             </fieldset>

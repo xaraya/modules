@@ -140,6 +140,7 @@ function tinymce_upgrade($oldversion)
 
     case '1.1.2': 
         xarModSetVar('tinymce',  'activetinymce',true);
+        xarModSetVar('tinymce',  'gztext','');        
     case '1.5.0': //current version
        break;
     }

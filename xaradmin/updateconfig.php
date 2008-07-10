@@ -345,7 +345,6 @@ function tinymce_admin_updateconfig()
     $jstext .='language : "'.xarModGetVar('tinymce','tinylang').'" ';
     
 
-
     /* now add the other configurations */
     if (xarModGetVar('tinymce','usemulticonfig')==1){
         if (strlen(trim(xarModGetVar('tinymce','multiconfig')))>0) {
@@ -354,6 +353,15 @@ function tinymce_admin_updateconfig()
     }else{
           $multiconfig='';
     }
+
+
+    /* let's build a custom gz script as well */
+    $gztext  = 'theme : "'.xarModGetVar('tinymce','tinytheme').'",';
+    $gztext .= 'plugins : "'.$plugs.'", ';
+    $gztext .= 'debug : "false", ';    
+    $gztext .=' disk_cache : "true",'; 
+    $gztext .= 'language : "'.xarModGetVar('tinymce','tinylang').'" ';
+    xarModSetVar('tinymce','gztext',$gztext);
 
     /* let's set button or popup */
     $buttonon=xarML('Turn On');
