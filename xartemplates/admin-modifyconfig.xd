@@ -177,18 +177,19 @@
                     <xar:mlstring><strong>Automatic</strong>: xarTinyMce is automatically activated when mode is 
                     set to All TextAreas without the need to use tinymce DD properties or configure anything further. The disadvantage is that tinymce is loaded on every page. </xar:mlstring><br /><br />
                 </li>
-                <li class="xar-norm" ><xar:mlstring><strong>Manual Override</strong>: turns off automatic activation. xarTinyMCE DD properties are an exception and are still activated with this set as manual.
-                    Alternatively, specify where wysiwyg should or should not be activated by adding the specific template snippet code as shown below, to your page or other specific templates.
-                    All textareas contained or included in the template where you have the XarTinymce tags are converted to WYSIWYG according to the "All Text Area" or "Special Labelled Only" setting above.
-                    Advantages are that tinymce is only loaded when required rather than every page or in every textarea.
+                <li class="xar-norm" ><xar:mlstring><strong>Manual Override</strong>: turns off automatic activation.  Only xarTinymce DD property textareas, or textareas marked 
+                   with an editor selector trigger class (default is mceEditor) will be WYSIWYG.  If you do not use a xarTinymce DD property and want to activate an ordinary textarea or div
+                   in this way, you must ensure an editor selector class (mceEditor) is added as a class to your textarea in the template or via the DD validation in the GUI, 
+                   and also add the following snippet to the top of your module or page template:
                     </xar:mlstring>
                 </li>
             </ol>
             <pre>
-            &lt;xar:if condition="xarModGetVar('base','editor') eq 'tinymce'"&gt;
+            &lt;xar:if condition="xarModGetVar('tinymce','activetinymce') eq 1'"&gt;
                  &lt;xar:template file="tinymce_insert" module="tinymce" type="module" /&gt;
             &lt;/xar:if&gt;
             </pre>
+            
             <p>
                 <xar:mlstring><strong>HINT:</strong> Copy <code>modules/tinymce/xartemplates/properties/showinput-tinymce.xd</code>
                 to your own theme's <code>themes/yourtheme/modules/base/properties/showinput-textarea.xt</code> as a DD textarea override 
@@ -559,7 +560,6 @@
                     <xar:mlstring>Names of plugins to load (separated by commas):</xar:mlstring>
                 </label>
                 <textarea class="mceNoEditor" name="tinyplugins" id="tinyplugins" cols="50" rows="3" >#$tinyplugins#</textarea>
-               <!--<input type="text" name="tinyplugins" id="tinyplugins" value="#$tinyplugins#" size="70" maxlength="250" />-->
 
             </div>
 

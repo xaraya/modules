@@ -1,13 +1,16 @@
-* Version 2.0.0 July 2008
-- Integartion of upstream 3.1.0 and post release fixes
+* Version 1.5.0 July 2008
+- Integration of upstream 3.1.0 and post release fixes
+- New activation modvar  - use the tinymce one not base module 'activetinymce' modvar
 - Remove deprecated tinymce api calls, update with new.
 - Update the button on/off code
 - Reintegrate the new compressor
+- Remodel the xarTinymce DD property to inherit from xar textarea dd property
 - Adjust the tinymce Pagebreak plugin to use xaraya pagebreaks by default, 
    and remove older xarpagebreak code
 - Updated Loremipsum plugin - removed old lorem plugin
 - Updated Liststyle plugin
 - Updated Spellchecker plugin
+- New configuration variables
 
 * Version 1.1.5 6 Oct 2007
 - Integrate 2.1.2 and post release fixes

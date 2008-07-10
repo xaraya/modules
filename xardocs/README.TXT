@@ -24,7 +24,7 @@ To INSTALL and get started:
 
 1. Install this module like you would any other Xaraya module. That is:
    - Put the tinymce folder in your Xaraya modules directory
-   - Go to the Adminpanel menu -> Modules -> View All
+   - Go to the Administration menu -> Modules -> View All
    - Click on the "install" link of the tinymce module
 
 2. Make sure you have the HTML module installed, and your allowed tags 
@@ -33,8 +33,8 @@ To INSTALL and get started:
    It does not determine what attributes are allowed. Tinymce applies additional
    filtering for tags and attributes and works with a default set (see the usage instructions).
 
-3. Go to xarTinyMCE modify config
-   - Set TinyMCE as the default editor
+3. Go to xarTinyMCE modify config Install Options tab: 
+   - Activate TinyMCE by checking the Activate tinymce checkbox
    - Set the Mode: Optimal method is to use "Specifically labelled text areas"
      and xarTinymce GUI DD property to replace your text areas
    - Set the mode to Manual if you are using specially labelled text areas or with DD properties
@@ -50,7 +50,7 @@ Please read the Overview Documentation in the TinyMCE administration area for mo
 
 ******************************
 
-To UPGRADE to Version 1.1.5:
+To UPGRADE to Version 1.5.0:
 
 There has been a number of major changes in tinymce that could BREAK COMPTIBILITY.
 Please check the following to ensure xartinymce continues to work for you.
@@ -59,30 +59,37 @@ When you are ready to upgrade your tinymce files:
 
 1. Remove ALL files in the tinymce module directory and subdirectories and
    replace with the upgraded module and files.
-   
-2. Copy the tinymceconfig.inc.php file in tinymce/xartemplates/includes/tinymceconfig.inc.php
-   to your installation var/tinymce/tinymceconfig.inc.php (create the directory if it doesn't exist)
-   Make sure you update the file paths in the tinymceconfig.inc.php file.
-
-3. Go to your Administration -> Modules ->View All
+      
+2. Go to your Administration -> Modules ->View All
    Click Upgrade
    Click Activate
 
-4. Go to Administration -> XarTinyMCE -> Modify Config
+3. Go to Administration -> XarTinyMCE -> Modify Config
    Go to ***each*** TAB and ensure the values are as required.
    Make sure you check any new or upgraded options are filled in.
    **Click Submit button**** on EACH screen to confirm and update the configuration and 
    generated javascript saved from your settings.
 
+4. Update your custom templates. Pay particular attention to the following as variables have changed:
+
+   - If you are using the activation snippet at the tope of your pages, please change the modvar
+     from ('base','default') to ('tinymce','activetinymce').
+     
+   - If you have textarea or tinymce GUI DD property template overrides, compare them against the
+     changed ones in this version and update yours accordingly.
+   
+   - Copy the tinymceconfig.inc.php file in tinymce/xartemplates/includes/tinymceconfig.inc.php
+   to your installation var/tinymce/tinymceconfig.inc.php (create the directory if it doesn't exist)
+   Make sure you update the file paths in the tinymceconfig.inc.php file.
 
 MAJOR CHANGES
 *************
-See the changelog.txt in the xardocs directory.
+See the changelog.txt in the xardocs directory or at http://xarigami.com/contrails/versions/xtm.
 
 
 IMAGE BROWSER (IBROWSER), IMAGE MANAGER (IMANAGER), FILEBROWSER and  SECURITY
 ******************************
-Filebrowser now comes as a general file and image browser integrated into xartinymce.
+Filebrowser has been integrated as general file and image browser integrated into xartinymce.
 Please note that using Filebrowser can leave your upload directories insecured. You will need to make
 provision for protecting access to the upload directory via filebrowser.
 

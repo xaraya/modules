@@ -3,13 +3,13 @@
  * Admin Main Menu link
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage xartinymce module
- * @link http://xaraya.com/index.php/release/63.html
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @copyright (C) 2002-2008 2skies.com
+ * @link http://xarigami.com/projects/xartinymce
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 /**
  * Utility function pass individual menu items to the main menu

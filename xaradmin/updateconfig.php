@@ -39,7 +39,7 @@ function tinymce_admin_updateconfig()
              * This one: treats the string as a comma-separeted list of tokens. Each token
              * is lower-cased, trimmed and compared to a list of allowed browsers.
              */
-            if (!xarVarFetch('tinybrowsers', 'strlist:,:pre:lower:trim:passthru:enum:msie:gecko:safari:opera', $tinybrowsers, 'msie,gecko,safari', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinybrowsers', 'strlist:,:pre:lower:trim:passthru:enum:msie:gecko:safari:opera', $tinybrowsers, 'msie,gecko,opera,safari', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('usebutton','checkbox',$usebutton,null,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyundolevel','int:1:3',$tinyundolevel,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinydirection','str:1:3',$tinydirection,'ltr',XARVAR_NOT_REQUIRED)) return;

@@ -54,7 +54,7 @@ textarea#'.$id.' {
 <xar:if condition="xarModGetVar('tinymce','tinyask') and $usewysiwyg eq '1'">
   <xar:if condition="xarModGetVar('tinymce','usebutton')">
     <div class="xar-form-container-after">
-      <textarea rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
+      <textarea  class="#$class#" rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
     </div>
     <div class="xar-form-input-wrapper">
         <label class="xar-form-label">#$wysiwygprompt#</label>
@@ -77,7 +77,7 @@ textarea#'.$id.' {
   </xar:if>
 <xar:else />
     <div class="xar-form-container-after">
-    <textarea rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
+    <textarea class="#$class#" rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
     </div>
 </xar:if>
 <xar:if condition="!empty($invalid)">

@@ -94,7 +94,7 @@ function tinymce_admin_modifyconfig()
     }
 
     if (!isset($data['tinybrowsers'])){
-        $data['tinybrowsers']='msie,gecko,opera';
+        $data['tinybrowsers']='msie,gecko,opera,safari';
     }
 
     if (!isset($data['usebutton']) || ($data['tinymode']=='textareas')){
