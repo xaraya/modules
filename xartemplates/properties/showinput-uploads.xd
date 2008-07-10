@@ -2,34 +2,38 @@
     <xar:base-include-javascript module="uploads" filename="switchImport.js" />
     <xar:style scope="module" module="uploads" file="uploads" />
     <div class="xar-form-container-after">
-        <xar:mlstring>Attach file(s) from source:</xar:mlstring><br />
-        <xar:if condition="in_array(1,$file_input_methods)">
-            <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(1, #$getAction['LOCAL']#, '#$id#');true;" 
-               name="attach_trusted_#$id#" title="#xarML('Attach file from Trusted Directory')#"><xar:mlstring>Trusted</xar:mlstring></a> |
+    <xar:set name="foo">var_dump($default_input_method)</xar:set>
+    <xar:set name="foo">var_dump(count($file_input_methods))</xar:set>
+        <xar:if condition="count($file_input_methods) gt 1">
+            <xar:mlstring>Attach file(s) from source:</xar:mlstring><br />
+            <xar:if condition="in_array(1,$file_input_methods)">
+                <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(1, #$getAction['LOCAL']#, '#$id#');true;" 
+                   name="attach_trusted_#$id#" title="#xarML('Attach file from Trusted Directory')#"><xar:mlstring>Trusted</xar:mlstring></a> |
+            </xar:if>
+
+            <xar:if condition="in_array(2,$file_input_methods)">
+                <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(2, #$getAction['EXTERNAL']#, '#$id#');true;" 
+                   name="attach_external_#$id#" title="#xarML('Attach file from external source (http(s)|ftp)')#"><xar:mlstring>External</xar:mlstring></a> |
+            </xar:if>
+
+            <xar:if condition="in_array(3,$file_input_methods)">
+                <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(3, #$getAction['UPLOAD']#, '#$id#');true;" 
+                   name="attach_upload_#$id#" title="#xarML('Attach uploaded file')#"><xar:mlstring>Upload</xar:mlstring></a> |
+            </xar:if>
+
+            <xar:if condition="in_array(4,$file_input_methods) AND (isset($storedList) AND count($storedList))">
+                <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(4, #$getAction['STORED']#, '#$id#');true;" 
+                   name="attach_stored_#$id#" title="#xarML('Attach previously stored file')#"><xar:mlstring>Stored</xar:mlstring></a> |
+            </xar:if>
+
+            <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(5, -1, '#$id#');true;" 
+               name="attach_reset_#$id#" title="#xarML('Revert to initial state')#"><xar:mlstring>Reset</xar:mlstring></a> | 
+
+            <input type="checkbox" id="attach_clear_#$id#" onclick="javascript:xar_uploads_switchImport(6, -2, '#$id#');true;" 
+               name="attach_clear_#$id#" /> <label for="attach_clear_#$id#" title="#xarML('Clear stored value')#"><xar:mlstring>Clear</xar:mlstring></label>
+            <br />
         </xar:if>
-
-        <xar:if condition="in_array(2,$file_input_methods)">
-            <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(2, #$getAction['EXTERNAL']#, '#$id#');true;" 
-               name="attach_external_#$id#" title="#xarML('Attach file from external source (http(s)|ftp)')#"><xar:mlstring>External</xar:mlstring></a> |
-        </xar:if>
-
-        <xar:if condition="in_array(3,$file_input_methods)">
-            <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(3, #$getAction['UPLOAD']#, '#$id#');true;" 
-               name="attach_upload_#$id#" title="#xarML('Attach uploaded file')#"><xar:mlstring>Upload</xar:mlstring></a> |
-        </xar:if>
-
-        <xar:if condition="in_array(4,$file_input_methods) AND (isset($storedList) AND count($storedList))">
-            <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(4, #$getAction['STORED']#, '#$id#');true;" 
-               name="attach_stored_#$id#" title="#xarML('Attach previously stored file')#"><xar:mlstring>Stored</xar:mlstring></a> |
-        </xar:if>
-
-        <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(5, -1, '#$id#');true;" 
-           name="attach_reset_#$id#" title="#xarML('Revert to initial state')#"><xar:mlstring>Reset</xar:mlstring></a> | 
-
-        <input type="checkbox" id="attach_clear_#$id#" onclick="javascript:xar_uploads_switchImport(6, -2, '#$id#');true;" 
-           name="attach_clear_#$id#" /> <label for="attach_clear_#$id#" title="#xarML('Clear stored value')#"><xar:mlstring>Clear</xar:mlstring></label>
-        <br />
-
+        
         <div id="#$id#_attach_trusted" style="display: none;">
             <xar:template file="attach_trusted" type="module" />
         </div>

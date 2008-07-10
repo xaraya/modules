@@ -381,6 +381,7 @@ class UploadProperty extends FileUploadProperty
             }
         }
         $data['file_input_methods'] = $this->initialization_file_input_methods;
+        if (count($data['file_input_methods']) > 0) $data['default_input_method'] = array_pop($data['file_input_methods']);
         $data['max_file_size'] = $this->validation_max_file_size;
         // Jump over the direct parent for now
         return DataProperty::showInput($data);
