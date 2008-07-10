@@ -3,6 +3,7 @@
  * Dynamic data tinymce WYSIWYG GUI property
  
  * @package modules
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
