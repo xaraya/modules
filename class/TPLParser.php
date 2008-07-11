@@ -44,9 +44,12 @@ class TPLParser
         $reader->xml($filestring);
         $nodes = array();
         $i = 0;
+        // Ignore xar:set nodes and take all other text nodes
         while ($reader->read()) {
             $i++;
-            if ($reader->nodeType == XMLReader::TEXT) {
+            if ($reader->name == "xar::set") {
+                continue;
+            } elseif ($reader->nodeType == XMLReader::TEXT) {
                $string = $reader->value;
             }
             else if ($reader->name == "xar::mlstring") {
