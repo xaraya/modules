@@ -1,6 +1,6 @@
-INSTALLATION AND USE - XarTinyMCE Version 2.0.0
+INSTALLATION AND USE - XarTinyMCE Version 1.5.0
 
-UPGRADES to 2.0.0:
+UPGRADES to 1.5.0:
 PLEASE SEE UPGRADE CONSIDERATIONS AT THE END OF THIS DOCUMENT
 
 XarTinyMCE is a configurable, lightweight WYSIWYG editor.
@@ -110,8 +110,11 @@ For added security, turn off Upload ability in the filebrowser, or the iBrowser 
 use the Uploads and Images module. Point your Image library to the Image module's directory or 
 trusted directory of Uploads.
 
-
-   That's it!
+KNOWN ISSUES
+******************************
+iBrowser and iManager will only work with IE7 or less, or FF2x (tested). 
+This current iBrowser and iManager  will not work in the more modern browsers such as
+ Firefox version 3, Safari or Opera, and IE8 That's it!
 ******************************
 
 Feature requests and bug reports to:
