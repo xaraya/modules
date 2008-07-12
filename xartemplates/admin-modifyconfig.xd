@@ -292,7 +292,7 @@
             <div class="xar-form-input-wrapper-after">
                 <xar:data-input type="checkbox" name="tinycleanup" id="tinycleanup" checked="$tinycleanup"/>
                 <label for="tinycleanup" title="#xarML('Set cleanup functionality that enables you to specify what elements and attributes are allowed.')#">
-                    <xar:mlstring>Use content cleanup? T</xar:mlstring>
+                    <xar:mlstring>Use content cleanup? </xar:mlstring>
                 </label>
                 <xar:mlstring>(ON by default, and recommended).</xar:mlstring>
                 <p>
