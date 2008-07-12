@@ -6,7 +6,7 @@
                 "multiple_{$id}"
             </xar:set>
 
-            <xar:if condition="isset($$multiple) AND $$multiple eq TRUE">
+            <xar:if condition="isset($multiple) AND $multiple eq TRUE">
                 <select name="#$id#_attach_stored[]" id="#$id#_attach_stored_id" multiple="multiple" size="5">
                     <!-- TODO: consider putting this in an separate template -->
                     <xar:loop name="$storedList">
