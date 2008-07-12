@@ -11,7 +11,9 @@
 <xar:else/>
     <xar:set name="class">'xar-form-textareamedium'</xar:set>
 </xar:if>
-
+<xar:if condition="empty($mceclass)">
+    <xar:set name="mceclass">'mceEditor'</xar:set>
+</xar:if>
 <xar:set name="textareasource">'
 <!--
 textarea#'.$id.' {
@@ -60,12 +62,12 @@ textarea#'.$id.' {
     </div>
   <xar:else />
     <div class="xar-form-container-after">
-       <textarea class="mceEditor" rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
+       <textarea class="#$mceclass#" rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
     </div>
   </xar:if>
 <xar:elseif condition="$usewysiwyg eq 1" />
     <div class="xar-form-container-after">
-      <textarea class="mceEditor" rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
+      <textarea class="#$mceclass#" rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
     </div>
   <xar:if condition="xarModGetVar('tinymce','usebutton')">
     <div class="xar-form-input-wrapper">

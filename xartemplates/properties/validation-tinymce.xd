@@ -20,6 +20,15 @@
   </tr>
   <tr>
     <td>
+      <xar:mlstring>Editor Selector</xar:mlstring>
+    </td>
+    <td>
+      <input type="text" name="#$name#[mceclass]" id="#$id#_mceclass" value="#$mceclass#" size="20" tabindex="#$tabindex#" />
+      (<xar:ml><xar:mlstring>default: #(1)</xar:mlstring><xar:mlvar>#$defaultmceclass#</xar:mlvar></xar:ml>)
+    </td>
+  </tr>
+  <tr>
+    <td>
       <xar:mlstring>Other rule</xar:mlstring>
     </td>
     <td>
