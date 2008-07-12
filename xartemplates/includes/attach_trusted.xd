@@ -5,7 +5,7 @@
         "multiple_{$id}"
     </xar:set>
 
-    <xar:if condition="isset($$multiple) AND $$multiple eq TRUE">
+    <xar:if condition="isset($multiple) AND $multiple eq TRUE">
         <select name="#$id#_attach_trusted[]" id="#$id#_attach_trusted_id" multiple="multiple" size="5">
             <xar:loop name="$fileList">
                 <option value="#$loop:item['relativePath']#">#$loop:item['relativePath']#</option>
