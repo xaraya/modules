@@ -17,7 +17,7 @@ function xtasks_adminapi_update($args)
     extract($args);
     
     if(!isset($assigner) || empty($assigner) || $assigner == 0) {
-        $assigner = xarSessionGetVar('uid');
+        $assigner = xarModGetUserVar('xproject', 'mymemberid'); // xarSessionGetVar('uid'); // 
     }
 
     $invalid = array();
@@ -102,16 +102,17 @@ function xtasks_adminapi_update($args)
                         'hours_spent_delta' => $hours_spent - $item['hours_spent'],
                         'hours_remaining_delta' => $hours_remaining - $item['hours_remaining']));
     }
-    /*
-    if($item['parentid'] > 0 && false) {
-        xarModAPIFunc('xtasks', 'admin', 'updatetimeframes',
-                    array('taskid' => $item['parentid'],
-                        'date_start_planned' => $item['date_start_planned'],
-                        'date_start_actual' => $item['date_start_actual'],
-                        'date_end_planned' => $item['date_end_planned'],
-                        'date_end_actual' => $item['date_end_actual']));
+    
+    if($item['projectid'] > 0) {
+        $projectinfo = xarModAPIFunc('xproject', 'user', 'get', array('projectid' => $item['projectid']));
+        if($projectinfo == false) return;
+        
+        if($date_end_planned > $projectinfo['planned_end_date']) {
+            $projectinfo['planned_end_date'] = $date_end_planned;
+            if(!xarModAPIFunc('xproject', 'admin', 'update',$projectinfo)) return;
+        }
     }
-    */
+    
     $item['module'] = 'xtasks';
     $item['itemid'] = $taskid;
     $item['name'] = $task_name;
@@ -119,7 +120,7 @@ function xtasks_adminapi_update($args)
     
     $mymemberid = xarModGetUserVar('xproject', 'mymemberid');
     if(!empty($item['owner']) && $item['owner'] != $mymemberid) {
-        xarModAPIFunc('xtasks', 'user', 'notify', array('contacttype' => 735, 'owner' => $item['owner'], 'taskid' => $taskid, 'action' => "UPDATE"));
+        xarModAPIFunc('xtasks', 'user', 'notify', array('contacttype' => 779, 'owner' => $item['owner'], 'taskid' => $taskid, 'action' => "UPDATE"));
     }
 
     return true;

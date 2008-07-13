@@ -6,34 +6,35 @@
 
 <xar:set name="encoded_returnurl">urlencode($returnurl)</xar:set>
 
+<xar:template type="module" file="admin-menu" />
+
 <div class="xar-mod-head">
-	<span class="xar-mod-title"><xar:mlstring>xTasks</xar:mlstring></span>
+    <span class="xar-mod-title"><xar:mlstring>Quick Contact / Project / Task / Task Update</xar:mlstring></span>
 </div>
+
 <div class="xar-mod-body">
-
-    <h2><xar:mlstring>Quick Contact / Project / Task / Worklog</xar:mlstring></h2>
-
-	<xar:template type="module" file="admin-menu" />
-
-    <xar:if condition="!isset($showajax)">
-        <xar:set name="action">"javascript:loadContent('".xarModURL('xtasks','user','quickproject')."','quickproject','POST','contactselect');"</xar:set>
-    <xar:else />
-        <xar:set name="action">"&xar-modurl-xtasks-user-quickproject;"</xar:set>
-    </xar:if>
-
-    <form method="post" action="#$action#" name="contactselect" id="contactselect">
-		<div class="xar-form-input-wrapper">
-		    <label for="contactid" class="xar-form-label">
-		        <xar:mlstring>Client</xar:mlstring>
-		    </label>
-             <xar:data-input type="contactlist" name="contactid" />
-		</div>
-
-		<div class="xar-margin-thickends xar-align-center">
-            <input type="submit" value="#xarML('Get Projects')#" />
-        </div>
-    </form>
-
+    <div style="float: left; width: 200px;">
+        <strong>Client</strong>
+    </div>
+    <div style="float: left; width: 300px;">
+        <xar:if condition="!isset($showajax)">
+            <xar:set name="action">"javascript:loadContent('".xarModURL('xtasks','user','quickproject')."','quickproject','POST','contactselect');"</xar:set>
+        <xar:else />
+            <xar:set name="action">"&xar-modurl-xtasks-user-quickproject;"</xar:set>
+        </xar:if>
+        <form method="post" action="#$action#" name="contactselect" id="contactselect" style="display: inline;" >
+            <div>
+                <div style="float: left; width: auto;">
+                    <xar:data-input type="contactlist" name="contactid" />
+                </div>
+                <div style="float: left; width: 100px;">
+                    <input type="submit" value="Get Projects" />
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+        </form>
+    </div>
+    <div style="clear: both;"></div>
     <div id="quickproject" name="quickproject"></div>
 </div>
 

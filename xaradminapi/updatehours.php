@@ -87,7 +87,7 @@ function xtasks_adminapi_updatehours($args)
     
     $mymemberid = xarModGetUserVar('xproject', 'mymemberid');
     if(!empty($taskinfo['owner']) && $taskinfo['owner'] != $mymemberid) {
-        xarModAPIFunc('xtasks', 'user', 'notify', array('contacttype' => 735, 'owner' => $taskinfo['owner'], 'taskid' => $taskid, 'action' => "HOURS"));
+        xarModAPIFunc('xtasks', 'user', 'notify', array('contacttype' => 779, 'owner' => $taskinfo['owner'], 'taskid' => $taskid, 'action' => "HOURS"));
     }
     
     if($taskinfo['parentid'] > 0) {

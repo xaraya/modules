@@ -41,9 +41,9 @@ function xtasks_admin_display($args)
     
     if (xarSecurityCheck('EditXTask', 0, 'Item', "$item[task_name]:All:$item[taskid]")) {
         $item['editurl'] = xarModURL('xtasks',
-            'admin',
-            'modify',
-            array('taskid' => $item['taskid']));
+                                    'admin',
+                                    'modify',
+                                    array('taskid' => $item['taskid']));
     } else {
         $item['editurl'] = '';
     }
@@ -96,7 +96,7 @@ function xtasks_admin_display($args)
     $data['project_name'] = "";
     $data['projectinfo'] = array();
     $data['project_url'] = "";
-    if($item['objectid'] > 0 && $item['modid'] = xarModGetIDFromName('xproject')) {
+    if($item['objectid'] > 0 && $item['modid'] == xarModGetIDFromName('xproject')) {
         $projectinfo = xarModAPIFunc('xproject',
                               'user',
                               'get',

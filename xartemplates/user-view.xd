@@ -2,94 +2,92 @@
 
 <xar:set name="xtasks_objectid">xarModGetVar('xtasks','xtasks_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xtasks" itemtype="1" itemid="$xtasks_objectid" />
-<div class="xar-mod-head">
-	<span class="xar-mod-title"><xar:mlstring>xTasks</xar:mlstring></span>
-</div>
+
+<xar:template type="module" file="admin-menu" />
+
 <div class="xar-mod-body">
+<div align="center">
+<xar:if condition="!empty($status)">
+    <div>#$status#</div>
+</xar:if>
 
-    <h2><xar:mlstring>View Tasks</xar:mlstring></h2>
 
-	<xar:template type="module" file="admin-menu" />
+<table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
+    <tr>
+        <th style="width: 300px;"><xar:mlstring>Name</xar:mlstring></th>
+        <th><xar:mlstring>Assigned&nbsp;To</xar:mlstring></th>
+        <th><xar:mlstring>Date&nbsp;Due</xar:mlstring></th>
+        <th><xar:mlstring>Status</xar:mlstring></th>
+        <th><xar:mlstring>Importance</xar:mlstring></th>
+        <th><xar:mlstring>Priority</xar:mlstring></th>
+        <th><xar:mlstring>Sub-Tasks</xar:mlstring></th>
+        <th style="width: 80px;"><xar:mlstring>Options</xar:mlstring></th>
+    </tr>
 
-	<xar:if condition="!empty($status)">
-	    <div class="xar-align-center">
-			#$status#
-		</div>
-	</xar:if>
-
-	<table class="xar-fullwidth">
-	    <tr>
-	        <th class="xar-thirdwidth"><xar:mlstring>Name</xar:mlstring></th>
-	        <th><xar:mlstring>Assigned&nbsp;To</xar:mlstring></th>
-	        <th><xar:mlstring>Date&nbsp;Due</xar:mlstring></th>
-	        <th><xar:mlstring>Status</xar:mlstring></th>
-	        <th><xar:mlstring>Importance</xar:mlstring></th>
-	        <th><xar:mlstring>Priority</xar:mlstring></th>
-	        <th><xar:mlstring>Sub-Tasks</xar:mlstring></th>
-	        <th><xar:mlstring>Options</xar:mlstring></th>
-	    </tr>
-
-	    <xar:foreach in="$xtasks" value="$xtaskinfo">
-	        <tr>
-	            <td>
-	                <xar:if condition="empty($xtaskinfo['link'])">
-	                    #$xtaskinfo['task_name']#
-	                <xar:else />
-	                    <a href="#$xtaskinfo['link']#">#$xtaskinfo['task_name']#</a>
-	                </xar:if>
-	            </td>
+    <xar:foreach in="$xtasks" value="$xtaskinfo">
     
-	            <td class="xar-align-center">
-	                <xar:if condition="isset($properties['owner'])">
-	                    <xar:data-output property="$properties['owner']" value="$xtaskinfo['owner']" />
-	                </xar:if>
-	            </td>
+        <tr>
+            <td class="xar-norm">
+                <xar:if condition="empty($xtaskinfo['link'])">
+                    #$xtaskinfo['task_name']#
+                <xar:else />
+                    <a href="#$xtaskinfo['link']#">#$xtaskinfo['task_name']#</a>
+                </xar:if>
+            </td>
     
-	            <td class="xar-align-center">
-	                <xar:if condition="isset($properties['date_end_planned']) and $xtaskinfo['date_end_planned'] gt 0">
-	                    <xar:data-output property="$properties['date_end_planned']" value="$xtaskinfo['date_end_planned']" dateformat="%a, %d %B %Y" />
-	                </xar:if>
-	            </td>
-	    
-	            <td class="xar-align-center">
-	                <xar:if condition="isset($properties['status'])">
-	                    <xar:data-output property="$properties['status']" value="$xtaskinfo['status']" />
-	                </xar:if>
-	            </td>
-	    
-	            <td class="xar-align-center">
-	                <xar:if condition="isset($properties['importance'])">
-	                    <xar:data-output property="$properties['importance']" value="$xtaskinfo['importance']" />
-	                </xar:if>
-	            </td>
-	    
-	            <td class="xar-align-center">
-	                <xar:if condition="isset($properties['priority'])">
-	                    <xar:data-output property="$properties['priority']" value="$xtaskinfo['priority']" />
-	                </xar:if>
-	            </td>
-	    
-	            <td class="xar-align-center">
-	                #$xtaskinfo['numchildren']#
-	            </td>
-	    
-	            <td class="xar-nowrap xar-align-center">
-					<a href="&xar-modurl-xtasks-admin-reassign;&amp;taskid=#$xtaskinfo['taskid']#"><img src="modules/xtasks/xarimages/button.reassign.gif" border="0"></a>
-					<a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$xtaskinfo['taskid']#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0"></a>
-					<a href="&xar-modurl-xtasks-admin-delete;&amp;taskid=#$xtaskinfo['taskid']#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0"></a>
-				</td>
-	        </tr>
-	
-	        <xar:if condition="!empty($xtaskinfo['description'])" >
-	            <tr>
-	                <td class="xtasks-desc" colspan="8">#$xtaskinfo['description']#</td>
-	            </tr>
-	        </xar:if>
-	    
-	    </xar:foreach>
-	</table>
+            <td class="xar-norm" align="center">
+                <xar:if condition="isset($properties['owner'])">
+                    <xar:data-output property="$properties['owner']" value="$xtaskinfo['owner']" />
+                </xar:if>
+            </td>
+    
+            <td class="xar-norm" align="center">
+                <xar:if condition="isset($properties['date_end_planned']) and $xtaskinfo['date_end_planned'] gt 0">
+                    <xar:data-output property="$properties['date_end_planned']" value="$xtaskinfo['date_end_planned']" dateformat="%a, %d %B %Y" />
+                </xar:if>
+            </td>
+    
+            <td class="xar-norm" align="center">
+                <xar:if condition="isset($properties['status'])">
+                    <xar:data-output property="$properties['status']" value="$xtaskinfo['status']" />
+                </xar:if>
+            </td>
+    
+            <td class="xar-norm" align="center">
+                <xar:if condition="isset($properties['importance'])">
+                    <xar:data-output property="$properties['importance']" value="$xtaskinfo['importance']" />
+                </xar:if>
+            </td>
+    
+            <td class="xar-norm" align="center">
+                <xar:if condition="isset($properties['priority'])">
+                    <xar:data-output property="$properties['priority']" value="$xtaskinfo['priority']" />
+                </xar:if>
+            </td>
+    
+            <td class="xar-norm" align="center">
+                #$xtaskinfo['numchildren']#
+            </td>
+    
+            <td class="xar-norm" style="text-align: center;"><a href="&xar-modurl-xtasks-admin-reassign;&amp;taskid=#$xtaskinfo['taskid']#"><img src="modules/xtasks/xarimages/button.reassign.gif" border="0"></a>&nbsp;<a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$xtaskinfo['taskid']#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0"></a>&nbsp;<a href="&xar-modurl-xtasks-admin-delete;&amp;taskid=#$xtaskinfo['taskid']#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0"></a></td>
+        </tr>
 
-	<div class="xar-align-center">
-		#$pager#
-	</div>
+        <xar:if condition="!empty($xtaskinfo['description'])" >
+            <tr>
+                <td class="xar-norm" colspan="6" style="margin-left: 50px;">#$xtaskinfo['description']#</td>
+            </tr>
+        </xar:if>
+    
+    </xar:foreach>
+
+
+
+</table>
+
+<br />
+
+</div>
+</div>
+<div class="xar-mod-foot">
+#$pager#
 </div>

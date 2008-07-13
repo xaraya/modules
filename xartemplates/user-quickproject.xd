@@ -1,41 +1,39 @@
 <xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xProject" itemtype="1" itemid="$projects_objectid" />
 
-<xar:if condition="!isset($showajax)">
-    <xar:set name="action">"javascript:loadContent('".xarModURL('xtasks','user','quicktask')."','quicktask','POST','searchprojects');"</xar:set>
-<xar:else />
-    <xar:set name="action">"&xar-modurl-xproject-admin-view;"</xar:set>
-</xar:if>
-
-<form method="post" action="#$action#" name="searchprojects" id="searchprojects" style="display: inline;" >
-
-	<div class="xar-form-input-wrapper">
-	    <label for="contactid" class="xar-form-label">
-	        <xar:mlstring>Project</xar:mlstring>
-	    </label>
-	    <xar:if condition="count($projectlist) gt 0">
-	        <xar:if condition="!isset($showajax)">
-	            <xar:set name="action">"javascript:loadContent('".xarModURL('xtasks','user','quicktask')."','quicktask','POST','searchprojects');"</xar:set>
-	        <xar:else />
-	            <xar:set name="action">"&xar-modurl-xproject-admin-view;"</xar:set>
-	        </xar:if>
-        
-          
-            <select name="projectid" onchange="#$action#">
-                <option value=""><xar:mlstring> - select a project - </xar:mlstring></option>
-            <xar:foreach in="$projectlist" value="$projectinfo">
-                <option value="#$projectinfo['projectid']#">#$projectinfo['project_name']#</option>
-            </xar:foreach>
-            </select>
+<div>
+    <div style="float: left; width: 200px;">
+        <strong><xar:mlstring>Project</xar:mlstring></strong>
+    </div>
+    <div style="float: left; width: 300px;">
+        <xar:if condition="count($projectlist) gt 0">
+            <xar:if condition="!isset($showajax)">
+                <xar:set name="action">"javascript:loadContent('".xarModURL('xtasks','user','quicktask')."','quicktask','POST','searchprojects');"</xar:set>
+            <xar:else />
+                <xar:set name="action">"&xar-modurl-xproject-admin-view;"</xar:set>
+            </xar:if>
             
-            <a href="&xar-modurl-xproject-admin-new;&amp;clientid=#$contactid#"><xar:mlstring>Create Project</xar:mlstring></a> 
-            
-	    <xar:else />
-	        <xar:mlstring>No projects exist for this contact.</xar:mlstring>
-	        <br />
-	        <a href="&xar-modurl-xproject-admin-new;&amp;clientid=#$contactid#"><xar:mlstring>Create Project</xar:mlstring></a>    
-	    </xar:if>
-	</div>
+                <form method="post" action="#$action#" name="searchprojects" id="searchprojects" style="display: inline;" >
+                
+                <select name="projectid" onChange="#$action#">
+                    <option value=""><xar:mlstring> - select a project - </xar:mlstring></option>
+                <xar:foreach in="$projectlist" value="$projectinfo">
+                    <option value="#$projectinfo['projectid']#">#$projectinfo['project_name']#</option>
+                </xar:foreach>
+                </select>
+                
+                <a href="&xar-modurl-xproject-admin-new;&amp;clientid=#$contactid#"><xar:mlstring>Create Project</xar:mlstring></a> 
+                
+                </form>
+        <xar:else />
+            <xar:mlstring>No projects exist for this contact.</xar:mlstring>
+            <br />
+            <a href="&xar-modurl-xproject-admin-new;&amp;clientid=#$contactid#"><xar:mlstring>Create Project</xar:mlstring></a>    
+        </xar:if>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+
 </form>
 
 <div id="quicktask" name="quicktask"></div>

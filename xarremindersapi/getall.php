@@ -33,10 +33,23 @@ function xtasks_remindersapi_getall($args)
                   taskid,
                   ownerid,
                   eventdate,
-                  reminder
+                  reminder,
+                  warning
             FROM $reminderstable
-            WHERE ownerid = $ownerid
-            ORDER BY eventdate";
+            WHERE ownerid = $ownerid";
+            
+    $whereclause = array();
+    if(!empty($startdate)) {
+        $whereclause[] = "DATE_SUB(eventdate, INTERVAL warning MINUTE) >= '".$startdate."'";
+    }
+    if(!empty($enddate)) {
+        $whereclause[] = "eventdate <= '".$enddate."'";
+    }
+    if(count($whereclause) > 0) {
+        $sql .= " AND ".implode(" AND ", $whereclause);
+    }
+    
+    $sql .= " ORDER BY eventdate";
 
     $result = $dbconn->Execute($sql);
 
@@ -60,7 +73,7 @@ function xtasks_remindersapi_getall($args)
     }
 
     $result->Close();
-
+    
     return $items;
 }
 

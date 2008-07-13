@@ -111,8 +111,8 @@ function xtasks_worklogapi_getall($args)
             $formatted_notes = nl2br($notes);
         }
         
-        $formatted_notes = ereg_replace("[[:alpha:]]+://[^<>[:space:]]+[[:alnum:]/]",
-                 "<a href=\"\\0\" target=\"new\">\\0</a>", $formatted_notes);
+//        $formatted_notes = ereg_replace("[[:alpha:]]+://[^<>[:space:]]+[[:alnum:]/]",
+//                 "<a href=\"\\0\" target=\"new\">\\0</a>", $formatted_notes);
                  
         $items[] = array('worklogid'        => $worklogid,
                           'taskid'          => $taskid,

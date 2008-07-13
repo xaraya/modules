@@ -2,52 +2,37 @@
 <xar:data-getitem name="$properties" module="xTasks" itemtype="3" itemid="$reminders_objectid" />
 
 <xar:if condition="!isset($ownerid)">
-    <xar:set name="ownerid">xarSessionGetVar('uid')</xar:set>
+    <xar:set name="ownerid">xarModGetUserVar('xproject', 'mymemberid')</xar:set>
 </xar:if>
 
 <div class="xar-mod-body">
-	<xar:if condition="$inline">
-		<fieldset>
-		    <legend>
-				<xar:mlstring>New Reminder</xar:mlstring>
-			</legend>
-	<xar:else />
-		<div class="xar-mod-head">
-			<span class="xar-mod-title"><xar:mlstring>xTasks Reminders</xar:mlstring></span>
-		</div>
-	    <h2><xar:mlstring>New Reminder</xar:mlstring></h2>
-
-	    <xar:template type="module" file="admin-menu" />
-	</xar:if>
-
-    <form method="post" action="#xarModUrl('xtasks','reminders','create')#">
-
-		<div class="xar-form-input-wrapper">
-		    <label for="ownerid" class="xar-form-label">
-		        <xar:data-label property="$properties['ownerid']" />
-		    </label>
-		    <xar:data-input property="$properties['ownerid']" name="ownerid" value="$ownerid" />
-		</div>
-
-		<div class="xar-form-input-wrapper">
-		    <label for="eventdate_input" class="xar-form-label">
-		        <xar:data-label property="$properties['eventdate']" />
-		    </label>
-		    <xar:data-input property="$properties['eventdate']" name="eventdate" />
-		</div>
-
-		<div class="xar-form-input-wrapper">
-		    <label for="reminder" class="xar-form-label">
-		        <xar:data-label property="$properties['reminder']" />
-		    </label>
-		    <xar:data-input property="$properties['reminder']" name="reminder" />
-		</div>
-
-            
-		<div class="xar-align-center xar-margin-thickends">
-            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('xtasks')#" />
+    <div align="center">
+    
+        <form method="post" action="&xar-modurl-xtasks-reminders-create;">
+        
+            <input type="hidden" name="authid" value="#$authid#" />
             <input type="hidden" name="taskid" value="#$taskid#" />
-			<input type="submit" name="submit" value="#xarML('Add Reminder')#" />
-		</div>
-    </form>
+            
+            <table width="100%" border="0" cellspacing="0" cellpadding="2">
+                <tr>
+                    <td><xar:data-label property="$properties['ownerid']" /></td>
+                    <td><xar:data-input property="$properties['ownerid']" name="ownerid" value="$ownerid" /></td>
+                </tr>
+                <tr>
+                    <td><xar:data-label property="$properties['eventdate']" /></td>
+                    <td><xar:data-input property="$properties['eventdate']" name="eventdate" /></td>
+                </tr>
+                <tr>
+                    <td><xar:data-label property="$properties['reminder']" /></td>
+                    <td><xar:data-input property="$properties['reminder']" name="reminder" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><br /><input type="submit" name="submit" value="#$addbutton#" /></td>
+                </tr>
+            </table>
+            
+            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('xtasks')#" />
+        
+        </form>
+    </div>
 </div>

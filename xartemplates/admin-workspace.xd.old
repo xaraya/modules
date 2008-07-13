@@ -15,7 +15,7 @@
     <input type="hidden" name="itemtype" value="#$itemtype#" />
     <input type="hidden" name="objectid" value="#$objectid#" />
     <xar:if condition="!isset($returnurl)">
-        <xar:set name="returnurl">xarServerGetVar('HTTP_REFERER')</xar:set>
+        <xar:set name="returnurl">$_SERVER['HTTP_REFERER']</xar:set>
     </xar:if>
     <input type="hidden" name="returnurl" id="returnurl" value="#$returnurl#" />
     

@@ -3841,7 +3841,7 @@ class Image {
 	
 	$this->SetAutoMargin();		
 	
-	if( $GLOBALS['gd2']==true && USE_TRUECOLOR ) {
+	if( isset($GLOBALS['gd2']) && $GLOBALS['gd2']==true && USE_TRUECOLOR ) {
 	    $this->img = @imagecreatetruecolor($aWidth, $aHeight);
 	    if( $this->img < 1 ) {
 		die("<font color=\"red\"><b>JpGraph Error:</b></font> Can't create truecolor image. Check that you really have GD2 library installed.");

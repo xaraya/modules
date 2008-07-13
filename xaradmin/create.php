@@ -21,10 +21,10 @@ function xtasks_admin_create($args)
     if (!xarVarFetch('objectid',  'isset', $objectid,   NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('parentid', 'id', $parentid, $parentid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('dependentid', 'id', $dependentid, $dependentid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('projectid', 'id', $projectid, $projectid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('projectid', 'isset', $projectid, $projectid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('task_name', 'str:1:', $task_name, $task_name, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('private', 'str:1:', $private, $private, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('description', 'str', $description, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('description', 'str::', $description, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('creator', 'id', $creator, $creator, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('owner', 'id', $owner, $owner, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('assigner', 'id', $assigner, $assigner, XARVAR_NOT_REQUIRED)) return;

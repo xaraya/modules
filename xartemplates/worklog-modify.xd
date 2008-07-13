@@ -3,77 +3,49 @@
 <xar:set name="xtasks_objectid">xarModGetVar('xtasks','xtasks_objectid')</xar:set>
 <xar:data-getitem name="$taskproperties" module="xTasks" itemtype="1" itemid="$xtasks_objectid" />
 
-<div class="xar-mod-head">
-	<span class="xar-mod-title"><xar:mlstring>xTasks Administration</xar:mlstring></span>
-</div>
+<xar:template type="module" file="admin-menu" />
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Audit Work Record</xar:mlstring></span></div>
 <div class="xar-mod-body">
-
-    <h2><xar:mlstring>Audit Work Record</xar:mlstring></h2>
-
-	<xar:template type="module" file="admin-menu" />
 
     <form method="post" action="&xar-modurl-xtasks-worklog-update;">
     
-		<div class="xar-form-input-wrapper">
-		    <label class="xar-form-label">
-		        <xar:mlstring>Task Name</xar:mlstring>
-		    </label>
-		    #$taskinfo['task_name']#
-		</div>
-
-		<div class="xar-form-input-wrapper">
-		    <label class="xar-form-label">
-		        <xar:mlstring>Work Performed By</xar:mlstring>
-		    </label>
-		    <xar:data-output property="$properties['ownerid']" value="$item['ownerid']" />
-		</div>
-
-		<div class="xar-form-input-wrapper">
-		    <label for="eventdate_input" class="xar-form-label">
-		        <xar:mlstring>Work Date</xar:mlstring>
-		    </label>
-		    <xar:data-input property="$properties['eventdate']" name="eventdate" value="$item['eventdate']" />
-		</div>
-
-		<fieldset>
-			<legend>
-				<xar:mlstring>Hours Planned</xar:mlstring>
-			</legend>
-
-			<div class="xar-form-input-wrapper">
-			    <label for="hours_planned" class="xar-form-label">
-			        <xar:mlstring>Planned</xar:mlstring>
-			    </label>
-			    <xar:data-output property="$taskproperties['hours_planned']" value="$taskinfo['hours_planned']" />
-			</div>
-
-			<div class="xar-form-input-wrapper">
-			    <label for="hours" class="xar-form-label">
-			        <xar:mlstring>Worked</xar:mlstring>
-			    </label>
-			    <xar:data-input property="$properties['hours']" name="hours" value="$item['hours']" />
-			</div>
-
-			<div class="xar-form-input-wrapper">
-			    <label for="hours_remaining" class="xar-form-label">
-			        <xar:mlstring>Remaining</xar:mlstring>
-			    </label>
-			    <xar:data-input property="$taskproperties['hours_remaining']" name="hours_remaining" value="$taskinfo['hours_remaining']" />
-			</div>
-
-		</fieldset>
-
-		<div class="xar-form-input-wrapper">
-		    <label for="notes" class="xar-form-label">
-		        <xar:mlstring>Notes</xar:mlstring>
-		    </label>
-		    <xar:data-input property="$properties['notes']" name="notes" value="$item['notes']" />
-		</div>
-
-		<div class="xar-align-center xar-margin-thickends">
-		    <input type="hidden" name="authid" value="#$authid#" />
-		    <input type="hidden" name="worklogid" value="#$worklogid#" />
-			<input type="submit" value="#xarML('Update')#">    
-    	</div>
+    <input type="hidden" name="authid" value="#$authid#" />
+    <input type="hidden" name="worklogid" value="#$worklogid#" />
+    
+    <table width="100%" border="0" cellspacing="0" cellpadding="2">
+        <tr>
+            <td class="xtasks-display-label"><xar:mlstring>Task Name</xar:mlstring></td>
+            <td class="xtasks-display-input"><strong>#$taskinfo['task_name']#</strong></td>
+        </tr>
+        <tr>
+            <td class="xtasks-display-label"><xar:mlstring>Work Performed By</xar:mlstring></td>
+            <td class="xtasks-display-input"><xar:data-output property="$properties['ownerid']" value="$item['ownerid']" /></td>
+        </tr>
+        <tr>
+            <td class="xtasks-display-label"><xar:mlstring>Work Date</xar:mlstring></td>
+            <td class="xtasks-display-input"><xar:data-input property="$properties['eventdate']" name="eventdate" value="$item['eventdate']" /></td>
+        </tr>
+        <tr>
+            <td class="xtasks-display-label"><xar:mlstring>Hours Planned</xar:mlstring></td>
+            <td class="xtasks-display-input"><xar:data-output property="$taskproperties['hours_planned']" value="$taskinfo['hours_planned']" />
+        </tr>
+        <tr>
+            <td class="xtasks-display-label"><xar:mlstring>Hours Worked</xar:mlstring></td>
+            <td class="xtasks-display-input"><xar:data-input property="$properties['hours']" name="hours" value="$item['hours']" /></td>
+        </tr>
+        <tr>
+            <td class="xtasks-display-label"><xar:mlstring>Hours Remaining</xar:mlstring></td>
+            <td class="xtasks-display-input"><xar:data-input property="$taskproperties['hours_remaining']" name="hours_remaining" value="$taskinfo['hours_remaining']" />
+        </tr>
+        <tr>
+            <td class="xtasks-display-label"><xar:mlstring>Notes</xar:mlstring></td>
+            <td class="xtasks-display-input"><xar:data-input property="$properties['notes']" name="notes" value="$item['notes']" /></td>
+        </tr>
+        <tr>
+            <td colspan=2 align="center" class="xtasks-display-input"><br /><input type="submit" value="#$updatebutton#"></td>
+        </tr>
+    </table>
+    
     </form>
 </div>

@@ -1,28 +1,11 @@
 <?php
-/**
- * Emails alerts
- *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002-2005 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Julian Module
- * @copyright (C) 2004 by Metrostat Technologies, Inc.
- */
  
-/*
- * Emails alerts re: events to the user based on which categories the user has selected to recieve.
- * This script is intended to be run via the scheduler module. It should be run once a day.
- *
- * initial template: Roger Raymond
- * @author Jodie Razdrh/John Kevlin/David St.Clair
- * @link http://www.metrostat.net
- * 
- * @access private
- *
- * @ TODO MichelV <1> Generate cleaner mail function to incorporate templates.
- */
+// TODO: INCREASE TASK PRIORITY BY ONE IF:
+// * IS LOWER THAN PROJECT IMPORTANCE?
+// * IS LOWER THAN TASK IMPORTANCE?
+// * TASKS NOT BELONGING TO PROJECTS ARE NOT AFFECTED BY THIS ROUTINE?
+// * INCREMENT ONCE PER [DAY|WEEK]?
+ 
 function xtasks_schedulerapi_autoincrement($args)
 {
     extract ($args);

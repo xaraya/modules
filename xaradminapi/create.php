@@ -18,6 +18,9 @@ function xtasks_adminapi_create($args)
     if (!isset($task_name) || !is_string($task_name)) {
         $invalid[] = 'task_name';
     }
+    if (isset($projectid) && $projectid == "error") {
+        $invalid[] = 'Invalid Project';
+    }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     join(', ',$invalid), 'admin', 'create', 'xtasks');
@@ -26,10 +29,25 @@ function xtasks_adminapi_create($args)
         return;
     }
     
-    $mymemberid = xarModGetUserVar('xproject', 'mymemberid');
+    $xproject_modid = xarModGetIDFromName('xProject');
+    if($modid == $xproject_modid) {
+        $projectid = $objectid;
+    }
+    
+    // NEED TO TOGGLE BASED ON CONTACT FIELD TYPE
+    $mymemberid = xarModGetUserVar('xproject', 'mymemberid'); // xarSessionGetVar('uid'); // 
+    
+    $timezonestr = xarModGetUserVar('roles','usertimezone');
+    if(!empty($timezonestr)) {
+        $timezonearray = unserialize($timezonestr);
+        $timezone = $timezonearray['timezone'];
+    } else {
+        $timezone = xarConfigGetVar('Site.Core.TimeZone');
+    }
+    
 
     if (!isset($creator) || !is_numeric($creator)) {
-        $creator = xarSessionGetVar('uid');
+        $creator = $mymemberid;
     }
 
     if (!isset($owner) || !is_numeric($owner)) {
@@ -37,7 +55,7 @@ function xtasks_adminapi_create($args)
     }
 
     if (!isset($assigner) || !is_numeric($assigner)) {
-        $assigner = xarSessionGetVar('uid');
+        $assigner = $mymemberid;
     }
     
     if (!xarSecurityCheck('AddXProject', 1, 'Item', "$task_name:All:All")) {
@@ -103,10 +121,10 @@ function xtasks_adminapi_create($args)
                     $owner ? $owner : 0,
                     $assigner ? $assigner : 0,
                     $groupid ? $groupid : 0,
-                    $date_start_planned ? $date_start_planned : NULL,
-                    $date_start_actual ? $date_start_actual : NULL,
-                    $date_end_planned ? $date_end_planned : NULL,
-                    $date_end_actual ? $date_end_actual : NULL,
+                    $date_start_planned ? $date_start_planned." ".$timezone : NULL,
+                    $date_start_actual ? $date_start_actual." ".$timezone : NULL,
+                    $date_end_planned ? $date_end_planned." ".$timezone : NULL,
+                    $date_end_actual ? $date_end_actual." ".$timezone : NULL,
                     $hours_planned,
                     $hours_spent,
                     $hours_remaining);
@@ -119,7 +137,7 @@ function xtasks_adminapi_create($args)
     $taskid = $dbconn->PO_Insert_ID($xtaskstable, 'taskid');
     
     if(!empty($owner) && $owner != $mymemberid) {
-        xarModAPIFunc('xtasks', 'user', 'notify', array('owner' => $owner, 'taskid' => $taskid, 'action' => "CREATE"));
+        xarModAPIFunc('xtasks', 'user', 'notify', array('contacttype' => 779, 'owner' => $owner, 'taskid' => $taskid, 'action' => "CREATE"));
     }
     
     if($parentid > 0) {
@@ -132,6 +150,16 @@ function xtasks_adminapi_create($args)
                         'hours_planned_delta' => $hours_planned,
                         'hours_spent_delta' => $hours_spent,
                         'hours_remaining_delta' => $hours_remaining));
+    }
+    
+    if($projectid > 0) {
+        $projectinfo = xarModAPIFunc('xproject', 'user', 'get', array('projectid' => $projectid));
+        if($projectinfo == false) return;
+        
+        if($date_end_planned > $projectinfo['planned_end_date']) {
+            $projectinfo['planned_end_date'] = $date_end_planned;
+            if(!xarModAPIFunc('xproject', 'admin', 'update',$projectinfo)) return;
+        }
     }
         
     $item = $args;

@@ -25,7 +25,7 @@ function xtasks_worklog_report($args)
     if (!xarVarFetch('ttldays',   'int::', $ttldays,   7, XARVAR_NOT_REQUIRED)) return;
     
     if(!$ownersearch) $ownerid = NULL;
-
+    
     $data = xarModAPIFunc('xtasks','admin','menu');
 
     $data['worklog'] = array();
@@ -47,15 +47,15 @@ function xtasks_worklog_report($args)
     if (!isset($worklog) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
     
     $worksummary = array();
-
+    
     if(empty($reportview)) {
         $filter_1 = "thisprojectid";
         $filter_2 = "taskownerid";
         $filter_3 = "workdate";
     } else {
         list($filter_1,$filter_2,$filter_3) = split(":",$reportview);
-	}
-
+    }
+    
     foreach($worklog as $workinfo) {
         list($workdate,$worktime) = explode(" ", $workinfo['eventdate']);
         

@@ -27,15 +27,20 @@ function xtasks_user_mytasks($args)
     $data['maxdepth'] = xarModGetVar('xtasks', 'maxdepth');
 
     $data['authid'] = xarSecGenAuthKey();
-
+    
+    $data['mymemberid'] = $mymemberid;
+    $data['mymemberinfo'] = array('sortname'=>xarML('you have not chosen a contact record as your own'));
+    if($data['mymemberid']) {
+        $data['mymemberinfo'] = xarModAPIFunc('dossier','user','get',array('contactid'=>$mymemberid));;
+    }
+    
     $data['addbutton'] = xarVarPrepForDisplay(xarML('Add'));
 
     $data['xtasks_objectid'] = xarModGetVar('xtasks', 'xtasks_objectid');
 //    xarModAPILoad('xtaskss', 'user');
-    $items = xarModAPIFunc('xtasks', 'user', 'getall',
+    $items = xarModAPIFunc('xtasks', 'user', 'getall_weighted',
                             array('owner' => $mymemberid,
                                   'startnum' => $startnum,
-                                  'orderby' => $orderby,
                                   'mode' => "Open",
                                   'numitems' => xarModGetVar('xtasks','itemsperpage')));
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
@@ -62,6 +67,8 @@ function xtasks_user_mytasks($args)
                 $taskinfo['project_url'] = xarModURL('xproject', 'admin', 'display', array('projectid' => $projectinfo['projectid']));
             }
         }
+        $taskinfo['worklog'] = xarModAPIFunc('xtasks','worklog','getallfromtask',array('taskid'=>$item['taskid']));
+    
         $tasklist[] = $taskinfo;
     }
     
@@ -83,7 +90,7 @@ function xtasks_user_mytasks($args)
     
     $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('xtasks', 'user', 'countitems', 
-                    array('memberid' => $mymemberid,
+                    array('mymemberid' => $mymemberid,
                             'statusfilter' => "Active")),
         xarModURL('xtasks', 'user', 'mytasks', 
                     array('startnum' => '%%',

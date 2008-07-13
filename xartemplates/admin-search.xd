@@ -14,7 +14,7 @@
     
     <div align="center">
 
-        <form method="post" action="#xarModUrl('xtasks','admin','search')#" name="searchtasks" id="searchtasks">
+        <form method="post" action="&xar-modurl-xtasks-admin-search;" name="searchtasks" id="searchtasks">
             <input type="hidden" name="orderby" value="#$orderby#">
             <div style="margin: 2px;">
                 <xar:mlstring>Search: </xar:mlstring><input type="text" name="q" value="#$q#" size="10">
@@ -42,7 +42,7 @@
             </div>
         </form>
     
-        <form method="post" action="#xarModUrl('xtasks','admin','process')#">
+        <form method="post" action="&xar-modurl-xtasks-admin-process;">
         <input type="hidden" name="authid" value="#$authid#" />
         <input type="hidden" name="returnurl" value="#$returnurl#" />
         
@@ -85,7 +85,7 @@
                     <th style="width: 80px;"><xar:if condition="$orderby ne 'priority'"><a href="#$returnurl#&amp;orderby=priority"><xar:mlstring>Priority</xar:mlstring></a><xar:else /><xar:mlstring>Priority</xar:mlstring></xar:if></th>
                 </xar:if>
                 <th style="width: 80px;"><xar:if condition="$orderby ne 'status'"><a href="#$returnurl#&amp;orderby=status"><xar:mlstring>Status</xar:mlstring></a><xar:else /><xar:mlstring>Status</xar:mlstring></xar:if></th>
-                <th style="width: 50px;"><a href="#xarModUrl('xtasks','user','settings')#"><xar:mlstring>Options</xar:mlstring></a></th>
+                <th style="width: 50px;"><a href="&xar-modurl-xtasks-user-settings;"><xar:mlstring>Options</xar:mlstring></a></th>
             </tr>
         
             <xar:foreach in="$items" value="$taskinfo">

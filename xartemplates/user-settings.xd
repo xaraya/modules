@@ -2,34 +2,34 @@
 <xar:set name="itemids">array($uid)</xar:set>
 <xar:data-getitems name="$properties" value="$values" module="roles" itemtype="704" itemids="$itemids" />
 
-<div class="xar-mod-body xtasks">
 
-    <h2>
-		<xar:mlstring>My Settings for xTasks</xar:mlstring>
-	</h2>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>My Settings for xTasks</xar:mlstring></span></div>
+    
+<div class="xar-mod-body xtasks">
     
     <p><xar:mlstring>This uses dynamic user settings, i.e. you can add/remove the user settings available to your users dynamically too. But you could use the 'normal' hard-coded approach here as well...</xar:mlstring></p>
-
-    <form method="post" action="&xar-modurl-dynamicdata-admin-update;">
+<!--    <pre><xar:set name="dummy">print_r($properties)</xar:set></pre>-->
+        <form method="post" action="&xar-modurl-dynamicdata-admin-update;">
         <fieldset>
-	        <legend>
-				<xar:mlstring>User Settings</xar:mlstring>
-			</legend>
+            <legend><xar:mlstring>User Settings</xar:mlstring></legend>
             
-			<xar:data-form module="roles" itemtype="704" itemid="$uid" />
-
-			<div class="xar-form-input-wrapper-after">
-				<input type="hidden" name="authid" value="#xarSecGenAuthKey('dynamicdata')#" />
-				<input type="hidden" name="modid" value="#xarModGetIDFromName('roles')#" />
-				<input type="hidden" name="itemtype" value="#xarModGetIDFromName('xtasks')#" />
-				<input type="hidden" name="itemid" value="#$uid#" />
-				<input type="hidden" name="return_url" value="#$returnurl#" />
-				<input type="submit" value="#$submitlabel#" />
-			</div>
-		</fieldset>
-	</form>
+       <xar:data-form module="roles" itemtype="704" itemid="$uid" />
+            
+            <div class="xar-form-input-wrapper-after">
+              <input type="hidden" name="authid" value="#xarSecGenAuthKey('dynamicdata')#" />
+              <input type="hidden" name="modid" value="#xarModGetIDFromName('roles')#" />
+              <input type="hidden" name="itemtype" value="#xarModGetIDFromName('xtasks')#" />
+              <input type="hidden" name="itemid" value="#$uid#" />
+              <input type="hidden" name="return_url" value="#$returnurl#" />
+              <input type="submit" value="#$submitlabel#" />
+            </div>
+        
+        </fieldset>
+        </form>
     <p class="xar-align-center">
-        <xar:mlstring>This part could be made available in Your Account...</xar:mlstring>
+        <strong>This part could be made available in Your Account...</strong>
     </p>
 
 </div>
+
+<div class="xar-mod-foot"></div>

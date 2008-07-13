@@ -14,11 +14,14 @@ function xtasks_worklogapi_create($args)
     extract($args);
     
     if (!isset($ownerid) || !is_numeric($ownerid)) {
-        $ownerid = xarSessionGetVar('uid');
+        $ownerid = xarModGetUserVar('xproject', 'mymemberid');
     }
 
     $invalid = array();
     if (!isset($taskid) || !is_numeric($taskid)) {
+        $invalid[] = 'taskid';
+    }
+    if (!isset($ownerid) || !is_numeric($ownerid)) {
         $invalid[] = 'taskid';
     }
     if (!isset($eventdate) || !is_string($eventdate)) {
@@ -37,6 +40,46 @@ function xtasks_worklogapi_create($args)
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION', new SystemException($msg));
         return;
     }
+    /*
+//    $eventdate xarMLS_userOffset($eventdate);
+    $timestamp = strtotime($eventdate);
+    $timezonestr = xarModGetUserVar('roles','usertimezone');
+    if(!empty($timezonestr)) {
+        $timezonearray = unserialize($timezonestr);
+        $timezone = $timezonearray['timezone'];
+        $offset = $timezonearray['offset'];
+    } else {
+        $timezone = xarConfigGetVar('Site.Core.TimeZone');
+    }
+    if (isset($timestamp) && !empty($timezone) && function_exists('xarModAPIFunc')) {
+        $adjust = xarModAPIFunc('base','user','dstadjust',
+                                array('timezone' => $timezone,
+                                      // pass the timestamp *with* the offset
+                                      'time'     => $timestamp + $offset * 3600));
+
+    } else {
+        $adjust = 0;
+    }
+    $offset = $offset + $adjust;
+    */
+    $offset = xarMLS_userOffset($eventdate);
+    $eventdate = date("Y-m-d H:i:s", strtotime($eventdate) - ($offset * 3600));
+    /*
+    $eventdate = xarLocaleFormatDate("%Y-%m-%d %H:%M:%S",$eventdate)
+    
+    
+    
+    $eventdateproperty = xarModAPIFunc('dynamicdata','user','getproperty',
+                                         array('name' => 'eventdate',
+                                               'type' => 'calendar',
+                                               'validation' => ""));
+    $check = $eventdateproperty->checkInput('eventdate');
+    if (!$check) {
+        $eventdate = '';
+    } else {
+        $eventdate = $eventdateproperty->value;
+    }
+    */
 
     $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -53,7 +96,7 @@ function xtasks_worklogapi_create($args)
                   hours,
                   notes)
             VALUES (?,?,?,?,?,?)";
-
+// CONVERT_TZ('".$eventdate."','".(isset($offset) ? sprintf("%02d", $offset).":00" : "+00:00")."','+00:00')
     $bindvars = array(
               $nextId,
               $taskid,
@@ -61,7 +104,7 @@ function xtasks_worklogapi_create($args)
               $eventdate,
               $hours,
               $notes);
-              
+//echo "test: ".$query."<pre>";print_r($bindvars);die("</pre>");
     $result = &$dbconn->Execute($query,$bindvars);
     
     if (!$result) return;

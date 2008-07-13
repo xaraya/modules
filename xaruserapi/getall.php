@@ -20,8 +20,10 @@ function xtasks_userapi_getall($args)
         $modid = xarModGetIDFromName($modname);
     }
     
-    $show_project = xarModGetUserVar('xtasks', 'show_project');
-    $show_client = xarModGetUserVar('xtasks', 'show_client');
+    if(!xarModAPILoad('xproject','user')) return;
+    
+    if(!isset($show_project)) $show_project = xarModGetUserVar('xtasks', 'show_project');
+    if(!isset($show_client)) $show_client = xarModGetUserVar('xtasks', 'show_client');
     
     if (!isset($mode)) {
         $mode = "";
@@ -133,6 +135,10 @@ function xtasks_userapi_getall($args)
         $whereclause[] = "a.owner = ".$owner;
     }
             
+    if($mode == "Calendar") {
+        $whereclause[] = "a.owner != 0";
+    }
+            
     if(isset($creator) && $creator > 0) {
         $whereclause[] = "a.creator = ".$creator;
     }
@@ -177,9 +183,14 @@ function xtasks_userapi_getall($args)
         $statusfilter = "";
     }
     
+    if(isset($date_end_planned) && !empty($date_end_planned)) {
+        $maxdate = date("Y-m-d", strtotime($date_end_planned) - (7 * 24 * 3600));
+        $whereclause[] = "a.date_end_planned <= '".$date_end_planned."' ";
+        $whereclause[] = "a.date_end_planned > '".$maxdate."'";
+    }
+    
     if($private == "public") $whereclause[] = "a.private != '1'";
     if(!empty($status)) $whereclause[] = "a.status = '".$status."'";
-//    if($clientid > 0) $whereclause[] = "clientid = '".$clientid."'";
     if($max_priority > 0) $whereclause[] = "a.priority <= '".$max_priority."'";
     if(isset($dependentid)) $whereclause[] = "a.dependentid = '".$dependentid."'";
     if($max_importance > 0) $whereclause[] = "a.importance <= '".$max_importance."'";
@@ -196,26 +207,29 @@ function xtasks_userapi_getall($args)
 
     switch($orderby) {
         case "task_name":
-            $sql .= " ORDER BY statusid, a.task_name";
+            $sql .= " ORDER BY statusid, a.date_end_actual, a.task_name";
             break;
         case "importance":
-            $sql .= " ORDER BY statusid, a.importance, a.task_name";
+            $sql .= " ORDER BY statusid, a.date_end_actual, a.importance, a.task_name";
             break;
         case "priority":
-            $sql .= " ORDER BY statusid, a.priority, a.task_name";
+            $sql .= " ORDER BY statusid, a.date_end_actual, a.priority, a.task_name";
             break;
         case "status":
-            $sql .= " ORDER BY statusid, a.status, a.task_name";
+            $sql .= " ORDER BY statusid, a.date_end_actual, a.status, a.task_name";
             break;
         default:
             if(isset($mymemberid)) {
-                $sql .= " ORDER BY statusid, a.date_start_planned, a.date_end_planned, a.priority, a.task_name ";
+                $sql .= " ORDER BY statusid, a.date_end_actual, a.date_start_planned, a.date_end_planned, a.priority, a.task_name ";
             } elseif(isset($memberid)) {
-                $sql .= " ORDER BY statusid, a.date_start_planned, a.date_end_planned, a.importance, a.task_name ";
+                $sql .= " ORDER BY statusid, a.date_end_actual, a.date_start_planned, a.date_end_planned, a.importance, a.task_name ";
+            } elseif($mode == "Calendar") {
+                $sql .= " ORDER BY a.date_end_planned DESC, a.owner, statusid, a.date_start_planned, a.importance, a.task_name ";
             } else {//if($statusfilter == "Closed") {
-                $sql .= " ORDER BY statusid, a.date_start_planned, a.date_end_planned, a.task_name ";
+                $sql .= " ORDER BY statusid, a.date_end_actual, a.date_start_planned, a.date_end_planned, a.priority, a.task_name ";
             }
     }
+//    echo $sql;
 /*
     if ($selected_project != "all") {
         $sql .= " AND $xtasks_todos_column[project_id]=".$selected_project;
@@ -281,7 +295,7 @@ function xtasks_userapi_getall($args)
              $hours_spent,
              $hours_remaining,
              $numchildren) = $result->fields;
-        if (xarSecurityCheck('ReadXTask', 0, 'Item', "$task_name:All:$taskid")) {
+//        if (xarSecurityCheck('ReadXTask', 0, 'Item', "$task_name:All:$taskid")) {
             $numtasks = xarModAPIFunc('xtasks', 'user', 'countitems', array('projectid' => $projectid));
             if(!empty($date_created) && $date_created != "0000-00-00") {
                 $days_old = sprintf("%01.1f", (time() - strtotime($date_created) ) / (24 * 60 * 60));
@@ -297,6 +311,7 @@ function xtasks_userapi_getall($args)
             $projectinfo = array();
             if(($show_project || $show_client) && $projectid > 0) {
                 $projectinfo = xarModAPIFunc('xproject', 'user', 'get', array('projectid' => $projectid));
+                if($projectinfo == false) xarErrorFree();
             }
     
             if(preg_match("/<br\\s*?\/??>/i", $description)) {
@@ -340,7 +355,7 @@ function xtasks_userapi_getall($args)
                             'hours_remaining' => $hours_remaining,
                             'numchildren' => $numchildren,
                             'projectinfo' => $projectinfo);
-        }
+//        }
     }
 
     $result->Close();
