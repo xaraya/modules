@@ -15,17 +15,16 @@
  * Return courses table names to xaraya
  *
  * This function is called internally by the core whenever the module is
- * loaded.  It is loaded by xarMod__loadDbInfo().
+ * loaded. It is loaded by xarMod__loadDbInfo().
  *
  * @access private
- * @return array
+ * @return array with the coursetable names
  */
 function courses_xartables()
 {
     // Initialise table array
     $xarTables = array();
-    // Get the name for the course table.  This is not necessary
-    // but helps in the following statements and keeps them readable
+    // Get the name for the course table. For historic reasons, this one does not have the prefix of 'courses'
     $courses = xarDBGetSiteTablePrefix() . '_courses';
     // Set the table name
     $xarTables['courses'] = $courses;

@@ -3,7 +3,7 @@
  * Get all planned courses
  *
  * @package modules
- * @copyright (C) 2005-2007 The Digital Development Foundation
+ * @copyright (C) 2005-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -32,7 +32,7 @@ function courses_userapi_getallplanned($args)
     // Security check
     if (!xarSecurityCheck('ReadCourses')) return;
 
-    if (!isset($sortby) || (isset($sortby) && !in_array($sortby,array('planningid','courseid','credits','courseyear','startdate')))) {
+    if (!isset($sortby) || (isset($sortby) && !in_array($sortby,array('planningid','courseid','credits','courseyear','startdate','name','number')))) {
         $sortby ='startdate';
     }
     if (!isset($startnum) || !is_numeric($startnum)) {
@@ -57,6 +57,7 @@ function courses_userapi_getallplanned($args)
     } else {
     $where = "0";
     }
+
 
     // Get items
     $query = "SELECT $planningtable.xar_planningid,
@@ -93,7 +94,8 @@ function courses_userapi_getallplanned($args)
                    $coursestable.xar_name,
                    $coursestable.xar_number";
 
-    // TODO: how to select by cat ids (automatically) when needed ???
+    // Create the general join part
+    $join = "LEFT JOIN $coursestable ON $planningtable.xar_courseid = $coursestable.xar_courseid";
     // 2=planned courses
     if (!empty($catid) && xarModIsHooked('categories','courses')) {
         // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
@@ -102,6 +104,7 @@ function courses_userapi_getallplanned($args)
                                              'catid' => $catid));
         if (!empty($categoriesdef)) {
             $query .= " FROM ($planningtable
+                        $join
                         LEFT JOIN $categoriesdef[table]
                         ON $categoriesdef[field] = $coursestable.xar_courseid )
                         $categoriesdef[more]
@@ -110,15 +113,21 @@ function courses_userapi_getallplanned($args)
                         ";
             } else {
                 $query .= " FROM $planningtable
+                            $join
                             WHERE $planningtable.xar_hideplanning in ($where)";
             }
      } else {
         $query .= " FROM $planningtable
-                    LEFT JOIN $coursestable ON $planningtable.xar_courseid = $coursestable.xar_courseid
+                    $join
                     WHERE $planningtable.xar_hideplanning in ($where)";
      }
 
-    $query .= " ORDER BY $planningtable.xar_" . $sortby ;
+    // Create the sort part of the query
+    if (in_array($sortby, array('planningid','courseid','credits','courseyear','startdate'))) {
+        $query .= " ORDER BY $planningtable.xar_" . $sortby ;
+    } elseif (in_array($sortby, array('name','number'))) {
+        $query .= " ORDER BY $coursestable.xar_" . $sortby ;
+    }
     $query .= " $sortorder";
 
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
