@@ -48,6 +48,7 @@ function courses_userapi_getallplanned($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $planningtable = $xartable['courses_planning'];
+    $coursestable = $xartable['courses'];
     // TODO: how to select by cat ids (automatically) when needed ???
 
     // Set to be able to see all courses or only non-hidden ones
@@ -58,36 +59,39 @@ function courses_userapi_getallplanned($args)
     }
 
     // Get items
-    $query = "SELECT xar_planningid,
-                   xar_courseid,
-                   xar_credits,
-                   xar_creditsmin,
-                   xar_creditsmax,
-                   xar_courseyear,
-                   xar_startdate,
-                   xar_enddate,
-                   xar_expected,
-                   xar_prerequisites,
-                   xar_aim,
-                   xar_method,
-                   xar_language,
-                   xar_longdesc,
-                   xar_costs,
-                   xar_committee,
-                   xar_coordinators,
-                   xar_lecturers,
-                   xar_location,
-                   xar_material,
-                   xar_info,
-                   xar_program,
-                   xar_regurl,
-                   xar_extreg,
-                   xar_hideplanning,
-                   xar_minparticipants,
-                   xar_maxparticipants,
-                   xar_closedate,
-                   xar_hideplanning,
-                   xar_last_modified";
+    $query = "SELECT $planningtable.xar_planningid,
+                   $planningtable.xar_courseid,
+                   $planningtable.xar_credits,
+                   $planningtable.xar_creditsmin,
+                   $planningtable.xar_creditsmax,
+                   $planningtable.xar_courseyear,
+                   $planningtable.xar_startdate,
+                   $planningtable.xar_enddate,
+                   $planningtable.xar_expected,
+                   $planningtable.xar_prerequisites,
+                   $planningtable.xar_aim,
+                   $planningtable.xar_method,
+                   $planningtable.xar_language,
+                   $planningtable.xar_longdesc,
+                   $planningtable.xar_costs,
+                   $planningtable.xar_committee,
+                   $planningtable.xar_coordinators,
+                   $planningtable.xar_lecturers,
+                   $planningtable.xar_location,
+                   $planningtable.xar_material,
+                   $planningtable.xar_info,
+                   $planningtable.xar_program,
+                   $planningtable.xar_regurl,
+                   $planningtable.xar_extreg,
+                   $planningtable.xar_hideplanning,
+                   $planningtable.xar_minparticipants,
+                   $planningtable.xar_maxparticipants,
+                   $planningtable.xar_closedate,
+                   $planningtable.xar_hideplanning,
+                   $planningtable.xar_last_modified,
+                   $coursestable.xar_courseid,
+                   $coursestable.xar_name,
+                   $coursestable.xar_number";
 
     // TODO: how to select by cat ids (automatically) when needed ???
     // 2=planned courses
@@ -99,17 +103,19 @@ function courses_userapi_getallplanned($args)
         if (!empty($categoriesdef)) {
             $query .= " FROM ($planningtable
                         LEFT JOIN $categoriesdef[table]
-                        ON $categoriesdef[field] = xar_planningid )
+                        ON $categoriesdef[field] = $coursestable.xar_courseid )
                         $categoriesdef[more]
                         WHERE $categoriesdef[where]
-                        AND xar_hideplanning in ($where)";
+                        AND xar_hideplanning in ($where)
+                        ";
             } else {
                 $query .= " FROM $planningtable
-                            WHERE xar_hideplanning in ($where)";
+                            WHERE $planningtable.xar_hideplanning in ($where)";
             }
      } else {
         $query .= " FROM $planningtable
-                    WHERE xar_hideplanning in ($where)";
+                    LEFT JOIN $coursestable ON $planningtable.xar_courseid = $coursestable.xar_courseid
+                    WHERE $planningtable.xar_hideplanning in ($where)";
      }
 
     $query .= " ORDER BY $planningtable.xar_" . $sortby ;
@@ -123,7 +129,8 @@ function courses_userapi_getallplanned($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($planningid, $courseid, $credits, $creditsmin, $creditsmax, $courseyear, $startdate, $enddate,$expected,
          $prerequisites, $aim, $method, $language, $longdesc, $costs, $committee, $coordinators, $lecturers,
-          $location, $material, $info, $program, $regurl, $extreg, $hideplanning, $minparticipants, $maxparticipants, $closedate, $hideplanning, $last_modified) = $result->fields;
+          $location, $material, $info, $program, $regurl, $extreg, $hideplanning, $minparticipants, $maxparticipants, $closedate, $hideplanning, $last_modified,
+          $courseid2, $name, $number) = $result->fields;
         if (xarSecurityCheck('ReadCourses', 0, 'Course', "$courseid:$planningid:$courseyear")){
 
             $items[] = array(
@@ -155,7 +162,9 @@ function courses_userapi_getallplanned($args)
             'maxparticipants' => $maxparticipants,
             'closedate' => $closedate,
             'hideplanning'  => $hideplanning,
-            'last_modified' => $last_modified);
+            'last_modified' => $last_modified,
+            'name' => $name,
+            'number' => $number);
         }
     }
     // All successful database queries produce a result set, and that result

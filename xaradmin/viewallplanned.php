@@ -3,7 +3,7 @@
  * Standard all planned courses
  *
  * @package modules
- * @copyright (C) 2005-2007 The Digital Development Foundation
+ * @copyright (C) 2005-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -33,11 +33,10 @@ function courses_admin_viewallplanned()
 
     // Add the admin menu
     $data = xarModAPIFunc('courses', 'admin', 'menu');
-    // Initialise the variable that will hold the items, so that the template
-    // doesn't need to be adapted in case of errors
 
     $data['catid'] = $catid;
-
+    // Initialise the variable that will hold the items, so that the template
+    // doesn't need to be adapted in case of errors
     $data['items'] = array();
     // Call the xarTPL helper function to produce a pager in case
     $data['pager'] = xarTplGetPager($startnum,
@@ -63,7 +62,7 @@ function courses_admin_viewallplanned()
                            );
     // Check for exceptions
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-    // Quick check for emptyness...
+    // Quick check for emptiness...
     if (count($items) == 0) {
         // This causes a weird empty page...
         $data['items'] = $items;
@@ -127,9 +126,9 @@ function courses_admin_viewallplanned()
             }
             $items[$i]['copytitle'] = xarML('Copy');
 
-            $course = xarModAPIFunc('courses','user','get',array('courseid' => $item['courseid']));
-            $items[$i]['name'] = xarVarPrepForDisplay($course['name']);
-            $items[$i]['number'] = xarVarPrepForDisplay($course['number']);
+            //$course = xarModAPIFunc('courses','user','get',array('courseid' => $item['courseid']));
+            $items[$i]['name'] = xarVarPrepForDisplay($item['name']);
+            $items[$i]['number'] = xarVarPrepForDisplay($item['number']);
         }// End for()
 
         // Add the array of items to the template variables
