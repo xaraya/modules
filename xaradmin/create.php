@@ -64,7 +64,7 @@
 
         $item = $myobject->getFieldValues();
         $item['module'] = 'calendar';
-        xarModCallHooks('item', 'update', $itemid, $myobject);
+        xarModCallHooks('item', 'update', $itemid, $item);
 
         if (!empty($return_url)) {
             xarResponseRedirect($return_url);
