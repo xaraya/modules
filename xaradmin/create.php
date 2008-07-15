@@ -62,6 +62,10 @@
 
         if (empty($itemid)) return; // throw back
 
+        $item = $myobject->getFieldValues();
+        $item['module'] = 'calendar';
+        xarModCallHooks('item', 'update', $itemid, $myobject);
+
         if (!empty($return_url)) {
             xarResponseRedirect($return_url);
         } else {

@@ -68,6 +68,10 @@
          // If we are here then the update is valid: reset the session var
         xarSession::setVar('ddcontext.' . $tplmodule, array('tplmodule' => $tplmodule));
 
+        $item = $myobject->getFieldValues();
+        $item['module'] = 'calendar';
+        xarModCallHooks('item', 'update', $itemid, $myobject);
+
         if (!empty($return_url)) {
             xarResponseRedirect($return_url);
         } elseif ($myobject->objectid == 2) { // for dynamic properties, return to modifyprop
