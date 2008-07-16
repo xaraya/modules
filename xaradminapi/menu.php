@@ -13,6 +13,8 @@
  */
 /**
  * generate the common admin menu configuration
+ *
+ * @return array
  */
 function logconfig_adminapi_menu()
 {

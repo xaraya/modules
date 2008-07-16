@@ -3,7 +3,7 @@
  * Logconfig initialization functions
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,7 +12,9 @@
  * @author Logconfig module development team
  */
 /**
- * generate the common admin menu configuration
+ * Generate the php file with the configuration of the logging
+ *
+ * @param array $args with array 'structure' in there
  */
 function logconfig_adminapi_structuretophp($args)
 {

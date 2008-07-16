@@ -3,7 +3,7 @@
  * Logconfig initialization functions
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,6 +13,10 @@
  */
 /**
  * the main administration function
+ * This function will show the overview page with information on this module.
+ *
+ * @param none
+ * @return array
  */
 function logconfig_admin_overview()
 {

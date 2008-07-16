@@ -13,6 +13,7 @@
  */
 /**
  * update an item
+ * This function updates a logger configuration
  */
 function logconfig_admin_update($args)
 {
