@@ -70,6 +70,7 @@
 
         $item = $myobject->getFieldValues();
         $item['module'] = 'calendar';
+        $item['itemtype'] = 1;
         xarModCallHooks('item', 'update', $itemid, $item);
 
         if (!empty($return_url)) {
