@@ -12,13 +12,19 @@
  * @author Logconfig module development team
  */
 /**
- * view items
+ * View Loggers
+ * This will show an overview page with the currently defined loggers.
+ * @return array Data array for the template.
  */
 function logconfig_admin_view()
 {
+    // Log some test levels
     xarLogMessage("Logconfig Internal test (info level)", XARLOG_LEVEL_INFO);
-    xarLogMessage("Logconfig Internal test (error level)", XARLOG_LEVEL_ERROR);
+    xarLogMessage("Logconfig Internal test (notice level)", XARLOG_LEVEL_NOTICE);
     xarLogMessage("Logconfig Internal test (warning level)", XARLOG_LEVEL_WARNING);
+    xarLogMessage("Logconfig Internal test (error level)", XARLOG_LEVEL_ERROR);
+    xarLogMessage("Logconfig Internal test (critical level)", XARLOG_LEVEL_CRITICAL);
+    // Start the array by defining the admin menu
     $data = xarModAPIFunc('logconfig','admin','menu');
 
     // Security check - important to do this as early as possible to avoid
@@ -27,9 +33,7 @@ function logconfig_admin_view()
 
     $data['itemsnum'] = xarModGetVar('logconfig','itemstypenumber');
 
-    if (!xarModAPIFunc('logconfig','admin','islogon')
-        && xarLogFallbackPossible())
-    {
+    if (!xarModAPIFunc('logconfig','admin','islogon') && xarLogFallbackPossible() ) {
         $data['fallbackOn'] = true;
     } else {
         $data['fallbackOn'] = false;

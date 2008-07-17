@@ -3,7 +3,7 @@
  * Logconfig initialization functions
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,8 +14,7 @@
 /**
  * utility function pass individual menu items to the main menu
  *
- * @author the Example module development team
- * @returns array
+ * @author the Logfig module development team
  * @return array containing the menulinks for the main menu items.
  */
 function logconfig_adminapi_getmenulinks()
@@ -24,7 +23,7 @@ function logconfig_adminapi_getmenulinks()
 
     if (xarSecurityCheck('AdminLogConfig',0)) {
 
-        $menulinks[] = Array('url'   => xarModURL('logconfig',
+        $menulinks[] = array('url'   => xarModURL('logconfig',
                                                    'admin',
                                                    'newloggers'),
                               // In order to display the tool tips and label in any language,
@@ -33,7 +32,7 @@ function logconfig_adminapi_getmenulinks()
                               'label' => xarML('Add logger'),
                               'func' => 'newloggers');
 
-        $menulinks[] = Array('url'   => xarModURL('logconfig',
+        $menulinks[] = array('url'   => xarModURL('logconfig',
                                                    'admin',
                                                    'view'),
                               // In order to display the tool tips and label in any language,
@@ -43,7 +42,7 @@ function logconfig_adminapi_getmenulinks()
                               'func' => 'view');
 
         if (!xarModAPIFunc('logconfig','admin','islogon')) {
-            $menulinks[] = Array('url'   => xarModURL('logconfig',
+            $menulinks[] = array('url'   => xarModURL('logconfig',
                                                        'admin',
                                                        'switchonoff',
                                                        array('authid' => xarSecGenAuthKey())),
@@ -53,7 +52,7 @@ function logconfig_adminapi_getmenulinks()
                                   'label' => xarML('Turn logging on'),
                                   'func' => 'switchonoff');
         } else {
-            $menulinks[] = Array('url'   => xarModURL('logconfig',
+            $menulinks[] = array('url'   => xarModURL('logconfig',
                                                        'admin',
                                                        'switchonoff',
                                                        array('authid' => xarSecGenAuthKey())),
@@ -63,16 +62,13 @@ function logconfig_adminapi_getmenulinks()
                                   'label' => xarML('Turn logging off'),
                                   'func' => 'switchonoff');
         }
-        $menulinks[] = Array('url'   => xarModURL('logconfig',
+        $menulinks[] = array('url'   => xarModURL('logconfig',
                                                    'admin',
                                                    'overview'),
                               'title' => xarML('Overview'),
                               'label' => xarML('Overview'),
                               'func' => 'main');
-
-
     }
-
     return $menulinks;
 }
 

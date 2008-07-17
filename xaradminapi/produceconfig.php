@@ -36,14 +36,14 @@ function logconfig_adminapi_produceconfig()
             unset($properties['description']);
 
             //fix log level:
-            $translation = array ('Emergency'   => 1,
-                                                'Alert'               => 2,
-                                                'Critical'            => 4,
-                                                'Error'               => 8,
-                                                'Warning'         => 16,
-                                                'Notice'            => 32,
-                                                'Info'                 => 64,
-                                                'Debug'           => 128);
+            $translation = array ('Emergency' => 1,
+                                  'Alert'     => 2,
+                                  'Critical'  => 4,
+                                  'Error'     => 8,
+                                  'Warning'   => 16,
+                                  'Notice'    => 32,
+                                  'Info'      => 64,
+                                  'Debug'     => 128);
 
             $newlevel = 0;
             $level = unserialize($properties['logLevel']);
