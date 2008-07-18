@@ -109,6 +109,33 @@
                  <xar:mlstring>Then make sure you have the waiting content block available on your site. When a file is in submitted status, it will be shown in the block.</xar:mlstring>
 
             </p>
+        <h3>DD Uploads Methods</h3>
+        <dl>
+            <dt>Trusted</dt>
+            <dd>A "Trusted" directory usually points to a folder that lists files previously uploaded, eg, by the Administrator via FTP. Please note, if configured, multiple items can be selected in this input method.</dd>
+            <dt>External</dt>
+            <dd>As the name implies, this input expects a valid URL, either HTTP or FTP. Please note, PHP/HTTP must be configured to allow outward-bound connections.</dd>
+            <dt>Upload</dt>
+            <dd>The standard "upload" input, allowing the user to upload a file from their computer. Currently, files can only be uploaded one at a time.</dd>
+            <dt>Stored</dt>
+            <dd>This input represents the library of files uploaded. If selected, the user will be able to select from previously uploaded files. Please note, if configured, multiple items can be selected in this input method.</dd>
+            </dl>
+        <h3>Configuring the DD Uploads Property</h3>
+        <p>Most of the global Modify Config options can be overridden on a per-property case, allowing greater flexibility to admins to store files separately based on content or user. The following is a brief overview of the options available:</p>
+        <dl>
+            <dt>Multiple?</dt>
+            <dd>Checking this option will allow multiple files to be selected in the Trusted or Stored methods.</dd>
+            <dt>Input Method</dt>
+            <dd>You can override the global config with your own Input Methods preference for this particular instance of the Uploads property.</dd>
+            <dt>File Types</dt>
+            <dd>Allowed file types.</dd>
+            <dt>Base Directory</dt>
+            <dd>Override the global config with a property specific path.</dd>
+            <dt>Trusted Directory</dt>
+            <dd>Override the global config with a property specific path.</dd>
+            <dt>Directory Name</dt>
+            <dd>This is the directory prefix for the module to use when creating sub directories. Uploads recognizes several macros, {user} and {theme} to dynamically create certain path conventions.</dd>
+            </dl>
         <h3><xar:mlstring>Further Information</xar:mlstring></h3>
         <p>
              <xar:mlstring>Further information on the Uploads module can be found at</xar:mlstring>

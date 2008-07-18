@@ -3,7 +3,7 @@
 
     <xar:if condition="isset($fileList) AND is_array($fileList) AND count($fileList)">
         <xar:loop name="$Attachments">
-            <div class="xar-uploads-icon">
+            <div class="xar-uploads-icon" id="#$id#_alist">
                 <a href="#$loop:item['fileDownload']#" alt="#$loop:item['fileName']#" title="#$loop:item['DownloadLabel']#">
                         <img src="#$loop:item['mimeImage']#" alt="#$loop:item['fileType']#" />
                         #$loop:item['fileName']#
