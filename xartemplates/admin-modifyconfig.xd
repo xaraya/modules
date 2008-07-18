@@ -29,7 +29,7 @@
                             <br />NOTE: This directory MUST be writable by the webserver.
                            </xar:mlstring>
                         </p>
-                </div>
+                    </div>
                     <div class="xar-form-input-wrapper">
                         <label for="path[imports-directory]" class="xar-form-label" title="#xarML('Full path to the local trusted directory')#">
                             <xar:mlstring>

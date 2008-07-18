@@ -4,56 +4,61 @@
     <div class="xar-form-container-after">
         <xar:if condition="count($file_input_methods) gt 1">
             <xar:mlstring>Attach file(s) from source:</xar:mlstring><br />
-            <xar:if condition="in_array(1,$file_input_methods)">
-                <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(1, #$getAction['LOCAL']#, '#$id#');true;" 
-                   name="attach_trusted_#$id#" title="#xarML('Attach file from Trusted Directory')#"><xar:mlstring>Trusted</xar:mlstring></a> |
+            <xar:if condition="in_array($getAction['LOCAL'],$file_input_methods)">
+                <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(#$getAction['LOCAL']#, '#$id#');true;" 
+                   name="attach_trusted_#$id#" title="#xarML('Attach file from Trusted Directory')#"><xar:mlstring>Trusted</xar:mlstring>
+                </a> |
             </xar:if>
 
-            <xar:if condition="in_array(2,$file_input_methods)">
-                <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(2, #$getAction['EXTERNAL']#, '#$id#');true;" 
-                   name="attach_external_#$id#" title="#xarML('Attach file from external source (http(s)|ftp)')#"><xar:mlstring>External</xar:mlstring></a> |
+            <xar:if condition="in_array($getAction['EXTERNAL'],$file_input_methods)">
+                <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(#$getAction['EXTERNAL']#, '#$id#');true;" 
+                   name="attach_external_#$id#" title="#xarML('Attach file from external source (http(s)|ftp)')#"><xar:mlstring>External</xar:mlstring>
+                </a> |
             </xar:if>
 
-            <xar:if condition="in_array(3,$file_input_methods)">
-                <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(3, #$getAction['UPLOAD']#, '#$id#');true;" 
-                   name="attach_upload_#$id#" title="#xarML('Attach uploaded file')#"><xar:mlstring>Upload</xar:mlstring></a> |
+            <xar:if condition="in_array($getAction['UPLOAD'],$file_input_methods)">
+                <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(#$getAction['UPLOAD']#, '#$id#');true;" 
+                   name="attach_upload_#$id#" title="#xarML('Attach uploaded file')#"><xar:mlstring>Upload</xar:mlstring>
+                </a> |
             </xar:if>
 
-            <xar:if condition="in_array(4,$file_input_methods)">
-                <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(4, #$getAction['STORED']#, '#$id#');true;" 
-                   name="attach_stored_#$id#" title="#xarML('Attach previously stored file')#"><xar:mlstring>Stored</xar:mlstring></a> |
+            <xar:if condition="in_array($getAction['STORED'],$file_input_methods)">
+                <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(#$getAction['STORED']#, '#$id#');true;" 
+                   name="attach_stored_#$id#" title="#xarML('Attach previously stored file')#"><xar:mlstring>Stored</xar:mlstring>
+                </a> |
             </xar:if>
 
-            <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(5, -1, '#$id#');true;" 
-               name="attach_reset_#$id#" title="#xarML('Revert to initial state')#"><xar:mlstring>Reset</xar:mlstring></a>
-    <xar:if condition="!empty($Attachments)">
-               | 
-            <input type="checkbox" id="attach_clear_#$id#" onclick="javascript:xar_uploads_switchImport(6, -2, '#$id#');true;" 
-               name="attach_clear_#$id#" /> <label for="attach_clear_#$id#" title="#xarML('Clear stored value')#"><xar:mlstring>Clear</xar:mlstring></label>
-    </xar:if>
+            <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(-1, '#$id#');true;" 
+               name="attach_reset_#$id#" title="#xarML('Revert to initial state')#"><xar:mlstring>Reset</xar:mlstring>
+            </a>
+            <xar:if condition="!empty($Attachments)">                       | 
+                <input type="checkbox" id="attach_clear_#$id#" onclick="javascript:xar_uploads_switchImport(-2, '#$id#');true;" 
+                   name="attach_clear_#$id#" /> <label for="attach_clear_#$id#" title="#xarML('Clear stored value')#">
+                <xar:mlstring>Clear</xar:mlstring></label>
+            </xar:if>
             <br />
         </xar:if>
 
-    <xar:set name="setdisplay">'none'</xar:set>
-    <xar:if condition="$default_input_method eq 1">
-        <xar:set name="setdisplay">'block'</xar:set>
-    </xar:if>
+        <xar:set name="setdisplay">'none'</xar:set>
+        <xar:if condition="$active_method eq $getAction['LOCAL']">
+            <xar:set name="setdisplay">'block'</xar:set>
+        </xar:if>
         <div id="#$id#_attach_trusted" style="display: #$setdisplay#;">
             <xar:template file="attach_trusted" type="module" />
         </div>
 
-    <xar:set name="setdisplay">'none'</xar:set>
-    <xar:if condition="$default_input_method eq 2">
-        <xar:set name="setdisplay">'block'</xar:set>
-    </xar:if>
+        <xar:set name="setdisplay">'none'</xar:set>
+        <xar:if condition="$active_method eq $getAction['EXTERNAL']">
+            <xar:set name="setdisplay">'block'</xar:set>
+        </xar:if>
         <div id="#$id#_attach_external" style="display: #$setdisplay#;">
             <xar:template file="attach_external" type="module" />
         </div>
 
-    <xar:set name="setdisplay">'none'</xar:set>
-    <xar:if condition="$default_input_method eq 3">
-        <xar:set name="setdisplay">'block'</xar:set>
-    </xar:if>
+        <xar:set name="setdisplay">'none'</xar:set>
+        <xar:if condition="$active_method eq $getAction['UPLOAD']">
+            <xar:set name="setdisplay">'block'</xar:set>
+        </xar:if>
         <div id="#$id#_attach_upload" style="display: #$setdisplay#;">
             <xar:template file="attach_upload" type="module" />
             <xar:if condition="!empty($file_extensions)">
@@ -61,15 +66,15 @@
             </xar:if>
         </div>
 
-    <xar:set name="setdisplay">'none'</xar:set>
-    <xar:if condition="$default_input_method eq 4">
-        <xar:set name="setdisplay">'block'</xar:set>
-    </xar:if>
+        <xar:set name="setdisplay">'none'</xar:set>
+        <xar:if condition="$active_method eq $getAction['STORED']">
+            <xar:set name="setdisplay">'block'</xar:set>
+        </xar:if>
         <div id="#$id#_attach_stored" style="display: #$setdisplay#;">
             <xar:template file="attach_stored" type="module" />
         </div>
 
-        <input type="hidden" name="#$id#_attach_type" id="#$id#_attach_type" value="#$getAction['STORED']#" />
+        <input type="hidden" name="#$name#_active_method" id="#$id#_active_method" value="#$active_method#" />
 
     </div>
     <xar:template file="dataproperty_additions" module="base" />

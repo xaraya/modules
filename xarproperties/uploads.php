@@ -38,13 +38,13 @@ class UploadProperty extends FileUploadProperty
     public $initialization_import_directory   = null;
     public $initialization_multiple_files     = TRUE;
     public $initialization_directory_name     = 'User_';
-    public $initialization_file_input_methods = array(1,2,3,4);
+    public $initialization_file_input_methods = array(5,2,1,7);
 
     /*
-    Trusted/local  --> 5  chekc xaruserapi.php for the list of all allowed constants. The stuff here is not accurate.
+    Trusted/local  --> 5  check xaruserapi.php for the list of all allowed constants.
     External       --> 2
-    Uploads        --> 3
-    Stored         --> 4
+    Uploads        --> 1
+    Stored         --> 7
     */
 
     // the file data stored by this property
@@ -103,22 +103,9 @@ class UploadProperty extends FileUploadProperty
 
         xarModAPILoad('uploads','user');
 
-        if (!empty($this->initialization_file_input_methods)) {
-            $typeCheck = 'enum:0:' . _UPLOADS_GET_STORED;
-            $typeCheck .= (in_array(1,$this->initialization_file_input_methods)) ? ':' . _UPLOADS_GET_LOCAL : '';
-            $typeCheck .= (in_array(2,$this->initialization_file_input_methods))  ? ':' . _UPLOADS_GET_EXTERNAL : '';
-            $typeCheck .= (in_array(3,$this->initialization_file_input_methods)) ? ':' . _UPLOADS_GET_UPLOAD : '';
-            $typeCheck .= ':-2'; // clear value
-        } else {
-            $typeCheck = 'enum:0:' . _UPLOADS_GET_STORED;
-            $typeCheck .= (xarModVars::get('uploads', 'dd.fileupload.external') == TRUE) ? ':' . _UPLOADS_GET_EXTERNAL : '';
-            $typeCheck .= (xarModVars::get('uploads', 'dd.fileupload.trusted') == TRUE) ? ':' . _UPLOADS_GET_LOCAL : '';
-            $typeCheck .= (xarModVars::get('uploads', 'dd.fileupload.upload') == TRUE) ? ':' . _UPLOADS_GET_UPLOAD : '';
-            $typeCheck .= ':-2'; // clear value
-        }
+        $data['action'] = $this->getActiveInputMethod($name);
 
-        xarVarFetch($name . '_attach_type', $typeCheck, $data['action'], -3, XARVAR_NOT_REQUIRED);
-
+        echo $data['action'];
         switch ($data['action']) {
             case _UPLOADS_GET_UPLOAD:
                 if (!xarVarFetch('MAX_FILE_SIZE', "int::$this->validation_max_file_size", $this->validation_max_file_size)) return;
@@ -155,11 +142,12 @@ class UploadProperty extends FileUploadProperty
                 break;
             case _UPLOADS_GET_LOCAL:
 
-                if (!xarVarFetch($name . '_attach_trusted', 'list:regexp:/(?<!\.{2,2}\/)[\w\d]*/', $fileList)) return;
+                if (!xarVarFetch($name . '_attach_trusted', 'list:regexp:/(?<!\.{2,2}\/)[\w\d]*/', $fileList,array(), XARVAR_NOT_REQUIRED)) return;
 
             // CHECKME: use 'imports' name like in db_get_file() ?
                 // replace /trusted coming from showinput() again
                 $importDir = $this->initialization_import_directory;
+                $data['fileList'] = array();
                 foreach ($fileList as $file) {
                     $file = str_replace('/trusted', $importDir, $file);
                     $data['fileList']["$file"] = xarModAPIFunc('uploads', 'user', 'file_get_metadata',
@@ -299,8 +287,8 @@ class UploadProperty extends FileUploadProperty
         $data['getAction']['REFRESH']     = _UPLOADS_GET_REFRESH_LOCAL;
     //    $data['id']                       = $id;
 
-        // Set up the trusted method
-        if (in_array(1,$this->initialization_file_input_methods)) {
+        // Set up for the trusted input method
+        if (in_array(_UPLOADS_GET_LOCAL,$this->initialization_file_input_methods)) {
             if (!file_exists($this->initialization_import_directory)) {
                 $msg = xarML('Unable to find trusted directory #(1)', $this->initialization_import_directory);
                 throw new Exception($msg);
@@ -320,8 +308,8 @@ class UploadProperty extends FileUploadProperty
             $data['fileList']     = array();
         }
 
-        // Set up the stored method
-        if (in_array(2,$this->initialization_file_input_methods)) {
+        // Set up for the stored input method
+        if (in_array(_UPLOADS_GET_STORED,$this->initialization_file_input_methods)) {
             // if there is an override['upload']['path'], try to use that
             if (!empty($this->initialization_basedirectory)) {
                 if (file_exists($this->initialization_basedirectory)) {
@@ -381,8 +369,9 @@ class UploadProperty extends FileUploadProperty
             }
         }
         $data['file_input_methods'] = $this->initialization_file_input_methods;
-        if (count($data['file_input_methods']) > 0) $data['default_input_method'] = current($data['file_input_methods']);
+        $data['active_method'] = $this->getActiveInputMethod($data['name']);
         $data['max_file_size'] = $this->validation_max_file_size;
+
         // Jump over the direct parent for now
         return DataProperty::showInput($data);
     }
@@ -427,6 +416,21 @@ class UploadProperty extends FileUploadProperty
 
         // Jump over the direct parent because it uses text string field names as file entries
         return DataProperty::showOutput($data);
+    }
+
+    function getActiveInputMethod($name=null)
+    {
+        if (empty($name)) $name = $this->name;
+        $typeCheck = 'enum:0';
+        if (!empty($this->initialization_file_input_methods)) {
+            $typeCheck .= (in_array(_UPLOADS_GET_LOCAL,$this->initialization_file_input_methods))     ? ':' . _UPLOADS_GET_LOCAL : '';
+            $typeCheck .= (in_array(_UPLOADS_GET_EXTERNAL,$this->initialization_file_input_methods))  ? ':' . _UPLOADS_GET_EXTERNAL : '';
+            $typeCheck .= (in_array(_UPLOADS_GET_UPLOAD,$this->initialization_file_input_methods))    ? ':' . _UPLOADS_GET_UPLOAD : '';
+            $typeCheck .= (in_array(_UPLOADS_GET_STORED,$this->initialization_file_input_methods))    ? ':' . _UPLOADS_GET_STORED : '';
+            $typeCheck .= ':-2'; // clear value
+            xarVarFetch($name . '_active_method', $typeCheck, $activemethod, current($this->initialization_file_input_methods), XARVAR_NOT_REQUIRED);
+        }
+        return $activemethod;
     }
 
     /**
