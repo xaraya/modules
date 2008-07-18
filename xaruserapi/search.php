@@ -3,7 +3,7 @@
  * Search the database for example items
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -25,8 +25,12 @@
  */
 function example_userapi_search($args)
 {
+    /* Extract the arguments passed to this function
+     */
     extract($args);
-
+    /* We want to have at least 1 argument present
+     * Let's check for that
+     */
     if (empty($args) || count($args) < 1) {
         return;
     }
@@ -39,7 +43,7 @@ function example_userapi_search($args)
     $xartable =& xarDBGetTables();
     $exampletable = & $xartable['example'];
     $where = '';
-    $releases = array();
+    $items = array();
     $sql = "SELECT  xar_exid,
                     xar_name,
                     xar_number
@@ -82,7 +86,9 @@ function example_userapi_search($args)
     }
     /* we will sort by the item name here, ascending */
     $sql .=")  ORDER BY xar_name ASC";
-
+    /* Execute the actual query.
+     * The execute function combines the $sql query with the $bindvars
+     */
     $result =& $dbconn->Execute($sql, $bindvars);
 
     if (!$result) return;
@@ -90,11 +96,14 @@ function example_userapi_search($args)
     if ($result->EOF) {
         return array();
     }
+    /* Loop over the result array
+     * We are returning a multidimensional array, even if we return one result
+     */
     for (; !$result->EOF; $result->MoveNext()) {
         list($exid, $name, $number) = $result->fields;
         /* don't forget to add your user id uid here if you're searching on author */
         if (xarSecurityCheck('ReadExample', 0)) {
-            $example[] = array('exid'   => $exid,
+            $items[] = array('exid'   => $exid,
                                 'name'   => $name,
                                 'number' => $number);
         }
@@ -102,7 +111,7 @@ function example_userapi_search($args)
     $result->Close();
 
     /* Return any results */
-    return $example;
+    return $items;
 
 }
 ?>
