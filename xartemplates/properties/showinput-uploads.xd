@@ -39,6 +39,14 @@
             <br />
         </xar:if>
 
+        <xar:if condition="!empty($Attachments)">
+            <span style="margin-left: 10px;" id="#$id#_alist">
+                Currently stored:&#160;
+                <xar:foreach in="$Attachments" value="$attachment">
+                    #$attachment.fileName#&#160;
+                </xar:foreach>
+            </span>
+        </xar:if>
         <xar:set name="setdisplay">'none'</xar:set>
         <xar:if condition="$active_method eq $getAction['LOCAL']">
             <xar:set name="setdisplay">'block'</xar:set>
@@ -75,6 +83,7 @@
         </div>
 
         <input type="hidden" name="#$name#_active_method" id="#$id#_active_method" value="#$active_method#" />
+        <input type="hidden" name="#$name#_initial_method" id="#$id#_initial_method" value="#$initial_method#" />
 
     </div>
     <xar:template file="dataproperty_additions" module="base" />

@@ -1,4 +1,4 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:mlstring>Attach External File: </xar:mlstring><br />
+    <xar:mlstring>Attach an external file: </xar:mlstring><br />
     <input type="text" name="#$id#_attach_external" id="#$id#_attach_external_id" value="" size="40" maxlength="128" />
 </xar:template>

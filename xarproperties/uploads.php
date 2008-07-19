@@ -39,6 +39,7 @@ class UploadProperty extends FileUploadProperty
     public $initialization_multiple_files     = TRUE;
     public $initialization_directory_name     = 'User_';
     public $initialization_file_input_methods = array(5,2,1,7);
+    public $initialization_initial_method;
 
     /*
     Trusted/local  --> 5  check xaruserapi.php for the list of all allowed constants.
@@ -369,6 +370,7 @@ class UploadProperty extends FileUploadProperty
             }
         }
         $data['file_input_methods'] = $this->initialization_file_input_methods;
+        $data['initial_method'] = !empty($this->initialization_initial_method) ? $this->initialization_initial_method : current($this->initialization_file_input_methods);
         $data['active_method'] = $this->getActiveInputMethod($data['name']);
         $data['max_file_size'] = $this->validation_max_file_size;
 
