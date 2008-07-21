@@ -41,12 +41,15 @@ class ImageResizeProperty extends ImageProperty
         if (!empty($data['src'])) $data['value'] = $data['src'];
         if (empty($data['imagetext'])) $data['imagetext'] = $this->imagetext;
         if (empty($data['label'])) $data['label'] = $this->imagealt;
-        if (empty($data['height']) && empty($data['height'])) {
-            $sizeinfo = @getimagesize($data['src']);
-            $data['width'] = $sizeinfo[0] . "px";
-            $data['height'] = $sizeinfo[1] . "px";
+        if (empty($data['height']) && empty($data['width'])) {
+            try {
+                $sizeinfo = getimagesize($data['src']);
+                $data['width'] = $sizeinfo[0] . "px";
+                $data['height'] = $sizeinfo[1] . "px";
+            } catch (Exception $e) {}
         }
         $data = array_merge($data,xarModAPIFunc('images', 'user', 'resize', $data));
+        if (isset($data['url'])) $data['value'] = $data['url'];
         if (isset($sizeinfo)) {
             $data['width'] = $sizeinfo[0];
             $data['height'] = $sizeinfo[1];

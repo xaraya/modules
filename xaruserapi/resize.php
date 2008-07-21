@@ -262,10 +262,10 @@ function images_userapi_resize($args)
     $attribs .= sprintf(' width="%s" height="%s"', $image->getWidth(), $image->getHeight());
 
     $location = $image->getDerivative();
-    if (!$location) {
+    if (empty($location)) {
         if ($image->resize()) {
             $location = $image->saveDerivative();
-            if (!$location) {
+            if (empty($location)) {
                 $msg = xarML('Unable to save resized image !');
                 return sprintf('<img src="%s" alt="%s" %s />', '', $msg, $attribs);
             }
@@ -303,9 +303,7 @@ function images_userapi_resize($args)
                                'width'  => $image->getWidth()));
     }
 
-    if( $returnpath == true ){
-        return $url;
-    }
+    if( $returnpath == true ) return $url;
 
     return array('url' => $url, 'label' => $label, 'attributes' => $attribs);
     
