@@ -106,7 +106,6 @@ class UploadProperty extends FileUploadProperty
 
         $data['action'] = $this->getActiveInputMethod($name);
 
-        echo $data['action'];
         switch ($data['action']) {
             case _UPLOADS_GET_UPLOAD:
                 if (!xarVarFetch('MAX_FILE_SIZE', "int::$this->validation_max_file_size", $this->validation_max_file_size)) return;
@@ -270,7 +269,7 @@ class UploadProperty extends FileUploadProperty
         if (!empty($data['value'])) $this->value = $data['value'];
         if (!empty($data['basedir'])) $this->initialization_basedirectory = $data['basedir'];
         if (!empty($data['importdir'])) $this->initialization_import_directory = $data['importdir'];
-        if (!empty($data['max_file_size'])) $this->validation_max_file_size = $data['file_maxsize'];
+        if (!empty($data['max_file_size'])) $this->validation_max_file_size = $data['max_file_size'];
         if (!empty($data['methods'])) {
             if (!is_array($data['methods'])) {
                 $data['methods'] = explode(',',$data['methods']);                

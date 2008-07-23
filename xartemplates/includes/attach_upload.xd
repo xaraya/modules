@@ -1,12 +1,4 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:if condition="!empty($Attachments)">
-        <span style="margin-left: 10px;" id="#$id#_alist">
-            Current file:&#160;
-            <xar:foreach in="$Attachments" value="$attachment">
-                #$attachment.fileName#&#160;
-            </xar:foreach>
-        </span>
-    </xar:if>
     <xar:mlstring>Upload a file: </xar:mlstring><br />
     <input type="hidden" name="MAX_FILE_SIZE" value="#$max_file_size#" />
     <input type="file" name="#$id#_attach_upload" id="#$id#_attach_upload_id" />
