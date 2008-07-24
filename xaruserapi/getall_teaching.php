@@ -46,10 +46,12 @@ function courses_userapi_getall_teaching($args)
             $teacherstable.xar_type
             FROM $teacherstable, $coursestable, $planningtable
 
-            WHERE $teacherstable.xar_userid = $uid AND
+            WHERE $teacherstable.xar_userid = ? AND
                   $planningtable.xar_planningid = $teacherstable.xar_planningid AND
                   $planningtable.xar_courseid = $coursestable.xar_courseid";
-     $result = &$dbconn->Execute($query);
+    // Put the input into the bindvars
+    $bindvars = array($uid);
+    $result = &$dbconn->Execute($query, $bindvars);
 //            JOIN $planningtable
 //            ON $planningtable.xar_planningid = $teacherstable.xar_planningid
     // Check for an error with the database code, adodb has already raised
