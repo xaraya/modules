@@ -61,8 +61,9 @@ function julian_userapi_gethooked($args)
 
     // Try to find the link for the current module, item type and item id.
     // TODO: make this a cleaner call
-    $query = "SELECT * FROM " .  $event_linkage_table . " WHERE ( hook_modid =$modid AND hook_itemtype = $itemtype AND hook_iid = $objectid)";
-    $result = $dbconn->Execute($query);
+    $query = "SELECT * FROM " .  $event_linkage_table . " WHERE ( hook_modid = ? AND hook_itemtype = ? AND hook_iid = ?)";
+    $bindvars = array($modid, $itemtype, $objectid);
+    $result = $dbconn->Execute($query, $bindvars);
 
     if (!empty($result)) {
         if (!$result->EOF) {
