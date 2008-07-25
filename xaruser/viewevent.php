@@ -74,8 +74,143 @@ function julian_user_viewevent()
 
     // Get the event, as it is not in the linked table
     // We use event_id here
+    /*
+    The event array consists of:
+                'eID' => $eID,
+                'eName' => $eName,
+                'eDescription' => $eDescription,
+                'eStreet1' => $eStreet1,
+                'eStreet2' => $eStreet2,
+                'eCity' => $eCity,
+                'eState' => $eState,
+                'eZip' => $eZip,
+                'eEmail' => $eEmail,
+                'ePhone' => $ePhone,
+                'eLocation' => $eLocation,
+                'eUrl' => $eUrl,
+                'eContact' => $eContact,
+                'eOrganizer' => $eOrganizer,
+                'eStart' => $eStart,
+                'eEnd' => $eEnd,
+                'i_moduleid' => '',
+                'i_itemtype' => '',
+                'i_itemid' => '',
+                'i_DateTime' => strtotime($eStart['timestamp']),
+                'eRecur' => $eRecur,
+                'eDuration' => $eDuration,
+                'eDurationHours' => $eDurationHours,
+                'eRrule' => $eRrule,
+                'eIsallday' => $eIsallday,
+                'eFee' => $eFee,
+                // Migrated from get(), in preparation for merging.
+                'event_id' =>$eID,
+                'calendar_id' =>$eCalendarID,
+                'type' => $eType,
+                'organizer' => $eOrganizer,
+                'contact' => $eContact,
+                'url' => $eUrl,
+                'summary' => $eName,
+                'description' => $eDescription,
+                'related_to' => $eRelatedTo,
+                'reltype' => $eReltype,
+                'class' => $eClass,
+                'share_uids' => $eShareUIDs,
+                'priority' => $ePriority,
+                'status' => $eStatus,
+                'location' => $eLocation,
+                'street1' => $eStreet1,
+                'street2' => $eStreet2,
+                'city' => $eCity,
+                'state' => $eState,
+                'zip' => $eZip,
+                'phone' => $ePhone,
+                'email' => $eEmail,
+                'fee' => $eFee,
+                'exdate' => $eExdate,
+                'categories' => $eCategories,
+                'recur_freq' => $eRecurFreq,
+                'recur_until' => $eRecur,
+                'recur_count' => $eRecurCount,
+                'recur_interval' => $eRecurInterval,
+                'dtstart' => $eStart,
+                'dtend' => $eDtend,
+                'duration' => $eDuration,
+                'freebusy' => $eFreebusy,
+                'due' => $eDue,
+                'transp' => $eTransp,
+                'created' => $eCreated,
+                'last_modified' => $eLastModified
+
+
+    */
+
+
+
+    $event = xarModAPIFunc('julian', 'user', 'get', array('event_id'=>$event_id));
     $bl_data = array();
-    $bl_data = xarModAPIFunc('julian', 'user', 'get', array('event_id'=>$event_id));
+    // Put all vars into the template array, and sanitize meanwhile
+
+             $bl_data['eID'] = $event['eID'];
+             $bl_data['eName'] = xarVarPrepForDisplay($event['eName']);
+             $bl_data['eDescription'] = xarVarPrepForDisplay($event['eDescription']);
+             $bl_data['eStreet1'] = xarVarPrepForDisplay($event['eStreet1']);
+             $bl_data['eStreet2'] = xarVarPrepForDisplay($event['eStreet2']);
+             $bl_data['eCity'] = xarVarPrepForDisplay($event['eCity']);
+             $bl_data['eState'] = xarVarPrepForDisplay($event['eState']);
+             $bl_data['eZip'] = xarVarPrepForDisplay($event['eZip']);
+             $bl_data['eEmail'] = xarVarPrepEmailDisplay($event['eEmail']);
+             $bl_data['ePhone'] = xarVarPrepForDisplay($event['ePhone']);
+             $bl_data['eLocation'] = xarVarPrepForDisplay($event['eLocation']);
+             $bl_data['eUrl'] = $event['eUrl'];
+             $bl_data['eContact'] = xarVarPrepForDisplay($event['eContact']);
+             $bl_data['eOrganizer'] = xarVarPrepForDisplay($event['eOrganizer']);
+             $bl_data['eStart'] = $event['eStart'];
+             $bl_data['eEnd'] = $event['eEnd'];
+             $bl_data['i_DateTime'] = $event['eStart'];
+             $bl_data['eRecur'] = $event['eRecur'];
+             $bl_data['eDuration'] = $event['eDuration'];
+             $bl_data['eDurationHours'] = $event['eDurationHours'];
+             $bl_data['eRrule'] = $event['eRrule'];
+             $bl_data['eIsallday'] = $event['eIsallday'];
+             $bl_data['eFee'] = $event['eFee'];
+                // Migrated from get()']; in preparation for merging.
+             $bl_data['event_id'] =$event['eID'];
+             $bl_data['calendar_id'] =$event['eCalendarID'];
+             $bl_data['type'] = $event['eType'];
+             $bl_data['organizer'] = $event['eOrganizer'];
+             $bl_data['contact'] = $event['eContact'];
+             $bl_data['url'] = $event['eUrl'];
+             $bl_data['summary'] = xarVarPrepForDisplay($event['eName']);
+             $bl_data['description'] = xarVarPrepForDisplay($event['eDescription']);
+             $bl_data['related_to'] = $event['eRelatedTo'];
+             $bl_data['reltype'] = $event['eReltype'];
+             $bl_data['class'] = $event['eClass'];
+             $bl_data['share_uids'] = $event['eShareUIDs'];
+             $bl_data['priority'] = $event['ePriority'];
+             $bl_data['status'] = $event['eStatus'];
+             $bl_data['location'] = xarVarPrepForDisplay($event['eLocation']);
+             $bl_data['street1'] = xarVarPrepForDisplay($event['eStreet1']);
+             $bl_data['street2'] = xarVarPrepForDisplay($event['eStreet2']);
+             $bl_data['city'] = xarVarPrepForDisplay($event['eCity']);
+             $bl_data['state'] = xarVarPrepForDisplay($event['eState']);
+             $bl_data['zip'] = xarVarPrepForDisplay($event['eZip']);
+             $bl_data['phone'] = xarVarPrepForDisplay($event['ePhone']);
+             $bl_data['email'] = xarVarPrepEmailDisplay($event['eEmail']);
+             $bl_data['fee'] = $event['eFee'];
+             $bl_data['exdate'] = $event['eExdate'];
+             $bl_data['categories'] = $event['eCategories'];
+             $bl_data['recur_freq'] = $event['eRecurFreq'];
+             $bl_data['recur_until'] = $event['eRecur'];
+             $bl_data['recur_count'] = $event['eRecurCount'];
+             $bl_data['recur_interval'] = $event['eRecurInterval'];
+             $bl_data['dtstart'] = $event['eStart'];
+             $bl_data['dtend'] = $event['eDtend'];
+             $bl_data['duration'] = $event['eDuration'];
+             $bl_data['freebusy'] = $event['eFreebusy'];
+             $bl_data['due'] = $event['eDue'];
+             $bl_data['transp'] = $event['eTransp'];
+             $bl_data['created'] = $event['eCreated'];
+             $bl_data['last_modified'] = $event['eLastModified'];
 
     // Security check
     if (!xarSecurityCheck('ReadJulian', 1, 'Item', "$event_id:$bl_data[organizer]:$bl_data[calendar_id]:All")) return;
@@ -87,8 +222,8 @@ function julian_user_viewevent()
     $dateformat_created = $dateformat . ' ' . $timeformat;
 
     // Don't like this here
-    if (!isset($bl_data['eRecur']['timestamp']) || 
-        is_numeric($bl_data['eRecur']['timestamp']) || 
+    if (!isset($bl_data['eRecur']['timestamp']) ||
+        is_numeric($bl_data['eRecur']['timestamp']) ||
         strpos($bl_data['eRecur']['timestamp'], '0000')!== false) {
             $bl_data['recur_until'] = 'recur_until';
     }

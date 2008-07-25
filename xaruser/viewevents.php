@@ -85,7 +85,7 @@ function julian_user_viewevents($args)
     // Validate the start and end date, and default if not valid.
     if (!checkdate(substr($startdate,2,2), substr($startdate,4,2), substr($startdate,0,4))) $startdate = date('Ymd');
     if (!checkdate(substr($enddate,2,2), substr($enddate,4,2), substr($enddate,0,4))) $enddate = date('Ymd', strtotime('+1 month'));
-    
+
     // Check the start date components
     if (!empty($startyear)) {
         if (!empty($startmonth)) {
@@ -145,7 +145,7 @@ function julian_user_viewevents($args)
             'startnum'  => $startnum,
             'numitems'  => $numitems,
             'sortby'    => $sortby,
-        'catid'     => $catid,
+            'catid'     => $catid,
             'orderby'   => $orderby,
             'startdate' => $startdate,
         'enddate'   => $enddate
@@ -157,6 +157,73 @@ function julian_user_viewevents($args)
     // Check for exceptions.
     // FIXME: errors should be indicated some other way, such as a NULL return.
     if (!isset($events) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+
+    // Sanitize all items
+
+    foreach ($events as $key=>$event) {
+         $event['eID'] = $event['eID'];
+         $event['eName'] = xarVarPrepForDisplay($event['eName']);
+         $event['eDescription'] = xarVarPrepForDisplay($event['eDescription']);
+         $event['eStreet1'] = xarVarPrepForDisplay($event['eStreet1']);
+         $event['eStreet2'] = xarVarPrepForDisplay($event['eStreet2']);
+         $event['eCity'] = xarVarPrepForDisplay($event['eCity']);
+         $event['eState'] = xarVarPrepForDisplay($event['eState']);
+         $event['eZip'] = xarVarPrepForDisplay($event['eZip']);
+         $event['eEmail'] = xarVarPrepEmailDisplay($event['eEmail']);
+         $event['ePhone'] = xarVarPrepForDisplay($event['ePhone']);
+         $event['eLocation'] = xarVarPrepForDisplay($event['eLocation']);
+         $event['eUrl'] = $event['eUrl'];
+         $event['eContact'] = xarVarPrepForDisplay($event['eContact']);
+         $event['eOrganizer'] = xarVarPrepForDisplay($event['eOrganizer']);
+         $event['eStart'] = $event['eStart'];
+         $event['eEnd'] = $event['eEnd'];
+         $event['i_DateTime'] = $event['eStart'];
+         $event['eRecur'] = $event['eRecur'];
+         $event['eDuration'] = $event['eDuration'];
+         $event['eDurationHours'] = $event['eDurationHours'];
+         $event['eRrule'] = $event['eRrule'];
+         $event['eIsallday'] = $event['eIsallday'];
+         $event['eFee'] = $event['eFee'];
+            // Migrated from get()']; in preparation for merging.
+         $event['event_id'] =$event['eID'];
+         $event['calendar_id'] =$event['eCalendarID'];
+         $event['type'] = $event['eType'];
+         $event['organizer'] = $event['eOrganizer'];
+         $event['contact'] = $event['eContact'];
+         $event['url'] = $event['eUrl'];
+         $event['summary'] = xarVarPrepForDisplay($event['eName']);
+         $event['description'] = xarVarPrepForDisplay($event['eDescription']);
+         $event['related_to'] = $event['eRelatedTo'];
+         $event['reltype'] = $event['eReltype'];
+         $event['class'] = $event['eClass'];
+         $event['share_uids'] = $event['eShareUIDs'];
+         $event['priority'] = $event['ePriority'];
+         $event['status'] = $event['eStatus'];
+         $event['location'] = xarVarPrepForDisplay($event['eLocation']);
+         $event['street1'] = xarVarPrepForDisplay($event['eStreet1']);
+         $event['street2'] = xarVarPrepForDisplay($event['eStreet2']);
+         $event['city'] = xarVarPrepForDisplay($event['eCity']);
+         $event['state'] = xarVarPrepForDisplay($event['eState']);
+         $event['zip'] = xarVarPrepForDisplay($event['eZip']);
+         $event['phone'] = xarVarPrepForDisplay($event['ePhone']);
+         $event['email'] = xarVarPrepEmailDisplay($event['eEmail']);
+         $event['fee'] = $event['eFee'];
+         $event['exdate'] = $event['eExdate'];
+         $event['categories'] = $event['eCategories'];
+         $event['recur_freq'] = $event['eRecurFreq'];
+         $event['recur_until'] = $event['eRecur'];
+         $event['recur_count'] = $event['eRecurCount'];
+         $event['recur_interval'] = $event['eRecurInterval'];
+         $event['dtstart'] = $event['eStart'];
+         $event['dtend'] = $event['eDtend'];
+         $event['duration'] = $event['eDuration'];
+         $event['freebusy'] = $event['eFreebusy'];
+         $event['due'] = $event['eDue'];
+         $event['transp'] = $event['eTransp'];
+         $event['created'] = $event['eCreated'];
+         $event['last_modified'] = $event['eLastModified'];
+         $events[$key] = $event;
+    }
 
     // Add the array of Events to the template variables.
     $bl_data['events'] = $events;
@@ -284,7 +351,7 @@ function julian_user_viewevents($args)
     $bl_data['datenumber'] = $datenumber;
     $bl_data['datetype'] = $datetype;
 
-    //Count the number of 
+    //Count the number of
     $count = xarModAPIFunc('julian', 'user', 'countevents', $urlparams);
 
     // Create Pagination.
@@ -326,7 +393,7 @@ function julian_user_viewevents_get_period($startdate, $eventdate, $periodtype =
     default:
         $startdayofweek = xarModGetVar('julian', 'startDayOfWeek');
         $startdateday = date('w', $startdate);
-	    $daystostartperiod = $startdateday - $startdayofweek;
+        $daystostartperiod = $startdateday - $startdayofweek;
         if ($daystostartperiod < 0) $daystostartperiod += 7;
 
         // Get the period start date (unix timestamp) by counting back the appropriate number of days

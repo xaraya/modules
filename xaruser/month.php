@@ -3,7 +3,7 @@
  * View one month
  *
  * @package modules
- * @copyright (C) 2005-2007 The Digital Development Foundation
+ * @copyright (C) 2005-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -54,7 +54,22 @@ function julian_user_month($args)
     $bl_data['cal_sdow'] = $cal_sdow;
     $bl_data['longDayNames'] = $c->getLongDayNames($cal_sdow);
     //get the events for the selected month
-    $bl_data['event_array']=xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate, 'catid' => $catid));
+    $a_events=xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate, 'catid' => $catid));
+    // Clean the display values
+    $a_cleanedevents = array();
+
+    foreach ($a_events as $day=>$list) {
+
+        foreach ($list as $key=>$event) {
+            $event['summary'] = xarVarPrepHTMLDisplay($event['summary']);
+            $event['description'] = xarVarPrepHTMLDisplay($event['description']);
+            $a_cleanedevents[$day][$key]= $event;
+        }
+
+    }
+    // Now put the cleaned array in the template array
+    $bl_data['event_array'] = $a_cleanedevents;
+    // Put the calendar itself into the array
     $bl_data['calendar']=$c;
     $bl_data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
 

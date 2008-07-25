@@ -48,7 +48,22 @@ function julian_user_day()
     $startdate = $data['selected_year']."-".$data['selected_month']."-".$data['selected_day'];
 
     // get the events for the selected day
-    $data['event_array']=xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$startdate));
+    $a_events = xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$startdate));
+
+    // Clean the display values
+    $a_cleanedevents = array();
+
+    foreach ($a_events as $day) {
+
+        foreach ($day as $event) {
+            $event['summary'] = xarVarPrepHTMLDisplay($event['summary']);
+            $event['description'] = xarVarPrepHTMLDisplay($event['description']);
+            $a_cleanedevents[$startdate][]= $event;
+        }
+
+    }
+
+    $data['event_array'] = $a_cleanedevents;
 
     // the next two variables help determine which color is displayed for this day depending on whether
     // it is a weekend or the current day

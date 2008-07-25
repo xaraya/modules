@@ -3,7 +3,7 @@
  * View one week
  *
  * @package modules
- * @copyright (C) 2005-2007 The Digital Development Foundation
+ * @copyright (C) 2005-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -53,7 +53,23 @@ function julian_user_week($args)
     $enddate = date("Y-m-d",strtotime($bl_data['week'][6]));
 
     //get the events for the selected week
-    $bl_data['event_array'] = xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate, 'catid' => $catid));
+
+    $a_events=xarModApiFunc('julian','user','getall', array('startdate'=>$startdate, 'enddate'=>$enddate, 'catid' => $catid));
+    // Clean the display values
+    $a_cleanedevents = array();
+
+    foreach ($a_events as $day=>$list) {
+
+        foreach ($list as $key=>$event) {
+            $event['summary'] = xarVarPrepHTMLDisplay($event['summary']);
+            $event['description'] = xarVarPrepHTMLDisplay($event['description']);
+            $a_cleanedevents[$day][$key]= $event;
+        }
+
+    }
+    // Now put the cleaned array in the template array
+    $bl_data['event_array'] = $a_cleanedevents;
+
     $bl_data['Bullet'] = '&'.xarModGetVar('julian', 'BulletForm').';';
 
     //set the url to this page in session as the last page viewed

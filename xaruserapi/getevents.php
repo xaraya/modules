@@ -55,7 +55,7 @@ function julian_userapi_getevents($args)
     if (!isset($orderby)) $orderby = 'ASC';
 
     // Default the start date to today.
-    // JDJ: removed. The defaults should happen in the 
+    // JDJ: removed. The defaults should happen in the
     //if (!isset($startdate)) $startdate = date('Ymd');
 
     // Argument check.
@@ -253,7 +253,7 @@ function julian_userapi_getevents($args)
                 $eDurationHours = 0;
                 $eDurationUnix = 0;
             }
-            
+
             // Change date formats from UNIX timestamp to something readable.
             // TODO: why do we need all this display stuff in here?
             // TODO: the time format should be configurable, to allow the use of 24-hour clock format.
@@ -401,7 +401,7 @@ function julian_userapi_getevents($args)
 
     // Put items into result array
     for (; !$result_linked->EOF; $result_linked->MoveNext()) {
-        list($eID,
+        list($i_eID,
             $hook_modid,
             $hook_itemtype,
             $hook_iid,
@@ -432,7 +432,7 @@ function julian_userapi_getevents($args)
                 $eDurationHours = 0;
                 $eDurationUnix = 0;
             }
-            
+
             // Change date formats to configured types
             if ($eStart['timestamp'] == '0000-00-00 00:00:00') {
                 $eStart['mon'] = '';
@@ -464,7 +464,7 @@ function julian_userapi_getevents($args)
             }
 
             $items[] = array(
-                'eID' => $eID.'_link',
+                'eID' => $i_eID.'_link',
                 'eName' => $eSummary,
                 'eDescription' => $itemlinks['description'],
                 'eStreet1' => '',
@@ -565,13 +565,13 @@ function julian_userapi_getrecur($start_date, $recur_freq, $rrule = null, $recur
 {
     //Number of recursive events to fetch
     $recur_no = 10;
-    
+
     //Define vars
     $start_date = strtotime($start_date);
     if (!empty($recur_until)) $recur_until = strtotime($recur_until);
 
     //First of all we need to determine if this is an 'every' or an 'on' type
-    
+
 
     //Loop through the event dates.
     $recur_dates = array();
