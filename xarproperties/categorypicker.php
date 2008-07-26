@@ -225,7 +225,7 @@ class CategoryPickerProperty extends DataProperty
     if (!empty($ptid)) {
         xarModSetUserVar('articles','basecids',serialize($basecids),$ptid);
     } else {
-        xarModSetVar('articles','basecids',serialize($basecids));
+        xarModVars::set('articles','basecids',serialize($basecids));
     }
 
 
