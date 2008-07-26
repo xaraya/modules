@@ -52,12 +52,12 @@ function categories_admin_modifyconfig()
             if (!xarVarFetch('catsperpage', 'int:1:1000', $catsperpage, 10, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('useJSdisplay', 'bool', $useJSdisplay)) return;
             if (!xarSecConfirmAuthKey()) return;
-            xarModSetVar('categories','catsperpage', $catsperpage);
-            xarModSetVar('categories','useJSdisplay', $useJSdisplay);
+            xarModVars::set('categories','catsperpage', $catsperpage);
+            xarModVars::set('categories','useJSdisplay', $useJSdisplay);
             if (!xarVarFetch('numstats', 'int', $numstats, 100, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('showtitle', 'checkbox', $showtitle, false, XARVAR_NOT_REQUIRED)) return;
-            xarModSetVar('categories', 'numstats', $numstats);
-            xarModSetVar('categories', 'showtitle', $showtitle);
+            xarModVars::set('categories', 'numstats', $numstats);
+            xarModVars::set('categories', 'showtitle', $showtitle);
 
             // Call update config hooks
             xarModCallHooks('module','updateconfig','categories', array('module' => 'categories'));

@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="empty($refcid)">
     <xar:set name="refcid">0</xar:set>
     <xar:if condition="!empty($func) and $func eq 'modify'">
@@ -78,3 +79,4 @@
         <div style="clear: both;">&#160;</div>
     </div>
 </xar:if>
+</xar:template>

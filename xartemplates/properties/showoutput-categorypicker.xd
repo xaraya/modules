@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="isset($onchange)">
   <xar:set name="evt_change">$onchange</xar:set>
 <xar:else/>
@@ -17,4 +18,4 @@
         <xar:data-input type="categories" name="$cidname" basecid="$item['category_id']" value="$item['value']" onchange="$evt_change" style="$style" />
     </xar:foreach>
 </xar:if>
-
+</xar:template>

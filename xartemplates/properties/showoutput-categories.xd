@@ -10,4 +10,3 @@
         </xar:foreach>
     </xar:if>
 </xar:template>
-

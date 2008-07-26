@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <h2>
     <xar:mlstring>
         Browse Categories
@@ -32,33 +33,23 @@
 
 <xar:if condition="!empty($categories) and count($categories) gt 0">
   <xar:set name="numcats">count($categories)</xar:set>
-  <xar:set name="miditem">round(($numcats - 0.5) / 2)</xar:set>
-  <xar:if condition="$numcats gt 7">
-    <table border="0"><tr><td valign="top">
-  </xar:if>
   <ul>
-  <xar:foreach in="$categories" key="$id" value="$category">
-    <li> <a href="#$category['link']#">#$category['name']#</a> </li>
-    <xar:if condition="$numcats gt 7 and $id eq $miditem">
-      </ul></td>
-      <td valign="top"><ul>
-    </xar:if>
-  </xar:foreach>
+    <xar:foreach in="$categories" key="$id" value="$category">
+      <li> <a href="#$category['link']#">#$category['name']#</a> </li>
+    </xar:foreach>
   </ul>
-  <xar:if condition="$numcats gt 7">
-    </td></tr></table>
-  </xar:if>
 </xar:if>
 
 <xar:if condition="!empty($moditems) and count($moditems) gt 0">
   <xar:foreach in="$moditems" value="$moditem">
-    &bull; <a href="#$moditem['link']#">#$moditem['name']#</a> (#$moditem['numitems']#)
+    &#8226; <a href="#$moditem['link']#">#$moditem['name']#</a> (#$moditem['numitems']#)
     <ul>
-    <xar:if condition="!empty($moditem['items'])">
-    <xar:foreach in="$moditem['items']" value="$item">
-       <li> <a href="#$item['url']#" title="#$item['title']#">#$item['label']#</a> </li>
-    </xar:foreach>
-    </xar:if>
+      <xar:if condition="!empty($moditem['items'])">
+      <xar:foreach in="$moditem['items']" value="$item">
+         <li> <a href="#$item['url']#" title="#$item['title']#">#$item['label']#</a> </li>
+      </xar:foreach>
+      </xar:if>
     </ul>
   </xar:foreach>
 </xar:if>
+</xar:template>

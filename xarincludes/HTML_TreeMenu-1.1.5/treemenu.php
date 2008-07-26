@@ -177,7 +177,7 @@ class HTML_TreeMenu
             default:
                 // Need to create a HTML_TreeMenu object ?
                 if (!isset($params['treeMenu'])) {
-                    $treeMenu = &new HTML_TreeMenu();
+                    $treeMenu = new HTML_TreeMenu();
                 } else {
                     $treeMenu = &$params['treeMenu'];
                 }
@@ -234,7 +234,7 @@ class HTML_TreeMenu
         // Supplied $xml is a string
         if (is_string($xml)) {
             require_once('XML/Tree.php');
-            $xmlTree = &new XML_Tree();
+            $xmlTree = new XML_Tree();
             $xmlTree->getTreeFromString($xml);
 
         // Supplied $xml is an XML_Tree object

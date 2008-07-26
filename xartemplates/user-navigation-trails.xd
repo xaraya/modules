@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="!empty($catdescr)">
 <div class="xar-mod-head"><span class="xar-mod-title">#$catdescr#<xar:if condition="!empty($cathooks) and !empty($cathooks['pubsub'])"> #$cathooks['pubsub']#</xar:if></span></div>
 </xar:if>
@@ -61,20 +62,16 @@ The 'baseflag' variable allows you to skip certain categories in the trail :
 <xar:if condition="!empty($caticons) and count($caticons) gt 0">
 <br />
 <table border="0" cellpadding="8" cellspacing="0" width="95%">
-<tr>
     <xar:loop id="icons" name="$caticons">
+      <tr>
         <td align="center" valign="middle">
             <a href="#$loop:icons:item['catlink']#"><img src="#$loop:icons:item['catimage']#" border="0" alt="#$loop:icons:item['catlabel']#" /><br />#$loop:icons:item['catlabel']#</a>
             <xar:if condition="!empty($loop:icons:item['catcount'])">
                 (#$loop:icons:item['catcount']#)
             </xar:if>
         </td>
-        <xar:if condition="$loop:icons:item['catnum'] % 2 eq 0">
-    </tr>
-    <tr>
-        </xar:if>
+      </tr>
     </xar:loop>
-</tr>
 </table>
 </xar:if>
 
@@ -100,3 +97,4 @@ The 'baseflag' variable allows you to skip certain categories in the trail :
 </xar:if>
 
 <br />
+</xar:template>

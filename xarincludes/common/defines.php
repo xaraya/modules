@@ -1,5 +1,4 @@
 <?php
-// File: $Id$
 // ----------------------------------------------------------------------
 // Xaraya Content Management System
 // Copyright (C) 2001 by the Xaraya Development Team.

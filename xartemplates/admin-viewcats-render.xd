@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Categories Administration</xar:mlstring></span>
 </div>
@@ -8,7 +9,7 @@
         <a href="#xarModURL('categories','admin','modifycat')#"><xar:mlstring>Add Category</xar:mlstring></a><br /><br />
         <xar:if condition="empty($options)" >
             <div align="center">
-                <h3><xar:mlstring>No base category chosen</xar:mlstring></h3></div><br />
+                <h3><xar:mlstring>No base category chosen</xar:mlstring></h3>
             </div>
         <xar:else />
             <xar:data-input type="categorytree" options="$options" />
@@ -16,3 +17,4 @@
     </div>
 </div>
 
+</xar:template>

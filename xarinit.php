@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id: s.xarinit.php 1.22 03/01/26 20:03:00-05:00 John.Cox@mcnabb. $
- *
  * Categories System
  *
  * @package Xaraya eXtensible Management System
@@ -9,7 +7,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage categories module
- * @author Jim McDonald, Flávio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
+ * @author Jim McDonald, FlÃ¡vio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
 */
 
 //Load Table Maintainance API
@@ -18,7 +16,7 @@ sys::import('xaraya.tableddl');
 /**
  * Initialise the categories module
  *
- * @author  Jim McDonald, Flávio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
+ * @author  Jim McDonald, FlÃ¡vio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
  * @access  public
  * @param   none
  * @return  true on success or void or false on failure
@@ -27,7 +25,8 @@ sys::import('xaraya.tableddl');
 */
 function categories_init()
 {
-    xarTemplateTag::unregisterall('categories');
+    // What's this???
+    //xarTemplateTag::unregisterall('categories');
     // Get database information
     $dbconn = xarDB::getConn();
     $xartable = xarDB::getTables();
@@ -149,24 +148,35 @@ function categories_init()
     if (!$result) return;
 
     # --------------------------------------------------
+    $fields = array (
+        'id'          => array('type' => 'integer', 'increment' => true, 'primary_key' => true),
+        'category_id' => array('type' => 'integer', 'null' => false, 'default' => '1' ),
+        'module_id'   => array('type' => 'integer', 'default' => 'null'),
+        'itemtype'    => array('type' => 'integer', 'null' => false, 'default' => '0'),
+        'name'        => array('type' => 'varchar', 'size' => 64, 'null' => false),
+        'selectable'  => array('type' => 'integer', 'size' => 1, 'default' => '1')
+        );
 
-    $q = new xarQuery();
-    $query = "DROP TABLE IF EXISTS " . $prefix . "_categories_basecategories";
-    if (!$q->run($query)) return;
-    $query = "CREATE TABLE " . $prefix . "_categories_basecategories (
-      id int NOT NULL auto_increment,
-      category_id int(11) DEFAULT '1' NOT NULL,
-      module_id int(11) DEFAULT NULL,
-      itemtype int(11) DEFAULT '0' NOT NULL,
-      name varchar(64) NOT NULL,
-      selectable int(1) DEFAULT '1' NOT NULL,
-      PRIMARY KEY  (id)
-    )";
-    if (!$q->run($query)) return;
+    $query = xarDBCreateTable( $xartable['categories_basecategories'],$fields);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+    // $q = new xarQuery();
+    // $query = "DROP TABLE IF EXISTS " . $prefix . "_categories_basecategories";
+    // if (!$q->run($query)) return;
+    // $query = "CREATE TABLE " . $prefix . "_categories_basecategories (
+    //   id int NOT NULL auto_increment,
+    //   category_id int(11) DEFAULT '1' NOT NULL,
+    //   module_id int(11) DEFAULT NULL,
+    //   itemtype int(11) DEFAULT '0' NOT NULL,
+    //   name varchar(64) NOT NULL,
+    //   selectable int(1) DEFAULT '1' NOT NULL,
+    //   PRIMARY KEY  (id)
+    // )";
+    // if (!$q->run($query)) return;
 
     // Set up module variables
-//    xarModSetVar('categories', 'bold', 0);
-    xarModSetVar('categories', 'catsperpage', 40);
+//    xarModVars::set('categories', 'bold', 0);
+    xarModVars::set('categories', 'catsperpage', 40);
 
     // when a new module item is being specified
     if (!xarModRegisterHook('item', 'new', 'GUI',
@@ -223,9 +233,9 @@ function categories_init()
                              'blockType'=> 'navigation'))) return;
 
     // Register BL tags
-    xarTplRegisterTag('categories', 'categories-navigation',
-                      array(),
-                      'categories_userapi_navigationTag');
+    // xarTplRegisterTag('categories', 'categories-navigation',
+    //                      array(),
+    //                      'categories_userapi_navigationTag');
 
     /*********************************************************************
     * Define instances for this module
@@ -314,7 +324,7 @@ function categories_init()
 /**
  * Upgrade the categories module from an old version
  *
- * @author  Jim McDonald, Flávio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
+ * @author  Jim McDonald, FlÃ¡vio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
  * @access  public
  * @param   $oldVersion
  * @return  true on success or false on failure
@@ -492,7 +502,7 @@ function categories_upgrade($oldversion)
 /**
  * Delete the categories module
  *
- * @author  Jim McDonald, Flávio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
+ * @author  Jim McDonald, FlÃ¡vio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
  * @access  public
  * @param   no parameters
  * @return  true on success or false on failure

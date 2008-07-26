@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:foreach in="$cattrees" value="$cattree">
     <xar:foreach in="$cattree['catparents']" value="$catparent">
         <xar:if condition="empty($catparent['catlink'])">
@@ -14,7 +15,7 @@
         <br />
     </xar:foreach>
     <xar:foreach in="$cattree['catitems']" value="$catitem">
-        &bull;&#160;
+        &#8226;&#160;
         <xar:if condition="empty($catitem['catlink'])">
             <b>#$catitem['catlabel']#</b>
         <xar:else />
@@ -29,7 +30,7 @@
         <br />
         <xar:if condition="!empty($catitem['catchildren']) and count($catitem['catchildren']) gt 0">
         <xar:foreach in="$catitem['catchildren']" value="$catchild">
-            &#160;&#160;&bull;&#160;
+            &#160;&#160;&#8226;&#160;
             <xar:if condition="empty($catchild['clink'])">
                 <b>#$catchild['clabel']#</b>
             <xar:else />
@@ -47,3 +48,4 @@
     </xar:foreach>
     <br />
 </xar:foreach>
+</xar:template>

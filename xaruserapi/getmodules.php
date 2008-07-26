@@ -81,7 +81,7 @@ function categories_userapi_getmodules($args)
             $sql .= " WHERE c.module_id = m.id AND category_id = ?";
             $bindvars[] = $cid;
         }
-        $sql .= ") GROUP BY module_id, itemtype";
+        $sql .= ") GROUP BY module_id, itemtype, regid";
 
         $result = $dbconn->Execute($sql,$bindvars);
         if (!$result) return;
@@ -102,7 +102,7 @@ function categories_userapi_getmodules($args)
             $sql .= " WHERE c.module_id = m.id AND category_id = ?";
             $bindvars[] = $cid;
         }
-        $sql .= " GROUP BY module_id, itemtype";
+        $sql .= " GROUP BY module_id, itemtype, regid";
 
         $result = $dbconn->Execute($sql,$bindvars);
         if (!$result) return;

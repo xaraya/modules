@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:foreach in="$map" value="$mapitem">
     <xar:if condition="$mapitem == 'o_connector'" >
         <img style="vertical-align: top; border: 0" height="21" src="modules/categories/xarimages/n_nosub.gif" alt="0" width="9" />
@@ -18,3 +19,4 @@
     <xar:else />
     </xar:if>
 </xar:foreach>
+</xar:template>
