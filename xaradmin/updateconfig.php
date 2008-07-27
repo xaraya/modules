@@ -244,6 +244,9 @@ function tinymce_admin_updateconfig()
     if (trim(xarModGetVar('tinymce','tinytime')) <> '') {
           $jstext .='plugin_insertdate_timeFormat  : "'.trim(xarModGetVar('tinymce','tinytime')).'", ';
     }
+    
+    //initialize some vars
+    $plugs = '';
     if (xarModGetVar('tinymce','tinytheme') <>'simple') {
         
          $jstext .='theme_advanced_toolbar_location: "'.xarModGetVar('tinymce','tinytoolbar').'", ';
@@ -313,7 +316,7 @@ function tinymce_admin_updateconfig()
             //$jstext .='extended_valid_elements : "'.xarModGetVar('tinymce','tinyextended').'", ';
             $jstext .='extended_valid_elements : "'.$extended.'", ';
         }
-   }
+   } 
 
     /* Setup for 'exact' mode - we only want to replace areas that match for id or name */
     if ((xarModGetVar('tinymce','tinymode') =='exact') and (trim(xarModGetVar('tinymce','tinyinstances')) <> '')){
