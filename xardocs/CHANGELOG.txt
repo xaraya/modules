@@ -1,4 +1,4 @@
-* Version 1.5.0 July 2008
+* Version 1.5.0 July 12 2008
 - Integration of upstream 3.1.0 and post release fixes
 - New activation modvar  - use the tinymce one not base module 'activetinymce' modvar
 - Remove deprecated tinymce api calls, update with new.
