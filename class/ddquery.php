@@ -108,13 +108,13 @@ class DDQuery extends Query
         $init = $this->initalias;
         $this->table = $tables['dynamic_data'];
         parent::addtable($this->table, $init);
-        parent::addfield($init . '.propid');
-        parent::addfield($init . '.itemid');
+        parent::addfield($init . '.property_id');
+        parent::addfield($init . '.item_id');
         parent::addfield($init . '.value');
 
         // Restrict the query to the records which contain data
         // that belong to the object we are interested in
-        parent::in($this->initalias . '.propid',$this->columnids);
+        parent::in($this->initalias . '.property_id',$this->columnids);
     }
 
     function output()
@@ -122,7 +122,7 @@ class DDQuery extends Query
         $items = array();
         foreach(parent::output() as $datum) {
             $cols = $this->columns;
-            $items[$datum['itemid']][$cols[$datum['propid']]['name']] = $datum['value'];
+            $items[$datum['item_id']][$cols[$datum['property_id']]['name']] = $datum['value'];
         }
         // TODO: find a better way to do this
         $output = array();
@@ -145,7 +145,7 @@ class DDQuery extends Query
     {
         // Disable this for the moment
         $this->fieldsempty = 0;
-        parent::eq($this->initalias . '.propid',$this->columnnames[$field]);
+        parent::eq($this->initalias . '.property_id',$this->columnnames[$field]);
     }
 //    function addfields($fields)
 //    {
@@ -157,8 +157,8 @@ class DDQuery extends Query
         sleep(1);
         $this->subalias = "sub".time();
         parent::addtable($this->table, $this->subalias);
-        parent::join($this->initalias . '.itemid', $this->subalias . '.itemid');
-        parent::eq($this->subalias . '.propid',$this->columnnames[$field]);
+        parent::join($this->initalias . '.item_id', $this->subalias . '.item_id');
+        parent::eq($this->subalias . '.property_id',$this->columnnames[$field]);
     }
     function join($field1,$field2)
     {
@@ -201,7 +201,7 @@ class DDQuery extends Query
     // Disable this for the moment
 //    function run($statement='',$display=1)
 //    {
-//        parent::in($this->initalias . '.propid',$this->columnids);
+//        parent::in($this->initalias . '.property_id',$this->columnids);
 //        parent::run($statement,$display);
 //    }
 }
