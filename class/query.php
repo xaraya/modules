@@ -313,12 +313,16 @@ class Query
 
         $done = false;
         for ($i=0;$i<count($this->fields);$i++) {
-            if ($this->fields[$i]['name'] == $argsarray['name']) {
+            // if we already have this field , bail
+            if ($this->fields[$i] == $argsarray) {$done = true; break;}
+            // We might still be able to add alias info
+            if ($this->fields[$i]['name'] == $argsarray['name'] && $this->fields[$i]['table'] == $argsarray['table']) {
                 if (isset($this->fields[$i]['alias']) && isset($argsarray['alias']) &&
-                   ($this->fields[$i]['alias'] != $argsarray['alias'])) break;
-                $this->fields[$i] = $argsarray;
-                $done = true;
-                break;
+                   ($this->fields[$i]['alias'] != $argsarray['alias'])) {
+                        $this->fields[$i] = $argsarray;
+                        $done = true;
+                        break;
+                }
             }
         }
         if (!$done) $this->fields[] = $argsarray;
@@ -428,6 +432,10 @@ class Query
     }
     function eq($field1,$field2,$active=1)
     {
+        return $this->addcondition(array('field1' => $field1,
+                                  'field2' => $field2,
+                                  'op' => $this->eqoperator),$active);
+        // Review this
         $key = $this->_addcondition($active);
         $limit = count($this->conditions);
         $this->conditions[$key]=array('field1' => $field1,
@@ -678,7 +686,10 @@ class Query
 
     function addcondition($x,$active=1)
     {
-        $key = $this->_getkey();
+        foreach($this->conditions as $key => $value)
+            if ($value == $x) return $key;
+
+        $key = $this->_getkey();        
         $this->conjunctions[$key]=array('conditions' => $key,
                                         'conj' => 'IMPLICIT',
                                         'active' => $active);
@@ -1446,8 +1457,9 @@ class Query
     function addconditions($q)
     {
         if ($q->gettype() != $this->gettype()) return false;
-        foreach ($q->conditions as $key => $value) $this->conditions[$key] = $value;
-        foreach ($q->conjunctions as $key => $value) $this->conjunctions[$key] = $value;
+        foreach ($q->conditions as $key => $value) $this->addcondition($value);
+//        foreach ($q->conditions as $key => $value) $this->conditions[$key] = $value;
+//        foreach ($q->conjunctions as $key => $value) $this->conjunctions[$key] = $value;
     }
     function unite($q1, $q2)
     {
