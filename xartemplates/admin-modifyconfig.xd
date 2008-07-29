@@ -24,7 +24,7 @@
                     <p class="xar-form-input-wrapper-after">
                         <xar:mlstring>
                         This is the full path to the directory where uploaded and external import files will be placed.
-                        It is stronly recommended that this directory be located outside of your web directory.
+                        It is strongly recommended that this directory be located outside of your web directory.
                         <br />NOTE: This directory MUST be writable by the webserver.
                        </xar:mlstring>
                     </p>
@@ -52,7 +52,7 @@
                             Maximum Upload Size :
                         </xar:mlstring>
                     </label>
-                    <input type="text" name="file[maxsize]" value="#$file['maxsize']#"/> 
+                    <input type="text" name="file[maxsize]" value="#$file['maxsize']#"/>
                     in bytes (commas are fine)
                     <p class="xar-form-input-wrapper-after">
                         <xar:mlstring>
@@ -69,17 +69,17 @@
                         </xar:mlstring>
                     </label>
                 <xar:if condition="$file['auto-approve'] eq $approveList['noone']">
-                    <input type="radio" name="file[auto-approve]" value="#$approveList['noone']#" checked="true"/> <xar:mlstring>No one</xar:mlstring>     
-                    <input type="radio" name="file[auto-approve]" value="#$approveList['admin']#"/> <xar:mlstring>Admin</xar:mlstring>      
-                    <input type="radio" name="file[auto-approve]" value="#$approveList['everyone']#"/> <xar:mlstring>Everyone</xar:mlstring>   
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['noone']#" checked="true"/> <xar:mlstring>No one</xar:mlstring>
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['admin']#"/> <xar:mlstring>Admin</xar:mlstring>
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['everyone']#"/> <xar:mlstring>Everyone</xar:mlstring>
                 <xar:elseif condition="$file['auto-approve'] eq $approveList['admin']" />
-                    <input type="radio" name="file[auto-approve]" value="#$approveList['noone']#"/><xar:mlstring>No one</xar:mlstring>     
-                    <input type="radio" name="file[auto-approve]" value="#$approveList['admin']#" checked="true"/> <xar:mlstring>Admin</xar:mlstring>      
-                    <input type="radio" name="file[auto-approve]" value="#$approveList['everyone']#"/> <xar:mlstring>Everyone</xar:mlstring>   
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['noone']#"/><xar:mlstring>No one</xar:mlstring>
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['admin']#" checked="true"/> <xar:mlstring>Admin</xar:mlstring>
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['everyone']#"/> <xar:mlstring>Everyone</xar:mlstring>
                 <xar:else />
-                    <input type="radio" name="file[auto-approve]" value="#$approveList['noone']#"/> <xar:mlstring>No one</xar:mlstring>     
-                    <input type="radio" name="file[auto-approve]" value="#$approveList['admin']#"/> <xar:mlstring>Admin</xar:mlstring>      
-                    <input type="radio" name="file[auto-approve]" value="#$approveList['everyone']#" checked="true"/> <xar:mlstring>Everyone</xar:mlstring>   
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['noone']#"/> <xar:mlstring>No one</xar:mlstring>
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['admin']#"/> <xar:mlstring>Admin</xar:mlstring>
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['everyone']#" checked="true"/> <xar:mlstring>Everyone</xar:mlstring>
                 </xar:if>
                     <p class="xar-form-input-wrapper-after">
                         <xar:mlstring>
@@ -224,7 +224,7 @@
                 </legend>
                 <p class="xar-form-input-wrapper-before">
                     <xar:mlstring>
-                    These settings allow you to redefine certain characteristics of the FileUpload DynamicData Property. 
+                    These settings allow you to redefine certain characteristics of the FileUpload DynamicData Property.
                     These settings only take effect if you have 'hooked' the uploads module to the module using the
                     FileUpload property.
                     </xar:mlstring>
