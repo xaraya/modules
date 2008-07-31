@@ -18,11 +18,15 @@ function messages_user_modify( $args )
     if (!xarSecurityCheck('ViewMessages', 0)) {
         return $data['error'] = xarML('You are not permitted to view messages.');
     }
-
-    if (!xarVarFetch('id', 'int:1:', $id)) return;
+	if (!xarVarFetch('id', 'int', $id , NULL , XARVAR_NOT_REQUIRED)){ 
+    	$msg = xarML('Invalid #(1)#(2) for #(3) function #(4)() in module #(5)',
+                                 'messages' ,'Id', 'user', 'modify', 'messages');
+        throw new Exception($msg);
+    }
     xarVarFetch('preview', 'checkbox', $preview, false, XARVAR_NOT_REQUIRED);
     xarVarFetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED);
     xarVarFetch('draft', 'checkbox', $draft, true, XARVAR_NOT_REQUIRED);
+    xarVarFetch('postanon',   'checkbox', $postanon,   false, XARVAR_NOT_REQUIRED);
 
     if ($preview === true) {
         $action = 'preview';
@@ -35,6 +39,7 @@ function messages_user_modify( $args )
     $data['action']         = $action;
     $data['draft']          = $draft;
     $data['input_title']    = xarML('Modify Message');
+	$data['postanon']       = $postanon;	    
     $data['id']             = $id;
 
     xarTplSetPageTitle( xarML('Modify Message') );
@@ -97,12 +102,13 @@ function messages_user_modify( $args )
                 $data['subject']                    = $subject;
                 $data['body']                       = $body;
 
+                //Psspl:Comment code for resolving draft messages error. 
                 // added call to transform text srg 09/22/03
-                list($data['message']['body']) = xarModCallHooks('item',
+                /*list($data['message']['body']) = xarModCallHooks('item',
                      'transform',
                      $id,
                      array($data['message']['body']));
-                return $data;
+                return $data;*/
             }
 
             $id = xarModAPIFunc('messages',
@@ -112,6 +118,7 @@ function messages_user_modify( $args )
                                  'subject' => $subject,
                                  'body'  => $body,
                                  'recipient'    => $recipient,
+                                 'postanon' => $postanon,
                                  'draft' => $draft));
             // see if the recipient has set an away message
             if(!$draft){
@@ -160,7 +167,7 @@ function messages_user_modify( $args )
             $data['message']['date']            = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', time());
             $data['message']['raw_date']        = time();
             $data['message']['body']            = $body;
-
+			$data['message']['postanon']        = $postanon;
             $data['recipient']                  = $recipient;
             $data['subject']                    = $subject;
             $data['body']                       = $body;
@@ -187,7 +194,7 @@ function messages_user_modify( $args )
             $data['date']           = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', time());
             $data['raw_date']       = time();
             $data['body']           = $messages[0]['body'];
-
+			$data['postanon']       = $messages[0]['postanon'];
             $data['message'] = $messages[0];
 
             $data['message']['date']            = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', time());

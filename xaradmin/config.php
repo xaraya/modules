@@ -14,6 +14,7 @@
 /**
  * Administration for the mybookmarks module.
  */
+include_once("./modules/commonutil.php");
 function messages_admin_config( $args )
 {
     extract( $args );
@@ -45,7 +46,15 @@ function messages_adminpriv_config( $args )
     extract( $args );
     if (!xarVarFetch('itemtype',  'int',    $itemtype, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('shorturls', 'int:0:1', $shorturls, 0, XARVAR_NOT_REQUIRED)) return;
-    if ( isset( $authid ) ) {
+    //Psspl:Modifided the code for allowedsend to selected group configuration.
+    if (!xarVarFetch('selectedGroups',  'array',    $selectedGroups, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('action',    'str:1:', $action, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('group',  'int',    $group, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('childgroupsimploded',  'str',    $childgroupsimploded, 0, XARVAR_NOT_REQUIRED)) return;	
+   	   
+	$data['group'] = $group;
+    
+	if ( isset( $authid ) ) {
         /* The user confirmed the form. So save the results.         */
 
         if (!xarSecConfirmAuthKey()) return;
@@ -63,8 +72,13 @@ function messages_adminpriv_config( $args )
             xarModURL('messages','admin','config', array('itemtype' => $itemtype )));
 
     } // Save the changes
-
-    $data['common']['menu_label'] = 'Configure';
+	//Psspl:Added the code for modify action for storing selected information.
+   if ($action == 'Modify') {
+    	    	xarModAPIFunc('messages','admin','setconfig',array('group'=>$data['group'],'childgroupsimploded' => $childgroupsimploded));
+    	
+	}
+	$data['selectedGroupStr'] = xarModAPIFunc('messages','admin','getconfig',array('group'=>$data['group']));
+	$data['common']['menu_label'] = 'Configure';
     $data['common']['menu']       = messages_adminpriv_configmenu();
 
     /*

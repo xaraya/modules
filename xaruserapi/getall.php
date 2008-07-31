@@ -11,10 +11,13 @@
  * @link http://xaraya.com/index.php/release/6.html
  * @author XarayaGeek
  */
+//Psspl:Modifided the code for post anonymously. 
+
+include_once("./modules/commonutil.php");
 function messages_userapi_getall( $args )
 {
     extract($args);
-
+	
     if(!isset($folder) || !in_array($folder, array('inbox','sent','drafts'))) {
         $folder = 'inbox';
     }
@@ -66,8 +69,23 @@ function messages_userapi_getall( $args )
         $message['date']          = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', $node['datetime']);
         $message['body']          = $node['text'];
         $message['recipient']     = xarUserGetVar('name');
+        $message['postanon']	  = $node['postanon'];	
         $message['recipient_id']  = xarSession::getVar('role_id');
 
+		
+        if ($folder == 'sent' || $folder == 'drafts') {
+
+        	$MessageInfo = xarModAPIFunc('messages',
+										 'user',
+								         'get_one',
+								         array('id' => $node['id'] , 'folder' => $folder));
+        	
+	        foreach ($MessageInfo as $info_key => $Info_node) {
+        		
+        		$message['recipient']     = xarUserGetVar('name',$Info_node['objectid']);
+        		$message['recipient_id']  = $Info_node['objectid'];
+        	}
+        }
         if($folder == 'inbox'){
             if (!in_array($message['id'], $read_messages)) {
                 $message['status_image'] = xarTplGetImage('unread.gif');

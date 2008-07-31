@@ -11,6 +11,8 @@
  * @link http://xaraya.com/index.php/release/6.html
  * @author XarayaGeek
  */
+//Psspl:Modifided the code for post anonymously. 
+include_once("./modules/commonutil.php");
 function messages_user_send()
 {
 
@@ -22,6 +24,7 @@ function messages_user_send()
     xarVarFetch('preview', 'checkbox', $preview, false, XARVAR_NOT_REQUIRED);
     xarVarFetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED);
     xarVarFetch('draft',   'checkbox', $draft,   false, XARVAR_NOT_REQUIRED);
+    xarVarFetch('postanon',   'checkbox', $postanon,   false, XARVAR_NOT_REQUIRED);
 
     if ($preview === true) {
         $action = 'preview';
@@ -34,16 +37,10 @@ function messages_user_send()
     $data['post_url']       = xarModURL('messages','user','send');
     $data['action']         = $action;
     $data['draft']          = $draft;
-
+    $data['postanon']       = $postanon;   
     if($action != 'submit') {
-        $users = xarModAPIFunc('roles',
-                               'user',
-                               'getall',
-                                array('state'   => 3,
-                                      'include_anonymous' => false,
-                                      'include_myself' => false));
-        $data['users']          = $users;
-    }
+$data['users'] = xarModAPIFunc('messages','user','get_users');
+	}
 
     switch($action) {
         case "submit":
@@ -96,6 +93,7 @@ function messages_user_send()
                           'create',
                            array('subject' => $subject,
                                  'body'  => $body,
+                                 'postanon' => $postanon,
                                  'recipient'    => $recipient,
                                  'draft' => $draft));
             // see if the recipient has set an away message
@@ -132,13 +130,22 @@ function messages_user_send()
             $data['recipient']     = $messages[0]['sender_id'];
             $data['message']        = $messages[0];
 
+			//Psspl:Added the code for recipient name for anonymous messages
+			$data['postanon']      = $messages[0]['postanon'];
+            
+			// Get $recipient information
+        	$recipient_info = xarRoles::get($data['recipient']);
+        	if (!$recipient_info) return;
+	       	$data['recipient_name'] = $recipient_info->getName();			      		       	            
             break;
         case "preview":
+            //Psspl:Comment the code for resolving preview message issue
+			/*             
             if (!xarVarFetch('id', 'int:1', $id)) {
                 $data['id'] = 1;
                 xarErrorHandled();
             }
-
+			*/
             if (!xarVarFetch('subject', 'str:1', $subject)) {
                 $data['no_subject'] = 1;
                 xarErrorHandled();
@@ -151,12 +158,13 @@ function messages_user_send()
                 $data['no_recipient'] = 1;
                 xarErrorHandled();
             }
+            //Psspl:Comment the code for resolving preview message issue
             // added call to transform text srg 09/22/03
-            list($body) = xarModCallHooks('item',
+            /*list($body) = xarModCallHooks('item',
                                           'transform',
                                            $id,
                                            array($body));
-
+			*/
             xarTplSetPageTitle( xarML('Post Message') );
 
             $data['input_title']                = xarML('Compose Message');

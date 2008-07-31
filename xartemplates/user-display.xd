@@ -104,7 +104,13 @@
                             </td>
                             <td class="#$rowclass# xar-align-left xar-messages-mailboxlistsender">
                                 <xar:if condition="strtolower($folder) eq 'inbox'">
+								<!--Psspl:Modifided the code for anonymous message-->
+                                <xar:if condition="$loop:item['postanon'] eq '0'">
                                     <a href="#$loop:item['user_link']#" title="#xarML('View user info')#">#$loop:item['sender']#</a>
+                          			<!--#$comment['author']#-->
+                      		<xar:else/>
+                        		<xar:mlstring>Anonymous</xar:mlstring>
+                    		</xar:if>
                                 <xar:else />
                                     <a href="#$loop:item['user_link']#" title="#xarML('View user info')#">#$loop:item['recipient']#</a>
                                 </xar:if>
@@ -121,8 +127,13 @@
                                     <a href="#$loop:item['view_link']#" title="#xarML('View message')#"><xar:mlstring>View</xar:mlstring></a> |
                                 </xar:if>
                                 <xar:if condition="strtolower($folder) eq 'inbox'">
-                                    <a href="#$loop:item['reply_link']#" title="#xarML('Reply to Message')#"><xar:mlstring>Reply</xar:mlstring></a> |
-                                <xar:elseif condition="strtolower($folder) eq 'drafts'" />
+                                	<xar:if condition="$loop:item['postanon'] eq '0'">
+                                    	<a href="#$loop:item['reply_link']#" title="#xarML('Reply to Message')#"><xar:mlstring>Reply</xar:mlstring></a> |
+                               		<xar:else/>
+                               			<!--<xar:mlstring>Reply</xar:mlstring></a> |-->
+                               			<a href="#$loop:item['reply_link']#" title="#xarML('Reply to Message')#"><xar:mlstring>Reply</xar:mlstring></a> |
+                               		</xar:if> 
+                               <xar:elseif condition="strtolower($folder) eq 'drafts'" />
                                     <a href="#$loop:item['modify_link']#" title="#xarML('Edit or Send Message')#"><xar:mlstring>Modify</xar:mlstring></a> |
                                 </xar:if>
                                 <xar:if condition="!empty($allowdelete)">

@@ -11,6 +11,7 @@
  * @link http://xaraya.com/index.php/release/6.html
  * @author XarayaGeek
  */
+//Psspl:Modifided the code for post anonymously. 
 function messages_userapi_get( $args )
 {
 
@@ -26,7 +27,13 @@ function messages_userapi_get( $args )
         $status = 2;
     }
 
-    $list = xarModAPIFunc('comments',
+    $list1 = xarModAPIFunc('comments',
+                                   'user',
+                                   'get_multiple',
+                                    array('modid'       => xarModGetIDFromName('messages'),
+                                          'objectid'    => xarUserGetVar('id'),
+                                          'status'      => 2));
+    $list = xarModAPIFunc('messages',
                            'user',
                            'get_one',
                             array('id' => $id));
@@ -49,6 +56,7 @@ function messages_userapi_get( $args )
         $message['raw_date']      = $node['datetime'];
         $message['date']          = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', $node['datetime']);
         $message['subject']       = $node['title'];
+        $message['postanon']	  = $node['postanon'];	
         $message['body']          = $node['text'];
         $message['draft']         = ($node['status'] == 1 ? true : false);
         if (!in_array($message['id'], $read_messages)) {

@@ -11,6 +11,7 @@
  * @link http://xaraya.com/index.php/release/6.html
  * @author XarayaGeek
  */
+//Psspl: modifided the code for post anonymously 
 function messages_userapi_create( $args )
 {
     extract($args);
@@ -47,7 +48,8 @@ function messages_userapi_create( $args )
                                 'objectid'    => $recipient,
                                 'title'       => $subject,
                                 'comment'     => $body,
-                                'author'      => xarSession::getVar('role_id')));
+                                'author'      => xarSession::getVar('role_id'),
+                                 'postanon' => $postanon,));
 
 	if($id !== false && $draft == true) {
     	xarModAPIFunc('comments',

@@ -6,12 +6,22 @@
                 <xar:mlstring>From:</xar:mlstring>
             </label>
             #xarUserGetVar('name')#
+			<!--Psspl:Modifided the code for anonymous message-->
+            <xar:if condition="isset($postanon) and $postanon eq 1">
+                      <input type="checkbox" name="postanon" id="postanon" checked="checked" value="1"/>
+                    <xar:else />
+                      <input type="checkbox" name="postanon" id="postanon" value="1" />
+                    </xar:if>
+                    <xar:mlstring>
+                      Post anonymously
+                    </xar:mlstring>
         </div>
 
         <div class="xar-form-input-wrapper">
             <label for="recipient" title="#xarML('To whom the message will be sent')#" class="xar-form-label">
                 <xar:mlstring>To:</xar:mlstring>
             </label>
+            <xar:if condition="isset($action) and $action ne 'reply' ">
             <select name="recipient" id="recipient">
                 <xar:loop name="$users">
                     <xar:if condition="isset($recipient) and $loop:item['id'] eq $recipient">
@@ -25,6 +35,19 @@
                     </xar:if>
                 </xar:loop>
             </select>
+            </xar:if>
+            <xar:if condition="isset($action) and $action eq 'reply' ">
+            <xar:if condition="isset($postanon) and $postanon eq 1">
+            <xar:mlstring>
+                      Anonymous
+                </xar:mlstring>
+            <xar:else />
+            <xar:mlstring>
+            		#$recipient_name#
+             </xar:mlstring>		
+            </xar:if>	
+            <input type="hidden" value="#$recipient#" name="recipient" id="recipient" />
+            </xar:if>
             <xar:if condition="isset($no_recipient)">
                 <span class="xar-error">
                     <xar:mlstring>Missing!</xar:mlstring>
@@ -80,6 +103,9 @@
             <xar:if condition="isset($mid)">
                 <input type="hidden" name="mid" id="mid" value="#$mid#" />
             </xar:if>
+            <xar:if condition="isset($id)">
+            <input type="hidden" name="id" id="id" value="#$id#" />
+             </xar:if>
             <input type="submit" name="preview" id="preview" value="#xarML('Preview')#" class="xar-margin-thickright" />
             <input type="submit" name="confirm" id="confirm" value="#xarML('Submit')#" class="xar-margin-thickleft" />
         </div>

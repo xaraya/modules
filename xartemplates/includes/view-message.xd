@@ -9,7 +9,18 @@
             <span class="xar-form-label">
                 <xar:mlstring>From:</xar:mlstring>
             </span>
+            <!--Psspl:Modifided the code for anonymous message-->
+			<xar:if condition="isset($message['postanon'])">
+            <!--#$message['sender']#-->
+            <xar:if condition="$message['postanon'] eq 0 or xarModVars::get('comments','AllowPostAsAnon') eq 0">
+         		<!--Psspl:Resolve the issue of sender link -->
+            		<a href="#$message['user_link']#" title="#xarML('View user info')#">#$message['sender']#</a>
+                     		<xar:else/>
+                        		<xar:mlstring>Anonymous</xar:mlstring>
+                    		</xar:if>
+                    		<xar:else/>
             #$message['sender']#
+                    		</xar:if>
         </div>
 
         <div class="xar-form-input-wrapper">
@@ -40,7 +51,13 @@
         <xar:if condition="isset($action) and $action ne 'preview' and $action ne 'check' and $action ne 'modify'">
             <div class="xar-margin-thicktop">
                 <xar:if condition="$action ne 'viewsent'">
+                	<xar:if condition="!isset($message['postanon'])">
                     <a href="#$message['reply_link']#" title="#xarML('Reply to Message')#"><xar:mlstring>Reply</xar:mlstring></a> |
+					<xar:else/>
+					<!--Psspl:Added the code for anonymoys messages -->
+					    <!--<xar:mlstring>Reply</xar:mlstring>-->
+					 <a href="#$message['reply_link']#" title="#xarML('Reply to Message')#"><xar:mlstring>Reply</xar:mlstring></a> |               
+                    </xar:if>
                 </xar:if>
                 <xar:if condition="xarSecurityCheck('DeleteMessages', 0)">
                     <a href="#$message['delete_link']#" title="#xarML('Delete Message')#"><xar:mlstring>Delete</xar:mlstring></a>
