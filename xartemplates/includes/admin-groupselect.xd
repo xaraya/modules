@@ -12,7 +12,7 @@
     <input type="hidden" name="authid" id="authid" value="#$authid#"/>
 
     <fieldset>
-      <legend><xar:mlstring>Configure Options</xar:mlstring></legend>
+      <legend><xar:mlstring>Defaults</xar:mlstring></legend>
   <div class="xar-form-input-wrapper">
         <label for="supportshorturls" class="xar-form-label" title="#xarML('Enable short URLS?')#">
           <xar:mlstring>Enable short URLs?</xar:mlstring>
@@ -20,16 +20,14 @@
            <xar:data-input type="checkbox" name="supportshorturls" value="$supportshorturls"/>
       </div>
 
+    </fieldset>
+    <fieldset>
+      <legend><xar:mlstring>Message Send Lists</xar:mlstring></legend>
       <!--Psspl:Added the code for selecting group configuration for allowedsendGroup-->
-      <div>
-      <label for="select user groups" class="xar-form-label" title="#xarML('Select the Groups for sending messages')#">
-          <xar:mlstring>Select Groups for sending Messages</xar:mlstring>
-        </label><br /><br />
-      </div>
        <!--Psspl:call the groupmulti select-->
         <div class="xar-form-input-wrapper" style="padding-bottom: 10px;">
         <label for="group" title="#xarML('Manage the members of this group')#" class="xar-form-label">
-            <xar:mlstring>Group:</xar:mlstring>
+            <xar:mlstring>Members of this group:</xar:mlstring>
         </label>
         <xar:data-input type="grouplist" name="group" value="$group" onchange="javascript:submit();" />
         </div>
@@ -37,7 +35,7 @@
      <xar:set name="groupfilter">"parent:" . $group</xar:set>
         <ul style="list-style-type:none;">
             <li style="float:left;background:none;">
-                Send Allow List:
+                can send to members of:
                 <br />
                 <xar:data-input type="groupmultiselect" name="childgroups" id="childgroups" validation="$groupfilter" />
                <input type="hidden" name="childgroupsimploded" id="childgroupsimploded" value="$childgroupsoptionkeys" />               
