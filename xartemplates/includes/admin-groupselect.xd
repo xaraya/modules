@@ -1,6 +1,6 @@
 <!--Psspl:Added the template for setting configuration for "send_allow_list" -->
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:comment>Common Administration menu</xar:comment>
 <!--Psspl:Use the body insted of <div class="xar-mod-body"> tag for calling javascript function on onload event
 <div class="xar-mod-body"> not support the javascript function call
@@ -32,7 +32,7 @@
             <xar:mlstring>Group:</xar:mlstring>
         </label>
         <xar:data-input type="grouplist" name="group" value="$group" onchange="javascript:submit();" />
-    	</div>
+        </div>
     <div>
      <xar:set name="groupfilter">"parent:" . $group</xar:set>
         <ul style="list-style-type:none;">
@@ -56,7 +56,7 @@
     </fieldset>
        <div class="xar-form-input-wrapper-after">
 
-		<input type="submit" value="Modify" name="action"/>
+        <input type="submit" value="Modify" name="action"/>
         <input type="submit" name="cancel" value="Cancel"/>
     </div>
 </form>
