@@ -80,7 +80,7 @@ class CalendarDisplayProperty extends DataProperty
 
                 $WeekDecorator = new WeekEvent_Decorator($WeekEvents);
                 $WeekDecorator->build($events);
-                $data['Week'] =& $WeekDecorator; // pass a reference to the object to the template
+                $data['Week'] =& $WeekDecorator;
                 $data['cal_sdow'] = CALENDAR_FIRST_DAY_OF_WEEK;
                 break;
             case 'month':
