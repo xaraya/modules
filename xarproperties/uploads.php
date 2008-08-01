@@ -212,9 +212,16 @@ class UploadProperty extends FileUploadProperty
                 break;
         }
 
+        if(!$this->createValue($data))return false;
+        xarVarSetCached('DynamicData.Upload',$name,$this->value);
+        return true;
+    }
+
+    function createValue(Array $data = array())
+    {
         if (!empty($data['action'])) {
 
-            if (isset($storeType)) $data['storeType'] = $storeType;
+//            if (isset($storeType)) $data['storeType'] = $storeType;
 
             // This is where the actual saves happen
             $data['override']['upload']['path'] = $this->initialization_basedirectory;
@@ -251,8 +258,6 @@ class UploadProperty extends FileUploadProperty
         } else {
             return false;
         }
-        xarVarSetCached('DynamicData.Upload',$name,$this->value);
-        return true;
     }
 
     /**
