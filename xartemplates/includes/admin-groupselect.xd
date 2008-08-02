@@ -1,70 +1,64 @@
 <!--Psspl:Added the template for setting configuration for "send_allow_list" -->
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<xar:comment>Common Administration menu</xar:comment>
-<!--Psspl:Use the body insted of <div class="xar-mod-body"> tag for calling javascript function on onload event
-<div class="xar-mod-body"> not support the javascript function call
--->
-<body onload="javascript:addSelectedGroup('childgroupsselect','childgroups','#$selectedGroupStr#');implodeListKeys('childgroups','childgroupsimploded',',');implodeListKeys('childgroups','childgroupsimploded',',');checkstatus('childgroupsselect','childgroups','removeall','addall','add','remove');">
-<!--<div class="xar-mod-body" onload="javascript:addSelectedGroup('childgroupsselect','childgroups','#$selectedGroupStr#');implodeListKeys('childgroups','childgroupsimploded',',');">-->
+    <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:comment>Common Administration menu</xar:comment>
+    <xar:base-include-javascript position="body" type="onload" code="addSelectedGroup('childgroupsselect','childgroups','#$selectedGroupStr#');implodeListKeys('childgroups','childgroupsimploded',',');implodeListKeys('childgroups','childgroupsimploded',',');checkstatus('childgroupsselect','childgroups','removeall','addall','add','remove');" />
     <h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
-  <form method="post" action="#$action#">
-    <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+      <form method="post" action="#$action#">
+        <input type="hidden" name="authid" id="authid" value="#$authid#"/>
 
-    <fieldset>
-      <legend><xar:mlstring>Defaults</xar:mlstring></legend>
-  <div class="xar-form-input-wrapper">
-        <label for="supportshorturls" class="xar-form-label" title="#xarML('Enable short URLS?')#">
-          <xar:mlstring>Enable short URLs?</xar:mlstring>
-        </label>
-           <xar:data-input type="checkbox" name="supportshorturls" value="$supportshorturls"/>
-      </div>
+        <fieldset>
+          <legend><xar:mlstring>Defaults</xar:mlstring></legend>
+      <div class="xar-form-input-wrapper">
+            <label for="supportshorturls" class="xar-form-label" title="#xarML('Enable short URLS?')#">
+              <xar:mlstring>Enable short URLs?</xar:mlstring>
+            </label>
+               <xar:data-input type="checkbox" name="supportshorturls" value="$supportshorturls"/>
+          </div>
 
-    </fieldset>
-    <fieldset>
-      <legend><xar:mlstring>Message Send Lists</xar:mlstring></legend>
-      <!--Psspl:Added the code for selecting group configuration for allowedsendGroup-->
-       <!--Psspl:call the groupmulti select-->
-        <div class="xar-form-input-wrapper" style="padding-bottom: 10px;">
-        <label for="group" title="#xarML('Manage the members of this group')#" class="xar-form-label">
-            <xar:mlstring>Members of this group:</xar:mlstring>
-        </label>
-        <xar:data-input type="grouplist" name="group" value="$group" onchange="javascript:submit();" />
+        </fieldset>
+        <fieldset>
+          <legend><xar:mlstring>Message Send Lists</xar:mlstring></legend>
+          <!--Psspl:Added the code for selecting group configuration for allowedsendGroup-->
+           <!--Psspl:call the groupmulti select-->
+            <div class="xar-form-input-wrapper" style="padding-bottom: 10px;">
+            <label for="group" title="#xarML('Manage the members of this group')#" class="xar-form-label">
+                <xar:mlstring>Members of this group:</xar:mlstring>
+            </label>
+            <xar:data-input type="grouplist" name="group" value="$group" onchange="javascript:submit();" />
+            </div>
+        <div>
+         <xar:set name="groupfilter">"parent:" . $group</xar:set>
+            <ul style="list-style-type:none;">
+                <li style="float:left;background:none;">
+                    can send to members of:
+                    <br />
+                    <xar:data-input type="groupmultiselect" name="childgroups" id="childgroups" validation="$groupfilter" />
+                   <input type="hidden" name="childgroupsimploded" id="childgroupsimploded" value="$childgroupsoptionkeys" />               
+                </li>
+                <li style="float:left;background:none;padding-top: 10px;">
+
+                <input class="button" type="button" id="add" value="&lt; #xarML('Add Group')#" onclick="addSelectedToList('childgroupsselect','childgroups');implodeListKeys('childgroups','childgroupsimploded',',');delSelectedFromList('childgroupsselect'); implodeListKeys('childgroups','childgroupsimploded',',');checkstatus('childgroupsselect','childgroups','removeall','addall','add','remove');" title="#xarML('Add group')#" style="width: 150px;" />
+                    <br />
+                <input class="button" type="button" id="remove" value="#xarML('Remove Group')# &gt;" onclick="addSelectedToList('childgroups','childgroupsselect');implodeListKeys('childgroups','childgroupsimploded',',');delSelectedFromList('childgroups'); implodeListKeys('childgroups','childgroupsimploded',',');checkstatus('childgroupsselect','childgroups','removeall','addall','add','remove');" title="#xarML('Remove group')#"  style="width: 150px;"/>
+                    <br />
+                    <input class="button" type="button" id="addall" value="&lt;&lt; #xarML('Add All')#" onclick="addAllGroup('childgroupsselect','childgroups');implodeListKeys('childgroups','childgroupsimploded',',');removeAllGroup('childgroupsselect'); implodeListKeys('childgroups','childgroupsimploded',',');checkstatus('childgroupsselect','childgroups','removeall','addall','add','remove');" title="#xarML('Add all group')#" style="width: 150px;" />
+                    <br />                                                                                                                                                                                                                                                                                                                       
+                    <input class="button" type="button" id="removeall" value="#xarML('Remove All')# &gt;&gt;" onclick="addAllGroup('childgroups','childgroupsselect');implodeListKeys('childgroups','childgroupsimploded',',');removeAllGroup('childgroups'); implodeListKeys('childgroups','childgroupsimploded',','); checkstatus('childgroupsselect','childgroups','removeall','addall','add','remove');" title="#xarML('Remove all group')#"  style="width: 150px;"  />
+
+                </li>
+                <li style="float:left;background:none;padding-top: 10px;">
+                   <!-- <xar:data-input type="grouplist" name="childgroupsselect" id="childgroupsselect" />-->
+                    <xar:data-input type="groupmultiselect" name="childgroupsselect" id="childgroupsselect" validation="$groupfilter" />
+                </li>
+            </ul>
+        </div>       
+        </fieldset>
+           <div class="xar-form-input-wrapper-after">
+
+            <input type="submit" value="Modify" name="action"/>
+            <!--Psspl:modifided the code for resolving cancel issue the  -->
+            <input type="submit" name="action" value="Cancel"/>
         </div>
-    <div>
-     <xar:set name="groupfilter">"parent:" . $group</xar:set>
-        <ul style="list-style-type:none;">
-            <li style="float:left;background:none;">
-                can send to members of:
-                <br />
-                <xar:data-input type="groupmultiselect" name="childgroups" id="childgroups" validation="$groupfilter" />
-               <input type="hidden" name="childgroupsimploded" id="childgroupsimploded" value="$childgroupsoptionkeys" />               
-            </li>
-            <li style="float:left;background:none;padding-top: 10px;">
-            
-            <input class="button" type="button" id="add" value="&lt; #xarML('Add Group')#" onclick="addSelectedToList('childgroupsselect','childgroups');implodeListKeys('childgroups','childgroupsimploded',',');delSelectedFromList('childgroupsselect'); implodeListKeys('childgroups','childgroupsimploded',',');checkstatus('childgroupsselect','childgroups','removeall','addall','add','remove');" title="#xarML('Add group')#" style="width: 150px;" />
-                <br />
-            <input class="button" type="button" id="remove" value="#xarML('Remove Group')# &gt;" onclick="addSelectedToList('childgroups','childgroupsselect');implodeListKeys('childgroups','childgroupsimploded',',');delSelectedFromList('childgroups'); implodeListKeys('childgroups','childgroupsimploded',',');checkstatus('childgroupsselect','childgroups','removeall','addall','add','remove');" title="#xarML('Remove group')#"  style="width: 150px;"/>
-                <br />
-                <input class="button" type="button" id="addall" value="&lt;&lt; #xarML('Add All')#" onclick="addAllGroup('childgroupsselect','childgroups');implodeListKeys('childgroups','childgroupsimploded',',');removeAllGroup('childgroupsselect'); implodeListKeys('childgroups','childgroupsimploded',',');checkstatus('childgroupsselect','childgroups','removeall','addall','add','remove');" title="#xarML('Add all group')#" style="width: 150px;" />
-                <br />																																																																														 
-                <input class="button" type="button" id="removeall" value="#xarML('Remove All')# &gt;&gt;" onclick="addAllGroup('childgroups','childgroupsselect');implodeListKeys('childgroups','childgroupsimploded',',');removeAllGroup('childgroups'); implodeListKeys('childgroups','childgroupsimploded',','); checkstatus('childgroupsselect','childgroups','removeall','addall','add','remove');" title="#xarML('Remove all group')#"  style="width: 150px;"  />
-                
-            </li>
-            <li style="float:left;background:none;padding-top: 10px;">
-               <!-- <xar:data-input type="grouplist" name="childgroupsselect" id="childgroupsselect" />-->
-                <xar:data-input type="groupmultiselect" name="childgroupsselect" id="childgroupsselect" validation="$groupfilter" />
-            </li>
-        </ul>
-    </div>       
-    </fieldset>
-       <div class="xar-form-input-wrapper-after">
-
-        <input type="submit" value="Modify" name="action"/>
-        <!--Psspl:modifided the code for resolving cancel issue the  -->
-        <input type="submit" name="action" value="Cancel"/>
-    </div>
-</form>
-<!--</div>-->
-</body>
+    </form>
 </xar:template>
