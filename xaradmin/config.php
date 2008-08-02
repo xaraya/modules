@@ -49,7 +49,7 @@ function messages_adminpriv_config( $args )
     //Psspl:Modifided the code for allowedsend to selected group configuration.
     if (!xarVarFetch('selectedGroups',  'array',    $selectedGroups, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('action',    'str:1:', $action, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('group',  'int',    $group, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('group',  'int',    $group, 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('childgroupsimploded',  'str',    $childgroupsimploded, 0, XARVAR_NOT_REQUIRED)) return;	
    	   
 	$data['group'] = $group;

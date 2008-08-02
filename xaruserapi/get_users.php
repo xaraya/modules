@@ -1,4 +1,4 @@
-<?
+<?php
 /**Psspl:Added the code for allow the members of a
  * given group to only send messages to another group.
  * 
@@ -71,8 +71,7 @@ function messages_userapi_get_users( $args )
     	//Check condition for selecting all group.
     	if ($allowedSendMessages[0] != 0 or $allowedSendMessages != null ) {
 	    	//$allowedGroups = explode(",",$allowedSendMessages);
-	    	foreach ($allowedSendMessages as $key => $value)
-	    	{
+	    	foreach ($allowedSendMessages as $key => $value) {
 	    		$group_c[]=$q->peq('rm.parent_id' , $value);//select the users only from selected group. 
 	    	}
 	    	
