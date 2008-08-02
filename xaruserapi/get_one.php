@@ -58,12 +58,10 @@ TracePrint($tableName,"table");
                     objectid AS objectid
               FROM  $xartable[comments]
               WHERE  id=$id";
-	if ($folder=='drafts') 
-    {
+	if ($folder=='drafts') {
     	//$sql .= " AND  status="._COM_STATUS_OFF;
     }
-    else 
-    {
+    else{
     	//$sql .= " AND  status="._COM_STATUS_ON;
     }
        
