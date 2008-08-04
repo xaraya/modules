@@ -11,6 +11,9 @@
  * @link http://xaraya.com/index.php/release/666.html
  * @author Uploads Module Development Team
  */
+/**
+ * Show a page with various ways to add files to the system
+ */
 // load defined constants
 xarModAPILoad('uploads', 'user');
 

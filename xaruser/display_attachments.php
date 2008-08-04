@@ -13,13 +13,12 @@
  */
 
 /**
- * display rating for a specific item, and request rating
- * @param $args['objectid'] ID of the item this rating is for
+ * Display files that are attached to an item
+ * @param int $args['objectid'] ID of the item this rating is for
  * @param $args['extrainfo'] URL to return to if user chooses to rate
  * @param $args['style'] style to display this rating in (optional)
  * @param $args['itemtype'] item type
- * @return output
- * @return output with rating information
+ * @return array
  */
 function uploads_user_display_attachments($args)
 {
