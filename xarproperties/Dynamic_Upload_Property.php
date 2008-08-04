@@ -79,6 +79,11 @@ class Dynamic_Upload_Property extends Dynamic_Property
     }
     /**
      * Check the input into the uploads property
+     *
+     * This function will see if we have a value as input. If the value is set,
+     *  it is parsed to the validate function
+     * @param string name
+     * @param mixed value
      */
     function checkInput($name='', $value = null)
     {
@@ -94,6 +99,7 @@ class Dynamic_Upload_Property extends Dynamic_Property
     }
     /**
      * Validate the value entered
+     * @param mixed value
      */
     function validateValue($value = null)
     {
@@ -168,6 +174,8 @@ class Dynamic_Upload_Property extends Dynamic_Property
 //    function showInput($name = '', $value = null, $size = 0, $maxsize = 0, $id = '', $tabindex = '')
     /**
      * Show the input form
+     * @param array args
+     * @return mixed This function will show the input form via the uploads_admin_showinput function
      */
     function showInput($args = array())
     {
@@ -256,7 +264,11 @@ class Dynamic_Upload_Property extends Dynamic_Property
         return $ulid;
     }
 
-
+    /**
+     * Parse the listing of validation options
+     * The function sets the options in return
+     * @param string validation rules
+     */
     function parseValidation($validation = '')
     {
         list($multiple, $methods, $basedir, $importdir) = xarModAPIFunc('uploads', 'admin', 'dd_configure', $validation);
@@ -273,9 +285,9 @@ class Dynamic_Upload_Property extends Dynamic_Property
      *
      * @return array base information for this property
      **/
-     function getBasePropertyInfo()
-     {
-         $baseInfo = array(
+    function getBasePropertyInfo()
+    {
+        $baseInfo = array(
                             'id'         => 105,
                             'name'       => 'uploads',
                             'label'      => 'Upload',
@@ -289,8 +301,11 @@ class Dynamic_Upload_Property extends Dynamic_Property
                             // ...
                            );
         return $baseInfo;
-     }
-
+    }
+    /**
+     * Show the options for the validation of the property
+     * This function will show all options that are possible
+     */
     function showValidation($args = array())
     {
         extract($args);
@@ -313,6 +328,7 @@ class Dynamic_Upload_Property extends Dynamic_Property
         $data['methods'] = $this->methods;
         $data['basedir'] = $this->basedir;
         $data['importdir'] = $this->importdir;
+        // MichelV: This will remove the options put forward (like type of file to allow) Is this correct?
         $data['other'] = '';
 
         // allow template override by child classes
@@ -321,7 +337,11 @@ class Dynamic_Upload_Property extends Dynamic_Property
         }
         return xarTplProperty('uploads', 'upload', 'validation', $data);
     }
-
+    /**
+     * Set the validation options in a string format.
+     * @param array args with validation
+     * @return bool true on succesful set.
+     */
     function updateValidation($args = array())
     {
         extract($args);
@@ -333,6 +353,7 @@ class Dynamic_Upload_Property extends Dynamic_Property
         // do something with the validation and save it in $this->validation
         if (isset($validation)) {
             if (is_array($validation)) {
+                // MichelV: so this will override the other options?
                 if (!empty($validation['other'])) {
                     $this->validation = $validation['other'];
 
