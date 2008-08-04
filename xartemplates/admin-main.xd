@@ -34,6 +34,7 @@
   <p>
   <xar:mlstring>Get the JpGraph library from the website at</xar:mlstring> <a href="http://www.aditus.nu/jpgraph/jpdownload.php">http://www.aditus.nu/jpgraph/jpdownload.php</a><br />
   <xar:mlstring>Unzip the files. Copy the files from /src to /xarincludes/jpgraph2/ (or /jpgraph1 if you are using the version 1 files) and the files from /docs to /xardocs/. Then, copy the config file (jpg-config.inc.php) from xarincludes over to the jpgraph2 directory.</xar:mlstring>
+  <xar:mlstring>You should probably take a look into the jpg-config.inc.php file and see if all settings are correct for your setup.</xar:mlstring>
   <br />
   <xar:mlstring>Run the test suit to see what goes ok on your system. Set any options in modifyconfig and optionally the others in the jpg-config.inc.php file in xarincludes/jpgraph2.</xar:mlstring>
   </p>
@@ -41,7 +42,7 @@
   <h3><xar:mlstring>Included Tools</xar:mlstring></h3>
   <ul>
     <li><a href="modules/jpgraph/xarincludes/jpgraph2/Examples/testsuit.php"><xar:mlstring>Test suit</xar:mlstring></a></li>
-    <li><xar:mlstring>jpgraph</xar:mlstring></li>
+    <li><a href="#xarModURL('jpgraph','admin','new')#"><xar:mlstring>JpGraph test page</xar:mlstring></a></li>
   </ul>
 
 

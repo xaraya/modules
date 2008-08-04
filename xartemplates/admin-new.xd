@@ -3,8 +3,9 @@
     <span class="xar-mod-title"><xar:mlstring>JpGraph Examples with direct calls to the JpGraph functions</xar:mlstring></span>
 </div>
 <div id="notsogoodbutok" class="xar-mod-body">
-    <h3>one</h3>
+    <h3>One</h3>
         <xar:data-output type="JpGraph" plot_legend="xar 2 legend" ydata="$y_series" graph_xtitle="my own xxx" />
+        <xar:mlstring>The Property with added y data</xar:mlstring>
     <h3>Two</h3>
         <xar:data-output type="JpGraph" ydata="$y_series" graph_type="bar" />
     <h3>Three</h3>

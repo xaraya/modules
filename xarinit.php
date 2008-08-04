@@ -118,7 +118,7 @@ function jpgraph_upgrade($oldversion)
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
     switch ($oldversion) {
         case '0.1.0':
-            xarModSetVar('jpgraph', 'ttfdirectory', 'modules/jpgraph/xarinclude/ttf/');
+            xarModSetVar('jpgraph', 'ttfdirectory', 'modules/jpgraph/xarincludes/ttf/');
         case '0.2.0':
             xarModSetVar('jpgraph', 'graphic_error', true);
             xarModSetVar('jpgraph', 'jpgraphversion', '2.1.4');
