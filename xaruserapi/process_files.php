@@ -12,25 +12,24 @@
  * @author Uploads Module Development Team
  */
 /**
- *  Processes incoming files (uploades / imports)
+ *  Processes incoming files (uploads / imports)
  *
  *  @author  Carl P. Corliss (aka Rabbitt)
  *  @access  public
  *  @param   string     importFrom  The complete path to a (local) directory to import files from
- *  @param   array      override    Array containing override values for import/uplaod path/obfuscate
+ *  @param   array      override    Array containing override values for import/upload path/obfuscate
  *  @param   string     override.upload.path        Override the upload path with the specified value
  *  @param   string     override.upload.obfuscate   Override the upload filename obfuscation
  *  @param   integer    action        The action that is happening ;-)
  *  @return array      list of files the files that were requested to be stored. If they had errors,
- *                      they will have 'error' index defined and will -not- have been added. otherwise,
- *                      they will have a fileId associated with them if they were added to the DB
+ *                      they will have 'error' index defined and will -not- have been added. Otherwise,
+ *                      they will have a fileId associated with them if they were added to the DB.
  */
-
+// Load the defines
 xarModAPILoad('uploads', 'user');
 
 function uploads_userapi_process_files( $args )
 {
-
     extract($args);
 
     $storeList = array();
