@@ -22,7 +22,7 @@ function messages_admin_main()
         xarModURL(
             'messages'
             ,'admin'
-            ,'config' ));
+            ,'modifyconfig' ));
     return true;
 
 }

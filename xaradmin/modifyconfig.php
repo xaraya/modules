@@ -1,37 +1,75 @@
 <?php
 /**
- * Messages Module
+ * Main configuration page for the messages module
  *
- * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Messages Module
- * @link http://xaraya.com/index.php/release/6.html
- * @author XarayaGeek
  */
-/**
- * This is a standard function to modify the configuration parameters of the
- * module
- */
-function messages_admin_modifyconfig()
-{
-    // Initialise the $data variable that will hold the data to be used in
-    // the blocklayout template, and get the common menu configuration - it
-    // helps if all of the module pages have a standard menu at the top to
-    // support easy navigation
-    $data = xarModAPIFunc('messages','admin','menu');
 
-    // Security check - important to do this as early as possible to avoid
-    // potential security holes or just too much wasted processing
-     if(!xarSecurityCheck('AdminMessages')) return;
+// Use this version of the modifyconfig file when the module is not a  utility module
 
-    // Generate a one-time authorisation code for this operation
-    $data['authid'] = xarSecGenAuthKey();
+    function messages_admin_modifyconfig()
+    {
+        // Security Check
+        if (!xarSecurityCheck('AdminMessages')) return;
+        if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+        if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('group',  'int',    $group, 1, XARVAR_NOT_REQUIRED)) return;
+        switch (strtolower($phase)) {
+            case 'modify':
+            default:
+                switch ($data['tab']) {
+                    case 'general':
+                        break;
+                    case 'tab2':
+                        break;
+                    case 'tab3':
+                        break;
+                    default:
+                        break;
+                }
 
-    // Specify some labels and values for display
+                break;
 
+            case 'update':
+                // Confirm authorisation code
+                if (!xarSecConfirmAuthKey()) return;
+                switch ($data['tab']) {
+                    case 'general':
+                        if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, xarModVars::get('messages', 'itemsperpage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+                        if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
+                        if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('messages', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
+                        if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('messages', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
+
+                        //Psspl:Modifided the code for allowedsend to selected group configuration.
+                        if (!xarVarFetch('selectedGroups',  'array',    $selectedGroups, 0, XARVAR_NOT_REQUIRED)) return;
+                        if (!xarVarFetch('childgroupsimploded',  'str',    $childgroupsimploded, 0, XARVAR_NOT_REQUIRED)) return;   
+
+                        xarModVars::set('messages', 'itemsperpage', $itemsperpage);
+                        xarModVars::set('messages', 'SupportShortURLs', $shorturls);
+                        xarModVars::set('messages', 'useModuleAlias', $useModuleAlias);
+                        xarModVars::set('messages', 'aliasname', $aliasname);
+                        break;
+                    case 'tab2':
+                        break;
+                    case 'tab3':
+                        break;
+                    default:
+                        break;
+                }
+
+                xarResponseRedirect(xarModURL('messages', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
+                // Return
+                return true;
+                break;
+
+        }
+        $data['authid'] = xarSecGenAuthKey();
+        $data['group'] = $group;
+        $data['selectedGroupStr'] = xarModAPIFunc('messages','admin','getconfig',array('group'=>$data['group']));
+        return $data;
+    }
+
+
+/*
     $data['itemsperpage'] = xarModVars::get('messages', 'itemsperpage');
     $data['buddylist'] = xarModVars::get('messages', 'buddylist');
     $data['limitsaved'] = xarModVars::get('messages', 'limitsaved');
@@ -65,5 +103,5 @@ function messages_admin_modifyconfig()
     // Return the template variables defined in this function
     return $data;
 }
-
+*/
 ?>

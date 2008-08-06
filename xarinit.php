@@ -23,12 +23,16 @@ function messages_init()
     xarModVars::set('messages', 'limitsaved', 12);
     xarModVars::set('messages', 'limitout', 10);
     xarModVars::set('messages', 'limitinbox', 10);
+    xarModVars::set('messages', 'smilies', false);
+    xarModVars::set('messages', 'allow_html', false);
+    xarModVars::set('messages', 'allow_bbcode', false);
     xarModVars::set('messages', 'mailsubject', 'You have a new private message !');
     xarModVars::set('messages', 'fromname', 'Webmaster');
     xarModVars::set('messages', 'from', 'Webmaster@YourSite.com');
     xarModVars::set('messages', 'inboxurl', 'http://www.yoursite.com/index.php?module=messages&type=user&func=view');
     xarModVars::set('messages', 'serverpath', '/home/yourdir/public_html/modules/messages');
     xarModVars::set('messages', 'SupportShortURLs', false );
+
 
     // read_messages is intended only for users
     // it will store the message id of each message that
