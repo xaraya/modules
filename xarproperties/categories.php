@@ -135,9 +135,9 @@ class CategoriesProperty extends SelectProperty
                                     'modid' => $info['systemid']));
         }
 
-        if (count($categories) > 0) {
+        if (count($this->categories) > 0) {
             $result = xarModAPIFunc('categories', 'admin', 'linkcat',
-                                  array('cids'  => $categories,
+                                  array('cids'  => $this->categories,
                                         'iids'  => array($itemid),
                                         'itemtype' => $this->localitemtype,
                                         'modid' => $info['systemid'],
