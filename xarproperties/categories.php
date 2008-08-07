@@ -65,6 +65,7 @@ class CategoriesProperty extends SelectProperty
 
     public $localmodule;
     public $localitemtype;
+    public $basecategories = array();
 
     function __construct(ObjectDescriptor $descriptor)
     {
@@ -77,6 +78,7 @@ class CategoriesProperty extends SelectProperty
     public function checkInput($name = '', $value = null)
     {
         // Pull in local module and itemtype from the form and store for reuse
+        if (!xarVarFetch($name . '_categories_basecats', 'array', $basecats, array(), XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch($name . '_categories_localitemtype', 'int', $itemtype, 0, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch($name . '_categories_localmodule', 'str', $modname, '', XARVAR_NOT_REQUIRED)) return;
         if (empty($modname)) $modname = xarModGetName();
@@ -123,7 +125,6 @@ class CategoriesProperty extends SelectProperty
     public function createValue($itemid=0)
     {
         $info = xarMod::getBaseInfo($this->localmodule);
-        if (!xarVarFetch($name . '_categories_basecats', 'array', $basecats, array(), XARVAR_NOT_REQUIRED)) return;
 
         if (!empty($itemid)) {
             $result = xarModAPIFunc('categories', 'admin', 'unlink',
@@ -138,7 +139,7 @@ class CategoriesProperty extends SelectProperty
                                         'iids'  => array($itemid),
                                         'itemtype' => $this->localitemtype,
                                         'modid' => $info['systemid'],
-                                        'basecids'  => $basecats,
+                                        'basecids'  => $this->basecategories,
                                         'clean_first' => true));
 
         }
