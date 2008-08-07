@@ -229,7 +229,7 @@ class CategoriesProperty extends SelectProperty
             $data['categories_localitemtype'] = $data['itemtype'];
         } else {
             if (!empty($this->localitemtype)) {
-                $data['categories_localitemtype'] = $this->categories_localitemtype;
+                $data['categories_localitemtype'] = $this->localitemtype;
             } else {
                 $data['categories_localitemtype'] = 0;
             }
