@@ -349,6 +349,7 @@ class CategoriesProperty extends SelectProperty
 //        }
 
         // Now make the value passed to the template the selected categories
+        $data['categories_itemid'] = $data['value'];
         $data['value'] = $selectedcategories;;
         return parent::showInput($data);
     }
