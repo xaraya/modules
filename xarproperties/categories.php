@@ -349,7 +349,7 @@ class CategoriesProperty extends SelectProperty
 //        }
 
         // This is just for backward compatibility in the tepate
-        $data['categories_itemid'] = $data['value'];
+        $data['categories_itemid'] = isset($data['value']) ? $data['value'] : 0;
         // Now make the value passed to the template the selected categories
         $data['value'] = $selectedcategories;;
         return parent::showInput($data);
