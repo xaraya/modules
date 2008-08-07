@@ -311,33 +311,34 @@ class CategoriesProperty extends SelectProperty
             $data['show_edit'] = 0;
         }
 
-        if (!empty($data['itemid'])) {
-            $data['categories_itemid'] = $data['itemid'];
-        } elseif (isset($this->_itemid)) {
-            $data['categories_itemid'] = $this->_itemid;
-        } else {
-            $data['categories_itemid'] = null;
-        }
-
+        // Now we need to figure out which categories are displayed
+        $selectedcategories = array();
+        
+        // $data['value'] at this point is the itemid. Generate the categories from it
         if (empty($data['value'])) {
-            if (empty($this->value)) {
-
+            if (!empty($data['itemid'])) {
+                // We'll accept an itemid attribute if there is one for backward compatibility
+                $data['value'] = $data['itemid'];
+            } elseif (!empty($this->value)) {
+                // We have $this->value, use it as the itemid
+                $data['value'] = $this->value;
+            } else {
+                // No information passed, so just make the base categories the selected categories
+                $selectedcategories = $data['basecids'];
+            }
+        }
+        
+        // We have a valid itemid, so get its linked categories
+        if (!empty($data['value'])) {
                 $links = xarModAPIFunc('categories', 'user', 'getlinkage',
-                                       array('itemid' => $data['categories_itemid'],
+                                       array('itemid' => $data[value],
                                              'itemtype' => $data['categories_localitemtype'],
                                              'module' => $data['categories_localmodule'],
                                               ));
                 $catlink = array();
                 foreach ($links as $link) $catlink[$link['basecategory']] = $link['category_id'];
-                $data['value'] = array();
                 foreach ($data['basecids'] as $basecid)
-                    $data['value'][] = isset($catlink[$basecid]) ? $catlink[$basecid]: 0;
-            } else {
-                if (!is_array($this->value)) $this->value = array($this->value);
-                $data['value'] = $this->value;
-            }
-        } elseif (!is_array($data['value'])) {
-            $data['value'] = array($data['value'] => $data['value']);
+                    $selectedcategories[] = isset($catlink[$basecid]) ? $catlink[$basecid]: 0;
         }
 
     // Note : $data['values'][$id] will be updated inside the template, so that when several
@@ -347,6 +348,8 @@ class CategoriesProperty extends SelectProperty
 //            $GLOBALS['Categories_MakeSelect_Values'] =& $data['values'];
 //        }
 
+        // Now make the value passed to the template the selected categories
+        $data['value'] = $selectedcategories;;
         return parent::showInput($data);
     }
 
