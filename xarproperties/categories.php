@@ -331,7 +331,7 @@ class CategoriesProperty extends SelectProperty
         // We have a valid itemid, so get its linked categories
         if (!empty($data['value'])) {
                 $links = xarModAPIFunc('categories', 'user', 'getlinkage',
-                                       array('itemid' => $data[value],
+                                       array('itemid' => $data['value'],
                                              'itemtype' => $data['categories_localitemtype'],
                                              'module' => $data['categories_localmodule'],
                                               ));
