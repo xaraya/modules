@@ -102,7 +102,7 @@ class CategoriesProperty extends SelectProperty
         if (!xarVarFetch($name . '_categories_basecats', 'array', $basecats, array(), XARVAR_NOT_REQUIRED)) return;
 
         // Check their number against the valid categories we have
-        if (count($basecats) != count($checkcats)) {
+        if (count($basecats) != count($categories)) {
             $this->invalid = xarML("The number of categories and their base categories is not the same");
             $this->value = null;
             return false;
