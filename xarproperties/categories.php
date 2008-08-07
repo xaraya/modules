@@ -65,6 +65,7 @@ class CategoriesProperty extends SelectProperty
 
     public $localmodule;
     public $localitemtype;
+    public $categories = array();
     public $basecategories = array();
 
     function __construct(ObjectDescriptor $descriptor)
@@ -78,7 +79,6 @@ class CategoriesProperty extends SelectProperty
     public function checkInput($name = '', $value = null)
     {
         // Pull in local module and itemtype from the form and store for reuse
-        if (!xarVarFetch($name . '_categories_basecats', 'array', $basecats, array(), XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch($name . '_categories_localitemtype', 'int', $itemtype, 0, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch($name . '_categories_localmodule', 'str', $modname, '', XARVAR_NOT_REQUIRED)) return;
         if (empty($modname)) $modname = xarModGetName();
@@ -96,7 +96,12 @@ class CategoriesProperty extends SelectProperty
         } else {
             if (!is_array($categories)) $categories = array($categories);
         }
+        $this->categories = $categories;
         
+        // Get the base categories from the form
+        if (!xarVarFetch($name . '_categories_basecats', 'array', $basecats, array(), XARVAR_NOT_REQUIRED)) return;
+        $this->basecategories = $basecats;
+
         // Make sure they are valid
         if (count($categories) > 0) {
             $checkcats= array();
@@ -110,10 +115,7 @@ class CategoriesProperty extends SelectProperty
             }
         }
         
-        // Get the base categories from the form
-        if (!xarVarFetch($name . '_categories_basecats', 'array', $basecats, array(), XARVAR_NOT_REQUIRED)) return;
-
-        // Check their number against the valid categories we have
+        // Check the number of base categories against the number categories we have
         if (count($basecats) != count($categories)) {
             $this->invalid = xarML("The number of categories and their base categories is not the same");
             $this->value = null;
