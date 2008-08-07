@@ -77,23 +77,36 @@ class CategoriesProperty extends SelectProperty
         // store the fieldname for validations who need them (e.g. file uploads)
         $this->fieldname = $name;
 
+        // Get the categories from the form
         list($isvalid, $categories) = $this->fetchValue($name . '_categories');
         if ($categories == null) {
             if (!xarVarFetch($name . '_categories', 'array', $categories, array(), XARVAR_NOT_REQUIRED)) return;
         } else {
             if (!is_array($categories)) $categories = array($categories);
         }
+        
+        // Make sure they are valid
+        if (count($categories) > 0) {
+            $checkcats= array();
+            foreach ($categories as $category) {
+                $validcat = xarModAPIFunc('categories','user','getcatinfo',array('cid'=>$category));
+                if (!$validcat) {
+                    $this->invalid = xarML("The category #(1) is not valid", $category);
+                    $this->value = null;
+                    return false;
+                }
+            }
+        }
+        
+        // Get the base categories from the form
         if (!xarVarFetch($name . '_categories_basecats', 'array', $basecats, array(), XARVAR_NOT_REQUIRED)) return;
 
-        if (count($basecats) != count($categories)) {
+        // Check their number against the valid categories we have
+        if (count($basecats) != count($checkcats)) {
             $this->invalid = xarML("The number of categories and their base categories is not the same");
             $this->value = null;
             return false;
         }
-        if (!xarVarFetch($name . '_categories_itemid', 'int', $itemid, NULL, XARVAR_DONT_SET)) return;
-        if (!isset($itemid)) $itemid = $this->itemid;
-        if (!$itemid && isset($value)) $itemid = $value;
-
         return true;
     }
 
@@ -113,16 +126,8 @@ class CategoriesProperty extends SelectProperty
         }
 
         if (count($categories) > 0) {
-            $checkcats= array();
-            foreach ($categories as $category) {
-                $validcat = xarModAPIFunc('categories','user','getcatinfo',array('cid'=>$category));
-                if ($validcat) {
-                     $checkcats[]=$category;
-                }
-            }
-
             $result = xarModAPIFunc('categories', 'admin', 'linkcat',
-                                  array('cids'  => $checkcats,
+                                  array('cids'  => $categories,
                                         'iids'  => array($itemid),
                                         'itemtype' => $itemtype,
                                         'modid' => $info['systemid'],
