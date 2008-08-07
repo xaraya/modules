@@ -77,22 +77,33 @@ class CategoriesProperty extends SelectProperty
         // store the fieldname for validations who need them (e.g. file uploads)
         $this->fieldname = $name;
 
-        if (!xarVarFetch($name . '_categories_localmodule', 'str', $modname, '', XARVAR_NOT_REQUIRED)) return;
-        if (empty($modname)) $modname = xarModGetName();
-        $info = xarMod::getBaseInfo($modname);
-        if (!xarVarFetch($name . '_categories_localitemtype', 'int', $itemtype, 0, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch($name . '_categories_basecats', 'array', $basecats, array(), XARVAR_NOT_REQUIRED)) return;
-
         list($isvalid, $categories) = $this->fetchValue($name . '_categories');
         if ($categories == null) {
             if (!xarVarFetch($name . '_categories', 'array', $categories, array(), XARVAR_NOT_REQUIRED)) return;
         } else {
             if (!is_array($categories)) $categories = array($categories);
         }
+        if (!xarVarFetch($name . '_categories_basecats', 'array', $basecats, array(), XARVAR_NOT_REQUIRED)) return;
 
+        if (count($basecats) != count($categories)) {
+            $this->invalid = xarML("The number of categories and their base categories is not the same");
+            $this->value = null;
+            return false;
+        }
         if (!xarVarFetch($name . '_categories_itemid', 'int', $itemid, NULL, XARVAR_DONT_SET)) return;
         if (!isset($itemid)) $itemid = $this->itemid;
         if (!$itemid && isset($value)) $itemid = $value;
+
+        return true;
+    }
+
+    public function createValue($itemid=0)
+    {
+        if (!xarVarFetch($name . '_categories_localitemtype', 'int', $itemtype, 0, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch($name . '_categories_localmodule', 'str', $modname, '', XARVAR_NOT_REQUIRED)) return;
+        if (empty($modname)) $modname = xarModGetName();
+        $info = xarMod::getBaseInfo($modname);
+        if (!xarVarFetch($name . '_categories_basecats', 'array', $basecats, array(), XARVAR_NOT_REQUIRED)) return;
 
         if (!empty($itemid)) {
             $result = xarModAPIFunc('categories', 'admin', 'unlink',
@@ -119,7 +130,19 @@ class CategoriesProperty extends SelectProperty
                                         'clean_first' => true));
 
         }
+
         return true;
+    }
+
+    public function updateValue($itemid=0)
+    {
+        return $this->createValue($itemid);
+    }
+
+    public function deleteValue($itemid=0)
+    {
+        // TODO make this work, but do we need it?
+        return $itemid;
     }
 
     public function returnInput($name = '', $value = null)
@@ -382,31 +405,6 @@ class CategoriesProperty extends SelectProperty
         return $this->value;
     }
 
-/*    public function parseValidation($validation = '')
-    {
-        foreach(preg_split('/(?<!\\\);/', $validation) as $option) {
-            // Semi-colons can be escaped with a '\' prefix.
-            $option = str_replace('\;', ';', $option);
-            // An option comes in two parts: basecid:cidvalues
-            if (strchr($option, ':')) {
-//                list($basecid, $cidvalues) = explode(':', $option, 2);
-//                $this->cidlist[$basecid] = explode(',', $cidvalues);
-                list($option_type, $option_value) = explode(':', $option, 2);
-                if ($option_type == 'cids') {
-                    list($basecid, $cidvalues) = explode(':', $option, 2);
-                    $this->cidlist[$basecid] = explode(',', $cidvalues);
-                }
-                if ($option_type == 'bases') {
-                    $this->baselist = array_merge($this->baselist, explode(',', $option_value));
-                }
-                // FIXME: should this be a validation option?
-                if ($option_type == 'showbase') {
-                    $this->showbase = $option_value;
-                }
-            }
-        }
-    }
-    */
 }
 
 ?>
