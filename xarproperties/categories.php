@@ -225,14 +225,14 @@ class CategoriesProperty extends SelectProperty
             unset($data['module']);
         }
         
-        if (empty($data['itemtype'])) {
-            $data['categories_localitemtype'] = $data['itemtype'];
-        } else {
+        if (!isset($data['itemtype'])) {
             if (!empty($this->localitemtype)) {
                 $data['categories_localitemtype'] = $this->localitemtype;
             } else {
                 $data['categories_localitemtype'] = 0;
             }
+        } else {
+            $data['categories_localitemtype'] = $data['itemtype'];
         }
 
         if (isset($data['validation'])) $this->parseValidation($data['validation']);
