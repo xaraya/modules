@@ -63,6 +63,9 @@ class CategoriesProperty extends SelectProperty
     public $itemid     = 0;
     public $showbase   = true;
 
+    public $localmodule;
+    public $localitemtype;
+
     function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
@@ -73,6 +76,13 @@ class CategoriesProperty extends SelectProperty
 
     public function checkInput($name = '', $value = null)
     {
+        // Pull in local module and itemtype from the form and store for reuse
+        if (!xarVarFetch($name . '_categories_localitemtype', 'int', $itemtype, 0, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch($name . '_categories_localmodule', 'str', $modname, '', XARVAR_NOT_REQUIRED)) return;
+        if (empty($modname)) $modname = xarModGetName();
+        $this->localitemtype = $itemtype;
+        $this->localmodule = $modname;
+        
         $name = empty($name) ? 'dd_'.$this->id : $name;
         // store the fieldname for validations who need them (e.g. file uploads)
         $this->fieldname = $name;
@@ -112,16 +122,13 @@ class CategoriesProperty extends SelectProperty
 
     public function createValue($itemid=0)
     {
-        if (!xarVarFetch($name . '_categories_localitemtype', 'int', $itemtype, 0, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch($name . '_categories_localmodule', 'str', $modname, '', XARVAR_NOT_REQUIRED)) return;
-        if (empty($modname)) $modname = xarModGetName();
-        $info = xarMod::getBaseInfo($modname);
+        $info = xarMod::getBaseInfo($this->localmodule);
         if (!xarVarFetch($name . '_categories_basecats', 'array', $basecats, array(), XARVAR_NOT_REQUIRED)) return;
 
         if (!empty($itemid)) {
             $result = xarModAPIFunc('categories', 'admin', 'unlink',
                               array('iid' => $itemid,
-                                    'itemtype' => $itemtype,
+                                    'itemtype' => $this->localitemtype,
                                     'modid' => $info['systemid']));
         }
 
@@ -129,7 +136,7 @@ class CategoriesProperty extends SelectProperty
             $result = xarModAPIFunc('categories', 'admin', 'linkcat',
                                   array('cids'  => $categories,
                                         'iids'  => array($itemid),
-                                        'itemtype' => $itemtype,
+                                        'itemtype' => $this->localitemtype,
                                         'modid' => $info['systemid'],
                                         'basecids'  => $basecats,
                                         'clean_first' => true));
@@ -207,13 +214,17 @@ class CategoriesProperty extends SelectProperty
             if (!empty($data['localmodule'])) {
                 $data['categories_localmodule'] = $data['localmodule'];
             } else {
-                $data['categories_localmodule'] = xarModGetName();
+                if (!empty($this->localmodule)) {
+                    $data['categories_localmodule'] = $this->localmodule;
+                } else {
+                    $data['categories_localmodule'] = xarModGetName();
+                }
             }
         } else {
             $data['categories_localmodule'] = $data['module'];
             unset($data['module']);
         }
-
+        
         if (!isset($data['itemtype'])) {
             $data['categories_localitemtype'] = 0;
         } else {
