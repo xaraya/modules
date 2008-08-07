@@ -39,8 +39,14 @@ function messages_user_send()
     $data['draft']          = $draft;
     $data['postanon']       = $postanon;   
     if($action != 'submit') {
-$data['users'] = xarModAPIFunc('messages','user','get_users');
-	}
+        $data['users'] = xarModAPIFunc('messages','user','get_users');
+        // djb - moving the numbers to the user-menu, adding these vars 
+        $data['unread']                  = xarModAPIFunc('messages','user','count_unread');
+        $data['sent']                    = xarModAPIFunc('messages','user','count_sent');
+        $data['total']                   = xarModAPIFunc('messages','user','count_total');
+        $data['drafts']                  = xarModAPIFunc('messages','user','count_drafts');
+
+    }
 
     switch($action) {
         case "submit":
@@ -130,22 +136,22 @@ $data['users'] = xarModAPIFunc('messages','user','get_users');
             $data['recipient']     = $messages[0]['sender_id'];
             $data['message']        = $messages[0];
 
-			//Psspl:Added the code for recipient name for anonymous messages
-			$data['postanon']      = $messages[0]['postanon'];
+            //Psspl:Added the code for recipient name for anonymous messages
+            $data['postanon']      = $messages[0]['postanon'];
             
-			// Get $recipient information
-        	$recipient_info = xarRoles::get($data['recipient']);
-        	if (!$recipient_info) return;
-	       	$data['recipient_name'] = $recipient_info->getName();			      		       	            
+            // Get $recipient information
+            $recipient_info = xarRoles::get($data['recipient']);
+            if (!$recipient_info) return;
+            $data['recipient_name'] = $recipient_info->getName();                                           
             break;
         case "preview":
             //Psspl:Comment the code for resolving preview message issue
-			/*             
+            /*             
             if (!xarVarFetch('id', 'int:1', $id)) {
                 $data['id'] = 1;
                 xarErrorHandled();
             }
-			*/
+            */
             if (!xarVarFetch('subject', 'str:1', $subject)) {
                 $data['no_subject'] = 1;
                 xarErrorHandled();
@@ -164,7 +170,7 @@ $data['users'] = xarModAPIFunc('messages','user','get_users');
                                           'transform',
                                            $id,
                                            array($body));
-			*/
+            */
             xarTplSetPageTitle( xarML('Post Message') );
 
             $data['input_title']                = xarML('Compose Message');

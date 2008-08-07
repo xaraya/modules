@@ -130,6 +130,28 @@
                     <xar:data-input type="textbox" name="aliasname" value="$value" size="32" maxlength="100" />
                 </div>
             </fieldset>
+            <fieldset>
+            <legend>Display Options</legend>
+                <div class="xar-form-input-wrapper">
+                <xar:set name="checked">xarModVars::get('messages','awaymsg')</xar:set>
+                    <label for = "awaymsg" class="xar-form-label" title="#xarML('Do not allow an Away Message')#">
+                        <xar:mlstring>
+                            Enable Away Message
+                        </xar:mlstring>
+                    </label>
+                    <xar:data-input type="checkbox" name="awaymsg" id="awaymsg" checked="$checked" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                <xar:set name="checked">xarModVars::get('messages','drafts')</xar:set>
+                    <label for = "drafts" class="xar-form-label" title="#xarML('Do not allow an Away Message')#">
+                        <xar:mlstring>
+                            Enable Drafts
+                        </xar:mlstring>
+                    </label>
+                    <xar:data-input type="checkbox" name="drafts" id="drafts" checked="$checked" />
+                </div>
+            </fieldset>
+
             <xar:template file="admin-groupselect" />
             <fieldset>
                 <div class="xar-form-input-wrapper-after">
