@@ -32,6 +32,8 @@ function messages_init()
     xarModVars::set('messages', 'inboxurl', 'http://www.yoursite.com/index.php?module=messages&type=user&func=view');
     xarModVars::set('messages', 'serverpath', '/home/yourdir/public_html/modules/messages');
     xarModVars::set('messages', 'SupportShortURLs', false );
+    xarModVars::set('messages', 'awaymsg', true );
+    xarModVars::set('messages', 'drafts', true );
 
 
     // read_messages is intended only for users

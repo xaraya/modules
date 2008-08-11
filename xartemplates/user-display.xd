@@ -7,7 +7,8 @@
         	<xar:comment>Psspl: Added the code for configuring NewMessages tab</xar:comment>
         	<xar:set name="subdata">array('allow_newpm' => $allow_newpm)</xar:set>
             <xar:template type="module" file="user-menu" data="$subdata" />
-            <h2><xar:mlstring>Message List:</xar:mlstring> #$folder#</h2>
+            <h2>Message List: #$folder#</h2>
+            <!--
             <table class="xar-border-thin xar-messages-mailboxsummary">
                 <tr>
                     <td class="xar-messages-mailboxlabel">
@@ -44,7 +45,6 @@
                         #$drafts#
                     </td>
                 </tr>
-            <!--
                 <tr>
                     <td nowrap="nowrap" width="5%" align="center">
                         *
@@ -57,32 +57,32 @@
                         #$total#
                     </td>
                 </tr>
-            -->
             </table>
+            -->
 
             <xar:if condition="count($messages) gt 0">
-                <table cellspacing="0" cellpadding="0" width="100%" border="0">
+                <table cellspacing="0" cellpadding="0" width="100%" border="0" style="border:1px solid grey;margin-bottom:1em;">
                     <tr>
-                        <th class="xar-align-center xar-messages-mailboxlistattachment">
-                            <img src="#$header_attachment_image#" alt="#xarML('Attachent')#" title="#xarML('Attachent')#" />
+                        <th class="xar-align-center" style="border-bottom:1px solid grey;">
+                            <img src="#$header_status_image#" style="width:16px;" alt="#xarML('Message status')#" title="#xarML('Message status')#" />
                         </th>
-                        <th class="xar-align-center">
-                            <img src="#$header_status_image#" alt="#xarML('Message status')#" title="#xarML('Message status')#" />
-                        </th>
-                        <th class="xar-align-left">
+                        <th class="xar-align-left" style="border-bottom:1px solid grey;">
                             <xar:if condition="strtolower($folder) eq 'inbox'">
                                 <xar:mlstring>From</xar:mlstring>
                             <xar:else />
                                 <xar:mlstring>To</xar:mlstring>
                             </xar:if>
                         </th>
-                        <th nowrap="nowrap" width="50%" align="center">
+                        <th nowrap="nowrap" width="50%" align="left" style="border-bottom:1px solid grey;">
                             <xar:mlstring>Subject</xar:mlstring>
                         </th>
-                        <th nowrap="nowrap" width="15%" align="center">
+                        <th class="xar-align-center xar-messages-mailboxlistattachment" style="border-bottom:1px solid grey;">
+                            <img src="#$header_attachment_image#" style="width:16px;" alt="#xarML('Attachment')#" title="#xarML('Attachment')#" />
+                        </th>
+                        <th nowrap="nowrap" width="15%" align="left" style="border-bottom:1px solid grey;">
                             <xar:mlstring>Date</xar:mlstring>
                         </th>
-                        <th width="10%" class="xar-align-center">
+                        <th width="10%" class="xar-align-center" style="border-bottom:1px solid grey;">
                             <xar:mlstring>Action</xar:mlstring>
                         </th>
                     </tr>
@@ -98,19 +98,18 @@
                             <xar:set name="rowclass">'xar-alt'</xar:set>
                         </xar:if>
                         <tr>
-                            <td class="#$rowclass# xar-align-center xar-messages-mailboxlistattachment">
-                                <xar:comment> TODO: check for attachements </xar:comment>
-                            </td>
                             <td class="#$rowclass# xar-align-center xar-messages-mailboxliststatus">
                                 <img src="#$loop:item['status_image']#" alt="#$loop:item['status_alt']#" title="#$loop:item['status_alt']#" />
                             </td>
                             <td class="#$rowclass# xar-align-left xar-messages-mailboxlistsender">
                                 <xar:if condition="strtolower($folder) eq 'inbox'">
+                                <!--Psspl:Modifided the code for anonymous message-->
 	          						<xar:if condition="$loop:item['postanon'] eq '0'">
 	          							<a href="#$loop:item['user_link']#" title="#xarML('View user info')#">#$loop:item['sender']#</a>
-                      				<xar:else/>
-                        				<xar:mlstring>Anonymous</xar:mlstring>
-                    				</xar:if>
+                                    <!--#$comment['author']#-->
+                            <xar:else/>
+                                <xar:mlstring>Anonymous</xar:mlstring>
+                            </xar:if>
 	         					</xar:if>
 								
 	         					<xar:if condition="strtolower($folder) eq 'sent'">
@@ -132,6 +131,9 @@
                             <td class="#$rowclass# xar-align-left xar-messages-mailboxlistsubject">
                                 <a href="#$loop:item['view_link']#">#xarVarPrepForDisplay($loop:item['subject'])#</a>
                             </td>
+                            <td class="#$rowclass# xar-align-center xar-messages-mailboxlistattachment">
+                                <xar:comment> TODO: check for attachements </xar:comment>
+                            </td>
                             <td class="#$rowclass# xar-align-left xar-nowrap xar-messages-mailboxlistdate">
                                 #xarLocaleGetFormattedDate('short',$loop:item['raw_date'])# @ 
                                 #xarLocaleGetFormattedTime('short', $loop:item['raw_date'])#
@@ -141,12 +143,12 @@
                                     <a href="#$loop:item['view_link']#" title="#xarML('View message')#"><xar:mlstring>View</xar:mlstring></a> |
                                 </xar:if>
                                 <xar:if condition="strtolower($folder) eq 'inbox'">
-                                	<xar:if condition="$loop:item['postanon'] eq '0'">
-                                    	<a href="#$loop:item['reply_link']#" title="#xarML('Reply to Message')#"><xar:mlstring>Reply</xar:mlstring></a> |
-                               		<xar:else/>
-                               			<!--<xar:mlstring>Reply</xar:mlstring></a> |-->
-                               			<a href="#$loop:item['reply_link']#" title="#xarML('Reply to Message')#"><xar:mlstring>Reply</xar:mlstring></a> |
-                               		</xar:if> 
+                                    <xar:if condition="$loop:item['postanon'] eq '0'">
+                                        <a href="#$loop:item['reply_link']#" title="#xarML('Reply to Message')#"><xar:mlstring>Reply</xar:mlstring></a> |
+                                    <xar:else/>
+                                        <!--<xar:mlstring>Reply</xar:mlstring></a> |-->
+                                        <a href="#$loop:item['reply_link']#" title="#xarML('Reply to Message')#"><xar:mlstring>Reply</xar:mlstring></a> |
+                                    </xar:if> 
                                <xar:elseif condition="strtolower($folder) eq 'drafts'" />
                                		<xar:comment>Psspl:Added the code for modifing draft messages</xar:comment>
                                		<xar:if condition="!empty($loop:item['allow_modify'])">	
@@ -173,26 +175,30 @@
                 </p>
             </xar:if>
 			<xar:if condition="!empty($allow_newpm)"> 
+<!-- djb dont really need it do we (and its ugly)
             <div class="xar-align-right">
                 <a href="#xarModURL('messages','user','send',array('action'=>'post'))#" class="xar-messages-newpmlink">
                     <img src="#xarTplGetImage('newpm.gif','messages')#" alt="#xarML('New private message')#" />
                 </a>
             </div>
+-->
             </xar:if>
-            <xar:if condition="empty($away_message)">
-                <h3><xar:mlstring>Away Message - OFF</xar:mlstring></h3>
-            <xar:else/>
-                <h3><xar:mlstring>Away Message - ON</xar:mlstring></h3>
+            <xar:if condition="xarModVars::get('messages','awaymsg') eq 1">
+                <xar:if condition="empty($away_message)">
+                    <h3><xar:mlstring>Away Message - OFF</xar:mlstring></h3>
+                <xar:else/>
+                    <h3><xar:mlstring>Away Message - ON</xar:mlstring></h3>
+                </xar:if>
+    
+                <form method="post" action="&xar-modurl-messages-user-display;">
+                    <div class="xar-norm">
+                        <textarea cols="" rows="" name="away" id="away" class="xar-form-textareamedium">#xarVarPrepForDisplay($away_message)#</textarea>
+                    </div>
+                    <div class="xar-margin-thick xar-align-center">
+                        <input type="submit" value="#xarML('Update')#" />
+                    </div>
+                </form>
             </xar:if>
-
-            <form method="post" action="&xar-modurl-messages-user-display;">
-                <div class="xar-norm">
-                    <textarea cols="" rows="" name="away" id="away" class="xar-form-textareamedium">#xarVarPrepForDisplay($away_message)#</textarea>
-                </div>
-                <div class="xar-margin-thick xar-align-center">
-                    <input type="submit" value="#xarML('Update')#" />
-                </div>
-            </form>
         <xar:else />
             <div class="xar-norm">
                 #$error#

@@ -42,6 +42,8 @@ include_once("./modules/commonutil.php");
                         if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
                         if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('messages', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
                         if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('messages', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
+                        if (!xarVarFetch('awaymsg', 'checkbox', $awaymsg,  xarModVars::get('messages', 'awaymsg'), XARVAR_NOT_REQUIRED)) return;
+                        if (!xarVarFetch('drafts', 'checkbox', $drafts,  xarModVars::get('messages', 'drafts'), XARVAR_NOT_REQUIRED)) return;
 
                         //Psspl:Modifided the code for allowedsend to selected group configuration.
                         if (!xarVarFetch('selectedGroups',  'array',    $selectedGroups, 0, XARVAR_NOT_REQUIRED)) return;
@@ -52,6 +54,8 @@ include_once("./modules/commonutil.php");
                         xarModVars::set('messages', 'useModuleAlias', $useModuleAlias);
                         xarModVars::set('messages', 'aliasname', $aliasname);TracePrint($group,"group");
                         xarModAPIFunc('messages','admin','setconfig',array('group'=>$group,'childgroupsimploded' => $childgroupsimploded));
+                        xarModVars::set('messages', 'awaymsg', $awaymsg);
+                        xarModVars::set('messages', 'drafts', $drafts);
                         break;
                     case 'tab2':
                         break;
