@@ -6,7 +6,7 @@
                 <xar:mlstring>From:</xar:mlstring>
             </label>
             #xarUserGetVar('name')#
-		<xar:comment>Psspl:Modifided the code for anonymous message</xar:comment>
+            <!--Psspl:Modifided the code for anonymous message-->
          <xar:if condition="isset($id) and isset($postanon)">
           		<xar:if condition="$postanon eq 1">
 	               <input type="checkbox" name="postanon" id="postanon" checked="checked" value="1"/>
@@ -74,7 +74,7 @@
                     </xar:if>
                 </xar:loop>
             </select>
-            	</xar:if>
+            </xar:if>   
             	<input type="hidden" value="#$recipient#" name="recipient" id="recipient" />
             </xar:if>
             <xar:if condition="isset($no_recipient)">
@@ -117,16 +117,16 @@
         </div>
 
         <xar:if condition="xarModVars::get('messages','drafts') eq 1">
-	        <div class="xar-form-input-wrapper-after">
-	            <xar:if condition="isset($draft) and $draft eq true">
-	                <input type="checkbox" name="draft" id="draft" value="1" checked="checked" />
-	            <xar:else />
-	                <input type="checkbox" name="draft" id="draft" value="1" />
-	            </xar:if>
-	            <label for="draft" title="#xarML('Save this message to be sent later')#">
-	                <xar:mlstring>Save as draft</xar:mlstring>
-	            </label>
-	        </div>
+            <div class="xar-form-input-wrapper-after">
+                <xar:if condition="isset($draft) and $draft eq true">
+                    <input type="checkbox" name="draft" id="draft" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="draft" id="draft" value="1" />
+                </xar:if>
+                <label for="draft" title="#xarML('Save this message to be sent later')#">
+                    <xar:mlstring>Save as draft</xar:mlstring>
+                </label>
+            </div>
         </xar:if>
 
         <div class="xar-align-center xar-margin-thick">

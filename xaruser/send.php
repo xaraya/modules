@@ -48,19 +48,19 @@ function messages_user_send()
 	$data['allow_newpm']    = xarModAPIFunc('messages' , 'user' , 'isset_grouplist');
         
     if($action != 'submit') {
-		$data['users'] = xarModAPIFunc('messages','user','get_users');
+        $data['users'] = xarModAPIFunc('messages','user','get_users');
+		//Psspl:Added the code for checking user list
+		if(empty($data['users'])) {
+			$msg = xarML('There are no active users for sending messages');
+        	//throw new Exception($msg);		
+		}
         // djb - moving the numbers to the user-menu, adding these vars 
         $data['unread']                  = xarModAPIFunc('messages','user','count_unread');
         $data['sent']                    = xarModAPIFunc('messages','user','count_sent');
         $data['total']                   = xarModAPIFunc('messages','user','count_total');
         $data['drafts']                  = xarModAPIFunc('messages','user','count_drafts');
 
-		//Psspl:Added the code for checking user list
-		if(empty($data['users'])) {
-			$msg = xarML('There are no active users for sending messages');
-        	//throw new Exception($msg);		
-		}
-	}
+    }
 
     switch($action) {
         case "submit":
@@ -265,20 +265,24 @@ function messages_user_send()
 			
 			$data['body']     = xarModAPIFunc('messages', 'user', 'reply_message_text', array('message' => $data['message']));
 			$subject  = xarModAPIFunc('messages', 'user', 'reply_message_subject', array('message' => $data['message']));
+            //Psspl:Added the code for recipient name for anonymous messages
+            $data['postanon']      = $messages[0]['postanon'];
 			TracePrint($subject,"Replysubject");
 			$data['subject']	= $subject;
-			// Get $recipient information
-        	$recipient_info = xarRoles::get($data['recipient']);
-        	if (!$recipient_info) return;
-	       	$data['recipient_name'] = $recipient_info->getName();			      		       	            
+            // Get $recipient information
+            $recipient_info = xarRoles::get($data['recipient']);
+            if (!$recipient_info) return;
+            $data['recipient_name'] = $recipient_info->getName();                                           
             break;
         case "preview":
             xarVarFetch('subject',   'str:1', $subject,   null, XARVAR_NOT_REQUIRED);
            //minimum length is 7 character it sets &#160; for processing
+            /*             
 			xarVarFetch('body',   'str:7', $body,   null, XARVAR_NOT_REQUIRED); 
 			xarVarFetch('recipient',   'int:1', $recipient,   null, XARVAR_NOT_REQUIRED);
 			
 			if($subject == null) {
+            */
 				$data['no_subject'] = 1;
 			}
 			if($body == null) {
@@ -293,7 +297,7 @@ function messages_user_send()
                                           'transform',
                                            $id,
                                            array($body));
-			*/
+            */
             xarTplSetPageTitle( xarML('Post Message') );
 
             $data['input_title']                = xarML('Compose Message');

@@ -103,11 +103,13 @@
                             </td>
                             <td class="#$rowclass# xar-align-left xar-messages-mailboxlistsender">
                                 <xar:if condition="strtolower($folder) eq 'inbox'">
+                                <!--Psspl:Modifided the code for anonymous message-->
 	          						<xar:if condition="$loop:item['postanon'] eq '0'">
 	          							<a href="#$loop:item['user_link']#" title="#xarML('View user info')#">#$loop:item['sender']#</a>
-                      				<xar:else/>
-                        				<xar:mlstring>Anonymous</xar:mlstring>
-                    				</xar:if>
+                                    <!--#$comment['author']#-->
+                            <xar:else/>
+                                <xar:mlstring>Anonymous</xar:mlstring>
+                            </xar:if>
 	         					</xar:if>
 								
 	         					<xar:if condition="strtolower($folder) eq 'sent'">
@@ -141,12 +143,12 @@
                                     <a href="#$loop:item['view_link']#" title="#xarML('View message')#"><xar:mlstring>View</xar:mlstring></a> |
                                 </xar:if>
                                 <xar:if condition="strtolower($folder) eq 'inbox'">
-                                	<xar:if condition="$loop:item['postanon'] eq '0'">
-                                    	<a href="#$loop:item['reply_link']#" title="#xarML('Reply to Message')#"><xar:mlstring>Reply</xar:mlstring></a> |
-                               		<xar:else/>
-                               			<!--<xar:mlstring>Reply</xar:mlstring></a> |-->
-                               			<a href="#$loop:item['reply_link']#" title="#xarML('Reply to Message')#"><xar:mlstring>Reply</xar:mlstring></a> |
-                               		</xar:if> 
+                                    <xar:if condition="$loop:item['postanon'] eq '0'">
+                                        <a href="#$loop:item['reply_link']#" title="#xarML('Reply to Message')#"><xar:mlstring>Reply</xar:mlstring></a> |
+                                    <xar:else/>
+                                        <!--<xar:mlstring>Reply</xar:mlstring></a> |-->
+                                        <a href="#$loop:item['reply_link']#" title="#xarML('Reply to Message')#"><xar:mlstring>Reply</xar:mlstring></a> |
+                                    </xar:if> 
                                <xar:elseif condition="strtolower($folder) eq 'drafts'" />
                                		<xar:comment>Psspl:Added the code for modifing draft messages</xar:comment>
                                		<xar:if condition="!empty($loop:item['allow_modify'])">	
@@ -174,28 +176,29 @@
             </xar:if>
 		<!-- djb dont really need it do we (and its ugly)
 			<xar:if condition="!empty($allow_newpm)"> 
+<!-- djb dont really need it do we (and its ugly)
             <div class="xar-align-right">
                 <a href="#xarModURL('messages','user','send',array('action'=>'post'))#" class="xar-messages-newpmlink">
                     <img src="#xarTplGetImage('newpm.gif','messages')#" alt="#xarML('New private message')#" />
                 </a>
             </div>
             </xar:if>
-		-->
+-->
             <xar:if condition="xarModVars::get('messages','awaymsg') eq 1">
-	            <xar:if condition="empty($away_message)">
-	                <h3><xar:mlstring>Away Message - OFF</xar:mlstring></h3>
-	            <xar:else/>
-	                <h3><xar:mlstring>Away Message - ON</xar:mlstring></h3>
-	            </xar:if>
-	
-	            <form method="post" action="&xar-modurl-messages-user-display;">
-	                <div class="xar-norm">
-	                    <textarea cols="" rows="" name="away" id="away" class="xar-form-textareamedium">#xarVarPrepForDisplay($away_message)#</textarea>
-	                </div>
-	                <div class="xar-margin-thick xar-align-center">
-	                    <input type="submit" value="#xarML('Update')#" />
-	                </div>
-	            </form>
+                <xar:if condition="empty($away_message)">
+                    <h3><xar:mlstring>Away Message - OFF</xar:mlstring></h3>
+                <xar:else/>
+                    <h3><xar:mlstring>Away Message - ON</xar:mlstring></h3>
+                </xar:if>
+    
+                <form method="post" action="&xar-modurl-messages-user-display;">
+                    <div class="xar-norm">
+                        <textarea cols="" rows="" name="away" id="away" class="xar-form-textareamedium">#xarVarPrepForDisplay($away_message)#</textarea>
+                    </div>
+                    <div class="xar-margin-thick xar-align-center">
+                        <input type="submit" value="#xarML('Update')#" />
+                    </div>
+                </form>
             </xar:if>
         <xar:else />
             <div class="xar-norm">

@@ -56,6 +56,8 @@ include_once("./modules/commonutil.php");
                         xarModVars::set('messages', 'awaymsg', $awaymsg);
                         xarModVars::set('messages', 'drafts', $drafts);
                         xarModAPIFunc('messages','admin','setconfig',array('group'=>$group,'childgroupsimploded' => $childgroupsimploded));
+                        xarModVars::set('messages', 'awaymsg', $awaymsg);
+                        xarModVars::set('messages', 'drafts', $drafts);
                         break;
                     case 'tab2':
                         break;
