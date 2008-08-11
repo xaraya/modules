@@ -116,16 +116,18 @@
             </xar:if>
         </div>
 
-        <div class="xar-form-input-wrapper-after">
-            <xar:if condition="isset($draft) and $draft eq true">
-                <input type="checkbox" name="draft" id="draft" value="1" checked="checked" />
-            <xar:else />
-                <input type="checkbox" name="draft" id="draft" value="1" />
-            </xar:if>
-            <label for="draft" title="#xarML('Save this message to be sent later')#">
-                <xar:mlstring>Save as draft</xar:mlstring>
-            </label>
-        </div>
+        <xar:if condition="xarModVars::get('messages','drafts') eq 1">
+	        <div class="xar-form-input-wrapper-after">
+	            <xar:if condition="isset($draft) and $draft eq true">
+	                <input type="checkbox" name="draft" id="draft" value="1" checked="checked" />
+	            <xar:else />
+	                <input type="checkbox" name="draft" id="draft" value="1" />
+	            </xar:if>
+	            <label for="draft" title="#xarML('Save this message to be sent later')#">
+	                <xar:mlstring>Save as draft</xar:mlstring>
+	            </label>
+	        </div>
+        </xar:if>
 
         <div class="xar-align-center xar-margin-thick">
             <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />

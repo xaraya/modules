@@ -19,7 +19,7 @@
         </xar:if>
         <dd class="#$tabclass#">
           <a href="#xarModURL('messages','user','display')#">
-            <xar:mlstring>Inbox</xar:mlstring>
+            <xar:mlstring>Inbox</xar:mlstring> &#160;(<xar:if condition="$unread eq 0">&#160;#$unread#&#160;<xar:else/> <span style="color:green;">&#160;#$unread#&#160;</span></xar:if> /&#160;#$total#&#160;)
           </a>
         </dd>
         <xar:if condition="($activetab eq 'display' or $activetab eq 'viewsent') and (empty($folder) or strtolower($folder) eq 'sent')">
@@ -29,19 +29,21 @@
         </xar:if>
         <dd class="#$tabclass#">
           <a href="#xarModURL('messages','user','display',array('folder'=>'sent'))#">
-            <xar:mlstring>Sent</xar:mlstring>
+            <xar:mlstring>Sent</xar:mlstring> &#160;(&#160;#$sent#&#160;)
           </a>
         </dd>
-        <xar:if condition="($activetab eq 'display' or $activetab eq 'modify') and (empty($folder) or strtolower($folder) eq 'drafts')">
-            <xar:set name="tabclass">'active'</xar:set>
-        <xar:else />
-            <xar:set name="tabclass">''</xar:set>
+        <xar:if condition="xarModVars::get('messages','drafts') eq 1">
+	        <xar:if condition="($activetab eq 'display' or $activetab eq 'modify') and (empty($folder) or strtolower($folder) eq 'drafts')">
+	            <xar:set name="tabclass">'active'</xar:set>
+	        <xar:else />
+	            <xar:set name="tabclass">''</xar:set>
+	        </xar:if>
+	        <dd class="#$tabclass#">
+	          <a href="#xarModURL('messages','user','display',array('folder'=>'drafts'))#">
+                <xar:mlstring>Drafts</xar:mlstring> (&#160;#$drafts#&#160;)
+	          </a>
+    	    </dd>
         </xar:if>
-        <dd class="#$tabclass#">
-          <a href="#xarModURL('messages','user','display',array('folder'=>'drafts'))#">
-            <xar:mlstring>Drafts</xar:mlstring>
-          </a>
-        </dd>
     </xar:sec>
     <xar:comment>Psspl: Added the code for configuring NewMessages tab</xar:comment>
     <xar:if condition="!empty($allow_newpm)"> 

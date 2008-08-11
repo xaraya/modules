@@ -49,6 +49,12 @@ function messages_user_send()
         
     if($action != 'submit') {
 		$data['users'] = xarModAPIFunc('messages','user','get_users');
+        // djb - moving the numbers to the user-menu, adding these vars 
+        $data['unread']                  = xarModAPIFunc('messages','user','count_unread');
+        $data['sent']                    = xarModAPIFunc('messages','user','count_sent');
+        $data['total']                   = xarModAPIFunc('messages','user','count_total');
+        $data['drafts']                  = xarModAPIFunc('messages','user','count_drafts');
+
 		//Psspl:Added the code for checking user list
 		if(empty($data['users'])) {
 			$msg = xarML('There are no active users for sending messages');
