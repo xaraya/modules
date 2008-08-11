@@ -5,7 +5,7 @@
  */
 
 // Use this version of the modifyconfig file when the module is not a  utility module
-
+include_once("./modules/commonutil.php");
     function messages_admin_modifyconfig()
     {
         // Security Check
@@ -13,6 +13,10 @@
         if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
         if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('group',  'int',    $group, 1, XARVAR_NOT_REQUIRED)) return;
+        //Psspl:Modifided the code for resolving group configuration update issue.
+        if($phase == 'Update Messages Configuration'){
+        	$phase = 'update';
+        }
         switch (strtolower($phase)) {
             case 'modify':
             default:
@@ -46,7 +50,8 @@
                         xarModVars::set('messages', 'itemsperpage', $itemsperpage);
                         xarModVars::set('messages', 'SupportShortURLs', $shorturls);
                         xarModVars::set('messages', 'useModuleAlias', $useModuleAlias);
-                        xarModVars::set('messages', 'aliasname', $aliasname);
+                        xarModVars::set('messages', 'aliasname', $aliasname);TracePrint($group,"group");
+                        xarModAPIFunc('messages','admin','setconfig',array('group'=>$group,'childgroupsimploded' => $childgroupsimploded));
                         break;
                     case 'tab2':
                         break;
@@ -56,15 +61,18 @@
                         break;
                 }
 
-                xarResponseRedirect(xarModURL('messages', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
+                //xarResponseRedirect(xarModURL('messages', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
                 // Return
-                return true;
-                break;
+                //return true;
+                //break;
 
         }
+        $data['action']     = xarModURL('messages','admin','modifyconfig' );
         $data['authid'] = xarSecGenAuthKey();
-        $data['group'] = $group;
-        $data['selectedGroupStr'] = xarModAPIFunc('messages','admin','getconfig',array('group'=>$data['group']));
+        $data['group'] = $group;TracePrint($group,"group_modifyconfig");
+        $data['selectedGroupStr'] = xarModAPIFunc('messages','admin','getconfig',array('group'=>$group));
+        TracePrint("$data[selectedGroupStr]","selected_group_in_modify_config");
+        $data['supportshorturls']   = xarModVars::get('messages', 'SupportShortURLs');
         return $data;
     }
 

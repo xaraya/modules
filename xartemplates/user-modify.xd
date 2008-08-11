@@ -3,7 +3,9 @@
         <span class="xar-mod-title"><xar:mlstring>Private Messages</xar:mlstring></span>
     </div>
     <div class="xar-mod-body">
-        <xar:template type="module" file="user-menu" />
+        <xar:comment>Psspl: Added the code for configuring NewMessages tab</xar:comment>
+		<xar:set name="subdata">array('allow_newpm' => $allow_newpm)</xar:set>
+        <xar:template type="module" file="user-menu" data="$subdata" />
         <xar:if condition="$action ne 'post'">
             <h3><xar:mlstring>Message Preview</xar:mlstring></h3>
             <div class="xar-margin-thick xar-padding-thick xar-border-thin">

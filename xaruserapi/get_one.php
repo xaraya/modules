@@ -21,15 +21,15 @@ function messages_userapi_get_one( $args )
 
     if(!isset($id) || empty($id)) {
         $msg = xarML('Missing or Invalid argument [#(1)] for #(2) function #(3) in module #(4)',
-                                 'id','userapi','get_one','comments');
+                                 'id','userapi', 'get_one', 'comments');
         throw new Exception($msg);
     }
 
     $dbconn = xarDB::getConn();
     $xartable = xarDB::getTables();
-$prefix = xarDB::getPrefix();
-$tableName = $prefix."_comments"; 
-TracePrint($tableName,"table");
+	$prefix = xarDB::getPrefix();
+	$tableName = $prefix."_comments"; 
+	//TracePrint($tableName, "table");
     // initialize the commentlist array
     $commentlist = array();
 
@@ -39,7 +39,7 @@ TracePrint($tableName,"table");
     	$folder = 'inbox';
     	
     }
-    TracePrint($xartable,"xartables");
+    //TracePrint($xartable,"xartables");
     TracePrint($args,"id");
     $sql = "SELECT  title AS title,
                     date AS datetime,
@@ -53,6 +53,7 @@ TracePrint($tableName,"table");
                     left_id AS left_id,
                     right_id AS right_id,
                     anonpost AS postanon,
+                    anonpost_to AS postanon_to,
                     modid AS modid,
                     itemtype AS itemtype,
                     objectid AS objectid
@@ -76,7 +77,7 @@ TracePrint($tableName,"table");
         return array();
     }
 
-    if (!xarModLoad('comments','renderer')) {
+    if (!xarModLoad('comments', 'renderer')) {
         $msg = xarML('Unable to load #(1) #(2) - unable to trim excess depth','comments','renderer');
         throw new Exception($msg);
     }
@@ -89,7 +90,7 @@ TracePrint($tableName,"table");
         // $row['date'] = xarLocaleFormatDate("%B %d, %Y %I:%M %p",$row['datetime']);
         $row['date'] = $row['datetime'];
         $row['author'] = xarUserGetVar('name',$row['author']);
-        comments_renderer_wrap_words($row['text'],80);
+        comments_renderer_wrap_words($row['text'], 80);
         $commentlist[] = $row;
         $result->MoveNext();
     }

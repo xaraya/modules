@@ -70,6 +70,7 @@ function messages_userapi_getall( $args )
         $message['body']          = $node['text'];
         $message['recipient']     = xarUserGetVar('name');
         $message['postanon']	  = $node['postanon'];	
+        $message['postanon_to']	  = $node['postanon_to'];	
         $message['recipient_id']  = xarSession::getVar('role_id');
 
 		

@@ -41,6 +41,10 @@ function messages_userapi_create( $args )
     // check the authorisation key
     if (!xarSecConfirmAuthKey()) return; // throw back
 
+	//Psspl:Modifided the code for postanon_to field.	
+    if(!isset($postanon_to)){
+		$postanon_to = 0;
+	}		
     $id =  xarModAPIFunc('comments',
                          'user',
                          'add',
@@ -49,6 +53,7 @@ function messages_userapi_create( $args )
                                 'title'       => $subject,
                                 'comment'     => $body,
                                 'author'      => xarSession::getVar('role_id'),
+								'postanon_to' => $postanon_to,                                 
                                  'postanon' => $postanon,));
 
 	if($id !== false && $draft == true) {

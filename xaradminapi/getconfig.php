@@ -9,15 +9,15 @@ function messages_adminapi_getconfig( $args )
 {
     extract( $args );
      	
-	$selectedGroup = unserialize(xarModVars::get('messages',"allowedSendMessages[$group]"));
+	$selectedGroup = unserialize(xarModVars::get('messages', "allowedSendMessages[$group]"));
    	
-	TracePrint($selectedGroup,"selected");
+	TracePrint($selectedGroup, "selected");
    	
    	if (!empty($selectedGroup)) {  	 	 
    		
-   		$selectedGroupStr = implode(",",$selectedGroup);//convert array into comma seprated string.
+   		$selectedGroupStr = implode(",", $selectedGroup);//convert array into comma seprated string.
    		
-   		TracePrint($selectedGroupStr,"str selected");
+   		TracePrint($selectedGroupStr, "str selected");
    		
    		return $selectedGroupStr;
    	}

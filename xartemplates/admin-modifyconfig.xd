@@ -1,4 +1,5 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+
 <xar:comment>
     License: GPL http://www.gnu.org/copyleft/gpl.html
 </xar:comment>
@@ -130,13 +131,13 @@
                     <xar:data-input type="textbox" name="aliasname" value="$value" size="32" maxlength="100" />
                 </div>
             </fieldset>
-            <xar:template file="admin-groupselect" />
+                 	<xar:template file="admin-groupselect" />
             <fieldset>
                 <div class="xar-form-input-wrapper-after">
                     <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                    <input type="hidden" name="phase" id="phase" value="update" />
+                   <!-- <input type="hidden" name="phase" id="phase" value="update" />-->
                     <input type="hidden" name="tab" id="tab" value="#$tab#" />
-                    <input type="submit" value="#xarML('Update Messages Configuration')#" />
+                    <input type="submit" name="phase" id="phase" value="#xarML('Update Messages Configuration')#" />
                 </div>
             </fieldset>
         </form>

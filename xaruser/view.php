@@ -21,6 +21,9 @@ function messages_user_view( $args )
 
     if (!xarVarFetch('id', 'int:1:', $id)) return;
 
+    //Psspl:Added the code for configuring the user-menu
+	$data['allow_newpm'] = xarModAPIFunc('messages' , 'user' , 'isset_grouplist');
+        
     $messages = xarModAPIFunc('messages','user','get',array('id' => $id));
 
     if (!count($messages) || !is_array($messages)) {

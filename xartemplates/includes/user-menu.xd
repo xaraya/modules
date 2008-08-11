@@ -43,6 +43,8 @@
           </a>
         </dd>
     </xar:sec>
+    <xar:comment>Psspl: Added the code for configuring NewMessages tab</xar:comment>
+    <xar:if condition="!empty($allow_newpm)"> 
     <xar:sec mask="AddMessages" catch="false">
         <xar:set name="tabclass">$activetab=='send'?'active':''</xar:set>
         <dd class="#$tabclass#">
@@ -51,7 +53,18 @@
           </a>
         </dd>
     </xar:sec>
-
+    <xar:else />
+    <xar:comment>
+    	<xar:sec mask="AddMessages" catch="false">
+        	<xar:set name="tabclass">$activetab=='send'?'active':''</xar:set>
+        	<dd class="#$tabclass#">
+          	<a href="#xarModURL('messages','user','send', array('action'=>'post'))#">
+            	<xar:mlstring>No Message Tab</xar:mlstring>
+          	</a>
+        	</dd>
+    	</xar:sec>
+    </xar:comment>
+    </xar:if>
   </dl>
 </div>
 </xar:template>

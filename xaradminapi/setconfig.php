@@ -13,11 +13,11 @@ function messages_adminapi_setconfig( $args )
 		$childgroupsimploded = 0;//select all groups
 	}
     
-	$selectedGroup = explode(",",$childgroupsimploded);
+	$selectedGroup = explode(",", $childgroupsimploded);
 	
 	TracePrint($selectedGroup,"arrary selectedGroup");
 	
-	xarModVars::set('messages',"allowedSendMessages[$group]",serialize($selectedGroup));
+	xarModVars::set('messages', "allowedSendMessages[$group]", serialize($selectedGroup));
 	
 	return true;
 }

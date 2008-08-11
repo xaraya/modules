@@ -6,22 +6,34 @@
                 <xar:mlstring>From:</xar:mlstring>
             </label>
             #xarUserGetVar('name')#
-			<!--Psspl:Modifided the code for anonymous message-->
-            <xar:if condition="isset($postanon) and $postanon eq 1">
-                      <input type="checkbox" name="postanon" id="postanon" checked="checked" value="1"/>
-                    <xar:else />
-                      <input type="checkbox" name="postanon" id="postanon" value="1" />
-                    </xar:if>
-                    <xar:mlstring>
-                      Post anonymously
-                    </xar:mlstring>
+		<xar:comment>Psspl:Modifided the code for anonymous message</xar:comment>
+         <xar:if condition="isset($id) and isset($postanon)">
+          		<xar:if condition="$postanon eq 1">
+	               <input type="checkbox" name="postanon" id="postanon" checked="checked" value="1"/>
+                <xar:else />
+                   <input type="checkbox" name="postanon" id="postanon" value="1"/>
+                </xar:if>
+         <xar:else />
+         		<xar:if condition="isset($postanon)">
+         			<xar:if condition="$postanon eq 1">
+	              		<input type="checkbox" name="postanon" id="postanon" checked="checked" value="1"/>
+                	<xar:else/>
+                   		<input type="checkbox" name="postanon" id="postanon" value="1"/>
+                	</xar:if> 
+                <xar:else/>
+                    <input type="checkbox" name="postanon" id="postanon" value="1"/> 
+                </xar:if>        
+        </xar:if>
+         <xar:mlstring>
+              Post anonymously
+         </xar:mlstring>
         </div>
 
         <div class="xar-form-input-wrapper">
             <label for="recipient" title="#xarML('To whom the message will be sent')#" class="xar-form-label">
                 <xar:mlstring>To:</xar:mlstring>
             </label>
-            <xar:if condition="isset($action) and $action ne 'reply' ">
+            <xar:if condition="isset($action) and $action ne 'reply' and $action ne 'prev_reply' and $action ne 'modify'">
             <select name="recipient" id="recipient">
                 <xar:loop name="$users">
                     <xar:if condition="isset($recipient) and $loop:item['id'] eq $recipient">
@@ -36,17 +48,34 @@
                 </xar:loop>
             </select>
             </xar:if>
-            <xar:if condition="isset($action) and $action eq 'reply' ">
-            <xar:if condition="isset($postanon) and $postanon eq 1">
-            <xar:mlstring>
-                      Anonymous
-                </xar:mlstring>
-            <xar:else />
-            <xar:mlstring>
-            		#$recipient_name#
-             </xar:mlstring>		
-            </xar:if>	
-            <input type="hidden" value="#$recipient#" name="recipient" id="recipient" />
+            <xar:if condition="isset($action) and $action eq 'reply' or $action eq 'prev_reply' ">
+            	<xar:if condition="isset($postanon_to) and $postanon_to eq 1">
+            		<xar:mlstring>Anonymous</xar:mlstring>
+            	<xar:else/>
+            		<xar:mlstring>#$recipient_name#</xar:mlstring>		
+            	</xar:if>
+            	<input type="hidden" value="#$recipient#" name="recipient" id="recipient" />
+            </xar:if>
+            
+            <xar:if condition="isset($action) and $action eq 'modify' ">
+            	<xar:if condition="isset($postanon_to) and $postanon_to eq 1">
+            		<xar:mlstring>Anonymous</xar:mlstring>
+            	<xar:else/>
+            		<select name="recipient" id="recipient">
+                <xar:loop name="$users">
+                    <xar:if condition="isset($recipient) and $loop:item['id'] eq $recipient">
+                        <option value="#$loop:item['id']#" selected="selected">
+                            #$loop:item['name']# (#$loop:item['uname']#)
+                        </option>
+                    <xar:else />
+                        <option value="#$loop:item['id']#">
+                            #$loop:item['name']# (#$loop:item['uname']#)
+                        </option>
+                    </xar:if>
+                </xar:loop>
+            </select>
+            	</xar:if>
+            	<input type="hidden" value="#$recipient#" name="recipient" id="recipient" />
             </xar:if>
             <xar:if condition="isset($no_recipient)">
                 <span class="xar-error">
@@ -104,7 +133,21 @@
                 <input type="hidden" name="mid" id="mid" value="#$mid#" />
             </xar:if>
             <xar:if condition="isset($id)">
-            <input type="hidden" name="id" id="id" value="#$id#" />
+            	<input type="hidden" name="id" id="id" value="#$id#" />
+            </xar:if>
+            <xar:if condition="isset($action)"> 
+             	<xar:if condition="$action eq 'reply'">
+            		<input type="hidden" name="action" id="action" value="prev_reply" />
+            		<input type="hidden" name="postanon_to" id="postanon_to" value="#$postanon_to#" />
+            	</xar:if>
+            	<xar:if condition="$action eq 'modify'">
+            		<input type="hidden" name="action" id="action" value="prev_reply" />
+            		<input type="hidden" name="postanon_to" id="postanon_to" value="#$postanon_to#" />
+            	</xar:if>
+            	<xar:if condition="$action eq 'prev_reply'">
+            		<input type="hidden" name="action" id="action" value="prev_reply" />
+            		<input type="hidden" name="postanon_to" id="postanon_to" value="#$postanon_to#" />
+            	</xar:if>
              </xar:if>
             <input type="submit" name="preview" id="preview" value="#xarML('Preview')#" class="xar-margin-thickright" />
             <input type="submit" name="confirm" id="confirm" value="#xarML('Submit')#" class="xar-margin-thickleft" />

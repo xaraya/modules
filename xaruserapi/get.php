@@ -57,6 +57,7 @@ function messages_userapi_get( $args )
         $message['date']          = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', $node['datetime']);
         $message['subject']       = $node['title'];
         $message['postanon']	  = $node['postanon'];	
+        $message['postanon_to']	  = $node['postanon_to'];	
         $message['body']          = $node['text'];
         $message['draft']         = ($node['status'] == 1 ? true : false);
         if (!in_array($message['id'], $read_messages)) {

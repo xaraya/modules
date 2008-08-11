@@ -21,8 +21,12 @@ function messages_user_viewsent( $args )
 
     if (!xarVarFetch('id', 'int:1:', $id)) return;
 
+    if (!xarVarFetch('folder', 'enum:inbox:sent:drafts', $folder, 'inbox')) return;
     $messages = xarModAPIFunc('messages','user','get',array('id' => $id, 'status' => 2));
 
+    //Psspl:Added the code for configuring the user-menu
+	$data['allow_newpm'] = xarModAPIFunc('messages' , 'user' , 'isset_grouplist');
+        
     if (!count($messages) || !is_array($messages)) {
         $data['error'] = xarML('Message ID nonexistant!');
         return $data;
@@ -53,7 +57,19 @@ function messages_user_viewsent( $args )
         $read_messages = array();
     }
 
+	$data['folder']  = $folder;
     $data['message'] = $messages[0];
+    //Psspl:Added code for ataching folder type to the links. 
+    foreach($messages as  $key=>$message){
+        if(isset($data['message']['view_link']))
+        	$data['message']['view_link']     .= "&folder=$folder"; 
+        
+        if(isset($data['message']['modify_link']))
+        	$data['message']['modify_link']   .= "&folder=$folder"; 
+        
+        if(isset($data['message']['delete_link']))
+        	$data['message']['delete_link']    .= "&folder=$folder"; 
+    } 
     $data['action']  = 'viewsent';
 
     // added call to transform text srg 09/22/03

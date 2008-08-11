@@ -11,6 +11,7 @@
  * @link http://xaraya.com/index.php/release/6.html
  * @author XarayaGeek
  */
+include_once("./modules/commonutil.php");
 function messages_user_modify( $args )
 {
 
@@ -27,7 +28,7 @@ function messages_user_modify( $args )
     xarVarFetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED);
     xarVarFetch('draft', 'checkbox', $draft, true, XARVAR_NOT_REQUIRED);
     xarVarFetch('postanon',   'checkbox', $postanon,   false, XARVAR_NOT_REQUIRED);
-
+	xarVarFetch('postanon_to',   'int', $postanon_to,   false, XARVAR_NOT_REQUIRED);	
     if ($preview === true) {
         $action = 'preview';
     } elseif ($confirm === true) {
@@ -42,15 +43,13 @@ function messages_user_modify( $args )
 	$data['postanon']       = $postanon;	    
     $data['id']             = $id;
 
+	//Psspl:Added the code for configuring the user-menu
+	$data['allow_newpm'] = xarModAPIFunc('messages' , 'user' , 'isset_grouplist');
+    	
     xarTplSetPageTitle( xarML('Modify Message') );
 
-    $users = xarModAPIFunc('roles',
-                           'user',
-                           'getall',
-                            array('state'   => 3,
-                                  'include_anonymous' => false,
-                                  'include_myself' => false));
-    $data['users']          = $users;
+	//Psspl:Modifided the code for getting user list.
+    $data['users'] = xarModAPIFunc('messages','user','get_users');    
 
     $messages = xarModAPIFunc('messages','user','get',array('id' => $id, 'status' => 1));
 
@@ -72,18 +71,20 @@ function messages_user_modify( $args )
     switch($action) {
         case "submit":
 
-            if (!xarVarFetch('subject', 'str:1', $subject)) {
-                $data['no_subject'] = 1;
-                xarErrorHandled();
-            }
-            if (!xarVarFetch('body', 'str:1', $body)){
-                $data['no_body'] = 1;
-                xarErrorHandled();
-            }
-            if (!xarVarFetch('recipient', 'int:1', $recipient)){
-                $data['no_recipient'] = 1;
-                xarErrorHandled();
-            }
+            xarVarFetch('subject',   'str:1', $subject,   null, XARVAR_NOT_REQUIRED);
+           //minimum length is 7 character it sets &#160; for processing
+			xarVarFetch('body',   'str:7', $body,   null, XARVAR_NOT_REQUIRED); 
+			xarVarFetch('recipient',   'int:1', $recipient,   null, XARVAR_NOT_REQUIRED);
+			
+			if($subject == null) {
+				$data['no_subject'] = 1;
+			}
+			if($body == null) {
+				$data['no_body'] = 1;
+			}
+			if($recipient == null){
+				 $data['no_recipient'] = 1;
+			}
 
             if(isset($data['no_subject']) || isset($data['no_body']) || isset($data['no_recipient'])){
 
@@ -107,8 +108,13 @@ function messages_user_modify( $args )
                 /*list($data['message']['body']) = xarModCallHooks('item',
                      'transform',
                      $id,
-                     array($data['message']['body']));
-                return $data;*/
+                     array($data['message']['body']));*/
+               
+                $data['postanon_to']    = $postanon_to;
+				$data['postanon']       = $postanon;
+                $data['action']		= 'modify';
+                $data['folder']     = 'drafts';                
+                return $data;
             }
 
             $id = xarModAPIFunc('messages',
@@ -122,7 +128,7 @@ function messages_user_modify( $args )
                                  'draft' => $draft));
             // see if the recipient has set an away message
             if(!$draft){
-                $isaway = xarModUserVars::get('messages','away_message',$recipient);
+                $isaway = xarModUserVars::get('messages' , 'away_message' , $recipient);
                 if (!empty($isaway)) {
                     $data['recipient'] = $recipient;
                     $data['away_message'] = $isaway;
@@ -134,17 +140,23 @@ function messages_user_modify( $args )
             break;
 
         case 'preview';
-            if (!xarVarFetch('subject', 'str:1', $subject)) {
+            //Psspl:modifided code for Error Handling;
+			xarVarFetch('subject',   'str:1', $subject,   null, XARVAR_NOT_REQUIRED);
+            //minimum length is 7 character it sets &#160; for processing
+		    xarVarFetch('body',   'str:7', $body,   null, XARVAR_NOT_REQUIRED); 
+			xarVarFetch('recipient',   'int:1', $recipient,   null, XARVAR_NOT_REQUIRED);
+			
+			if($subject == null) {
                 $data['no_subject'] = 1;
-                xarErrorHandled();
+                //xarErrorHandled();
             }
-            if (!xarVarFetch('body', 'str:1', $body)){
+			if($body == null) {
                 $data['no_body'] = 1;
-                xarErrorHandled();
+                //xarErrorHandled();
             }
-            if (!xarVarFetch('recipient', 'int:1', $recipient)){
+			if($recipient == null){
                 $data['no_recipient'] = 1;
-                xarErrorHandled();
+                //xarErrorHandled();
             }
             // added call to transform text srg 09/22/03
             list($body) = xarModCallHooks('item',
@@ -155,9 +167,9 @@ function messages_user_modify( $args )
             xarTplSetPageTitle( xarML('Modify Message') );
 
             $data['input_title']                = xarML('Compose Message');
-            $data['action']                     = 'preview';
-
-            $data['message'] = $messages[0];
+            $data['action']        				= 'modify';
+			$data['folder']                     = 'drafts';
+            $data['message']                    = $messages[0];
 
             $data['message']['sender']          = xarUserGetVar('name');
             $data['message']['senderid']        = xaruserGetVar('id');
@@ -171,7 +183,7 @@ function messages_user_modify( $args )
             $data['recipient']                  = $recipient;
             $data['subject']                    = $subject;
             $data['body']                       = $body;
-
+			$data['postanon_to']				= $postanon_to;
             $data['message']['date']            = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', time());
             $data['message']['raw_date']        = time();
 
@@ -186,6 +198,7 @@ function messages_user_modify( $args )
             break;
 
         case 'modify':
+        	$data['folder']         = 'drafts';
             $data['post_url']       = xarModURL('messages','user','modify');
             $data['action']         = $action;
             $data['draft']          = $messages[0]['draft'];
@@ -194,27 +207,22 @@ function messages_user_modify( $args )
             $data['date']           = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', time());
             $data['raw_date']       = time();
             $data['body']           = $messages[0]['body'];
+			$data['postanon_to']    = $messages[0]['postanon_to'];
 			$data['postanon']       = $messages[0]['postanon'];
-            $data['message'] = $messages[0];
+            $data['message']        = $messages[0];
 
             $data['message']['date']            = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', time());
             $data['message']['raw_date']        = time();
 
             // added call to transform text srg 09/22/03
             list($data['message']['body']) = xarModCallHooks('item',
-                 'transform',
-                 $id,
-                 array($data['message']['body']));
+											                 'transform',
+											                 $id,
+											                 array($data['message']['body']));
 
 
             return $data;
             break;
     }
-
-
-
-
-
 }
-
 ?>

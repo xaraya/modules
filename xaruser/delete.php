@@ -28,7 +28,7 @@ function messages_user_delete()
 
     if (!xarVarFetch('action', 'enum:confirmed:check', $action)) return;
     if (!xarVarFetch('id', 'int:1', $id)) return;
-
+	if (!xarVarFetch('folder', 'enum:inbox:sent:drafts', $folder, 'inbox')) return;
 
     /*
      * Let's make sure the message exists before we
@@ -37,6 +37,8 @@ function messages_user_delete()
      */
     $messages = xarModAPIFunc('messages', 'user', 'get', array('id' => $id));
 
+	//Psspl:Added the code for configuring the user-menu
+    $data['allow_newpm'] = xarModAPIFunc('messages' , 'user' , 'isset_grouplist');
     if (!count($messages)) {
         $data['error']  = xarML('Message id refers to a nonexistant message!');
         return $data;
@@ -79,6 +81,7 @@ function messages_user_delete()
             break;
 
         case "check":
+        	$data['folder']     = $folder;
             $data['message']    = $messages[0];
             $data['id']         = $id;
             $data['action']     = $action;
