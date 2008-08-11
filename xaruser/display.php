@@ -27,14 +27,14 @@ function messages_user_display( )
         $read_messages = array();
     }
 
-	//Psspl:Added the code for configuring the user-menu
-	$data['allow_newpm'] = xarModAPIFunc('messages' , 'user' , 'isset_grouplist');
+    //Psspl:Added the code for configuring the user-menu
+    $data['allow_newpm'] = xarModAPIFunc('messages' , 'user' , 'isset_grouplist');
     
-	//psspl:Added the code for resolving issue of modifing draft messages.
-	if ($folder != 'drafts') {
-   		$messages = xarModAPIFunc('messages', 'user', 'getall', array('folder' => $folder));
+    //psspl:Added the code for resolving issue of modifing draft messages.
+    if ($folder != 'drafts') {
+        $messages = xarModAPIFunc('messages', 'user', 'getall', array('folder' => $folder));
     } else {
-    	$messages = xarModAPIFunc('messages', 'user', 'checkdraft');	
+        $messages = xarModAPIFunc('messages', 'user', 'checkdraft');    
     }
     
     if (is_array($messages)) {
@@ -44,15 +44,15 @@ function messages_user_display( )
         $data['messages']                = $messages;
         //Psspl:Added the code for attaching foder type to the link.
        foreach($messages as  $key=>$message){
-        	
-        	if(isset($data['messages'][$key]['view_link']))
-        		$data['messages'][$key]['view_link']       .= "&folder=$folder"; 
-        	
-        	if(isset($data['messages'][$key]['modify_link']))
-        		$data['messages'][$key]['modify_link']     .= "&folder=$folder"; 
-        	
-        	if(isset($data['messages'][$key]['delete_link']))
-        		$data['messages'][$key]['delete_link'] 	   .= "&folder=$folder"; 
+            
+            if(isset($data['messages'][$key]['view_link']))
+                $data['messages'][$key]['view_link']       .= "&folder=$folder"; 
+            
+            if(isset($data['messages'][$key]['modify_link']))
+                $data['messages'][$key]['modify_link']     .= "&folder=$folder"; 
+            
+            if(isset($data['messages'][$key]['delete_link']))
+                $data['messages'][$key]['delete_link']     .= "&folder=$folder"; 
         }
         
         //Psspl:Added the code for read unread messages.
@@ -60,9 +60,9 @@ function messages_user_display( )
         $unread = 0;
         foreach($messages_inbox as $k => $message)
         {    if($message['status_alt'] == 'unread')
-        	{
-        		$unread++;
-        	}
+            {
+                $unread++;
+            }
         } 
         $data['header_attachment_image'] = xarTplGetImage('attachment.png');
         $data['header_status_image']     = xarTplGetImage('check_read.gif');
@@ -70,7 +70,7 @@ function messages_user_display( )
         $data['sent']                    = xarModAPIFunc('messages','user','count_sent');
         $data['total']                   = xarModAPIFunc('messages','user','count_total');
         $data['drafts']                  = xarModAPIFunc('messages','user','count_drafts');
-		$data['unread']  				 = $unread;
+        $data['unread']                  = $unread;
     } else {
         $list = array();
     }

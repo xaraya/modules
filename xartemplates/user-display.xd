@@ -4,8 +4,8 @@
     </div>
     <div class="xar-mod-body">
         <xar:if condition="!isset($error)">
-        	<xar:comment>Psspl: Added the code for configuring NewMessages tab</xar:comment>
-        	<xar:set name="subdata">array('allow_newpm' => $allow_newpm)</xar:set>
+            <xar:comment>Psspl: Added the code for configuring NewMessages tab</xar:comment>
+            <xar:set name="subdata">array('allow_newpm' => $allow_newpm)</xar:set>
             <xar:template type="module" file="user-menu" data="$subdata" />
             <h2>Message List: #$folder#</h2>
             <!--
@@ -104,28 +104,28 @@
                             <td class="#$rowclass# xar-align-left xar-messages-mailboxlistsender">
                                 <xar:if condition="strtolower($folder) eq 'inbox'">
                                 <!--Psspl:Modifided the code for anonymous message-->
-	          						<xar:if condition="$loop:item['postanon'] eq '0'">
-	          							<a href="#$loop:item['user_link']#" title="#xarML('View user info')#">#$loop:item['sender']#</a>
+                                    <xar:if condition="$loop:item['postanon'] eq '0'">
+                                        <a href="#$loop:item['user_link']#" title="#xarML('View user info')#">#$loop:item['sender']#</a>
                                     <!--#$comment['author']#-->
                             <xar:else/>
                                 <xar:mlstring>Anonymous</xar:mlstring>
                             </xar:if>
-	         					</xar:if>
-								
-	         					<xar:if condition="strtolower($folder) eq 'sent'">
-	          						<xar:if condition="$loop:item['postanon_to'] eq '0'">
-	          							<a href="#$loop:item['user_link']#" title="#xarML('View user info')#">#$loop:item['recipient']#</a>
-	                                <xar:else />
-	          							<xar:mlstring>Anonymous</xar:mlstring>
-	          						</xar:if>
-	         					</xar:if>
-	         					
-	         					<xar:if condition="strtolower($folder) eq 'drafts'">
-	          						<xar:if condition="$loop:item['postanon_to'] eq '0'">
+                                </xar:if>
+                                
+                                <xar:if condition="strtolower($folder) eq 'sent'">
+                                    <xar:if condition="$loop:item['postanon_to'] eq '0'">
                                         <a href="#$loop:item['user_link']#" title="#xarML('View user info')#">#$loop:item['recipient']#</a>
-	          						<xar:else/>
-	          							<xar:mlstring>Anonymous</xar:mlstring>
-	          						</xar:if>
+                                    <xar:else />
+                                        <xar:mlstring>Anonymous</xar:mlstring>
+                                    </xar:if>
+                                </xar:if>
+                                
+                                <xar:if condition="strtolower($folder) eq 'drafts'">
+                                    <xar:if condition="$loop:item['postanon_to'] eq '0'">
+                                        <a href="#$loop:item['user_link']#" title="#xarML('View user info')#">#$loop:item['recipient']#</a>
+                                    <xar:else/>
+                                        <xar:mlstring>Anonymous</xar:mlstring>
+                                    </xar:if>
                                 </xar:if>
                             </td>
                             <td class="#$rowclass# xar-align-left xar-messages-mailboxlistsubject">
@@ -150,11 +150,11 @@
                                         <a href="#$loop:item['reply_link']#" title="#xarML('Reply to Message')#"><xar:mlstring>Reply</xar:mlstring></a> |
                                     </xar:if> 
                                <xar:elseif condition="strtolower($folder) eq 'drafts'" />
-                               		<xar:comment>Psspl:Added the code for modifing draft messages</xar:comment>
-                               		<xar:if condition="!empty($loop:item['allow_modify'])">	
-                                    	<a href="#$loop:item['modify_link']#" title="#xarML('Edit or Send Message')#"><xar:mlstring>Modify</xar:mlstring></a> |
-                                 	<xar:else/>
-                                 		<a href="#$loop:item['modify_link']#" title="#xarML('Edit or Send Message')#"><xar:mlstring>Modify</xar:mlstring></a> | 
+                                    <xar:comment>Psspl:Added the code for modifing draft messages</xar:comment>
+                                    <xar:if condition="!empty($loop:item['allow_modify'])"> 
+                                        <a href="#$loop:item['modify_link']#" title="#xarML('Edit or Send Message')#"><xar:mlstring>Modify</xar:mlstring></a> |
+                                    <xar:else/>
+                                        <a href="#$loop:item['modify_link']#" title="#xarML('Edit or Send Message')#"><xar:mlstring>Modify</xar:mlstring></a> | 
                                     </xar:if>
                                 </xar:if>
                                 <xar:if condition="!empty($allowdelete)">
@@ -174,14 +174,13 @@
                     </xar:ml>
                 </p>
             </xar:if>
-		<!-- djb dont really need it do we (and its ugly)
-			<xar:if condition="!empty($allow_newpm)"> 
-<!-- djb dont really need it do we (and its ugly)
-            <div class="xar-align-right">
-                <a href="#xarModURL('messages','user','send',array('action'=>'post'))#" class="xar-messages-newpmlink">
-                    <img src="#xarTplGetImage('newpm.gif','messages')#" alt="#xarML('New private message')#" />
-                </a>
-            </div>
+        <!-- djb dont really need it do we (and its ugly) 
+            <xar:if condition="!empty($allow_newpm)"> 
+                <div class="xar-align-right">
+                    <a href="#xarModURL('messages','user','send',array('action'=>'post'))#" class="xar-messages-newpmlink">
+                        <img src="#xarTplGetImage('newpm.gif','messages')#" alt="#xarML('New private message')#" />
+                    </a>
+                </div>
             </xar:if>
 -->
             <xar:if condition="xarModVars::get('messages','awaymsg') eq 1">
