@@ -87,6 +87,12 @@ function messages_user_viewsent( $args )
         xarModUserVars::set('messages','read_messages',serialize($read_messages));
     }
 
+	//Psspl:Added the code for resolving djb issue in viewsent.
+    // djb - fillin in the status bar / actions 
+    $data['unread']                  = xarModAPIFunc('messages','user','count_unread');
+    $data['sent']                    = xarModAPIFunc('messages','user','count_sent');
+    $data['total']                   = xarModAPIFunc('messages','user','count_total');
+    $data['drafts']                  = xarModAPIFunc('messages','user','count_drafts');
     return $data;
 }
 

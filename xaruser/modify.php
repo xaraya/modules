@@ -43,6 +43,13 @@ function messages_user_modify( $args )
 	$data['postanon']       = $postanon;	    
     $data['id']             = $id;
 
+    //Psspl:Added the code for resolving issue of djb in modify
+    // djb - fillin in the status bar / actions 
+    $data['unread']                  = xarModAPIFunc('messages','user','count_unread');
+    $data['sent']                    = xarModAPIFunc('messages','user','count_sent');
+    $data['total']                   = xarModAPIFunc('messages','user','count_total');
+    $data['drafts']                  = xarModAPIFunc('messages','user','count_drafts');
+		
 	//Psspl:Added the code for configuring the user-menu
 	$data['allow_newpm'] = xarModAPIFunc('messages' , 'user' , 'isset_grouplist');
     	

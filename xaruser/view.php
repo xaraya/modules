@@ -73,12 +73,8 @@ function messages_user_view( $args )
         array_push($read_messages, $data['message']['id']);
         xarModUserVars::set('messages','read_messages',serialize($read_messages));
     }
+
 	// djb - fillin in the status bar / actions 
-    $data['unread']                  = xarModAPIFunc('messages','user','count_unread');
-    $data['sent']                    = xarModAPIFunc('messages','user','count_sent');
-    $data['total']                   = xarModAPIFunc('messages','user','count_total');
-    $data['drafts']                  = xarModAPIFunc('messages','user','count_drafts');
-    // djb - fillin in the status bar / actions 
     $data['unread']                  = xarModAPIFunc('messages','user','count_unread');
     $data['sent']                    = xarModAPIFunc('messages','user','count_sent');
     $data['total']                   = xarModAPIFunc('messages','user','count_total');
