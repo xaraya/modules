@@ -322,13 +322,11 @@ class CategoriesProperty extends SelectProperty
             } elseif (!empty($this->value)) {
                 // We have $this->value, use it as the itemid
                 $data['value'] = $this->value;
-            } else {
-                // No information passed, so just make the base categories the selected categories
-                $selectedcategories = $data['basecids'];
             }
         }
         
         // We have a valid itemid, so get its linked categories
+        // This is the case of a property attached to an object
         if (!empty($data['value'])) {
                 $links = xarModAPIFunc('categories', 'user', 'getlinkage',
                                        array('itemid' => $data['value'],
@@ -341,6 +339,13 @@ class CategoriesProperty extends SelectProperty
                     $selectedcategories[] = isset($catlink[$basecid]) ? $catlink[$basecid]: 0;
         }
 
+        // We have a categories attribute
+        // This is the case of a standalone property
+        if (!empty($data['categories'])) $selectedcategories = $data['categories'];
+        
+        // No information passed, so just make the base categories the selected categories
+        if (empty($selectedcategories))  $selectedcategories = $data['basecids'];
+
     // Note : $data['values'][$id] will be updated inside the template, so that when several
     //        select boxes are used with overlapping trees, categories will only be selected once
     // This requires that the values are passed by reference : $data['values'] =& $seencids;
@@ -348,10 +353,11 @@ class CategoriesProperty extends SelectProperty
 //            $GLOBALS['Categories_MakeSelect_Values'] =& $data['values'];
 //        }
 
-        // This is just for backward compatibility in the tepate
+        // This is just for backward compatibility in the template
         $data['categories_itemid'] = isset($data['value']) ? $data['value'] : 0;
+
         // Now make the value passed to the template the selected categories
-        $data['value'] = $selectedcategories;;
+        $data['value'] = $selectedcategories;
         return parent::showInput($data);
     }
 
