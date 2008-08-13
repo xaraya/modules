@@ -9,7 +9,7 @@
  *
  * @subpackage Scheduler Module
  * @link http://xaraya.com/index.php/release/189.html
- * @author mikespub
+ * @author mikespub 
  */
 /**
  * initialise the scheduler module
