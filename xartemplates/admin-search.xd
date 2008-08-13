@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
@@ -5,23 +6,24 @@
     </span>
 </div>
 <div class="xar-mod-body">
-    <xar:template type="module" module="scheduler" file="admin-menu" />
+      <xar:template type="module" module="scheduler" file="admin-menu" />
     <h3><xar:mlstring>Scheduler API Functions</xar:mlstring></h3>
-    <xar:if condition="!empty($found) and count($found) gt 0">
-        <ul>
-        <xar:foreach in="$found" value="$api">
-            <xar:set name="args">array('addjob' => "$api[module];$api[type];$api[func]")</xar:set>
-            <li>[<a href="#xarModURL('scheduler','admin','modifyconfig',$args)#"><xar:mlstring>add job</xar:mlstring></a>] #$api['module']# - #$api['type']# - #$api['func']#</li>
-        </xar:foreach>
-        </ul>
-    <xar:else/>
+<xar:if condition="!empty($found) and count($found) gt 0">
+    <ul>
+    <xar:foreach in="$found" value="$api">
+        <xar:set name="args">array('addjob' => "$api[module];$api[type];$api[func]")</xar:set>
+        <li>[<a href="#xarModURL('scheduler','admin','modifyconfig',$args)#"><xar:mlstring>add job</xar:mlstring></a>] #$api['module']# - #$api['type']# - #$api['func']#</li>
+    </xar:foreach>
+    </ul>
+<xar:else/>
+            <p>
+    <xar:mlstring>No scheduler API functions found...</xar:mlstring>
+            </p>
+</xar:if>
         <p>
-        <xar:mlstring>No scheduler API functions found...</xar:mlstring>
-        </p>
-    </xar:if>
-    <p>
-    <div class="xar-accent xar-norm-outline xar-padding-thick">
-         <xar:mlstring>Note: there may be other API functions available for use by the scheduler - check your module documentation or try it out</xar:mlstring>
-    </div>
-    </p>
+             <div class="xar-accent xar-norm-outline xar-padding-thick">
+                <xar:mlstring>Note: there may be other API functions available for use by the scheduler - check your module documentation or try it out</xar:mlstring>
 </div>
+        </p>
+</div>
+</xar:template>

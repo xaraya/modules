@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
@@ -126,7 +127,7 @@
     </div>
   </fieldset>
     <div class="xar-form-input-wrapper-after">
-      <xar:if condition="xarModGetVar('scheduler','running')">
+      <xar:if condition="xarModVars::get('scheduler','running')">
         <xar:mlstring>Warning: jobs are currently running - any changes you make now may be overwritten</xar:mlstring><br/>
       </xar:if>
       <input type="submit" name="confirm" value="#xarML('Update Scheduler Job')#" />
@@ -140,3 +141,4 @@
     </p>
 
 </div>
+</xar:template>

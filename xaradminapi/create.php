@@ -51,7 +51,7 @@ function scheduler_adminapi_create($args)
 
     if (!xarSecurityCheck('AdminScheduler')) return;
 
-    $serialjobs = xarModGetVar('scheduler','jobs');
+    $serialjobs = xarModVars::get('scheduler','jobs');
     if (empty($serialjobs)) {
         $jobs = array();
     } else {
@@ -66,7 +66,7 @@ function scheduler_adminapi_create($args)
             return;
         }
     }
-    $maxid = xarModGetVar('scheduler','maxjobid');
+    $maxid = xarModVars::get('scheduler','maxjobid');
     if (!isset($maxid)) {
         // re-number jobs starting from 1 and save maxid
         $maxid = 0;
@@ -78,7 +78,7 @@ function scheduler_adminapi_create($args)
         $jobs = $newjobs;
     }
     $maxid++;
-    xarModSetVar('scheduler','maxjobid',$maxid);
+    xarModVars::set('scheduler','maxjobid',$maxid);
     if (empty($config)) {
         $config = array();
     }
@@ -96,7 +96,7 @@ function scheduler_adminapi_create($args)
                           'lastrun' => $lastrun,
                           'result' => $result);
     $serialjobs = serialize($jobs);
-    xarModSetVar('scheduler','jobs',$serialjobs);
+    xarModVars::set('scheduler','jobs',$serialjobs);
 
     $itemid = $maxid;
 

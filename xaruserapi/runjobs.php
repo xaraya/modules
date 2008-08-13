@@ -20,7 +20,7 @@ function scheduler_userapi_runjobs($args = array())
 {
     // run the jobs
     $log = xarML('Starting jobs');
-    $serialjobs = xarModGetVar('scheduler','jobs');
+    $serialjobs = xarModVars::get('scheduler','jobs');
     if (!empty($serialjobs)) {
         $jobs = unserialize($serialjobs);
     } else {
@@ -150,7 +150,7 @@ function scheduler_userapi_runjobs($args = array())
 
     // we didn't run anything, so return now
     if (count($hasrun) == 0) {
-        xarModDelVar('scheduler','running');
+        xarModVars::delete('scheduler','running');
         return $log;
     }
 
@@ -159,7 +159,7 @@ function scheduler_userapi_runjobs($args = array())
 //    xarVarDelCached('Mod.Variables.scheduler', 'jobs');
 
     // get the current list of jobs
-    $serialjobs = xarModGetVar('scheduler','jobs');
+    $serialjobs = xarModVars::get('scheduler','jobs');
     if (!empty($serialjobs)) {
         $newjobs = unserialize($serialjobs);
     } else {
@@ -184,8 +184,8 @@ function scheduler_userapi_runjobs($args = array())
     }
     // update the new jobs
     $serialjobs = serialize($newjobs);
-    xarModSetVar('scheduler','jobs',$serialjobs);
-    xarModDelVar('scheduler','running');
+    xarModVars::set('scheduler','jobs',$serialjobs);
+    xarModVars::delete('scheduler','running');
 
     return $log;
 }

@@ -18,8 +18,8 @@
     xarCoreInit(XARCORE_SYSTEM_ALL);
 
     // update the last run time
-    xarModSetVar('scheduler','lastrun',time());
-    xarModSetVar('scheduler','running',1);
+    xarModVars::set('scheduler','lastrun',time());
+    xarModVars::set('scheduler','running',1);
 
     // call the API function to run the jobs
     echo xarModAPIFunc('scheduler','user','runjobs');

@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
   <span class="xar-mod-title"><xar:mlstring>Scheduler Administration </xar:mlstring></span>
@@ -103,7 +104,7 @@
     </li>
   </ul>
   <p class="xar-sub">
-    <strong>&nbsp;<xar:mlstring>Scheduler Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.1&nbsp; 2006-07-20
+    <strong>&#160;<xar:mlstring>Scheduler Module Overview</xar:mlstring></strong><br />&#160;<xar:mlstring>Version</xar:mlstring> 1.0.1&#160; 2006-07-20
   </p>
 </div>
-
+</xar:template>

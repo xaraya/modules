@@ -21,7 +21,7 @@ function scheduler_admin_modify()
 
     if (!xarSecurityCheck('AdminScheduler')) return;
 
-    $serialjobs = xarModGetVar('scheduler', 'jobs');
+    $serialjobs = xarModVars::get('scheduler', 'jobs');
     if (empty($serialjobs)) {
         $jobs = array();
     } else {
@@ -57,7 +57,7 @@ function scheduler_admin_modify()
         $jobs[$itemid]['config'] = $config;
 
         $serialjobs = serialize($jobs);
-        xarModSetVar('scheduler','jobs',$serialjobs);
+        xarModVars::set('scheduler','jobs',$serialjobs);
 
         xarResponseRedirect(xarModURL('scheduler', 'admin', 'modify',
                                       array('itemid' => $itemid)));

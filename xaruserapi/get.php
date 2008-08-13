@@ -49,7 +49,7 @@ function scheduler_userapi_get($args)
         return;
     }
 
-    $serialjobs = xarModGetVar('scheduler','jobs');
+    $serialjobs = xarModVars::get('scheduler','jobs');
     if (empty($serialjobs)) {
         $jobs = array();
     } else {

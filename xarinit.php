@@ -18,8 +18,8 @@
  */
 function scheduler_init()
 {
-    xarModSetVar('scheduler', 'trigger', 'disabled');
-    xarModSetVar('scheduler', 'lastrun', 0);
+    xarModVars::set('scheduler', 'trigger', 'disabled');
+    xarModVars::set('scheduler', 'lastrun', 0);
 
     xarRegisterMask('AdminScheduler', 'All', 'scheduler', 'All', 'All', 'ACCESS_ADMIN');
 
@@ -67,9 +67,9 @@ function scheduler_upgrade($oldversion)
  */
 function scheduler_delete()
 {
-    xarModDelVar('scheduler', 'trigger');
-    xarModDelVar('scheduler', 'lastrun');
-    xarModDelVar('scheduler', 'jobs');
+    xarModVars::delete('scheduler', 'trigger');
+    xarModVars::delete('scheduler', 'lastrun');
+    xarModVars::delete('scheduler', 'jobs');
 
     xarRemoveMasks('scheduler');
 

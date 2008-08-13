@@ -22,18 +22,18 @@ function scheduler_admin_updateconfig()
     if (!xarSecConfirmAuthKey()) return;
 
     if (!xarVarFetch('trigger','str:1:',$trigger,'disabled',XARVAR_NOT_REQUIRED)) return;
-    xarModSetVar('scheduler', 'trigger', $trigger);
+    xarModVars::set('scheduler', 'trigger', $trigger);
 
     if ($trigger == 'external') {
         if (!xarVarFetch('checktype','isset',$checktype,'',XARVAR_NOT_REQUIRED)) return;
-        xarModSetVar('scheduler', 'checktype', $checktype);
+        xarModVars::set('scheduler', 'checktype', $checktype);
         if (!xarVarFetch('checkvalue','isset',$checkvalue,'',XARVAR_NOT_REQUIRED)) return;
-        xarModSetVar('scheduler', 'checkvalue', $checkvalue);
+        xarModVars::set('scheduler', 'checkvalue', $checkvalue);
     }
 
     if (!xarVarFetch('reset','isset',$reset,0,XARVAR_NOT_REQUIRED)) return;
 
-    $serialjobs = xarModGetVar('scheduler', 'jobs');
+    $serialjobs = xarModVars::get('scheduler', 'jobs');
     if (empty($serialjobs)) {
         $oldjobs = array();
     } else {
@@ -53,10 +53,10 @@ function scheduler_admin_updateconfig()
             }
             if (empty($id)) {
                 // get the next job id
-                $maxid = xarModGetVar('scheduler','maxjobid');
+                $maxid = xarModVars::get('scheduler','maxjobid');
                 if (empty($maxid)) $maxid = 0;
                 $maxid++;
-                xarModSetVar('scheduler','maxjobid',$maxid);
+                xarModVars::set('scheduler','maxjobid',$maxid);
                 $id = $maxid;
             } elseif (!empty($oldjobs[$id])) {
                 // get the extra configuration from the original job
@@ -68,11 +68,11 @@ function scheduler_admin_updateconfig()
         }
     }
     $serialjobs = serialize($savejobs);
-    xarModSetVar('scheduler','jobs',$serialjobs);
+    xarModVars::set('scheduler','jobs',$serialjobs);
 
     if (!empty($reset)) {
-        xarModSetVar('scheduler','lastrun',0);
-        xarModDelVar('scheduler','running');
+        xarModVars::set('scheduler','lastrun',0);
+        xarModVars::delete('scheduler','running');
     }
 
     xarModCallHooks('module','updateconfig','scheduler',

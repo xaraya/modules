@@ -3,7 +3,7 @@
  * Scheduler module
  *
  * @package modules
- * @copyright (C) 2002-2008 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -38,8 +38,6 @@ function scheduler_triggerblock_info()
 
 /**
  * display block
- * @param array blockinfo
- * @return array
  */
 function scheduler_triggerblock_display($blockinfo)
 {
@@ -55,14 +53,14 @@ function scheduler_triggerblock_display($blockinfo)
     }
 
     // check if we have the right trigger
-    $trigger = xarModGetVar('scheduler','trigger');
+    $trigger = xarModVars::get('scheduler','trigger');
     if (empty($trigger) || $trigger != 'block') {
         $blockinfo['content'] = xarML('Wrong trigger');
         return $blockinfo;
     }
 
     // check when we last ran the scheduler
-    $lastrun = xarModGetVar('scheduler', 'lastrun');
+    $lastrun = xarModVars::get('scheduler', 'lastrun');
     $now = time() + 60; // add some margin here
     if (!empty($lastrun) && $lastrun > $now - 60*60) {
         if (empty($vars['showstatus'])) {
@@ -79,8 +77,8 @@ function scheduler_triggerblock_display($blockinfo)
     @set_time_limit(15*60);
 
     // update the last run time
-    xarModSetVar('scheduler','lastrun',$now - 60); // remove the margin here
-    xarModSetVar('scheduler','running',1);
+    xarModVars::set('scheduler','lastrun',$now - 60); // remove the margin here
+    xarModVars::set('scheduler','running',1);
 
 // TODO: this won't work on NFS-mounted or FAT (Win98) file systems, and ISAPI may do weird things too !
 //       So we need to find some better way to see if we're really the only ones playing here...
@@ -132,7 +130,6 @@ function scheduler_triggerblock_modify($blockinfo)
 
 /**
  * update block settings
- * @return array blockinfo
  */
 function scheduler_triggerblock_update($blockinfo)
 {
