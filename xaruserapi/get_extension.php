@@ -1,15 +1,17 @@
 <?php
-/**
+/*
+ *
  * Mime Module
  *
- * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
  * @subpackage mime
  * @author Carl P. Corliss
  */
+
  /**
   *  Get the name of a mime type
   *
@@ -27,12 +29,12 @@ function mime_userapi_get_extension( $args )
 
     if (!isset($extensionId) && !isset($extensionName)) {
         $msg = xarML('No (usable) parameter to work with (#(1)::#(2)::#(3))', 'mime','userapi','get_extension');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        throw new Exception($msg);
     }
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable     = xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable     = xarDB::getTables();
 
     $where = ' WHERE ';
 

@@ -1,15 +1,17 @@
 <?php
-/**
+/*
+ *
  * Mime Module
  *
- * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
  * @subpackage mime
  * @author Carl P. Corliss
  */
+
 /**
  * Attempt to convert a MIME type to a file extension.
  * If we cannot map the type to a file extension, we return false.
@@ -23,26 +25,37 @@
  */
 function mime_userapi_mime_to_extension( $args )
 {
+
     extract($args);
 
     if (!isset($mime_type) || empty($mime_type)) {
         $msg = xarML('Missing \'mime_type\' parameter!');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return FALSE;
+        throw new Exception($msg);
     }
 
-    $mime_list = unserialize(xarModGetVar('mime','mime.magic'));
-
-    if (isset($mime_list[$mime_type])) {
-        if (isset($mime_list[$mime_type]['extension_list']) && is_array($mime_list[$mime_type]['extension_list'])) {
-            // return the first extension we find for this mime_type
-            return $mime_list[$mime_type]['extension_list'][0];
-        } else {
-            return FALSE;
-        }
-    } else {
-        return FALSE;
+    $typeparts = explode('/',$mime_type);
+    if (count($typeparts) < 2) {
+        $msg = xarML('Missing mime type or subtype parameter!');
+        throw new Exception($msg);
     }
+
+    $xartable = xarDB::getTables();
+    sys::import('modules.query.class.query');
+    $q = new Query();
+    $q->addtable($xartable['mime_type'], 'mt');
+    $q->addtable($xartable['mime_subtype'], 'mst');
+    $q->addtable($xartable['mime_extension'], 'me');
+    $q->join('mt.xar_mime_type_id','mst.xar_mime_type_id');
+    $q->join('mst.xar_mime_subtype_id','me.xar_mime_subtype_id');
+    $q->eq('mt.xar_mime_type_name',$typeparts[0]);
+    $q->eq('mst.xar_mime_subtype_name',$typeparts[1]);
+    
+    $q->addfield('xar_mime_type_name AS type_name');
+    $q->addfield('xar_mime_subtype_name AS subtype_name');
+    $q->addfield('xar_mime_extension_name AS extension');
+    if (!$q->run()) return;
+
+    return $q->output();
 }
 
 ?>

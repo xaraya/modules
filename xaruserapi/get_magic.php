@@ -1,15 +1,17 @@
 <?php
-/**
+/*
+ *
  * Mime Module
  *
- * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
  * @subpackage mime
  * @author Carl P. Corliss
  */
+
  /**
   *  Get the magic number(s) for a particular mime subtype
   *
@@ -17,21 +19,22 @@
   *  @access public
   *  @param  integer    matgicId     the magicId of the magic # to lookup   (optional)
   *  @param  string     magicValue   the magic value of the magic # to lookup (optional)
-  *  @return array      An array of (subtypeid, magicId, magic, offset, length) or an empty array
+  *  returns array      An array of (subtypeid, magicId, magic, offset, length) or an empty array
   */
 
 function mime_userapi_get_magic( $args )
 {
+
     extract($args);
 
     if (!isset($magicId) && !isseT($magicValue)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module[#(3)].', 'magicId','userapi_get_magic','mime');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        throw new Exception($msg);
     }
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable     = xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable     = xarDB::getTables();
 
     $where = ' WHERE ';
 

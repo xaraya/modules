@@ -1,15 +1,17 @@
 <?php
-/**
+/*
+ *
  * Mime Module
  *
- * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
  * @subpackage mime
  * @author Carl P. Corliss
  */
+
  /**
   *  Get the name of a mime type
   *
@@ -17,20 +19,22 @@
   *  @access public
   *  @param  integer    subtypeId   the subtypeID of the mime subtype to lookup (optional)
   *  @param  integer    subtypeName the Name of the mime sub type to lookup (optional)
-  *  @return array      An array of (subtypeId, subtypeName) or an empty array
+  *  returns array      An array of (subtypeId, subtypeName) or an empty array
   */
+
 function mime_userapi_get_mimetype( $args )
 {
+
     extract($args);
 
     if (!isset($subtypeId) && !isset($subtypeName)) {
         $msg = xarML('No (usable) parameter to work with (#(1)::#(2)::#(3))', 'mime','userapi','get_subtype');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        throw new Exception($msg);
     }
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable     = xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable     = xarDB::getTables();
 
     $where = ' WHERE ';
 
@@ -60,4 +64,5 @@ function mime_userapi_get_mimetype( $args )
 
     return $row['mimetype'] . '/' . $row['mimesubtype'];
 }
+
 ?>

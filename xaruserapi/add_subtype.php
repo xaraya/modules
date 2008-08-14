@@ -1,10 +1,11 @@
 <?php
-/**
+/*
+ *
  * Mime Module
  *
- * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
  * @subpackage mime
@@ -30,13 +31,13 @@ function mime_userapi_add_subtype( $args )
     if (!isset($typeId)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
                      'typeId','userapi_add_subtypes','mime');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        throw new Exception($msg);
     }
 
     if (!isset($subtypeName)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
                      'subtypeName','userapi_add_subtype','mime');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        throw new Exception($msg);
     }
 
     if (!isset($subtypeDesc) || !is_string($subtypeDesc)) {
@@ -44,12 +45,12 @@ function mime_userapi_add_subtype( $args )
     }
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     // table and column definitions
     $subtype_table =& $xartable['mime_subtype'];
-    $subtypeId     = $dbconn->GenID($subtype_table);
+    $subtypeId     = $dbconn->genID($subtype_table);
 
     $sql = "INSERT
               INTO $subtype_table

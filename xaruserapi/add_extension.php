@@ -1,16 +1,18 @@
 <?php
-/**
+/*
+ *
  * Mime Module
  *
- * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
  * @subpackage mime
  * @author Carl P. Corliss
  */
-/**
+
+ /**
   *  Get the name of a mime type
   *
   *  @author Carl P. Corliss
@@ -22,27 +24,28 @@
 
 function mime_userapi_add_extension( $args )
 {
+
     extract($args);
 
     if (!isset($subtypeId)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
                      'subtypeId','userapi_add_extension','mime');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        throw new Exception($msg);
     }
 
     if (!isset($extensionName)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
                      'extensionName','userapi_add_extension','mime');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        throw new Exception($msg);
     }
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable     = xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable     = xarDB::getTables();
 
     // table and column definitions
     $extension_table =& $xartable['mime_extension'];
-    $extensionId     = $dbconn->GenID($extension_table);
+    $extensionId     = $dbconn->genID($extension_table);
 
     $sql = "INSERT
               INTO $extension_table
