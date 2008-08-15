@@ -61,8 +61,10 @@ function julian_user_displayhook($args)
     } else {
         $itemtype = 0;
     }
-    $item = xarModAPIFunc('julian', 'user', 'gethooked', array('modid' => $modid, 'itemtype' => $itemtype, 'objectid' => $objectid));
 
+    $item = xarModAPIFunc('julian', 'user', 'gethooked', array('modid' => $modid, 'itemtype' => $itemtype, 'objectid' => $objectid));
+    //pass extrainfo as well so we can easily discriminate between calling modules an itemtypes in the tempalte
+    $item['extrainfo'] = $extrainfo;
     return xarTplModule('julian','user','displayhook',$item);
 }
 
