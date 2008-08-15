@@ -10,7 +10,6 @@
             'day' => &$Day,
         );
         $events = xarModAPIFunc('icalendar','user','getevents',$args);
-        var_dump($events);exit;
         return $data;
     }
 
