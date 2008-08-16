@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>
     Initialise the jquery.jcarousellite widget.
     See http://gmarwaha.com/jquery/jcarousellite/index.php
@@ -21,4 +22,4 @@
     along with lists of the available options for numbers of items, autoscroll,
     easing etc.
 </xar:comment>
-
+</xar:template>

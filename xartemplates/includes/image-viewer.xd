@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>
     Make sure jQuery is going to be loaded.
 </xar:comment>
@@ -26,4 +27,4 @@
 <xar:if condition="!empty($selector)">
     <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').ImageViewer();});" />
 </xar:if>
-
+</xar:template>

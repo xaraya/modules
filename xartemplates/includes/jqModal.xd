@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>
     Initialise the jqModal dialogue and modal pop-up handler.
     See http://dev.iceburg.net/jquery/jqModal/ for details of this plugin
@@ -28,4 +29,4 @@
         <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').jqm();});" />
     </xar:if>
 </xar:if>
-
+</xar:template>

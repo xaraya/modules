@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>
     Initialise the jqGalView gallery widget.
     See http://benjaminsterling.com/2007/08/24/jquery-jqgalview-photo-gallery for details of this plugin
@@ -26,5 +27,4 @@
 </xar:comment>
 
 <xar:base-include-javascript filename="jqGalView.js" module="jquery" />
-
-
+</xar:template>

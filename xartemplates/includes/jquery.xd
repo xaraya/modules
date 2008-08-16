@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:base-include-javascript filename="jquery.pack.js" module="jquery" />
 
 <xar:comment>
@@ -24,3 +25,4 @@
     compatibility plugin.
 </xar:comment>
 <xar:comment><xar:base-include-javascript filename="jquery.easing.compatibility.js" module="jquery" /></xar:comment>
+</xar:template>

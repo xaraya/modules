@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>
     Initialise the jquery.xarfaq plugin.
 </xar:comment>
@@ -34,3 +35,4 @@
         <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').xarfaq('');});" />
     </xar:if>
 </xar:if>
+</xar:template>

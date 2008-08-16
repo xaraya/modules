@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>
     Initialise the jquery.minitabs tool.
 </xar:comment>
@@ -30,3 +31,4 @@
 <xar:else />
     <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('div.tabwrapper').minitabs($options);});" />
 </xar:if>
+</xar:template>

@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>
     Initialise the superfish menu plugin.
     See http://users.tpg.com.au/j_birch/plugins/superfish/ for details of this plugin
@@ -38,4 +39,4 @@
         <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').superfish();});" />
     </xar:if>
 </xar:if>
-
+</xar:template>

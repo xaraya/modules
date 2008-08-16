@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>
     Initialise the xar.googlemaps plugin.
     This plugin loads the Google Maps API.
@@ -33,3 +34,4 @@
 
     <xar:base-include-javascript type="code" code="jQuery(window).unload(function(){GUnload();});" />
 </xar:if>
+</xar:template>

@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>
     Initialise the jquery.ifixpng tool (previously known as pngFix).
     Just include this script and PNG transparency will be fixed for IE5.5 and IE6
@@ -34,3 +35,4 @@
 <xar:else />
     <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('img[@src$=.png]').ifixpng();});" />
 </xar:if>
+</xar:template>

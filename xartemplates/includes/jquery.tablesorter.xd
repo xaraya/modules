@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>
     Load the jquery.tablesorter plugin.
     This is version 2, which supports themes and AJAX to update the
@@ -25,4 +26,4 @@
         <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').tablesorter();});" />
     </xar:if>
 </xar:if>
-
+</xar:template>
