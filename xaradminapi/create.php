@@ -160,10 +160,11 @@ function articles_adminapi_create($args)
         $cids = array();
     }
 
-/* ---------------------------- TODO: Remove */
+/* ---------------------------- TODO: Remove once articles uses dd objects */
     sys::import('modules.dynamicdata.class.properties.master');
     $categories = DataPropertyMaster::getProperty(array('name' => 'categories'));
     $categories->checkInput('categories',$id);
+    $categories->createValue($id);
 /*------------------------------- */
 
     // Call create hooks for categories, hitcount etc.
