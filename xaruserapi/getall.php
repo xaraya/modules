@@ -22,6 +22,8 @@ function messages_userapi_getall( $args )
         $folder = 'inbox';
     }
 
+	$numitems = xarModVars::get('messages', 'itemsperpage');
+	$startnum = isset($startnum)?$startnum : 1;
     switch($folder){
     
         case 'inbox':
@@ -30,7 +32,11 @@ function messages_userapi_getall( $args )
                                    'get_multiple',
                                     array('modid'       => xarModGetIDFromName('messages'),
                                           'objectid'    => xarUserGetVar('id'),
-                                          'status'      => 2));
+                                          'status'      => 2,
+                                          'delete_to' => 1,
+                                          'orderby'   => 'id DESC',
+                                          'startnum' => $startnum,
+                                          'numitems' => $numitems));
             break;
         case 'sent':
             $list = xarModAPIFunc('comments',
@@ -38,7 +44,11 @@ function messages_userapi_getall( $args )
                                    'get_multiple',
                                     array('modid'       => xarModGetIDFromName('messages'),
                                           'author'      => xarUserGetVar('id'),
-                                          'status'      => 2));
+                                          'status'      => 2,
+                                          'delete_from' => 1,
+                                          'orderby'   => 'id DESC',
+                                          'startnum' => $startnum,
+                                          'numitems' => $numitems));
             break;
         case 'drafts':
             $list = xarModAPIFunc('comments',
@@ -46,7 +56,11 @@ function messages_userapi_getall( $args )
                                    'get_multiple',
                                     array('modid'       => xarModGetIDFromName('messages'),
                                           'author'      => xarUserGetVar('id'),
-                                          'status'      => 1));
+                                          'status'      => 1,
+                                          'delete_from' => 1,
+                                          'orderby'   => 'id DESC',
+                                          'startnum' => $startnum,
+                                          'numitems' => $numitems));
             break;
     }
 

@@ -30,6 +30,8 @@ function messages_user_delete()
     if (!xarVarFetch('id', 'int:1', $id)) return;
 	if (!xarVarFetch('folder', 'enum:inbox:sent:drafts', $folder, 'inbox')) return;
 
+	//Psspl:Added the code for folder type.	
+	$data['folder'] = (isset($folder))?$folder:'inbox';
     /*
      * Let's make sure the message exists before we
      * try to delete it - otherwise, all sorts of crazy
@@ -76,7 +78,8 @@ function messages_user_delete()
             xarModAPIFunc('messages',
                           'user',
                           'delete',
-                           array('id' => $id));
+                           array('id' => $id ,
+								 'folder' => $folder));
             xarResponseRedirect(xarModURL('messages','user','display'));
             break;
 
@@ -86,6 +89,21 @@ function messages_user_delete()
             $data['id']         = $id;
             $data['action']     = $action;
             $data['post_url']   = xarModURL('messages','user','delete');
+           
+			/*Psspl:Added the code for read messages.
+     		  * Add this message id to the list of 'seen' messages
+    		  * if it's not already in there :)
+     		*/
+    		$read_messages = xarModUserVars::get('messages','read_messages');
+            if (!empty($read_messages)) {
+                $read_messages = unserialize($read_messages);
+            } else {
+                $read_messages = array();
+            }
+             if (!in_array($id, $read_messages)) {
+        		array_push($read_messages, $id);
+        		xarModUserVars::set('messages','read_messages',serialize($read_messages));
+    		}
             break;
     }
 	// djb - fillin in the status bar / actions 

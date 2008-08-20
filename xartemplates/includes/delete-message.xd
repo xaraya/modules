@@ -4,6 +4,10 @@
         <form action="#$post_url#" method="post" enctype="application/x-www-form-urlencoded" >
            <xar:mlstring>Are you sure you want to delete this message?</xar:mlstring>
             <br />
+            <xar:comment>Psspl:Added the code for folder type</xar:comment>
+            <xar:if condition="isset($folder)">
+            	<input type="hidden" value="#$folder#" name="folder" id="folder" />    
+        	</xar:if>
             <input type="hidden" name="id" id="id" value="#$id#" />
             <input type="hidden" name="action" id="action" value="confirmed" />
             <input type="submit" name="confirmed" id="delete" value="#xarML('Delete')#" />

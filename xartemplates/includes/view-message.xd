@@ -71,6 +71,12 @@
         <div>
             #xarVarPrepHTMLDisplay($message['body'])#
         </div>
+        <xar:comment>Psspl:Added the code for folder type</xar:comment>
+        <div class="xar-form-input-wrapper">
+        	<xar:if condition="isset($folder)">
+            	<input type="hidden" value="#$folder#" name="folder" id="folder" />    
+        	</xar:if>
+        </div>
         <xar:if condition="isset($action) and $action ne 'preview' and $action ne 'check' and $action ne 'modify' and $action ne 'prev_reply'">
             <div class="xar-margin-thicktop">
                 <xar:if condition="$action ne 'viewsent'">

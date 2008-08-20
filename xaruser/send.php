@@ -27,6 +27,11 @@ function messages_user_send()
     xarVarFetch('postanon',   'checkbox', $postanon,   false, XARVAR_NOT_REQUIRED);
 	xarVarFetch('action',   'str', $action,   false, XARVAR_NOT_REQUIRED);
 	xarVarFetch('postanon_to',   'int', $postanon_to,   false, XARVAR_NOT_REQUIRED);	
+    //Psspl:Added the code for folder type.
+	xarVarFetch('folder', 'enum:inbox:sent:drafts', $folder, 'inbox');
+	
+    $data['folder'] = (isset($folder))?$folder:'inbox';
+	
     if ($preview === true) {
         if($action == 'reply' or $action == 'prev_reply'){
     		//$action = 'reply';
@@ -55,7 +60,29 @@ function messages_user_send()
         	//throw new Exception($msg);		
 		}
 	}
-     //Psspl:Modifided the code for resolving the issue 
+	
+	//Psspl:Added the code for read/unread messages. 
+	if(isset($action) && $action == 'reply') {
+		
+		if (!xarVarFetch('id', 'int:1', $id)) return;
+		
+		$read_messages = xarModUserVars::get('messages','read_messages');
+		
+		if (!empty($read_messages)) {
+
+			$read_messages = unserialize($read_messages);
+		
+		} else {
+			
+			$read_messages = array();
+		}
+		
+		if (!in_array($id, $read_messages)) {
+			array_push($read_messages, $id);
+			xarModUserVars::set('messages','read_messages',serialize($read_messages));
+		}
+	}	
+	 //Psspl:Modifided the code for resolving the issue 
      //of blank messages body or subject sending.
      // djb - moving the numbers to the user-menu, adding these vars 
      $data['unread']                  = xarModAPIFunc('messages','user','count_unread');
@@ -271,7 +298,22 @@ function messages_user_send()
 			// Get $recipient information
         	$recipient_info = xarRoles::get($data['recipient']);
         	if (!$recipient_info) return;
-	       	$data['recipient_name'] = $recipient_info->getName();			      		       	            
+	       	$data['recipient_name'] = $recipient_info->getName();
+	       	/*Psspl:Added the code for read messages.
+     		  * Add this message id to the list of 'seen' messages
+    		  * if it's not already in there :)
+     		*/
+    		$read_messages = xarModUserVars::get('messages','read_messages');
+            if (!empty($read_messages)) {
+                $read_messages = unserialize($read_messages);
+            } else {
+                $read_messages = array();
+            }
+             if (!in_array($id, $read_messages)) {
+        		array_push($read_messages, $id);
+        		xarModUserVars::set('messages','read_messages',serialize($read_messages));
+    		}
+    					      		       	            
             break;
         case "preview":
             xarVarFetch('subject',   'str:1', $subject,   null, XARVAR_NOT_REQUIRED);

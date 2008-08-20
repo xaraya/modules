@@ -21,6 +21,11 @@ function messages_user_view( $args )
 
     if (!xarVarFetch('id', 'int:1:', $id)) return;
 
+    //Psspl:Added the code for folder type.
+	xarVarFetch('folder', 'enum:inbox:sent:drafts', $folder, 'inbox');
+	
+    $data['folder'] = (isset($folder))?$folder:'inbox';
+    
     //Psspl:Added the code for configuring the user-menu
 	$data['allow_newpm'] = xarModAPIFunc('messages' , 'user' , 'isset_grouplist');
         

@@ -14,12 +14,14 @@
 function messages_userapi_count_unread()
 {
 
+	//Psspl:Modifided the code for delete_to field.
     $total = xarModAPIFunc('comments',
                             'user',
                             'get_count',
                              array('modid'      => xarModGetIDFromName('messages'),
                                    'objectid'   => xarSession::getVar('role_id'),
-                                   'status'     => 2));
+                                   'status'     => 2,
+                                   'delete_to' => 1));
 
     $read_messages = xarModUserVars::get('messages','read_messages');
     if (!empty($read_messages)) {

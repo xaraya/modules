@@ -13,12 +13,14 @@
  */
 function messages_userapi_count_drafts()
 {
+    //Psspl:Modifided the code for delete_from field
     $total = xarModAPIFunc('comments',
                             'user',
                             'get_author_count',
                              array('modid'  => xarModGetIDFromName('messages'),
                                    'status' => 1,
-                                   'author' => xarUserGetVar('id')));
+                                   'author' => xarUserGetVar('id'),
+                                   'delete_from' => 1));
 
     return $total;
 }

@@ -31,10 +31,32 @@ function messages_userapi_delete( $args )
         throw new Exception($msg);
     }
 
+	//Psspl:Added the code for resolving issue of deleting message.
+    if($folder=='inbox'){
+    	 	xarModAPIFunc('messages',
+                          'user',
+                          'delete_to',
+                           array('id' => $id , 'folder' => $folder));
+    }
+    if($folder =='sent'){
+    	xarModAPIFunc('messages',
+                          'user',
+                          'delete_from',
+                           array('id' => $id , 'folder' => $folder));
+    }
+    if($folder == 'drafts'){
+    	xarModAPIFunc('messages',
+                          'user',
+                          'delete_from',
+                           array('id' => $id , 'folder' => $folder));
+    }
+    
+    /*
     return (bool) xarModAPIFunc('comments',
                                 'admin',
                                 'delete_branch',
                                  array('node' => $id));
+     */
 
 }
 

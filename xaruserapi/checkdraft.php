@@ -11,7 +11,7 @@ function messages_userapi_checkdraft( $args )
 
     extract($args);
 	
-	   	$messages = xarModAPIFunc('messages', 'user', 'getall', array('folder' => 'drafts'));
+	   	$messages = xarModAPIFunc('messages', 'user', 'getall', array('folder' => 'drafts',
 	   	
 	   	$users = xarModAPIFunc('messages', 'user', 'get_users');
 	   	
