@@ -415,6 +415,7 @@ class UploadProperty extends FileUploadProperty
             }
             $data['dbvalue'] = $this->dbvalue;
         }
+        if (!isset($data['dbvalue'])) $data['dbvalue'] = '';
         $data['file_input_methods'] = $this->initialization_file_input_methods;
         $data['initial_method'] = !empty($this->initialization_initial_method) ? $this->initialization_initial_method : current($this->initialization_file_input_methods);
         $data['active_method'] = $this->getActiveInputMethod($data['name']);
