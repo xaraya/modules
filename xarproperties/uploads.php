@@ -36,10 +36,15 @@ class UploadProperty extends FileUploadProperty
 //    public $initialization_basepath         = null;
     public $initialization_basedirectory      = 'var/uploads';
     public $initialization_import_directory   = null;
-    public $initialization_multiple_files     = TRUE;
     public $initialization_directory_name     = 'User_';
     public $initialization_file_input_methods = array(5,2,1,7);
     public $initialization_initial_method;
+    public $validation_max_length             = 10;  // The number of files this property can have
+    public $validation_allow_duplicates       = 0;  // 0: no duplicates, 1: upload the dupliacte, 2: use the existing entry
+    
+    public $propertydata;                   // This is the data set assembled by the checkInput/validateValue method
+    public $dbvalue;                        // Holds the last value saved in the db. Useful when using the file tag
+    public $upload_clear = 0;               // Flag to clear the stored db value(s) of an file tag
 
     /*
     Trusted/local  --> 5  check xaruserapi.php for the list of all allowed constants.
@@ -82,6 +87,21 @@ class UploadProperty extends FileUploadProperty
         }
         $this->validation_max_file_size = xarModVars::get('uploads', 'file.maxsize');
         $this->initialization_import_directory = xarModVars::get('uploads', 'path.imports-directory');
+        
+        // Save the value in a separate var that won't be changed with this->value
+    }
+
+    function checkInput($name='', $value = null)
+    {
+        if (isset($this->fieldname)) $name = $this->fieldname;
+        else $name = 'dd_'.$this->id;
+
+        if (!xarVarFetch($name . '_dbvalue', 'str', $dbvalue,  '', XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch($name . '_clear', 'checkbox', $clear,  0, XARVAR_NOT_REQUIRED)) return;
+//        echo $name . '_dbvalue';
+        $this->dbvalue = $dbvalue;
+        $this->upload_clear = $clear;
+        return parent::checkInput($name, $value);
     }
 
     /**
@@ -108,20 +128,22 @@ class UploadProperty extends FileUploadProperty
 
         switch ($data['action']) {
             case _UPLOADS_GET_UPLOAD:
-                if (!xarVarFetch('MAX_FILE_SIZE', "int::$this->validation_max_file_size", $this->validation_max_file_size)) return;
+                if (!xarVarFetch($name . '_max_file_size', "int::$this->validation_max_file_size", $this->validation_max_file_size)) return;
                 if (!xarVarValidate('array:1:', $_FILES[$name . '_attach_upload'])) return;
 
-                $upload         =& $_FILES[$name . '_attach_upload'];
                 $data['upload'] =& $_FILES[$name . '_attach_upload'];
-                if (empty($upload['name'])) {
+
+/* Extension validation is now done client side
+                if (empty($data['upload']['name'])) {
                     // No file name entered, ignore
                     $this->value = '';
                     return true;
-                } elseif (!$this->validateExtension($upload['name'])) {
+                } elseif (!$this->validateExtension($data['upload']['name'])) {
                     $this->invalid = xarML('The file type is not allowed');
                     $this->value = null;
                     return false;
                 }
+*/
                 break;
             case _UPLOADS_GET_EXTERNAL:
                 // minimum external import link must be: ftp://a.ws  <-- 10 characters total
@@ -212,20 +234,28 @@ class UploadProperty extends FileUploadProperty
                 break;
         }
 
-        if(!$this->createValue($data))return false;
+//        if(!$this->createValue($data))return false;
+        
+        // Store the particulares so the createValue method can find them
+        $this->propertydata = $data;
         xarVarSetCached('DynamicData.Upload',$name,$this->value);
         return true;
     }
 
-    function createValue(Array $data = array())
+    function createValue($itemid=0)
     {
+        $data = $this->propertydata;
         if (!empty($data['action'])) {
 
 //            if (isset($storeType)) $data['storeType'] = $storeType;
 
             // This is where the actual saves happen
             $data['override']['upload']['path'] = $this->initialization_basedirectory;
+            // Check for duplicates. This should actually happen in the validateValue method
+            $data['allow_duplicate'] = $this->validation_allow_duplicates;
+                    echo $data['allow_duplicate']."XX";
             $list = xarModAPIFunc('uploads','user','process_files', $data);
+            
             $storeList = array();
             $storeListData = array();
             foreach ($list as $file => $fileInfo) {
@@ -252,12 +282,16 @@ class UploadProperty extends FileUploadProperty
                     uploads_sync_associations($moduleid, $itemtype, $itemid, $storeList);
                 }
             } else {
-                $this->value = null;
-                return false;
+                // If the user wants, remove the current stored value(s). Otherwise do nothing
+                if ($this->upload_clear) {
+                    $this->value = '';
+                    $this->dbvalue = '';
+                } else {
+                    $this->value = null;
+                }
             }
-        } else {
-            return false;
         }
+        return true;
     }
 
     /**
@@ -281,7 +315,6 @@ class UploadProperty extends FileUploadProperty
             }
             $this->initialization_file_input_methods = $data['methods'];
         }
-        
         $descend = TRUE;
 
         xarModAPILoad('uploads','user');
@@ -342,36 +375,45 @@ class UploadProperty extends FileUploadProperty
         } else {
             $data['storedList']   = array();
         }
-        // used to allow selection of multiple files
-        $data['multiple_' . $this->id] = $this->initialization_multiple_files;
+        // This is the maximum number of files this property can upload
+        $data['multiple_dd_' . $this->id] = $this->validation_max_length;
 
-        if (!empty($this->value)) {
-            $data['value'] = $this->value;
+        // Set up for the stored input method
+        if (in_array(_UPLOADS_GET_UPLOAD,$this->initialization_file_input_methods)) {
+            if (!empty($this->value)) $this->dbvalue = $this->value;
+            if (!empty($data['value'])) $this->value = $data['value'];
             
-            // We use array_filter to remove any values from
-            // the array that are empty, null, or false
-            $aList = array_filter(explode(';', $this->value));
+            // If we have an empty value it might mean we submitted the form with nothing in the file tag
+            // There might still be a value saved. Check it
+            if (empty($this->value)) $this->value = $this->dbvalue;
 
-            if (is_array($aList) && count($aList)) {
-                $data['inodeType']['DIRECTORY']   = _INODE_TYPE_DIRECTORY;
-                $data['inodeType']['FILE']        = _INODE_TYPE_FILE;
-                $data['Attachments'] = xarModAPIFunc('uploads', 'user', 'db_get_file',
-                                                      array('fileId' => $aList));
-                $list = xarModAPIFunc('uploads','user','showoutput',
-                                      array('value' => $this->value, 'style' => 'icon', 'multiple' => $this->initialization_multiple_files));
+            if (!empty($this->value)) {
+                // We use array_filter to remove any values from
+                // the array that are empty, null, or false
+                $aList = array_filter(explode(';', $this->value));
 
-                foreach ($aList as $fileId) {
-                    if (!empty($data['storedList'][$fileId])) {
-                        $data['storedList'][$fileId]['selected'] = TRUE;
-                    } elseif (!empty($data['Attachments'][$fileId])) {
-                        // add it to the list (e.g. from another user's upload directory - we need this when editing)
-                        $data['storedList'][$fileId] = $data['Attachments'][$fileId];
-                        $data['storedList'][$fileId]['selected'] = TRUE;
-                    } else {
-                        // missing data for $fileId
+                if (is_array($aList) && count($aList)) {
+                    $data['inodeType']['DIRECTORY']   = _INODE_TYPE_DIRECTORY;
+                    $data['inodeType']['FILE']        = _INODE_TYPE_FILE;
+                    $data['attachments'] = xarModAPIFunc('uploads', 'user', 'db_get_file',
+                                                          array('fileId' => $aList));
+                    $list = xarModAPIFunc('uploads','user','showoutput',
+                                          array('value' => $this->value, 'style' => 'icon', 'multiple' => $this->validation_max_length));
+
+                    foreach ($aList as $fileId) {
+                        if (!empty($data['storedList'][$fileId])) {
+                            $data['storedList'][$fileId]['selected'] = TRUE;
+                        } elseif (!empty($data['attachments'][$fileId])) {
+                            // add it to the list (e.g. from another user's upload directory - we need this when editing)
+                            $data['storedList'][$fileId] = $data['attachments'][$fileId];
+                            $data['storedList'][$fileId]['selected'] = TRUE;
+                        } else {
+                            // missing data for $fileId
+                        }
                     }
                 }
             }
+            $data['dbvalue'] = $this->dbvalue;
         }
         $data['file_input_methods'] = $this->initialization_file_input_methods;
         $data['initial_method'] = !empty($this->initialization_initial_method) ? $this->initialization_initial_method : current($this->initialization_file_input_methods);
@@ -388,7 +430,7 @@ class UploadProperty extends FileUploadProperty
     function showOutput(Array $data = array())
     {
         if (empty($data['value'])) $data['value'] = $this->value;
-        if (empty($data['multiple'])) $data['multiple'] = $this->initialization_multiple_files;
+        if (empty($data['multiple'])) $data['multiple'] = $this->validation_max_length;
         if (empty($data['format'])) $data['format'] = 'fileupload';
 
         // The explode will create an empty indice,

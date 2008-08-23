@@ -1,5 +1,16 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:base-include-javascript filename="jquery-1.2.6.pack.js" module="jquery" position="head" />
+    <xar:base-include-javascript filename="jquery.MultiFile.pack.js" module="jquery" position="head" />
     <xar:mlstring>Upload a file: </xar:mlstring><br />
-    <input type="hidden" name="MAX_FILE_SIZE" value="#$max_file_size#" />
+    <input type="hidden" name="#$id#_max_file_size" value="#$max_file_size#" />
+    <!--
     <input type="file" name="#$id#_attach_upload" id="#$id#_attach_upload_id" />
+    -->
+    <xar:set name="maxlength">'multiple_' . $id</xar:set>
+    <xar:if condition="!empty($$maxlength)">
+        <input type="file" name="#$id#_attach_upload[]" id="#$id#_attach_upload_id" class="multi" maxlength="#$$maxlength#" accept="#$file_extensions#" />
+    <xar:else />
+        <input type="file" name="#$id#_attach_upload[]" id="#$id#_attach_upload_id" class="multi" maxlength="#$$maxlength#" accept="#$file_extensions#"/>
+    </xar:if>
+    <input type="hidden" name="#$id#_dbvalue" id="#$id#_dbvalue" value="#$dbvalue#"/>
 </xar:template>

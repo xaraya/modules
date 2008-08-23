@@ -31,20 +31,20 @@
             <a class="xar-uploads-action" onclick="javascript:xar_uploads_switchImport(-1, '#$id#');true;" 
                name="attach_reset_#$id#" title="#xarML('Revert to initial state')#"><xar:mlstring>Reset</xar:mlstring>
             </a>
-            <xar:if condition="!empty($Attachments)">                       | 
-                <input type="checkbox" id="attach_clear_#$id#" onclick="javascript:xar_uploads_switchImport(-2, '#$id#');true;" 
-                   name="attach_clear_#$id#" /> <label for="attach_clear_#$id#" title="#xarML('Clear stored value')#">
-                <xar:mlstring>Clear</xar:mlstring></label>
-            </xar:if>
             <br />
         </xar:if>
 
-        <xar:if condition="!empty($Attachments)">
+        <xar:if condition="!empty($attachments)">
             <span style="margin-left: 10px;" id="#$id#_alist">
                 Currently stored:&#160;
-                <xar:foreach in="$Attachments" value="$attachment">
+                <xar:foreach in="$attachments" value="$attachment">
                     #$attachment.fileName#&#160;
                 </xar:foreach>
+                <xar:set name="name">$id . '_clear'</xar:set>
+                <xar:data-input type="checkbox" name="$name" /> 
+                <label for="#$id#_attach_clear" title="#xarML('Clear stored value')#">
+                    <xar:mlstring>Remove</xar:mlstring>
+                </label>
             </span>
         </xar:if>
         <xar:set name="setdisplay">'none'</xar:set>
