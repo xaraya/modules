@@ -113,7 +113,7 @@
     </h3>
     <p>
         <xar:mlstring>
-            In <strong>Articles Configuration</strong>, set start view (list/browse), ## of columns and items, show category links + # of comments (+ performance impact)
+            In <strong>Articles Configuration</strong>, set start view (list/browse), ## of columns and items, show category links + ## of comments (+ performance impact)
         </xar:mlstring>
     </p>
     <p>
