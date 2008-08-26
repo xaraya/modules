@@ -1,0 +1,25 @@
+<xar:comment>
+    Initialise the QATool plugin.
+    See TBC for details of this plugin
+</xar:comment>
+
+<xar:comment>
+    Make sure jQuery is going to be loaded.
+</xar:comment>
+
+<xar:template file="jquery" module="jquery" />
+
+<xar:comment>
+    Load the main plugin.
+</xar:comment>
+
+<xar:base-include-javascript filename="jquery.qatool.js" module="jquery" />
+
+<xar:if condition="!empty($selector)">
+    <xar:if condition="!empty($options)">
+        <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').qatool({ $options });});" />
+    <xar:else />
+        <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').qatool();});" />
+    </xar:if>
+</xar:if>
+

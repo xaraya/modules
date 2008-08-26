@@ -1,21 +1,28 @@
 
 /*
- * QATool v0.9.0 - jQuery form widget
+ * QATool v0.1.0 - jQuery form widget
  * Copyright (c) 2008 Jason Judge
  *
  * Dual licensed under the MIT and GPL licenses:
  * 	http://www.opensource.org/licenses/mit-license.php
  * 	http://www.gnu.org/licenses/gpl.html
  *
+ * SUMMARY: create a tool that can be used to lead end user through
+ * a series of steps to reach a conclusion. Each step is based on
+ * simple yes/no or choice questions, with each answer leading to
+ * a further step. A form may be used to build up data that can then
+ * be submitted right at the end. The tool is created using very simple
+ * HTML, so can be maintained with moderate technical knowledge.
+ *
  * CHANGELOG: 
- * BUGS: 
+ * BUGS: see inline comment
  */
 
 (function($) {
 	$.fn.qatool = function(options){
 		// TODO: need to be able to disable form submit unless there is 
 		// an explicit submit button. We don't want the form submitted
-		// too early by accident.
+		// too early by accident (e.g. by pressing 'enter' in a form field).
 
 		// TODO: fix keyboard navigation; a 'form submit' is triggered for each
 		// radio button when the user scans down a list of radio buttons.
@@ -24,6 +31,7 @@
 		// when a form is used.
 
 		// set up default options
+		// TODO: support alternative easing functions
 		var defaults = {
 			startClass: 'start',
 			fadeOutSpeed: 'fast',
@@ -49,7 +57,7 @@
 			if (url_hash && $(this).find('> li' + url_hash)) {
 				hide = '> li:not(' + url_hash + '):visible';
 				show = '> li' + url_hash + ':hidden';
-			} else if (defaults.startClass && $(this).find('> li.' + defaults.startClass)) {
+			} else if (defaults.startClass && $(this).find('> li.' + defaults.startClass).length) {
 				hide = '> li:not(.start):visible';
 				show = '> li.start:hidden';
 			} else {

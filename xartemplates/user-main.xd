@@ -10,6 +10,46 @@
     <p><xar:mlstring>Note: the Xaraya_Classic theme causes most of these plugins to fail one way or another.
     We don't know where the fault lies, but it is something to bear in mind when trying this demo out.</xar:mlstring></p>
 
+    <h2><xar:mlstring>QATool - a simple QA hand-holding series of steps</xar:mlstring></h2>
+
+    <xar:template file="jquery.qatool" module="jquery" subdata="array('selector'=&gt;'ul.qatool')" />
+    <xar:style file='jquery.qatool' scope="module" module="jquery" />
+
+    <ul class="qatool">
+        <li id="A" class="start">
+            <p>Please choose an animal: bird, dog or cat.</p>
+            <p class="question">Does your animal have feathers?</p>
+            <p><input type="radio" value="B" name="A" id="A-YES" />
+            <label for="A-YES">Yes, it has feathers.</label></p>
+            <p><input type="radio" value="C" name="A" id="A-NO" />
+            <label for="A-NO">No, it does not have feathers.</label></p>
+        </li>
+
+        <li id="B">
+            <p>Your animal is a bird.</p>
+            <p><a href="#A" class="back">Start Over</a></p>
+        </li>
+
+        <li id="C">
+            <p>Does your animal bark or meow?</p>
+            <p><input type="radio" value="D" name="C" id="C-WOOF" />
+            <label for="C-WOOF">It goes "woof, woof".</label></p>
+            <p><input type="radio" value="E" name="C" id="C-MEOW" />
+            <label for="C-MEOW">My animal says "meeow".</label></p>
+            <p><a href="#A" class="back">Start Over</a></p>
+        </li>
+
+        <li id="D">
+            <p>Your animal is a dog.</p>
+            <p><a href="#C" class="back">Back</a> | <a href="#A" class="back">Start Over</a></p>
+        </li>
+
+        <li id="E">
+            <p>Your animal is a cat.</p>
+            <p><a href="#C" class="back">Back</a> | <a href="#A" class="back">Start Over</a></p>
+        </li>
+    </ul>
+
     <h2><xar:mlstring>Superfish - suckerfish-inspired menus</xar:mlstring></h2>
 
     <xar:set name="options">"pathClass: 'current', animation: {opacity:'show'}, delay: 1000"</xar:set>

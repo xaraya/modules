@@ -1,5 +1,5 @@
 ﻿/**
-* hoverIntent r5 // 2007.03.27 // jQuery 1.1.2
+* hoverIntent r5 // 2007.03.27 // jQuery 1.1.2+
 * <http://cherne.net/brian/resources/jquery.hoverIntent.html>
 * 
 * @param  f  onMouseOver function || An object with configuration options
