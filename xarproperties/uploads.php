@@ -253,7 +253,6 @@ class UploadProperty extends FileUploadProperty
             $data['override']['upload']['path'] = $this->initialization_basedirectory;
             // Check for duplicates. This should actually happen in the validateValue method
             $data['allow_duplicate'] = $this->validation_allow_duplicates;
-                    echo $data['allow_duplicate']."XX";
             $list = xarModAPIFunc('uploads','user','process_files', $data);
             
             $storeList = array();
