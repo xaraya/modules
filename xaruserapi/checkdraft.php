@@ -10,19 +10,19 @@ function messages_userapi_checkdraft( $args )
 {
 
     extract($args);
-	
-	   	$messages = xarModAPIFunc('messages', 'user', 'getall', array('folder' => 'drafts',
-	   	
-	   	$users = xarModAPIFunc('messages', 'user', 'get_users');
-	   	
-	   	foreach ($messages as $key => $message) {
-	   		$messages[$key]['allow_modify'] = false;
-	   		foreach ($users as $user_key => $user) {
-	   			if ($message['recipient'] == $user['name']) {
-	   					$messages[$key]['allow_modify'] = true;
-	   			}
-	   		}
-	   	}
-	  	return $messages;
+    
+        $messages = xarModAPIFunc('messages', 'user', 'getall', array('folder' => 'drafts',));
+        
+        $users = xarModAPIFunc('messages', 'user', 'get_users');
+        
+        foreach ($messages as $key => $message) {
+            $messages[$key]['allow_modify'] = false;
+            foreach ($users as $user_key => $user) {
+                if ($message['recipient'] == $user['name']) {
+                        $messages[$key]['allow_modify'] = true;
+                }
+            }
+        }
+        return $messages;
 }
 ?>    
