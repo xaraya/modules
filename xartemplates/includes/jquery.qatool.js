@@ -1,6 +1,6 @@
 
 /*
- * QATool v0.1.0 - jQuery form widget
+ * QATool v0.1.1 - jQuery form widget
  * Copyright (c) 2008 Jason Judge
  *
  * Dual licensed under the MIT and GPL licenses:
@@ -51,6 +51,7 @@
 			// initially through CSS with the 'start' item alone being visible.
 
 			var url_hash = window.location.hash;
+			var url_pathname = window.location.pathname;
 			var hide = '';
 			var show = '';
 
@@ -78,17 +79,22 @@
 
 				if (tagName == 'A') {
 					hash = $(this).attr('href');
+					// Need to strip off the URL if the current page URL is in the anchor,
+					// e.g. <a href="index.php/path/to/page#anchor">...</a>
+					// It may have been put in by a CMS to work around base meta tag settings.
+					// But don't touch any URLs for other pages.
+					if (hash.indexOf(url_pathname) >= 0 && hash.indexOf('#') > 0) hash = hash.substring(hash.indexOf('#'));
 				} else {
 					hash = '#' + this.value;
 				}
-				if (hash != undefined && hash.length > 1 && hash.indexOf('#') == 0 && $(list).find('> li' + hash)) {
 
+				if (hash != undefined && hash.length > 1 && hash.indexOf('#') == 0 && $(list).find('> li' + hash)) {
 					$(this).click(function(){
 						// Hide this list item and show the new one.
 						// Actually, hide all list items that are not the new one.
 						// Fade out the old one before fading in the new one
 						$(list).find('> li:not(' + hash + '):visible').fadeOut(defaults.fadeOutSpeed,
-							function(){jQuery('li' + hash).fadeIn(defaults.fadeInSpeed);}
+							function(){$('li' + hash).fadeIn(defaults.fadeInSpeed);}
 						);
 						// Override the default bahaviour of the anchor.
 						if (tagName == 'A') return(false);
