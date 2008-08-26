@@ -1,7 +1,7 @@
 ul.qatool {
     margin: 0;
     padding: 0;
-    list-item-type: none;
+    list-style-type: none;
     background-color: #f0f0f0;
 }
 ul.qatool li {
