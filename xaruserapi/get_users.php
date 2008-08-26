@@ -68,7 +68,7 @@ function messages_userapi_get_users( $args )
         /*Psspl:get the selected group only 
         */
         //Check condition for selecting all group.
-        if ($allowedSendMessages[0] != 0 or $allowedSendMessages != null ) {
+        if (!empty($allowedSendMessages) && $allowedSendMessages[0] != 0) {
             //$allowedGroups = explode(",",$allowedSendMessages);
             foreach ($allowedSendMessages as $key => $value) {
                 $group_c[] = $q->peq('rm.parent_id' , $value);//select the users only from selected group. 
