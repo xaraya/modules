@@ -1,0 +1,14 @@
+ul.qatool {
+    margin: 0;
+    padding: 0;
+    list-item-type: none;
+    background-color: #f0f0f0;
+}
+ul.qatool li {
+    margin: 0;
+    padding: 1em;
+    display: none;
+}
+ul.qatool li.start {
+    display: block;
+}
