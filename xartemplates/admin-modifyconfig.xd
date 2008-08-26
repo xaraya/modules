@@ -162,14 +162,6 @@
                 </div>
             </fieldset>
         </form>
-        <xar:comment>
-             - - - - - - - - - - - - - - - - - - - Begin Tab2 Options  - - - - - - - - - - - - - - - - - - -
-        </xar:comment>
-        <xar:elseif condition="$tab eq 'tab2'" />
-        <xar:comment>
-             - - - - - - - - - - - - - - - - - - - Begin Tab3 Options  - - - - - - - - - - - - - - - - - - -
-        </xar:comment>
-        <xar:elseif condition="$tab eq 'tab3'" />
     </xar:if>
 </div>
 </xar:template>

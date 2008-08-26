@@ -15,7 +15,7 @@ include_once("./modules/commonutil.php");
         if (!xarVarFetch('group',  'int',    $group, 1, XARVAR_NOT_REQUIRED)) return;
         //Psspl:Modifided the code for resolving group configuration update issue.
         if($phase == 'Update Messages Configuration'){
-        	$phase = 'update';
+            $phase = 'update';
         }
         switch (strtolower($phase)) {
             case 'modify':
@@ -45,19 +45,19 @@ include_once("./modules/commonutil.php");
                         if (!xarVarFetch('awaymsg', 'checkbox', $awaymsg,  xarModVars::get('messages', 'awaymsg'), XARVAR_NOT_REQUIRED)) return;
                         if (!xarVarFetch('drafts', 'checkbox', $drafts,  xarModVars::get('messages', 'drafts'), XARVAR_NOT_REQUIRED)) return;
 
-                        //Psspl:Modifided the code for allowedsend to selected group configuration.
-                        if (!xarVarFetch('selectedGroups',  'array',    $selectedGroups, 0, XARVAR_NOT_REQUIRED)) return;
-                        if (!xarVarFetch('childgroupsimploded',  'str',    $childgroupsimploded, 0, XARVAR_NOT_REQUIRED)) return;   
-
                         xarModVars::set('messages', 'itemsperpage', $itemsperpage);
                         xarModVars::set('messages', 'SupportShortURLs', $shorturls);
                         xarModVars::set('messages', 'useModuleAlias', $useModuleAlias);
                         xarModVars::set('messages', 'aliasname', $aliasname);TracePrint($group,"group");
                         xarModVars::set('messages', 'awaymsg', $awaymsg);
                         xarModVars::set('messages', 'drafts', $drafts);
-                        xarModAPIFunc('messages','admin','setconfig',array('group'=>$group,'childgroupsimploded' => $childgroupsimploded));
                         xarModVars::set('messages', 'awaymsg', $awaymsg);
                         xarModVars::set('messages', 'drafts', $drafts);
+
+                        //Psspl:Modifided the code for allowedsend to selected group configuration.
+                        if (!xarVarFetch('childgroupsimploded',  'str',    $childgroupsimploded, 0, XARVAR_NOT_REQUIRED)) return;   
+                        $selectedGroup = explode(",", $childgroupsimploded);
+                        xarModItemVars::set('messages', "allowedSendMessages", serialize($selectedGroup),$group);
                         break;
                     case 'tab2':
                         break;
@@ -79,6 +79,14 @@ include_once("./modules/commonutil.php");
         $data['selectedGroupStr'] = xarModAPIFunc('messages','admin','getconfig',array('group'=>$group));
         TracePrint("$data[selectedGroupStr]","selected_group_in_modify_config");
         $data['supportshorturls']   = xarModVars::get('messages', 'SupportShortURLs');
+
+        try {
+            $data['selectedGroups'] = unserialize(xarModItemVars::get('messages', "allowedSendMessages", $group));
+            $data['selectedGroupsStr'] = implode(",", $data['selectedGroups']);//convert array into comma seprated string.
+        } catch(Exception $e) {
+            $data['selectedGroups'] = array();
+            $data['selectedGroupsStr'] = "";
+        }
         return $data;
     }
 

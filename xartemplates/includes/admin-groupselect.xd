@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:comment>Common Administration menu</xar:comment>
     <xar:base-include-javascript filename="joomla.javascript.js" module="simpleadmin" position="head"/>
-    <xar:base-include-javascript position="body" type="code" code="sortDropDown('group');addSelectedGroup('childgroupsselect','childgroups','$selectedGroupStr');sortList('childgroupsselect','childgroups');implodeListKeys('childgroups','childgroupsimploded',',');checkstatus('childgroupsselect','childgroups','removeall','addall','add','remove');" />
+    <xar:base-include-javascript position="body" type="code" code="sortDropDown('group');document.getElementById('Refresh').click();" />
     <fieldset>
           <legend><xar:mlstring>Message Send Lists</xar:mlstring></legend>
           <!--Psspl:Added the code for selecting group configuration for allowedsendGroup-->
@@ -14,16 +14,15 @@
             </label>
             <xar:data-input type="grouplist" name="group" value="$group" onchange="javascript:submit();" />
             <xar:comment>Psspl: Added the code for Refresh group list</xar:comment>
-            <input class="button" type="button" id="Refresh" value="#xarML('Refresh')#" onclick="RefreshSelectedGroup('childgroupsselect','childgroups','#$selectedGroupStr#');sortList('childgroupsselect','childgroups');implodeListKeys('childgroups','childgroupsimploded',',');implodeListKeys('childgroups','childgroupsimploded',',');checkstatus('childgroupsselect','childgroups','removeall','addall','add','remove');" title="#xarML('Refresh')#" style="width: 100px;" />
+            <input class="button" type="button" id="Refresh" value="#xarML('Refresh')#" onclick="RefreshSelectedGroup('childgroupsselect','childgroups','#$selectedGroupsStr#');sortList('childgroupsselect','childgroups');implodeListKeys('childgroups','childgroupsimploded',',');checkstatus('childgroupsselect','childgroups','removeall','addall','add','remove');" title="#xarML('Refresh')#" style="width: 100px;" />
             </div>
         <div>
-         <xar:set name="groupfilter">"parent:" . $group</xar:set>
             <ul style="list-style-type:none;">
                 <li style="float:left;background:none;">
                     can send to members of:
                     <br />
-                    <xar:data-input type="groupmultiselect" name="childgroups" id="childgroups" validation="$groupfilter" />
-                   <input type="hidden" name="childgroupsimploded" id="childgroupsimploded" value="$childgroupsoptionkeys" />               
+                    <xar:data-input type="groupmultiselect" name="childgroups" value="$selectedGroups"/>
+                    <input type="hidden" name="childgroupsimploded" id="childgroupsimploded" />
                 </li>
                 <li style="float:left;background:none;padding-top: 10px;">
 
@@ -38,7 +37,7 @@
                 </li>
                 <li style="float:left;background:none;padding-top: 10px;">
                    <!-- <xar:data-input type="grouplist" name="childgroupsselect" id="childgroupsselect" />-->
-                    <xar:data-input type="groupmultiselect" name="childgroupsselect" id="childgroupsselect" validation="$groupfilter" />
+                    <xar:data-input type="groupmultiselect" name="childgroupsselect" />
                 </li>
             </ul>
         </div>       

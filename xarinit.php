@@ -34,6 +34,7 @@ function messages_init()
     xarModVars::set('messages', 'SupportShortURLs', false );
     xarModVars::set('messages', 'awaymsg', true );
     xarModVars::set('messages', 'drafts', true );
+    xarModVars::set('messages', 'allowedSendMessages', serialize(array()) );
 
 
     // read_messages is intended only for users
