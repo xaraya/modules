@@ -50,7 +50,9 @@ class ImageResizeProperty extends ImageProperty
         }
         try {
             $data = array_merge($data,xarModAPIFunc('images', 'user', 'resize', $data));
-        } catch(Exception $e) {}
+        } catch(Exception $e) {
+            $data['imagealt'] = xarML('This image could not be read');
+        }
         if (isset($data['url'])) $data['value'] = $data['url'];
         if (isset($sizeinfo)) {
             $data['width'] = $sizeinfo[0];
