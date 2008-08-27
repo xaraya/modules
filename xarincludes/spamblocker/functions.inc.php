@@ -21,7 +21,11 @@ function bb2_read_settings()
                       'visible' => $bb_visible,
                       'display_stats' => $bb_display_stats,
                       'strict' => $bb_strict,
-                      'verbose' => $bb_verbose );
+                      'verbose' => $bb_verbose,
+                      'logging' => $bb_logging,
+                      'httpbl_key' => $bb_httpbl_key,
+                      'httpbl_threat' => $bb_httpbl_threat,
+                      'httpbl_maxage' => $bb_httpbl_maxage );
     return $settings;
 }
 function bb2_insert_stats($force = false)
@@ -132,15 +136,12 @@ function match_cidr($addr, $cidr)
 }
 function bb2_load_headers()
 {
-    if (!is_callable('getallheaders'))
-    {
+    if (!is_callable('getallheaders')) {
         $headers = array();
         foreach($_SERVER as $name => $value)
             if(substr($name, 0, 5) == 'HTTP_')
                 $headers[substr($name, 5)] = $value;
-    }
-    else
-    {
+    } else {
         $headers = getallheaders();
     }
     return $headers;

@@ -8,7 +8,6 @@ function netquery_adminapi_getport($args)
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
-    if (!xarSecurityCheck('ReadNetquery')) return;
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $PortsTable = $xartable['netquery_ports'];
@@ -17,7 +16,7 @@ function netquery_adminapi_getport($args)
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     list($port_id, $port, $protocol, $service, $comment, $flag) = $result->fields;
-
+    if (!xarSecurityCheck('OverviewNetquery')) return;
     $port = array('port_id'  => $port_id,
                   'port'     => $port,
                   'protocol' => $protocol,

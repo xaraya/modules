@@ -23,6 +23,10 @@ function netquery_init()
     xarModSetVar('netquery', 'bb_display_stats', 'session');
     xarModSetVar('netquery', 'bb_strict', 0);
     xarModSetVar('netquery', 'bb_verbose', 0);
+    xarModSetVar('netquery', 'bb_logging', 1);
+    xarModSetVar('netquery', 'bb_httpbl_key', '');
+    xarModSetVar('netquery', 'bb_httpbl_threat', 25);
+    xarModSetVar('netquery', 'bb_httpbl_maxage', 10);
     xarModSetVar('netquery', 'clientinfo_enabled', 1);
     xarModSetVar('netquery', 'mapping_site', 1);
     xarModSetVar('netquery', 'topcountries_limit', 10);
@@ -51,9 +55,7 @@ function netquery_init()
     xarModSetVar('netquery', 'looking_glass_enabled', 1);
     if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
     xarRegisterMask('ReadNetqueryBlock', 'All', 'netquery', 'Block', 'All', 'ACCESS_OVERVIEW');
-    // MichelV: This double READ Access causes errors
-    //xarRegisterMask('OverviewNetquery','All','netquery','All','All','ACCESS_READ');
-    xarRegisterMask('OverviewNetquery','All','netquery','All','All','ACCESS_OVERVIEW');
+    xarRegisterMask('OverviewNetquery','All','netquery','All','All','ACCESS_READ');
     xarRegisterMask('ReadNetquery','All','netquery','All','All','ACCESS_READ');
     xarRegisterMask('EditNetquery','All','netquery','All','All','ACCESS_EDIT');
     xarRegisterMask('AddNetquery','All','netquery','All','All','ACCESS_ADD');
@@ -167,12 +169,16 @@ function netquery_upgrade($oldversion)
         case '4.0.5':
             xarModSetVar('netquery', 'bb_display_stats', 'session');
             xarModAPIFunc('blocks', 'admin', 'unregister_block_type', array('modName' => 'netquery', 'blockType' => 'nqmonitor'));
-            return netquery_upgrade('4.1.0');
+            return netquery_upgrade('4.1.2');
         case '4.1.0':
         case '4.1.1':
-            xarUnRegisterMask('OverviewNetquery');
-            xarRegisterMask('OverviewNetquery','All','netquery','All','All','ACCESS_OVERVIEW');
         case '4.1.2':
+            xarModSetVar('netquery', 'bb_logging', 1);
+            xarModSetVar('netquery', 'bb_httpbl_key', '');
+            xarModSetVar('netquery', 'bb_httpbl_threat', 25);
+            xarModSetVar('netquery', 'bb_httpbl_maxage', 10);
+            return netquery_upgrade('4.1.3');
+        case '4.1.3':
         default:
             break;
     }

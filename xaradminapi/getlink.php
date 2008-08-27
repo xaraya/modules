@@ -8,7 +8,6 @@ function netquery_adminapi_getlink($args)
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
-    if (!xarSecurityCheck('ReadNetquery')) return;
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $WhoisTable = $xartable['netquery_whois'];
@@ -17,7 +16,7 @@ function netquery_adminapi_getlink($args)
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
     list($whois_id, $whois_tld, $whois_server, $whois_prefix, $whois_suffix, $whois_unfound) = $result->fields;
-
+    if (!xarSecurityCheck('OverviewNetquery')) return;
     $data = array('whois_id'      => $whois_id,
                   'whois_tld'     => $whois_tld,
                   'whois_server'  => $whois_server,

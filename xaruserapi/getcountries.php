@@ -5,7 +5,7 @@ function netquery_userapi_getcountries($args)
     if ((!isset($startnum)) || (!is_numeric($startnum))) $startnum = 1;
     if ((!isset($numitems)) || (!is_numeric($numitems))) $numitems = -1;
     $countries = array();
-    if (!xarSecurityCheck('ReadNetquery',0 )) return $countries;
+    if (!xarSecurityCheck('OverviewNetquery')) return $countries;
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $GeoccTable = $xartable['netquery_geocc'];

@@ -9,7 +9,7 @@ function netquery_adminapi_getportflag($args)
         return;
     }
     $portflag = array();
-    if (!xarSecurityCheck('ReadNetquery',0)) return $portflag;
+    if (!xarSecurityCheck('OverviewNetquery')) return $portflag;
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $PortsTable = $xartable['netquery_ports'];
