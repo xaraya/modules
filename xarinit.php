@@ -170,7 +170,8 @@ function netquery_upgrade($oldversion)
         case '4.0.5':
             xarModSetVar('netquery', 'bb_display_stats', 'session');
             xarModAPIFunc('blocks', 'admin', 'unregister_block_type', array('modName' => 'netquery', 'blockType' => 'nqmonitor'));
-            return netquery_upgrade('4.1.2');
+            //return netquery_upgrade('4.1.2');
+            //fallthrough
         case '4.1.0':
         case '4.1.1':
             xarUnRegisterMask('OverviewNetquery');
