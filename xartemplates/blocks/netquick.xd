@@ -1,5 +1,5 @@
 <xar:style scope="module" file="'.$stylesheet.'" module="netquery" />
-
+<xar:sec mask="ReadNetquery" catch="false">
 <xar:if condition="$vars['blockquery'] eq 'nqmonitor'">
     <xar:if condition="$bbsettings.running">
         <xar:mlstring>Running</xar:mlstring>
@@ -121,7 +121,7 @@
     <input class="gobutton" type="image" src="#$buttondir#/btn_go.gif" alt="Go" />
     </form>
 </xar:if>
-
+</xar:sec>
 <script type="text/javascript">
 function newwindow(link)
 {

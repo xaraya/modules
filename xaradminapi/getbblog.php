@@ -5,7 +5,7 @@ function netquery_adminapi_getbblog($args)
     if ((!isset($startnum)) || (!is_numeric($startnum))) $startnum = 1;
     if ((!isset($numitems)) || (!is_numeric($numitems))) $numitems = -1;
     $entries = array();
-    if (!xarSecurityCheck('OverviewNetquery')) return $entries;
+    if (!xarSecurityCheck('ReadNetquery',0)) return $entries;
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $SpamblockerTable = $xartable['netquery_spamblocker'];

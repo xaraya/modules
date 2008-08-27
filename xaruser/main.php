@@ -1,7 +1,7 @@
 <?php
 function netquery_user_main()
 {
-    if (!xarSecurityCheck('OverviewNetquery')) return;
+    if (!xarSecurityCheck('ReadNetquery',0)) return;
     $data = xarModAPIFunc('netquery', 'user', 'mainapi');
     $clrlink = $data['clrlink'];
     if ($data['querytype'] == 'none') return $data;

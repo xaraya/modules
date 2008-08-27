@@ -22,7 +22,8 @@ function netquery_netquickblock_info()
 }
 function netquery_netquickblock_display($blockinfo)
 {
-    if (!xarSecurityCheck('ReadNetqueryBlock', 0, 'Block', $blockinfo['title'])) {return;}
+    // MichelV: cannot use this when there are no instances created.
+    //if (!xarSecurityCheck('ReadNetqueryBlock', 0, 'Block', $blockinfo['title'])) {return;}
     include_once "modules/netquery/xarincludes/nqSniff.class.php";
     if (!is_array($blockinfo['content']))
     {

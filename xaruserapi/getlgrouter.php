@@ -39,7 +39,7 @@ function netquery_userapi_getlgrouter($args)
          $ospf6d_port,
          $ospf6d_password,
          $use_argc) = $result->fields;
-    if (!xarSecurityCheck('OverviewNetquery')) return;
+    if (!xarSecurityCheck('ReadNetquery',0)) return;
     $lgrouter = array('router_id'       => $router_id,
                       'router'          => $router,
                       'address'         => $address,

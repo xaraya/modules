@@ -16,7 +16,7 @@ function netquery_userapi_getlink($args)
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     list($whois_id, $whois_tld, $whois_server, $whois_prefix, $whois_suffix, $whois_unfound) = $result->fields;
-    if (!xarSecurityCheck('OverviewNetquery')) return;
+    if (!xarSecurityCheck('ReadNetquery',0)) return;
     $link = array('whois_id'      => $whois_id,
                   'whois_tld'     => $whois_tld,
                   'whois_server'  => $whois_server,

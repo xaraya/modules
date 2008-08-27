@@ -16,7 +16,7 @@ function netquery_adminapi_getport($args)
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     list($port_id, $port, $protocol, $service, $comment, $flag) = $result->fields;
-    if (!xarSecurityCheck('OverviewNetquery')) return;
+    if (!xarSecurityCheck('ReadNetquery',0)) return;
     $port = array('port_id'  => $port_id,
                   'port'     => $port,
                   'protocol' => $protocol,

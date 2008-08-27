@@ -9,7 +9,7 @@ function netquery_userapi_getportdata($args)
         return;
     }
     $portdata = array();
-    if (!xarSecurityCheck('OverviewNetquery')) return $portdata;
+    if (!xarSecurityCheck('ReadNetquery',0)) return $portdata;
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $PortsTable = $xartable['netquery_ports'];

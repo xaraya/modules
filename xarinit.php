@@ -55,7 +55,8 @@ function netquery_init()
     xarModSetVar('netquery', 'looking_glass_enabled', 1);
     if (!xarModAPIFunc('blocks', 'admin', 'register_block_type', array('modName' => 'netquery', 'blockType' => 'netquick'))) return;
     xarRegisterMask('ReadNetqueryBlock', 'All', 'netquery', 'Block', 'All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('OverviewNetquery','All','netquery','All','All','ACCESS_READ');
+    //xarRegisterMask('OverviewNetquery','All','netquery','All','All','ACCESS_READ');
+    xarRegisterMask('OverviewNetquery','All','netquery','All','All','ACCESS_OVERVIEW');    
     xarRegisterMask('ReadNetquery','All','netquery','All','All','ACCESS_READ');
     xarRegisterMask('EditNetquery','All','netquery','All','All','ACCESS_EDIT');
     xarRegisterMask('AddNetquery','All','netquery','All','All','ACCESS_ADD');
@@ -172,6 +173,8 @@ function netquery_upgrade($oldversion)
             return netquery_upgrade('4.1.2');
         case '4.1.0':
         case '4.1.1':
+            xarUnRegisterMask('OverviewNetquery');
+            xarRegisterMask('OverviewNetquery','All','netquery','All','All','ACCESS_OVERVIEW');
         case '4.1.2':
             xarModSetVar('netquery', 'bb_logging', 1);
             xarModSetVar('netquery', 'bb_httpbl_key', '');
