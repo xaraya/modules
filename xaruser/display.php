@@ -363,7 +363,7 @@ function articles_user_display($args)
                     $data[$field] = xarModAPIFunc('dynamicdata','user','showoutput',
                                                   array('name' => $field,
                                                         'type' => $value['format'],
-                                                        'validation' => $value['validation'],
+                                                        'configuration' => $value['validation'],
                                                         'value' => $article[$field]));
                 } else {
                     $data[$field] = '';
@@ -391,8 +391,8 @@ function articles_user_display($args)
                 $data[$field] = $properties[$field]->getValue();
                 // POOR mans flagging for transform hooks
                 try {
-                $validation = $properties[$field]->validation;
-                if(substr($validation,0,10) == 'transform:') {
+                $configuration = $properties[$field]->configuration;
+                if(substr($configuration,0,10) == 'transform:') {
                     $data['transform'][] = $field;
                 }
                 } catch (Exception $e) {}
