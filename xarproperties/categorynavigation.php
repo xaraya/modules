@@ -995,7 +995,12 @@ class CategoryNavigationProperty extends SelectProperty
                 }
                 break;
         }
-
+        if (!empty($data['template'])) {
+            $data['propertytemplate'] = $data['template'];
+            unset($data['template']);
+        } else {
+            $data['propertytemplate'] = $template;
+        }
         return parent::showOutput($data);
     }
 

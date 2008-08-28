@@ -392,35 +392,28 @@ class CategoriesProperty extends SelectProperty
             $data['categories_itemid'] = 0;
         }
 
+        // We have a valid itemid, so get its linked categories
+        // This is the case of a property attached to an object
+        $selectedcategories = array();
         if (empty($data['value'])) {
             if (empty($this->value)) {
                 $data['value'] = array();
                 $links = xarModAPIFunc('categories', 'user', 'getlinkages',
-                                       array('items' => array($data['categories_itemid']),
+                                       array('itemid' => $data['value'],
                                              'itemtype' => $data['categories_localitemtype'],
                                              'module' => $data['categories_localmodule'],
                                              ));
-                if (!empty($links) && is_array($links) && count($links) > 0) {
-                    foreach ($links as $link)
-                        foreach ($link as $row) {
-                            $data['value'][] = $row;
-                        }
-                } else {
-                    $data['value'] = array();
-                }
-            } else {
-                if (!is_array($this->value)) $this->value = array($this->value);
-                $data['value'] = $this->value;
+                foreach ($links as $link) $selectedcategories[$link['basecategory']] = $link['category_id'];
             }
-        } elseif (!is_array($data['value'])) {
-            $data['value'] = array($data['value'] => $data['value']);
         }
-        $temparray = array();
-        foreach ($data['value'] as $category) {
-            $this->value = $category['category_id'];
-            $temparray[] = array_merge($category,array('value' => $this->getOption()));
-        }
-        $data['value'] = $temparray;
+
+        // We have a categories attribute
+        // This is the case of a standalone property
+        if (!empty($data['categories'])) $selectedcategories = $data['categories'];
+
+        // Now make the value passed to the template the selected categories
+        $data['value'] = $selectedcategories;
+
         return parent::showOutput($data);
     }
 
