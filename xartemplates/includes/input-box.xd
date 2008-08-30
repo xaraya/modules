@@ -1,4 +1,12 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:set name="is_sendtouser">
+        xarModAPIFunc('messages','user','is_sendtouser', 
+            array(
+                'sendtouser' => $recipient,
+            )
+        )
+    </xar:set>
+    
     <h3>#$input_title#</h3>
     <form id="inputbox" action="#$post_url#" method="post" enctype="multipart/form-data">
         <div class="xar-form-input-wrapper">
@@ -7,7 +15,7 @@
             </label>
             #xarUserGetVar('name')#
             <!--Psspl:Modified the code for anonymous message-->
-            <xar:if condition="isset($action) and $action ne 'reply' and $action ne 'prev_reply'">
+            <xar:if condition="isset($action) and $action ne 'reply' and $action ne 'prev_reply' AND $is_sendtouser">
                 <xar:if condition="isset($id) and isset($postanon)">
                     <xar:data-input type="checkbox"  name="postanon" checked="$postanon" />
                 <xar:else />
@@ -35,29 +43,13 @@
                 </xar:if>
             </xar:if>
             <xar:if condition="isset($action) and $action eq 'reply' or $action eq 'prev_reply' ">
-                <xar:set name="is_sendtouser">
-                    xarModAPIFunc('messages','user','is_sendtouser', 
-                        array(
-                            'sendtouser' => $recipient,
-                        )
-                    )
-                </xar:set>
                 <xar:if condition="$postanon eq 0 AND $is_sendtouser">
                     <xar:mlstring>#$recipient_name#</xar:mlstring>      
                 <xar:else/>
                     <xar:mlstring>Anonymous</xar:mlstring>
                 </xar:if>
                 <input type="hidden" value="#$recipient#" name="recipient" id="recipient" />
-            </xar:if>
-            
-            <xar:if condition="isset($action) and $action eq 'modify' ">
-                <xar:set name="is_sendtouser">
-                    xarModAPIFunc('messages','user','is_sendtouser', 
-                        array(
-                            'sendtouser' => $recipient,
-                        )
-                    )
-                </xar:set>
+            <xar:elseif condition="isset($action) and $action eq 'modify' /">
                 <xar:if condition="$is_sendtouser">
                     <xar:data-inpt type="dropdown" name="recipient" value="$recipient" options="$users" />
                 <xar:else/>
