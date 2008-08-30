@@ -16,10 +16,10 @@
         $parents =  $q->output();
         
         // Check if a parent is in the sendto groups
-        is_sendtouser = false;
+        $is_sendtouser = false;
         foreach ($parents as $parent) {
             if (in_array($parent['parent_id'], $sendtogroups)) {
-                is_sendtouser = true;
+                $is_sendtouser = true;
                 break;
             }
         }        
