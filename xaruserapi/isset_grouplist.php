@@ -42,7 +42,7 @@ function messages_userapi_isset_grouplist( $args )
             if(empty($allowedSendMessages[0])) {
                 return false;
             }
-            $data['users'] = xarModAPIFunc('messages','user','get_users');
+            $data['users'] = xarModAPIFunc('messages','user','get_sendtousers');
             if(empty($data['users'])){
                 return false;
             }

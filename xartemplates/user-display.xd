@@ -107,9 +107,9 @@
                                     <xar:if condition="$loop:item['postanon'] eq '0'">
                                         <a href="#$loop:item['user_link']#" title="#xarML('View user info')#">#$loop:item['sender']#</a>
                                     <!--#$comment['author']#-->
-                            <xar:else/>
-                                <xar:mlstring>Anonymous</xar:mlstring>
-                            </xar:if>
+                                    <xar:else/>
+                                        <xar:mlstring>Anonymous</xar:mlstring>
+                                    </xar:if>
                                 </xar:if>
                                 
                                 <xar:if condition="strtolower($folder) eq 'sent'">
@@ -175,40 +175,40 @@
                 </p>
             </xar:if>
         <xar:if condition="!empty($prev_link) or !empty($next_link)">
-    		<div class="xar-align-center">
-        		<xar:if condition="!empty($prev_link)">
-            		<a href="#$prev_link#"><xar:mlstring> Prev</xar:mlstring></a>
-        		<xar:else />
-            		Prev
-        		</xar:if>
-        		&#160;&#160;&#160;
-        		<xar:if condition="!empty($next_link)">
-            		<a href="#$next_link#"><xar:mlstring>Next</xar:mlstring></a>
-        		<xar:else />
-        			Next
-        		</xar:if>
-    		</div>
-		</xar:if>
-		
-		<xar:comment>Psspl: comment this code due to issue of less than character</xar:comment>
-		<!--
-		<xar:if condition="!empty($prev_link) or !empty($next_link)">
-    		<div class="xar-align-center">
-        		<xar:if condition="!empty($prev_link)">
-            		<a href="#$prev_link#">&lt;&lt;<xar:mlstring> Prev</xar:mlstring></a>
-        		<xar:else />
-            		&lt;&lt;
-        		</xar:if>
-        		&#160;&#160;&#160;
-        		<xar:if condition="!empty($next_link)">
-            		<a href="#$next_link#"><xar:mlstring>Next</xar:mlstring>&gt;&gt; </a>
-        		<xar:else />
-        			&gt;&gt;
-        		</xar:if>
-    		</div>
-		</xar:if>
-		-->
-		
+            <div class="xar-align-center">
+                <xar:if condition="!empty($prev_link)">
+                    <a href="#$prev_link#"><xar:mlstring> Prev</xar:mlstring></a>
+                <xar:else />
+                    Prev
+                </xar:if>
+                &#160;&#160;&#160;
+                <xar:if condition="!empty($next_link)">
+                    <a href="#$next_link#"><xar:mlstring>Next</xar:mlstring></a>
+                <xar:else />
+                    Next
+                </xar:if>
+            </div>
+        </xar:if>
+        
+        <xar:comment>Psspl: comment this code due to issue of less than character</xar:comment>
+        <!--
+        <xar:if condition="!empty($prev_link) or !empty($next_link)">
+            <div class="xar-align-center">
+                <xar:if condition="!empty($prev_link)">
+                    <a href="#$prev_link#">&lt;&lt;<xar:mlstring> Prev</xar:mlstring></a>
+                <xar:else />
+                    &lt;&lt;
+                </xar:if>
+                &#160;&#160;&#160;
+                <xar:if condition="!empty($next_link)">
+                    <a href="#$next_link#"><xar:mlstring>Next</xar:mlstring>&gt;&gt; </a>
+                <xar:else />
+                    &gt;&gt;
+                </xar:if>
+            </div>
+        </xar:if>
+        -->
+        
         <!-- djb dont really need it do we (and its ugly) 
             <xar:if condition="!empty($allow_newpm)"> 
                 <div class="xar-align-right">
