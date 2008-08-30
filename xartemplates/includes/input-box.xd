@@ -49,6 +49,13 @@
             </xar:if>
             
             <xar:if condition="isset($action) and $action eq 'modify' ">
+                <xar:set name="is_sendtouser">
+                    xarModAPIFunc('messages','user','is_sendtouser', 
+                        array(
+                            'sendtouser' => $recipient,
+                        )
+                    )
+                </xar:set>
                 <xar:if condition="$is_sendtouser">
                     <xar:data-inpt type="dropdown" name="recipient" value="$recipient" options="$users" />
                 <xar:else/>
