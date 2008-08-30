@@ -118,18 +118,30 @@
                                     <xar:else/>
                                         <xar:mlstring>Anonymous</xar:mlstring>
                                     </xar:if>
-                                </xar:if>
-                                
-                                <xar:if condition="strtolower($folder) eq 'sent'">
-                                    <xar:if condition="$loop:item['postanon_to'] eq '0' AND $is_sendtouser">
+                                <xar:elseif condition="strtolower($folder) eq 'sent'" />
+                                    <xar:set name="itemid">$loop->item['user_link']</xar:set>
+                                    <xar:set name="is_sendtouser">
+                                        xarModAPIFunc('messages','user','is_sendtouser', 
+                                            array(
+                                                'sendtouser' => $itemid,
+                                            )
+                                        )
+                                    </xar:set>
+                                    <xar:if condition="$is_sendtouser">
                                         <a href="#$loop:item['user_link']#" title="#xarML('View user info')#">#$loop:item['recipient']#</a>
                                     <xar:else />
                                         <xar:mlstring>Anonymous</xar:mlstring>
                                     </xar:if>
-                                </xar:if>
-                                
-                                <xar:if condition="strtolower($folder) eq 'drafts'">
-                                    <xar:if condition="$loop:item['postanon_to'] eq '0' AND $is_sendtouser">
+                                <xar:elseif condition="strtolower($folder) eq 'drafts'" />
+                                    <xar:set name="itemid">$loop->item['user_link']</xar:set>
+                                    <xar:set name="is_sendtouser">
+                                        xarModAPIFunc('messages','user','is_sendtouser', 
+                                            array(
+                                                'sendtouser' => $itemid,
+                                            )
+                                        )
+                                    </xar:set>
+                                    <xar:if condition="$is_sendtouser">
                                         <a href="#$loop:item['user_link']#" title="#xarML('View user info')#">#$loop:item['recipient']#</a>
                                     <xar:else/>
                                         <xar:mlstring>Anonymous</xar:mlstring>
