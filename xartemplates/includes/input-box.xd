@@ -49,7 +49,7 @@
                     <xar:mlstring>Anonymous</xar:mlstring>
                 </xar:if>
                 <input type="hidden" value="#$recipient#" name="recipient" id="recipient" />
-            <xar:elseif condition="isset($action) and $action eq 'modify' /">
+            <xar:elseif condition="isset($action) and $action eq 'modify'" />
                 <xar:if condition="$is_sendtouser">
                     <xar:data-inpt type="dropdown" name="recipient" value="$recipient" options="$users" />
                 <xar:else/>
