@@ -48,7 +48,7 @@
                         )
                     )
                 </xar:set>
-                <xar:if condition="$postanon_to eq 0 AND $is_sendtouser">
+                <xar:if condition="$postanon eq 0 AND $is_sendtouser">
                     <xar:mlstring>#$recipient_name#</xar:mlstring>      
                 <xar:else/>
                     <xar:mlstring>Anonymous</xar:mlstring>
