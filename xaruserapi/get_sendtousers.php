@@ -11,7 +11,7 @@
         $sendtogroups = xarModAPIFunc('messages','user','get_sendtogroups',$args);
         ;  
         // Get the uses these allowed groups contain
-        sys::import('modules.query.class.Query');
+        sys::import('modules.query.class.query');
         $xartable = xarDB::getTables();
         $q = new Query('SELECT');
         $q->addtable($xartable['roles'], 'r');

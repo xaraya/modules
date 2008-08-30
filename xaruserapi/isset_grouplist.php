@@ -18,10 +18,10 @@ function messages_userapi_isset_grouplist( $args )
                                         'include_myself' => false));
         $userid = xarUserGetVar('id');
 
-        sys::import('modules.roles.class.xarQuery');
+        sys::import('modules.query.class.query');
 
         $xartable = xarDB::getTables();
-        $q = new xarQuery('SELECT');
+        $q = new Query('SELECT');
         $q->addtable($xartable['roles'], 'r');
 
         $q->eq('id', $userid);

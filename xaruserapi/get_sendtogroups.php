@@ -6,9 +6,9 @@
         if (!isset($currentuser)) $currentuser = xarUserGetVar('id');
     
         // First we get all the parents of the current user
-        sys::import('modules.query.class.Query');
+        sys::import('modules.query.class.query');
         $xartable = xarDB::getTables();
-        $q = new xarQuery('SELECT');
+        $q = new Query('SELECT');
         $q->addtable($xartable['roles'], 'r');
         $q->addtable($xartable['rolemembers'],'rm');
         $q->join('r.id', 'rm.role_id');
