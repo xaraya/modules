@@ -9,6 +9,7 @@
         $sendtogroups = xarModAPIFunc('messages','user','get_sendtogroups',$args);
         
         // Now get the parents of the candidate sendto user
+        $xartable = xarDB::getTables();
         $q = new Query('SELECT');
         $q->addtable($xartable['rolemembers'],'rm');
         $q->addfield('rm.parent_id');
