@@ -12,11 +12,10 @@
                 <xar:mlstring>From:</xar:mlstring>
             </span>
             <!--Psspl:Modified the code for anonymous message-->
-            <xar:set name="itemid">$message['user_link']</xar:set>
             <xar:set name="is_sendtouser">
                 xarModAPIFunc('messages','user','is_sendtouser', 
                     array(
-                        'sendtouser' => $itemid,
+                        'sendtouser' => $message['user_link'],
                     )
                 )
             </xar:set>
