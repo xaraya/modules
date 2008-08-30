@@ -104,7 +104,7 @@
                             <td class="#$rowclass# xar-align-left xar-messages-mailboxlistsender">
                                 <xar:if condition="strtolower($folder) eq 'inbox'">
                                 <!--Psspl:Modifided the code for anonymous message-->
-                                    <xar:set name="itemid">$loop->item['pid']</xar:set>
+                                    <xar:set name="itemid">$loop->item['sender_id']</xar:set>
                                     <xar:set name="is_sendtouser">
                                         xarModAPIFunc('messages','user','is_sendtouser', 
                                             array(
