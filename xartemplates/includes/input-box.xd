@@ -26,19 +26,11 @@
                 <xar:mlstring>To:</xar:mlstring>
             </label>
             <xar:if condition="isset($action) and $action ne 'reply' and $action ne 'prev_reply' and $action ne 'modify'">
-            <select name="recipient" id="recipient">
-                <xar:loop name="$users">
-                    <xar:if condition="isset($recipient) and $loop:item['id'] eq $recipient">
-                        <option value="#$loop:item['id']#" selected="selected">
-                            #$loop:item['name']# (#$loop:item['uname']#)
-                        </option>
-                    <xar:else />
-                        <option value="#$loop:item['id']#">
-                            #$loop:item['name']# (#$loop:item['uname']#)
-                        </option>
-                    </xar:if>
-                </xar:loop>
-            </select>
+                <xar:if condition="empty($users)">
+                    No recipients available
+                <xar:else />
+                    <xar:data-inpt type="dropdown" name="recipient" value="$recipient" options="$users" />
+                </xar:if>
             </xar:if>
             <xar:if condition="isset($action) and $action eq 'reply' or $action eq 'prev_reply' ">
                 <xar:set name="is_sendtouser">
