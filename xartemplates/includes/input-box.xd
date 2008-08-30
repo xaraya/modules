@@ -13,7 +13,7 @@
                 <xar:if condition="isset($postanon)">
                     <xar:data-input type="checkbox"  name="postanon" checked="$postanon" />
                 <xar:else/>
-                    <input type="checkbox" name="postanon" id="postanon" value="1"/> 
+                    <xar:data-input type="checkbox"  name="postanon" checked="1" />
                 </xar:if>        
         </xar:if>
          <xar:mlstring>
