@@ -5,6 +5,14 @@
         <!-- <xar:mlstring>Message-Posting-Host:</xar:mlstring> #$message['posting-host']# -->
         </xar:comment>
 
+        <xar:set name="is_sendtouser">
+            xarModAPIFunc('messages','user','is_sendtouser', 
+                array(
+                    'sendtouser' => $message['user_link'],
+                )
+            )
+        </xar:set>
+
         <div class="xar-form-input-wrapper">
             <span class="xar-form-label">
                 <xar:mlstring>From:</xar:mlstring>
@@ -13,13 +21,6 @@
             <xar:if condition="isset($action) and $action eq 'viewsent' and $folder ne 'inbox'">
                 <a href="#$message['user_link']#" title="#xarML('View user info')#">#$message['sender']#</a>
             <xar:else/>
-                <xar:set name="is_sendtouser">
-                    xarModAPIFunc('messages','user','is_sendtouser', 
-                        array(
-                            'sendtouser' => $message['user_link'],
-                        )
-                    )
-                </xar:set>
                 <xar:if condition="$message['postanon'] eq 0 AND $is_sendtouser">
                     <a href="#$message['user_link']#" title="#xarML('View user info')#">#$message['sender']#</a>
                 <xar:else/>
@@ -34,10 +35,10 @@
             </span>
             <xar:if condition="isset($action) and ($action eq 'viewsent' or $action eq 'check' or $action eq 'modify')">
                 <xar:if condition="isset($folder) and $folder eq 'sent' or $folder eq 'drafts'">
-                    <xar:if condition="isset($message['postanon_to']) and $message['postanon_to'] eq 1">
-                        <xar:mlstring>Anonymous</xar:mlstring>
-                    <xar:else/>
+                    <xar:if condition="$is_sendtouser">
                         #$message['recipient']#
+                    <xar:else/>
+                        <xar:mlstring>Anonymous</xar:mlstring>
                     </xar:if>
                 </xar:if>
                 <xar:if condition="isset($folder) and $folder eq 'inbox' ">
@@ -45,10 +46,10 @@
                 </xar:if>
             <xar:else/>
                 <xar:if condition="isset($action) and $action eq 'prev_reply'">
-                    <xar:if condition="isset($message['postanon_to']) and $message['postanon_to'] eq 1">
-                        <xar:mlstring>Anonymous</xar:mlstring>
-                    <xar:else/>
+                    <xar:if condition="$is_sendtouser">
                         #$message['recipient']#
+                    <xar:else/>
+                        <xar:mlstring>Anonymous</xar:mlstring>
                     </xar:if>
                 <xar:else/>
                         #$message['recipient']#
