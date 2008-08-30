@@ -13,11 +13,10 @@
             <xar:if condition="isset($action) and $action eq 'viewsent' and $folder ne 'inbox'">
                 <a href="#$message['user_link']#" title="#xarML('View user info')#">#$message['sender']#</a>
             <xar:else/>
-                <xar:set name="itemid">$message['user_link']</xar:set>
                 <xar:set name="is_sendtouser">
                     xarModAPIFunc('messages','user','is_sendtouser', 
                         array(
-                            'sendtouser' => $itemid,
+                            'sendtouser' => $message['user_link'],
                         )
                     )
                 </xar:set>
