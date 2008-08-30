@@ -7,18 +7,20 @@
             </label>
             #xarUserGetVar('name')#
             <!--Psspl:Modified the code for anonymous message-->
-         <xar:if condition="isset($id) and isset($postanon)">
-                <xar:data-input type="checkbox"  name="postanon" checked="$postanon" />
-         <xar:else />
-                <xar:if condition="isset($postanon)">
+            <xar:if condition="isset($action) and $action ne 'reply' and $action ne 'prev_reply'">
+                <xar:if condition="isset($id) and isset($postanon)">
                     <xar:data-input type="checkbox"  name="postanon" checked="$postanon" />
-                <xar:else/>
-                    <xar:data-input type="checkbox"  name="postanon" checked="1" />
-                </xar:if>        
-        </xar:if>
-         <xar:mlstring>
-              Post anonymously
-         </xar:mlstring>
+                <xar:else />
+                    <xar:if condition="isset($postanon)">
+                        <xar:data-input type="checkbox"  name="postanon" checked="$postanon" />
+                    <xar:else/>
+                        <xar:data-input type="checkbox"  name="postanon" checked="1" />
+                    </xar:if>        
+                </xar:if>
+                <xar:mlstring>
+                    Post anonymously
+                </xar:mlstring>
+            </xar:if>
         </div>
 
         <div class="xar-form-input-wrapper">
