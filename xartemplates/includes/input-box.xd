@@ -49,23 +49,11 @@
             </xar:if>
             
             <xar:if condition="isset($action) and $action eq 'modify' ">
-                <xar:if condition="isset($postanon_to) and $postanon_to eq 1">
-                    <xar:mlstring>Anonymous</xar:mlstring>
+                <xar:if condition="$is_sendtouser">
+                    <xar:data-inpt type="dropdown" name="recipient" value="$recipient" options="$users" />
                 <xar:else/>
-                    <select name="recipient" id="recipient">
-                <xar:loop name="$users">
-                    <xar:if condition="isset($recipient) and $loop:item['id'] eq $recipient">
-                        <option value="#$loop:item['id']#" selected="selected">
-                            #$loop:item['name']# (#$loop:item['uname']#)
-                        </option>
-                    <xar:else />
-                        <option value="#$loop:item['id']#">
-                            #$loop:item['name']# (#$loop:item['uname']#)
-                        </option>
-                    </xar:if>
-                </xar:loop>
-            </select>
-            </xar:if>   
+                    <xar:mlstring>Anonymous</xar:mlstring>
+                </xar:if>   
                 <input type="hidden" value="#$recipient#" name="recipient" id="recipient" />
             </xar:if>
             <xar:if condition="isset($no_recipient)">
