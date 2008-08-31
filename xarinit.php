@@ -46,6 +46,7 @@
     #
         xarRegisterMask('ViewXarayatesting','All','xarayatesting','All','All','ACCESS_OVERVIEW');
         xarRegisterMask('ReadXarayatesting','All','xarayatesting','All','All','ACCESS_READ');
+        xarRegisterMask('EditXarayatesting','All','xarayatesting','All','All','ACCESS_EDIT');
         xarRegisterMask('ManageXarayatesting','All','xarayatesting','All','All','ACCESS_DELETE');
         xarRegisterMask('AdminXarayatesting','All','xarayatesting','All','All','ACCESS_ADMIN');
 
@@ -53,6 +54,7 @@
     #
     # Set up privileges
     #
+        xarRegisterPrivilege('ManageXarayatesting','All','xarayatesting','All','All','ACCESS_DELETE');
         xarRegisterPrivilege('AdminXarayatesting','All','xarayatesting','All','All','ACCESS_ADMIN');
 
     # --------------------------------------------------------
