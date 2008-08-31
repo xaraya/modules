@@ -14,7 +14,7 @@ function xarayatesting_user_display($args)
     if (!isset($object)) return;
     $object->getItem(array('itemid'   => $itemid));
 
-    $data['object'] =& $myobject;
+    $data['object'] =& $object;
     return $data;
 }
 
