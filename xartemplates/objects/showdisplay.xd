@@ -37,14 +37,6 @@
             <xar:data-output property="$properties[$name]" />
         </div>
     </xar:foreach>
-        <xar:set name="extrainfo">
-            array(
-                'module' => 'articles',
-                'itemid' => 0,
-                'itemtype' => $properties['id']->value,
-            );
-            $hooks = xarModCallHooks('item','modify','',$extrainfo)
-        </xar:set>
     <xar:if condition="!empty($hooks)">
         <xar:foreach in="$hooks" key="$hookmodule">#$hooks[$hookmodule]#</xar:foreach>
     </xar:if>
