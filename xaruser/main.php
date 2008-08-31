@@ -1,9 +1,18 @@
 <?php
+/**
+ * Main user GUI function, entry point
+ *
+ */
 
-function jquery_user_main($args)
-{
-    // Do nothing here - leave it all to the template.
-    return $args;
-}
+    function xarayatesting_user_main()
+    {
+        // Security Check
+        if (!xarSecurityCheck('ReadXarayatesting')) return;
+
+        if (!xarModVars::get('modules', 'disableoverview') == 0) {
+            xarResponseRedirect(xarModURL('xarayatesting', 'user', 'testpage'));
+        }
+        return array();
+    }
 
 ?>

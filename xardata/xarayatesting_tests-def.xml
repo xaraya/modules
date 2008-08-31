@@ -1,0 +1,205 @@
+<object name="xarayatesting_tests">
+<objectid>144</objectid>
+<label>Test Cases</label>
+<parent>objects</parent>
+<module_id>182</module_id>
+<itemtype>63</itemtype>
+<class>DataObject</class>
+<filepath></filepath>
+<urlparam>itemid</urlparam>
+<maxid>0</maxid>
+<config> </config>
+<isalias>1</isalias>
+<properties>
+<property name="id">
+<id>1371</id>
+<label>ID</label>
+<type>itemid</type>
+<defaultvalue></defaultvalue>
+<source>xar_xarayatesting_test.id</source>
+<status>65</status>
+<seq>1</seq>
+<configuration></configuration>
+</property>
+<property name="code">
+<id>1375</id>
+<label>Code</label>
+<type>textbox</type>
+<defaultvalue></defaultvalue>
+<source>xar_xarayatesting_test.code</source>
+<status>33</status>
+<seq>2</seq>
+<configuration></configuration>
+</property>
+<property name="name">
+<id>1372</id>
+<label>Name</label>
+<type>textbox</type>
+<defaultvalue></defaultvalue>
+<source>xar_xarayatesting_test.name</source>
+<status>33</status>
+<seq>3</seq>
+<configuration></configuration>
+</property>
+<property name="test_suite">
+<id>1373</id>
+<label>Test Suite</label>
+<type>textbox</type>
+<defaultvalue></defaultvalue>
+<source>xar_xarayatesting_test.testsuite</source>
+<status>33</status>
+<seq>4</seq>
+<configuration></configuration>
+</property>
+<property name="test_group">
+<id>1374</id>
+<label>Test Group</label>
+<type>textbox</type>
+<defaultvalue></defaultvalue>
+<source>xar_xarayatesting_test.testgroup</source>
+<status>33</status>
+<seq>5</seq>
+<configuration></configuration>
+</property>
+<property name="description">
+<id>1376</id>
+<label>Description</label>
+<type>textbox</type>
+<defaultvalue></defaultvalue>
+<source>xar_xarayatesting_test.description</source>
+<status>33</status>
+<seq>6</seq>
+<configuration></configuration>
+</property>
+<property name="expected">
+<id>1377</id>
+<label>Expected</label>
+<type>textarea_medium</type>
+<defaultvalue></defaultvalue>
+<source>xar_xarayatesting_test.expected</source>
+<status>34</status>
+<seq>7</seq>
+<configuration></configuration>
+</property>
+<property name="step_1">
+<id>1378</id>
+<label>Step 1</label>
+<type>textarea</type>
+<defaultvalue></defaultvalue>
+<source>xar_xarayatesting_test.step01</source>
+<status>34</status>
+<seq>8</seq>
+<configuration></configuration>
+</property>
+<property name="step_2">
+<id>1378</id>
+<label>Step 2</label>
+<type>textarea</type>
+<defaultvalue></defaultvalue>
+<source>xar_xarayatesting_test.step02</source>
+<status>34</status>
+<seq>9</seq>
+<configuration></configuration>
+</property>
+<property name="step_3">
+<id>1378</id>
+<label>Step 3</label>
+<type>textarea</type>
+<defaultvalue></defaultvalue>
+<source>xar_xarayatesting_test.step03</source>
+<status>34</status>
+<seq>10</seq>
+<configuration></configuration>
+</property>
+<property name="step_4">
+<id>1378</id>
+<label>Step 4</label>
+<type>textarea</type>
+<defaultvalue></defaultvalue>
+<source>xar_xarayatesting_test.step04</source>
+<status>34</status>
+<seq>11</seq>
+<configuration></configuration>
+</property>
+<property name="step_5">
+<id>1378</id>
+<label>Step 5</label>
+<type>textarea</type>
+<defaultvalue></defaultvalue>
+<source>xar_xarayatesting_test.step05</source>
+<status>34</status>
+<seq>12</seq>
+<configuration></configuration>
+</property>
+<property name="step_6">
+<id>1378</id>
+<label>Step 6</label>
+<type>textarea</type>
+<defaultvalue></defaultvalue>
+<source>xar_xarayatesting_test.step06</source>
+<status>34</status>
+<seq>13</seq>
+<configuration></configuration>
+</property>
+<property name="step_7">
+<id>1378</id>
+<label>Step 7</label>
+<type>textarea</type>
+<defaultvalue></defaultvalue>
+<source>xar_xarayatesting_test.step07</source>
+<status>34</status>
+<seq>14</seq>
+<configuration></configuration>
+</property>
+<property name="step_8">
+<id>1378</id>
+<label>Step 8</label>
+<type>textarea</type>
+<defaultvalue></defaultvalue>
+<source>xar_xarayatesting_test.step08</source>
+<status>34</status>
+<seq>15</seq>
+<configuration></configuration>
+</property>
+<property name="step_9">
+<id>1378</id>
+<label>Step 9</label>
+<type>textarea</type>
+<defaultvalue></defaultvalue>
+<source>xar_xarayatesting_test.step09</source>
+<status>34</status>
+<seq>16</seq>
+<configuration></configuration>
+</property>
+<property name="step_10">
+<id>1378</id>
+<label>Step 10</label>
+<type>textarea</type>
+<defaultvalue></defaultvalue>
+<source>xar_xarayatesting_test.step10</source>
+<status>34</status>
+<seq>17</seq>
+<configuration></configuration>
+</property>
+<property name="state">
+<id>1379</id>
+<label>State</label>
+<type>dropdown</type>
+<defaultvalue>3</defaultvalue>
+<source>xar_xarayatesting_test.state</source>
+<status>33</status>
+<seq>18</seq>
+<configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:30:"0,Deleted;1,Inactive;3,Active;";}</configuration>
+</property>
+<property name="created">
+<id>1380</id>
+<label>Created</label>
+<type>formatteddatetime</type>
+<defaultvalue>time()</defaultvalue>
+<source>xar_xarayatesting_test.timestamp</source>
+<status>67</status>
+<seq>19</seq>
+<configuration></configuration>
+</property>
+</properties>
+</object>

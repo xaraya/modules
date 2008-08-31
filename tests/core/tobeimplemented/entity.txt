@@ -1,0 +1,3 @@
+<externaltag>
+  Some text in the externaltag
+</externaltag>

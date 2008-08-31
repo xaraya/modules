@@ -1,0 +1,91 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:if condition="xarModVars::get('xarayatesting','useModuleAlias')">
+                <xar:var scope="module" module="xarayatesting" name="aliasname" />
+            <xar:else />
+                <xar:mlstring>Xaraya Testing</xar:mlstring>
+            </xar:if>
+        </span>
+    </div>
+    <div class="xar-mod-body">
+        <xar:template file="testpageheader" />
+        <xar:if condition="count($suites) eq 0">
+            <xar:if condition="isset($message)">
+                #$message#
+            <xar:else />
+                Choose a set of tests to run from the tabs above
+            </xar:if>            
+        <xar:else />
+            <xar:foreach in="$suites" value="$suite">
+                <h2>#$suite:name#</h2>
+                <xar:set name="casekeys">array_keys($suite->testcases)</xar:set>
+                <xar:foreach in="$casekeys" value="$casekey">
+                    <xar:set name="casename">$suite->testcases[$casekey]->name</xar:set>
+                    <h4>TestCase: #$casename#</h4>
+                    <table width="90%">
+                        <xar:set name="tests">$suite->testcases[$casekey]->tests</xar:set>
+                        <xar:set name="testkeys">array_keys($tests)</xar:set>
+                        <xar:foreach in="$testkeys" value="$key">
+                            <xar:set name="result">$tests[$key]->result</xar:set>
+                            <tr>
+                                <xar:if condition="empty($result->message)">
+                                    <td>
+                                        WARNING: invalid result in test '#$key#'
+                                    </td>
+                                <xar:else />
+                                    <td>
+                                        #$result:message#
+                                    </td>
+                                </xar:if>
+                                <td>
+                                    <xar:if condition="get_class($result) ne 'xarTestSuccess'">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    Expected:
+                                                </td>
+                                                <td>
+                                                    <xar:set name="expected">$tests[$key]->expected</xar:set>
+                                                    <xar:if condition="!empty($expected)">
+                                                        #$expected#
+                                                    <xar:else />
+                                                        No result available
+                                                    </xar:if>
+                                               </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Actual:
+                                                </td>
+                                                <td>
+                                                    <xar:set name="actual">$tests[$key]->actual</xar:set>
+                                                    <xar:if condition="!empty($actual)">
+                                                        #$actual#
+                                                    <xar:else />
+                                                        No result available
+                                                    </xar:if>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    <xar:else />
+                                    </xar:if>
+                                </td>
+                                <xar:if condition="get_class($result) eq 'xarTestSuccess'">
+                                    <td width="10%">
+                                        Passed
+                                    </td>
+                                <xar:else />
+                                    <td width="10%">
+                                        <b style="color: red">Failed</b>
+                                    </td>
+                                </xar:if>
+                            </tr>
+                        </xar:foreach>
+                    </table>
+                </xar:foreach>
+            </xar:foreach>
+        </xar:if>
+    </div>
+</xar:template>

@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+
+<!DOCTYPE roottag SYSTEM '/non/exist/my.dtd'
+[ <!ENTITY internal_entity "internal entity">
+
+  <!ENTITY unparsedentity
+         SYSTEM "/wherever/on/the/system/image.gif"
+         NDATA gif >
+
+  <!ENTITY external_entity SYSTEM "includes/xartests/entity.txt">
+]>
+
+<!-- This is the main test file for the core xml parser
+     we'll try to do all kinds of dirty things in here
+     to test the parser. Not illegal things, just dirty
+-->
+
+<!-- root tag of the document, let's define a couple of namespaces as well -->
+<roottag xmlns:xar="http://www.xaraya.com/2003/blocklayout"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns##">
+
+  <!-- tag with namespace -->
+  <xar:sub first="test" second="2">
+    textdata
+  </xar:sub>
+  
+  <!-- processing instruction -->
+  <?php
+  echo "This ia a processing instruction, just for testing";
+  ?>
+
+  <!-- internal entities, we can just replace the declared value -->
+  <internal>Internal entity: &internal_entity;</internal>
+
+  <!-- external entities, we need to parse the location of the reference -->
+  &external_entity;
+
+  <!-- unparsed entities, actually i don't know what to do with these -->
+  &unparsed_entity;
+  
+</roottag>

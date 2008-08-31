@@ -1,0 +1,128 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:style scope="module" module="base" file="navtabs" />
+    <div>
+        <dl class="xar-tabs">
+            <dt class="help">
+                <xar:mlstring>
+                    Core:
+                </xar:mlstring>
+            </dt>
+            <xar:set name="core">
+                array(
+                    'core.testxarblock'      => 'xarBlock',
+                    'core.testxarcache'      => 'xarCache',
+                    'core.testxarcore'       => 'xarCore',
+                    'core.testxardb'         => 'xarDB',
+                    'core.testxarevents'     => 'xarEvents',
+                    'core.testxarexceptions' => 'xarExceptions',
+                    'core.testxarlog'        => 'xarLog',
+                    'core.testxarmod'        => 'xarMod',
+                    'core.testxarmls'        => 'xarMLS',
+                    'core.testxarserver'     => 'xarServer',
+                    'core.testxarsession'    => 'xarSession',
+                    'core.testxartemplate'   => 'xarTemplate',
+                    'core.testxaruser'       => 'xarUser',
+                    'core.testxarvar'        => 'xarVar',
+                )
+            </xar:set>
+            <xar:foreach in="$core" key="$key" value="$value">
+                <xar:if condition="$tab eq $key">
+                    <dd class="active">
+                        <a href="&xar-modurl-xarayatesting-user-testpage;&amp;tab=#$key#">
+                            #$value#
+                        </a>
+                    </dd>
+                    <xar:else />
+                    <dd>
+                        <a href="&xar-modurl-xarayatesting-user-testpage;&amp;tab=#$key#">
+                            #$value#
+                        </a>
+                    </dd>
+                </xar:if>
+            </xar:foreach>
+        </dl>
+    </div>
+    <div>
+        <dl class="xar-tabs">
+            <dt class="help">
+                <xar:mlstring>
+                    Libraries:
+                </xar:mlstring>
+            </dt>
+            <xar:set name="libraries">
+                array(
+                    'libraries.testblocklayout' => 'BlockLayout',
+                    'libraries.testcreole'      => 'Creole',
+                )
+            </xar:set>
+            <xar:foreach in="$libraries" key="$key" value="$value">
+                <xar:if condition="$tab eq $key">
+                    <dd class="active">
+                        <a href="&xar-modurl-xarayatesting-user-testpage;&amp;tab=#$key#">
+                            #$value#
+                        </a>
+                    </dd>
+                    <xar:else />
+                    <dd>
+                        <a href="&xar-modurl-xarayatesting-user-testpage;&amp;tab=#$key#">
+                            #$value#
+                        </a>
+                    </dd>
+                </xar:if>
+            </xar:foreach>
+        </dl>
+    </div>
+    <div>
+        <dl class="xar-tabs">
+            <dt class="help">
+                <xar:mlstring>
+                    Core Modules:
+                </xar:mlstring>
+            </dt>
+            <xar:foreach in="$coremodules" key="$key" value="$value">
+                <xar:set name="modulename">#$value['name']#</xar:set>
+                <xar:set name="ucmodulename">ucfirst($modulename)</xar:set>
+                <xar:if condition="$tab eq $modulename">
+                    <dd class="active">
+                        <a href="&xar-modurl-xarayatesting-user-testpage;&amp;tab=#$key#">
+                            #$ucmodulename#
+                        </a>
+                    </dd>
+                    <xar:else />
+                    <dd>
+                        <a href="&xar-modurl-xarayatesting-user-testpage;&amp;tab=#$key#">
+                            #$ucmodulename#
+                        </a>
+                    </dd>
+                </xar:if>
+            </xar:foreach>
+        </dl>
+    </div>
+    <div>
+        <dl class="xar-tabs">
+            <dt class="help">
+                <xar:mlstring>
+                    Other Modules:
+                </xar:mlstring>
+            </dt>
+            <xar:foreach in="$modules" key="$key" value="$value">
+                <xar:set name="modulename">#$value['name']#</xar:set>
+                <xar:set name="ucmodulename">ucfirst($modulename)</xar:set>
+                <xar:if condition="$tab eq $modulename">
+                    <dd class="active">
+                        <a href="&xar-modurl-xarayatesting-user-testpage;&amp;tab=#$key#">
+                            #$ucmodulename#
+                        </a>
+                    </dd>
+                    <xar:else />
+                    <dd>
+                        <a href="&xar-modurl-xarayatesting-user-testpage;&amp;tab=#$key#">
+                            #$ucmodulename#
+                        </a>
+                    </dd>
+                </xar:if>
+            </xar:foreach>
+        </dl>
+    </div>
+</xar:template>

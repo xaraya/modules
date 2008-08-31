@@ -1,0 +1,35 @@
+<table border="0" width="100%">
+    <tr>
+        <th colspan="4" align="center">
+            <xar:mlstring>Users Administration</xar:mlstring>            
+        </th>
+    </tr>
+    <tr align="center">
+        <td align="center">
+        
+        </td>
+        <td align="center">
+            <a href="&xar-modurl-roles-admin-new;"><xar:mlstring>Add User</xar:mlstring></a>
+        </td>
+        <td align="center">
+            <a href="&xar-modurl-roles-admin-view;"><xar:mlstring>View Users</xar:mlstring></a>
+        </td>
+        <td align="center">
+            <a href="&xar-modurl-roles-admin-modifyconfig;"><xar:mlstring>Modify Users Configuration</xar:mlstring></a>
+        </td>
+    </tr>
+    <tr align="center">
+        <td align="center">
+        
+        </td>
+        <td align="center">
+            <a href="&xar-modurl-roles-admin-modifytac;"><xar:mlstring>Modify Terms and Conditions</xar:mlstring></a>
+        </td>
+        <td align="center">
+            <a href="&xar-modurl-roles-admin-modifyconfirmationemail;"><xar:mlstring>Modify Confirmation Email</xar:mlstring></a>
+        </td>
+        <td align="center">
+            <a href="&xar-modurl-roles-admin-modifywelcomeemail;"><xar:mlstring>Modify Welcome Email</xar:mlstring></a>
+        </td>
+    </tr>
+</table>
