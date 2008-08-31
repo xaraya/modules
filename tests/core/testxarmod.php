@@ -43,7 +43,7 @@ class testxarModgetName extends xarTestCase {
 
     function testgetNameWithValidParam() {
         $this->expected = 'xarayatesting';
-        $this->actual   = xarMod::getName(30072);
+        $this->actual   = xarMod::getName(30073);
         $res = $this->assertSame($this->actual,$this->expected,"A regid param returns the name of a module");
         return $res;
     }
@@ -184,7 +184,7 @@ $suite->AddTestCase('testxarModgetDisplayDescription','xarMod::getDisplayDescrip
 class testxarModgetRegid extends xarTestCase {
                
     function testgetRegid() {
-        $this->expected = 30072;
+        $this->expected = 30073;
         $this->actual   = xarMod::getRegID('xarayatesting');
         $res = $this->assertSame($this->actual,$this->expected,"No param returns the regid of the current module");
         return $res;
@@ -212,7 +212,7 @@ class testxarModgetInfo extends xarTestCase {
                
     function testgetInfo() {
         $this->expected = '[array]';
-        $this->actual   = xarMod::getInfo(30072);
+        $this->actual   = xarMod::getInfo(30073);
         $res = $this->assertTrue(is_array($this->actual),"Call with regid param returns an array");
         return $res;
     }
@@ -239,7 +239,7 @@ class testxarModgetInfo extends xarTestCase {
     function testgetInfoWithBadTypeParam() {
         try{
             $this->expected = '[exception]';
-            $this->actual   = xarMod::getInfo(30072,'foobar');
+            $this->actual   = xarMod::getInfo(30073,'foobar');
             $res = $this->assertSame($this->actual,$this->expected,"Regid param, bad type param throws an exception");
             return $res;
         } catch(Exception $e) {
@@ -248,7 +248,7 @@ class testxarModgetInfo extends xarTestCase {
     }
     function testgetInfoWithTypeParam1() {
         $this->expected = '[array]';
-        $this->actual   = xarMod::getInfo(30072,'module');
+        $this->actual   = xarMod::getInfo(30073,'module');
         $res = $this->assertTrue(is_array($this->actual) && (count($this->actual) == 30),"Call with regid param and type = 'module' returns an array of 30 elements");
         return $res;
     }
@@ -402,7 +402,7 @@ class testxarModgetState extends xarTestCase {
                
     function testgetState() {
         $this->expected = 3;
-        $this->actual   = xarMod::getState(30072);
+        $this->actual   = xarMod::getState(30073);
         $res = $this->assertSame($this->actual,$this->expected,"Call with module name param returns a state value");
         return $res;
     }
@@ -429,7 +429,7 @@ class testxarModgetState extends xarTestCase {
     function testgetStateWithBadTypeParam() {
         try{
             $this->expected = '[exception]';
-            $this->actual   = xarMod::getState(30072,'foobar');
+            $this->actual   = xarMod::getState(30073,'foobar');
             $res = $this->assertSame($this->actual,$this->expected,"Call with module name param, bad type param throws an exception");
             return $res;
         } catch(Exception $e) {
@@ -438,7 +438,7 @@ class testxarModgetState extends xarTestCase {
     }
     function testgetStateWithTypeParam1() {
         $this->expected = 3;
-        $this->actual   = xarMod::getState(30072,'module');
+        $this->actual   = xarMod::getState(30073,'module');
         $res = $this->assertSame($this->actual,$this->expected,"Call with module name param and type = 'module' returns returns a state value");
         return $res;
     }

@@ -25,7 +25,7 @@
         function testActivateBadParam() {
             try{
                 $this->expected = '[exception]';
-                $this->actual   = xarModAPIFunc('themes','admin','activate',array('regid' => 30072));
+                $this->actual   = xarModAPIFunc('themes','admin','activate',array('regid' => 30073));
                 $res = $this->assertSame($this->actual,$this->expected,"Call with an invalid theme id param throws an exception");
                 return $res;
             } catch(Exception $e) {

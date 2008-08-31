@@ -5,7 +5,7 @@
  *
  */
     $modversion['name']           = 'xarayatesting';
-    $modversion['id']             = '30072';
+    $modversion['id']             = '30073';
     $modversion['version']        = '1.0.0';
     $modversion['displayname']    = xarML('Xaraya Testing');
     $modversion['description']    = xarML('Module with QA checks and unit tests');
