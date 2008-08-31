@@ -5,6 +5,7 @@
  */
     function xarayatesting_admin_testpage($args)
     {
-        return xarModFunc('xarayatesting','user','testpage',$args);
+        xarResponseRedirect(xarModURL('xarayatesting','user','testpage',$args));
+        return true;
     }
 ?>
