@@ -12,7 +12,7 @@
                               'url'   => xarModURL('xarayatesting','user','view')
                              );
 
-        $extensionitemtypes = xarModAPIFunc('dynamicdata','user','getmoduleitemtypes',array('moduleid' => 30071, 'native' => false));
+        $extensionitemtypes = xarModAPIFunc('dynamicdata','user','getmoduleitemtypes',array('moduleid' => 30072, 'native' => false));
 
         /* TODO: activate this code when we move to php5
         $keys = array_merge(array_keys($itemtypes),array_keys($extensionitemtypes));
