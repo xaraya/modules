@@ -17,8 +17,8 @@ function xarayatesting_userapi_getmenulinks()
         $menulinks[] = array('url'   => xarModURL('xarayatesting',
                                                   'user',
                                                   'view'),
-                              'title' => xarML('Run the site test suites'),
-                              'label' => xarML('Run Site Tests'));
+                              'title' => xarML('Display the site test suites'),
+                              'label' => xarML('Site Tests'));
         $menulinks[] = array('url'   => xarModURL('xarayatesting',
                                                   'user',
                                                   'testpage'),
