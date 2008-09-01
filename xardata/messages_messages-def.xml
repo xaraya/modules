@@ -1,0 +1,105 @@
+<object name="messages_messages">
+  <objectid>161</objectid>
+  <label>Messages</label>
+  <parent>objects</parent>
+  <module_id>182</module_id>
+  <itemtype>71</itemtype>
+  <class>DataObject</class>
+  <filepath></filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="id">
+      <id>1680</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_comments.id</source>
+      <status>65</status>
+      <seq>1</seq>
+      <configuration></configuration>
+    </property>
+    <property name="to">
+      <id>1681</id>
+      <label>To</label>
+      <type>username</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_comments.pid</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration>a:6:{s:16:"display_linkrule";s:1:"0";s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:20:"validation_existrule";s:1:"0";s:25:"initialization_store_type";s:2:"id";}</configuration>
+    </property>
+    <property name="from">
+      <id>1682</id>
+      <label>From</label>
+      <type>username</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_comments.author</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration>a:6:{s:16:"display_linkrule";s:1:"0";s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:20:"validation_existrule";s:1:"0";s:25:"initialization_store_type";s:2:"id";}</configuration>
+    </property>
+    <property name="subject">
+      <id>1683</id>
+      <label>Subject</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_comments.title</source>
+      <status>33</status>
+      <seq>4</seq>
+      <configuration></configuration>
+    </property>
+    <property name="time">
+      <id>1684</id>
+      <label>Time</label>
+      <type>formatteddatetime</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_comments.date</source>
+      <status>33</status>
+      <seq>5</seq>
+      <configuration></configuration>
+    </property>
+    <property name="state">
+      <id>1685</id>
+      <label>State</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_comments.status</source>
+      <status>35</status>
+      <seq>6</seq>
+      <configuration></configuration>
+    </property>
+    <property name="object">
+      <id>1686</id>
+      <label>Object</label>
+      <type>object</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_comments.objectid</source>
+      <status>35</status>
+      <seq>7</seq>
+      <configuration></configuration>
+    </property>
+    <property name="post_anonymously">
+      <id>1687</id>
+      <label>Post Anonymously</label>
+      <type>checkbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_comments.anonpost</source>
+      <status>34</status>
+      <seq>8</seq>
+      <configuration></configuration>
+    </property>
+    <property name="deleted">
+      <id>1688</id>
+      <label>Deleted</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_comments.delete_to</source>
+      <status>34</status>
+      <seq>9</seq>
+      <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:68:"1,Deleted from To list;2,Deleted from From list;3,Deleted from both;";}</configuration>
+    </property>
+  </properties>
+</object>

@@ -1,12 +1,20 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:set name="is_sendtouser">
-        xarModAPIFunc('messages','user','is_sendtouser', 
-            array(
-                'sendtouser' => $recipient,
-            )
-        )
+    <xar:set name="action">
+        isset($action) ? $action : 'noaction'
     </xar:set>
-    
+    <xar:if condition="isset($recipient)">
+        <xar:set name="is_sendtouser">
+            xarModAPIFunc('messages','user','is_sendtouser', 
+                array(
+                    'sendtouser' => $recipient,
+                )
+            )
+        </xar:set>
+    <xar:else />
+        <xar:set name="is_sendtouser">
+            1
+        </xar:set>
+    </xar:if>
     <h3>#$input_title#</h3>
     <form id="inputbox" action="#$post_url#" method="post" enctype="multipart/form-data">
         <div class="xar-form-input-wrapper">
@@ -15,7 +23,7 @@
             </label>
             #xarUserGetVar('name')#
             <!--Psspl:Modified the code for anonymous message-->
-            <xar:if condition="isset($action) and $action ne 'reply' and $action ne 'prev_reply' AND $is_sendtouser">
+            <xar:if condition="$action ne 'reply' and $action ne 'prev_reply' AND $is_sendtouser">
                 <xar:if condition="isset($id) and isset($postanon)">
                     <xar:data-input type="checkbox"  name="postanon" checked="$postanon" />
                 <xar:else />
@@ -35,27 +43,26 @@
             <label for="recipient" title="#xarML('To whom the message will be sent')#" class="xar-form-label">
                 <xar:mlstring>To:</xar:mlstring>
             </label>
-            <xar:if condition="isset($action) and $action ne 'reply' and $action ne 'prev_reply' and $action ne 'modify'">
-                <xar:if condition="empty($users)">
-                    No recipients available
-                <xar:else />
-                    <xar:data-inpt type="dropdown" name="recipient" value="$recipient" options="$users" />
-                </xar:if>
-            </xar:if>
-            <xar:if condition="isset($action) and $action eq 'reply' or $action eq 'prev_reply' ">
+            <xar:if condition="$action eq 'reply' or $action eq 'prev_reply'" >
                 <xar:if condition="$postanon eq 0 AND $is_sendtouser">
                     <xar:mlstring>#$recipient_name#</xar:mlstring>      
                 <xar:else/>
                     <xar:mlstring>Anonymous</xar:mlstring>
                 </xar:if>
                 <input type="hidden" value="#$recipient#" name="recipient" id="recipient" />
-            <xar:elseif condition="isset($action) and $action eq 'modify'" />
+            <xar:elseif condition="$action eq 'modify'" />
                 <xar:if condition="$is_sendtouser">
                     <xar:data-inpt type="dropdown" name="recipient" value="$recipient" options="$users" />
                 <xar:else/>
                     <xar:mlstring>Anonymous</xar:mlstring>
                 </xar:if>   
                 <input type="hidden" value="#$recipient#" name="recipient" id="recipient" />
+            <xar:else/>
+                <xar:if condition="empty($users)">
+                    No recipients available
+                <xar:else />
+                    <xar:data-input type="dropdown" name="recipient" options="$users" />
+                </xar:if>
             </xar:if>
             <xar:if condition="isset($no_recipient)">
                 <span class="xar-error">
