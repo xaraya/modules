@@ -37,6 +37,12 @@ function mag_user_article($args)
     // viewed, but only to someone with edit privileges.
     xarVarFetch('show', 'enum:preview', $show, '', XARVAR_NOT_REQUIRED);
 
+    // If we have an premium bypass IPs, then make sure this page does not get cached.
+    // The idea is that anonymous users visiting protected articles will not result in
+    // the page being cached, leaving a non-readable to indexing processes running on
+    // the server.
+    if (!empty($premium_policy_bypass_ip)) xarCore_SetCached('Page.Caching', 'nocache', TRUE);
+
     // aid overrides article
     if (!empty($article_ref) && !empty($aid)) $article_ref = '';
 
@@ -216,32 +222,32 @@ function mag_user_article($args)
 
                     $return['article_authors'] = $authors;
                 }
-            }
 
-            // Now check the permissions for this article.
-            // We still need all the information in the template, regardless of what
-            // the privilege level is, hence doing this check right at the end.
-            // The three levels are: NONE, OVERVIEW and READ.
-            if ($show == 'preview') {
-                // Preview mode trumps them all.
-                $viewlevel = 'READ';
-            } else {
-                if (xarSecurityCheck('OverviewMagArt', 0, 'MagArt', "$mid:$article[premium]")) {
-                    // We have at least overview privilege.
-                    if (xarSecurityCheck('ReadMagArt', 0, 'MagArt', "$mid:$article[premium]")) {
-                        $viewlevel = 'READ';
-                    } else {
-                        $viewlevel = 'OVERVIEW';
-                    }
+                // Now check the permissions for this article.
+                // We still need all the information in the template, regardless of what
+                // the privilege level is, hence doing this check right at the end.
+                // The three levels are: NONE, OVERVIEW and READ.
+                if ($show == 'preview') {
+                    // Preview mode trumps them all.
+                    $viewlevel = 'READ';
                 } else {
-                    // No have no privilege to view this page.
-                    $viewlevel = 'NONE';
+                    if (xarSecurityCheck('OverviewMagArt', 0, 'MagArt', "$mid:$article[premium]")) {
+                        // We have at least overview privilege.
+                        if (xarSecurityCheck('ReadMagArt', 0, 'MagArt', "$mid:$article[premium]")) {
+                            $viewlevel = 'READ';
+                        } else {
+                            $viewlevel = 'OVERVIEW';
+                        }
+                    } else {
+                        // No have no privilege to view this page.
+                        $viewlevel = 'NONE';
+                    }
                 }
-            }
 
-            // Pass the view level to the templates, where it can be used to
-            // show or hide sections of the article as appropriate.
-            $return['viewlevel'] = $viewlevel;
+                // Pass the view level to the templates, where it can be used to
+                // show or hide sections of the article as appropriate.
+                $return['viewlevel'] = $viewlevel;
+            }
         } // Overview privilege check on magazine
     }
 
