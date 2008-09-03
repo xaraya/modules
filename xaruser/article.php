@@ -284,9 +284,9 @@ function mag_user_article($args)
     // It does not bypass security restrictions though, only the
     // premium policy.
 
-    if (!empty($premium_policy_bypass_ip) && !empty($GLOBALS['HTTP_SERVER_VARS']['SERVER_ADDR']) && !empty($GLOBALS['HTTP_SERVER_VARS']['REMOTE_ADDR'])) {
-        $ips = explode(',', str_replace('localhost', $GLOBALS['HTTP_SERVER_VARS']['SERVER_ADDR'], $premium_policy_bypass_ip));
-        if (in_array($GLOBALS['HTTP_SERVER_VARS']['REMOTE_ADDR'], $ips)) {
+    if (!empty($premium_policy_bypass_ip) && !empty($_SERVER['SERVER_ADDR']) && !empty($_SERVER['REMOTE_ADDR'])) {
+        $ips = explode(',', str_replace('localhost', $_SERVER['SERVER_ADDR'], $premium_policy_bypass_ip));
+        if (in_array($_SERVER['REMOTE_ADDR'], $ips)) {
             $premium_bypass = true;
         } else {
             $premium_bypass = false;

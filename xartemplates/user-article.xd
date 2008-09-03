@@ -53,7 +53,7 @@
                 <xar:template file="article-header" module="mag" />
             </xar:if>
 
-            <xar:if condition="$viewlevel eq 'OVERVIEW' or $viewlevel eq 'READ'">
+            <xar:if condition="$viewlevel eq 'OVERVIEW' or $viewlevel eq 'READ' or $premium_bypass">
                 <xar:comment>Introduction section - image, summary. Make the main image a thickbox/thumbnailed if required.</xar:comment>
                 <xar:if condition="!empty($style) and xarModAPIfunc('mag','user','testtemplate',array('templateName'=&gt;'article-intro','templateSuffix'=&gt;$style))">
                     <xar:set name="$article_intro_html"><xar:template file="article-intro-$style" module="mag" /></xar:set>
@@ -62,7 +62,7 @@
                 </xar:if>
                 #xarModAPIfunc('mag','user','imgfilter',array('text'=&gt;$article_intro_html,'mag_ref'=&gt;$mag.ref,'issue_ref'=&gt;$issue.ref))#
 
-                <xar:if condition="$viewlevel eq 'READ'">
+                <xar:if condition="$viewlevel eq 'READ' or $premium_bypass">
                     <xar:comment>Body section - main body</xar:comment>
                     <xar:if condition="!empty($style) and xarModAPIfunc('mag','user','testtemplate',array('templateName'=&gt;'article-body','templateSuffix'=&gt;$style))">
                         <xar:template file="article-body-$style" module="mag" />
