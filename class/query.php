@@ -286,8 +286,8 @@ class Query
         $numargs = func_num_args();
         if ($numargs == 2) {
             $name = func_get_arg(0);
-            $value = func_get_arg(1);
-            $argsarray = array('name' => $name, 'value' => $value);
+            $argsarray = $this->_deconstructfield($name);
+            $argsarray['value'] = func_get_arg(1);
         }
         elseif ($numargs == 1) {
             $field = func_get_arg(0);
@@ -315,14 +315,15 @@ class Query
         for ($i=0;$i<count($this->fields);$i++) {
             // if we already have this field , bail
             if ($this->fields[$i] == $argsarray) {$done = true; break;}
-            // We might still be able to add alias info
+            
+            // If at least the name and table are identical, we might still be able to add alias info
             if ($this->fields[$i]['name'] == $argsarray['name'] && $this->fields[$i]['table'] == $argsarray['table']) {
-                if (isset($this->fields[$i]['alias']) && isset($argsarray['alias']) &&
-                   ($this->fields[$i]['alias'] != $argsarray['alias'])) {
-                        $this->fields[$i] = $argsarray;
-                        $done = true;
-                        break;
+                if (isset($argsarray['alias']) {
+                    $this->fields[$i]['alias'] = $argsarray['alias'];                
                 }
+                $this->fields[$i]['value'] = $argsarray['value'];
+                $done = true;
+                break;
             }
         }
         if (!$done) $this->fields[] = $argsarray;
