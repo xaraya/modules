@@ -101,7 +101,7 @@ function xarpages_funcapi_news($args)
     // General sort methods will be what articles supports (practically just date and title)
     xarVarFetch('sort', 'str', $sort, '', XARVAR_NOT_REQUIRED);
     if (empty($sort)) $sort = (isset($settings['defaultsort']) ? $settings['defaultsort'] : '');
-    
+
     // Put all the category ids into the cids array.
     if (!empty($cid) && !in_array($cid, $cids)) array_push($cids, $cid);
 
@@ -294,6 +294,20 @@ function xarpages_funcapi_news($args)
                     }
 
                 }
+            }
+
+            // Perform other required hooks (e.g. hitcount) against the article.
+            if (!empty($article)) {
+                $article['hooks'] = xarModCallHooks(
+                    'item', 'display', $aid,
+                    array(
+                        'module' => 'articles',
+                        'itemtype' => $article['pubtypeid'],
+                        'itemid' => $aid,
+                        'title' => $article['title'],
+                        'returnurl' => xarServerGetCurrentURL() //xarModURL('articles', 'user', 'display', array('ptid' => $ptid, 'aid' => $aid))
+                    ), 'articles'
+                );
             }
 
             // If the article is in the list of articles, then we can provide links
