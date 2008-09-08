@@ -318,7 +318,7 @@ class Query
             
             // If at least the name and table are identical, we might still be able to add alias info
             if ($this->fields[$i]['name'] == $argsarray['name'] && $this->fields[$i]['table'] == $argsarray['table']) {
-                if (isset($argsarray['alias']) {
+                if (isset($argsarray['alias'])) {
                     $this->fields[$i]['alias'] = $argsarray['alias'];                
                 }
                 $this->fields[$i]['value'] = $argsarray['value'];
