@@ -1,7 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:comment>
+    <!--
         License: GPL http://www.gnu.org/copyleft/gpl.html
-    </xar:comment>
+    -->
     <div class="xar-mod-head">
         <span class="xar-mod-title">
             <xar:if condition="xarModVars::get('categories','useModuleAlias')">
@@ -21,8 +21,8 @@
             <xar:template file="headerconfig" type="module"/>
         </div>
 
-        <xar:comment> Begin General Options
-        </xar:comment>
+        <!-- Begin General Options
+        -->
 
         <form method="post" action="&xar-modurl-categories-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
             <xar:if condition="$tab eq 'categories_general'">

@@ -33,7 +33,7 @@
             </xar:for>
         </select>
     </div>
-    <xar:comment>The position needs to be set after categories select because There is no position which we can have a selected category that will work in all cases</xar:comment>
+    <!-- The position needs to be set after categories select because There is no position which we can have a selected category that will work in all cases -->
     <div class="xar-form-input-wrapper">
         <label for="position[#$cid#]" class="xar-form-label help" title="#xarML('Position of this category.')#">
             <xar:mlstring>Position</xar:mlstring>

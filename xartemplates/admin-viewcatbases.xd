@@ -3,11 +3,11 @@
 <div class="xar-mod-body"><h2><xar:mlstring>View Category Bases</xar:mlstring></h2>
 <div style="margin: auto;">
 
-<xar:comment> These two variables track transitions in module or itemtype down the table. </xar:comment>
+<!-- These two variables track transitions in module or itemtype down the table. -->
 <xar:set name="moduletrack">''</xar:set>
 <xar:set name="itemtypetrack">''</xar:set>
 
-<xar:comment> Provide 'all modules' and 'all item types' links if relevant </xar:comment>
+<!-- Provide 'all modules' and 'all item types' links if relevant -->
 <xar:if condition="!empty($modid) or !empty($itemtype)">
     <p>
         <xar:if condition="!empty($modid)">
@@ -23,14 +23,14 @@
     </p>
 </xar:if>
 
-<xar:comment> Display the main table if there is data to display </xar:comment>
+<!-- Display the main table if there is data to display -->
 <xar:if condition="!empty($catbases)">
     <table cellpadding="2" cellspacing="0">
         <xar:loop name="$catbases">
         <xar:if condition="$loop:index eq 0">
-            <xar:comment> Prepare table headings in the first iteration of the loop </xar:comment>
+            <!-- Prepare table headings in the first iteration of the loop -->
             <caption>
-                <xar:comment> Caption indicates scope: all, module or itemtype </xar:comment>
+                <!-- Caption indicates scope: all, module or itemtype -->
                 <xar:if condition="empty($modid)">
                     <xar:mlstring>Category bases</xar:mlstring>
                 <xar:elseif condition="!isset($itemtype)"/>
@@ -99,7 +99,7 @@
                 <a href="#xarModURL('categories', 'admin', 'modify', array('cid' => $loop:item['cid']))#" title="#xarML('Modify category')#">#$loop:item['catname']#</a>
             </td>
             <td style="text-align: center;">
-                <xar:comment> Pass the module and itemtype in for now - eventually just the bid will be sufficient </xar:comment>
+                <!-- Pass the module and itemtype in for now - eventually just the bid will be sufficient -->
                 <a href="#xarModURL('categories', 'admin', 'modifycatbase', array('bid' => $loop:item['bid'], 'modid' => $loop:item['modid'], 'itemtype' => $loop:item['itemtype']))#">
                     <xar:mlstring>Modify</xar:mlstring>
                 </a>
@@ -117,7 +117,7 @@
 </xar:if>
 
 <xar:if condition="!empty($modid) and !empty($itemtype)">
-    <xar:comment> New allowed where we know the module and item type </xar:comment>
+    <!-- New allowed where we know the module and item type -->
     <p>
         <a href="#xarModURL('categories', 'admin', 'newcatbase', array('modid' => $modid, 'itemtype' => $itemtype))#">
             <xar:mlstring>New</xar:mlstring>

@@ -1,12 +1,12 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="!empty($size)">
-    <xar:set name="sizestring">'size="'.$size.'"'</xar:set>
+    <xar:set name="sizestring">'$size'</xar:set>
 <xar:else/>
     <xar:set name="sizestring">''</xar:set>
 </xar:if>
 
 <xar:if condition="!empty($multiple)">
-    <xar:set name="multiplestring">'multiple="multiple"'</xar:set>
+    <xar:set name="multiplestring">"multiple"</xar:set>
 <xar:else/>
     <xar:set name="multiplestring">''</xar:set>
 </xar:if>
@@ -15,7 +15,7 @@
     <xar:set name="javascript">''</xar:set>
 </xar:if>
 
-<select #$sizestring# name="#$name_prefix#cids[]" #$multiplestring# #$javascript# >
+<select size="#$sizestring#" name="#$name_prefix#cids[]" multiple="#$multiplestring#" onchange="#$javascript#" >
 <xar:if condition="!empty($select_itself)">
     <option value=""><xar:mlstring>Select :</xar:mlstring></option>
 </xar:if>
@@ -52,7 +52,7 @@
     <xar:elseif condition="(isset($values)) and (isset($values[$id]))and (($multiple eq true) or (!$already_passed)) and ($values[$id] gt 0)" />
         <option value="#$id#" selected="selected">#$indent##$name#</option>
         <xar:set name="already_passed">true</xar:set>
-<xar:comment>this is used to inform the calling function that we saw this category, when several select boxes are used</xar:comment>
+<!-- this is used to inform the calling function that we saw this category, when several select boxes are used -->
         <xar:set name="current_id">$id; $values[$id]--; $GLOBALS['Categories_MakeSelect_Values'][$id]--;</xar:set>
     <xar:else />
         <option value="#$id#">#$indent##$name#</option>

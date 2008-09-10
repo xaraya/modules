@@ -43,7 +43,7 @@
                     <input type="checkbox" name="display" id="display" value="1" />
                 </xar:if>
             </p>
-            <xar:comment> Display the ordering select list if modifying, and there are two or more category bases to order </xar:comment>
+            <!-- Display the ordering select list if modifying, and there are two or more category bases to order -->
             <xar:if condition="$groupcount gt 1 and !empty($bid)">
                 <p>
                     <label for="order"><xar:mlstring>Order</xar:mlstring></label>

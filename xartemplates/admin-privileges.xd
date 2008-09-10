@@ -71,10 +71,10 @@
     </td>
 </tr>
 
-<xar:comment>
+<!--
     // TODO: add option to apply this privilege for all child categories too
     //       (once privileges supports this)
-</xar:comment>
+-->
 
 <tr><th valign="top" align="right">
 <xar:mlstring>Access Level</xar:mlstring>

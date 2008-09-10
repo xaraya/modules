@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div style="clear: both; padding-top: 10px;">
     <span style="float: left; width: 20%; text-align: right;">
     <label for="layout#$blockid#"><xar:mlstring>Category layout</xar:mlstring></label>
@@ -109,5 +110,4 @@
         <xar:data-input type="dropdown" name="showchildren" id="$id2" options="$options" value="$showchildren" />
     </span>
 </div>
-
-
+</xar:template>

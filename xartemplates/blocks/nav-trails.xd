@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="!empty($catdescr)">
 <table border="0" cellpadding="2" cellspacing="0" width="100%">
 <tr>
@@ -86,3 +87,4 @@
 </xar:if>
 
 <br />
+</xar:template>
