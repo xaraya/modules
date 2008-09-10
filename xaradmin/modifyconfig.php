@@ -1,6 +1,6 @@
 <?php
 /**
- * Main configuration page for the foo object
+ * Main configuration page for the foo module
  *
  */
 
