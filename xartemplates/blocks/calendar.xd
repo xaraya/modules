@@ -40,6 +40,7 @@
 
     <!--
     <xar:style scope="module" file="stylejulian" />
+    -->
 
     <xar:template file="navheader" />
     <!--
@@ -99,15 +100,17 @@
                 <xar:set name="WeekNum">xarModAPIFunc('calendar','user','getWeekNumber',array('cal_date'=>$WeekDate))</xar:set>
                 <tr>
                     <th class="cal-week"><a href="#$WeekUrl#">#xarLocaleFormatDate('%U',$Day->getTimeStamp())#</a></th>
+                </tr>
                 </xar:if>
                 <!-- populate the day -->
                 <xar:set name="today">xarLocaleFormatDate('%Y%m%d')</xar:set>
                 <xar:set name="thisday">xarLocaleFormatDate('%Y%m%d',$Day->getTimeStamp())</xar:set>
                 <xar:if condition="$today eq $thisday">
-                    <td class="xar-accent cal-day">
+                    <xar:set name="displayclass">"xar-accent cal-day"</xar:set>
                 <xar:else />
-                    <td class="cal-day">
+                    <xar:set name="displayclass">"cal-day"</xar:set>
                 </xar:if>
+                <td class="#$displayclass#">
                 <xar:if condition="!$Day:isEmpty()">
                     <!-- Display the date for this day -->
                     <a class="xar-accent" href="#$DayURI->current('day')#">#$Day->thisDay()#</a>
