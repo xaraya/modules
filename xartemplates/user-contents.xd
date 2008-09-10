@@ -28,6 +28,7 @@
                         #xarVarPrepForDisplay($issue.title)#
                     </a>
                 </h1>
+                <xar:set name="dummy">#xarTplSetPageTitle($issue.title . ' - ' . $mag.title)#</xar:set>
                 <xar:if condition="!empty($issue.tagline)">
                     <h2>
                         #xarVarPrepForDisplay($issue.tagline)#
