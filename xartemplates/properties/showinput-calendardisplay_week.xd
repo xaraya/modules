@@ -1,12 +1,12 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:style scope="module" module="calendar" file="user-month" />
-    <xar:comment> we want to add the textual decorator to the month class so we have day names and such </xar:comment>
+    <!-- we want to add the textual decorator to the month class so we have day names and such -->
 
     <xar:template file="navheader" />
-    <xar:comment>
+    <!--
         Define our navigation elements.
         TODO: Make a nice API Function for creating the valid URLS
-    </xar:comment>
+    -->
     <xar:calendar-decorator object="$Week" decorator="Xaraya" name="WeekURI" />
 
     <xar:set name="prevYearTitle"><xar:mlstring>Previous Year</xar:mlstring></xar:set>
@@ -38,13 +38,13 @@
             <xar:while condition="true">
                 <xar:set name="Day">$Week->fetch()</xar:set>
                 <xar:if condition="$Day">
-                    <xar:comment> we want to create a new Day object with Xaraya specifics </xar:comment>
+                    <!-- we want to create a new Day object with Xaraya specifics -->
                     <xar:calendar-decorator object="$Day" decorator="Xaraya" name="DayURI" />
 
                     <xar:if condition="$Day:isFirst()">
-                        <td>&#160;<xar:comment> week info goes here </xar:comment></td>
+                        <td>&#160;<!-- week info goes here --></td>
                     </xar:if>
-                    <xar:comment> populate the day </xar:comment>
+                    <!-- populate the day -->
                     <xar:set name="today">xarLocaleFormatDate('%Y%m%d')</xar:set>
                     <xar:set name="thisday">xarLocaleFormatDate('%Y%m%d',$Day->getTimeStamp())</xar:set>                    
                     <xar:if condition="$today eq $thisday">
@@ -54,7 +54,7 @@
                     </xar:if>
                     <td class="#$accentclass# cal-day" style="width: 14%">
                         <xar:if condition="!$Day:isEmpty()">
-                            <xar:comment> Display the date for this day </xar:comment>
+                            <!-- Display the date for this day -->
                             <a href="#$DayURI->current('day')#">#$Day->thisDay()#</a>
                             <xar:set name="entries">$Day->getEntries()</xar:set>
                             <!--
@@ -83,7 +83,7 @@
                                 </xar:foreach>
                             </table>
                         <xar:else />
-                            <xar:comment> Hide this day because it's not part of the month we are viewing </xar:comment>
+                            <!-- Hide this day because it's not part of the month we are viewing -->
                             &#160;
                         </xar:if>
                     </td>

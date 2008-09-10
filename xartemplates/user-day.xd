@@ -91,6 +91,6 @@
         </xar:while>
     </div>
 
-    <xar:comment> include the calendar footer </xar:comment>
+    <!-- include the calendar footer -->
     <xar:template file="todayfooter" />
 </xar:template>

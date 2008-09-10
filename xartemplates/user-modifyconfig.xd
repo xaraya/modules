@@ -25,7 +25,7 @@
             <option value="year"><xar:mlstring>Year</xar:mlstring></option>
         </xar:if>
 
-        <xar:comment> adapt to your own preferred custom view</xar:comment>
+        <!-- adapt to your own preferred custom view-->
         <xar:if condition="$default_view eq 'customview'">
             <option disabled="disabled" value="customview" selected="selected"><xar:mlstring>Customized</xar:mlstring></option>
         <xar:else />

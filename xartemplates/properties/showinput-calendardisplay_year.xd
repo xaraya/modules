@@ -50,7 +50,7 @@
                             <xar:set name="Day">$Month->fetch()</xar:set>
                             <xar:while condition="$Day">
                                 <xar:if condition="$Day:isFirst()">
-                                    <xar:comment> Start a new row </xar:comment>
+                                    <!-- Start a new row -->
                                     <xar:set name="WeekDate">xarLocaleFormatDate('%Y%m%d',$Day->thisDay('timestamp'))</xar:set>
                                     <xar:set name="WeekUrl">xarModURL('calendar','user','week',array('cal_date'=>$WeekDate))</xar:set>
                                     <xar:set name="WeekNum">xarModAPIFunc('calendar','user','getWeekNumber',array('cal_date'=>$WeekDate))</xar:set>
@@ -59,7 +59,7 @@
                                             <a href="#$WeekUrl#">#xarLocaleFormatDate('%U',$Day->getTimeStamp())#</a>
                                         </td>
                                         <xar:while condition="1">                        
-                                            <xar:comment> populate the day </xar:comment>
+                                            <!-- populate the day -->
                                             <xar:set name="thisday">xarLocaleFormatDate('%Y%m%d',$Day->thisDay('timestamp'))</xar:set>
                                             <xar:if condition="$today eq $thisday">
                                                 <xar:set name="accentclass">'xar-accent'</xar:set>
@@ -69,15 +69,15 @@
                                             <td class="#$accentclass# cal-day">
                                                 <xar:set name="DayUrl">xarModURL('calendar','user','day',array('cal_date'=>$thisday))</xar:set>
                                                 <xar:if condition="!$Day:isEmpty()">
-                                                    <xar:comment> Display the date for this day </xar:comment>
+                                                    <!-- Display the date for this day -->
                                                     <a href="#$DayUrl#">#$Day->thisDay()#</a>
                                                 <xar:else />
-                                                    <xar:comment> Hide this day because it's not part of the Year we are viewing </xar:comment>
+                                                    <!-- Hide this day because it's not part of the Year we are viewing -->
                                                     &#160;
                                                 </xar:if>
                                             </td>
                                             <xar:if condition="$Day:isLast()">
-                                                <xar:comment> close out the row </xar:comment>
+                                                <!-- close out the row -->
                                                <xar:break />
                                             </xar:if>
                                             <xar:set name="Day">$Month->fetch()</xar:set>
@@ -89,12 +89,12 @@
                         </table>
                     </td>
                     <xar:set name="i">$i + 1</xar:set>
-                <xar:comment> make a new row for when necessary </xar:comment>
+                <!-- make a new row for when necessary -->
                 <xar:if condition="!($i % 2)">
                     <xar:break />
                 </xar:if>
                     <xar:set name="Month">$Year->fetch()</xar:set>
-                    <xar:comment> check for this being the last Year to close out the table row </xar:comment>
+                    <!-- check for this being the last Year to close out the table row -->
                 </xar:while>
             </tr>
             <xar:set name="Month">$Year->fetch()</xar:set>
