@@ -4,6 +4,9 @@
 
     <xar:if condition="!empty($series.title)">
         <p class="mag-article-series">#xarVarPrepForDisplay($series.title)#</p>
+        <xar:set name="dummy">#xarTplSetPageTitle($article.title . ' - ' . $series.title)#</xar:set>
+    <xar:else />
+        <xar:set name="dummy">#xarTplSetPageTitle($article.title)#</xar:set>
     </xar:if>
 
     <h1>
