@@ -10,6 +10,27 @@
     <p><xar:mlstring>Note: the Xaraya_Classic theme causes most of these plugins to fail one way or another.
     We don't know where the fault lies, but it is something to bear in mind when trying this demo out.</xar:mlstring></p>
 
+    <h2><xar:mlstring>uiTableFilter - filter a table dynamically</xar:mlstring></h2>
+
+    <xar:template file="jquery.uitablefilter" module="jquery" subdata="array('selector'=&gt;'table.food-planner','filter'=&gt;'input#food-table-filter')" />
+
+    <p><input name="foo" id="food-table-filter" type="text" /></p>
+    <table class="food-planner">
+        <thead>
+            <tr><th>Your Food List</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Beef, ground, 95% lean meat / 5% fat, patty, cooked, broiled</td></tr>
+            <tr><td>Bread, rye, toasted</td></tr>
+            <tr><td>Broccoli, cooked, boiled, drained, with salt</td></tr>
+            <tr><td>Butter, salted</td></tr>
+            <tr><td>CAMPBELL Soup Company, CAMPBELL'S CHUNKY Microwavable Bowls, Chicken and Dumplings Soup</td></tr>
+            <tr><td>CAMPBELL Soup Company, CAMPBELL'S CHUNKY Soups, Fajita Chicken with Rice &amp; Beans Soup</td></tr>
+            <tr><td>Carrots, baby, raw</td></tr>
+            <tr><td>Cheese, swiss</td></tr>
+        </tbody>
+    </table>
+    
     <h2><xar:mlstring>QATool - a simple QA hand-holding series of steps</xar:mlstring></h2>
 
     <xar:template file="jquery.qatool" module="jquery" subdata="array('selector'=&gt;'ul.qatool')" />
