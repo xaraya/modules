@@ -2,19 +2,11 @@
 
     class YearEvent_Decorator extends Calendar_Decorator
     {
-        public $cE;
-        public $tableHelper;
-        public $firstDay = false;
-
         function build($sDates = array(), $firstDay = null)
         {
-            include_once CALENDAR_ROOT . 'Day.php';
-            include_once CALENDAR_ROOT .  'Table/Helper.php';
-            $this->tableHelper = new Calendar_Table_Helper($this, $this->firstDay);
-            $this->cE = & $this->getEngine();
             require_once CALENDAR_ROOT.'Factory.php';
             $this->firstDay = $this->defineFirstDayOfWeek($firstDay);
-            $monthsInYear = $this->cE->getMonthsInYear($this->thisYear());
+            $monthsInYear = $this->calendar->cE->getMonthsInYear($this->thisYear());
             for ($i=1; $i <= $monthsInYear; $i++) {
                 $month = Calendar_Factory::create('Month', $this->year, $i);
                 $start_time = $month->getTimestamp();
