@@ -19,10 +19,10 @@
             require_once CALENDAR_ROOT.'Factory.php';
             $monthsInYear = $this->cE->getMonthsInYear($this->thisYear());
             for ($i=1; $i <= $monthsInYear; $i++) {
-                $month = Calendar_Factory::create('Month', $this->year, $i);
-                $start_time = $month->getTimestamp();
                 $month = Calendar_Factory::create('Month', $this->year, $i+1);
                 $end_time = $month->getTimestamp();
+                $month = Calendar_Factory::create('Month', $this->year, $i);
+                $start_time = $month->getTimestamp();
                 $events = $this->getEvents($start_time, $end_time, xarSession::getVar('role_id')); 
                 $MonthDecorator = new MonthEvent_Decorator($month);
                 $MonthDecorator->build($events);
