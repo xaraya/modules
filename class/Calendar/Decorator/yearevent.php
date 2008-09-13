@@ -2,11 +2,14 @@
 
     class YearEvent_Decorator extends Calendar_Decorator
     {
+        public $cE;
+
         function build($sDates = array(), $firstDay = null)
         {
+            $this->cE = $this->calendar->cE;
             require_once CALENDAR_ROOT.'Factory.php';
             $this->firstDay = $this->defineFirstDayOfWeek($firstDay);
-            $monthsInYear = $this->calendar->cE->getMonthsInYear($this->thisYear());
+            $monthsInYear = $this->cE->getMonthsInYear($this->thisYear());
             for ($i=1; $i <= $monthsInYear; $i++) {
                 $month = Calendar_Factory::create('Month', $this->year, $i);
                 $start_time = $month->getTimestamp();
