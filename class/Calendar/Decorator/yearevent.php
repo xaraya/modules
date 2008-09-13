@@ -2,72 +2,39 @@
 
     class YearEvent_Decorator extends Calendar_Decorator
     {
-        //Calendar engine
-        public $cE;
-        public $tableHelper;
-
-        public $year;
-        public $month = 1;
-        public $day =1;
-        public $firstDay = false;
-
-        function build($events=array())
+        function build($sDates = array(), $firstDay = null)
         {
-            include_once CALENDAR_ROOT . 'Day.php';
-            include_once CALENDAR_ROOT .  'Table/Helper.php';
-            $this->tableHelper = new Calendar_Table_Helper($this, $this->firstDay);
-            $this->cE = & $this->getEngine();
-            $this->year  = $this->thisYear();
+            require_once CALENDAR_ROOT.'Factory.php';
+            $this->firstDay = $this->defineFirstDayOfWeek($firstDay);
+            $monthsInYear = $this->cE->getMonthsInYear($this->thisYear());
+            for ($i=1; $i <= $monthsInYear; $i++) {
+                $month = Calendar_Factory::create('Month', $this->year, $i);
+                $start_time = $month->getTimestamp();
+                $month = Calendar_Factory::create('Month', $this->year, $i+1);
+                $end_time = $month->getTimestamp();
+                $events = $this->getEvents($start_time, $end_time, $role_id); 
+                $MonthDecorator = new MonthEvent_Decorator($month);
+                $MonthDecorator->build($events);
 
-            $daysInYear = $this->year % 4 == 0 ? 366 : 365;
-            for ($i=1; $i<=$daysInYear; $i++) {
-                $Day = new Calendar_Day(2000,1,1); // Create Day with dummy values
-                $Day->setTimeStamp($this->cE->dateToStamp($this->year, $this->month, $i));
-                $this->children[$i] = new Event($Day);
+                $this->children[$i] = MonthDecorator;
             }
-            $this->calendar->children = $this->children;
-            if (count($events) > 0) {
-                $this->setSelection($events);
+            if (count($sDates) > 0) {
+                $this->setSelection($sDates);
             }
-            /*
-            $this->calendar->tableHelper = & $this->tableHelper;
-            $this->calendar->buildEmptyDaysBefore();
-            $this->calendar->shiftDays();
-            $this->calendar->buildEmptyDaysAfter();
-            $this->calendar->setWeekMarkers();
-            */
             return true;
         }
 
-        function setSelection($events)
+        public function getEvents($start_time, $end_time, $role_id)
         {
-            $daysInYear = $this->year % 4 == 0 ? 366 : 365;
-            for ($i=1; $i<=$daysInYear; $i++) {
-                $stamp1 = $this->cE->dateToStamp($this->year, $this->month, $i);
-                $stamp2 = $this->cE->dateToStamp($this->year, $this->month, $i+1);
-                foreach ($events as $event) {
-                    $end_time = $event['start_time'] + $event['duration'];
-                    if (($stamp1 >= $event['start_time'] && $stamp1 < $end_time) ||
-                        ($stamp2 >= $event['start_time'] && $stamp2 < $end_time) ||
-                        ($stamp1 <= $event['start_time'] && $stamp2 > $end_time)
-                    ) {
-                        $this->children[$i]->addEntry1($event);
-                        $this->children[$i]->setSelected();
-                    }
-                }
-            }
-        }
-
-        function fetch()
-        {
-            if (empty($this->calendar->children)) return array();
-            $child = each($this->calendar->children);
-            if ($child) {
-                return $child['value'];
-            } else {
-                reset($this->calendar->children);
-                return false;
-            }
+            // get all the events. need to improve this query and combine it with the query in the template
+            $xartable = xarDB::getTables();
+            $q = new Query('SELECT', $xartable['calendar_event']);
+            $q->ge('start_time', $start_time);
+            $q->lt('start_time', $end_time);
+            $q->eq('role_id',$role_id);
+    //        $q->qecho();
+            if (!$q->run()) return;
+            return $q->output();
         }
     }
 ?>

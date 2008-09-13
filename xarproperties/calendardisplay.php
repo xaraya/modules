@@ -114,8 +114,8 @@ class CalendarDisplayProperty extends DataProperty
                 $data['cal_sdow'] = CALENDAR_FIRST_DAY_OF_WEEK;
 */
                 $Year = new Calendar_Year($data['cal_year']);
-                $Year->build(); // TODO: find a better way to handle this
-                $data['Year'] =& $Year;
+                $YearDecorator = new YearEvent_Decorator($Year);
+                $data['Year'] =& $YearDecorator;
                 $data['cal_sdow'] = CALENDAR_FIRST_DAY_OF_WEEK;
                 break;
         }
