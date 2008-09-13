@@ -244,7 +244,7 @@ class CategoriesProperty extends SelectProperty
         if (!is_array($data['bases'])) {
             // Return an array where each toplevel category is a base category
             if (strtolower($data['bases']) == 'all') {
-                if (!isset($data['itemtype'])) {
+                if (empty($data['categories_localitemtype'])) {
                     $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => $data['categories_localmodule']));
                 } else {
                     $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => $data['categories_localmodule'], 'itemtype' => $data['categories_localitemtype']));

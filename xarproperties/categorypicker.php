@@ -47,28 +47,24 @@ class CategoryPickerProperty extends DataProperty
 
         xarMod::loadDbInfo('categories');
         $xartable = xarDB::getTables();
+        
+        // Remove all the entries for this module
+        $q = new xarQuery('DELETE', $xartable['categories_basecategories']);
+        $q->eq('module_id',xarMod::getID($localmodule));
+        if (!$q->run()) return;
+
         for($i=0;$i<$numberofbasecats;$i++) {
             $thiscid = isset($basecid[$i]) && is_numeric($basecid[$i]) ? $basecid[$i] : 0;
             $thisname = (isset($basename[$i]) && !empty($basename[$i])) ? $basename[$i] : xarML('Base Category #(1)',$i+1);
             $thisitemtype = isset($baseitemtype[$i]) ? $baseitemtype[$i] : $localitemtype;
             $thisbasecat = xarModAPIFunc('categories','user','getcatbase',array('name' => $thisname, 'module' => $localmodule, 'itemtype' => $thisitemtype));
-            if (!empty($thisbasecat)) {
-                $currentbaseids[] = $thisbasecat['id'];
-                $q = new xarQuery('UPDATE', $xartable['categories_basecategories']);
-                $q->eq('module_id',xarMod::getID($localmodule));
-                $q->eq('itemtype',$thisitemtype);
-                $q->eq('name',$thisname);
-                $q->addfield('category_id',$thiscid);
-                if (!$q->run()) return;
-            } else {
-                $q = new xarQuery('INSERT', $xartable['categories_basecategories']);
-                $q->addfield('module_id',xarMod::getID($localmodule));
-                $q->addfield('itemtype',$thisitemtype);
-                $q->addfield('name',$thisname);
-                $q->addfield('category_id',$thiscid);
-                if (!$q->run()) return;
-                $currentbaseids[] = $q->lastid($xartable['categories_basecategories'], 'id');
-            }
+            $q = new xarQuery('INSERT', $xartable['categories_basecategories']);
+            $q->addfield('module_id',xarMod::getID($localmodule));
+            $q->addfield('itemtype',$thisitemtype);
+            $q->addfield('name',$thisname);
+            $q->addfield('category_id',$thiscid);
+            if (!$q->run()) return;
+            $currentbaseids[] = $q->lastid($xartable['categories_basecategories'], 'id');
         }
         $q = new xarQuery('DELETE', $xartable['categories_basecategories']);
         $q->eq('module_id',xarMod::getID($localmodule));
@@ -93,7 +89,11 @@ class CategoryPickerProperty extends DataProperty
         }
 
         if (!isset($data['basecids'])) {
-            $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => $data['categories_localmodule'], 'itemtype' => $data['categories_localitemtype']));
+            if (empty($data['categories_localitemtype'])) {
+                $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => $data['categories_localmodule']));
+            } else {
+                $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => $data['categories_localmodule'], 'itemtype' => $data['categories_localitemtype']));
+            }
         }
         if (!isset($data['categories_numberofbasecats'])) $data['categories_numberofbasecats'] = count($basecats);
         $seencid = array();
