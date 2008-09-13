@@ -62,6 +62,8 @@ class CalendarDisplayProperty extends DataProperty
                 break;
             case 'year':
                 include_once(CALENDAR_ROOT.'Year.php');
+                sys::import("modules.calendar.class.Calendar.Decorator.event");
+                sys::import("modules.calendar.class.Calendar.Decorator.yearevent");
                 break;
         }
         sys::import("modules.calendar.class.Calendar.Decorator.Xaraya");
