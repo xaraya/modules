@@ -66,11 +66,6 @@ class CategoryPickerProperty extends DataProperty
             if (!$q->run()) return;
             $currentbaseids[] = $q->lastid($xartable['categories_basecategories'], 'id');
         }
-        $q = new xarQuery('DELETE', $xartable['categories_basecategories']);
-        $q->eq('module_id',xarMod::getID($localmodule));
-        $q->in('itemtype',$localitemtype);
-        if (!empty($currentbaseids)) $q->notin('id',$currentbaseids);
-        if (!$q->run()) return;
         return true;
     }
 
