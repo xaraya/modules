@@ -6,9 +6,6 @@
         public $tableHelper;
         public $firstDay = false;
 
-        function build($events=array())
-        {
-
         function build($sDates = array(), $firstDay = null)
         {
             include_once CALENDAR_ROOT . 'Day.php';
