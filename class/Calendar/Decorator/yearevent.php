@@ -2,8 +2,11 @@
 
     class YearEvent_Decorator extends Calendar_Decorator
     {
+        public $cE;
+
         function build($sDates = array(), $firstDay = null)
         {
+            $this->cE = & $this->getEngine();
             require_once CALENDAR_ROOT.'Factory.php';
             $this->firstDay = $this->defineFirstDayOfWeek($firstDay);
             $monthsInYear = $this->cE->getMonthsInYear($this->thisYear());
