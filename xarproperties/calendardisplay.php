@@ -62,8 +62,6 @@ class CalendarDisplayProperty extends DataProperty
                 break;
             case 'year':
                 include_once(CALENDAR_ROOT.'Year.php');
-                sys::import("modules.calendar.class.Calendar.Decorator.event");
-                sys::import("modules.calendar.class.Calendar.Decorator.yearevent");
                 break;
         }
         sys::import("modules.calendar.class.Calendar.Decorator.Xaraya");
@@ -104,7 +102,7 @@ class CalendarDisplayProperty extends DataProperty
                 $data['Month'] =& $MonthDecorator;
                 break;
             case 'year':
-                $Year = new Calendar_Year($data['cal_year']);
+/*                $Year = new Calendar_Year($data['cal_year']);
                 $start_time = $Year->getTimestamp();
                 $Year = new Calendar_Year($data['cal_year']+1);
                 $end_time = $Year->getTimestamp();
@@ -113,6 +111,11 @@ class CalendarDisplayProperty extends DataProperty
                 $YearDecorator = new YearEvent_Decorator($Year);
                 $YearDecorator->build($events);
                 $data['Year'] =& $YearDecorator;
+                $data['cal_sdow'] = CALENDAR_FIRST_DAY_OF_WEEK;
+*/
+                $Year = new Calendar_Year($data['cal_year']);
+                $Year->build(); // TODO: find a better way to handle this
+                $data['Year'] =& $Year;
                 $data['cal_sdow'] = CALENDAR_FIRST_DAY_OF_WEEK;
                 break;
         }

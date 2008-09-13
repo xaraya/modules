@@ -84,7 +84,15 @@ class Calendar_Year extends Calendar
         $this->firstDay = $this->defineFirstDayOfWeek($firstDay);
         $monthsInYear = $this->cE->getMonthsInYear($this->thisYear());
         for ($i=1; $i <= $monthsInYear; $i++) {
-            $this->children[$i] = Calendar_Factory::create('Month', $this->year, $i);
+            $month = Calendar_Factory::create('Month', $this->year, $i);
+            $start_time = $month->getTimestamp();
+            $month = Calendar_Factory::create('Month', $this->year, $i+1);
+            $end_time = $month->getTimestamp();
+            $events = $this->getEvents($start_time, $end_time, $role_id); 
+            $MonthDecorator = new MonthEvent_Decorator($month);
+            $MonthDecorator->build($events);
+        
+            $this->children[$i] = MonthDecorator;
         }
         if (count($sDates) > 0) {
             $this->setSelection($sDates);
