@@ -37,8 +37,8 @@
                                 </th>
                             </tr>
                             <!-- blocklayout tag to allow building an object -->
-                            <xar:comment>#$Year->build()#</xar:comment>
-                            <xar:comment>xar:calendar-build object="$Year" /</xar:comment>
+                            <!-- #$Year->build()# -->
+                            <!-- xar:calendar-build object="$Year" / -->
                             <xar:set name="dummy">$Month->build()</xar:set>
                             <tr>
                                 <th class="cal-week-title"><xar:mlstring>wk</xar:mlstring></th>
