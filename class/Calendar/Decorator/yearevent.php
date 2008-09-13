@@ -1,12 +1,21 @@
 <?php
 
+    sys::import("modules.calendar.class.Calendar.Decorator.event");
+    sys::import("modules.calendar.class.Calendar.Decorator.monthevent");
+
     class YearEvent_Decorator extends Calendar_Decorator
     {
         public $cE;
+        public $year;
+        public $month;
+        public $day;
 
         function build($sDates = array(), $firstDay = null)
         {
             $this->cE = $this->calendar->cE;
+            $this->year = $this->calendar->year;
+            $this->month= $this->calendar->month;
+            $this->day= $this->calendar->day;
             require_once CALENDAR_ROOT.'Factory.php';
             $this->firstDay = $this->defineFirstDayOfWeek($firstDay);
             $monthsInYear = $this->cE->getMonthsInYear($this->thisYear());
@@ -15,11 +24,11 @@
                 $start_time = $month->getTimestamp();
                 $month = Calendar_Factory::create('Month', $this->year, $i+1);
                 $end_time = $month->getTimestamp();
-                $events = $this->getEvents($start_time, $end_time, $role_id); 
+                $events = $this->getEvents($start_time, $end_time, xarSession::getVar('role_id')); 
                 $MonthDecorator = new MonthEvent_Decorator($month);
                 $MonthDecorator->build($events);
 
-                $this->children[$i] = MonthDecorator;
+                $this->calendar->children[$i] = $MonthDecorator;
             }
             if (count($sDates) > 0) {
                 $this->setSelection($sDates);
