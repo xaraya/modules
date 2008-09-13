@@ -64,7 +64,6 @@ class CategoryPickerProperty extends DataProperty
             $q->addfield('name',$thisname);
             $q->addfield('category_id',$thiscid);
             if (!$q->run()) return;
-            $currentbaseids[] = $q->lastid($xartable['categories_basecategories'], 'id');
         }
         return true;
     }

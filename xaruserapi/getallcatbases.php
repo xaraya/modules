@@ -35,6 +35,7 @@ function categories_userapi_getallcatbases($args)
     $q->addfield('category.right_id AS right_id');
     if (!empty($module))  $q->eq('module_id',xarMod::getID($module));
     if (isset($itemtype))  $q->eq('itemtype',$itemtype);
+    $q->addorder('base.id');
 //    $q->qecho();
     if (!$q->run()) return;
     return $q->output();
