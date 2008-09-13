@@ -111,7 +111,7 @@ class CalendarDisplayProperty extends DataProperty
                 $events = $this->getEvents($start_time, $end_time, $role_id); 
 
                 $YearDecorator = new YearEvent_Decorator($Year);
-                $Year->build($events); // TODO: find a better way to handle this
+                $YearDecorator->build($events);
                 $data['Year'] =& $YearDecorator;
                 $data['cal_sdow'] = CALENDAR_FIRST_DAY_OF_WEEK;
                 break;
