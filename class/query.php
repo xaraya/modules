@@ -1349,7 +1349,6 @@ class Query
                 if (!empty($this->distinctname)) $this->addfield('COUNT(' . $this->distinctname. ')');
                 else $this->addfield('COUNT(*)');
                 $this->setstatement();
-                echo $this->statement;
                 $result = $this->dbconn->Execute($this->statement);
                 list($this->rows) = $result->fields;
                 $this->fields = $temp1;
