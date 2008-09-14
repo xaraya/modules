@@ -1346,6 +1346,8 @@ class Query
                 $this->clearsorts();
                 $temp3 = $this->usebinding;
                 $this->usebinding = 0;
+                $temp4 = $this->distinctarray;
+                $this->distinctarray = array();
                 if (!empty($this->distinctname)) $this->addfield('COUNT(DISTINCT ' . $this->distinctname. ')');
                 else $this->addfield('COUNT(*)');
                 $this->setstatement();
@@ -1354,6 +1356,7 @@ class Query
                 $this->fields = $temp1;
                 $this->sorts = $temp2;
                 $this->usebinding = $temp3;
+                $this->distinctarray = $temp4;;
                 $this->setstatement();
             }
         }
