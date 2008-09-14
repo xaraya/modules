@@ -31,7 +31,8 @@ class Query
     public $bindpublics;
     public $bindstring;
     public $limits = 1;
-    public $uniqueselect = false;
+    public $distinctselect = false;
+    public $distinctarray = array();
     public $starttime;
 
 // Flags
@@ -872,7 +873,6 @@ class Query
         $st =  $this->type . " ";
         switch ($this->type) {
         case "SELECT" :
-            if ($this->uniqueselect) $st .= " DISTINCT ";
             $st .= $this->assembledfields("SELECT");
             $st .= " FROM ";
             $st .= $this->assembledtables();
@@ -999,17 +999,41 @@ class Query
         $this->bindstring = "";
         switch ($this->type) {
         case "SELECT" :
-            if (count($this->fields) == 0) return "*";
-            foreach ($this->fields as $field) {
+            if (count($this->fields) == 0) {
+                if (!empty($this->distinctarray)) {
+                    $this->fields = $this->distinctarray;
+                } else {
+                    return "*";
+                }
+            } 
+            if (!empty($this->distinctarray)) {
+                $fields = array();
+                $flag = false;
+                $distinct = "";
+                foreach ($this->fields as $field) {
+                    if ((($field['name'] == $this->distinctarray['name']) && ($field['table'] == $this->distinctarray['table'])) || ($field['alias'] == $this->distinctarray['name'])) {
+                        $distinct = $field;
+                    } else {
+                        $fields[] = $field;
+                    }
+                }
+                $this->bindstring .= "DISTINCT ";
+                if (!empty($distinct)) {
+                    $this->bindstring .= $this->_reconstructfield($distinct) . ", ";
+                    $distinct['alias'] = "";
+                    $this->distinctname = $this->_reconstructfield($distinct);               
+                }
+            } else {
+                $fields = $this->fields;
+            }
+            foreach ($fields as $field) {
                 if (is_array($field)) {
-                    if(isset($field['table']) && $field['table'] != '')
-                        $this->bindstring .= $field['table'] . ".";
-                    $this->bindstring .= $field['name'];
-                    $this->bindstring .= (isset($field['alias']) && $field['alias'] != '') ? " AS " . $field['alias'] . ", " : ", ";
+                    $this->bindstring .= $this->_reconstructfield($field);
                 }
                 else {
-                    $this->bindstring .= $field . ", ";
+                    $this->bindstring .= $field;
                 }
+                $this->bindstring .= ", ";
             }
             if ($this->bindstring != "") $this->bindstring = trim($this->bindstring," ,");
             break;
@@ -1169,23 +1193,29 @@ class Query
         return $s;
     }
 
-    function _deconstructfield($field)
+    private function _deconstructfield($field)
     {
         if (preg_match("/(.*) as (.*)/i", $field, $match)) {
             $field = trim($match[1]);
             $alias = trim($match[2]);
         }
         $fieldparts = explode('.',$field);
-        if (count($fieldparts) > 1) {
-            $table = $fieldparts[0];
-            $name = substr($field,strlen($fieldparts[0])+1);
-            $fullfield = array('name' => $name, 'table' => $table);
-        }
-        else {
+        if (count($fieldparts) > 1) 
+            $fullfield = array('name' => $fieldparts[1], 'table' => $fieldparts[0]);
+        else 
             $fullfield = array('name' => $field, 'table' => '');
-        }
         if (isset($alias)) $fullfield['alias'] = $alias;
+        else $fullfield['alias'] = '';
         return $fullfield;
+    }
+
+    private function _reconstructfield($field)
+    {
+        $bindstring = "";
+        if(!empty($field['table'])) $bindstring .= $field['table'] . ".";
+        $bindstring .= $field['name'];
+        if (!empty($field['alias'])) $bindstring .= " AS " . $field['alias'];
+        return $bindstring;
     }
 
     function deconstructfield($field)
@@ -1316,8 +1346,10 @@ class Query
                 $this->clearsorts();
                 $temp3 = $this->usebinding;
                 $this->usebinding = 0;
-                $this->addfield('COUNT(*)');
+                if (!empty($this->distinctname)) $this->addfield('COUNT(' . $this->distinctname. ')');
+                else $this->addfield('COUNT(*)');
                 $this->setstatement();
+                echo $this->statement;
                 $result = $this->dbconn->Execute($this->statement);
                 list($this->rows) = $result->fields;
                 $this->fields = $temp1;
@@ -1400,7 +1432,11 @@ class Query
     }
     function setdistinct($x = 1)
     {
-        $this->uniqueselect = $x;
+        if ($x == 1) $this->distinctselect = '';
+        else {
+            $this->distinctselect = $x;
+            $this->distinctarray = $this->_deconstructfield($x);
+        }
     }
     function setgroup($x = '')
     {
