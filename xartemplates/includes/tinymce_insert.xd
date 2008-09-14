@@ -32,7 +32,7 @@
             <xar:set name="dynajs">xarTplAddJavaScript('head', 'code', 'tinyMCE_GZ.init({'.$gzstring.'});', 'tinymce')</xar:set>
             <xar:set name="dynajs">xarTplAddJavaScript('body', 'code', 'tinyMCE.init({'.$jsstring.'});'.$jsconfigstring.$buttonjs, 'tinymce')</xar:set>
         </xar:if>
-        <xar:if condition="xarModGetVar('tinymce','usefilebrowser') eq 1">
+        <xar:if condition="xarModGetVar('tinymce','usefilebrowser') eq 1 and xarSecurityCheck('AdminArticles',0)">
             <xar:base-include-javascript position="head" module="tinymce" filename="../../xarincludes/xarfilebrowsercallback.js" />
         </xar:if>
 
