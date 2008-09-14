@@ -1346,7 +1346,7 @@ class Query
                 $this->clearsorts();
                 $temp3 = $this->usebinding;
                 $this->usebinding = 0;
-                if (!empty($this->distinctname)) $this->addfield('COUNT(' . $this->distinctname. ')');
+                if (!empty($this->distinctname)) $this->addfield('COUNT(DISTINCT ' . $this->distinctname. ')');
                 else $this->addfield('COUNT(*)');
                 $this->setstatement();
                 $result = $this->dbconn->Execute($this->statement);
