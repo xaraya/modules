@@ -13,20 +13,17 @@
 
         function build($events=array())
         {
-            include_once CALENDAR_ROOT . 'Day.php';
             include_once CALENDAR_ROOT .  'Table/Helper.php';
-            $this->tableHelper = new Calendar_Table_Helper($this, $this->firstDay);
+            $this->tableHelper = new Calendar_Table_Helper($this->calendar, $this->firstDay);
             $this->cE = & $this->getEngine();
-            $this->year  = $this->thisYear();
-            $this->month = $this->thisMonth();
+            $this->month = $this->calendar->month;
+            $this->year = $this->calendar->year;
 
             $daysInMonth = $this->cE->getDaysInMonth($this->year, $this->month);
             for ($i=1; $i<=$daysInMonth; $i++) {
-                $Day = new Calendar_Day(2000,1,1); // Create Day with dummy values
-                $Day->setTimeStamp($this->cE->dateToStamp($this->year, $this->month, $i));
-                $this->children[$i] = new Event($Day);
+                $Day = new Calendar_Day($this->calendar->year, $this->calendar->month, $i);
+                $this->calendar->children[$i] = new Event($Day);
             }
-            $this->calendar->children = $this->children;
             if (count($events) > 0) {
                 $this->setSelection($events);
             }
@@ -50,8 +47,8 @@
                         ($stamp2 >= $event['start_time'] && $stamp2 < $end_time) ||
                         ($stamp1 <= $event['start_time'] && $stamp2 > $end_time)
                     ) {
-                        $this->children[$i]->addEntry1($event);
-                        $this->children[$i]->setSelected();
+                        $this->calendar->children[$i]->addEntry1($event);
+                        $this->calendar->children[$i]->setSelected();
                     }
                 }
             }

@@ -21,6 +21,7 @@
     <xar:set name="today">xarLocaleFormatDate('%Y%m%d')</xar:set>
 
     <xar:set name="Month">$Year->fetch()</xar:set>
+    
     <table id="cal-calendar">
         <xar:while condition="$Month">
             <xar:set name="i">0</xar:set>
@@ -36,10 +37,6 @@
                                     <a href="#$MonthURI->current('month')#">#xarLocaleFormatDate('%B',$Month->getTimeStamp())#</a>
                                 </th>
                             </tr>
-                            <!-- blocklayout tag to allow building an object -->
-                            <!-- #$Year->build()# -->
-                            <!-- xar:calendar-build object="$Year" / -->
-                            <xar:set name="dummy">$Month->build()</xar:set>
                             <tr>
                                 <th class="cal-week-title"><xar:mlstring>wk</xar:mlstring></th>
                                 <xar:set name="weekdays">$MonthText->orderedWeekdays('one')</xar:set>

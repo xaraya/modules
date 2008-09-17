@@ -63,6 +63,7 @@ class CalendarDisplayProperty extends DataProperty
             case 'year':
                 include_once(CALENDAR_ROOT.'Year.php');
                 sys::import("modules.calendar.class.Calendar.Decorator.event");
+                sys::import("modules.calendar.class.Calendar.Decorator.monthevent");
                 sys::import("modules.calendar.class.Calendar.Decorator.yearevent");
                 break;
         }
@@ -88,14 +89,14 @@ class CalendarDisplayProperty extends DataProperty
             case 'month':
                 $MonthEvents = new Calendar_Month_Weekdays(
                     $data['cal_year'],
-                    $data['cal_month'],
-                    xarModVars::get('calendar', 'cal_sdow'));
-                $start_time = $MonthEvents->getTimestamp();
-                $MonthEvents = new Calendar_Month_Weekdays(
-                    $data['cal_year'],
                     $data['cal_month'] + 1,
                     xarModVars::get('calendar', 'cal_sdow'));
                 $end_time = $MonthEvents->getTimestamp();
+                $MonthEvents = new Calendar_Month_Weekdays(
+                    $data['cal_year'],
+                    $data['cal_month'],
+                    xarModVars::get('calendar', 'cal_sdow'));
+                $start_time = $MonthEvents->getTimestamp();
 
                 $events = $this->getEvents($start_time, $end_time, $role_id); 
 
@@ -104,22 +105,17 @@ class CalendarDisplayProperty extends DataProperty
                 $data['Month'] =& $MonthDecorator;
                 break;
             case 'year':
-                $Year = new Calendar_Year($data['cal_year']);
-                $start_time = $Year->getTimestamp();
                 $Year = new Calendar_Year($data['cal_year']+1);
                 $end_time = $Year->getTimestamp();
+                $Year = new Calendar_Year($data['cal_year']);
+                $start_time = $Year->getTimestamp();
+                
                 $events = $this->getEvents($start_time, $end_time, $role_id); 
 
                 $YearDecorator = new YearEvent_Decorator($Year);
                 $YearDecorator->build($events);
-                $data['Year'] =& $YearDecorator;
+                $data['Year'] =& $YearDecorator->calendar;
                 $data['cal_sdow'] = CALENDAR_FIRST_DAY_OF_WEEK;
-/*
-                $Year = new Calendar_Year($data['cal_year']);
-                $Year->build(); // TODO: find a better way to handle this
-                $data['Year'] =& $Year;
-                $data['cal_sdow'] = CALENDAR_FIRST_DAY_OF_WEEK;
-                */
                 break;
         }
         return $data;
