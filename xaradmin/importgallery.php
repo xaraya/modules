@@ -3,7 +3,7 @@
  * Images Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -41,7 +41,7 @@ function uploads_admin_importgallery( $args )
                      'cids' => array(),
                   // for preview
                      'pubtypeid' => $Picture_Publication_Type_ID,
-                     'authorid' => xarSessionGetVar('uid'),
+                     'authorid' => xarSession::getVar('role_id'),
                      'aid' => 0
                      );
 
@@ -348,8 +348,8 @@ function pruneFiles( $FilesInDir, $image_import_dir, $album )
     {
 
         // Get database setup
-        $dbconn =& xarDBGetConn();
-        $xartable =& xarDBGetTables();
+        $dbconn = xarDB::getConn();
+        $xartable = xarDB::getTables();
 
         // table and column definitions
         $uploadstable = $xartable['uploads'];

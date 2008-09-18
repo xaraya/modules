@@ -76,7 +76,8 @@
                             ImageMagick 'convert' program:
                         </xar:mlstring>
                     </label>
-                    <input type="text" name="file[imagemagick]" id="file_imagemagick" size="60" value="#xarModGetVar('images','file.imagemagick')#" />
+                        <xar:set name="value"><xar:var scope="module" module="images" name="file.imagemagick" /></xar:set>
+                        <input type="text" name="file[imagemagick]" id="file_imagemagick" size="60" value="#$value#" />
                     <p class="xar-form-input-wrapper-after">
                         <xar:mlstring>
                         <em>
@@ -110,7 +111,8 @@
                             Cache server file information:
                         </xar:mlstring>
                     </label>
-                    <input type="text" name="file[cache-expire]" id="file_cache_expire" size="3" maxlength="3" value="#xarModGetVar('images','file.cache-expire')#" />
+                        <xar:set name="value"><xar:var scope="module" module="images" name="file.cache-expire" /></xar:set>
+                        <input type="text" name="file[cache-expire]" id="file_cache_expire" size="3" maxlength="3" value="#$value#" />
                     <xar:mlstring>seconds</xar:mlstring>
                 </div>
                 <div class="xar-form-input-wrapper">
@@ -119,7 +121,8 @@
                             Items per page in admin view:
                         </xar:mlstring>
                     </label>
-                    <input type="text" name="view[itemsperpage]" id="view_itemsperpage" size="3" maxlength="3" value="#xarModGetVar('images','view.itemsperpage')#" />
+                        <xar:set name="value"><xar:var scope="module" module="images" name="itemsperpage" /></xar:set>
+                        <input type="text" name="view[itemsperpage]" id="view_itemsperpage" size="3" maxlength="3" value="#$value#" />
                 </div>
             </fieldset>
             <fieldset>

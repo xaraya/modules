@@ -3,7 +3,7 @@
  * Images Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -94,8 +94,7 @@ function images_user_display( $args )
 
     if (is_null($fileLocation)) {
         $msg = xarML('Unable to find file: [#(1)]', $fileId);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILE_MISSING', new SystemException($msg));
-        return FALSE;
+        throw new Exception($msg);
     }
 
     // Close the buffer, saving it's current contents for possible future use
@@ -151,8 +150,8 @@ function images_user_display( $args )
 
     // Make sure to check the browser / os type - IE 5.x on Mac (os9 / osX / etc) does
     // not like headers being sent for iamges - so leave them out for those particular cases
-    $osName      = xarSessionGetVar('osname');
-    $browserName = xarSessionGetVar('browsername');
+    $osName      = xarSession::getVar('osname');
+    $browserName = xarSession::getVar('browsername');
 
     if (empty($osName) || $osName != 'mac' || ($osName == 'mac' && !stristr($browserName, 'internet explorer'))) {
         header("Pragma: ");

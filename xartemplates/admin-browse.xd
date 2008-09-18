@@ -58,11 +58,11 @@
             <p class="xar-align-center">
                 <a href="#xarModURL('images','admin','browse',array('action' => $action,'bid' => $baseId,'getprev' => $selimage['fileId']))#">&lt;&lt;</a>&#160;&#160;&#160;
                 <xar:if condition="!empty($width) or !empty($height)">
-                    <img src="#$selimage['fileDownload']#" width="#$width#" height="#$height#" class="xar-noborder xar-valign-top" />
+                        <xar:data-output type="imageresize" src="$selimage['fileDownload']" width="$width" height="$height" class="xar-noborder xar-valign-top" />
                 <xar:else/>
-                    <img src="#$selimage['fileDownload']#" class="xar-noborder xar-valign-top" alt="" />
+                        <xar:data-output type="imageresize" src="$selimage['fileDownload']" class="xar-noborder xar-valign-top" alt="" />
                </xar:if>
-               &#160;&#160; &#160;<a href="#xarModURL('images','admin','browse',array('action' => $action,'bid' => $baseId,'getnext' => $selimage['fileId']))#">&gt;&gt;</a>
+                   &#160;&#160; &#160;<a href="#xarModURL('images','admin','browse',array('action' => $action,'bid' => $baseId,'getnext' => $selimage['fileId']))#">&gt;&gt;</a>
              </p>
            </div>
         </fieldset>
@@ -260,14 +260,11 @@
             </xar:foreach>
             <tr>
                 <td colspan="6" align="center">
-                    <xar:if condition="!empty($pager)">
-                        #$pager#
-                    </xar:if>
-<script type="text/javascript"><![CDATA[
-    document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewimages'],true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
-    document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewimages'],false)\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
-]]>
-</script>
+                        <div class="xar-align-center">
+                            <xar:data-input type="pager" url="$url" itemsperpage ="$numitems" startnum="$startnum" itemstotal="$countitems" />
+                        </div>
+    [ <a href="javascript:xar_base_checkall(document.forms['viewimages'],true)"><xar:mlstring>Check All</xar:mlstring></a>&#160;|&#160;
+     <a href="javascript:xar_base_checkall(document.forms['viewimages'],false)"><xar:mlstring>Uncheck All</xar:mlstring></a> ]
                 </td>
             </tr>
             <xar:if condition="empty($action)">

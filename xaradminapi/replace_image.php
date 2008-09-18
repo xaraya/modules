@@ -3,7 +3,7 @@
  * Replaces an image with a resized image
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -45,8 +45,7 @@ function images_adminapi_replace_image($args)
     if (!is_writable($checkwrite)) {
         $mesg = xarML('Unable to replace #(1) - please check your file permissions',
                       $fileLocation);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
-        return;
+        throw new Exception($mesg);
     }
 
 // TODO: replace files stored in xar_file_data too

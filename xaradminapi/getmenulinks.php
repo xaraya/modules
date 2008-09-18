@@ -3,7 +3,7 @@
  * Utility function used in Admin Menu generation
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -18,6 +18,7 @@
  */
 function images_adminapi_getmenulinks()
 {
+    $menulinks = array();
     if (xarSecurityCheck('AdminImages')) {
         if (xarModIsAvailable('uploads') && xarSecurityCheck('AdminUploads',0)) {
             $menulinks[] = Array('url'   => xarModURL('images',
@@ -46,9 +47,6 @@ function images_adminapi_getmenulinks()
                                                   'modifyconfig'),
                              'title' => xarML('Edit the Images Configuration'),
                              'label' => xarML('Modify Config'));
-    }
-    if (empty($menulinks)){
-        $menulinks = '';
     }
     return $menulinks;
 }

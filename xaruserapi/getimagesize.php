@@ -3,7 +3,7 @@
  * Images Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -28,18 +28,15 @@ function images_userapi_getimagesize( $args )
     if (empty($fileId) && empty($fileLocation)) {
         $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                       '', 'getimagesize', 'images');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
-        return;
+        throw new Exception($mesg);
     } elseif (!empty($fileId) && !is_numeric($fileId)) {
         $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                       'fileId', 'getimagesize', 'images');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
-        return;
+        throw new Exception($mesg);
     } elseif (!empty($fileLocation) && !is_string($fileLocation)) {
         $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                       'fileLocation', 'getimagesize', 'images');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
-        return;
+        throw new Exception($mesg);
     }
 
     if (!empty($fileLocation) && file_exists($fileLocation)) {

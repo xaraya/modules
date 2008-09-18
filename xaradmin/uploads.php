@@ -3,7 +3,7 @@
  * Images Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -45,7 +45,7 @@ function images_admin_uploads($args)
     $data['sort'] = ($sort != 'name') ? $sort : null;
 
     if (!isset($numitems)) {
-        $numitems = xarModGetVar('images','view.itemsperpage');
+        $numitems = xarModVars::get('images','view.itemsperpage');
     }
 
     $data['pager'] = '';

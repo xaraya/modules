@@ -3,7 +3,7 @@
  * View a list of server images
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -57,17 +57,17 @@ function images_admin_browse()
     $data['getprev'] = $getprev;
 
     // Check if we can cache the image list
-    $data['cacheExpire'] = xarModGetVar('images', 'file.cache-expire');
+    $data['cacheExpire'] = xarModVars::get('images', 'file.cache-expire');
 
-    $data['pager'] = '';
+    $params = $data;
+    if (!isset($numitems)) {
+        $params['numitems'] = xarModVars::get('images','view.itemsperpage');
+    }
+
     if (!empty($fileId)) {
         $data['images'] = xarModAPIFunc('images','admin','getimages',
                                         $data);
     } else {
-        $params = $data;
-        if (!isset($numitems)) {
-            $params['numitems'] = xarModGetVar('images','view.itemsperpage');
-        }
         // Check if we need to refresh the cache anyway
         if (!xarVarFetch('refresh',     'int:0:',     $refresh,          NULL, XARVAR_DONT_SET)) return;
         $params['cacheRefresh'] = $refresh;
@@ -85,22 +85,20 @@ function images_admin_browse()
             return true;
         }
 
+    }
         // Note: this must be called *after* getimages() to benefit from caching
         $countitems = xarModAPIFunc('images','admin','countimages',
                                     $params);
 
-        // Add pager
-        if (!empty($params['numitems']) && $countitems > $params['numitems']) {
-            $data['pager'] = xarTplGetPager($startnum,
-                                            $countitems,
-                                            xarModURL('images', 'admin', 'browse',
+        // Add pager variables
+        $data['startnum'] = "%%";
+        $data['countitems'] = $countitems;
+        $data['numitems'] = $params['numitems'];
+        $data['url'] = xarModURL('images', 'admin', 'browse',
                                                       array('bid'      => $baseId,
                                                             'startnum' => '%%',
                                                             'numitems' => $data['numitems'],
-                                                            'sort'     => $data['sort'])),
-                                            $params['numitems']);
-        }
-    }
+                                                            'sort'     => $data['sort']));
 
     $data['basedirs'] = $basedirs;
 

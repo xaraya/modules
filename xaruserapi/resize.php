@@ -1,9 +1,9 @@
-<?php
+0<?php
 /**
  * Images Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -42,7 +42,7 @@ function images_userapi_resize($args)
     }
 
     if (!isset($width) && !isset($height) && !isset($setting) && !isset($params)) {
-        $msg = xarML("Required parameters '#(1)', '#(2)', '#(3)' or '#(4)' for tag <xar:image> are missing. See tag documentation.",
+        $msg = xarML("Required parameters '#(1)', '#(2)', '#(3)' or '#(4)' for imageresize property are missing. See the documentation.",
                      'width', 'height', 'setting', 'params');
         throw new BadParameterException(null,$msg);
     } elseif (isset($height) && !xarVarValidate('regexp:/[0-9]+(px|%)/:', $height)) {
@@ -125,7 +125,7 @@ function images_userapi_resize($args)
 
                 // or if it's an absolute URL, try to get rid of it
                 } elseif (substr($location,0,1) == '/' || substr($location,1,1) == ':') {
-                    $thumbsdir = xarModGetVar('images', 'path.derivative-store');
+                    $thumbsdir = xarModVars::get('images', 'path.derivative-store');
                     $url = $thumbsdir . '/' . basename($location);
                 }
                 // if it's an absolute URL, try to get rid of it
@@ -174,7 +174,7 @@ function images_userapi_resize($args)
 
             // or if it's an absolute URL, try to get rid of it
             } elseif (substr($location,0,1) == '/' || substr($location,1,1) == ':') {
-                $thumbsdir = xarModGetVar('images', 'path.derivative-store');
+                $thumbsdir = xarModVars::get('images', 'path.derivative-store');
                 $url = $thumbsdir . '/' . basename($location);
 
             }
@@ -262,10 +262,10 @@ function images_userapi_resize($args)
     $attribs .= sprintf(' width="%s" height="%s"', $image->getWidth(), $image->getHeight());
 
     $location = $image->getDerivative();
-    if (!$location) {
+    if (empty($location)) {
         if ($image->resize()) {
             $location = $image->saveDerivative();
-            if (!$location) {
+            if (empty($location)) {
                 $msg = xarML('Unable to save resized image !');
                 return sprintf('<img src="%s" alt="%s" %s />', '', $msg, $attribs);
             }
@@ -282,7 +282,7 @@ function images_userapi_resize($args)
 
         // or if it's an absolute URL, try to get rid of it
         } elseif (substr($location,0,1) == '/' || substr($location,1,1) == ':') {
-            $thumbsdir = xarModGetVar('images', 'path.derivative-store');
+            $thumbsdir = xarModVars::get('images', 'path.derivative-store');
             $url = $thumbsdir . '/' . basename($location);
 
         }
@@ -303,10 +303,10 @@ function images_userapi_resize($args)
                                'width'  => $image->getWidth()));
     }
 
-    if( $returnpath == true ){
-        return $url;
-    }
+    if( $returnpath == true ) return $url;
 
+    return array('url' => $url, 'label' => $label, 'attributes' => $attribs);
+    
     $imgTag = sprintf('<img src="%s" alt="%s" %s />', $url, $label, $attribs);
 
     return $imgTag;

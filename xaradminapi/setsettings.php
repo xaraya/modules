@@ -3,7 +3,7 @@
  * Predefined settings for image processing
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -24,6 +24,6 @@ function images_adminapi_setsettings($args)
         $args = array();
     }
 
-    xarModSetVar('images','phpthumb-settings',serialize($args));
+    xarModVars::set('images','phpthumb-settings',serialize($args));
 }
 ?>

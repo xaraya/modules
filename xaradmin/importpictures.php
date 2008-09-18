@@ -3,7 +3,7 @@
  * Images Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -23,7 +23,7 @@ function uploads_admin_importpictures( $args )
     $image_import_dir = '/home/epicsaga/public_html/var/uploads/images';
     $Picture_Publication_Type_ID = 5;
 
-    xarModSetVar('uploads', 'obfuscate_imports', 0);
+    xarModVars::set('uploads', 'obfuscate_imports', 0);
 
 
     echo "Import Pictures here<br/>";
@@ -54,7 +54,7 @@ function uploads_admin_importpictures( $args )
     $cids = array();
 
     $pubtypeid = $Picture_Publication_Type_ID;
-    $authorid  = xarSessionGetVar('uid');
+    $authorid  = xarSession::getVar('role_id');
     $aid       = 0;
 
     $article = array('title' => $title,
@@ -161,8 +161,8 @@ function pruneFiles( $FilesInDir, $image_import_dir )
     {
 
         // Get database setup
-        $dbconn =& xarDBGetConn();
-        $xartable =& xarDBGetTables();
+        $dbconn = xarDB::getConn();
+        $xartable = xarDB::getTables();
 
         // table and column definitions
         $uploadstable = $xartable['uploads'];

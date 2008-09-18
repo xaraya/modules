@@ -3,7 +3,7 @@
  * Images Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -18,7 +18,7 @@
  */
 function images_userapi_getbasedirs()
 {
-    $basedirs = xarModGetVar('images','basedirs');
+    $basedirs = xarModVars::get('images','basedirs');
     if (!empty($basedirs)) {
         $basedirs = unserialize($basedirs);
     }
@@ -28,7 +28,7 @@ function images_userapi_getbasedirs()
                              'baseurl'   => 'themes',
                              'filetypes' => 'gif|jpg|png',
                              'recursive' => true);
-        xarModSetVar('images','basedirs',serialize($basedirs));
+        xarModVars::set('images','basedirs',serialize($basedirs));
     }
 
     return $basedirs;

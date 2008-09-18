@@ -3,7 +3,7 @@
  * Images Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -26,18 +26,15 @@ function & images_userapi_load_image( $args )
     if (empty($fileId) && empty($fileLocation)) {
         $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                       '', 'load_image', 'images');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
-        return;
+        throw new Exception($mesg);
     } elseif (!empty($fileId) && !is_string($fileId)) {
         $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                       'fileId', 'load_image', 'images');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
-        return;
+        throw new Exception($mesg);
     } elseif (!empty($fileLocation) && !is_string($fileLocation)) {
         $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                       'fileLocation', 'load_image', 'images');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
-        return;
+        throw new Exception($mesg);
     }
 
     // if both arguments are specified, give priority to fileId
@@ -68,8 +65,7 @@ function & images_userapi_load_image( $args )
         } else {
             $mesg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                           'fileLocation', 'load_image', 'images');
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
-            return;
+            throw new Exception($mesg);
         }
 
     } else {
@@ -77,12 +73,12 @@ function & images_userapi_load_image( $args )
     }
 
     if (empty($thumbsdir)) {
-        $thumbsdir = xarModGetVar('images', 'path.derivative-store');
+        $thumbsdir = xarModVars::get('images', 'path.derivative-store');
     }
 
     include_once('modules/images/xarclass/image_properties.php');
 
-    switch(xarModGetVar('images', 'type.graphics-library')) {
+    switch(xarModVars::get('images', 'type.graphics-library')) {
         case _IMAGES_LIBRARY_IMAGEMAGICK:
             include_once('modules/images/xarclass/image_ImageMagick.php');
             $newImage = new Image_ImageMagick($location, $thumbsdir);

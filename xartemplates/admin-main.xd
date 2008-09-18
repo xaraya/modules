@@ -73,7 +73,7 @@
         Take special note on the approval of files in the uploads module. Only files that have been approved will normally be accessible by standard users, or you need to assign them the EDIT privilege for the uploads.
         </xar:mlstring>
     </p>
-        <xar:if condition="xarModGetVar('images','upgrade-1.0.0')">
+            <xar:if condition="xarModVars::get('images','upgrade-1.0.0')">
         <h3>
         <xar:mlstring>Upgrade from version 1.0.0</xar:mlstring>
         </h3>
@@ -92,7 +92,7 @@
           </li>
       </ul>
       <p class="xar-sub">
-         <strong>&#160;<xar:mlstring>Images module - Overview</xar:mlstring></strong><br />&#160;<xar:mlstring>Version</xar:mlstring> 1.1.0&#160; #xarLocaleGetFormattedDate('short','1130972400')#
+             <strong>&#160;<xar:mlstring>Images module - Overview</xar:mlstring></strong><br />&#160;<xar:mlstring>Version</xar:mlstring> 1.1.0&#160; #xarLocaleGetFormattedDate('short','1130972400')#
   </p>
 </div>
 

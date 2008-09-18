@@ -3,7 +3,7 @@
  * Process an image using phpThumb
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -51,10 +51,7 @@ function images_adminapi_process_image($args)
             // The calling GUI needs to stop processing here
             return true;
         } else {
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                        new SystemException($msg));
-            // Throw back the error
-            return;
+            throw new Exception($msg);
         }
     }
 
@@ -95,7 +92,7 @@ function images_adminapi_process_image($args)
 
             case 0: // derivative
             default:
-                $thumbsdir = xarModGetVar('images', 'path.derivative-store');
+                $thumbsdir = xarModVars::get('images', 'path.derivative-store');
                 // Use MD5 hash of file location here
                 $save = realpath($thumbsdir) . '/' . md5($image['fileLocation']);
                 // Add the setting to the filename
@@ -119,7 +116,7 @@ function images_adminapi_process_image($args)
     } elseif (is_numeric($image['fileId']) && xarModIsAvailable('uploads') && xarModAPILoad('uploads','user',0) &&
               defined('_UPLOADS_STORE_DB_DATA') && ($image['storeType'] & _UPLOADS_STORE_DB_DATA)) {
 
-        $uploadsdir = xarModGetVar('uploads', 'path.uploads-directory');
+        $uploadsdir = xarModVars::get('uploads', 'path.uploads-directory');
         switch ($saveas) {
             case 1: // [image]_new.[ext] // CHECKME: not in the database ?
                 $save = realpath($uploadsdir) . '/' . $image['fileName'];
@@ -141,7 +138,7 @@ function images_adminapi_process_image($args)
 
             case 0: // derivative
             default:
-                $thumbsdir = xarModGetVar('images', 'path.derivative-store');
+                $thumbsdir = xarModVars::get('images', 'path.derivative-store');
                 // Use file id here
                 $save = realpath($thumbsdir) . '/' . $image['fileId'];
                 // Add the setting to the filename
@@ -167,10 +164,7 @@ function images_adminapi_process_image($args)
                 // The calling GUI needs to stop processing here
                 return true;
             } else {
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                            new SystemException($msg));
-                // Throw back the error
-                return;
+                throw new Exception($msg);
             }
         }
 
@@ -189,10 +183,7 @@ function images_adminapi_process_image($args)
             // The calling GUI needs to stop processing here
             return true;
         } else {
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                        new SystemException($msg));
-            // Throw back the error
-            return;
+            throw new Exception($msg);
         }
     }
 
@@ -215,10 +206,7 @@ function images_adminapi_process_image($args)
             // The calling GUI needs to stop processing here
             return true;
         } else {
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                        new SystemException($msg));
-            // Throw back the error
-            return;
+            throw new Exception($msg);
         }
     }
 
@@ -234,20 +222,14 @@ function images_adminapi_process_image($args)
     if (empty($save)) {
         $msg = xarML("Invalid parameter '#(1)' to API function '#(2)' in module '#(3)'",
                       'save', 'process_image', 'images');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                    new SystemException($msg));
-        // Throw back the error
-        return;
+            throw new Exception($msg);
     }
 
     $result = $phpThumb->RenderToFile($save);
 
     if (empty($result)) {
         $msg = implode("\n\n", $phpThumb->debugmessages);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                    new SystemException($msg));
-        // Throw back the error
-        return;
+        throw new Exception($msg);
     }
 
 // TODO: add file entry to uploads when saveas == 1 ?
@@ -281,7 +263,7 @@ function &images_get_thumb()
     include_once('modules/images/xarclass/phpthumb.class.php');
     $phpThumb = new phpThumb();
 
-    $imagemagick = xarModGetVar('images', 'file.imagemagick');
+    $imagemagick = xarModVars::get('images', 'file.imagemagick');
     if (!empty($imagemagick) && file_exists($imagemagick)) {
         $phpThumb->config_imagemagick_path = realpath($imagemagick);
     }
