@@ -1,15 +1,17 @@
 <?php
-/**
+/*
+ *
  * Mime Module
  *
- * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
  * @subpackage mime
  * @author Carl P. Corliss
  */
+
 /**
  * Retrieves the name of the image file to use for a given mimetype.
  * If no image file exists for the given mimtype, the unknown image file
@@ -30,7 +32,7 @@ function mime_userapi_get_mime_image( $args )
     if (!isset($mimeType)) {
         // API location handled centrally.
         $msg = xarML('Missing parameter [#(1)].', 'mimeType');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        throw new Exception($msg);
     }
 
     // Defaults.

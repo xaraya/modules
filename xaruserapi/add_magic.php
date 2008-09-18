@@ -1,10 +1,11 @@
 <?php
-/**
+/*
+ *
  * Mime Module
  *
- * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
  * @subpackage mime
@@ -28,34 +29,34 @@ function mime_userapi_add_magic( $args )
     if (!isset($subtypeId)) {
         $msg =  xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
                       'subtypeId','userapi_add_magic','mime');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        throw new Exception($msg);
     }
 
     if (!isset($magicValue)) {
         $msg =  xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
                       'magicValue','userapi_add_magic','mime');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        throw new Exception($msg);
     }
 
     if (!isset($magicOffset)) {
         $msg =  xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
                       'magicOffset','userapi_add_magic','mime');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        throw new Exception($msg);
     }
 
     if (!isset($magicLength)) {
         $msg =  xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
                       'magicLength','userapi_add_magic','mime');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        throw new Exception($msg);
     }
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable     = xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable     = xarDB::getTables();
 
     // table and column definitions
     $magic_table =& $xartable['mime_magic'];
-    $magicId     =  $dbconn->GenID($magic_table);
+    $magicId     =  $dbconn->genID($magic_table);
 
     $sql = "INSERT
               INTO $magic_table

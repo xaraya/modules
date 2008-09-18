@@ -1,15 +1,24 @@
 <?php
+
 /**
+ * File: $Id
+ *
  * MIME initialization functions
  *
- * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
  * @subpackage mime
- * @author Carl P. Corliss
+ * @author Carl P. Corliss <rabbitt@xaraya.com>
+*/
+
+/**
+ * MIME API
+ * @package Xaraya
+ * @subpackage MIME_API
  */
+
 /**
  * initialise the mime module
  * This function is only ever called once during the lifetime of a particular
@@ -20,32 +29,36 @@ function mime_init()
     $error = FALSE;
 
     //Load Table Maintenance API
-    xarDBLoadTableMaintenanceAPI();
+    sys::import('xaraya.tableddl');
 
-    $dbconn =& xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     $fields['mime_type'] = array(
-        'xar_mime_type_id'          => array('type'=>'integer',  'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
+        'xar_mime_type_id'          => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
+//        'xar_mime_type_id'          => array('type'=>'integer',  'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_mime_type_name'        => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255),
     );
 
     $fields['mime_subtype'] = array(
         'xar_mime_type_id'          => array('type'=>'integer',  'null'=>FALSE),
-        'xar_mime_subtype_id'       => array('type'=>'integer',  'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
+        'xar_mime_subtype_id'       => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
+//        'xar_mime_subtype_id'       => array('type'=>'integer',  'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_mime_subtype_name'     => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255),
         'xar_mime_subtype_desc'     => array('type'=>'varchar',  'null'=>TRUE,  'size'=>255),
     );
 
     $fields['mime_extension'] = array(
         'xar_mime_subtype_id'       => array('type'=>'integer',  'null'=>FALSE),
-        'xar_mime_extension_id'     => array('type'=>'integer',  'null'=>FALSE,  'increment'=>TRUE,'primary_key'=>TRUE),
+        'xar_mime_extension_id'     => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
+//        'xar_mime_extension_id'     => array('type'=>'integer',  'null'=>FALSE,  'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_mime_extension_name'   => array('type'=>'varchar',  'null'=>FALSE,  'size'=>10)
     );
 
     $fields['mime_magic'] = array(
         'xar_mime_subtype_id'       => array('type'=>'integer',  'null'=>FALSE),
-        'xar_mime_magic_id'         => array('type'=>'integer',  'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
+        'xar_mime_magic_id'         => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
+//        'xar_mime_magic_id'         => array('type'=>'integer',  'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_mime_magic_value'      => array('type'=>'varchar',  'null'=>FALSE, 'size'=>255),
         'xar_mime_magic_length'     => array('type'=>'integer',  'null'=>FALSE),
         'xar_mime_magic_offset'     => array('type'=>'integer',  'null'=>FALSE)
@@ -85,7 +98,7 @@ function mime_init()
     if (!file_exists('modules/mime/xarincludes/mime.magic.php')) {
 
         $msg = xarML('Could not open #(1) for inclusion', 'modules/mime/xarincludes/mime.magic.php');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'MISSING_FILE', new SystemException($msg));
+        throw new Exception($msg);
 
         mime_delete();
         return FALSE;
@@ -94,7 +107,7 @@ function mime_init()
 
         if (!isset($mime_list) || empty($mime_list)) {
             $msg = xarML('Missing mime magic list! Please report this as a bug.');
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'MISSING_MIME_MAGIC_LIST', new SystemException($msg));
+        throw new Exception($msg);
 
             mime_delete();
             return FALSE;
@@ -120,11 +133,11 @@ function mime_init()
 function mime_delete()
 {
     //Load Table Maintenance API
-    xarDBLoadTableMaintenanceAPI();
+    sys::import('xaraya.tableddl');
 
     // Get database information
-    $dbconn =& xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     // Delete tables
     $queries[0] = xarDBDropTable($xartable['mime_type']);
@@ -147,8 +160,8 @@ function mime_delete()
 function mime_upgrade($oldversion)
 {
     // Set up database objects
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
     // Upgrade dependent on old version number

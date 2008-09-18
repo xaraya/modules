@@ -1,15 +1,17 @@
 <?php
-/**
+/*
+ *
  * Mime Module
  *
- * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
  * @subpackage mime
  * @author Carl P. Corliss
  */
+
 /**
  * Uses variants of the UNIX "file" command to attempt to determine the
  * MIME type of an unknown file.
@@ -30,8 +32,7 @@ function mime_userapi_analyze_file( $args )
 
     if (!isset($fileName)) {
         $msg = xarML('Unable to retrieve mime type. No filename supplied!');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return FALSE;
+        throw new Exception($msg);
     }
 
     if (!isset($altFileName) || !strlen($altFileName)) {
@@ -85,8 +86,7 @@ function mime_userapi_analyze_file( $args )
     // Otherwise, actually test the contents of the file
     if (!($fp = @fopen($fileName, 'rb'))) {
         $msg = xarML('Unable to analyze file [#(1)]. Cannot open for reading!', $fileName);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_OPEN', new SystemException($msg));
-        return FALSE;
+        throw new Exception($msg);
     } else {
         $mime_list = xarModAPIFunc('mime', 'user', 'getall_magic');
 
@@ -111,16 +111,14 @@ function mime_userapi_analyze_file( $args )
                     if (@fseek($fp, $magicInfo['offset'], SEEK_SET)) {
                         $msg = xarML('Unable to seek to offset [#(1)] within file: [#(2)]',
                                       $magicInfo['offset'], $fileName);
-                        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_SEEK', new SystemException($msg));
-                        return FALSE;
+                    throw new Exception($msg);
                     }
                 }
 
                 if (!($value = @fread($fp, $magicInfo['length']))) {
                     $msg = xarML('Unable to read (#(1) bytes) from file: [#(2)].',
                                  $magicInfo['length'], $fileName);
-                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_READ', new SystemException($msg));
-                    return FALSE;
+                    throw new Exception($msg);
                 }
 
                 if ($magicInfo['value'] == base64_encode($value)) {
@@ -146,14 +144,12 @@ function mime_userapi_analyze_file( $args )
 
         if (!rewind($fp)) {
             $msg = xarML('Unable to rewind to beginning of file: [#(1)]', $fileName);
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_REWIND', new SystemException($msg));
-            return FALSE;
+            throw new Exception($msg);
         }
 
         if (!($value = @fread($fp, 256))) {
             $msg = xarML('Unable to read (256 bytes) from file: [#(1)]', $fileName);
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_READ', new SystemException($msg));
-            return FALSE;
+            throw new Exception($msg);
         }
 
         // get rid of printable characters so we can

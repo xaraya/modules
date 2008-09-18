@@ -1,10 +1,11 @@
 <?php
-/**
+/*
+ *
  * Mime Module
  *
- * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
  * @subpackage mime
@@ -26,18 +27,18 @@ function mime_userapi_add_type( $args )
     extract( $args );
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable     = xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable     = xarDB::getTables();
 
     if (!isset($typeName) || empty($typeName)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
                      'typeName','userapi_add_type','mime');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        throw new Exception($msg);
     }
 
     // table and column definitions
     $type_table =& $xartable['mime_type'];
-    $typeId = $dbconn->GenID($type_table);
+    $typeId = $dbconn->genID($type_table);
 
     $sql = "INSERT
               INTO $type_table
