@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
 <xar:style file='jquery-demos' scope="module" module="jquery" />
 
@@ -337,12 +338,12 @@
     <xar:template file="jquery.tooltip" module="jquery" subdata="array('selector'=&gt;'#tooltip-set1 *')"/>
 
     <div id="tooltip-set1">
-		<a title="#xarML('A tooltip with default settings. The href is displayed below the title.')#" href="http://google.co.uk">Link to google</a>
-		<br />
-		<label title="#xarML('A label with a title and default settings, no href here')#" for="text1">Input something please!</label>
-		<br />
-		<input title="#xarML('Note that the tooltip disappears when clicking the input element')#" type="text" value="Test" name="action" id="text1"/>
-	</div>
+        <a title="#xarML('A tooltip with default settings. The href is displayed below the title.')#" href="http://google.co.uk">Link to google</a>
+        <br />
+        <label title="#xarML('A label with a title and default settings, no href here')#" for="text1">Input something please!</label>
+        <br />
+        <input title="#xarML('Note that the tooltip disappears when clicking the input element')#" type="text" value="Test" name="action" id="text1"/>
+    </div>
 
     <div id="cluetip-abstract">
         <h2><xar:mlstring>jquery.cluetip - more flexible tooltips</xar:mlstring></h2>
@@ -607,3 +608,4 @@
     </div>
 
 </div>
+</xar:template>

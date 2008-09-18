@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>
     Initialise the jquery.linktracker tool.
     Based on http://www.glennjones.net/Post/811/AjaxLinkTracker22Thedownload.htm
@@ -15,3 +16,4 @@
     be a good one.
 </xar:comment>
 <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery().linktracker('');});" />
+</xar:template>

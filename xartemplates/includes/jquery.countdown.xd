@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>
     Initialise the jquery.countdown plugin.
     See http://keith-wood.name/countdown.html for details of this plugin
@@ -31,3 +32,4 @@
         <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').countdown();});" />
     </xar:if>
 </xar:if>
+</xar:template>

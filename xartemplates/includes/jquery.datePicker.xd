@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>
     Initialise the jquery.datePicker widget.
     See http://jquery.com/plugins/project/datepicker for details of this plugin
@@ -43,3 +44,4 @@
 <xar:if condition="!empty($selector)">
     <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').datePicker();});" />
 </xar:if>
+</xar:template>
