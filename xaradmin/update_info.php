@@ -3,9 +3,9 @@
  * Update the session info with how we are going to translate
  *
  * @package modules
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @link http://www.xaraya.com
- * 
+ *
  * @subpackage translations
  * @author Marco Canini
  * @author Marcel van der Boom <marcel@xaraya.com>

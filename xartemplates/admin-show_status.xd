@@ -1,13 +1,13 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-    <div class="xar-mod-head">
-      <span class="xar-mod-title"><xar:mlstring>Translations Administration</xar:mlstring></span>
-    </div>
-    <div class="xar-mod-body">
-       <xar:template type="module" module="translations" file="admin-nav" />
-       <h2>    <xar:mlstring>Translation progress report for locale </xar:mlstring>
-        #xarSessionGetVar('translations_working_locale')#
-      </h2>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>Translations Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+   <xar:template type="module" module="translations" file="admin-nav" />
+   <h2>    <xar:mlstring>Translation progress report for locale </xar:mlstring>
+    #xarSessionGetVar('translations_working_locale')#
+  </h2>
 
     <xar:set name="total_entries">$coreentries['numEntries']+$mod_totalentries+$theme_totalentries</xar:set>
     <xar:set name="total_untranslated">$coreentries['numEmptyEntries']+$mod_untranslated+$theme_untranslated</xar:set>
@@ -192,5 +192,5 @@
       </tr>
     </xar:loop>
     </table>
-    </div>
+</div>
 </xar:template>
