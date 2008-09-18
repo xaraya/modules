@@ -58,14 +58,14 @@ function xarpages_init()
 
     $index = array('name' => 'i_' . $prefix . '_xarpages_page_name',
                    'fields' => array('xar_name')
-                   );
+    );
     $query = xarDBCreateIndex($pagestable, $index);
     $result = $dbconn->Execute($query);
     if (!$result) {return;}
 
     $index = array('name' => 'i_' . $prefix . '_xarpages_page_type',
                    'fields' => array('xar_itemtype')
-                   );
+    );
     $query = xarDBCreateIndex($pagestable, $index);
     $result = $dbconn->Execute($query);
     if (!$result) {return;}
@@ -155,6 +155,10 @@ function xarpages_init()
     // are made:
     // xarSecurityCheck($mask, $showException, $component, $instance, $module, ...)
     // xarRegisterMask($name, $realm, $module, $component, $instance, $level, $description='')
+    xarRegisterMask(
+        'ViewXarpagesPage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_OVERVIEW',
+        xarML('See that a page exists')
+    );
     xarRegisterMask(
         'ReadXarpagesPage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_READ',
         xarML('Read or view a page')
@@ -392,6 +396,13 @@ function xarpages_upgrade($oldversion)
             // New module variables.
             xarModVars::set('xarpages', 'transformfields', 'body');
             xarModVars::set('xarpages', 'transformref', 1);
+
+        case '0.2.7':
+            // Upgrade to 0.2.8 - new overview privilege on a page.
+            xarRegisterMask(
+                'ViewXarpagesPage', 'All', 'xarpages', 'Page', 'All', 'ACCESS_OVERVIEW',
+                xarML('See that a page exists')
+            );
 
         break;
     }

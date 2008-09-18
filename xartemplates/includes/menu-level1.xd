@@ -75,7 +75,7 @@
                         <xar:set name="current_class">'not-current'</xar:set>
                     </xar:if>
 
-                    <li class="#$current_class#">
+                    <li class="menu-pid-#$page.pid# #$current_class#">
                         <xar:comment>
                             An empty page with no children is treated as a section header,
                             used to divide sections of pages in a single menu level.

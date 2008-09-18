@@ -17,7 +17,11 @@
     <xar:set name="menu_level">1</xar:set>
 </xar:if>
 
-<xar:if condition="!empty($parent.has_children)">
+<xar:set name="this_menu_level">$menu_level</xar:set>
+<xar:set name="menu_level">$menu_level + 1</xar:set>
+<xar:set name="parent_copy">$parent</xar:set>
+
+<xar:if condition="!empty($parent_copy.has_children)">
     <xar:comment>
         In this menu, we want to display:
         1. Children of the root node (i.e. depth 1) so the lowest level is always open.
@@ -38,9 +42,9 @@
     </xar:comment>
 
     <xar:set name="display_children">false</xar:set>
-    <xar:loop name="$parent.child_keys">
+    <xar:loop name="$parent_copy.child_keys">
         <xar:set name="page">#$pages[$loop:item]#</xar:set>
-        <xar:if condition="($max_level eq 0 or $page.depth le $max_level) and (!empty($page.is_child) or !empty($page.is_sibling) or !empty($page.is_ancestor) or $menu_level eq 1)">
+        <xar:if condition="($max_level eq 0 or $page.depth le $max_level) and (!empty($page.is_child) or !empty($page.is_sibling) or !empty($page.is_ancestor) or $this_menu_level eq 1)">
             <xar:set name="display_children">true</xar:set>
         </xar:if>
     </xar:loop>
@@ -52,9 +56,9 @@
         </xar:comment>
 
         <ul>
-            <xar:loop name="$parent.child_keys">
+            <xar:loop name="$parent_copy.child_keys">
                 <xar:set name="page">#$pages[$loop:item]#</xar:set>
-                <xar:if condition="($max_level eq 0 or $page.depth le $max_level) and (!empty($page.is_child) or !empty($page.is_sibling) or !empty($page.is_ancestor) or $menu_level eq 1)">
+                <xar:if condition="($max_level eq 0 or $page.depth le $max_level) and (!empty($page.is_child) or !empty($page.is_sibling) or !empty($page.is_ancestor) or $this_menu_level eq 1)">
                     <xar:comment>Set a class if the page has sub-pages</xar:comment>
                     <xar:if condition="!empty($page.has_children)">
                     </xar:if>
@@ -102,7 +106,8 @@
                             <xar:if condition="!empty($page.has_children) and !empty($page.is_ancestor)">v</xar:if>
 
                             <xar:if condition="!empty($page.has_children)">
-                                <xar:template file="menu" subdata="array('parent'=&gt;$page,'pages'=&gt;$pages,'max_level'=&gt;$max_level,'menu_level'=&gt;$menu_level+1)" />
+                                <xar:set name="parent">$page</xar:set>
+                                <xar:template file="menu" />
                             </xar:if>
                         </xar:if>
                     </li>

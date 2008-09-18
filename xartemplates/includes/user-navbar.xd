@@ -1,11 +1,15 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment>
     Set the page title to the description of the page.
-    You could instead create a DD property called 'title' and refererence
+    You could instead create a DD property called 'page_title' and refererence
     it as $current_page.dd.title, reserving the description field for
     administration notes.
 </xar:comment>
-<xar:set name="dummy">#xarTplSetPageTitle($current_page.desc)#</xar:set>
+<xar:if condition="!empty($current_page.dd.page_title)">
+    <xar:set name="dummy">#xarTplSetPageTitle($current_page.dd.page_title)#</xar:set>
+<xar:else />
+    <xar:set name="dummy">#xarTplSetPageTitle($current_page.desc)#</xar:set>
+</xar:if>
 
 <div>
     <xar:mlstring>You are here:</xar:mlstring>

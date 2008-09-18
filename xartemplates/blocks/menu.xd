@@ -18,5 +18,6 @@
     <xar:set name="max_level">0</xar:set>
 </xar:if>
 
-<xar:template file="menu" subdata="array('parent'=&gt;$root_page,'pages'=&gt;$pages,'max_level'=&gt;$max_level)" />
+<xar:set name="parent">$root_page</xar:set>
+<xar:template file="menu" />
 </xar:template>
