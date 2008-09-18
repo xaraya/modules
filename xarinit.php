@@ -36,14 +36,12 @@ function mime_init()
 
     $fields['mime_type'] = array(
         'xar_mime_type_id'          => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-//        'xar_mime_type_id'          => array('type'=>'integer',  'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_mime_type_name'        => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255),
     );
 
     $fields['mime_subtype'] = array(
         'xar_mime_type_id'          => array('type'=>'integer',  'null'=>FALSE),
         'xar_mime_subtype_id'       => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-//        'xar_mime_subtype_id'       => array('type'=>'integer',  'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_mime_subtype_name'     => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255),
         'xar_mime_subtype_desc'     => array('type'=>'varchar',  'null'=>TRUE,  'size'=>255),
     );
@@ -51,14 +49,12 @@ function mime_init()
     $fields['mime_extension'] = array(
         'xar_mime_subtype_id'       => array('type'=>'integer',  'null'=>FALSE),
         'xar_mime_extension_id'     => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-//        'xar_mime_extension_id'     => array('type'=>'integer',  'null'=>FALSE,  'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_mime_extension_name'   => array('type'=>'varchar',  'null'=>FALSE,  'size'=>10)
     );
 
     $fields['mime_magic'] = array(
         'xar_mime_subtype_id'       => array('type'=>'integer',  'null'=>FALSE),
         'xar_mime_magic_id'         => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-//        'xar_mime_magic_id'         => array('type'=>'integer',  'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_mime_magic_value'      => array('type'=>'varchar',  'null'=>FALSE, 'size'=>255),
         'xar_mime_magic_length'     => array('type'=>'integer',  'null'=>FALSE),
         'xar_mime_magic_offset'     => array('type'=>'integer',  'null'=>FALSE)
