@@ -13,8 +13,8 @@
 
     <h2><xar:mlstring>uiTableFilter - filter a table dynamically</xar:mlstring></h2>
 
-    <xar:template file="jquery.uitablefilter" module="jquery" subdata="array('selector'=&gt;'table.food-planner','filter'=&gt;'input#food-table-filter')" />
-
+    <!-- <xar:template file="jquery.uitablefilter" module="jquery" subdata="array('selector'=&gt;'table.food-planner','filter'=&gt;'input#food-table-filter')" /> -->
+  
     <p><input name="foo" id="food-table-filter" type="text" /></p>
     <table class="food-planner">
         <thead>

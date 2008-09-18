@@ -26,11 +26,11 @@ $modversion['credits']      = 'xardocs/credits.txt';
 $modversion['help']         = 'xardocs/help.txt';
 $modversion['changelog']    = 'xardocs/changelog.txt';
 $modversion['license']      = 'xardocs/license.txt';
-$modversion['official']     = 0;
+$modversion['official']     = false;
 $modversion['author']       = 'Jason Judge';
 $modversion['contact']      = 'judgej@xaraya.com';
-$modversion['admin']        = 0;
-$modversion['user']         = 1;
+$modversion['admin']        = false;
+$modversion['user']         = true;
 $modversion['class']        = 'Tools';
 $modversion['category']     = 'Global';
 ?>
