@@ -64,6 +64,11 @@
                                                 <xar:set name="accentclass">''</xar:set>
                                             </xar:if>
                                             <td class="#$accentclass# cal-day">
+                                                <xar:if condition="isset($Day->entries) AND count($Day->entries)">
+                                                    <xar:set name="accentstyle">'color: red; font-weight: bold'</xar:set>
+                                                <xar:else />
+                                                    <xar:set name="accentstyle">''</xar:set>
+                                                </xar:if>
                                                 <xar:set name="DayUrl">xarModURL('calendar','user','day',array('cal_date'=>$thisday))</xar:set>
                                                 <xar:if condition="!$Day:isEmpty()">
                                                     <!-- Display the date for this day -->
