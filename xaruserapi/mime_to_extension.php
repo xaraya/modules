@@ -39,24 +39,22 @@ function mime_userapi_mime_to_extension( $args )
     }
 
     $xartable = xarDB::getTables();
-    $dbconn = xarDB::getConn();
-    $query = "
-        SELECT xar_mime_type_name AS type_name, 
-               xar_mime_subtype_name AS subtype_name, 
-               xar_mime_extension_name AS extension 
-        FROM   $xartable[mime_type] mt, 
-               $xartable[mime_subtype] mst, 
-               $xartable[mime_extension] me 
-        WHERE  mt.xar_mime_type_id = mst.xar_mime_type_id AND 
-               mst.xar_mime_subtype_id = me.xar_mime_subtype_id AND
-               mt.xar_mime_type_name = ? AND 
-               mst.xar_mime_subtype_name = ?
-        LIMIT  1";
+    sys::import('modules.query.class.query');
+    $q = new Query();
+    $q->addtable($xartable['mime_type'], 'mt');
+    $q->addtable($xartable['mime_subtype'], 'mst');
+    $q->addtable($xartable['mime_extension'], 'me');
+    $q->join('mt.xar_mime_type_id','mst.xar_mime_type_id');
+    $q->join('mst.xar_mime_subtype_id','me.xar_mime_subtype_id');
+    $q->eq('mt.xar_mime_type_name',$typeparts[0]);
+    $q->eq('mst.xar_mime_subtype_name',$typeparts[1]);
     
-    $result = $dbconn->Execute($query,array($typeparts[0],$typeparts[1]),ResultSet::FETCHMODE_ASSOC);
-    if($result->getRecordCount() != 1) 
-        return false;
-    return $result->getRow();
+    $q->addfield('xar_mime_type_name AS type_name');
+    $q->addfield('xar_mime_subtype_name AS subtype_name');
+    $q->addfield('xar_mime_extension_name AS extension');
+    if (!$q->run()) return;
+
+    return $q->output();
 }
 
 ?>
