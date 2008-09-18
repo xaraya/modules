@@ -25,30 +25,27 @@ function xarpages_init()
     $pagestable = $prefix . "_xarpages_pages";
     $typestable = $prefix . "_xarpages_types";
 
-    $query = "DROP TABLE IF EXISTS " . $pagestable;
-    $dbconn->Execute($query);
-    $query = "CREATE TABLE " . $pagestable ." (
-          `xar_pid` int(11) NOT NULL auto_increment,
-          `xar_name` varchar(100) NOT NULL default '',
-          `xar_desc` text,
-          `xar_itemtype` int(11) NOT NULL default '0',
-          `xar_parent` int(11) NOT NULL default '0',
-          `xar_left` int(11) NOT NULL default '0',
-          `xar_right` int(11) NOT NULL default '0',
-          `xar_template` varchar(100) default NULL,
-          `xar_page_template` varchar(100) default NULL,
-          `xar_theme` varchar(100) default NULL,
-          `xar_encode_url` varchar(100) default NULL,
-          `xar_decode_url` varchar(100) default NULL,
-          `xar_function` varchar(100) default NULL,
-          `xar_status` varchar(20) NOT NULL default 'ACTIVE',
-          `xar_alias` tinyint(4) NOT NULL default '0',
-          PRIMARY KEY  (`xar_pid`)
-        )" ;
+    sys::import('xaraya.tableddl');
+    $fields = array(
+        'xar_pid'   => array('type'=>'integer',  'null'=>FALSE,  'increment'=>TRUE,'primary_key'=>TRUE),
+        'xar_name'  => array('type'=>'varchar',  'null'=>FALSE, 'size'=>100, 'default'=>''),
+        'xar_desc'  => array('type'=>'text'),
+        'xar_itemtype' => array('type'=>'integer','null'=>false, 'default'=>0),
+        'xar_parent'    => array('type' => 'integer','null'=>false, 'default'=>0),
+        'xar_left'    => array('type' => 'integer','null'=>false, 'default'=>0),
+        'xar_right'    => array('type' => 'integer','null'=>false, 'default'=>0),
+        'xar_template'    => array('type' => 'varchar', 'size' => 100,'default' => null),
+        'xar_page_template'    => array('type' => 'varchar','size' => 100,'default' => null),
+        'xar_theme'    => array('type' => 'varchar', 'size' => 100,'default' => null),
+        'xar_encode_url'    => array('type' => 'varchar', 'size' => 100,'default' => null),
+        'xar_decode_url'    => array('type' => 'varchar', 'size' => 100,'default' => null),
+        'xar_function'    => array('type' => 'varchar', 'size' => 100,'default' => null),
+        'xar_status'    => array('type' => 'varchar', 'size' => 20,'null'=>false, 'default'=>'ACTIVE'),
+        'xar_alias'    => array('type' => 'integer', 'size' => 4,'null'=>false, 'default'=>0)
+    );
+    $query = xarDBCreateTable($pagestable, $fields);
     $result = $dbconn->Execute($query);
-    if (!$result) {return;}
 
-   sys::import('xaraya.tableddl');
     $index = array('name' => 'i_' . $prefix . '_xarpages_page_left',
                    'fields' => array('xar_left')
                    );
@@ -70,24 +67,14 @@ function xarpages_init()
     $result = $dbconn->Execute($query);
     if (!$result) {return;}
 
-/*    $result = $datadict->createIndex(
-        'i_' . xarDB::getPrefix() . '_xarpages_page_type',
-        $pagestable,
-        'xar_itemtype'
-    );
-    if (!$result) {return;}
-*/
-
-    $query = "DROP TABLE IF EXISTS " . $typestable;
-    $dbconn->Execute($query);
-    $query = "CREATE TABLE " . $typestable ." (
-          `xar_ptid` int(11) NOT NULL auto_increment,
-          `xar_name` varchar(100) NOT NULL default '',
-          `xar_desc` varchar(200) default NULL,
-          PRIMARY KEY  (`xar_ptid`)
-        )" ;
+    $fields = array(
+        'xar_ptid' => array('type' => 'integer','null'=>false,'increment'=>true,'primary_key'=>true),
+        'xar_name' => array('type' => 'varchar','null'=>false,'size'=>100,'default'=>''),
+        'xar_desc' => array('type' => 'varchar','default'=>null,'size'=>200)
+        );
+    $query = xarDBCreateTable($typestable, $fields);
     $result = $dbconn->Execute($query);
-    if (!$result) {return;}
+    
 
     $index = array('name' => 'i_' . $prefix . '_xarpages_type_name',
                    'fields' => array('xar_name'),
@@ -97,15 +84,6 @@ function xarpages_init()
     $result = $dbconn->Execute($query);
     if (!$result) {return;}
 
-/*    // The page type name must be unique.
-    $result = $datadict->createIndex(
-        'i_' . xarDB::getPrefix() . '_xarpages_type_name',
-        $typestable,
-        'xar_name',
-        array('UNIQUE' => true)
-    );
-    if (!$result) {return;}
-*/
 
     // Set up module variables.
     xarModVars::set('xarpages', 'defaultpage', 0);

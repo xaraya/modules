@@ -97,18 +97,22 @@ function xarpages_admin_modifyconfig($args)
     // Get the itemtype of the page type.
     $type_itemtype = xarModAPIfunc('xarpages', 'user', 'gettypeitemtype');
 
+    $confighooks = array();
     $confighooks = xarModCallHooks(
         'module', 'modifyconfig', 'xarpages',
         array('module' => 'xarpages', 'itemtype' => $type_itemtype)
     );
 
     // Clear out any empty hooks.
-    foreach($confighooks as $key => $confighook) {
-        if (trim($confighook) == '') {
-            unset($confighooks[$key]);
-        } else {
-            $confighooks[$key] = trim($confighook);
+    if(!empty($confighooks)) {
+        foreach($confighooks as $key => $confighook) {
+            if (trim($confighook) == '') {
+                unset($confighooks[$key]);
+            } else {
+                $confighooks[$key] = trim($confighook);
+            }
         }
+        
     }
     $data['confighooks'] =& $confighooks;
 
