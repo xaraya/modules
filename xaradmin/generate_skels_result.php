@@ -3,14 +3,16 @@
  * Generate skels result
  *
  * @package modules
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @link http://www.xaraya.com
  *
  * @subpackage translations
  * @author Marco Canini
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
-
+/**
+ * Parse the generation request and show a result page.
+ */
 function translations_admin_generate_skels_result()
 {
     // Security Check
@@ -19,7 +21,7 @@ function translations_admin_generate_skels_result()
     if (!xarVarFetch('dnType','int',$dnType)) return;
     if (!xarVarFetch('dnName','str:1:',$dnName)) return;
     if (!xarVarFetch('extid','int',$extid)) return;
-
+    if (!xarVarFetch('dnTypeAll','bool',$dnTypeAll, false, XARVAR_NOT_REQUIRED)) return;
     $locale = translations_working_locale();
     $args = array('locale'=>$locale);
     switch ($dnType) {
@@ -27,8 +29,32 @@ function translations_admin_generate_skels_result()
         $res = xarModAPIFunc('translations','admin','generate_core_skels',$args);
         break;
         case XARMLS_DNTYPE_MODULE:
-        $args['modid'] = $extid;
-        $res = xarModAPIFunc('translations','admin','generate_module_skels',$args);
+
+            if ($dnTypeAll) {
+
+                // Get all modules
+                $installed = xarModAPIFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_INSTALLED)));
+                if (!isset($installed)) return;
+                $uninstalled = xarModAPIFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_UNINITIALISED)));
+                if (!isset($uninstalled)) return;
+                // Add modules to the list
+                $modlist = array();
+                foreach($uninstalled as $term) {
+                    $modlist[] = $term['regid'];
+                }
+                foreach($installed as $term) {
+                    $modlist[] = $term['regid'];
+                }
+                // Loop over the modlist and for each module generate the skels
+                foreach($modlist as $extid) {
+                    $args['modid'] = $extid;
+                    $res = xarModAPIFunc('translations','admin','generate_module_skels',$args);
+                }
+
+            } else {
+                $args['modid'] = $extid;
+                $res = xarModAPIFunc('translations','admin','generate_module_skels',$args);
+            }
         break;
         case XARMLS_DNTYPE_THEME:
         $args['themeid'] = $extid;
@@ -51,7 +77,7 @@ function translations_admin_generate_skels_result()
     elseif ($dnType == XARMLS_DNTYPE_MODULE) $dnTypeText = 'module';
     else $dnTypeText = '';
     $tplData['dnTypeText'] = $dnTypeText;
-
+    $tplData['dnTypeAll']= $dnTypeAll;
     $tplData['dnName'] = $dnName;
     $tplData['extid'] = $extid;
     $tplData = array_merge($tplData, $druidbar, $opbar);
