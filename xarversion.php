@@ -22,11 +22,11 @@ $modversion['help'] = 'xardocs/help.txt';
 $modversion['changelog'] = 'xardocs/changelog.txt';
 $modversion['license'] = 'xardocs/license.txt';
 $modversion['coding'] = 'xardocs/coding.txt';
-$modversion['official'] = 1;
+$modversion['official'] = true;
 $modversion['author'] = 'Jim McDonald';
 $modversion['contact'] = 'http://www.mcdee.net/';
-$modversion['admin'] = 1;
-$modversion['user'] = 1;
+$modversion['admin'] = true;
+$modversion['user'] = true;
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Utility';
 ?>
