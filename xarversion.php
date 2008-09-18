@@ -20,10 +20,10 @@ $modversion['credits']      = 'docs/credits.txt';
 $modversion['help']         = 'docs/help.txt';
 $modversion['changelog']    = 'docs/changelog.txt';
 $modversion['license']      = 'docs/license.txt';
-$modversion['official']     = 1;
+$modversion['official']     = true;
 $modversion['author']       = 'Carl P. Corliss (carl.corliss@xaraya.com)';
 $modversion['contact']      = 'http://www.xaraya.com/';
-$modversion['admin']        = 1;
+$modversion['admin']        = true;
 $modversion['class']        = 'Utility';
 $modversion['category']     = 'Global';
 // this module requires the gd extension (for now)

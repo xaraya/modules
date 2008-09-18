@@ -47,12 +47,13 @@ function images_init()
         throw new Exception($msg);
     }
     // Register the tag
-    $imageAttributes = array(new xarTemplateAttribute('src',         XAR_TPL_REQUIRED | XAR_TPL_STRING),
-                             new xarTemplateAttribute('height',      XAR_TPL_OPTIONAL | XAR_TPL_STRING),
-                             new xarTemplateAttribute('width',       XAR_TPL_OPTIONAL | XAR_TPL_STRING),
-                             new xarTemplateAttribute('constrain',   XAR_TPL_OPTIONAL | XAR_TPL_STRING),
-                             new xarTemplateAttribute('label',       XAR_TPL_REQUIRED | XAR_TPL_STRING));
-    xarTplRegisterTag('images', 'image-resize', $imageAttributes, 'images_userapi_handle_image_tag');
+    // @todo: reimplement this tag
+    // $imageAttributes = array(new xarTemplateAttribute('src',         XAR_TPL_REQUIRED | XAR_TPL_STRING),
+    //                          new xarTemplateAttribute('height',      XAR_TPL_OPTIONAL | XAR_TPL_STRING),
+    //                          new xarTemplateAttribute('width',       XAR_TPL_OPTIONAL | XAR_TPL_STRING),
+    //                          new xarTemplateAttribute('constrain',   XAR_TPL_OPTIONAL | XAR_TPL_STRING),
+    //                          new xarTemplateAttribute('label',       XAR_TPL_REQUIRED | XAR_TPL_STRING));
+    // xarTplRegisterTag('images', 'image-resize', $imageAttributes, 'images_userapi_handle_image_tag');
 
     // Initialisation successful
     return true;
