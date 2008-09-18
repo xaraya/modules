@@ -1,85 +1,90 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-  <div class="xar-mod-head">
-    <span class="xar-mod-title">
-      <xar:mlstring>Images Administration</xar:mlstring>
-    </span>
-  </div>
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>Images Administration</xar:mlstring>
+        </span>
+    </div>
 
-  <div class="xar-mod-body">
-    <xar:template type="module" file="admin-menu" module="images" />
-    <h2><xar:mlstring>Image Processing with phpThumb()</xar:mlstring></h2>
+    <div class="xar-mod-body">
+      <xar:template type="module" file="admin-menu" module="images" />
+        <h2>
+            <xar:mlstring>Image Processing with phpThumb()</xar:mlstring>
+        </h2>
 
-    <xar:if condition="!empty($message)">
-        <p><strong>#$message#</strong></p>
-    </xar:if>
 
-    <a name="config"></a>
-    <fieldset>
-      <legend><xar:mlstring>Settings</xar:mlstring></legend>
-
-      <div class="xar-form-input-wrapper">
-        <strong><xar:mlstring>Configure</xar:mlstring></strong>
-        <xar:if condition="!empty($selimage['filePreview'])">
-          |
-          <a href="#xarServerGetCurrentURL()##preview"><xar:mlstring>Preview Image</xar:mlstring></a>
-          </xar:if>
-          <xar:if condition="!empty($selimage['fileDownload'])">
-          |
-          <a href="#xarServerGetCurrentURL()##original"><xar:mlstring>Original Image</xar:mlstring></a>
+        <xar:if condition="!empty($message)">
+            <p><strong>#$message#</strong></p>
         </xar:if>
-      </div>
 
-      <form method="post" name="post" id="post" action="#xarModURL('images', 'admin', 'phpthumb')#">
+        <a name="config"></a>
+        <fieldset>
+            <legend>
+                <xar:mlstring>Settings</xar:mlstring>
+            </legend>
+            <div class="xar-form-input-wrapper">
+
+            <strong><xar:mlstring>Configure</xar:mlstring></strong>
+            <xar:if condition="!empty($selimage['filePreview'])">
+            |
+            <a href="#xarServerGetCurrentURL()##preview"><xar:mlstring>Preview Image</xar:mlstring></a>
+            </xar:if>
+            <xar:if condition="!empty($selimage['fileDownload'])">
+            |
+            <a href="#xarServerGetCurrentURL()##original"><xar:mlstring>Original Image</xar:mlstring></a>
+            </xar:if>
+            </div>
+        </fieldset>
+        <form method="post" name="post" id="post" action="#xarModURL('images', 'admin', 'phpthumb')#">
         <table class="xar-fullwidth xar-accent">
-          <xar:if condition="!empty($selimage)">
-              <tr>
-                  <th colspan="4" class="xar-accent" align="center">
-                      <xar:mlstring>Image</xar:mlstring>
-                  </th>
-              </tr>
-              <tr>
-                  <td class="xar-accent">
-                      <xar:mlstring>Filename</xar:mlstring>
-                  </td>
-                  <td>
-                      #$selimage['fileName']#
-                  </td>
-                  <td class="xar-accent">
-                      <xar:mlstring>Modified</xar:mlstring>
-                  </td>
-                  <td>
-                      #xarLocaleGetFormattedDate('short',$selimage['fileModified'])#
-                  </td>
-              </tr>
-              <tr>
-                  <td class="xar-accent">
-                      <xar:mlstring>Filetype</xar:mlstring>
-                  </td>
-                  <td>
-                      #$selimage['fileType']#
-                  </td>
-                  <td class="xar-accent">
-                      <xar:mlstring>Size</xar:mlstring>
-                  </td>
-                  <td>
-                      #$selimage['fileSize']#
-                  </td>
-              </tr>
-              <tr>
-                  <td class="xar-accent">
-                      <xar:mlstring>Width</xar:mlstring>
-                  </td>
-                  <td>
-                      #$selimage['width']#
-                  </td>
-                  <td class="xar-accent">
-                      <xar:mlstring>Height</xar:mlstring>
-                  </td>
-                  <td>
-                      #$selimage['height']#
-                  </td>
-              </tr>
-          </xar:if>
+        <xar:if condition="!empty($selimage)">
+            <tr>
+                <th colspan="4" class="xar-accent" align="center">
+                    <xar:mlstring>Image</xar:mlstring>
+                </th>
+            </tr>
+            <tr>
+                <td class="xar-accent">
+                    <xar:mlstring>Filename</xar:mlstring>
+                </td>
+                <td>
+                    #$selimage['fileName']#
+                </td>
+                <td class="xar-accent">
+                    <xar:mlstring>Modified</xar:mlstring>
+                </td>
+                <td>
+                    #xarLocaleGetFormattedDate('short',$selimage['fileModified'])#
+                </td>
+            </tr>
+            <tr>
+                <td class="xar-accent">
+                    <xar:mlstring>Filetype</xar:mlstring>
+                </td>
+                <td>
+                    #$selimage['fileType']#
+                </td>
+                <td class="xar-accent">
+                    <xar:mlstring>Size</xar:mlstring>
+                </td>
+                <td>
+                    #$selimage['fileSize']#
+                </td>
+            </tr>
+            <tr>
+                <td class="xar-accent">
+                    <xar:mlstring>Width</xar:mlstring>
+                </td>
+                <td>
+                    #$selimage['width']#
+                </td>
+                <td class="xar-accent">
+                    <xar:mlstring>Height</xar:mlstring>
+                </td>
+                <td>
+                    #$selimage['height']#
+                </td>
+            </tr>
+        </xar:if>
             <tr>
                 <th colspan="4" class="xar-accent" align="center">
                     <xar:mlstring>Settings</xar:mlstring>
@@ -431,10 +436,10 @@
                     -360 - 360
                 </td>
             </tr>
-          <xar:comment>
-            To be continued (any volunteers ?) - we'll let people specify filters by hand below.
-            Perhaps we could provide a separate (javascript-based) page to fill in those fields ?
-          </xar:comment>
+    <xar:comment>
+    To be continued (any volunteers ?) - we'll let people specify filters by hand below.
+    Perhaps we could provide a separate (javascript-based) page to fill in those fields ?
+    </xar:comment>
             <tr>
                 <th colspan="4" class="xar-accent" align="center">
                     <xar:mlstring>Other Filters</xar:mlstring>
@@ -545,52 +550,50 @@
                 </td>
             </tr>
         </xar:if>
-      </table>
-      </form>
+        </table>
+        </form>
 
-      <xar:if condition="!empty($params)">
-          <p><xar:ml><xar:mlstring><strong>Parameters :</strong> #(1)</xar:mlstring><xar:mlvar>#$params#</xar:mlvar></xar:ml></p>
-      </xar:if>
+    <xar:if condition="!empty($params)">
+        <p><xar:ml><xar:mlstring><strong>Parameters :</strong> #(1)</xar:mlstring><xar:mlvar>#$params#</xar:mlvar></xar:ml></p>
+    </xar:if>
 
-      <xar:if condition="!empty($selimage['filePreview'])">
-          <a name="preview"></a>
+    <xar:if condition="!empty($selimage['filePreview'])">
+        <a name="preview"></a>
 
-          <hr/>
-          <p>
-              <a href="#xarServerGetCurrentURL()##config"><xar:mlstring>Configure</xar:mlstring></a>
-              |
-              <strong><xar:mlstring>Preview Image</xar:mlstring></strong>
-              <xar:if condition="!empty($selimage['fileDownload'])">
-              |
-              <a href="#xarServerGetCurrentURL()##original"><xar:mlstring>Original Image</xar:mlstring></a>
-              </xar:if>
-          </p>
-          <p><img src="#$selimage['filePreview']#" border="0" /></p>
-      </xar:if>
+        <hr/>
+        <p>
+            <a href="#xarServerGetCurrentURL()##config"><xar:mlstring>Configure</xar:mlstring></a>
+            |
+            <strong><xar:mlstring>Preview Image</xar:mlstring></strong>
+            <xar:if condition="!empty($selimage['fileDownload'])">
+            |
+            <a href="#xarServerGetCurrentURL()##original"><xar:mlstring>Original Image</xar:mlstring></a>
+            </xar:if>
+        </p>
+        <p><img src="#$selimage['filePreview']#" border="0" /></p>
+    </xar:if>
 
-      <xar:if condition="!empty($selimage['fileDownload'])">
-          <a name="original"></a>
+    <xar:if condition="!empty($selimage['fileDownload'])">
+        <a name="original"></a>
 
-          <hr/>
-          <p>
-              <a href="#xarServerGetCurrentURL()##config"><xar:mlstring>Configure</xar:mlstring></a>
-              <xar:if condition="!empty($selimage['filePreview'])">
-              |
-              <a href="#xarServerGetCurrentURL()##preview"><xar:mlstring>Preview Image</xar:mlstring></a>
-              </xar:if>
-              |
-              <strong><xar:mlstring>Original Image</xar:mlstring></strong>
-          </p>
-          <p><img src="#$selimage['fileDownload']#" border="0" /></p>
-      </xar:if>
-    </fieldset>
-</div>
-  <div>
-    <p>
-      <i>
-        <xar:set name="ref">'<a href="http://phpthumb.sourceforge.net/">phpThumb()</a>'</xar:set>
-        <xar:ml><xar:mlstring>Based on #(1) by James Heinrich</xar:mlstring><xar:mlvar>#$ref#</xar:mlvar></xar:ml>
-      </i>
-    </p>
-  </div>
+        <hr/>
+        <p>
+            <a href="#xarServerGetCurrentURL()##config"><xar:mlstring>Configure</xar:mlstring></a>
+            <xar:if condition="!empty($selimage['filePreview'])">
+            |
+            <a href="#xarServerGetCurrentURL()##preview"><xar:mlstring>Preview Image</xar:mlstring></a>
+            </xar:if>
+            |
+            <strong><xar:mlstring>Original Image</xar:mlstring></strong>
+        </p>
+        <p><img src="#$selimage['fileDownload']#" border="0" /></p>
+    </xar:if>
+
+    </div>
+        <div>
+            <p><i>
+                <xar:set name="ref">'<a href="http://phpthumb.sourceforge.net/">phpThumb()</a>'</xar:set>
+                <xar:ml><xar:mlstring>Based on #(1) by James Heinrich</xar:mlstring><xar:mlvar>#$ref#</xar:mlvar></xar:ml>
+            </i></p>
+        </div>
 </xar:template>

@@ -1,189 +1,187 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>Images Administration</xar:mlstring>
-    </span>
-</div>
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:mlstring>Images Administration</xar:mlstring>
+        </span>
+    </div>
 
-<div class="xar-mod-body">
-  <xar:template type="module" file="admin-menu" module="images" />
-    <h2>
-        <xar:mlstring>View Derivative Images</xar:mlstring>
-    </h2>
-    <xar:if condition="!empty($selimage)">
+    <div class="xar-mod-body">
+      <xar:template type="module" file="admin-menu" module="images" />
+        <h2>
+            <xar:mlstring>View Derivative Images</xar:mlstring>
+        </h2>
+        <xar:if condition="!empty($selimage)">
 
 
-        <xar:if condition="!empty($action) and $action eq 'delete'">
-        <form method="post" action="&xar-modurl-images-admin-derivatives;">
-            <p><strong><xar:mlstring>Are you sure you want to delete this image ?</xar:mlstring></strong></p>
-            <input type="hidden" name="authid" value="#$authid#" />
-            <input type="hidden" name="action" value="delete" />
-            <input type="hidden" name="fileId" value="#$selimage['fileId']#" />
-            <input type="submit" name="confirm" value="#xarML('Confirm')#" />
-            <input type="submit" name="action" value="#xarML('Cancel')#" />
-        </form>
+            <xar:if condition="!empty($action) and $action eq 'delete'">
+            <form method="post" action="&xar-modurl-images-admin-derivatives;">
+                <p><strong><xar:mlstring>Are you sure you want to delete this image ?</xar:mlstring></strong></p>
+                <input type="hidden" name="authid" value="#$authid#" />
+                <input type="hidden" name="action" value="delete" />
+                <input type="hidden" name="fileId" value="#$selimage['fileId']#" />
+                <input type="submit" name="confirm" value="#xarML('Confirm')#" />
+                <input type="submit" name="action" value="#xarML('Cancel')#" />
+            </form>
+            </xar:if>
+            <fieldset>
+                <legend>
+                    <xar:mlstring>Image</xar:mlstring>
+                </legend>
+                <div class="xar-form-input-wrapper">
+                <p class="xar-align-center">
+                    <img src="#$selimage['fileDownload']#" class="xar-noborder" alt=""/>
+                </p>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>
+                    <xar:mlstring>Derivative Image Details</xar:mlstring>
+                </legend>
+                    <div class="xar-form-input-wrapper">
+                        <label class="xar-form-label"><xar:mlstring>Filename</xar:mlstring> :</label>
+                         #$selimage['fileName']#
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label class="xar-form-label"><xar:mlstring>Width</xar:mlstring> :</label>
+                         #$selimage['width']#
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label class="xar-form-label"><xar:mlstring>Height</xar:mlstring> :</label>
+                         #$selimage['height']#
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label class="xar-form-label"><xar:mlstring>Size</xar:mlstring> :</label>
+                         #$selimage['fileSize']#
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label class="xar-form-label"><xar:mlstring>Modified</xar:mlstring> :</label>
+                         #xarLocaleGetFormattedDate('short',$selimage['fileModified'])#
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <xar:if condition="!empty($selimage['fileSetting'])">
+                         <label class="xar-form-label"><xar:mlstring>Settings</xar:mlstring> :</label>
+                          #$selimage['fileSetting']#
+                        </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <xar:if condition="!empty($selimage['original'])">
+                              <label class="xar-form-label"><xar:mlstring>Original</xar:mlstring> : </label>
+                              <a href="#xarModURL('images', 'admin', 'uploads', array('action' => 'view', 'fileId' => $selimage['original']['fileId']))#">#$selimage['original']['fileName']#</a>
+                        </xar:if>
+                    </div>
+            </fieldset>
+
         </xar:if>
-        <fieldset>
-            <legend>
-                <xar:mlstring>Image</xar:mlstring>
-            </legend>
-            <div class="xar-form-input-wrapper">
-            <p class="xar-align-center">
-                <img src="#$selimage['fileDownload']#" class="xar-noborder" alt=""/>
+
+        <xar:comment>
+            Note: we always show the list here
+        </xar:comment>
+
+
+
+            <p>
+                <strong><xar:mlstring>Derivatives Storage Directory</xar:mlstring>:</strong>
+                #$thumbsdir#
+                <xar:if condition="!empty($cacheExpire)">
+                    <a href="#xarModURL('images','admin','derivatives',array('refresh' => 1))#">
+                        <xar:mlstring>Refresh</xar:mlstring>
+                    </a>
+                </xar:if>
             </p>
-            </div>
-        </fieldset>
-        <fieldset>
-            <legend>
-                <xar:mlstring>Derivative Image Details</xar:mlstring>
-            </legend>
-                <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label"><xar:mlstring>Filename</xar:mlstring> :</label>
-                     #$selimage['fileName']#
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label"><xar:mlstring>Width</xar:mlstring> :</label>
-                     #$selimage['width']#
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label"><xar:mlstring>Height</xar:mlstring> :</label>
-                     #$selimage['height']#
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label"><xar:mlstring>Size</xar:mlstring> :</label>
-                     #$selimage['fileSize']#
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label class="xar-form-label"><xar:mlstring>Modified</xar:mlstring> :</label>
-                     #xarLocaleGetFormattedDate('short',$selimage['fileModified'])#
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <xar:if condition="!empty($selimage['fileSetting'])">
-                     <label class="xar-form-label"><xar:mlstring>Settings</xar:mlstring> :</label>
-                      #$selimage['fileSetting']#
+
+            <xar:set name="showoriginal">xarModIsAvailable('uploads')</xar:set>
+
+            <table class="xar-accent">
+                <tr>
+                    <xar:if condition="!empty($showoriginal)">
+                    <th>
+                        <xar:mlstring>Original</xar:mlstring>
+                    </th>
                     </xar:if>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <xar:if condition="!empty($selimage['original'])">
-                          <label class="xar-form-label"><xar:mlstring>Original</xar:mlstring> : </label>
-                          <a href="#xarModURL('images', 'admin', 'uploads', array('action' => 'view', 'fileId' => $selimage['original']['fileId']))#">#$selimage['original']['fileName']#</a>
+                    <th>
+                        <a href="#xarModURL('images','admin','derivatives')#">
+                        <xar:mlstring>Filename</xar:mlstring>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="#xarModURL('images','admin','derivatives',array('sort' => 'width'))#">
+                        <xar:mlstring>Width</xar:mlstring>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="#xarModURL('images','admin','derivatives',array('sort' => 'height'))#">
+                        <xar:mlstring>Height</xar:mlstring>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="#xarModURL('images','admin','derivatives',array('sort' => 'size'))#">
+                        <xar:mlstring>Size</xar:mlstring>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="#xarModURL('images','admin','derivatives',array('sort' => 'time'))#">
+                        <xar:mlstring>Modified</xar:mlstring>
+                        </a>
+                    </th>
+                    <th>
+                        <xar:mlstring>Action</xar:mlstring>
+                    </th>
+                </tr>
+                <xar:foreach in="$images" value="$image">
+                <tr>
+                    <xar:if condition="!empty($showoriginal)">
+                    <td>
+                        <xar:if condition="!empty($image['original'])">
+                            <a href="#xarModURL('images', 'admin', 'uploads', array('action' => 'view', 'fileId' => $image['original']['fileId']))#">#$image['original']['fileName']#</a>
+                        <xar:else/>
+                            -
+                        </xar:if>
+                    </td>
                     </xar:if>
-                </div>
-        </fieldset>
-
-    </xar:if>
-
-    <xar:comment>
-        Note: we always show the list here
-    </xar:comment>
-
-
-
-        <p>
-            <strong><xar:mlstring>Derivatives Storage Directory</xar:mlstring>:</strong>
-            #$thumbsdir#
-            <xar:if condition="!empty($cacheExpire)">
-                <a href="#xarModURL('images','admin','derivatives',array('refresh' => 1))#">
-                    <xar:mlstring>Refresh</xar:mlstring>
-                </a>
-            </xar:if>
-        </p>
-
-        <xar:set name="showoriginal">xarModIsAvailable('uploads')</xar:set>
-
-        <table class="xar-accent">
-            <tr>
-                <xar:if condition="!empty($showoriginal)">
-                <th>
-                    <xar:mlstring>Original</xar:mlstring>
-                </th>
-                </xar:if>
-                <th>
-                    <a href="#xarModURL('images','admin','derivatives')#">
-                    <xar:mlstring>Filename</xar:mlstring>
-                    </a>
-                </th>
-                <th>
-                    <a href="#xarModURL('images','admin','derivatives',array('sort' => 'width'))#">
-                    <xar:mlstring>Width</xar:mlstring>
-                    </a>
-                </th>
-                <th>
-                    <a href="#xarModURL('images','admin','derivatives',array('sort' => 'height'))#">
-                    <xar:mlstring>Height</xar:mlstring>
-                    </a>
-                </th>
-                <th>
-                    <a href="#xarModURL('images','admin','derivatives',array('sort' => 'size'))#">
-                    <xar:mlstring>Size</xar:mlstring>
-                    </a>
-                </th>
-                <th>
-                    <a href="#xarModURL('images','admin','derivatives',array('sort' => 'time'))#">
-                    <xar:mlstring>Modified</xar:mlstring>
-                    </a>
-                </th>
-                <th>
-                    <xar:mlstring>Action</xar:mlstring>
-                </th>
-            </tr>
-            <xar:foreach in="$images" value="$image">
-            <tr>
-                <xar:if condition="!empty($showoriginal)">
-                <td>
-                    <xar:if condition="!empty($image['original'])">
-                        <a href="#xarModURL('images', 'admin', 'uploads', array('action' => 'view', 'fileId' => $image['original']['fileId']))#">#$image['original']['fileName']#</a>
+                    <td>
+                        #$image['fileName']#
+                    </td>
+                    <td>
+                        #$image['width']#
+                    </td>
+                    <td>
+                        #$image['height']#
+                    </td>
+                    <td>
+                        #$image['fileSize']#
+                    </td>
+                    <td>
+                        #xarLocaleGetFormattedDate('short',$image['fileModified'])#
+                    </td>
+                    <td>
+                        <a href="#xarModURL('images','admin','derivatives',array('action' => 'view', 'fileId' => $image['fileId']))#">
+                            <xar:mlstring>View</xar:mlstring>
+                        </a>
+                        |
+                        <a href="#xarModURL('images','admin','phpthumb',array('fid' => $image['fileId']))#">
+                            <xar:mlstring>Process</xar:mlstring>
+                        </a>
+                        |
+                        <a href="#xarModURL('images','admin','derivatives',array('action' => 'delete', 'fileId' => $image['fileId']))#">
+                            <xar:mlstring>Delete</xar:mlstring>
+                        </a>
+                    </td>
+                </tr>
+                </xar:foreach>
+                <xar:if condition="!empty($pager)">
+                <tr>
+                    <xar:if condition="!empty($showoriginal)">
+                    <td colspan="7" align="center">
+                        #$pager#
+                    </td>
                     <xar:else/>
-                        -
+                    <td colspan="6" align="center">
+                        #$pager#
+                    </td>
                     </xar:if>
-                </td>
+                </tr>
                 </xar:if>
-                <td>
-                    #$image['fileName']#
-                </td>
-                <td>
-                    #$image['width']#
-                </td>
-                <td>
-                    #$image['height']#
-                </td>
-                <td>
-                    #$image['fileSize']#
-                </td>
-                <td>
-                    #xarLocaleGetFormattedDate('short',$image['fileModified'])#
-                </td>
-                <td>
-                    <a href="#xarModURL('images','admin','derivatives',array('action' => 'view', 'fileId' => $image['fileId']))#">
-                        <xar:mlstring>View</xar:mlstring>
-                    </a>
-                    |
-                    <a href="#xarModURL('images','admin','phpthumb',array('fid' => $image['fileId']))#">
-                        <xar:mlstring>Process</xar:mlstring>
-                    </a>
-                    |
-                    <a href="#xarModURL('images','admin','derivatives',array('action' => 'delete', 'fileId' => $image['fileId']))#">
-                        <xar:mlstring>Delete</xar:mlstring>
-                    </a>
-                </td>
-            </tr>
-            </xar:foreach>
-            <xar:if condition="!empty($pager)">
-            <tr>
-                <xar:if condition="!empty($showoriginal)">
-                <td colspan="7" align="center">
-                    #$pager#
-                </td>
-                <xar:else/>
-                <td colspan="6" align="center">
-                    #$pager#
-                </td>
-                </xar:if>
-            </tr>
-            </xar:if>
-        </table>
+            </table>
 
-</div>
-
-
+    </div>
 </xar:template>
