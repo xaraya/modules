@@ -28,7 +28,7 @@ function xarpages_init()
     $query = "DROP TABLE IF EXISTS " . $pagestable;
     $dbconn->Execute($query);
     $query = "CREATE TABLE " . $pagestable ." (
-          `xar_pid` int(11) NOT NULL auto_increment,
+          `xar_pid` integer unsigned NOT NULL auto_increment,
           `xar_name` varchar(100) NOT NULL default '',
           `xar_desc` text,
           `xar_itemtype` int(11) NOT NULL default '0',
@@ -81,7 +81,7 @@ function xarpages_init()
     $query = "DROP TABLE IF EXISTS " . $typestable;
     $dbconn->Execute($query);
     $query = "CREATE TABLE " . $typestable ." (
-          `xar_ptid` int(11) NOT NULL auto_increment,
+          `xar_ptid` integer unsigned NOT NULL auto_increment,
           `xar_name` varchar(100) NOT NULL default '',
           `xar_desc` varchar(200) default NULL,
           PRIMARY KEY  (`xar_ptid`)
