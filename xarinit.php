@@ -71,12 +71,6 @@
     #
     # Set up hooks
     #
-        // This is a GUI hook for the roles module that enhances the roles profile page
-        if (!xarModRegisterHook('item', 'usermenu', 'GUI',
-                'xarayatesting', 'user', 'usermenu')) {
-            return false;
-        }
-
         sys::import('xaraya.structures.hooks.observer');
         $observer = new BasicObserver('xarayatesting');
         $subject = new HookSubject('comments');

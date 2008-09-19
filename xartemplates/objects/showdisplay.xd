@@ -37,9 +37,6 @@
             <xar:data-output property="$properties[$name]" />
         </div>
     </xar:foreach>
-    <xar:if condition="!empty($hooks)">
-        <xar:foreach in="$hooks" key="$hookmodule">#$hooks[$hookmodule]#</xar:foreach>
-    </xar:if>
     <xar:set name="itemid">$properties['id']->value</xar:set>
     <xar:data-input type="commenttree" itemtype="1" module="xarayatesting" itemid="$itemid" />
 </xar:template>
