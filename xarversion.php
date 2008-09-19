@@ -23,9 +23,11 @@
     $modversion['dependency']     = array();
     $modversion['securityschema'] = array();
 $modversion['dependency'] = array(
+                                  14,
                                   30046,
                                   );
 $modversion['dependencyinfo'] = array(
+                                      14  => 'comments',
                                       30046  => 'listings',
                                       );
 ?>
