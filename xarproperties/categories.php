@@ -314,17 +314,6 @@ class CategoriesProperty extends SelectProperty
         // Now we need to figure out which categories are displayed
         $selectedcategories = array();
         
-/*        // $data['value'] at this point is the itemid. Generate the categories from it
-        if (empty($data['value'])) {
-            if (!empty($data['itemid'])) {
-                // We'll accept an itemid attribute if there is one for backward compatibility
-                $data['value'] = $data['itemid'];
-            } elseif (!empty($this->value)) {
-                // We have $this->value, use it as the itemid
-                $data['value'] = $this->value;
-            }
-        }
-        */
         if (!empty($data['itemid'])) {
             $data['categories_itemid'] = $data['itemid'];
         } elseif (isset($this->_itemid)) {
