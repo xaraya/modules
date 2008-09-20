@@ -50,9 +50,9 @@ function categories_userapi_getlinkage($args)
     $q->addfield('c.id AS id');
     $q->addfield('c.name AS name');
     $q->addfield('cl.basecategory AS basecategory_id');
-    $q->addfield('c.module_id AS module_id');
-    $q->addfield('c.itemid AS itemid');
-    $q->addfield('c.itemtype AS itemtype');
+    $q->addfield('cl.module_id AS module_id');
+    $q->addfield('cl.itemid AS itemid');
+    $q->addfield('cl.itemtype AS itemtype');
 //    $q->qecho();
     if (!$q->run()) return array();
     return $q->output();
