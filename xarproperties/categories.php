@@ -398,8 +398,8 @@ class CategoriesProperty extends SelectProperty
         if (empty($data['value'])) {
             if (empty($this->value)) {
                 $data['value'] = array();
-                $links = xarModAPIFunc('categories', 'user', 'getlinkages',
-                                       array('itemid' => $data['value'],
+                $links = xarModAPIFunc('categories', 'user', 'getlinkage',
+                                       array('itemid' => $data['categories_itemid'],
                                              'itemtype' => $data['categories_localitemtype'],
                                              'module' => $data['categories_localmodule'],
                                              ));
