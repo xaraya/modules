@@ -57,21 +57,21 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinyentity_encoding','str:1:',$tinyentity_encoding,'raw',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyencode','checkbox',$tinyencode,false,XARVAR_NOT_REQUIRED)) return;
                xarModSetVar('tinymce', 'tinytheme', $tinytheme);
-               xarModSetVar('tinymce', 'tinyask', ($tinyask?1:0));
-               xarModSetVar('tinymce', 'striplinebreaks', ($stripbreaks?1:0));
+               xarModSetVar('tinymce', 'tinyask', ($tinyask==1?true:false));
+               xarModSetVar('tinymce', 'striplinebreaks', ($stripbreaks==1?true:false));
                xarModSetVar('tinymce', 'tinyundolevel',$tinyundolevel);
                xarModSetVar('tinymce', 'tinydirection', $tinydirection);
                xarModSetVar('tinymce', 'tinyinstances', $tinyinstances); //not used at this stage
                xarModSetVar('tinymce', 'tinylang', $tinylang);
-               xarModSetVar('tinymce', 'tinybr', ($tinybr?1:0));
+               xarModSetVar('tinymce', 'tinybr', ($tinybr ==1 ?true:false));
                xarModSetVar('tinymce', 'tinypara', ($tinypara?1:0));
-               xarModSetVar('tinymce', 'sourceformat', ($sourceformat?1:0));
-               xarModSetVar('tinymce', 'tinycompressor',($tinycompressor?1:0));
-               xarModSetVar('tinymce', 'tinycleanup',($tinycleanup?1:0));
-               xarModSetVar('tinymce', 'usebutton', ($usebutton?1:0));
+               xarModSetVar('tinymce', 'sourceformat', ($sourceformat==1?true:false));
+               xarModSetVar('tinymce', 'tinycompressor',($tinycompressor==1?true:false));
+               xarModSetVar('tinymce', 'tinycleanup',($tinycleanup==1?true:false));
+               xarModSetVar('tinymce', 'usebutton', ($usebutton==1?true:false));
                xarModSetVar('tinymce', 'tinybrowsers', $tinybrowsers);
-               xarModSetVar('tinymce', 'tinytilemap', ($tinytilemap?1:0));
-               xarModSetVar('tinymce','tinyencode', ($tinyencode?1:0));
+               xarModSetVar('tinymce', 'tinytilemap', ($tinytilemap==1?true:false));
+               xarModSetVar('tinymce','tinyencode', ($tinyencode==1?true:false));
                xarModSetVar('tinymce','tinyentity_encoding', $tinyentity_encoding);
                $tinyeditorselector = trim($tinyeditorselector);
                if ($tinyeditorselector ==''){
@@ -131,10 +131,10 @@ function tinymce_admin_updateconfig()
                xarModSetVar('tinymce', 'tinyadvformat', $tinyadvformat);
                xarModSetVar('tinymce', 'tinyshowpath', $tinyshowpath);
                xarModSetVar('tinymce', 'tinybuttonsremove', $tinybuttonsremove);
-               xarModSetVar('tinymce','tinyadvresize', ($tinyadvresize?1:0));
-               xarModSetVar('tinymce','tinyenablepath', ($tinyenablepath?1:0));
-               xarModSetVar('tinymce','tinyresizehorizontal', ($tinyresizehorizontal?1:0));
-               xarModSetVar('tinymce','usefilebrowser',($usefilebrowser?1:0));
+               xarModSetVar('tinymce','tinyadvresize', ($tinyadvresize==1)?true:false);
+               xarModSetVar('tinymce','tinyenablepath', ($tinyenablepath==1)?true:false);
+               xarModSetVar('tinymce','tinyresizehorizontal', ($tinyresizehorizontal==1)?true:false);
+               xarModSetVar('tinymce','usefilebrowser',($usefilebrowser==1)?true:false);
            break;
     case 'customconfig':
            if (!xarVarFetch('tinycustom','str:1:',$tinycustom,'',XARVAR_NOT_REQUIRED)) return;
@@ -142,7 +142,7 @@ function tinymce_admin_updateconfig()
            if (!xarVarFetch('multiconfig','str:1:',$multiconfig,XARVAR_NOT_REQUIRED)) return;
                 xarModSetVar('tinymce', 'tinycustom', $tinycustom);
                 xarModSetVar('tinymce', 'multiconfig', $multiconfig);
-                xarModSetVar('tinymce', 'usemulticonfig', ($dousemulticonfig?1:0));
+                xarModSetVar('tinymce', 'usemulticonfig', ($dousemulticonfig==1)?true:false);
 
     break;
 
@@ -200,10 +200,10 @@ function tinymce_admin_updateconfig()
     }
 
     if (xarModGetVar('tinymce','tinyask')==1){ //defaults to false
-        $jstext .='ask : "true",';
+        $jstext .='ask : true,';
     }
     if (xarModGetVar('tinymce','tinyinlinestyle')==1){
-        $jstext .='inline_styles : "true", ';
+        $jstext .='inline_styles : true, ';
     }
     if (xarModGetVar('tinymce','tinyundolevel') > 0){
         $jstext .='custom_undo_redo_levels : "'.xarModGetVar('tinymce','tinyundolevel').'", ';
@@ -214,25 +214,27 @@ function tinymce_admin_updateconfig()
     }
     */
     if (xarModGetVar('tinymce','tinytilemap')==1){
-        $jstext .='button_tile_map : "true",';
+        $jstext .='button_tile_map : true,';
     }
     if (xarModGetVar('tinymce','tinycleanup')!=1){
         $jstext .='cleanup: "false",';
     }
 
     if (xarModGetVar('tinymce','tinybr')==1){
-        $jstext .='convert_newlines_to_brs: "true",';
+        $jstext .='convert_newlines_to_brs: true,';
+    } else {
+     $jstext .='convert_newlines_to_brs: false,';
     }
 
     if (xarModGetVar('tinymce','tinypara') !=1){ //This is true by default in tinymce
-        $jstext .='force_p_newlines: "false",';
+        $jstext .='force_p_newlines: false,';
     }
 
     if (xarModGetVar('tinymce','sourceformat')==1){
-        $jstext .='apply_source_formatting: "true",';
+        $jstext .='apply_source_formatting: true,';
     }
     if (xarModGetVar('tinymce','striplinebreaks')==1){
-        $jstext .='remove_linebreaks: "true",';
+        $jstext .='remove_linebreaks: true,';
     }
 
    if (trim(xarModGetVar('tinymce','tinyinvalid')) <> '') {
@@ -258,10 +260,10 @@ function tinymce_admin_updateconfig()
             $jstext .='theme_advanced_statusbar_location: "'.xarModGetVar('tinymce','tinyshowpath').'", ';
          
             if (xarModGetVar('tinymce','tinyadvresize')==1 ){
-                $jstext .='theme_advanced_resizing : "true", ';
+                $jstext .='theme_advanced_resizing : true, ';
             }
             if (xarModGetVar('tinymce','tinyresizehorizontal')==1 ){
-                $jstext .='theme_advanced_resize_horizontal : "true", ';
+                $jstext .='theme_advanced_resize_horizontal : true, ';
             }
         }
 
