@@ -314,7 +314,7 @@ class CategoriesProperty extends SelectProperty
         // Now we need to figure out which categories are displayed
         $selectedcategories = array();
         
-        // $data['value'] at this point is the itemid. Generate the categories from it
+/*        // $data['value'] at this point is the itemid. Generate the categories from it
         if (empty($data['value'])) {
             if (!empty($data['itemid'])) {
                 // We'll accept an itemid attribute if there is one for backward compatibility
@@ -324,12 +324,20 @@ class CategoriesProperty extends SelectProperty
                 $data['value'] = $this->value;
             }
         }
-        
+        */
+        if (!empty($data['itemid'])) {
+            $data['categories_itemid'] = $data['itemid'];
+        } elseif (isset($this->_itemid)) {
+            $data['categories_itemid'] = $this->_itemid;
+        } else {
+            $data['categories_itemid'] = 0;
+        }
+
         // We have a valid itemid, so get its linked categories
         // This is the case of a property attached to an object
-        if (!empty($data['value'])) {
+        if (!empty($data['categories_itemid'])) {
                 $links = xarModAPIFunc('categories', 'user', 'getlinkage',
-                                       array('itemid' => $data['value'],
+                                       array('itemid' => $data['categories_itemid'],
                                              'itemtype' => $data['categories_localitemtype'],
                                              'module' => $data['categories_localmodule'],
                                               ));
@@ -395,7 +403,7 @@ class CategoriesProperty extends SelectProperty
         // We have a valid itemid, so get its linked categories
         // This is the case of a property attached to an object
         $selectedcategories = array();
-        if (empty($data['value'])) {
+        if (!empty($data['categories_itemid'])) {
             if (empty($this->value)) {
                 $data['value'] = array();
                 $links = xarModAPIFunc('categories', 'user', 'getlinkage',
