@@ -11,7 +11,7 @@
 
 (function() {
 	// Load plugin specific language pack
-	tinymce.PluginManager.requireLangPack();
+	tinymce.PluginManager.requireLangPack('loremipsum');
 
 	tinymce.create('tinymce.plugins.LoremIpsum', {
 		/**
