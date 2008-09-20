@@ -403,7 +403,8 @@ class CategoriesProperty extends SelectProperty
                                              'itemtype' => $data['categories_localitemtype'],
                                              'module' => $data['categories_localmodule'],
                                              ));
-                foreach ($links as $link) $selectedcategories[$link['basecategory_id']] = $link['id'];
+                foreach ($links as $link) 
+                    $selectedcategories[$link['basecategory_id']] = $link;
             }
         }
 
