@@ -30,7 +30,7 @@ function messages_userapi_get( $args )
     $list1 = xarModAPIFunc('comments',
                                    'user',
                                    'get_multiple',
-                                    array('modid'       => xarModGetIDFromName('messages'),
+                                    array('modid'       => xarMod::getID('messages'),
                                           'objectid'    => xarUserGetVar('id'),
                                           'status'      => 2));
     $list = xarModAPIFunc('messages',
@@ -56,8 +56,7 @@ function messages_userapi_get( $args )
         $message['raw_date']      = $node['datetime'];
         $message['date']          = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', $node['datetime']);
         $message['subject']       = $node['title'];
-        $message['postanon']	  = $node['postanon'];	
-        $message['postanon_to']	  = $node['postanon_to'];	
+        $message['postanon']      = $node['postanon'];  
         $message['body']          = $node['text'];
         $message['draft']         = ($node['status'] == 1 ? true : false);
         if (!in_array($message['id'], $read_messages)) {
@@ -74,9 +73,9 @@ function messages_userapi_get( $args )
         */
         $message['user_link']     = xarModURL('roles','user','display',
                                                array('id' => $node['role_id']));
-        $message['view_link']     = xarModURL('messages','user', 'view',
+        $message['view_link']     = xarModURL('messages','user', 'display',
                                                array('id'    => $node['id']));
-        $message['reply_link']    = xarModURL('messages','user','send',
+        $message['reply_link']    = xarModURL('messages','user','new',
                                                array('action' => 'reply',
                                                      'id'    => $node['id']));
         $message['delete_link']   = xarModURL('messages','user','delete',

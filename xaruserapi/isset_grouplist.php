@@ -5,7 +5,6 @@
  * @param unknown_type $args
  * @return array of groups selected if not configured return false
  */
-include_once("./modules/commonutil.php");
 function messages_userapi_isset_grouplist( $args )
 {
 
@@ -36,7 +35,6 @@ function messages_userapi_isset_grouplist( $args )
         $groupID=$CurrentUser[0]['parent_id'];
         
         $allowedSendMessages = unserialize(xarModItemVars::get('messages',"allowedSendMessages",$groupID));
-        TracePrint($allowedSendMessages,"allowed Send Messages");
         
         if(isset($allowedSendMessages)) {
             if(empty($allowedSendMessages[0])) {

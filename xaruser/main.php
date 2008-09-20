@@ -13,7 +13,7 @@
  */
 function messages_user_main()
 {
-    xarResponseRedirect(xarModURL('messages','user','display'));
+    xarResponseRedirect(xarModURL('messages','user','view'));
     return;
 
 }

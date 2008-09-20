@@ -4,9 +4,9 @@
             <xar:mlstring>Away Message</xar:mlstring>
         </span>
     </div>
-	<!--Psspl:Modifided the code for adding return action -->
+    <!--Psspl:Modifided the code for adding return action -->
     <div class="xar-mod-body">
-    <form action="#xarModURL('messages','user','display')#" method="post">    
+    <form action="#xarModURL('messages','user','view')#" method="post">    
         <span class="xar-accent">
             <xar:ml><xar:mlstring>#(1) is away</xar:mlstring><xar:mlvar>#xarUserGetVar('name',$recipient)#</xar:mlvar></xar:ml>
         </span>

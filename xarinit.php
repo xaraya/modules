@@ -29,12 +29,12 @@ function messages_init()
     xarModVars::set('messages', 'mailsubject', 'You have a new private message !');
     xarModVars::set('messages', 'fromname', 'Webmaster');
     xarModVars::set('messages', 'from', 'Webmaster@YourSite.com');
-    xarModVars::set('messages', 'inboxurl', 'http://www.yoursite.com/index.php?module=messages&type=user&func=view');
+    xarModVars::set('messages', 'inboxurl', 'http://www.yoursite.com/index.php?module=messages&type=user&func=display');
     xarModVars::set('messages', 'serverpath', '/home/yourdir/public_html/modules/messages');
     xarModVars::set('messages', 'SupportShortURLs', false );
     xarModVars::set('messages', 'awaymsg', true );
     xarModVars::set('messages', 'drafts', true );
-    xarModVars::set('messages', 'allowedSendMessages', serialize(array()) );
+    xarModVars::set('messages', 'allowedSendMessages', serialize(array()));
 
 
     // read_messages is intended only for users
@@ -95,14 +95,14 @@ function messages_init()
     xarRegisterMask('EditMessages','All','messages','Item','All:All:All','ACCESS_EDIT');
     xarRegisterMask('AddMessages','All','messages','Item','All:All:All','ACCESS_ADD');
     xarRegisterMask('DenyReadMessages','All','messages','Item','All:All:All','ACCESS_NONE');
-    xarRegisterMask('DeleteMessages','All','messages','Item','All:All:All','ACCESS_DELETE');
+    xarRegisterMask('ManageMessages','All','messages','Item','All:All:All','ACCESS_DELETE');
     xarRegisterMask('AdminMessages','All','messages','Item','All:All:All','ACCESS_ADMIN');
     /*********************************************************************
     * Enter some default privileges
     * Format is
     * register(Name,Realm,Module,Component,Instance,Level,Description)
     *********************************************************************/
-    xarRegisterPrivilege('DeleteMessages','All','messages','All','All','ACCESS_DELETE',xarML('Delete access to messages'));
+    xarRegisterPrivilege('ManageMessages','All','messages','All','All','ACCESS_DELETE',xarML('Delete access to messages'));
     xarRegisterPrivilege('DenyReadMessages','All','messages','All','All','ACCESS_NONE',xarML('Deny access to messages'));
     /*********************************************************************
     * Assign the default privileges to groups/users
@@ -110,8 +110,19 @@ function messages_init()
     * assign(Privilege,Role)
     *********************************************************************/
 
-    xarAssignPrivilege('DeleteMessages','Users');
+    xarAssignPrivilege('ManageMessages','Users');
     xarAssignPrivilege('DenyReadMessages','Everybody');
+
+# --------------------------------------------------------
+#
+# Create DD objects
+#
+    $module = 'messages';
+    $objects = array(
+                   'messages_messages',
+                     );
+
+    if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
 
     // Initialisation successful
     return true;
@@ -157,11 +168,6 @@ function messages_upgrade($oldversion)
  */
 function messages_delete()
 {
-    /*
-     * REMOVE MODULE VARS
-     */
-    if ( !xarModVars::delete_all( 'messages' ) )
-        return;
 
     /*
      * REMOVE all messages (which are stored via the comments api)
@@ -169,7 +175,7 @@ function messages_delete()
     xarModAPIFunc('comments',
                   'admin',
                   'delete_module_nodes',
-                   array('modid' => xarModGetIDFromName('messages')));
+                   array('modid' => xarMod::getID('messages')));
     /*
      * UNREGISTER BLOCKS
      */
@@ -179,14 +185,8 @@ function messages_delete()
                        'unregister_block_type',
                        array('modName'  => 'messages',
                              'blockType'=> 'newmessages'))) return;
-    /*
-     * REMOVE MASKS AND INSTANCES
-     */
-    xarRemoveMasks( 'messages' );
-    xarRemoveInstances( 'messages' );
 
-    // Deletion successful
-    return true;
+    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'listings'));
 }
 
 ?>

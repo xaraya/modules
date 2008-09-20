@@ -25,39 +25,20 @@ function messages_userapi_delete( $args )
 
     extract($args);
 
-    if (!isset($id)) {
-        $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
-                     'id', 'userapi', 'delete', 'messages');
-        throw new Exception($msg);
-    }
+    if (!isset($folder)) throw new Exception(xarML('Missing folder for delete'));
+    if (!isset($object)) throw new Exception(xarML('Missing object for delete'));
 
-	//Psspl:Added the code for resolving issue of deleting message.
+    $deleted = $object->properties['deleted']->getValue();
     if($folder=='inbox'){
-    	 	xarModAPIFunc('messages',
-                          'user',
-                          'delete_to',
-                           array('id' => $id , 'folder' => $folder));
+        if ($deleted == MESSAGES_DELETE_STATUS_ACTIVE) $deleted = MESSAGES_DELETE_STATUS_VISIBLE_FROM;
+        elseif ($deleted == MESSAGES_DELETE_STATUS_VISIBLE_TO) $deleted = MESSAGES_DELETE_STATUS_DELETED;
+    } else {
+        if ($deleted == MESSAGES_DELETE_STATUS_ACTIVE) $deleted = MESSAGES_DELETE_STATUS_VISIBLE_TO;
+        elseif ($deleted == MESSAGES_DELETE_STATUS_VISIBLE_FROM) $deleted = MESSAGES_DELETE_STATUS_DELETED;
     }
-    if($folder =='sent'){
-    	xarModAPIFunc('messages',
-                          'user',
-                          'delete_from',
-                           array('id' => $id , 'folder' => $folder));
-    }
-    if($folder == 'drafts'){
-    	xarModAPIFunc('messages',
-                          'user',
-                          'delete_from',
-                           array('id' => $id , 'folder' => $folder));
-    }
-    
-    /*
-    return (bool) xarModAPIFunc('comments',
-                                'admin',
-                                'delete_branch',
-                                 array('node' => $id));
-     */
-
+    $object->properties['deleted']->setValue($deleted);
+    $object->updateItem();
+    return true;
 }
 
 ?>

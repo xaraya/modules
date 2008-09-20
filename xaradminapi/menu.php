@@ -42,7 +42,7 @@ function messages_adminapi_menu()
     // Define a menu item
     // $item = array();
     // $item['menulabel'] = _messagesVIEW;
-    // $item['menulink'] = xarModURL('messages','user','view');
+    // $item['menulink'] = xarModURL('messages','user','display');
     //
     // Add it to the array of menu items
     // $menu['menuitems'][] = $item;

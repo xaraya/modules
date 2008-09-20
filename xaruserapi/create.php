@@ -34,38 +34,38 @@ function messages_userapi_create( $args )
         throw new Exception($msg);
     }
 
-	if (!isset($draft) || $draft != true) {
-		$draft = false;
-	}
+    if (!isset($draft) || $draft != true) {
+        $draft = false;
+    }
 
     // check the authorisation key
     if (!xarSecConfirmAuthKey()) return; // throw back
 
-	//Psspl:Modifided the code for postanon_to field.	
+    //Psspl:Modifided the code for postanon_to field.   
     if(!isset($postanon_to)){
-		$postanon_to = 0;
-	}		
+        $postanon_to = 0;
+    }       
     $id =  xarModAPIFunc('comments',
                          'user',
                          'add',
-                          array('modid'       => xarModGetIDFromName('messages'),
+                          array('modid'       => xarMod::getID('messages'),
                                 'objectid'    => $recipient,
                                 'title'       => $subject,
                                 'comment'     => $body,
                                 'author'      => xarSession::getVar('role_id'),
-								'postanon_to' => $postanon_to,                                 
+                                'postanon_to' => $postanon_to,                                 
                                  'postanon' => $postanon,));
 
-	if($id !== false && $draft == true) {
-    	xarModAPIFunc('comments',
+    if($id !== false && $draft == true) {
+        xarModAPIFunc('comments',
                          'user',
                          'deactivate',
                           array('id'       => $id));
-	
-	}
+    
+    }
 
 
-	return $id;
+    return $id;
 }
 
 ?>

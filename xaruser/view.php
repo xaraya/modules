@@ -11,80 +11,75 @@
  * @link http://xaraya.com/index.php/release/6.html
  * @author XarayaGeek
  */
-function messages_user_view( $args )
+function messages_user_view( )
 {
+    if (!xarSecurityCheck('ReadMessages')) return;
 
-    // Security check
-    if (!xarSecurityCheck('ViewMessages', 0)) {
-        return $data['error'] = xarML('You are not permitted to view messages.');
-    }
+    if (!xarVarFetch('folder', 'enum:inbox:sent:drafts', $folder, 'inbox', XARVAR_NOT_REQUIRED)) return;
+    xarSession::setVar('messages_currentfolder', $folder);
 
-    if (!xarVarFetch('id', 'int:1:', $id)) return;
+    xarVarFetch('startnum', 'int', $startnum , 1 , XARVAR_NOT_REQUIRED);
 
-    //Psspl:Added the code for folder type.
-	xarVarFetch('folder', 'enum:inbox:sent:drafts', $folder, 'inbox');
-	
-    $data['folder'] = (isset($folder))?$folder:'inbox';
+    $data['startnum'] = $startnum ;
     
-    //Psspl:Added the code for configuring the user-menu
-	$data['allow_newpm'] = xarModAPIFunc('messages' , 'user' , 'isset_grouplist');
-        
-    $messages = xarModAPIFunc('messages','user','get',array('id' => $id));
-
-    if (!count($messages) || !is_array($messages)) {
-        $data['error'] = xarML('Message ID nonexistant!');
-        return $data;
-    }
-
-    if ($messages[0]['recipient_id'] != xarSession::getVar('role_id') &&
-        $messages[0]['sender_id'] != xarSession::getVar('role_id')) {
-            $data['error'] = xarML("You are NOT authorized to view someone else's mail!");
-            return $data;
-    }
-
+    //Psspl:Added the code for paging
+    $link_data = xarModAPIFunc('messages', 
+                               'user', 
+                               'get_prev_next_link',
+                                array('folder'   => $folder,
+                                      'startnum' => $startnum));
+    
+    $data = array_merge($data,$link_data);
+       
     $read_messages = xarModUserVars::get('messages','read_messages');
-
-
     if (!empty($read_messages)) {
         $read_messages = unserialize($read_messages);
     } else {
         $read_messages = array();
     }
 
-
-    /*
-     * if it's not already an array, then this must be
-     * the first time we've looked at it
-     * so let's make it an array :)
-     */
-    if (!is_array($read_messages)) {
-        $read_messages = array();
-    }
-
-    $data['message'] = $messages[0];
-    $data['action']  = 'view';
-
-    // added call to transform text srg 09/22/03
-    list($data['message']['body']) = xarModCallHooks('item',
-         'transform',
-         $id,
-         array($data['message']['body']));
-
-    /*
-     * Add this message id to the list of 'seen' messages
-     * if it's not already in there :)
-     */
-    if (!in_array($data['message']['id'], $read_messages)) {
-        array_push($read_messages, $data['message']['id']);
-        xarModUserVars::set('messages','read_messages',serialize($read_messages));
-    }
-
-	// djb - fillin in the status bar / actions 
-    $data['unread']                  = xarModAPIFunc('messages','user','count_unread');
-    $data['sent']                    = xarModAPIFunc('messages','user','count_sent');
-    $data['total']                   = xarModAPIFunc('messages','user','count_total');
-    $data['drafts']                  = xarModAPIFunc('messages','user','count_drafts');
+    //Psspl:Added the code for configuring the user-menu
+//    $data['allow_newpm'] = xarModAPIFunc('messages' , 'user' , 'isset_grouplist');
     
+    //psspl:Added the code for resolving issue of modifing draft messages.
+    if ($folder != 'drafts') {
+        $messages = xarModAPIFunc('messages', 'user', 'getall', array('folder' => $folder,
+                                                                        'startnum' => $startnum));
+    } else {
+        $messages = xarModAPIFunc('messages', 'user', 'checkdraft' , array('startnum' => $startnum));   
+    }
+    
+    if (is_array($messages)) {
+
+        //Psspl:Comment the code for sorting messages.
+        //krsort($messages);
+
+        $data['messages']                = $messages;
+        
+        //Psspl:Added the code for read unread messages.
+        /*$messages_inbox = xarModAPIFunc('messages', 'user', 'getall', array('folder' => 'inbox'));
+        $unread = 0;
+        foreach($messages_inbox as $k => $message) {
+            if($message['status_alt'] == 'unread') {
+               $unread++;
+            }
+        } 
+        */ 
+    } else {
+        $list = array();
+    }
+    if (xarUserIsLoggedIn()) {
+        if (!xarVarFetch('away','str',$away,null,XARVAR_NOT_REQUIRED)) return;
+        if (isset($away)) {
+            xarModUserVars::set('messages','away_message',$away);
+        }
+        $data['away_message'] = xarModUserVars::get('messages','away_message');
+    } else {
+        $data['away_message'] = '';
+    }
+
+    $data['folder'] = $folder;
+
     return $data;
 }
 

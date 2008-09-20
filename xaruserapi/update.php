@@ -63,7 +63,7 @@ function messages_userapi_update( $args )
                          'user',
                          'modify',
                           array('id'          => $id,
-                                'modid'       => xarModGetIDFromName('messages'),
+                                'modid'       => xarMod::getID('messages'),
                                 'objectid'    => $recipient,
                                 'title'       => $subject,
                                 'date'        => time(),

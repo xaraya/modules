@@ -12,8 +12,6 @@
                      or an empty array if no comment found
  */
 //Psspl:Added function for getting comment entry according to the folder type.
-//Psspl:Included file for debbuging.
-include_once("./modules/commonutil.php");
 function messages_userapi_get_one( $args )
 {
 
@@ -27,20 +25,17 @@ function messages_userapi_get_one( $args )
 
     $dbconn = xarDB::getConn();
     $xartable = xarDB::getTables();
-	$prefix = xarDB::getPrefix();
-	$tableName = $prefix."_comments"; 
-	//TracePrint($tableName, "table");
+    $prefix = xarDB::getPrefix();
+    $tableName = $prefix."_comments"; 
     // initialize the commentlist array
     $commentlist = array();
 
     // if the depth is zero then we
     // only want one comment
     if (!isset($folder)) {
-    	$folder = 'inbox';
-    	
+        $folder = 'inbox';
+        
     }
-    //TracePrint($xartable,"xartables");
-    TracePrint($args,"id");
     $sql = "SELECT  title AS title,
                     date AS datetime,
                     hostname AS hostname,
@@ -53,17 +48,16 @@ function messages_userapi_get_one( $args )
                     left_id AS left_id,
                     right_id AS right_id,
                     anonpost AS postanon,
-                    anonpost_to AS postanon_to,
                     modid AS modid,
                     itemtype AS itemtype,
                     objectid AS objectid
               FROM  $xartable[comments]
               WHERE  id=$id";
-	if ($folder=='drafts') {
-    	//$sql .= " AND  status="._COM_STATUS_OFF;
+    if ($folder=='drafts') {
+        //$sql .= " AND  status="._COM_STATUS_OFF;
     }
     else{
-    	//$sql .= " AND  status="._COM_STATUS_ON;
+        //$sql .= " AND  status="._COM_STATUS_ON;
     }
        
 
@@ -103,7 +97,7 @@ function messages_userapi_get_one( $args )
         // FIXME: <rabbitt> this stuff should really be moved out of the comments
         //        module into a "rendering" module of some sort anyway -- or (god forbid) a widget.
     }
-	
+    
     
     return $commentlist;
     

@@ -27,7 +27,7 @@
      </xar:foreach>
         <td>
             <xar:set name="$test">array('itemid' => $itemid, 'itemtype' => 1 )</xar:set>
-            <a href="#xarModURL('messages','user','display', $test )#"><xar:mlstring>View</xar:mlstring></a> |
+            <a href="#xarModURL('messages','user','view', $test )#"><xar:mlstring>View</xar:mlstring></a> |
             <a href="#xarModURL('messages','admin','reply',$test)#"><xar:mlstring>Reply</xar:mlstring></a> |
             <a href="#xarModURL('messages','admin','delete',$test)#"><xar:mlstring>Delete</xar:mlstring></a>
         </td>

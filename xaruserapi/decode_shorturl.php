@@ -31,9 +31,9 @@ function messages_userapi_decode_shorturl( $params )
         default:
         case 'Inbox':
             if (isset($params[2])) {
-                return array('view', array('id' => $params[2]));
+                return array('display', array('id' => $params[2]));
             } else {
-                return array('display', array());
+                return array('view', array());
             }
             break;
     }

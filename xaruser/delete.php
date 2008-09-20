@@ -20,26 +20,27 @@
 
 function messages_user_delete()
 {
+    if (!xarSecurityCheck('ManageMessages')) return;
 
-    // Security check
-    if (!xarSecurityCheck( 'DeleteMessages', 0)) {
-        return $data['error'] = xarML('You are not permitted to delete messages.');
+    if (!xarVarFetch('action', 'enum:confirmed:check', $data['action'], 'check', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('object', 'str', $object, 'messages_messages', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('id', 'int:1', $id, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('folder', 'enum:inbox:sent:drafts', $folder, 'inbox', XARVAR_NOT_REQUIRED)) return;
+
+    $data['object'] = DataObjectMaster::getObject(array('name' => $object));
+    $data['object']->getItem(array('itemid' => $id));
+
+
+    // Check that the current user is either sender or receiver
+    if (($data['object']->properties['to']->value != xarSession::getVar('role_id')) &&
+        ($data['object']->properties['from']->value != xarSession::getVar('role_id'))) {
+        return xarTplModule('messages','user','message_errors',array('layout' => 'bad_id'));
     }
 
-    if (!xarVarFetch('action', 'enum:confirmed:check', $action)) return;
-    if (!xarVarFetch('id', 'int:1', $id)) return;
-	if (!xarVarFetch('folder', 'enum:inbox:sent:drafts', $folder, 'inbox')) return;
-
-	//Psspl:Added the code for folder type.	
-	$data['folder'] = (isset($folder))?$folder:'inbox';
-    /*
-     * Let's make sure the message exists before we
-     * try to delete it - otherwise, all sorts of crazy
-     * could happen!
-     */
+/*
     $messages = xarModAPIFunc('messages', 'user', 'get', array('id' => $id));
 
-	//Psspl:Added the code for configuring the user-menu
+    //Psspl:Added the code for configuring the user-menu
     $data['allow_newpm'] = xarModAPIFunc('messages' , 'user' , 'isset_grouplist');
     if (!count($messages)) {
         $data['error']  = xarML('Message id refers to a nonexistant message!');
@@ -51,8 +52,8 @@ function messages_user_delete()
         $data['error'] = xarML("You are NOT authorized to view someone else's mail!");
         return $data;
     }
-
-    switch($action) {
+*/
+    switch($data['action']) {
         case "confirmed":
 
             /*
@@ -78,39 +79,35 @@ function messages_user_delete()
             xarModAPIFunc('messages',
                           'user',
                           'delete',
-                           array('id' => $id ,
-								 'folder' => $folder));
-            xarResponseRedirect(xarModURL('messages','user','display'));
+                           array('object' => $data['object'] ,
+                                 'folder' => $folder));
+            xarResponseRedirect(xarModURL('messages','user','view',array('folder' =>    xarSession::getVar('messages_currentfolder'))));
             break;
 
         case "check":
-        	$data['folder']     = $folder;
-            $data['message']    = $messages[0];
             $data['id']         = $id;
+        /*
+            $data['folder']     = $folder;
+            $data['message']    = $messages[0];
             $data['action']     = $action;
             $data['post_url']   = xarModURL('messages','user','delete');
-           
-			/*Psspl:Added the code for read messages.
-     		  * Add this message id to the list of 'seen' messages
-    		  * if it's not already in there :)
-     		*/
-    		$read_messages = xarModUserVars::get('messages','read_messages');
+         */  
+            /*Psspl:Added the code for read messages.
+              * Add this message id to the list of 'seen' messages
+              * if it's not already in there :)
+            */
+            $read_messages = xarModUserVars::get('messages','read_messages');
             if (!empty($read_messages)) {
                 $read_messages = unserialize($read_messages);
             } else {
                 $read_messages = array();
             }
              if (!in_array($id, $read_messages)) {
-        		array_push($read_messages, $id);
-        		xarModUserVars::set('messages','read_messages',serialize($read_messages));
-    		}
+                array_push($read_messages, $id);
+                xarModUserVars::set('messages','read_messages',serialize($read_messages));
+            }
             break;
     }
-	// djb - fillin in the status bar / actions 
-    $data['unread']                  = xarModAPIFunc('messages','user','count_unread');
-    $data['sent']                    = xarModAPIFunc('messages','user','count_sent');
-    $data['total']                   = xarModAPIFunc('messages','user','count_total');
-    $data['drafts']                  = xarModAPIFunc('messages','user','count_drafts');
     return $data;
 }
 

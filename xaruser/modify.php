@@ -11,89 +11,70 @@
  * @link http://xaraya.com/index.php/release/6.html
  * @author XarayaGeek
  */
-include_once("./modules/commonutil.php");
 function messages_user_modify( $args )
 {
+    if (!xarSecurityCheck('EditMessages')) return;
 
-    // Security check
-    if (!xarSecurityCheck('ViewMessages', 0)) {
-        return $data['error'] = xarML('You are not permitted to view messages.');
-    }
-    if (!xarVarFetch('id', 'int', $id , NULL , XARVAR_NOT_REQUIRED)){ 
-        $msg = xarML('Invalid #(1)#(2) for #(3) function #(4)() in module #(5)',
-                                 'messages' ,'Id', 'user', 'modify', 'messages');
-        throw new Exception($msg);
-    }
+    if (!xarVarFetch('action', 'enum:modify:submit:preview', $data['action'], 'modify', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('object', 'str', $object, 'messages_messages', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('id', 'int:1', $id, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('folder', 'enum:inbox:sent:drafts', $data['folder'], 'inbox', XARVAR_NOT_REQUIRED)) return;
+
     xarVarFetch('preview', 'checkbox', $preview, false, XARVAR_NOT_REQUIRED);
     xarVarFetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED);
-    xarVarFetch('draft', 'checkbox', $draft, true, XARVAR_NOT_REQUIRED);
-    xarVarFetch('postanon',   'checkbox', $postanon,   false, XARVAR_NOT_REQUIRED);
-    xarVarFetch('postanon_to',   'int', $postanon_to,   false, XARVAR_NOT_REQUIRED);    
+
+    $data['object'] = DataObjectMaster::getObject(array('name' => $object));
+    $data['object']->getItem(array('itemid' => $id));
+
     if ($preview === true) {
-        $action = 'preview';
+        $data['action'] = 'preview';
     } elseif ($confirm === true) {
-        $action = 'submit';
+        $data['action'] = 'submit';
     } else {
-        $action = 'modify';
+        $data['action'] = 'modify';
     }
     $data['post_url']       = xarModURL('messages','user','modify');
-    $data['action']         = $action;
-    $data['draft']          = $draft;
-    $data['input_title']    = xarML('Modify Message');
-    $data['postanon']       = $postanon;        
-    $data['id']             = $id;
-
-    //Psspl:Added the code for resolving issue of djb in modify
-    // djb - fillin in the status bar / actions 
-    $data['unread']                  = xarModAPIFunc('messages','user','count_unread');
-    $data['sent']                    = xarModAPIFunc('messages','user','count_sent');
-    $data['total']                   = xarModAPIFunc('messages','user','count_total');
-    $data['drafts']                  = xarModAPIFunc('messages','user','count_drafts');
-        
-    //Psspl:Added the code for configuring the user-menu
-    $data['allow_newpm'] = xarModAPIFunc('messages' , 'user' , 'isset_grouplist');
-        
+    $data['input_title']    = xarML('Modify this message');
     xarTplSetPageTitle( xarML('Modify Message') );
+    $data['id']             = $id;
+        
+    // Check that the current user is either sender or receiver
+    if (($data['object']->properties['to']->value != xarSession::getVar('role_id')) &&
+        ($data['object']->properties['from']->value != xarSession::getVar('role_id'))) {
+        return xarTplModule('messages','user','message_errors',array('layout' => 'bad_id'));
+    }
+
+    //Psspl:Added the code for configuring the user-menu
+//    $data['allow_newpm'] = xarModAPIFunc('messages' , 'user' , 'isset_grouplist');
+        
 
     //Psspl:Modifided the code for getting user list.
     $data['users'] = xarModAPIFunc('messages','user','get_sendtousers');    
 
-    $messages = xarModAPIFunc('messages','user','get',array('id' => $id, 'status' => 1));
+    if ($data['object']->properties['pid']->value) {
+        // If this is a reply get the previous message
 
-    if (!count($messages) || !is_array($messages)) {
-        $data['error'] = xarML('Message ID nonexistant!');
-        return $data;
+        xarTplSetPageTitle( xarML('Messages :: Reply') );
+        $data['input_title']    = xarML('Modify this reply');
+
+        $data['previousobject'] = DataObjectMaster::getObject(array('name' => $object));
+        $data['previousobject']->getItem(array('itemid' => $data['object']->properties['pid']->value));
+        $data['object']->properties['postanon']->setValue(0);
+        $data['object']->properties['pid']->value = $data['previousobject']->properties['id']->value;;
+        $data['object']->properties['to']->value = $data['previousobject']->properties['from']->value;
     }
 
-    if ($messages[0]['sender_id'] != xarUserGetVar('id')) {
-            $data['error'] = xarML("You are NOT authorized to modify someone else's mail!");
-            return $data;
-    }
-
-    if (!$messages[0]['draft']) {
-            $data['error'] = xarML("This message is not a draft!");
-            return $data;
-    }
-
-    switch($action) {
+    switch($data['action']) {
         case "submit":
 
-            xarVarFetch('subject',   'str:1', $subject,   null, XARVAR_NOT_REQUIRED);
-           //minimum length is 7 character it sets &#160; for processing
-            xarVarFetch('body',   'str:7', $body,   null, XARVAR_NOT_REQUIRED); 
-            xarVarFetch('recipient',   'int:1', $recipient,   null, XARVAR_NOT_REQUIRED);
+            $isvalid = $data['object']->checkInput();
             
-            if($subject == null) {
-                $data['no_subject'] = 1;
-            }
-            if($body == null) {
-                $data['no_body'] = 1;
-            }
-            if($recipient == null){
-                 $data['no_recipient'] = 1;
-            }
+            if(!$isvalid){
 
-            if(isset($data['no_subject']) || isset($data['no_body']) || isset($data['no_recipient'])){
+                xarTplSetPageTitle( xarML('Modify Message') );
+                $data['action']                     = 'post';
+
+                return xarTplModule('messages','user','new',$data);
 
                 $data['action']                     = 'post';
     
@@ -117,13 +98,21 @@ function messages_user_modify( $args )
                      $id,
                      array($data['message']['body']));*/
                
-                $data['postanon_to']    = $postanon_to;
                 $data['postanon']       = $postanon;
                 $data['action']     = 'modify';
                 $data['folder']     = 'drafts';                
                 return $data;
             }
 
+            $checkbox = DataPropertyMaster::getProperty(array('name' => 'checkbox'));
+            $checkbox->checkInput('is_draft');
+            
+            // If this is to be a draft, adjust the state
+            if ($checkbox->value) $data['object']->properties['state']->setValue(2);
+            else $data['object']->properties['state']->setValue(3);
+            $id = $data['object']->updateItem();
+
+/*
             $id = xarModAPIFunc('messages',
                           'user',
                           'update',
@@ -142,7 +131,8 @@ function messages_user_modify( $args )
                     return xarTplModule('messages','user','away',$data);
                 }
             }
-            xarResponseRedirect(xarModURL('messages','user','display'));
+*/
+            xarResponseRedirect(xarModURL('messages','user','view',array('folder' => xarSession::getVar('messages_currentfolder'))));
             return true;
             break;
 
@@ -190,7 +180,6 @@ function messages_user_modify( $args )
             $data['recipient']                  = $recipient;
             $data['subject']                    = $subject;
             $data['body']                       = $body;
-            $data['postanon_to']                = $postanon_to;
             $data['message']['date']            = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', time());
             $data['message']['raw_date']        = time();
 
@@ -206,28 +195,14 @@ function messages_user_modify( $args )
 
         case 'modify':
             $data['folder']         = 'drafts';
-            $data['post_url']       = xarModURL('messages','user','modify');
-            $data['action']         = $action;
-            $data['draft']          = $messages[0]['draft'];
-            $data['recipient']      = $messages[0]['recipient_id'];
-            $data['subject']        = $messages[0]['subject'];
-            $data['date']           = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', time());
-            $data['raw_date']       = time();
-            $data['body']           = $messages[0]['body'];
-            $data['postanon_to']    = $messages[0]['postanon_to'];
-            $data['postanon']       = $messages[0]['postanon'];
-            $data['message']        = $messages[0];
 
-            $data['message']['date']            = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', time());
-            $data['message']['raw_date']        = time();
-
-            // added call to transform text srg 09/22/03
+/*            // added call to transform text srg 09/22/03
             list($data['message']['body']) = xarModCallHooks('item',
                                                              'transform',
                                                              $id,
                                                              array($data['message']['body']));
 
-
+*/
             return $data;
             break;
     }

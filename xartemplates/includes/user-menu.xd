@@ -4,67 +4,72 @@
 <xar:style scope="module" module="base" file="navtabs" />
 
 <xar:set name="request">xarRequestGetInfo()</xar:set>
-<xar:set name="activetab">#$request.2#</xar:set>
-<xar:set name="activetype">#$request.1#</xar:set>
+<xar:set name="activetab">$request[2]</xar:set>
+<xar:set name="activetype">$request[1]</xar:set>
+<xar:set name="unread">xarModAPIFunc('messages','user','count_messages',array('class' => 'unread'))</xar:set>
+<xar:set name="sent">xarModAPIFunc('messages','user','count_messages',array('class' => 'sent'))</xar:set>
+<xar:set name="total">xarModAPIFunc('messages','user','count_messages',array('class' => 'total'))</xar:set>
+<xar:set name="drafts">xarModAPIFunc('messages','user','count_messages',array('class' => 'drafts'))</xar:set>
+
 <div>
   <dl class="xar-tabs">
     <dt class="help" title="Choose an action to perform">
       <xar:mlstring>Actions:</xar:mlstring>
     </dt>
     <xar:sec mask="ReadMessages" catch="false">
-        <xar:if condition="($activetab eq 'display' or $activetab eq 'view') and (empty($folder) or strtolower($folder) eq 'inbox')">
+        <xar:if condition="($activetab eq 'view') and (empty($folder) or $folder eq 'inbox')">
             <xar:set name="tabclass">'active'</xar:set>
         <xar:else />
             <xar:set name="tabclass">''</xar:set>
         </xar:if>
         <dd class="#$tabclass#">
-          <a href="#xarModURL('messages','user','display')#">
+          <a href="#xarModURL('messages','user','view')#">
             <xar:mlstring>Inbox</xar:mlstring> &#160;(<xar:if condition="$unread eq 0">&#160;#$unread#&#160;<xar:else/> <span style="color:green;">&#160;#$unread#&#160;</span></xar:if> /&#160;#$total#&#160;)
           </a>
         </dd>
-        <xar:if condition="($activetab eq 'display' or $activetab eq 'viewsent') and (empty($folder) or strtolower($folder) eq 'sent')">
+        <xar:if condition="($activetab eq 'view' or $activetab eq 'viewsent') and (empty($folder) or $folder eq 'sent')">
             <xar:set name="tabclass">'active'</xar:set>
         <xar:else />
             <xar:set name="tabclass">''</xar:set>
         </xar:if>
         <dd class="#$tabclass#">
-          <a href="#xarModURL('messages','user','display',array('folder'=>'sent'))#">
+          <a href="#xarModURL('messages','user','view',array('folder'=>'sent'))#">
             <xar:mlstring>Sent</xar:mlstring> &#160;(&#160;#$sent#&#160;)
           </a>
         </dd>
         <xar:if condition="xarModVars::get('messages','drafts') eq 1">
-            <xar:if condition="($activetab eq 'display' or $activetab eq 'modify') and (empty($folder) or strtolower($folder) eq 'drafts')">
+            <xar:if condition="($activetab eq 'view' or $activetab eq 'modify') and (empty($folder) or $folder eq 'drafts')">
                 <xar:set name="tabclass">'active'</xar:set>
             <xar:else />
                 <xar:set name="tabclass">''</xar:set>
             </xar:if>
             <dd class="#$tabclass#">
-              <a href="#xarModURL('messages','user','display',array('folder'=>'drafts'))#">
+              <a href="#xarModURL('messages','user','view',array('folder'=>'drafts'))#">
                 <xar:mlstring>Drafts</xar:mlstring> (&#160;#$drafts#&#160;)
               </a>
             </dd>
         </xar:if>
     </xar:sec>
     <xar:comment>Psspl: Added the code for configuring NewMessages tab</xar:comment>
-    <xar:if condition="!empty($allow_newpm)"> 
+    <xar:if condition="xarModAPIFunc('messages' , 'user' , 'isset_grouplist')"> 
     <xar:sec mask="AddMessages" catch="false">
-        <xar:set name="tabclass">$activetab=='send'?'active':''</xar:set>
+        <xar:set name="tabclass">$activetab=='new'?'active':''</xar:set>
         <dd class="#$tabclass#">
-          <a href="#xarModURL('messages','user','send', array('action'=>'post'))#">
+          <a href="#xarModURL('messages','user','new', array('action'=>'post'))#">
             <xar:mlstring>New Message</xar:mlstring>
           </a>
         </dd>
     </xar:sec>
     <xar:else />
     <xar:comment>
-    	<xar:sec mask="AddMessages" catch="false">
-        	<xar:set name="tabclass">$activetab=='send'?'active':''</xar:set>
-        	<dd class="#$tabclass#">
-          	<a href="#xarModURL('messages','user','send', array('action'=>'post'))#">
-            	<xar:mlstring>No Message Tab</xar:mlstring>
-          	</a>
-        	</dd>
-    	</xar:sec>
+        <xar:sec mask="AddMessages" catch="false">
+            <xar:set name="tabclass">$activetab=='new'?'active':''</xar:set>
+            <dd class="#$tabclass#">
+            <a href="#xarModURL('messages','user','new')#">
+                <xar:mlstring>No Message Tab</xar:mlstring>
+            </a>
+            </dd>
+        </xar:sec>
     </xar:comment>
     </xar:if>
   </dl>

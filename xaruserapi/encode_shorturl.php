@@ -59,8 +59,8 @@ function messages_userapi_encode_shorturl( $args )
         case 'delete':
             $path .= '/Trash';
             break;
-        case 'display':
         case 'view':
+        case 'display':
         case 'main':
         default:
             $path .= '/Inbox';

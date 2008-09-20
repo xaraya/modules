@@ -5,7 +5,6 @@
  * is available in current configuration.
   * @return array of messages selected. 
  */
-include_once("./modules/commonutil.php");
 function messages_userapi_checkdraft( $args )
 {
 

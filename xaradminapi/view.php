@@ -59,7 +59,7 @@ function messages_adminapi_view( $args )
 
 
     $data['pager'] = xarTplGetPager($startnum, xarModAPIFunc('messages', 'user', 'count', array( 'itemtype' => $itemtype )),
-                   xarModURL('messages', $type, 'view',
+                   xarModURL('messages', $type, 'display',
                    array('startnum'  => '%%', 'itemtype' => $itemtype )),$itemsperpage );
 
         $numitems = xarModAPIFunc('messages', 'user', 'counttotal',

@@ -5,14 +5,14 @@
     <xar:else />
         <center>
             <xar:mlstring>You have</xar:mlstring>
-            <a href="#xarModURL('messages','user','display')#">#$totalin#</a>
+            <a href="#xarModURL('messages','user','view')#">#$totalin#</a>
             <xar:mlstring>Total Messages</xar:mlstring>
             <br />
     
             <xar:mlstring>You have</xar:mlstring>
-            <a href="#xarModURL('messages','user','display')#">#$unread#</a>
+            <a href="#xarModURL('messages','user','view')#">#$unread#</a>
             <xar:mlstring>Unread Messages</xar:mlstring><br />
-            <a href="#xarModURL('messages','user','display')#">
+            <a href="#xarModURL('messages','user','view')#">
                 <img src="modules/messages/xarimages/unread.gif" border="0"/>
             </a>
         </center>

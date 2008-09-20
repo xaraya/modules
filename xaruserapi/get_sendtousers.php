@@ -5,7 +5,6 @@
  * 
  */
  
-    include_once("./modules/commonutil.php");
     function messages_userapi_get_sendtousers( $args )
     {
         $sendtogroups = xarModAPIFunc('messages','user','get_sendtogroups',$args);

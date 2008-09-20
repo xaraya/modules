@@ -38,7 +38,7 @@ function messages_admin_delete( $args )
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work
     xarResponseRedirect(
-        xarModURL('messages', 'user', 'view', array('itemtype' => 1 )));
+        xarModURL('messages', 'user', 'display', array('itemtype' => 1 )));
 
 }
 

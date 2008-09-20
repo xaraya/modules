@@ -17,15 +17,14 @@
  * @param message
  * @return subject
  */
-include_once("./modules/commonutil.php");
 function messages_userapi_reply_message_subject( $args )
 {
     extract($args);
-	   
-   	$subject    = "RE:";
-   	$subject 	.= $message['subject'];
-   	  
-	return $subject;
+       
+    $subject    = "RE:";
+    $subject    .= $message['subject'];
+      
+    return $subject;
 }
 
 ?>

@@ -45,7 +45,7 @@ function messages_adminapi_modify( $args )
          * function.
          */
         if ( !xarModLoad( 'messages', 'user' ) ) return;
-        $preview = xarModFunc('messages', 'user', 'display',
+        $preview = xarModFunc('messages', 'user', 'view',
                    array('itemtype'  => '1', 'object'   => $object ));
 
         if ( !isset( $preview ) ) return;

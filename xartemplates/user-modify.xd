@@ -4,14 +4,56 @@
     </div>
     <div class="xar-mod-body">
         <xar:comment>Psspl: Added the code for configuring NewMessages tab</xar:comment>
-		<xar:set name="subdata">array('allow_newpm' => $allow_newpm)</xar:set>
-        <xar:template type="module" file="user-menu" data="$subdata" />
-        <xar:if condition="$action ne 'post'">
-            <h3><xar:mlstring>Message Preview</xar:mlstring></h3>
+        <xar:template type="module" file="user-menu" />
+
+        <xar:set name="is_reply">$object->properties['pid']->value</xar:set>
+        <xar:if condition="$is_reply">
+            <h3><xar:mlstring>Original Message</xar:mlstring></h3>
             <div class="xar-margin-thick xar-padding-thick xar-border-thin">
-                <xar:template file="view-message" type="module" />
+                <xar:data-display object="$previousobject" tplmodule="messages" action="$action"/>
+                <div class="xar-margin-thicktop">
+                    <xar:if condition="xarSecurityCheck('ManageMessages', 0)">
+                        <a href="#xarModURL('messages','user','delete',array('id' => $previousobject->properties['id']->value, 'folder' => $folder))#" title="#xarML('Delete Message')#"><xar:mlstring>Delete</xar:mlstring></a>
+                    <xar:else/>
+                        <xar:mlstring>Delete</xar:mlstring>
+                    </xar:if>
+                </div>
             </div>
         </xar:if>
-        <xar:template file="input-box" type="module" />
+        <xar:if condition="$action ne 'post'">
+            <xar:if condition="$is_reply">
+                <h3><xar:mlstring>Reply Preview</xar:mlstring></h3>
+            <xar:else />
+                <h3><xar:mlstring>New Message Preview</xar:mlstring></h3>
+            </xar:if>
+            <div class="xar-margin-thick xar-padding-thick xar-border-thin">
+                <xar:if condition="$is_reply">
+                    <xar:set name="previousanon">
+                        $previousobject->properties['postanon']->value
+                    </xar:set>
+                    <xar:data-display object="$object" tplmodule="messages" action="$action" previousanon="$previousanon" />
+                <xar:else />
+                    <xar:data-display object="$object" tplmodule="messages" action="$action" />
+                </xar:if>
+            </div>
+        </xar:if>
+        <h3>#$input_title#</h3>
+        <form id="inputbox" action="#$post_url#" method="post" enctype="multipart/form-data">
+            <xar:if condition="$is_reply">
+                <xar:set name="previousanon">
+                    $previousobject->properties['postanon']->value
+                </xar:set>
+                <xar:data-form object="$object" tplmodule="messages" action="$action" previousanon="$previousanon" />
+            <xar:else />
+                <xar:data-form object="$object" tplmodule="messages" action="$action"/>
+            </xar:if>
+            <div class="xar-align-center xar-margin-thick">
+                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                <input type="hidden" name="id" id="id" value="#$id#" />
+                <input type="hidden" name="action" id="action" value="submit" />
+                <input type="submit" name="preview" id="preview" value="#xarML('Preview')#" class="xar-margin-thickright" />
+                <input type="submit" name="confirm" id="confirm" value="#xarML('Submit')#" class="xar-margin-thickleft" />
+            </div>
+        </form>
     </div>
 </xar:template>

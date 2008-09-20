@@ -14,43 +14,22 @@
 function messages_userapi_getmenulinks ( $args )
 {
 
-
-    // First we need to do a security check to ensure that we only return menu items
-    // that we are suppose to see.  It will be important to add for each menu item that
-    // you want to filter.  No sense in someone seeing a menu link that they have no access
-    // to edit.  Notice that we are checking to see that the user has permissions, and
-    // not that he/she doesn't.
-
-
-    if (xarSecurityCheck('ReadMessages', 0) == true) {
-        // The main menu will look for this array and return it for a tree
-        // view of the module. We are just looking for three items in the
-        // array, the url, which we need to use the xarModURL function, the
-        // title of the link, which will display a tool tip for the module
-        // url, in order to keep the label short, and finally the exact label
-        // for the function that we are displaying.
-
+    $menulinks = ARRAY();
+    if (xarSecurityCheck('ReadMessages', 0)) {
         $menulinks[] = array(
-            'url'      => xarModURL('messages', 'user', 'display'),
+            'url'      => xarModURL('messages', 'user', 'view'),
             'title'    => 'Look at the Messages',
-            'label'    => 'Display Messages' );
+            'label'    => 'View Messages' );
     }
 
-    if (xarSecurityCheck('AddMessages', 0) == true) {
+    if (xarSecurityCheck('AddMessages', 0)) {
         $menulinks[] = array(
-            'url'      => xarModURL('messages', 'user', 'send', array('action' => 'post')),
+            'url'      => xarModURL('messages', 'user', 'new'),
             'title'    => 'Send a message to someone',
-            'label'    => 'Send Message' );
-
+            'label'    => 'New Message' );
     } 
 
-        $menulinks = '';
-    
-
-    // The final thing that we need to do in this function is return the values back
-    // to the main menu for display.
     return $menulinks;
-
 }
 
 ?>

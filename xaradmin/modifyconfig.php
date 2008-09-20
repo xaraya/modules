@@ -5,7 +5,6 @@
  */
 
 // Use this version of the modifyconfig file when the module is not a  utility module
-include_once("./modules/commonutil.php");
     function messages_admin_modifyconfig()
     {
         // Security Check
@@ -48,7 +47,7 @@ include_once("./modules/commonutil.php");
                         xarModVars::set('messages', 'itemsperpage', $itemsperpage);
                         xarModVars::set('messages', 'SupportShortURLs', $shorturls);
                         xarModVars::set('messages', 'useModuleAlias', $useModuleAlias);
-                        xarModVars::set('messages', 'aliasname', $aliasname);TracePrint($group,"group");
+                        xarModVars::set('messages', 'aliasname', $aliasname);
                         xarModVars::set('messages', 'awaymsg', $awaymsg);
                         xarModVars::set('messages', 'drafts', $drafts);
                         xarModVars::set('messages', 'awaymsg', $awaymsg);
@@ -75,9 +74,8 @@ include_once("./modules/commonutil.php");
         }
         $data['action']     = xarModURL('messages','admin','modifyconfig' );
         $data['authid'] = xarSecGenAuthKey();
-        $data['group'] = $group;TracePrint($group,"group_modifyconfig");
+        $data['group'] = $group;
         $data['selectedGroupStr'] = xarModAPIFunc('messages','admin','getconfig',array('group'=>$group));
-        TracePrint("$data[selectedGroupStr]","selected_group_in_modify_config");
         $data['supportshorturls']   = xarModVars::get('messages', 'SupportShortURLs');
 
         try {

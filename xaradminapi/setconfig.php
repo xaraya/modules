@@ -4,7 +4,6 @@
  * Function save the sent messages configuration for selected group.
  * * @param groupid,selected group for send messages.
  */
-include_once("./modules/commonutil.php");
 function messages_adminapi_setconfig( $args )
 {
     extract( $args );
@@ -14,8 +13,6 @@ function messages_adminapi_setconfig( $args )
     }
     
     $selectedGroup = explode(",", $childgroupsimploded);
-    
-    TracePrint($selectedGroup,"arrary selectedGroup");
     
     xarModItemVars::set('messages', "allowedSendMessages", serialize($selectedGroup),$group);
     
