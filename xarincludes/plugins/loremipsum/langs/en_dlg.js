@@ -10,6 +10,7 @@
  */
 
 tinyMCE.addI18n('en.loremipsum_dlg',{
+    desc : "Lorem Ipsum",
 	sentences : "Source text",
 	amount : "Generated amount",
 	formating : "Formating",
