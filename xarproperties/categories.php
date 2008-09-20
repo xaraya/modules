@@ -342,7 +342,7 @@ class CategoriesProperty extends SelectProperty
                                              'module' => $data['categories_localmodule'],
                                               ));
                 $catlink = array();
-                foreach ($links as $link) $catlink[$link['basecategory']] = $link['category_id'];
+                foreach ($links as $link) $catlink[$link['basecategory_id']] = $link['id'];
                 foreach ($data['basecids'] as $basecid)
                     $selectedcategories[] = isset($catlink[$basecid]) ? $catlink[$basecid]: 0;
         }
