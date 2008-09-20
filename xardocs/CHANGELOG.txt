@@ -1,5 +1,9 @@
-* Version 1.5.1  X Sept 2008
-- Upgrade to latest upstream 3.2 code
+* Version 1.5.1  20 Sept 2008
+- Upgrade to latest upstream 3.2.0.1 code (revision 932)
+- xtm-000199 undeclared var using simple theme
+- xtm-000222 liststyle plugin lang broken - fixed lang files for upstream TinyMCE3 changes
+- xtm-000223 Lorem Ipsum plugin lang files broken - incorrect params to method
+- New dpHighlight highlight plugin (must have dpHighlight module installed)
 
 * Version 1.5.0 July 2008
 - Integration of upstream 3.1.0 and post release fixes

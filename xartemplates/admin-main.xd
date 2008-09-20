@@ -137,7 +137,8 @@
                <li><xar:mlstring>VisualChars - Toggle to show or hide special characters such as hard spaces</xar:mlstring></li>
                <li><xar:mlstring>Nonbreaking - Enter nonbreaking spaces</xar:mlstring></li>
                <li><xar:mlstring>xhtmlxtras - Abiilty to add xml extras such as cite</xar:mlstring></li>
-               <li><xar:mlstring>bbcode - Ability to add punbb type bbcode in your wysiwyg</xar:mlstring></li>               
+               <li><xar:mlstring>bbcode - Ability to add punbb type bbcode in your wysiwyg</xar:mlstring></li> 
+               <li><xar:mlstring>dphighlight- Ability to easily add code highlighting to you articles (must have dpHighlight module installed with dpHighlight active)</xar:mlstring></li>                               
             </ol>
             <p><xar:mlstring>Further <strong>plugins that are customized and tested for xartinymce</strong> can be downloaded from the </xar:mlstring><a href="http://xarigami.com/project/xartinymce"><xar:mlstring>Xarigami website project page for xarTinyMCE</xar:mlstring></a>.
             <xar:mlstring>These include the previously bundled IBrowser (image upload and browse), IManager (full featured image upload, browse and editing with all the features of phpthumbs, and Dictionary lookup plugin.
