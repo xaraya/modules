@@ -8,7 +8,7 @@ var tinyMCE_GZ = {
 		debug : false,
 		suffix : ''
 	},
-tinymce.dom.Event.domLoaded = true;
+
 	init : function(s, cb, sc) {
 		var t = this, n, i, nl = document.getElementsByTagName('script');
 
