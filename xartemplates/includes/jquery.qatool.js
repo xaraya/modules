@@ -1,6 +1,6 @@
 
 /*
- * QATool v0.1.1 - jQuery form widget
+ * QATool v0.1.2 - jQuery form widget
  * Copyright (c) 2008 Jason Judge
  *
  * Dual licensed under the MIT and GPL licenses:
@@ -88,7 +88,8 @@
 					hash = '#' + this.value;
 				}
 
-				if (hash != undefined && hash.length > 1 && hash.indexOf('#') == 0 && $(list).find('> li' + hash)) {
+				// Add a trigger if the hash is valid, and matches exactly one li element ID.
+				if (hash != undefined && hash.length > 1 && hash.indexOf('#') == 0 && $(list).find('> li' + hash).size() == 1) {
 					$(this).click(function(){
 						// Hide this list item and show the new one.
 						// Actually, hide all list items that are not the new one.
