@@ -17,7 +17,7 @@
         </div>
         <div class="xar-form-input-wrapper">
           <label class="xar-form-label"><xar:mlstring>Workitems</xar:mlstring></label>
-          <a href="&xar-modurl-workflow-admin-monitor_workitems;&amp;filter_instance=#$ins_info['instanceId']#">#$ins_info['workitems']#</a>
+          <a href="#xarModURL('workflow','admin','monitor_workitems',array('filter_instance' => $ins_info['instanceId']))#">#$ins_info['workitems']#</a>
         </div>
         <div class="xar-form-input-wrapper">
           <label class="xar-form-label"><xar:mlstring>Status</xar:mlstring></label>
@@ -84,7 +84,7 @@
                 <tr>
                   <td class="odd">#$acts[$ix]['name']#
                     <xar:if condition="$acts[$ix]['isInteractive'] eq 'y'">
-                      <a href="&xar-modurl-workflow-user-run_activity;&amp;activityId=#$acts[$ix]['activityId']#&amp;iid=#$iid#">
+                      <a href="#xarModURL('workflow','user','run_activity',array('activityId' => $acts[$ix]['activityId'], 'iid' => $iid))#">
                         <img src="modules/workflow/lib/galaxia/img/icons/next.gif" alt="#xarML('run')#" title="#xarML('run')#" /></a>
                     </xar:if>
                   </td>

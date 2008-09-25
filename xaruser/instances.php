@@ -36,11 +36,11 @@ function workflow_user_instances()
         xarVarFetch('return_url','isset',$return_url,'',XARVAR_NOT_REQUIRED);
         if (!empty($iid)) {
             if (xarUserIsLoggedIn()) {
-                $seenlist = xarModGetUserVar('workflow','seenlist');
+                $seenlist = xarModUserVars::get('workflow','seenlist');
                 if (empty($seenlist)) {
-                    xarModSetUserVar('workflow','seenlist',$iid);
+                    xarModUserVars::set('workflow','seenlist',$iid);
                 } else {
-                    xarModSetUserVar('workflow','seenlist',$seenlist.';'.$iid);
+                    xarModUserVars::set('workflow','seenlist',$seenlist.';'.$iid);
                 }
             } else {
                 $seenlist = xarSession::getVar('workflow.seenlist');

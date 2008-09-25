@@ -28,7 +28,7 @@ function workflow_init()
     // Galaxia developers use quotes around column names.
     // Since PostgreSQL creates column names in lowercase by
     // default, the column names must be surrounded by quotes.
-    $dbtype  = xarCore_getSystemVar('DB.Type');
+    $dbtype  = xarSystemVars::get(null,'DB.Type');
     switch ($dbtype) {
         case 'postgres':
                 $qte = '"';
@@ -43,7 +43,7 @@ function workflow_init()
     /*
     $queries[] =
     "CREATE TABLE $xartable[workflow_activities] (
-    activityId int(14) NOT NULL auto_increment,
+    activityId integer unsigned NOT NULL auto_increment,
     name varchar(80) default NULL,
     normalized_name varchar(80) default NULL,
     pId int(14) NOT NULL default '0',
@@ -141,7 +141,7 @@ function workflow_init()
     /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_instance_comments] (
-  cId int(14) NOT NULL auto_increment,
+  cId integer unsigned NOT NULL auto_increment,
   instanceId int(14) NOT NULL default '0',
   user varchar(200) default NULL,
   activityId int(14) default NULL,
@@ -180,7 +180,7 @@ function workflow_init()
     /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_instances] (
-  instanceId int(14) NOT NULL auto_increment,
+  instanceId integer unsigned NOT NULL auto_increment,
   pId int(14) NOT NULL default '0',
   started int(14) default NULL,
   owner varchar(200) default NULL,
@@ -220,7 +220,7 @@ function workflow_init()
     /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_processes] (
-  pId int(14) NOT NULL auto_increment,
+  pId integer unsigned NOT NULL auto_increment,
   name varchar(80) default NULL,
   isValid char(1) default NULL,
   isActive char(1) default NULL,
@@ -257,7 +257,7 @@ function workflow_init()
     /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_roles] (
-  roleId int(14) NOT NULL auto_increment,
+  roleId integer unsigned NOT NULL auto_increment,
   pId int(14) NOT NULL default '0',
   lastModif int(14) default NULL,
   name varchar(80) default NULL,
@@ -344,7 +344,7 @@ function workflow_init()
     /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_workitems] (
-  itemId int(14) NOT NULL auto_increment,
+  itemId integer unsigned NOT NULL auto_increment,
   instanceId int(14) NOT NULL default '0',
   orderId int(14) NOT NULL default '0',
   activityId int(14) NOT NULL default '0',
@@ -380,13 +380,13 @@ function workflow_init()
     if (!$result) return;
 
     // set default activityId for create, update and delete hooks
-    xarModSetVar('workflow','default.create',0);
-    xarModSetVar('workflow','default.update',0);
-    xarModSetVar('workflow','default.delete',0);
+    xarModVars::set('workflow','default.create',0);
+    xarModVars::set('workflow','default.update',0);
+    xarModVars::set('workflow','default.delete',0);
 
-    xarModSetVar('workflow','SupportShortURLs',0);
-    xarModSetVar('workflow','itemsperpage',20);
-    xarModSetVar('workflow','seenlist','');
+    xarModVars::set('workflow','SupportShortURLs',0);
+    xarModVars::set('workflow','itemsperpage',20);
+    xarModVars::set('workflow','seenlist','');
 
     if (!xarModRegisterHook('item', 'create', 'API',
                            'workflow', 'admin', 'createhook')) {

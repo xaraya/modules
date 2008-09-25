@@ -7,7 +7,7 @@
 
       <!-- Proces filtering -->
       <div class="xar-form-input-container">
-      <form action="&xar-modurl-workflow-admin-processes;" method="post">
+      <form action="#xarModURL('workflow','admin','monitor_processes')#" method="post">
         <xar:mlstring>Find</xar:mlstring>:<input size="8" type="text" name="find" value="#$find#" />
         <xar:mlstring>Process</xar:mlstring>:
         <select name="filter_name">
@@ -113,23 +113,23 @@
                 <td><a href="#$baselink#&amp;sort_mode=#$sort_mode#&amp;newmajor=#$items[$ix]['pId']#">
                     <span class="xar-accent-outline">x</span><span>.1</span></a></td>
                 <td class="xar-align-center">
-                  <a href="&xar-modurl-workflow-admin-activities;&amp;pid=#$items[$ix]['pId']#">
+                  <a href="#xarModURL('workflow','admin','activities')#&amp;pid=#$items[$ix]['pId']#">
                     <img src="modules/workflow/lib/galaxia/img/icons/activity.gif" alt="#xarML('activities')#" title="#xarML('activities')#" /></a>
                 </td>
                 <td class="xar-align-center">
-                  <a href="&xar-modurl-workflow-admin-shared_source;&amp;pid=#$items[$ix]['pId']#">
+                  <a href="#xarModURL('workflow','admin','shared_source')#&amp;pid=#$items[$ix]['pId']#">
                     <img src="modules/workflow/lib/galaxia/img/icons/book.gif" alt="#xarML('code')#" title="#xarML('code')#" /></a>
                 </td>
                 <td class="xar-align-center">
-                  <a href="&xar-modurl-workflow-admin-roles;&amp;pid=#$items[$ix]['pId']#">
+                  <a href="#xarModURL('workflow','admin','roles')#&amp;pid=#$items[$ix]['pId']#">
                     <img src="modules/workflow/lib/galaxia/img/icons/myinfo.gif" alt="#xarML('roles')#" title="#xarML('roles')#" /></a>
                 </td>
                 <td class="xar-align-center">
-                  <a href="&xar-modurl-workflow-admin-graph;&amp;pid=#$items[$ix]['pId']#">
+                  <a href="#xarModURL('workflow','admin','graph')#&amp;pid=#$items[$ix]['pId']#">
                     <img src="modules/workflow/lib/galaxia/img/icons/mode_tree.gif" title="#xarML('graph')#" alt="#xarML('graph')#" /></a>
                 </td>
                 <td class="xar-align-center">
-                  <a class="link" href="&xar-modurl-workflow-admin-save_process;&amp;pid=#$items[$ix]['pId']#">
+                  <a class="link" href="#xarModURL('workflow','admin','save_process')#&amp;pid=#$items[$ix]['pId']#">
                     <img src="modules/workflow/lib/galaxia/img/icons/export.gif" alt="#xarML('export')#" title="#xarML('export')#" /></a>
                 </td>
               </tr>

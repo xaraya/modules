@@ -138,13 +138,13 @@
                 </td>
 
                 <td style="text-align: center;">
-                  <a href="&xar-modurl-workflow-admin-shared_source;&amp;pid=#$pid#&amp;activityId=#$items[$ix]['activityId']#">
+                  <a href="#xarModURL('workflow','admin','shared_source',array('pid' => $pid, 'activityId' => $items[$ix]['activityId']))#">
                     <img src="modules/workflow/lib/galaxia/img/icons/book.gif" alt="#xarML('code')#" title="#xarML('Code to execute when running this activity')#" />
                   </a>
                 </td>
                 <td style="text-align: center;">
                   <xar:if condition="$items[$ix]['isInteractive'] eq 'y'">
-                    <a class="link" href="&xar-modurl-workflow-admin-shared_source;&amp;pid=#$pid#&amp;activityId=#$items[$ix]['activityId']#&amp;template=1">
+                    <a class="link" href="#xarModURL('workflow','admin','shared_source',array('pid' => $pid, 'activityId' => $items[$ix]['activityId'], 'template' => 1))#">
                       <img src="modules/workflow/lib/galaxia/img/icons/theme.gif" alt="#xarML('template')#" title="#xarML('Interface template for interactive activity')#" />
                     </a>
                   <xar:else/>

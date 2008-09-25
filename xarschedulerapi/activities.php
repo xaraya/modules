@@ -116,7 +116,7 @@ function workflow_schedulerapi_activities($args)
     }
     // update the new jobs
     $serialjobs = serialize($newjobs);
-    xarModSetVar('workflow','jobs',$serialjobs);
+    xarModVars::set('workflow','jobs',$serialjobs);
 
     return $log;
 }

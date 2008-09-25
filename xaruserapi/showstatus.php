@@ -51,7 +51,7 @@ function workflow_userapi_showstatus($args)
     $items = $processMonitor->monitor_list_instances(0, -1, 'started_asc', '', $where, array());
 
     if (xarUserIsLoggedIn()) {
-        $seenlist = xarModGetUserVar('workflow','seenlist');
+        $seenlist = xarModUserVars::get('workflow','seenlist');
     } else {
         $seenlist = xarSession::getVar('workflow.seenlist');
     }

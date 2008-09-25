@@ -16,7 +16,7 @@
           <xar:mlstring>List of instances</xar:mlstring> (#$cant#)
         </legend>
 
-        <form style="margin-left: 1em;" action="&xar-modurl-workflow-admin-monitor_instances;" method="post">
+        <form style="margin-left: 1em;" action="#xarModURL('workflow','admin','monitor_instances')#" method="post">
           <input type="hidden" name="offset" value="#$offset#" />
           <input type="hidden" name="sort_mode" value="#$sort_mode#" />
           <table>
@@ -122,7 +122,7 @@
           </table>
         </form>
 
-        <form style="margin-left: 1em;" action="&xar-modurl-workflow-admin-monitor_instances;" method="post">
+        <form style="margin-left: 1em;" action="#xarModURL('workflow','admin','monitor_activities')#" method="post">
           <input type="hidden" name="offset" value="#$offset#" />
           <input type="hidden" name="find" value="#$find#" />
           <input type="hidden" name="where" value="#$where#" />

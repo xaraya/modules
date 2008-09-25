@@ -10,7 +10,7 @@
   </xar:if>
 
   <dd class="#$classstring#">
-    <a href="&xar-modurl-workflow-admin-monitor_processes;">
+    <a href="#xarModURL('workflow','admin','monitor_processes')#">
       <img src="modules/workflow/lib/galaxia/img/icons/process.gif" alt="#xarML('monitor')#" title="#xarML('monitor processes')#" />
       <xar:mlstring>Monitor</xar:mlstring>&#160;<xar:mlstring>processes</xar:mlstring>
     </a>
@@ -21,7 +21,7 @@
     <xar:set name="classstring">'active'</xar:set>
   </xar:if>
   <dd class="#$classstring#">
-    <a href="&xar-modurl-workflow-admin-monitor_activities;">
+    <a href="#xarModURL('workflow','admin','monitor_activities')#">
       <img src="modules/workflow/lib/galaxia/img/icons/activity.gif" alt="#xarML('monitor')#" title="#xarML('monitor activities')#" />
       <xar:mlstring>Monitor</xar:mlstring>&#160;<xar:mlstring>activities</xar:mlstring>&#160;
     </a>
@@ -32,7 +32,7 @@
     <xar:set name="classstring">'active'</xar:set>
   </xar:if>
   <dd class="#$classstring#">
-    <a  href="&xar-modurl-workflow-admin-monitor_instances;">
+    <a  href="#xarModURL('workflow','admin','monitor_instances')#">
       <img src="modules/workflow/lib/galaxia/img/icons/instance.gif" alt="#xarML('monitor')#" title="#xarML('monitor instances')#" />
       <xar:mlstring>Monitor</xar:mlstring>&#160;<xar:mlstring>instances</xar:mlstring>&#160;
     </a>
@@ -43,7 +43,7 @@
     <xar:set name="classstring">'active'</xar:set>
   </xar:if>
   <dd class="#$classstring#">
-    <a  href="&xar-modurl-workflow-admin-monitor_workitems;">
+    <a  href="#xarModURL('workflow','admin','monitor_workitems')#">
       <img src="modules/workflow/lib/galaxia/img/icons/memo.gif" alt="#xarML('monitor')#" title="#xarML('monitor workitems')#" />
       <xar:mlstring>Monitor</xar:mlstring>&#160;<xar:mlstring>workitems</xar:mlstring>&#160;
     </a>

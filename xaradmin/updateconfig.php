@@ -26,8 +26,8 @@ function workflow_admin_updateconfig()
     // Security Check
     if (!xarSecurityCheck('AdminWorkflow')) return;
 
-    xarModSetVar('workflow','SupportShortURLs',$shorturls);
-    xarModSetVar('workflow','itemsperpage',$numitems);
+    xarModVars::set('workflow','SupportShortURLs',$shorturls);
+    xarModVars::set('workflow','itemsperpage',$numitems);
 
     if (!xarVarFetch('jobs','isset',$jobs,array(),XARVAR_NOT_REQUIRED)) return;
     if (empty($jobs)) {
@@ -40,7 +40,7 @@ function workflow_admin_updateconfig()
         }
     }
     $serialjobs = serialize($savejobs);
-    xarModSetVar('workflow','jobs',$serialjobs);
+    xarModVars::set('workflow','jobs',$serialjobs);
 
     if (xarModIsAvailable('scheduler')) {
         if (!xarVarFetch('interval', 'str:1', $interval, '', XARVAR_NOT_REQUIRED)) return;

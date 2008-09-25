@@ -1,7 +1,7 @@
 <object name="cdcollection">
   <objectid>14</objectid>
   <label>CD Collection 3</label>
-  <moduleid>182</moduleid>
+  <module_id>182</module_id>
   <itemtype>100</itemtype>
   <parent>1</parent>
   <class>DataObject</class>
@@ -14,41 +14,41 @@
       <id>78</id>
       <label>CD</label>
       <type>itemid</type>
-      <default></default>
+      <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
       <status>1</status>
-      <order>1</order>
-      <validation></validation>
+      <seq>1</seq>
+      <configuration></configuration>
     </property>
     <property name="title">
       <id>79</id>
       <label>Title</label>
       <type>textbox</type>
-      <default></default>
+      <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
       <status>1</status>
-      <order>2</order>
-      <validation></validation>
+      <seq>2</seq>
+      <configuration></configuration>
     </property>
     <property name="status">
       <id>80</id>
       <label>Status</label>
       <type>dropdown</type>
-      <default></default>
+      <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
       <status>1</status>
-      <order>3</order>
-      <validation>available;not available</validation>
+      <seq>3</seq>
+      <configuration>available;not available</configuration>
     </property>
     <property name="user">
       <id>81</id>
       <label>User</label>
       <type>username</type>
-      <default></default>
+      <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
       <status>1</status>
-      <order>4</order>
-      <validation></validation>
+      <seq>4</seq>
+      <configuration></configuration>
     </property>
   </properties>
   <items>

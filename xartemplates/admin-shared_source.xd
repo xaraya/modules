@@ -32,7 +32,7 @@ function keypresshandler(elemID,event)
     <!-- Process navigation bar -->
     <xar:template file="proc_bar"/>
 
-  <form id='editsource' action="&xar-modurl-workflow-admin-shared_source;" method="post">
+  <form id='editsource' action="#xarModURL('workflow','admin','shared_source')#" method="post">
 
     <fieldset>
      <legend><xar:mlstring>Admin process sources</xar:mlstring></legend>
@@ -78,17 +78,17 @@ function keypresshandler(elemID,event)
                <p>
                 <strong><xar:mlstring>Function wizard: </xar:mlstring></strong>
                 <xar:if condition="$template != 'y'">
-                  <a href="javascript:setSomeElement('src','$instance->setNextUser(\'\');');"><xar:mlstring>Set next user</xar:mlstring></a> &#160;
-                  <a href="javascript:setSomeElement('src','$instance->get(\'\');');"><xar:mlstring>Get property</xar:mlstring></a>&#160;
-                  <a href="javascript:setSomeElement('src','$instance->set(\'\',\'\');');"><xar:mlstring>Set property</xar:mlstring></a>&#160;
+                  <a href="javascript:setSomeElement('src','$instance->setNextUser(&#39;&#39;);');"><xar:mlstring>Set next user</xar:mlstring></a> &#160;
+                  <a href="javascript:setSomeElement('src','$instance->get(&#39;&#39;);');"><xar:mlstring>Get property</xar:mlstring></a>&#160;
+                  <a href="javascript:setSomeElement('src','$instance->set(&#39;&#39;,&#39;&#39;);');"><xar:mlstring>Set property</xar:mlstring></a>&#160;
                   <xar:if condition="$act_info['isInteractive'] eq 'y'">
                     <a href="javascript:setSomeElement('src','$instance->complete();');"><xar:mlstring>Complete</xar:mlstring></a>&#160;
-                    <a href="javascript:setSomeElement('src','if(isset($_REQUEST[\'save\']){\n  $instance->complete();\n}');"><xar:mlstring>Process form</xar:mlstring></a>&#160;
+                    <a href="javascript:setSomeElement('src','if(isset($_REQUEST[&#39;save&#39;]){\n  $instance->complete();\n}');"><xar:mlstring>Process form</xar:mlstring></a>&#160;
                   </xar:if>
                   <xar:if condition="$act_info['type'] eq 'switch'">
-                    <a href="javascript:setSomeElement('src','$instance->setNextActivity(\'\');');"><xar:mlstring>Set Next act</xar:mlstring></a>&#160;
-                    <a href="javascript:setSomeElement('src','if(true) {\n    $instance->setNextActivity(\'\');\n}');"><xar:mlstring>If:SetNextact</xar:mlstring></a>&#160;
-                    <a href="javascript:setSomeElement('src','switch($instance->get(\'\')){\n  case:\'\':\n  $instance->setNextActivity(\'\');\n  break;\n}');"><xar:mlstring>Switch construct</xar:mlstring></a>&#160;
+                    <a href="javascript:setSomeElement('src','$instance->setNextActivity(&#39;&#39;);');"><xar:mlstring>Set Next act</xar:mlstring></a>&#160;
+                    <a href="javascript:setSomeElement('src','if(true) {\n    $instance->setNextActivity(&#39;&#39;);\n}');"><xar:mlstring>If:SetNextact</xar:mlstring></a>&#160;
+                    <a href="javascript:setSomeElement('src','switch($instance->get(&#39;&#39;)){\n  case:&#39;&#39;:\n  $instance->setNextActivity(&#39;&#39;);\n  break;\n}');"><xar:mlstring>Switch construct</xar:mlstring></a>&#160;
                   </xar:if>
                 </xar:if>
                 </p>

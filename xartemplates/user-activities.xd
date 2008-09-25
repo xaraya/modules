@@ -12,7 +12,7 @@
     <fieldset>
       <legend><xar:mlstring>List of activities</xar:mlstring> (#$cant#)</legend>
 
-      <form action="&xar-modurl-workflow-user-activities;" method="post" id='fform'>
+      <form action="#xarModURL('workflow','user','activities')#" method="post" id='fform'>
         <input type="hidden" name="offset" value="#$offset#" />
         <input type="hidden" name="sort_mode" value="#$sort_mode#" />
         <table>
@@ -45,7 +45,7 @@
         </table>
       </form>
 
-      <form action="&xar-modurl-workflow-user-activities;" method="post">
+      <form action="#xarModURL('workflow','user','activities')#" method="post">
         <input type="hidden" name="offset" value="#$offset#" />
         <input type="hidden" name="find" value="#$find#" />
         <input type="hidden" name="where" value="#$where#" />
@@ -102,7 +102,7 @@
                     #$items[$ix]['name']#
                   </xar:if>
                   <xar:if condition="$items[$ix]['isInteractive'] eq 'y' and ($items[$ix]['type'] eq 'start' or $items[$ix]['type'] eq 'standalone')">
-                    <a href="&xar-modurl-workflow-user-run_activity;&amp;activityId=#$items[$ix]['activityId']#">
+                    <a href="#xarModURL('workflow','user','run_activity',array('activityId' => $items[$ix]['activityId']))#">
                       <img src="modules/workflow/lib/galaxia/img/icons/next.gif" alt="#xarML('run')#" title="#xarML('run activity')#" />
                     </a>
                   </xar:if>

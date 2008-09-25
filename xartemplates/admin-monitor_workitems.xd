@@ -15,7 +15,7 @@
         <xar:mlstring>List of workitems</xar:mlstring> (#$cant#)
       </legend>
 
-      <form style="margin-left: 1em;" action="&xar-modurl-workflow-admin-monitor_workitems;" method="post">
+      <form style="margin-left: 1em;" action="#xarModURL('workflow','admin','monitor_workitems')#" method="post">
         <input type="hidden" name="offset" value="#$offset#" />
         <input type="hidden" name="sort_mode" value="#$sort_mode#" />
         <input type="hidden" name="filter_instance" value="#$filter_instance#" />
@@ -91,7 +91,7 @@
         </table>
       </form>
 
-      <form style="margin-left: 1em;" action="&xar-modurl-workflow-admin-monitor_workitems;" method="post">
+      <form style="margin-left: 1em;" action="#xarModURL('workflow','admin','monitor_workitems')#" method="post">
         <input type="hidden" name="offset" value="#$offset#" />
         <input type="hidden" name="find" value="#$find#" />
         <input type="hidden" name="where" value="#$where#" />

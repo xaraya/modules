@@ -9,7 +9,7 @@
     <xar:set name="classstring">'active'</xar:set>
   </xar:if>
   <dd class="#$classstring#">
-    <a class="link" href="&xar-modurl-workflow-admin-processes;">
+    <a class="link" href="#xarModURL('workflow','admin','processes')#">
       <img src="#xarTplGetImage('index.gif')#" alt="#xarML('processlist')#" title="#xarML('processlist')#" />
       <xar:mlstring>List </xar:mlstring>
     </a>
@@ -20,7 +20,7 @@
     <xar:set name="classstring">''</xar:set>
     <xar:if condition="$proc_info['isActive'] eq 'y'">
       <dd class="#$classstring#">
-        <a class="link" href="&xar-modurl-workflow-admin-activities;&amp;pid=#$pid#&amp;deactivate_proc=#$pid#">
+        <a class="link" href="#xarModURL('workflow','admin','activities')#&amp;pid=#$pid#&amp;deactivate_proc=#$pid#">
           <img src="modules/workflow/lib/galaxia/img/icons/stop.gif" alt="#xarML('stop')#" title="#xarML('stop')#" />
           <xar:mlstring>Deactivate </xar:mlstring>
         </a>
@@ -28,7 +28,7 @@
       <xar:else/>
       <xar:if condition="$proc_info['isValid'] eq 'y'">
         <dd class="#$classstring#">
-          <a href="&xar-modurl-workflow-admin-activities;&amp;pid=#$pid#&amp;activate_proc=#$pid#">
+          <a href="#xarModURL('workflow','admin','activities')#&amp;pid=#$pid#&amp;activate_proc=#$pid#">
             <img src="modules/workflow/lib/galaxia/img/icons/refresh2.gif" alt="#xarML('activate')#" title="#xarML('activate')#" />
             <xar:mlstring>Activate </xar:mlstring>
           </a>
@@ -41,7 +41,7 @@
       <xar:set name="classstring">'active'</xar:set>
     </xar:if>
     <dd class="#$classstring#">
-      <a href="&xar-modurl-workflow-admin-processes;&amp;pid=#$pid#">
+      <a href="#xarModURL('workflow','admin','processes')#&amp;pid=#$pid#">
         <img src="modules/workflow/lib/galaxia/img/icons/change.gif" alt="#xarML('edit')#" title="#xarML('edit')#" />
         <xar:mlstring>Process Details</xar:mlstring>
       </a>
@@ -52,7 +52,7 @@
       <xar:set name="classstring">'active'</xar:set>
     </xar:if>
     <dd class="#$classstring#">
-      <a href="&xar-modurl-workflow-admin-activities;&amp;pid=#$pid#">
+      <a href="#xarModURL('workflow','admin','activities')#&amp;pid=#$pid#">
         <img src="modules/workflow/lib/galaxia/img/icons/activity.gif" alt="#xarML('activities')#" title="#xarML('activities')#" />
         <xar:mlstring>Activities</xar:mlstring>
       </a>
@@ -63,7 +63,7 @@
       <xar:set name="classstring">'active'</xar:set>
     </xar:if>
     <dd class="#$classstring#">
-      <a href="&xar-modurl-workflow-admin-shared_source;&amp;pid=#$pid#">
+      <a href="#xarModURL('workflow','admin','shared_source')#&amp;pid=#$pid#">
         <img src="modules/workflow/lib/galaxia/img/icons/book.gif" alt="#xarML('code')#" title="#xarML('code')#" />
         <xar:mlstring>Code</xar:mlstring>
       </a>
@@ -74,7 +74,7 @@
       <xar:set name="classstring">'active'</xar:set>
     </xar:if>
     <dd class="#$classstring#">
-      <a href="&xar-modurl-workflow-admin-roles;&amp;pid=#$pid#">
+      <a href="#xarModURL('workflow','admin','roles')#&amp;pid=#$pid#">
         <img src="modules/workflow/lib/galaxia/img/icons/myinfo.gif" alt="#xarML('roles')#" title="#xarML('roles')#" />
         <xar:mlstring>Roles</xar:mlstring>
       </a>
@@ -85,7 +85,7 @@
       <xar:set name="classstring">'active'</xar:set>
     </xar:if>
     <dd class="#$classstring#">
-      <a href="&xar-modurl-workflow-admin-graph;&amp;pid=#$pid#">
+      <a href="#xarModURL('workflow','admin','graph')#&amp;pid=#$pid#">
         <img src="modules/workflow/lib/galaxia/img/icons/mode_tree.gif" title="#xarML('graph')#" alt="#xarML('graph')#" />
         <xar:mlstring>Graph</xar:mlstring>
       </a>
@@ -93,7 +93,7 @@
 
     <xar:set name="classstring">''</xar:set>
     <dd class="#$classstring#">
-      <a href="&xar-modurl-workflow-admin-save_process;&amp;pid=#$pid#">
+      <a href="#xarModURL('workflow','admin','save_process')#&amp;pid=#$pid#">
         <img src="modules/workflow/lib/galaxia/img/icons/export.gif" alt="#xarML('export')#" title="#xarML('export')#" />
         <xar:mlstring>Export</xar:mlstring>
       </a>
@@ -108,9 +108,4 @@
   <!-- Show a list of errors, if any, to complete this process -->
   <xar:template file="processerrors"/>
 </xar:if>
-
-
-
-
-
 </xar:template>
