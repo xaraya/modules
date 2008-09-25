@@ -85,7 +85,7 @@
     <fieldset>
       <legend><xar:mlstring>Configuration of Scheduled Activities</xar:mlstring></legend>
       <xar:if condition="xarModIsAvailable('scheduler')" >
-        <xar:template file="scheduled" />
+        <xar:template file="scheduler" />
       <xar:else />
         The scheduler module is not installed
       </xar:if>
