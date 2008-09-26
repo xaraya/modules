@@ -7,7 +7,7 @@
  * Converted to Xaraya by John Cox
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -18,7 +18,7 @@
 
 $modversion['name']             = 'bbcode';
 $modversion['id']               = '778';
-$modversion['version']          = '2.0.0';
+$modversion['version']          = '2.0.1';
 $modversion['displayname']      = xarML('BBCode');
 $modversion['description']      = 'BBCode Hook';
 $modversion['credits']          = 'xardocs/credits.txt';

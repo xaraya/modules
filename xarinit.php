@@ -235,9 +235,14 @@ function bbcode_upgrade($oldversion)
             }
             xarRegisterMask('OverviewBBCode','All','bbcode','All','All','ACCESS_OVERVIEW');
             break;
-        default:
-            // Couldn't find a previous version to upgrade
-            return;
+
+        case '2.0.0':
+            //fall through
+            //3rd point upgrade to signify update of bbcode parser to 0.3.3
+            //Also signifies upgrade of syntax highlighter to 1.5.1
+            
+        case '2.0.1': //current version
+        
     }
     return true;
 }

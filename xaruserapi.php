@@ -306,6 +306,7 @@ function do_bbcode_quote ($action, $attributes, $content, $params, &$node_object
 
 function do_bbcode_code ($action, $attributes, $content, $params, &$node_object) 
 {
+
     if (!isset ($attributes['default'])) {
         return xarTplModule('bbcode','user', 'code', array('replace' => $content));
     } elseif ($attributes['default'] == 'php') {
