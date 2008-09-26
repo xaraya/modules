@@ -98,7 +98,7 @@ fclose($fd);
         // If we have at least one match, then the API is allowed
         // TODO: we then need to check the role groups for each line matched.
         if (empty($api_matches)) {
-            $error = new nusoap_fault('Server', 'Xaraya', "Access to API '$module:$type:func' is not permitted");
+            $error = new nusoap_fault('Server', 'Xaraya', "Access to API '$module:$type:$func' is not permitted");
             return $error;
         }
     }
