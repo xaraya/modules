@@ -1,6 +1,6 @@
 <p>
     #xarML('Code')#:
 </p>
-<div class='bbcode-code' style='padding: 5px; white-space: normal;'>
+<code class='bbcode-code' style='padding: 5px; white-space: normal;'>
     #$replace#
-</div>
+</code>
