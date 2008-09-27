@@ -240,8 +240,9 @@ function bbcode_upgrade($oldversion)
             //fall through
             //3rd point upgrade to signify update of bbcode parser to 0.3.3
             //Also signifies upgrade of syntax highlighter to 1.5.1
-            
-        case '2.0.1': //current version
+        case '2.0.1':
+            //3rd point upgrade to signify update of transform API
+        case '2.0.2': //current version
         
     }
     return true;

@@ -18,7 +18,7 @@
 
 $modversion['name']             = 'bbcode';
 $modversion['id']               = '778';
-$modversion['version']          = '2.0.1';
+$modversion['version']          = '2.0.2';
 $modversion['displayname']      = xarML('BBCode');
 $modversion['description']      = 'BBCode Hook';
 $modversion['credits']          = 'xardocs/credits.txt';
