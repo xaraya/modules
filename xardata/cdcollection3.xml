@@ -20,7 +20,8 @@
       </roles>
       <code><![CDATA[<?php
 // Nothing to do here...
-?>      ]]></code>    </activity>
+?>      ]]></code>    
+    </activity>
     <activity>
       <name>Browse CDs</name>
       <type>standalone</type>
@@ -120,7 +121,8 @@ if ($actinfo) {
 </xar:foreach>
 </xar:if>
 </table>
-</xar:template>      ]]></template>    </activity>
+</xar:template>      ]]></template>    
+    </activity>
     <activity>
       <name>Request CD</name>
       <type>start</type>
@@ -178,7 +180,8 @@ CD to request:
 There are no CDs available at the moment...
 </xar:if>
 </form>
-</xar:template>      ]]></template>    </activity>
+</xar:template>      ]]></template>
+    </activity>
     <activity>
       <name>Approve CD Request</name>
       <type>switch</type>
@@ -242,7 +245,8 @@ Status: #$info['status']# <br/>
 <input type="submit" name="rejected" value="rejected" />
 <input type="submit" name="approved" value="approved" />
 </form>
-</xar:template>      ]]></template>    </activity>
+</xar:template>      ]]></template>   
+    </activity>
     <activity>
       <name>Approve CD</name>
       <type>activity</type>
@@ -277,7 +281,8 @@ $cd = xarModAPIFunc('dynamicdata','user','getitem', $object);
 // Update the CD status and user
 $cd->updateItem(array('status' => 'not available',
                       'user' => $sendto));
-?>      ]]></code>    </activity>
+?>      ]]></code>    
+    </activity>
     <activity>
       <name>Reject CD</name>
       <type>activity</type>
@@ -300,7 +305,8 @@ if (!empty($sendto)) {
 
 // No need to update the CD information here
 
-?>      ]]></code>    </activity>
+?>      ]]></code>    
+    </activity>
     <activity>
       <name>Ack result</name>
       <type>activity</type>
@@ -345,7 +351,8 @@ Your request for #$title# was #$status#
 <input type="hidden" name="return_url" value="#$return_url#"/>
 <input type="submit" name="ack" value="OK" />
 </form>
-</xar:template>      ]]></template>    </activity>
+</xar:template>      ]]></template>    
+    </activity>
     <activity>
       <name>Handle Escalated Request</name>
       <type>switch</type>
@@ -417,7 +424,8 @@ Escalated: #xarLocaleFormatDate('%x %X %z', $escalated)# <br/>
 <input type="submit" name="rejected" value="rejected" />
 <input type="submit" name="approved" value="approved" />
 </form>
-</xar:template>      ]]></template>    </activity>
+</xar:template>      ]]></template>    
+    </activity>
     <activity>
       <name>Escalate</name>
       <type>standalone</type>
@@ -490,7 +498,8 @@ foreach ($findinstances as $info) {
     // or ...
 }
 
-?>      ]]></code>    </activity>
+?>      ]]></code>    
+  </activity>
   </activities>
   <transitions>
      <transition>

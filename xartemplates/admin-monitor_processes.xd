@@ -117,10 +117,10 @@
                   <td style="text-align:right;">
                     <table >
                       <tr>
-                        <td style="text-align:right;"><a style="color:green;" href="#xarModURL('workflow','admin','monitor_instances',array('filter_process' => $items[$ix]['pId'], 'filter_status' => 'active', 'filter_activity' => $items[$ix]['activityId']))#">#$items[$ix]['active_instances']#</a></td>
-                        <td style="text-align:right;"><a style="color:black;" href="#xarModURL('workflow','admin','monitor_instances',array('filter_process' => $items[$ix]['pId'], 'filter_status' => 'completed', 'filter_activity' => $items[$ix]['activityId']))#">#$items[$ix]['completed_instances']#</a></td>
-                        <td style="text-align:right;"><a style="color:grey;" href="#xarModURL('workflow','admin','monitor_instances',array('filter_process' => $items[$ix]['pId'], 'filter_status' => 'aborted', 'filter_activity' => $items[$ix]['activityId']))#">#$items[$ix]['aborted_instances']#</a></td>
-                        <td style="text-align:right;"><a style="color:red;" href="#xarModURL('workflow','admin','monitor_instances',array('filter_process' => $items[$ix]['pId'], 'filter_status' => 'exception','filter_activity' => $items[$ix]['activityId']))#">#$items[$ix]['exception_instances']#</a></td>
+                        <td style="text-align:right;"><a style="color:green;" href="#xarModURL('workflow','admin','monitor_instances',array('filter_process' => $items[$ix]['pId'], 'filter_status' => 'active'))#">#$items[$ix]['active_instances']#</a></td>
+                        <td style="text-align:right;"><a style="color:black;" href="#xarModURL('workflow','admin','monitor_instances',array('filter_process' => $items[$ix]['pId'], 'filter_status' => 'completed'))#">#$items[$ix]['completed_instances']#</a></td>
+                        <td style="text-align:right;"><a style="color:grey;" href="#xarModURL('workflow','admin','monitor_instances',array('filter_process' => $items[$ix]['pId'], 'filter_status' => 'aborted'))#">#$items[$ix]['aborted_instances']#</a></td>
+                        <td style="text-align:right;"><a style="color:red;" href="#xarModURL('workflow','admin','monitor_instances',array('filter_process' => $items[$ix]['pId'], 'filter_status' => 'exception'))#">#$items[$ix]['exception_instances']#</a></td>
                       </tr>
                     </table>
                   </td>

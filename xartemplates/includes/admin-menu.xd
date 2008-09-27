@@ -31,7 +31,7 @@
         </xar:if>
 
         <dd class="#$tabclass#">
-            <a href="#xarModURL('workflow','admin','monitor_processes')#" >
+            <a href="#xarModURL('workflow','admin','processes')#" >
                 <xar:mlstring>Manage Processes</xar:mlstring>
             </a>
         </dd>
