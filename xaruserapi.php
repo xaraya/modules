@@ -6,7 +6,7 @@
  * http://www.pncommunity.de
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -90,8 +90,13 @@ function bbcode_transform($text)
                       'inline', array ('listitem', 'block', 'inline'), array());
     $bbcode->addCode ('yahoo', 'callback_replace', 'do_bbcode_yahoo', array (),
                       'inline', array ('listitem', 'block', 'inline'), array());
-    $bbcode->addCode ('wiki', 'callback_replace', 'do_bbcode_wiki', array (),
-                      'inline', array ('listitem', 'block', 'inline'), array());
+    //bug 5214 - xbbc-000229                  
+    $bbcode->addCode ('wiki', 'usecontent', 'do_bbcode_wiki',  
+                        array ('usecontent_param' => 'default'), 
+                        'inline', 
+                        array ('listitem', 'block', 'inline'), 
+                        array()
+                        );
     $bbcode->addCode ('thesaurus', 'callback_replace', 'do_bbcode_thesaurus', array (),
                       'inline', array ('listitem', 'block', 'inline'), array());
     $bbcode->addCode ('linethrough', 'callback_replace', 'do_bbcode_linethrough', array (),
@@ -181,9 +186,9 @@ function do_bbcode_img ($action, $attributes, $content, $params, $node_object)
     }
     //return '<img src="'.htmlspecialchars($content).'" alt="">';  bug 5217
     if (!isset ($attributes['default'])) {
-    		return '<img src="'.htmlspecialchars($content).'" alt="">';
+            return '<img src="'.htmlspecialchars($content).'" alt="">';
     } else {
-    		return '<img src="'.htmlspecialchars($attributes['default']).'" alt="">';
+            return '<img src="'.htmlspecialchars($attributes['default']).'" alt="">';
     }
 }
 // Bug 4826
@@ -217,8 +222,17 @@ function do_bbcode_msn ($action, $attributes, $content, $params, &$node_object)
 }
 function do_bbcode_wiki ($action, $attributes, $content, $params, &$node_object) 
 {
-    return xarTplModule('bbcode','user', 'wiki', array('replace' => $content));
+    if (!isset ($attributes['default'])) {
+        // if option not specified then link to main site
+        return xarTplModule('bbcode','user', 'wiki', array('iso' => 'www', 'replace' => $content));
+    } else {
+        // only valid with two characters iso code
+        $iso = htmlspecialchars(substr($attributes['default'],0,2));
+        // if option 'de' or 'ru' etc specified than go to de.wiki.org or ru.wiki.org  etc
+        return xarTplModule('bbcode','user', 'wiki', array('iso' => $iso, 'replace' => $content ));
+    }
 }
+
 function do_bbcode_yahoo ($action, $attributes, $content, $params, &$node_object) 
 {
     return xarTplModule('bbcode','user', 'yahoo', array('replace' => $content));
