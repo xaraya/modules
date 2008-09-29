@@ -6,19 +6,18 @@
         xarTplSetPageTitle(xarML('New Account'));
         if (!xarVarFetch('phase','str:1:100',$phase,'request',XARVAR_NOT_REQUIRED)) return;
 
-
         $regobjectname = xarModVars::get('registration', 'registrationobject');
+        $object = DataObjectMaster::getObject(array('name' => $regobjectname));
+        if(empty($object)) return;
         $authid = xarSecGenAuthKey();
 
-        switch(strtolower($phase)) {
+       switch(strtolower($phase)) {
 
             case 'registerformcycle':
                 $fieldvalues = xarSessionGetVar('Registration.UserInfo');
             case 'registerform': 
             default:
 
-                $object = DataObjectMaster::getObject(array('name' => $regobjectname));
-                if(empty($object)) return;
 
                 if (isset($fieldvalues)) {
                     $object->setFieldValues($fieldvalues);
@@ -48,7 +47,6 @@
 
             case 'checkregistration':
 
-                $object = DataObjectMaster::getObject(array('name' => $regobjectname));
                 $isvalid = $object->checkInput();
 
                 /* Call hooks here, others than just dyn data
@@ -69,6 +67,7 @@
                 if (!$isvalid) {
                     $data = array('authid'     => $authid,
                                   'object'     => $object,
+                                  'properties'    => $object->getProperties(),
                                   'hookoutput' => $hookoutput);
                     return xarTplModule('registration','user', 'newmemberform',$data);
                 }
@@ -131,9 +130,6 @@
             case 'createuser':
 //                if (!xarSecConfirmAuthKey()) return;
                 $fieldvalues = xarSessionGetVar('Registration.UserInfo');
-
-                $object = DataObjectMaster::getObject(array('name' => $regobjectname));
-                if(empty($object)) return;
 
                 // Do we need admin activation of the account?
                 if (xarModVars::get('registration', 'explicitapproval')) {
