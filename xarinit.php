@@ -95,7 +95,14 @@ function smilies_init()
      }
     // Set up module variables
     xarModSetVar('smilies', 'itemsperpage', 20);
-
+    // Bug 3957: added in 1.0.2, allow specific html tags to be ignored in transforms
+    xarModSetVar('smilies', 'skiptags', serialize(array('code', 'textarea')));
+    // Bug 5271: added in 1.0.3, allow admins to specify folder to serve smilies from
+    // folder must be present in modules/smilies/xarimages/ folder
+    // or /themes/{themename}/modules/smilies/xarimages/ folder
+    xarModSetVar('smilies', 'image_folder', '');
+    // Bug 5116: added in 1.0.3, option to hide duplicate emotions in user main
+    xarModSetVar('smilies', 'showduplicates', false);
     // Register blocks
     if (!xarModAPIFunc('blocks',
                        'admin',
@@ -111,6 +118,22 @@ function smilies_init()
                             'user',
                             'transform')) return;
 
+    // Set up module hooks
+    if (!xarModRegisterHook('module',
+                            'modifyconfig',
+                            'GUI',
+                            'smilies',
+                            'admin',
+                            'modifyconfighook')) return;
+
+    // Set up module hooks
+    if (!xarModRegisterHook('module',
+                            'updateconfig',
+                            'API',
+                            'smilies',
+                            'admin',
+                            'updateconfighook')) return;
+
     // Register Masks
     xarRegisterMask('OverviewSmilies','All','smilies','All','All','ACCESS_READ');
     xarRegisterMask('ReadSmilies','All','smilies','All','All','ACCESS_READ');
@@ -118,7 +141,7 @@ function smilies_init()
     xarRegisterMask('AddSmilies','All','smilies','All','All','ACCESS_ADD');
     xarRegisterMask('DeleteSmilies','All','smilies','All','All','ACCESS_DELETE');
     xarRegisterMask('AdminSmilies','All','smilies','All','All','ACCESS_ADMIN');
-
+    
     // Initialisation successful
     return true;
 }
@@ -140,7 +163,35 @@ function smilies_upgrade($oldversion)
                                          'icon'     => $smile['iconupdated'],
                                          'emotion'  => $smile['emotion']))) return;
             }
-            break;
+        case '1.0.1':
+            // Bug 3957: allow admins to specify html tags to ignore when transforming smiley code, useful for 
+            // eg: not transforming smilies in <code> and <textarea> tags used by BBCode's [code] tag
+            xarModSetVar('smilies', 'skiptags', serialize(array('code', 'textarea')));
+        case '1.0.2':
+            // Bug 5271: allow admins to specify folder to serve smilies from
+            // folder must be present in modules/smilies/xarimages/ folder
+            // or /themes/{themename}/modules/smilies/xarimages/ folder
+            xarModSetVar('smilies', 'imagefolder', '');
+            // Bug 5116: option to hide duplicate emotions in user main
+            xarModSetVar('smilies', 'showduplicates', false);
+        case '1.0.3':
+            // Set up module hooks
+            if (!xarModRegisterHook('module',
+                                    'modifyconfig',
+                                    'GUI',
+                                    'smilies',
+                                    'admin',
+                                    'modifyconfighook')) return;
+
+            // Set up module hooks
+            if (!xarModRegisterHook('module',
+                                    'updateconfig',
+                                    'API',
+                                    'smilies',
+                                    'admin',
+                                    'updateconfighook')) return;            
+        break;
+
     }
     return true;
 }
@@ -156,6 +207,22 @@ function smilies_delete()
                               'smilies',
                               'user',
                               'transform')) return;
+
+    // Remove module hooks
+    if (!xarModUnregisterHook('module',
+                              'modifyconfig',
+                              'GUI',
+                              'smilies',
+                              'admin',
+                              'modifyconfighook')) return;
+
+    // Remove module hooks
+    if (!xarModUnregisterHook('module',
+                              'updateconfig',
+                              'API',
+                              'smilies',
+                              'admin',
+                              'updateconfighook')) return;
 
     // Drop the table
     $dbconn =& xarDBGetConn();

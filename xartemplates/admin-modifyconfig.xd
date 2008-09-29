@@ -1,0 +1,117 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>
+            Smilies Administration
+        </xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" module="smilies" file="admin-menu" />
+    <h2>
+        <xar:mlstring>
+            Modify Config
+        </xar:mlstring>
+    </h2>
+    <xar:set name="statusMsg">#xarSessionGetVar('statusmessage')#</xar:set>
+    <xar:if condition="!empty($statusMsg)">
+      <span class="xar-error">#$statusMsg#</span>
+    </xar:if>
+    <form class="xar-formwidget" action="#xarModURL('smilies', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset class="formelements xar-norm">
+            <legend>
+                <strong>
+                    <xar:mlstring>
+                         Display Settings
+                    </xar:mlstring>
+                </strong>
+            </legend>
+            <div class="xar-form-input-wrapper">
+                <label for="itemsperpage" class="xar-form-label help" title="#xarML('Number of smilies to display per page')#">
+                        <xar:mlstring>
+                            Smilies per page:
+                        </xar:mlstring>
+                </label>
+                <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsperpage#" size="10" maxlength="3" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="showduplicates" class="xar-form-label help" title="#xarML('Optionally show all codes for each Emotion in user display functions')#">
+                  <xar:mlstring>Show All Codes:</xar:mlstring>
+                </label>
+                <xar:data-input type="checkbox" name="showduplicates" id="showduplicates" value="$showduplicates" />
+                <p class="xar-form-container-after">
+                    <xar:mlstring>
+                        Select this option if you'd like your users to see all codes for each emotion (leave empty to just show the first code encountered for each emotion)
+                    </xar:mlstring>
+                </p>
+            </div>
+        </fieldset>
+        <fieldset class="formelements xar-norm">
+            <legend>
+                <strong>
+                    <xar:mlstring>
+                         Module Settings
+                    </xar:mlstring>
+                </strong>
+            </legend>
+            <div class="xar-form-input-wrapper-after">
+                <xar:set name="$allowhookoverride">#xarModGetVar('smilies','allowhookoverride')#</xar:set>
+                <xar:if condition="$allowhookoverride eq 1">
+                    <input type="checkbox" name="allowhookoverride" id="allowhookoverride" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="allowhookoverride" id="allowhookoverride" />
+                </xar:if>
+                <label for="allowhookoverride" title="#xarML('Allow hooked modules to override default settings')#">
+                        <xar:mlstring>
+                            Allow hooked modules to override default settings
+                        </xar:mlstring>
+                </label>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="skiptags" class="xar-form-label help" title="#xarML('Specify HTML tags to ignore when transforming smilies')#">
+                    <xar:mlstring>
+                        Skip HTML tags:
+                    </xar:mlstring>
+                </label>
+                <input type="text" name="skiptags" id="skiptags" value="#$skiptags#" size="30" maxlength="255" />
+                <p class="xar-form-container-after">
+                  <xar:mlstring>Enter a comma delimited list of HTML* tags which you'd like smilies to ignore when transforming text. Useful for, eg, BBCode, when using the [code] tag you probably don't want smiley code to transform, so you could add code and textarea (which are the tags used by BBCode) to the list of tags to ignore</xar:mlstring><br />
+                  <xar:mlstring>Note: *Must be valid XHTML tags.</xar:mlstring>
+                </p>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="image_folder" class="xar-form-label help" title="#xarML('Specify the folder from which to serve smilies images')#">
+                  <xar:mlstring>
+                    Smilies Folder:
+                  </xar:mlstring>
+                </label>
+                <input type="text" name="image_folder" id="image_folder" value="#$image_folder#" size="30" maxlength="100" />
+                <p class="xar-form-container-after">
+                    <xar:mlstring>
+                        This folder must exist in either
+                        <code>/modules/smilies/xarimages/</code>
+                        or
+                        <code>/themes/{themename}/modules/smilies/images/</code>
+                        and must contain images with the same filenames specified by the smiley icon path for each smiley configured on your system
+                    </xar:mlstring>
+                </p>
+            </div>
+        </fieldset>
+        <xar:if condition="!empty($hooks)">
+            <fieldset>
+                <xar:foreach in="$hooks" key="$hookmodule">
+                    <div class="xar-form-input-wrapper">
+                        #$hooks[$hookmodule]#
+                    </div>
+                </xar:foreach>
+            </fieldset>
+        </xar:if>
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="submit" value="#xarML('Update Settings')#" />
+            </div>
+        </fieldset>
+    </form>
+</div>
+<xar:set name="statusMsg">#xarSessionSetVar('statusmessage', '')#</xar:set>

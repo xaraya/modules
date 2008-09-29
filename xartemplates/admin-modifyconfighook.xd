@@ -1,0 +1,15 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<fieldset class="formelements xar-norm">
+    <legend>
+        <xar:mlstring>
+            Smilies
+        </xar:mlstring>
+    </legend>
+    <!-- @todo allow this to be per itemtype instead of globally -->
+    <xar:if condition="xarModGetVar('smilies','allowhookoverride')">
+        <xar:template file="modifyconfig_common" />
+   <xar:else />
+       <xar:mlstring>Hook overrides are currently disabled. They can be enabled </xar:mlstring>
+       <a href="&xar-modurl-smilies-admin-modifyconfig;"><xar:mlstring>Here</xar:mlstring></a>
+   </xar:if>
+</fieldset>

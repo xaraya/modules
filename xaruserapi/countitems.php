@@ -15,18 +15,26 @@
  * @returns integer
  * @returns number of links in the database
  */
-function smilies_userapi_countitems()
+function smilies_userapi_countitems($args)
 {
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
     // Security Check
     if(!xarSecurityCheck('OverviewSmilies')) return;
-
+    extract($args);
     $smiliestable = $xartable['smilies'];
 
     $query = "SELECT COUNT(1)
             FROM $smiliestable";
+    // Bug 5116: Hide duplicates, applies to counts also for pager to work
+    if (isset($groupby)) {
+      switch ($groupby) {
+        case 'emotion':
+          $query .= " GROUP BY xar_emotion";
+        break;
+      }
+    }
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 

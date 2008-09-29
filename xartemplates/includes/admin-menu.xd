@@ -4,7 +4,7 @@
 
 <xar:set name="activetab">$_bl_module_func</xar:set>
 <xar:comment>We put in catch here for the whole menu as the same admin page
-             is used for user display. 
+             is used for user display.
 </xar:comment>
 <xar:sec mask="EditSmilies" catch="false">
 <div>
@@ -32,7 +32,6 @@
             </a>
         </dd>
 
-    <!--
     <xar:sec mask="AdminSmilies" catch="false">
         <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
         <dd class="#$tabclass#">
@@ -41,7 +40,6 @@
           </a>
         </dd>
     </xar:sec>
-    -->
     <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
     <dd class="#$tabclass#">
       <a href="&xar-modurl-smilies-admin-overview;">

@@ -13,7 +13,7 @@
 
 $modversion['name'] = 'Smilies';
 $modversion['id'] = '153';
-$modversion['version'] = '1.0.1';
+$modversion['version'] = '1.0.4';
 $modversion['displayname']    = xarML('Smilies');
 $modversion['description'] = 'Transform smilies to images';
 $modversion['credits'] = 'xardocs/credits.txt';

@@ -16,13 +16,46 @@
         </h2>
         <p>
             <xar:mlstring>
-            From the menu, you have two choices.  "Add Smilies", and "View Smiles".
+            From the menu, you have three choices.  "Add Smilies", "View Smiles", and "Modify Config".
             </xar:mlstring>
         </p>
-        <ul>
-            <li><xar:mlstring>View Smilies -- Allows you to view the smilies that you have configured on your system.</xar:mlstring></li>
-            <li><xar:mlstring>Add Smilies -- Allows you to add new smilies to your system.</xar:mlstring></li>
-        </ul>
+        <ol>
+            <li><xar:mlstring><strong>Add Smilie</strong> -- Allows you to add new smilies to your system.</xar:mlstring></li>
+            <li><xar:mlstring><strong>Manage Smilies</strong> -- Allows you to view the smilies that you have configured on your system.</xar:mlstring></li>
+            <li><xar:mlstring><strong>Modify Config</strong> -- Allows you to change some of the key settings controlling the behaviour of the module</xar:mlstring>
+              <ul>
+                <li><xar:mlstring>Specify the number of smilies to display per page</xar:mlstring></li>
+                <li>
+                  <p>
+                  <xar:mlstring>
+                    Specify HTML tags to ignore when transforming smiley code, useful for, eg, the bbcode [code] tags
+                  </xar:mlstring>
+                  </p>
+                  <p>
+                  <xar:mlstring>Accepts a comma delimited list of lowercase valid HTML tags.</xar:mlstring>
+                  </p>
+                </li>
+                <li><xar:mlstring>Optionally display all codes for each emotion on user main</xar:mlstring></li>
+                <li>
+                  <xar:mlstring>Optionally specify a folder containing images to use for smilies</xar:mlstring>
+                  <p>
+                  <xar:mlstring>Folder must exist in one of the following folders (if the folder doesn't exist, or you leave this option empty, images will be served from these folders):</xar:mlstring>
+                  </p>
+                  <p>
+                  <xar:mlstring>In the module itself </xar:mlstring>
+                  <code>/modules/smilies/xarimages/</code>
+                  </p>
+                  <p>
+                  <xar:mlstring>Or when over-ridden by the theme in </xar:mlstring>
+                  <code>/themes/{current-theme-dir}/modules/smilies/images/</code>
+                  </p>
+                  <p>
+                  <xar:mlstring>Images must be named according to the Icon Path specified for each smilie configured on your system</xar:mlstring>
+                  </p>
+                </li>
+              </ul>
+            </li>
+        </ol>
         <h3>
             <xar:mlstring>Included Blocks</xar:mlstring>
         </h3>
@@ -49,7 +82,7 @@
     </li>
   </ul>
   <p class="xar-sub">
-    <strong>&nbsp;<xar:mlstring>Smilies Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-04-10
+    <strong>&nbsp;<xar:mlstring>Smilies Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.3-RC1&nbsp; 2008-09-25
   </p>
 
   <h3><xar:mlstring>Current Smilies</xar:mlstring></h3>
@@ -58,9 +91,10 @@
         <xar:loop name="$icons">
             <li>
                 <img src="#xarTplGetImage($loop:key, 'smilies')#" />
+                <strong>#xarVarPrepForDisplay($loop:item['0']['emotion'])#</strong>
                 <ul>
                     <xar:loop name="$loop:item">
-                        <li><strong style="width: 10em;">#xarVarPrepForDisplay($loop:item.code)#</strong> #xarVarPrepForDisplay($loop:item.emotion)#</li>
+                        <li><strong style="width: 10em;">#xarVarPrepForDisplay($loop:item.code)#</strong> <xar:comment>#xarVarPrepForDisplay($loop:item.emotion)#</xar:comment></li>
                     </xar:loop>
                 </ul>
             </li>

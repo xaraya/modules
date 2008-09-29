@@ -46,8 +46,16 @@ function smilies_userapi_getall($args)
                      xar_code,
                      xar_icon,
                      xar_emotion
-            FROM $smiliestable
-            ORDER BY xar_emotion";
+            FROM $smiliestable";
+    // Bug 5116: Groupby emotion so we don't get duplicates
+    if (isset($groupby)) {
+      switch ($groupby) {
+        case 'emotion':
+          $query .= " GROUP BY xar_emotion";
+        break;
+      }
+    }
+    $query .= " ORDER BY xar_emotion";
     $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
     if (!$result) return;
 

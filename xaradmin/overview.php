@@ -23,9 +23,28 @@ function smilies_admin_overview()
 
     // Get the current smilies for an overview.
     $smilies = xarModAPIFunc('smilies', 'user', 'getall');
+    
+    // Bug 5271:
+    $image_folder = xarModGetVar('smilies', 'image_folder');
+    if (!empty($image_folder)) {
+      $themedir = xarTplGetThemeDir();
+      // make sure we have a folder somewhere by this name
+      if (!file_exists('modules/smilies/xarimages/'.$image_folder) && !file_exists($themedir.'/modules/smilies/images/'.$image_folder)) {
+        // and if not, use the default folder
+        $image_folder = '';
+      }
+    }
 
     // Sort by icon
     foreach($smilies as $smilie) {
+        // Bug 5271:
+        if (!empty($image_folder)) {
+          // look for the smiley in the subfolder of the module and theme images folders
+          if (file_exists('modules/smilies/xarimages/'.$image_folder.'/'.$smilie['icon']) || file_exists($themedir.'/modules/smilies/images/'.$image_folder.'/'.$smilie['icon'])) {
+            // if we found one, use it
+            $smilie['icon']= $image_folder . '/' . $smilie['icon'];
+          }
+        }
         $data['icons'][$smilie['icon']][] = $smilie;
     }
 

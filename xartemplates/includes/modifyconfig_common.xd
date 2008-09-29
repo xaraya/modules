@@ -1,0 +1,17 @@
+<div class="xar-form-input-wrapper">
+    <label for="skiptags" class="xar-form-label help" title="#xarML('Specify HTML tags to ignore when transforming smilies')#">
+        <xar:mlstring>
+            Skip HTML tags:
+        </xar:mlstring>
+    </label>
+    <input type="text" name="skiptags" id="skiptags" value="#$skiptags#" size="30" maxlength="255" />
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="image_folder" class="xar-form-label help" title="#xarML('Specify the folder from which to serve smilies images')#">
+      <xar:mlstring>
+        Smilies Folder:
+      </xar:mlstring>
+    </label>
+    <input type="text" name="image_folder" id="image_folder" value="#$image_folder#" size="30" maxlength="100" />
+</div>
+

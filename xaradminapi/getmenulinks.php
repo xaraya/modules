@@ -37,7 +37,6 @@ function smilies_adminapi_getmenulinks()
                               'title' => xarML('View and Edit :)'),
                               'label' => xarML('View'));
     }
-    /*
     if (xarSecurityCheck('AdminSmilies', 0)) {
         $menulinks[] = Array('url'   => xarModURL('smilies',
                                                   'admin',
@@ -45,7 +44,6 @@ function smilies_adminapi_getmenulinks()
                               'title' => xarML('Modify the configuration for the smilies'),
                               'label' => xarML('Modify Config'));
     }
-    */
     if (empty($menulinks)){
         $menulinks = '';
     }

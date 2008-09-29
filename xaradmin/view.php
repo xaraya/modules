@@ -35,6 +35,18 @@ function smilies_admin_view()
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
+    
+    // Bug 5271:
+    $image_folder = xarModGetVar('smilies', 'image_folder');
+    if (!empty($image_folder)) {
+      $themedir = xarTplGetThemeDir();
+      // make sure we have a folder somewhere by this name
+      if (!file_exists('modules/smilies/xarimages/'.$image_folder) && !file_exists($themedir.'/modules/smilies/images/'.$image_folder)) {
+        // and if not, use the default folder
+        $image_folder = '';
+      }
+    }
+
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($links); $i++) {
         $link = $links[$i];
@@ -56,6 +68,14 @@ function smilies_admin_view()
             $links[$i]['deleteurl'] = '';
         }
         $links[$i]['deletetitle'] = xarML('Delete');
+        // Bug 5271:
+        if (!empty($image_folder)) {
+          // look for the smiley in the subfolder of the module and theme images folders
+          if (file_exists('modules/smilies/xarimages/'.$image_folder.'/'.$links[$i]['icon']) || file_exists($themedir.'/modules/smilies/images/'.$image_folder.'/'.$links[$i]['icon'])) {
+            // if we found one, use it
+            $links[$i]['icon'] = $image_folder . '/' . $links[$i]['icon'];
+          }
+        }
     }
     // Add the array of items to the template variables
     $data['items'] = $links;
