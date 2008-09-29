@@ -134,7 +134,7 @@
                     <xar:mlstring>Body</xar:mlstring>
                 </td>
                 <td class="xar-norm newtopicfield">
-                    <textarea name="tpost" id="tpost" rows="15" cols="35" tabindex="2">#xarVarPrepForDisplay($tpost)#</textarea>
+                    <textarea name="tpost" id="tpost" rows="15" cols="35" tabindex="2" onlick="storeCaret(this);">#xarVarPrepForDisplay($tpost)#</textarea>
                 </td>
             </tr>
 
@@ -171,6 +171,7 @@
                         <br />
                         <xar:mlstring>Smilies are</xar:mlstring>
                         <xar:if condition="xarModIsHooked('smilies', 'xarbb', $fid)">
+                            <xar:base-include-javascript module="smilies" filename="smilies.js" position="head" />
                             <a href="&xar-modurl-smilies-user-main;&amp;theme=print" onclick="xarbb_popUp(this.href,'elastic',400,400);return false;" target="newWin" style="color: green;">
                                 <xar:mlstring>On</xar:mlstring>
                             </a>

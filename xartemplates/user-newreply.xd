@@ -116,9 +116,9 @@
                 </td>
                 <td class="xar-norm newtopicfield">
                     <xar:if condition="isset($package['text'])">
-                        <textarea rows="15" style="width: 100%;" wrap="virtual" name="package[text]" id="package_text" tabindex="2">#xarVarPrepForDisplay($package.text)#</textarea>
+                        <textarea rows="15" style="width: 100%;" wrap="virtual" name="package[text]" id="package_text" tabindex="2" onlick="storeCaret(this);">#xarVarPrepForDisplay($package.text)#</textarea>
                     <xar:else />
-                        <textarea rows="15" style="width: 100%;" wrap="virtual" name="package[text]" id="package_text" tabindex="2"></textarea>
+                        <textarea rows="15" style="width: 100%;" wrap="virtual" name="package[text]" id="package_text" tabindex="2" onlick="storeCaret(this);"></textarea>
                     </xar:if>
                 </td>
             </tr>
@@ -156,6 +156,7 @@
                         <br />
                         <xar:mlstring>Smilies are</xar:mlstring>
                         <xar:if condition="xarModIsHooked('smilies', 'xarbb', $fid)">
+                            <xar:base-include-javascript module="smilies" filename="smilies.js" position="head" />
                             <a href="#xarModUrl('smilies', 'user', 'main', array('theme' =&gt; 'print'))#" onclick="xarbb_popUp(this.href,'elastic',400,400);return false;" target="newWin" style="color: green;">
                                 <xar:mlstring>On</xar:mlstring>
                             </a>
