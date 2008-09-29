@@ -1,24 +1,6 @@
 <?php
     function registration_user_newmember()
     {
-/*        if (!xarSecurityCheck('AddIce')) return;
-
-        $data['object'] = xarModApiFunc('dynamicdata','user','getobject', array('name' => xarModVars::get('registration', 'registrationobject')));
-        
-        // Get the data of this user/reseller
-        $data['object']->getItem(array('itemid' => xarSession::getVar('role_id')));
-        // Check for the promotion code
-        $data['promocode'] = $data['object']->properties['promo']->getValue();
-        if (empty($data['promocode']))
-            return xarTplModule('ice','user','errors',array('layout' => 'no_promocode'));
-        
-        $data['object'] = xarModApiFunc('dynamicdata','user','getobject', array('name' => xarModVars::get('registration', 'registrationobject')));
-        $data['properties'] = $data['object']->getProperties();
-        $data['tplmodule'] = 'ice';
-        $data['authid'] = xarSecGenAuthKey();
-        return $data;
-*/
-
         sys::import('modules.dynamicdata.class.objects.master');
 
         xarTplSetPageTitle(xarML('New Account'));
@@ -60,6 +42,7 @@
                 $data = xarTplModule('registration','user', 'newmemberform',
                                array('authid'     => $authid,
                                      'object'    => $object,
+                                     'properties'    => $object->getProperties(),
                                      'hookoutput' => $hookoutput));
                 break;
 
@@ -220,6 +203,7 @@
 //                if (!empty($data['password'])) xarSession::setVars('registration.password','');
                 
                 $data['object'] = $object;
+                $data['properties'] = $object->getProperties();
                 $data = xarTplModule('registration','user', 'newmembersignoff',$data);
                 break;
         }
