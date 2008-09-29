@@ -122,7 +122,8 @@
                 // everything seems OK -> go on to the next step
                 $data = xarTplModule('registration','user', 'confirmnewmember',
                                      array('object'      => $object,
-                                           'properties'    => $object->getProperties(),
+                                           'properties'  => $object->getProperties(),
+                                           'password'    => xarSession:: getVar('registration.password'),
                                            'authid'      => $authid,
                                            'hookoutput'  => $hookoutput));
 
