@@ -1,0 +1,30 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:set name="adminemail">xarModVars::get('mail','adminmail')</xar:set>
+    <div class="xar-mod-head">
+        <span class="xar-mod-title"><xar:mlstring>Create User Account</xar:mlstring></span>
+    </div>
+
+    <div class="xar-mod-body">
+        <h2>Your Registration Data</h2>
+        <p>
+            A user has been created with the following registration data:
+        </p>
+        <xar:data-display object="$object" />
+        <div style="clear: both">&#160;</div>
+        <h2>Instructions Sent</h2>
+        <p>
+            The terms of uasge of this web site have been sent to the email you provided. They are reproduced below.
+        </p>
+        <h4>
+            Please note that logging in with the details reproduced above constitutes acceptance of the terms.
+        </h4>
+        <p>
+            <xar:ml>
+                <xar:mlstring>If you have a question, or didn't receive your instructions please contact the <a href="mailto:#(1)">website administrator</a>.</xar:mlstring>
+                <xar:mlvar>#$adminemail#</xar:mlvar>
+            </xar:ml>
+        </p>
+        <xar:module module="registration" func="terms" />
+    </div>
+</xar:template>

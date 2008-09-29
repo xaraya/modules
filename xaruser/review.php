@@ -20,7 +20,7 @@ function registration_user_review()
                              array('where'    => $where,
                                    ));
                                    
-    // Check if thsi is allowed
+    // Check if this is allowed
     if (!xarUserIsLoggedIn() || !xarModVars::get('registration','allowreview') || count($responses) == 0) {
         xarResponseRedirect(xarModURL('roles', 'user', 'account'));
         return true;

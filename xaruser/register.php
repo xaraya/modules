@@ -83,7 +83,7 @@ function registration_user_register()
 
         case 'registerformcycle':
             $fieldvalues = xarSessionGetVar('Registration.UserInfo');
-        case 'registerform': //Make this default now login is handled by authsystem
+        case 'registerform': 
         default:
 
             $object = DataObjectMaster::getObject(array('name' => $regobjectname));
@@ -242,7 +242,6 @@ function registration_user_register()
 
             // Create a password and add it if the user can't create one himself
             if (!xarModVars::get('registration', 'chooseownpassword')){
-                $fielddvalues = array();
                 $pass = xarModAPIFunc('roles', 'user', 'makepass');
                 $fieldvalues['password'] = $pass;
                 $object->setFieldValues($fieldvalues);

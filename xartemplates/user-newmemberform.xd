@@ -1,0 +1,47 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Create User Account</xar:mlstring></span>
+</div>
+
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Registration</xar:mlstring></h2>
+    <xar:if condition="$object:upload">
+        <xar:set name="enc_type">'multipart/form-data'</xar:set>
+    <xar:else/>
+        <xar:set name="enc_type">'application/x-www-form-urlencoded'</xar:set>
+    </xar:if>
+
+    <form method="post" id="post" action="&xar-modurl-registration-user-newmember;" enctype="#$enc_type#">
+        <fieldset>
+        <legend><xar:mlstring>Registration Requirements</xar:mlstring></legend>
+
+            <xar:data-form object="$object" />
+        </fieldset>
+        <xar:if condition="!empty($hookoutput)">
+            <fieldset>
+                <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                <xar:foreach in="$hookoutput" key="$hookmodule">
+                    <!--
+                    You can display individual hooks if you want using xar:if statements
+
+                    <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
+                        #$hookoutput['categories']#
+                    </xar:if>
+
+                    or display them all with one command as follows
+                    -->
+                    #$hookoutput[$hookmodule]#
+                </xar:foreach>
+            </fieldset>
+        </xar:if>
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="submit" value="#xarML('Submit')#" />
+            </div>
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="phase" id="phase" value="checkregistration" />
+        </fieldset>
+    </form>
+</div>
+</xar:template>
