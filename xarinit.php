@@ -413,7 +413,9 @@ function html_upgrade($oldversion)
 
         case '1.4':
         case '1.4.0':
-            // Code to upgrade from version 1.3 goes here
+            // BBCode linebreak handling
+        case '1.4.1':
+            // Code to upgrade from version 1.4.1 goes here
             break;
         default:
             // Couldn't find a previous version to upgrade

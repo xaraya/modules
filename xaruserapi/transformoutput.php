@@ -33,7 +33,45 @@ function html_userapi_transformoutput($args)
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
-
+    // When called via hooks, modname will be empty, but we get it from the
+    // extrainfo or from the current module
+    if (empty($modname) || !is_string($modname)) {
+        if (isset($extrainfo) && is_array($extrainfo) &&
+            isset($extrainfo['module']) && is_string($extrainfo['module'])) {
+            $modname = $extrainfo['module'];
+        } else {
+            $modname = xarModGetName();
+        }
+    }
+    if (!isset($itemtype) || !is_numeric($itemtype)) {
+         if (isset($extrainfo) && is_array($extrainfo) &&
+             isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
+             $itemtype = $extrainfo['itemtype'];
+         } else {
+             $itemtype = 0;
+         }
+    }
+    $dobreak = xarModGetVar('html', 'dobreak');
+    $dotransform = xarModGetVar('html', 'dolinebreak');
+    if ($dobreak || $dotransform) {
+      // look for BBCode transform flag
+      if (xarVarIsCached('Hooks.bbcode', 'nolinebreaks')) {
+        // cached var should contain an array of fields to clean, or empty to clean none
+        $nolinebreaks = xarVarGetCached('Hooks.bbcode', 'nolinebreaks');
+      // if we didn't find the flag, hook order could have been changed, or we may be using an old ver of BBCode
+      // so we see if BBCode's hooked to this module/itemtype AND BBCode is handling linebreaks
+      } elseif (xarModIsHooked('bbcode', $modname, $itemtype) && xarModGetVar('bbcode', 'dolinebreak')) {
+        // if it is, we take a best guess at fields to clean, those being textarea and code
+        $nolinebreaks = 'code;textarea';
+      // otherwise we carry on as normal :)
+      } else {
+        $nolinebreaks = '';
+      }
+    } else {
+      $nolinebreaks = '';
+    }
+    // now we need to make this available to the transform api
+    xarVarSetCached('Hooks.html', 'nolinebreaks', $nolinebreaks);
     if (is_array($extrainfo)) {
         if (isset($extrainfo['transform']) && is_array($extrainfo['transform'])) {
             foreach ($extrainfo['transform'] as $key) {
@@ -136,6 +174,21 @@ function html_userapitransformoutput($text)
 
         // Remove paragraphs and breaks from within any <pre> tags.
         $text = preg_replace('!(<pre.{0,}?>)(.{0,}?)</pre>!ise', " stripslashes('$1') .  stripslashes(html_userapitransformoutput_clean_pre('$2'))  . '</pre>' ", $text);
+
+        // here's where we handle the linebreaks from BBCode
+        $nolinebreaks = xarVarGetCached('Hooks.html', 'nolinebreaks');
+        if (!empty($nolinebreaks)) {
+          if (strpos($nolinebreaks, ';') !== false) {
+            $cleanup = explode(';', $nolinebreaks);
+          } else {
+            $cleanup = array($nolinebreaks);
+          }
+          if (!empty($cleanup)) {
+            foreach ($cleanup as $skiptag) {
+                $text = preg_replace('!(<'.$skiptag.'.{0,}?>)(.{0,}?)</'.$skiptag.'>!ise', " stripslashes('$1') .  stripslashes(html_userapitransformoutput_clean_pre('$2'))  . '</{$skiptag}>' ", $text);
+            }
+          }
+        }
 
         // Since this is HTML now, it can be safely trimmed.
         $text = trim($text);
