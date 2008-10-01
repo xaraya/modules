@@ -96,6 +96,9 @@ function categories_userapi_groupcount($args)
         // be the item ID.
         if ($groupby == 'itemcategory') $itemid = array_shift($fields);
 
+        // Collapse any duplicate categories in the 'fields' result, e.g. '123+123' := '123'.
+        $fields = array_unique($fields);
+
         // Use multi-level array for multi-category grouping?
         $id = join('+', $fields);
 

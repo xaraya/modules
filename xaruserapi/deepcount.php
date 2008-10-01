@@ -36,6 +36,12 @@ function categories_userapi_deepcount($args)
     // Throw back errors as an empty list.
     if (empty($catcount)) {return $count;}
 
+    // Throw away all the muliple-category counts, just leaving the simple categories.
+    // e.g. we want to count '123' and '456' separately, and not count the combined '123+456'.
+    foreach($catcount as $catcount_key => $catcount_value) {
+        if (!is_numeric($catcount_key)) unset($catcount[$catcount_key]);
+    }
+
     $allcounts = $catcount;
 
     // Array of category IDs.
@@ -47,6 +53,7 @@ function categories_userapi_deepcount($args)
     // For each non-zero category count, traverse the ancestors and add on the counts.
     $allcounts[0] = 0;
     foreach ($catcount as $cat => $count) {
+        $cat = (int)$cat;
         // Keep track of categories visited to avoid infinite loops.
         $done = array();
         $nextcat = $ancestors[$cat]['parent'];
