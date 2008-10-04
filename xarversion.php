@@ -27,5 +27,10 @@ $modversion['admin']        = 1;
 $modversion['user']         = 1;
 $modversion['class']        = 'Admin';
 $modversion['category']     = 'Content';
-$modversion['dependency']   = array(14, 30031);
+$modversion['dependency']   = array(14, 30031, 30049);
+$modversion['dependencyinfo'] = array(
+                                      30031 => 'simpleadmin',
+                                      30049  => 'query',
+                                      );
+
 ?>
