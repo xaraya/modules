@@ -19,16 +19,16 @@ function messages_userapi_get_one( $args )
 
     if(!isset($id) || empty($id)) {
         $msg = xarML('Missing or Invalid argument [#(1)] for #(2) function #(3) in module #(4)',
-                                 'id','userapi', 'get_one', 'comments');
+                                 'id','userapi', 'get_one', 'messages');
         throw new Exception($msg);
     }
 
     $dbconn = xarDB::getConn();
     $xartable = xarDB::getTables();
     $prefix = xarDB::getPrefix();
-    $tableName = $prefix."_comments"; 
-    // initialize the commentlist array
-    $commentlist = array();
+    $tableName = $prefix."_messages"; 
+    // initialize the messagelist array
+    $messagelist = array();
 
     // if the depth is zero then we
     // only want one comment
@@ -38,20 +38,19 @@ function messages_userapi_get_one( $args )
     }
     $sql = "SELECT  title AS title,
                     date AS datetime,
-                    hostname AS hostname,
                     text AS text,
                     author AS author,
-                    author AS role_id,
+                    author AS author_id,
+                    recipient AS recipient,
+                    recipient AS recipient_id,
                     id AS id,
                     pid AS pid,
-                    status AS status,
+                    author_status AS author_status,
+                    recipient_status AS recipient_status,
                     left_id AS left_id,
                     right_id AS right_id,
-                    anonpost AS postanon,
-                    modid AS modid,
-                    itemtype AS itemtype,
-                    objectid AS objectid
-              FROM  $xartable[comments]
+                    anonpost AS postanon
+              FROM  $xartable[messages]
               WHERE  id=$id";
     if ($folder=='drafts') {
         //$sql .= " AND  status="._COM_STATUS_OFF;
@@ -84,15 +83,16 @@ function messages_userapi_get_one( $args )
         // $row['date'] = xarLocaleFormatDate("%B %d, %Y %I:%M %p",$row['datetime']);
         $row['date'] = $row['datetime'];
         $row['author'] = xarUserGetVar('name',$row['author']);
+        $row['recipient'] = xarUserGetVar('name',$row['recipient']);
         comments_renderer_wrap_words($row['text'], 80);
-        $commentlist[] = $row;
+        $messagelist[] = $row;
         $result->MoveNext();
     }
 
     $result->Close();
 
-    if (!comments_renderer_array_markdepths_bypid($commentlist)) {
-        $msg = xarML('Unable to add depth field to comments!');
+    if (!comments_renderer_array_markdepths_bypid($messagelist)) {
+        $msg = xarML('Unable to add depth field to messages!');
         throw new Exception($msg);
         // FIXME: <rabbitt> this stuff should really be moved out of the comments
         //        module into a "rendering" module of some sort anyway -- or (god forbid) a widget.

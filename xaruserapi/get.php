@@ -27,21 +27,24 @@ function messages_userapi_get( $args )
         $status = 2;
     }
 
-    $list1 = xarModAPIFunc('comments',
+    $list1 = xarModAPIFunc('messages',
                                    'user',
                                    'get_multiple',
-                                    array('modid'       => xarMod::getID('messages'),
-                                          'objectid'    => xarUserGetVar('id'),
+                                    array('author'       => xarUserGetVar('id'),
                                           'status'      => 2));
     $list = xarModAPIFunc('messages',
                            'user',
                            'get_one',
                             array('id' => $id));
-    $read_messages = xarModUserVars::get('messages','read_messages');
-    if (!empty($read_messages)) {
-        $read_messages = unserialize($read_messages);
-    } else {
-        $read_messages = array();
+    $read_list = xarModAPIFunc('messages',
+                                    'user',
+                                    'get_multiple',
+                                    array('recipient' => xarUserGetVar('id'),
+                                            'status' => 1
+                                    ));
+    $read_messages = array();
+    foreach ($read_list as $k => $v) {
+        $read_messages[] = $v['id'];
     }
 
     $messages = array();
@@ -49,15 +52,16 @@ function messages_userapi_get( $args )
     foreach ($list as $key => $node) {
         $message['id']            = $node['id'];
         $message['sender']        = $node['author'];
-        $message['sender_id']     = $node['role_id'];
-        $message['recipient']     = xarUserGetVar('name',$node['objectid']);
-        $message['recipient_id']  = $node['objectid'];
-        $message['posting_host']  = $node['hostname'];
+        $message['sender_id']     = $node['author_id'];
+        $message['recipient']     = $node['recipient'];
+        $message['recipient_id']  = $node['recipient_id'];
         $message['raw_date']      = $node['datetime'];
         $message['date']          = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', $node['datetime']);
         $message['subject']       = $node['title'];
         $message['postanon']      = $node['postanon'];  
         $message['body']          = $node['text'];
+        $message['author_status'] = $node['author_status'];
+        $message['recipient_status'] = $node['recipient_status'];
         $message['draft']         = ($node['status'] == 1 ? true : false);
         if (!in_array($message['id'], $read_messages)) {
             $message['status_image'] = xarTplGetImage('unread.gif');
@@ -72,7 +76,7 @@ function messages_userapi_get( $args )
         $message['status_alt']   = xarML('draft');
         */
         $message['user_link']     = xarModURL('roles','user','display',
-                                               array('id' => $node['role_id']));
+                                               array('id' => $node['author_id']));
         $message['view_link']     = xarModURL('messages','user', 'display',
                                                array('id'    => $node['id']));
         $message['reply_link']    = xarModURL('messages','user','new',

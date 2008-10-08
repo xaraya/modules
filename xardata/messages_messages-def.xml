@@ -16,7 +16,7 @@
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
-      <source>xar_comments.id</source>
+      <source>xar_messages.id</source>
       <status>65</status>
       <seq>1</seq>
       <configuration></configuration>
@@ -26,7 +26,7 @@
       <label>To</label>
       <type>dropdown</type>
       <defaultvalue></defaultvalue>
-      <source>xar_comments.objectid</source>
+      <source>xar_messages.recipient</source>
       <status>33</status>
       <seq>2</seq>
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:50:"xarModAPIFunc('messages','user','get_sendtousers')";}</configuration>
@@ -36,7 +36,7 @@
       <label>From</label>
       <type>username</type>
       <defaultvalue></defaultvalue>
-      <source>xar_comments.author</source>
+      <source>xar_messages.author</source>
       <status>33</status>
       <seq>3</seq>
       <configuration>a:6:{s:16:"display_linkrule";s:1:"0";s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:20:"validation_existrule";s:1:"0";s:25:"initialization_store_type";s:2:"id";}</configuration>
@@ -46,7 +46,7 @@
       <label>Subject</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
-      <source>xar_comments.title</source>
+      <source>xar_messages.title</source>
       <status>33</status>
       <seq>4</seq>
       <configuration>a:4:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"5";}</configuration>
@@ -56,49 +56,19 @@
       <label>Body</label>
       <type>textarea_medium</type>
       <defaultvalue></defaultvalue>
-      <source>xar_comments.text</source>
+      <source>xar_messages.text</source>
       <status>34</status>
       <seq>5</seq>
       <configuration>a:3:{s:12:"display_rows";s:1:"8";s:15:"display_columns";s:2:"50";s:14:"display_layout";s:7:"default";}</configuration>
-    </property>
-    <property name="module_id">
-      <id>1746</id>
-      <label>Module</label>
-      <type>module</type>
-      <defaultvalue>xarMod::getID('messages')</defaultvalue>
-      <source>xar_comments.modid</source>
-      <status>35</status>
-      <seq>6</seq>
-      <configuration></configuration>
-    </property>
-    <property name="itemtype">
-      <id>1747</id>
-      <label>Itemtype</label>
-      <type>integerbox</type>
-      <defaultvalue>0</defaultvalue>
-      <source>xar_comments.itemtype</source>
-      <status>35</status>
-      <seq>7</seq>
-      <configuration></configuration>
     </property>
     <property name="pid">
       <id>1748</id>
       <label>Parent ID</label>
       <type>integerbox</type>
       <defaultvalue>0</defaultvalue>
-      <source>xar_comments.pid</source>
+      <source>xar_messages.pid</source>
       <status>35</status>
       <seq>8</seq>
-      <configuration></configuration>
-    </property>
-    <property name="host">
-      <id>1749</id>
-      <label>Host</label>
-      <type>textbox</type>
-      <defaultvalue>xarSession::getVar('REMOTE_ADDR')</defaultvalue>
-      <source>xar_comments.hostname</source>
-      <status>35</status>
-      <seq>9</seq>
       <configuration></configuration>
     </property>
     <property name="left_id">
@@ -106,7 +76,7 @@
       <label>Left ID</label>
       <type>integerbox</type>
       <defaultvalue>1</defaultvalue>
-      <source>xar_comments.left_id</source>
+      <source>xar_messages.left_id</source>
       <status>67</status>
       <seq>10</seq>
       <configuration></configuration>
@@ -116,7 +86,7 @@
       <label>Right ID</label>
       <type>integerbox</type>
       <defaultvalue>1</defaultvalue>
-      <source>xar_comments.right_id</source>
+      <source>xar_messages.right_id</source>
       <status>67</status>
       <seq>11</seq>
       <configuration></configuration>
@@ -126,19 +96,29 @@
       <label>Post Anonymously</label>
       <type>checkbox</type>
       <defaultvalue>1</defaultvalue>
-      <source>xar_comments.anonpost</source>
+      <source>xar_messages.anonpost</source>
       <status>34</status>
       <seq>12</seq>
       <configuration></configuration>
     </property>
     <property name="deleted">
       <id>1753</id>
-      <label>Deleted</label>
+      <label>Author Deleted</label>
       <type>dropdown</type>
       <defaultvalue>3</defaultvalue>
-      <source>xar_comments.delete_state</source>
+      <source>xar_messages.author_delete</source>
       <status>34</status>
       <seq>13</seq>
+      <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:62:"0,Deleted;1,Visible to To list;2,Visble to From list;3,Active;";}</configuration>
+    </property>
+    <property name="deleted">
+      <id>1753</id>
+      <label>Recipient Deleted</label>
+      <type>dropdown</type>
+      <defaultvalue>3</defaultvalue>
+      <source>xar_messages.recipient_delete</source>
+      <status>34</status>
+      <seq>14</seq>
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:62:"0,Deleted;1,Visible to To list;2,Visble to From list;3,Active;";}</configuration>
     </property>
     <property name="time">
@@ -146,19 +126,29 @@
       <label>Time</label>
       <type>formatteddatetime</type>
       <defaultvalue>time()</defaultvalue>
-      <source>xar_comments.date</source>
+      <source>xar_messages.date</source>
       <status>33</status>
-      <seq>14</seq>
+      <seq>15</seq>
       <configuration></configuration>
     </property>
-    <property name="state">
+    <property name="author_status">
       <id>1755</id>
-      <label>State</label>
+      <label>Author Status</label>
       <type>dropdown</type>
       <defaultvalue>3</defaultvalue>
-      <source>xar_comments.status</source>
+      <source>xar_messages.author_status</source>
       <status>34</status>
-      <seq>15</seq>
+      <seq>16</seq>
+      <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:38:"0,Deleted;1,Inactive;2,Draft;3,Active;";}</configuration>
+    </property>
+    <property name="recipient_status">
+      <id>1755</id>
+      <label>Recipient Status</label>
+      <type>dropdown</type>
+      <defaultvalue>3</defaultvalue>
+      <source>xar_messages.recipient_status</source>
+      <status>34</status>
+      <seq>16</seq>
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:38:"0,Deleted;1,Inactive;2,Draft;3,Active;";}</configuration>
     </property>
   </properties>

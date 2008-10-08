@@ -59,12 +59,10 @@ function messages_userapi_update( $args )
         return;
     }
 
-    $id = xarModAPIFunc('comments',
+    $id = xarModAPIFunc('messages',
                          'user',
                          'modify',
                           array('id'          => $id,
-                                'modid'       => xarMod::getID('messages'),
-                                'objectid'    => $recipient,
                                 'title'       => $subject,
                                 'date'        => time(),
                                 'text'        => $body,

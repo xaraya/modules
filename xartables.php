@@ -13,7 +13,16 @@
  */
 function messages_xartables()
 {
-    // no tables to worry about here :)
-    return array();
+    // Initialise table array
+    $xartable = array();
+
+    // Name for template database entities
+    $messages_table     = xarDB::getPrefix() . '_messages';
+
+    // Table name
+    $xartable['messages']   = $messages_table;
+
+    // Return table information
+    return $xartable;
 }
 ?>

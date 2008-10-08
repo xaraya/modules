@@ -6,10 +6,10 @@
 <xar:set name="request">xarRequestGetInfo()</xar:set>
 <xar:set name="activetab">$request[2]</xar:set>
 <xar:set name="activetype">$request[1]</xar:set>
-<xar:set name="unread">xarModAPIFunc('messages','user','count_messages',array('class' => 'unread'))</xar:set>
-<xar:set name="sent">xarModAPIFunc('messages','user','count_messages',array('class' => 'sent'))</xar:set>
-<xar:set name="total">xarModAPIFunc('messages','user','count_messages',array('class' => 'total'))</xar:set>
-<xar:set name="drafts">xarModAPIFunc('messages','user','count_messages',array('class' => 'drafts'))</xar:set>
+<xar:set name="unread">xarModAPIFunc('messages','user','get_count',array('recipient' => xarUserGetVar('id'),'unread'=>true))</xar:set>
+<xar:set name="sent">xarModAPIFunc('messages','user','get_count',array('author' => xarUserGetVar('id')))</xar:set>
+<xar:set name="total">xarModAPIFunc('messages','user','get_count',array('recipient' => xarUserGetVar('id')))</xar:set>
+<xar:set name="drafts">xarModAPIFunc('messages','user','get_count',array('author' => xarUserGetVar('id'), 'drafts' => true))</xar:set>
 
 <div>
   <dl class="xar-tabs">

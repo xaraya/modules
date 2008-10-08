@@ -26,11 +26,10 @@ function messages_userapi_getall( $args )
     switch($folder){
     
         case 'inbox':
-            $list = xarModAPIFunc('comments',
+            $list = xarModAPIFunc('messages',
                                    'user',
                                    'get_multiple',
-                                    array('modid'       => xarMod::getID('messages'),
-                                          'objectid'    => xarUserGetVar('id'),
+                                    array('recipient'      => xarUserGetVar('id'),
                                           'status'      => MESSAGES_STATUS_ACTIVE,
                                           'delete'      => MESSAGES_DELETE_STATUS_VISIBLE_TO,
                                           'orderby'     => 'id DESC',
@@ -38,11 +37,10 @@ function messages_userapi_getall( $args )
                                           'numitems'    => $numitems));
             break;
         case 'sent':
-            $list = xarModAPIFunc('comments',
+            $list = xarModAPIFunc('messages',
                                    'user',
                                    'get_multiple',
-                                    array('modid'       => xarMod::getID('messages'),
-                                          'author'      => xarUserGetVar('id'),
+                                    array('author'      => xarUserGetVar('id'),
                                           'status'      => MESSAGES_STATUS_ACTIVE,
                                           'delete'      => MESSAGES_DELETE_STATUS_VISIBLE_FROM,
                                           'orderby'     => 'id DESC',
@@ -50,11 +48,10 @@ function messages_userapi_getall( $args )
                                           'numitems'    => $numitems));
             break;
         case 'drafts':
-            $list = xarModAPIFunc('comments',
+            $list = xarModAPIFunc('messages',
                                    'user',
                                    'get_multiple',
-                                    array('modid'       => xarMod::getID('messages'),
-                                          'author'      => xarUserGetVar('id'),
+                                    array('author'      => xarUserGetVar('id'),
                                           'status'      => MESSAGES_STATUS_DRAFT,
                                           'delete'      => MESSAGES_DELETE_STATUS_VISIBLE_FROM,
                                           'orderby'     => 'id DESC',

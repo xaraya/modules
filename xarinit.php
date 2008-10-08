@@ -18,6 +18,44 @@
  */
 function messages_init()
 {
+    //Load Table Maintenance API
+    sys::import('xaraya.tableddl');
+
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
+    //Psspl:Added the code for anonpost_to field.
+    $fields = array(
+        'id'                     => array('type'=> 'integer', 'unsigned'=>true, 'null'=>false, 'increment'=>true, 'primary_key'=>true),     
+        'pid'                    => array('type'=>'integer', 'unsigned'=>true, 'null'=>FALSE),
+        'date'                   => array('type'=>'integer', 'unsigned'=>true, 'null'=>FALSE),
+        'author'                 => array('type'=>'integer', 'unsigned'=>true, 'null'=>FALSE, 'size'=>'medium', 'default'=>5),
+        'recipient'              => array('type'=>'integer', 'unsigned'=>true, 'null'=>FALSE, 'size'=>'medium', 'default'=>5),
+        'left_id'                => array('type'=>'integer', 'unsigned'=>true, 'null'=>FALSE),
+        'right_id'               => array('type'=>'integer', 'unsigned'=>true, 'null'=>FALSE),
+        'author_status'          => array('type'=>'integer', 'null'=>FALSE, 'size'=>'tiny'),
+        'recipient_status'       => array('type'=>'integer', 'null'=>FALSE, 'size'=>'tiny'),
+        'author_delete'          => array('type'=>'integer', 'null'=>FALSE, 'size'=>'tiny', 'default'=>0),
+        'recipient_delete'       => array('type'=>'integer', 'null'=>FALSE, 'size'=>'tiny', 'default'=>0),
+        'anonpost'               => array('type'=>'integer', 'unsigned'=>true, 'null'=>TRUE, 'size'=>'tiny', 'default'=>0),
+        'title'                  => array('type'=>'varchar', 'null'=>FALSE, 'size'=>100),
+        'text'                   => array('type'=>'text', 'null'=>TRUE, 'size'=>'medium')
+    );
+
+    $query = xarDBCreateTable($xartable['messages'], $fields);
+
+    $result =& $dbconn->Execute($query);
+    if (!$result)
+        return;
+
+    $index = array('name'      => 'i_' . xarDB::getPrefix() . '_messages_left',
+                   'fields'    => array('left_id'),
+                   'unique'    => FALSE);
+
+    $query = xarDBCreateIndex($xartable['messages'],$index);
+
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
     xarModVars::set('messages', 'buddylist', 0);
     xarModVars::set('messages', 'itemsperpage', 10);
     xarModVars::set('messages', 'limitsaved', 12);
@@ -186,7 +224,7 @@ function messages_delete()
                        array('modName'  => 'messages',
                              'blockType'=> 'newmessages'))) return;
 
-    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'listings'));
+    return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => 'messages'));
 }
 
 ?>
