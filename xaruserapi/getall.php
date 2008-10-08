@@ -94,7 +94,11 @@ function sitecontact_userapi_getall($args)
     if (!empty($scrid)) {
         $result =& $dbconn->Execute($query,$bindvars);
     } else {
-        $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1,$bindvars );
+        if ($numitems > 0) {
+            $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1,$bindvars );
+        } else {
+            $result =& $dbconn->Execute($query, $bindvars );        
+        }
     }
 
     if ($result->EOF) {
