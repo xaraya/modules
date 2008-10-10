@@ -1,0 +1,99 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:set name="postanon">
+        $properties['postanon']->value
+    </xar:set>
+    <xar:set name="recipient">
+        $properties['to']->value
+    </xar:set>
+    <xar:if condition="empty($recipient)">
+        <xar:set name="is_sendtouser">
+            1
+        </xar:set>
+    <xar:else />
+        <xar:set name="is_sendtouser">
+            xarModAPIFunc('messages','user','is_sendtouser', 
+                array(
+                    'sendtouser' => $recipient,
+                )
+            )
+        </xar:set>
+    </xar:if>
+    <div class="xar-form-input-wrapper">
+        <xar:var name="title">The author of the message</xar:var>
+        <xar:data-label property="$properties['from']" title="$title" for="id" />
+        #xarUserGetVar('name')#
+        <xar:data-input property="$properties['from']" hidden="$hidden" />
+
+        <!--Psspl:Modified the code for anonymous message-->
+        <xar:if condition="$action ne 'reply' OR ($action ne 'modify' AND !isset($previousanon)) AND $is_sendtouser">
+            &#160;<xar:data-input property="$properties['postanon']" />
+            Post anonymously
+        </xar:if>
+    </div>
+
+    <div class="xar-form-input-wrapper">
+        <xar:var name="title">To whom the message will be sent</xar:var>
+        <xar:data-label property="$properties['to']" title="$title" for="id" />
+        <xar:if condition="$action eq 'reply'" >
+            <xar:if condition="isset($previousanon) AND $previousanon eq 0 AND $is_sendtouser">
+                #xarUserGetVar('name',$recipient)#      
+            <xar:else/>
+                <xar:mlstring>Anonymous</xar:mlstring>
+            </xar:if>
+            <xar:data-input property="$properties['to']" hidden="hidden"/>
+        <xar:elseif condition="$action eq 'modify'" />
+            <xar:if condition="isset($previousanon) AND $previousanon">
+                <xar:mlstring>Anonymous</xar:mlstring>
+                <xar:data-input property="$properties['to']" hidden="hidden"/>
+            <xar:elseif condition="$is_sendtouser" />
+                <xar:data-input property="$properties['to']" />
+            <xar:else/>
+                <xar:mlstring>Anonymous</xar:mlstring>
+                <xar:data-input property="$properties['to']" hidden="hidden"/>
+            </xar:if>   
+        <xar:else/>
+            <xar:set name="users">
+                $properties['to']->getOptions()
+            </xar:set>
+            <xar:if condition="empty($users)">
+                No recipients available
+                <xar:data-input property="$properties['to']" hidden="hidden"/>
+            <xar:else />
+                <xar:data-input property="$properties['to']" />
+            </xar:if>
+        </xar:if>
+    </div>
+
+    <div class="xar-form-input-wrapper">
+        <xar:var name="title">Message subject</xar:var>
+        <xar:data-label property="$properties['subject']" title="$title" for="id" />
+        <xar:data-input property="$properties['subject']" tabindex="1" />
+    </div>
+
+    <div class="xar-form-input-wrapper">
+        <xar:var name="title">Message text</xar:var>
+        <xar:data-label property="$properties['body']" title="$title" for="id" />
+        <xar:data-input property="$properties['body']" tabindex="1" />
+    </div>
+
+    <xar:if condition="xarModVars::get('messages','drafts') eq 1">
+        <div class="xar-form-input-wrapper-after">
+            <xar:set name="is_draft">
+                $properties['state']->value == MESSAGES_STATUS_DRAFT
+            </xar:set>
+            <xar:data-input type="checkbox" name="is_draft" value="$is_draft" />&#160;
+            Save as draft
+        </div>
+    </xar:if>
+
+    <xar:data-input property="$properties['id']" hidden="hidden"/>
+    <xar:data-input property="$properties['time']" hidden="hidden"/>
+    <xar:data-input property="$properties['deleted']" hidden="hidden"/>
+    <xar:data-input property="$properties['pid']" hidden="hidden"/>
+    <xar:data-input property="$properties['itemtype']" hidden="hidden"/>
+    <xar:data-input property="$properties['host']" hidden="hidden"/>
+    <xar:data-input property="$properties['left_id']" hidden="hidden"/>
+    <xar:data-input property="$properties['right_id']" hidden="hidden"/>
+    <xar:data-input property="$properties['module_id']" hidden="hidden"/>
+    <xar:data-input property="$properties['state']" hidden="hidden"/>
+</xar:template>
