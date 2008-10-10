@@ -23,6 +23,13 @@ function messages_init()
 
     $dbconn = xarDB::getConn();
     $xartable = xarDB::getTables();
+
+    $sql = "DROP TABLE IF EXISTS " . $xartable['messages'];
+
+    $result =& $dbconn->Execute($sql);
+    if (!$result)
+        return;
+
     //Psspl:Added the code for anonpost_to field.
     $fields = array(
         'id'                     => array('type'=> 'integer', 'unsigned'=>true, 'null'=>false, 'increment'=>true, 'primary_key'=>true),     
