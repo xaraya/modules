@@ -34,10 +34,10 @@ function messages_init()
         'right_id'               => array('type'=>'integer', 'unsigned'=>true, 'null'=>FALSE),
         'author_status'          => array('type'=>'integer', 'null'=>FALSE, 'size'=>'tiny'),
         'recipient_status'       => array('type'=>'integer', 'null'=>FALSE, 'size'=>'tiny'),
-        'author_delete'          => array('type'=>'integer', 'null'=>FALSE, 'size'=>'tiny', 'default'=>0),
-        'recipient_delete'       => array('type'=>'integer', 'null'=>FALSE, 'size'=>'tiny', 'default'=>0),
-        'anonpost'               => array('type'=>'integer', 'unsigned'=>true, 'null'=>TRUE, 'size'=>'tiny', 'default'=>0),
-        'title'                  => array('type'=>'varchar', 'null'=>FALSE, 'size'=>100),
+        'author_delete'          => array('type'=>'integer', 'null'=>FALSE, 'size'=>'tiny', 'default'=>'0'),
+        'recipient_delete'       => array('type'=>'integer', 'null'=>FALSE, 'size'=>'tiny', 'default'=>'0'),
+        'anonpost'               => array('type'=>'integer', 'unsigned'=>true, 'null'=>TRUE, 'size'=>'tiny', 'default'=>'0'),
+        'title'                  => array('type'=>'varchar', 'null'=>FALSE, 'size'=>'100'),
         'text'                   => array('type'=>'text', 'null'=>TRUE, 'size'=>'medium')
     );
 
@@ -206,14 +206,6 @@ function messages_upgrade($oldversion)
  */
 function messages_delete()
 {
-
-    /*
-     * REMOVE all messages (which are stored via the comments api)
-     */
-    xarModAPIFunc('comments',
-                  'admin',
-                  'delete_module_nodes',
-                   array('modid' => xarMod::getID('messages')));
     /*
      * UNREGISTER BLOCKS
      */

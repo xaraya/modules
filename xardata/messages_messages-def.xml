@@ -101,7 +101,7 @@
       <seq>12</seq>
       <configuration></configuration>
     </property>
-    <property name="deleted">
+    <property name="author_delete">
       <id>1753</id>
       <label>Author Deleted</label>
       <type>dropdown</type>
@@ -111,7 +111,7 @@
       <seq>13</seq>
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:62:"0,Deleted;1,Visible to To list;2,Visble to From list;3,Active;";}</configuration>
     </property>
-    <property name="deleted">
+    <property name="recipient_delete">
       <id>1753</id>
       <label>Recipient Deleted</label>
       <type>dropdown</type>
