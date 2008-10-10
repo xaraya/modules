@@ -31,9 +31,13 @@ function messages_user_view( )
     
     $data = array_merge($data,$link_data);
        
-    $read_messages = xarModUserVars::get('messages','read_messages');
+    $read_messages = xarModAPIFunc('messages','user','get_multiple', array('recipient' => xarUserGetVar('id'), 'status' => 2));
     if (!empty($read_messages)) {
-        $read_messages = unserialize($read_messages);
+        $read = array();
+        foreach ($read_messages as $k => $v) {
+            $read[] = $v['id'];
+        }
+        $read_messages = $read;
     } else {
         $read_messages = array();
     }
