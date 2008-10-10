@@ -22,6 +22,10 @@ function netquery_userapi_bb2_settings()
     $bb_display_stats = xarModGetVar('netquery', 'bb_display_stats');
     $bb_strict = xarModGetVar('netquery', 'bb_strict');
     $bb_verbose = xarModGetVar('netquery', 'bb_verbose');
+    $bb_logging = xarModGetVar('netquery', 'bb_logging');
+    $bb_httpbl_key = xarModGetVar('netquery', 'bb_httpbl_key');
+    $bb_httpbl_threat = xarModGetVar('netquery', 'bb_httpbl_threat');
+    $bb_httpbl_maxage = xarModGetVar('netquery', 'bb_httpbl_maxage');
     $settings = array('version' => BB2_VERSION,
                       'log_table' => $table_prefix.'_netquery_spamblocker',
                       'log_retain' => $bb_retention,
@@ -30,7 +34,11 @@ function netquery_userapi_bb2_settings()
                       'visible' => $bb_visible,
                       'display_stats' => $bb_display_stats,
                       'strict' => $bb_strict,
-                      'verbose' => $bb_verbose );
+                      'verbose' => $bb_verbose,
+                      'logging' => $bb_logging,
+                      'httpbl_key' => $bb_httpbl_key,
+                      'httpbl_threat' => $bb_httpbl_threat,
+                      'httpbl_maxage' => $bb_httpbl_maxage );
     return $settings;
 }
 ?>

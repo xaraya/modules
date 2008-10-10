@@ -41,6 +41,10 @@ function netquery_userapi_mainapi()
     $data['bb_strict'] = xarModGetVar('netquery', 'bb_strict');
     $data['bb_visible'] = xarModGetVar('netquery', 'bb_visible');
     $data['bb_display_stats'] = xarModGetVar('netquery', 'bb_display_stats');
+    $data['bb_logging'] = xarModGetVar('netquery', 'bb_logging');
+    $data['bb_httpbl_key'] = xarModGetVar('netquery', 'bb_httpbl_key');
+    $data['bb_httpbl_threat'] = xarModGetVar('netquery', 'bb_httpbl_threat');
+    $data['bb_httpbl_maxage'] = xarModGetVar('netquery', 'bb_httpbl_maxage');
     $data['clientinfo_enabled'] = xarModGetVar('netquery', 'clientinfo_enabled');
     $data['mapping_site'] = xarModGetVar('netquery', 'mapping_site');
     $data['topcountries_limit'] = xarModGetVar('netquery', 'topcountries_limit');
