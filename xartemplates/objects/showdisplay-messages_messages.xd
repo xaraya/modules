@@ -1,0 +1,103 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:style scope="module" module="messages" file="messages" />
+    <xar:set name="action">
+        isset($action) ? $action : 'check'
+    </xar:set>
+    <xar:set name="postanon">
+        $properties['postanon']->value
+    </xar:set>
+    <xar:set name="receiver">
+        $properties['to']->value
+    </xar:set>
+    <xar:set name="sender">
+        $properties['from']->value
+    </xar:set>
+    <xar:set name="vettor">
+        xarSession::getVar('role_id') == $receiver ? $receiver : $sender
+    </xar:set>
+    <xar:set name="vettee">
+        xarSession::getVar('role_id') == $receiver ? $sender : $receiver
+    </xar:set>
+    <xar:if condition="empty($vettee)">
+        <xar:set name="is_sendtouser">
+            1
+        </xar:set>
+    <xar:else />
+        <xar:set name="is_sendtouser">
+            xarModAPIFunc('messages','user','is_sendtouser', 
+                array(
+                    'currentuser' => $vettor,
+                    'sendtouser' => $vettee,
+                )
+            )
+        </xar:set>
+    </xar:if>
+    <xar:comment>
+    <!-- <xar:mlstring>Message-Posting-Host:</xar:mlstring> #$message['posting-host']# -->
+    </xar:comment>
+
+    <div class="xar-form-input-wrapper">
+        <span class="xar-form-label">
+            <xar:mlstring>From:</xar:mlstring>
+        </span>
+        <xar:comment>Psspl:Modifided the code for anonymous message</xar:comment>
+        <xar:if condition="!$postanon AND $is_sendtouser">
+            <a href="#$sender#" title="#xarML('View user info')#">
+                #xarUserGetVar('name',$sender)#
+            </a>
+        <xar:else/>
+            <xar:mlstring>Anonymous</xar:mlstring>
+        </xar:if>
+    </div>
+
+    <div class="xar-form-input-wrapper">
+        <span class="xar-form-label">
+            <xar:mlstring>To:</xar:mlstring>
+        </span>
+        <xar:if condition="$action eq 'reply' OR  $action eq 'modify'">
+            <xar:if condition="xarSession::getVar('role_id') eq $receiver">
+                #xarUserGetVar('name',$receiver)#
+            <xar:else/>
+                <xar:if condition="isset($previousanon) AND $previousanon">
+                    <xar:mlstring>Anonymous</xar:mlstring>
+                    <xar:data-input property="$properties['to']" hidden="hidden"/>
+                <xar:elseif condition="$is_sendtouser" />
+                    #xarUserGetVar('name',$receiver)#
+                <xar:else/>
+                    <xar:mlstring>Anonymous</xar:mlstring>
+                </xar:if>
+            </xar:if>
+        <xar:else/>
+            <xar:if condition="$is_sendtouser">
+                #xarUserGetVar('name',$receiver)#
+            <xar:else/>
+                <xar:mlstring>Anonymous</xar:mlstring>
+            </xar:if>
+        </xar:if>
+    </div>
+
+    <div class="xar-form-input-wrapper">
+        <span class="xar-form-label">
+            <xar:mlstring>Date:</xar:mlstring>
+        </span>
+        <xar:data-output property="$properties['time']" />
+    </div>
+
+    <div class="xar-form-input-wrapper">
+        <span class="xar-form-label">
+            <xar:mlstring>Subject:</xar:mlstring>
+        </span>
+        <xar:data-output property="$properties['subject']" />
+    </div>
+
+    <hr class="xar-clearboth" />
+    <div>
+        <xar:data-output property="$properties['body']" />
+    </div>
+    <xar:comment>Psspl:Added the code for folder type</xar:comment>
+    <div class="xar-form-input-wrapper">
+        <xar:if condition="isset($folder)">
+            <input type="hidden" value="#$folder#" name="folder" id="folder" />    
+        </xar:if>
+    </div>
+</xar:template>
