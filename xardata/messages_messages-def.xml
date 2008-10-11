@@ -1,9 +1,9 @@
 <object name="messages_messages">
-  <objectid>165</objectid>
+  <objectid>12</objectid>
   <label>Messages</label>
   <parent>objects</parent>
   <module_id>182</module_id>
-  <itemtype>73</itemtype>
+  <itemtype>5</itemtype>
   <class>DataObject</class>
   <filepath></filepath>
   <urlparam>itemid</urlparam>
@@ -12,17 +12,17 @@
   <isalias>1</isalias>
   <properties>
     <property name="id">
-      <id>1741</id>
+      <id>75</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
       <source>xar_messages.id</source>
-      <status>65</status>
+      <status>67</status>
       <seq>1</seq>
       <configuration></configuration>
     </property>
     <property name="to">
-      <id>1742</id>
+      <id>76</id>
       <label>To</label>
       <type>dropdown</type>
       <defaultvalue></defaultvalue>
@@ -32,7 +32,7 @@
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:23:"initialization_function";s:50:"xarModAPIFunc('messages','user','get_sendtousers')";}</configuration>
     </property>
     <property name="from">
-      <id>1743</id>
+      <id>77</id>
       <label>From</label>
       <type>username</type>
       <defaultvalue></defaultvalue>
@@ -42,7 +42,7 @@
       <configuration>a:6:{s:16:"display_linkrule";s:1:"0";s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:20:"validation_existrule";s:1:"0";s:25:"initialization_store_type";s:2:"id";}</configuration>
     </property>
     <property name="subject">
-      <id>1744</id>
+      <id>78</id>
       <label>Subject</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -52,7 +52,7 @@
       <configuration>a:4:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"5";}</configuration>
     </property>
     <property name="body">
-      <id>1745</id>
+      <id>79</id>
       <label>Body</label>
       <type>textarea_medium</type>
       <defaultvalue></defaultvalue>
@@ -62,37 +62,37 @@
       <configuration>a:3:{s:12:"display_rows";s:1:"8";s:15:"display_columns";s:2:"50";s:14:"display_layout";s:7:"default";}</configuration>
     </property>
     <property name="pid">
-      <id>1748</id>
+      <id>80</id>
       <label>Parent ID</label>
       <type>integerbox</type>
       <defaultvalue>0</defaultvalue>
       <source>xar_messages.pid</source>
-      <status>35</status>
+      <status>67</status>
       <seq>8</seq>
       <configuration></configuration>
     </property>
     <property name="left_id">
-      <id>1750</id>
+      <id>81</id>
       <label>Left ID</label>
       <type>integerbox</type>
       <defaultvalue>1</defaultvalue>
       <source>xar_messages.left_id</source>
-      <status>67</status>
+      <status>64</status>
       <seq>10</seq>
       <configuration></configuration>
     </property>
     <property name="right_id">
-      <id>1751</id>
+      <id>82</id>
       <label>Right ID</label>
       <type>integerbox</type>
       <defaultvalue>1</defaultvalue>
       <source>xar_messages.right_id</source>
-      <status>67</status>
+      <status>64</status>
       <seq>11</seq>
       <configuration></configuration>
     </property>
     <property name="postanon">
-      <id>1752</id>
+      <id>83</id>
       <label>Post Anonymously</label>
       <type>checkbox</type>
       <defaultvalue>1</defaultvalue>
@@ -102,54 +102,55 @@
       <configuration></configuration>
     </property>
     <property name="author_delete">
-      <id>1753</id>
+      <id>84</id>
       <label>Author Deleted</label>
       <type>dropdown</type>
-      <defaultvalue>3</defaultvalue>
+      <defaultvalue>1</defaultvalue>
       <source>xar_messages.author_delete</source>
-      <status>34</status>
+      <status>33</status>
       <seq>13</seq>
-      <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:62:"0,Deleted;1,Visible to To list;2,Visble to From list;3,Active;";}</configuration>
+      <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:19:"0,Deleted;1,Active;";}</configuration>
     </property>
     <property name="recipient_delete">
-      <id>1753</id>
+      <id>85</id>
       <label>Recipient Deleted</label>
       <type>dropdown</type>
-      <defaultvalue>3</defaultvalue>
+      <defaultvalue>1</defaultvalue>
       <source>xar_messages.recipient_delete</source>
-      <status>34</status>
+      <status>33</status>
       <seq>14</seq>
-      <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:62:"0,Deleted;1,Visible to To list;2,Visble to From list;3,Active;";}</configuration>
+      <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:19:"0,Deleted;1,Active;";}</configuration>
     </property>
     <property name="time">
-      <id>1754</id>
+      <id>86</id>
       <label>Time</label>
-      <type>formatteddatetime</type>
+      <type>calendar</type>
       <defaultvalue>time()</defaultvalue>
       <source>xar_messages.date</source>
-      <status>33</status>
+      <status>66</status>
       <seq>15</seq>
       <configuration></configuration>
     </property>
     <property name="author_status">
-      <id>1755</id>
+      <id>87</id>
       <label>Author Status</label>
       <type>dropdown</type>
-      <defaultvalue>3</defaultvalue>
+      <defaultvalue>2</defaultvalue>
       <source>xar_messages.author_status</source>
-      <status>34</status>
+      <status>33</status>
       <seq>16</seq>
-      <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:38:"0,Deleted;1,Inactive;2,Draft;3,Active;";}</configuration>
+      <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:24:"0,Draft;1,Unread;2,Read;";}</configuration>
     </property>
     <property name="recipient_status">
-      <id>1755</id>
+      <id>88</id>
       <label>Recipient Status</label>
       <type>dropdown</type>
-      <defaultvalue>3</defaultvalue>
+      <defaultvalue>1</defaultvalue>
       <source>xar_messages.recipient_status</source>
-      <status>34</status>
+      <status>33</status>
       <seq>16</seq>
-      <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:38:"0,Deleted;1,Inactive;2,Draft;3,Active;";}</configuration>
+      <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:16:"1,Unread;2,Read;";}</configuration>
     </property>
   </properties>
 </object>
+
