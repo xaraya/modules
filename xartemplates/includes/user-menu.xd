@@ -45,7 +45,7 @@
             </xar:if>
             <dd class="#$tabclass#">
               <a href="#xarModURL('messages','user','view',array('folder'=>'drafts'))#">
-                <xar:mlstring>Drafts</xar:mlstring> (&#160;#$drafts#&#160;)
+                <xar:mlstring>Drafts</xar:mlstring> &#160;(&#160;#$drafts#&#160;)
               </a>
             </dd>
         </xar:if>

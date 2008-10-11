@@ -34,7 +34,7 @@ function messages_userapi_getall( $args )
                                     array('recipient'   => xarUserGetVar('id'),
                                           'delete'      => MESSAGES_ACTIVE,
                                           'orderby'     => 'id DESC',
-                                          'startnum'    => $startnum,
+                                          'startnum'    => $startnum,'inbox'=>true,
                                           'numitems'    => $numitems));
             break;
         case 'sent':

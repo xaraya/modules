@@ -88,14 +88,12 @@ function messages_userapi_get_multiple($args)
     $bindvars = array();
 
     if ( isset($recipient) && is_numeric($recipient)) {
-        $sql .= " recipient = ?";
+        $sql .= " recipient=?";
         $bindvars[] = (int) $recipient;
-        if (isset($status)) {
-            $sql .= " AND recipient_status=?";
-            $bindvars[] = (int) $status;
-        }
+        $sql .= " AND recipient_status!=?";
+        $bindvars[] = MESSAGES_STATUS_DRAFT;
         if (isset($delete) && !empty($delete)) {
-            $sql .= " AND (recipient_delete = 3 OR recipient_delete = ?)";
+            $sql .= " AND recipient_delete=?";
             $bindvars[] = (string) $delete; 
         }
     } elseif (isset($author) && is_numeric($author)) {
@@ -106,7 +104,7 @@ function messages_userapi_get_multiple($args)
             $bindvars[] = (int) $status;
         }
         if (isset($delete) && !empty($delete)) {
-            $sql .= " AND (author_delete = 3 OR author_delete = ?)";
+            $sql .= " AND author_delete=?";
             $bindvars[] = (string) $delete; 
         }
     }
