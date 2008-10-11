@@ -120,7 +120,7 @@
                                     </xar:set>
                                 <!--Psspl:Modifided the code for anonymous message-->
                                     <xar:if condition="!$loop:item['postanon'] AND $is_sendtouser">
-                                        <a href="#$loop:item['user_link']#" title="#xarML('View user info')#">#$loop:item['sender']#</a>
+                                        <a href="#$loop:item['user_link']#" title="#xarML('View user info')#">#$loop:item['author']#</a>
                                     <!--#$comment['author']#-->
                                     <xar:else/>
                                         <xar:mlstring>Anonymous</xar:mlstring>
@@ -144,7 +144,7 @@
                             <xar:if condition="$folder eq 'sent' OR $folder eq 'drafts'">
                                 <td class="#$rowclass# xar-align-left xar-messages-mailboxlistsender">
                                     <xar:if condition="!$loop:item['postanon'] AND $is_sendtouser">
-                                        <a href="#$loop:item['user_link']#" title="#xarML('View user info')#">#$loop:item['sender']#</a>
+                                        <a href="#$loop:item['user_link']#" title="#xarML('View user info')#">#$loop:item['author']#</a>
                                     <xar:else/>
                                         <xar:mlstring>Anonymous</xar:mlstring>
                                     </xar:if>
