@@ -25,7 +25,7 @@ function messages_userapi_getmenulinks ( $args )
             'label'    => 'View Messages' );
     }
 
-    if (xarSecurityCheck('AddMessages', 0)) {
+    if (xarSecurityCheck('AddMessages', 0) && xarModAPIFunc('messages' , 'user' , 'isset_grouplist')) {
         $menulinks[] = array(
             'url'      => xarModURL('messages', 'user', 'new'),
             'title'    => 'Send a message to someone',
