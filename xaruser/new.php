@@ -11,6 +11,9 @@
  * @link http://xaraya.com/index.php/release/6.html
  * @author XarayaGeek
  */
+
+sys::import('modules.messages.xarincludes.defines');
+
 function messages_user_new()
 {
     if (!xarSecurityCheck('AddMessages')) return;
@@ -58,7 +61,7 @@ function messages_user_new()
         case "post":
             xarTplSetPageTitle( xarML('Post Message') );
             $data['input_title']    = xarML('Compose Message');
-        break;
+            break;
         
         case "reply":
         // If this is a reply get the previous message
@@ -96,6 +99,8 @@ function messages_user_new()
             case "post":
 
                 $isvalid = $data['object']->checkInput();
+                $data['object']->properties['time']->setValue(time());
+                $data['object']->properties['from']->setValue(xarUserGetVar('id'));
                 if(!$isvalid){           
                     return xarTplModule('messages','user','new',$data);
                 }
@@ -281,13 +286,18 @@ function messages_user_new()
         $checkbox->checkInput('is_draft');
 
         // If this is to be a draft, adjust the state
-        if ($checkbox->value) $data['object']->properties['state']->setValue(2);
-        else $data['object']->properties['state']->setValue(3);
+        if ($checkbox->value) {
+            $data['object']->properties['author_status']->setValue(MESSAGES_STATUS_DRAFT);
+            $data['object']->properties['recipient_status']->setValue(MESSAGES_STATUS_DRAFT);
+        } else {
+            $data['object']->properties['author_status']->setValue(MESSAGES_STATUS_READ);
+            $data['object']->properties['recipient_status']->setValue(MESSAGES_STATUS_UNREAD);
+        }
         $id = $data['object']->createItem();
 
-        $state = $data['object']->properties['state']->getValue();
-        if ($state == '2') $folder = 'drafts';
-        elseif ($state == '3') $folder = 'sent';
+        $state = $data['object']->properties['author_status']->getValue();
+        if ($state == MESSAGES_STATUS_DRAFT) $folder = 'drafts';
+        elseif ($state == MESSAGES_STATUS_READ) $folder = 'sent';
         else $folder = 'inbox';
 
         xarResponseRedirect(xarModURL('messages','user','view', array('folder' => $folder)));

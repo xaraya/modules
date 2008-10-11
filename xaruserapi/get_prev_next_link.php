@@ -5,6 +5,8 @@
  * @param unknown_type $args
  */
 
+sys::import('modules.messages.xarincludes.defines');
+
 function messages_userapi_get_prev_next_link( $args )
 {
     extract($args);

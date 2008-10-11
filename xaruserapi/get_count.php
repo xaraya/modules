@@ -22,6 +22,9 @@
  * @param bool       $drafts      (optional) count drafts
  * @returns integer  the number of messages
  */
+
+sys::import('modules.messages.xarincludes.defines');
+
 function messages_userapi_get_count($args)
 {
     extract($args);

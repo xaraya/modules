@@ -5,6 +5,9 @@
  * @param message
  * @return body
  */
+
+sys::import('modules.messages.xarincludes.defines');
+
 function messages_userapi_reply_message_text( $args )
 {
     extract($args);

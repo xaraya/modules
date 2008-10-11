@@ -19,6 +19,9 @@
  * @returns array
  * @return array containing the itemlink(s) for the item(s).
  */
+
+sys::import('modules.messages.xarincludes.defines');
+
 function messages_userapi_getitemlinks($args)
 {
     $itemlinks = array();

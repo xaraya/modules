@@ -1,22 +1,19 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div>
-    <xar:if condition="empty($numitems)">
+    <xar:if condition="empty($unread) or $unread eq 0">
         #$emptymessage#
     <xar:else />
-        <center>
-            <xar:mlstring>You have</xar:mlstring>
-            <a href="#xarModURL('messages','user','view')#">#$totalin#</a>
-            <xar:mlstring>Total Messages</xar:mlstring>
-            <br />
+        <xar:mlstring>You have</xar:mlstring>
+        <a href="#xarModURL('messages','user','view')#">#$totalin#</a>
+        <xar:mlstring>Total Messages</xar:mlstring>
+        <br />
     
-            <xar:mlstring>You have</xar:mlstring>
-            <a href="#xarModURL('messages','user','view')#">#$unread#</a>
-            <xar:mlstring>Unread Messages</xar:mlstring><br />
-            <a href="#xarModURL('messages','user','view')#">
-                <img src="modules/messages/xarimages/unread.gif" border="0"/>
-            </a>
-        </center>
+        <xar:mlstring>You have</xar:mlstring>
+        <a href="#xarModURL('messages','user','view')#">#$unread#</a>
+        <xar:mlstring>Unread Messages</xar:mlstring><br />
+        <a href="#xarModURL('messages','user','view')#">
+            <img src="modules/messages/xarimages/unread.gif" border="0"/>
+        </a>
     </xar:if>
-    <br />
 </div>
 </xar:template>

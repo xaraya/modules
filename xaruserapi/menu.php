@@ -14,6 +14,9 @@
 /**
  * generate the common menu configuration
  */
+
+sys::import('modules.messages.xarincludes.defines');
+
 function messages_userapi_menu()
 {
     // Initialise the array that will hold the menu configuration

@@ -20,6 +20,8 @@
  * @returns bool true on success, false otherwise
  */
 
+sys::import('modules.messages.xarincludes.defines');
+
 function messages_userapi_delete( $args )
 {
 
@@ -28,15 +30,12 @@ function messages_userapi_delete( $args )
     if (!isset($folder)) throw new Exception(xarML('Missing folder for delete'));
     if (!isset($object)) throw new Exception(xarML('Missing object for delete'));
 
-    $deleted = $object->properties['deleted']->getValue();
-    if($folder=='inbox'){
-        if ($deleted == MESSAGES_DELETE_STATUS_ACTIVE) $deleted = MESSAGES_DELETE_STATUS_VISIBLE_FROM;
-        elseif ($deleted == MESSAGES_DELETE_STATUS_VISIBLE_TO) $deleted = MESSAGES_DELETE_STATUS_DELETED;
+    if($folder == 'sent' || $folder == 'drafts'){
+        $object->properties['author_delete']->setValue(MESSAGES_DELETED);
     } else {
-        if ($deleted == MESSAGES_DELETE_STATUS_ACTIVE) $deleted = MESSAGES_DELETE_STATUS_VISIBLE_TO;
-        elseif ($deleted == MESSAGES_DELETE_STATUS_VISIBLE_FROM) $deleted = MESSAGES_DELETE_STATUS_DELETED;
+        $object->properties['recipient_delete']->setValue(MESSAGES_DELETED);
     }
-    $object->properties['deleted']->setValue($deleted);
+
     $object->updateItem();
     return true;
 }

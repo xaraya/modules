@@ -5,6 +5,9 @@
  * @param unknown_type $args
  * @return array of groups selected if not configured return false
  */
+
+sys::import('modules.messages.xarincludes.defines');
+
 function messages_userapi_isset_grouplist( $args )
 {
 

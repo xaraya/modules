@@ -5,6 +5,9 @@
  * is available in current configuration.
   * @return array of messages selected. 
  */
+
+sys::import('modules.messages.xarincludes.defines');
+
 function messages_userapi_checkdraft( $args )
 {
 

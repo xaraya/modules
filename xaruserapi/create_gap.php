@@ -21,6 +21,9 @@
  * @param    integer    $gapsize       the size of the gap to make (defaults to 2 for inserting a single node)
  * @returns  integer    number of affected rows or false [0] on error
  */
+
+sys::import('modules.messages.xarincludes.defines');
+
 function messages_userapi_create_gap( $args )
 {
 

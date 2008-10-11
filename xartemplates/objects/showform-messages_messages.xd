@@ -26,8 +26,10 @@
 
         <!--Psspl:Modified the code for anonymous message-->
         <xar:if condition="$action ne 'reply' OR ($action ne 'modify' AND !isset($previousanon)) AND $is_sendtouser">
-            &#160;<xar:data-input property="$properties['postanon']" />
-            Post anonymously
+            <div class="xar-form-input-wrapper">
+                <xar:data-label property="$properties['postanon']" for="id" label="Post Anonymously" />
+                <xar:data-input property="$properties['postanon']" />
+            </div>
         </xar:if>
     </div>
 
@@ -79,21 +81,22 @@
     <xar:if condition="xarModVars::get('messages','drafts') eq 1">
         <div class="xar-form-input-wrapper-after">
             <xar:set name="is_draft">
-                $properties['state']->value == MESSAGES_STATUS_DRAFT
+                $properties['author_status']->value == MESSAGES_STATUS_DRAFT
             </xar:set>
-            <xar:data-input type="checkbox" name="is_draft" value="$is_draft" />&#160;
-            Save as draft
+            <xar:data-input type="checkbox" id="is_draft" name="is_draft" value="$is_draft" />
+            <label for="is_draft" label="Post Anonymously">
+                Save as draft
+            </label>
         </div>
     </xar:if>
 
     <xar:data-input property="$properties['id']" hidden="hidden"/>
     <xar:data-input property="$properties['time']" hidden="hidden"/>
-    <xar:data-input property="$properties['deleted']" hidden="hidden"/>
+    <xar:data-input property="$properties['author_delete']" hidden="hidden"/>
+    <xar:data-input property="$properties['recipient_delete']" hidden="hidden"/>
+    <xar:data-input property="$properties['recipient_status']" hidden="hidden"/>
     <xar:data-input property="$properties['pid']" hidden="hidden"/>
-    <xar:data-input property="$properties['itemtype']" hidden="hidden"/>
-    <xar:data-input property="$properties['host']" hidden="hidden"/>
-    <xar:data-input property="$properties['left_id']" hidden="hidden"/>
-    <xar:data-input property="$properties['right_id']" hidden="hidden"/>
-    <xar:data-input property="$properties['module_id']" hidden="hidden"/>
-    <xar:data-input property="$properties['state']" hidden="hidden"/>
+<!--    <xar:data-input property="$properties['left_id']" hidden="hidden"/>
+    <xar:data-input property="$properties['right_id']" hidden="hidden"/> -->
+    <xar:data-input property="$properties['author_status']" hidden="hidden"/>
 </xar:template>

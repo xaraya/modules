@@ -29,6 +29,9 @@
  * @returns array    an array of messages or an empty array if no messages
  *                   or raise an exception and return false.
  */
+
+sys::import('modules.messages.xarincludes.defines');
+
 function messages_userapi_get_multiple($args)
 {
 
@@ -69,7 +72,6 @@ function messages_userapi_get_multiple($args)
                     date AS datetime,
                     text AS text,
                     author AS author,
-                    author AS role_id,
                     recipient AS recipient,
                     id AS id,
                     pid AS pid,

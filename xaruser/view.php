@@ -11,6 +11,9 @@
  * @link http://xaraya.com/index.php/release/6.html
  * @author XarayaGeek
  */
+
+sys::import('modules.messages.xarincludes.defines');
+
 function messages_user_view( )
 {
     if (!xarSecurityCheck('ReadMessages')) return;

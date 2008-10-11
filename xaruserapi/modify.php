@@ -18,6 +18,9 @@
  * @access private
  * @returns mixed description of return
  */
+
+sys::import('modules.messages.xarincludes.defines');
+
 function messages_userapi_modify($args)
 {
 

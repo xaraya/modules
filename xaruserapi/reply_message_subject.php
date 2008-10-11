@@ -17,6 +17,9 @@
  * @param message
  * @return subject
  */
+
+sys::import('modules.messages.xarincludes.defines');
+
 function messages_userapi_reply_message_subject( $args )
 {
     extract($args);

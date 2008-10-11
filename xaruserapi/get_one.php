@@ -12,6 +12,9 @@
                      or an empty array if no comment found
  */
 //Psspl:Added function for getting comment entry according to the folder type.
+
+sys::import('modules.messages.xarincludes.defines');
+
 function messages_userapi_get_one( $args )
 {
 

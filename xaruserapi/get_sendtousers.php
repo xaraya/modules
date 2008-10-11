@@ -5,6 +5,8 @@
  * 
  */
  
+sys::import('modules.messages.xarincludes.defines');
+
     function messages_userapi_get_sendtousers( $args )
     {
         $sendtogroups = xarModAPIFunc('messages','user','get_sendtogroups',$args);

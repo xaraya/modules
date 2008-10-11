@@ -1,5 +1,7 @@
 <?php
 
+sys::import('modules.messages.xarincludes.defines');
+
     function messages_userapi_is_sendtouser( $args )
     {
         extract($args);

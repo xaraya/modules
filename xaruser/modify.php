@@ -11,6 +11,9 @@
  * @link http://xaraya.com/index.php/release/6.html
  * @author XarayaGeek
  */
+
+sys::import('modules.messages.xarincludes.defines');
+
 function messages_user_modify( $args )
 {
     if (!xarSecurityCheck('EditMessages')) return;
@@ -108,8 +111,13 @@ function messages_user_modify( $args )
             $checkbox->checkInput('is_draft');
             
             // If this is to be a draft, adjust the state
-            if ($checkbox->value) $data['object']->properties['state']->setValue(2);
-            else $data['object']->properties['state']->setValue(3);
+            if ($checkbox->value) {
+                $data['object']->properties['author_status']->setValue(MESSAGES_STATUS_DRAFT);
+                $data['object']->properties['recipient_status']->setValue(MESSAGES_STATUS_DRAFT);
+            } else {
+                $data['object']->properties['author_status']->setValue(MESSAGES_STATUS_READ);
+                $data['object']->properties['recipient_status']->setValue(MESSAGES_STATUS_UNREAD);
+            }
             $id = $data['object']->updateItem();
 
 /*

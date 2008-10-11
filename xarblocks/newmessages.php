@@ -48,29 +48,26 @@ function messages_newmessagesblock_display($blockinfo)
     $role_id = xarSession::getVar('role_id');
 
     // Count total Messages
-     $numitems = xarModAPIFunc(
-        'messages'
-        ,'user'
-        ,'count_total'
-        ,array(
-            'module'     => 'messages'
-            ,'itemtype'  => $itemtype
-        ));
-     $data['totalin'] = $numitems;
-    // Count Unread Messages
+    $totalin = xarModAPIFunc('messages',
+                              'user',
+                              'get_count',
+                              array(
+                                  'recipient' => $role_id
+                ));
+    $data['totalin'] = $totalin;
 
-   $numitems = xarModAPIFunc(
-        'messages'
-        ,'user'
-        ,'count_unread'
-        ,array(
-            'module'     => 'messages'
-            ,'itemtype'  => $itemtype
-        ));
-    $data['unread'] = $numitems;
+    // Count Unread Messages
+    $unread = xarModAPIFunc('messages',
+                              'user',
+                              'get_count',
+                              array(
+                                  'recipient' => xarUserGetVar('id'),
+                                  'unread'=>true
+                ));
+    $data['unread'] = $unread;
 
     // No messages return emptymessage
-    if (empty($numitems)){
+    if (empty($unread) || $unread == 0){
         $data['emptymessage'] = xarML('No Unread messages in mailbox');
         $data['content'] = 'No new Messages';
         if (empty($data['title'])){
@@ -79,23 +76,15 @@ function messages_newmessagesblock_display($blockinfo)
 
         $blockinfo['content'] = $data;
         return $blockinfo;
+    } else {
+        $data['emptymessage'] = '';
+        $data['numitems'] = $numitems;
+        $blockinfo['content'] = $data;
+
+        if (empty($blockinfo['title'])){
+            $blockinfo['title'] = xarML('My Messages');
+        }
     }
-
-
-//pulling unread messages will go here
-// $read_messages = unserialize(xarModUserVars::get('messages','read_messages'));
-//if (!in_array($data['message']['id'], $read_messages)) {
-// add to unread list
-// }
-
-   $data['emptymessage'] = '';
-   $data['numitems'] = $numitems;
-   $blockinfo['content'] = $data ;
-
-    if (empty($blockinfo['title'])){
-        $blockinfo['title'] = xarML('My Messages');
-    }
-
     return $blockinfo;
 }
 

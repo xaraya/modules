@@ -12,6 +12,9 @@
  * @author XarayaGeek
  */
 //Psspl: modifided the code for post anonymously 
+
+sys::import('modules.messages.xarincludes.defines');
+
 function messages_userapi_create( $args )
 {
     extract($args);

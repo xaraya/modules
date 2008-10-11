@@ -1,5 +1,7 @@
 <?php
 
+sys::import('modules.messages.xarincludes.defines');
+
     function messages_user_reply()
     {
         if (!xarSecurityCheck('AddMessages')) return;

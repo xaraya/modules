@@ -18,6 +18,8 @@
  * @access  public
  */
 
+sys::import('modules.messages.xarincludes.defines');
+
 function messages_user_delete()
 {
     if (!xarSecurityCheck('ManageMessages')) return;

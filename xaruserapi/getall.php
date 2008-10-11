@@ -13,6 +13,8 @@
  */
 //Psspl:Modifided the code for post anonymously. 
 
+sys::import('modules.messages.xarincludes.defines');
+
 function messages_userapi_getall( $args )
 {
     extract($args);
@@ -29,9 +31,8 @@ function messages_userapi_getall( $args )
             $list = xarModAPIFunc('messages',
                                    'user',
                                    'get_multiple',
-                                    array('recipient'      => xarUserGetVar('id'),
-                                          'status'      => MESSAGES_STATUS_ACTIVE,
-                                          'delete'      => MESSAGES_DELETE_STATUS_VISIBLE_TO,
+                                    array('recipient'   => xarUserGetVar('id'),
+                                          'delete'      => MESSAGES_ACTIVE,
                                           'orderby'     => 'id DESC',
                                           'startnum'    => $startnum,
                                           'numitems'    => $numitems));
@@ -41,8 +42,7 @@ function messages_userapi_getall( $args )
                                    'user',
                                    'get_multiple',
                                     array('author'      => xarUserGetVar('id'),
-                                          'status'      => MESSAGES_STATUS_ACTIVE,
-                                          'delete'      => MESSAGES_DELETE_STATUS_VISIBLE_FROM,
+                                          'delete'      => MESSAGES_ACTIVE,
                                           'orderby'     => 'id DESC',
                                           'startnum'    => $startnum,
                                           'numitems'    => $numitems));
@@ -53,54 +53,40 @@ function messages_userapi_getall( $args )
                                    'get_multiple',
                                     array('author'      => xarUserGetVar('id'),
                                           'status'      => MESSAGES_STATUS_DRAFT,
-                                          'delete'      => MESSAGES_DELETE_STATUS_VISIBLE_FROM,
+                                          'delete'      => MESSAGES_ACTIVE,
                                           'orderby'     => 'id DESC',
                                           'startnum'    => $startnum,
                                           'numitems'    => $numitems));
             break;
     }
 
-    $read_messages = xarModUserVars::get('messages','read_messages');
-    if (!empty($read_messages) && $folder == 'inbox') {
-        $read_messages = unserialize($read_messages);
-    } else {
-        $read_messages = array();
-    }
-
     $messages = array();
 
     foreach ($list as $key => $node) {
-        $message['id']            = $node['id'];
-        $message['sender']        = $node['author'];
-        $message['sender_id']     = $node['role_id'];
-        $message['posting_host']  = $node['hostname'];
-        $message['subject']       = $node['title'];
-        $message['raw_date']      = $node['datetime'];
-        $message['date']          = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', $node['datetime']);
-        $message['body']          = $node['text'];
-        $message['recipient']     = xarUserGetVar('name');
-        $message['postanon']      = $node['postanon'];  
-        $message['recipient_id']  = xarSession::getVar('role_id');
+        $message['id']               = $node['id'];
+        $message['pid']              = $node['pid'];
+        $message['left_id']          = $node['left_id'];
+        $message['right_id']         = $node['right_id'];
+        $message['author']           = xarUserGetVar('name', $node['author']);
+        $message['author_id']        = $node['author'];
+        $message['subject']          = $node['title'];
+        $message['raw_date']         = $node['datetime'];
+        $message['date']             = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', $node['datetime']);
+        $message['body']             = $node['text'];
+        $message['recipient']        = xarUserGetVar('name', $node['recipient']);
+        $message['recipient_id']     = $node['recipient'];
+        $message['author_status']    = $node['author_status'];
+        $message['recipient_status'] = $node['recipient_status'];
+        $message['author_delete']    = $node['author_delete'];
+        $message['recipient_delete'] = $node['recipient_delete'];
+        $message['postanon']         = $node['postanon'];  
 
         
-        if ($folder == 'sent' || $folder == 'drafts') {
-
-            $MessageInfo = xarModAPIFunc('messages',
-                                         'user',
-                                         'get_one',
-                                         array('id' => $node['id'] , 'folder' => $folder));
-            
-            foreach ($MessageInfo as $info_key => $Info_node) {
-                
-                $message['recipient']     = xarUserGetVar('name',$Info_node['objectid']);
-                $message['recipient_id']  = $Info_node['objectid'];
-            }
-        }
         if($folder == 'inbox'){
-            if (!in_array($message['id'], $read_messages)) {
+            if ($message['recipient_status'] == MESSAGES_STATUS_UNREAD) {
                 $message['status_image'] = xarTplGetImage('unread.gif');
                 $message['status_alt']   = xarML('unread');
-            } else {
+            } elseif ($message['recipient_status'] == MESSAGES_STATUS_READ) {
                 $message['status_image'] = xarTplGetImage('read.gif');
                 $message['status_alt']   = xarML('read');
             }
@@ -115,14 +101,14 @@ function messages_userapi_getall( $args )
         }
         if($folder == 'inbox'){
             $message['user_link']     = xarModURL('roles','user','display',
-                                                   array('id' => $node['role_id']));
+                                                   array('id' => $message['author_id']));
             $message['view_link']     = xarModURL('messages','user', 'display',
-                                                   array('id'    => $node['id']));
+                                                   array('id'    => $message['id']));
         } else {
             $message['user_link']     = xarModURL('roles','user','display',
                                                    array('id' => $message['recipient_id']));
             $message['view_link']     = xarModURL('messages','user', 'viewsent',
-                                                   array('id'    => $node['id']));
+                                                   array('id'    => $message['id']));
         }
         /*
         $message['reply_link']    = xarModURL('messages','user','new',
@@ -134,7 +120,7 @@ function messages_userapi_getall( $args )
                                                array('id'    => $node['id'],
                                                      'action' => 'check'));
         */
-        $messages[$node['id']] = $message;
+        $messages[$message['id']] = $message;
     }
 
 
