@@ -161,7 +161,6 @@ function messages_userapi_get_multiple($args)
         // FIXME Delete after date testing
         // $row['date'] = xarLocaleFormatDate("%B %d, %Y %I:%M %p",$row['datetime']);
         $row['date'] = $row['datetime'];
-        $row['author'] = xarUserGetVar('name',$row['author']);
         comments_renderer_wrap_words($row['text'],80);
         $commentlist[] = $row;
         $result->MoveNext();
