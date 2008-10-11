@@ -107,7 +107,7 @@
                                 <img src="#$loop:item['status_image']#" alt="#$loop:item['status_alt']#" title="#$loop:item['status_alt']#" />
                             </td>
                             <td class="#$rowclass# xar-align-left xar-messages-mailboxlistsender">
-                                <xar:set name="sender">$loop->item['sender_id']</xar:set>
+                                <xar:set name="sender">$loop->item['author_id']</xar:set>
                                 <xar:set name="receiver">$loop->item['recipient_id']</xar:set>
                                 <xar:if condition="$folder eq 'inbox'">
                                     <xar:set name="is_sendtouser">
