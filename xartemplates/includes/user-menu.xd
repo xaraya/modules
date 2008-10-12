@@ -24,7 +24,7 @@
         </xar:if>
         <dd class="#$tabclass#">
           <a href="#xarModURL('messages','user','view')#">
-            <xar:mlstring>Inbox</xar:mlstring> &#160;(<xar:if condition="$unread eq 0">&#160;#$unread#&#160;<xar:else/> <span style="color:green;">&#160;#$unread#&#160;</span></xar:if> /&#160;#$total#&#160;)
+            <xar:mlstring>Inbox</xar:mlstring>&#160;(&#160;<xar:if condition="$unread eq 0">#$unread#<xar:else/><span class="xar-messages-tab-unread">#$unread#</span></xar:if>&#160;/&#160;#$total#&#160;)
           </a>
         </dd>
         <xar:if condition="($activetab eq 'view' or $activetab eq 'viewsent') and (empty($folder) or $folder eq 'sent')">

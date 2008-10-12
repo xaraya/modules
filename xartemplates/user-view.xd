@@ -180,7 +180,7 @@
                                     </xar:if>
                                 </xar:if>
                                 <xar:if condition="!empty($allowdelete)">
-                                    <a href="#xarModURL('messages','user','delete',array('id' => $loop:item['id']))#" title="#xarML('Delete Message')#"><xar:mlstring>Delete</xar:mlstring></a>
+                                    <a href="#xarModURL('messages','user','delete',array('id' => $loop:item['id'], 'folder' => $folder))#" title="#xarML('Delete Message')#"><xar:mlstring>Delete</xar:mlstring></a>
                                 <xar:else/>
                                     <xar:mlstring>Delete</xar:mlstring>
                                 </xar:if>

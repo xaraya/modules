@@ -6,7 +6,17 @@
     <xar:comment>Psspl: Added the code for configuring NewMessages tab</xar:comment>
     <xar:template type="module" file="user-menu" />
 
-    <h2><xar:mlstring>Delete Message</xar:mlstring></h2>
+    <h2>
+        <xar:if condition="!isset($folder)">
+            <xar:mlstring>Delete Message</xar:mlstring>
+        <xar:else />
+            <xar:set name="displayfolder">xarML(ucfirst($folder))</xar:set>
+            <xar:ml>
+                <xar:mlstring>Delete Message From #(1)</xar:mlstring>
+                <xar:mlvar>#$displayfolder#</xar:mlvar>
+            </xar:ml>
+        </xar:if>
+    </h2>
 
     <xar:if condition="!isset($error)">
         <div class="xar-margin-thick xar-padding-thick xar-border-thin">

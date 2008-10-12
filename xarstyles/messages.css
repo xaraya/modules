@@ -48,3 +48,6 @@ td.xar-messages-mailboxlistaction {
 a.xar-messages-newpmlink img {
 	border: 0;
 }
+span.xar-messages-tab-unread {
+    color: #090;
+}
