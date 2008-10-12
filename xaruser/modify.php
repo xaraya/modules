@@ -120,26 +120,6 @@ function messages_user_modify( $args )
             }
             $id = $data['object']->updateItem();
 
-/*
-            $id = xarModAPIFunc('messages',
-                          'user',
-                          'update',
-                           array('id' => $id,
-                                 'subject' => $subject,
-                                 'body'  => $body,
-                                 'recipient'    => $recipient,
-                                 'postanon' => $postanon,
-                                 'draft' => $draft));
-            // see if the recipient has set an away message
-            if(!$draft){
-                $isaway = xarModUserVars::get('messages' , 'away_message' , $recipient);
-                if (!empty($isaway)) {
-                    $data['recipient'] = $recipient;
-                    $data['away_message'] = $isaway;
-                    return xarTplModule('messages','user','away',$data);
-                }
-            }
-*/
             xarResponseRedirect(xarModURL('messages','user','view',array('folder' => xarSession::getVar('messages_currentfolder'))));
             return true;
             break;
