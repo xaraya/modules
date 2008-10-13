@@ -68,27 +68,20 @@ function messages_user_new()
             if ($data['action'] == 'reply') {
                 xarVarFetch('id',   'int:1', $id,   null, XARVAR_NOT_REQUIRED);
 
+                $data['previousobject'] = DataObjectMaster::getObject(array('name' => $object));
+                $data['previousobject']->getItem(array('itemid' => $id));
+
                 // Add the message we're replying to the list of those read
-                $read_messages = xarModUserVars::get('messages','read_messages');
-                if (!empty($read_messages)) {
-                    $read_messages = unserialize($read_messages);
-                } else {
-                    $read_messages = array();
-                }
-                 if (!in_array($id, $read_messages)) {
-                    array_push($read_messages, $id);
-                    xarModUserVars::set('messages','read_messages',serialize($read_messages));
-                }
+                $data['previousobject']->properties['author_status']->setValue(MESSAGES_STATUS_READ);
 
                 $data['id'] = $id;
                 xarTplSetPageTitle( xarML('Messages :: Reply') );
                 $data['input_title']    = xarML('Compose a Reply');
 
-                $data['previousobject'] = DataObjectMaster::getObject(array('name' => $object));
-                $data['previousobject']->getItem(array('itemid' => $id));
                 $data['object']->properties['postanon']->setValue(0);
-                $data['object']->properties['pid']->value = $data['previousobject']->properties['id']->value;;
+                $data['object']->properties['pid']->value = $data['previousobject']->properties['id']->value;
                 $data['object']->properties['to']->value = $data['previousobject']->properties['from']->value;
+                $data['object']->properties['subject']->value = xarML('RE:') . ' ' . $data['previousobject']->properties['subject']->value;
             }
         break;
     }

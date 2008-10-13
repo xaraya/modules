@@ -33,32 +33,12 @@ function messages_user_view( )
                                       'startnum' => $startnum));
     
     $data = array_merge($data,$link_data);
-       
-    $read_messages = xarModAPIFunc('messages',
-                                   'user',
-                                   'get_multiple', 
-                                   array('recipient' => xarUserGetVar('id'), 'status' => MESSAGES_STATUS_READ));
-    if (!empty($read_messages)) {
-        $read = array();
-        foreach ($read_messages as $k => $v) {
-            $read[] = $v['id'];
-        }
-        $read_messages = $read;
-    } else {
-        $read_messages = array();
-    }
 
     //Psspl:Added the code for configuring the user-menu
 //    $data['allow_newpm'] = xarModAPIFunc('messages' , 'user' , 'isset_grouplist');
     
-    //psspl:Added the code for resolving issue of modifing draft messages.
-    if ($folder != 'drafts') {
-        $messages = xarModAPIFunc('messages', 'user', 'getall', array('folder' => $folder,
-                                                                        'startnum' => $startnum));
-    } else {
-        $messages = xarModAPIFunc('messages', 'user', 'checkdraft' , array('startnum' => $startnum));   
-    }
-    
+    $messages = xarModAPIFunc('messages', 'user', 'getall', array('folder' => $folder,
+                                                                    'startnum' => $startnum));    
     if (is_array($messages)) {
 
         //Psspl:Comment the code for sorting messages.

@@ -1,4 +1,5 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:style scope="module" module="messages" file="messages" />
 <xar:if condition="!isset($error)">
 
     <div class="xar-mod-head">

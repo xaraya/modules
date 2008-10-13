@@ -1,4 +1,5 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:style scope="module" module="messages" file="messages" />
 <xar:set name="action">
     isset($action) ? $action : 'noaction'
 </xar:set>

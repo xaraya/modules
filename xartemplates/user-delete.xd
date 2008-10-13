@@ -1,4 +1,5 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<xar:style scope="module" module="messages" file="messages" />
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Private Messages</xar:mlstring></span>
 </div>

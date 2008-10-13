@@ -68,63 +68,66 @@ function messages_userapi_get_multiple($args)
     //Psspl:Modifided the Sql query for getting anonpost_to field.  
     // if the depth is zero then we
     // only want one comment
-    $sql = "SELECT  title AS title,
-                    date AS datetime,
-                    text AS text,
-                    author AS author,
-                    recipient AS recipient,
-                    id AS id,
-                    pid AS pid,
-                    author_status AS author_status,
-                    recipient_status AS recipient_status,
-                    left_id AS left_id,
-                    right_id AS right_id,
-                    anonpost AS postanon,
-                    author_delete AS author_delete,
-                    recipient_delete AS recipient_delete
-              FROM  $xartable[messages]
+    $sql = "SELECT  m.title AS title,
+                    m.date AS datetime,
+                    m.text AS text,
+                    m.author AS author,
+                    m.recipient AS recipient,
+                    m.id AS id,
+                    m.pid AS pid,
+                    m.author_status AS author_status,
+                    m.recipient_status AS recipient_status,
+                    m.left_id AS left_id,
+                    m.right_id AS right_id,
+                    m.anonpost AS postanon,
+                    p.anonpost AS parentanon,
+                    m.author_delete AS author_delete,
+                    m.recipient_delete AS recipient_delete
+              FROM  $xartable[messages] m
+         LEFT JOIN  $xartable[messages] as p on p.id = m.pid
              WHERE  ";
 
     $bindvars = array();
 
     if ( isset($recipient) && is_numeric($recipient)) {
-        $sql .= " recipient=?";
+        $sql .= " m.recipient=?";
         $bindvars[] = (int) $recipient;
-        $sql .= " AND recipient_status!=?";
+        $sql .= " AND m.recipient_status!=?";
         $bindvars[] = MESSAGES_STATUS_DRAFT;
         if (isset($delete) && !empty($delete)) {
-            $sql .= " AND recipient_delete=?";
+            $sql .= " AND m.recipient_delete=?";
             $bindvars[] = (string) $delete; 
         }
     } elseif (isset($author) && is_numeric($author)) {
-        $sql .= " author = ?";
+        $sql .= " m.author = ?";
         $bindvars[] = (int) $author;
         if (isset($status)) {
-            $sql .= " AND author_status=?";
+            $sql .= " AND m.author_status=?";
             $bindvars[] = (int) $status;
         }
         if (isset($delete) && !empty($delete)) {
-            $sql .= " AND author_delete=?";
+            $sql .= " AND m.author_delete=?";
             $bindvars[] = (string) $delete; 
         }
     }
 
     if ($id > 0) {
-        $sql .= " AND (left_id >= ?";
-        $sql .= " AND  right_id <= ?)";
+        $sql .= " AND (m.left_id >= ?";
+        $sql .= " AND  m.right_id <= ?)";
         $bindvars[] = (int) $node['left_id'];
         $bindvars[] = (int) $node['right_id'];
     }
 
     if (!empty($orderby)) {
-        $sql .= " ORDER BY $orderby";
+        $sql .= " ORDER BY m.$orderby";
     } else {
         if (!empty($reverse)) {
-          $sql .= " ORDER BY right_id DESC";
+          $sql .= " ORDER BY m.right_id DESC";
         } else {
-            $sql .= " ORDER BY left_id";
+            $sql .= " ORDER BY m.left_id";
         }
     }
+
 // cfr. xarcachemanager - this approach might change later
     $expire = xarModVars::get('messages','cache.userapi.get_multiple');
 
@@ -159,6 +162,9 @@ function messages_userapi_get_multiple($args)
         // FIXME Delete after date testing
         // $row['date'] = xarLocaleFormatDate("%B %d, %Y %I:%M %p",$row['datetime']);
         $row['date'] = $row['datetime'];
+        if ($row['parentanon'] != 1) {
+            $row['parentanon'] = 0;
+        }
         comments_renderer_wrap_words($row['text'],80);
         $commentlist[] = $row;
         $result->MoveNext();

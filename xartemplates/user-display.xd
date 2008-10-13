@@ -1,4 +1,5 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:style scope="module" module="messages" file="messages" />
     <div class="xar-mod-head">
         <span class="xar-mod-title"><xar:mlstring>Private Messages</xar:mlstring></span>
     </div>
@@ -11,7 +12,7 @@
         <xar:data-display object="$object" tplmodule="messages" action="$action" folder="$folder"/>
         <div class="xar-margin-thicktop">
             <xar:if condition="xarSecurityCheck('AddMessages', 0)">
-                <a href="#xarModURL('messages','user','reply',array('id' => $object->properties['id']->value))#" title="#xarML('Delete Message')#"><xar:mlstring>Reply</xar:mlstring></a>
+                <a href="#xarModURL('messages','user','reply',array('id' => $object->properties['id']->value, 'folder' => $folder))#" title="#xarML('Delete Message')#"><xar:mlstring>Reply</xar:mlstring></a>
             <xar:else/>
                 <xar:mlstring>Reply</xar:mlstring>
             </xar:if>

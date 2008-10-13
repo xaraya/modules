@@ -80,6 +80,7 @@ function messages_userapi_getall( $args )
         $message['author_delete']    = $node['author_delete'];
         $message['recipient_delete'] = $node['recipient_delete'];
         $message['postanon']         = $node['postanon'];  
+        $message['parentanon']       = $node['parentanon'];  
 
         
         if($folder == 'inbox'){
