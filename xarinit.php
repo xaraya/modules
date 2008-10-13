@@ -81,11 +81,6 @@ function messages_init()
     xarModVars::set('messages', 'drafts', true );
     xarModVars::set('messages', 'allowedSendMessages', serialize(array()));
 
-
-    // read_messages is intended only for users
-    // it will store the message id of each message that
-    // the user has seen
-    xarModVars::set('messages', 'read_messages', serialize(array()));
     xarModVars::set('messages', 'away_message', '');
 
     /*

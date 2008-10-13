@@ -36,26 +36,6 @@ function messages_user_display( $args )
         return xarTplModule('messages','user','message_errors',array('layout' => 'bad_id'));
     }
 
-/*
-    $read_messages = xarModUserVars::get('messages','read_messages');
-
-
-    if (!empty($read_messages)) {
-        $read_messages = unserialize($read_messages);
-    } else {
-        $read_messages = array();
-    }
-*/
-
-    /*
-     * if it's not already an array, then this must be
-     * the first time we've looked at it
-     * so let's make it an array :)
-     */
-//    if (!is_array($read_messages)) {
-//        $read_messages = array();
-//    }
-
 //    $data['message'] = $messages[0];
     $data['action']  = 'display';
 

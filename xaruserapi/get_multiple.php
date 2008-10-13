@@ -56,7 +56,7 @@ function messages_userapi_get_multiple($args)
     }
 
     if (!isset($status) || !is_numeric($status)) {
-        $status = 2;
+        $status = MESSAGES_STATUS_READ;
     }
 
     $dbconn = xarDB::getConn();
