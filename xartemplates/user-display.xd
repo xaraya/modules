@@ -10,6 +10,12 @@
 
         <xar:data-display object="$object" tplmodule="messages" action="$action" folder="$folder"/>
         <div class="xar-margin-thicktop">
+            <xar:if condition="xarSecurityCheck('AddMessages', 0)">
+                <a href="#xarModURL('messages','user','reply',array('id' => $object->properties['id']->value))#" title="#xarML('Delete Message')#"><xar:mlstring>Reply</xar:mlstring></a>
+            <xar:else/>
+                <xar:mlstring>Reply</xar:mlstring>
+            </xar:if>
+             | 
             <xar:if condition="xarSecurityCheck('ManageMessages', 0)">
                 <a href="#xarModURL('messages','user','delete',array('id' => $object->properties['id']->value, 'folder' => $folder))#" title="#xarML('Delete Message')#"><xar:mlstring>Delete</xar:mlstring></a>
             <xar:else/>
