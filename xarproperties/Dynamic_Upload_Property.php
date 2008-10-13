@@ -35,6 +35,7 @@ class Dynamic_Upload_Property extends Dynamic_Property
                          'stored'   => false);
     var $basedir = null;
     var $importdir = null;
+    var $style = '';
 
     // this is used by Dynamic_Property_Master::addProperty() to set the $object->upload flag
     var $upload = true;
@@ -171,7 +172,6 @@ class Dynamic_Upload_Property extends Dynamic_Property
         }
     }
 
-//    function showInput($name = '', $value = null, $size = 0, $maxsize = 0, $id = '', $tabindex = '')
     /**
      * Show the input form
      * @param array args
@@ -227,11 +227,16 @@ class Dynamic_Upload_Property extends Dynamic_Property
         if (!isset($value)) {
             $value = $this->getValue();
         }
+        if (isset($args['style'])) $this->style = $args['style'];
 
         return xarModAPIFunc('uploads','user','showoutput',
-                             array('value' => $value,
+            array(
+                'value' => $value,
                                    'format' => 'upload',
-                                   'multiple' => $this->multiple));
+                'multiple' => $this->multiple,
+                'style' => $this->style
+            )
+        );
     }
 
     /**

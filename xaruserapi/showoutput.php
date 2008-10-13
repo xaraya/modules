@@ -67,6 +67,9 @@ function uploads_userapi_showoutput($args)
     // FIXME: Quick Fix - Forcing return of raw array of fileId's with their metadata for now
     // Rabbitt :: March 29th, 2004
 
+    // 2008-10-13: pass the style down the chain.
+    if (isset($style)) $data['style'] = $style;
+
     if (isset($style) && $style = 'icon') {
         if (is_array($value) && count($value)) {
             $data['Attachments'] = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $value));

@@ -1,5 +1,4 @@
 <xar:style scope="module" module="uploads" file="uploads" />
-
 <xar:if condition="isset($fileList) AND is_array($fileList) AND count($fileList)">
     <xar:loop name="$Attachments">
         <div class="xar-uploads-icon">
