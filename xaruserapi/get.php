@@ -27,27 +27,27 @@ function messages_userapi_get( $args )
     }
 
     if(!isset($status) || !in_array($status, array(1,2,3))){
-        $status = 2;
+        $status = MESSAGES_STATUS_READ;
     }
 
     $list1 = xarModAPIFunc('messages',
                                    'user',
                                    'get_multiple',
                                     array('author'       => xarUserGetVar('id'),
-                                          'status'      => 2));
+                                          'status'      => MESSAGES_STATUS_READ));
     $list = xarModAPIFunc('messages',
                            'user',
                            'get_one',
                             array('id' => $id));
-    $read_list = xarModAPIFunc('messages',
+    $unread_list = xarModAPIFunc('messages',
                                     'user',
                                     'get_multiple',
                                     array('recipient' => xarUserGetVar('id'),
-                                            'status' => 1
+                                            'status' => MESSAGES_STATUS_UNREAD
                                     ));
-    $read_messages = array();
+    $unread_messages = array();
     foreach ($read_list as $k => $v) {
-        $read_messages[] = $v['id'];
+        $unread_messages[] = $v['id'];
     }
 
     $messages = array();
