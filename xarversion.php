@@ -13,7 +13,7 @@
  */
 $modversion['name']         = 'HTML';
 $modversion['id']           = '779';
-$modversion['version']      = '1.4.1';
+$modversion['version']      = '1.4.0';
 $modversion['displayname']  = xarML('HTML');
 $modversion['description']  = 'Configure the allowed HTML or your site';
 $modversion['credits']      = 'xardocs/credits.txt';

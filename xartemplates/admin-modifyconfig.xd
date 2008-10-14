@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
   <span class="xar-mod-title">
@@ -29,7 +30,7 @@
           <xar:mlstring>You may choose either or both of the following linebreak transforms:</xar:mlstring>
       </p>
       <div class="xar-form-input-wrapper-after">
-        <xar:if condition="xarModGetVar('html', 'dolinebreak')">
+        <xar:if condition="xarModVars::get('html', 'dolinebreak')">
           <input type="checkbox" name="dolinebreak" id="dolinebreak" value="1" checked="checked" />
           <xar:else />
           <input type="checkbox" name="dolinebreak" id="dolinebreak" value="1" />
@@ -42,7 +43,7 @@
       </div>
       <div class="xar-form-input-wrapper-after">
 
-        <xar:if condition="xarModGetVar('html', 'dobreak')">
+        <xar:if condition="xarModVars::get('html', 'dobreak')">
           <input type="checkbox" name="dobreak" id="dobreak" value="1" checked="checked" />
           <xar:else />
           <input type="checkbox" name="dobreak" id="dobreak" value="1" />
@@ -81,3 +82,4 @@
 
   </form>
 </div>
+</xar:template>

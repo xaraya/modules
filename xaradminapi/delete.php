@@ -49,8 +49,8 @@ function html_adminapi_delete($args)
     // Security Check
     if(!xarSecurityCheck('DeleteHTML')) return;
     // Get datbase setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $htmltable = $xartable['html'];
 
     // Delete the tag
@@ -68,14 +68,14 @@ function html_adminapi_delete($args)
     if ($tagtype['type'] == 'html') {
         $allowedhtml = array();
         // Get the current tags from config vars
-        foreach (xarConfigGetVar('Site.Core.AllowableHTML') as $key => $value) {
+        foreach (xarConfigVars::get(null,'Site.Core.AllowableHTML') as $key => $value) {
             // Remove the deleted html tag from the config vars
             if ($key != $html['tag']) {
                 $allowedhtml[$key] = $value;
             }
         }
         // Set the config vars
-        xarConfigSetVar('Site.Core.AllowableHTML', $allowedhtml);
+        xarConfigVars::set(null,'Site.Core.AllowableHTML', $allowedhtml);
     }
     // Let any hooks know that we have deleted a html
     xarModCallHooks('item', 'delete', $cid, '');

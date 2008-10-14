@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
@@ -22,13 +23,13 @@
                 <td class="#$rowclass#" align="center">
                     #$loop:item['type']#
                 </td>
-                <td align="center" class="#$rowclass#">
+            <td align="center" class="#$rowclass#">
                     <xar:if condition="empty($loop:item['editurl'])">
                         <xar:mlstring>Edit</xar:mlstring>
                         <xar:else />
                             <a href="#$loop:item['editurl']#"><xar:mlstring>Edit</xar:mlstring></a>
                     </xar:if>
-                    &nbsp;|&nbsp;
+                &#160;|&#160;
                     <xar:if condition="empty($loop:item['deleteurl'])">
                         <xar:mlstring>Delete</xar:mlstring>
                         <xar:else />
@@ -39,4 +40,4 @@
         </xar:loop>
     </table>
 </div>
-
+</xar:template>

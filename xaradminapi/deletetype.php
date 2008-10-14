@@ -49,8 +49,8 @@ function html_adminapi_deletetype($args)
     if(!xarSecurityCheck('DeleteHTML')) return;
 
     // Get datbase setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     // Set table name
     $htmltable = $xartable['html'];
@@ -72,7 +72,7 @@ function html_adminapi_deletetype($args)
     if ($type['type'] == 'html') {
         $allowedhtml = array();
         // Set the config vars to an empty array
-        xarConfigSetVar('Site.Core.AllowableHTML', $allowedhtml);
+        xarConfigVars::set(null,'Site.Core.AllowableHTML', $allowedhtml);
     }
     // Let any hooks know that we have deleted a tag type
     xarModCallHooks('item', 'deletetype', $id, '');

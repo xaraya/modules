@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
@@ -19,7 +20,7 @@
                     <xar:mlstring>Allowed</xar:mlstring>
                 </th>
                 <th>
-                    <xar:mlstring>Allowed With Attributes</xar:mlstring>
+                    <xar:mlstring>Allowed With Parameters</xar:mlstring>
                 </th>
                 <th>
                     <xar:mlstring>Options</xar:mlstring>
@@ -84,3 +85,4 @@
         <input type="submit" value="#$submitlabel#" />
     </form>
 </div>
+</xar:template>

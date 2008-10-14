@@ -45,8 +45,8 @@ function html_adminapi_update($args)
     // Security Check
     if(!xarSecurityCheck('EditHTML')) return;
     // Get datbase setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $htmltable = $xartable['html'];
 
     // Update the html tag

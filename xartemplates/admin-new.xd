@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <script type="text/javascript">
 <!--
@@ -40,13 +41,13 @@
             </label>
             <p class="xar-form-container-after">
                    <input type="radio" value="0" name="allowed" id="0" tabindex="3" />
-                   &nbsp;&nbsp;<xar:mlstring>Not Allowed</xar:mlstring>
+                   &#160;&#160;<xar:mlstring>Not Allowed</xar:mlstring>
                    <br />
                    <input type="radio" value="1" name="allowed" id="1" tabindex="4" />
-                   &nbsp;&nbsp;<xar:mlstring>Allowed</xar:mlstring>
+                   &#160;&#160;<xar:mlstring>Allowed</xar:mlstring>
                    <br />
                    <input type="radio" value="2" name="allowed" id="2" tabindex="5" checked="checked" />
-                   &nbsp;&nbsp;<xar:mlstring>Allowed with Attributes</xar:mlstring>
+                   &#160;&#160;<xar:mlstring>Allowed with Parameters</xar:mlstring>
             </p>
          </div>
         </fieldset>
@@ -56,3 +57,4 @@
     </form>
 
 </div>
+</xar:template>

@@ -77,7 +77,7 @@ function html_admin_edit()
         return; // throw back
     }
 
-    xarSessionSetVar('statusmsg', xarML('HTML Tag Updated'));
+    xarSession::setVar('statusmsg', xarML('HTML Tag Updated'));
 
     // Redirect
     xarResponseRedirect(xarModURL('html', 'admin', 'set'));

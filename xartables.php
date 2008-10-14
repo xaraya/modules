@@ -25,7 +25,7 @@ function html_xartables()
 {
     // Initialise table array
     $xartable = array();
-    $prefix = xarDBGetSiteTablePrefix();
+    $prefix = xarDB::getPrefix();
 
     // Set the prefix name for the html table
     $html = $prefix . '_html';

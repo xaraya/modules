@@ -22,6 +22,7 @@
  */
 function html_adminapi_getmenulinks()
 {
+    $menulinks = array();
     if (xarSecurityCheck('AddHTML')) {
 
         $menulinks[] = Array('url'   => xarModURL('html',
@@ -58,9 +59,6 @@ function html_adminapi_getmenulinks()
                                                   'modifyconfig'),
                               'title' => xarML('Modify the configuration of the HTML Module'),
                               'label' => xarML('Modify Config'));
-    }
-    if (empty($menulinks)){
-        $menulinks = '';
     }
     return $menulinks;
 }
