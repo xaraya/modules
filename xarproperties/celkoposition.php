@@ -243,6 +243,7 @@ class CelkoPositionProperty extends DataProperty
 
     }
 
+        /*
     public function showOutput(Array $args = array())
     {
         extract($args);
@@ -280,6 +281,7 @@ class CelkoPositionProperty extends DataProperty
 
         return parent::showOutput($data);
     }
+        */
     
     function updateposition($itemid=0, $parent=0, $point_of_insertion=1) 
     {
