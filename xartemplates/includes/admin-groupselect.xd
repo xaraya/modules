@@ -2,7 +2,7 @@
     <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:comment>Common Administration menu</xar:comment>
-    <xar:base-include-javascript filename="joomla.javascript.js" module="simpleadmin" position="head"/>
+    <xar:base-include-javascript filename="joomla.javascript.js" module="messages" position="head"/>
     <xar:base-include-javascript position="body" type="code" code="sortDropDown('group');document.getElementById('Refresh').click();" />
     <fieldset>
           <legend><xar:mlstring>Message Send Lists</xar:mlstring></legend>
