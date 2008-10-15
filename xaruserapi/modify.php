@@ -95,7 +95,7 @@ function messages_userapi_modify($args)
                      (($useeditstamp == 2 ) && (xarUserGetVar('id')<>$adminid))) {
         $text .= "\n";
         $text .= xarTplModule('messages','user','modifiedby', array(
-                              'isauthor' => (xarUserGetVar('id') == $authorid),
+                              'isauthor' => (xarUserGetVar('id') == $author_id),
                               'postanon'=>$postanon));
         $text .= "\n"; //let's keep the begin and end tags together around the wrapped content
     }

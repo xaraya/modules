@@ -69,7 +69,7 @@ function messages_userapi_update( $args )
                                 'title'       => $subject,
                                 'date'        => time(),
                                 'text'        => $body,
-                                'authorid'    => xarUserGetVar('id'),
+                                'author_id'    => xarUserGetVar('id'),
                                 'status'      => ($draft ? 1 : 2),
                                 'postanon'    => $postanon,
                                 'useeditstamp'=> 0));

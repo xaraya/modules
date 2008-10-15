@@ -108,7 +108,7 @@ function messages_user_new()
                     $data['users']                      = $users;
 
                     $data['message']['author']          = xarUserGetVar('name');
-                    $data['message']['authorid']        = xarUserGetVar('id');
+                    $data['message']['author_id']        = xarUserGetVar('id');
                     $data['message']['recipient']       = xarUserGetVar('name',$recipient);
                     $data['message']['recipient_id']    = $recipient;
                     $data['message']['subject']         = $subject;
@@ -208,7 +208,7 @@ function messages_user_new()
                 $data['postanon']                   = $postanon;     
 
                 $data['message']['author']          = xarUserGetVar('name');
-                $data['message']['authorid']        = xarSession::getVar('role_id');
+                $data['message']['author_id']        = xarSession::getVar('role_id');
                 $data['message']['recipient']       = xarUserGetVar('name',$recipient);
                 $data['message']['recipient_id']    = $recipient;
                 $data['message']['subject']         = $subject;
@@ -259,7 +259,7 @@ function messages_user_new()
                 $data['action']                     = 'preview';
 
                 $data['message']['author']          = xarUserGetVar('name');
-                $data['message']['authorid']        = xarSession::getVar('role_id');
+                $data['message']['author_id']        = xarSession::getVar('role_id');
                 $data['message']['recipient']       = xarUserGetVar('name',$recipient);
                 $data['message']['recipient_id']    = $recipient;
                 $data['message']['subject']         = $subject;

@@ -82,7 +82,7 @@ function messages_user_modify( $args )
                 $data['action']                     = 'post';
     
                 $data['message']['author']          = xarUserGetVar('name');
-                $data['message']['authorid']        = xarUserGetVar('id');
+                $data['message']['author_id']        = xarUserGetVar('id');
                 $data['message']['recipient']       = xarUserGetVar('name',$recipient);
                 $data['message']['recipient_id']    = $recipient;
                 $data['message']['subject']         = $subject;
@@ -157,7 +157,7 @@ function messages_user_modify( $args )
             $data['message']                    = $messages[0];
 
             $data['message']['author']          = xarUserGetVar('name');
-            $data['message']['authorid']        = xaruserGetVar('id');
+            $data['message']['author_id']        = xaruserGetVar('id');
             $data['message']['recipient']       = xarUserGetVar('name',$recipient);
             $data['message']['recipient_id']    = $recipient;
             $data['message']['subject']         = $subject;
