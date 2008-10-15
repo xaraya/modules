@@ -12,10 +12,10 @@ function messages_userapi_reply_message_text( $args )
 {
     extract($args);
     
-    if($message['postanon']==1){
-        $sender = "Anonymous";
+    if($message['postanon'] == 1){
+        $author = "Anonymous";
     }else {
-        $sender = $message['sender'];
+        $author = $message['author'];
     }
     
     $sent = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', $message['raw_date']);
@@ -28,7 +28,7 @@ function messages_userapi_reply_message_text( $args )
     
     $body     = "\0\n";
     $body     .="----------Original messages-----------";
-    //$body    .= "\nFrom:  $sender \n";
+    //$body    .= "\nFrom:  $author \n";
     $body    .= "\nSent : $sent";
     //$body  .= "To:        $recipient\n";
     $body    .= "\nSubject : $subject\n";

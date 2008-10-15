@@ -30,7 +30,7 @@ function messages_user_display( $args )
 
     $current_user = xarSession::getVar('role_id');
 
-    // Check that the current user is either sender or receiver
+    // Check that the current user is either author or recipient
     if (($data['object']->properties['to']->value != $current_user) &&
         ($data['object']->properties['from']->value != $current_user)) {
         return xarTplModule('messages','user','message_errors',array('layout' => 'bad_id'));

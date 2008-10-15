@@ -54,8 +54,8 @@ function messages_userapi_get( $args )
 
     foreach ($list as $key => $node) {
         $message['id']            = $node['id'];
-        $message['sender']        = $node['author'];
-        $message['sender_id']     = $node['author_id'];
+        $message['author']        = $node['author'];
+        $message['author_id']     = $node['author_id'];
         $message['recipient']     = $node['recipient'];
         $message['recipient_id']  = $node['recipient_id'];
         $message['raw_date']      = $node['datetime'];

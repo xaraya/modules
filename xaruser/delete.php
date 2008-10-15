@@ -33,7 +33,7 @@ function messages_user_delete()
     $data['object']->getItem(array('itemid' => $id));
 
 
-    // Check the folder, and that the current user is either sender or receiver
+    // Check the folder, and that the current user is either author or recipient
     switch ($folder) {
         case 'inbox':
             if ($data['object']->properties['to']->value != xarSession::getVar('role_id')) {

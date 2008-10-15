@@ -6,17 +6,17 @@
     <xar:set name="postanon">
         $properties['postanon']->value
     </xar:set>
-    <xar:set name="receiver">
+    <xar:set name="recipient">
         $properties['to']->value
     </xar:set>
-    <xar:set name="sender">
+    <xar:set name="author">
         $properties['from']->value
     </xar:set>
     <xar:set name="vettor">
-        xarSession::getVar('role_id') == $receiver ? $receiver : $sender
+        xarSession::getVar('role_id') == $recipient ? $recipient : $author
     </xar:set>
     <xar:set name="vettee">
-        xarSession::getVar('role_id') == $receiver ? $sender : $receiver
+        xarSession::getVar('role_id') == $recipient ? $author : $recipient
     </xar:set>
     <xar:if condition="empty($vettee)">
         <xar:set name="is_sendtouser">
@@ -42,8 +42,8 @@
         </span>
         <xar:comment>Psspl:Modifided the code for anonymous message</xar:comment>
         <xar:if condition="!$postanon AND $is_sendtouser">
-            <a href="#$sender#" title="#xarML('View user info')#">
-                #xarUserGetVar('name',$sender)#
+            <a href="#$author#" title="#xarML('View user info')#">
+                #xarUserGetVar('name',$author)#
             </a>
         <xar:else/>
             <xar:mlstring>Anonymous</xar:mlstring>
@@ -55,21 +55,21 @@
             <xar:mlstring>To:</xar:mlstring>
         </span>
         <xar:if condition="$action eq 'reply' OR  $action eq 'modify'">
-            <xar:if condition="xarSession::getVar('role_id') eq $receiver">
-                #xarUserGetVar('name',$receiver)#
+            <xar:if condition="xarSession::getVar('role_id') eq $recipient">
+                #xarUserGetVar('name',$recipient)#
             <xar:else/>
                 <xar:if condition="isset($previousanon) AND $previousanon">
                     <xar:mlstring>Anonymous</xar:mlstring>
                     <xar:data-input property="$properties['to']" hidden="hidden"/>
                 <xar:elseif condition="$is_sendtouser" />
-                    #xarUserGetVar('name',$receiver)#
+                    #xarUserGetVar('name',$recipient)#
                 <xar:else/>
                     <xar:mlstring>Anonymous</xar:mlstring>
                 </xar:if>
             </xar:if>
         <xar:else/>
             <xar:if condition="$is_sendtouser">
-                #xarUserGetVar('name',$receiver)#
+                #xarUserGetVar('name',$recipient)#
             <xar:else/>
                 <xar:mlstring>Anonymous</xar:mlstring>
             </xar:if>

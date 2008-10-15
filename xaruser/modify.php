@@ -41,7 +41,7 @@ function messages_user_modify( $args )
     xarTplSetPageTitle( xarML('Modify Message') );
     $data['id']             = $id;
         
-    // Check that the current user is either sender or receiver
+    // Check that the current user is either author or recipient
     if (($data['object']->properties['to']->value != xarSession::getVar('role_id')) &&
         ($data['object']->properties['from']->value != xarSession::getVar('role_id'))) {
         return xarTplModule('messages','user','message_errors',array('layout' => 'bad_id'));
@@ -81,8 +81,8 @@ function messages_user_modify( $args )
 
                 $data['action']                     = 'post';
     
-                $data['message']['sender']          = xarUserGetVar('name');
-                $data['message']['senderid']        = xarUserGetVar('id');
+                $data['message']['author']          = xarUserGetVar('name');
+                $data['message']['authorid']        = xarUserGetVar('id');
                 $data['message']['recipient']       = xarUserGetVar('name',$recipient);
                 $data['message']['recipient_id']    = $recipient;
                 $data['message']['subject']         = $subject;
@@ -156,8 +156,8 @@ function messages_user_modify( $args )
             $data['folder']                     = 'drafts';
             $data['message']                    = $messages[0];
 
-            $data['message']['sender']          = xarUserGetVar('name');
-            $data['message']['senderid']        = xaruserGetVar('id');
+            $data['message']['author']          = xarUserGetVar('name');
+            $data['message']['authorid']        = xaruserGetVar('id');
             $data['message']['recipient']       = xarUserGetVar('name',$recipient);
             $data['message']['recipient_id']    = $recipient;
             $data['message']['subject']         = $subject;

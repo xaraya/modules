@@ -107,8 +107,8 @@ function messages_user_new()
 
                     $data['users']                      = $users;
 
-                    $data['message']['sender']          = xarUserGetVar('name');
-                    $data['message']['senderid']        = xarUserGetVar('id');
+                    $data['message']['author']          = xarUserGetVar('name');
+                    $data['message']['authorid']        = xarUserGetVar('id');
                     $data['message']['recipient']       = xarUserGetVar('name',$recipient);
                     $data['message']['recipient_id']    = $recipient;
                     $data['message']['subject']         = $subject;
@@ -136,7 +136,7 @@ function messages_user_new()
                     }
 
                     if ($replymessages[0]['recipient_id'] != xarSession::getVar('role_id') &&
-                        $replymessages[0]['sender_id'] != xarSession::getVar('role_id')) {
+                        $replymessages[0]['author_id'] != xarSession::getVar('role_id')) {
                             $data['error'] = xarML("You are NOT authorized to view someone else's mail!");
                             return $data;
                     }
@@ -144,7 +144,7 @@ function messages_user_new()
                     $data['id']             = $id;
                     $data['post_url']       = xarModURL('messages', 'user', 'new');
                     $data['input_title']    = xarML('Reply to a Message');
-                    $data['recipient']      = $replymessages[0]['sender_id'];
+                    $data['recipient']      = $replymessages[0]['author_id'];
                     $data['replymessage']   = $replymessages[0];
 
                     // Get $recipient information
@@ -178,7 +178,7 @@ function messages_user_new()
                 }
 
                 if ($replymessages[0]['recipient_id'] != xarSession::getVar('role_id') &&
-                    $replymessages[0]['sender_id'] != xarSession::getVar('role_id')) {
+                    $replymessages[0]['author_id'] != xarSession::getVar('role_id')) {
                         $data['error'] = xarML("You are NOT authorized to view someone else's mail!");
                         return $data;
                 }
@@ -186,7 +186,7 @@ function messages_user_new()
                 $data['id']             = $id;
                 $data['post_url']       = xarModURL('messages', 'user', 'new');
                 $data['input_title']    = xarML('Reply to a Message');
-                $data['recipient']      = $replymessages[0]['sender_id'];
+                $data['recipient']      = $replymessages[0]['author_id'];
                 $data['replymessage']   = $replymessages[0];
 
                 // Get $recipient information
@@ -207,8 +207,8 @@ function messages_user_new()
                 $data['message']['postanon']        = $postanon;
                 $data['postanon']                   = $postanon;     
 
-                $data['message']['sender']          = xarUserGetVar('name');
-                $data['message']['senderid']        = xarSession::getVar('role_id');
+                $data['message']['author']          = xarUserGetVar('name');
+                $data['message']['authorid']        = xarSession::getVar('role_id');
                 $data['message']['recipient']       = xarUserGetVar('name',$recipient);
                 $data['message']['recipient_id']    = $recipient;
                 $data['message']['subject']         = $subject;
@@ -258,8 +258,8 @@ function messages_user_new()
                 $data['input_title']                = xarML('Compose Message');
                 $data['action']                     = 'preview';
 
-                $data['message']['sender']          = xarUserGetVar('name');
-                $data['message']['senderid']        = xarSession::getVar('role_id');
+                $data['message']['author']          = xarUserGetVar('name');
+                $data['message']['authorid']        = xarSession::getVar('role_id');
                 $data['message']['recipient']       = xarUserGetVar('name',$recipient);
                 $data['message']['recipient_id']    = $recipient;
                 $data['message']['subject']         = $subject;

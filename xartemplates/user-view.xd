@@ -108,14 +108,14 @@
                                 <img src="#$loop:item['status_image']#" alt="#$loop:item['status_alt']#" title="#$loop:item['status_alt']#" />
                             </td>
                             <td class="#$rowclass# xar-align-left xar-messages-mailboxlistsender">
-                                <xar:set name="sender">$loop->item['author_id']</xar:set>
-                                <xar:set name="receiver">$loop->item['recipient_id']</xar:set>
+                                <xar:set name="author">$loop->item['author_id']</xar:set>
+                                <xar:set name="recipient">$loop->item['recipient_id']</xar:set>
                                 <xar:if condition="$folder eq 'inbox'">
                                     <xar:set name="is_sendtouser">
                                         xarModAPIFunc('messages','user','is_sendtouser', 
                                             array(
-                                                'currentuser' => $receiver,
-                                                'sendtouser' => $sender,
+                                                'currentuser' => $recipient,
+                                                'sendtouser' => $author,
                                             )
                                         )
                                     </xar:set>
@@ -130,8 +130,8 @@
                                     <xar:set name="is_sendtouser">
                                         xarModAPIFunc('messages','user','is_sendtouser', 
                                             array(
-                                                'currentuser' => $sender,
-                                                'sendtouser' => $receiver,
+                                                'currentuser' => $author,
+                                                'sendtouser' => $recipient,
                                             )
                                         )
                                     </xar:set>
