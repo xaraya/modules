@@ -81,7 +81,7 @@
         if you enable the uploads hooks for xarbb (for all forums or a particular forum).
     </xar:comment>
 
-    <xar:if condition="xarVarGetCached('Hooks.uploads','ishooked')">
+    <xar:if condition="xarVarGetCached('Hooks.dynamicdata','withupload')">
         <xar:set name="enctype">'multipart/form-data'</xar:set>
     <xar:else />
         <xar:set name="enctype">'application/x-www-form-urlencoded'</xar:set>

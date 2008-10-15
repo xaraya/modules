@@ -45,7 +45,7 @@
 </div>
 
 <div class="xarbb-tablewrapper">
-    <xar:if condition="xarVarGetCached('Hooks.uploads','ishooked')">
+    <xar:if condition="xarVarGetCached('Hooks.dynamicdata','withupload')">
         <xar:set name="enctype">'multipart/form-data'</xar:set>
     <xar:else />
         <xar:set name="enctype">'application/x-www-form-urlencoded'</xar:set>
