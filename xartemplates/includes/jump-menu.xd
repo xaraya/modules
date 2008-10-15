@@ -1,9 +1,8 @@
-<div class="ievents-search">
-<div class="ievents-search-inner">
-    <h1><xar:mlstring>Search Events</xar:mlstring></h1>
+<fieldset class="ievents-search">
+    <legend><xar:mlstring>Search Events</xar:mlstring></legend>
 
     <xar:if condition="xarThemeIsAvailable('rss') or !empty($export_handlers)">
-        <p>
+        <div class="xar-margin-thickbottom">
             <xar:if condition="xarThemeIsAvailable('rss')">
                 <a href="#xarModURL('ievents','user','view',array_merge($feed_params,array('format'=&gt;'rss')))#" class="ievents-export-rss" title="#xarML('RSS feed for these events')#">RSS</a>
             </xar:if>
@@ -14,7 +13,7 @@
                     <a href="#xarModURL('ievents','user','view',array_merge($feed_params,array('format'=&gt;$loop:key)))#" title="#$loop:item.desc#" class="ievents-export-#$loop:item.class#">#$loop:item.short#</a>
                 </xar:loop>
             </xar:if>
-        </p>
+        </div>
     </xar:if>
 
     <form method="get" action="#xarModURL('ievents','user','view')#">
@@ -40,9 +39,13 @@
                         <xar:data-input name="cid" id="calendar" type="6" validation="$calendarlist" value="$cid" />
                     </xar:if>
                 </td>
-                <td><input type="submit" value="#xarML('Find Events')#" /></td>
+                <td>
+					<input type="submit" value="#xarML('Find Events')#" />
+				</td>
             </tr> 
         </table>
+
+		<hr />
 
         <xar:comment>
             Use javascript to enable and disable the advanced search options as it is clicked.
@@ -124,7 +127,7 @@
                     <xar:if condition="!empty($loop:item.catlist)">
                         <select class="ievents-jump-catids" name="catids[]" id="catids_#$loop:index#" multiple="multiple">
                             <optgroup label="#xarVarPrepForDisplay($loop:basecats:item.catname)#">
-                            <xar:set name="max_cat_depth">#xarModAPIfunc('ievents','user','params',array('name'=&gt;'max_cat_depth'))#</xar:set>
+                            <xar:set name="max_cat_depth">#xarModGetVar('ievents','max_cat_depth')#</xar:set>
                             <xar:loop name="$loop:item.catlist">
                                 <xar:if condition="$loop:item.level le $max_cat_depth">
                                     <xar:if condition="in_array($loop:item.cid, $catids)">
@@ -166,13 +169,7 @@
         </div>
         </xar:if>
 
-        <div class="ievents-search-box-bottom">
-            <p class="adv-submit">
-                <input type="submit" value="#xarML('Find Events')#" />
-            </p>
-        </div>
         <xar:comment>End Advanced Search section</xar:comment>
     </div>
     </form>
-</div>
-</div>
+</fieldset>

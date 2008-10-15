@@ -10,11 +10,9 @@ function ievents_adminapi_delete($args)
 {
     extract($args);
 
-    list($module, $modid, $itemtype_events) =
-        xarModAPIfunc('ievents', 'user', 'params',
-            array('names' => 'module,modid,itemtype_events')
-        );
-
+    $module = 'ievents';
+    $modid = xarModGetIDFromName($module);
+    $itemtype_events = xarModGetVar('ievents', 'itemtype_events');
 
     if (empty($eid)) {
         // Event ID is mandatory.

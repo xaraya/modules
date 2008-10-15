@@ -1,0 +1,27 @@
+<div>
+	<table class="ievents-calendar-week">
+	    <tr class="ievents-calendar-week-header">
+			<xar:for start="$i = 1" test="$i le 7" iter="$i++">
+	            <th>
+					#$dayheaders.$i.d#<br />
+					#$dayheaders.$i.day#
+				</th>
+			</xar:for>
+	    </tr>
+	    <tr>
+			<xar:for start="$dow = 0" test="$dow lt 7" iter="$dow++">
+			    <xar:set name="datecheck">mktime(0, 0, 0, date("m", ($firstdayofweek + ($oneday * $dow))), date("d", ($firstdayofweek + ($oneday * $dow))) + $startingdow, date("Y", ($firstdayofweek + ($oneday * $dow))), date("Y", ($firstdayofweek + ($oneday * $dow))))</xar:set>
+				<xar:set name="classes">''</xar:set>
+				<xar:if condition="$dow eq 0 or $dow eq 6">
+					<xar:set name="classes">'ievents-weekend'</xar:set>
+				</xar:if>
+				<xar:if condition="date('Ymd') eq date('Ymd', $datecheck)">
+					<xar:set name="classes">'ievents-today'</xar:set>
+				</xar:if>
+			    <td class="#$classes#">
+			        #$cal:getEvents($datecheck, "weekly")#
+			    </td>
+			</xar:for>
+		</tr>
+    </table>
+</div>

@@ -29,9 +29,7 @@ function ievents_userapi_daterange2dates($args)
     }
 
     // Get module parameters
-    extract(xarModAPIfunc('ievents', 'user', 'params',
-        array('knames' => 'startdayofweek')
-    ));
+    $startdayofweek = xarModGetVar('ievents', 'startdayofweek');
 
     // Some handy definitions.
 

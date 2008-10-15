@@ -5,7 +5,7 @@
 </xar:comment>
 
 <xar:if condition="!empty($event.flags_arr)">
-    <span class="ievents-flags-wrapper">
+    <div class="ievents-flags-wrapper">
         <xar:loop name="$event.flags_arr">
             <xar:if condition="$loop:key eq 'T'">
                 <span class="ievents-rescheduled ievents-flag"><span>#$loop:item#</span></span>
@@ -17,10 +17,14 @@
                 <span class="ievents-cancelled ievents-flag"><span>#$loop:item#</span></span>
             <xar:elseif condition="$loop:key eq 'V'" />
                 <span class="ievents-newvenue ievents-flag"><span>#$loop:item#</span></span>
+            <xar:elseif condition="$loop:key eq 'E'" />
+                <span class="ievents-new ievents-flag"><span>#$loop:item#</span></span>
+            <xar:elseif condition="$loop:key eq 'U'" />
+                <span class="ievents-updated ievents-flag"><span>#$loop:item#</span></span>
             <xar:else />
                 <span class="ievents-other ievents-flag"><span>#$loop:item#</span></span>
             </xar:if>
         </xar:loop>
-    </span>
+    </div>
 </xar:if>
 

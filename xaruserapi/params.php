@@ -24,41 +24,42 @@ function ievents_userapi_params($args)
 
         // First day of the week.
         // 0=Sunday; 1=Monday
-        $params['startdayofweek'] = 1;
+        $startdayofweek = xarModGetVar('ievents','startdayofweek');
 
         // Time quanta.
         // The smallest chunk of time dealt with (minutes).
         // Make sure it is divisible into 60 by a whole number.
         // Range is 0 to 60 (e.g. 5, 10, 15, 20, 30), where '0' disables the quantisation feature.
-        $params['quanta'] = 15;
+//        $params['quanta'] = 15;
+        $params['quantas'] = array(0, 5, 10, 15, 20, 30);
 
         // The maximum number of categories that can be added to an event.
-        $params['maxcats'] = 10;
+//        $params['maxcats'] = 10;
 
         // Standard itemtypes.
-        $params['itemtype_events'] = 1;
-        $params['itemtype_calendars'] = 2;
+//        $params['itemtype_events'] = 1;
+//        $params['itemtype_calendars'] = 2;
 
-        $module = 'ievents';
+//        $module = 'ievents';
 
-        $params['module'] = $module;
-        $params['modid'] = xarModGetIDFromName($module);
+//        $params['module'] = $module;
+//        $params['modid'] = xarModGetIDFromName($module);
 
         // The number of days that an event is flagged as 'new' from when it was created.
-        $params['days_new'] = 5;
+//        $params['days_new'] = 5;
 
         // The number of days an avent is flagged as 'updated' from when it was last updated.
-        $params['days_updated'] = 3;
+//        $params['days_updated'] = 3;
 
         // Default events per page in listing.
-        $params['default_numitems'] = 20;
-        $params['max_numitems'] = 200;
+//        $params['default_numitems'] = 20;
+//        $params['max_numitems'] = 200;
 
         // Default start and end dates, in 'strtotime' format.
         // TODO: allow a default 'daterange' name instead.
-        $params['default_startdate'] = 'now';
-        $params['default_enddate'] = '+6 months';
-        $params['default_daterange'] = 'next6months';
+//        $params['default_startdate'] = 'now';
+//        $params['default_enddate'] = '+6 months';
+//        $params['default_daterange'] = 'next6months';
 
         // Output transform fields.
         // Only these fields will be passed through the output transform.
@@ -77,19 +78,19 @@ function ievents_userapi_params($args)
         // Summary max words (for text fields in summary mode).
         // This is really a display thing, and deserves to live in the templates.
         // TODO: it may not actually be used yet.
-        $params['summary_max_words'] = 100;
+//        $params['summary_max_words'] = 100;
 
         // Default year range in drop-downs
         // TODO: the year ranges should come from actual dates
-        $params['year_range_min'] = -3;
-        $params['year_range_max'] = +5;
+//        $params['year_range_min'] = -3;
+//        $params['year_range_max'] = +5;
 
         // Fields included in query-text searches
         $params['q_fields'] = 'title,summary,location_venue,location_postcode,external_ref';
 
         // Default group type.
         // Options are: none or '', day, week, month, year
-        $params['default_group'] = 'week';
+//        $params['default_group'] = 'week';
 
         // The complete list of options for grouping.
         $params['grouplist'] = array(
@@ -97,12 +98,13 @@ function ievents_userapi_params($args)
             'day' => xarML('Daily'),
             'week' => xarML('Weekly'),
             'month' => xarML('Monthly'),
+            'quarter' =>  xarML('Quarterly'),
             'year' => xarML('Annual'),
         );
 
         // Default date range for calendar subscriptions.
-        $params['cal_subscribe_range'] = 'window4months';
-        $params['cal_subscribe_numitems'] = 100;
+//        $params['cal_subscribe_range'] = 'window4months';
+//        $params['cal_subscribe_numitems'] = 100;
 
         // Format of the full address.
         // Fields are surrounded by {curly brackets} with contents matching the DD property names.
@@ -124,24 +126,31 @@ function ievents_userapi_params($args)
         // Date range list, used to provide a handy set of date ranges in various places
         $params['daterangelist'] = array(
             '' => xarML('-- Date range --'),
-            'next4weeks' => xarML('Next four weeks'),
-            'next6months' => xarML('Next six months'),
-            'thisyear' => xarML('This year (Jan-Dec)'),
-            'nextyear' => xarML('Next year (Jan-Dec)'),
-            'thismonth' => xarML('This month'),
-            'nextmonth' => xarML('Next month'),
-            'thisweek' => xarML('This week'),
-            'nextweek' => xarML('Next week'),
-            'today' => xarML('Today'),
+            'last4weeks' =>  xarML('Last four weeks'),
+            'next4weeks' =>  xarML('Next four weeks'),
+            'last6months' =>  xarML('Last six months'),
+            'next6months' =>  xarML('Next six months'),
+            'lastyear' =>  xarML('Last year (Jan-Dec)'),
+            'thisyear' =>  xarML('This year (Jan-Dec)'),
+            'nextyear' =>  xarML('Next year (Jan-Dec)'),
+            'lastmonth' =>  xarML('Last month'),
+            'thismonth' =>  xarML('This month'),
+            'nextmonth' =>  xarML('Next month'), 
+            'lastweek' =>  xarML('Last week'),
+            'thisweek' =>  xarML('This week'),
+            'nextweek' =>  xarML('Next week'),
+            'yesterday' =>  xarML('Yesterday'),
+            'today' =>  xarML('Today'),
+            'tomorrow' =>  xarML('Tomorrow')
         );
 
         // Maximum category depth shown in the jump menu.
         // 1 is just a single level (the root cat, shown as an option group, and one level below that)
-        $params['max_cat_depth'] = 2;
+//        $params['max_cat_depth'] = 2;
 
         // The various display formats.
         // Each of these maps to different summary and display templates.
-        $params['default_display_format'] = 'list';
+//        $params['default_display_format'] = 'list';
         $params['display_formats'] = array(
             'list' => xarML('Listings'),
             'cal' => xarML('Calendar'),
@@ -149,7 +158,7 @@ function ievents_userapi_params($args)
 
         // If true, then all category searches are performed
         // as a tree search (i.e. selected category and all descendants).
-        $params['category_tree_search'] = true;
+//        $params['category_tree_search'] = true;
 
         // Get locale data, so we can get month and day names.
         $localeData = xarMLSLoadLocaleData();
@@ -166,10 +175,12 @@ function ievents_userapi_params($args)
 
         // Days are zero-indexed. They will be rotated so the start day of the week comes first. Sunday is zero.
         for($i = 1; $i <= 7; $i+=1) {
-            $params['locale']['days']['short'][($i+$params['startdayofweek']+6) % 7] =
-                $localeData["/dateSymbols/weekdays/" . (($i+$params['startdayofweek']+6) % 7 + 1) . "/short"];
-            $params['locale']['days']['long'][($i+$params['startdayofweek']+6) % 7] =
-                $localeData["/dateSymbols/weekdays/" . (($i+$params['startdayofweek']+6) % 7 + 1) . "/full"];
+            $params['locale']['days']['xshort'][($i + $startdayofweek + 6) % 7] =
+                substr($localeData["/dateSymbols/weekdays/" . (($i + $startdayofweek + 6) % 7 + 1) . "/short"], 0, 2);
+            $params['locale']['days']['short'][($i + $startdayofweek + 6) % 7] =
+                $localeData["/dateSymbols/weekdays/" . (($i + $startdayofweek + 6) % 7 + 1) . "/short"];
+            $params['locale']['days']['long'][($i + $startdayofweek + 6) % 7] =
+                $localeData["/dateSymbols/weekdays/" . (($i + $startdayofweek + 6) % 7 + 1) . "/full"];
         }
 
         //var_dump($localeData);
@@ -182,7 +193,9 @@ function ievents_userapi_params($args)
 
         // Determine whether fulltext search is supported.
         // The mode can be 'TRUE', 'FALSE' or 'AUTO'.
+/*
         $fulltext_mode = xarModGetVar($module, 'fulltext_search');
+*/
         $params['fulltext_mode'] = (empty($fulltext_mode) ? false : true);
     }
 
@@ -206,10 +219,10 @@ function ievents_userapi_params($args)
             // Trim in case there are spaces in the list.
             $name = trim($name);
 
-            if (!empty($knames)) {
-                $return[$name] = ievents_userapi_params(array('name' => $name));
+            if (!empty($knames) && isset($params[$name])) {
+                $return[$name] = $params[$name];
             } else {
-                $return[] = ievents_userapi_params(array('name' => $name));
+                $return[] = $params[$name];
             }
         }
     } else {

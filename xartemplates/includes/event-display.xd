@@ -1,0 +1,218 @@
+<xar:comment>
+    Display an event detail.
+    Requires the following paramaters:
+    - $event
+    - $calendar (current calendar record)
+    - $categories (full list of available categories)
+</xar:comment>
+
+<xar:set name="dates">#xarModAPIfunc('ievents','user','format_datetime',array('event'=&gt;$event))#</xar:set>
+
+
+    <xar:if condition="!empty($calendar.image_name)">
+        <xar:set name="image_source">#xarTplGetImage($calendar.image_name)#</xar:set>
+        <xar:if condition="!empty($image_source)">
+            <a href="#xarModURL('ievents','user','viewcals',array('cid'=&gt;$calendar.cid))#" class="ievents-calendar-image">
+                <img src="#xarVarPrepForDisplay($image_source)#" alt="#xarVarPrepForDisplay($calendar.long_name)#" class="ievents-cal-logo" />
+            </a>
+        </xar:if>
+    </xar:if>
+
+
+<h1>#xarVarPrepForDisplay($event.title)#</h1>
+
+<div>
+    <a href="#xarModURL('ievents', 'user', 'view', array('eid'=&gt;$event.eid))#"><xar:mlstring>Link to this Event</xar:mlstring></a>
+    <xar:if condition="xarSecurityCheck('ModerateIEvent', 0, 'IEvent', $event['calendar_id'] . ':' .$event['eid']. ':' . $event['created_by'])">
+            | <a href="#xarModURL('ievents','user','modify',array('eid'=&gt;$event.eid,'return_url'=&gt;xarServerGetCurrentURL(array(),false)))#"><xar:mlstring>edit</xar:mlstring></a>
+    </xar:if>
+    <xar:if condition="xarSecurityCheck('DeleteIEvent', 0, 'IEvent', $event['calendar_id'] . ':' .$event['eid']. ':' . $event['created_by'])">
+            | <a href="#xarModURL('ievents','user','delete',array('eid'=&gt;$event.eid,'return_url'=&gt;xarServerGetCurrentURL(array('eid'=&gt;NULL),false)))#"><xar:mlstring>delete</xar:mlstring></a>
+    </xar:if>
+</div>
+
+<xar:if condition="!empty($calendar.event_header)">
+    <div class="ievents-event-calheader">
+        #$calendar.event_header#
+    </div>
+</xar:if>
+
+<div class="ievents-event-summary">
+    <xar:template file="event-flags" subdata="array('event'=&gt;$event)" />
+
+    <dl class="ievents-event">
+        <dt>
+            <xar:mlstring>Date:</xar:mlstring>
+        </dt>
+        <dd>
+             #$dates.long.date#
+            <xar:if condition="$event.duration_days eq 1">
+                <em>#$dates.short.time#</em>
+            </xar:if>
+        </dd>
+        <dt>
+            <xar:mlstring>Calendar:</xar:mlstring>
+        </dt>
+        <dd>
+            <a href="#xarModURL('ievents','user','viewcals',array('cid'=&gt;$calendar.cid))#">
+                #xarVarPrepForDisplay($calendar.long_name)#
+            </a>
+        
+        </dd>
+        <xar:if condition="!empty($event.cost)">
+            <dt>
+                <xar:mlstring>Cost:</xar:mlstring>
+            </dt>
+            <dd>
+                #xarVarPrepForDisplay($event.cost)#
+            </dd>
+        </xar:if>
+        <xar:if condition="!empty($event.summary)">
+            <dt>
+                <xar:mlstring>Summary:</xar:mlstring>
+            </dt>
+            <dd>
+                #xarVarPrepForDisplay(xarModAPIfunc('ievents','user','transform', array('text'=&gt;$event.summary)))#
+            </dd>
+        </xar:if>
+    </dl>
+</div>
+
+<xar:if condition="!empty($event.catids)">
+    <div class="ievents-event-categories">
+        <xar:mlstring>Categories:</xar:mlstring>
+        <xar:loop name="$event.catids">
+            <xar:if condition="$loop:index gt 0"> | </xar:if>
+            <a href="#xarServerGetCurrentURL(array('cats'=&gt;$loop:item,'eid'=&gt;NULL,'startnum'=&gt;NULL))#">
+                #xarVarPrepForDisplay($categories['flatlist'][$loop:item]['name'])#
+            </a>
+        </xar:loop>
+    </div>
+</xar:if>
+
+<xar:comment>
+    Amount to be displayed depends on the user permissions.
+    Only display the detail if the user has read privilege. The summary requires only overview privilege.
+</xar:comment>
+
+<xar:sec mask="ReadIEvent" instance="$event[calendar_id]:$event[eid]:ALL" catch="false">
+    <xar:if condition="!empty($event.description)">
+        <h2><xar:mlstring>Detail</xar:mlstring></h2>
+        <div>#$event.description#</div>
+    </xar:if>
+    <xar:if condition="!empty($event.url) && $event.url ne 'http://'">
+        <p>
+            <xar:ml>
+                <xar:mlstring><a href="#(1)">More information and to book a place</a> (<a href="#(1)" target="_blank">New window</a>)</xar:mlstring>
+                <xar:mlvar>#xarVarPrepForDisplay($event.url)#</xar:mlvar>
+            </xar:ml>
+        </p>
+    </xar:if>
+
+    <xar:comment>
+        TODO: do something with flags, last updated ('updated' flag if recent?), status (if admin - treat as a flag?),
+        links to categories, created date ('new' flag if recent)
+    </xar:comment>
+
+    <xar:if condition="!empty($event.location)">
+        <h2><xar:mlstring>Location</xar:mlstring></h2>
+        <dl class="ievents-event">
+            <xar:if condition="!empty($event.location.venue)">
+                <dt>
+                    <xar:mlstring>Venue:</xar:mlstring>
+                </dt>
+                <dd>
+                    #xarVarPrepForDisplay($event.location.venue)#
+                </dd>
+            </xar:if>
+
+            <xar:if condition="!empty($event.address_formatted)">
+                <dt>
+                    <xar:mlstring>Address:</xar:mlstring>
+                </dt>
+                <dd>
+                    #xarModAPIfunc('ievents','user','transform', array('html'=&gt;$event.address_formatted))#
+                </dd>
+            </xar:if>
+
+            <xar:comment>
+                <xar:if condition="!empty($event.location.address)">
+                    <dt>
+                        <xar:mlstring>Address:</xar:mlstring>
+                    </dt>
+                    <dd>
+                        #xarModAPIfunc('ievents','user','transform', array('html'=&gt;$event.location.address))#
+                    </dd>
+                </xar:if>
+                <xar:if condition="!empty($event.location.country)">
+                    <dt>
+                        <xar:mlstring>Country:</xar:mlstring>
+                    </dt>
+                    <dd>
+                        #xarVarPrepForDisplay($event.location.country)#
+                    </dd>
+                </xar:if>
+                <xar:if condition="!empty($event.location.postcode)">
+                    <dt>
+                        <xar:mlstring>Postcode:</xar:mlstring>
+                    </dt>
+                    <dd>
+                        #xarVarPrepForDisplay($event.location.postcode)#</p>
+                    </dd>
+                </xar:if>
+            </xar:comment>
+
+            <xar:comment>
+                Use the postcode to nip off to maps and directions etc. Could do this by hooks, but we'll call up
+                a sub-template to do it.
+            </xar:comment>
+            <xar:template file="event-directions-dl" />
+        </dl>
+    </xar:if>
+
+    <xar:if condition="!empty($event.contact)">
+        <h2><xar:mlstring>Contact</xar:mlstring></h2>
+        <div class="ievent-contact">
+            <dl class="ievents-event">
+                <xar:if condition="!empty($event.contact.email)">
+                    <dt>
+                        <xar:mlstring>E-mail:</xar:mlstring>
+                    </dt>
+                    <dd>
+                        <a href="mailto:#xarVarPrepForDisplay($event.contact.email)#">#xarVarPrepForDisplay($event.contact.email)#</a>
+                    </dd>
+                </xar:if>
+                <xar:if condition="!empty($event.contact.phone)">
+                    <dt>
+                        <xar:mlstring>Phone:</xar:mlstring>
+                    </dt>
+                    <dd>
+                        #xarVarPrepForDisplay($event.contact.phone)#
+                    </dd>
+                </xar:if>
+                <xar:if condition="!empty($event.contact.details)">
+                    <dt>
+                        <xar:mlstring>Further details:</xar:mlstring>
+                    </dt>
+                    <dd>
+                        #$event.contact.details#
+                    </dd>
+                </xar:if>
+            </dl>
+        </div>
+    </xar:if>
+</xar:sec>
+
+<xar:if condition="!empty($export_handlers)">
+    <h2><xar:mlstring>Download this event</xar:mlstring></h2>
+    <p>
+        <xar:loop name="$export_handlers">
+            <xar:if condition="$loop:index gt 0"> | </xar:if>
+            <a href="#xarModURL('ievents','user','view',array('format'=&gt;$loop:key,'eid'=&gt;$event.eid))#" title="#$loop:item.desc#" class="ievents-export-#$loop:item.class#">#$loop:item.short#</a>
+        </xar:loop>
+    </p>
+</xar:if>
+
+<xar:if condition="!empty($calendar.event_footer)">
+    <div class="ievents-event-calfooter">#$calendar.event_footer#</div>
+</xar:if>

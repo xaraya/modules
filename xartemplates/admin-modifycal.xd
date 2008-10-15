@@ -1,6 +1,6 @@
 <xar:style file="ievents" scope="module" />
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Events</xar:mlstring></span>
+    <span class="xar-mod-title"><xar:mlstring>Events Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
 

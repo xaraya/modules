@@ -21,30 +21,38 @@ div.ievents-modify-calendar div.ievents-hooks select {
 
 /* Flat Events listing */
 div.ievents-view dl.ievents-events {
-	margin: 0.5em 0;
+	margin: 1em 0;
 }
+/*
 div.ievents-view dl.ievents-events dt,
 div.ievents-view dl.ievents-events dd,
 div.ievents-view dl.ievents-groups dd {
 	margin-left: 0;
 }
+*/
 div.ievents-view dl.ievents-events dt {
-	margin-top: 0.5em;
-	border-top: 1px solid #eeeeee;
-	clear: both;
+    float: left;
+    width: 12em;
+    font-weight: bold;
+    clear: both;
 }
 div.ievents-view dl.ievents-events dd {
-	margin-left: 12em;
+	margin: 0 0 1em 12em;
 }
 div.ievents-view dl.ievents-events dt span.ievents-time {
 	padding-left: 12em;
 }
 
-/* Give each event lising some left margin to put the dates */
+div.ievents-view dl.ievents-events dd h3 {
+    margin-top: 0;
+}
+
+/* Give each event lising some left margin to put the dates
 div.ievents-view dl.ievents-events dt {
 	margin-left: 12em;
 	position: relative;
 }
+*/
 /* Then position the dates within the dt margin */
 div.ievents-view dl.ievents-events dt strong {
     width: 12em; /* Allow the date to wrap */
@@ -68,17 +76,15 @@ div.ievents-view dt.ievents-group {
 
 div.ievents-view dl.ievents-event dt {
 	margin-left: 0;
+    width: 12em;
+    float: left;
+    clear: both;
 }
 div.ievents-view dl.ievents-event dd {
-	margin-left: 2em;
+    margin: 0 0 1em 12em;
 }
 div.ievents-view dl.ievents-event dt {
 	font-weight: bold;
-	font-style: italic;
-	font-size: 120%;
-	color: #666666;
-	border-bottom: 2px solid #dddddd;
-	margin-top: 1em;
 }
 div.ievents-view dl.ievents-event dd.ievents-event-calfooter {
 	margin: 1em 0;
@@ -93,10 +99,7 @@ div.ievents-view dl.ievents-event dd.ievents-event-calheader {
 
 /* Next/previous links in an event detail */
 div.ievents-nextprev {
-	margin: 0.25em 0;
-	padding: 0.25wm 0;
-	border: dotted #bbbbbb;
-	border-width: 1px 0;
+	margin: 1em 0;
 }
 div.ievents-nextprev ul {
 	list-style: none;
@@ -112,20 +115,27 @@ div.ievents-nextprev li {
 	background-image: none; /* For Xaraya_Classic */
 }
 div.ievents-nextprev li a {
-	text-decoration: none;
-	font-weight: bold;
 }
 div.ievents-nextprev li span {
 	color: #dddddd;
 	font-weight: bold;
 }
-div.ievents-nextprev li.ievents-nextprev-prev {
+div.ievents-nextprev div.ievents-nextprev-prev {
+    float: left;
+    width: 25%;
 	text-align: left;
 }
-div.ievents-nextprev li.ievents-nextprev-list {
+div.ievents-nextprev div.ievents-nextprev-list {
+    width: 45%;
+    margin: auto;
 	text-align: center;
 }
-div.ievents-nextprev li.ievents-nextprev-next {
+div.ievents-nextprev div.ievents-nextprev-list h1 {
+    margin-bottom: 0;
+}
+div.ievents-nextprev div.ievents-nextprev-next {
+    float: right;
+    width: 25%;
 	text-align: right;
 }
 
@@ -199,55 +209,66 @@ dl.ievents-event {
 	border: none;
 }
 
-dd.ievents-event-summary img {
-    vertical-align: top;
-	padding-left: 1em;
+a.ievents-calendar-image {
+    display: block;
+    float: right;
+    width: auto;
 }
-
+a.ievents-calendar-image img {
+    display: block;
+}
 /* Flags wrapper */
-span.ievents-flags-wrapper {
+div.ievents-flags-wrapper {
+    margin: 1em 0;
+    font-size: 80%;
 }
-span.ievents-flags-wrapper span.ievents-flag {
-	margin: 0 1em;
-	padding: 0.1em 0.5em;
+div.ievents-flags-wrapper span.ievents-flag {
+	margin: 0 .3em;
+	padding: 0.1em 0.25em;
 	font-weight: bold;
 	color: #ffffff;
 	background-color: #999999;
 }
-span.ievents-flags-wrapper span.ievents-cancelled {
+div.ievents-flags-wrapper span.ievents-new {
 	background-color: #ba0000;
 }
-span.ievents-flags-wrapper span.ievents-full {
+div.ievents-flags-wrapper span.ievents-updated {
 	background-color: #ba0000;
 }
-span.ievents-flags-wrapper span.ievents-provisional {
+div.ievents-flags-wrapper span.ievents-cancelled {
+	background-color: #ba0000;
+}
+div.ievents-flags-wrapper span.ievents-full {
+	background-color: #ba0000;
+}
+div.ievents-flags-wrapper span.ievents-provisional {
 	background-color: #ba0000;
 }
 
 /* Search Styles */
 
 /* The search box and the table cell it is in should take up whatever space is left */
-div.ievents-search table input#q {
+.ievents-search table input#q {
     width: 94%;
 	margin-right: 4%;
 }
-div.ievents-search td#ievents-td-q {
+.ievents-search td#ievents-td-q {
     width: 100%;
 }
 
 /* Make table cell alignment explicit */
-div.ievents-search table tr th,
-div.ievents-search table tr td {
+.ievents-search table tr th,
+.ievents-search table tr td {
     vertical-align: bottom;
 	text-align: left;
 }
 
 /* Some padding on the form items */
-div.ievents-search table select {
+.ievents-search table select {
     margin-right: 0.25em;
 }
 
-div.ievents-search table tr td label {
+.ievents-search table tr td label {
     clear: both;
     display: block;
 }
@@ -256,11 +277,11 @@ span.ievents-date-divider {
     margin: 0 0.5em;
 }
 
-div.ievents-search-simple table {
+.ievents-search-simple table {
     border: none;
 	width: 98%;
 }
-div.ievents-search table, div.ievents-search td, div.ievents-search th {
+.ievents-search table, .ievents-search td, .ievents-search th {
     border: none;
 }
 
@@ -307,6 +328,10 @@ div.ievents-search-advanced-hidden {
 
 /* Calendar views: common */
 
+h3.ievents-cal-header {
+    text-align: center;
+}
+
 div.ievents-cal-wrapper {
 	vertical-align: top;
 }
@@ -314,29 +339,15 @@ div.ievents-cal-wrapper {
 /* Calendar views: large monthly TODO: limit these to a month view, somehow. */
 
 div.ievents-cal-wrapper table {
-	width: 100%;
 	margin: 1em 0;
 	border-collapse: collapse;
-	border: 1px solid #666666;
-	font-size: 12px;
 }
 div.ievents-cal-wrapper td, div.ievents-cal-wrapper th {
-	width: 14%;
 	padding: 0;
 	margin: 0;
-	border: 1px solid #aaaaaa;
-	background-color: #ffffff;
-	font-size: 12px;
-}
-div.ievents-cal-wrapper td {
-	height: 8em;
-	text-align: left;
-	vertical-align: top;
 }
 div.ievents-cal-wrapper td div.ievents-day-wrapper {
     /*padding: 0.25em;*/
-    font-size: 12px;
-    width: 100%;
     height: 8em;
     overflow: auto;
 }
@@ -347,30 +358,165 @@ div.ievents-cal-wrapper td div.ievents-day-wrapper ul {
 }
 div.ievents-cal-wrapper td div.ievents-day-wrapper ul li {
 	padding-bottom: 0.25em;
-	border-top: 1px dotted #999999;
+	border-top: 1px dotted;
 }
 
-div.ievents-cal-wrapper td div.ievents-day-number {
-	font-size: 18px;
+td div.ievents-day-number {
+	font-size: 125%;
 	font-weight: bold;
+margin: .2em .25em;
 }
 div.ievents-cal-wrapper td div.ievents-day-number span.ievents-week-number {
-    font-size: 10px;
-	color: #aaaaaa;
+    font-size: 60%;
 }
 
-div.ievents-cal-wrapper td.ievents-weekend {
+td.ievents-weekend {
 	background-color: #cceecc;
 	filter: alpha(opacity=70);
 	-moz-opacity: 70%;
 }
-div.ievents-cal-wrapper td.ievents-today {
+td.ievents-today {
 	background-color: #ffdddd;
 }
-div.ievents-cal-wrapper th {
+table.ievents-calendar-year {
+}
+td.ievents-calendar-yearmonth {
+	text-align: center; 
+	vertical-align: top;
+	width: 33%;padding: 4px;
+}
+td.ievents-calendar-yearmonth h4 {
 	text-align: center;
+	margin: .5em auto;
+}
+div.ievents-calendar-smallmonth {
+	margin: .5em;
+}
+table.ievents-calendar-year {
+	margin: .5em .25em;
+	border-collapse: collapse;
+	border-width: 0;
+	background-color: transparent;
+}
+tr.ievents-calendar-yearquarter {
+}
+td.ievents-calendar-yearmonth {
+	border: 1px solid;
+	background-color: transparent;
+}
+table.ievents-calendar-largemonth {
+	margin: .5em .25em;
+	border-collapse: collapse;
+	border: 1px solid;
+}
+table.ievents-calendar-largemonth th {
+	width: 14%;
+	border: 1px solid;
+}
+table.ievents-calendar-largemonth td {
+	width: 14%;
+	height: 8em;
+	text-align: left;
+	vertical-align: top;
+	border: 1px solid;
+}
+table.ievents-calendar-smallmonth {
+	margin: .5em .25em;
+	border-collapse: collapse;
+	border: 1px solid;
+}
+table.ievents-calendar-smallmonth th {
+	width: 14%;
+	border: 1px solid;
+}
+table.ievents-calendar-smallmonth td {
+	width: 14%;
+	height: auto;
+	text-align: center;
+	border: 1px solid;
+	padding: .2em 0;
+}
+table.ievents-calendar-week {
+	margin: .5em .25em;
+	border-collapse: collapse;
+	border: 1px solid;
+	width: 100%;
+}
+table.ievents-calendar-week th {
+	width: 12.5%;
+	border: 1px solid;
+}
+table.ievents-calendar-week td {
+	width: 14%;
+	height: auto;
+	border: 1px solid;
+}
+tr.ievents-calendar-week-header th {
+	text-align: center;
+	width: 12.5%;
+}
+table.ievents-calendar-week td ul {
+	margin: .2em;
+	padding: 0;
+	list-style: none;
+}
+table.ievents-calendar-week td li {
+	margin: 0 0 .2em 0;
+	padding: 0;
+	list-style: none;
+	border-bottom: 1px dotted;
+}
+table.ievents-calendar-day {
+	margin: .5em .25em;
+	border-collapse: collapse;
+	border: 1px solid;
+	width: 100%;
+}
+table.ievents-calendar-day th {
+	width: 12.5%;
+	border: 1px solid;
+	vertical-align: top;
+	text-align: right;
+}
+table.ievents-calendar-day td {
+	height: auto;
+	border: 1px solid;
+	text-align: left;
+	vertical-align: top;
+}
+table.ievents-calendar-day td.ievents-calendar-norm-work {
+	background-color: #DDDDFF;
+}
+table.ievents-calendar-day td.ievents-calendar-norm {
+	background-color: #DDFFDD;
+}
+table.ievents-calendar-day td.ievents-calendar-alt-work {
+	background-color: #BBBBFF;
+}
+table.ievents-calendar-day td.ievents-calendar-alt {
+	background-color: #BBFFBB;
+}
+table.ievents-calendar-day td ul {
+	margin: .2em;
+	padding: 0;
+	list-style: none;
+}
+table.ievents-calendar-day td li {
+	margin: 0 0 .2em 0;
+	padding: 0;
+	list-style: none;
+	border-bottom: 1px dotted;
+}
+table.ievents-calendar-day tr.ievents-calendar-day-hour {
+	backround-color: #ccc;
 }
 
+
+
+td.ievents-spacer {
+	background-color: #eeeeee;
+	border: 1px solid;
+}
 /* Tidy up the cluetips a little, protecting it from the main theme */
 div#cluetip-outer {
 	text-align: left;

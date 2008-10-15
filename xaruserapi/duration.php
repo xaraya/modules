@@ -26,7 +26,7 @@ function ievents_userapi_duration($args)
 
     // Quanta of the hour divisions, in minutes.
     // Set to zero for no quantisation.
-    if (!isset($quanta)) $quanta = xarModAPIfunc('ievents', 'user', 'params', array('name' => 'quanta'));
+    if (!isset($quanta)) $quanta = xarModGetVar('ievents', 'quanta');
 
     // TODO: complete this
 }

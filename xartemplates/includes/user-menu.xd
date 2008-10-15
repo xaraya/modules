@@ -1,0 +1,55 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common User menu</xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+
+<xar:set name="activetab">$_bl_module_func</xar:set>
+
+<xar:set name="itemtype_events">xarModGetVar('ievents', 'itemtype_events')</xar:set>
+<xar:set name="itemtype_calendars">xarModGetVar('ievents', 'itemtype_calendars')</xar:set>
+
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="Choose an action to perform">
+      <xar:mlstring>Actions:</xar:mlstring>
+    </dt>
+
+    <xar:sec mask="OverviewIEvent" catch="false">
+        <xar:if condition="$activetab eq 'viewcals'">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+
+        <dd class="#$tabclass#">
+          <a href="#xarModURL('ievents','user','viewcals')#" title="#xarML('View Calendars')#">
+            <xar:mlstring>View Calendars</xar:mlstring>
+          </a>
+        </dd>
+
+        <xar:if condition="($activetab eq 'view')">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+            <a href="#xarModURL('ievents','user','view')#">
+                <xar:mlstring>View Events</xar:mlstring>
+            </a>
+        </dd>
+    </xar:sec>
+
+    <xar:sec mask="CommentIEvent" catch="false" component="IEvent" instance="All:All:All">
+        <xar:if condition="($activetab eq 'modify') and (xarRequestGetVar('itemtype') ne $itemtype_calendars)">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+            <a href="#xarModURL('ievents','user','modify')#" >
+                <xar:mlstring>New Event</xar:mlstring>
+            </a>
+        </dd>
+    </xar:sec>
+
+  </dl>
+</div>

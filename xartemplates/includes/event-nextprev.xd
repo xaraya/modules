@@ -5,37 +5,33 @@
 
 
 <div class="ievents-nextprev">
-    <ul>
-        <xar:if condition="!empty($prev_event)">
-            <li class="ievents-nextprev-prev">
-                <a href="#xarServerGetCurrentURL(array('eid'=&gt;$prev_event.eid,'startnum'=&gt;$prev_event.startnum))#" title="#xarVarPrepForDisplay($prev_event.title)#">
-                    &lt;&lt; <xar:mlstring>Previous</xar:mlstring>
-                </a>
-            </li>
-        <xar:else />
-            <li class="ievents-nextprev-prev"><span>&lt;&lt; <xar:mlstring>Previous</xar:mlstring></span></li>
-        </xar:if>
-
-        <li class="ievents-nextprev-list">
-            <a href="#xarServerGetCurrentURL(array('eid'=&gt;NULL),true,'event-summary-'.$event.eid)#"><xar:mlstring>Back to summary</xar:mlstring></a>
-            <xar:if condition="!empty($list_position)">
-                <xar:ml>
-                    <xar:mlstring>(#(1) of #(2))</xar:mlstring>
-                    <xar:mlvar>#$list_position#</xar:mlvar>
-                    <xar:mlvar>#$total_events#</xar:mlvar>
-                </xar:ml>
-            </xar:if>
-        </li>
-
+    <div class="ievents-nextprev-next">
         <xar:if condition="!empty($next_event)">
-            <li class="ievents-nextprev-next">
-                <a href="#xarServerGetCurrentURL(array('eid'=&gt;$next_event.eid,'startnum'=&gt;$next_event.startnum))#" title="#xarVarPrepForDisplay($next_event.title)#">
-                    <xar:mlstring>Next</xar:mlstring> &gt;&gt;
-                </a>
-            </li>
+            <a href="#xarServerGetCurrentURL(array('eid'=&gt;$next_event.eid,'startnum'=&gt;$next_event.startnum))#" title="#xarVarPrepForDisplay($next_event.title)#">
+                <xar:mlstring>Next</xar:mlstring> &gt;&gt;
+            </a>
         <xar:else />
-            <li class="ievents-nextprev-next"><span><xar:mlstring>Next</xar:mlstring> &gt;&gt;</span></li>
+            <xar:mlstring>Next</xar:mlstring> &gt;&gt;
         </xar:if>
-    </ul>
+    </div>
+    <div class="ievents-nextprev-prev">
+        <xar:if condition="!empty($prev_event)">
+            <a href="#xarServerGetCurrentURL(array('eid'=&gt;$prev_event.eid,'startnum'=&gt;$prev_event.startnum))#" title="#xarVarPrepForDisplay($prev_event.title)#">
+                &lt;&lt; <xar:mlstring>Previous</xar:mlstring>
+            </a>
+        <xar:else />
+            &lt;&lt; <xar:mlstring>Previous</xar:mlstring>
+        </xar:if>
+    </div>
+    <div class="ievents-nextprev-list">
+        <a href="#xarServerGetCurrentURL(array('eid'=&gt;NULL),true,'event-summary-'.$event.eid)#"><xar:mlstring>Back to summary</xar:mlstring></a>
+        <xar:if condition="!empty($list_position)">
+            <xar:ml>
+                <xar:mlstring>(#(1) of #(2))</xar:mlstring>
+                <xar:mlvar>#$list_position#</xar:mlvar>
+                <xar:mlvar>#$total_events#</xar:mlvar>
+            </xar:ml>
+        </xar:if>
+    </div>
     <div style="clear: both;"></div>
 </div>

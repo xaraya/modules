@@ -26,9 +26,8 @@ function ievents_user_viewcals($args)
     xarVarFetch('name', 'str:0:200', $name, '', XARVAR_NOT_REQUIRED);
 
     // Get module variables.
-    list($cal_subscribe_range, $cal_subscribe_numitems) = xarModAPIfunc('ievents', 'user', 'params',
-        array('names' => 'cal_subscribe_range,cal_subscribe_numitems')
-    );
+    $cal_subscribe_range = xarModGetVar('ievents', 'cal_subscribe_range');
+    $cal_subscribe_numitems = xarModGetVar('ievents', 'cal_subscribe_numitems');
 
     // Get details of the export handlers available.
     $export_object = xarModAPIfunc('ievents', 'export', 'new_export');

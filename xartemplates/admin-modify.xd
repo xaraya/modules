@@ -1,6 +1,6 @@
 <xar:style file="ievents" scope="module" />
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Events</xar:mlstring></span>
+    <span class="xar-mod-title"><xar:mlstring>Events Administration</xar:mlstring></span>
 </div>
 <div class="xar-mod-body">
     <xar:if condition="empty($eid)">
@@ -29,20 +29,16 @@
             </xar:comment>
 
             <xar:if condition="empty($properties_extra[$property_name]['hidden'])">
-                <div class="xar-form-input-wrapper">
-                    <label for="dd_#$this_property->id#" class="xar-form-label">
-                        <xar:data-label property="$this_property" />
-                    </label>
-                    <div class="xar-form-container-after">
-                        <xar:if condition="!empty($properties_extra[$this_property-&gt;name]['displayonly'])">
-                            <xar:comment>Changeable property</xar:comment>
-                            <xar:data-output property="$this_property" />
-                        <xar:else />
-                            <xar:comment>Read-only property</xar:comment>
-                            <xar:data-input property="$this_property" />
-                        </xar:if>
-                    </div>
-                </div>
+                <p style="clear: both;">
+                    <label style="display: block;"><xar:data-label property="$this_property" /></label>
+                    <xar:if condition="!empty($properties_extra[$this_property-&gt;name]['displayonly'])">
+                        <xar:comment>Changeable property</xar:comment>
+                        <xar:data-output property="$this_property" />
+                    <xar:else />
+                        <xar:comment>Read-only property</xar:comment>
+                        <xar:data-input property="$this_property" />
+                    </xar:if>
+                </p>
             </xar:if>
         </xar:loop>
         <div style="clear: both;">&nbsp;</div>
@@ -61,7 +57,7 @@
         </xar:if>
     </div>
 
-    <div class="xar-margin-thickends xar-align-center">
+    <p>
         <input type="hidden" name="eid" value="#$eid#" />
         <input type="hidden" name="authid" value="#xarSecGenAuthKey('ievents')#" />
         <input type="hidden" name="return_url" value="#xarVarPrepForDisplay($return_url)#" />
@@ -73,7 +69,7 @@
         <xar:if condition="!empty($eid)">
             <input type="submit" name="submitcopy" value="#xarML('Save as Copy')#" />
         </xar:if>
-    </div>
+    </p>
 
     </form>
 

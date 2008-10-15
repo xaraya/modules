@@ -15,10 +15,9 @@ function ievents_admin_delete($args)
     xarVarFetch('cid', 'id', $cid, 0, XARVAR_NOT_REQUIRED);
 
     // Can be called up using the itemtype and itemid
-    list($itemtype_calendars, $itemtype_events) = 
-        xarModAPIfunc('ievents', 'user', 'params', 
-            array('names' => 'itemtype_calendars,itemtype_events')
-        );
+
+    $itemtype_events = xarModGetVar('ievents', 'itemtype_events');
+    $itemtype_calendars = xarModGetVar('ievents', 'itemtype_calendars');
 
     if (!empty($itemtype)) {
         if ($itemtype != $itemtype_events /* && $itemtype != $itemtype_calendars*/) {

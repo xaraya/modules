@@ -1,0 +1,55 @@
+<table class="ievents-calendar-largemonth">
+	<tr>
+		<xar:for start="$i = 0" test="$i lt 7" iter="$i++">
+		    <th>#$daysofweek.$i#</th>
+		</xar:for>
+	</tr>
+
+	<tr>
+	<xar:for start="$i = 1" test="$i le $days" iter="$i++">
+	    <xar:if condition="$startday eq 0">
+	        <tr>
+	    </xar:if>
+
+	    <xar:set name="date">mktime(0, 0, 0, $m, $i, $y)</xar:set>
+	
+	    <xar:set name="classes">''</xar:set>
+
+	    <xar:if condition="(date('w', $date) eq 0) or (date('w', $date) eq 6)">
+	    	<xar:set name="classes">$classes . ' ievents-weekend'</xar:set>
+	    </xar:if>
+
+	    <xar:if condition="$i eq $today">
+	    	<xar:set name="classes">$classes . ' ievents-today'</xar:set>
+	    </xar:if>
+
+	    <xar:if condition="$i eq 1 and $startday gt 0">
+	        <td colspan="#$startday#" class="ievents-spacer">
+				&nbsp;
+			</td>
+	    </xar:if>
+
+	    <xar:if condition="!empty($classes)">
+	        <td class="#$classes#">
+				#$cal:getEvents($date, 'largeMonth')#
+			</td>
+	    <xar:else />
+	        <td>
+				#$cal:getEvents($date, 'largeMonth')#
+			</td>
+	    </xar:if>
+
+	    <xar:set name="startday">$startday + 1</xar:set>
+	    <xar:if condition="$startday eq 7">
+	        </tr>
+	        <xar:set name="startday">0</xar:set>
+	    </xar:if>
+	</xar:for>
+
+	<xar:if condition="$startday gt 0">
+		<xar:set name="offset">7 - $startday</xar:set>
+	    <td colspan="#$offset#" class="ievents-spacer">&nbsp;</td>
+	</xar:if>
+
+	</tr>
+</table>

@@ -1,0 +1,226 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Events Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Modify Config</xar:mlstring></h2>
+
+    <xar:template type="module" file="admin-menu" />
+
+    <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
+        <p>#xarSessionGetVar('statusmsg')#</p>
+    </xar:if>
+
+    <form action="#xarModURL('ievents','admin','updateconfig')#" method="post" enctype="application/x-www-form-urlencoded">
+
+        <div class="xar-form-input-wrapper-after">
+            <xar:if condition="$shorturl == 1">
+                <input type="checkbox" name="shorturl" id="shorturl" value="1" checked="checked"/>
+            <xar:else />
+                <input type="checkbox" name="shorturl" id="shorturl" value="1"/>
+            </xar:if>
+            <label for="shorturl" title="#xarML('Use short urls for the calendars')#">
+                <xar:mlstring>Enable Short URLs?</xar:mlstring>
+            </label>
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="startdayofweek" title="#xarML('Select the day which begins a week')#" class="xar-form-label">
+                <xar:mlstring>Start day of week</xar:mlstring>:
+            </label>
+            <select name="startdayofweek" id="startdayofweek">
+                <xar:foreach in="$weekdays" key="$i" value="$day">
+                    <xar:if condition="$startdayofweek eq $i">
+                        <option value="#$i#" selected="selected">#$day#</option>
+                    <xar:else />
+                        <option value="#$i#">#$day#</option>
+                    </xar:if>
+                </xar:foreach>
+            </select>
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="quanta" title="#xarML('Length of hour divisions')#" class="xar-form-label">
+                <xar:mlstring>Hour division length</xar:mlstring>:
+            </label>
+            <select name="quanta" id="quanta">
+                <xar:foreach in="$quantas" value="$q">
+                    <xar:if condition="$quanta eq $q">
+                        <option value="#$q#" selected="selected">#$q#</option>
+                    <xar:else />
+                        <option value="#$q#">#$q#</option>
+                    </xar:if>
+                </xar:foreach>
+            </select>
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="days_new" title="#xarML('Number of days an event is considered new')#" class="xar-form-label">
+                <xar:mlstring>Days New</xar:mlstring>:
+            </label>
+            <input type="text" name="days_new" id="days_new" value="#$days_new#" class="xar-form-textshort" />
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="days_updated" title="#xarML('Number of days an event is marked updated')#" class="xar-form-label">
+                <xar:mlstring>Days Updated</xar:mlstring>:
+            </label>
+            <input type="text" name="days_updated" id="days_updated" value="3" class="xar-form-textshort" />
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="default_numitems" title="#xarML('Default Number of Items to display in list view')#" class="xar-form-label">
+                <xar:mlstring>Default Items:</xar:mlstring>
+            </label>
+            <input type="text" name="default_numitems" id="default_numitems" value="#$default_numitems#" class="xar-form-textshort" />
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="max_numitems" title="#xarML('Maximum Number of Items to display in list view')#" class="xar-form-label">
+                <xar:mlstring>Maximum Items</xar:mlstring>:
+            </label>
+            <input type="text" name="max_numitems" id="max_numitems" value="#$max_numitems#" class="xar-form-textshort" />
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="default_startdate" title="#xarML('Default start date of views')#" class="xar-form-label">
+                <xar:mlstring>Default start date</xar:mlstring>:
+            </label>
+            <xar:mlstring>Now</xar:mlstring>
+            <input type="hidden" name="default_startdate" id="default_startdate" value="#$default_startdate#" class="xar-form-textshort" />
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="default_enddate" title="#xarML('Default end date of views')#" class="xar-form-label">
+                <xar:mlstring>Default end date</xar:mlstring>:
+            </label>
+            #$default_enddate#
+            <input type="hidden" name="default_enddate" id="default_enddate" value="#$default_enddate#" class="xar-form-textshort" />
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="default_daterange" title="#xarML('Default date range of views')#" class="xar-form-label">
+                <xar:mlstring>Default date range</xar:mlstring>:
+            </label>
+            #$default_daterange#
+            <input type="hidden" name="default_daterange" id="default_daterange" value="#$default_daterange#" class="xar-form-textshort" />
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="summary_max_words" title="#xarML('Word limit in event summaries')#" class="xar-form-label">
+                <xar:mlstring>Summary word limit</xar:mlstring>:
+            </label>
+            <input type="text" name="summary_max_words" id="summary_max_words" value="#$summary_max_words#" class="xar-form-textshort" />
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="year_range_min" title="#xarML('Start of year range')#" class="xar-form-label">
+                <xar:mlstring>Year range minimum</xar:mlstring>:
+            </label>
+            <select name="year_range_min" id="year_range_min">
+                <xar:for start="$y = -10" test="$y lt 0" iter="$y++">
+                    <xar:if condition="$year_range_min eq $y">
+                        <option value="#$y#" selected="selected">#$y# <xar:mlstring>years</xar:mlstring></option>
+                    <xar:else />
+                        <option value="#$y#">#$y# <xar:mlstring>years</xar:mlstring></option>
+                    </xar:if>
+                </xar:for>
+            </select>
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="year_range_max" title="#xarML('End of year range')#" class="xar-form-label">
+                <xar:mlstring>Year range maximum</xar:mlstring>:
+            </label>
+            <select name="year_range_max" id="year_range_max">
+                <xar:for start="$y = 1" test="$y le 10" iter="$y++">
+                    <xar:if condition="$year_range_max eq $y">
+                        <option value="#$y#" selected="selected">#$y# <xar:mlstring>years</xar:mlstring></option>
+                    <xar:else />
+                        <option value="#$y#">#$y# <xar:mlstring>years</xar:mlstring></option>
+                    </xar:if>
+                </xar:for>
+            </select>
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="default_group" title="#xarML('Default timeframe')#" class="xar-form-label">
+                <xar:mlstring>Default group</xar:mlstring>:
+            </label>
+            <select name="default_group" id="default_group">
+                <xar:foreach in="$groups" key="$group" value="$grouplabel">
+                    <xar:if condition="$default_group eq $group">
+                        <option value="#$group#" selected="selected">#$grouplabel#</option>
+                    <xar:else />
+                        <option value="#$group#">#$grouplabel#</option>
+                    </xar:if>
+                </xar:foreach>
+            </select>
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="cal_subscribe_range" title="#xarML('Calendar subscribe range')#" class="xar-form-label">
+                <xar:mlstring>Calendar subscribe range</xar:mlstring>:
+            </label>
+            <select name="cal_subscribe_range" id="cal_subscribe_range">
+                <option value="window4months" selected="selected">window4months</option>
+            </select>
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="cal_subscribe_numitems" title="#xarML('Calendar subscribe number of items')#" class="xar-form-label">
+                <xar:mlstring>Calendar subscription items</xar:mlstring>:
+            </label>
+            <input type="text" name="cal_subscribe_numitems" id="cal_subscribe_numitems" value="#$cal_subscribe_numitems#" class="xar-form-textshort" />
+        </div>
+
+        <div class="xar-form-input-wrapper">
+            <label for="default_display_format" title="#xarML('Default display format')#" class="xar-form-label">
+                <xar:mlstring>Default display format</xar:mlstring>:
+            </label>
+            <select name="default_display_format" id="default_display_format">
+                <xar:foreach in="$display_formats" key="$format" value="$formatlabel">
+                    <xar:if condition="$default_display_format eq $format">
+                        <option value="#$format#" selected="selected">#$formatlabel#</option>
+                    <xar:else />
+                        <option value="#$format#">#$formatlabel#</option>
+                    </xar:if>
+                </xar:foreach>
+            </select>
+        </div>
+
+		<fieldset>
+			<legend><xar:mlstring>Category Settings</xar:mlstring></legend>
+
+	        <div class="xar-form-input-wrapper">
+	            <label for="maxcats" title="#xarML('Maximum number of categories')#" class="xar-form-label">
+	                <xar:mlstring>Maximum Categories</xar:mlstring>:
+	            </label>
+	            <input type="text" name="maxcats" id="maxcats" value="#$maxcats#" class="xar-form-textshort" />
+	        </div>
+
+	        <div class="xar-form-input-wrapper">
+	            <label for="max_cat_depth" title="#xarML('Maximum category depth')#" class="xar-form-label">
+	                <xar:mlstring>Maximum category depth</xar:mlstring>:
+	            </label>
+	            <input type="text" name="max_cat_depth" id="max_cat_depth" value="#$max_cat_depth#" class="xar-form-textshort" />
+	        </div>
+
+	        <div class="xar-form-input-wrapper-after">
+	            <xar:if condition="$category_tree_search">
+	                <input type="checkbox" name="category_tree_search" id="category_tree_search" value="1" checked="checked" />
+	            <xar:else />
+	                <input type="checkbox" name="category_tree_search" id="category_tree_search" value="1" />
+	            </xar:if>
+	            <label for="category_tree_search" title="#xarML('Search categories as a tree')#">
+	                <xar:mlstring>Category Tree Search</xar:mlstring>
+	            </label>
+	        </div>
+		</fieldset>
+
+        <div class="xar-margin-thickends xar-align-center">
+			<input type="hidden" name="authid" value="#$authid#" />
+            <input type="submit" value="#xarML('Submit')#" />
+        </div>
+
+    </form>
+</div>

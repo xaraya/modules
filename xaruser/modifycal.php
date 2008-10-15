@@ -30,10 +30,10 @@ function ievents_user_modifycal($args)
     }
 
     // Get module parameters
-    list($module, $modid, $itemtype_calendars) =
-        xarModAPIfunc('ievents', 'user', 'params',
-            array('names' => 'module,modid,itemtype_calendars')
-        );
+
+    $module = 'ievents';
+    $modid = xarModGetIDFromName($module);
+    $itemtype_calendars = xarModGetVar('ievents', 'itemtype_calendars');
 
     // Set up initial data for passing to the template.
     $data = array();

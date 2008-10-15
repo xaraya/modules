@@ -18,16 +18,15 @@ function ievents_userapi_calc_period($args)
     if (!isset($startdate) || !isset($eventdate)) return;
 
     // Validate and default the group type.
-    if (!xarVarValidate('pre:lower:passthru:enum:day:week:month:year', $group, true)) $group = 'week';
+    if (!xarVarValidate('pre:lower:passthru:enum:day:week:month:quarter:year', $group, true)) $group = 'week';
 
     // Get global parameters.
-    $gparams = xarModAPIfunc('ievents', 'user', 'params');
+    $startdayofweek = xarModGetVar('ievents', 'startdayofweek');
 
     switch ($group) {
     case 'week':
     default:
         // TODO: does the first day of the week need to be configurable?
-        $startdayofweek = $gparams['startdayofweek'];
         $startdateday = date('w', $startdate);
 	    $daystostartperiod = $startdateday - $startdayofweek;
         if ($daystostartperiod < 0) $daystostartperiod += 7;
@@ -47,10 +46,11 @@ function ievents_userapi_calc_period($args)
 
     case 'day':
         // This is an easy one: the startdate is day 1; count the days
-        $period1start = $startdate;
-        $periodnumber = floor(($eventdate - $period1start) / (60  * 60 * 24)) + 1;
+        $quanta = xarModGetVar('ievents','quanta'); // quanta is stored as minutes
+        $period1start = strtotime(date('Ymd', $startdate));
+        $periodnumber = floor(($eventdate - $period1start) / ($quanta * 60)) + 1;
         $periodstart = $eventdate;
-        $periodend = $eventdate;
+        $periodend = strtotime('-1 second', strtotime("+$quanta minutes", $periodstart));
         break;
 
     case 'month':
@@ -61,6 +61,14 @@ function ievents_userapi_calc_period($args)
         $periodend = strtotime('-1 day', strtotime('+1 month', $periodstart));
         break;
 
+    case 'quarter':
+        // Count the time between the two dates.
+        $period1start = strtotime(date('Y', $startdate) . '0101');
+		$periodnumber = floor(((date('m', $startdate) - 1) / 3) + 1);
+        $periodstart = strtotime('+' . (($periodnumber - 1) * 3) . ' months', $period1start);
+        $periodend = strtotime('-1 day', strtotime('+3 months', $periodstart));
+        break;
+
     case 'year':
         $period1start = strtotime(date('Y', $startdate) . '0101');
         $periodnumber = date('Y', $eventdate) - date('Y', $startdate) + 1;
@@ -68,7 +76,6 @@ function ievents_userapi_calc_period($args)
         $periodend = strtotime('-1 day', strtotime('+1 year', $periodstart));
         break;
     }
-
     // Return numeric array elements, so list() can be used. Don't change the order!
     return array(
         $group,

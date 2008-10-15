@@ -28,8 +28,13 @@ function ievents_adminapi_modify($args)
     if (empty($cid)) $cid = 0;
 
     // Fetch all the config items we need at once.
-    list($module, $modid, $itemtype_events, $itemtype_calendars, $maxcats, $html_fields, $text_fields) =
-        xarModAPIfunc('ievents', 'user', 'params', array('names' => 'module,modid,itemtype_events,itemtype_calendars,maxcats,html_fields,text_fields'));
+    $module = 'ievents';            
+    $modid = xarModGetIDFromName($module);              
+    $itemtype_events = xarModGetVar('ievents', 'itemtype_events');           
+    $itemtype_calendars = xarModGetVar('ievents', 'itemtype_calendars');           
+    $maxcats = xarModGetVar('ievents', 'maxcats');
+    $html_fields = 'description,contact_details';
+    $text_fields = 'summary,location_address';
 
     // Set up initial data for passing to the template.
     $data = array();

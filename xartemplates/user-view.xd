@@ -1,12 +1,17 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Events</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
 
-<xar:comment>
-    All HTML views come through this central exchange.
-    Only the month format is working at present.
-    The week and year formats need some tweaking before they can be used.
-</xar:comment>
+    <xar:comment>
+        All HTML views come through this central exchange.
+        Only the month format is working at present.
+        The week and year formats need some tweaking before they can be used.
+    </xar:comment>
 
-<xar:if condition="$format eq 'cal' and ($group eq 'month' or $group eq 'month')">
-    <xar:template file="user-view-cal" />
-<xar:else />
-    <xar:template file="user-view-list" />
-</xar:if>
+    <xar:if condition="$format eq 'cal'">
+        <xar:template file="user-view-cal" />
+    <xar:else />
+        <xar:template file="user-view-list" />
+    </xar:if>
+</div>

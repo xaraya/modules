@@ -15,8 +15,9 @@ function ievents_userapi_getcalendars($args)
     extract($args);
 
     // Fetch all the config items we need at once.
-    list($module, $modid, $itemtype) =
-        xarModAPIfunc('ievents', 'user', 'params', array('names' => 'module,modid,itemtype_calendars'));
+    $module = 'ievents';
+    $modid = xarModGetIDFromName($module);
+    $itemtype = xarModGetVar('ievents', 'itemtype_calendars');
 
     // Only used for some text escaping methods.
     $dbconn =& xarDBGetConn();

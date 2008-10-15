@@ -1,0 +1,9 @@
+<table class="ievents-calendar-year">
+		<tr class="ievents-calendar-yearquarter">
+			<xar:for start="$i = $startmonth" test="$i le $endmonth" iter="$i++">
+			    <td class="ievents-calendar-yearmonth">
+				    #$months_output.$i#
+			    </td>
+			</xar:for>
+		</tr>
+</table>

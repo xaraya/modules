@@ -12,8 +12,8 @@ function ievents_userapi_getitemtypes($args)
 {
     $itemtypes = array();
 
-    list($itemtype_events, $itemtype_calendars) =
-        xarModAPIfunc('ievents', 'user', 'params', array('names' => 'itemtype_events,itemtype_calendars'));
+    $itemtype_events = xarModGetVar('ievents', 'itemtype_events');
+    $itemtype_calendars = xarModGetVar('ievents', 'itemtype_calendars');
 
     // Get item types
     $types = array(

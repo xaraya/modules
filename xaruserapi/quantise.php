@@ -9,7 +9,7 @@ function ievents_userapi_quantise($args)
 {
     // Take the module quanta setting.
     static $global_quanta = NULL;
-    if (!isset($global_quanta)) $global_quanta = xarModAPIfunc('ievents', 'user', 'params', array('name' => 'quanta'));
+    if (!isset($global_quanta)) $global_quanta = xarModGetVar('ievents', 'quanta');
 
     extract($args);
 

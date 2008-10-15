@@ -1,8 +1,9 @@
-
 <xar:style file="ievents" scope="module" />
-
-<div class="ievents-view-calendars">
-    <h1>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Events</xar:mlstring></span>
+</div>
+<div class="mod-body">
+    <h2>
         <xar:if condition="count($calendars) eq count($all_calendars)">
             <xar:mlstring>All Calendars</xar:mlstring>
         <xar:else />
@@ -15,7 +16,9 @@
                 (<a href="#xarModURL('ievents','user','viewcals')#"><xar:mlstring>Show all calendars</xar:mlstring></a>)
             </xar:if>
         </xar:if>
-    </h1>
+    </h2>
+
+	<xar:template type="module" file="user-menu" />
 
     <xar:comment>Get standard quick-jump list of date ranges</xar:comment>
     <xar:set name="daterangelist">#xarModAPIfunc('ievents','user','params',array('name'=&gt;'daterangelist'))#</xar:set>
@@ -23,97 +26,113 @@
     <xar:if condition="empty($calendars)">
         <p><xar:mlstring>No calendars available</xar:mlstring></p>
     <xar:else />
-        <dl>
-            <xar:if condition="count($calendars) gt 1">
-                <dt><xar:mlstring>All calendars</xar:mlstring></dt>
+        <xar:if condition="count($calendars) gt 1">
+            <h3><xar:mlstring>All calendars</xar:mlstring></h3>
 
-                <dd class="ievent-links">
-                    <xar:if condition="!empty($daterangelist)">
-                        <xar:comment>Display as a list of links, or a drop-down list - your choice</xar:comment>
-                        <xar:comment>
-                        <strong><xar:mlstring>View events:</xar:mlstring></strong>
-                        <xar:loop name="$daterangelist">
-                            <xar:if condition="$loop:key ne ''">
-                                <xar:if condition="$loop:index gt 1"> | </xar:if>
-                                <a href="#xarModURL('ievents','user','view',array('range'=&gt;$loop:key))#">#$loop:item#</a>
-                            </xar:if>
-                        </xar:loop>
-                        </xar:comment>
+            <div class="ievent-links">
+                <xar:if condition="!empty($daterangelist)">
+                    <xar:comment>Display as a list of links, or a drop-down list - your choice</xar:comment>
+                    <xar:comment>
+                    <strong><xar:mlstring>View events:</xar:mlstring></strong>
+                    <xar:loop name="$daterangelist">
+                        <xar:if condition="$loop:key ne ''">
+                            <xar:if condition="$loop:index gt 1"> | </xar:if>
+                            <a href="#xarModURL('ievents','user','view',array('range'=&gt;$loop:key))#">#$loop:item#</a>
+                        </xar:if>
+                    </xar:loop>
+                    </xar:comment>
 
-                        <form method="post" action="#xarModURL('ievents','user','view')#">
-                            <label><xar:mlstring>View events:</xar:mlstring>
-                                <xar:data-input name="range" type="6" validation="$daterangelist" value="" />
-                            </label>
-                            <input type="submit" value="#xarML('Go')#" />
-                        </form>
-                    <xar:else />
-                        <a href="#xarModURL('ievents','user','view',array('range'=&gt;'next4weeks'))#"><xar:mlstring>Next four weeks</xar:mlstring></a>
-                        | <a href="#xarModURL('ievents','user','view',array('range'=&gt;'next6months'))#"><xar:mlstring>Next six months</xar:mlstring></a>
-                    </xar:if>
-                </dd>
-                <xar:if condition="!empty($export_handlers)">
-                    <dd class="ievent-export-links">
-                        <strong><xar:mlstring>Subscribe:</xar:mlstring></strong>
-                        <xar:loop name="$export_handlers">
-                            <xar:if condition="$loop:index gt 0"> | </xar:if>
-                            <a href="#xarModURL('ievents','user','view',array('format'=&gt;$loop:key,'numitems'=&gt;$cal_subscribe_numitems,'range'=&gt;$cal_subscribe_range))#" title="#$loop:item.long#" class="ievents-export-#$loop:item.class#">#$loop:item.short#</a>
-                        </xar:loop>
-                    </dd>
+                    <form method="post" action="#xarModURL('ievents','user','view')#">
+                        <label><xar:mlstring>View events:</xar:mlstring>
+                            <xar:data-input name="range" type="6" validation="$daterangelist" value="" />
+                        </label>
+                        <input type="submit" value="#xarML('Go')#" />
+                    </form>
+                <xar:else />
+                    <a href="#xarModURL('ievents','user','view',array('range'=&gt;'next4weeks'))#"><xar:mlstring>Next four weeks</xar:mlstring></a>
+                    | <a href="#xarModURL('ievents','user','view',array('range'=&gt;'next6months'))#"><xar:mlstring>Next six months</xar:mlstring></a>
                 </xar:if>
+            </div>
+            <xar:if condition="!empty($export_handlers)">
+                <p class="ievent-export-links">
+                    <strong><xar:mlstring>Subscribe:</xar:mlstring></strong>
+                    <xar:loop name="$export_handlers">
+                        <xar:if condition="$loop:index gt 0"> | </xar:if>
+                        <a href="#xarModURL('ievents','user','view',array('format'=&gt;$loop:key,'numitems'=&gt;$cal_subscribe_numitems,'range'=&gt;$cal_subscribe_range))#" title="#$loop:item.long#" class="ievents-export-#$loop:item.class#">
+							#$loop:item.short#
+						</a>
+                    </xar:loop>
+                </p>
             </xar:if>
+        </xar:if>
 
-            <xar:loop name="$calendars" id="calloop">
-                <dt>
-                    #xarVarPrepForDisplay($loop:item.long_name)#
-                    <xar:if condition="$loop:item.status eq 'INACTIVE'">
-                        <span class="xar-error"><xar:mlstring>INACTIVE</xar:mlstring></span>
-                    </xar:if>
-                </dt>
-                <xar:if condition="!empty($loop:item.description)">
-                    <dd class="ievent-calendar">
-                        #xarModAPIfunc('ievents','user','transform', array('html'=&gt;$loop:item.description))#
-                    </dd>
+        <xar:loop name="$calendars" id="calloop">
+            <h3>
+                
+                <xar:if condition="$loop:item.status eq 'INACTIVE'">
+					#xarVarPrepForDisplay($loop:item.long_name)#
+                    <span class="xar-error"><xar:mlstring>INACTIVE</xar:mlstring></span>
+				<xar:else />
+					<a href="#xarModURL('ievents','user','view',array('cid'=&gt;$loop:key))#">
+						#xarVarPrepForDisplay($loop:item.long_name)#
+					</a>
                 </xar:if>
-                <dd class="ievent-links">
-                    <xar:comment>Provide some links</xar:comment>
-                    <xar:if condition="xarSecurityCheck('DeleteIEventCal', 0, 'IEvent', $loop:key)">
-                        [<a href="#xarModURL('ievents','user','modifycal',array('cid'=&gt;$loop:key,'return_url'=&gt;xarServerGetCurrentURL(array(),false)))#"><xar:mlstring>Edit</xar:mlstring></a>] |
-                    </xar:if>
-
-                    <xar:if condition="!empty($daterangelist)">
-                        <xar:comment>Display as a list of links, or a drop-down list - your choice</xar:comment>
-                        <xar:comment>
-                        <strong><xar:mlstring>View events:</xar:mlstring></strong>
-                        <xar:loop name="$daterangelist">
-                            <xar:if condition="$loop:key ne ''">
-                                <xar:if condition="$loop:index gt 1"> | </xar:if>
-                                <a href="#xarModURL('ievents','user','view',array('range'=&gt;$loop:key,'cid'=&gt;$loop:calloop:key))#">#$loop:item#</a>
-                            </xar:if>
-                        </xar:loop>
-                        </xar:comment>
-
-                        <form method="post" action="#xarModURL('ievents','user','view',array('cid'=&gt;$loop:calloop:key))#">
-                            <label><xar:mlstring>View events:</xar:mlstring>
-                                <xar:data-input name="range" type="6" validation="$daterangelist" value="" />
-                            </label>
-                            <input type="submit" value="#xarML('Go')#" />
-                        </form>
-                    <xar:else />
-                        <a href="#xarModURL('ievents','user','view',array('range'=&gt;'next4weeks','cid'=&gt;$loop:calloop:key))#"><xar:mlstring>Next four weeks</xar:mlstring></a>
-                        | <a href="#xarModURL('ievents','user','view',array('range'=&gt;'next6months','cid'=&gt;$loop:calloop:key))#"><xar:mlstring>Next six months</xar:mlstring></a>
-                    </xar:if>
-                </dd>
-                <xar:if condition="!empty($export_handlers)">
-                    <dd class="ievent-export-links">
-                        <strong><xar:mlstring>Subscribe:</xar:mlstring></strong>
-                        <xar:loop name="$export_handlers">
-                            <xar:if condition="$loop:index gt 0"> | </xar:if>
-                            <a href="#xarModURL('ievents','user','view',array('format'=&gt;$loop:key,'numitems'=&gt;$cal_subscribe_numitems,'cid'=&gt;$loop:calloop:key,'range'=&gt;$cal_subscribe_range))#" title="#$loop:item.long#" class="ievents-export-#$loop:item.class#">#$loop:item.short#</a>
-                        </xar:loop>
-                    </dd>
+            </h3>
+            <xar:if condition="!empty($loop:item.description)">
+                <p class="ievent-calendar">
+                    #xarModAPIfunc('ievents','user','transform', array('html'=&gt;$loop:item.description))#
+                </p>
+            </xar:if>
+            <div class="ievent-links">
+                <xar:comment>Provide some links</xar:comment>
+                <xar:if condition="xarSecurityCheck('DeleteIEventCal', 0, 'IEvent', $loop:key)">
+                    <a href="#xarModURL('ievents','user','modifycal',array('cid'=&gt;$loop:key,'return_url'=&gt;xarServerGetCurrentURL(array(),false)))#">
+						<xar:mlstring>Edit</xar:mlstring>
+					</a>
+					<xar:if condition="empty($daterangelist)">
+					 | 
+					</xar:if>
                 </xar:if>
-            </xar:loop>
-        </dl>
+
+                <xar:if condition="!empty($daterangelist)">
+                    <xar:comment>Display as a list of links, or a drop-down list - your choice</xar:comment>
+                    <xar:comment>
+                    <strong><xar:mlstring>View events:</xar:mlstring></strong>
+                    <xar:loop name="$daterangelist">
+                        <xar:if condition="$loop:key ne ''">
+                            <xar:if condition="$loop:index gt 1"> | </xar:if>
+                            <a href="#xarModURL('ievents','user','view',array('range'=&gt;$loop:key,'cid'=&gt;$loop:calloop:key))#">
+								#$loop:item#
+							</a>
+                        </xar:if>
+                    </xar:loop>
+                    </xar:comment>
+
+                    <form method="post" action="#xarModURL('ievents','user','view',array('cid'=&gt;$loop:calloop:key))#">
+                        <label><xar:mlstring>View events:</xar:mlstring>
+                            <xar:data-input name="range" type="6" validation="$daterangelist" value="" />
+                        </label>
+                        <input type="submit" value="#xarML('Go')#" />
+                    </form>
+                <xar:else />
+                    <a href="#xarModURL('ievents','user','view',array('range'=&gt;'next4weeks','cid'=&gt;$loop:calloop:key))#">
+						<xar:mlstring>Next four weeks</xar:mlstring>
+					</a>
+                    | 
+					<a href="#xarModURL('ievents','user','view',array('range'=&gt;'next6months','cid'=&gt;$loop:calloop:key))#">
+						<xar:mlstring>Next six months</xar:mlstring>
+					</a>
+                </xar:if>
+            </div>
+            <xar:if condition="!empty($export_handlers)">
+                <p class="ievent-export-links">
+                    <strong><xar:mlstring>Subscribe:</xar:mlstring></strong>
+                    <xar:loop name="$export_handlers">
+                        <xar:if condition="$loop:index gt 0"> | </xar:if>
+                        <a href="#xarModURL('ievents','user','view',array('format'=&gt;$loop:key,'numitems'=&gt;$cal_subscribe_numitems,'cid'=&gt;$loop:calloop:key,'range'=&gt;$cal_subscribe_range))#" title="#$loop:item.long#" class="ievents-export-#$loop:item.class#">#$loop:item.short#</a>
+                    </xar:loop>
+                </p>
+            </xar:if>
+        </xar:loop>
     </xar:if>
-
 </div>

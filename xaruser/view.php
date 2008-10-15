@@ -12,7 +12,7 @@
  *
  * @todo Transform hooks on the HTML fields
  * @todo Support different display formats (list, calendar, etc)
- * @todo Provide next/previous day/week/month/year/goup links for the template (for any view)
+ * @todo Provide next/previous day/week/month/year/group links for the template (for any view)
  * @todo Create a textual description of the search that has been performed
  * @todo Pass a 'feed_params' base url to the templates, containing relevant parameters to base a feed off (relative dates, no grouping etc) [half done]
  */
@@ -25,14 +25,20 @@ function ievents_user_view($args)
     if (!xarSecurityCheck('OverviewIEvent')) return;
 
     // Get module parameters
+    $module = 'ievents';
+    $default_numitems = xarModGetVar('ievents', 'default_numitems');
+    $max_numitems = xarModGetVar('ievents','max_numitems');
+    $default_startdate = xarModGetVar('ievents','default_startdate');
+    $default_enddate = xarModGetVar('ievents','default_enddate');
+    $startdayofweek = xarModGetVar('ievents','startdayofweek');
+    $itemtype_events = xarModGetVar('ievents','itemtype_events');
+    $year_range_min = xarModGetVar('ievents','year_range_min');
+    $year_range_max = xarModGetVar('ievents','year_range_max');
+    $default_group = xarModGetVar('ievents','default_group');
+    $default_display_format = xarModGetVar('ievents','default_display_format');
+
     extract(xarModAPIfunc('ievents', 'user', 'params',
-        array(
-            'knames' => 'module,default_numitems,max_numitems,default_startdate,'
-                . 'default_enddate,startdayofweek,'
-                . 'html_fields,itemtype_events,year_range_min,'
-                . 'year_range_max,q_fields,default_group,'
-                . 'default_display_format,display_formats,locale'
-        )
+        array('knames' => 'html_fields,q_fields,display_formats,locale')
     ));
 
     // Get the user parameters.
@@ -146,13 +152,13 @@ function ievents_user_view($args)
 
     // These two parameters handle "next N days/weeks/months/years" date selection.
     xarVarFetch('datenumber', 'int:0:365', $datenumber, 0, XARVAR_NOT_REQUIRED);
-    xarVarFetch('datetype', 'pre:lower:passthru:enum:days:weeks:months:years', $datetype, '', XARVAR_NOT_REQUIRED);
+    xarVarFetch('datetype', 'pre:lower:passthru:enum:days:weeks:months:quarters:years', $datetype, '', XARVAR_NOT_REQUIRED);
 
     // Grouping of listed items.
     // Grouping should affect the sorting too, since grouping my a time period
     // would imply sorting by that time period too.
     // The default grouping is configurable (with no grouping - '' - being an option)
-    xarVarFetch('group', 'pre:lower:passthru:enum:day:week:month:year:none', $group, $default_group, XARVAR_NOT_REQUIRED);
+    xarVarFetch('group', 'pre:lower:passthru:enum:day:week:month:quarter:year:none', $group, $default_group, XARVAR_NOT_REQUIRED);
     if ($group == 'none') $group = '';
 
     // Event ID.
@@ -214,6 +220,15 @@ function ievents_user_view($args)
                 $cal_links_labels['this_view'] = date('Y', $ustartdate);
                 break;
 
+            case 'quarter':
+            	$ustartdate = mktime(0, 0, 0, ((floor(((date('m', $ustartdate)) / 3) + 1) * 3) - 2), '01', date('Y', $ustartdate));
+                $uenddate = strtotime('+3 months -1 day', $ustartdate);
+                $cal_links_labels['this_view'] = xarML('Quarter #(1), #(2)', 
+                	floor(((date('m', $ustartdate)) / 3) + 1), 
+                	date('Y', $ustartdate)
+                );
+                break;
+
             case 'month':
                 $ustartdate = strtotime(date('Ym', $ustartdate) . '01');
                 $uenddate = strtotime('+1 month -1 day', $ustartdate);
@@ -226,9 +241,10 @@ function ievents_user_view($args)
                 if ($daystostartweek < 0) $daystostartweek += 7;
                 $ustartdate = strtotime("-$daystostartweek days", $ustartdate);
                 $uenddate = strtotime('+7 days', $ustartdate);
-                $cal_links_labels['this_view'] = xarML('Week start #(1)', xarLocaleGetFormattedDate('long', $ustartdate));
+                $cal_links_labels['this_view'] = xarML('Week Starting #(1)', xarLocaleGetFormattedDate('long', $ustartdate));
                 break;
 
+			case 'day':
             default:
                 // Default to a single day.
                 $uenddate = $ustartdate;
@@ -239,6 +255,8 @@ function ievents_user_view($args)
 
         $cal_links['next_year'] = date('Y', strtotime('+1 year', $ustartdate));
         $cal_links['prev_year'] = date('Y', strtotime('-1 year', $ustartdate));
+        $cal_links['next_quarter'] = date('Ym', strtotime('+3 months', $ustartdate));
+        $cal_links['prev_quarter'] = date('Ym', strtotime('-3 months', $ustartdate));
         $cal_links['next_month'] = date('Ym', strtotime('+1 month', $ustartdate));
         $cal_links['prev_month'] = date('Ym', strtotime('-1 month', $ustartdate));
         $cal_links['next_week'] = date('Ymd', strtotime('+1 week', $ustartdate));
@@ -248,6 +266,8 @@ function ievents_user_view($args)
 
         $cal_links_labels['next_year'] = date('Y', strtotime('+1 year', $ustartdate));
         $cal_links_labels['prev_year'] = date('Y', strtotime('-1 year', $ustartdate));
+        $cal_links_labels['next_quarter'] = 'Q' . floor(((date('m', strtotime('+3 months', $ustartdate)) / 3) + 1)) . ', ' . date('Y', strtotime('+3 months', $ustartdate));
+        $cal_links_labels['prev_quarter'] = 'Q' . floor(((date('m', strtotime('-3 months', $ustartdate)) / 3) + 1)) . ', ' . date('Y', strtotime('-3 months', $ustartdate));
         $cal_links_labels['next_month'] = $locale['months']['long'][(date('m', strtotime('+1 month', $ustartdate)) + 11) % 12 + 1];
         $cal_links_labels['prev_month'] = $locale['months']['long'][(date('m', strtotime('-1 month', $ustartdate)) + 11) % 12 + 1];
         $cal_links_labels['next_week'] = xarLocaleGetFormattedDate('medium', strtotime('+1 week', $ustartdate));
@@ -533,7 +553,7 @@ function ievents_user_view($args)
     //
 
     // Now create a reference array of these event IDs, allowing events to be grouped.
-    // Loop though each event to put them into a group (day, week, month or year), if required.
+    // Loop though each event to put them into a group (quanta, day, week, month, quarter or year), if required.
     $groups = array();
     foreach($events as $eventkey => $eventvalue) {
         // Add some other details to each event, that will be useful.
@@ -574,24 +594,40 @@ function ievents_user_view($args)
         switch($group) {
             case 'year':
                 $cal->calFormat = 'fullYear';
+                $cal->DOWformat = 'xshort';
+                break;
+            case 'quarter':
+                $cal->calFormat = 'quarterYear';
+                $cal->DOWformat = 'xshort';
                 break;
             case 'month':
                 $cal->calFormat = 'largeMonth';
                 break;
             case 'week':
                 $cal->calFormat = 'weekly';
+                $cal->DOWformat = 'short';
+                break;
+            case 'day':
+                $cal->calFormat = 'daily';
                 break;
         }
+
+        if (!empty($cid)) $cal->cid = $cid;
         $cal->displayPrevNext = false;
         $cal->displayEvents = true;
         $cal->startingDOW = $startdayofweek;
         $cal->showWeek = false;
+        $cal->calDay = strtotime(date('Ymd', $ustartdate));
+        $cal->calWeek = $ustartdate;
         $cal->calMonth = date('m', $ustartdate);
+        $cal->calQuarter = floor(((date('m', $ustartdate) - 1) / 3) + 1);
         $cal->calYear = date('Y', $ustartdate);
+		$cal->quanta = xarModGetVar('ievents', 'quanta');
 
         // Pass the locale data in.
         $cal->dayNames = $locale['days']['long'];
         $cal->dayNamesShort = $locale['days']['short'];
+        $cal->dayNamesXShort = $locale['days']['xshort'];
 
         $cal->monthNames = $locale['months']['long'];
         $cal->monthNamesShort = $locale['months']['short'];
@@ -611,6 +647,7 @@ function ievents_user_view($args)
                 ))
             );
         }
+        $cal_output = $cal->display();
     } else {
         $cal = NULL;
     }
@@ -741,7 +778,7 @@ function ievents_user_view($args)
 
         // Other
         'hooks', 'q', 'q_fields', 'export_handlers', 'format',
-        'cal_links', 'cal_links_labels', 'cal', 'advanced'
+        'cal_links', 'cal_links_labels', 'cal', 'cal_output', 'advanced'
     );
 
     // RSS - switch to the RSS theme if the format is RSS

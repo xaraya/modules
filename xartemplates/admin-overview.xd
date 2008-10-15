@@ -1,0 +1,64 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>Events Administration </xar:mlstring></span>
+</div>
+
+<div class="xar-mod-body">
+  <xar:template type="module" file="admin-menu" />
+  <img src="#xarTplGetImage('admin.gif', 'ievents')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
+  <h2>
+    <xar:mlstring>Overview</xar:mlstring>
+  </h2>
+  <h3>
+    <xar:mlstring>What is it?</xar:mlstring>
+  </h3>
+  <p>
+    <em>
+      <xar:mlstring>IEvents is a Xaraya Content Module.</xar:mlstring>
+    </em>
+    <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
+    <ul>
+      <li>
+        <xar:mlstring>Create and manage calendars.</xar:mlstring>
+      </li>
+      <li>
+        <xar:mlstring>Create and manage events in each calendar.</xar:mlstring>
+      </li>
+      <li>
+        <xar:mlstring>Allow event information to be exported in both iCal and vCal formats.</xar:mlstring>
+      </li>
+    </ul>
+  </p>
+  <h3>
+    <xar:mlstring>How to use it?</xar:mlstring>
+  </h3>
+  <p>
+	tbd
+  </p>
+  <h3>
+    <xar:mlstring>Included Blocks</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>None.</xar:mlstring>
+  </p>
+  <h3>
+    <xar:mlstring>Included Hooks</xar:mlstring>
+  </h3>
+  <p>
+    <xar:mlstring>None.</xar:mlstring>
+  </p>
+    <h3><xar:mlstring>Further Information</xar:mlstring></h3>
+  <p>
+       <xar:mlstring>Extended information about this module can be found at </xar:mlstring><a title="#xarML('IEvents Module - Xaraya Extension 986')#" href="http://www.xaraya.com/index.php/release/986.html">Xaraya Extension and Releases</a>.
+  </p>
+      <ul>
+          <li><xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+          </li>
+          <li><xar:mlstring>Related tutorials and documentation on IEvents found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/ievents/" title="#xarML('Related documentation on IEvents')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+          </li>
+      </ul>
+      <p class="xar-sub">
+         <strong>&nbsp;<xar:mlstring>IEvents modules - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 0.2.0&nbsp; #xarLocaleGetFormattedDate('short','1215723666')#
+      </p>
+
+</div>

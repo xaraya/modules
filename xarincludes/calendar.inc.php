@@ -68,6 +68,11 @@ class calendar {
 
     //*********** Class variables that apply to all calendar formats ***********
 
+	/*
+	Declare a variable to define the calendar id
+	*/
+	var $cid = 0;
+
     /*
     Declare the main array to hold the calendar events.
     $events[]['date'] is the date and time of the event in unix time format.
@@ -90,15 +95,17 @@ class calendar {
     var $startingDOW;
 
     /*
-    Decalare a variable to indicate the calendar format.
+    Declare a variable to indicate the calendar format.
     smallMonth
     largeMonth
+    quarterYear
     fullYear
     weekly
+    daily
     */
     var $calFormat;
 
-    //Declare a boolean variable to determine weather to display events.
+    //Declare a boolean variable to determine whether to display events.
     var $displayEvents;
 
     /*
@@ -121,12 +128,20 @@ class calendar {
 
     //Declare a variable to tell how the month is displayed.  Values are long and short.
     var $monthFormat;
+    //Declare a variable that will hold the day to display.
+    var $calDay;
+    //Declare a variable that will hold the week to display (first day of week) .
+    var $calWeek;
     //Declare a variable that will hold the month to display.
     var $calMonth;
+    //Declare a variable that will hold the quarter to display.
+    var $calQuarter;
     //Declare a variable that will hold the year to display.
     var $calYear;
     //Declare a boolean variable to determine weather the current day is highlighted.
     var $showToday;
+    //Declare a variable to set minute length of hour divisions.
+    var $quanta;
 
     //****** Class variables that apply only to the small calendar format ******
 
@@ -148,7 +163,7 @@ class calendar {
     are displayed. This only applies to the large month calendar format.
     */
     var $displayPrevNext;
-    //Declare a variable to hold the background image for lsrge formst cslendsrs.
+    //Declare a variable to hold the background image for large format calendars.
     var $backgroundLargeFormatImage;
     /*
     Declare a variable that tells how a background image is repeated.
@@ -164,7 +179,7 @@ class calendar {
     */
     var $showWeek;
     /*
-    Decalare a variable to indicate the large calendar day of the week format.
+    Declare a variable to indicate the large calendar day of the week format.
     short - eg. Sun, Mon,Tue...
     long - eg. Sunday, Monday, Tuesday...
     */
@@ -187,7 +202,7 @@ class calendar {
     //**** Class variables that apply only to the full year calendar format ****
 
     /*
-    Decalre a boolean variable to determine weather the year is shown for small
+    Declare a boolean variable to determine weather the year is shown for small
     month calendars.  This is typically used when displaying the full year calendars.
     */
     var $displayYear;
@@ -227,6 +242,7 @@ class calendar {
     // List of day names, zero-indexed, with 0=Sunday
     var $dayNames;
     var $dayNamesShort;
+    var $dayNamesXShort;
 
     // List of month names, one-indexed, with 1=January
     var $monthNames;
@@ -241,6 +257,7 @@ class calendar {
         // Set up the default day names.
         if (!isset($this->dayNames)) $this->dayNames = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
         if (!isset($this->dayNamesShort)) $this->dayNamesShort = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
+        if (!isset($this->dayNamesXShort)) $this->dayNamesShort = array('Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa');
 
         // Set up the default month names.
         if (!isset($this->monthNames)) {
@@ -288,34 +305,27 @@ class calendar {
     */
 
     function getEvents($date, $cal, $highlightDate = false) {
-        // Set a boolean variable to determine weather events were displayed or not.
+        // Set a boolean variable to determine whether events were displayed or not.
         $displayed = false;
 
-        //
         $day_text_key = date('Ymd', $date);
 
-        // Clear an events variable based on the calendar format.
+		// Open a wrapper for the event.
         switch ($cal) {
-            /*case 'smallMonth':
-                if ($this->displayEvents) {
-                    // display the event with hover titles
-                    $events = '<a href="#" title="';
-                } else {
-                    // display the event without hover titles
-                    $events = '';
-                }
-                break;*/
+            case 'smallMonth':
+                $events = '';
+                break;
 
             case 'largeMonth':
                 // Display the event with full text
                 // TODO: if there are any events displayed, then the day number should be a
                 // hyperlink to a summary of that day (or the single event if there is only one event)
                 $events = '<div class="ievents-day-wrapper">';
-                $events .= '<div class="ievents-day-number">';
+                $events .= '    <div class="ievents-day-number">';
 
                 // If there is a URL for the day, then wrap the day number in that URL.
                 if (!empty($this->day_urls[$day_text_key])) {
-                    $events .= '<a href="' . $this->day_urls[$day_text_key] . '" rel="#ievents-day-' . $day_text_key . '" title="Events Today">' . date('j', $date) . '</a>';
+                    $events .= '<a href="' . $this->day_urls[$day_text_key] . '" rel="#ievents-day-' . $day_text_key . '" title="' . xarML("View this day's events") . '">' . date('j', $date) . '</a>';
                 } else {
                     $events .= date('j', $date);
                 }
@@ -325,28 +335,39 @@ class calendar {
                     $events .= ' <span class="ievents-week-number"> Week ' . date('W', $date) . '</span>';
                 }
 
-                $events .= '</div>' . "\n";
+                $events .= '</div>' . "\n<ul>\n";
                 break;
 
-            /*case 'weekly':
+            case 'weekly':
                 //display the event with full text
-                $events = '<div style="font-size: 12px; color: ' . $this->colorWeekFormatEventText . '; width: 100%; height: ' . $this->weekCellHeight . '; overflow: auto;">' . "\n";
-                break;*/
+                $events = "\n<ul>";
+                break;
+
+            case 'daily': // TODO: daily format
+                //display the event with full text
+                $events = '<div style="color: ' . $this->colorWeekFormatEventText . ';">' . "\n<ul>\n";
+                break;
 
             default:
                 $error = 'Invalid calendar format passed to the getEvents function.';
                 $this->displayError($error);
         }
 
+		$numEvents = 0;
+
         // Check if any events are defined.
         if (isset($this->events) && $this->displayEvents) {
             // Cycle through the events that are defined.
             if (isset($this->day_events[$day_text_key])) {
-                $events .= '<div id="ievents-day-' . $day_text_key . '"><ul>';
+				if ($cal != 'smallMonth' && $cal != 'weekly' && $cal != 'daily') {
+	                $events .= '<div id="ievents-day-' . $day_text_key . '"><ul>';
+				}
                 foreach($this->day_events[$day_text_key] as $event) {
                     // An event was found so determine the calendar format we need to display.
+                    $numEvents++;
                     switch ($cal) {
-                        /*case 'smallMonth':
+                        case 'smallMonth':
+/*
                             // Check if this is the first event displayed.
                             if ($displayed) {
                                 // Display the event with hover titles on a new line.
@@ -356,50 +377,88 @@ class calendar {
                                 $events .= date('h:i A', $event['date']) . ' - ' . $event['event'];
                                 $displayed = true;
                             }
-                            break;*/
+*/
+                            $displayed = true;
+                            break;
 
                         case 'largeMonth':
                         case 'weekly':
                             // Put each event into a list item.
                             // TODO: handle html entities.
                             // Display the event with full text.
-                            $events .= '<li>';
+                            $events .= "            <li>\n";
+							$events .= "                <strong>"  . xarLocaleGetFormattedTime('short', $event['date']) . "</strong><br />\n";
                             if (!empty($event['url'])) {
-                                $events .= '<a href="' . $event['url'] . '">' . $event['event'] . '</a>' . "\n";
+                                $events .= '            <a href="' . $event['url'] . '">' . $event['event'] . '</a>' . "\n";
                             } else {
-                                $events .= $event['event'] . '<br />' . "\n";
+                                $events .= $event['event'] . "\n";
                             }
-                            $events .= '</li>';
+                            $events .= "            </li>\n";
+                            break;
+                        case 'daily';
+                        	$qstart = $date;
+							$qend = $qstart + ($this->quanta * 60);
+							$eventlocaletime =  strtotime(xarLocaleGetFormattedDate('short', $event['date']) . ' ' . xarLocaleGetFormattedTime('short', $event['date']));
+
+							if (($eventlocaletime >= $qstart) && ($eventlocaletime < $qend)) {
+	                            $events .= "            <li>\n";
+	                            if (!empty($event['url'])) {
+	                                $events .= '            <a href="' . $event['url'] . '">' . $event['event'] . '</a>' . "\n";
+	                            } else {
+	                                $events .= $event['event'] . "\n";
+	                            }
+	                            $events .= "            </li>\n";
+							} else {
+								// decrement the event counter
+								$numEvents--;
+							}
                             break;
                     }
                 }
-                $events .= '</ul></div>';
+				if ($cal != 'smallMonth' && $cal != 'weekly' && $cal != 'daily') {
+	                $events .= "</ul>\n";
+	            }
             }
         }
 
         // Close the wrapper.
         switch ($cal) {
-            /*case 'smallMonth':
+            case 'smallMonth':
+            	// We're only interested in the number of events here, which is why we didn't do anything with this format before
                 if ($this->displayEvents) {
                     if ($displayed) {
                         // Continue to show the display the event with hover titles.
-                        $events .= '" style="text-decoration: none; font-weight: bold;"> ' . date('j', $date) . '</a>';
+                        $events .= '<a href="';
+						if ($this->cid != 0) {
+	                        $events .= xarModURL('ievents','user','view',array('cid' => $this->cid, 'startdate' => date('Ymd', $date), 'enddate' => date('Ymd', $date), 'group' => 'day')) . '" title="';
+						} else {
+	                        $events .= xarModURL('ievents','user','view',array('startdate' => date('Ymd', $date), 'enddate' => date('Ymd', $date), 'group' => 'day')) . '" title="';
+						}
+                        if ($numEvents == 1) {
+                        	$events .= xarML('#(1) Event', $numEvents);
+                        } else {
+                        	$events .= xarML('#(1) Events', $numEvents);
+                        }
+                        $events .= '">' . date('j', $date) . '</a>';
                     } else {
                         // No events were added to the title so just display the date.
-                        $events = '&nbsp;' . date('j', $date);
+                        $events = date('j', $date);
                     }
                 } else {
                     // display the event without hover titles
-                    $events = ' ' . date('j', $date);
+                    $events = date('j', $date);
                 }
-                break;*/
+                break;
 
             case 'largeMonth':
             case 'weekly':
+            case 'daily':
                 $events .= '</div>';
                 break;
         }
-
+        if (($cal == 'weekly' || $cal == 'daily') && $numEvents == 0) {
+			$events = '&nbsp;';
+		}
         return $events;
     }
 
@@ -460,6 +519,14 @@ class calendar {
                 }
             
                 break;
+            case 'xshort':
+                if (isset($this->dayNamesXShort[$dow % 7])) {
+                    $weekday = $this->dayNamesXShort[$dow % 7];
+                } else {
+                    $weekday = 'Un';
+                }
+            
+                break;
 
             default:
                 $weekday = '';
@@ -477,12 +544,12 @@ class calendar {
     $np - A boolean value indicating weather to display the links for the previous and next months.
 
     */
-/*
+
     function showSmallMonth($m, $y, $np = false, $showyear = true, $linkMonth = false) {
         // Calculate the number of days in the month
         $days = date('t',mktime(0,0,0,$m, 1, $y));
         // Calculate the day of the week that the month starts on
-        $startDay = date('w',mktime(0,0,0,$m, 1, $y)) - $this->startingDOW;
+		$startDay = (date('w', mktime(0, 0, 0, $m, 1, $y)) - $this->startingDOW + 7) % 7;
         // set the column offset for the starting day of the week.
         $offset = '';
         if ($startDay > 0) {
@@ -490,6 +557,12 @@ class calendar {
         } else if ($startDay == -1) {
             $offset .= '<td width="14%" colspan="6">&nbsp;</td>' . "\n";
             $startDay = 6;
+        }
+
+        if (mktime(0, 0, 0, date('m'), 1, date('Y')) == mktime(0, 0, 0, $m, 1, $y)) {
+            $today = date('j');
+        } else {
+            $today = 0;
         }
 
         // Get the textual representation of the month
@@ -512,7 +585,7 @@ class calendar {
             $nextYear = $y;
         }
 
-        //Get the currrent date to display if the month showing is the current month.
+        //Get the current date to display if the month showing is the current month.
         if (mktime(0, 0, 0, date("m"), 1, date("Y")) == mktime(0, 0, 0, $m, 1, $y)) {
             $day = date("j");
         } else {
@@ -523,56 +596,44 @@ class calendar {
         } else {
             $year = "";
         }
+		$prevLink = '';
+		$nextLink = '';
 
-        //Create the header
-        $output = "<div style=\"vertical-align: top;\">\n";
-        $output .= "<table class=\"calendar\" border=\"".$this->smallMonthBorder."\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\" style=\"font-size: 14px;\">\n";
-        $output .= "    <tr>\n";
-        $output .= "        <th colspan=\"7\" style=\"text-align: center;\">\n";
-        $output .= "            <span style=\"font-size: 25px; font-weight: bold; color: ".$this->colorSmallFormatHeaderText.";\">".$prevLink.$month."&nbsp;".$year.$nextLink."</span>\n";
-        $output .= "        </th>\n";
-        $output .= "    </tr>\n";
-        $output .= "    <tr style=\"color: ".$this->colorSmallFormatDayOfWeek.";\">\n";
-        //now create the weekday headers
-        if ($this->startingDOW == 0) {
-            $output .= "        <td style=\"width: 14%; text-align: center;\">S</td>\n";
+        $data = array(
+        	'm' => $m,
+        	'y' => $y,
+        	'np' => $np,
+        	'cid' => $this->cid,
+        	'showyear' => $showyear,
+        	'linkmonth' => $linkMonth,
+        	'month' => $month,
+        	'year' => $year,
+        	'prevmonth' => $prevMonth,
+        	'prevyear' => $prevYear,
+			'prevlink' => $prevLink,
+			'nextlink' => $nextLink,
+        	'days' => $days,
+        	'startday' => $startDay,
+        	'startdate' => date('Ymd', mktime(0, 0, 0, $m, 1, $y)),
+        	'enddate' => date('Ymd', mktime(0, 0, 0, $m, $days, $y)),
+        	'today' => $today,
+        	'startingdow' => $this->startingDOW,
+        	'offset' => $offset,
+        	'cal' => $this
+        	);
+
+		$daysofweek = array();
+        for ($i = 1; $i <= 7; $i++) {
+            $daysofweek[] = $this->getDOW($i);
         }
-        $output .= "        <td style=\"width: 14%; text-align: center;\">M</td>\n";
-        $output .= "        <td style=\"width: 14%; text-align: center;\">T</td>\n";
-        $output .= "        <td style=\"width: 14%; text-align: center;\">W</td>\n";
-        $output .= "        <td style=\"width: 14%; text-align: center;\">T</td>\n";
-        $output .= "        <td style=\"width: 14%; text-align: center;\">F</td>\n";
-        $output .= "        <td style=\"width: 14%; text-align: center;\">S</td>\n";
-        if ($this->startingDOW == 1) {
-            $output .= "        <td style=\"width: 14%; text-align: center;\">S</td>\n";
-        }
-        $output .= "    </tr>\n";
-        $output .= "    <tr>\n";
-        //Now generate the calendar
-        for($i=1; $i<=$days; $i++){
-            if ($i == $day && $this->showToday) {
-                $output .= $offset."        <td style=\"width: 14%; text-align: center; color: ".$this->colorSmallFormatDateHighlight."; font-weight: bold;\">&nbsp;".$this->getEvents(mktime(0, 0, 0, $m, $i, $y), "smallMonth")."&nbsp;</td>\n";
-            } else {
-                $output .= $offset."        <td style=\"width: 14%; text-align: center; color: ".$this->colorSmallFormatDateText.";\">&nbsp;".$this->getEvents(mktime(0, 0, 0, $m, $i, $y), "smallMonth")."&nbsp;</td>\n";
-            }
-            $offset = "";
-            $startDay ++;
-            if ($startDay == 7) {
-                $output .= "    </tr>\n";
-                $output .= "    <tr>\n";
-                $startDay = 0;
-            }
-        }
-        if ($startDay > 0) {
-            $output .= "        <td colspan=\"".(7 - $startDay)."\" style=\"width: 14%;\">&nbsp;</td>\n";
-        }
-        $output .= "    </tr>\n";
-        $output .= "</table>\n";
-        $output .= "</div>\n";
+
+		$data['daysofweek'] = $daysofweek;
+
         //Now output the calendar
-        return $output;
+        return xarTplObject('ievents', 'calendar', 'smallmonth', $data);
+
     } //End function showSmallMonth()
-*/
+
 
     /*
     This function for the class will display a month in large format. The inputs
@@ -597,127 +658,118 @@ class calendar {
         }
 
         // Create the header
-        $output = array();
+        $data = array(
+        	'm' => $m,
+        	'y' => $y,
+        	'days' => $days,
+        	'startday' => $startDay,
+        	'today' => $today,
+        	'cal' => $this,
+        	'startingdow' => $this->startingDOW
+        	);
 
-        // No classes needed for the table, as we can select it in a wrapper.
-        $output[] = '<table>';
-
-        // Create the weekday headers
-        $output[] = '<tr>';
+		$daysofweek = array();
         for ($i = 1; $i <= 7; $i++) {
-            $output[] = '<th>' . $this->getDOW($i) . '</th>';
-        }
-        $output[] = '</tr>';
-
-        // Generate the calendar
-        $output[] = '<tr>';
-        for($i=1; $i<=$days; $i++){
-            $date = mktime(0, 0, 0, $m, $i, $y);
-
-            // Set the class for the table cells.
-            $classes = array();
-
-            // Highlight weekends.
-            if ((date('w', $date) == '0') || (date('w', $date) == '6')) $classes[] = 'ievents-weekend';
-
-            // Highlight today.
-            if ($i == $today) $classes[] = 'ievents-today';
-
-            // Add some spacer cells if we are not starting at the far left.
-            if ($i == 1 && $startDay > 0) {
-                $output[] = '<td colspan="' . $startDay . '" class="ievents-spacer">&nbsp;</td>';
-            }
-
-            if (!empty($classes)) {
-                $output[] = '<td class="' . implode(' ', $classes) . '">' . $this->getEvents($date, 'largeMonth') . '</td>';
-            } else {
-                $output[] = '<td>' . $this->getEvents($date, 'largeMonth') . '</td>';
-            }
-
-            $startDay ++;
-            if ($startDay == 7) {
-                $output[] = '</tr>';
-                $output[] = '<tr>';
-                $startDay = 0;
-            }
+            $daysofweek[] = $this->getDOW($i);
         }
 
-        $offset = array();
+		$data['daysofweek'] = $daysofweek;
 
-        if ($startDay > 0) {
-            $output[] = '<td colspan="' . (7 - $startDay) . '" class="ievents-spacer">&nbsp;</td>';
-        }
-
-        $output[] = '</tr>';
-        $output[] = '</table>';
-
-        // Return the calendar markup.
-        return implode("\n", $output) . "\n";
+        return xarTplObject('ievents', 'calendar', 'largemonth', $data);
     } // End function showLargeMonth()
 
 
-/*
+    function showQuarterYear($q, $y, $np = false) {
+        //Get the previous and next years for the year selection links.
+
+		$startmonth = ($q * 3) - 2;
+		$endmonth = $startmonth + 2;
+
+		$data = array(
+			'q' => $q,
+			'y' => $y,
+			'startmonth' => $startmonth,
+			'endmonth' => $endmonth
+		);
+
+		$months_output = array();
+        for ($i = $startmonth; $i <= $endmonth; $i++) {
+			$months_output[$i] = $this->showSmallMonth($i, $y, false, false, true);
+		}
+
+		$data['months_output'] = $months_output;
+
+        return xarTplObject('ievents', 'calendar', 'quarter', $data);
+    } //End function showFullYear()
+
     function showFullYear($y, $np = false) {
         //Get the previous and next years for the year selection links.
-        $prevYear = $y - 1;
-        $nextYear = $y + 1;
-        //Set default arrows to use if no images are defined.
-        $prevArrow = "<<";
-        $nextArrow = ">>";
-        //If images were set for the previous month and next month links, set the images.
-        if (isset($this->fullYearPrevArrow)) {
-            $prevArrow = "<img src=\"".$this->fullYearPrevArrow."\" border=\"0\" align=\"top\">";
-        }
-        if (isset($this->fullYearNextArrow)) {
-            $nextArrow = "<img src=\"".$this->fullYearNextArrow."\" border=\"0\" align=\"top\">";
-        }
 
-        //Create the table that will contain the months and add the year header.
-        $output = "<table border=\"1\" cellspacing=\"0\" cellpadding=\"3\" width=\"100%\" align=\"center\">\n";
-        $output .= "    <tr>\n";
-        $output .= "        <td colspan=\"3\" style=\"text-align: center;\">\n";
-        $output .= "            <span style=\"font-size: 50px; font-weight: bold;\">".$prevLink.$y.$nextLink."</span>\n";
-        $output .= "        </td>\n";
-        $output .= "    </tr>\n";
-        $output .= "    <tr>\n";
-        //Create a variable to count the columns.
-        $col = 1;
-        //Now show the months for that year.
+		$data = array(
+			'y' => $y
+		);
+
+		$months_output = array();
         for ($i = 1; $i <= 12; $i++) {
-            $output .= "        <td style=\"text-align: center; vertical-align: top;\">\n";
-            $output .= $this->showSmallMonth($i, $y, false, false);
-            $output .= "        </td>\n";
-            $col ++;
-            if ($col == 4) {
-                $output .= "    </tr>\n";
-                $output .= "    <tr>\n";
-                $col = 1;
-            }
-        }
-        $output .= "    </tr>\n";
-        $output .= "</table>\n";
-        return $output;
+			$months_output[$i] = $this->showSmallMonth($i, $y, false, false, true);
+		}
+
+		$data['months_output'] = $months_output;
+
+        return xarTplObject('ievents', 'calendar', 'fullyear', $data);
     } //End function showFullYear()
-*/
 
     /*
     This function is used to show a weekly view of the calendar.
     */
+
+    function showWeekView($date, $linkWeek = false) {
+        //Define one day in seconds (60 seconds * 60 minutes * 24 hours).
+        $oneDay = 86400;
+        //Determine the first day of the week that the day falls on.
+        $firstDayOfWeek = $date - (date("w",$date) * $oneDay); // ;
+
+        $highlightWorkHours = false;
+        $toggle = 0;
+
+
+		$data = array(
+			'date' => $date,
+			'firstdayofweek' => $firstDayOfWeek,
+			'oneday' => $oneDay,
+			'startingdow' => $this->startingDOW,
+			'cal' => $this
+		);
+
+
+		$dayheaders = array();
+		for ($i = 1; $i <= 7; $i++) {
+			$dayheaders[$i] = array(
+				'd' => date("j", ($firstDayOfWeek + ($oneDay * ($i - 1)))),
+				'day' => $this->getDOW($i)
+			);
+		}
+
+		$data['dayheaders'] = $dayheaders;
+
+        return xarTplObject('ievents', 'calendar', 'week', $data);
+    } //End function showWeekView()
+
     /*
-    function showWeekView($date) {
+    This function is used to show a day view of the calendar.
+    */
+
+    function showDayView($date, $linkDay = false) {
         //Determine what week of the year the date falls on.
         $week = date("W", $date);
         //Determine what day of the week the date falls on.
         $dayOfWeek = date("w",$date);
-        //Define one day in seconds (60 seconds * 60 minutes * 24 hours).
-        $oneDay = 60 * 60 * 24;
-        //Determine the first day of the week that the day falls on.
-        $firstDayOfWeek = $date - ($dayOfWeek * $oneDay); // ;
-        $weekCalendarClass = "";
-        $weekCalendarID = "";
+        //Define when the day ends.
+        $dayEnd = $date + 86400;
+
         $prevLink = "";
         $nextLink = "";
-        $width = "100%";
+        $quanta = $this->quanta * 60;  // quanta stored as minutes
 
         $highlightWorkHours = false;
         $toggle = 0;
@@ -738,89 +790,21 @@ class calendar {
         }
 
         // Create the header
-        $output = "<div style=\"vertical-align: top;\">";
-        $output .= "<table".$weekCalendarClass.$weekCalendarID." border=\"1\" cellspacing=\"0\" cellpadding=\"0\" align=\"".$this->largeFormatAlign."\" style=\"width: ".$width.";\">\n";
-        $output .= "    <tr>\n";
-        $output .= "        <td style=\"width: 100%; text-align: center; vertical-align: middle;\">\n";
-        $output .= "            <span style=\"font-size: 30px; font-weight: bold; color: ".$this->colorWeekFormatHeaderText.";\">".$prevLink."Week ".$week.$nextLink."</span>\n";
-        $output .= "        </td>\n";
-        $output .= "    </tr>\n";
-        $output .= "    <tr style=\"color: ".$this->colorWeekFormatDayOfWeek."; font-weight: bold;\">\n";
-        $output .= "        <td>\n";
-        $output .= "            <table border=\"1\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\" style=\"width: 100%;\">\n";
-        $output .= "                <tr>\n";
-        $output .= "                    <td style=\"width: 12.5%; text-align: center;\">Hour</td>\n";
-        //now create the weekday headers
-        for ($i = 1; $i < 8; $i++) {
-            $output .= "        <td style=\"width: 12.5%; text-align: center;\">".$this->getDOW($i)."</td>\n";
-        }
-        $output .= "        <td style=\"width: 1.9%;\">&nbsp;</td>\n";
-        $output .= "                </tr>\n";
-        $output .= "            </table>\n";
-        $output .= "        <td>\n";
-        $output .= "    </tr>\n";
-        $output .= "    <tr>\n";
-        $output .= "        <td colspan=\"9\">\n";
-        $output .= "            <div style=\"width: 100%; height: ".$this->weekCalendarHeight."; overflow: auto;\">\n";
-        $output .= "                <table border=\"1\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\" style=\"width: 100%;\">\n";
-        for($ampm = 0; $ampm < 2; $ampm ++) {
-            for ($hour = 1; $hour < 13; $hour ++) {
-                for ($minute = 0; $minute < 4; $minute ++) {
-                    //Format the time display.
-                    $unixTime = mktime((($hour + ($ampm * 12)) - 1), ($minute * 15), 0, date("m", $date), date("j", $date), date("Y", $date));
-                    $time = date("g:i A", $unixTime);
+        $data = array(
+			'date' => $date,
+			'dayend' => $dayEnd,
+			'quanta' => $quanta,
+			'toggle' => $toggle,
+			'unixworkstarttime' => $unixWorkStartTime,
+			'unixworkendtime' => $unixWorkEndTime,
+			'highlightworkhours' => $highlightWorkHours,
+        	'cal' => $this,
+        	);
 
-                    if ($minute == 0) {
-                        $highlightZeroHour = "font-weight: bold;";
-                    } else {
-                        $highlightZeroHour = "";
-                    }
 
-                    if ($minute == 0) {
-                        $toggle ++;
-                        if ($toggle > 1) {
-                            $toggle = 0;
-                        }
-                    }
+        return xarTplObject('ievents', 'calendar', 'day', $data);
+    } //End function showDayView()
 
-                    if ($toggle == 0) {
-                        if ((($unixTime >= $unixWorkStartTime)) && ($unixTime < $unixWorkEndTime) && $highlightWorkHours) {
-                            $highlightHour = " background-color: #DDDDFF;";
-                        } else {
-                            $highlightHour = " background-color: DDFFDD;";
-                        }
-                    } else {
-                        if ((($unixTime >= $unixWorkStartTime)) && ($unixTime < $unixWorkEndTime) && $highlightWorkHours) {
-                            $highlightHour = " background-color: #BBBBFF;";
-                        } else {
-                            $highlightHour = " background-color: #BBFFBB;";
-                        }
-                    }
-
-                    $output .= "                    <tr style=\"".$highlightHour." height: ".$this->weekCellHeight.";\">\n";
-                    $output .= "                        <td style=\"width: 12.5%; text-align: right;".$highlightZeroHour." vertical-align: top;\">\n";
-                    $output .= "                        <a name=\"".$time."\">".$time."</a>\n";
-                    $output .= "                        </td>\n";
-                    for ($dow = 0; $dow < 7; $dow ++) {
-                        $output .= "                        <td style=\"width: 12.5%; text-align: left; vertical-align: top;\">\n";
-                        $dateCheck = mktime(($hour + ($ampm * 12) - 1), ($minute * 15), 0, date("m", ($firstDayOfWeek + ($oneDay * $dow))), date("d", ($firstDayOfWeek + ($oneDay * $dow))) + $this->startingDOW, date("Y", ($firstDayOfWeek + ($oneDay * $dow))));
-                        $output .= "                        ".$this->getEvents($dateCheck, "weekly")."\n";
-                        $output .= "                        </td>\n";
-                    }
-                    $output .= "                    </tr>\n";
-                }
-            }
-        }
-        $output .= "                    </tr>\n";
-        $output .= "                </table>\n";
-        $output .= "            </div>\n";
-        $output .= "        </td>\n";
-        $output .= "    </tr>\n";
-        $output .= "    </table>\n";
-
-        return $output;
-    } //End function showWeekView()
-*/
 
     /*
     This function for the class outputs the calendar based on the parameters given.
@@ -834,11 +818,17 @@ class calendar {
             case 'largeMonth':
                 $displayCal = $this->showLargeMonth($this->calMonth, $this->calYear);
                 break;
+            case 'quarterYear':
+                $displayCal = $this->showQuarterYear($this->calQuarter, $this->calYear, $this->displayPrevNextLinks);
+                break;
             case 'fullYear':
                 $displayCal = $this->showFullYear($this->calYear, $this->displayPrevNextLinks);
                 break;
             case 'weekly':
-                $displayCal = $this->showWeekView($this->calWeek);
+                $displayCal = $this->showWeekView($this->calWeek, $this->displayPrevNextLinks);
+                break;
+            case 'daily':
+                $displayCal = $this->showDayView($this->calDay, $this->displayPrevNextLinks);
                 break;
             default:
                 $error = 'Invalid definition of the calFormat variable in display function.';
@@ -856,12 +846,12 @@ class calendar {
         $output = "<table>\n";
         $output .= "    <tr>\n";
         $output .= "        <td style=\"text-align: center;\">\n";
-        $output .= "        The clendar class has generated the following error:<br />\n";
+        $output .= "        The calendar class has generated the following error:<br />\n";
         $output .= "        <span style=\"color: red;\">".$error."</span>\n";
         $output .= "        </td>\n";
         $output .= "    <tr>\n";
         $output .= "</table>\n";
-        die($output);
+        return $output;
     } //End function displayError()
 } //End class calendar
 

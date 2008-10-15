@@ -142,7 +142,7 @@ function ievents_userapi_format_datetime_duration($startdate, $enddate)
     // Quanta of the hour divisions, in minutes.
     // Set to zero for no quantisation.
     static $quanta = NULL;
-    if (!isset($quanta)) $quanta = xarModAPIfunc('ievents', 'user', 'params', array('name' => 'quanta'));
+    if (!isset($quanta)) $quanta = xarModGetVar('ievents', 'quanta');
 
     $total_minutes = (int)(date('G', $enddate)*60 + date('i', $enddate) - date('G', $startdate)*60 - date('i', $startdate));
 

@@ -1,3 +1,7 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Events</xar:mlstring></span>
+</div>
+<div class="mod-body">
 
 <form method="post" action="#xarModURL('ievents','user','delete')#">
 
@@ -14,14 +18,15 @@
         </xar:ml>
     </p>
 
-    <p>
+    <div class="xarmargin-thickends xar-align-center">
         <input type="submit" name="confirm" value="#xarML('Confirm')#" />
         <input type="hidden" name="eid" value="#$event.eid#" />
         <xar:if condition="!empty($return_url)">
             <input type="hidden" name="return_url" value="#xarVarPrepForDisplay($return_url)#" />
             <a href="#xarVarPrepForDisplay($return_url)#"><xar:mlstring>Cancel</xar:mlstring></a>
         </xar:if>
-    </p>
+    </div>
 </xar:if>
 
 </form>
+</div>

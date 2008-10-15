@@ -1,0 +1,48 @@
+<div>
+	<table class="ievents-calendar-day">
+		<xar:for start="$qtime = $date" test="$qtime lt $dayend" iter="$qtime += $quanta">
+			<xar:set name="hour">date('g', $qtime)</xar:set>
+			<xar:set name="minute">date('i', $qtime)</xar:set>
+			<xar:set name="time">date("g:i A", $qtime)</xar:set>
+			<xar:set name="classes">''</xar:set>
+			<xar:set name="qid">date("\\t\i\m\e_giA", $qtime)</xar:set>
+			<xar:set name="qlabel">date("g:i A", $qtime)</xar:set>
+
+		    <xar:if condition="$minute eq 0">
+		        <xar:set name="rowclass">'ievents-calendar-day-hour'</xar:set>
+		    <xar:else />
+				<xar:set name="rowclasses">''</xar:set>
+		    </xar:if>
+
+		    <xar:if condition="$minute eq 0">
+		        <xar:set name="toggle">$toggle + 1</xar:set>
+		        <xar:if condition="$toggle gt 1">
+					<xar:set name="toggle">0</xar:set>
+		        </xar:if>
+		    </xar:if>
+
+		    <xar:if condition="$toggle eq 0">
+		        <xar:if condition="(($qtime ge $unixworkstarttime)) and ($qtime lt $unixworkendtime) and $highlightworkhours">
+		            <xar:set name="classes">$classes . ' ievents-calendar-norm-work'</xar:set>
+		        <xar:else />
+		            <xar:set name="classes">' ievents-calendar-norm'</xar:set>
+		        </xar:if>
+		    <xar:else />
+		        <xar:if condition="(($qtime ge $unixworkstarttime)) and ($qtime lt $unixworkendtime) and $highlightworkhours">
+		            <xar:set name="classes">$classes . ' ievents-calendar-alt-work'</xar:set>
+		        <xar:else />
+		            <xar:set name="classes">' ievents-calendar-alt'</xar:set>
+		        </xar:if>
+		    </xar:if>
+
+            <tr class="#rowclasses#">
+	            <th id="#$qid#" class="#$rowclass#">
+                	#$qlabel#
+                </th>
+                <td class="#$classes#">
+                	#$cal:getEvents($qtime, "daily")#
+                </td>
+            </tr>
+		</xar:for>
+    </table>
+</div>

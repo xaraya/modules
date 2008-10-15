@@ -36,8 +36,15 @@ function ievents_userapi_getevents($args)
 
     static $static_object = NULL;
 
-    list($module, $modid, $itemtype, $q_fields, $group_prefixes, $address_format, $default_listing_sort, $category_tree_search) =
-        xarModAPIfunc('ievents', 'user', 'params', array('names' => 'module,modid,itemtype_events,q_fields,group_prefixes,address_format,default_listing_sort,category_tree_search'));
+    $module = 'ievents';
+    $modid = xarModGetIDFromName($module);
+    $itemtype = xarModGetVar('ievents','itemtype_events');
+    $category_tree_search = xarModGetVar('ievents','category_tree_search');
+
+    list($q_fields,$group_prefixes,$address_format,$default_listing_sort) =
+        xarModAPIfunc('ievents', 'user', 'params', 
+            array('names' => 'q_fields,group_prefixes,address_format,default_listing_sort')
+        );
 
     // Default return value (array or 0, depending on whether doing a count).
     if (empty($docount)) {
@@ -291,6 +298,8 @@ function ievents_userapi_getevents($args)
         // - Add a reference to the calendar details
         if (!empty($events)) {
             $position = 1;
+            $days_new = xarModGetVar('ievnets','days_new');
+            $days_updated = xarModGetVar('ievnets','days_updated');
             foreach ($events as $event) {
                 // Security check.
                 // We are not doing checks on category here, as we only want to use categories
@@ -320,6 +329,16 @@ function ievents_userapi_getevents($args)
                 } else {
                     $event['flags_arr'] = array();
                 }
+                // Add flags for new and/or updated events
+                // Put these flags at the beginning by reversing the array
+                $event['flags_arr'] = array_reverse($event['flags_arr'], true);
+                if ($event['created_time'] < (time() + ($days_new * 86400))) {
+                    $event['flags_arr']['E'] = 'New';
+                }
+                elseif ($event['updated_time'] < (time() + ($days_updated * 86400))) {
+                    $event['flags_arr']['U'] = 'Updated';
+                }
+                $event['flags_arr'] = array_reverse($event['flags_arr'], true);
 
                 // Include the duration, in days, as it is used a lot.
                 // Set the duration to zero if the event is open-ended.

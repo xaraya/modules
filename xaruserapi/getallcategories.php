@@ -14,8 +14,9 @@ function ievents_userapi_getallcategories($args)
     if (isset($info)) return $info;
 
     // Fetch all the config items we need at once.
-    list($module, $modid, $itemtype_events) =
-        xarModAPIfunc('ievents', 'user', 'params', array('names' => 'module,modid,itemtype_events'));
+    $module = 'ievents';
+    $modid = xarModGetIDFromName($module);
+    $itemtype_events = xarModGetVar('ievents', 'itemtype_events');
 
     // Return empty array if not hooked to categories.
     if (!xarModIsHooked('categories', $module, $itemtype_events)) {

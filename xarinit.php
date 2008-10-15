@@ -260,6 +260,18 @@ function ievents_init()
 
     // Masks for the component 'IEventCal'.
     xarRegisterMask(
+        'View' . $comp, 'All', $module, $comp, 'All', 'ACCESS_OVERVIEW',
+        xarML('Edit details for a calendar')
+    );
+    xarRegisterMask(
+        'Read' . $comp, 'All', $module, $comp, 'All', 'ACCESS_READ',
+        xarML('Edit details for a calendar')
+    );
+    xarRegisterMask(
+        'Comment' . $comp, 'All', $module, $comp, 'All', 'ACCESS_COMMENT',
+        xarML('Edit details for a calendar')
+    );
+    xarRegisterMask(
         'Edit' . $comp, 'All', $module, $comp, 'All', 'ACCESS_EDIT',
         xarML('Edit details for a calendar')
     );
@@ -341,6 +353,28 @@ function ievents_upgrade($oldversion)
             $result = &$dbconn->Execute($query);
             if (!$result) return;      
             
+            xarModSetVar('ievents', 'itemtype_events', 1);
+            xarModSetVar('ievents', 'itemtype_calendars', 2);
+            xarModSetVar('ievents', 'startdayofweek', 1);
+            xarModSetVar('ievents', 'quanta', 15);
+            xarModSetVar('ievents', 'maxcats', 10);
+            xarModSetVar('ievents', 'days_new', 5);
+            xarModSetVar('ievents', 'days_updated', 3);
+            xarModSetVar('ievents', 'default_numitems', 20);
+            xarModSetVar('ievents', 'max_numitems', 200);
+            xarModSetVar('ievents', 'default_startdate', 'now');
+            xarModSetVar('ievents', 'default_enddate', '+6 months');
+            xarModSetVar('ievents', 'default_daterange', 'next6months');
+            xarModSetVar('ievents', 'summary_max_words', 100);
+            xarModSetVar('ievents', 'year_range_min', -3);
+            xarModSetVar('ievents', 'year_range_max', 5);
+            xarModSetVar('ievents', 'default_group', 'week');
+            xarModSetVar('ievents', 'cal_subscribe_range', 'window4months');
+            xarModSetVar('ievents', 'cal_subscribe_numitems', 100);
+            xarModSetVar('ievents', 'max_cat_depth', 2);
+            xarModSetVar('ievents', 'default_display_format', 'list');
+            xarModSetVar('ievents', 'category_tree_search', 1);
+
         case '0.1.1':
             // Upgrading from 0.1.1
 

@@ -5,6 +5,12 @@
 
 <xar:style file="ievents" scope="module" />
 
+<xar:template type="module" file="user-menu" />
+
+<xar:if condition="isset($cid) and isset($calendars[$cid])">
+	<h1>#$calendars.$cid.long_name#</h1>
+</xar:if>
+
 <div class="ievents-view">
     <xar:comment><xar:template file="admin-mini" /></xar:comment>
 
@@ -13,18 +19,16 @@
 
         <xar:template file="event-nextprev" />
 
-        <dl class="ievents-event">
-            <xar:template file="event-display-dl" subdata="array('event'=&gt;$event,'calendar'=&gt;$calendars[$event.calendar_id],'categories'=&gt;$categories,'export_handlers'=&gt;$export_handlers)" />
+            <xar:template file="event-display" subdata="array('event'=&gt;$event,'calendar'=&gt;$calendars[$event.calendar_id],'categories'=&gt;$categories,'export_handlers'=&gt;$export_handlers)" />
             <xar:if condition="!empty($hooks)">
-                <dd class="ievents-hooks">
+                <div class="ievents-hooks">
                     <xar:foreach in="$hooks" key="$hookmodule">
                         <xar:if condition="trim($hooks[$hookmodule]) ne ''">
                             <div class="ievents-hooks-#$hookmodule#">#$hooks[$hookmodule]#</div>
                         </xar:if>
                     </xar:foreach>
-                </dd>
+                </div>
             </xar:if>
-        </dl>
 
         <xar:template file="event-nextprev" />
 
@@ -37,6 +41,7 @@
 
         <xar:if condition="empty($groups)">
             <xar:comment>Single listing, not grouped in any way</xar:comment>
+
             <dl class="ievents-events">
                 <xar:loop name="$events">
                     <xar:template file="event-summary-dl" subdata="array('event'=&gt;$loop:item,'calendar'=&gt;$calendars[$loop:item.calendar_id],'categories'=&gt;$categories)" />
@@ -44,23 +49,22 @@
             </dl>
         <xar:else />
             <xar:comment>Multiple listings, grouped in some way</xar:comment>
-            <dl class="ievents-groups">
-                <xar:loop id="groups" name="$groups">
-                    <xar:template file="group-header-dl" subdata="array('group'=&gt;$loop:item)" />
-                    <dd>
-                        <dl class="ievents-events">
-                            <xar:loop name="$loop:item.events">
-                                <xar:template file="event-summary-dl" subdata="array('event'=&gt;$events[$loop:item],'group'=&gt;$group,'calendar'=&gt;$calendars[$events[$loop:item]['calendar_id']],'categories'=&gt;$categories)" />
-                            </xar:loop>
-                        </dl>
-                    <dd>
-                </xar:loop>
-            </dl>
+            <xar:loop id="groups" name="$groups">
+                <xar:template file="group-header" subdata="array('group'=&gt;$loop:item)" />
+
+                <dl class="ievents-events">
+                    <xar:loop name="$loop:item.events">
+                        <xar:template file="event-summary" subdata="array('event'=&gt;$events[$loop:item],'group'=&gt;$group,'calendar'=&gt;$calendars[$events[$loop:item]['calendar_id']],'categories'=&gt;$categories)" />
+                    </xar:loop>
+                </dl>
+            </xar:loop>
         </xar:if>
 
         <xar:template file="list-pager" />
     <xar:else />
         <xar:template file="jump-menu" />
-        <p><xar:mlstring>No events found</xar:mlstring></p>
+        <p>
+            <xar:mlstring>No events found</xar:mlstring>
+        </p>
     </xar:if>
 </div>

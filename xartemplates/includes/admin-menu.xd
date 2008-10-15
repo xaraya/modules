@@ -1,0 +1,72 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration menu</xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+
+<xar:set name="activetab">$_bl_module_func</xar:set>
+
+<xar:set name="itemtype_events">xarModGetVar('ievents', 'itemtype_events')</xar:set>
+<xar:set name="itemtype_calendars">xarModGetVar('ievents', 'itemtype_calendars')</xar:set>
+
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="Choose an action to perform">
+      <xar:mlstring>Actions:</xar:mlstring>
+    </dt>
+
+    <xar:sec mask="EditIEventCal" catch="false">
+        <xar:if condition="$activetab eq 'viewcals' or $activetab eq 'modifycal' or $activetab eq 'deletecal' or $activetab eq 'modify'">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+
+        <dd class="#$tabclass#">
+          <a href="#xarModURL('ievents','admin','viewcals')#" title="#xarML('View, edit or create Calendars')#">
+            <xar:mlstring>Manage Calendars</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+
+
+    <xar:sec mask="CommentIEventCal" catch="false">
+        <xar:if condition="($activetab eq 'modify') and (xarRequestGetVar('itemtype') eq $itemtype_calendars)">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+            <a href="#xarModURL('ievents','admin','modify', array('itemtype' => $itemtype_calendars))#">
+                <xar:mlstring>New Calendar</xar:mlstring>
+            </a>
+        </dd>
+    </xar:sec>
+
+    <xar:sec mask="CommentIEvent" catch="false">
+        <xar:if condition="($activetab eq 'modify') and (xarRequestGetVar('itemtype') ne $itemtype_calendars)">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+            <a href="#xarModURL('ievents','admin','modify')#" >
+                <xar:mlstring>New Event</xar:mlstring>
+            </a>
+        </dd>
+    </xar:sec>
+
+    <xar:sec mask="AdminIEventCal" catch="false">
+        <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="#xarModURL('ievents','admin','modifyconfig')#">
+            <xar:mlstring>Modify Config</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+    <xar:set name="tabclass">$activetab=='overview'?'active':''</xar:set>
+    <dd class="#$tabclass#">
+      <a href="#xarModURL('ievents','admin','overview')#">
+        <xar:mlstring>Overview</xar:mlstring>
+      </a>
+    </dd>
+  </dl>
+</div>

@@ -1,0 +1,24 @@
+<h2>
+    <xar:if condition="$group.periodtype eq 'day'">
+        <xar:ml>
+            <xar:mlstring>#(1) #(2)</xar:mlstring>
+            <xar:mlvar>#xarLocaleFormatDate('%A', $group.periodstart)#</xar:mlvar>
+            <xar:mlvar>#xarLocaleGetFormattedDate('long', $group.periodstart)#</xar:mlvar>
+        </xar:ml>
+    <xar:elseif condition="$group.periodtype eq 'week'" />
+        <xar:ml>
+            <xar:mlstring>Week commencing #(1)</xar:mlstring>
+            <xar:mlvar>#xarLocaleGetFormattedDate('long', $group.periodstart)#</xar:mlvar>
+        </xar:ml>
+    <xar:elseif condition="$group.periodtype eq 'month'" />
+        <xar:ml>
+            <xar:mlstring>Events for #(1)</xar:mlstring>
+            <xar:mlvar>#xarLocaleFormatDate('%B %Y', $group.periodstart)#</xar:mlvar>
+        </xar:ml>
+    <xar:elseif condition="$group.periodtype eq 'year'" />
+        <xar:ml>
+            <xar:mlstring>Events for #(1)</xar:mlstring>
+            <xar:mlvar>#xarLocaleFormatDate('%Y', $group.periodstart)#</xar:mlvar>
+        </xar:ml>
+    </xar:if>
+</h2>
