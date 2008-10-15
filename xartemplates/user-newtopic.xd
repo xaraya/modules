@@ -81,7 +81,13 @@
         if you enable the uploads hooks for xarbb (for all forums or a particular forum).
     </xar:comment>
 
-    <form method="post" action="&xar-modurl-xarbb-user-newtopic;&amp;phase=update" name="post" id="post" enctype="application/x-www-form-urlencoded" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+    <xar:if condition="xarVarGetCached('Hooks.uploads','ishooked')">
+        <xar:set name="enctype">'multipart/form-data'</xar:set>
+    <xar:else />
+        <xar:set name="enctype">'application/x-www-form-urlencoded'</xar:set>
+    </xar:if>
+
+    <form method="post" action="&xar-modurl-xarbb-user-newtopic;&amp;phase=update" name="post" id="post" enctype="#$enctype#" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
         <table>
             <tr>
                 <th colspan="2">

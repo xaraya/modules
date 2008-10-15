@@ -112,6 +112,11 @@ function xarbb_user_newtopic()
                 $item['itemtype'] = $data['fid'];
                 $item['itemid'] = $tid;
 
+                // Horrible hack so the File Upload property knows when to invoke its uploads hooks.
+                if (xarModIsHooked('uploads', 'xarbb', $data['fid'])) {
+                    xarVarSetCached('Hooks.uploads','ishooked',1);
+                }
+
                 //Call hooks here - but need to null out the ones that will cause trouble                
                 // CHECKME: should we not remove them, rather than setting to NULL?
                 $data['hooks'] = xarModCallHooks('item', 'modify', $tid, $item);
@@ -141,6 +146,11 @@ function xarbb_user_newtopic()
                 $item['module'] = 'xarbb';
                 $item['itemtype'] = $fid;
                 $item['itemid'] = '';
+
+                // Horrible hack so the File Upload property knows when to invoke its uploads hooks.
+                if (xarModIsHooked('uploads', 'xarbb', $fid)) {
+                    xarVarSetCached('Hooks.uploads','ishooked',1);
+                }
 
                 // Call hooks here - but need to null out the ones that will cause trouble
                 // CHECKME: should we not remove them, rather than setting to NULL?
