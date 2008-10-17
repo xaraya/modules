@@ -81,7 +81,31 @@ function messages_user_new()
                 $data['object']->properties['postanon']->setValue(0);
                 $data['object']->properties['pid']->value = $data['previousobject']->properties['id']->value;
                 $data['object']->properties['to']->value = $data['previousobject']->properties['from']->value;
-                $data['object']->properties['subject']->value = xarML('RE:') . ' ' . $data['previousobject']->properties['subject']->value;
+
+
+                // add reply indicator to the subject in a smart way
+                $subject = $data['previousobject']->properties['subject']->value;
+
+                if (eregi('^(re\:|re\([0-9]+\))',$subject)) {
+                    if (eregi('^re\:',$subject)) {
+                        $new_subject = preg_replace("'re\:'i",
+                                                  'Re(1): ',
+                                                  $subject,
+                                                  1
+                                                 );
+                    } else {
+                        preg_match("/^re\(([0-9]+)?/i",$subject, $matches);
+                        $new_subject = preg_replace("'re\([0-9]+\)\:'i",
+                                                  'Re('.($matches[1] + 1).'): ',
+                                                  $subject,
+                                                  1
+                                                 );
+                    }
+                } else {
+                    $new_subject = 'Re: ' . $subject;
+                }
+
+                $data['object']->properties['subject']->value = $new_subject;
             }
         break;
     }
