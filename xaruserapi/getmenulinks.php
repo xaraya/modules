@@ -17,7 +17,7 @@ sys::import('modules.messages.xarincludes.defines');
 function messages_userapi_getmenulinks ( $args )
 {
 
-    $menulinks = ARRAY();
+    $menulinks = array();
     if (xarSecurityCheck('ReadMessages', 0)) {
         $menulinks[] = array(
             'url'      => xarModURL('messages', 'user', 'view'),
