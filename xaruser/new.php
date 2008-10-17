@@ -117,7 +117,7 @@ function messages_user_new()
 
                 $isvalid = $data['object']->checkInput();
                 $data['object']->properties['time']->setValue(time());
-                $data['object']->properties['from']->setValue(xarUserGetVar('id'));
+                $data['object']->properties['from']->setValue(xarUserGetVar('uname'));
                 if(!$isvalid){           
                     return xarTplModule('messages','user','new',$data);
                 }
