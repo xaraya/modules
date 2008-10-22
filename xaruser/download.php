@@ -39,7 +39,6 @@ function uploads_user_download()
 
     // If you are an administrator OR the file is approved, continue
     if ($fileInfo['fileStatus'] != _UPLOADS_STATUS_APPROVED && !xarSecurityCheck('EditUploads', 0, 'File', $instance)) {
-        xarErrorHandled();
         $msg = xarML('You do not have the necessary permissions for this object.');
         throw new Exception($msg);             
     }
@@ -59,10 +58,12 @@ function uploads_user_download()
 
         $result = xarModAPIFunc('uploads', 'user', 'file_push', $fileInfo);
 
+        /*
         if (!$result || xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
             // now just return and let the error bubble up
             return FALSE;
         }
+        */
 
         // Let any hooked modules know that we've just pushed a file
         // the hitcount module in particular needs to know to save the fact

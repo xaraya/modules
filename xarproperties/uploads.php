@@ -375,7 +375,8 @@ class UploadProperty extends FileUploadProperty
             $data['storedList']   = array();
         }
         // This is the maximum number of files this property can upload
-        $data['multiple_dd_' . $this->id] = $this->validation_max_length;
+        if (!empty($data['multiple'])) $data['multiple_' . $data['name']] = $data['multiple'];
+        else $data['multiple_' . $data['name']] = $this->validation_max_length;
 
         // Set up for the stored input method
         if (in_array(_UPLOADS_GET_UPLOAD,$this->initialization_file_input_methods)) {

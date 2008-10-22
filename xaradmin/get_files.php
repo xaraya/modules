@@ -42,10 +42,10 @@ function uploads_admin_get_files()
 
     switch ($action) {
         case _UPLOADS_GET_UPLOAD:
-            if (!xarVarFetch('MAX_FILE_SIZE', "int::$file_maxsize", $maxsize)) return;
-            if (!xarVarValidate('array:1:', $_FILES['upload'])) return;
-            $upload = $_FILES['upload'];
-            $args['upload'] = $upload;
+            $uploads = DataPropertyMaster::getProperty(array('name' => 'uploads'));
+            $uploads->checkInput('upload');
+            $args['upload'] = $uploads->propertydata;
+            var_dump($args);exit;
             break;
         case _UPLOADS_GET_EXTERNAL:
             // minimum external import link must be: ftp://a.ws  <-- 10 characters total
