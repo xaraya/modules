@@ -37,21 +37,23 @@ function courses_userapi_search($args)
 
     $courses = array();
     $where = array();
+    $searchstring = $dbconn->qstr('%'.$q.'%');
+    
     if ($name == 1){
-        $where[] = "$coursestable.xar_name LIKE '%$q%'";
+        $where[] = "$coursestable.xar_name LIKE $searchstring";
     }
     if ($number == 1){
-        $where[] = "$coursestable.xar_number LIKE '%$q%'";
+        $where[] = "$coursestable.xar_number LIKE $searchstring";
     }
     $join = '';
     if ($shortdesc == 1){
-        $where[] = "$coursestable.xar_shortdesc LIKE '%$q%'";
+        $where[] = "$coursestable.xar_shortdesc LIKE $searchstring";
     }
     if ($longdesc == 1){
         $join = "LEFT JOIN $planningtable ON $coursestable.xar_courseid = $planningtable.xar_courseid";
-        $where[] = "$planningtable.xar_longdesc LIKE '%$q%'";
+        
+        $where[] = "$planningtable.xar_longdesc LIKE $searchstring";
     }
-
     if(count($where) > 1){
         $clause = join($where, ' OR ');
     }
@@ -85,6 +87,7 @@ function courses_userapi_search($args)
             }
         }
     }
+
     $result->Close();
 
     // Return the courses
