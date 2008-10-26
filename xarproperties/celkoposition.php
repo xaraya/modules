@@ -70,8 +70,8 @@ class CelkoPositionProperty extends DataProperty
            /* Find out where you should put the new category in */
            if (
                !($point_of_insertion =
-                    xarModAPIFunc('categories','admin','find_point_of_insertion',
-                       Array('inorout' => $this->inorout,
+                    $this->find_point_of_insertion(
+                       array('inorout' => $this->inorout,
                                'rightorleft' => $this->rightorleft,
                                'right' => $this->right,
                                'left' => $this->left
@@ -129,8 +129,8 @@ class CelkoPositionProperty extends DataProperty
 
        // Find the needed variables for moving things...
        $point_of_insertion =
-                   xarModAPIFunc('categories','admin','find_point_of_insertion',
-                       Array('inorout' => $this->inorout,
+                   $this->find_point_of_insertion(
+                       array('inorout' => $this->inorout,
                                'rightorleft' => $this->rightorleft,
                                'right' => $refcat['right'],
                                'left' => $refcat['left']
@@ -242,46 +242,6 @@ class CelkoPositionProperty extends DataProperty
         return parent::showInput($data);
 
     }
-
-        /*
-    public function showOutput(Array $args = array())
-    {
-        extract($args);
-
-        if (!isset($value)) $value = $this->value;
-
-        // Get the configuration settings for the form
-        foreach ($this->configargs as $configarg) {
-            if (isset($$configarg)) {
-                $this->$configarg = $$configarg;
-            }
-            $data[$configarg]   = $this->$configarg;
-        }
-
-        // Allow overrides for the properties
-        if (isset($object)) {
-            $info = DataObjectMaster::getObjectInfo(array('name'  => $object));
-            $this->initialization_refobject = $info['name'];
-        }
-        if (isset($allowinput)) $this->initialization_subiteminput = $allowinput;
-        if (isset($linkfield)) $this->initialization_linkfield = $linkfield;
-
-        // Get the properties for the form
-        foreach ($this->configargs as $configarg) {
-            $data[$configarg]   = $this->$configarg;
-        }
-        if (isset($label)) $data['label'] = $label;
-
-        // If we already have items send them to the template
-        if (!empty($this->items)) $data['items'] = $this->items;
-
-        // If not get the objectlist and the appropriate items in it
-        if (!isset($data['items'])) $data['items'] = $this->getObjects($value);
-        $data['numberofitems'] = count($data['items']);
-
-        return parent::showOutput($data);
-    }
-        */
     
     function updateposition($itemid=0, $parent=0, $point_of_insertion=1) 
     {
@@ -316,5 +276,52 @@ class CelkoPositionProperty extends DataProperty
         for ($i=1;$i<4;$i++) if (!$dbconn->Execute($SQLquery[$i],$bindvars[$i])) return;
     }
 
+    function find_point_of_insertion($args)
+    {
+        extract($args);
+
+        // Switch chosen over ifs for easiness of comprehession of the code
+        $rightorleft = strtolower ($rightorleft);
+        $inorout = strtolower ($inorout);
+
+        switch($rightorleft) {
+           case "right":
+               $point_of_insertion = $right;
+
+               switch($inorout) {
+                  case "out":
+                     $point_of_insertion++;
+                  break;
+
+                  case "in":
+                  break;
+
+                  default:
+                    $msg = xarML('Valid values: IN or OUT');
+                    throw new BadParameterException(null, $msg);
+               }
+
+           break;
+           case "left":
+               $point_of_insertion = $left;
+               switch($inorout) {
+                  case "out":
+                  break;
+
+                  case "in":
+                     $point_of_insertion++;
+                  break;
+
+                  default:
+                    $msg = xarML('Valid values: IN or OUT');
+                    throw new BadParameterException(null, $msg);
+               }
+           break;
+           default:
+            $msg = xarML('Valid values: RIGHT or LEFT');
+            throw new BadParameterException(null, $msg);
+        }
+        return $point_of_insertion;
+    }
 }
 ?>
