@@ -14,12 +14,16 @@ class CelkoPositionProperty extends DataProperty
     public $parent;
     public $catexists;
     
+    public $itemtable;
+    
     function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
         $this->template = 'celkoposition';
         $this->tplmodule = 'categories';
         $this->filepath   = 'modules/categories/xarproperties';
+        
+        $this->itemtable = 'xar_categories';
     }
 
     public function checkInput($name = '', $value = null)
@@ -57,7 +61,7 @@ class CelkoPositionProperty extends DataProperty
         } else {
 
            // Obtain current information on the reference category
-           $cat = xarModAPIFunc('categories', 'user', 'getcatinfo', array('cid' => $this->refcid));
+           $cat = $this->getiteminfo($this->refcid);
 
            if ($cat == false) {
                xarSession::setVar('errormsg', xarML('That category does not exist'));
@@ -97,7 +101,7 @@ class CelkoPositionProperty extends DataProperty
     public function updateValue($itemid=0)
     {
         // Obtain current information on the category
-        $cat = xarModAPIFunc('categories', 'user', 'getcatinfo', array('cid' => $itemid));
+        $cat = $this->getiteminfo($itemid);
 
         if ($cat == false) {
            xarSession::setVar('errormsg', xarML('That category does not exist'));
@@ -110,7 +114,7 @@ class CelkoPositionProperty extends DataProperty
         $categoriestable = $xartable['categories'];
 
        // Obtain current information on the reference category
-       $refcat = xarModAPIFunc('categories', 'user', 'getcatinfo', array('cid'=>$this->refcid));
+       $refcat = $this->getiteminfo($this->refcid);
 
        if ($refcat == false) {
            xarSession::setVar('errormsg', xarML('That category does not exist'));
@@ -197,10 +201,7 @@ class CelkoPositionProperty extends DataProperty
     {
         $data['itemid'] = isset($data['itemid']) ? $data['itemid'] : $this->value;
         if (!empty($data['itemid'])) {        
-            $data['category'] = xarModAPIFunc('categories',
-                                              'user',
-                                              'getcatinfo',
-                                              array('cid' => $data['itemid']));
+            $data['category'] = $this->getiteminfo($data['itemid']);
             $categories = xarModAPIFunc('categories',
                                         'user',
                                         'getcat',
@@ -322,6 +323,14 @@ class CelkoPositionProperty extends DataProperty
             throw new BadParameterException(null, $msg);
         }
         return $point_of_insertion;
+    }
+    
+    function getiteminfo($id) {
+        sys::import('modules.query.class.query');
+        $q = new Query('SELECT', $this->itemtable);
+        $q->eq('id',$id);
+        if ($q->run()) return;
+        return $q->row();
     }
 }
 ?>
