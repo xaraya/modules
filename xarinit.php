@@ -41,7 +41,7 @@
         xarModVars::set('foo', 'itemsperpage', 20);
         xarModVars::set('foo', 'useModuleAlias',0);
         xarModVars::set('foo', 'aliasname','Foo');
-        xarModVars::set('foo', 'currentmastertable','foo_foo');
+        xarModVars::set('foo', 'defaultmastertable','foo_foo');
 
         // Add variables like this next one when creating utility modules
         // This variable is referenced in the xaradmin/modifyconfig-utility.php file

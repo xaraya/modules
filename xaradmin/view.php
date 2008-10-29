@@ -11,14 +11,14 @@
 
         // Define which object will be shown
         if (!xarVarFetch('objectname', 'str', $objectname, null, XARVAR_DONT_SET)) return;
-        if (!empty($objectname)) xarModUserVars::set($modulename,'currentmastertable', $objectname);
+        if (!empty($objectname)) xarModUserVars::set($modulename,'defaultmastertable', $objectname);
 
         // Set a return url
         xarSession::setVar('ddcontext.' . $modulename, array('return_url' => xarServerGetCurrentURL()));
 
         // Get the available dropdown options
         $object = DataObjectMaster::getObjectList(array('objectid' => 1));
-        $data['objectname'] = xarModUserVars::get($modulename,'currentmastertable');
+        $data['objectname'] = xarModUserVars::get($modulename,'defaultmastertable');
         $items = $object->getItems();
         $options = array();
         foreach ($items as $item)

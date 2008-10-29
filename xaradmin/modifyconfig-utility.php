@@ -49,9 +49,11 @@
                 if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('foo', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('foo', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('defaultmastertable',    'str',      $defaultmastertable, xarModVars::get('foo', 'defaultmastertable'), XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('bar', 'str:1', $bar, 'Bar', XARVAR_NOT_REQUIRED)) return;
 
                 $modvars = array(
+                                'defaultmastertable',
                                 'bar',
                                 );
 
