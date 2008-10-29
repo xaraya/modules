@@ -7,14 +7,14 @@
 
         // Define which object will be shown
         if (!xarVarFetch('objectname', 'str', $objectname, 'calendar_calendar', XARVAR_DONT_SET)) return;
-        if (!empty($objectname)) xarModVars::set($modulename,'mastertable', $objectname);
+        if (!empty($objectname)) xarModVars::set($modulename,'defaultmastertable', $objectname);
 
         // Set a return url
         xarSession::setVar('ddcontext.' . $modulename, array('return_url' => xarServerGetCurrentURL()));
 
         // Get the available dropdown options
         $object = DataObjectMaster::getObjectList(array('objectid' => 1));
-        $data['objectname'] = xarModVars::get($modulename,'mastertable');
+        $data['objectname'] = xarModVars::get($modulename,'defaultmastertable');
         $items = $object->getItems();
         $options = array();
         foreach ($items as $item)
