@@ -1,7 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:set name="thispageno">count($items);</xar:set>
     <div class="xar-clearleft xar-floatleft xar-padding-thick xar-halfwidth" style="float: left; padding-top:1em;">
-        <xar:if condition="$total gt $rowstodisplay">
+        <xar:if condition="$total gt $itemsperpage">
           <xar:ml>
               <xar:mlstring>Displaying #(1) of #(2) selected</xar:mlstring>
               <xar:mlvar>#$thispageno#</xar:mlvar>
