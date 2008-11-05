@@ -44,9 +44,7 @@ function scheduler_adminapi_delete($args)
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      join(', ', $invalid), 'admin', 'delete', 'scheduler');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-            new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
 
     if (!xarSecurityCheck('AdminScheduler')) return;
@@ -61,9 +59,7 @@ function scheduler_adminapi_delete($args)
         if (!isset($jobs[$itemid])) {
             $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                          'job id', 'admin', 'delete', 'scheduler');
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                new SystemException($msg));
-            return;
+            throw new Exception($msg);
         }
     } else {
         foreach ($jobs as $id => $job) {
@@ -75,9 +71,7 @@ function scheduler_adminapi_delete($args)
         if (!isset($itemid)) {
             $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                          'job', 'admin', 'delete', 'scheduler');
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                new SystemException($msg));
-            return;
+            throw new Exception($msg);
         }
     }
     unset($jobs[$itemid]);
