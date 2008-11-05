@@ -173,8 +173,7 @@ function messages_userapi_get_multiple($args)
 
     if (!comments_renderer_array_markdepths_bypid($commentlist)) {
         $msg = xarML('Unable to create depth by pid');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'SYSTEM_ERROR', new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
-        return;
+        throw new Exception($msg);
     }
 
     return $commentlist;

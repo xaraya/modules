@@ -21,29 +21,25 @@ function messages_userapi_update( $args )
     if (!is_numeric($id)) {
         $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
                      'message ID', 'userapi', 'update', 'messages');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
 
     if (!isset($subject)) {
         $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
                      'subject', 'userapi', 'update', 'messages');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
 
     if (!isset($body)) {
         $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
                      'body', 'userapi', 'update', 'messages');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
 
     if (!isset($recipient)) {
         $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
                      'recipient', 'userapi', 'update', 'messages');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
 
     if (!isset($draft) || $draft != true) {
@@ -58,8 +54,7 @@ function messages_userapi_update( $args )
     if (!count($messages) || !is_array($messages)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'Message ID', 'userapi', 'update', 'messages');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new Exception($msg);
     }
 
     $id = xarModAPIFunc('messages',
