@@ -547,8 +547,7 @@ class Query
     {
         $numargs = func_num_args();
         if ($numargs == 2) {
-        }
-        elseif ($numargs == 1) {
+        } elseif ($numargs == 1) {
             $field = func_get_arg(0);
             if ($field == array()) return true;
             $key = $this->_addcondition(1);
@@ -563,8 +562,7 @@ class Query
     {
         $numargs = func_num_args();
         if ($numargs == 2) {
-        }
-        elseif ($numargs == 1) {
+        } elseif ($numargs == 1) {
             $field = func_get_arg(0);
             if ($field == array()) return true;
             $key = $this->_addcondition(1);
@@ -580,8 +578,7 @@ class Query
         $key = $this->_addcondition(0);
         $numargs = func_num_args();
         if ($numargs == 2) {
-        }
-        elseif ($numargs == 1) {
+        } elseif ($numargs == 1) {
             $field = func_get_arg(0);
             $this->conjunctions[$key] = array('conditions' => $field,
                                              'conj' => $this->andoperator,
@@ -595,8 +592,7 @@ class Query
         $key = $this->_addcondition(0);
         $numargs = func_num_args();
         if ($numargs == 2) {
-        }
-        elseif ($numargs == 1) {
+        } elseif ($numargs == 1) {
             $field = func_get_arg(0);
             $this->conjunctions[$key] = array('conditions' => $field,
                                              'conj' => $this->oroperator,

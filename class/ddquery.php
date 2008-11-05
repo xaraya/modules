@@ -30,8 +30,7 @@ class DDQuery extends Query
     /*
         if (!isset($object)) {
             $msg = xarML('DynamicDataQuery needs to be instantiated with a parameter');
-            xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-            return;
+            throw new Exception($msg);
         }
     */
         if(empty($object)) return false;
