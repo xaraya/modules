@@ -19,10 +19,10 @@
             </label>
             <select name="#$name#_refcid" id="#$name#_refcid">
                 <xar:for start="$i = 0" test="$i lt count($categories)" iter="$i++">
-                    <xar:if condition="$categories[$i]['left'] eq $category['left']-1">
+                    <xar:if condition="$categories[$i]['left'] eq $category['left_id']-1">
                         <xar:set name="position">4</xar:set>
                         <option value="#$categories[$i]['cid']#" selected="selected">#$categories[$i]['slash_separated']#</option>
-                        <xar:elseif condition="$categories[$i]['right'] eq $category['left']-1" />
+                        <xar:elseif condition="$categories[$i]['right'] eq $category['left_id']-1" />
                         <xar:set name="position">2</xar:set>
                         <option value="#$categories[$i]['cid']#" selected="selected">#$categories[$i]['slash_separated']#</option>
                         <xar:else />

@@ -46,6 +46,8 @@ function categories_adminapi_linkcat($args)
     }
 
     foreach ($args['cids'] as $cid) {
+          $cidparts = explode('.',$cid);
+          $cid = $cidparts[0];
         $cat = xarModAPIFunc('categories',
                              'user',
                              'getcatinfo',
@@ -112,13 +114,17 @@ function categories_adminapi_linkcat($args)
           // Insert the link
           $sql = "INSERT INTO $categorieslinkagetable (
                     category_id,
+                    child_category_id,
                     item_id,
                     itemtype,
                     module_id,
                     basecategory)
-                  VALUES(?,?,?,?,?)";
+                  VALUES(?,?,?,?,?,?)";
           $basecid = isset($basecids[$i]) ? $basecids[$i] : 0;
-          $bindvars = array($cid, $iid, $itemtype, $args['modid'], $basecid);
+          $cidparts = explode('.',$cid);
+          $cid = $cidparts[0];
+          $ccid = isset($cidparts[1]) ? $cidparts[1] : 0;
+          $bindvars = array($cid, $ccid, $iid, $itemtype, $args['modid'], $basecid);
           $result =& $dbconn->Execute($sql,$bindvars);
           if (!$result) return;
           $i++;

@@ -31,6 +31,7 @@
         public $name = '';
         public $description = '';
         public $image = '';
+        public $child_object = "";
         public $parent = 0;
         public $left = 0;
         public $right = 0;
@@ -55,6 +56,7 @@
                                 name,
                                 description,
                                 image,
+                                child_object,
                                 parent_id,
                                 left_id,
                                 right_id
@@ -67,7 +69,7 @@
             $set = new BasecSet();
             while (!$result->EOF) {
                 $c = new CategoryTreeNode();
-                list($c->id, $c->name, $c->description, $c->image, $c->parent, $c->left, $c->right) = $result->fields;
+                list($c->id, $c->name, $c->description, $c->image, $o->child_object, $c->parent, $c->left, $c->right) = $result->fields;
                 $collection->add($c);
             }
             return $collection;
@@ -163,6 +165,7 @@
                     'description' => $row['description'],
                     'indentation' => $row['indentation'],
                     'image' => $row['image'],
+                    'child_object' => $row['child_object'],
                     'left' => $row['left'],
                     'right' => $row['right'],
                 );

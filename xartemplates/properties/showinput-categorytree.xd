@@ -3,6 +3,7 @@
         <tr>
             <th><xar:mlstring>Name</xar:mlstring></th>
             <th><xar:mlstring>Description</xar:mlstring></th>
+            <th><xar:mlstring>Child Categories</xar:mlstring></th>
             <th><xar:mlstring>Image</xar:mlstring></th>
             <th><xar:mlstring>Options</xar:mlstring></th>
         </tr>
@@ -21,9 +22,10 @@
 
                 <xar:set name="cid">$node->id</xar:set>
                 <xar:set name="name">$node->name</xar:set>
+                <xar:set name="description">$node->description</xar:set>
+                <xar:set name="child_object">$node->child_object</xar:set>
                 <xar:set name="image">$node->image</xar:set>
                 <!--<xar:set name="map">$node->map</xar:set>-->
-                <xar:set name="description">$node->description</xar:set>
                 <xar:set name="level">$node->getLevel()</xar:set>
 
                 <xar:if condition="(($displayindex + 1) % 2)">
@@ -40,6 +42,7 @@
                        #$name#
                     </td>
                     <td class="#$displayclass#" style="text-align: left; margin-left: 5px;">#$description#</td>
+                    <td class="#$displayclass#" style="text-align: left; margin-left: 5px;">#$child_object#</td>
                     <td class="#$displayclass#"><xar:if condition="empty($image)">&#160;<xar:else />#$image#</xar:if></td>
                     <td class="#$displayclass#" style="text-align: center;">
                         <a href="#xarModURL('categories', 'admin', 'modify', array('cid' => $cid))#">

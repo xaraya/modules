@@ -48,10 +48,10 @@
  *   bases: bascid[,bascid] - select only cids who are descendants of the given basecid(s)
  */
 
-sys::import('modules.base.xarproperties.dropdown');
+sys::import('modules.dynamicdata.class.properties.base');
 sys::import('modules.categories.xarproperties.categorytree');
 
-class CategoriesProperty extends SelectProperty
+class CategoriesProperty extends DataProperty
 {
     public $id         = 100;
     public $name       = 'categories';
@@ -67,6 +67,8 @@ class CategoriesProperty extends SelectProperty
     public $localitemtype;
     public $categories = array();
     public $basecategories = array();
+    
+    public $validation_categories;
 
     function __construct(ObjectDescriptor $descriptor)
     {
@@ -106,7 +108,9 @@ class CategoriesProperty extends SelectProperty
         if (count($categories) > 0) {
             $checkcats= array();
             foreach ($categories as $category) {
-                $validcat = xarModAPIFunc('categories','user','getcatinfo',array('cid'=>$category));
+                $catparts = explode('.',$category);
+                $category = $catparts[0];
+                $validcat = xarModAPIFunc('categories','user','getcatinfo',array('cid' => $category));
                 if (!$validcat) {
                     $this->invalid = xarML("The category #(1) is not valid", $category);
                     $this->value = null;
@@ -160,6 +164,7 @@ class CategoriesProperty extends SelectProperty
         return $itemid;
     }
 
+    /* REMEMBERME: old code. remove at some point
     public function returnInput($name = '', $value = null)
     {
         $name = empty($name) ? 'dd_'.$this->id : $name;
@@ -210,7 +215,7 @@ class CategoriesProperty extends SelectProperty
         }
         return true;
     }
-
+*/
     public function showInput(Array $data = array())
     {
         if (empty($data['module'])) {
@@ -331,7 +336,10 @@ class CategoriesProperty extends SelectProperty
                                              'module' => $data['categories_localmodule'],
                                               ));
                 $catlink = array();
-                foreach ($links as $link) $catlink[$link['basecategory_id']] = $link['id'];
+                foreach ($links as $link) {
+                    $fulllink = !empty($link['childid']) ? $link['id'] . "." . $link['childid'] : $link['id'];
+                    $catlink[$link['basecategory_id']] = $fulllink;
+                }
                 foreach ($data['basecids'] as $basecid)
                     $selectedcategories[] = isset($catlink[$basecid]) ? $catlink[$basecid]: 0;
         }

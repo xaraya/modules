@@ -43,6 +43,7 @@ function categories_init()
         'parent_id'   => array('type'=>'integer','null'=>false,'default'=>'0'),
         'left_id'     => array('type'=>'integer','null'=>true,'unsigned'=>true),
         'right_id'    => array('type'=>'integer','null'=>true,'unsigned'=>true),
+        'child_object'=> array('type'=>'varchar','size'=>255,'null'=>false),
         'state'       => array('type'=>'integer','null'=>false,'default'=>'3')
     );
     $query = xarDBCreateTable($xartable['categories'],$fields);
@@ -79,6 +80,7 @@ function categories_init()
 
     $fields = array(
         'category_id'   => array('type'=>'integer','null'=>false),
+        'child_category_id'   => array('type'=>'integer','null'=>false),
         'item_id'   => array('type'=>'integer','null'=>false),
         'module_id' => array('type'=>'integer','null'=>false),
         'itemtype' => array('type'=>'integer','null'=>false),

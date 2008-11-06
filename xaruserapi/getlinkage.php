@@ -48,6 +48,7 @@ function categories_userapi_getlinkage($args)
         }
     }
     $q->addfield('c.id AS id');
+    $q->addfield('cl.child_category_id AS childid');
     $q->addfield('c.name AS name');
     $q->addfield('cl.basecategory AS basecategory_id');
     $q->addfield('cl.module_id AS module_id');
