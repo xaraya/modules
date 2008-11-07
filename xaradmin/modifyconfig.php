@@ -31,7 +31,7 @@ function scheduler_admin_modifyconfig()
     $data['jobs'] = xarModAPIFunc('scheduler','user','getall');
 
     $modules = xarModAPIFunc('modules', 'admin', 'getlist',
-                             array('filter' => array('AdminCapable' => 1)));
+                             array('filter' => array('AdminCapable' => true)));
     $data['modules'] = array();
     foreach ($modules as $module) {
         $data['modules'][$module['name']] = $module['displayname'];

@@ -20,11 +20,11 @@ $modversion['credits']        = '';
 $modversion['help']           = '';
 $modversion['changelog']      = '';
 $modversion['license']        = '';
-$modversion['official']       = 1;
+$modversion['official']       = true;
 $modversion['author']         = 'mikespub';
 $modversion['contact']        = 'http://www.xaraya.com/';
-$modversion['admin']          = 1;
-$modversion['user']           = 0;
+$modversion['admin']          = true;
+$modversion['user']           = false;
 $modversion['class']          = 'Utility';
 $modversion['category']       = 'Miscellaneous';
 ?>
