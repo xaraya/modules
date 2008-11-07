@@ -12,23 +12,15 @@
  * @author mikespub
  */
 /**
- * This is a standard function to modify the configuration parameters of the
- * module
+ * Modify extra information for scheduler jobs
+ * @param id itemid
  */
-function scheduler_admin_modifyconfig()
+function scheduler_admin_new()
 {
     if (!xarSecurityCheck('AdminScheduler')) return;
 
+    // Use the current job as $data
     $data = array();
-
-    $forwarded = xarServerGetVar('HTTP_X_FORWARDED_FOR');
-    if (!empty($forwarded)) {
-        $data['proxy'] = $data['ip'];
-        $data['ip'] = preg_replace('/,.*/', '', $forwarded);
-        $data['ip'] = xarVarPrepForDisplay($data['ip']);
-    }
-
-    $data['jobs'] = xarModAPIFunc('scheduler','user','getall');
 
     $modules = xarModAPIFunc('modules', 'admin', 'getlist',
                              array('filter' => array('AdminCapable' => 1)));
@@ -41,19 +33,13 @@ function scheduler_admin_modifyconfig()
                            'admin' => 'admin',
                            'user' => 'user',
                           );
-    $data['intervals'] = xarModAPIFunc('scheduler','user','intervals');
-    $data['triggers'] = xarModAPIFunc('scheduler','user','triggers');
-    
 
-    $hooks = xarModCallHooks('module', 'modifyconfig', 'scheduler',
-                             array('module' => 'scheduler'));
-    if (empty($hooks)) {
-        $data['hooks'] = '';
-    } elseif (is_array($hooks)) {
-        $data['hooks'] = join('', $hooks);
-    } else {
-        $data['hooks'] = $hooks;
-    }
+    $data['triggers'] = xarModAPIFunc('scheduler','user','triggers');
+    $data['sources'] = xarModAPIFunc('scheduler','user','sources');
+
+    $data['authid'] = xarSecGenAuthKey();
+    $data['intervals'] = xarModAPIFunc('scheduler','user','intervals');
+
     // Return the template variables defined in this function
     return $data;
 }

@@ -52,34 +52,6 @@ function scheduler_triggerblock_display($blockinfo)
         $vars['showstatus'] = 0;
     }
 
-    // check if we have the right trigger
-    $trigger = xarModVars::get('scheduler','trigger');
-    if (empty($trigger) || $trigger != 'block') {
-        $blockinfo['content'] = xarML('Wrong trigger');
-        return $blockinfo;
-    }
-
-    // check when we last ran the scheduler
-    $lastrun = xarModVars::get('scheduler', 'lastrun');
-    $now = time() + 60; // add some margin here
-    if (!empty($lastrun) && $lastrun > $now - 60*60) {
-        if (empty($vars['showstatus'])) {
-            return;
-        } else {
-            $diff = time() - $lastrun;
-            $blockinfo['content'] = xarML('Last run was #(1) minutes #(2) seconds ago', intval($diff / 60), $diff % 60);
-            return $blockinfo;
-        }
-    }
-
-    // let's run without interruptions for a while :)
-    @ignore_user_abort(true);
-    @set_time_limit(15*60);
-
-    // update the last run time
-    xarModVars::set('scheduler','lastrun',$now - 60); // remove the margin here
-    xarModVars::set('scheduler','running',1);
-
 // TODO: this won't work on NFS-mounted or FAT (Win98) file systems, and ISAPI may do weird things too !
 //       So we need to find some better way to see if we're really the only ones playing here...
 
@@ -153,7 +125,7 @@ function scheduler_triggerblock_runjobs()
     if (!empty($GLOBALS['xarScheduler_BaseDir'])) {
         chdir($GLOBALS['xarScheduler_BaseDir']);
     }
-    $output = xarModAPIFunc('scheduler','user','runjobs');
+    $output = xarModAPIFunc('scheduler','user','runjobs',array('trigger' => 2));
 
     // Normally, open files should be closed at the end by PHP anyway, but let's be polite :)
     if (!empty($GLOBALS['xarScheduler_LockFileHandle'])) {

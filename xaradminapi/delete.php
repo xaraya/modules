@@ -15,14 +15,13 @@
  * delete a scheduler job
  *
  * @author mikespub
- * @param  $args ['module'] module +
- * @param  $args ['type'] type +
- * @param  $args ['func'] API function, or
  * @param  $args ['itemid'] job id
- * @return int job id on success, void on failure
+ * @return true on success, void on failure
  */
 function scheduler_adminapi_delete($args)
 {
+    if (!xarSecurityCheck('AdminScheduler')) return;
+
     extract($args);
 
     $invalid = array();
@@ -30,67 +29,42 @@ function scheduler_adminapi_delete($args)
         if (!is_numeric($itemid)) {
             $invalid[] = 'item id';
         }
-    } else {
-        if (empty($module) || !is_string($module)) {
-            $invalid[] = 'module';
-        }
-        if (empty($type) || !is_string($type)) {
-            $invalid[] = 'type';
-        }
-        if (empty($func) || !is_string($func)) {
-            $invalid[] = 'func';
-        }
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      join(', ', $invalid), 'admin', 'delete', 'scheduler');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-            new SystemException($msg));
-        return;
+        throw new BadParameterException($msg);
     }
 
-    if (!xarSecurityCheck('AdminScheduler')) return;
+	$job = xarmodAPIFunc('scheduler','user','get',array('itemid'=>$itemid));
 
-    $serialjobs = xarModVars::get('scheduler','jobs');
-    if (empty($serialjobs)) {
-        $jobs = array();
-    } else {
-        $jobs = unserialize($serialjobs);
-    }
-    if (isset($itemid)) {
-        if (!isset($jobs[$itemid])) {
-            $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                         'job id', 'admin', 'delete', 'scheduler');
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                new SystemException($msg));
-            return;
-        }
-    } else {
-        foreach ($jobs as $id => $job) {
-            if ($job['module'] == $module && $job['type'] == $type && $job['func'] == $func) {
-                $itemid = $id;
-                break;
-            }
-        }
-        if (!isset($itemid)) {
-            $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                         'job', 'admin', 'delete', 'scheduler');
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                new SystemException($msg));
-            return;
-        }
-    }
-    unset($jobs[$itemid]);
-    $serialjobs = serialize($jobs);
-    xarModVars::set('scheduler','jobs',$serialjobs);
+	if (empty($job)) {
+        $msg = xarML('Job #(1) for #(2) function #(3)() in module #(4)',
+                     $itemid, 'admin', 'delete', 'scheduler');
+        throw new Exception($msg);
+	}
 
-    $item = $args;
-    $item['module'] = 'scheduler';
-    $item['itemid'] = $itemid;
-    xarModCallHooks('item', 'delete', $itemid, $item);
+	$running = xarModVars::get('scheduler', 'running.' . $itemid);
 
-    // Return the id of the deleted item to the calling process
-    return $itemid;
+	if($running == 1 || $job['job_trigger'] != 0) {
+        $msg = xarML('Job #(1) must be disabled and not running to allow deletion.',
+                     $itemid);
+        throw new Exception($msg);
+	}	
+	
+    // Load up database details.
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
+
+    $table = $xartable['scheduler_jobs'];
+
+	$query = "DELETE FROM $table WHERE id=?";
+	
+	$result = $dbconn->Execute($query,array($itemid));
+
+	xarModVars::delete('scheduler','running.' . $itemid);
+
+    return true;
 }
 
 ?>

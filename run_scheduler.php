@@ -17,11 +17,7 @@
     include 'includes/xarCore.php';
     xarCoreInit(XARCORE_SYSTEM_ALL);
 
-    // update the last run time
-    xarModVars::set('scheduler','lastrun',time());
-    xarModVars::set('scheduler','running',1);
-
-    // call the API function to run the jobs
-    echo xarModAPIFunc('scheduler','user','runjobs');
+    // call the function to run the jobs
+    echo xarModFunc('scheduler','user','main');
 
 ?>

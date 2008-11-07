@@ -22,11 +22,14 @@
  */
 function scheduler_xartables()
 {
-    // Initialise table array
-    $xarTables = array();
+    $tables = array();
 
-    // Return the table information
-    return $xarTables;
+    $prefix = xarDB::getPrefix();
+
+    $tables['scheduler_jobs'] = $prefix . '_scheduler_jobs';
+
+    return $tables;
+
 }
 
 ?>

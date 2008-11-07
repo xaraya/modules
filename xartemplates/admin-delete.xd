@@ -1,0 +1,63 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>
+            Scheduler Administration
+        </xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+ <xar:template type="module" file="admin-menu" />
+    <h2>
+        <xar:mlstring>
+            Delete Scheduler Job
+        </xar:mlstring>
+    </h2>
+    <fieldset>
+        <legend>
+            <xar:mlstring>Confirm deleting this job?</xar:mlstring>
+        </legend>
+        <p>
+            <xar:mlstring>Module:</xar:mlstring>
+            #$module#
+        </p>
+        <p>
+            <xar:mlstring>Type:</xar:mlstring>
+            #$functype#
+        </p>
+        <p>
+            <xar:mlstring>Function:</xar:mlstring>
+            #$func#
+        </p>
+        <p>
+            <xar:mlstring>Trigger:</xar:mlstring>
+            #$triggers.$job_trigger#
+        </p>
+    </fieldset>
+
+	<xar:set name="running">xarModVars::get('scheduler', 'running.' . $id)</xar:set>
+
+	<xar:if condition="$running ne 0 or $job_trigger ne 0">
+		<p class="xar-alt-outline xar-padding-thick">
+			<xar:mlstring>This job must be disabled and not running to allow deletion.</xar:mlstring> 
+			<a href="#xarModURL('scheduler','admin','modify',array('itemid'=>$id))#"><xar:mlstring>Please set its trigger to disabled</xar:mlstring></a>.
+		</p>
+
+
+	<xar:else />
+	    <form method="post" action="&xar-modurl-scheduler-admin-delete;">
+	        <div class="xar-align-center xar-margin-thickends">
+	            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+	            <input type="hidden" name="confirm" id="confirm" value="true" />
+	            <input type="hidden" name="itemid" id="itemid" value="#$id#" />
+	            <input type="submit" value="#xarML('Delete Job')#" class="xar-margin-thicksides" />
+	            <xar:set name="returnurl">
+	                #xarModURL('scheduler', 'admin', 'modifyconfig')#
+	            </xar:set>
+	            <input type="button" value="#xarML('Cancel')#" class="xar-margin-thicksides" onclick="window.location='#$returnurl#';" />
+	        </div>
+		</form>
+	</xar:if>
+</div>
+</xar:template>

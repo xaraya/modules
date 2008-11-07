@@ -21,24 +21,10 @@ function scheduler_admin_updateconfig()
     if (!xarSecurityCheck('AdminScheduler')) return;
     if (!xarSecConfirmAuthKey()) return;
 
-    if (!xarVarFetch('trigger','str:1:',$trigger,'disabled',XARVAR_NOT_REQUIRED)) return;
-    xarModVars::set('scheduler', 'trigger', $trigger);
+      // move this to modify
+//    if (!xarVarFetch('reset','isset',$reset,0,XARVAR_NOT_REQUIRED)) return;
 
-    if ($trigger == 'external') {
-        if (!xarVarFetch('checktype','isset',$checktype,'',XARVAR_NOT_REQUIRED)) return;
-        xarModVars::set('scheduler', 'checktype', $checktype);
-        if (!xarVarFetch('checkvalue','isset',$checkvalue,'',XARVAR_NOT_REQUIRED)) return;
-        xarModVars::set('scheduler', 'checkvalue', $checkvalue);
-    }
-
-    if (!xarVarFetch('reset','isset',$reset,0,XARVAR_NOT_REQUIRED)) return;
-
-    $serialjobs = xarModVars::get('scheduler', 'jobs');
-    if (empty($serialjobs)) {
-        $oldjobs = array();
-    } else {
-        $oldjobs = unserialize($serialjobs);
-    }
+    $old_jobs = xarModAPIFunc('scheduler','user','getall');
 
     if (!xarVarFetch('jobs','isset',$jobs,array(),XARVAR_NOT_REQUIRED)) return;
     if (empty($jobs)) {
@@ -46,7 +32,7 @@ function scheduler_admin_updateconfig()
     }
     $savejobs = array();
     foreach ($jobs as $id => $job) {
-        if (!empty($job['module']) && !empty($job['type']) && !empty($job['func']) && !empty($job['interval'])) {
+        if (!empty($job['module']) && !empty($job['functype']) && !empty($job['func']) && !empty($job['job_interval'])) {
             if (!empty($reset)) {
                 $job['lastrun'] = 0;
                 $job['result'] = '';

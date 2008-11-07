@@ -8,31 +8,17 @@
 <div class="xar-mod-body">
 	<xar:template type="module" module="scheduler" file="admin-menu" />
 	<h2>
-		<xar:ml><xar:mlstring>Modify Scheduler Job #(1)</xar:mlstring><xar:mlvar>#$itemid#</xar:mlvar></xar:ml>
+		<xar:mlstring>Create Scheduler Job</xar:mlstring>
 	</h2>
 
-	<form method="post" action="&xar-modurl-scheduler-admin-modify;">
+	<form method="post" action="&xar-modurl-scheduler-admin-create;">
 			<div class="xar-form-input-wrapper">
 				<label for="job_module" class="xar-form-label">
 					<xar:mlstring>Module</xar:mlstring>
 				</label>
 				<select name="job_module" id="job_module">
-					<xar:if condition="$module eq ''">
-						<option value=""></option>
-					<xar:else />
-						<option value="">
-							[ <xar:ml>
-							<xar:mlstring>Remove #(1)</xar:mlstring>
-							<xar:mlvar>#$module#</xar:mlvar>
-							</xar:ml> ]
-						</option>
-					</xar:if>
 					<xar:foreach in="$modules" key="$name" value="$display">
-						<xar:if condition="!empty($module) and $module eq $name">
-							<option value="#$name#" selected="selected">#$display#</option>
-						<xar:else/>
-							<option value="#$name#">#$display#</option>
-						</xar:if>
+    					<option value="#$name#">#$display#</option>
 					</xar:foreach>
 				</select>
 			</div>
@@ -42,11 +28,7 @@
 				</label>
 				<select name="functype">
 					<xar:foreach in="$types" key="$name" value="$display">
-						<xar:if condition="!empty($functype) and $functype eq $name">
-							<option value="#$name#" selected="selected">#$display#</option>
-						<xar:else/>
-							<option value="#$name#">#$display#</option>
-						</xar:if>
+						<option value="#$name#">#$display#</option>
 					</xar:foreach>
 				</select>
 			</div>
@@ -54,13 +36,13 @@
 				<label for="job_func" class="xar-form-label">
 					<xar:mlstring>API Function</xar:mlstring>
 				</label>
-				<input type="text" name="job_func" id="job_func" value="#$func#" size="10" />
+				<input type="text" name="job_func" id="job_func" value="" size="10" />
 			</div>
 			<div class="xar-form-input-wrapper">
 				<label for="config_params" class="xar-form-label">
 					<xar:mlstring>Parameters</xar:mlstring>
 				</label>
-				<input type="text" name="config[params]" id="config_params" value="#$config['params']#" />
+				<input type="text" name="config[params]" id="config_params" value="" />
 				<xar:mlstring>example: array('ptid' => 1)</xar:mlstring>
 			</div>
 			<div class="xar-form-input-wrapper">
@@ -69,11 +51,7 @@
 				</label>
 				<select name="job_interval" id="job_interval">
 					<xar:foreach in="$intervals" key="$name" value="$display">
-						<xar:if condition="!empty($job_interval) and $job_interval eq $name">
-							<option value="#$name#" selected="selected">#$display#</option>
-						<xar:else/>
-							<option value="#$name#">#$display#</option>
-						</xar:if>
+						<option value="#$name#">#$display#</option>
 					</xar:foreach>
 				</select>
 			</div>
@@ -82,13 +60,13 @@
 				<label for="config_startdate" class="xar-form-label">
 					<xar:mlstring>Start Date</xar:mlstring>
 				</label>
-				<xar:data-input type="calendar" name="config[startdate]" id="config_startdate" value="$config['startdate']" />
+				<xar:data-input type="calendar" name="config[startdate]" id="config_startdate" value="" />
 			</div>
 			<div class="xar-form-input-wrapper">
 				<label for="config_enddate" class="xar-form-label">
 					<xar:mlstring>End Date</xar:mlstring>
 				</label>
-				<xar:data-input type="calendar" name="config[enddate]" id="config_enddate" value="$config['enddate']" />
+				<xar:data-input type="calendar" name="config[enddate]" id="config_enddate" value="" />
 			</div>
 
 		<fieldset>
@@ -102,21 +80,10 @@
 				</label>
 				<select name="job_trigger" id="job_trigger">
 					<xar:foreach in="$triggers" key="$triggerid" value="$triggername">
-						<xar:if condition="!empty($job_trigger) and $job_trigger eq $triggerid">
-							<option value="#$triggerid#" selected="selected">#$triggername#</option>
-						<xar:else/>
-							<option value="#$triggerid#">#$triggername#</option>
-						</xar:if>
+						<option value="#$triggerid#">#$triggername#</option>
 					</xar:foreach>
 				</select>
 			</div>
-
-			<p>
-				<xar:mlstring>If using an external trigger, point it at the following web page:</xar:mlstring>
-			</p>
-			<blockquote>
-				#xarModURL('scheduler','user','main',array('itemid' => $itemid))#
-			</blockquote>
 
 			<p>
 				<xar:mlstring>The following settings are used to limit external access to the scheduler.</xar:mlstring>
@@ -128,11 +95,7 @@
 				</label>
 				<select name="checktype" id="job_trigger">
 					<xar:foreach in="$sources" key="$sourceid" value="$sourcename">
-						<xar:if condition="!empty($checktype) and $checktype eq $sourceid">
-							<option value="#$sourceid#" selected="selected">#$sourcename#</option>
-						<xar:else/>
-							<option value="#$sourceid#">#$sourcename#</option>
-						</xar:if>
+						<option value="#$sourceid#">#$sourcename#</option>
 					</xar:foreach>
 				</select>
 			</div>
@@ -140,7 +103,7 @@
 				<label for="checkvalue" class="xar-form-label">
 					<xar:mlstring>Source</xar:mlstring>
 				</label>
-				<input type="text" name="checkvalue" id="checkvalue" value="#$checkvalue#" />
+				<input type="text" name="checkvalue" id="checkvalue" value="" />
 			</div>
 
 
@@ -155,56 +118,39 @@
 				<label for="config_crontab_minute" class="xar-form-label">
 					<xar:mlstring>Minutes (0-59)</xar:mlstring>
 				</label>
-				<input type="text" name="config[crontab][minute]" id="config_crontab_minute" value="#$config['crontab']['minute']#" />
+				<input type="text" name="config[crontab][minute]" id="config_crontab_minute" value="" />
 				<xar:mlstring>example: 0,15,30,45 = every 15 minutes</xar:mlstring>
 			</div>
 			<div class="xar-form-input-wrapper">
 				<label for="config_crontab_hour" class="xar-form-label">
 					<xar:mlstring>Hours (0-23)</xar:mlstring>
 				</label>
-				<input type="text" name="config[crontab][hour]" id="config_crontab_hour" value="#$config['crontab']['hour']#" />
+				<input type="text" name="config[crontab][hour]" id="config_crontab_hour" value="" />
 				<xar:mlstring>example: 8-18 = during business hours</xar:mlstring>
 			</div>
 			<div class="xar-form-input-wrapper">
 				<label for="config_crontab_day" class="xar-form-label">
 					<xar:mlstring>Days (1-31)</xar:mlstring>
 				</label>
-				<input type="text" name="config[crontab][day]" id="config_crontab_day" value="#$config['crontab']['day']#" />
+				<input type="text" name="config[crontab][day]" id="config_crontab_day" value="" />
 			</div>
 			<div class="xar-form-input-wrapper">
 				<label for="config_crontab_month" class="xar-form-label">
 					<xar:mlstring>Months (1-12)</xar:mlstring>
 				</label>
-				<input type="text" name="config[crontab][month]" id="config_crontab_month" value="#$config['crontab']['month']#" />
+				<input type="text" name="config[crontab][month]" id="config_crontab_month" value="" />
 			</div>
 			<div class="xar-form-input-wrapper">
 				<label for="config_crontab_weekday" class="xar-form-label">
 					<xar:mlstring>Week Days (0-6)</xar:mlstring>
 				</label>
-				<input type="text" name="config[crontab][weekday]" id="config_crontab_weekday" value="#$config['crontab']['weekday']#" />
+				<input type="text" name="config[crontab][weekday]" id="config_crontab_weekday" value="" />
 				<xar:mlstring>example: 1-5 = from Monday to Friday</xar:mlstring>
-			</div>
-			<div class="xar-form-input-wrapper">
-				<label class="xar-form-label">
-					<xar:mlstring>Next Run</xar:mlstring>
-				</label>
-				<xar:if condition="$job_interval eq '0c' and !empty($config['crontab'])">
-					<xar:if condition="empty($config['crontab']['nextrun'])">
-						<xar:set name="nextrun">xarModAPIFunc('scheduler','user','nextrun',$config['crontab'])</xar:set>
-						#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$nextrun)#
-					<xar:else/>
-						#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$config['crontab']['nextrun'])#
-					</xar:if>
-				</xar:if>
 			</div>
 		</fieldset>
 		<div class="xar-form-input-wrapper-after">
-			<xar:if condition="xarModVars::get('scheduler','running.' . $itemid)">
-				<xar:mlstring>Warning: This job is currently running - any changes you make now may be overwritten</xar:mlstring><br/>
-			</xar:if>
-			<input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
 			<input type="hidden" name="authid" id="authid" value="#$authid#" />
-			<input type="submit" name="confirm" value="#xarML('Update Scheduler Job')#" />
+			<input type="submit" name="confirm" value="#xarML('Create Scheduler Job')#" />
 		</div>
 	</form>
 	<p>

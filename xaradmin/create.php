@@ -15,19 +15,9 @@
  * Modify extra information for scheduler jobs
  * @param id itemid
  */
-function scheduler_admin_modify()
+function scheduler_admin_create()
 {
-    if (!xarVarFetch('itemid','id', $itemid)) {return;}
-
     if (!xarSecurityCheck('AdminScheduler')) return;
-
-    $job = xarmodAPIFunc('scheduler','user','get',array('itemid' => $itemid));
-
-    if (empty($job)) {
-        $msg = xarML('Invalid job id for #(1) function #(2)() in module #(3)',
-                     'user', 'modify', 'scheduler');
-        throw BadParameterException($msg);
-    }
 
     if (!xarVarFetch('confirm','isset',$confirm,NULL,XARVAR_NOT_REQUIRED)) return;
     if (!empty($confirm)) {
@@ -106,53 +96,13 @@ function scheduler_admin_modify()
         }
         $job['config'] = $config;
 
-        xarModAPIFunc('scheduler','admin','update', $job);
+        xarModAPIFunc('scheduler','admin','create', $job);
 
-        xarResponseRedirect(xarModURL('scheduler', 'admin', 'modify',
-                                      array('itemid' => $itemid)));
+        xarResponseRedirect(xarModURL('scheduler', 'admin', 'modifyconfig'));
         return true;
     }
 
-    // Use the current job as $data
-    $data = $job;
-    $modules = xarModAPIFunc('modules', 'admin', 'getlist',
-                             array('filter' => array('AdminCapable' => 1)));
-    $data['modules'] = array();
-    foreach ($modules as $module) {
-        $data['modules'][$module['name']] = $module['displayname'];
-    }
-    $data['types'] = array( // don't translate API types
-                           'scheduler' => 'scheduler',
-                           'admin' => 'admin',
-                           'user' => 'user',
-                          );
-
-    $data['triggers'] = xarModAPIFunc('scheduler','user','triggers');
-    $data['sources'] = xarModAPIFunc('scheduler','user','sources');
-
-    $data['itemid'] = $itemid;
-    $data['authid'] = xarSecGenAuthKey();
-    $data['intervals'] = xarModAPIFunc('scheduler','user','intervals');
-
-    // Prefill the configuration array
-    if (empty($data['config'])) {
-        $data['config'] = array(
-                                'params' => '',
-                                'startdate' => '',
-                                'enddate' => '',
-                                'crontab' => array('minute' => '',
-                                                   'hour' => '',
-                                                   'day' => '',
-                                                   'month' => '',
-                                                   'weekday' => '',
-                                                   'nextrun' => ''),
-                                // not supported yet
-                                'runas' => array('user' => '',
-                                                 'pass' => ''),
-                               );
-    }
-
-    // Return the template variables defined in this function
-    return $data;
+    xarResponseRedirect(xarModURL('scheduler', 'admin', 'modifyconfig'));
+    return true;
 }
 ?>
