@@ -324,11 +324,12 @@ class CelkoPositionProperty extends DataProperty
         $q->eq('id',$id);
         if (!$q->run()) return;
         $result = $q->row();
+        if (empty($result)) return $result;
         $result['name'] = $result[$this->initialization_celkoname];
         $result['parent_id'] = $result[$this->initialization_celkoparent_id];
         $result['left_id'] = $result[$this->initialization_celkoleft_id];
         $result['right_id'] = $result[$this->initialization_celkoright_id];
-        return $q->row();
+        return $result;
     }
     
     function countitems()
