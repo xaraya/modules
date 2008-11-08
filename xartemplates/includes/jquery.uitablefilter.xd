@@ -1,0 +1,27 @@
+<xar:comment>
+    Load the jquery.uitablefilter plugin.
+</xar:comment>
+
+<xar:comment>
+    Make sure jQuery is going to be loaded.
+</xar:comment>
+
+<xar:template file="jquery" module="jquery" />
+
+<xar:comment>
+    Load the main javascript.
+</xar:comment>
+
+<xar:base-include-javascript filename="jquery.uitablefilter.js" module="jquery" />
+
+<xar:comment>
+    Need both a selector and a text field to use as the filter.
+        $selector
+        $filter
+    TODO: support additional options.
+</xar:comment>
+
+<xar:if condition="!empty($selector) and !empty($filter)">
+    <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$filter').keyup(function(){jQuery.uiTableFilter(jQuery('$selector'), this.value );});})" />
+</xar:if>
+

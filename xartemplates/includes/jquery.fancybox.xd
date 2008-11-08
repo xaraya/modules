@@ -1,0 +1,38 @@
+<xar:comment>
+    Initialise the fancybox plugin.
+    See http://fancy.klade.lv/ for details of this plugin.
+</xar:comment>
+
+<xar:comment>
+    Make sure jQuery is going to be loaded.
+</xar:comment>
+
+<xar:template file="jquery" module="jquery" />
+
+<xar:comment><xar:style file='fancy' scope="module" module="jquery" /></xar:comment>
+
+<xar:comment>
+    Other required plugins.
+</xar:comment>
+
+<xar:template file="jquery.pngFix" module="jquery" />
+
+<xar:comment>
+    Required stylesheets.
+</xar:comment>
+
+<xar:style file='fancy' scope="module" module="jquery" />
+
+<xar:comment>
+    Main plugin.
+</xar:comment>
+
+<xar:base-include-javascript filename="jquery.fancybox.js" module="jquery" />
+
+<xar:if condition="!empty($selector)">
+    <xar:if condition="!empty($options)">
+        <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').fancybox({ $options });});" />
+    <xar:else />
+        <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').fancybox();});" />
+    </xar:if>
+</xar:if>
