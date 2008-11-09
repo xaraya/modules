@@ -1,5 +1,5 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:comment>
+<!-- 
     page-pageform template
 
 basic template for pageform extensions to xarpages module
@@ -21,7 +21,7 @@ if you add these additional fields, they'll be used in the template:
     page_title: sets the page title. If empty, uses description field
     body:   body content
 
-</xar:comment>
+ -->
 <xar:if condition="!empty($current_page.dd.page_title)">
     <xar:set name="ttl">#$current_page.dd.page_title#</xar:set>
 <xar:else />
@@ -37,7 +37,7 @@ if you add these additional fields, they'll be used in the template:
 
 
 <xar:if condition="!empty($pageform)">
-    <xar:comment> could use enctype='application/x-www-form-urlencoded' if we know there's no uploads. See other templates for examples, might need to call xarVarGetCached('Hooks.dynamicdata','withupload')  </xar:comment>
+    <!--  could use enctype='application/x-www-form-urlencoded' if we know there's no uploads. See other templates for examples, might need to call xarVarGetCached('Hooks.dynamicdata','withupload')   -->
     <form method="post" name="post" id="post" action="#$pageform['action_url']#" enctype='multipart/form-data'>
         <xar:if condition="!empty($current_page.dd.formlayout)">
             <xar:data-form object="$pageform['object']" layout="$current_page['dd']['formlayout']" />
@@ -79,7 +79,7 @@ if you add these additional fields, they'll be used in the template:
 
 </div>
 
-<xar:comment> set title last in case another module tried to set it, above </xar:comment>
+<!--  set title last in case another module tried to set it, above  -->
 <xar:if condition="!empty($ttl)">
     <xar:set name="dummy">#xarTplSetPageTitle($ttl)#</xar:set>
 </xar:if>

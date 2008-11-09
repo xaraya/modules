@@ -1,12 +1,12 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
-<xar:comment>
+<!-- 
     This template is used to handle the starting page (though that is optional), 
     the cancel page, the error page and the timeout page for a form sequence.
     It is fairly simplistic, but can be customised as required.
-</xar:comment>
+ -->
 
-<xar:comment>Common navbar stuff</xar:comment>
+<!-- Common navbar stuff -->
 <xar:template file="user-navbar" module="xarpages" />
 
 <xar:if condition="empty($multiform)">
@@ -27,7 +27,7 @@
         <h1><xar:mlstring>Timeout</xar:mlstring></h1>
         <p><xar:mlstring>Due to a period of inactivity, the form entry has been cancelled.</xar:mlstring></p>
     <xar:else />
-        <xar:comment>Display body content for the page.</xar:comment>
+        <!-- Display body content for the page. -->
         <xar:if condition="isset($current_page.dd.body)">
             <div>#$current_page.dd.body#</div>
         </xar:if>

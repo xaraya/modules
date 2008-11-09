@@ -14,7 +14,7 @@
     </h2>
 
     <div style="margin: auto;">
-        <xar:comment>Creating a page, but we don't yet have a page type</xar:comment>
+        <!-- Creating a page, but we don't yet have a page type -->
         <xar:if condition="$func eq 'create' and empty($ptid)">
             <form class="xar-xarpages-admin" action="#xarModURL('xarpages','admin','modifypage')#" method="post">
                 <fieldset class="formelements xar-norm">
@@ -41,7 +41,7 @@
             </form>
         </xar:if>
 
-        <xar:comment>Either modifying a page, or we have a page type</xar:comment>
+        <!-- Either modifying a page, or we have a page type -->
         <xar:if condition="$func eq 'modify' or !empty($ptid)">
             <p>
                 <a href="#xarModURL('xarpages','admin','viewpages')#"><xar:mlstring>View pages</xar:mlstring></a>
@@ -67,7 +67,7 @@
 
                     <p class="param">
                         <label for="name"><xar:mlstring>Name</xar:mlstring></label>
-                        <xar:comment>Disable this item if we do not have delete priv.</xar:comment>
+                        <!-- Disable this item if we do not have delete priv. -->
                         <xar:if condition="$func eq 'modify' and empty($delete_allowed)">
                             <input type="text" name="name" id="name" value="#xarVarPrepForDisplay($page.name)#" size="32" maxlength="64" disabled="disabled" />
                             <xar:mlstring>(name locked)</xar:mlstring>
@@ -225,7 +225,7 @@
                     </p>
                 </fieldset>
 
-                <xar:comment>Need delete priv to be able to move the item around the hierarchy</xar:comment>
+                <!-- Need delete priv to be able to move the item around the hierarchy -->
                 <xar:if condition="$func ne 'modify' or !empty($delete_allowed)">
                     <fieldset class="formelements xar-norm">
                         <legend>

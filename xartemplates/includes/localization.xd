@@ -34,11 +34,11 @@
         </select>
     </p>
 
-    <xar:comment>
+    <!-- 
         The position needs to be set after pages select because there is
         no position which we can have a selected page that will work in
         all cases.
-    </xar:comment>
+     -->
     <p class="param">
         <label for="position"><xar:mlstring>Position</xar:mlstring></label>
         <select name="position" id="position">

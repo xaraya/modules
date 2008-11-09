@@ -6,7 +6,7 @@
     <xar:set name="dummy">#xarTplSetPageTitle($current_page.desc)#</xar:set>
 </xar:if>
 
-<xar:comment>Change this from 'article' to some other prefix to use a different set of template prefixes</xar:comment>
+<!-- Change this from 'article' to some other prefix to use a different set of template prefixes -->
 <xar:set name="template_prefix">'article'</xar:set>
 
 <!--
@@ -18,19 +18,19 @@
 -->
 <xar:set name="dummy">#xarVarSetCached('themes','rss_channel_link',xarServerGetCurrentURL(array('theme'=&gt;NULL,'startnum'=&gt;NULL)))#</xar:set>
 
-<xar:comment>List of items</xar:comment>
+<!-- List of items -->
 <xar:if condition="empty($article)">
-    <xar:comment>Different text for the summary as for an individual item?</xar:comment>
-        <xar:comment>Loop through the articles to display the summary, calling up a template for format it</xar:comment>
+    <!-- Different text for the summary as for an individual item? -->
+        <!-- Loop through the articles to display the summary, calling up a template for format it -->
         <xar:loop name="$articles">
             <xar:set name="summary">#xarTplModule('xarpages', $template_prefix, 'summary', array_merge($loop:item, $current_page), $pubtypes[$loop:item.pubtypeid]['name'])#</xar:set>
             #$summary#
         </xar:loop>
 </xar:if>
 
-<xar:comment>Individual item</xar:comment>
+<!-- Individual item -->
 <xar:if condition="!empty($article)">
-    <xar:comment>Different text for the summary as for an individual item?</xar:comment>
+    <!-- Different text for the summary as for an individual item? -->
         <xar:set name="summary">#xarTplModule('xarpages', $template_prefix, 'summary', $article, $pubtypes[$article.pubtypeid]['name'])#</xar:set>
         #$summary#
 </xar:if>

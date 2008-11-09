@@ -1,12 +1,12 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
-<xar:comment>
+<!-- 
     This is a very simple example of a template for the 'html' page type.
     The HTML body of the page is placed into a dynamicdata field called
     'body'.
-</xar:comment>
+ -->
 
-<xar:comment>Common navbar stuff</xar:comment>
+<!-- Common navbar stuff -->
 <xar:template file="user-navbar" module="xarpages" />
 
 <xar:if condition="isset($current_page.dd.body)">

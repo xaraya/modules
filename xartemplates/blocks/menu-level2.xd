@@ -1,8 +1,8 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
-<xar:comment>
+<!-- 
     Menu for side columns.
-</xar:comment>
+ -->
 
 <xar:if condition="empty($max_level)">
     <xar:set name="max_level">0</xar:set>

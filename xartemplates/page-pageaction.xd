@@ -1,7 +1,4 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:comment>
-
-</xar:comment>
   <h1>Pageaction Debugging</h1>
   <p>page name: #$current_page['name']#</p>
   <xar:if condition="!empty($pageaction['pf'])">

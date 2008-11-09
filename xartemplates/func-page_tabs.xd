@@ -14,9 +14,9 @@
 </div>
 <div style="clear: both;"></div>
 
-<xar:comment>
+<!-- 
    Show just the relevant section.
    $tab is one-based, and the arrays are zero-based.
-</xar:comment>
+ -->
 #$sections[$tab-1]#
 </xar:template>

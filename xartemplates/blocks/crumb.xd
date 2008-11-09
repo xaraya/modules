@@ -1,7 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
 <div class="xarpages-crumbtrail">
-    <xar:comment><xar:mlstring>You are here:</xar:mlstring></xar:comment>
+    <!-- <xar:mlstring>You are here:</xar:mlstring> -->
     <xar:loop name="$ancestors">
         <xar:if condition="$loop:index ge 1">&#187;</xar:if>
         <xar:if condition="$loop:item.pid eq $pid">
@@ -19,7 +19,7 @@
         </xar:if>
     </xar:loop>
 
-    <xar:comment>Provide an edit link if we have privileges</xar:comment>
+    <!-- Provide an edit link if we have privileges -->
     <xar:if condition="xarSecurityCheck('EditXarpagesPage', 0, 'Page', $current_page.name . ':' . $current_page.pagetype.name)">
         [<a href="#xarModURL('xarpages','admin','modifypage',array('pid'=>$pid,'return_url'=>xarServerGetCurrentURL(array(),false)))#">edit</a>]
     </xar:if>

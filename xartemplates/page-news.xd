@@ -1,32 +1,32 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
-<xar:comment>Common navbar stuff</xar:comment>
+<!-- Common navbar stuff -->
 <xar:template file="user-navbar" module="xarpages" />
 
-<xar:comment>Change this from 'article' to some other prefix to use a different set of template prefixes</xar:comment>
+<!-- Change this from 'article' to some other prefix to use a different set of template prefixes -->
 <xar:set name="template_prefix">'article'</xar:set>
 
-<xar:comment>
+<!-- 
     If no searching is being done, then display the introduction text.
     You may also wish to suppress the listing below completely if the intro
     text is displayed (so the user sees intro text *or* listings, but never
     both). Adapt this template to do that.
-</xar:comment>
+ -->
 <xar:if condition="!empty($current_page.dd.intro_text) and (empty($extra.searching_flag) or (empty($article) and empty($articles)))">
     <div class="xarpages-intro-text">#$current_page.dd.intro_text#</div>
 </xar:if>
 
-<xar:comment>Include a simple search box</xar:comment>
+<!-- Include a simple search box -->
 <xar:template file="news-searchbox" type="module" module="xarpages" />
 
-<xar:comment>List of items</xar:comment>
+<!-- List of items -->
 <xar:if condition="empty($extra.aid)">
-    <xar:comment>Archive table - the user has elected to view an archive (only show on the overview)</xar:comment>
+    <!-- Archive table - the user has elected to view an archive (only show on the overview) -->
     <xar:if condition="!empty($extra.archive)">
         <div class="xarpages-archive-list"><xar:template file="news-archive-list" /></div>
     </xar:if>
 
-    <xar:comment>Different text for the summary as for an individual item?</xar:comment>
+    <!-- Different text for the summary as for an individual item? -->
     <xar:if condition="isset($current_page.dd.list_text)">
         <div class="xarpages-list-text">#$current_page.dd.list_text#</div>
     </xar:if>
@@ -35,7 +35,7 @@
         <xar:if condition="!isset($extra)">
             <p><xar:mlstring>Configuration error: page requires the 'news' custom page function to be set.</xar:mlstring></p>
         </xar:if>
-        <xar:comment>Loop through the articles to display the summary, calling up a template for format it</xar:comment>
+        <!-- Loop through the articles to display the summary, calling up a template for format it -->
         <xar:if condition="!empty($articles) and is_array($articles)">
             <xar:loop name="$articles">
                 <xar:set name="summary">#xarTplModule('xarpages', $template_prefix, 'summary', $loop:item, $pubtypes[$loop:item.pubtypeid]['name'])#</xar:set>
@@ -47,10 +47,10 @@
     </div>
 </xar:if>
 </xar:template>
-<xar:comment>Individual item</xar:comment>
+<!-- Individual item -->
 <xar:if condition="!empty($extra.aid)">
     <xar:if condition="!empty($article)">
-        <xar:comment>Different text for the summary as for an individual item?</xar:comment>
+        <!-- Different text for the summary as for an individual item? -->
         <xar:if condition="isset($current_page.dd.item_text)">
             <div>#$current_page.dd.item_text#</div>
         </xar:if>
@@ -68,7 +68,7 @@
     </xar:if>
 </xar:if>
 
-<xar:comment>Display the view pager only if not displaying a single item</xar:comment>
+<!-- Display the view pager only if not displaying a single item -->
 <xar:if condition="!empty($extra.pager) and empty($extra.aid)">
     <div class="pager">#$extra.pager#</div>
 </xar:if>

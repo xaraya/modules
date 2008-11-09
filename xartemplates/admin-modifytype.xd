@@ -14,7 +14,7 @@
     </h2>
 
     <div style="margin: auto;">
-        <xar:comment>Either modifying a page, or we have a page type</xar:comment>
+        <!-- Either modifying a page, or we have a page type -->
         <form class="xar-xarpages-admin" action="#xarModURL('xarpages','admin','updatetype')#" method="post">
             <fieldset class="formelements xar-norm">
                 <legend>

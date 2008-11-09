@@ -1,8 +1,8 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:comment>
+<!-- 
     Display the history crumbtrail/progress bar/jump menu.
     You can use CSS to hide either or both of these div.xarpages-multiform-history-crumbs or div.xarpages-multiform-history-jump
-</xar:comment>
+ -->
 
 <xar:if condition="!empty($multiform.history)">
     <div class="xarpages-multiform-history-crumbs">

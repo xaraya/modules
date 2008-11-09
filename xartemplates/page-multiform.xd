@@ -1,13 +1,13 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
-<xar:comment>
+<!-- 
     Default page for the 'multiform' page display.
-</xar:comment>
+ -->
 
-<xar:comment>Common navbar stuff</xar:comment>
+<!-- Common navbar stuff -->
 <xar:template file="user-navbar" module="xarpages" />
 
-<xar:comment>Add an edit link if required.</xar:comment>
+<!-- Add an edit link if required. -->
 <xar:if condition="xarSecurityCheck('EditXarpagesPage', 0, 'Page', $current_page.name . ':' . $current_page.pagetype.name)">
     <xar:if condition="!empty($multiform.formobject-&gt;objectid)">
         [<a href="#xarModURL('dynamicdata', 'admin', 'modifyprop', array('itemid'=&gt;$multiform.formobject-&gt;objectid,'return_url'=>xarServerGetCurrentURL(array(),false)))#">edit form</a>]
@@ -18,25 +18,25 @@
     <p class="xar-error">Configuration error: This page is missing the 'multiform' custom page function.
     Please add the page function and try again.</p>
 <xar:else />
-    <xar:comment>Display the history crumbtrail/progress bar</xar:comment>
+    <!-- Display the history crumbtrail/progress bar -->
     <xar:template file="multiform-progress" />
 
-    <xar:comment>Display overall error message if required</xar:comment>
+    <!-- Display overall error message if required -->
     <xar:if condition="isset($multiform.form_isvalid) and $multiform.form_isvalid eq false">
         <p class="xar-error xarpages-multiform-formerror">
             <xar:mlstring>This form contains errors. Please correct the errors where indicated and resubmit.</xar:mlstring>
         </p>
     </xar:if>
 
-    <xar:comment>Display body content for the form. This could hold a title, introduction, hints etc.</xar:comment>
+    <!-- Display body content for the form. This could hold a title, introduction, hints etc. -->
     <xar:if condition="isset($current_page.dd.body)">
         <div>#$current_page.dd.body#</div>
     </xar:if>
 
-    <xar:comment>Display the main input form.</xar:comment>
+    <!-- Display the main input form. -->
 
     <form method="post" name="post" id="post" action="#xarModURL('xarpages','user','display',array('pid'=&gt;$current_page.pid))#" enctype='multipart/form-data'>
-        <xar:comment>There may not be a form object - this could just be an information page in the sequence</xar:comment>
+        <!-- There may not be a form object - this could just be an information page in the sequence -->
         <xar:if condition="!empty($multiform.formobject)">
             <xar:if condition="!empty($multiform['formobject']-&gt;properties)">
                 <div class="xarpages-multiform-input">
@@ -59,11 +59,11 @@
             </xar:if>
         </xar:if>
 
-        <xar:comment>Display the form buttons</xar:comment>
+        <!-- Display the form buttons -->
         <xar:template file="multiform-buttons" />
     </form>
 
-    <xar:comment>Display footer content for the form.</xar:comment>
+    <!-- Display footer content for the form. -->
     <xar:if condition="isset($current_page.dd.footer)">
         <div>#$current_page.dd.footer#</div>
     </xar:if>
@@ -76,7 +76,7 @@
         </xar:foreach>
     </xar:if>
 
-    <xar:comment>Dislay any debug information</xar:comment>
+    <!-- Dislay any debug information -->
     <xar:if condition="!empty($multiform.debug)">
         <xar:template file="multiform-debug" />
     </xar:if>

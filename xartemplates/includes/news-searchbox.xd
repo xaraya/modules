@@ -1,11 +1,11 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:comment>
+<!-- 
     Provide a simple text search box for use in 'news' page types.
     Query words are POSTed so as to retain any GET parameters already present in the URL.
     In order to use GET for searching, it is necessary to strip off any GET parameters in
     the URL and embed them in the form as hidden parameters. A generic solution to this
     would be good at some point.
-</xar:comment>
+ -->
 
 <xar:if condition="isset($extra.q)">
     <div class="xarpages-searchbox">

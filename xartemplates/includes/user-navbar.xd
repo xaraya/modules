@@ -1,10 +1,10 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:comment>
+<!-- 
     Set the page title to the description of the page.
     You could instead create a DD property called 'page_title' and refererence
     it as $current_page.dd.title, reserving the description field for
     administration notes.
-</xar:comment>
+ -->
 <xar:if condition="!empty($current_page.dd.page_title)">
     <xar:set name="dummy">#xarTplSetPageTitle($current_page.dd.page_title)#</xar:set>
 <xar:else />
@@ -44,7 +44,7 @@
     </div>
 </xar:if>
 
-<xar:comment>Add an edit link if required. The crumbtrails block may also provide an edit link.</xar:comment>
+<!-- Add an edit link if required. The crumbtrails block may also provide an edit link. -->
 <xar:if condition="xarSecurityCheck('EditXarpagesPage', 0, 'Page', $current_page.name . ':' . $current_page.pagetype.name)">
     [<a href="#xarModURL('xarpages','admin','modifypage',array('pid'=>$pid,'return_url'=>xarServerGetCurrentURL(array(),false)))#">edit</a>]
 </xar:if>

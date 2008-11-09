@@ -1,16 +1,16 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
-<xar:comment>
+<!-- 
     TODO: The CSS loaded will depend on what kind of menu you want.
     The CSS script should match the class of the wrapper div for the menu,
     both of which should be selectable from the block admin page.
     At the moment they are hard-coded here.
     In addition, this stylesheet link will probably have to be linked directly
     from your page template, until setting stylesheets from blocks is supported.
-</xar:comment>
+ -->
 <xar:style file="block_side_menu1" scope="block" fileext="php" />
 
-<xar:comment>
+<!-- 
     This simple menu template formats the pages tree into a nested-list menu.
     Required paramaters are:
         $pages - the list of all pages needed to build the menu
@@ -21,7 +21,7 @@
     a single-homed menu.
 
     Menu titles can be set with a DD field on each page called 'menu_title'.
-</xar:comment>
+ -->
 
 <xar:if condition="empty($max_level)">
     <xar:set name="max_level">0</xar:set>

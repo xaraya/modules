@@ -1,6 +1,6 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
-<xar:comment>
+<!-- 
     This simple menu template formats the pages tree into a nested-list menu.
     Required paramaters are:
         $pages - the list of all pages needed to build the menu
@@ -12,7 +12,7 @@
 
     Menu titles can be set with a DD field on each page called 'menu_title'.
 <xar:set name="dummy">var_dump($root_page)</xar:set>
-</xar:comment>
+ -->
 
 <xar:if condition="empty($max_level)">
     <xar:set name="max_level">0</xar:set>

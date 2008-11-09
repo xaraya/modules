@@ -25,7 +25,7 @@
             </xar:loop>
         </select>
 
-        <xar:comment>Existing root pids to removed</xar:comment>
+        <!-- Existing root pids to removed -->
         <xar:loop name="$root_pids">
             <div>
                 <input name="remove_root_pid[]" type="checkbox" value="#$loop:key#" id="remove_root_pid_#$bid#_#$loop:key#" />

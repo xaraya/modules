@@ -67,7 +67,7 @@ look something like this in the autolinks admin list:
 3. Create the following autolink template in your theme:
 
 <!-- themes/{your-theme}/modules/autolinks/link-page.xt -->
-<xar:comment>Provide links to other xarpages using the format [page:path] or [page:path:title]</xar:comment>
+<!-- Provide links to other xarpages using the format [page:path] or [page:path:title] -->
 <xar:set name="page">xarModAPIfunc('xarpages','user','getpagebypath',array('path'=>$url,'dd_flag'=>true))</xar:set>
 <xar:if condition="!empty($page)">
     <xar:set name="pageurl">$page['url']</xar:set>

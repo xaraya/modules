@@ -1,7 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:base-include-javascript module="base" filename="confirmlink.js" />
 
-<xar:comment>Display the form buttons</xar:comment>
+<!-- Display the form buttons -->
 <div class="xarpages-multiform-buttons">
     <xar:if condition="!empty($multiform.multiform_key)">
         <input type="hidden" name="#$multiform.multiform_key_name#" value="#$multiform.multiform_key#" />
