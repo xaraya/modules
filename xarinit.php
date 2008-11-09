@@ -198,8 +198,12 @@ function scheduler_upgrade($oldversion)
             $trigger = xarModVars::get('scheduler', 'trigger');
 
             // convert old strings to new ints
-            $trigger = $triggers[$trigger];
-            $checktype = $checktypes[$checktype];
+            $flip_triggers = array_flip($triggers);
+            $flip_checktypes = array_flip($flip_checktypes);
+
+
+            $trigger = $flip_triggers[$trigger];
+            $checktype = $flip_checktypes[$checktype];
 
             // import modvar data into table
             $jobs = unserialize($jobs);
