@@ -199,7 +199,7 @@ function scheduler_upgrade($oldversion)
 
             // convert old strings to new ints
             $flip_triggers = array_flip($triggers);
-            $flip_checktypes = array_flip($flip_checktypes);
+            $flip_checktypes = array_flip($checktypes);
 
 
             $trigger = $flip_triggers[$trigger];
