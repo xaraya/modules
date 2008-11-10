@@ -197,13 +197,37 @@ function scheduler_upgrade($oldversion)
             $running = xarModVars::get('scheduler', 'running');
             $trigger = xarModVars::get('scheduler', 'trigger');
 
-            // convert old strings to new ints
-            $flip_triggers = array_flip($triggers);
-            $flip_checktypes = array_flip($checktypes);
+            switch ($trigger) {
+                case 'external':
+                    $trigger = 1;
+                    break;
+                case 'block':
+                    $trigger = 2;
+                    break;
+                case 'event':
+                    $trigger = 3;
+                    break;
+                default:
+                case 'disabled':
+                    $trigger = 0;
+                    break;
+            }
 
-
-            $trigger = $flip_triggers[$trigger];
-            $checktype = $flip_checktypes[$checktype];
+            switch ($checktype) {
+                case 'ip':
+                    $trigger = 2;
+                    break;
+                case 'proxy':
+                    $trigger = 3;
+                    break;
+                case 'host':
+                    $trigger = 4;
+                    break;
+                default:
+                case 'local':
+                    $trigger = 1;
+                    break;
+            }
 
             // import modvar data into table
             $jobs = unserialize($jobs);
