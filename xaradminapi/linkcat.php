@@ -23,7 +23,10 @@ function categories_adminapi_linkcat($args)
     } else {
         $clean_first = false;
     }
-
+    
+    // Do we check the validity of the categories before linking?
+    $check = isset($args['check']) ? $args['check'] : true;
+    
     if (
         (!isset($args['cids'])) ||
         (!isset($args['iids'])) ||
@@ -39,27 +42,26 @@ function categories_adminapi_linkcat($args)
     } else {
         $itemtype = 0;
     }
-    if (!empty($itemtype)) {
-        $modtype = $itemtype;
-    } else {
-        $modtype = 'All';
-    }
+    if (!empty($itemtype)) $modtype = $itemtype;
+    else $modtype = 'All';
 
-    foreach ($args['cids'] as $cid) {
-          $cidparts = explode('.',$cid);
-          $cid = $cidparts[0];
-        $cat = xarModAPIFunc('categories',
-                             'user',
-                             'getcatinfo',
-                             Array
-                             (
-                              'cid' => $cid
-                             )
-                            );
-         if ($cat == false) {
-            $msg = xarML('Unknown Category');
-            throw new BadParameterException(null, $msg);
-         }
+    if ($check)) {
+        foreach ($args['cids'] as $cid) {
+              $cidparts = explode('.',$cid);
+              $cid = $cidparts[0];
+            $cat = xarModAPIFunc('categories',
+                                 'user',
+                                 'getcatinfo',
+                                 Array
+                                 (
+                                  'cid' => $cid
+                                 )
+                                );
+             if ($cat == false) {
+                $msg = xarML('Unknown Category');
+                throw new BadParameterException(null, $msg);
+             }
+        }
     }
 
     // Get database setup

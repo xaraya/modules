@@ -19,7 +19,7 @@ function categories_adminapi_unlink($args)
         if ((empty($modid)) || !is_numeric($modid) ||
             (empty($iid)) || !is_numeric($iid))
         {
-            $msg = xarML('Invalid Parameter Count', '', 'admin', 'linkcat', 'categories');
+            $msg = xarML('Invalid Parameter Count', '', 'admin', 'unlink', 'categories');
             throw new BadParameterException(null, $msg);
         }
 

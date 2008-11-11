@@ -104,17 +104,19 @@ class CategoriesProperty extends DataProperty
         if (!xarVarFetch($name . '_categories_basecats', 'array', $basecats, array(), XARVAR_NOT_REQUIRED)) return;
         $this->basecategories = $basecats;
 
-        // Make sure they are valid
-        if (count($categories) > 0) {
-            $checkcats= array();
-            foreach ($categories as $category) {
-                $catparts = explode('.',$category);
-                $category = $catparts[0];
-                $validcat = xarModAPIFunc('categories','user','getcatinfo',array('cid' => $category));
-                if (!$validcat) {
-                    $this->invalid = xarML("The category #(1) is not valid", $category);
-                    $this->value = null;
-                    return false;
+        // Make sure they are valid unless we can override
+        if ($this->validation_override) {
+            if (count($categories) > 0) {
+                $checkcats= array();
+                foreach ($categories as $category) {
+                    $catparts = explode('.',$category);
+                    $category = $catparts[0];
+                    $validcat = xarModAPIFunc('categories','user','getcatinfo',array('cid' => $category));
+                    if (!$validcat) {
+                        $this->invalid = xarML("The category #(1) is not valid", $category);
+                        $this->value = null;
+                        return false;
+                    }
                 }
             }
         }
@@ -141,13 +143,13 @@ class CategoriesProperty extends DataProperty
 
         if (count($this->categories) > 0) {
             $result = xarModAPIFunc('categories', 'admin', 'linkcat',
-                                  array('cids'  => $this->categories,
-                                        'iids'  => array($itemid),
-                                        'itemtype' => $this->localitemtype,
-                                        'modid' => $info['systemid'],
-                                        'basecids'  => $this->basecategories,
+                                  array('cids'        => $this->categories,
+                                        'iids'        => array($itemid),
+                                        'itemtype'    => $this->localitemtype,
+                                        'modid'       => $info['systemid'],
+                                        'basecids'    => $this->basecategories,
+                                        'check'       => false,
                                         'clean_first' => true));
-
         }
 
         return true;
