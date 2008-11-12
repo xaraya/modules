@@ -45,7 +45,7 @@ function categories_adminapi_linkcat($args)
     if (!empty($itemtype)) $modtype = $itemtype;
     else $modtype = 'All';
 
-    if ($check)) {
+    if ($check) {
         foreach ($args['cids'] as $cid) {
               $cidparts = explode('.',$cid);
               $cid = $cidparts[0];
