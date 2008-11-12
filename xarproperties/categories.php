@@ -69,6 +69,7 @@ class CategoriesProperty extends DataProperty
     public $basecategories = array();
     
     public $validation_categories;
+    public $validation_override = true;
 
     function __construct(ObjectDescriptor $descriptor)
     {
@@ -105,7 +106,7 @@ class CategoriesProperty extends DataProperty
         $this->basecategories = $basecats;
 
         // Make sure they are valid unless we can override
-        if ($this->validation_override) {
+        if (!$this->validation_override) {
             if (count($categories) > 0) {
                 $checkcats= array();
                 foreach ($categories as $category) {
