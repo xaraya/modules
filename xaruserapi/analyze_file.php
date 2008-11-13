@@ -42,11 +42,18 @@ function mime_userapi_analyze_file( $args )
     // Path to magic file without 'mime' extension is for windows, see http://pecl.php.net/bugs/bug.php?id=7555
     $testMethod = xarModGetVar('mime', 'mimemethod');
     $pathToMagic = xarModGetVar('mime', 'mimepath');
+    //need to test for file exists as environment var for MAGIC path not available in some server setups
+    $handle = file_exists($pathToMagic);        
     if ($testMethod == 'none') { 
         //rely on php extension 'fileinfo' and xarayas own tests
     } elseif ($testMethod == 'file_get_contents') {
         // PHP5 approach from http://www.jellyandcustard.com/2006/01/19/php-mime-types-and-fileinfo/
-        $fi = new finfo(FILEINFO_MIME, $pathToMagic);
+        if ($handle) {
+            $fi = new finfo(FILEINFO_MIME, $pathToMagic);
+        } else {
+            //try system default
+            $fi = new finfo(FILEINFO_MIME);     
+        }
         $mime_type = $fi->buffer(file_get_contents($fileName));
         if (isset($mime_type) && strlen($mime_type)) {
             return $mime_type;
@@ -60,9 +67,14 @@ function mime_userapi_analyze_file( $args )
         }
     }
 
-    //try to use if disponible pecl fileinfo extension
-    if(extension_loaded('fileinfo')) {
-        $res = finfo_open(FILEINFO_MIME, $pathToMagic);
+    //try to use if relevant pecl fileinfo extension
+    if (extension_loaded('fileinfo')) {
+        if (!$handle) {
+            //try using default path
+            $res = finfo_open(FILEINFO_MIME);
+        } else {
+            $res = finfo_open(FILEINFO_MIME,$pathToMagic);
+        }    
         $mime_type = finfo_file($res, $fileName);
         finfo_close($res);
         if (isset($mime_type) && strlen($mime_type)) {
