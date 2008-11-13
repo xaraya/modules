@@ -41,7 +41,7 @@ function sitecontact_adminapi_getcurrentip()
     
     /* Gets the proxy ip if it exists and  sent */
 
-    if (!empty($x_fowarded_for)){
+    if (!empty($x_forwarded_for)){
         $proxyip = $x_forwarded_for;
     } elseif (!empty($x_forwarded)) {
         $proxyip = $x_forwarded;
