@@ -156,7 +156,7 @@
                                 </td>
                             </tr>
                             <xar:if condition="xarModIsHooked('dynamicdata','uploads',1)">
-                                <xar:data-getitem name="$ddprops" module="uploads" itemtype="1" itemid="$fileInfo['fileId']" />
+                                <xar:data-getitem name="ddprops" module="uploads" itemtype="1" itemid="$fileInfo['fileId']" />
                                 <xar:if condition="!empty($ddprops)">
                                     <xar:foreach in="$ddprops" key="$ddname">
                                         <td class="xar-norm" width="20%">
