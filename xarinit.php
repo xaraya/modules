@@ -30,10 +30,10 @@ function xarpages_init()
         'xar_pid'   => array('type'=>'integer',  'null'=>FALSE,  'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_name'  => array('type'=>'varchar',  'null'=>FALSE, 'size'=>100, 'default'=>''),
         'xar_desc'  => array('type'=>'text'),
-        'xar_itemtype' => array('type'=>'integer','null'=>false, 'default'=>0),
-        'xar_parent'    => array('type' => 'integer','null'=>false, 'default'=>0),
-        'xar_left'    => array('type' => 'integer','null'=>false, 'default'=>0),
-        'xar_right'    => array('type' => 'integer','null'=>false, 'default'=>0),
+        'xar_itemtype' => array('type'=>'integer','null'=>false, 'default'=>'0'),
+        'xar_parent'    => array('type' => 'integer','null'=>false, 'default'=>'0'),
+        'xar_left'    => array('type' => 'integer','null'=>false, 'default'=>'0'),
+        'xar_right'    => array('type' => 'integer','null'=>false, 'default'=>'0'),
         'xar_template'    => array('type' => 'varchar', 'size' => 100,'default' => null),
         'xar_page_template'    => array('type' => 'varchar','size' => 100,'default' => null),
         'xar_theme'    => array('type' => 'varchar', 'size' => 100,'default' => null),
@@ -41,7 +41,7 @@ function xarpages_init()
         'xar_decode_url'    => array('type' => 'varchar', 'size' => 100,'default' => null),
         'xar_function'    => array('type' => 'varchar', 'size' => 100,'default' => null),
         'xar_status'    => array('type' => 'varchar', 'size' => 20,'null'=>false, 'default'=>'ACTIVE'),
-        'xar_alias'    => array('type' => 'integer', 'size' => 4,'null'=>false, 'default'=>0)
+        'xar_alias'    => array('type' => 'integer', 'size' => 4,'null'=>false, 'default'=>'0')
     );
     $query = xarDBCreateTable($pagestable, $fields);
     $result = $dbconn->Execute($query);
