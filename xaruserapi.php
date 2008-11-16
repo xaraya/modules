@@ -59,7 +59,8 @@ function bbcode_transform($text)
     // transform to BBCode, instead of HTML, let the BBCode template deal with display
     // Bug, this doesn't catch plain urls inside other BBCode tags.
     // Added regex to not match string beginning with [url] or [url=] allows all other tags to work
-    $text = preg_replace("#(^|[\n ]|[^[url.]])([\w]+?://[^ \"\n\r\t<[]*)#is", "\\1[url]\\2[/url]", $text); 
+    //$text = preg_replace("#(^|[\n ]|[^[url.]])([\w]+?://[^ \"\n\r\t<[]*)#is", "\\1[url]\\2[/url]", $text); 
+    $text = preg_replace("#(^|[\n ]|[^\[img|url*]])([\w]+?://[^ \"\n\r\t<[]*)#is", "\\1[url]\\2[/url]", $text); 
     //$text = preg_replace("#(^|[\n ])([\w]+?://[^ \"\n\r\t<]*)#is", "\\1<a href=\"\\2\" target=\"_blank\">\\2</a>", $text); 
 
     // matches a "www|ftp.xxxx.yyyy[/zzzz]" kinda lazy URL thing

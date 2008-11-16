@@ -242,6 +242,8 @@ function bbcode_upgrade($oldversion)
             //Also signifies upgrade of syntax highlighter to 1.5.1
         case '2.0.1':
             //3rd point upgrade to signify update of transform API
+            //Update covers various bugfixes/FRs.
+
         case '2.0.2': //current version
         
     }
