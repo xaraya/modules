@@ -48,10 +48,10 @@
 		getInfo : function() {
 			return {
 				longname : 'dpHighlight',
-				author : 'Jo Dalle Nogare',
-				authorurl : 'http://xarigami.com/project/xarigami_dphighlight',
+				author : 'Xarigami',
+				authorurl : 'http://xarigami.com/',
 				infourl : 'http://xarigami.com/project/xarigami_dphighlight',
-				version : "1.1 Xarigami"
+				version : "1.1"
 			};
 		}
 	});
