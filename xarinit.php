@@ -142,7 +142,9 @@ function tinymce_upgrade($oldversion)
         xarModSetVar('tinymce',  'activetinymce',true);
         xarModSetVar('tinymce',  'gztext','');  
         xarModSetVar('tinymce',  'usebutton',true);                
-    case '1.5.0': //current version
+    case '1.5.0': 
+    case '1.5.1':    
+    case '1.5.2'://current version
        break;
     }
     return true;

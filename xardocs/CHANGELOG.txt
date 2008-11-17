@@ -1,3 +1,10 @@
+* Version 1.5.2  18 Nov 2008
+- Upgrade to latest upstream 3.2.1 code (including additional to revision 962)
+- Upstream changes include better support and fixes for webkit based browers
+- xhtmlextra plugin fixes
+- fix for problem with inlinepopup and editable input elements in Firefox2
+- legacy fonts converted to spans even without cleanup enabled
+
 * Version 1.5.1  20 Sept 2008
 - Upgrade to latest upstream 3.2.0.1 code (revision 932)
 - xtm-000199 undeclared var using simple theme
