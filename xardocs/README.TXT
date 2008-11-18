@@ -1,6 +1,6 @@
-INSTALLATION AND USE - XarTinyMCE Version 1.5.0
+INSTALLATION AND USE - XarTinyMCE Version 1.5.2
 
-UPGRADES to 1.5.0:
+UPGRADES to 1.5.3:
 PLEASE SEE UPGRADE CONSIDERATIONS AT THE END OF THIS DOCUMENT
 
 XarTinyMCE is a configurable, lightweight WYSIWYG editor.
@@ -50,7 +50,7 @@ Please read the Overview Documentation in the TinyMCE administration area for mo
 
 ******************************
 
-To UPGRADE to Version 1.5.0:
+To UPGRADE to Version 1.5.2:
 
 There has been a number of major changes in tinymce that could BREAK COMPTIBILITY.
 Please check the following to ensure xartinymce continues to work for you.
@@ -97,7 +97,7 @@ For a more secure, but image only browser and upload application see ibrowser an
 
 The updated xartinymce ibrowser and image manager plugin can be downloaded at http://xarigami.com
 
-Please make sure you copy the NEW tinymceconfig.inc.php file in
+Please make sure you copy the tinymceconfig.inc.php file in
 modules/tinymce/xartemplates/includes/tinymceconfig.inc.php to your
 var/tinymce/ directory and update the configuration settings there.
 
@@ -112,9 +112,8 @@ trusted directory of Uploads.
 
 KNOWN ISSUES
 ******************************
-iBrowser and iManager will only work with IE7 or less, or FF2x (tested). 
-This current iBrowser and iManager  will not work in the more modern browsers such as
- Firefox version 3, Safari or Opera, and IE8 That's it!
+The equivalent iBrowser and iManager for xarTinymce 1.5.2 is tested and working with IE 6, IE7, IE8
+This current iBrowser and iManager  will not work in Safari or Opera.
 ******************************
 
 Feature requests and bug reports to:
