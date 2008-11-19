@@ -4,12 +4,12 @@
  *
  */
 
-function karma_userapi_getmenulinks()
+function foo_userapi_getmenulinks()
 {
     $menulinks = array();
 
-    if (xarSecurityCheck('ViewKarma',0)) {
-        $menulinks[] = array('url'   => xarModURL('karma',
+    if (xarSecurityCheck('ViewFoo',0)) {
+        $menulinks[] = array('url'   => xarModURL('foo',
                                                   'user',
                                                   'main'),
                               'title' => xarML(''),

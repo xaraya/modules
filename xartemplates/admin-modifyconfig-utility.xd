@@ -4,10 +4,10 @@
     </xar:comment>
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:if condition="xarModVars::get('karma','useModuleAlias')">
-                <xar:var scope="module" module="karma" name="aliasname" />
+            <xar:if condition="xarModVars::get('foo','useModuleAlias')">
+                <xar:var scope="module" module="foo" name="aliasname" />
             <xar:else />
-                <xar:mlstring>Karma Administration</xar:mlstring>
+                <xar:mlstring>Foo Administration</xar:mlstring>
             </xar:if>
         </span>
     </div>
@@ -24,8 +24,8 @@
         <xar:comment> Begin General Options
         </xar:comment>
 
-        <form method="post" action="&xar-modurl-karma-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
-            <xar:if condition="$tab eq 'karma_general'">
+        <form method="post" action="&xar-modurl-foo-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
+            <xar:if condition="$tab eq 'foo_general'">
                 <h3>
                     <xar:mlstring>
                         General Options
@@ -43,13 +43,13 @@
                                 Items Per Page:
                             </xar:mlstring>
                         </label>
-                        <xar:set name="value"><xar:var scope="module" module="karma" name="itemsperpage" /></xar:set>
+                        <xar:set name="value"><xar:var scope="module" module="foo" name="itemsperpage" /></xar:set>
                         <input type="text" name="itemsperpage" id="itemsperpage" value="#$value#" maxlength="3" class="xar-form-textshort" />
                     </div>
                     <div class="xar-form-input-wrapper-after">
-                        <xar:set name="checked">xarModVars::get('karma','SupportShortURLs')</xar:set>
+                        <xar:set name="checked">xarModVars::get('foo','SupportShortURLs')</xar:set>
                         <xar:data-input type="checkbox" name="shorturls" id="shorturls" checked="$checked" />
-                        <label for="shorturls" title="#xarML('Enable short URLs for Karma module')#">
+                        <label for="shorturls" title="#xarML('Enable short URLs for Foo module')#">
                             <xar:mlstring>
                                 Enable Short URLs
                             </xar:mlstring>
@@ -61,7 +61,7 @@
                                 Use a module alias
                             </xar:mlstring>
                         </label>
-                        <xar:set name="checked">xarModVars::get('karma','useModuleAlias')</xar:set>
+                        <xar:set name="checked">xarModVars::get('foo','useModuleAlias')</xar:set>
                         <xar:data-input type="checkbox" name="modulealias" id="modulealias" checked="$checked" />
                     </div>
                     <div class="xar-form-input-wrapper">
@@ -70,7 +70,7 @@
                                     Module Alias Name
                                 </xar:mlstring>
                         </label>
-                        <xar:set name="value"><xar:var scope="module" module="karma" name="aliasname" /></xar:set>
+                        <xar:set name="value"><xar:var scope="module" module="foo" name="aliasname" /></xar:set>
                         <input type="text" name="aliasname" id="aliasname" value="#$value#" size="32" maxlength="100" />
                     </div>
                 </fieldset>

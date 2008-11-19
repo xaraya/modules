@@ -3,7 +3,7 @@
  * Call a generic test page
  *
  */
-    function karma_user_test()
+    function foo_user_test()
     {
         return array();
     }

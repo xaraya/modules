@@ -1,15 +1,15 @@
 <?php
 /**
- * Return the itemtypes of the karma module
+ * Return the itemtypes of the foo module
  *
  */
-    function karma_userapi_getitemtypes($args)
+    function foo_userapi_getitemtypes($args)
     {
         $itemtypes = array();
 
-        $itemtypes[1] = array('label' => xarML('Native Karma'),
-                              'title' => xarML('View Karma'),
-                              'url'   => xarModURL('karma','user','view')
+        $itemtypes[1] = array('label' => xarML('Native Foo'),
+                              'title' => xarML('View Foo'),
+                              'url'   => xarModURL('foo','user','view')
                              );
 
         $extensionitemtypes = xarModAPIFunc('dynamicdata','user','getmoduleitemtypes',array('moduleid' => 30059, 'native' => false));

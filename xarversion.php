@@ -4,10 +4,10 @@
  * Version information
  *
  */
-    $modversion['name']           = 'karma';
-    $modversion['id']             = '30059';
+    $modversion['name']           = 'foo';
+    $modversion['id']             = '30000';
     $modversion['version']        = '1.0.0';
-    $modversion['displayname']    = xarML('Karma');
+    $modversion['displayname']    = xarML('Foo');
     $modversion['description']    = xarML('A genereic Web 2.0 module');
     $modversion['credits']        = 'credits.txt';
     $modversion['help']           = 'help.txt';

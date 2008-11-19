@@ -4,12 +4,12 @@
  *
  */
 
-    function karma_user_main()
+    function foo_user_main()
     {
         // Security Check
-        if (!xarSecurityCheck('ReadKarma')) return;
+        if (!xarSecurityCheck('ReadFoo')) return;
 
-//        xarResponseRedirect(xarModURL('karma', 'user', 'view'));
+//        xarResponseRedirect(xarModURL('foo', 'user', 'view'));
         // success
         return array(); //true;
     }

@@ -1,9 +1,9 @@
 <?php
 /**
- * View items of the karma object
+ * View items of the foo object
  *
  */
-    function karma_admin_view($args)
+    function foo_admin_view($args)
     {
         if (!xarSecurityCheck('ManageFoo')) return;
 

@@ -5,10 +5,10 @@
 <xar:style scope="module" module="base" file="navtabs" />
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:if condition="xarModVars::get('karma','useModuleAlias')">
-            <xar:var scope="module" module="karma" name="aliasname" />
+        <xar:if condition="xarModVars::get('foo','useModuleAlias')">
+            <xar:var scope="module" module="foo" name="aliasname" />
         <xar:else />
-            <xar:mlstring>Karma Administration</xar:mlstring>
+            <xar:mlstring>Foo Administration</xar:mlstring>
         </xar:if>
     </span>
 </div>
@@ -27,7 +27,7 @@
             </dt>
             <xar:if condition="$tab eq 'general'">
                 <dd class="active">
-                    <a href="&xar-modurl-karma-admin-modifyconfig;&amp;tab=general">
+                    <a href="&xar-modurl-foo-admin-modifyconfig;&amp;tab=general">
                         <xar:mlstring>
                             General
                         </xar:mlstring>
@@ -35,7 +35,7 @@
                 </dd>
                 <xar:else />
                 <dd>
-                    <a href="&xar-modurl-karma-admin-modifyconfig;&amp;tab=general">
+                    <a href="&xar-modurl-foo-admin-modifyconfig;&amp;tab=general">
                         <xar:mlstring>
                             General
                         </xar:mlstring>
@@ -44,7 +44,7 @@
             </xar:if>
             <xar:if condition="$tab eq 'tab2'">
                 <dd class="active">
-                    <a href="&xar-modurl-karma-admin-modifyconfig;&amp;tab=tab2">
+                    <a href="&xar-modurl-foo-admin-modifyconfig;&amp;tab=tab2">
                         <xar:mlstring>
                             Tab2
                         </xar:mlstring>
@@ -52,7 +52,7 @@
                 </dd>
                 <xar:else />
                 <dd>
-                    <a href="&xar-modurl-karma-admin-modifyconfig;&amp;tab=tab2">
+                    <a href="&xar-modurl-foo-admin-modifyconfig;&amp;tab=tab2">
                         <xar:mlstring>
                             Tab2
                         </xar:mlstring>
@@ -61,7 +61,7 @@
             </xar:if>
             <xar:if condition="$tab eq 'tab3'">
                 <dd class="active">
-                    <a href="&xar-modurl-karma-admin-modifyconfig;&amp;tab=tab3">
+                    <a href="&xar-modurl-foo-admin-modifyconfig;&amp;tab=tab3">
                         <xar:mlstring>
                             Tab3
                         </xar:mlstring>
@@ -69,7 +69,7 @@
                 </dd>
                 <xar:else />
                 <dd>
-                    <a href="&xar-modurl-karma-admin-modifyconfig;&amp;tab=tab3">
+                    <a href="&xar-modurl-foo-admin-modifyconfig;&amp;tab=tab3">
                         <xar:mlstring>
                             Tab3
                         </xar:mlstring>
@@ -82,7 +82,7 @@
          - - - - - - - - - - - - - - - - - - - Begin General Options  - - - - - - - - - - - - - - - - - - -
     </xar:comment>
     <xar:if condition="$tab eq 'general'">
-        <form method="post" action="&xar-modurl-karma-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
+        <form method="post" action="&xar-modurl-foo-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
             <h3>
                 <xar:mlstring>
                     General Options
@@ -100,13 +100,13 @@
                             Items Per Page:
                         </xar:mlstring>
                     </label>
-                    <xar:set name="value"><xar:var scope="module" module="karma" name="itemsperpage" /></xar:set>
+                    <xar:set name="value"><xar:var scope="module" module="foo" name="itemsperpage" /></xar:set>
                     <xar:data-input type="textbox" name="itemsperpage" value="$value" class="xar-form-textshort" />
                 </div>
                 <div class="xar-form-input-wrapper-after">
-                    <xar:set name="checked">xarModVars::get('karma','SupportShortURLs')</xar:set>
+                    <xar:set name="checked">xarModVars::get('foo','SupportShortURLs')</xar:set>
                     <xar:data-input type="checkbox" name="shorturls" id="shorturls" checked="$checked" />
-                    <label for="shorturls" title="#xarML('Enable short URLs for Karma module')#">
+                    <label for="shorturls" title="#xarML('Enable short URLs for Foo module')#">
                         <xar:mlstring>
                             Enable Short URLs
                         </xar:mlstring>
@@ -126,7 +126,7 @@
                                 Module Alias Name
                             </xar:mlstring>
                     </label>
-                    <xar:set name="value"><xar:var scope="module" module="karma" name="aliasname" /></xar:set>
+                    <xar:set name="value"><xar:var scope="module" module="foo" name="aliasname" /></xar:set>
                     <xar:data-input type="textbox" name="aliasname" value="$value" size="32" maxlength="100" />
                 </div>
             </fieldset>
@@ -135,7 +135,7 @@
                     <input type="hidden" name="authid" id="authid" value="#$authid#" />
                     <input type="hidden" name="phase" id="phase" value="update" />
                     <input type="hidden" name="tab" id="tab" value="#$tab#" />
-                    <input type="submit" value="#xarML('Update Karma Configuration')#" />
+                    <input type="submit" value="#xarML('Update Foo Configuration')#" />
                 </div>
             </fieldset>
         </form>

@@ -1,5 +1,5 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:if condition="$tabmodule ne 'karma'">
+    <xar:if condition="$tabmodule ne 'foo'">
         <xar:set name="regid">xarModGetIDFromName($tabmodule)</xar:set>
     <xar:else />
         <xar:set name="regid">0</xar:set>
@@ -10,7 +10,7 @@
                 Bar:
             </xar:mlstring>
         </label>
-        <xar:set name="value">xarModItemVars::get('karma', 'bar', $regid)</xar:set>
+        <xar:set name="value">xarModItemVars::get('foo', 'bar', $regid)</xar:set>
         <input type="text" name="bar" id="bar" value="#$value#" />
     </div>
 </xar:template>
