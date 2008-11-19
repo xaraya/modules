@@ -232,6 +232,10 @@ class xoapWeather
         $head =& $tree['children'][0];
         $loc  =& $tree['children'][1];
         
+        if (!isset($tree['children'][2])) {
+            $forecast = array();
+            return $forecast;
+        }
         if ($tree['children'][2]['name'] == 'dayf') {
             $days =& $tree['children'][2]['children'];
         } else {
