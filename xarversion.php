@@ -4,11 +4,11 @@
  * Version information
  *
  */
-    $modversion['name']           = 'foo';
-    $modversion['id']             = '30000';
+    $modversion['name']           = 'karma';
+    $modversion['id']             = '30059';
     $modversion['version']        = '1.0.0';
-    $modversion['displayname']    = xarML('Foo');
-    $modversion['description']    = xarML('Empty module to be used as a template');
+    $modversion['displayname']    = xarML('Karma');
+    $modversion['description']    = xarML('A genereic Web 2.0 module');
     $modversion['credits']        = 'credits.txt';
     $modversion['help']           = 'help.txt';
     $modversion['changelog']      = 'changelog.txt';
@@ -20,7 +20,10 @@
     $modversion['user']           = 1;
     $modversion['class']          = 'Complete';
     $modversion['category']       = 'Content';
-    $modversion['dependency']     = array();
     $modversion['securityschema'] = array();
-    $modversion['dependencyinfo'] = array();
+    $modversion['dependency'] = array(30012, 30046);
+    $modversion['dependencyinfo'] = array(
+                                          30012 => 'math',
+                                          30046 => 'listings',
+                                          );
 ?>
