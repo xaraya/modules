@@ -333,7 +333,10 @@ class xoapWeather
         $head =& $tree['children'][0];
         $loc  =& $tree['children'][1];
 
-        if (!isset($tree['children'][2])) return array();
+        if (!isset($tree['children'][2])) {
+            $cc = array();
+            return $cc;
+        }
         if ($tree['children'][2]['name'] == 'cc') {
             $cc =& $tree['children'][2];
         } else {
