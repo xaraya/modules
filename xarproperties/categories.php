@@ -321,7 +321,7 @@ class CategoriesProperty extends DataProperty
 
         // Now we need to figure out which categories are displayed
         $selectedcategories = array();
-        
+    
         if (!empty($data['itemid'])) {
             $data['categories_itemid'] = $data['itemid'];
         } elseif (isset($this->_itemid)) {
@@ -332,7 +332,10 @@ class CategoriesProperty extends DataProperty
 
         // We have a valid itemid, so get its linked categories
         // This is the case of a property attached to an object
-        if (!empty($data['categories_itemid'])) {
+        if (!empty($this->categories)) {
+          $selectedcategories = $this->categories;
+        } elseif (!empty($data['categories_itemid'])) {           
+        //if (!empty($data['categories_itemid'])) {
                 $links = xarModAPIFunc('categories', 'user', 'getlinkage',
                                        array('itemid' => $data['categories_itemid'],
                                              'itemtype' => $data['categories_localitemtype'],
@@ -403,7 +406,10 @@ class CategoriesProperty extends DataProperty
         // We have a valid itemid, so get its linked categories
         // This is the case of a property attached to an object
         $selectedcategories = array();
-        if (!empty($data['categories_itemid'])) {
+        if (!empty($this->categories)) {
+          $selectedcategories = $this->categories;
+        } elseif (!empty($data['categories_itemid'])) {           
+        //if (!empty($data['categories_itemid'])) {
             if (empty($this->value)) {
                 $data['value'] = array();
                 $links = xarModAPIFunc('categories', 'user', 'getlinkage',
