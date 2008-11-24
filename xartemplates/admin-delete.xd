@@ -1,5 +1,7 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span></div>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span>
+</div>
 <div class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
     <h2><xar:mlstring>Delete Tag</xar:mlstring>: #$tag#</h2>
@@ -9,21 +11,22 @@
         <input type="hidden" name="cid" id="cid" value="#$cid#" />
         <input type="hidden" name="confirm" id="confirm" value="1"/>
         <fieldset>
-        <legend>
-            <strong><xar:mlstring>Confirm Tag Deletion</xar:mlstring></strong>
-        </legend>
+            <legend>
+                <strong><xar:mlstring>Confirm Tag Deletion</xar:mlstring></strong>
+            </legend>
             <div class="xar-form-input-wrapper">
                 <label for="tagdelete" class="xar-form-label" title="#xarML('Delete this tag?')#">
                     <xar:mlstring>Confirm deletion of the tag</xar:mlstring>
                 </label>
-            &nbsp;<strong>#$tag#</strong></p>
-        </fieldset>
-            <div class="xar-form-input-wrapper">
-                <input type="submit" value="#$submitlabel#"  />
+                &nbsp;<strong>#$tag#</strong>
             </div>
+        </fieldset>
+        <div class="xar-form-input-wrapper">
+            <input type="submit" value="#$submitlabel#" />
+        </div>
         <p>
             <a href="&xar-modurl-html-admin-set;"><xar:mlstring>Cancel deletion of the tag.</xar:mlstring></a>
         </p>
     </form>
 </div>
-</div>
+
