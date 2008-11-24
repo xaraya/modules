@@ -63,7 +63,7 @@ Weekly with events
     This will display a weekly calendar showing every quarter hour in the day.
 */
 
-class calendar {
+class ieventsCalendar {
     //********************* Start of variable declarations *********************
 
     //*********** Class variables that apply to all calendar formats ***********
@@ -253,7 +253,7 @@ class calendar {
     /*
         Calendar class constructor.
     */
-    function calendar() {
+    function ieventsCalendar() {
         // Set up the default day names.
         if (!isset($this->dayNames)) $this->dayNames = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
         if (!isset($this->dayNamesShort)) $this->dayNamesShort = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
@@ -846,7 +846,7 @@ class calendar {
         $output = "<table>\n";
         $output .= "    <tr>\n";
         $output .= "        <td style=\"text-align: center;\">\n";
-        $output .= "        The calendar class has generated the following error:<br />\n";
+        $output .= "        The ieventsCalendar class has generated the following error:<br />\n";
         $output .= "        <span style=\"color: red;\">".$error."</span>\n";
         $output .= "        </td>\n";
         $output .= "    <tr>\n";

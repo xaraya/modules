@@ -587,7 +587,7 @@ function ievents_user_view($args)
     // TODO: give the object a name in a better namespace.
     if ($format == 'cal') {
         include_once(dirname(__FILE__) . '/../xarincludes/calendar.inc.php');
-        $cal = new calendar;
+        $cal = new ieventsCalendar;
 
         // Set the format.
         // TODO: include daily.
