@@ -25,7 +25,7 @@ function xarpages_admin_updatetype($args)
 
     if (!xarVarFetch('name', 'pre:lower:ftoken:str:1:100', $name)) return;
 
-    if (!xarVarFetch('desc', 'str:0:255', $desc)) return;
+    if (!xarVarFetch('desc', 'str:0:200', $desc)) return;
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) {return;}
