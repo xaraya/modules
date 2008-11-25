@@ -333,21 +333,22 @@ class CategoriesProperty extends DataProperty
         // We have a valid itemid, so get its linked categories
         // This is the case of a property attached to an object
         if (!empty($this->categories)) {
-          $selectedcategories = $this->categories;
+            // We are in displaying a preview, or checkInput for our object failed
+            $selectedcategories = $this->categories;
         } elseif (!empty($data['categories_itemid'])) {           
-        //if (!empty($data['categories_itemid'])) {
-                $links = xarModAPIFunc('categories', 'user', 'getlinkage',
-                                       array('itemid' => $data['categories_itemid'],
-                                             'itemtype' => $data['categories_localitemtype'],
-                                             'module' => $data['categories_localmodule'],
-                                              ));
-                $catlink = array();
-                foreach ($links as $link) {
-                    $fulllink = !empty($link['childid']) ? $link['id'] . "." . $link['childid'] : $link['id'];
-                    $catlink[$link['basecategory_id']] = $fulllink;
-                }
-                foreach ($data['basecids'] as $basecid)
-                    $selectedcategories[] = isset($catlink[$basecid]) ? $catlink[$basecid]: 0;
+            // No checkInput has run, we are in an existing object or a standalone with an itemid given
+            $links = xarModAPIFunc('categories', 'user', 'getlinkage',
+                                   array('itemid' => $data['categories_itemid'],
+                                         'itemtype' => $data['categories_localitemtype'],
+                                         'module' => $data['categories_localmodule'],
+                                          ));
+            $catlink = array();
+            foreach ($links as $link) {
+                $fulllink = !empty($link['childid']) ? $link['id'] . "." . $link['childid'] : $link['id'];
+                $catlink[$link['basecategory_id']] = $fulllink;
+            }
+            foreach ($data['basecids'] as $basecid)
+                $selectedcategories[] = isset($catlink[$basecid]) ? $catlink[$basecid]: 0;
         }
 
         // We have a categories attribute
@@ -407,9 +408,10 @@ class CategoriesProperty extends DataProperty
         // This is the case of a property attached to an object
         $selectedcategories = array();
         if (!empty($this->categories)) {
-          $selectedcategories = $this->categories;
-        } elseif (!empty($data['categories_itemid'])) {           
-        //if (!empty($data['categories_itemid'])) {
+            // We are in displaying a preview, or checkInput for our object failed
+            $selectedcategories = $this->categories;
+        } elseif (!empty($data['categories_itemid'])) {
+            // No checkInput has run, we are in an existing object or a standalone with an itemid given
             if (empty($this->value)) {
                 $data['value'] = array();
                 $links = xarModAPIFunc('categories', 'user', 'getlinkage',
