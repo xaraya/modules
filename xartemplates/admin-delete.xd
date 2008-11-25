@@ -1,3 +1,4 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span>
@@ -18,7 +19,7 @@
                 <label for="tagdelete" class="xar-form-label" title="#xarML('Delete this tag?')#">
                     <xar:mlstring>Confirm deletion of the tag</xar:mlstring>
                 </label>
-                &nbsp;<strong>#$tag#</strong>
+            &#160;<strong>#$tag#</strong></p>
             </div>
         </fieldset>
         <div class="xar-form-input-wrapper">
@@ -30,3 +31,4 @@
     </form>
 </div>
 
+</xar:template>

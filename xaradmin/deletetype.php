@@ -74,7 +74,7 @@ function html_admin_deletetype()
         return; // throw back
     }
 
-    xarSessionSetVar('statusmsg', xarML('HTML Tag Deleted'));
+    xarSession::setVar('statusmsg', xarML('HTML Tag Deleted'));
 
     // Redirect
     xarResponseRedirect(xarModURL('html', 'admin', 'viewtypes'));

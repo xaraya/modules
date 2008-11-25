@@ -38,8 +38,8 @@ function html_userapi_gettag($args)
     if(!xarSecurityCheck('ReadHTML')) return;
 
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $htmltable = $xartable['html'];
     $htmltypestable = $xartable['htmltypes'];
 

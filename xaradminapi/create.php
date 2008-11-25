@@ -55,8 +55,8 @@ function html_adminapi_create($args)
     $type = trim($type);
 
     // Get datbase setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     // Set tables
     $htmltable = $xartable['html'];
@@ -98,12 +98,12 @@ function html_adminapi_create($args)
     // also add the tag to config vars
     if ($tagtype['type'] == 'html') {
         // Get the current html tags from config vars
-        $allowedhtml = xarConfigGetVar('Site.Core.AllowableHTML');
+        $allowedhtml = xarConfigVars::get(null,'Site.Core.AllowableHTML');
         // Add the new html tag
         $allowedhtml[$tag] = $allowed;
         error_log($tag . " " . $allowed);
         // Set the config vars
-        xarConfigSetVar('Site.Core.AllowableHTML', $allowedhtml);
+        xarConfigVars::set(null,'Site.Core.AllowableHTML', $allowedhtml);
     }
     // Let any hooks know that we have created a new tag
     xarModCallHooks('item', 'create', $cid, 'cid');

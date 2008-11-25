@@ -58,8 +58,8 @@ function html_adminapi_edit($args)
     if(!xarSecurityCheck('EditHTML')) return;
 
     // Get datbase setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $htmltable = $xartable['html'];
 
     // Make sure $tag is lowercase
@@ -82,7 +82,7 @@ function html_adminapi_edit($args)
     if ($tagtype['type'] == 'html') {
         $allowedhtml = array();
         // Get the current html tags from config vars
-        foreach (xarConfigGetVar('Site.Core.AllowableHTML') as $key => $value) {
+        foreach (xarConfigVars::get(null,'Site.Core.AllowableHTML') as $key => $value) {
             // Update html tag from the config vars
             if ($key != $html['tag']) {
             $allowedhtml[$key] = $value;
@@ -91,7 +91,7 @@ function html_adminapi_edit($args)
         // Add the new html tag
         $allowedhtml[$tag] = $html['allowed'];
         // Set the config vars
-        xarConfigSetVar('Site.Core.AllowableHTML', $allowedhtml);
+        xarConfigVars::set(null,'Site.Core.AllowableHTML', $allowedhtml);
     }
     // Let any hooks know that we have deleted a html
     xarModCallHooks('item', 'edit', $cid, '');

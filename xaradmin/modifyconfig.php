@@ -23,15 +23,15 @@ function html_admin_modifyconfig()
 
     switch (strtolower($phase)) {
         case 'modify':
-        default: 
+        default:
             //Set Data Array
             $data                   = array();
             $data['authid']         = xarSecGenAuthKey();
             $data['submitlabel']    = xarML('Submit');
 
             // Call Modify Config Hooks
-            $hooks = xarModCallHooks('module', 
-                                     'modifyconfig', 
+            $hooks = xarModCallHooks('module',
+                                     'modifyconfig',
                                      'html',
                                      array('module'     => 'html',
                                            'itemtype'   => 0));
@@ -47,23 +47,23 @@ function html_admin_modifyconfig()
             if (!xarVarFetch('dobreak', 'checkbox', $dobreak, false, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('transformtype', 'int', $transformtype, 1)) return;
             // Confirm authorisation code
-            if (!xarSecConfirmAuthKey()) return; 
+            if (!xarSecConfirmAuthKey()) return;
             // Update module variables
-            xarModSetVar('html', 'dolinebreak', $dolinebreak);
-            xarModSetVar('html', 'dobreak', $dobreak);            
-            xarModSetVar('html', 'transformtype', $transformtype);
+            xarModVars::set('html', 'dolinebreak', $dolinebreak);
+            xarModVars::set('html', 'dobreak', $dobreak);
+            xarModVars::set('html', 'transformtype', $transformtype);
             // Call Update Config Hooks
-            xarModCallHooks('module', 
-                            'updateconfig', 
+            xarModCallHooks('module',
+                            'updateconfig',
                             'html',
-                            array('module'      => 'html', 
+                            array('module'      => 'html',
                                   'itemtype'    => 0));
 
-            xarResponseRedirect(xarModURL('html', 'admin', 'modifyconfig')); 
+            xarResponseRedirect(xarModURL('html', 'admin', 'modifyconfig'));
             // Return
             return true;
             break;
-    } 
+    }
     return $data;
-} 
+}
 ?>

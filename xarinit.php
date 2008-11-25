@@ -25,22 +25,22 @@
 function html_init()
 {
     // Set up module variables
-    xarModSetVar('html', 'itemsperpage', 20);
-    xarModSetVar('html', 'transformtype', 1);
+    xarModVars::set('html', 'itemsperpage', 20);
+    xarModVars::set('html', 'transformtype', 1);
 
     // Load Table Maintainance API
-    xarDBLoadTableMaintenanceAPI();
+    sys::import('xaraya.tableddl');
 
     // Set up database tables
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     // Create html table
     $htmltable = $xartable['html'];
 
     /*****************************************************************
     * $query = "CREATE TABLE $htmltable (
-    *       xar_cid INT(11) NOT NULL auto_increment,
+    *       xar_cid integer unsigned NOT NULL auto_increment,
     *       xar_tid INT(11) NOT NULL default '0',
     *       xar_tag VARCHAR(100) NOT NULL default '',
     *       xar_allowed INT(11)  NOT NULL default '0',
@@ -48,7 +48,8 @@ function html_init()
     *       UNIQUE KEY tag (xar_tag))";
     *****************************************************************/
     $fields = array(
-    'xar_cid'      => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
+    'xar_cid'      => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
+//    'xar_cid'      => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
     'xar_tid'      => array('type'=>'integer','null'=>false,'increment'=>false,'default'=>'0'),
     'xar_tag'      => array('type'=>'varchar','size'=>100,'null'=>false,'default'=>''),
     'xar_allowed'  => array('type'=>'integer','null'=>false,'increment'=>false,'default'=>'0'),
@@ -60,7 +61,7 @@ function html_init()
     if (!$result) return;
 
     // Create index on xar_tag
-    $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_html_tag',
+    $index = array('name'      => 'i_'.xarDB::getPrefix().'_html_tag',
                    'fields'    => array('xar_tid, xar_tag'),
                    'unique'    => TRUE);
 
@@ -74,13 +75,14 @@ function html_init()
 
     /*****************************************************************
     * $query = "CREATE TABLE $htmltypestable (
-    *       xar_id INT(11) NOT NULL auto_increment,
+    *       xar_id integer unsigned NOT NULL auto_increment,
     *       xar_type VARCHAR(20) NOT NULL default ''
     *       PRIMARY KEY (xar_type),
     *       UNIQUE KEY tag (xar_name))";
     *****************************************************************/
     $fields = array(
-    'xar_id'       => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
+    'xar_id'       => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
+//    'xar_id'       => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
     'xar_type'     => array('type'=>'varchar','size'=>20,'null'=>false,'default'=>'')
     );
 
@@ -90,7 +92,7 @@ function html_init()
     if (!$result) return;
 
     // Create index on xar_type
-    $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_html_type',
+    $index = array('name'      => 'i_'.xarDB::getPrefix().'_html_type',
                    'fields'    => array('xar_type'),
                    'unique'    => TRUE);
 
@@ -121,7 +123,7 @@ function html_init()
     // The default values of the HTML tags are:
     //   0 = Not allowed
     //   1 = Allowed
-    //   2 = Allowed with attributes
+    //   2 = Allowed with parameters
     $htmltags = array('!--' =>      2,
                       'a' =>        2,
                       'abbr' =>     0,
@@ -273,11 +275,11 @@ function html_init()
 function html_upgrade($oldversion)
 {
     // Load Table Maintainance API
-    xarDBLoadTableMaintenanceAPI();
+    sys::import('xaraya.tableddl');
 
     // Set up database tables
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
 
     $htmltable = $xartable['html'];
     $htmltypestable = $xartable['htmltypes'];
@@ -327,13 +329,14 @@ function html_upgrade($oldversion)
             // Create htmltypes table
             /*****************************************************************
             * $query = "CREATE TABLE $htmltypestable (
-            *       xar_id INT(11) NOT NULL auto_increment,
+            *       xar_id integer unsigned NOT NULL auto_increment,
             *       xar_type VARCHAR(20) NOT NULL default ''
             *       PRIMARY KEY (xar_type),
             *       UNIQUE KEY tag (xar_name))";
             *****************************************************************/
             $fields = array(
-                'xar_id'       => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
+                'xar_id'       => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
+//                'xar_id'       => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
                 'xar_type'     => array('type'=>'varchar','size'=>20,'null'=>false,'default'=>'')
             );
 
@@ -343,7 +346,7 @@ function html_upgrade($oldversion)
             if (!$result) return;
 
             // Create index on xar_type
-            $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_html_type',
+            $index = array('name'      => 'i_'.xarDB::getPrefix().'_html_type',
                            'fields'    => array('xar_type'),
                            'unique'    => TRUE);
 
@@ -381,7 +384,7 @@ function html_upgrade($oldversion)
             if (!$result) return;
 
             // Drop current index
-            $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_html_1',
+            $index = array('name'      => 'i_'.xarDB::getPrefix().'_html_1',
                            'fields'    => array('xar_tag'));
             $query = xarDBDropIndex($htmltable, $index);
             $result = & $dbconn->Execute($query);
@@ -395,7 +398,7 @@ function html_upgrade($oldversion)
             if (!$result) return;
 
             // Create new index on xar_html table
-            $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_html',
+            $index = array('name'      => 'i_'.xarDB::getPrefix().'_html',
                            'fields'    => array('xar_tid, xar_tag'),
                            'unique'    => TRUE);
 
@@ -407,15 +410,13 @@ function html_upgrade($oldversion)
             // fall through to the next upgrade
         case '1.3':
         case '1.3.0':
-            xarModSetVar('html', 'transformtype', 1);
+            xarModVars::set('html', 'transformtype', 1);
             // Code to upgrade from version 1.3 goes here
             break;
 
         case '1.4':
         case '1.4.0':
-            // BBCode linebreak handling
-        case '1.4.1':
-            // Code to upgrade from version 1.4.1 goes here
+            // Code to upgrade from version 1.3 goes here
             break;
         default:
             // Couldn't find a previous version to upgrade
@@ -438,14 +439,14 @@ function html_delete()
 {
 
     // Remove module variables
-    xarModDelVar('html', 'itemsperpage');
+    xarModVars::delete('html', 'itemsperpage');
     xarRemoveMasks('html');
     xarRemoveInstances('html');
 
     // Get the database information
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-    xarDBLoadTableMaintenanceAPI();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
+    sys::import('xaraya.tableddl');
 
     // Generate the SQL to drop the table using the API
     $query = xarDBDropTable($xartable['html'] );
@@ -469,7 +470,7 @@ function html_delete()
     // I'm lazy.  So shoot me, one time thing:
     $allowedhtml = unserialize($allowedhtml);
 
-    xarConfigSetVar('Site.Core.AllowableHTML', $allowedhtml);
+    xarConfigVars::set(null,'Site.Core.AllowableHTML', $allowedhtml);
     // Deletion successful
     return true;
 }

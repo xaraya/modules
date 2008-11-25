@@ -70,7 +70,7 @@ function html_admin_updateset()
     }
 
     // Set config vars
-    xarConfigSetVar('Site.Core.AllowableHTML', $allowedhtml);
+    xarConfigVars::set(null,'Site.Core.AllowableHTML', $allowedhtml);
 
     // Redirect back to set
     xarResponseRedirect(xarModURL('html', 'admin', 'set'));

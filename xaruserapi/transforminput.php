@@ -62,8 +62,8 @@ function html_userapi_transforminput($args)
  */
 function html_userapitransforminput($text)
 {
-    $validxhtml     = xarModGetVar('html', 'validxhtml');
-    $addparagraphs  = xarModGetVar('html', 'addparagraphs');
+    $validxhtml     = xarModVars::get('html', 'validxhtml');
+    $addparagraphs  = xarModVars::get('html', 'addparagraphs');
 
     // Step 1 look for valid xhtml -> html transforms.
     // Credit to Rabbitt for fixing

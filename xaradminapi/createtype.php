@@ -44,8 +44,8 @@ function html_adminapi_createtype($args)
 
     // Trim input
     $tagtype = trim($tagtype);
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $htmltypestable = $xartable['htmltypes'];
     // Make sure $type is lowercase
     $tagtype = strtolower($tagtype);

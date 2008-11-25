@@ -27,8 +27,8 @@ function html_userapi_countitems()
     // Security Check
     if(!xarSecurityCheck('ReadHTML')) return;
     // Get database setup
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
     $htmltable = $xartable['html'];
     // Count number of items in table
     $query = "SELECT COUNT(1)
