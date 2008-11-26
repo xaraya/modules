@@ -1,0 +1,73 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-body">
+    <xar:comment><xar:template type="module" file="admin-menu" /></xar:comment>
+    <h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
+
+    <xar:if condition="!empty($settings.error)">
+        <p class="xar-error">#xarVarPrepForDisplay($settings.error)#</p>
+    <xar:else />
+        <ul>
+            <li>
+                <xar:ml>
+                    <xar:mlstring>Base path for Vanilla: #(1)</xar:mlstring>
+                    <xar:mlvar>#xarVarPrepForDisplay($basepath)#</xar:mlvar>
+                </xar:ml>
+            </li>
+            <li>
+                <xar:ml>
+                    <xar:mlstring>Vanilla home directory: <a href="#(1)#(2)">#(1)#(2)</a></xar:mlstring>
+                    <xar:mlvar>#xarServerGetBaseURL()#</xar:mlvar>
+                    <xar:mlvar>#xarVarPrepForDisplay($basepath)#</xar:mlvar>
+                </xar:ml>
+            </li>
+            <li>
+                <xar:ml>
+                    <xar:mlstring>Vanilla session cookie: "#(1)" + "#(2)" + "#(3)"</xar:mlstring>
+                    <xar:mlvar>#xarVarPrepForDisplay($settings.COOKIE_DOMAIN)#</xar:mlvar>
+                    <xar:mlvar>#xarVarPrepForDisplay($settings.COOKIE_PATH)#</xar:mlvar>
+                    <xar:mlvar>#xarVarPrepForDisplay($settings.SESSION_NAME)#</xar:mlvar>
+                </xar:ml>
+            </li>
+            <li>
+                <xar:if condition="!empty($settings.DatabaseTables.UserRole)">
+                    <xar:mlstring>The MultiRoles plugin is installed - multiple roles are supported</xar:mlstring>
+                <xar:else />
+                    <xar:mlstring>The MultiRoles plugin is not installed - only a single role can be supported</xar:mlstring>
+                </xar:if>
+            </li>
+            <xar:if condition="!empty($settings.ALLOW_PASSWORD_CHANGE)">
+                <li class="xar-error">
+                    <xar:mlstring>Users are able to change their passwords from within Vanilla. Please disable this option (ALLOW_PASSWORD_CHANGE=0).</xar:mlstring>
+                </li>
+            </xar:if>
+            <xar:if condition="!empty($settings.ALLOW_NAME_CHANGE)">
+                <li class="xar-error">
+                    <xar:mlstring>Users are able to change their login names from within Vanilla. Please disable this option (ALLOW_NAME_CHANGE=0).</xar:mlstring>
+                </li>
+            </xar:if>
+            <xar:if condition="!empty($settings.ALLOW_EMAIL_CHANGE)">
+                <li>
+                    <xar:mlstring>Users are able to change their e-mails from within Vanilla. Please disable this option (ALLOW_EMAIL_CHANGE=0) if you wish Xaraya to control the e-mail.</xar:mlstring>
+                </li>
+            </xar:if>
+            <li>
+                <a href="#xarModURL('vanilla','admin','modifyconfig', array('test' =&gt; 'login'))#"><xar:mlstring>Test login to Vanilla (current user)</xar:mlstring></a>
+                | <a href="#xarModURL('vanilla','admin','modifyconfig', array('test' =&gt; 'logout'))#"><xar:mlstring>Test logout from Vanilla (current user)</xar:mlstring></a>
+            </li>
+        </ul>
+    </xar:if>
+
+    <form action="#xarModURL('vanilla','admin','modifyconfig')#" method="post">
+        <p>
+            <label for="basepath"><xar:mlstring>Base path of the Vanilla application</xar:mlstring></label>
+            <input name="basepath" id="basepath" value="#xarVarPrepForDisplay($basepath)#" type="text" maxlen="100" />
+        </p>
+        <p>
+            <xar:mlstring>The base path is relative to the Xaraya index point, i.e. where index.php is located.</xar:mlstring>
+        </p>
+        <p>
+            <input type="submit" name="#xarML('Submit')#" />
+        </p>
+    </form>
+</div>

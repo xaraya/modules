@@ -1,0 +1,51 @@
+Xaraya Vanilla Module
+=====================
+
+In short, this module will simultaneously log a user into a local installation
+of Vanilla Forums as they log in and out of Xaraya. As much as possible has
+been made automatic, and there is virtually no configuration involved.
+
+The local Vanilla installation should be located in a sub-directory of the Xaraya
+install. 'forums' is a good choice. Other folders should also work, so long as
+the installations are on the same domain so that Vanilla cookies can be set by
+Xaraya.
+
+When you log into Xaraya, if the user does not exist in Vanilla, then one will be
+created *provided* the user in the member of a group that exists on Vanilla.
+
+Each time a user logs in, the groups they are a member of will be compared to
+the groups available on Vanilla. If any of the group names are the same, then the
+user will be added to that role. If a user is removed from a role on Xaraya, then
+they will also be removed from that role on Vanilla. This way you can add users to
+banned roles etc. to disable their Vanilla use.
+
+By default Vanilla will support a single role for any user. This module will select
+the matching role with the highest 'priority' in Vanilla, i.e. the role with the
+highest privileges. However, if the 'MultiRoles' plugin is installed in Vanilla,
+then this module will also use that to add as many additional matching roles as
+it can, so a user can have multiple roles in Vanilla.
+
+The user login created on Vanilla will be the string 'user_' followed by the 
+Xaraya user ID. That username is the primary key used to keep the users between
+the two systems in sync.
+
+The passwords are randomly set, so there is no way a user can manually log into
+Vanilla using their auto-generated username. To be safe, new user registrations
+and manual login should be disabled in Vanilla, as should be the ability to
+change passwords, e-mail addresses and usernames. The users can change any other
+detail though, so can maintain a different display name and profile information
+on Vanilla.
+
+There is just admin screen for this module. This screen provides some basic checks
+and may make some recommendations if some of the settings need to be changed.
+
+The script 'custlogout.php' located in this module, may need to be copied to the
+root folder of Vanilla. So far in my tests this has not been necessary, but I
+suspect some stricter security settings on the PHP installation may make this
+required in some installations.
+
+It only leaves me to say: have fun with this module and with Vanilla forums.
+
+Jason Judge
+jason.judge@consil.co.uk
+
