@@ -49,3 +49,27 @@ It only leaves me to say: have fun with this module and with Vanilla forums.
 Jason Judge
 jason.judge@consil.co.uk
 
+Additional Notes
+================
+
+Here are some additional notes for setting up the pair (Vanilla and Xaraya).
+
+The following options should be added to conf/settings.php:
+
+$Configuration['ALLOW_EMAIL_CHANGE'] = '0';
+$Configuration['ALLOW_NAME_CHANGE'] = '0';
+$Configuration['ALLOW_PASSWORD_CHANGE'] = '0';
+
+The administrator roles need to be renamed. Xaraya names the administrator 
+role as 'Administrators' while Vanilla uses 'Administrator'. You should change
+one or the other so they match. I generally add an 's' to the end of the
+Vanilla administrator role.
+
+You will probably want to change some of the other role and group names too,
+e.g. change Xaraya 'Users' to 'Members', or vice-versa on Vanilla.
+
+TODO:
+
+We need to prevent people from registering and from directly authenticating
+themselves on Vanilla. It is not yet very clear how to do that.
+

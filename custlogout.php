@@ -10,6 +10,12 @@ if (empty($_POST) || count($_POST) != 1) {
     exit('Invalid POST data');
 }
 
+// Only accept requests from the local host.
+if ($_SERVER['REMOTE_ADDR'] != $_SERVER['SERVER_ADDR'] && $_SERVER['REMOTE_ADDR'] != 'localhost') {
+    exit('Invalid address');
+}
+
+// The name of the sole POST parameter is the session name.
 $session_name = array_shift(array_keys($_POST));
 
 if (!is_string($session_name)) {
@@ -22,6 +28,7 @@ if (!is_string($session_name)) {
 // session cookie, just deleting the session information on the server.
 //session_set_cookie_params(0, $settings['COOKIE_PATH'], $settings['COOKIE_DOMAIN']);
 
+// Start the session then destroy it.
 session_name($session_name);
 session_start();
 session_destroy();
