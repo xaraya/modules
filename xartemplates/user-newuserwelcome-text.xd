@@ -1,0 +1,16 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+Dear #$name#,
+
+You or someone in your name has registered a new user at:  #$sitename# under the user name
+
+Username: #$values['uname']#
+
+Your account is now active and can be accessed with this user name and your password.
+
+If this has been an error no further action from you is required, and we apologize for any inconvenience.
+
+Sincerely yours,
+
+#$adminname#
+#sitename#
+</xar:template>

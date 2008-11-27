@@ -247,7 +247,7 @@ function registration_user_register()
                 $object->setFieldValues($fieldvalues);
             }
 
-            // Create the group, assigning it to a parent
+            // Create the user, assigning it to a parent
             $id = $object->createItem(array('parentid' => xarModVars::get('registration','defaultgroup')));
 
             if (empty($id)) return;

@@ -172,11 +172,14 @@
                     $object->setFieldValues($fieldvalues);
                 }
 
-                // Create the group, assigning it to a parent
-                $id = 999;//$object->createItem(array('parentid' => xarModVars::get('registration','defaultgroup')));
+                // Create the user, assigning it to a parent
+                 $object->createItem(array('parentid' => xarModVars::get('registration','defaultgroup')));
 
                 if (empty($id)) return;
                 xarModVars::set('roles', 'lastuser', $id);
+                
+                // Send a welcome email
+                xarModAPIFunc('registration','user','notifyuser',$object->getFieldValues());
 
                 //Make sure the user email setting is off unless the user sets it
                 xarModUserVars::set('roles','allowemail', false, $id);
