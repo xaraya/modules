@@ -10,7 +10,7 @@
  */
 function registration_userapi_notifyuser ($args)
 {
-    $messagetitle = xarML('A new user #(1) #(2) has registered on #(3)', $args['uname'], $args['last_name'], xarModVars::get('themes','SiteName'));
+    $messagetitle = xarML('A new user #(1) #(2) has registered on #(3)', $args['uname'], $args['name'], xarModVars::get('themes','SiteName'));
 
     // Make sure we remove comments from the templates
     $themecomments = xarModVars::get('themes','ShowTemplates');
@@ -41,7 +41,7 @@ function registration_userapi_notifyuser ($args)
     try {
         xarModAPIFunc('mail', 'admin', 'sendmail',
                            array('info'         => $args['email'],
-                                 'name'         => $args['last_name'],
+                                 'name'         => $args['name'],
                                  'subject'      => $messagetitle,
                                  'message'      => $message,
                                  'from'         => xarModVars::get('mail','adminmail'),
