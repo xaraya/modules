@@ -178,6 +178,10 @@
                 if (empty($id)) return;
                 xarModVars::set('roles', 'lastuser', $id);
                 
+                // Make sure we have a name property for the next step(s)
+                if (!isset($object->properties['name']))
+                    throw new Exception('The object #(1) has no name property',$object->name);
+                    
                 // Send a welcome email
                 xarModAPIFunc('registration','user','notifyuser',$object->getFieldValues());
 
