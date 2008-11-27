@@ -8,16 +8,9 @@
  * @param id - the users id
  * @return bool true on success
  */
-function registration_userapi_notifyadmin ($args)
+function registration_userapi_notifyuser ($args)
 {
-    $id = $args['id'];
-    $state = $args['state'];
-    $requireapproval = xarModVars::get('registration','explicitapproval');
-    $messagetitle = xarML('A new user #(1) #(2) has registered on #(3)', $args['uname'], $args['name'], xarModVars::get('themes','SiteName'));
-    if ($requireapproval) {
-        $messagetitle = xarML('A new user - #(1) - has registered and requires approval',$args['uname']);
-    } else {
-    }
+    $messagetitle = xarML('A new user #(1) #(2) has registered on #(3)', $args['uname'], $args['last_name'], xarModVars::get('themes','SiteName'));
 
     // Make sure we remove comments from the templates
     $themecomments = xarModVars::get('themes','ShowTemplates');
@@ -27,13 +20,12 @@ function registration_userapi_notifyadmin ($args)
 
     $emailvars = array('adminemail'   => $args['email'],
                        'adminname'    => $args['name'],
-                       'terms'        => $terms,
                        'messagetitle' => $messagetitle,
                        'sitename'     => xarModVars::get('themes','SiteName'),
                        'values'       => $args
                       );
     //Prepare the message
-    switch (xarModItemVars::get('mail','messagetype',xarMod::getRegID('registration'))
+    switch (xarModItemVars::get('mail','messagetype',xarMod::getRegID('registration')))
     {
         case 'html':
             $message= xarTplModule('registration', 'user', 'newuserwelcome', $emailvars,'html');
@@ -49,12 +41,12 @@ function registration_userapi_notifyadmin ($args)
     try {
         xarModAPIFunc('mail', 'admin', 'sendmail',
                            array('info'         => $args['email'],
-                                 'name'         => $args['name'],
+                                 'name'         => $args['last_name'],
                                  'subject'      => $messagetitle,
                                  'message'      => $message,
                                  'from'         => xarModVars::get('mail','adminmail'),
                                  'fromname'     => xarModVars::get('mail','adminname'),
-                                 'usetemplates' => 0))) {//use templates is set true by default if passed in var is not set
+                                 'usetemplates' => 0)); //use templates is set true by default if passed in var is not set
     } catch (Exception $e) {}
 
    /* Set the template comments back */

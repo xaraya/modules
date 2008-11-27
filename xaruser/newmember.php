@@ -173,7 +173,7 @@
                 }
 
                 // Create the user, assigning it to a parent
-                 $object->createItem(array('parentid' => xarModVars::get('registration','defaultgroup')));
+                $id = $object->createItem(array('parentid' => xarModVars::get('registration','defaultgroup')));
 
                 if (empty($id)) return;
                 xarModVars::set('roles', 'lastuser', $id);
