@@ -68,8 +68,37 @@ Vanilla administrator role.
 You will probably want to change some of the other role and group names too,
 e.g. change Xaraya 'Users' to 'Members', or vice-versa on Vanilla.
 
-TODO:
+The last change is to prevent people from registering and from directly
+authenticating themselves on Vanilla. There are two changes needed here:
 
-We need to prevent people from registering and from directly authenticating
-themselves on Vanilla. It is not yet very clear how to do that.
+1. Remove people.php from the Vanilla home directory. This script handles
+registration, login and logout. Without it, it is not possible to log directly
+into Vanilla, or to register for a new account.
 
+2. Change the URLs so they no longer point to people.php. There are just two URLs
+(that are not generated within people.php): the login URL and the logout URL.
+These should point to the Xaraya login and logout functions, e.g. in conf/settings.php:
+
+$Configuration['SIGNIN_URL'] = $Configuration['BASE_URL'] 
+    . '../index.php/authsystem/login?returnurl=' . rawurlencode($_SERVER['SCRIPT_URI']);
+$Configuration['SIGNOUT_URL'] = $Configuration['BASE_URL'] . '../index.php/authsystem/logout';
+
+There is one circumstance where Vanilla may attempt to call up people.php still,
+and that is when the forums are set not to allow unregistered users to browse
+the forums. If that setting is required, then replace people.php with some static
+text or a redirect to somewhere more sensible. Rather than setting this feature though,
+it is probably easier to control unauthenticated user access through the privileges
+of the categories.
+
+Bugs and Issues
+===============
+Since this module creates users directly in the database, it may skip over any
+additional setup that is required. For example, any plugins that need to take
+some action on the creation of a new user, will fail to be notified.
+
+The order of the Vanilla roles may be wrong. When the roles are added to the
+user account, the most significant role (with the highest priority) becomes the
+main role. There are some administration functions that will only work if the
+administrator role is the main role, and not a secondary role. It may be necessary
+to create an additional administrator user with *just* the admin role to administer
+the forums, rather than using a standard forum user.
