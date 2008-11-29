@@ -420,7 +420,7 @@ class CategoriesProperty extends DataProperty
                                              'module' => $data['categories_localmodule'],
                                              ));
                 foreach ($links as $link) 
-                    $selectedcategories[$link['id']] = $link;
+                    $selectedcategories[] = $link['id'];
             }
         }
 
