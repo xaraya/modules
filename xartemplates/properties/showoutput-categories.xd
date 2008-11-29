@@ -1,6 +1,6 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <xar:set name="catinfo">xarModAPIFunc('categories', 'user', 'getcatinfo', array('cids' => $value))</xar:set>
+    <xar:set name="catinfo">xarModAPIFunc('categories', 'user', 'getcatinfo', array('cids' => array_keys($value)))</xar:set>
     <xar:if condition="$layout eq 'default' OR $layout eq 'horizontal' OR empty($layout)">
        <xar:foreach in="$catinfo" value="$category">
             <xar:if condition="!$showbase">
