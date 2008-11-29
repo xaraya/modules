@@ -1,9 +1,9 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-Dear #$name#,
+Dear <xar:data-output property="$properties['name']" />
 
 You or someone in your name has registered a new user at:  #$sitename# under the user name
 
-Username: #$values['uname']#
+Username: <xar:data-output property="$properties['uname']" />
 
 Your account is now active and can be accessed with this user name and your password.
 
