@@ -19,7 +19,7 @@ function registration_userapi_notifyuser ($args)
     else xarModVars::set('themes','ShowTemplates',0);
 
     $emailvars = array('adminemail'   => $args['email'],
-                       'adminname'    => $args['name'],
+                       'adminname'    => xarModVars::get('mail','adminname'),
                        'messagetitle' => $messagetitle,
                        'sitename'     => xarModVars::get('themes','SiteName'),
                        'values'       => $args
