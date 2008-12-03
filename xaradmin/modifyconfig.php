@@ -129,7 +129,23 @@ function tinymce_admin_modifyconfig()
 
     $data['jsstrings']="";
     $jsstrings=explode('",',$data['jstext']);
+
     $data['jsstrings']=$stringstart;
+    $counter = count($jsstrings);
+    for($i=0;$i<$counter;$i++){
+        //break up a long string
+        $jsstrings[$i] = trim($jsstrings[$i]);
+        if (strlen($jsstrings[$i]) >80){
+        
+            $jsstrings[$i] = "\n".wordwrap($jsstrings[$i], 80,"\n",1 );
+        }
+        if ($i<$counter-1) {
+           $data['jsstrings'] .="\n ".$jsstrings[$i].'",';
+        } else {
+           $data['jsstrings'] .="\n ".$jsstrings[$i];
+        }
+    }
+    /*
      foreach ($jsstrings as $key => $value) {
        if (strlen($value) > 70){
         $data['jsstrings'].="\n".wordwrap($value, 75,"\n",1 ).'",';
@@ -139,6 +155,7 @@ function tinymce_admin_modifyconfig()
           $data['jsstrings'] .="\n ".$value.'",';
        }
      }
+     */
      $data['jsstrings'] .="\n".$stringend;
 
      $data['jsmultiple'] ="\n";
