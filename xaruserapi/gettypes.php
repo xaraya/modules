@@ -52,7 +52,7 @@ function xarpages_userapi_gettypes($args)
     $query = 'SELECT xar_ptid, xar_name, xar_desc'
         . ' FROM ' . $xartable['xarpages_types']
         . (!empty($where) ? ' WHERE (' . implode(' AND ', $where) . ') OR xar_name LIKE \'@%\'' : '')
-        . ' ORDER BY xar_ptid ASC';
+        . ' ORDER BY xar_name ASC';
 
     $result = $dbconn->execute($query, $bind);
     if (!$result) return;

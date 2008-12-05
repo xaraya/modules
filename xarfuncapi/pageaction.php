@@ -42,8 +42,9 @@ function xarpages_funcapi_pageaction($args)
     $nav = _pageform_getnav( $args, $pf, 1 ); // 1 = this is action page
     $args['pageaction'] = $nav;
     $form_pid = $nav['form_pid'];
+    if (!empty($nav['nextform_pid'])) {
     $nextform_pid = $nav['nextform_pid'];
-    
+    }
 	// make reference key
 	if (empty($pf)) {
 		if (isset($dd['unique_key']) && $dd['unique_key'])
@@ -134,7 +135,7 @@ function xarpages_funcapi_pageaction($args)
     
     if ($isvalid) { // only not-valid if debugging so we can drop to bottom
         // start an object for next form (if one)
-		if (!empty($pages[$nextform_pid])) {
+		if (!empty($nextform_pid) && !empty($pages[$nextform_pid])) {
 	        // reuse (append) existing object if one 
 	        if (!empty($pf)) {
 	            $out_object = _pageform_getobject( $pf, $pages[$nextform_pid]['name'] );
@@ -196,7 +197,9 @@ function xarpages_funcapi_pageaction($args)
     if ($isvalid) { // only not-valid if debugging so we can drop to bottom
         // save both in and out objects
         _pageform_setobject( $pf, $pages[$form_pid]['name'], $in_object );
-        if (!empty($out_object) && !empty($pages[$nextform_pid]['name'])) _pageform_setobject( $pf, $pages[$nextform_pid]['name'], $out_object );
+        if (!empty($out_object) && !empty($nextform_pid) && !empty($pages[$nextform_pid]['name'])) {
+            _pageform_setobject( $pf, $pages[$nextform_pid]['name'], $out_object );
+        }
 
         // CONTINUE TO PAGE (next form)
         // if not debugging, redirect

@@ -21,7 +21,7 @@ function xarpages_userapi_decode_shorturl($params)
     // $params[0] contains the first part after index.php/example
 
     // Save the module alias and shift it away if necessary.
-    $args['module_alias'] = $params[0];
+    $args['module_alias'] = strtolower($params[0]);
 
     // If the alias is not the module name, then it will be a part of the path.
     // Shift it away only if it is the module name.
@@ -33,7 +33,7 @@ function xarpages_userapi_decode_shorturl($params)
     if (isset($params[0])) {
         $rootpage = xarModAPIfunc(
             'xarpages', 'user', 'getpage',
-            array('name' => $params[0], 'parent' => 0, 'status' => 'ACTIVE,EMPTY', 'key' => 'pid')
+            array('name' => strtolower($params[0]), 'parent' => 0, 'status' => 'ACTIVE,EMPTY', 'key' => 'pid')
         );
     }
 
@@ -42,7 +42,7 @@ function xarpages_userapi_decode_shorturl($params)
     if (empty($rootpage) && $args['module_alias'] != 'xarpages') {
         $rootpage = xarModAPIfunc(
             'xarpages', 'user', 'getpage',
-            array('name' => $params[0], 'status' => 'ACTIVE,EMPTY', 'key' => 'pid')
+            array('name' => strtolower($params[0]), 'status' => 'ACTIVE,EMPTY', 'key' => 'pid')
         );
     }
 
@@ -74,8 +74,9 @@ function xarpages_userapi_decode_shorturl($params)
 
         // Walk the page tree, matching as many path components as possible.
         $pid = $rootpage['pid'];
-
-        while (isset($params[0]) && isset($tree['child_refs']['names'][$pid]) && array_key_exists($params[0], $tree['child_refs']['names'][$pid])) {
+        
+        while (isset($params[0]) && isset($tree['child_refs']['names'][$pid]) && array_key_exists(strtolower($params[0]), $tree['child_refs']['names'][$pid])) {
+            $params[0] = strtolower($params[0]);
             $pid = $tree['child_refs']['names'][$pid][$params[0]];
             array_shift($params);
         }
