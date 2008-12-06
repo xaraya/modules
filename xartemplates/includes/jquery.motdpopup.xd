@@ -1,0 +1,34 @@
+<xar:comment>
+    Initialise the motdpopup plugin.
+    See http://www.consil.co.uk/dev for details of this plugin
+</xar:comment>
+
+<xar:comment>
+    Make sure jQuery is going to be loaded.
+</xar:comment>
+
+<xar:template file="jquery" module="jquery" />
+
+<xar:comment>
+    Other required plugins.
+</xar:comment>
+
+<xar:template file="jqModal" module="jquery" subdata="array()" />
+<xar:base-include-javascript filename="jquery.cookie.js" module="jquery" />
+<xar:base-include-javascript filename="jquery.crc32.js" module="jquery" />
+
+<xar:comment>
+    Main plugin.
+</xar:comment>
+
+<xar:base-include-javascript filename="jquery.motdpopup.js" module="jquery" />
+
+<xar:if condition="empty($selector)">
+    <xar:set name="selector">''</xar:set>
+</xar:if>
+
+<xar:if condition="!empty($options)">
+    <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').motdPopup({ $options });});" />
+<xar:else />
+    <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').motdPopup();});" />
+</xar:if>

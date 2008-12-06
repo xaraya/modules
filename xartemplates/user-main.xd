@@ -10,6 +10,33 @@
     <p><xar:mlstring>Note: the Xaraya_Classic theme causes most of these plugins to fail one way or another.
     We don't know where the fault lies, but it is something to bear in mind when trying this demo out.</xar:mlstring></p>
 
+    <h2><xar:mlstring>motdpopup - the means to pop up a modal message just once for any visitor</xar:mlstring></h2>
+
+    <xar:set name="options">"jqm: {ajax: 'modules/jquery/xarhtml/ajax-popup.html'}"</xar:set>
+    <xar:template file="jquery.motdpopup" module="jquery" subdata="array('selector'=&gt;'#motdModal','options'=&gt;$options)" />
+    <script type="text/javascript">
+        jQuery().ready(function() {
+            jQuery('#clearmotdCookie').click(function() {
+                jQuery.cookie('motdPopup', null, {path: '/'});
+                alert('Cookie "motdPopup" cleared.');
+                return false;
+            });
+        });
+    </script>
+
+    <p>(Message Of The Day Popup)</p>
+    <p>
+        The pop-up should appear after you view this page five times.
+        Press the refresh button a few times to see.
+        It will not appear again unless either the message is changed,
+        or your cookies are cleared.
+    </p>
+    <p><a href="#" class="motdModal">[Display message manually]</a></p>
+    <p><a href="#" id="clearmotdCookie">[Clear cookie]</a></p>
+
+    <div id="motdModal" class="jqmWindow">Place-holder for the popup (would contain html to display if not using AJAX)</div>
+
+
     <h2><xar:mlstring>uiTableFilter - filter a table dynamically</xar:mlstring></h2>
 
     <xar:template file="jquery.uitablefilter" module="jquery" subdata="array('selector'=&gt;'table.food-planner','filter'=&gt;'input#food-table-filter')" />
@@ -230,7 +257,7 @@
 
     <h2><xar:mlstring>Gallery - jqGalView</xar:mlstring></h2>
 
-    <xar:template file="jqGalView" module="jquery" />
+    <xar:template file="jqGalView" module="jquery" subdata="array()" />
 
     <xar:set name="jqGalView_openme"><xar:mlstring>Open Me</xar:mlstring></xar:set>
     <xar:set name="jqGalView_return"><xar:mlstring>Return</xar:mlstring></xar:set>
@@ -298,7 +325,7 @@
 
     <h2><xar:mlstring>jCarouselLite - little brother to jCarousel</xar:mlstring></h2>
 
-    <xar:template file="jquery.jcarousellite" module="jquery" />
+    <xar:template file="jquery.jcarousellite" module="jquery" subdata="array()" />
 
     <xar:comment>TODO: support passing all these parameters into the jquery.jcarousellite template as subdata</xar:comment>
     <xar:base-include-javascript type="code" code="jQuery(function() {jQuery('.carousel-lite').jCarouselLite({btnNext: '.jCarouselLite-next', btnPrev: '.jCarouselLite-prev', visible: 2});});" />
@@ -392,7 +419,7 @@
     </div>
 
     <h2><xar:mlstring>thickbox - the classic utility providing modal image display</xar:mlstring></h2>
-    <xar:template file="thickbox" module="jquery" />
+    <xar:template file="thickbox" module="jquery" subdata="array()" />
 
     <p><a href="modules/jquery/xarimages/gallery/image1.jpg" title="#xarML('Demo 1 - single image')#" class="thickbox"><img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg" alt="Single Image" /></a></p>
 
@@ -449,7 +476,7 @@
     <h2><xar:mlstring>Linktracker</xar:mlstring></h2>
     <p><xar:mlstring>The database table defined in modules/jquery/xarincludes/linktracker-table.sql needs to be created before this will work.</xar:mlstring></p>
 
-    <xar:template file="jquery.linktracker" module="jquery" />
+    <xar:template file="jquery.linktracker" module="jquery" subdata="array()" />
 
     <ul>
         <li><a href="#xarServergetCurrentURL(array(),true,'linktracker_1')#">Linktracker 1 (no id attribute)</a></li>
@@ -529,7 +556,7 @@
             <input type="submit" value="#xarML('Show map')#" />
         </form>
         <div id="location_map" style="width: 100%; height: 300px; border: 2px solid #999999;"></div>
-        <xar:template file="xar.googlemaps" module="jquery" />
+        <xar:template file="xar.googlemaps" module="jquery" subdata="array()" />
         <xar:base-include-javascript filename="location_map.js" module="jquery" />
         <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){if(GBrowserIsCompatible()){xar_MapsShowAddressLocation('10 Downing Street, London, UK','The British Prime Minister');}});" />
     </xar:if>
