@@ -599,7 +599,7 @@ function vanilla_userapi_logoutevent($args)
     curl_setopt($curl, CURLOPT_POST, 1);
     curl_setopt($curl, CURLOPT_POSTFIELDS, array($session_name => $session_id));
     @curl_exec($curl);
-    curl_close();
+    @curl_close($curl);
     ob_end_clean();
 
     return true;

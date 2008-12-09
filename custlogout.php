@@ -29,6 +29,15 @@ if (!is_string($session_name)) {
 //session_set_cookie_params(0, $settings['COOKIE_PATH'], $settings['COOKIE_DOMAIN']);
 
 // Start the session then destroy it.
+
+// Set the session name.
+session_name($session_name);
+
+// Force the session details into the cookies array.
+// This gets around the issue where the php flag session.use_only_cookies is
+// set (so preventing the session starting on the POST alone).
+$_COOKIE[$session_name] = $_POST[$session_name];
+
 session_name($session_name);
 session_start();
 session_destroy();
