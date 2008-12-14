@@ -208,7 +208,7 @@ function registration_user_register()
             if (xarModIsAvailable('payments') && xarModItemVars::get('payments','payments_active', $module)) {
                 $object = DataObjectMaster::getObject(array('name' => xarModItemVars::get('payments', 'orderobject', $module)));
                 $data['properties'] = $object->getProperties();
-                $data['return_url']['cancel_return'] = xarModURL('registration','user','register',array('phase' => 'createuser'));
+                $data['return_url']['cancel_return'] = xarModURL('registration','user','register',array('phase' => 'checkregistration'));
                 $data['return_url']['cancel_text'] = xarML("Click to return to the registration page");
                 $data['return_url']['success_return'] = xarML("User Craetion");
                 $data['return_url']['success_return_link'] = xarModURL('registration', 'user', 'register');
