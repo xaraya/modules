@@ -1,42 +1,44 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<xar:base-include-javascript position="head" module="registration" filename="registration.js" />
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Create User Account</xar:mlstring></span></div>
-<div class="xar-mod-body">
-    <form action="&xar-modurl-registration-user-register;" method="post" enctype="application/x-www-form-urlencoded">
-        <xar:data-display object="$object" />
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:base-include-javascript position="head" module="registration" filename="registration.js" />
+    <div class="xar-mod-head"><span class="xar-mod-title">
+        Create User Account</span>
+    </div>
+    <div class="xar-mod-body">
+        <form action="&xar-modurl-registration-user-register;" method="post" enctype="application/x-www-form-urlencoded">
+            <xar:data-display object="$object" />
 
-        <!-- all the hooks here, loop over each one of them -->
-        <xar:if condition="!empty($hookoutput)">
+            <!-- all the hooks here, loop over each one of them -->
+            <xar:if condition="!empty($hookoutput)">
+                <fieldset>
+                   <legend>Hooked content</legend>
+                        <xar:foreach in="$hookoutput" key="$hookmodule">
+                      <!--
+                        You can display individual hooks if you want using xar:if statements
+
+                        <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
+                            #$hookoutput['categories']#
+                        </xar:if>
+
+                        or display them all with one command as follows
+                        -->
+                        #$hookoutput[$hookmodule]#
+                        </xar:foreach>
+                </fieldset>
+            </xar:if>
+            <div style="clear: both;"></div>
             <fieldset>
-               <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
-                    <xar:foreach in="$hookoutput" key="$hookmodule">
-                  <!--
-                    You can display individual hooks if you want using xar:if statements
+                <p class="xar-form-input-wrapper-before">
+                    Please review the above information and check it for correctness. Click Create Account to continue.
+                </p>
+                <div class="xar-form-input-wrapper-after xar-padding-thick">
+                    <input type="submit" id="1" value="#xarML('Edit Data')#" onclick="javascript:setPhase('registerformcycle')" />
+                    <input type="submit" id="2" value="#xarML('Create Account')#" />
+                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                    <input type="hidden" name="phase" id="phase" value="createuser" />
+                </div>
 
-                    <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
-                        #$hookoutput['categories']#
-                    </xar:if>
-
-                    or display them all with one command as follows
-                    -->
-                    #$hookoutput[$hookmodule]#
-                    </xar:foreach>
             </fieldset>
-        </xar:if>
-        <div style="clear: both;"></div>
-        <fieldset>
-            <p class="xar-form-input-wrapper-before">
-                <xar:mlstring>Please review the above information and check it for correctness. Click Create Account to continue.</xar:mlstring>
-            </p>
-            <div class="xar-form-input-wrapper-after xar-padding-thick">
-                <input type="submit" id="1" value="#xarML('Edit Data')#" onclick="javascript:setPhase('registerformcycle')" />
-                <input type="submit" id="2" value="#xarML('Create Account')#" />
-                <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <input type="hidden" name="phase" id="phase" value="createuser" />
-            </div>
-
-        </fieldset>
-    </form>
-</div>
+        </form>
+    </div>
 </xar:template>
