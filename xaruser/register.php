@@ -211,8 +211,9 @@ function registration_user_register()
                 $data['return_url']['cancel_return'] = xarModURL('registration','user','register',array('phase' => 'createuser'));
                 $data['return_url']['cancel_text'] = xarML("Click to return to the registration page");
                 $data['return_url']['success_return'] = xarML("User Craetion");
-                $data['return_url']['success_return_link'] = xarModURL('registration', 'user', 'register'));
+                $data['return_url']['success_return_link'] = xarModURL('registration', 'user', 'register');
                 $data['allowEdit_Payment'] = false;
+                $authid = xarSecGenAuthKey();
     
                 $process = xarModItemVars::get('payments','process',$module);
                 switch ($process) {
