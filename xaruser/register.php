@@ -213,7 +213,7 @@ function registration_user_register()
                 $data['return_url']['success_return'] = xarML("User Craetion");
                 $data['return_url']['success_return_link'] = xarModURL('registration', 'user', 'register');
                 $data['allowEdit_Payment'] = false;
-                $authid = xarSecGenAuthKey();
+                $data['authid'] = xarSecGenAuthKey();
     
                 $process = xarModItemVars::get('payments','process',$module);
                 switch ($process) {
