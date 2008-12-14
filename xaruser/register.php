@@ -202,6 +202,24 @@ function registration_user_register()
             break;
 
         case 'createuser':
+        
+            // Branch off to payment here if required
+            if (xarModIsAvailable('payments') && xarModVars::get('payments','payments_active',xarMod::getRegID('registration'))) {
+                $process = xarModVars::get('payments','process',xarMod::getRegID('registration'));
+                switch ($process) {
+                    case 0:
+                    default:
+                        $data['layout'] = 'no_process';
+                        return xarTplModule('payments','user','errors',$data);
+                    case 1:
+                        return xarTplModule('payments','user','amount',$data);
+                    case 2:
+                        return xarTplModule('payments','user','amount',$data);
+                    case 3:
+                        return xarTplModule('payments','user','amount',$data);
+                }
+            }
+            
             if (!xarSecConfirmAuthKey()) return;
             $fieldvalues = xarSessionGetVar('Registration.UserInfo');
 
