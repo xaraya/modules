@@ -232,11 +232,13 @@ function registration_user_register()
                     case 3:
                         return xarTplModule('payments','user','amount',$data);
                 }
+            } else {
+                // If we don't branch off to payments do the check
+                if (!xarSecConfirmAuthKey()) return;
             }
             
         case 'confirmcreateuser':
         
-            if (!xarSecConfirmAuthKey()) return;
             $fieldvalues = xarSessionGetVar('Registration.UserInfo');
 
             $object = DataObjectMaster::getObject(array('name' => $regobjectname));
