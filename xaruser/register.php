@@ -82,7 +82,7 @@ function registration_user_register()
             break;
 
         case 'registerformcycle':
-            $fieldvalues = xarSessionGetVar('Registration.UserInfo');
+            $fieldvalues = xarSession::getVar('Registration.UserInfo');
         case 'registerform': 
         default:
 
@@ -192,7 +192,7 @@ function registration_user_register()
                 return xarTplModule('registration','user','registerform', $data);
             }
 
-            xarSessionSetVar('Registration.UserInfo',$values);
+            xarSession::setVar('Registration.UserInfo',$values);
             // everything seems OK -> go on to the next step
             $data = xarTplModule('registration','user', 'confirmregistration',
                                  array('object'      => $object,
@@ -211,7 +211,11 @@ function registration_user_register()
                 $data['return_url']['cancel_return'] = xarModURL('registration','user','register',array('phase' => 'checkregistration'));
                 $data['return_url']['cancel_text'] = xarML("Click to return to the registration page");
                 $data['return_url']['success_return'] = xarML("User Craetion");
-                $data['return_url']['success_return_link'] = xarModURL('registration', 'user', 'register');
+                $data['return_url']['success_return_link'] = xarModURL('registration', 'user', 'register', array('phase' => 'confirmcreateuser'));
+
+                // Save the return URLs for when we come back from the gateway
+                xarSession::setVar('return_url',serialize($data['return_url']));
+
                 $data['allowEdit_Payment'] = false;
                 $data['authid'] = xarSecGenAuthKey();
     
@@ -230,6 +234,8 @@ function registration_user_register()
                 }
             }
             
+        case 'confirmcreateuser':
+        
             if (!xarSecConfirmAuthKey()) return;
             $fieldvalues = xarSessionGetVar('Registration.UserInfo');
 
