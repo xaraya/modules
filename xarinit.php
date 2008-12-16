@@ -158,6 +158,8 @@ function formantibot_upgrade($oldversion)
             return false;
         }
 
+        xarModSetVar('formantibot','registered',false);
+        
         case '0.5.0': //current version
             break;
     }

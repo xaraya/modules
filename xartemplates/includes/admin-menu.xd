@@ -11,6 +11,12 @@
     </dt>
 
     <xar:sec mask="FormAntiBot-Admin" catch="false">
+      <xar:set name="tabclass">($activetab=='modifyconfig')?'active':''</xar:set>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-formantibot-admin-modifyconfig;">
+                <xar:mlstring>Modify Configuration</xar:mlstring>
+            </a>
+        </dd>    
         <xar:set name="tabclass">($activetab=='main' or $activetab=='overview')?'active':''</xar:set>
         <dd class="#$tabclass#">
             <a href="&xar-modurl-formantibot-admin-overview;">

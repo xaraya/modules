@@ -300,9 +300,9 @@ class securimage
     }
 
 
-    // FIXME: Stolen from sitecontact, but should be in includes/xarServer.php <rabbitt>
+
     function getcurrentip()
-    {
+    {      
         $data=array(); //initialize our data array
         $proxyip=''; //proxy ip if it exists
         $trueip=''; //true ip if it exists

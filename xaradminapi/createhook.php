@@ -78,24 +78,40 @@ function formantibot_adminapi_createhook($args)
     $antibotinvalid = FALSE;
     $badcaptcha = 0; //backward compat
     
-    if (!isset($antibotcode)) {
-        $antibotcode = $extrainfo['antibotcode'];
-    } elseif  (!isset($extrainfo['antibotcode'])) {
-        if(!xarVarFetch('antibotcode',  'str:6:10', $antibotcode, '',XARVAR_DONT_SET)) {return;}
-    }    
-    
-    $correctcode =xarModAPIFunc('formantibot', 'user', 'validate', array('userInput' => $antibotcode));
+    //check whether to use it for registered users as well as anon
+    $registered = xarModGetvar('formantibot','registered');
+    $usecaptcha = 0;// default is not to use
 
-    if ($correctcode != TRUE) {
-        $antibotinvalid = TRUE;
-        $botreset = TRUE;
-        $badcaptcha = 1;
+
+    if (!xarUserIsLoggedIn() || ($registered ==1)) {
+        $usecaptcha = 1;
     }
-    $extrainfo = array('antibotinvalid'=>$antibotinvalid,
-                       'botreset'   =>$botreset,
-                       'badcaptcha' => $badcaptcha);
-                       
- 
-      return $extrainfo;
+
+    if ($usecaptcha != 1)  {
+        $extrainfo = array( 'antibotinvalid'=> FALSE,
+                            'botreset'   => FALSE,
+                            'badcaptcha' => 0);                 
+    } else {
+        //we assume there is an antibot code and we need to check it now
+        if (!isset($antibotcode) && (isset($extrainfo['antibotcode']))) {
+            $antibotcode = $extrainfo['antibotcode'];
+        } elseif  (!isset($extrainfo['antibotcode'])) {
+            if(!xarVarFetch('antibotcode',  'str:6:10', $antibotcode, '',XARVAR_DONT_SET)) {return;}
+        }    
+
+        $correctcode =xarModAPIFunc('formantibot', 'user', 'validate', array('userInput' => $antibotcode));
+
+        if ($correctcode != TRUE) {
+            $antibotinvalid = TRUE;
+            $botreset = TRUE;
+            $badcaptcha = 1;
+            $extrainfo = array('antibotinvalid'=>$antibotinvalid,
+                           'botreset'   =>$botreset,
+                           'badcaptcha' => $badcaptcha);        
+        }
+
+    }
+
+    return $extrainfo;
 }
 ?>

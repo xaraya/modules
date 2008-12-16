@@ -1,0 +1,44 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>Formantibot Administration</xar:mlstring></span>
+</div>
+
+<div class="xar-mod-body">
+   <xar:template type="module" file="admin-menu" />
+   <xar:if condition="xarSessionGetVar('statusmsg') != ''">
+        <p>#xarSessionGetVar('statusmsg')#</p>
+   </xar:if>
+
+ <form method="post" id="post" action="&xar-modurl-formantibot-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
+    <fieldset>
+        <legend><xar:mlstring>General Options</xar:mlstring></legend>
+        <div class="xar-form-input-wrapper">
+            <label for="registered" class="xar-form-label" title="#xarML('Use captcha for registered users as well as anonymous?')#">
+                <xar:mlstring>Turn on Form Captcha for registered users?</xar:mlstring>
+            </label>
+            <xar:data-input type="checkbox" name="registered" id="registered" checked="$registered" />
+            [<xar:mlstring>default: anonymous users only</xar:mlstring>]
+        </div>
+        TODO: add config vars for class variables, maybe config per module
+    </fieldset>
+
+   <xar:if condition="!empty($hooks)">
+        <fieldset>
+            <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
+
+                <xar:foreach in="$hooks" key="$hookmodule">
+                  #$hookoutput[$hookmodule]#
+                </xar:foreach>
+
+        </fieldset>
+   </xar:if>
+   
+    <div class="xar-form-input-wrapper-after">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="submit" value="#xarML('Update Configuration')#" />
+    </div>
+   
+  </form>
+</div>
+<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

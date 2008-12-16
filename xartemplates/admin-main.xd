@@ -13,20 +13,26 @@
     </h3>
         <p><em><xar:mlstring>Format Anti-Bot is a Xaraya Utility Module.</xar:mlstring></em> 
             <xar:mlstring>The module secures forms from abuse by bot's by requiring translation and input of image based text, sometimes known as CAPTCHA.
-            The module can only be used in conjunction with other Xaraya modules that support it. </xar:mlstring></p>
+            The module can be used in conjunction with other Xarigami and Xaraya modules that support it either via hooks or through direct use of apis in the module.</xar:mlstring></p>
             <p><xar:mlstring>The following modules currently support FormAnti-Bot:</xar:mlstring></p>
             <ul>
-                <li><xar:mlstring>Sitecontact module - a contact form module allowing multiple, custom contact forms, and optional saving of data.</xar:mlstring></li>
+                <li><xar:mlstring>Xarigami and Xaraya Sitecontact module - a contact form module allowing multiple, custom contact forms, and optional saving of data.</xar:mlstring></li>
+                <li><xar:mlstring>Xarigami Comments module - a comments module with moderation and spam control features.</xar:mlstring></li>
+                <li><xar:mlstring>Xarigami xarBB  - a lightweight forum module that can be optioned up with various features via hooks.</xar:mlstring></li>                
             </ul>
         <h3>
             <xar:mlstring>How to use it?</xar:mlstring>
        </h3>
         <p>
             <xar:mlstring>
-                At this point, only modules that have chosen to include support for this module will be able to utilize it.
-                Read: no hooks are as yet available for this module.
+                Although Formantibot is a hook module, the nature of it requires the captured data from 
+                the new hook to be captured by the module, passed to the create hook that evaluates the information,
+                and then that value passed back to the module to make decisions on processing.
+                The create hook also needs to be called in a specific place in supported modules.
             </xar:mlstring>
         </p>
+        <p>As such, although Formantibot is a hook module, it does requires a little bit of additional
+           work to ensure it works correction in a supported module (but a lot less than direct api use).</p>
          <h3>
             <xar:mlstring>Included Blocks</xar:mlstring>
         </h3>
@@ -37,7 +43,7 @@
             <xar:mlstring>Included Hooks</xar:mlstring>
     </h3>
         <p>
-            <xar:mlstring>None</xar:mlstring>
+            <xar:mlstring>Display/new and create hooks are supplied.</xar:mlstring>
         </p> 
   <h3>
     <xar:mlstring>Further Information</xar:mlstring>
@@ -46,14 +52,13 @@
     <xar:mlstring>Further information on the FormAnti-Bot module can be found at</xar:mlstring>
   </p>
   <ul>
-    <li><xar:mlstring>FormAnti-Bot Extension page at</xar:mlstring> <a title="#xarML('FormAnti-Bot Module - Xaraya Extension 761')#" href="http://www.xaraya.com/index.php/release/761.html">Xaraya Extension and Releases</a>.
-      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    <li><xar:mlstring>FormAnti-Bot Project page at</xar:mlstring> <a title="#xarML('FormAnti-Bot project page')#" href="http://xarigami.com/project/xarigami_formantibot">Xarigami Formantibot</a>.
     </li>
-    <li><xar:mlstring>Related tutorials and documentation on FormAnti-Bot found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/formantibot/" title="#xarML('Related documentation on FormAnti-Bot')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    <li><xar:mlstring>Related tutorials and documentation on FormAnti-Bot found at</xar:mlstring> <a href="http://xarigami.com/resources/" title="#xarML('Related documentation on FormAnti-Bot')#"><xar:mlstring>Xarigami Resources</xar:mlstring></a>
     </li>
   </ul>
   <p class="xar-sub">
-    <strong>&nbsp;<xar:mlstring>FormAnti-Bot Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-08-01
+    <strong>&nbsp;<xar:mlstring>FormAnti-Bot Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Revision</xar:mlstring> 1.1.0&nbsp; 2008-12-15
   </p>
 </div>
 

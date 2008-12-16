@@ -72,7 +72,6 @@ function formantibot_admin_newhook($args)
         $data['AntiBot_Available'] = TRUE;
     }    
 
-
     if (isset($extrainfo['antibotinvalid'])) {
         $antibotinvalid = $extrainfo['antibotinvalid'];
     } else {
@@ -84,16 +83,31 @@ function formantibot_admin_newhook($args)
     } else {
         if(!xarVarFetch('botreset', 'bool',$botreset, false, XARVAR_DONT_SET)) {return;}
     }
+    
+    //check whether to use it for registered users as well as anon
+    $registered = xarModGetvar('formantibot','registered');
+    
+    $usecaptcha = 0;// default is not to use
+    
+    if (!xarUserIsLoggedIn() || ($registered == 1) && xarUserIsLoggedIn()) {
+        $usecaptcha = 1;
+    }
 
-    return xarTplModule('formantibot','admin','newhook',
-        array(
-            'antibotinvalid' => $antibotinvalid,
-            'botreset'       => $botreset,
-            'itemid'         => $itemid,
-            'itemtype'       => $itemtype,
-            'modid'          => $modid
-        )
-    );
+    if ($usecaptcha != 1) {
+        return ;
+    } else {
+    
+        return xarTplModule('formantibot','admin','newhook',
+            array(
+                'antibotinvalid' => $antibotinvalid,
+                'botreset'       => $botreset,
+                'itemid'         => $itemid,
+                'itemtype'       => $itemtype,
+                'modid'          => $modid,
+                'usecaptcha'     => $usecaptcha
+            )
+        );
+    }
 }
 
 ?>
