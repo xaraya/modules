@@ -1,30 +1,31 @@
 <?php
 /**
- * Module versioning information for Xaraya Secure Forms module
+ * Initialize the formantibot module
  *
- * @package Modules
- * @copyright (C) 2002-2006 by The Digital Development Foundation
+ * @package Xaraya modules
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
+ * @link http://xaraya.com
  *
- * @subpackage comments
- * @link http://xaraya.com/index.php/release/761.html
+ * @subpackage Formantibot
+ * @copyright (C) 2008 2skies.com
+ * @link http://xarigami.com/project/formantibot
  * @author Carl P. Corliss <carl.corliss@xaraya.com>
- * @access private
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 
-$modversion['name'] = 'Xaraya Secure Forms';
+$modversion['name'] = 'formantibot';
+$modversion['directory'] = 'formantibot';
 $modversion['id'] = '761';
-$modversion['version'] = '0.1.0';
-$modversion['displayname']    = xarML('Formantibot');
-$modversion['description'] = 'Secures forms from abuse by bot\'s by requiring translation and input of image based text.';
+$modversion['version'] = '0.5.0';
+$modversion['displayname']    = 'Formantibot';
+$modversion['description'] = 'Captcha image input for securing forms';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = '';
-$modversion['changelog'] = '';
+$modversion['changelog'] = 'xardocs/changelog.txt';
 $modversion['license'] = '';
 $modversion['official'] = 1;
-$modversion['author'] = 'Carl P. Corliss (aka Rabbitt)';
-$modversion['contact'] = 'carl.corliss@xaraya.com';
+$modversion['author'] = 'Jo Dalle Nogare';
+$modversion['contact'] = 'http://xarigami.com';
 $modversion['admin'] = 1;
 $modversion['user'] = 0;
 $modversion['class'] = 'Utility';

@@ -1,0 +1,35 @@
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head"/>
+<script type="text/javascript">
+<!--
+    // Enter name of mandatory fields
+    var fieldRequired= Array("antibotcode");
+    // Enter field description to appear in the dialog box
+    var fieldDescription = Array("Anti-Bot Code");
+//-->
+</script>
+<div class="xar-form-input-wrapper">
+    <label for="antibotimage" class="xar-form-labelshort" title="#xarML('Enter the value as seen in the image (if you can not read the image, click on it to load a new one).')#">
+        <xar:mlstring>Anti-Bot Code</xar:mlstring>
+    </label>
+        <div class="xar-displayblock">
+            <p class="xar-float-left xar-displayinline">
+            <img id="antibotimage" name="antibotimage"                        
+                src="#xarModURL('formantibot', 'user', 'image')#" 
+                onclick="this.src = this.src + '?' + (new Date()).getTime(); return true;" alt="antibotimage" title="#xarML('secure antibot image')#"/>
+ 
+                <xar:mlstring>Can't read it? Click the image again.</xar:mlstring>
+            </p>
+           <xar:if condition="isset($antibotinvalid) AND $antibotinvalid">
+                <p class="xar-error xar-clear-left">
+                    <xar:mlstring>Anti-bot code entry was incorrect - please try again...</xar:mlstring>
+                </p>
+            </xar:if>            
+        </div>
+ 
+
+        <label for="antibodcode" class="xar-form-labelshort" >
+            <xar:mlstring>Enter the Anti-Bot Code</xar:mlstring>
+        </label>
+        <input type="text" name="antibotcode" id="antibotcode" size="10" value="" maxlength="10"  />
+            
+</div>

@@ -1,0 +1,14 @@
+Basic configs
+=============
+1. Basic config settings
+2. Move other formantibot specific settings to admin
+
+Convert to a Hook
+=================
+1.  Create/update hook
+
+2.  Display Hook
+    New Hook
+    Displays the formantibot box
+    Collects the information required
+    Sends it to the create hook or update hook as the case may be (same in this case)

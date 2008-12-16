@@ -1,0 +1,9 @@
+Version 0.5.0  - Xarigami version XX Dec 2008
+--------------
+Jo Dalle Nogare icedlava@2skies.com
+
+
+
+Version 0.1.0 - Initial release 1 August 2006
+--------------
+by Carl P. Corliss 

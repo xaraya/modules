@@ -1,15 +1,16 @@
 <?php
 /**
- * init file for installing/upgrading formantibot module
+ * Initialize the formantibot module
  *
- * @package Modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @package Xaraya modules
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
+ * @link http://xaraya.com
  *
+ * @subpackage Formantibot
+ * @copyright (C) 2008 2skies.com
+ * @link http://xarigami.com/project/formantibot
  * @author Carl P. Corliss <carl.corliss@xaraya.com>
- * @link http://xaraya.com/index.php/release/761.html  
- * @subpackage formantibot
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 
 /**
@@ -17,6 +18,7 @@
  * currently initialized modules
  *
  * @author Carl P. Corliss <carl.corliss@xaraya.com>
+ * @author Jo Dalle Nogare <icedlava@2skies.com> 
  * @access private
  * @return bool True on success, False otherwise
  *
@@ -97,8 +99,8 @@ function formantibot_init()
     // Register Security Mask
     xarRegisterMask('FormAntiBot-Admin', 'All','formantibot', 'All', 'All', 'ACCESS_ADMIN', 'Administrate Form Anti-bot');
 
-      // Initialisation successful
-    return TRUE;
+    //This initialization takes us to version 0.1.0 - continue in upgrade
+    return formantibot_upgrade('0.1.0');
 }
 
 /**
@@ -113,7 +115,15 @@ function formantibot_delete()
 {
       //Load Table Maintenance API
     xarDBLoadTableMaintenanceAPI();
+    if (!xarModUnregisterHook('item', 'create', 'API',
+                            'formantibot', 'admin', 'createhook')) {
+        return false;
+    }   
 
+    if (!xarModUnregisterHook('item', 'new', 'GUI',
+                            'formantibot', 'admin', 'newhook')) {
+        return false;
+    }                             
 
       // Remove Masks and Instances
     xarRemoveMasks('formantibot');
@@ -127,8 +137,7 @@ function formantibot_delete()
 
 /**
  * Upgrades the module from a previous version to a new one
- *
- * @author Carl P. Corliss <carl.corliss@xaraya.com>
+ * @author Jo Dalle Nogare <jojodee>
  * @access private
  * @return bool True on success, False otherwise
  *
@@ -137,13 +146,19 @@ function formantibot_upgrade($oldversion)
 {
       // Upgrade dependent on old version number
     switch($oldversion) {
-        case '1.0':
-              // Code to upgrade from version 1.0 goes here
-              // Register blocks
-        case '1.1':
-              // Code to upgrade from version 1.1 goes here
-        case '2.5':
-              // Code to upgrade from version 2.5 goes here
+        case '0.1.0':
+                          
+        if (!xarModRegisterHook('item', 'create', 'API',
+                                'formantibot', 'admin', 'createhook')) {
+            return false;
+        }
+
+        if (!xarModRegisterHook('item', 'new', 'GUI',
+                               'formantibot', 'admin', 'newhook')) {
+            return false;
+        }
+
+        case '0.5.0': //current version
             break;
     }
     return TRUE;
