@@ -23,16 +23,21 @@
         <h3>
             <xar:mlstring>How to use it?</xar:mlstring>
        </h3>
-        <p>
-            <xar:mlstring>
-                Although Formantibot is a hook module, the nature of it requires the captured data from 
-                the new hook to be captured by the module, passed to the create hook that evaluates the information,
-                and then that value passed back to the module to make decisions on processing.
-                The create hook also needs to be called in a specific place in supported modules.
-            </xar:mlstring>
+        <ul>
+            <xar:set name="hookurl">#xarModURL('modules','admin','hooks',array('hook'=>'formantibot'))#</xar:set>
+            <li>
+                <a href="#$hookurl#"><xar:mlstring>Hook Formantibot</xar:mlstring></a><xar:mlstring> to the module in which  you wish to display the captcha.</xar:mlstring>
+
+            </li>
+            <li>
+                <xar:set name="configurl">#xarModURL('formantibot','admin','modifyconfig')#</xar:set>
+                <a href="#$configurl#"><xar:mlstring>Set configuration settings</xar:mlstring></a><xar:mlstring> in the Formantibot modify configuration page as you would like them.</xar:mlstring>
+            </li>
+        </ul>
+        <p><xar:mlstring>Developer note: 
+            In using the Formantibot hooks, it was necessary to call the create hook earlier than usual in the target module. We need to get the hook results (whether the code was valid or not) prior to creating a new item. If it is invalid code then like other invalid form variables, it is used to decide whether to return the user to the form.
+        </xar:mlstring>
         </p>
-        <p>As such, although Formantibot is a hook module, it does requires a little bit of additional
-           work to ensure it works correction in a supported module (but a lot less than direct api use).</p>
          <h3>
             <xar:mlstring>Included Blocks</xar:mlstring>
         </h3>
