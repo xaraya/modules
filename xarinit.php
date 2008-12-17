@@ -115,8 +115,8 @@ function formantibot_delete()
 {
       //Load Table Maintenance API
     xarDBLoadTableMaintenanceAPI();
-    if (!xarModUnregisterHook('item', 'create', 'API',
-                            'formantibot', 'admin', 'createhook')) {
+    if (!xarModUnregisterHook('item', 'submit', 'API',
+                            'formantibot', 'admin', 'submithook')) {
         return false;
     }   
 
@@ -148,8 +148,8 @@ function formantibot_upgrade($oldversion)
     switch($oldversion) {
         case '0.1.0':
                           
-        if (!xarModRegisterHook('item', 'create', 'API',
-                                'formantibot', 'admin', 'createhook')) {
+        if (!xarModRegisterHook('item', 'submit', 'API',
+                                'formantibot', 'admin', 'submithook')) {
             return false;
         }
 

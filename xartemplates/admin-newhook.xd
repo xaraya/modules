@@ -29,7 +29,7 @@
             </div>
      
     
-            <label for="antibodcode" class="xar-form-labelshort" >
+            <label for="antibotcode" class="xar-form-labelshort" >
                 <xar:mlstring>Enter the Anti-Bot Code</xar:mlstring>
             </label>
             <input type="text" name="antibotcode" id="antibotcode" size="10" value="" maxlength="10"  />
