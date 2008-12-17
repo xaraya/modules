@@ -35,7 +35,10 @@
             </li>
         </ul>
         <p><xar:mlstring>Developer note: 
-            In using the Formantibot hooks, it was necessary to call the create hook earlier than usual in the target module. We need to get the hook results (whether the code was valid or not) prior to creating a new item. If it is invalid code then like other invalid form variables, it is used to decide whether to return the user to the form.
+            In using the Formantibot hooks, it was necessary to call the usual create hook earlier than usual in the target module. 
+            We need to get the hook results (whether the code was valid or not) prior to creating a new item. 
+            If it is invalid code then like other invalid form variables, it is used to decide whether to return the user to the form.
+            Thus we use a 'submit' hook that needs to be called in modules prior to the item creation.
         </xar:mlstring>
         </p>
          <h3>

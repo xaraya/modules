@@ -148,19 +148,31 @@ function formantibot_upgrade($oldversion)
     switch($oldversion) {
         case '0.1.0':
                           
-        if (!xarModRegisterHook('item', 'submit', 'API',
-                                'formantibot', 'admin', 'submithook')) {
-            return false;
-        }
-
-        if (!xarModRegisterHook('item', 'new', 'GUI',
-                               'formantibot', 'admin', 'newhook')) {
-            return false;
-        }
-
-        xarModSetVar('formantibot','registered',false);
-        
+            if (!xarModRegisterHook('item', 'create', 'API',
+                                    'formantibot', 'admin', 'createhook')) {
+                return false;
+            }
+    
+            if (!xarModRegisterHook('item', 'new', 'GUI',
+                                   'formantibot', 'admin', 'newhook')) {
+                return false;
+            }
+    
+            xarModSetVar('formantibot','registered',false);
+            
         case '0.5.0': //current version
+       
+            //get rid of this one - creates problems calling it too early
+            if (!xarModUnregisterHook('item', 'create', 'API',
+                                'formantibot', 'admin', 'createhook')) {
+            return false;
+            }         
+            if (!xarModRegisterHook('item', 'submit', 'API',
+                                    'formantibot', 'admin', 'submithook')) {
+                return false;
+            }
+                   
+        case '0.6.0': //current version
             break;
     }
     return TRUE;

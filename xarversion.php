@@ -16,7 +16,7 @@
 $modversion['name'] = 'formantibot';
 $modversion['directory'] = 'formantibot';
 $modversion['id'] = '761';
-$modversion['version'] = '0.5.0';
+$modversion['version'] = '0.6.0';
 $modversion['displayname']    = 'Formantibot';
 $modversion['description'] = 'Captcha image input for securing forms';
 $modversion['credits'] = 'xardocs/credits.txt';
