@@ -30,7 +30,6 @@ function formantibot_admin_modifyconfig()
     //use for all users including registered (default is non-logged in only)
     $data['registered']      = xarModGetVar('formantibot', 'registered');
 
-
     $settings     = xarModGetVar('formantibot', 'settings');
     $settings = unserialize($settings);
 
@@ -38,9 +37,9 @@ function formantibot_admin_modifyconfig()
     $textcolor = $settings['text_color']['red'].','.$settings['text_color']['green'].','.$settings['text_color']['blue'];
     $imagebgcolor = $settings['image_bg_color']['red'].','.$settings['image_bg_color']['green'].','.$settings['image_bg_color']['blue'];
 
-    $settings['linecolorhex'] = xarModAPIFunc('formantibot','user','RGB2Hex2RGB',array('c'=>$linecolor));
-    $settings['textcolorhex'] = xarModAPIFunc('formantibot','user','RGB2Hex2RGB',array('c'=>$textcolor));
-    $settings['imagebgcolorhex'] = xarModAPIFunc('formantibot','user','RGB2Hex2RGB',array('c'=>$imagebgcolor));
+    $settings['linecolorhex'] = xarModAPIFunc('formantibot','user','rgb2hex2rgb',array('c'=>$linecolor));
+    $settings['textcolorhex'] = xarModAPIFunc('formantibot','user','rgb2hex2rgb',array('c'=>$textcolor));
+    $settings['imagebgcolorhex'] = xarModAPIFunc('formantibot','user','rgb2hex2rgb',array('c'=>$imagebgcolor));
     $data['settings'] = $settings;
 
     $hooks = xarModCallHooks('module', 'modifyconfig', 'formantibot',

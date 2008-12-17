@@ -51,9 +51,9 @@ function formantibot_admin_updateconfig()
         $settings[$k] = isset($settings[$k])?$settings[$k] : 0;
     }
     
-    $textcolor =xarModAPIFunc('formantibot','user','RGB2Hex2RGB',array('c'=>$textcolor)); 
-    $imagebgcolor =xarModAPIFunc('formantibot','user','RGB2Hex2RGB',array('c'=>$imagebgcolor)); 
-    $linecolor =xarModAPIFunc('formantibot','user','RGB2Hex2RGB',array('c'=>$linecolor));       
+    $textcolor =xarModAPIFunc('formantibot','user','rgb2hex2rgb',array('c'=>$textcolor)); 
+    $imagebgcolor =xarModAPIFunc('formantibot','user','rgb2hex2rgb',array('c'=>$imagebgcolor)); 
+    $linecolor =xarModAPIFunc('formantibot','user','rgb2hex2rgb',array('c'=>$linecolor));       
       
     $settings['text_color'] = array('red'=>$textcolor['red'],'green'=>$textcolor['green'],'blue'=>$textcolor['blue']);
     $settings['line_color'] = array('red'=>$linecolor['red'],'green'=>$linecolor['green'],'blue'=>$linecolor['blue']);    
