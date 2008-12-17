@@ -29,8 +29,8 @@ function formantibot_admin_updateconfig()
     if (!xarVarFetch('text_x_start',   'int',        $settings['text_x_start'], 9, XARVAR_NOT_REQUIRED)) return;  
     if (!xarVarFetch('text_minimum_distance', 'int', $settings['text_minimum_distance'], 30, XARVAR_NOT_REQUIRED)) return;  
     if (!xarVarFetch('text_maximum_distance', 'int', $settings['text_maximum_distance'], 33, XARVAR_NOT_REQUIRED)) return;  
-    if (!xarVarFetch('shadow_text',    'checkbox',       $shadow_text, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('use_transparent_text', 'checkbox', $use_transparent_text, false, XARVAR_NOT_REQUIRED)) return;   
+    if (!xarVarFetch('shadow_text',    'checkbox',       $settings['shadow_text'], false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('use_transparent_text', 'checkbox', $settings['use_transparent_text'], true, XARVAR_NOT_REQUIRED)) return;   
     if (!xarVarFetch('text_transparency_percentage','int',  $settings['text_transparency_percentage'], 25, XARVAR_NOT_REQUIRED)) return;                                      
     if (!xarVarFetch('draw_lines','checkbox',            $settings['draw_lines'], true, XARVAR_NOT_REQUIRED)) return;    
     if (!xarVarFetch('line_distance', 'int',         $settings['line_distance'], 12, XARVAR_NOT_REQUIRED)) return;  
@@ -43,7 +43,7 @@ function formantibot_admin_updateconfig()
     if (!xarVarFetch('linecolor',     'str',    $linecolor, '#CCCCFF', XARVAR_NOT_REQUIRED)) return; 
                    
     if (!xarSecConfirmAuthKey()) return;
-   
+     
     xarModSetVar('formantibot', 'registered', $registered);
     //handle booleans that are going to be serialized
     $booleans = array('shadow_text','use_transparent_text','draw_lines_over_text','draw_lines','draw_angled_lines');
@@ -58,7 +58,7 @@ function formantibot_admin_updateconfig()
     $settings['text_color'] = array('red'=>$textcolor['red'],'green'=>$textcolor['green'],'blue'=>$textcolor['blue']);
     $settings['line_color'] = array('red'=>$linecolor['red'],'green'=>$linecolor['green'],'blue'=>$linecolor['blue']);    
     $settings['image_bg_color'] = array('red'=>$imagebgcolor['red'],'green'=>$imagebgcolor['green'],'blue'=>$imagebgcolor['blue']);   
-    
+
     $settings = serialize($settings);
     xarModSetVar('formantibot','settings', $settings);
 
