@@ -22,7 +22,7 @@ function formantibot_adminapi_getmenulinks()
 
     // Security Check
   
-    if (xarSecurityCheck('AdminAkismet',0)) {
+    if (xarSecurityCheck('FormAntiBot-Admin',0)) {
 
         $menulinks[] = Array('url'   => xarModURL('formantibot', 'admin',  'modifyconfig'),
                               'title' => xarML('Modify the akismet module configuration'),
