@@ -17,7 +17,7 @@
  * http://www.go4expert.com
  */
  
-function formantibot_userapi_RGB2Hex2RGB($args)
+function formantibot_userapi_rgb2hex2rgb($args)
  {
      extract($args);
      if(!$c) return false;
