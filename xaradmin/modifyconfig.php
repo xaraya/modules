@@ -16,6 +16,7 @@
  *
  * @return array
  */
+
 function formantibot_admin_modifyconfig()
 { 
     $data = array();
@@ -25,8 +26,22 @@ function formantibot_admin_modifyconfig()
     /* Generate a one-time authorisation code for this operation */
     $data['authid'] = xarSecGenAuthKey();
 
-    /* Specify some values for display */
+    /* Specify some values for captcha display */
+    //use for all users including registered (default is non-logged in only)
     $data['registered']      = xarModGetVar('formantibot', 'registered');
+
+
+    $settings     = xarModGetVar('formantibot', 'settings');
+    $settings = unserialize($settings);
+
+    $linecolor = $settings['line_color']['red'].','.$settings['line_color']['green'].','.$settings['line_color']['blue'];
+    $textcolor = $settings['text_color']['red'].','.$settings['text_color']['green'].','.$settings['text_color']['blue'];
+    $imagebgcolor = $settings['image_bg_color']['red'].','.$settings['image_bg_color']['green'].','.$settings['image_bg_color']['blue'];
+
+    $settings['linecolorhex'] = xarModAPIFunc('formantibot','user','RGB2Hex2RGB',array('c'=>$linecolor));
+    $settings['textcolorhex'] = xarModAPIFunc('formantibot','user','RGB2Hex2RGB',array('c'=>$textcolor));
+    $settings['imagebgcolorhex'] = xarModAPIFunc('formantibot','user','RGB2Hex2RGB',array('c'=>$imagebgcolor));
+    $data['settings'] = $settings;
 
     $hooks = xarModCallHooks('module', 'modifyconfig', 'formantibot',
                        array('module' => 'formantibot'));
@@ -36,7 +51,6 @@ function formantibot_admin_modifyconfig()
     } else {
         $data['hookoutput'] = $hooks;
     }
-
     /* Return the template variables defined in this function */
     return $data;
 }

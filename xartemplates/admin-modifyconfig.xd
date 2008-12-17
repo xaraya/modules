@@ -20,8 +20,166 @@
             <xar:data-input type="checkbox" name="registered" id="registered" checked="$registered" />
             [<xar:mlstring>default: anonymous users only</xar:mlstring>]
         </div>
-        TODO: add config vars for class variables, maybe config per module
+        <div class="xar-form-input-wrapper">
+            <label for="hash_salt" class="xar-form-label" title="#xarML('A unique string that prevents users guessing filenames and makes data more secure')#">
+                <xar:mlstring>Unique hash string</xar:mlstring>
+            </label>
+            <xar:data-input type="textbox" name="hash_salt" id="hash_salt" value="$settings['hash_salt']" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="prune_minimum_age" class="xar-form-label" title="#xarML('Age (in minutes) of files containing unused codes to be deleted')#">
+                <xar:mlstring>Age of code files to delete</xar:mlstring>
+            </label>
+            <xar:data-input type="integerbox" name="prune_minimum_age" id="prune_minimum_age" value="$settings['prune_minimum_age']" /> minutes
+        </div>                  
     </fieldset>
+    <fieldset>
+        <legend><xar:mlstring>Image Display Options</xar:mlstring></legend>
+        <div class="xar-form-input-wrapper">
+            <label for="image_width" class="xar-form-label" title="#xarML('Width of the displayed security image')#">
+                <xar:mlstring>Image width</xar:mlstring>
+            </label>
+            <xar:data-input type="integerbox" name="image_width" id="image_width" value="$settings['image_width']" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="image_height" class="xar-form-label" title="#xarML('Height of the displayed security image')#">
+                <xar:mlstring>Image height</xar:mlstring>
+            </label>
+            <xar:data-input type="integerbox" name="image_height" id="image_height" value="$settings['image_height']" />
+        </div> 
+        <div class="xar-form-input-wrapper">
+            <label for="code_length" class="xar-form-label" title="#xarML('Height of the displayed security image')#">
+                <xar:mlstring>Code length</xar:mlstring>
+            </label>
+            <xar:data-input type="integerbox" name="code_length" id="code_length" value="$settings['code_length']" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="ttf_file" class="xar-form-label" title="#xarML('Path to ttf font to use')#">
+                <xar:mlstring>TTF Font</xar:mlstring>
+            </label>
+            <xar:data-input type="textbox" name="ttf_file" id="ttf_file" value="$settings['ttf_file']" class="xar-form-textxlong"/>
+            <span class="xar-sub">[<xar:mlstring>Default:</xar:mlstring> modules/formantibot/fonts/elephant.ttf]</span>
+        </div>                              
+        <div class="xar-form-input-wrapper">
+            <label for="font_size" class="xar-form-label" >
+                <xar:mlstring>Font size</xar:mlstring>
+            </label>
+            <xar:data-input type="integerbox" name="font_size" id="font_size" value="$settings['font_size']" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="text_angle_minimum" class="xar-form-label" title="#xarML('Minimum angle in degress of letter. Counter-clockwise direction')#">
+                <xar:mlstring>Minimum text angle</xar:mlstring>
+            </label>
+            <xar:data-input type="integerbox" name="text_angle_minimum" id="text_angle_minimum" value="$settings['text_angle_minimum']" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="text_angle_maximum" class="xar-form-label" title="#xarML('Maximum angle in degress of letter. Clockwise direction')#">
+                <xar:mlstring>Maximum text angle</xar:mlstring>
+            </label>
+            <xar:data-input type="integerbox" name="text_angle_maximum" id="text_angle_maximum" value="$settings['text_angle_maximum']" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="text_x_start" class="xar-form-label" title="#xarML('Position (in pixels) on the x axis where text starts')#">
+                <xar:mlstring>Text start position</xar:mlstring>
+            </label>
+            <xar:data-input type="integerbox" name="text_x_start" id="text_x_start" value="$settings['text_x_start']" /> px
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="text_minimum_distance" class="xar-form-label" title="#xarML('The shortest distance in pixels letters can be from eachother (a very small value will cause overlapping)')#">
+                <xar:mlstring>Min distance between letters</xar:mlstring>
+            </label>
+            <xar:data-input type="integerbox" name="text_minimum_distance" id="text_minimum_distance" value="$settings['text_minimum_distance']" /> px
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="text_maximum_distance" class="xar-form-label" title="#xarML('The longest distance in pixels letters can be from eachother')#">
+                <xar:mlstring>Max distance between letters</xar:mlstring>
+            </label>
+            <xar:data-input type="integerbox" name="text_maximum_distance" id="text_maximum_distance" value="$settings['text_maximum_distance']" /> px
+        </div>                                               
+        <div class="xar-form-input-wrapper">
+            <label for="shadow_text" class="xar-form-label" title="#xarML('Draw a shadow for the text (gives a 3d raised bolder effect)')#">
+                <xar:mlstring>Use shadow text</xar:mlstring>
+            </label>
+            <xar:data-input type="checkbox" name="shadow_text" id="shadow_text" checked="$settings['shadow_text']" />
+        </div>        
+        <div class="xar-form-input-wrapper">
+            <label for="use_transparent_text" class="xar-form-label" title="#xarML('Set to true for the ability to use transparent text, false for normal text')#">
+                <xar:mlstring>Use transparent text</xar:mlstring>
+            </label>
+            <xar:data-input type="checkbox" name="use_transparent_text" id="use_transparent_text" checked="$settings['use_transparent_text']" />
+        </div> 
+        <div class="xar-form-input-wrapper">
+            <label for="text_transparency_percentage" class="xar-form-label" title="#xarML('0 to 100, 0 being completely opaque, 100 being completely transparent')#">
+                <xar:mlstring>Transparency percent</xar:mlstring>
+            </label>
+            <xar:data-input type="integerbox" name="text_transparency_percentage" id="text_transparency_percentage" value="$settings['text_transparency_percentage']" /> %
+        </div>                         
+        <div class="xar-form-input-wrapper">
+            <label for="draw_lines" class="xar-form-label" title="#xarML('Set to true to draw horizontal and vertical lines on the image')#">
+                <xar:mlstring>Draw lines</xar:mlstring>
+            </label>
+            <xar:data-input type="checkbox" name="draw_lines" id="draw_lines" checked="$settings['draw_lines']" />
+        </div>         
+        <div class="xar-form-input-wrapper">
+            <label for="draw_lines_over_text" class="xar-form-label" title="#xarML('Set to true to draw the lines on top of the text, otherwise the text will be on the lines')#">
+                <xar:mlstring>Draw lines over text</xar:mlstring>
+            </label>
+            <xar:data-input type="checkbox" name="draw_lines_over_text" id="draw_lines_over_text" checked="$settings['draw_lines_over_text']" />
+        </div> 
+
+        <div class="xar-form-input-wrapper">
+            <label for="draw_angled_lines" class="xar-form-label" title="#xarML('Set to true to draw lines at 45 and -45 degree angles over the image  (makes x\'s)')#">
+                <xar:mlstring>Draw angled lines over text</xar:mlstring>
+            </label>
+            <xar:data-input type="checkbox" name="draw_angled_lines" id="draw_angled_lines" checked="$settings['draw_angled_lines']" />
+        </div> 
+        <div class="xar-form-input-wrapper">
+            <label for="line_distance" class="xar-form-label" title="#xarML('Distance in pixels the lines will be from each other')#">
+                <xar:mlstring>Line distance</xar:mlstring>
+            </label>
+            <xar:data-input type="integerbox" name="line_distance" id="line_distance" value="$settings['line_distance']" /> px
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="imagebgcolor" class="xar-form-label">
+                <xar:mlstring>Image background colour</xar:mlstring>
+            </label>
+         
+            <xar:data-input type="tcolorpicker" name="imagebgcolor" id="imagebgcolor" value="$settings['imagebgcolorhex']" />
+         
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="textcolor" class="xar-form-label">
+                <xar:mlstring>Text colour</xar:mlstring>
+            </label>
+            <xar:data-input type="tcolorpicker" name="textcolor" id="textcolor" value="$settings['textcolorhex']" />
+        </div>                  
+   
+        <div class="xar-form-input-wrapper">
+            <label for="linecolor" class="xar-form-label" title="#xarML('Color of the horizontal and vertical lines through the image')#">
+                <xar:mlstring>Line colour</xar:mlstring>
+            </label>
+            <xar:data-input type="tcolorpicker" name="linecolor" id="linecolor" value="$settings['linecolorhex']" /> 
+        </div>       
+    </fieldset>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
    <xar:if condition="!empty($hooks)">
         <fieldset>

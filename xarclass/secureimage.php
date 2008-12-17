@@ -80,13 +80,13 @@ class securimage
     var $text_color = array("red" => 128, "green" => 128, "blue" => 255);
     //the color of the text
 
-    var $shadow_text = false;
+    var $shadow_text = true;
     //draw a shadow for the text (gives a 3d raised bolder effect)
 
     var $use_transparent_text = true;
     //true for the ability to use transparent text, false for normal text
 
-    var $text_transparency_percentage = 15;
+    var $text_transparency_percentage = 25;
     //0 to 100, 0 being completely opaque, 100 being completely transparent
 
     var $draw_lines = TRUE;
