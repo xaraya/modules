@@ -86,16 +86,16 @@ function formantibot_adminapi_createhook($args)
     if (!xarUserIsLoggedIn() || ($registered ==1)) {
         $usecaptcha = 1;
     }
-
+  
     if ($usecaptcha != 1)  {
         $extrainfo = array( 'antibotinvalid'=> FALSE,
                             'botreset'   => FALSE,
                             'badcaptcha' => 0);                 
     } else {
         //we assume there is an antibot code and we need to check it now
-        if (!isset($antibotcode) && (isset($extrainfo['antibotcode']))) {
+        if ((!isset($antibotcode) || empty($antibotcode))  && (isset($extrainfo['antibotcode']) && !empty($extrainfo['antibotcode']))) {
             $antibotcode = $extrainfo['antibotcode'];
-        } elseif  (!isset($extrainfo['antibotcode'])) {
+        } elseif  (!isset($extrainfo['antibotcode']) || empty($extrainfo['antibotcode'])) {
             if(!xarVarFetch('antibotcode',  'str:6:10', $antibotcode, '',XARVAR_DONT_SET)) {return;}
         }    
 
