@@ -23,7 +23,7 @@
                 </p>
                <xar:if condition="isset($antibotinvalid) AND $antibotinvalid">
                     <p class="xar-error xar-clear-left">
-                        <xar:mlstring>Anti-bot code entry was incorrect - please try again...</xar:mlstring>
+                        <xar:mlstring>Anti-bot code incorrect - please try again (case sensitive)</xar:mlstring>
                     </p>
                 </xar:if>            
             </div>
