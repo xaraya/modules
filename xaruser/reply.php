@@ -30,7 +30,7 @@ function comments_user_reply()
     $receipt                      = xarRequestGetVar('receipt');
     $receipt['post_url']          = xarModURL('comments','user','reply');
     $header['input-title']        = xarML('Post a reply');
-
+    $antibotinvalid = 0; //initialize  
     if (!isset($package['postanon'])) {
         $package['postanon'] = 0;
     }
@@ -62,17 +62,25 @@ function comments_user_reply()
             $package = xarModCallHooks('item', 'transform-input', 0, $package,
                                        'comments', 0);
 
-            xarModAPIFunc('comments','user','add',
-                           array('modid'    => $header['modid'],
-                                 'itemtype' => $header['itemtype'],
-                                 'objectid' => $header['objectid'],
-                                 'pid'      => $header['pid'],
-                                 'comment'  => $package['text'],
-                                 'title'    => $package['title'],
-                                 'postanon' => $package['postanon']));
+            $args = array('modid'    => $header['modid'],
+                         'itemtype' => $header['itemtype'],
+                         'objectid' => $header['objectid'],
+                         'pid'      => $header['pid'],
+                         'comment'  => $package['text'],
+                         'title'    => $package['title'],
+                         'postanon' => $package['postanon']);
+                         
+            $hookinfo = xarModCallHooks('item', 'submit', $header['objectid'], $args);
+            $antibotinvalid = isset($hookinfo['antibotinvalid']) ? $hookinfo['antibotinvalid'] : 0;
+            
+            if ($antibotinvalid != TRUE) {                              
+               xarModAPIFunc('comments','user','add',$args);
 
-            xarResponseRedirect($receipt['returnurl']['decoded']);
+               xarResponseRedirect($receipt['returnurl']['decoded']);
             return true;
+            }
+            $package['comments'] = isset($package['comments'])?$package['comments']:array();
+            break;
         case 'reply':
 
             $comments = xarModAPIFunc('comments','user','get_one',
@@ -103,6 +111,7 @@ function comments_user_reply()
 
             // get the title and link of the original object
             $modinfo = xarModGetInfo($header['modid']);
+   
             $itemlinks = xarModAPIFunc($modinfo['name'],'user','getitemlinks',
                                        array('itemtype' => $header['itemtype'],
                                              'itemids' => array($header['objectid'])),
@@ -174,7 +183,8 @@ function comments_user_reply()
 
     }
 
-    $hooks = xarModAPIFunc('comments','user','formhooks');
+ $hooks = xarModAPIFunc('comments','user','formhooks',array('modname'=>'comments','itemtype'=>'0','antibotinvalid'=>$antibotinvalid));
+
 /*
     // Call new hooks for categories, dynamicdata etc.
     $args['module'] = 'comments';

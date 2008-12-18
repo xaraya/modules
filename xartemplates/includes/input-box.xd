@@ -86,7 +86,8 @@
                 #$hooks.iteminput.$hookmodule#
               </xar:foreach>
             </xar:if>
-          </xar:comment>
+          </xar:comment> 
+          #$hooks['formnew']#
           <input type="hidden" name="header[modid]" id="header-modid" value="#$header['modid']#" /> 
           <input type="hidden" name="header[objectid]" id="header-objectid" value="#$header['objectid']#" /> 
           <input type="hidden" name="header[itemtype]" id="header-itemtype" value="#$header['itemtype']#" /> 
@@ -164,6 +165,7 @@
               </xar:foreach>
             </xar:if>
           </xar:comment>
+           #$hooks['formnew']#
           <input type="hidden" name="header[modid]" id="header-modid" value="#$header['modid']#" /> 
           <input type="hidden" name="header[objectid]" id="header-objectid" value="#$header['objectid']#" /> 
           <input type="hidden" name="header[itemtype]" id="header-itemtype" value="#$header['itemtype']#" /> 

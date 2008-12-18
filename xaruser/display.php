@@ -243,7 +243,7 @@ function comments_user_display($args)
     $receipt['post_url']              = xarModURL('comments', 'user', 'reply');
     $receipt['action']                = 'display';
 
-    $hooks = xarModAPIFunc('comments','user','formhooks');
+    $hooks = xarModAPIFunc('comments','user','formhooks',array('modname'=>'comments','itemtype'=>'0'));
 
     //if (time() - ($package['comments']['xar_date'] - ($package['settings']['edittimelimit'] * 60))) {
     //}

@@ -15,13 +15,25 @@
  * Sets up any formaction / formdisplay hooks
  *
  */
-function comments_userapi_formhooks()
+function comments_userapi_formhooks($args)
 {
+if(!xarVarFetch('modname', 'isset',    $modname, 'comments',     XARVAR_NOT_REQUIRED)) {return;} 
+    if(!xarVarFetch('itemtype', 'isset',    $itemtype, 0,     XARVAR_NOT_REQUIRED)) {return;}          
+    //let the args override if necessary
+   
+    if (!isset($itemtype) || empty($itemtype)) {
+       $itemtype = '0';
+    }
 
+    $hooks = array();
+    if (isset($modname)) {
+        $args['modname'] = $modname;
+    }
     $hooks = array();
     $hooks['formaction']              = xarModCallHooks('item', 'formaction', '', array(), 'comments');
     $hooks['formdisplay']             = xarModCallHooks('item', 'formdisplay', '', array(), 'comments');
-
+    $hooks['formnew']                 = xarModCallHooks('item', 'new', '', $args, 'comments',$itemtype);
+    
     if (empty($hooks['formaction'])){
         $hooks['formaction'] = '';
     } elseif (is_array($hooks['formaction'])) {
@@ -32,6 +44,12 @@ function comments_userapi_formhooks()
         $hooks['formdisplay'] = '';
     } elseif (is_array($hooks['formdisplay'])) {
         $hooks['formdisplay'] = join('',$hooks['formdisplay']);
+    }
+
+    if (empty($hooks['formnew'])){
+        $hooks['formnew'] = '';
+    } elseif (is_array($hooks['formnew'])) {
+        $hooks['formnew'] = join('',$hooks['formnew']);
     }
 
     return $hooks;

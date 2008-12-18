@@ -53,7 +53,7 @@ form.xar-cm-actions > input {
 .xar-ib-wrapper {
     margin: 0;
     padding: .25em;
-    height: 19em;
+    height: auto; /*19em;*/
 }
 .xar-ib-leftpanel {
     margin:0;
