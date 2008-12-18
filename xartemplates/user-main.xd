@@ -169,7 +169,7 @@
                 <tr>
                     <td>
                         <strong>
-                        <a href="#xarModURL('weather','user','details',array('xwday'=>0))#">#$eData[0]['wkday']#</a>
+                        <a href="#xarModURL('weather','user','details',array('xwday'=>0,'location'=>$wData['location']))#">#$eData[0]['wkday']#</a>
                         </strong><br />#$eData[0]['date']#</td>
                     <td valign="middle" align="center"><img src="#xarTplGetImage('icons/default/32/'.$eData.0.part.d.icon.'.png','weather')#" alt="#$eData.0.part.d.icon#" /></td>
                     <td valign="middle" align="center">#$eData[0]['part']['d']['cond']#</td>
@@ -186,7 +186,7 @@
                     <tr class="#$item_class#">
                         <td>
                             <strong>
-                            <a href="#xarModURL('weather','user','details',array('xwday'=>$i))#">#$eData[$i]['wkday']#</a>
+                            <a href="#xarModURL('weather','user','details',array('xwday'=>$i,'location'=>$wData['location']))#">#$eData[$i]['wkday']#</a>
                             </strong><br />#$eData[$i]['date']#</td>
                         <td valign="middle" align="center"><img src="#xarTplGetImage('icons/default/32/'.$eData.$i.part.d.icon.'.png','weather')#" alt="#$eData.$i.part.d.icon#" /></td>
                         <td valign="middle" align="center">#$eData[$i]['part']['d']['cond']#</td>
