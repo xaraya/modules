@@ -1,3 +1,19 @@
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head"/>
+<xar:comment>jojo - this is ugly but we cannot assume the js arrays are declared previously, and redeclaring will remove validation for eg subject or body text</xar:comment>
+<script type="text/javascript">
+<!--
+    try
+      {
+        fieldRequired.splice(1,0,"antibotcode");
+        fieldDescription.splice(1,0,"Anti-Bot Code");
+      }
+    catch(err)
+      {
+    var fieldRequired = Array("antibotcode");
+    var fieldDescription = Array("Anti-bot code");
+      }  
+//-->
+</script>
 <xar:if condition="$usecaptcha eq 1">
     <div class="xar-form-input-wrapper">
         <label for="antibotimage" class="xar-form-labelshort" title="#xarML('Enter the value as seen in the image (if you can not read the image, click on it to load a new one).')#">
