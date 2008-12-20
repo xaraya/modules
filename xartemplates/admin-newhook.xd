@@ -1,12 +1,3 @@
-<xar:base-include-javascript module="base" filename="formcheck.js" position="head"/>
-<script type="text/javascript">
-    <!--
-        // Enter name of mandatory fields
-        var fieldRequired= Array("antibotcode");
-        // Enter field description to appear in the dialog box
-        var fieldDescription = Array("Anti-Bot Code");
-    //-->
-    </script>
 <xar:if condition="$usecaptcha eq 1">
     <div class="xar-form-input-wrapper">
         <label for="antibotimage" class="xar-form-labelshort" title="#xarML('Enter the value as seen in the image (if you can not read the image, click on it to load a new one).')#">
