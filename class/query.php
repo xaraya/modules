@@ -56,7 +56,7 @@ class Query
 //---------------------------------------------------------
 // Constructor
 //---------------------------------------------------------
-    function __construct($type='SELECT',$tables='',$fields='')
+    public function __construct($type='SELECT',$tables='',$fields='')
     {
         if (xarModVars::get('query','debugmode')) {
             $this->debugusers = array_keys(unserialize(xarModVars::get('query', 'debugusers')));
@@ -92,7 +92,7 @@ class Query
         $this->bindvars = array();
     }
 
-    function run($statement='',$display=1)
+    public function run($statement='',$display=1)
     {
         if ($this->debugflag) $querystart = microtime(true);
 
@@ -186,51 +186,51 @@ class Query
         return true;
     }
 
-    function close()
+    public function close()
     {
         return $this->dbconn->close();
     }
 
-    function open()
+    public function open()
     {
         $this->openconnection(xarDB::getConn());
     }
 
-    function uselimits()
+    public function uselimits()
     {
         $this->limits = 1;
     }
 
-    function nolimits()
+    public function nolimits()
     {
         $this->limits = 0;
     }
 
-    function row($row=0)
+    public function row($row=0)
     {
         if ($this->output == array()) return array();
         return $this->output[$row];
     }
 
-    function flatrow($row=0)
+    public function flatrow($row=0)
     {
         if ($this->output == array()) return false;
         return array_values($this->output[$row]);
     }
 
-    function output()
+    public function output()
     {
         return $this->output;
     }
 
-    function drop($tables=null)
+    public function drop($tables=null)
     {
         $this->settype("DROP");
         if (isset($tables)) $this->addtables($tables);
         return true;
     }
 
-    function createto($newtablename=null)
+    public function createto($newtablename=null)
     {
         if (!isset($newtablename)) $newtablename = "temp" . xarSession::getVar('role_id') . time();
         $this->createtablename = $newtablename;
@@ -238,7 +238,7 @@ class Query
         return true;
     }
 
-    function addtable()
+    public function addtable()
     {
         $numargs = func_num_args();
         if ($numargs == 2) {
@@ -282,7 +282,7 @@ class Query
     //    $this->tables[] = $argsarray;
     }
 
-    function addfield()
+    public function addfield()
     {
         $numargs = func_num_args();
         if ($numargs == 2) {
@@ -330,7 +330,7 @@ class Query
         if (!$done) $this->fields[] = $argsarray;
     }
 
-    function addfields($fields)
+    public function addfields($fields)
     {
         if (!is_array($fields)) {
             if (!is_string($fields)) {
@@ -361,7 +361,7 @@ class Query
         }
     }
 
-    function addtables($tables)
+    public function addtables($tables)
     {
         if (!is_array($tables)) {
             if (!is_string($tables)) {
@@ -376,7 +376,7 @@ class Query
         }
     }
 
-    function addtablelink($args)
+    public function addtablelink($args)
     {
         $key = $this->key;
         $this->key++;
@@ -394,7 +394,7 @@ class Query
         }
         return $key;
     }
-    function addhaving($args)
+    public function addhaving($args)
     {
         $key = $this->key;
         $this->key++;
@@ -407,32 +407,32 @@ class Query
         }
         return true;
     }
-    function join($field1,$field2,$active=1)
+    public function join($field1,$field2,$active=1)
     {
         $op = $this->on_syntax ? 'INNER JOIN' : 'JOIN';
         return $this->addtablelink(array('field1' => $field1,
                                   'field2' => $field2,
                                   'op' => $op),$active);
     }
-    function leftjoin($field1,$field2,$active=1)
+    public function leftjoin($field1,$field2,$active=1)
     {
         return $this->addtablelink(array('field1' => $field1,
                                   'field2' => $field2,
                                   'op' => 'LEFT JOIN'),$active);
     }
-    function rightjoin($field1,$field2,$active=1)
+    public function rightjoin($field1,$field2,$active=1)
     {
         return $this->addtablelink(array('field1' => $field1,
                                   'field2' => $field2,
                                   'op' => 'RIGHT JOIN'),$active);
     }
-    function having($expression, $conjunction='')
+    public function having($expression, $conjunction='')
     {
         if ($conjunction == '') $conjunction = $this->implicitconjunction;
         return $this->addhaving(array('expression' => $expression,
                                   'conjunction' => $conjunction));
     }
-    function eq($field1,$field2,$active=1)
+    public function eq($field1,$field2,$active=1)
     {
         return $this->addcondition(array('field1' => $field1,
                                   'field2' => $field2,
@@ -445,105 +445,105 @@ class Query
                                   'op' => $this->eqoperator);
         return $key;
     }
-    function ne($field1,$field2,$active=1)
+    public function ne($field1,$field2,$active=1)
     {
         return $this->addcondition(array('field1' => $field1,
                                   'field2' => $field2,
                                   'op' => $this->neoperator),$active);
     }
-    function gt($field1,$field2,$active=1)
+    public function gt($field1,$field2,$active=1)
     {
         return $this->addcondition(array('field1' => $field1,
                                   'field2' => $field2,
                                   'op' => $this->gtoperator),$active);
     }
-    function ge($field1,$field2,$active=1)
+    public function ge($field1,$field2,$active=1)
     {
         return $this->addcondition(array('field1' => $field1,
                                   'field2' => $field2,
                                   'op' => $this->geoperator),$active);
     }
-    function le($field1,$field2,$active=1)
+    public function le($field1,$field2,$active=1)
     {
         return $this->addcondition(array('field1' => $field1,
                                   'field2' => $field2,
                                   'op' => $this->leoperator),$active);
     }
-    function lt($field1,$field2,$active=1)
+    public function lt($field1,$field2,$active=1)
     {
         return $this->addcondition(array('field1' => $field1,
                                   'field2' => $field2,
                                   'op' => $this->ltoperator),$active);
     }
-    function like($field1,$field2,$active=1)
+    public function like($field1,$field2,$active=1)
     {
         return $this->addcondition(array('field1' => $field1,
                                   'field2' => $field2,
                                   'op' => 'LIKE'),$active);
     }
-    function notlike($field1,$field2,$active=1)
+    public function notlike($field1,$field2,$active=1)
     {
         return $this->addcondition(array('field1' => $field1,
                                   'field2' => $field2,
                                   'op' => 'NOT LIKE'),$active);
     }
-    function in($field1,$field2,$active=1)
+    public function in($field1,$field2,$active=1)
     {
         return $this->addcondition(array('field1' => $field1,
                                   'field2' => $field2,
                                   'op' => 'IN'),$active);
     }
-    function notin($field1,$field2,$active=1)
+    public function notin($field1,$field2,$active=1)
     {
         return $this->addcondition(array('field1' => $field1,
                                   'field2' => $field2,
                                   'op' => 'NOT IN'),$active);
     }
-    function regex($field1,$field2,$active=1)
+    public function regex($field1,$field2,$active=1)
     {
         return $this->addcondition(array('field1' => $field1,
                                   'field2' => $field2,
                                   'op' => 'REGEXP'),$active);
     }
 
-    function peq($field1,$field2)
+    public function peq($field1,$field2)
     {
         return $this->eq($field1,$field2,0);
     }
-    function pne($field1,$field2)
+    public function pne($field1,$field2)
     {
         return $this->ne($field1,$field2,0);
     }
-    function pgt($field1,$field2)
+    public function pgt($field1,$field2)
     {
         return $this->gt($field1,$field2,0);
     }
-    function pge($field1,$field2)
+    public function pge($field1,$field2)
     {
         return $this->ge($field1,$field2,0);
     }
-    function ple($field1,$field2)
+    public function ple($field1,$field2)
     {
         return $this->le($field1,$field2,0);
     }
-    function plt($field1,$field2)
+    public function plt($field1,$field2)
     {
         return $this->lt($field1,$field2,0);
     }
-    function plike($field1,$field2)
+    public function plike($field1,$field2)
     {
         return $this->like($field1,$field2,0);
     }
-    function pnotlike($field1,$field2)
+    public function pnotlike($field1,$field2)
     {
         return $this->notlike($field1,$field2,0);
     }
-    function pregex($field1,$field2)
+    public function pregex($field1,$field2)
     {
         return $this->regex($field1,$field2,0);
     }
 
-   function qand()
+   public function qand()
     {
         $numargs = func_num_args();
         if ($numargs == 2) {
@@ -558,7 +558,7 @@ class Query
         }
         return $key;
     }
-    function qor()
+    public function qor()
     {
         $numargs = func_num_args();
         if ($numargs == 2) {
@@ -573,7 +573,7 @@ class Query
         }
         return $key;
     }
-   function pqand()
+   public function pqand()
     {
         $key = $this->_addcondition(0);
         $numargs = func_num_args();
@@ -587,7 +587,7 @@ class Query
         }
         return $key;
     }
-    function pqor()
+    public function pqor()
     {
         $key = $this->_addcondition(0);
         $numargs = func_num_args();
@@ -601,7 +601,7 @@ class Query
         }
         return $key;
     }
-    function addorders($sorts)
+    public function addorders($sorts)
     {
         if (!is_array($sorts)) {
             if (!is_string($sorts)) {
@@ -618,13 +618,13 @@ class Query
             }
         }
     }
-    function getfield($myfield)
+    public function getfield($myfield)
     {
         foreach ($this->fields as $field)
             if ($field['name'] == $myfield) return $field['value'];
         return '';
     }
-    function removefield($myfield)
+    public function removefield($myfield)
     {
         for($i=0;$i<count($this->fields);$i++)
             if ($this->fields[$i]['name'] == $myfield) {
@@ -632,7 +632,7 @@ class Query
                 break;
             }
     }
-    function setalias($name='',$alias='')
+    public function setalias($name='',$alias='')
     {
         if($name == '' || $alias == '') return false;
         for($i=0;$i<count($this->tables);$i++) {
@@ -643,13 +643,13 @@ class Query
         }
         return false;
     }
-    function getcondition($mycondition)
+    public function getcondition($mycondition)
     {
         foreach ($this->conditions as $condition)
             if ($condition['field1'] == $mycondition) return $condition['field2'];
         return '';
     }
-    function removecondition($mycondition)
+    public function removecondition($mycondition)
     {
         foreach($this->conditions as $key => $value)
             if ($value['field1'] == $mycondition) {
@@ -659,7 +659,7 @@ class Query
             }
     }
 
-    function addsecuritycheck($args)
+    public function addsecuritycheck($args)
     {
         $numargs = func_num_args();
         if ($numargs == 2) {
@@ -682,7 +682,7 @@ class Query
         }
     }
 
-    function addcondition($x,$active=1)
+    public function addcondition($x,$active=1)
     {
         foreach($this->conditions as $key => $value)
             if ($value == $x) return $key;
@@ -695,15 +695,15 @@ class Query
         return $key;
     }
 
-    function _addconditions($x)
+/*
+// ------ Private methods --------------------------------------------------------
+*/
+    private function _addconditions($x)
     {
         foreach ($x as $condition); $this->addcondition($condition);
     }
 
-/*
-// ------ Private methods --------------------------------------------------------
-*/
-    function _getbinding($key)
+    private function _getbinding($key)
     {
         if (!isset($this->dbconn)) $this->dbconn = xarDB::getConn();
         $binding = $this->binding[$key];
@@ -717,7 +717,7 @@ class Query
         return $binding['field1'] . " " . $binding['op'] . " " . $sqlfield;
     }
 
-    function _getbindings()
+    private function _getbindings()
     {
         $this->bstring = "";
         foreach ($this->bindings as $binding) {
@@ -728,7 +728,7 @@ class Query
         return $this->bstring;
     }
 
-    function _getcondition($key)
+    private function _getcondition($key)
     {
         if (!isset($this->dbconn)) $this->dbconn = xarDB::getConn();
         $condition = $this->conditions[$key];
@@ -776,7 +776,7 @@ class Query
         return $condition['field1'] . " " . $condition['op'] . " " . $sqlfield;
     }
 
-    function _getconditions()
+    private function _getconditions()
     {
         $this->cstring = "";
        foreach ($this->conjunctions as $conjunction) {
@@ -785,7 +785,7 @@ class Query
         return $this->cstring;
     }
 
-    function _resolve($conjunction)
+    private function _resolve($conjunction)
     {
         if (is_array($conjunction['conditions'])) {
 //                echo $this->cstring . "<br />";
@@ -827,7 +827,7 @@ class Query
         }
     }
 
-    function _addcondition($active=1)
+    private function _addcondition($active=1)
     {
         $key = $this->_getkey();
         $this->conjunctions[$key]=array('conditions' => $key,
@@ -856,14 +856,14 @@ class Query
         $this->openconnection();
     }
 
-    function _getkey()
+    private function _getkey()
     {
         $key = $this->key;
         $this->key++;
         return $key;
     }
 
-    function _statement()
+    private function _statement()
     {
         $this->bindvars = array();
         $st =  $this->type . " ";
@@ -904,7 +904,7 @@ class Query
         return $st;
     }
 
-    function assembledtables()
+    private function assembledtables()
     {
         foreach ($this->tablelinks as $link) {
             if ($link['op'] != 'JOIN') {
@@ -943,7 +943,7 @@ class Query
         return $t;
     }
 
-    function assembledtablelinks()
+    private function assembledtablelinks()
     {
 //FIXME: bug if two joins are between the same tables
         $tablesdone = array();
@@ -980,7 +980,7 @@ class Query
         return $t ;
     }
 
-    function _gettablenamefromalias($alias)
+    private function _gettablenamefromalias($alias)
     {
         foreach ($this->tables as $table) {
             if ($table['alias'] == $alias) return $table['name'];
@@ -988,7 +988,7 @@ class Query
         return false;
     }
 
-    function assembledfields($type)
+    private function assembledfields($type)
     {
         if (!isset($this->dbconn)) $this->dbconn = xarDB::getConn();
         $f = "";
@@ -1108,7 +1108,7 @@ class Query
         return $this->bindstring;
     }
 
-    function assembledconditions()
+    private function assembledconditions()
     {
         $temp1 = $this->conditions;
         $temp2 = $this->conjunctions;
@@ -1134,7 +1134,7 @@ class Query
         return $c;
     }
 
-    function assembledgroups()
+    private function assembledgroups()
     {
         $s = "";
         if (count($this->groups)>0) $s = " GROUP BY ";
@@ -1150,7 +1150,7 @@ class Query
         return $s;
     }
 
-    function assembledhaving()
+    private function assembledhaving()
     {
         $s = "";
         if (count($this->having)>0) $s = " HAVING ";
@@ -1171,7 +1171,7 @@ class Query
         return $s;
     }
 
-    function assembledsorts()
+    private function assembledsorts()
     {
         $s = "";
         if (count($this->sorts)>0 && count($this->fields) > 0 && !isset($this->fields['COUNT(*)'])) {
@@ -1214,7 +1214,7 @@ class Query
         return $bindstring;
     }
 
-    function deconstructfield($field)
+    private function deconstructfield($field)
     {
         return $this->_deconstructfield($field);
     }
@@ -1222,19 +1222,19 @@ class Query
 /*
 // ------ Gets and sets and other public methods --------------------------------------------------------
 */
-    function addgroup($x = '')
+    public function addgroup($x = '')
     {
         if ($x != '') {
             $this->groups[] = array('name' => $x);
         }
     }
-    function addorder($x = '', $y = 'ASC')
+    public function addorder($x = '', $y = 'ASC')
     {
         if ($x != '') {
             $this->sorts[] = array('name' => $x, 'order' => $y);
         }
     }
-    function bindstatement()
+    public function bindstatement()
     {
         if (!isset($this->dbconn)) $this->dbconn = xarDB::getConn();
         $pieces = explode('?',$this->statement);
@@ -1251,12 +1251,12 @@ class Query
         }
         $this->statement = $bound;
     }
-    function clearconditions()
+    public function clearconditions()
     {
         $this->conditions = array();
         $this->conjunctions = array();
     }
-    function clearfield($x)
+    public function clearfield($x)
     {
         $count = count($this->fields);
         for ($i=0;$i<$count;$i++) {
@@ -1268,48 +1268,49 @@ class Query
             }
         }
     }
-    function clearfields()
+    public function clearfields()
     {
         $this->fields = array();
+        $this->distinctarray = array();
     }
-    function clearsorts()
+    public function clearsorts()
     {
         $this->sorts = array();
     }
-    function cleartables()
+    public function cleartables()
     {
         $this->tables = array();
     }
-    function result()
+    public function result()
     {
         return $this->result;
     }
-    function clearresult()
+    public function clearresult()
     {
         $this->result = NULL;
         $this->output = NULL;
     }
-    function getconnection()
+    public function getconnection()
     {
         if (!isset($this->dbconn)) $this->dbconn = xarDB::getConn();
         return $this->dbconn;
     }
-    function getorder($x='')
+    public function getorder($x='')
     {
         if ($this->sorts == array()) return false;
         if ($x == '') return $this->sorts[0]['name'];
         foreach ($this->sorts as $order) if ($order[0] == $x) return $order;
         return false;
     }
-    function getpagerows()
+    public function getpagerows()
     {
         return $this->pagerows;
     }
-    function getrowfields()
+    public function getrowfields()
     {
         return $this->rowfields;
     }
-    function getrows()
+    public function getrows()
     {
         if (isset($this->output) && $this->rowstodo == 0) return count($this->output);
         if ($this->type == 'SELECT' && $this->rowstodo != 0 && $this->limits == 1) {
@@ -1358,11 +1359,11 @@ class Query
         }
         return $this->rows;
     }
-    function getrowstodo()
+    public function getrowstodo()
     {
         return $this->rowstodo;
     }
-    function getsort($x='')
+    public function getsort($x='')
     {
         if ($this->sorts == array()) return false;
         if ($x == '') return $this->sorts[0]['order'];
@@ -1371,50 +1372,50 @@ class Query
 //        if(is_array($order)) return $order['order'];
         return false;
     }
-    function getstartat()
+    public function getstartat()
     {
         return $this->startat;
     }
-    function getstatement()
+    public function getstatement()
     {
         if ($this->usebinding) $this->bindstatement();
         return $this->statement;
     }
-    function getto()
+    public function getto()
     {
         return $this->type;
     }
-    function gettype()
+    public function gettype()
     {
         return $this->type;
     }
-    function getversion()
+    public function getversion()
     {
         return $this->version;
     }
-    function lastid($table="", $id="")
+    public function lastid($table="", $id="")
     {
         if (!isset($this->dbconn)) $this->dbconn = xarDB::getConn();
         $result = $this->dbconn->Execute("SELECT MAX($id) FROM $table");
         list($id) = $result->fields;
         return $id;
     }
-    function nextid($table="", $id="")
+    public function nextid($table="", $id="")
     {
         if (!isset($this->dbconn)) $this->dbconn = xarDB::getConn();
         return $this->dbconn->PO_Insert_ID($table,$id);
     }
-    function openconnection($x = '')
+    public function openconnection($x = '')
     {
         if (empty($x)) $this->dbconn = xarDB::getConn();
         else $this->dbconn = $x;
     }
-    function qecho($statement='')
+    public function qecho($statement='')
     {
         if (empty($statement)) echo $this->tostring();
         else echo $statement;
     }
-    function sessiongetvar($x)
+    public function sessiongetvar($x)
     {
         $q = xarSession::getVar($x);
         if (empty($q) || !isset($q)) return;
@@ -1422,13 +1423,13 @@ class Query
         $this->open();
         return $this;
     }
-    function sessionsetvar($x)
+    public function sessionsetvar($x)
     {
         $q = $this;
         unset($q->dbconn);
         xarSession::setVar($x, serialize($q));
     }
-    function setdistinct($x = 1)
+    public function setdistinct($x = 1)
     {
         if ($x == 1) $this->distinctselect = '';
         else {
@@ -1436,29 +1437,29 @@ class Query
             $this->distinctarray = $this->_deconstructfield($x);
         }
     }
-    function setgroup($x = '')
+    public function setgroup($x = '')
     {
         if ($x != '') {
             $this->groups = array();
             $this->addgroup($x);
         }
     }
-    function setorder($x = '',$y = 'ASC')
+    public function setorder($x = '',$y = 'ASC')
     {
         if ($x != '') {
             $this->sorts = array();
             $this->addorder($x,$y);
         }
     }
-    function setrowstodo($x = 0)
+    public function setrowstodo($x = 0)
     {
         $this->rowstodo = $x;
     }
-    function setstartat($x = 0)
+    public function setstartat($x = 0)
     {
         $this->startat = $x;
     }
-    function setstatement($statement='')
+    public function setstatement($statement='')
     {
         if ($statement != '') {
             $this->israwstatement = 1;
@@ -1471,32 +1472,32 @@ class Query
             $this->statement = $this->_statement();
         }
     }
-    function settable($x)
+    public function settable($x)
     {
         $this->cleartables();
         $this->addtable($x);
     }
-    function settype($x = 'SELECT')
+    public function settype($x = 'SELECT')
     {
         $this->type = $x;
     }
-    function setusebinding($x = true)
+    public function setusebinding($x = true)
     {
         $this->usebinding = $x;
     }
-    function tostring()
+    public function tostring()
     {
         $this->setstatement();
         return $this->getstatement();
     }
-    function addconditions($q)
+    public function addconditions($q)
     {
         if ($q->gettype() != $this->gettype()) return false;
         foreach ($q->conditions as $key => $value) $this->addcondition($value);
 //        foreach ($q->conditions as $key => $value) $this->conditions[$key] = $value;
 //        foreach ($q->conjunctions as $key => $value) $this->conjunctions[$key] = $value;
     }
-    function unite($q1, $q2)
+    public function unite($q1, $q2)
     {
         if ($q1->gettype() != $q2->gettype()) return false;
         $this->fields = $q1->fields;
@@ -1508,7 +1509,7 @@ class Query
         foreach ($q2->conjunctions as $key => $value) $this->conjunctions[$key] = $value;
         return $this;
     }
-    function getwhereclause()
+    public function getwhereclause()
     {
         $bind = $this->usebinding;
         $this->setusebinding(false);
@@ -1516,52 +1517,52 @@ class Query
         $this->setusebinding($bind);
         return substr($clause, 6);;
     }
-    function setconditions($q)
+    public function setconditions($q)
     {
         $this->clearconditions();
         $this->addconditions($q);
     }
-    function seteqop($x='=')
+    public function seteqop($x='=')
     {
         if( in_array($x,array('=','eq'))) $this->eqoperator = $x;
     }
-    function setneop($x='!=')
+    public function setneop($x='!=')
     {
         if(in_array($x, array('!=','ne'))) $this->neoperator = $x;
     }
-    function setgtop($x='>')
+    public function setgtop($x='>')
     {
         if(in_array($x, array('>','gt'))) $this->gtoperator = $x;
     }
-    function setgeop($x='>=')
+    public function setgeop($x='>=')
     {
         if(in_array($x, array('>=','ge'))) $this->geoperator = $x;
     }
-    function setltop($x='<')
+    public function setltop($x='<')
     {
         if(in_array($x, array('<','lt'))) $this->ltoperator = $x;
     }
-    function setleop($x='<=')
+    public function setleop($x='<=')
     {
         if(in_array($x, array('<=','le'))) $this->geoperator = $x;
     }
-    function setbinding($x=true)
+    public function setbinding($x=true)
     {
         $this->usebinding = $x;
     }
-    function setorop($x='OR')
+    public function setorop($x='OR')
     {
         $temp = $this->oroperator;
         if(in_array($x, array('or','OR'))) $this->oroperator = $x;
         if($this->implicitconjunction == $temp) $this->implicitconjunction = $x;
     }
-    function setandop($x='AND')
+    public function setandop($x='AND')
     {
         $temp = $this->andoperator;
         if(in_array($x, array('and','AND'))) $this->andoperator = $x;
         if($this->implicitconjunction == $temp) $this->implicitconjunction = $x;
     }
-    function setalphaoperators()
+    public function setalphaoperators()
     {
         $this->seteqop('eq');
         $this->setneop('ne');
@@ -1570,7 +1571,7 @@ class Query
         $this->setltop('lt');
         $this->setleop('le');
     }
-    function talktoDD()
+    public function talktoDD()
     {
         $this->setalphaoperators();
         $this->setandop('and');
