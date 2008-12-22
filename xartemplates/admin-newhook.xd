@@ -16,7 +16,7 @@
 </script>
 <xar:if condition="$usecaptcha eq 1">
     <div class="xar-form-input-wrapper">
-        <label for="antibotimage" class="xar-form-labelshort" title="#xarML('Enter the value as seen in the image (if you can not read the image, click on it to load a new one).')#">
+        <label for="antibotimage" class="xar-form-label" title="#xarML('Enter the value as seen in the image (if you can not read the image, click on it to load a new one).')#">
             <xar:mlstring>Anti-Bot Code</xar:mlstring>
         </label>
         <p>
@@ -24,19 +24,19 @@
                 src="#xarModURL('formantibot', 'user', 'image')#" 
                 onclick="this.src = this.src + '?' + (new Date()).getTime(); return true;" alt="antibotimage" title="#xarML('secure antibot image')#"/>
         </p>
-        <span class="xar-form-labelshort">&#160;</span>
+        <span class="xar-form-label">&#160;</span>
         <p>
              <xar:mlstring>Can't read it? Click the image again.</xar:mlstring>
         </p>
         <xar:if condition="isset($antibotinvalid) AND $antibotinvalid">
-           <span class="xar-form-labelshort">&#160;</span>    
+           <span class="xar-form-label">&#160;</span>    
            <p class="xar-error xar-clear-left ">
                 <xar:mlstring>Anti-bot code is incorrect, please try again</xar:mlstring>
             </p>
         </xar:if>
     </div>        
     <div class="xar-form-input-wrapper">           
-        <label for="antibotcode" class="xar-clear-left xar-form-labelshort" >
+        <label for="antibotcode" class="xar-clear-left xar-form-label" >
             <xar:mlstring>Enter Anti-Bot Code</xar:mlstring>
         </label>
         <p>
