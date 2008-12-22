@@ -1,0 +1,29 @@
+<xar:comment>
+    Initialise the jquery.scrollto tool
+</xar:comment>
+
+<xar:comment>
+    Make sure jQuery is going to be loaded.
+</xar:comment>
+<xar:template file="jquery" module="jquery" />
+
+<xar:comment>
+    Load the main plugin javascript.
+</xar:comment>
+
+<xar:base-include-javascript filename="jquery.scrollTo.js" module="jquery" />
+<xar:base-include-javascript filename="jquery.localscroll.js" module="jquery" />
+
+<xar:comment>
+    The script will be applied to every anchor on the page.
+</xar:comment>
+
+<xar:if condition="!empty($selector)">
+    <xar:if condition="!empty($options)">
+        <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').localScroll({ $options });});" />
+    <xar:else />
+        <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').localScroll();});" />
+    </xar:if>
+<xar:else />
+    <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery.localScroll();});" />
+</xar:if>
