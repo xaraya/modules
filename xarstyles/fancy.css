@@ -172,6 +172,7 @@ div.fancy_bg {
 
 div.fancy_bg_n {
 	top: -18px;
+    left: 0;
 	width: 100%;
 	height: 18px;
 	background: transparent url(../xarimages/fancy_shadow_n.png) repeat-x;
@@ -202,6 +203,7 @@ div.fancy_bg_se {
 
 div.fancy_bg_s {
 	bottom: -18px;
+    left: 0;
 	width: 100%;
 	height: 18px;
 	background: transparent url(../xarimages/fancy_shadow_s.png) repeat-x;
