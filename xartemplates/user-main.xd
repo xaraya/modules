@@ -1,15 +1,7 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
-<xar:if condition="isset($AntiBot_Available) AND $AntiBot_Available AND $useantibot">
-    <script type="text/javascript">
-    <!--
-        // Enter name of mandatory fields
-        var fieldRequired= Array("useremail", "usermessage","username","antibotcode");
-        // Enter field description to appear in the dialog box
-        var fieldDescription = Array("Your Email","Your message", "Your Name", "Anti-Bot Code");
-    //-->
-    </script>
-<xar:elseif condition="$useantibot and (xarModGetVar('formcaptcha','usecaptcha') eq true)" />
+
+<xar:if condition="$useantibot and (xarModGetVar('formcaptcha','usecaptcha') eq true)">
    <script type="text/javascript">
     <!--
         // Enter name of mandatory fields
@@ -181,34 +173,15 @@
                     </div>
                 </xar:if>
             </xar:if>
-
-            <xar:comment>Start captcha support</xar:comment>
-            <xar:comment>Formantibot</xar:comment>
-            <xar:if condition="!xarUserIsLoggedIn()">
-            <xar:if condition="xarModIsAvailable('formantibot') AND $useantibot eq '1'">
-                <div class="xar-form-input-wrapper">
-                    <label for="antibodcode" class="xar-form-label" title="#xarML('Enter the value as seen in the image (if you can not read the image, click on it to load a new one).')#">
-                        <xar:mlstring>Anti-Bot Code</xar:mlstring>
-                    </label>
-                    <div class="xar-form-container-after">
-                        <xar:if condition="isset($antibotinvalid) AND $antibotinvalid">
-                            <span class="xar-error">
-                                <xar:mlstring>Anti-bot code entry was incorrect - please try again...</xar:mlstring>
-                            </span>
-                            <br />
-                        </xar:if>
-                        <img id="antibotimage" name="antibotimage"                        
-                            src="#xarModURL('formantibot', 'user', 'image')#" 
-                            onclick="this.src = this.src + '?' + (new Date()).getTime(); return true;" alt="antibotimage" title="#xarML('secure antibot image')#"/>
-                        <br />
-                        <input type="text" name="antibotcode" id="antibotcode" size="10" value="" maxlength="10"  />
-                        <xar:mlstring>Please enter the Anti-Bot Code</xar:mlstring>
-                        <p class="xar-form-input-after">
-                            <xar:mlstring>Can't read it? Click the image to generate a new code.</xar:mlstring>
-                        </p>
-                    </div>
-                </div>
+            <xar:comment> Make provision for hooks on new item - except for DD handled elsehwere</xar:comment>
+            <xar:if condition="!empty($hooks)">
+                <xar:foreach in="$hooks" key="$hookmod">
+                    <xar:if condition="$hookmod ne 'dynamicdata'">
+                        #$hooks[$hookmod]#
+                    </xar:if>
+                </xar:foreach>
             </xar:if>
+        
             <xar:comment>Anti spam formcaptcha code</xar:comment>
             <xar:if condition="$useantibot eq '1' and xarModIsAvailable('formcaptcha') and xarModGetVar('formcaptcha','usecaptcha') eq true">
                 <div class="xar-form-input-wrapper">
@@ -231,7 +204,7 @@
                     </div>
                 </div>
              </xar:if>
-       </xar:if>
+
        <xar:comment>End captcha support code</xar:comment>
 
        <div class="xar-form-input-wrapper-after xar-padding-thicktop">

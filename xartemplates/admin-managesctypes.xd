@@ -6,7 +6,6 @@
 <div class="xar-mod-body">
 
  <xar:template type="module" file="admin-menu" />
-
     <h2>
         <xar:ml>
             <xar:mlstring>Manage Sitecontact Forms : #(1)</xar:mlstring>
@@ -61,10 +60,10 @@
         <div class="xar-form-input-wrapper-after">
         <xar:data-input type="checkbox" name="useantibot" id="useantibot" value="$item['useantibot']"  />
             <label for="useantibot" title="#xarML('Use form Anti-Bot captcha?')#">
-                 <xar:mlstring>Use form captcha (formcaptcha or formantibot) ?</xar:mlstring>
+                 <xar:mlstring>Use form captcha?</xar:mlstring>
             </label>
             <xar:if condition="!xarModIsAvailable('formantibot')">
-                <p class="xar-error"><xar:mlstring>You must install the FormCaptcha or FormAntiBot module for this Anti-Bot CAPTCHA to work.</xar:mlstring></p>
+                <p class="xar-error"><xar:mlstring>You must install FormAntiBot module for this Anti-Bot CAPTCHA to work.</xar:mlstring></p>
             </xar:if>
        </div>
     </fieldset>
@@ -507,7 +506,7 @@
         <xar:mlvar>#$item.sctypename#</xar:mlvar>
     </xar:ml>
     </h3>
-<hr>
+    <hr />
 
     <xar:if condition="empty($item.customtitle)">
         <xar:set name="contacttitle"><xar:mlstring>Contact Form</xar:mlstring></xar:set>

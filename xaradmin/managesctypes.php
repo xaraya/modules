@@ -134,6 +134,40 @@ function sitecontact_admin_managesctypes()
 
         } elseif ($action == 'update') {
 
+             //check for antibot
+            // unset the hook and then reset it as necessary
+            if (xarModIsAvailable('formantibot')) {
+                // Make sure the overall module hook is disabled so we can do each form
+                xarModAPIFunc(
+                    'modules', 'admin', 'disablehooks',
+                    array(
+                        'callerModName'    => 'sitecontact',
+                        'callerItemType'   => 0,
+                        'hookModName'      => 'formantibot'
+                    )
+                );
+
+                if ($useantibot) {
+                    xarModAPIFunc(
+                        'modules', 'admin', 'enablehooks',
+                        array(
+                            'callerModName'    => 'sitecontact',
+                            'callerItemType'   => $scid,
+                            'hookModName'      => 'formantibot'
+                        )
+                    );
+                } else {
+                    xarModAPIFunc(
+                        'modules', 'admin', 'disablehooks',
+                        array(
+                            'callerModName'    => 'sitecontact',
+                            'callerItemType'   => $scid,
+                            'hookModName'      => 'formantibot'
+                        )
+                    );
+                }
+            }
+            
              $updatedscid=xarModAPIFunc('sitecontact','admin','updatesctype', $item);
 
              if (!$updatedscid) {
@@ -215,8 +249,8 @@ function sitecontact_admin_managesctypes()
 
     $data['newurl'] = xarModURL('sitecontact','admin','managesctypes',
                                array('action' => 'new'));
-	$propdata = isset($propdata)?$propdata:array();
-	
+    $propdata = isset($propdata)?$propdata:array();
+    
     // Fill in relevant variables
     if ($action == 'new') {
         xarSessionSetVar('statusmsg','');
@@ -366,7 +400,6 @@ function sitecontact_admin_managesctypes()
          /* check the input values for this object and do ....what here? */
          $isvalid = $object->checkInput();
 
-         /*we just want a copy of data - don't need to save it in a table (no request yet anyway!) */
          $properties =& $object->getProperties();
          $dditems = $properties; //backward compatibility
          foreach ($dditems as $itemid => $fields) {

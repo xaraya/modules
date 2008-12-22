@@ -45,7 +45,7 @@ function sitecontact_user_respond($args)
     //formcapcha variables
     if (!xarVarFetch('antiselect',    'int:0:',   $antiselect,  NULL,  XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('antiword',      'str:1',    $antiword,    '',    XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('antibotcode',   'str:6:10', $antibotcode, '',    XARVAR_NOT_REQUIRED)) return;
+    //if (!xarVarFetch('antibotcode',   'str:6:10', $antibotcode, '',    XARVAR_NOT_REQUIRED)) return;
     //custom contact email that can be passed in
     if (!xarVarFetch('customcontact', 'str:0:',   $customcontact, '',  XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('return_url',     'str:0:',  $return_url,   '',   XARVAR_NOT_REQUIRED)) {return;}
@@ -126,7 +126,7 @@ function sitecontact_user_respond($args)
                  'return_url'      => $return_url,
                  'antiselect'      => $antiselect,
                  'antiword'        => $antiword,
-                 'antibotcode'     => $antibotcode,
+               //  'antibotcode'     => $antibotcode,
                  'invalid'         => $invalid,
                  'customcontact'   => $customcontact,
                  'return_url'      => $return_url,
@@ -144,6 +144,13 @@ function sitecontact_user_respond($args)
         if (file_exists($customfunc)) {
             include_once($customfunc);
         }
+         //new hooks
+         $item['module'] = 'sitecontact';
+         $item['itemid'] = 0;
+         $item['itemtype'] = $formdata['scid'];
+         $item['antibotinvalid'] = isset($checkdata['antibotinvalid'])?$checkdata['antibotinvalid']:0;
+         $checkdata['hooks'] = xarModCallHooks('item','new','',$item);  
+               
         if (isset($blockurl) && !empty($blockurl)) {
            xarSessionSetVar('sitecontact.blockdata',$checkdata);
            xarResponseRedirect($blockurl);

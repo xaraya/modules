@@ -49,7 +49,7 @@ function sitecontact_userapi_respond($args)
         $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $defaultformid));
     }
     $formdata=$formdata[0];
-	
+
     if ($formdata['scactive'] !=1) { //form but not active
         $msg = xarML('The form requested is not available');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
@@ -99,15 +99,7 @@ function sitecontact_userapi_respond($args)
     $casmsg = '';
 
     if (!xarUserIsLoggedIn()) { //we want to use captch else don't bother if user is logged in
-        //just check for valid input and use the isvalid array futher down to return to our display form instead of doing it here
-        if (xarModIsAvailable('formantibot') && $useantibot) {
-        $correctcode =xarModAPIFunc('formantibot', 'user', 'validate', array('userInput' => $antibotcode));
-            if (!$correctcode) {
-                    $antibotinvalid = TRUE;
-                    $botreset = TRUE;
-            }
-        }
-
+       
         if (xarModIsAvailable('formcaptcha') && xarModGetVar('formcaptcha','usecaptcha') == true && $useantibot) {
             $autocap =xarModGetVar('formcaptcha','autocaptcha');
             
@@ -251,6 +243,9 @@ function sitecontact_userapi_respond($args)
         }
     }
 
+   $antibotinvalid =0;//initialize    
+   $hookinfo = xarModCallHooks('item', 'submit', $scid, array('itemtype'=>$scid));
+   $antibotinvalid = isset($hookinfo['antibotinvalid']) ? $hookinfo['antibotinvalid'] : 0;
     //add everything to an array for easy processing later
     $data = array('authid'         => xarSecGenAuthKey('sitecontact'),
                       'scid'           => $scid,
@@ -293,7 +288,7 @@ function sitecontact_userapi_respond($args)
                       'invalid'        => $invalid,
                       'return_url'     => $return_url,
                       'blockurl'       => $blockurl,
-                      'customcontact'  => $customcontact	
+                      'customcontact'  => $customcontact    
                      );
 
     if (($isvalid == FALSE) || ($antibotinvalid == TRUE) || ($badcaptcha == TRUE) || is_array($invalid)) {

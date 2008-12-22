@@ -52,11 +52,16 @@ function sitecontact_user_main($args)
     }
 
     //Have we got an active form
-    if (!is_array($formdata)) { //exists but not active
+    if (!is_array($formdata) || empty($formdata)) { //exists but not active
       //fallback to default form again
       $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $defaultformid));
     }
-    $formdata=$formdata[0];
+    if (!is_array($formdata) || empty($formdata)) 
+    {
+        return; //default form
+    } else {
+        $formdata=$formdata[0];
+    }
 
     if ($formdata['scactive'] !=1) { //form but not active
         $msg = xarML('The form requested is not available');
@@ -201,6 +206,7 @@ function sitecontact_user_main($args)
     $data['scform']=$data['sctypename'];
     //include custom functions for preprocessing data
 
+
     $customfunc = 'modules/sitecontact/xarworkflowapi/'.$data['sctypename'].'.php';
 
     if (file_exists($customfunc)) {
@@ -211,6 +217,20 @@ function sitecontact_user_main($args)
     if (xarModIsAvailable('formantibot')) {
         $data['AntiBot_Available'] = TRUE;
     }
+
+   if (!empty($formdata['scid'])) {
+        // preset some variables for hook modules
+        $item['module'] = 'sitecontact';
+        $item['itemid'] = 0;
+        $item['itemtype'] = $formdata['scid'];
+        //$item['antibotinvalid'] = isset($antibotinvalid)?$antibotinvalid:0;
+        $hooks = xarModCallHooks('item','new','',$item);
+    }
+    if (empty($hooks)) {
+        $hooks = '';
+    }
+    $data['hooks'] = $hooks;
+
 
     $templatedata = xarTplModule('sitecontact', 'user', 'main', $data, $template);
 
