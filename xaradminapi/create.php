@@ -3,7 +3,7 @@
  * Scheduler module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -32,7 +32,7 @@ function scheduler_adminapi_create($args)
     $modules = xarModAPIFunc('modules', 'admin', 'getlist',
                              array('filter' => array('AdminCapable' => 1)));
 
-	$modnames = array();
+    $modnames = array();
 
     foreach ($modules as $mod) {
         $modnames[] = $mod['name'];
@@ -49,19 +49,19 @@ function scheduler_adminapi_create($args)
         $invalid[] = 'func';
     }
 
-	$triggers = xarModAPIFunc('scheduler','user','triggers');
+    $triggers = xarModAPIFunc('scheduler','user','triggers');
     if (!isset($job_trigger)) {
         $invalid[] = 'trigger';
     } elseif (!is_numeric($job_trigger) && !isset($triggers[$job_trigger])) {
         $invalid[] = 'trigger';
     }
 
-	$intervals = xarModAPIFunc('scheduler','user','intervals');
+    $intervals = xarModAPIFunc('scheduler','user','intervals');
     if (empty($job_interval) || !isset($intervals[$job_interval])) {
         $invalid[] = 'job_interval';
     }
 
-	$checktypes = xarmodAPIFunc('scheduler','user','sources');
+    $checktypes = xarmodAPIFunc('scheduler','user','sources');
     if (!empty($checktype) && !isset($checktype, $checktypes)) {
         $invalid[] = 'checktype';
     }
@@ -78,47 +78,47 @@ function scheduler_adminapi_create($args)
         $lastrun = 0;
     }
 
-	if(!is_array($config)) {
-		$config = '';
-	} else {
-		if(!isset($config['params']) || !is_string($config['params'])) {
-			$config['params'] = '';
-		}
-		if(!isset($config['startdate']) || !is_numeric($config['startdate'])) {
-			$config['startdate'] = '';
-		}
-		if(!isset($config['enddate']) || !is_numeric($config['enddate'])) {
-			$config['enddate'] = '';
-		}
-		if(!isset($config['crontab']) || !is_array($config['crontab'])) {
-			$config['crontab'] = array('minute' => '',
-				'hour' => '',
-				'day' => '',
-				'month' => '',
-				'weekday' => '',
-				'nextrun' => 0
-			);
-		} else {
-			if(!isset($config['minute']) || !is_string($config['minute'])) {
-				$config['minute'] = '';
-			}
-			if(!isset($config['hour']) || !is_string($config['hour'])) {
-				$config['hour'] = '';
-			}
-			if(!isset($config['day']) || !is_string($config['day'])) {
-				$config['day'] = '';
-			}
-			if(!isset($config['month']) || !is_string($config['month'])) {
-				$config['month'] = '';
-			}
-			if(!isset($config['weekday']) || !is_string($config['weekday'])) {
-				$config['weekday'] = '';
-			}
-			if(!isset($config['nextrun']) || !is_numeric($config['nextrun'])) {
-				$config['nextrun'] = 0;
-			}
-		}
-	}
+    if(!is_array($config)) {
+        $config = '';
+    } else {
+        if(!isset($config['params']) || !is_string($config['params'])) {
+            $config['params'] = '';
+        }
+        if(!isset($config['startdate']) || !is_numeric($config['startdate'])) {
+            $config['startdate'] = '';
+        }
+        if(!isset($config['enddate']) || !is_numeric($config['enddate'])) {
+            $config['enddate'] = '';
+        }
+        if(!isset($config['crontab']) || !is_array($config['crontab'])) {
+            $config['crontab'] = array('minute' => '',
+                'hour' => '',
+                'day' => '',
+                'month' => '',
+                'weekday' => '',
+                'nextrun' => 0
+            );
+        } else {
+            if(!isset($config['minute']) || !is_string($config['minute'])) {
+                $config['minute'] = '';
+            }
+            if(!isset($config['hour']) || !is_string($config['hour'])) {
+                $config['hour'] = '';
+            }
+            if(!isset($config['day']) || !is_string($config['day'])) {
+                $config['day'] = '';
+            }
+            if(!isset($config['month']) || !is_string($config['month'])) {
+                $config['month'] = '';
+            }
+            if(!isset($config['weekday']) || !is_string($config['weekday'])) {
+                $config['weekday'] = '';
+            }
+            if(!isset($config['nextrun']) || !is_numeric($config['nextrun'])) {
+                $config['nextrun'] = 0;
+            }
+        }
+    }
 
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -138,7 +138,7 @@ function scheduler_adminapi_create($args)
         $result = '';
     }
 
-	$config = serialize($config);
+    $config = serialize($config);
 
     // Load up database details.
     $dbconn = xarDB::getConn();
@@ -146,27 +146,27 @@ function scheduler_adminapi_create($args)
 
     $table = $xartable['scheduler_jobs'];
 
-	$query = "INSERT INTO $table (
-					job_trigger,
-					checktype,
-					lastrun,
-					job_interval,
-					module,
-					functype,
-					func,
-					result,
-					checkvalue,
-					config)
-				VALUES (?,?,?,?,?,?,?,?,?,?)";
+    $query = "INSERT INTO $table (
+                    job_trigger,
+                    checktype,
+                    lastrun,
+                    job_interval,
+                    module,
+                    functype,
+                    func,
+                    result,
+                    checkvalue,
+                    config)
+                VALUES (?,?,?,?,?,?,?,?,?,?)";
 
-	$bindvars = array($job_trigger, $checktype, $lastrun, $job_interval, $module, $functype, $func, $result, $checkvalue, $config);
+    $bindvars = array($job_trigger, $checktype, $lastrun, $job_interval, $module, $functype, $func, $result, $checkvalue, $config);
 
     $dbconn->Execute($query, $bindvars);
 
     // Get ID of row inserted.
     $itemid = $dbconn->getLastId($table);
 
-	xarModVars::set('scheduler','running.' . $itemid, 0);
+    xarModVars::set('scheduler','running.' . $itemid, 0);
 
     $item = $args;
     $item['module'] = 'scheduler';

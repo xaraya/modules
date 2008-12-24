@@ -3,7 +3,7 @@
  * Scheduler module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -31,16 +31,16 @@ function scheduler_admin_delete()
     if (empty($confirm)) {
         // No confirmation yet - get one
 
-		$job = xarmodAPIFunc('scheduler','user','get',array('itemid'=>$itemid));
+        $job = xarmodAPIFunc('scheduler','user','get',array('itemid'=>$itemid));
 
-		if (empty($job)) {
-	        $msg = xarML('Job #(1) for #(2) function #(3)() in module #(4)',
-	                     $itemid, 'admin', 'delete', 'scheduler');
-	        throw new Exception($msg);
-		}
+        if (empty($job)) {
+            $msg = xarML('Job #(1) for #(2) function #(3)() in module #(4)',
+                         $itemid, 'admin', 'delete', 'scheduler');
+            throw new Exception($msg);
+        }
 
-		$job['authid'] = xarSecGenAuthKey();
-		$job['triggers'] = xarModAPIFunc('scheduler','user','triggers');
+        $job['authid'] = xarSecGenAuthKey();
+        $job['triggers'] = xarModAPIFunc('scheduler','user','triggers');
         return $job;
     }
 

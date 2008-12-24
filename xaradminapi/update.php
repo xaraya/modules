@@ -3,7 +3,7 @@
  * Scheduler module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -37,7 +37,7 @@ function scheduler_adminapi_update($args)
     $modules = xarModAPIFunc('modules', 'admin', 'getlist',
                              array('filter' => array('AdminCapable' => 1)));
 
-	$modnames = array();
+    $modnames = array();
 
     foreach ($modules as $mod) {
         $modnames[] = $mod['name'];
@@ -54,19 +54,19 @@ function scheduler_adminapi_update($args)
         $invalid[] = 'func';
     }
 
-	$triggers = xarModAPIFunc('scheduler','user','triggers');
+    $triggers = xarModAPIFunc('scheduler','user','triggers');
     if (!isset($job_trigger)) {
         $invalid[] = 'trigger';
     } elseif (!is_numeric($job_trigger) && !isset($triggers[$job_trigger])) {
         $invalid[] = 'trigger';
     }
 
-	$intervals = xarModAPIFunc('scheduler','user','intervals');
+    $intervals = xarModAPIFunc('scheduler','user','intervals');
     if (empty($job_interval) || !isset($intervals[$job_interval])) {
         $invalid[] = 'job_interval';
     }
 
-	$checktypes = xarmodAPIFunc('scheduler','user','sources');
+    $checktypes = xarmodAPIFunc('scheduler','user','sources');
     if (!empty($checktype) && !isset($checktype, $checktypes)) {
         $invalid[] = 'checktype';
     }
@@ -83,47 +83,47 @@ function scheduler_adminapi_update($args)
         $lastrun = 0;
     }
 
-	if(!is_array($config)) {
-		$config = '';
-	} else {
-		if(!isset($config['params']) || !is_string($config['params'])) {
-			$config['params'] = '';
-		}
-		if(!isset($config['startdate']) || !is_numeric($config['startdate'])) {
-			$config['startdate'] = '';
-		}
-		if(!isset($config['enddate']) || !is_numeric($config['enddate'])) {
-			$config['enddate'] = '';
-		}
-		if(!isset($config['crontab']) || !is_array($config['crontab'])) {
-			$config['crontab'] = array('minute' => '',
-				'hour' => '',
-				'day' => '',
-				'month' => '',
-				'weekday' => '',
-				'nextrun' => 0
-			);
-		} else {
-			if(!isset($config['minute']) || !is_string($config['minute'])) {
-				$config['minute'] = '';
-			}
-			if(!isset($config['hour']) || !is_string($config['hour'])) {
-				$config['hour'] = '';
-			}
-			if(!isset($config['day']) || !is_string($config['day'])) {
-				$config['day'] = '';
-			}
-			if(!isset($config['month']) || !is_string($config['month'])) {
-				$config['month'] = '';
-			}
-			if(!isset($config['weekday']) || !is_string($config['weekday'])) {
-				$config['weekday'] = '';
-			}
-			if(!isset($config['nextrun']) || !is_numeric($config['nextrun'])) {
-				$config['nextrun'] = 0;
-			}
-		}
-	}
+    if(!is_array($config)) {
+        $config = '';
+    } else {
+        if(!isset($config['params']) || !is_string($config['params'])) {
+            $config['params'] = '';
+        }
+        if(!isset($config['startdate']) || !is_numeric($config['startdate'])) {
+            $config['startdate'] = '';
+        }
+        if(!isset($config['enddate']) || !is_numeric($config['enddate'])) {
+            $config['enddate'] = '';
+        }
+        if(!isset($config['crontab']) || !is_array($config['crontab'])) {
+            $config['crontab'] = array('minute' => '',
+                'hour' => '',
+                'day' => '',
+                'month' => '',
+                'weekday' => '',
+                'nextrun' => 0
+            );
+        } else {
+            if(!isset($config['minute']) || !is_string($config['minute'])) {
+                $config['minute'] = '';
+            }
+            if(!isset($config['hour']) || !is_string($config['hour'])) {
+                $config['hour'] = '';
+            }
+            if(!isset($config['day']) || !is_string($config['day'])) {
+                $config['day'] = '';
+            }
+            if(!isset($config['month']) || !is_string($config['month'])) {
+                $config['month'] = '';
+            }
+            if(!isset($config['weekday']) || !is_string($config['weekday'])) {
+                $config['weekday'] = '';
+            }
+            if(!isset($config['nextrun']) || !is_numeric($config['nextrun'])) {
+                $config['nextrun'] = 0;
+            }
+        }
+    }
 
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -141,7 +141,7 @@ function scheduler_adminapi_update($args)
         throw new BadParameterException($msg);
     }
 
-	$config = serialize($config);
+    $config = serialize($config);
 
     //Load Table Maintenance API
     sys::import('xaraya.tableddl');
@@ -153,43 +153,43 @@ function scheduler_adminapi_update($args)
 
     $table = $xartable['scheduler_jobs'];
 
-	$query = "UPDATE $table SET
-					job_trigger=?,
-					checktype=?,
-					lastrun=?,
-					job_interval=?,
-					module=?,
-					functype=?,
-					func=?,
-					result=?,
-					checkvalue=?,
-					config=?
-				WHERE id=?";
+    $query = "UPDATE $table SET
+                    job_trigger=?,
+                    checktype=?,
+                    lastrun=?,
+                    job_interval=?,
+                    module=?,
+                    functype=?,
+                    func=?,
+                    result=?,
+                    checkvalue=?,
+                    config=?
+                WHERE id=?";
 
-	$bindvars = array(
-					$job_trigger,
-					$checktype,
-					$lastrun,
-					$job_interval,
-					$module,
-					$functype,
-					$func,
-					$result,
-					$checkvalue,
-					$config,
-					$id);
+    $bindvars = array(
+                    $job_trigger,
+                    $checktype,
+                    $lastrun,
+                    $job_interval,
+                    $module,
+                    $functype,
+                    $func,
+                    $result,
+                    $checkvalue,
+                    $config,
+                    $id);
 
-	try {
+    try {
         $dbconn->begin();
         $stmt = $dbconn->prepareStatement($query);     
         $stmt->executeUpdate($bindvars);
 
-	    $item = $args;
-	    $item['module'] = 'scheduler';
-	    $item['itemid'] = $id;
-	    xarModCallHooks('item', 'update', $id, $item);
+        $item = $args;
+        $item['module'] = 'scheduler';
+        $item['itemid'] = $id;
+        xarModCallHooks('item', 'update', $id, $item);
 
-		$dbconn->commit();
+        $dbconn->commit();
     } catch (SQLException $e) {
         $dbconn->rollback();                
         throw $e;              

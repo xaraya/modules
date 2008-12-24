@@ -3,7 +3,7 @@
  * Scheduler module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -80,22 +80,22 @@ function scheduler_admin_modify()
         }
 
         if (!xarVarFetch('job_trigger','int',$job_trigger,0,XARVAR_NOT_REQUIRED)) return;
-		$triggers = xarModAPIFunc('scheduler','user','triggers');
+        $triggers = xarModAPIFunc('scheduler','user','triggers');
         if (!isset($triggers[$job_trigger])) {
             $msg = xarML('Invalid trigger type for #(1) function #(2)() in module #(3)',
                          'user', 'modify', 'scheduler');
             throw BadParameterException($msg);
         }
-		$job['job_trigger'] = $job_trigger;
+        $job['job_trigger'] = $job_trigger;
 
         if (!xarVarFetch('checktype','int',$checktype,1,XARVAR_NOT_REQUIRED)) return;
-		$checktypes = xarmodAPIFunc('scheduler','user','sources');
+        $checktypes = xarmodAPIFunc('scheduler','user','sources');
         if (!isset($checktypes[$checktype])) {
             $msg = xarML('Invalid checktype type for #(1) function #(2)() in module #(3)',
                          'user', 'modify', 'scheduler');
             throw BadParameterException($msg);
         }
-		$job['checktype'] = $checktype;
+        $job['checktype'] = $checktype;
 
         if (!xarVarFetch('checkvalue','isset',$checkvalue,'',XARVAR_NOT_REQUIRED)) return;
         $job['checkvalue'] = $checkvalue;
