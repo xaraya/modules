@@ -3,7 +3,7 @@
  * Hitcount
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -33,8 +33,8 @@ function hitcount_init()
     // Create tables
     $query = xarDBCreateTable($xartable['hitcount'],
                              array('id'         => array('type'        => 'integer',
+                                                            'unsigned'    => true,
                                                             'null'        => false,
-                                                            'default'     => '0',
                                                             'increment'   => true,
                                                             'primary_key' => true),
 // TODO: replace with unique id
