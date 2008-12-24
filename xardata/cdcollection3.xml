@@ -240,7 +240,7 @@ Status: #$info['status']# <br/>
 <input type="hidden" name="activityId" value="#$activityId#"/>
 <input type="hidden" name="iid" value="#$iid#"/>
 <input type="hidden" name="return_url" value="#$return_url#"/>
-<textarea name="reason" cols="40" rows="4"></textarea>
+<textarea name="reason" cols="40" rows="4">&#160;</textarea>
 <br/><br/>
 <input type="submit" name="rejected" value="rejected" />
 <input type="submit" name="approved" value="approved" />
@@ -419,7 +419,7 @@ Escalated: #xarLocaleFormatDate('%x %X %z', $escalated)# <br/>
 <input type="hidden" name="activityId" value="#$activityId#"/>
 <input type="hidden" name="iid" value="#$iid#"/>
 <input type="hidden" name="return_url" value="#$return_url#"/>
-<textarea name="reason" cols="40" rows="4"></textarea>
+<textarea name="reason" cols="40" rows="4">&#160;</textarea>
 <br/><br/>
 <input type="submit" name="rejected" value="rejected" />
 <input type="submit" name="approved" value="approved" />

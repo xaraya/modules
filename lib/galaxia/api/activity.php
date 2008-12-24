@@ -35,7 +35,7 @@ class WorkflowActivity extends Base
         $query = "select * from ".self::tbl('activities')." where `activityId`=?";
         $result = $dummy->query($query,array($activityId));
 
-        if(!$result->numRows()) return false;
+        if(!$result->numRows()) { $false = false; return $false;}
         $res = $result->fetchRow();
         switch($res['type']) {
           case 'start':

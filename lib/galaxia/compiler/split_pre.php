@@ -7,8 +7,8 @@ if(empty($instance->instanceId)) {
   if(isset($_REQUEST['iid'])) {
     $instance->getInstance($_REQUEST['iid']);
   } else {
-    // defined in lib/galaxia/config.php
-    throw new Exception("No instance indicated");
+    $tplData['msg'] =  xarML("No instance indicated");
+    return xarTplModule('workflow', 'admin', 'error', $tplData);
   }
 }
 // Set the current user for this activity

@@ -1,13 +1,41 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-  <xar:template file="user_bar" type="module"/>
-  <div class="xar-mod-body">
-    <h3>
-      <xar:mlstring>Workflow Error</xar:mlstring>
-    </h3>
-    <div class="xar-norm-outline" style="padding: 0.5 em 1em 0.5em;">
-      <p>#$msg#</p>
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+      <span class="xar-mod-title">
+        <xar:mlstring>User Error</xar:mlstring>
+      </span>
     </div>
-<!-- Show a courtesy footer -->
-    <xar:template file="galaxfooter"/>
-  </div>
+    <div class="xar-mod-body">
+    <fieldset>
+        <legend><xar:mlstring>Error Encountered</xar:mlstring></legend>
+        <img src="#xarTplGetImage('sysmessage.jpg','base')#" alt="#xarML('System Message')#" width="96" height="96" class="xar-module-icon" />
+        <xar:if condition="!isset($layout)">
+            <div style="margin-top: 20px; margin-left: 20px">
+                <xar:if condition="isset($msg)">
+                    #$msg#
+                <xar:else />
+                    No error message is available.
+                    <br />
+                    Please contact the system administrator.
+                </xar:if>
+            </div>                    
+        <xar:elseif condition="$layout eq 'no_cookies'" />
+            <div style="margin-top: 20px; margin-left: 20px">
+                You must enable cookies on your browser to run Xaraya.
+                <br />
+                Check the browser configuration options to make sure cookies are enabled.
+            </div>
+        <xar:else />
+            <div style="margin-top: 20px; margin-left: 20px">
+                <xar:if condition="isset($msg)">
+                    #$msg#
+                <xar:else />
+                    No error message is available.
+                    <br />
+                    Please contact the system administrator.
+                </xar:if>
+            </div>                    
+        </xar:if>                
+    </fieldset>
+    </div>
 </xar:template>
