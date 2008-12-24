@@ -1,7 +1,7 @@
 <?php
 /**
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -210,7 +210,7 @@ function registration_user_register()
                 $data['properties'] = $object->getProperties();
                 $data['return_url']['cancel_return'] = xarModURL('registration','user','register',array('phase' => 'checkregistration'));
                 $data['return_url']['cancel_text'] = xarML("Click to return to the registration page");
-                $data['return_url']['success_return'] = xarML("User Craetion");
+                $data['return_url']['success_return'] = xarML("User Creation");
                 $data['return_url']['success_return_link'] = xarModURL('registration', 'user', 'register', array('phase' => 'confirmcreateuser'));
 
                 // Save the return URLs for when we come back from the gateway
