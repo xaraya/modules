@@ -3,7 +3,7 @@
  * Utility function to retrieve the list of item types of this module (if any)
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 The Digital Development Foundation
+ * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -31,18 +31,18 @@ function categories_userapi_getitemtypes($args)
                          );
 
     if ($extensionitemtypes = xarModAPIFunc('dynamicdata','user','getmoduleitemtypes',array('moduleid' => 147, 'native' =>false),0)) {
-		$types = array();
-		foreach ($itemtypes as $key => $value) $types[$key] = $value;
-		foreach ($extensionitemtypes as $key => $value) $types[$key] = $value;
+        $types = array();
+        foreach ($itemtypes as $key => $value) $types[$key] = $value;
+        foreach ($extensionitemtypes as $key => $value) $types[$key] = $value;
 
-		/* TODO: activate this code when we move to php5
-		$keys = array_merge(array_keys($itemtypes),array_keys($extensionitemtypes));
-		$values = array_merge(array_values($itemtypes),array_values($extensionitemtypes));
-		return array_combine($keys,$values);
-		*/
+        /* TODO: activate this code when we move to php5
+        $keys = array_merge(array_keys($itemtypes),array_keys($extensionitemtypes));
+        $values = array_merge(array_values($itemtypes),array_values($extensionitemtypes));
+        return array_combine($keys,$values);
+        */
 
     } else {
-    	$types = $itemtypes;
+        $types = $itemtypes;
     }
 
     return $types;
