@@ -3,7 +3,7 @@
  * Update the session info with how we are going to translate
  *
  * @package modules
- * @copyright (C) 2002-2008 The Digital Development Foundation
+ * @copyright (C) copyright-placeholder
  * @link http://www.xaraya.com
  *
  * @subpackage translations
