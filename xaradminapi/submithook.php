@@ -74,6 +74,9 @@ function formantibot_adminapi_submithook($args)
         return $extrainfo;
     }
 
+    //check whether to use it at all
+    $captchatype= xarModGetvar('formantibot','captchatype');
+    
     $botreset = FALSE; 
     $antibotinvalid = FALSE;
     $badcaptcha = 0; //backward compat
@@ -81,9 +84,9 @@ function formantibot_adminapi_submithook($args)
     //check whether to use it for registered users as well as anon
     $registered = xarModGetvar('formantibot','registered');
     $usecaptcha = 0;// default is not to use
+    $correctcode = FALSE;
 
-
-    if (!xarUserIsLoggedIn() || ($registered ==1)) {
+    if ((!xarUserIsLoggedIn() || (($registered == 1) && xarUserIsLoggedIn())) && $captchatype != 0) {
         $usecaptcha = 1;
     }
   
@@ -93,14 +96,23 @@ function formantibot_adminapi_submithook($args)
                             'badcaptcha' => 0);                 
     } else {
         //we assume there is an antibot code and we need to check it now
-        if ((!isset($antibotcode) || empty($antibotcode))  && (isset($extrainfo['antibotcode']) && !empty($extrainfo['antibotcode']))) {
-            $antibotcode = $extrainfo['antibotcode'];
-        } elseif  (!isset($extrainfo['antibotcode']) || empty($extrainfo['antibotcode'])) {
-            if(!xarVarFetch('antibotcode',  'str:6:10', $antibotcode, '',XARVAR_DONT_SET)) {return;}
-        }    
-
-        $correctcode =xarModAPIFunc('formantibot', 'user', 'validate', array('userInput' => $antibotcode));
-
+        //Depending on captcha type, determine if the code was correct
+        if ($captchatype ==1) {
+            if ((!isset($antibotcode) || empty($antibotcode))  && (isset($extrainfo['antibotcode']) && !empty($extrainfo['antibotcode']))) {
+                $antibotcode = $extrainfo['antibotcode'];
+            } elseif  (!isset($extrainfo['antibotcode']) || empty($extrainfo['antibotcode'])) {
+                if(!xarVarFetch('antibotcode',  'str:4:10', $antibotcode, '',XARVAR_DONT_SET)) {return;}
+            } 
+            $correctcode =xarModAPIFunc('formantibot', 'user', 'validate', array('userInput' => $antibotcode));
+        } elseif ($captchatype ==2) {
+            if ((!isset($antibotcode) || empty($antibotcode))  && (isset($extrainfo['antibotcode']) && !empty($extrainfo['antibotcode']))) {
+                $antibotcode = $extrainfo['antibotcode'];
+            } elseif  (!isset($extrainfo['antibotcode']) || empty($extrainfo['antibotcode'])) {
+                if(!xarVarFetch('antibotcode',  'int:0:20', $antibotcode, null,XARVAR_DONT_SET)) {return;}
+            } 
+            $correctcode = xarModAPIFunc('formantibot', 'user', 'validatenum', array('userInput' => $antibotcode));
+        }
+ 
         if ($correctcode != TRUE) {
             $antibotinvalid = TRUE;
             $botreset = TRUE;

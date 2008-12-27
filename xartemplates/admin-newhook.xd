@@ -14,7 +14,8 @@
       }  
 //-->
 </script>
-<xar:if condition="$usecaptcha eq 1">
+
+<xar:if condition="$usecaptcha eq 1 and $captchatype eq 1">
     <div class="xar-form-input-wrapper">
         <label for="antibotimage" class="xar-form-label" title="#xarML('Enter the value as seen in the image (if you can not read the image, click on it to load a new one).')#">
             <xar:mlstring>Anti-Bot Code</xar:mlstring>
@@ -43,4 +44,19 @@
             <input type="text" name="antibotcode" id="antibotcode" size="10" value="" maxlength="10"  />&#160;(case sensitive)    
         </p>
     </div>
+<xar:elseif condition="$usecaptcha eq 1 and $captchatype eq 2" />
+    <div class="xar-form-input-wrapper">     
+       <p class="xar-form-input-wrapper-after"><xar:mlstring>Please enter the answer to the question below (anti bot protection).</xar:mlstring></p>      
+        <label for="antibotcode" class="xar-clear-left xar-form-label" >
+            <xar:set name="numbertest">#xarModFunc('formantibot', 'user', 'number')#</xar:set>
+              #$numbertest#
+        </label>
+            <input type="text" name="antibotcode" id="antibotcode" size="10" value="" maxlength="10"  />   
+    </div>
+        <xar:if condition="isset($antibotinvalid) AND $antibotinvalid">
+           <span class="xar-form-label">&#160;</span>    
+           <p class="xar-error xar-clear-left ">
+                <xar:mlstring>Answer was incorrect, please try again</xar:mlstring>
+            </p>
+        </xar:if>
 </xar:if>

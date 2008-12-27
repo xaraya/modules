@@ -101,16 +101,17 @@ function formantibot_admin_newhook($args)
         return ;
     } else {
     
-        return xarTplModule('formantibot','admin','newhook',
-            array(
-                'antibotinvalid' => $antibotinvalid,
-                'botreset'       => $botreset,
-                'itemid'         => $itemid,
-                'itemtype'       => $itemtype,
-                'modid'          => $modid,
-                'usecaptcha'     => $usecaptcha
-            )
-        );
+            return xarTplModule('formantibot','admin','newhook',
+                array(
+                    'antibotinvalid' => $antibotinvalid,
+                    'botreset'       => $botreset,
+                    'itemid'         => $itemid,
+                    'itemtype'       => $itemtype,
+                    'modid'          => $modid,
+                    'usecaptcha'     => $usecaptcha,
+                    'captchatype'    => $captchatype
+                )
+            );
     }
 }
 

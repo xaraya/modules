@@ -45,8 +45,8 @@ function formantibot_admin_modifyconfig()
 
     $caparray = array(0 => xarML('None'),
                       1 => xarML('Image captcha'),
-                      2 => xarML('Image captcha - no freetype'),
-                      3 => xarML('Number challenge')
+                      2 => xarML('Number challenge'),          
+                     // 3 => xarML('[Image captcha, no freetype lib]')
                         );
     $data['caparray'] = $caparray;
 
