@@ -2,4 +2,5 @@ Carl P. Corliss    - Original Author
 
 Jo Dalle Nogare    - added hooks for new/display and create, 
                    - admin modify config  page and vars
+                   - added simple numeric challenge captcha
                    - documentation 

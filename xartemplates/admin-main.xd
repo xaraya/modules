@@ -12,12 +12,12 @@
             <xar:mlstring>What is it?</xar:mlstring>
     </h3>
         <p><em><xar:mlstring>Format Anti-Bot is a Xaraya Utility Module.</xar:mlstring></em> 
-            <xar:mlstring>The module secures forms from abuse by bot's by requiring translation and input of image based text, sometimes known as CAPTCHA.
+            <xar:mlstring>The module secures forms from abuse by bot's by requiring translation and input of numeric or image based text, sometimes known as CAPTCHA.
             The module can be used in conjunction with other Xarigami and Xaraya modules that support it either via hooks or through direct use of apis in the module.</xar:mlstring></p>
             <p><xar:mlstring>The following modules currently support FormAnti-Bot:</xar:mlstring></p>
             <ul>
                 <li><xar:mlstring>Xarigami and Xaraya Sitecontact module - a contact form module allowing multiple, custom contact forms, and optional saving of data.</xar:mlstring></li>
-                <li><xar:mlstring>Xarigami Comments module - a comments module with moderation and spam control features.</xar:mlstring></li>
+                <li><xar:mlstring>Xarigami and Xaraya Comments module - a comments module with moderation and spam control features.</xar:mlstring></li>
                 <li><xar:mlstring>Xarigami xarBB  - a lightweight forum module that can be optioned up with various features via hooks.</xar:mlstring></li>                
             </ul>
         <h3>
@@ -27,10 +27,13 @@
             <xar:set name="hookurl">#xarModURL('modules','admin','hooks',array('hook'=>'formantibot'))#</xar:set>
             <li>
                 <a href="#$hookurl#"><xar:mlstring>Hook Formantibot</xar:mlstring></a><xar:mlstring> to the module in which  you wish to display the captcha.</xar:mlstring>
-
             </li>
             <li>
-                <xar:set name="configurl">#xarModURL('formantibot','admin','modifyconfig')#</xar:set>
+               <xar:set name="configurl">#xarModURL('formantibot','admin','modifyconfig')#</xar:set>
+                <xar:mlstring> Choose the type of captcha you would like to use in the </xar:mlstring><a href="#$configurl#"><xar:mlstring>Modify Configuration page</xar:mlstring></a>. 
+                <xar:mlstring>Currently both image captcha and a simple numeric challenge question captcha are available.</xar:mlstring>
+            </li>            
+            <li>
                 <a href="#$configurl#"><xar:mlstring>Set configuration settings</xar:mlstring></a><xar:mlstring> in the Formantibot modify configuration page as you would like them.</xar:mlstring>
             </li>
         </ul>
@@ -51,7 +54,7 @@
             <xar:mlstring>Included Hooks</xar:mlstring>
     </h3>
         <p>
-            <xar:mlstring>Display/new and create hooks are supplied.</xar:mlstring>
+            <xar:mlstring>Display/new and submit hooks are supplied.</xar:mlstring>
         </p> 
   <h3>
     <xar:mlstring>Further Information</xar:mlstring>
@@ -66,7 +69,7 @@
     </li>
   </ul>
   <p class="xar-sub">
-    <strong>&nbsp;<xar:mlstring>FormAnti-Bot Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Revision</xar:mlstring> 1.1.0&nbsp; 2008-12-15
+    <strong>&nbsp;<xar:mlstring>FormAnti-Bot Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Revision</xar:mlstring> 1.1.1&nbsp; 2008-12-27
   </p>
 </div>
 
