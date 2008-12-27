@@ -11,6 +11,16 @@
    </xar:if>
 
  <form method="post" id="post" action="&xar-modurl-formantibot-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
+   <fieldset>
+        <legend><xar:mlstring>Activation Options</xar:mlstring></legend>
+        <div class="xar-form-input-wrapper">
+            <label for="captchatype" class="xar-form-label" title="#xarML('Select captcha type')#">
+                <xar:mlstring>Type of captcha to use</xar:mlstring>
+            </label>
+            <xar:data-input type="dropdown" name="captchatype" id="captchatype" value="$captchatype" validation="$caparray" />
+
+        </div>
+    </fieldset> 
     <fieldset>
         <legend><xar:mlstring>General Options</xar:mlstring></legend>
         <div class="xar-form-input-wrapper">
@@ -54,12 +64,18 @@
             <xar:data-input type="integerbox" name="code_length" id="code_length" value="$settings['code_length']" />
         </div>
         <div class="xar-form-input-wrapper">
-            <label for="ttf_file" class="xar-form-label" title="#xarML('Path to ttf font to use')#">
+            <label for="ttf_file_path" class="xar-form-label" title="#xarML('Path to ttf font to use')#">
+                <xar:mlstring>TTF Font path</xar:mlstring>
+            </label>
+           <xar:data-input type="textbox" name="ttf_file_path" id="ttf_file_path" value="$settings['ttf_file_path']" class="xar-form-textxlong"/>
+            <span class="xar-sub">[<xar:mlstring>Default:</xar:mlstring> modules/formantibot/fonts]</span>
+        </div> 
+        <div class="xar-form-input-wrapper">
+            <label for="ttf_file_name" class="xar-form-label" title="#xarML('Path to ttf font to use')#">
                 <xar:mlstring>TTF Font</xar:mlstring>
             </label>
-            <xar:data-input type="textbox" name="ttf_file" id="ttf_file" value="$settings['ttf_file']" class="xar-form-textxlong"/>
-            <span class="xar-sub">[<xar:mlstring>Default:</xar:mlstring> modules/formantibot/fonts/elephant.ttf]</span>
-        </div>                              
+            <xar:data-input type="filelist" name="ttf_file_name" id="ttf_file_name" validation="$fontvalidation" value="$settings['ttf_file_name']" class="xar-form-textxlong"/>
+        </div>                                        
         <div class="xar-form-input-wrapper">
             <label for="font_size" class="xar-form-label" >
                 <xar:mlstring>Font size</xar:mlstring>

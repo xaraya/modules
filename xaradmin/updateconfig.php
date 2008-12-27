@@ -22,7 +22,8 @@ function formantibot_admin_updateconfig()
     if (!xarVarFetch('image_width',   'int',  $settings['image_width'], 230, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('image_height',  'int',  $settings['image_height'], 40, XARVAR_NOT_REQUIRED)) return;    
     if (!xarVarFetch('code_length',   'int',  $settings['code_length'], 7, XARVAR_NOT_REQUIRED)) return;        
-    if (!xarVarFetch('ttf_file',      'str',      $settings['ttf_file'], "modules/formantibot/fonts/elephant.ttf", XARVAR_NOT_REQUIRED)) return;  
+    if (!xarVarFetch('ttf_file_name',      'str',      $settings['ttf_file_name'], "elephant.ttf", XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('ttf_file_path',      'str',      $settings['ttf_file_path'], "modules/formantibot/fonts", XARVAR_NOT_REQUIRED)) return;        
     if (!xarVarFetch('font_size',     'int',  $settings['font_size'], 20, XARVAR_NOT_REQUIRED)) return;  
     if (!xarVarFetch('text_angle_minimum', 'int',  $settings['text_angle_minimum'], -20, XARVAR_NOT_REQUIRED)) return;  
     if (!xarVarFetch('text_angle_maximum', 'int',  $settings['text_angle_maximum'], 20, XARVAR_NOT_REQUIRED)) return;  
@@ -41,16 +42,17 @@ function formantibot_admin_updateconfig()
     if (!xarVarFetch('imagebgcolor', 'str',    $imagebgcolor, '#FFFFFF', XARVAR_NOT_REQUIRED)) return; 
     if (!xarVarFetch('textcolor',     'str',    $textcolor,'#8080FF', XARVAR_NOT_REQUIRED)) return; 
     if (!xarVarFetch('linecolor',     'str',    $linecolor, '#CCCCFF', XARVAR_NOT_REQUIRED)) return; 
-                   
+    if (!xarVarFetch('captchatype',    'int', $captchatype, 1, XARVAR_NOT_REQUIRED)) return; 
+                      
     if (!xarSecConfirmAuthKey()) return;
      
     xarModSetVar('formantibot', 'registered', $registered);
+    xarModSetVar('formantibot', 'captchatype', $captchatype);    
     //handle booleans that are going to be serialized
     $booleans = array('shadow_text','use_transparent_text','draw_lines_over_text','draw_lines','draw_angled_lines');
     foreach ($booleans as $k) {
         $settings[$k] = isset($settings[$k])?$settings[$k] : 0;
     }
-    
     $textcolor =xarModAPIFunc('formantibot','user','rgb2hex2rgb',array('c'=>$textcolor)); 
     $imagebgcolor =xarModAPIFunc('formantibot','user','rgb2hex2rgb',array('c'=>$imagebgcolor)); 
     $linecolor =xarModAPIFunc('formantibot','user','rgb2hex2rgb',array('c'=>$linecolor));       
@@ -58,7 +60,7 @@ function formantibot_admin_updateconfig()
     $settings['text_color'] = array('red'=>$textcolor['red'],'green'=>$textcolor['green'],'blue'=>$textcolor['blue']);
     $settings['line_color'] = array('red'=>$linecolor['red'],'green'=>$linecolor['green'],'blue'=>$linecolor['blue']);    
     $settings['image_bg_color'] = array('red'=>$imagebgcolor['red'],'green'=>$imagebgcolor['green'],'blue'=>$imagebgcolor['blue']);   
-
+    $settings['ttf_file'] = $settings['ttf_file_path'].'/'.$settings['ttf_file_name'];
     $settings = serialize($settings);
     xarModSetVar('formantibot','settings', $settings);
 

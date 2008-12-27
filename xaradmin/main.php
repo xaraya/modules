@@ -28,11 +28,7 @@ function formantibot_admin_main()
     }
 
     // we only really need to show the default view (overview in this case)
-    if (xarModGetVar('adminpanels', 'overview') == 0){
-        return array();
-    } else {
-        xarResponseRedirect(xarModURL('formantibot', 'admin', 'view'));
-    }
+        xarResponseRedirect(xarModURL('formantibot', 'admin', 'modifyconfig'));
     // success
     return true;
 }

@@ -160,7 +160,7 @@ function formantibot_upgrade($oldversion)
     
             xarModSetVar('formantibot','registered',false);
             
-        case '0.5.0': //current version
+        case '0.5.0': 
        
             //get rid of this one - creates problems calling it too early
             if (!xarModUnregisterHook('item', 'create', 'API',
@@ -171,8 +171,14 @@ function formantibot_upgrade($oldversion)
                                     'formantibot', 'admin', 'submithook')) {
                 return false;
             }
-                   
-        case '0.6.0': //current version
+        case '0.6.0': 
+            $settingstring = xarModGetVar('formantibot','settings'); 
+            $settings = unserialize($settingstring);  
+            $settings['ttf_file_path']= 'modules/formantibot/fonts';
+            $settings['ttf_file_name']  = 'elephant.tff';
+            $settings['ttf_file']  = $settings['ttf_file_path'].'/'.$settings['ttf_file_name'];            
+            xarModSetVar('formantibot','settings',serialize($settings));
+        case '0.6.1': //current version
             break;
     }
     return TRUE;

@@ -70,7 +70,12 @@ function formantibot_admin_newhook($args)
     //backward compatibility
     if (xarModIsAvailable('formantibot')) {
         $data['AntiBot_Available'] = TRUE;
-    }    
+    } 
+    
+    $usecaptcha = 0;// default is not to use
+    
+    //check whether to use it at all
+    $captchatype= xarModGetvar('formantibot','captchatype');
 
     if (isset($extrainfo['antibotinvalid'])) {
         $antibotinvalid = $extrainfo['antibotinvalid'];
@@ -87,9 +92,8 @@ function formantibot_admin_newhook($args)
     //check whether to use it for registered users as well as anon
     $registered = xarModGetvar('formantibot','registered');
     
-    $usecaptcha = 0;// default is not to use
-    
-    if (!xarUserIsLoggedIn() || ($registered == 1) && xarUserIsLoggedIn()) {
+    //
+    if ((!xarUserIsLoggedIn() || (($registered == 1) && xarUserIsLoggedIn())) && $captchatype != 0) {
         $usecaptcha = 1;
     }
 
