@@ -303,8 +303,7 @@ function julian_user_viewevent()
         //Build the strings to describe the repeating event.
         if (!$bl_data['recur_count']) {
             //this is for the 'every' recurring event type
-            $time = xarML(
-                'Occurs every #(1) #(2) on #(3) #(4)',
+            $time = xarML('Occurs every #(1) #(2) on #(3) #(4)',
                 $bl_data['recur_freq'],
                 $intervals[$rrule],
                 xarLocaleFormatDate('%A', $bl_data['dtstart']['unixtime']),
