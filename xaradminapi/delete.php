@@ -16,8 +16,7 @@ function autolinks_adminapi_delete($args)
 
     // Argument check
     if (!isset($lid) || !is_numeric($lid)) {
-        $msg = xarML(
-            'Invalid Parameter Count',
+        $msg = xarML('Invalid Parameter Count in #(3)_#(1)_#(2)', 
             'admin', 'delete', 'Autolinks'
         );
         xarErrorSet(

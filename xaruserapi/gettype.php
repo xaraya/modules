@@ -11,8 +11,7 @@ function autolinks_userapi_gettype($args)
     extract($args);
 
     if (!isset($tid) && !isset($type_name)) {
-        $msg = xarML(
-            'Invalid Parameter Count',
+        $msg = xarML('Invalid Parameter Count in #(3)_#(1)_#(2)', 
             'userapi', 'gettype', 'autolinks'
         );
         xarErrorSet(

@@ -73,9 +73,9 @@ function autolinks_adminapi_create($args)
     if (!$result) {return;}
 
     if ($result->RecordCount() > 0) {
-        $msg = xarML(
-            'The link matching keyword "#(1)" or name "#(2)" already exists.',
-            $keyword, $name
+        $msg = xarML('The link matching keyword "#(1)" or name "#(2)" already exists.', 
+            $keyword, 
+            $name
         );
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
