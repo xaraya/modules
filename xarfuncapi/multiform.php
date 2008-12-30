@@ -246,9 +246,8 @@ function xarpages_funcapi_multiform($args)
                 xarModAPIfunc(
                     'xarpages', 'multiform', 'passdata',
                     array(
-                        'reason_detail' => xarML(
-                            'This session has already been completed or cancelled.'
-                        )
+                        'reason_detail' => xarML('This session has already been 
+                            completed or cancelled.')
                     )
                 );
             } else {
@@ -299,9 +298,9 @@ function xarpages_funcapi_multiform($args)
                         xarModAPIfunc(
                             'xarpages', 'multiform', 'passdata',
                             array(
-                                'reason_detail' => xarML(
-                                    'To prevent multiple submission of data, you cannot return to this page once it has been submitted.'
-                                )
+                                'reason_detail' => xarML('To prevent multiple 
+                                    submission of data, you cannot return to  
+                                    this page once it has been submitted.')
                             )
                         );
                     }
@@ -481,9 +480,8 @@ function xarpages_funcapi_multiform($args)
                                         xarModAPIfunc(
                                             'xarpages', 'multiform', 'passdata',
                                             array(
-                                                'reason_detail' => xarML(
-                                                    'Unexpected error: ' . $processing_object->reason_detail
-                                                )
+                                                'reason_detail' => xarML('Unexpected error: #(1)', 
+                                                    $processing_object->reason_detail)
                                             )
                                         );
                                     }

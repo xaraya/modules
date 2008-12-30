@@ -44,9 +44,9 @@
         <xar:if condition="$func eq 'modify' or !empty($ptid)">
             <p>
                 <a href="#xarModURL('xarpages','admin','viewpages')#"><xar:mlstring>View pages</xar:mlstring></a>
-                | <a href="#xarModURL('xarpages','admin','modifypage',array('ptid'=&gt;$ptid))#" title="Create a new page of this type (#xarVarPrepForDisplay($page.pagetype.name)#)"><xar:mlstring>New page</xar:mlstring></a>
+                | <a href="#xarModURL('xarpages','admin','modifypage',array('ptid'=&gt;$ptid))#" title="#xarML('Create a new page of this type')# (#xarVarPrepForDisplay($page.pagetype.name)#)"><xar:mlstring>New page</xar:mlstring></a>
                 <xar:if condition="!empty($pid)">
-                    | <a href="#xarModURL('xarpages','admin','modifypage',array('ptid'=&gt;$ptid,'insertpoint'=&gt;$pid))#" title="Create a new page of this type (#xarVarPrepForDisplay($page.pagetype.name)#)"><xar:mlstring>New page after</xar:mlstring></a>
+                    | <a href="#xarModURL('xarpages','admin','modifypage',array('ptid'=&gt;$ptid,'insertpoint'=&gt;$pid))#" title="#xarML('Create a new page of this type')# (#xarVarPrepForDisplay($page.pagetype.name)#)"><xar:mlstring>New page after</xar:mlstring></a>
                 </xar:if>
             </p>
             <form class="xar-xarpages-admin" action="#xarModURL('xarpages','admin','updatepage')#" method="post">
