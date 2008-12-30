@@ -47,12 +47,12 @@ class TPLParser
         // Ignore xar:set nodes and take all other text nodes
         while ($reader->read()) {
             $i++;
-            if ($reader->name == "xar::set") {
+            if ($reader->name == "xar:set") {
                 continue;
             } elseif ($reader->nodeType == XMLReader::TEXT) {
                $string = $reader->value;
             }
-            else if ($reader->name == "xar::mlstring") {
+            else if ($reader->name == "xar:mlstring") {
                $string = $reader->value;
             } else {
                 continue;
