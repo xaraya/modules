@@ -29,9 +29,8 @@ function categories_adminapi_create ($args)
         throw new BadParameterException(null, $msg);
     }
 
-    if (!isset($image)) {
-        $image = '';
-    }
+    if (!isset($image)) $image = '';
+    if (!isset($child_object)) $child_object = '';
 
     // Security check
     // Has to be redone later
@@ -69,7 +68,8 @@ function categories_adminapi_create ($args)
                     'name' => $name,
                     'description' => $description,
                     'image' => $image,
-                    'parent' => $parent_id
+                    'parent' => $parent_id,
+                    'child_object' => $child_object
                 )
             );
 }

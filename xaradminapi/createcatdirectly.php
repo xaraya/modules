@@ -53,10 +53,11 @@ function categories_adminapi_createcatdirectly($args)
                                 description,
                                 image,
                                 parent_id,
+                                child_object,
                                 left_id,
                                 right_id)
-                         VALUES (?,?,?,?,?,?,?)";
-    $bindvars[3] = array($nextID, $name, $description, $image, $parent, $point_of_insertion, $point_of_insertion + 1);
+                         VALUES (?,?,?,?,?,?,?,?)";
+    $bindvars[3] = array($nextID, $name, $description, $image, $parent, $child_object, $point_of_insertion, $point_of_insertion + 1);
 
     for ($i=1;$i<4;$i++)
     {
