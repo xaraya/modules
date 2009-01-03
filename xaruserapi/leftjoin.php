@@ -301,21 +301,22 @@ function articles_userapi_leftjoin($args)
 
         foreach ($normal as $text) {
             // TODO: use XARADODB to escape wildcards (and use portable ones) ??
-            $text = str_replace('%','\%',$text);
-            $text = str_replace('_','\_',$text);
+            // jojo: we only want to escape wildcards when we use LIKE clauses
+            $searchtext = str_replace('%','\%',$text);
+            $searchtext = str_replace('_','\_',$text);
             foreach ($searchfields as $field) {
                 if (empty($leftjoin[$field])) continue;
                 if (empty($searchtype) || $searchtype == 'like') {
-                    $find[] = $leftjoin[$field] . " LIKE " . $dbconn->qstr('%' . $text . '%');
+                    $find[] = $leftjoin[$field] . " LIKE " . $dbconn->qstr('%' . $searchtext . '%');
                 } elseif ($searchtype == 'start') {
-                    $find[] = $leftjoin[$field] . " LIKE " . $dbconn->qstr($text . '%');
+                    $find[] = $leftjoin[$field] . " LIKE " . $dbconn->qstr($searchtext . '%');
                 } elseif ($searchtype == 'end') {
-                    $find[] = $leftjoin[$field] . " LIKE " . $dbconn->qstr('%' . $text);
+                    $find[] = $leftjoin[$field] . " LIKE " . $dbconn->qstr('%' . $searchtext);
                 } elseif ($searchtype == 'eq') {
                     $find[] = $leftjoin[$field] . " = " . $dbconn->qstr($text);
                 } else {
                 // TODO: other search types ?
-                    $find[] = $leftjoin[$field] . " LIKE " . $dbconn->qstr('%' . $text . '%');
+                    $find[] = $leftjoin[$field] . " LIKE " . $dbconn->qstr('%' . $searchtext . '%');
                 }
             }
         }
