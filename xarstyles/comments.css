@@ -77,7 +77,7 @@ input.xar-ib-field, textarea.xar-ib-fieldtext {
     width: 14em;
     float: right;
     padding: 0 .25em;;
-    height:19em;
+    height: auto; /*19em; */
 }
 
 .xar-ib-actionpanel span {

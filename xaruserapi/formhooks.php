@@ -17,7 +17,7 @@
  */
 function comments_userapi_formhooks($args)
 {
-if(!xarVarFetch('modname', 'isset',    $modname, 'comments',     XARVAR_NOT_REQUIRED)) {return;} 
+if(!xarVarFetch('modname', 'isset',    $modname, '',     XARVAR_NOT_REQUIRED)) {return;} 
     if(!xarVarFetch('itemtype', 'isset',    $itemtype, 0,     XARVAR_NOT_REQUIRED)) {return;}          
     //let the args override if necessary
    
