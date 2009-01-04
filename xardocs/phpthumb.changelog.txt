@@ -3,9 +3,576 @@
 //        available at http://phpthumb.sourceforge.net     ///
 //////////////////////////////////////////////////////////////
 
+§ = structure change or important new feature
+* = less important new feature or change
+
+v1.7.8 - September 16, 2007
+  § Added 'stc' (Source Transparent Color) filter
+    (Feature Request #1672440)
+  § 'zc' now supports directed crop (top/bottom/left/right)
+    (thanks lee¯virtualinkdesign*com, chris¯sostreassoc*com)
+  § new class function resetObject() should be used to reset
+    default class paramters to default to allow reusing a
+    single object on multiple images
+    (see phpThumb.demo.object.php)
+    (thanks bjohnsonÿaccomplishhosting*com)
+  § "wmt" and "wmi" filters now support absolute positioning
+    using alignment values: {xoffset}x{yoffset} (eg: "10x20")
+    (Feature Request #1567113)
+    (thanks mailÿpedrocandeias*com;
+     squidlibertyÿusers*sourceforge*net)
+  § "wmi" filter now supports watermark scaling & rotation
+    (Feature Request #1788063)
+    (thanks glen*fiebichÿ2020promo*com)
+  § Added "size" filter.  NOTE: try not to use this filter,
+    it is inefficient and for special purposes only, please
+    see phpthumb.readme.txt entry before using.
+    (thanks glen*fiebichÿ2020promo*com)
+  * Added wildcard domain options for config settings
+    nooffsitelink_valid_domains and nohotlink_valid_domains
+    (thanks meÿjohannes*jarolim*com)
+  * Output image format defaults to input format (based on
+    filename)  (thanks bjohnsonÿaccomplishhosting*com)
+  * Sepia filter now uses ImageFilter under PHP5
+    (thanks richard*comleyÿmademedia*co*uk)
+  * "f" parameters now accepts formats with leading "."
+    (eg "&f=.png") to allow you to fool things that look at
+    the last characters of the URL to determine image type
+    (thanks alexÿalexderas*nl)
+  * Added section to phpthumb.demo.check.php to test cache
+    file creation and deletion
+  * Bugfix [#1715256]: ImageMagick output not always used
+    if fltr set incorrectly
+    (thanks danakiÿusers*sourceforge*net)
+  * Bugfix [#1541673]: ResolveFilenameToAbsolute() fails in
+    RenderToFile() if target file does not exist
+    (thanks jasonpellÿusers*sourceforge*net)
+  * Bugfix [#1703373]: CleanUpURLencoding() broken if path
+    element equals "0"
+    (thanks izeronÿusers*sourceforge*net)
+  * Bugfix [#1573399]: phpthumb_filters::Colorize() broken
+    under PHP5  (thanks cerwÿusers*sourceforge*net)
+  * Bugfix [#1573399]: ImageMagick version of colorize filter
+    missing quotes  (thanks cerwÿusers*sourceforge*net)
+  * Bugfix [#1733462]: SafeExec broken
+    (thanks hansfnÿusers*sourceforge*net)
+  * Bugfix [#1751821]: open_basedir restriction gives warning
+    when trying to initialize config_temp_dir
+    (thanks k-mystikÿusers*sourceforge*net)
+  * Bugfix: [#1751880]: open_basedirs not initialized properly
+    under Windows  (thanks k-mystikÿusers*sourceforge*net)
+  * Bugfix: "A non well formed numeric value encountered" error
+    when using "cont" filter in PHP5
+    (thanks isnbitÿyahoo*com)
+  * Bugfix: Colorize filter ignored $amount under PHP5
+    (thanks richard*comleyÿmademedia*co*uk)
+  * Bugfix: double-drawn color in corders of Bevel filter
+    (thanks m*westmijzeÿstudent*utwente*nl)
+  * Bugfix: 'nocache' parameter was forbidden
+    (thanks andreasÿkringelstan*se)
+  * Bugfix: disabled functions (set_time_limit, shell_exec, etc)
+    not always correctly detected
+    (thanks ryandemmerÿgmail*com, dr*creatorÿgmail*com)
+  * Bugfix: phpThumbURL() was broken if __FILE__ and
+    $PHPTHUMB_CONFIG['document_root'] had different slash
+    styles (\ vs /)  (thanks jobbetÿskarin*com)
+  * Bugfix: 'wmt' watermark text not properly right- or center-
+    aligned with TTF fonts
+  * Bugfix: force stderr output to stdout in SafeExec
+  * Bugfix: filter-generated debug messages not passed back
+  * Bugfix: /demo/phpThumb.demo.gallery.php was not getting
+    correct DOCUMENT_ROOT value on some servers
+    (thanks latex*dragonÿgmail*com)
+  * Bugfix: HTTP source images with no parameters were not
+    being passed through directly (thanks chrisÿmegawap*net)
+  * Bugfix: "unknown image type" errors on non-GD-supported
+    remote image sources  (thanks chrisÿgorillachicago*com)
+  * Bugfix: remote images not found if server returned 302
+    message with text other than "Found"
+    (thanks cveleÿdefault*co*yu, kevinÿkevinevans*net)
+  * Bugfix: resetObject() was clobbering debug messages
+    (thanks kevinÿkevinevans*net)
+  * Bugfix: CleanUpURLencoding() was broken
+    (thanks kevinÿkevinevans*net)
+  * Bugfix: Cache auto-purging was generally broken, especially
+    if the cache contained a directory or filename of "0"
+    (thanks hannoÿxcalak*info; webdesignÿweisshart*de)
+
+
+
+v1.7.7 - December 25, 2006
+  § Added phpThumb.demo.gallery.php -- basic image gallery demo
+  § Added option for image watermark for anti-hotlinking. See
+    phpThumb.config.php "nooffsitelink_watermark_src"
+    (thanks rik_helsenÿrad*be)
+  § Added config option "imagemagick_use_thumbnail" to control
+    use of ImageMagick's "-thumbnail" command vs "-resize" (the
+    former discards non-visible metadata, the latter retains it)
+    Most times you want the smallest filesize so keep the default
+    setting (imagemagick_use_thumbnail==true)
+    (thanks niklasÿmysticalgarden*se)
+  * Bugfix [#1620056]: EnsureDirectoryExists() failed to create
+    some directory structures  (thanks jeromyÿlocallinux*com)
+  * Bugfix [#1620056]: CleanUpCacheDirectory() would not purge
+    files from subdirectories if (cache_directory_depth > 0)
+    (thanks kingsquareÿusers*sourceforge*net)
+  * Bugfix: nooffsitelink_* broken when running on non-standard
+    HTTP port  (thanks marianbucur17ÿyahoo*com)
+
+
+v1.7.6 - December 09, 2006
+  § Added "sia" (Save Image As) parameter to provide default
+    filename when saving generated thumbnails
+    (thanks web_mkÿhotmail*com)
+  § Changed "lvl" filter parameters, and added option to choose
+    between four different methods (two internal, two from
+    ImageMagick). Added configurable threshold parameter.
+    (thanks publicÿwoktiny*com for code for new internal method)
+  § "wb" (White Balance) filter now processed by ImageMagick
+  * Changed GD max source pixels to 1/6 (from 1/5) available
+    memory, and changed SourceImageIsTooLarge() to account for
+    already-used memory (if known)
+  * More graceful error handling in object mode when source
+    larger than PHP memory limit and ImageMagick unavailable
+    (thanks djasonÿdjason*com)
+  * Added ImageMagickFormatsList()
+  * CleanUpCacheDirectory() now also purges zero-byte orphan
+    files left over from aborted thumbnailings
+  * Bugfix [#1606069]: Changed default urlencoded space
+    character from "+" to "%20"
+  * Bugfix [#1608664]: "Unsupported operand types" in "wmi"
+    filter (thanks haydurÿhaydur*com; squidliberty)
+  * Bugfix: debug mode now supports text output in all modes
+  * Bugfix: ImageMagick creation attempted before GD creation
+  * Bugfix: no longer fails silently if GD creation runs out of
+    memory
+  * Bugfix: poor alpha rendering from PNG to GIF with ImageMagick
+  * Bugfix: "wb" filter had no effect when "lvl" filter applied
+    in ImageMagick instead of GD
+
+
+v1.7.5 - October 03, 2006
+  § Deprecated parameters "err", "file", "goto"
+  § Added broad cache directory feature (see phpThumb.config.php
+    "cache_directory_depth") to spread cache files across many
+    directories for improved performance and ability to store
+    very large numbers (30000+) of cached files
+    (thanks despoixÿopenxtrem*com)
+  § phpThumb now follows HTTP redirects (status=302) to new
+    HTTP image URLs (configurable: config_http_follow_redirect)
+    (thanks shannahÿsfu*ca)
+  § Added "rot" (ROTate) filter which is similar to "ra" parameter
+    but now allows rotation of output of other filters (for
+    example, rotate image after fltr[]=mask is applied)
+    (thanks markÿwoodjoint*ca)
+  § Added WBMP output support (built-in GD or via ImageMagick)
+    (code was already mostly present, just was not allowed format)
+  § [#1567113] "wmi" filter now accepts both x and y margins
+    and can be in pixels or percent of thumbnail dimensions
+    (thanks squidlibertyÿusers*sourceforge*net)
+  * "hist" filter now accepts both X and Y margins
+  * Added config variables: config_http_fopen_timeout = 10;
+    config_http_follow_redirect = true
+  * Changed MIME type for WBMP to image/vnd.wap.wbmp
+  * Bugfix: Check for GD format support before attempting output
+  * Bugfix: Opening HTTP source images with URL query parameters
+    was broken (eg: http://host/show?id=123)
+    (thanks ivo*beckersÿinfopractica*nl)
+
+
+v1.7.4 - August 17, 2006
+  § Improved version of /demo/phpThumb.demo.showpic.php uses
+    phpThumb.php so any filters can be applied, as well as
+    resized image popups.
+    New file: /demo/javascript_api.js
+    Uses Javascript API by James Austin <jamesdozÿhotmail*com>
+    (http://aspandjavascript.co.uk/javascript/javascript_api/)
+  § Added "sfn" (Source Frame Number) parameter to specify
+    source frame in multi-frame/multi-page source formats, such
+    as GIF, TIFF, PDF, etc  (thanks despoixÿopenxtrem*com)
+  § Added "dpi" (Dots Per Inch) parameter to specify
+    rasterising resolution for vector source formats (PDF, WMF)
+    (requires ImageMagick)  (thanks despoixÿopenxtrem*com)
+  * Added /demo/phpThumb.demo.object.simple.php
+  * Added debug points inside GenerateThumbnail
+  * Explicit error message for unsupported PDF source images
+  * Bugfix: SafeURLread broken with GETstring parameters in
+    fsockopen mode
+  * Bugfix: [#1540523] CleanUpCacheDirectory() does not delete
+    files as expected  (thanks patricksleeÿusers*sourceforge*net)
+  * Bugfix: added useful error message when no source specified
+    in object mode  (thanks infoÿdoepud*co*uk)
+  * Bugfix: timeout value ignored in URLreadFsock()
+  * Bugfix: timeout missing in SafeURLread CURL part
+  * Bugfix: ImageMagick now checked with --version (not -version)
+  * Bugfix: better ImageMagick (numeric) version number matching
+  * Bugfix: noGD errors showing up when GD imagecreate functions
+    fail and ImageMagick not available
+    (thanks caseyyÿgmail*com)
+  * Bugfix: "-thumbnail" parameter not present in older versions
+    of ImageMagick, now using -resize if -thumbnail unavailable
+    (thanks atombomb96ÿbtopenworld*com)
+  * Bugfix: "-resize" parameter requires explicit dimensions
+    ("100x100" instead of "100x") in older ImageMagick versions
+    (thanks atombomb96ÿbtopenworld*com)
+  * Bugfix: phpThumb crashed with no output if ImageMagick failed
+    to resize but output image larger than max_source_pixels
+    (thanks atombomb96ÿbtopenworld*com)
+  * Bugfix: phpThumb might die with no output on some large source
+    images when ImageMagick unavailable.
+    (thanks atombomb96ÿbtopenworld*com)
+
+
+v1.7.3 - July 11, 2006
+  * Now returns useful message for HTTP sources if 404-file-
+    not-found (or similar) errors occur
+  * Added new fsockopen() section in SafeURLread()
+  * Removed PNG alpha warning for IE 7 (alpha PNGs now work)
+  * Bugfix: ImageMagick failing version check and dumping text
+    output  (thanks infoÿdevsystem*net)
+  * Bugfix: curl_exec failing with text output
+    (thanks infoÿdevsystem*net)
+  * Bugfix: workaround for PHP Bug #36102 (fopen(http) crash
+    in PHP v4.4.2
+  * Bugfix: "Unknown image type identified by..." problem when
+    opening http:// source images
+    (thanks webmasterÿdanceage*com)
+
+
+v1.7.2 - June 22, 2006
+  § [#1256693] Added $this->exif_raw_data which is returned
+    data from exif_read_data() on source image.
+    Requires PHP v4.2.0+  (thanks tebiÿusers*sourceforge*net)
+  § Added $this->outputImageData and RenderOutput() to allow
+    easy outputting of thumbnail data to a database or such.
+    Call RenderOutput() instead of RenderToFile() and then
+    access raw data in $this->outputImageData
+    (thanks r*cremerÿswitch*nl)
+  § Added 'crop' filter, which is applied after resizing (as
+    opposed to sx,sy,sw,sh which are before resizing)
+    (thanks scottÿscottjehl*com)
+  * Enable creating new images with PATH_INFO style call
+    (thanks edenÿinstyleit*com*au)
+  * Added warning message to encourage users not to use
+    full HTTP paths for "src" parameter
+  * Added fallback 'preg_quote' to phpthumb.functions.php in
+    case your PHP installation does not have preg_* functions
+    (thanks mortenÿemeskay*dk)
+  * Added fallback 'imagesavealpha' if GD < v2.0.1
+    (thanks oliver*heegerÿweb*de)
+  * Added fallback 'imagealphablending' if GD < v2.0.1
+    (thanks oliver*heegerÿweb*de)
+  * Added 'nocache' parameter that suppresses writing to cache
+    file, but only if high_security_enabled is set
+    (thanks federicoÿdonelleschi*com)
+  * Attempt to detect supported ImageMagick features
+    (thanks simonÿjapancentre*com)
+  * Added temp dir detection to phpThumb.demo.check.php
+  * Added ImageMagick dir to phpThumb.demo.check.php
+  * Added ImageMagick features to phpThumb.demo.check.php
+  * Default (config_allow_src_above_docroot = true) when PHP
+    running in "cli" mode  (thanks flobeeÿgmail*com)
+  * Bugfix: [#1470791] 'iar' not working properly with
+    ImageMagick  (thanks w1xÿusers*sourceforge*net)
+  * Bugfix: [#1498564] illegal characters in cache filenames
+    (thanks carl-evertÿusers*sourceforge*net)
+  * Bugfix: 'sx','sy','sw','sh','zc' cache parameters broken
+    (thanks federicoÿdonelleschi*com)
+  * Bugfix: 'config_max_source_pixels' incorrectly handled
+    (thanks oliver*heegerÿweb*de)
+  * Bugfix: 'aoe' not working properly
+    (thanks w1xÿusers*sourceforge*net)
+  * Bugfix: setParameter() was broken for arrays
+  * Bugfix: setSourceFilename() wasn't setting 'src'
+  * Bugfix: suppress stat()-related file permission
+    notices  (thanks lanceÿmainecoastdesign*com)
+  * Bugfix: image format now initialized during ErrorImage()
+  * Bugfix: domain matching now case-insensitive
+  * Bugfix: some versions of ImageMagick not detected
+    (thanks arvidÿfys*ku*dk)
+  * Bugfix: sometimes no image returned in safe_mode
+    (thanks bkainersÿgmail*com)
+  * Bugfix: 'far' not always handled correctly
+    (thanks matthew*newtonÿrealworldweb*com)
+  * Bugfix: PATH_INFO method not working if no filters specified
+    (thanks jjimenezÿpracticaldata*com)
+  * Bugfix: first (internal) call to ImageMagickVersion() failed
+    under Windows
+  * Bugfix: Images source-cropped AND resized with ImageMagick were
+    wrong size (cropped size, not resized size)
+    (thanks joao*saleiroÿwebfuel*pt)
+  * Bugfix: stat() warnings in CleanUpCacheDirectory()
+    (thanks christianÿhss-haage*de)
+  * Bugfix: $PHPTHUMB_DEFAULTS not working when no other processing
+    parameters specified  (thanks tbittnersÿcox*net)
+
+
+v1.7.1 - March 16, 2006
+  * /demo/phpThumb.demo.check.php now checks:
+    - server software
+    - local and master config values (with ini_get and
+      get_cfg_var respectively)  (thanks nEUTRonÿgmx*tm)
+    - existance of assorted PHP functions and explains their
+      importance
+  * Bugfix: config_error_die_on_error now defaults to FALSE to
+    prevent object-mode errors dying in an error image
+    (thanks moshÿtobt*de; riteshgupta1974ÿgmail*com)
+  * Bugfix: setParameter() now handles array parameters (such
+    as 'fltr') by appending $value to $parameter
+  * Bugfix: /demo/phpThumb.demo.check.php incorrect CURL value
+    under PHP5  (thanks nEUTRonÿgmx*tm)
+  * Bugfix: [#1439110] Limit fread() calls to 8kB
+    (see http://bugs.php.net/bug.php?id=35859)
+    (thanks andig2ÿusers*sourceforge*net)
+  * Bugfix: Prevent RenderToFilename() from trying to render
+    to URLs  (thanks Tim*Masseyÿitrm*co*uk)
+  * Bugfix: [#1438657] missing path in phpThumbURL()
+    (thanks terracesÿusers*sourceforge*net)
+  * Bugfix: zoomcrop was broken for non-square output
+    (thanks alisonÿsemidivine*com, federicoÿdonelleschi*com)
+  * Bugfix: suppress error messages when stat access to temp
+    dir is disabled  (thanks rfineÿvnuinc*com)
+  * Bugfix: ImageMagick processing was broken for source
+    images of types not supported by GetImageSize
+    (thanks rfineÿvnuinc*com)
+
+v1.7.0 - February 15, 2006
+  § ImageMagick output is used directly far more frequently
+    for much improved speed and minor quality improvement.
+  § ImageMagick now processes most of the image filters if
+    possible (will fall back to GD methods if unavailable)
+  § GD support is now optional if ImageMagick is installed.
+    Known limitations include:
+    - no support for HTTP source images
+    - ICO output is buggy (in some ImageMagick versions)
+    - most &fltr[] filters don't work at all
+    - 'ar', 'ra', 'far' don't work
+  § Added output support for ICO (icon) format (&f=ico).
+    Currently only supports single-image icons, but multi-
+    resolution support may be added in future versions
+    New file: phpthumb.ico.php
+  § Added output support for BMP (bitmap) format (&f=bmp).
+    Currently only supports 24-bit RGB format (for simplicity)
+  § Added new configuration & compatability checker
+    New file: demo/phpThumb.demo.check.php
+  * ImageMagick-generated thumbnails now have extra hidden
+    contents (EXIF data, etc) stripped (by using -thumbnail
+    instead of -resize) resulting in smaller filesizes
+  * Added background fill color, opacity and extent options to
+    'wmt' filter  (thanks craigÿpc-fanatics*com)
+  * Added metacharacter (^*) support for 'wmt', currently:
+    source filesize in bytes (^Fb), kB (^Fk), MB (^Fm),
+    source image width (^X), source image height (^Y),
+    thumbnail width (^x), thumbnail height (^y) and caret (^^)
+    (Feature Request #1357815)
+    (thanks ticklemeozmoÿusers*sourceforge*net)
+  * Moved ImageDestroy call from OutputThumbnail to end of
+    phpThumb.php to allow multiple calls to OutputThumbnail
+  * Added config_http_user_agent for site with browsersniffers
+    (thanks redrobÿgmail*com)
+  * Added $PHPTHUMB_CONFIG['disable_pathinfo_parsing'] (default
+    false) which disables parsing $_SERVER[PATH_INFO] for
+    parameters. If you want to parse PATH_INFO, set to false
+  * Added $PHPTHUMB_CONFIG['disable_imagecopyresampled'] (default
+    false) which replaces ImageCopyResampled with
+    ImageCopyResampleBicubic for buggy PHP-GD versions
+    (thanks g*pelagattiÿnetface*it)
+  * Added $PHPTHUMB_CONFIG['cache_prefix'] to allow sharing of
+    cache files across virtual servers (Feature Request #1395332)
+    (thanks doggyfrÿusers*sourceforge*net)
+  * Added $PHPTHUMB_CONFIG['disable_onlycreateable_passthru'] with
+    default=true (increased speed) to allow direct passthru of
+    images that don't have GD support. (Feature Request #1396446)
+    (thanks zedboyÿusers*sourceforge*net)
+  * Removed $PHPTHUMB_CONFIG['cache_differentiate_offsite'] because
+    it is now automatically tied in with nooffsitelink_enabled
+    (thanks doggysworldÿlibertysurf*fr)
+  * Removed phpThumb.demo.cacheconvert2.php
+  * Debug messages are now passed back from filters
+  * $PHPTHUMB_CONFIG['cache_source_filemtime_ignore_remote'] now
+    defaults to true for much-improved cached performance
+    (thanks redrobÿgmail*com)
+  * $PHPTHUMB_CONFIG['cache_differentiate_offsite'] now defaults
+    to false
+  * Added $PHPTHUMB_DEFAULTS['ar']='x' to phpThumb.config.php.default
+  * Added ImageDestroy($this->gdimg_source) to GenerateThumbnail()
+    to save memory before applying image filters
+  * gd_info() no longer member of phpthumb_functions
+  * cache files now default to using SERVER_NAME without 'www.'
+  * phpUnsharpMask::applyUnsharpMask() should be faster under PHP5 by
+    using ImageFilter(IMG_FILTER_GAUSSIAN_BLUR) when radius==1
+  * Added alternate CURL method for HTTP source images if
+    allow_url_fopen is disabled  (thanks webweberÿmotiondraw*com)
+  * Replaced $this->osslash with DIRECTORY_SEPARATOR constant
+  * Bugfix: [#1398327] 'new' got broken (1x1 images)
+  * Bugfix: [#1412552] HTTP source images with special characters were
+      not getting urlencoded
+  * Bugfix: ImageSaveAlpha errors on GD v2.0.0
+  * Bugfix: phpThumbDebug now entirely disabled if high_security=true
+  * Bugfix: source images with transparency lost transparency when
+    rotated  (thanks roalklÿyahoo*com)
+  * Bugfix: square source images were not resized when only (w|h)(p|l)
+    parameters passed
+  * Bugfix: source images are passed through unmodified in more cases
+  * Bugfix: ImageMagick not used on systems where it exists outside
+    defined open_basedir
+  * Bugfix: ImageMagickVersion() now returns correct versionstring
+  * Bugfix: ImageMagick warnings no longer cause ImageMagick to fail
+  * Bugfix: ErrorImage no longer fatal to phpThumbDebug
+  * Bugfix: "Array to string conversion" in foreach($a as $v) loops
+    (thanks zeeshanÿtargetedmedia*co*uk)
+  * Bugfix: safe mode warnings in ImageCreateFromStringReplacement
+    (thanks adminÿalex-home*net)
+  * Bugfix: nooffsitelink broken if !nooffsitelink_require_refer
+    (thanks depronÿgmx*net)
+  * Bugfix: phpThumb failed when magic_quotes_runtime=true
+    (thanks stansawyerÿyahoo*com)
+  * Bugfix: several issues with HTTP image sources
+    (thanks redrobÿgmail*com)
+  * Bugfix: phpThumb_tempnam() would return incomplete temp filenames
+    under Windows, which may result in orphaned zero-byte temp files
+    in C:\ if multiple drives exist
+
+v1.6.2 - November 24, 2005
+  § Animated GIF output is now possible if ImageMagick is
+    available and no filters (other than resize) are applied
+    (thanks brandenbassÿgmail*com for idea)
+  * Added $PHPTHUMB_CONFIG['cache_force_passthru'] to work
+    around cached-image-only-works-second-time issue
+    (thanks yakoÿ11y11*com)
+  * Bugfix: black borders on some image edges
+    (thanks atelierÿdelirius*ch && chuckÿcatalyststudio*com)
+  * Bugfix: uncaught PHP warning in RenderToFile DebugMessage
+  * Bugfix: allow phpThumbDebug in noGD PHP installations
+  * Bugfix: 'hash' warning in high_security mode
+    (thanks bernhardÿwtf*at)
+  * Bugfix: non-TTF rotated text watermarks now work (unrotated)
+    with no warnings if ImageRotate is unavailable
+    (thanks aparviaiÿusers*sourceforge*net)
+
+v1.6.1 - August 26, 2005
+  § Filters now use GD functions where available (using
+    ImageFilter, only available in PHP v5.0.0+ with bundled
+    version of GD). Enabled for: colorize, negative,
+    grayscale, brightness, contrast, gaussian blur, selective
+    blur, mean removal  (thanks donlaurÿmac*com)
+  § Added config_prefer_imagemagick (defaults=true)
+  § Added phpthumb_filters::Grayscale()        'gray'
+  § Added phpthumb_filters::ReduceColorDepth() 'rcd'
+  § Added phpthumb_filters::Brightness()       'brit'
+  § Added phpthumb_filters::Contrast()         'cont'
+  § Added phpthumb_filters::Saturation()       'sat'
+  § Added phpthumb_filters::EdgeDetect()    'edge' [PHP5 only]
+  § Added phpthumb_filters::BlurGaussian()  'gblr' [PHP5 only]
+  § Added phpthumb_filters::BlurSelective() 'gblr' [PHP5 only]
+  § Added phpthumb_filters::MeanRemoval()   'mean' [PHP5 only]
+  § Added phpthumb_filters::Smooth()        'smth' [PHP5 only]
+  * New timing debug info in phpThumbDebug
+  * Added config_cache_differentiate_offsite
+  * config_die_on_error now defaults to false
+  * ResolveSource works better
+  * cache filenames with 'fltr' parameters have changed
+  * Filters now skip processing if amount=0 or similar
+  * [#1263051] 'far' now accepts L,R,T,B,C as values giving
+    alignment of left/right/top/bottom/center respectively.
+    Old value of '1' defaults to centered
+    (thanks webgrappaÿusers*sourceforge*net)
+  * Bugfix: RenderToFile() now fails properly when output format
+    is unknown
+  * Bugfix: PNG transparency wasn't working with 'far'
+  * Bugfix: source images with EXIF thumbnails that differ in
+    aspect ratio no longer use EXIF thumbnails as source unless
+    no other options exist
+  * Bugfix: setting 'src' with setParameter now invokes
+    setSourceFilename to properly set $this->sourceFilename
+    (thanks Gazou)
+  * Bugfix: 'zc' had poor quality when used with ImageMagick
+  * Bugfix: 'aoe' parameter broken when not using ImageMagick
+    (thanks frankieali4ÿhotmail*com)
+  * Bugfix: fixed issue with symbolic links
+    (thanks hornet136ÿgmail*com)
+  * Bugfix: config_max_source_pixels now defaults to same
+    calculation as used in phpThumb.config.php
+    (thanks vukshaÿhotmail*com)
+  * Bugfix: Offsite cached thumbnails no longer use unique
+    referer (now either nothing or "_offsite")
+    (thanks swaayeÿyahoo*com)
+  * Bugfix: "Unknown image type identified by ì<?phî" errors
+    in some installations  (thanks frankieali4ÿhotmail*com)
+
+v1.6.0 - July 18, 2005
+  § Included new file phpThumb.demo.random.php to select a
+    random image from a specified folder, optionally only
+    landscape and/or portrait and/or square images, and to
+    display it to phpThumb.php
+    (thanks mikeÿgdaymate*nl)
+  § Added /docs/phpthumb.faq.txt
+  § Added /demo/readme.demos.txt
+  § Added 'wp', 'hp', 'wl', 'hl', 'ws', 'hs' parameters for
+    width and height of portrait, landscape and square
+    images. This allows you to display any image aspect
+    ratio at the size you want without knowing ahead of time
+    whether the image is wide or tall.
+    (thanks mikeÿgdaymate*nl)
+  § phpThumb.php can now also be called by passing parameters
+    in $_SERVER['PATH_INFO']. Please see phpthumb.readme.txt
+    (thanks javierÿguegue*net)
+  § MySQL data pulling configuration moved from phpThumb.php
+    to phpThumb.config.php
+  * "file" and "goto" parameters are now disabled by
+    default (configurable in phpThumb.config.php but not
+    recommended)
+  * Cached files are now used from first instance, avoiding
+    call to OutputThumbnail and preventing browser-side
+    cache failure
+  * Added config_allow_src_above_docroot (default=false) to
+    prevent browsing filesystem outside document_root
+    (thanks davidÿint0x80*com)
+  * Added config_allow_src_above_phpthumb (default=true) to
+    prevent access to files except in subdirectories of
+    phpThumb installation  (thanks davidÿint0x80*com)
+  * Added setParameter() and getParameter() functions
+    (thanks werner*kraussÿhallstatt*net)
+  * SafeBackTick() renamed to SafeExec() and all execution
+    functions are tried (exec, shell_exec, system, passthru)
+    are tried in case one or more are disabled
+    (thanks bkainersÿgmail*com)
+  * config_output_allow_enlarging has been removed from
+    phpthumb.class.php, and 'output_allow_enlarging' has
+    been removed from phpThumb.config.php
+  * New default detection method for
+    $PHPTHUMB_CONFIG['document_root']
+  * Bugfix: inconsitant handling of boolean parameters
+    passed "0" (isset vs !empty())  (thanks manniÿzapto*de)
+  * Bugfix: text watermarks now support multiple lines
+    (thanks hanno*vandenbergÿhccnet*nl)
+  * Bugfix: suppress error message in
+    ImageCreateFromStringReplacement()
+    (thanks srimandadapuÿyahoo*com)
+  * Bugfix: 'aoe' was ignored in object mode
+    (thanks tonyÿnylink*com)
+  * Bugfix: ResolveFilenameToAbsolute() failed on non-
+    existant filenames (file to be written, for example)
+  * Bugfix: 'aoe' parameter was ignored in cache filename
+    (thanks tonyÿnylink*com)
+  * Bugfix: non-TTF watermark text had inverted opacity
+    scale. All 'wmt' is now 100=opaque, 0=transparent
+    (thanks mailÿmmjaeger*com)
+  * Bugfix: cache file failed if document_root had
+    trailing slash.  (thanks lovingloboÿgmail*com)
+  * Bugfix: [#1219422] Cache filename structure modified to
+    avoid excessively long filenames (cache filenames are
+    now limited to 142 characters + length of
+    $_SERVER['SERVER_NAME'])
+    (thanks trungieÿusers*sourceforge*net)
+  * Bugfix: [#1211729] phpThumb.php fails to locate
+    phpThumb.config.php if the two files are in the same
+    directory but phpThumb.php is run through a sym link.
+    (thanks allanbushÿusers*sourceforge*net)
+
 v1.5.4 - May 27, 2005
   * Security issue with passthrough addressed
-    (thanks mr*agilityÿgmail*com)
+    (thanks davidÿint0x80*com)
   * 'wmt' now reads TTF fonts from the config font
     directory, or from anywhere if a path is specified in
     the font filename
@@ -34,7 +601,7 @@ v1.5.4 - May 27, 2005
     Image Dimensions error  (thanks mailÿmmjaeger*com)
 
 v1.5.3 - May 4, 2005
-  * Added new filters:
+  § Added new filters:
     - 'wb' (White Balance) [ex: &fltr[]=wb|<c>]
       where <c> is the target hex color to white balance
       on, this color is what "should be" white, or light
@@ -42,7 +609,7 @@ v1.5.3 - May 4, 2005
       any gray color can theoretically be used. If <c> is
       omitted the filter guesses based on brightest pixels
       in each of RGB
-  * Cached files are used by a Location header instead of
+  § Cached files are used by a Location header instead of
     being passed through phpThumb.php using readfile
     (thanks newtnÿthrillnerds*com)
   * Added 'cache_source_filemtime_ignore_local' and
@@ -85,12 +652,12 @@ v1.5.3 - May 4, 2005
     (thanks rebootÿusers*sourceforge*net)
 
 v1.5.2 - April 20, 2005
-  * phpThumb.config.php is renamed to
+  § phpThumb.config.php is renamed to
     phpThumb.config.php.default to prevent accidental
     overwriting. Please migrate your old settings to the new
     file, delete your old config and rename the default to
     phpThumb.config.php
-  * Added new filters:
+  § Added new filters:
     - 'blur' (Blur) [ex: &fltr[]=blur|<radius>]
       where (0 < <radius> < 25) (default = 1)
       (thanks thoensiÿnetcom*no for code)
@@ -157,12 +724,12 @@ v1.5.1 - April 06, 2005
       echo '<img src="'.phpThumbURL('src=pic.jpg&w=50').'">';
       This function is supplied at the bottom of
       phpThumb.config.php  (thanks paulÿstonie*co*uk)
-  * Added new parameter "new" (phpThumb.php only) which can
+  § Added new parameter "new" (phpThumb.php only) which can
     create a new image without using "src" parameter. Set
     "&new=<b>|<o>" where <b> is the background hex color,
     <o> is (optional) opacity (0=transparent, 100=opaque).
     (thanks mailÿmmjaeger*com)
-  * Added new filters:
+  § Added new filters:
     - 'sep' (Sepia) [ex: &fltr[]=sep|<value>|<color>]
       where <value> is a number between 0 and 100 for the
       amount of colorization (default=50), and <color> is
