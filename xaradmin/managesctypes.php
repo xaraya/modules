@@ -7,7 +7,7 @@
  * @link http://xaraya.com
  *
  * @subpackage SiteContact Module
- * @copyright (C) 2004-2008 2skies.com
+ * @copyright (C) 2004-2009 2skies.com
  * @link http://xarigami.com/project/sitecontact
  * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
@@ -128,7 +128,7 @@ function sitecontact_admin_managesctypes()
                                                     'scid' => $sctype['sctypeid'])));
                 return true;
             } else {
-                   xarSessionSetVar('statusmsg',xarML('Problem with creation of New Sitecontact Form '));
+                   xarSessionSetVar('statusmsg',xarML('Problem with creation of new Sitecontact Form '));
                    xarResponseRedirect(xarModURL('sitecontact', 'admin', 'managesctypes'));
             }
 
@@ -171,8 +171,8 @@ function sitecontact_admin_managesctypes()
              $updatedscid=xarModAPIFunc('sitecontact','admin','updatesctype', $item);
 
              if (!$updatedscid) {
-                  xarSessionSetVar('statusmsg',xarML('Problem updating site contact form #(1)',$item['sctypename']));
-                $msg = xarML('Problem updating a Sitecontact Forum with ID of #(1)',$item['scid']);
+                  xarSessionSetVar('statusmsg',xarML('Problem updating the site contact form #(1)',$item['sctypename']));
+                $msg = xarML('Problem updating a site contact form with ID of #(1)',$item['scid']);
                 xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
                 return false;

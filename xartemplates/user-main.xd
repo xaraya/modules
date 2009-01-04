@@ -14,9 +14,9 @@
     <script type="text/javascript">
     <!--
         // Enter name of mandatory fields
-         var fieldRequired = Array("useremail", "usermessage","username", "fav_colour");
+         var fieldRequired = Array("useremail", "usermessage","username");
         // Enter field description to appear in the dialog box
-        var fieldDescription = Array("Your Email","Your message", "Your Name", "Colour");
+        var fieldDescription = Array("Your Email","Your message", "Your Name");
     //-->
     </script>
 </xar:if>
@@ -68,7 +68,6 @@
                 <xar:else />
                    <xar:data-input type="email" id="useremail" name="useremail" class="xar-form-textxlong" value="$useremail" />&#160;<xar:mlstring>(required)</xar:mlstring>
                 </xar:if>
-                <!-- we want a valid email -->
                 <xar:if condition="isset($invalid['useremail']) and !empty($invalid['useremail'])">
                     <br /><span class="xar-error">#$invalid['useremail']#</span>
                 </xar:if>
