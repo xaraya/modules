@@ -3,7 +3,7 @@
 // GIF Util - (C) 2003 Yamasoft (S/C)
 // http://www.yamasoft.com
 // All Rights Reserved
-// This file can be freely copied, distributed, modified, updated by anyone under the only
+// This file can be freely copied, distributed, modified, updated by anyone under the only 
 // condition to leave the original address (Yamasoft, http://www.yamasoft.com) and this header.
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // <gif>  = gif_loadFile(filename, [index])
@@ -37,7 +37,10 @@ function gif_loadFileToGDimageResource($gifFilename, $bgColor = -1)
 {
     if ($gif = gif_loadFile($gifFilename)) {
 
-        @set_time_limit(300);
+        if (!phpthumb_functions::FunctionIsDisabled('set_time_limit')) {
+            // shouldn't take nearly this long
+            set_time_limit(120);
+        }
         // general strategy: convert raw data to PNG then convert PNG data to GD image resource
         $PNGdata = $gif->getPng($bgColor);
         if ($img = @ImageCreateFromString($PNGdata)) {
@@ -1093,7 +1096,9 @@ class CGIF
         $data = $this->m_img->m_data;
         $nPxl = ($this->m_gfh->m_nHeight - 1) * $this->m_gfh->m_nWidth;
         for ($y = 0; $y < $this->m_gfh->m_nHeight; $y++) {
-            set_time_limit(30);
+            if (!phpthumb_functions::FunctionIsDisabled('set_time_limit')) {
+                set_time_limit(30);
+            }
             for ($x = 0; $x < $this->m_gfh->m_nWidth; $x++, $nPxl++) {
                 if (
                     ($x >= $this->m_img->m_gih->m_nLeft) &&
