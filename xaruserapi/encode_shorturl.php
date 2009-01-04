@@ -359,13 +359,11 @@ function articles_encodeUsingTitle( $aid, $encodeUsingTitle = 1, $ptid = '' )
 
         $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
     }
-    /* jojo - why is this happening? Seems the problem is in retrieving an item if this is here.
-              Let's solve the root problem instead.
+
     if ( strpos($article['title'],'_') === FALSE )
     {
         $article['title'] = str_replace(' ','_',$article['title']);
     }
-    */
     $encodedTitle = rawurlencode($article['title']);
     // the URL encoded / (%2F) is not accepted by Apache in PATH_INFO
     $encodedTitle = str_replace('%2F','/',$encodedTitle);

@@ -274,8 +274,8 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 
     $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
 
     if( (count($articles) == 0) && (strpos($decodedTitle,'_') !== false) ) {
-        // jojo - we should not need this here - fix the root cause instead of this
-        //$searchArgs['search'] = str_replace('_',' ',$decodedTitle);
+
+        $searchArgs['search'] = str_replace('_',' ',$decodedTitle);
 
         $searchArgs['searchfields'] = array('title');
         $searchArgs['searchtype'] = 'equal whole string';
