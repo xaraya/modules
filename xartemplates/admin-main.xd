@@ -80,17 +80,19 @@
             <xar:mlstring>The naming convention for derivative images has changed since version 1.0.0. So you can delete the old derivative images, and new derivative images will be created as needed in the same directory...</xar:mlstring>
         </p>
         </xar:if>
-   <h3><xar:mlstring>Further Information</xar:mlstring></h3>
+ <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
   <p>
-       <xar:mlstring>Extended information about this module can be found at </xar:mlstring><a title="#xarML('Images Module - Xaraya Extension 152')#" href="http://www.xaraya.com/index.php/release/152.html">Xaraya Extension and Releases</a>.
-       </p>
-      <ul>
-          <li><xar:mlstring>Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
-          </li>
-          <li><xar:mlstring>Related tutorials and documentation on Images found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/images/" title="#xarML('Related documentation on Images')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
-          </li>
-      </ul>
-      <p class="xar-sub">
-         <strong>&nbsp;<xar:mlstring>Images module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.1.0&nbsp; #xarLocaleGetFormattedDate('short','1130972400')#
+    <xar:mlstring>Further information on the Images module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <li><xar:mlstring>Images Project page at</xar:mlstring> <a title="#xarML('Images project page')#" href="http://xarigami.com/project/images">Xarigami Images</a>.
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on Images found at</xar:mlstring> <a href="http://xarigami.com/resources/" title="#xarML('Related documentation on Images')#"><xar:mlstring>Xarigami Resources</xar:mlstring></a>
+    </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>Images Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Revision</xar:mlstring> 1.1.2&nbsp; 2009-01-2
   </p>
 </div>

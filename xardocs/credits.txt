@@ -1,0 +1,6 @@
+Original author : Carl P. Corliss
+
+PHPThumbs added and various other integrated features: Mikespub
+
+xarigami version from 1.1.1: based on original with updates to phpThumbs, bug fixes, updated UI
+
