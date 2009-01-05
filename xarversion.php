@@ -3,7 +3,7 @@
  * Initialization functions
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -13,7 +13,7 @@
  */
 $modversion['name']         = 'Images';
 $modversion['id']           = '152';
-$modversion['version']      = '1.1.0';
+$modversion['version']      = '1.1.1';
 $modversion['displayname']  = xarML('Images');
 $modversion['description']  = 'Handles basic image manipulation - resizing/cropping/scaling/rotating';
 $modversion['credits']      = 'docs/credits.txt';
