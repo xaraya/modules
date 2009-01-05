@@ -3,7 +3,7 @@
  * Initialization
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -86,6 +86,8 @@ function images_upgrade($oldversion)
             // Fall through to next upgrade
 
         case '1.1.0':
+        
+        case '1.1.1' : //current version
             break;
     }
 

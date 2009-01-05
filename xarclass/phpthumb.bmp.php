@@ -18,8 +18,7 @@
 /////////////////////////////////////////////////////////////////
 
 
-class phpthumb_bmp 
-{
+class phpthumb_bmp {
 
     function phpthumb_bmp() 
     {
@@ -742,7 +741,9 @@ class phpthumb_bmp
         }
 
         foreach ($BMPdata['data'] as $row => $colarray) {
-            @set_time_limit(30);
+            if (!phpthumb_functions::FunctionIsDisabled('set_time_limit')) {
+                set_time_limit(30);
+            }
             foreach ($colarray as $col => $color) {
                 list($red, $green, $blue) = $this->IntColor2RGB($color);
                 if ($truecolor) {
@@ -763,7 +764,9 @@ class phpthumb_bmp
             echo 'ERROR: no pixel data<BR>';
             return false;
         }
-        set_time_limit(intval(round($BMPinfo['resolution_x'] * $BMPinfo['resolution_y'] / 10000)));
+        if (!phpthumb_functions::FunctionIsDisabled('set_time_limit')) {
+            set_time_limit(intval(round($BMPinfo['resolution_x'] * $BMPinfo['resolution_y'] / 10000)));
+        }
         $im = $this->PlotPixelsGD($BMPinfo['bmp']);
         if (headers_sent()) {
             echo 'plotted '.($BMPinfo['resolution_x'] * $BMPinfo['resolution_y']).' pixels in '.(time() - $starttime).' seconds<BR>';

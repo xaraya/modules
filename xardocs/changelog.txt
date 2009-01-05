@@ -1,0 +1,8 @@
+Version 1.1.1 - Xarigami versions commence
+- Update phpThumb to 1.7.8-200709161750
+
+
+Version 1.0.0 - Mikespub
+Added phpThumbs support, admin UI interface and program interface
+
+Original Version: Carl P. Corliss
