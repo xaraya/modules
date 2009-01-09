@@ -202,10 +202,10 @@ function tinymce_admin_updateconfig()
     }
 
     if (xarModGetVar('tinymce','tinyask')==1){ //defaults to false
-        $jstext .='ask : "true",';
+        $jstext .='ask : true,';
     }
     if (xarModGetVar('tinymce','tinyinlinestyle')==1){
-        $jstext .='inline_styles : "true", ';
+        $jstext .='inline_styles : true, ';
     }
     if (xarModGetVar('tinymce','tinyundolevel') > 0){
         $jstext .='custom_undo_redo_levels : "'.xarModGetVar('tinymce','tinyundolevel').'", ';
@@ -216,16 +216,16 @@ function tinymce_admin_updateconfig()
     }
     */
     if (xarModGetVar('tinymce','tinytilemap')==1){
-        $jstext .='button_tile_map : "true",';
+        $jstext .='button_tile_map : true,';
     }
     if (xarModGetVar('tinymce','tinycleanup')!=1){
-        $jstext .='cleanup: "false",';
+        $jstext .='cleanup: false,';
     }
 
     if (xarModGetVar('tinymce','tinybr')==1){
-        $jstext .='convert_newlines_to_brs: "true",';
+        $jstext .='convert_newlines_to_brs: true,';
     } else {
-     $jstext .='convert_newlines_to_brs: "false",';
+     $jstext .='convert_newlines_to_brs: false,';
     }
 
     if (xarModGetVar('tinymce','tinypara') !=1){ //This is true by default in tinymce
@@ -233,10 +233,10 @@ function tinymce_admin_updateconfig()
     }
 
     if (xarModGetVar('tinymce','sourceformat')==1){
-        $jstext .='apply_source_formatting: "true",';
+        $jstext .='apply_source_formatting: true,';
     }
     if (xarModGetVar('tinymce','striplinebreaks')==1){
-        $jstext .='remove_linebreaks: "true",';
+        $jstext .='remove_linebreaks: true,';
     }
 
    if (trim(xarModGetVar('tinymce','tinyinvalid')) <> '') {
@@ -257,15 +257,15 @@ function tinymce_admin_updateconfig()
 
 
         if (xarModGetVar('tinymce','tinyenablepath')!=1){
-            $jstext .='theme_advanced_path: "false", ';
+            $jstext .='theme_advanced_path: false, ';
         } else { /* if not false set the status path location and resizing */
             $jstext .='theme_advanced_statusbar_location: "'.xarModGetVar('tinymce','tinyshowpath').'", ';
          
             if (xarModGetVar('tinymce','tinyadvresize')==1 ){
-                $jstext .='theme_advanced_resizing : "true", ';
+                $jstext .='theme_advanced_resizing : true, ';
             }
             if (xarModGetVar('tinymce','tinyresizehorizontal')==1 ){
-                $jstext .='theme_advanced_resize_horizontal : "true", ';
+                $jstext .='theme_advanced_resize_horizontal : true, ';
             }
         }
 
@@ -377,8 +377,8 @@ function tinymce_admin_updateconfig()
     /* let's build a custom gz script as well */
     $gztext  = 'theme : "'.xarModGetVar('tinymce','tinytheme').'",';
     $gztext .= 'plugins : "'.$plugs.'", ';
-    $gztext .= 'debug : "false", ';    
-    $gztext .=' disk_cache : "true",'; 
+    $gztext .= 'debug : false, ';    
+    $gztext .=' disk_cache : true,'; 
     $gztext .= 'language : "'.xarModGetVar('tinymce','tinylang').'" ';
     xarModSetVar('tinymce','gztext',$gztext);
 
