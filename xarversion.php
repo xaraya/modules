@@ -7,14 +7,14 @@
  * @link http://www.xaraya.com
  *
  * @subpackage xartinymce module
- * @copyright (C) 2002-2008 2skies.com
+ * @copyright (C) 2002-2009 2skies.com
  * @link http://xarigami.com/projects/xartinymce
  * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 
 $modversion['name']         = 'tinymce';
 $modversion['id']           = '63';
-$modversion['version']      = '1.5.2';
+$modversion['version']      = '1.5.3';
 $modversion['displayname']  = 'XarTinyMCE';
 $modversion['description']  = 'Integration of TinyMCE, a fast and configurable wysiwyg editor for Xaraya';
 $modversion['credits']      = 'xardocs/credits.txt';
