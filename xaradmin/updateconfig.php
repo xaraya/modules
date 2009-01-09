@@ -402,8 +402,19 @@ function tinymce_admin_updateconfig()
     }
 
     /* let's set the var to hold the js text */
+    
+    /* Prepare the display of current configuration */
+ $jsstrings="";
+    $finalstring = '';
+    $search = array("true,","false,","\",");
+    $replace= array("true,","false,","\",");    
+    $jsstrings = str_ireplace($search,$replace,$jstext);
+    $finalstring = $jsstrings;
+
+         
+    
     //we need to prepare it as it has space where we do not want and so on
-    $jsstrings="";
+/*    $jsstrings="";
     $jsstrings=explode('",',$jstext);
 
     $finalstring = '';
@@ -416,7 +427,7 @@ function tinymce_admin_updateconfig()
             $finalstring .= $jsstrings[$i];        
         }
       }
-
+*/
     xarModSetVar('tinymce','jstext',$finalstring);
     xarModSetVar('tinymce','multiconfig',$multiconfig);
     xarModSetVar('tinymce','buttonstring',$buttonswitch);

@@ -131,7 +131,8 @@ function tinymce_admin_modifyconfig()
     $search = array("true,","false,","\",");
     $replace= array("true,\n","false,\n","\",\n");    
     $jsstrings = str_ireplace($search,$replace,$data['jstext']);
-    $data['jsstrings'] = $jsstrings;
+     $data['jsstrings'] = $stringstart."\n";
+     $data['jsstrings'] .= $jsstrings;
  
      $data['jsstrings'] .="\n".$stringend;
 
