@@ -1,5 +1,5 @@
 /**
- * $Id: editor_template_src.js 960 2008-11-12 18:30:32Z spocke $
+ * $Id: editor_template_src.js 984 2009-01-05 19:51:42Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2008, Moxiecode Systems AB, All rights reserved.
@@ -104,7 +104,7 @@
 						}
 					}
 
-					if (/\s*\./.test(v))
+					if (/^\s*\./.test(v))
 						cl = v.replace(/\./g, '');
 
 					o[k] = cl ? {'class' : cl} : {fontSize : v};
@@ -687,7 +687,7 @@
 
 			n = DOM.add(tb, 'tr');
 			n = td = DOM.add(n, 'td', {'class' : 'mceStatusbar'});
-			n = DOM.add(n, 'div', {id : ed.id + '_path_row'}, s.theme_advanced_path ? ed.translate('advanced.path') + ': ' : '&nbsp;');
+			n = DOM.add(n, 'div', {id : ed.id + '_path_row'}, s.theme_advanced_path ? ed.translate('advanced.path') + ': ' : '&#160;');
 			DOM.add(n, 'a', {href : '#', accesskey : 'x'});
 
 			if (s.theme_advanced_resizing && !tinymce.isOldWebKit) {

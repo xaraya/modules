@@ -128,17 +128,12 @@ function tinymce_admin_modifyconfig()
     $stringend=' });';
 
     $data['jsstrings']="";
-    $jsstrings=explode('",',$data['jstext']);
-    $data['jsstrings']=$stringstart;
-     foreach ($jsstrings as $key => $value) {
-       if (strlen($value) > 70){
-        $data['jsstrings'].="\n".wordwrap($value, 75,"\n",1 ).'",';
-       }elseif (substr(trim($value),-1)=='"'){
-           $data['jsstrings'] .="\n ".$value;
-       }else{
-          $data['jsstrings'] .="\n ".$value.'",';
-       }
-     }
+    $search = array("true,","false,","\",");
+    $replace= array("true,\n","false,\n","\",\n");    
+    $jsstrings = str_ireplace($search,$replace,$data['jstext']);
+     $data['jsstrings'] = $stringstart."\n";
+     $data['jsstrings'] .= $jsstrings;
+ 
      $data['jsstrings'] .="\n".$stringend;
 
      $data['jsmultiple'] ="\n";

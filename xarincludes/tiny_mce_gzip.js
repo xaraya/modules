@@ -17,11 +17,15 @@ var tinyMCE_GZ = {
 
 		s = t.settings;
 
-		for (i=0; i<nl.length; i++) {
-			n = nl[i];
+		if (window.tinyMCEPreInit) {
+			t.baseURL = tinyMCEPreInit.base;
+		} else {
+			for (i=0; i<nl.length; i++) {
+				n = nl[i];
 
-			if (n.src && n.src.indexOf('tiny_mce') != -1)
-				t.baseURL = n.src.substring(0, n.src.lastIndexOf('/'));
+				if (n.src && n.src.indexOf('tiny_mce') != -1)
+					t.baseURL = n.src.substring(0, n.src.lastIndexOf('/'));
+			}
 		}
 
 		if (!t.coreLoaded)

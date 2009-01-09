@@ -3,8 +3,8 @@
 
 var tinymce = {
 	majorVersion : '3',
-	minorVersion : '2.1',
-	releaseDate : '2008-11-04',
+	minorVersion : '2.1.2',
+	releaseDate : '200x-xx-xx',
 
 	_init : function() {
 		var t = this, d = document, w = window, na = navigator, ua = na.userAgent, i, nl, n, base, p, v;
@@ -1149,7 +1149,7 @@ tinymce.create('static tinymce.util.XHR', {
 		select : function(pa, s) {
 			var t = this, cs, c, pl, o = [], x, i, l, n, xp;
 
-			s = t.get(s) || t.doc;
+			s = t.get(s) || t.get(t.settings.root_element) || t.doc;
 
 			// Look for native support and use that if it's found
 			if (s.querySelectorAll) {
@@ -2001,7 +2001,7 @@ tinymce.create('static tinymce.util.XHR', {
 					if (x) {
 						// So if we replace the p elements with divs and mark them and then replace them back to paragraphs
 						// after we use innerHTML we can fix the DOM tree
-						h = h.replace(/<p ([^>]+)>|<p>/g, '<div$1 mce_tmp="1">');
+						h = h.replace(/<p ([^>]+)>|<p>/g, '<div $1 mce_tmp="1">');
 						h = h.replace(/<\/p>/g, '</div>');
 
 						// Set the new HTML with DIVs
@@ -2200,15 +2200,23 @@ tinymce.create('static tinymce.util.XHR', {
 		},
 
 		decode : function(s) {
-			var e;
+			var e, n, v;
 
 			// Look for entities to decode
 			if (/&[^;]+;/.test(s)) {
 				// Decode the entities using a div element not super efficient but less code
 				e = this.doc.createElement("div");
 				e.innerHTML = s;
+				n = e.firstChild;
+				v = '';
 
-				return !e.firstChild ? s : e.firstChild.nodeValue;
+				if (n) {
+					do {
+						v += n.nodeValue;
+					} while (n.nextSibling);
+				}
+
+				return v || s;
 			}
 
 			return s;
@@ -2665,6 +2673,10 @@ tinymce.create('static tinymce.util.XHR', {
 
 		_pageInit : function() {
 			var e = Event;
+
+			// Safari on Mac fires this twice
+			if (e.domLoaded)
+				return;
 
 			e._remove(window, 'DOMContentLoaded', e._pageInit);
 			e.domLoaded = true;
@@ -7408,6 +7420,26 @@ var tinyMCE = window.tinyMCE = tinymce.EditorManager;
 				});
 			}
 
+			// Fix gecko link bug, when a link is placed at the end of block elements there is
+			// no way to move the caret behind the link. This fix adds a bogus br element after the link
+			if (isGecko) {
+				function fixLinks(ed, o) {
+					each(ed.dom.select('a'), function(n) {
+						var pn = n.parentNode;
+
+						if (ed.dom.isBlock(pn) && pn.lastChild === n)
+							ed.dom.add(pn, 'br', {'mce_bogus' : 1});
+					});
+				};
+
+				t.onExecCommand.add(function(ed, cmd) {
+					if (cmd === 'CreateLink')
+						fixLinks(ed);
+				});
+
+				t.onSetContent.add(t.selection.onSetContent.add(fixLinks));
+			}
+
 			if (isGecko && !s.readonly) {
 				try {
 					// Design mode must be set here once again to fix a bug where
@@ -8346,7 +8378,9 @@ var tinyMCE = window.tinyMCE = tinymce.EditorManager;
 						return v;
 
 					each(t.shortcuts, function(o) {
-						if (o.ctrl != e.ctrlKey && (!tinymce.isMac || o.ctrl == e.metaKey))
+						if (tinymce.isMac && o.ctrl != e.metaKey)
+							return;
+						else if (!tinymce.isMac && o.ctrl != e.ctrlKey)
 							return;
 
 						if (o.alt != e.altKey)
@@ -9650,7 +9684,7 @@ var tinyMCE = window.tinyMCE = tinymce.EditorManager;
 			function replaceFonts() {
 				var bm;
 
-				each(dom.select(tinymce.isWebKit && !tinymce.isAir ? 'span' : 'font'), function(n) {
+				each(dom.select('span,font'), function(n) {
 					if (n.style.fontFamily == 'mceinline' || n.face == 'mceinline') {
 						if (!bm)
 							bm = ed.selection.getBookmark();
@@ -10025,7 +10059,7 @@ tinymce.create('tinymce.UndoManager', {
 			t.reOpera = new RegExp('(\\u00a0|&#160;|&nbsp;)<\/' + elm + '>', 'gi');
 			t.rePadd = new RegExp('<p( )([^>]+)><\\\/p>|<p( )([^>]+)\\\/>|<p( )([^>]+)>\\s+<\\\/p>|<p><\\\/p>|<p\\\/>|<p>\\s+<\\\/p>'.replace(/p/g, elm), 'gi');
 			t.reNbsp2BR1 = new RegExp('<p( )([^>]+)>[\\s\\u00a0]+<\\\/p>|<p>[\\s\\u00a0]+<\\\/p>'.replace(/p/g, elm), 'gi');
-			t.reNbsp2BR2 = new RegExp('<p( )([^>]+)>(&nbsp;|&#160;)<\\\/p>|<p>(&nbsp;|&#160;)<\\\/p>'.replace(/p/g, elm), 'gi');
+			t.reNbsp2BR2 = new RegExp('<%p()([^>]+)>(&nbsp;|&#160;)<\\\/%p>|<%p>(&nbsp;|&#160;)<\\\/%p>'.replace(/%p/g, elm), 'gi');
 			t.reBR2Nbsp = new RegExp('<p( )([^>]+)>\\s*<br \\\/>\\s*<\\\/p>|<p>\\s*<br \\\/>\\s*<\\\/p>'.replace(/p/g, elm), 'gi');
 			t.reTrailBr = new RegExp('\\s*<br \\/>\\s*<\\\/p>'.replace(/p/g, elm), 'gi');
 
@@ -10375,19 +10409,19 @@ tinymce.create('tinymce.UndoManager', {
 				return true;
 
 			// If caption or absolute layers then always generate new blocks within
-			if (sb && (sb.nodeName == 'CAPTION' || /absolute|relative|static/gi.test(sb.style.position))) {
+			if (sb && (sb.nodeName == 'CAPTION' || /absolute|relative|static/gi.test(dom.getStyle(sb, 'position', 1)))) {
 				bn = se.element;
 				sb = null;
 			}
 
 			// If caption or absolute layers then always generate new blocks within
-			if (eb && (eb.nodeName == 'CAPTION' || /absolute|relative|static/gi.test(eb.style.position))) {
+			if (eb && (eb.nodeName == 'CAPTION' || /absolute|relative|static/gi.test(dom.getStyle(sb, 'position', 1)))) {
 				bn = se.element;
 				eb = null;
 			}
 
 			// Use P instead
-			if (/(TD|TABLE|TH|CAPTION)/.test(bn) || (sb && bn == "DIV" && /left|right/gi.test(sb.style.cssFloat))) {
+			if (/(TD|TABLE|TH|CAPTION)/.test(bn) || (sb && bn == "DIV" && /left|right/gi.test(dom.getStyle(sb, 'float', 1)))) {
 				bn = se.element;
 				sb = eb = null;
 			}

@@ -1,3 +1,8 @@
+* Version 1.5.3  9 Jan 2009
+- Upgrade to latest upstream 3.2.1.1 code to revision 984
+- Updated with latest fixes to compressor php file
+- Fixed problem with added p tags
+
 * Version 1.5.2  18 Nov 2008
 - Upgrade to latest upstream 3.2.1 code (including additional to revision 962)
 - Upstream changes include better support and fixes for webkit based browers

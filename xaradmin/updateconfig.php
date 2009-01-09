@@ -161,6 +161,8 @@ function tinymce_admin_updateconfig()
     /* Turn our settings into javascript for insert into template
      *Let's call the variable jstext
      */
+    //use double quotes around booleans as we want to parse on the final built string
+    // and we need unique points at end of config setting 
 
     /* start building the string */
     $tinymode = xarModGetVar('tinymce','tinymode');
@@ -217,7 +219,7 @@ function tinymce_admin_updateconfig()
         $jstext .='button_tile_map : true,';
     }
     if (xarModGetVar('tinymce','tinycleanup')!=1){
-        $jstext .='cleanup: "false",';
+        $jstext .='cleanup: false,';
     }
 
     if (xarModGetVar('tinymce','tinybr')==1){
@@ -227,7 +229,7 @@ function tinymce_admin_updateconfig()
     }
 
     if (xarModGetVar('tinymce','tinypara') !=1){ //This is true by default in tinymce
-        $jstext .='force_p_newlines: false,';
+        $jstext .='force_p_newlines: "false",';
     }
 
     if (xarModGetVar('tinymce','sourceformat')==1){
@@ -255,7 +257,7 @@ function tinymce_admin_updateconfig()
 
 
         if (xarModGetVar('tinymce','tinyenablepath')!=1){
-            $jstext .='theme_advanced_path: "false", ';
+            $jstext .='theme_advanced_path: false, ';
         } else { /* if not false set the status path location and resizing */
             $jstext .='theme_advanced_statusbar_location: "'.xarModGetVar('tinymce','tinyshowpath').'", ';
          
@@ -291,16 +293,28 @@ function tinymce_admin_updateconfig()
           $jstext .='theme_advanced_buttons3_add : "'.trim(xarModGetVar('tinymce','tinybuttons3')).'", ';
         }
         /* Do not trim these build vars - a space will render the line blank */
-        if (xarModGetVar('tinymce','tinybuild1') <> '') {
-          $jstext .='theme_advanced_buttons1 : "'.xarModGetVar('tinymce','tinybuild1').'", ';
+        /* ver 1.5.2 - noted that the behaviour is changed. We need an empty string - not a space else errors */
+        $build1 = xarModGetVar('tinymce','tinybuild1');
+        if ($build1 <> '') {
+          $jstext .='theme_advanced_buttons1 : "'.$build1.'", ';
+          //check for whitespace only - means we want to get rid of the row
+        } elseif (trim($build1) =='' && strlen($build1)>0) {
+            $jstext .='theme_advanced_buttons1 : "", ';
         }
-        if (xarModGetVar('tinymce','tinybuild2') <> '') {
-          $jstext .='theme_advanced_buttons2 : "'.xarModGetVar('tinymce','tinybuild2').'",';
+        $build2 = xarModGetVar('tinymce','tinybuild2');
+        if ($build2 <> '') {
+          $jstext .='theme_advanced_buttons2 : "'.$build2.'", ';
+          //check for whitespace only - means we want to get rid of the row
+        } elseif (trim($build2) =='' && strlen($build2)>0) {
+            $jstext .='theme_advanced_buttons2 : "", ';
         }
-        if (xarModGetVar('tinymce','tinybuild3') <> '') {
-          $jstext .='theme_advanced_buttons3 : "'.xarModGetVar('tinymce','tinybuild3').'",';
+        $build3 = xarModGetVar('tinymce','tinybuild3');
+        if ($build3 <> '') {
+          $jstext .='theme_advanced_buttons3 : "'.$build3.'", ';
+          //check for whitespace only - means we want to get rid of the row
+        } elseif (trim($build3) =='' && strlen($build3)>0) {
+            $jstext .='theme_advanced_buttons3 : "", ';
         }
-
        /*  Uncomment to get a debug popup dialog showing paths used
          $jstext .= 'debug : true,';
        */
@@ -363,8 +377,8 @@ function tinymce_admin_updateconfig()
     /* let's build a custom gz script as well */
     $gztext  = 'theme : "'.xarModGetVar('tinymce','tinytheme').'",';
     $gztext .= 'plugins : "'.$plugs.'", ';
-    $gztext .= 'debug : "false", ';    
-    $gztext .=' disk_cache : "true",'; 
+    $gztext .= 'debug : false, ';    
+    $gztext .=' disk_cache : true,'; 
     $gztext .= 'language : "'.xarModGetVar('tinymce','tinylang').'" ';
     xarModSetVar('tinymce','gztext',$gztext);
 
@@ -386,8 +400,35 @@ function tinymce_admin_updateconfig()
     }else{
        $buttonswitch='';
     }
+
     /* let's set the var to hold the js text */
-    xarModSetVar('tinymce','jstext',$jstext);
+    
+    /* Prepare the display of current configuration */
+ $jsstrings="";
+    $finalstring = '';
+    $search = array("true,","false,","\",");
+    $replace= array("true,","false,","\",");    
+    $jsstrings = str_ireplace($search,$replace,$jstext);
+    $finalstring = $jsstrings;
+
+         
+    
+    //we need to prepare it as it has space where we do not want and so on
+/*    $jsstrings="";
+    $jsstrings=explode('",',$jstext);
+
+    $finalstring = '';
+    $counter = count($jsstrings);
+    for($i=0;$i<$counter;$i++){
+        $jsstrings[$i] = trim($jsstrings[$i]);
+        if ($i < $counter-1) {
+            $finalstring .= $jsstrings[$i].'", ';
+        } else {
+            $finalstring .= $jsstrings[$i];        
+        }
+      }
+*/
+    xarModSetVar('tinymce','jstext',$finalstring);
     xarModSetVar('tinymce','multiconfig',$multiconfig);
     xarModSetVar('tinymce','buttonstring',$buttonswitch);
 
