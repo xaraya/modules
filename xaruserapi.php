@@ -542,6 +542,72 @@ function vanilla_userapi_loginevent($args)
             $settings['COOKIE_DOMAIN']
         );
     }
+
+    // An important final step:
+    // We need to be able to create a Vanilla session before we
+    // get to the application.
+    // The may or may not have already visited the forums. If they
+    // have, then we will have the session cookie. If not, then we
+    // need to make a quick visit now, and fetch a session cookie
+    // value.
+
+    // Check if we have a vannilla cookie. If not, fetch a new one.
+    $session_name = $settings['SESSION_NAME'];
+    if (!isset($_COOKIE[$session_name])) {
+        //
+        $vanilla_main_page = xarServerGetProtocol() . '://' . xarServerGetHost() . $settings['WEB_ROOT'] . 'index.php';
+        // Pass the two known cookies into the forums, and capture the session
+        // cookie that is returned.
+        $headers = array(
+            'Cookie: ' => $settings['COOKIE_USER_KEY'] . '=' . $van_user['UserID']
+                . '; ' . $settings['COOKIE_VERIFICATION_KEY'] . '=' . $van_user['VerificationKey']
+        );
+
+        // Reset the cookie global.
+        $GLOBALS['vanilla_userapi_curl_headers'] = array();
+
+        // Set up the curl script.
+        $curl = curl_init($vanilla_main_page);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_HEADERFUNCTION, 'vanilla_userapi_on_curl_header');
+        @curl_exec($curl);
+        @curl_close($curl);
+
+        // If the session cookie was returned, then pass it back to the current
+        // browser. We are going to assume these are real 'sesssion' cookies in
+        // that they do not have a date.
+        if (isset($GLOBALS['vanilla_userapi_curl_headers'][$session_name])) {
+            // Send this Vanilla session cookie back to the browser.
+            setcookie(
+                $session_name,
+                $GLOBALS['vanilla_userapi_curl_headers'][$session_name], 0,
+                $settings['COOKIE_PATH'],
+                $settings['COOKIE_DOMAIN']
+            );
+        }
+    }
+}
+
+// Helper function to get the cookies from a curl execute.
+// Seems a painful way to get the returned cookies, but it does not involve
+// messing around trying to read and interpret cookie files. And it does work.
+// The cookies are dumped into a global, which can then be inspected.
+function vanilla_userapi_on_curl_header($curl, $header)
+{
+    if (strpos($header, 'Set-Cookie: ') === 0) {
+        if (!isset($GLOBALS['vanilla_userapi_curl_headers'])) $GLOBALS['vanilla_userapi_curl_headers'] = array();
+
+        // e.g. "Set-Cookie: VanillaSession=ekbaodjhg1f1n3qqpspqabtpo7; path=/; domain=www.example.com"
+        // We want this bit  ^---------------------------------------^ as a name/value pair.
+        $header_parts = preg_split('/[:; ]+/', $header);
+        if (isset($header_parts[1])) {
+            $cookie_parts = explode('=', $header_parts[1], 2);
+            if (count($cookie_parts) == 2) $GLOBALS['vanilla_userapi_curl_headers'][$cookie_parts[0]] = $cookie_parts[1];
+        }
+    }
+ 
+    return strlen($header);
 }
 
 /**
@@ -589,18 +655,17 @@ function vanilla_userapi_logoutevent($args)
     // the vanilla directory.
 
     if (file_exists($settings['VanillaRealPath'] . 'custlogout.php')) {
-        $logout_script = xarServerGetProtocol() . '://' . xarServerGetHost() . $settings['WEB_ROOT'];
+        $logout_script = xarServerGetProtocol() . '://' . xarServerGetHost() . $settings['WEB_ROOT'] . 'custlogout.php';
     } else {
         $logout_script = xarServerGetBaseURL() . 'modules/vanilla/custlogout.php';
     }
 
-    ob_start();
     $curl = curl_init($logout_script);
     curl_setopt($curl, CURLOPT_POST, 1);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($curl, CURLOPT_POSTFIELDS, array($session_name => $session_id));
     @curl_exec($curl);
     @curl_close($curl);
-    ob_end_clean();
 
     return true;
 }
