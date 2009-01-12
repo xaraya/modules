@@ -5,7 +5,7 @@
             <xar:if condition="xarModVars::get('foo','useModuleAlias')">
                 <xar:var scope="module" module="foo" name="aliasname" />
             <xar:else />
-                <xar:mlstring>Create Item</xar:mlstring>
+                Create Item
             </xar:if>
         </span>
     </div>
@@ -17,14 +17,15 @@
             </xar:ml>
         </h2>
 
-        <form method="post" action="#xarServerGetCurrentURL()##">
+        <form method="post" action="#xarServerGetCurrentURL()#">
           <fieldset>
-            <legend><xar:mlstring>Item details</xar:mlstring></legend>
-            <xar:data-form object="$object" />
+            <legend>Item details</legend>
+            <xar:data-form object="$object" tplmodule="$tplmodule" />
           </fieldset>
           <fieldset>
             <div class="xar-align-center">
               <input type="hidden" name="authid" id="authid" value="#$authid#" />
+              <input type="hidden" name="name" id="name" value="#$object:name#" />
               <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#" />
               <input type="hidden" name="confirm" id="confirm" value="true" />
               <xar:var name="label">Create</xar:var>

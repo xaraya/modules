@@ -10,7 +10,7 @@
         if (!xarSecurityCheck('AddFoo')) return;
 
         if (!xarVarFetch('name',       'str',    $name,            'foo_foo', XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false, XARVAR_DONT_SET)) return;
+        if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
 
         $data['object'] = DataObjectMaster::getObject(array('name' => $name));
         $data['tplmodule'] = 'foo';
