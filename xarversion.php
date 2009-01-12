@@ -8,7 +8,7 @@
     $modversion['id']             = '30000';
     $modversion['version']        = '1.0.0';
     $modversion['displayname']    = xarML('Foo');
-    $modversion['description']    = xarML('A genereic Web 2.0 module');
+    $modversion['description']    = xarML('A generic Web 2.0 module');
     $modversion['credits']        = 'credits.txt';
     $modversion['help']           = 'help.txt';
     $modversion['changelog']      = 'changelog.txt';
