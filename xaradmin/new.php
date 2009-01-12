@@ -3,6 +3,8 @@
  * Create a new item of the foo object
  *
  */
+    sys::import('modules.dynamicdata.class.objects.master');
+    
     function foo_admin_new()
     {
         if (!xarSecurityCheck('AddFoo')) return;
