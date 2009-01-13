@@ -89,6 +89,7 @@ function articles_userapi_getpubtypes($args)
         while (!$result->EOF) {
             list($id, $name, $descr, $config) = $result->fields;
             $pubtypes[$id] = array(
+                'ptid' => $id,
                 'name' => $name,
                 'descr' => $descr,
                 'config' => unserialize($config)
