@@ -3,7 +3,7 @@
  * Overview displays standard Overview page
  *
  * @package modules
- * @copyright (C) 2006 The Digital Development Foundation
+ * @copyright (C) 2006 - 2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -23,14 +23,10 @@
  */
 function julian_admin_overview()
 {
-   /* Security Check */
-    if (!xarSecurityCheck('AdminJulian',0)) return;
+    //* Security Check with low threshold to give overview to editors
+    if (!xarSecurityCheck('EditJulian',0)) return;
 
     $data=array();
-
-    /* if there is a separate overview function return data to it
-     * else just call the main function that displays the overview
-     */
 
     return xarTplModule('julian', 'admin', 'main', $data,'main');
 }

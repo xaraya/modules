@@ -1,8 +1,5 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<!--When bug (3868 and others) for not calling AddStyleLink is fixed in xarblocks this call can be implemented:
-<xar:style module="julian" scope="block" file="julian" /> -->
-<link type="text/css" rel="stylesheet" href="modules/julian/xarstyles/style.css" />
-
+<xar:style module="julian" scope="block" file="style" />
 <div class="xar-julian xar-julian-block-calevent">
     <div class="xar-julian-calevent-today">
         <strong><xar:mlstring>Today's Events</xar:mlstring></strong>

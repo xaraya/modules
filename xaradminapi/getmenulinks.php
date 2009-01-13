@@ -3,7 +3,7 @@
  * Administration menu links.
  *
  * @package modules
- * @copyright (C) 2005-2007 The Digital Development Foundation
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -36,14 +36,20 @@ function julian_adminapi_getmenulinks()
                 'modifycategories'),
             'title' => xarML('Modify Categories'),
             'label' => xarML('Modify Categories'));
-    }
 
-    if (xarSecurityCheck('AdminJulian', 0)) {
         $menulinks[] = Array('url' => xarModURL('julian',
                 'admin',
                 'modifyconfig'),
-            'title' => xarML('Modify Config'),
+            'title' => xarML('Modify Configuration'),
             'label' => xarML('Modify Config'));
+    }
+
+    if (xarSecurityCheck('EditJulian', 0)) {
+        $menulinks[] = Array('url' => xarModURL('julian',
+                'admin',
+                'overview'),
+            'title' => xarML('View the modules Overview page'),
+            'label' => xarML('Overview'));
     }
 
     return $menulinks;
