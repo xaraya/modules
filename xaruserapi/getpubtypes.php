@@ -22,7 +22,9 @@
 function articles_userapi_getpubtypes($args)
 {
     static $all_pubtypes;
+
     $bindvars = array();
+    $pubtypes = array();
 
     //if we're doing a simple retrieval, use same results as last time
     //otherwise we need to re-query the database
