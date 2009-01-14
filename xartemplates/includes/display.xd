@@ -1,5 +1,5 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:if condition="$tabmodule ne 'payments'">
+    <xar:if condition="$tabmodule ne 'foo'">
         <xar:set name="regid">xarModGetIDFromName($tabmodule)</xar:set>
     <xar:else />
         <xar:set name="regid">0</xar:set>
