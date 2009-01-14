@@ -18,9 +18,11 @@ function vanilla_userapi_getsettings($args)
     if (!empty($data)) return $data;
 
     // Paths within Vanilla.
-    $default_settings = 'appg/settings.php';
     $default_database = 'appg/database.php';
     $conf_database = 'conf/database.php';
+
+    $default_settings = 'appg/settings.php';
+    $conf_settings = 'conf/settings.php';
     
     // Get the base directory.
     $basepath = xarModGetVar('vanilla', 'basepath');
@@ -46,6 +48,11 @@ function vanilla_userapi_getsettings($args)
 
     // Include the main settings.
     @include_once($realpath . '/' . $default_settings);
+
+    // Include any overriding local settings.
+    if (is_readable($realpath . '/' . $conf_settings)) {
+        @include_once($realpath . '/' . $conf_settings);
+    }
 
     // Close off the ob_start that was opened in the settings file.
     ob_end_clean();
@@ -176,6 +183,7 @@ function vanilla_userapi_getuser($args)
 
     $sql .= ' ' . implode(', ', $columns) . ' FROM ' . $usertable;
 
+    // TODO: use bind variables.
     if (!empty($UserID) && is_numeric($UserID)) {
         $sql .= ' WHERE ' . $usercolumns['UserID'] . ' = ' . (int)$UserID;
     } elseif (!empty($Name) && is_string($Name)) {
@@ -284,6 +292,25 @@ function vanilla_userapi_createuser($args)
     $settings = xarModAPIfunc('vanilla', 'user', 'getsettings');
     if (!empty($settings['error'])) return true;
 
+    // Get the default style.
+    // Bizarrely, this is stored as a path in the settings file, but as a number
+    // against each user, so a lookup needs to be done to find the ID.
+    $DefaultStyle = 1;
+    if (!empty($settings['DEFAULT_STYLE'])) {
+        $styletable = $settings['DATABASE_TABLE_PREFIX'] . $settings['DatabaseTables']['Style'];
+        $stylecolumns = $settings['DatabaseColumns']['Style'];
+
+        $sql = 'SELECT ' . $stylecolumns['StyleID']
+            . ' FROM ' . $styletable
+            . ' WHERE ' . $stylecolumns['Url'] . ' = ?';
+
+        $result = $dbconn->execute($sql, array($settings['DEFAULT_STYLE']));
+
+        if ($result && !$result->EOF) {
+            list($DefaultStyle) = $result->fields;
+        }
+    }
+
     // Table and column details (note no prefix on the User table - seems to be 
     // just the way Vanilla is, and will probably break this interface once it is
     // fixed).
@@ -296,6 +323,7 @@ function vanilla_userapi_createuser($args)
         . ', ' . $usercolumns['FirstName']
         . ', ' . $usercolumns['LastName']
         . ', ' . $usercolumns['RoleID']
+        . ', ' . $usercolumns['StyleID']
         . ', ' . $usercolumns['Password']
         . ', ' . $usercolumns['VerificationKey']
         . ', ' . $usercolumns['UtilizeEmail']
@@ -303,7 +331,7 @@ function vanilla_userapi_createuser($args)
         . ', ' . $usercolumns['DateLastActive']
         . ', ' . $usercolumns['RemoteIp']
         . ', ' . $usercolumns['DefaultFormatType']
-        . ') VALUES (?, ?, ?, ?, ?, ?, ?, ?, ' . $dbconn->sysTimeStamp . ', ' . $dbconn->sysTimeStamp . ', ?, ?)';
+        . ') VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ' . $dbconn->sysTimeStamp . ', ' . $dbconn->sysTimeStamp . ', ?, ?)';
 
     $bind = array(
         $Name,
@@ -311,6 +339,7 @@ function vanilla_userapi_createuser($args)
         $FirstName,
         $LastName,
         $RoleID,
+        $DefaultStyle,
         $Password,
         $VerificationKey,
         $settings['DEFAULT_EMAIL_VISIBLE'],
@@ -326,6 +355,9 @@ function vanilla_userapi_createuser($args)
 
     // Now deal with any additional roles.
     xarModAPIfunc('vanilla', 'user', 'setroles', array('UserID' => $UserID, 'RoleIDs' => $RoleIDs));
+
+    // Return the user ID.
+    return $UserID;
 }
 
 /**
@@ -499,7 +531,7 @@ function vanilla_userapi_loginevent($args)
 
         // Only pass in the options we need. The rest is filled in
         // by the called function.
-        $van_user = xarModAPIfunc('vanilla', 'user', 'createuser',
+        $van_user_id = xarModAPIfunc('vanilla', 'user', 'createuser',
             array(
                 'Name' => $van_name,
                 'Email' => xarUserGetVar('email'),
@@ -508,6 +540,8 @@ function vanilla_userapi_loginevent($args)
                 'LastName' => $name_parts[1],
             )
         );
+        // Fetch the user we have created.
+        $van_user = xarModAPIfunc('vanilla', 'user', 'getuser', array('UserID' => $van_user_id));
     } else {
         // User exists - update it if required.
         // Only the roles need be updated, for now at least.

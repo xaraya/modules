@@ -102,3 +102,23 @@ main role. There are some administration functions that will only work if the
 administrator role is the main role, and not a secondary role. It may be necessary
 to create an additional administrator user with *just* the admin role to administer
 the forums, rather than using a standard forum user.
+
+Other Additions
+===============
+
+This module will work only if users log directly into Xaraya. We have one system
+where users log into yet another membership system instead, and Xaraya becomes the
+slave login system. Because of the way the cookies are used to log in, Vanilla would
+not be able to hang on the end of the chain. This Xaraya module, through the userlogin
+and userlogout events, requires direct access to the user's browser in order to
+read, create and set the cookies. I would, of course, like to find a workaround to
+fix this.
+
+One possible way around this is to keep Vanilla in the chain, and when users are
+logged into Xaraya, the Vanilla user will get created and updated as required (that
+much should work). Then we would create an autrhentication module for vanilla that
+can auto-log people into Vanilla if they already have a session logged into Xaraya.
+A simple call to a Xaraya page should be able to return the current user ID, or NULL
+if the user is not logged in. Vanilla can then set its own cookies. The vanilla
+module would need to known where the Xaraya 'check logged in' page is, but otherwise
+should be straight-forward.
