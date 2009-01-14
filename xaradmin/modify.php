@@ -1,112 +1,44 @@
 <?php
 /**
- * Publications Module
+ * Modify an item of the foo object
  *
- * @package modules
- * @subpackage publications module
- * @category Third Party Xaraya Module
- * @version 2.0.0
- * @copyright (C) 2011 Netspan AG
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @author Marc Lutolf <mfl@netspan.ch>
  */
-/**
- * modify publication
- * @param int id The ID of the publication
- * @param string return_url
- * @param int preview
- */
-
-sys::import('modules.dynamicdata.class.objects.master');
-
-function publications_admin_modify($args)
-{
-    if (!xarSecurityCheck('ManagePublications')) return;
-
-    extract($args);
-
-    // Get parameters
-    if (!xarVarFetch('itemid',     'isset', $data['itemid'], NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('ptid',       'isset', $ptid, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('returnurl',  'str:1', $data['returnurl'], 'view', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('name',       'str:1', $name, '', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('tab',        'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
+    sys::import('modules.dynamicdata.class.objects.master');
     
-    if (empty($name) && empty($ptid)) return xarResponse::NotFound();
+    function foo_admin_modify()
+    {
+        if (!xarSecurityCheck('EditFoo')) return;
 
-    if(!empty($ptid)) {
-        $publication_type = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
-        $where = 'id = ' . $ptid;
-        $items = $publication_type->getItems(array('where' => $where));
-        $item = current($items);
-        $name = $item['name'];
+        if (!xarVarFetch('name',       'str',    $name,            'foo_foo', XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('itemid' ,    'int',    $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
+
+        $data['object'] = DataObjectMaster::getObject(array('name' => $name));
+        $data['tplmodule'] = 'foo';
+        $data['authid'] = xarSecGenAuthKey('foo');
+
+        if ($data['confirm']) {
+        
+            // Check for a valid confirmation key
+            if(!xarSecConfirmAuthKey()) return;
+            echo "X";
+            // Get the data from the form
+            $isvalid = $data['object']->checkInput();
+            
+            if (!$isvalid) {
+                // Bad data: redisplay the form with error messages
+                return xarTplModule('foo','user','modify', $data);        
+            } else {
+                // Good data: create the item
+                $item = $data['object']->updateItem();
+                
+                // Jump to the next page
+                xarResponseRedirect(xarModURL('foo','admin','view'));
+                return true;
+            }
+        } else {
+            $data['object']->getItem(array('itemid' => $data['itemid']));
+        }
+        return $data;
     }
-
-    // Get our object
-    $data['object'] = DataObjectMaster::getObject(array('name' => $name));
-    $data['object']->getItem(array('itemid' => $data['itemid']));
-    $data['ptid'] = $data['object']->properties['itemtype']->value;
-    
-    // Send the publication type and the object properties to the template 
-    $data['properties'] = $data['object']->getProperties();
-    
-    // Get the settings of the publication type we are using
-    $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
-    
-    // If creating a new translation get an empty copy
-    if ($data['tab'] == 'newtranslation') {
-        $data['object']->properties['id']->setValue(0);
-        $data['object']->properties['parent']->setValue($data['itemid']);
-        $data['items'][0] = $data['object']->getFieldValues(array(),1);
-        $data['tab'] = '';
-    } else {
-        $data['items'] = array();
-    }
-
-    // Get the base document. If this itemid is not the base doc,
-    // then first find the correct itemid
-    $data['object']->getItem(array('itemid' => $data['itemid']));
-    $fieldvalues = $data['object']->getFieldValues(array(),1);
-    if (!empty($fieldvalues['parent'])) {
-        $data['itemid'] = $fieldvalues['parent'];
-        $data['object']->getItem(array('itemid' => $data['itemid']));
-        $fieldvalues = $data['object']->getFieldValues(array(),1);
-    }
-    $data['items'][$data['itemid']] = $fieldvalues;
-
-    // Get any translations of the base document
-    $data['objectlist'] = DataObjectMaster::getObjectList(array('name' => $name));
-    $where = "parent = " . $data['itemid'];
-    $items = $data['objectlist']->getItems(array('where' => $where));
-    foreach ($items as $key => $value) {
-        // Clear the previous values before starting the next round
-        $data['object']->clearFieldValues();
-        $data['object']->getItem(array('itemid' => $key));
-        $data['items'][$key] = $data['object']->getFieldValues(array(),1);
-    }
-
-    return $data;
-
-// ----------------------------------------------------------------------------
-    $ptid = $publication['pubtype_id'];
-
-    $data = array();
-    $data['ptid'] = $ptid;
-    $data['id'] = $id;
-
-    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
-
-    // Security check
-    $input = array();
-    $input['publication'] = $publication;
-    $input['mask'] = 'EditPublications';
-    if (!xarModAPIFunc('publications','user','checksecurity',$input)) {
-        $msg = xarML('You have no permission to modify #(1) item #(2)',
-                     $pubtypes[$ptid]['descr'], xarVarPrepForDisplay($id));
-        throw new ForbiddenOperationException(null, $msg);
-    }
-    unset($input);
-
-}
-
 ?>

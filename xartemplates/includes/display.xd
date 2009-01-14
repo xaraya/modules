@@ -1,0 +1,16 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="$tabmodule ne 'payments'">
+        <xar:set name="regid">xarModGetIDFromName($tabmodule)</xar:set>
+    <xar:else />
+        <xar:set name="regid">0</xar:set>
+    </xar:if>
+    <div class="xar-form-input-wrapper">
+        <label for="defaultmastertable" title="#xarML('The product object this module displays as default in its view function')#" class="xar-form-label">
+            <xar:mlstring>
+                Default Master Table:
+            </xar:mlstring>
+        </label>
+        <xar:set name="value">xarModItemVars::get('products', 'defaultmastertable', $regid)</xar:set>
+        <xar:data-input type="object" name="defaultmastertable" value="$value" store_prop="name" firstline="Choose a master table object" />
+    </div>
+</xar:template>
