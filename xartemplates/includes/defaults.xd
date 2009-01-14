@@ -11,6 +11,6 @@
             </xar:mlstring>
         </label>
         <xar:set name="value">xarModItemVars::get('foo', 'bar', $regid)</xar:set>
-        <input type="text" name="bar" id="bar" value="#$value#" />
+        <xar:data-input type="textbox" name="bar" value="$value" />
     </div>
 </xar:template>
