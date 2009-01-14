@@ -5,12 +5,12 @@
         <xar:set name="regid">0</xar:set>
     </xar:if>
     <div class="xar-form-input-wrapper">
-        <label for="defaultmastertable" title="#xarML('The product object this module displays as default in its view function')#" class="xar-form-label">
+        <label for="defaultmastertable" title="#xarML('The object this module displays as default in its view function')#" class="xar-form-label">
             <xar:mlstring>
                 Default Master Table:
             </xar:mlstring>
         </label>
-        <xar:set name="value">xarModItemVars::get('products', 'defaultmastertable', $regid)</xar:set>
+        <xar:set name="value">xarModItemVars::get('foo', 'defaultmastertable', $regid)</xar:set>
         <xar:data-input type="object" name="defaultmastertable" value="$value" store_prop="name" firstline="Choose a master table object" />
     </div>
 </xar:template>
