@@ -57,7 +57,8 @@
         // Get the footer if this message has one
             $footer = "";
             if (!empty($mailitem['footer'])) {
-                $object = DataObjectMaster::getObjectList(array('name' => 'mailer_footers'));
+                $object = DataObjectMaster::getObject(array('name' => 'mailer_footers'));
+                $footeritemid = $object->getItem(array('itemid' => $mailitem['footer']));
                 if (!empty($object->properties['body']->value)) $footer = $object->properties['body']->value;
             }
             
@@ -86,8 +87,8 @@
                           'subject'      => $mailitem['subject'],
                           'message'      => $mailitem['body'] . $footer,
                           'htmlmessage'  => $mailitem['body'] . $footer,
-                          'from'         => $sendername,
-                          'fromname'     => $senderaddress,
+                          'from'         => $senderaddress,
+                          'fromname'     => $sendername,
                           'attachName'   => '',
                           'attachPath'   => '',
                           'usetemplates' => false);

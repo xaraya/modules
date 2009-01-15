@@ -2,7 +2,8 @@
   <mailer_footers itemid="1">
     <id>1</id>
     <name>Default Footer</name>
-    <body>\n
+    <body>
+-----------------------------------------------------------------------
 This is the default footer text for messages sent by the mailer module.</body>
     <created>1232012708</created>
   </mailer_footers>

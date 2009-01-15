@@ -15,17 +15,29 @@
             <legend>
                 Sending a test email
             </legend>
-            To test the module click on the button below. A default email will be sent to the site administrator.
-            <xar:if condition="$sent">
-                <xar:if condition="$result">
-                    <div style="color: red">
+            <div  style="margin-top: 20px; margin-bottom: 20px">
+                To test the module click on the button below. A default email will be sent to the site administrator.
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="message" title="#xarML('The test message to send')#" class="xar-form-label">
+                    Message to send
+                </label>
+                <xar:data-input type="objectref" name="message_id" value="$message_id" refobject="mailer_mails" store_prop="id" firstline="0,Choose a message" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="message" title="#xarML('The locale the message should be in')#" class="xar-form-label">
+                    Locale
+                </label>
+                <xar:data-input type="language" name="locale" value="$locale" />
+            </div>
+            <xar:if condition="isset($sent) AND $sent">
+                <div class="xar-form-input-wrapper-after" style="color: red; margin-top: 20px; margin-bottom: 20px">
+                    <xar:if condition="$result">
                         Message sent
-                    </div>
-                <xar:else/>
-                    <div style="color: red">
+                    <xar:else/>
                         Message not sent due to error condition
-                    </div>
-                </xar:if>
+                    </xar:if>
+                </div>
             </xar:if>
         </fieldset>
         <fieldset>
