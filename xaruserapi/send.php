@@ -49,7 +49,6 @@
             $mailitems = $object->getItems(array('where' => $where));
             
         // Sanity check: do we have a message?
-        var_dump($object->name);exit;
             if (empty($mailitems)) return false;
 
         // Grab the first one that fits
