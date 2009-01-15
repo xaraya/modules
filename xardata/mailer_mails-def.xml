@@ -1,0 +1,175 @@
+<object name="mailer_mails">
+  <objectid>94</objectid>
+  <label>Mails</label>
+  <parent>objects</parent>
+  <module_id>182</module_id>
+  <itemtype>21</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config>a:0:{}</config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="id">
+      <id>1064</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_mailer_mails.id</source>
+      <status>65</status>
+      <seq>1</seq>
+      <configuration></configuration>
+    </property>
+    <property name="name">
+      <id>1065</id>
+      <label>Name</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_mailer_mails.name</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration></configuration>
+    </property>
+    <property name="sender_name">
+      <id>1066</id>
+      <label>Sender Name</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_mailer_mails.sendername</source>
+      <status>34</status>
+      <seq>3</seq>
+      <configuration></configuration>
+    </property>
+    <property name="sender_address">
+      <id>1067</id>
+      <label>Sender Address</label>
+      <type>email</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_mailer_mails.senderaddress</source>
+      <status>34</status>
+      <seq>4</seq>
+      <configuration></configuration>
+    </property>
+    <property name="subject">
+      <id>1068</id>
+      <label>Subject</label>
+      <type>textarea</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_mailer_mails.subject</source>
+      <status>34</status>
+      <seq>5</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"2";s:15:"display_columns";s:2:"80";s:14:"display_layout";s:7:"default";}</configuration>
+    </property>
+    <property name="body">
+      <id>1069</id>
+      <label>Body</label>
+      <type>textarea_medium</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_mailer_mails.body</source>
+      <status>34</status>
+      <seq>6</seq>
+      <configuration>a:3:{s:12:"display_rows";s:1:"8";s:15:"display_columns";s:2:"80";s:14:"display_layout";s:7:"default";}</configuration>
+    </property>
+    <property name="footer">
+      <id>1070</id>
+      <label>Footer</label>
+      <type>objectref</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_mailer_mails.footer_id</source>
+      <status>34</status>
+      <seq>7</seq>
+      <configuration>a:6:{s:14:"display_layout";s:7:"default";s:19:"validation_override";s:1:"1";s:24:"initialization_refobject";s:14:"mailer_footers";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:4:"name";s:24:"initialization_firstline";s:32:"0,Choose a footer or leave empty";}</configuration>
+    </property>
+    <property name="locale">
+      <id>1071</id>
+      <label>Locale</label>
+      <type>language</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_mailer_mails.locale</source>
+      <status>33</status>
+      <seq>8</seq>
+      <configuration></configuration>
+    </property>
+    <property name="created">
+      <id>1072</id>
+      <label>Created</label>
+      <type>formatteddatetime</type>
+      <defaultvalue>time()</defaultvalue>
+      <source>xar_mailer_mails.timecreated</source>
+      <status>66</status>
+      <seq>9</seq>
+      <configuration></configuration>
+    </property>
+    <property name="modified">
+      <id>1073</id>
+      <label>Modified</label>
+      <type>formatteddatetime</type>
+      <defaultvalue>time()</defaultvalue>
+      <source>xar_mailer_mails.timemodified</source>
+      <status>65</status>
+      <seq>10</seq>
+      <configuration></configuration>
+    </property>
+    <property name="owner">
+      <id>1074</id>
+      <label>Owner</label>
+      <type>username</type>
+      <defaultvalue>xarUserGetVar('uname')</defaultvalue>
+      <source>xar_mailer_mails.role_id</source>
+      <status>37</status>
+      <seq>11</seq>
+      <configuration>a:6:{s:16:"display_linkrule";s:1:"0";s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:20:"validation_existrule";s:1:"0";s:25:"initialization_store_type";s:2:"id";}</configuration>
+    </property>
+    <property name="redirect">
+      <id>1075</id>
+      <label>Redirect</label>
+      <type>checkbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_mailer_mails.redirect</source>
+      <status>33</status>
+      <seq>12</seq>
+      <configuration></configuration>
+    </property>
+    <property name="redirect_address">
+      <id>1076</id>
+      <label>Redirect Address</label>
+      <type>email</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_mailer_mails.redirectaddress</source>
+      <status>34</status>
+      <seq>13</seq>
+      <configuration></configuration>
+    </property>
+    <property name="mail_type">
+      <id>1077</id>
+      <label>Mail Type</label>
+      <type>dropdown</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_mailer_mails.type</source>
+      <status>33</status>
+      <seq>14</seq>
+      <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:14:"1,text;2,html;";}</configuration>
+    </property>
+    <property name="alias">
+      <id>1078</id>
+      <label>Alias</label>
+      <type>objectref</type>
+      <defaultvalue>0</defaultvalue>
+      <source>xar_mailer_mails.alias</source>
+      <status>34</status>
+      <seq>15</seq>
+      <configuration>a:6:{s:14:"display_layout";s:7:"default";s:19:"validation_override";s:1:"1";s:24:"initialization_refobject";s:12:"mailer_mails";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:4:"name";s:24:"initialization_firstline";s:34:"0,Choose the alias of this message";}</configuration>
+    </property>
+    <property name="state">
+      <id>1079</id>
+      <label>State</label>
+      <type>dropdown</type>
+      <defaultvalue>3</defaultvalue>
+      <source>xar_mailer_mails.state</source>
+      <status>33</status>
+      <seq>16</seq>
+      <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:30:"0,Deleted,1,Inactive;3,Active;";}</configuration>
+    </property>
+  </properties>
+</object>

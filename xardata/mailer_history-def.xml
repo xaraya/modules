@@ -1,0 +1,115 @@
+<object name="mailer_history">
+  <objectid>88</objectid>
+  <label>Mail History</label>
+  <parent>objects</parent>
+  <module_id>182</module_id>
+  <itemtype>22</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config>a:0:{}</config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="id">
+      <id>998</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_mailer_history.id</source>
+      <status>65</status>
+      <seq>1</seq>
+      <configuration></configuration>
+    </property>
+    <property name="mail_id">
+      <id>999</id>
+      <label>Mail ID</label>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_mailer_history.mail_id</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration></configuration>
+    </property>
+    <property name="name">
+      <id>1000</id>
+      <label>Name</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_mailer_history.name</source>
+      <status>33</status>
+      <seq>3</seq>
+      <configuration></configuration>
+    </property>
+    <property name="sender_name">
+      <id>1001</id>
+      <label>Sender Name</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_mailer_history.sendername</source>
+      <status>34</status>
+      <seq>4</seq>
+      <configuration></configuration>
+    </property>
+    <property name="sender_address">
+      <id>1002</id>
+      <label>Sender Address</label>
+      <type>email</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_mailer_history.senderaddress</source>
+      <status>34</status>
+      <seq>5</seq>
+      <configuration></configuration>
+    </property>
+    <property name="recipient_name">
+      <id>1003</id>
+      <label>Recipient Name</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_mailer_history.recipientname</source>
+      <status>33</status>
+      <seq>6</seq>
+      <configuration></configuration>
+    </property>
+    <property name="recipient_address">
+      <id>1004</id>
+      <label>Recipient Address</label>
+      <type>email</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_mailer_history.recipientaddress</source>
+      <status>34</status>
+      <seq>7</seq>
+      <configuration></configuration>
+    </property>
+    <property name="subject">
+      <id>1005</id>
+      <label>Subject</label>
+      <type>textarea</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_mailer_history.subject</source>
+      <status>34</status>
+      <seq>8</seq>
+      <configuration></configuration>
+    </property>
+    <property name="body">
+      <id>1006</id>
+      <label>Body</label>
+      <type>textarea_medium</type>
+      <defaultvalue></defaultvalue>
+      <source>xar_mailer_history.body</source>
+      <status>34</status>
+      <seq>9</seq>
+      <configuration></configuration>
+    </property>
+    <property name="created">
+      <id>1007</id>
+      <label>Created</label>
+      <type>formatteddatetime</type>
+      <defaultvalue>time()</defaultvalue>
+      <source>xar_mailer_history.timecreated</source>
+      <status>65</status>
+      <seq>10</seq>
+      <configuration></configuration>
+    </property>
+  </properties>
+</object>

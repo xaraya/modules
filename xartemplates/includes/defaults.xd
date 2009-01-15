@@ -1,0 +1,43 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="$tabmodule ne 'mailer'">
+        <xar:set name="regid">xarModGetIDFromName($tabmodule)</xar:set>
+    <xar:else />
+        <xar:set name="regid">0</xar:set>
+    </xar:if>
+    <div class="xar-form-input-wrapper">
+        <label for="defaultrecipientname" title="#xarML('The name assigned to the recipient if none is specified')#" class="xar-form-label">
+            <xar:mlstring>
+                Default Recipient Name:
+            </xar:mlstring>
+        </label>
+        <xar:set name="value">xarModItemVars::get('mailer', 'defaultrecipientname', $regid)</xar:set>
+        <xar:data-input type="textbox" name="defaultrecipientname" value="$value" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="defaultsendername" title="#xarML('The name assigned to the sender if none is specified')#" class="xar-form-label">
+            <xar:mlstring>
+                Default Sender Name:
+            </xar:mlstring>
+        </label>
+        <xar:set name="value">xarModItemVars::get('mailer', 'defaultsendername', $regid)</xar:set>
+        <xar:data-input type="textbox" name="defaultsendername" value="$value" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="defaultsenderaddress" title="#xarML('The email address assigned to the sender if none is specified')#" class="xar-form-label">
+            <xar:mlstring>
+                Default Sender Address:
+            </xar:mlstring>
+        </label>
+        <xar:set name="value">xarModItemVars::get('mailer', 'defaultsenderaddress', $regid)</xar:set>
+        <xar:data-input type="textbox" name="defaultsenderaddress" value="$value" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="defaultlocale" title="#xarML('The locale assigned to the message if none is specified')#" class="xar-form-label">
+            <xar:mlstring>
+                Default Locale:
+            </xar:mlstring>
+        </label>
+        <xar:set name="value">xarModItemVars::get('mailer', 'defaultlocale', $regid)</xar:set>
+        <xar:data-input type="language" name="defaultlocale" value="$value" />
+    </div>
+</xar:template>

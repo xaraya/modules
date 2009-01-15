@@ -1,36 +1,29 @@
 <?php
 /**
- * shop
  *
- * @package modules
- * @copyright (C) 2009 WebCommunicate.net
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
+ * Version information
  *
- * @subpackage shop
- * @link http://xaraya.com/index.php/release/1031.html
- * @author Ryan Walker <ryan@webcommunicate.net>
- **/
-$modversion['name']         = 'shop';
-$modversion['id']           = '1031';
-$modversion['version']      = '0.6.0';
-$modversion['displayname']  = xarML('Shop');
-$modversion['description']  = 'E-commerce for Xaraya 2x';
-$modversion['credits']      = 'xardocs/credits.txt';
-$modversion['help']         = 'xardocs/help.txt';
-$modversion['changelog']    = 'xardocs/changelog.txt';
-$modversion['license']      = 'xardocs/license.txt';
-$modversion['official']     = true;
-$modversion['author']       = 'potion';
-$modversion['contact']      = 'http://www.webcommunicate.net/';
-$modversion['admin']        = true;
-$modversion['user']         = true;
-$modversion['class']        = 'Complete';
-$modversion['category']     = 'Commerce';
-$modversion['dependencyinfo'] = array(
-                                    0 => array(
-                                            'name' => 'Xaraya Core',
-                                            'version_ge' => '2.1.0'
-                                         ),
-                                      );
+ */
+    $modversion['name']           = 'mailer';
+    $modversion['id']             = '30064';
+    $modversion['version']        = '1.0.0';
+    $modversion['displayname']    = xarML('Mailer');
+    $modversion['description']    = xarML('A module to manage emails');
+    $modversion['credits']        = 'credits.txt';
+    $modversion['help']           = 'help.txt';
+    $modversion['changelog']      = 'changelog.txt';
+    $modversion['license']        = 'license.txt';
+    $modversion['official']       = 0;
+    $modversion['author']         = 'Marc Lutolf';
+    $modversion['contact']        = 'http://www.netspan.ch/';
+    $modversion['admin']          = 1;
+    $modversion['user']           = 1;
+    $modversion['class']          = 'Complete';
+    $modversion['category']       = 'Content';
+    $modversion['securityschema'] = array();
+    $modversion['dependency'] = array(30012, 30046);
+    $modversion['dependencyinfo'] = array(
+                                          30012 => 'math',
+                                          30046 => 'listings',
+                                          );
 ?>

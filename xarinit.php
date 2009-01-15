@@ -1,188 +1,155 @@
 <?php
 /**
- * shop
  *
- * @package modules
- * @copyright (C) 2009 WebCommunicate.net
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
+ * Initialise or remove the mailer module
  *
- * @subpackage shop
- * @link http://xaraya.com/index.php/release/1031.html
- * @author Ryan Walker <ryan@webcommunicate.net>
  */
-/**
- * Initialise the module
- *
- * This function is only ever called once during the lifetime of a particular
- * module instance
- * @return bool True on succes of init
- */
-function shop_init()
-{
-# --------------------------------------------------------
-#
-# Create DD objects
-#
-# The object XML files located in the xardata folder of the module.
-# The file names have the form e.g.
-#     shop-def.xml
-#     shop-dat.xml
-#
-# The first is a definition file for the object, and needs to be present if you list shop
-# among the objects to be created in the array below.
-#
-# The second is a defintion file for the object's items, i.e. its data. This file can be omitted.
-#
-# You can create these files manually, for example by cutting and pasting from an existing example.
-# The easier way is to create an object (and perhaps its items) using the user interface of the
-# DynamicData module. Once you have an object (and items), you can export it into an XML file using the
-# DD module's export facility.
-#
-# Note: the object(s) created below are automatically kept track of so that the module knows to remove them when
-# you deinstall it.
-#
-    // Load the address property because we need it in the objects
-    PropertyRegistration::importPropertyTypes(false,array('modules/shop/xarproperties'));
 
-    $module = 'shop';
-    $objects = array(
-                'shop_products',
-                'shop_transactions',
-                'shop_attributes',
-                'shop_customers',
-                'shop_shippingaddresses',
-                'shop_paymentmethods',
-                'shop_module_settings',
-                'shop_user_settings'
-                );
+    sys::import('modules.query.class.query');
 
-    if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;    
-# --------------------------------------------------------
-#
-# Set up configuration modvars (module specific)
-#
-# Since this modvar is used as storage in a DD object shop_module_settings,
-# we could also let Xaraya define it, but that would mean we wouldn't have it until
-# we updated the modifyconfig page
-#
-    xarModVars::set('shop','payment_gateway',1);
-    xarModVars::set('shop','pg_id','');
-    xarModVars::set('shop','pg_key','');
-    xarModVars::set('shop','pg_api_signature','');
-    xarModVars::set('shop','pg_notes','A place to store test credit card numbers etc');
-    xarModVars::set('shop','defaultmastertable','shop_products');
+    function mailer_init()
+    {
 
-# --------------------------------------------------------
-#
-# Set up configuration modvars (general)
-#
-# The common settings use the module_settings dataobject. which is created when Xaraya is installed
-# These next lines initialize the appropriate modvars that object uses for shop, if they don't already exist.
-# The lines below corresponding to the initializeation of the core modules are found in modules/installer/xaradmin.php.
-# The module_settings dataobject itself is defined in the dynamicdata module.
-#
-        $module_settings = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'shop'));
-        $module_settings->initialize();
+    # --------------------------------------------------------
+    #
+    # Set tables
+    #
+        $q = new Query();
+        $prefix = xarDB::getPrefix();
+        
+        $query = "DROP TABLE IF EXISTS " . $prefix . "_mailer_mails";
+        if (!$q->run($query)) return;
+        $query = "CREATE TABLE " . $prefix . "_mailer_mails (
+            id                integer unsigned NOT NULL auto_increment,
+            name              varchar(64) default '' NOT NULL,
+            sendername        varchar(254) default '' NOT NULL,
+            senderaddress     varchar(254) default '' NOT NULL,
+            subject           text,
+            body              text,
+            footer_id         integer unsigned NOT NULL,
+            locale            varchar(64) default '' NOT NULL,
+            timecreated       int(11) unsigned NOT NULL default '0', 
+            timemodified      int(11) unsigned NOT NULL default '0', 
+            role_id           int(11) unsigned NOT NULL default '0', 
+            redirect          tinyint NOT NULL default '0', 
+            redirectaddress   varchar(254) default '' NOT NULL,
+            alias             tinyint NOT NULL default '1', 
+            type              tinyint NOT NULL default '3', 
+            state             tinyint NOT NULL default '3', 
+            PRIMARY KEY  (id) 
+        ) TYPE=MyISAM";
+        if (!$q->run($query)) return;
 
-# --------------------------------------------------------
-#
-# Register blocks
-#
-/*    if (!xarMod::apiFunc('blocks',
-                       'admin',
-                       'register_block_type',
-                       array('modName' => 'shop',
-                             'blockType' => 'first'))) return;*/
-# --------------------------------------------------------
-#
-# Create privilege instances
-#
-    sys::import('modules.dynamicdata.class.objects.master');
-    $object = DataObjectMaster::getObject(array('name' => 'shop_transactions'));
-    $objectid = $object->objectid;
+        $query = "DROP TABLE IF EXISTS " . $prefix . "_mailer_footers";
+        if (!$q->run($query)) return;
+        $query = "CREATE TABLE " . $prefix . "_mailer_footers (
+            id                integer unsigned NOT NULL auto_increment,
+            name              varchar(64) default '' NOT NULL,
+            body              text,
+            timecreated       int(11) unsigned NOT NULL default '0', 
+            PRIMARY KEY  (id) 
+        ) TYPE=MyISAM";
+        if (!$q->run($query)) return;
 
-    $xartable =& xarDB::getTables();
-    $dynproptable = $xartable['dynamic_properties'];
-    $dyndatatable = $xartable['dynamic_data'];
-    $query = "SELECT DISTINCT $dynproptable.id
-    FROM $dynproptable
-    LEFT JOIN $dyndatatable
-    ON $dyndatatable.id=property_id
-    WHERE object_id= $objectid";
+        $query = "DROP TABLE IF EXISTS " . $prefix . "_mailer_history";
+        if (!$q->run($query)) return;
+        $query = "CREATE TABLE " . $prefix . "_mailer_history (
+            id                integer unsigned NOT NULL auto_increment,
+            mail_id           integer unsigned NOT NULL,
+            name              varchar(64) default '' NOT NULL,
+            sendername        varchar(254) default '' NOT NULL,
+            senderaddress     varchar(254) default '' NOT NULL,
+            recipientname     varchar(254) default '' NOT NULL,
+            recipinetaddress  varchar(254) default '' NOT NULL,
+            subject           text,
+            body              text,
+            timecreated       int(11) unsigned NOT NULL default '0', 
+            PRIMARY KEY  (id) 
+        ) TYPE=MyISAM";
+        if (!$q->run($query)) return;
 
-    // Note : we could add some other fields in here too, based on the properties we imported above
-    $instances = array(
-                        array('header' => 'shop ID:',
-                                'query' => $query,
-                                'limit' => 20
-                            )
-                    );
-    xarDefineInstance('shop', 'Item', $instances);
+    # --------------------------------------------------------
+    #
+    # Set up masks
+    #
+        xarRegisterMask('ViewMailer','All','mailer','All','All','ACCESS_OVERVIEW');
+        xarRegisterMask('ReadMailer','All','mailer','All','All','ACCESS_READ');
+        xarRegisterMask('CommentMailer','All','mailer','All','All','ACCESS_COMMENT');
+        xarRegisterMask('ModerateMailer','All','mailer','All','All','ACCESS_MODERATE');
+        xarRegisterMask('EditMailer','All','mailer','All','All','ACCESS_EDIT');
+        xarRegisterMask('AddMailer','All','mailer','All','All','ACCESS_ADD');
+        xarRegisterMask('ManageMailer','All','mailer','All','All','ACCESS_DELETE');
+        xarRegisterMask('AdminMailer','All','mailer','All','All','ACCESS_ADMIN');
 
-    xarRemoveMasks('shop');
+    # --------------------------------------------------------
+    #
+    # Set up privileges
+    #
+        xarRegisterPrivilege('ViewMailer','All','mailer','All','All','ACCESS_OVERVIEW');
+        xarRegisterPrivilege('ReadMailer','All','mailer','All','All','ACCESS_READ');
+        xarRegisterPrivilege('CommentMailer','All','mailer','All','All','ACCESS_COMMENT');
+        xarRegisterPrivilege('ModerateMailer','All','mailer','All','All','ACCESS_MODERATE');
+        xarRegisterPrivilege('EditMailer','All','mailer','All','All','ACCESS_EDIT');
+        xarRegisterPrivilege('AddMailer','All','mailer','All','All','ACCESS_ADD');
+        xarRegisterPrivilege('ManageMailer','All','mailer','All','All','ACCESS_DELETE');
+        xarRegisterPrivilege('AdminMailer','All','mailer','All','All','ACCESS_ADMIN');
 
-# --------------------------------------------------------
-#
-# Register masks
-#
-    xarRegisterMask('ViewShop','All','shop','Item','All:All:All','ACCESS_OVERVIEW');
-    xarRegisterMask('ReadShop','All','shop','Item','All:All:All','ACCESS_READ');
-    xarRegisterMask('EditShop','All','shop','Item','All:All:All','ACCESS_EDIT');
-    xarRegisterMask('AddShop','All','shop','Item','All:All:All','ACCESS_ADD');
-    xarRegisterMask('ManageShop','All','shop','Item','All:All:All','ACCESS_DELETE');
-    xarRegisterMask('AdminShop','All','shop','Item','All:All:All','ACCESS_ADMIN');
-# --------------------------------------------------------
-#
-# Register hooks
-#
+    # --------------------------------------------------------
+    #
+    # Set up modvars
+    #
+        xarModVars::set('mailer', 'itemsperpage', 20);
+        xarModVars::set('mailer', 'useModuleAlias',0);
+        xarModVars::set('mailer', 'aliasname','Mailer');
+        xarModVars::set('mailer', 'defaultmastertable','mailer_mails');
 
-    // Initialisation successful
-    return true;
-}
+        xarModVars::set('mailer', 'defaultrecipientname', xarML('Occupant'));
+        xarModVars::set('mailer', 'defaultsendername', xarModVars::get('mail','adminname'));
+        xarModVars::set('mailer', 'defaultsenderaddress', xarModVars::get('mail','adminmail'));
+        xarModVars::set('mailer', 'defaultuserobject', 'roles_users');
+        xarModVars::set('mailer', 'defaultmailobject', 'mailer_mails');
+        xarModVars::set('mailer', 'defaultlocale', 'en_US.utf-8');
+        xarModVars::set('mailer', 'defaultredirect', 0);
+        xarModVars::set('mailer', 'defaultredirectaddress', xarModVars::get('mail','adminmail'));
 
-/**
- * Upgrade the module from an old version
- *
- * This function can be called multiple times
- */
-function shop_upgrade($oldversion)
-{
-    // Upgrade dependent on old version number
-    switch($oldversion) {
-        case '2.0.0':
-            // Code to upgrade from version 2.0 goes here
-            break;
+    # --------------------------------------------------------
+    #
+    # Create DD objects
+    #
+        $module = 'mailer';
+        $objects = array(
+                         'mailer_mails',
+                         'mailer_footers',
+                         'mailer_history',
+                         );
+
+        if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+
+    # --------------------------------------------------------
+    #
+    # Set up hooks
+    #
+        // This is a GUI hook for the roles module that enhances the roles profile page
+        if (!xarModRegisterHook('item', 'usermenu', 'GUI',
+                'mailer', 'user', 'usermenu')) {
+            return false;
+        }
+
+        xarModAPIFunc('modules', 'admin', 'enablehooks',
+            array('callerModName' => 'mailer', 'hookModName' => 'mailer'));
+
+        return true;
     }
 
-    // Update successful
-    return true;
-}
+    function mailer_upgrade()
+    {
+        return true;
+    }
 
-/**
- * Delete the module
- *
- * This function is only ever called once during the lifetime of a particular
- * module instance
- * @return bool true on success of deletion
- */
-function shop_delete()
-{
-    // UnRegister blocks
-    if (!xarMod::apiFunc('blocks',
-                       'admin',
-                       'unregister_block_type',
-                       array('modName' => 'shop',
-                             'blockType' => 'first'))) return;
-
-# --------------------------------------------------------
-#
-# Uninstall the module
-#
-# The function below pretty much takes care of everything that needs to be removed
-#
-    $module = 'shop';
-    return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $module));
-}
+    function mailer_delete()
+    {
+        $this_module = 'mailer';
+        return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => $this_module));
+    }
 
 ?>

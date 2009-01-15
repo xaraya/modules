@@ -1,0 +1,20 @@
+<items>
+  <mailer_mails itemid="1">
+    <id>1</id>
+    <name>Test Email in English</name>
+    <sender_name></sender_name>
+    <sender_address></sender_address>
+    <subject>Mailer Module Test Email</subject>
+    <body>This the the default message body for a text email sent by the Mailer module.</body>
+    <footer>1</footer>
+    <locale>en_US.utf-8</locale>
+    <created>1232012781</created>
+    <modified>1232012781</modified>
+    <owner>5</owner>
+    <redirect>0</redirect>
+    <redirect_address></redirect_address>
+    <mail_type>1</mail_type>
+    <alias>1</alias>
+    <state>3</state>
+  </mailer_mails>
+</items>

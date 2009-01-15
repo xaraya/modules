@@ -1,66 +1,96 @@
 <?php
- /**
- * @package modules
- * @copyright (C) 2002-2010 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage shop Module
- * @link http://www.xaraya.com/index.php/release/eid/1031
- * @author potion <ryan@webcommunicate.net>
- */
 /**
- *  Modifyconfig
+ * Main configuration page for the mailer object
+ *
  */
-function shop_admin_modifyconfig()
-{
-    // Security check - important to do this as early as possible to avoid
-    // potential security holes or just too much wasted processing
-    if (!xarSecurityCheck('AdminShop')) return;
 
-    // Check if this template has been submitted, or if we just got here
-    if (!xarVarFetch('phase',        'str:1:100', $phase,       'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+// Use this version of the modifyconfig file when creating utility modules
 
-    // Load the DD master object class. This line will likely disappear in future versions
-    sys::import('modules.dynamicdata.class.objects.master');
-    // Get the object we'll be working with for shop-specific configuration
-    $data['object'] = DataObjectMaster::getObject(array('name' => 'shop_module_settings'));
-    // Get the appropriate item of the dataobject. Using itemid 0 (not passing an itemid parameter) is standard convention
-    $data['object']->getItem(array('itemid' => 0));
-
-    // Get the object we'll be working with for common configuration settings
-    $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'shop'));
-    // Decide which fields are configurable in this module
-    $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_user_menu, user_menu_link');
-    // Get the appropriate item of the dataobject. Using itemid 0 (not passing an itemid parameter) is standard convention
-    $data['module_settings']->getItem();
-
-    $defaultcustomer = DataObjectMaster::getObject(array('name' => 'shop_customers'));
-    if (!xarVarFetch('customer', 'int', $data['customer'], $defaultcustomer->objectid, XARVAR_NOT_REQUIRED)) return;
-
-    // Run the appropriate code depending on whether the template was submitted or not
-    switch (strtolower($phase)) {
-        case 'modify':
-        default:
-            break;
-
-        case 'update':
-          
-
-            $isvalid = $data['module_settings']->checkInput();
-            if (!$isvalid) {
-                return xarTplModule('shop','admin','modifyconfig', $data);
-            } else {
-                $itemid = $data['module_settings']->updateItem();
+    function mailer_admin_modifyconfig()
+    {
+        // Security Check
+        if (!xarSecurityCheck('AdminMailer')) return;
+        if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+        if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'mailer_general', XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('tabmodule', 'str:1:100', $tabmodule, 'mailer', XARVAR_NOT_REQUIRED)) return;
+        $hooks = xarModCallHooks('module', 'getconfig', 'mailer');
+        if (!empty($hooks) && isset($hooks['tabs'])) {
+            foreach ($hooks['tabs'] as $key => $row) {
+                $configarea[$key]  = $row['configarea'];
+                $configtitle[$key] = $row['configtitle'];
+                $configcontent[$key] = $row['configcontent'];
             }
- 
-                if (!xarMod::guiFunc('dynamicdata','admin','update')) return;
+            array_multisort($configtitle, SORT_ASC, $hooks['tabs']);
+        } else {
+            $hooks['tabs'] = array();
+        }
 
-            break;
+        $regid = xarModGetIDFromName($tabmodule);
+        switch (strtolower($phase)) {
+            case 'modify':
+            default:
+                switch ($data['tab']) {
+                    case 'mailer_general':
+                        break;
+                    case 'tab2':
+                        break;
+                    case 'tab3':
+                        break;
+                    default:
+                        break;
+                }
+
+                break;
+
+            case 'update':
+                // Confirm authorisation code
+                if (!xarSecConfirmAuthKey()) return;
+                if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, xarModVars::get('mailer', 'itemsperpage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+                if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('mailer', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('mailer', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('defaultmastertable',    'str',      $defaultmastertable, xarModVars::get('mailer', 'defaultmastertable'), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('defaultuserobject',    'str',      $defaultuserobject, xarModVars::get('mailer', 'defaultuserobject'), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('defaultmailobject',    'str',      $defaultmailobject, xarModVars::get('mailer', 'defaultmailobject'), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('defaultrecipientname',    'str',      $defaultrecipientname, xarModVars::get('mailer', 'defaultrecipientname'), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('defaultsendername',    'str',      $defaultsendername, xarModVars::get('mailer', 'defaultsendername'), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('defaultsenderaddress',    'str',      $defaultsenderaddress, xarModVars::get('mailer', 'defaultsenderaddress'), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('defaultlocale',    'str',      $defaultlocale, xarModVars::get('mailer', 'defaultlocale'), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('defaultredirect',    'checkbox',      $defaultredirect, xarModVars::get('mailer', 'defaultredirect'), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('defaultredirectaddress',    'str',      $defaultredirectaddress, xarModVars::get('mailer', 'defaultredirectaddress'), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('savetodb',    'checkbox',      $savetodb, xarModVars::get('mailer', 'savetodb'), XARVAR_NOT_REQUIRED)) return;
+
+                $modvars = array(
+                                'defaultmastertable',
+                                'defaultuserobject',
+                                'defaultmailobject',
+                                'defaultrecipientname',
+                                'defaultsendername',
+                                'defaultsenderaddress',
+                                'defaultlocale',
+                                'defaultredirect',
+                                'defaultredirectaddress',
+                                'savetodb',
+                                );
+
+                if ($data['tab'] == 'mailer_general') {
+                    xarModVars::set('mailer', 'itemsperpage', $itemsperpage);
+                    xarModVars::set('mailer', 'supportshorturls', $shorturls);
+                    xarModVars::set('mailer', 'useModuleAlias', $useModuleAlias);
+                    xarModVars::set('mailer', 'aliasname', $aliasname);
+                    foreach ($modvars as $var) if (isset($$var)) xarModVars::set('mailer', $var, $$var);
+                }
+                foreach ($modvars as $var) if (isset($$var)) xarModItemVars::set('mailer', $var, $$var, $regid);
+
+                xarResponseRedirect(xarModURL('mailer', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
+                // Return
+                return true;
+                break;
+
+        }
+        $data['hooks'] = $hooks;
+        $data['tabmodule'] = $tabmodule;
+        $data['authid'] = xarSecGenAuthKey();
+        return $data;
     }
-
-    // Return the template variables defined in this function
-    return $data;
-}
-
 ?>

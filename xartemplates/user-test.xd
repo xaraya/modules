@@ -1,0 +1,40 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:if condition="xarModVars::get('mailer','useModuleAlias')">
+            <xar:var scope="module" module="mailer" name="aliasname" />
+        <xar:else />
+            <xar:mlstring>Mailer Module</xar:mlstring>
+        </xar:if>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <form method="post" action="#xarServerGetCurrentURL()#">
+        <fieldset>
+            <legend>
+                Sending a test email
+            </legend>
+            To test the module click on the button below. A default email will be sent to the site administrator.
+            <xar:if condition="$sent">
+                <xar:if condition="$result">
+                    <div style="color: red">
+                        Message sent
+                    </div>
+                <xar:else/>
+                    <div style="color: red">
+                        Message not sent due to error condition
+                    </div>
+                </xar:if>
+            </xar:if>
+        </fieldset>
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                <input type="hidden" name="phase" id="phase" value="submit" />
+                <input type="submit" value="#xarML('Send a test email')#" />
+            </div>
+        </fieldset>
+    </form>
+</div>
+</xar:template>
