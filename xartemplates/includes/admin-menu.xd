@@ -2,10 +2,11 @@
 <xar:comment>Common Administration menu</xar:comment>
 <xar:style scope="module" module="base" file="navtabs" />
 
-<xar:set name="activetab">$_bl_module_func</xar:set>
+<xar:set name="request">xarRequestGetInfo()</xar:set>
+<xar:set name="activetab">#$request.2#</xar:set>
 <div>
   <dl class="xar-tabs">
-    <dt class="help" title="Choose an action to perform">
+    <dt class="help" title="#xarML('Choose an action to perform')#">
       <xar:mlstring>Actions:</xar:mlstring>
     </dt>
     <xar:sec mask="AdminNewsGroups" catch="false">
@@ -21,7 +22,6 @@
             <xar:mlstring>Modify Config</xar:mlstring>
           </a>
         </dd>
-
     <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
     <dd class="#$tabclass#">
       <a href="&xar-modurl-newsgroups-admin-overview;">

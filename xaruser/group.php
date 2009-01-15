@@ -32,10 +32,14 @@ function newsgroups_user_group()
     // Call the xarTPL helper function to produce a pager in case of there
     // being many items to display.
     $data['pager'] = xarTplGetPager($startnum,
-                                    $data['counts']['last'],
-                                    xarModURL('newsgroups', 'user', 'group', array('group' => $group,'startnum' => '%%')),
-                                    $numitems);
-// TODO: add support for first number $counts['first'] in pager
+                                    $data['counts']['count'],  //['last'],
+                                    xarModURL('newsgroups', 'user', 'group', 
+                                              array('group' => $group,
+                                                    'startnum' => '%%')),
+                                    $numitems, // articles per page
+                                    array('firstitem' => $data['counts']['first'],
+                                          'blocksize' => 5)
+                                    );
 
     // Return the template variables defined in this function
     return $data;

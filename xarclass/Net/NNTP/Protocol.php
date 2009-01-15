@@ -629,11 +629,16 @@ class Net_NNTP_Protocol extends PEAR
             if (PEAR::isError($data)) {
                 return $data;
             }
-            foreach($data as $line) {
-                preg_match("/^(.*?)\s(.*?$)/", trim($line), $matches);
-                $groups[$matches[1]] = (string) $matches[2];
+
+            If (empty($data)) {
+                return;  
+            } else {
+                foreach($data as $line) {
+                    preg_match("/^(.*?)\s(.*?$)/", trim($line), $matches);
+                    $groups[$matches[1]] = (string) $matches[2];
+                }
+                return $groups;
             }
-            return $groups;
 
         break;
         case 503: // RFC2980: 'program error, function not performed'

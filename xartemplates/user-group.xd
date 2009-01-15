@@ -2,6 +2,10 @@
 <div class="xar-mod-body">
 
     <h2><xar:ml><xar:mlstring>Messages in newsgroup #(1)</xar:mlstring><xar:mlvar>#$group#</xar:mlvar></xar:ml></h2>
+    <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
+        <div>#xarSessionGetVar('statusmsg')#</div>
+        <xar:set name="i">xarSessionSetVar('statusmsg', '')</xar:set>
+    </xar:if>
 
 <xar:if condition="isset($error_message)">
     <p> <xar:mlstring>News Server Error:</xar:mlstring>
@@ -10,11 +14,12 @@
         </span>
     </p>
 <xar:else />
+#$pager#
 <p><a href="#xarModUrl('newsgroups', 'user', 'main')#"><xar:mlstring>Back to main list</xar:mlstring></a></p>
 <xar:sec mask="SendNewsGroups" catch="false">
 <p><a href="#xarModUrl('newsgroups', 'user', 'post', array('group' => $group, 'phase' => 'new'))#"><xar:mlstring>Post to this newsgroup</xar:mlstring></a></p>
 </xar:sec>
-<div class="xar-norm-outline" style="margin: 0px 3px 6px 3px;padding: 3px;text-align: left;">
+<div class="xar-norm" style="margin: 0px 3px 6px 3px;padding: 3px;text-align: left;">
 <table>
     <tr>
         <th><xar:mlstring>Subject</xar:mlstring></th>
@@ -23,18 +28,15 @@
     </tr>
     <xar:loop name="$items">
     <xar:if condition="(($loop:index + 1) % 2)">
-    <tr>
-        <td><span style="margin-left: #$loop:item['depth']*20#px;"> <a href="#xarModUrl('newsgroups', 'user', 'article', array('group' => $group, 'article' => $loop:item['number']))#">#xarVarPrepForDisplay($loop:item['Subject'])#</a></span></td>
-        <td>#xarVarPrepEmailDisplay(xarVarPrepForDisplay($loop:item['From']))#</td>
-        <td>#xarVarPrepForDisplay($loop:item['Date'])#</td>
-    </tr>
+      <xar:set name="tdclass">'xar-norm'</xar:set>
     <xar:else />
-    <tr>
-        <td class="xar-accent"><span style="margin-left: #$loop:item['depth']*20#px;"> <a href="#xarModUrl('newsgroups', 'user', 'article', array('group' => $group, 'article' => $loop:item['number']))#">#xarVarPrepForDisplay($loop:item['Subject'])#</a></span></td>
-        <td class="xar-accent">#xarVarPrepEmailDisplay(xarVarPrepForDisplay($loop:item['From']))#</td>
-        <td class="xar-accent">#xarVarPrepForDisplay($loop:item['Date'])#</td>
-    </tr>
+      <xar:set name="tdclass">'xar-accent'</xar:set>
     </xar:if>
+    <tr>
+        <td class="#$tdclass#"><span style="margin-left: #$loop:item['depth']*2#ex;"> <a href="#xarModUrl('newsgroups', 'user', 'article', array('group' => $group, 'article' => $loop:item['number']))#">#xarVarPrepForDisplay($loop:item['Subject'])#</a></span></td>
+        <td class="#$tdclass#">#xarVarPrepEmailDisplay(xarVarPrepForDisplay($loop:item['From']))#</td>
+        <td class="#$tdclass#">#xarLocaleGetFormattedDate('medium', strtotime(xarVarPrepForDisplay($loop:item['Date'])), true)# #xarLocaleGetFormattedTime('short', strtotime(xarVarPrepForDisplay($loop:item['Date'])), true)#</td>
+    </tr>
     </xar:loop>
 </table>
 </div>

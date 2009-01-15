@@ -5,7 +5,7 @@
  * Get article from a newsgroup
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
+ * @copyright (C) 2005 - 2009 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -131,6 +131,13 @@ function newsgroups_userapi_getarticle($args = array())
 
     if (empty($article) && !empty($messageid)) {
         $headers = $newsgroups->splitHeaders($messageid);
+        if (PEAR::isError($headers)) {
+            $message = $headers->message;
+            $newsgroups->quit();
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                        new SystemException($message));
+            return;
+        }
         if (!empty($headers['Xref']) && preg_match("/ $group:(\d+)/",$headers['Xref'],$matches)) {
             $article = $matches[1];
         } else {
@@ -138,13 +145,13 @@ function newsgroups_userapi_getarticle($args = array())
         }
     } else {
         $headers = $newsgroups->splitHeaders($article);
-    }
-    if (PEAR::isError($headers)) {
-        $message = $headers->message;
-        $newsgroups->quit();
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                    new SystemException($message));
-        return;
+        if (PEAR::isError($headers)) {
+            $message = $headers->message;
+            $newsgroups->quit();
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                        new SystemException($message));
+            return;
+        }
     }
     $data['article'] = $article;
 
@@ -166,6 +173,11 @@ function newsgroups_userapi_getarticle($args = array())
                                $headers['References'][$i]);
             // STAT doesn't seem to work with message id's, and XHDR may not be available
             $stat = $newsgroups->splitHeaders($ref);
+            if (PEAR::isError($stat)) {
+                // Skip missing articles
+                continue;
+            }
+            
             if (!empty($stat['Xref']) && is_array($stat['Xref'])) {
                 // get the last reference if necessary
                 $stat['Xref'] = array_pop($stat['Xref']);

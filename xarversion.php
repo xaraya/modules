@@ -3,7 +3,7 @@
  * Xaraya NewsGroups
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,7 +14,7 @@
 
 $modversion['name'] = 'NewsGroups';
 $modversion['id'] = '802';
-$modversion['version'] = '1.0.2';
+$modversion['version'] = '1.0.3';
 $modversion['displayname']    = xarML('Newsgroups');
 $modversion['description'] = 'A newsgroup reader for Xaraya';
 $modversion['credits'] = 'xardocs/credits.txt';

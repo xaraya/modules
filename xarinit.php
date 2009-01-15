@@ -5,7 +5,7 @@
  * Xaraya NewsGroups
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @copyright (C) 2002 - 2009 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.org
  *
@@ -18,12 +18,12 @@
  */
 function newsgroups_init()
 {
-
+    // Default values
     xarModSetVar('newsgroups', 'server', 'news.xaraya.com');
     xarModSetVar('newsgroups', 'port', 119);
     xarModSetVar('newsgroups', 'user', '');
     xarModSetVar('newsgroups', 'pass', '');
-    xarModSetVar('newsgroups', 'numitems', 50);
+    xarModSetVar('newsgroups', 'numitems', 5);
     xarModSetVar('newsgroups', 'sortby', '');
     xarModSetVar('newsgroups', 'grouplist', '');
 
@@ -32,14 +32,18 @@ function newsgroups_init()
     xarModSetVar('newsgroups', 'messageexpire', '');
     xarModSetVar('newsgroups', 'cachesize', 500000);
 
-    xarModSetVar('newsgroups', 'wildmat', 'xaraya.*,ddf.*');
+    xarModSetVar('newsgroups', 'wildmat', 'xaraya.te*');
     xarModSetVar('newsgroups', 'SupportShortURLs', 0);
 
     // Register Masks
-    xarRegisterMask('ReadNewsGroups','All','newsgroups','All','All','ACCESS_READ');
-    xarRegisterMask('SendNewsGroups','All','newsgroups','All','All','ACCESS_COMMENT');
-    xarRegisterMask('AdminNewsGroups','All','newsgroups','All','All','ACCESS_ADMIN');
-
+    xarRegisterMask('ReadNewsGroups','All','newsgroups','All','All','ACCESS_READ',
+                    xarML('Read messages in newsgroups'));
+    xarRegisterMask('SendNewsGroups','All','newsgroups','All','All','ACCESS_COMMENT',
+                    xarML('Post messages in newsgroups'));
+    xarRegisterMask('DeleteNewsGroups','All','newsgroups','All','All','ACCESS_DELETE',
+                    xarML('Delete messages in newsgroups'));
+    xarRegisterMask('AdminNewsGroups','All','newsgroups','All','All','ACCESS_ADMIN',
+                    xarML('Administer the Newsgroups module'));
     // Register Block types (this *should* happen at activation/deactivation)
     if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
                        array('modName'   => 'newsgroups',
@@ -63,10 +67,10 @@ function newsgroups_upgrade($oldversion)
     switch($oldversion) {
         case '1.0.0':
             // Code to upgrade from version 1.0.0 goes here
-            xarRegisterMask('SendNewsGroups','All','newsgroups','All','All','ACCESS_COMMENT');
+            xarRegisterMask('SendNewsGroups','All','newsgroups','All','All','ACCESS_COMMENT',
+                            xarML('Post messages in newsgroups'));
 
         case '1.0.1':
-            // Code to upgrade from version 1.0.1 goes here
             xarModSetVar('newsgroups', 'listexpire', 3600);
             xarModSetVar('newsgroups', 'groupexpire', 900);
             xarModSetVar('newsgroups', 'messageexpire', '');
@@ -76,7 +80,10 @@ function newsgroups_upgrade($oldversion)
                                      'blockType' => 'latest'))) return;
 
         case '1.0.2':
-            // Code to upgrade from version 1.0.2 goes here
+            xarRegisterMask('DeleteNewsGroups','All','newsgroups','All','All','ACCESS_DELETE',
+                            xarML('Delete messages in newsgroups'));
+        case '1.0.3':
+            // Code to upgrade from current version 1.0.3 goes here
 
         case '2.0.0':
             // Code to upgrade from version 2.0.0 goes here

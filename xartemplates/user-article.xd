@@ -7,7 +7,8 @@
 <div class="xar-mod-body">
 
     <h2><xar:mlstring>Read Message</xar:mlstring></h2>
-    <p>#$pager# <a href="#xarModUrl('newsgroups', 'user', 'group', array('group' => $group))#"><xar:ml><xar:mlstring>Back to newsgroup #(1)</xar:mlstring><xar:mlvar>#$group#</xar:mlvar></xar:ml></a></p>
+    #$pager#
+    <p> <a href="#xarModUrl('newsgroups', 'user', 'group', array('group' => $group, 'startnum' => $groupstartnum))#"><xar:ml><xar:mlstring>Back to newsgroup #(1)</xar:mlstring><xar:mlvar>#$group#</xar:mlvar></xar:ml></a></p>
     <xar:if condition="isset($error_message)">
         <p> <xar:mlstring>News Server Error:</xar:mlstring>
             <span style="color: red;">
@@ -18,6 +19,18 @@
         <div style="margin: auto;">
             <xar:sec mask="SendNewsGroups" catch="false">
             <p>
+              <xar:if condition="!empty($deleteurl)">
+                <xar:if condition="$group eq 'xaraya.test' OR false">
+                  <xar:comment>
+                    Delete the condition for canceling posts in others than the test group
+                  </xar:comment>
+                  <div style="float: right; text-align: right;">
+                    <a href="#$deleteurl#">
+                      <xar:mlstring>Delete Message</xar:mlstring>
+                    </a>
+                  </div>
+                </xar:if>
+              </xar:if>
                 <a href="#xarModUrl('newsgroups', 'user', 'post', array('group' => $group, 'article' => $articlenum, 'phase' => 'reply'))#"><xar:mlstring>Post a reply</xar:mlstring></a>
             </p>
             </xar:sec>
@@ -27,7 +40,7 @@
                     <xar:mlstring>Subject</xar:mlstring>:&nbsp;&nbsp;<b>#xarVarPrepForDisplay($headers['Subject'])#</b><br />
                     <xar:mlstring>From</xar:mlstring>:&nbsp;&nbsp;<b>#xarVarPrepEmailDisplay(xarVarPrepForDisplay($headers['From']))#</b><br />
                     <xar:mlstring>Organization</xar:mlstring>:&nbsp;&nbsp;<b><xar:if condition="!empty($headers['Organization'])">#xarVarPrepForDisplay($headers['Organization'])#<xar:else/>-</xar:if></b><br />
-                    <xar:mlstring>Date</xar:mlstring>:&nbsp;&nbsp;<b>#xarVarPrepForDisplay($headers['Date'])#</b><br />
+                    <xar:mlstring>Date</xar:mlstring>:&nbsp;&nbsp;<b>#xarLocaleGetFormattedDate('long', strtotime(xarVarPrepForDisplay($headers['Date'])), true)#&nbsp;#xarLocaleGetFormattedTime('long', strtotime(xarVarPrepForDisplay($headers['Date'])), true)#</b><br />
                     <xar:mlstring>Newsgroups</xar:mlstring>:&nbsp;&nbsp;<b>#xarVarPrepForDisplay($headers['Newsgroups'])#</b><br />
                     <xar:if condition="isset($headers['References']) and is_array($headers['References'])">
                         <xar:mlstring>References</xar:mlstring>:&nbsp;
@@ -40,11 +53,10 @@
                         </xar:foreach><br />
                     </xar:if>
                     <br />
-                    <br />
                     #xarVarPrepEmailDisplay($article)#
                 </div>
             </div>
-            <p>#$pager#</p>
+            #$pager#
         </div>
     </xar:if>
 </div>

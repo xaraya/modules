@@ -14,18 +14,20 @@
   <h3>
       <xar:mlstring>How to use it?</xar:mlstring>
   </h3>
-      <p>
-            <xar:mlstring>
-            From the menu, you have one choice.  "Modify Configuration".
-            </xar:mlstring>
-            <ul>
-                <li><xar:mlstring>Modify Configuration -- Allows you to set the server, port, and pager for your newsgroups that you wish to view.</xar:mlstring></li>
-            </ul>
-       </p>
+    <p>
+    <xar:mlstring>From the menu, you have these choices:</xar:mlstring>
+      <dl>
+        <dt><xar:mlstring>Modify Configuration</xar:mlstring></dt>
+        <dd>
+          <xar:mlstring>Allows you to set the server, port, and pager for your newsgroups that you wish to view.</xar:mlstring>
+          <xar:mlstring>If a Wildcard Match with a to broad selection is used the retrieval of the groups list may fail.</xar:mlstring>
+        </dd>
+      </dl>
+    </p>
    <h3>
             <xar:mlstring>Included Blocks</xar:mlstring>
    </h3>
-       <p><xar:mlstring>There are no included blocks</xar:mlstring></p>
+       <p><xar:mlstring>The "Latest" block shows the latest postings in a newsgroup</xar:mlstring></p>
    <h3>
             <xar:mlstring>Included Hooks</xar:mlstring>
    </h3>

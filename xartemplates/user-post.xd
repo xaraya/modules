@@ -16,7 +16,7 @@
 <table>
     <tr>
         <td align="right">
-            <b>Subject:</b> 
+            <strong><xar:mlstring>Subject:</xar:mlstring></strong> 
         </td>
         <td>
             <input type="text" name="subject" value="#$subject#" size="40" maxlength="80" />
@@ -24,7 +24,7 @@
     </tr>
     <tr>
         <td align="right">
-            <b>Name:</b>
+            <strong><xar:mlstring>Name:</xar:mlstring></strong>
         </td>
         <td align="left">
             <input type="text" name="name" value="#$name#" size="40" maxlength="40" />
@@ -32,7 +32,7 @@
     </tr>
     <tr>
         <td align="right">
-            <b>eMail:</b>
+            <strong><xar:mlstring>Email:</xar:mlstring></strong>
         </td>
         <td align="left">
             <input type="text" name="email" value="#$email#" size="40" maxlength="40" />
@@ -42,7 +42,7 @@
 <table>
     <tr>
         <td>
-            <b>Message</b>
+            <strong><xar:mlstring>Message:</xar:mlstring></strong>
         <br />
             <textarea name="body" rows="20" cols="79" >#xarVarPrepEmailDisplay(xarVarPrepForDisplay($message))#</textarea>
         </td>
@@ -52,7 +52,7 @@
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="group" id="group" value="#$group#" />
     <input type="hidden" name="reference" value="#xarVarPrepForDisplay($reference)#" />
-    <input type="submit" value="New Topic" />
+    <input type="submit" value="#xarML('Mitteilung senden')#" />
 </p>
 </form>
 </xar:if>
