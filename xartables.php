@@ -10,12 +10,9 @@
         // Initialise table array
         $xartable = array();
 
-        $xartable['mailer_tags']          = xarDB::getPrefix() . '_mailer_tags';
-        $xartable['mailer_posts']         = xarDB::getPrefix() . '_mailer_posts';
-        $xartable['mailer_users']         = xarDB::getPrefix() . '_mailer_users';
-        $xartable['mailer_tags_posts']    = xarDB::getPrefix() . '_mailer_tags_posts';
-        $xartable['mailer_subscriptions'] = xarDB::getPrefix() . '_mailer_subscriptions';
-        $xartable['mailer_visits']        = xarDB::getPrefix() . '_mailer_visits';
+        $xartable['mailer_mails']          = xarDB::getPrefix() . '_mailer_mails';
+        $xartable['mailer_footers']        = xarDB::getPrefix() . '_mailer_footers';
+        $xartable['mailer_history']        = xarDB::getPrefix() . '_mailer_history';
 
         // Return the table information
         return $xartable;
