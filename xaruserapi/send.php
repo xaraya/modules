@@ -72,7 +72,7 @@
         // Check if there is a redirect in the message
             if ($mailitem['redirect']) {
                 if (empty($mailitem['redirect_address'])) return false;
-                $recipientaddress = $mailitem['redirectaddress'];
+                $recipientaddress = $mailitem['redirect_address'];
             }
             
         // Get the sender's data
