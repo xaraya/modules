@@ -1,9 +1,9 @@
 <object name="mailer_history">
-  <objectid>88</objectid>
+  <objectid>108</objectid>
   <label>Mail History</label>
   <parent>objects</parent>
   <module_id>182</module_id>
-  <itemtype>22</itemtype>
+  <itemtype>23</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
@@ -12,7 +12,7 @@
   <isalias>1</isalias>
   <properties>
     <property name="id">
-      <id>998</id>
+      <id>1203</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -22,27 +22,17 @@
       <configuration></configuration>
     </property>
     <property name="mail_id">
-      <id>999</id>
-      <label>Mail ID</label>
-      <type>integerbox</type>
-      <defaultvalue></defaultvalue>
+      <id>1204</id>
+      <label>Message Name</label>
+      <type>objectref</type>
+      <defaultvalue>0</defaultvalue>
       <source>xar_mailer_history.mail_id</source>
       <status>33</status>
       <seq>2</seq>
-      <configuration></configuration>
-    </property>
-    <property name="name">
-      <id>1000</id>
-      <label>Name</label>
-      <type>textbox</type>
-      <defaultvalue></defaultvalue>
-      <source>xar_mailer_history.name</source>
-      <status>33</status>
-      <seq>3</seq>
-      <configuration></configuration>
+      <configuration>a:4:{s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:12:"mailer_mails";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:4:"name";}</configuration>
     </property>
     <property name="sender_name">
-      <id>1001</id>
+      <id>1205</id>
       <label>Sender Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -52,7 +42,7 @@
       <configuration></configuration>
     </property>
     <property name="sender_address">
-      <id>1002</id>
+      <id>1206</id>
       <label>Sender Address</label>
       <type>email</type>
       <defaultvalue></defaultvalue>
@@ -62,7 +52,7 @@
       <configuration></configuration>
     </property>
     <property name="recipient_name">
-      <id>1003</id>
+      <id>1207</id>
       <label>Recipient Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -72,7 +62,7 @@
       <configuration></configuration>
     </property>
     <property name="recipient_address">
-      <id>1004</id>
+      <id>1208</id>
       <label>Recipient Address</label>
       <type>email</type>
       <defaultvalue></defaultvalue>
@@ -82,27 +72,27 @@
       <configuration></configuration>
     </property>
     <property name="subject">
-      <id>1005</id>
+      <id>1209</id>
       <label>Subject</label>
       <type>textarea</type>
       <defaultvalue></defaultvalue>
       <source>xar_mailer_history.subject</source>
       <status>34</status>
       <seq>8</seq>
-      <configuration></configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"2";s:15:"display_columns";s:2:"80";s:14:"display_layout";s:7:"default";}</configuration>
     </property>
     <property name="body">
-      <id>1006</id>
+      <id>1210</id>
       <label>Body</label>
       <type>textarea_medium</type>
       <defaultvalue></defaultvalue>
       <source>xar_mailer_history.body</source>
       <status>34</status>
       <seq>9</seq>
-      <configuration></configuration>
+      <configuration>a:3:{s:12:"display_rows";s:1:"8";s:15:"display_columns";s:2:"80";s:14:"display_layout";s:7:"default";}</configuration>
     </property>
     <property name="created">
-      <id>1007</id>
+      <id>1211</id>
       <label>Created</label>
       <type>formatteddatetime</type>
       <defaultvalue>time()</defaultvalue>

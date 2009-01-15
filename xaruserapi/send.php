@@ -99,6 +99,21 @@
         } else {
             if (!xarModAPIFunc('mail','admin','sendmail', $args)) return;
         }
+        
+        // Check we want to save this message and if so do it
+            if (xarModItemVars::get('mailer','savetodb', xarMod::getID($module))) {
+                $object = DataObjectMaster::getObject(array('name' => 'mailer_history'));
+                $args = array(
+                            'mail_id' => $mailitem['id'],
+                            'sender_name' => $sendername,
+                            'sender_address' => $senderaddress,
+                            'recipient_name' => $recipientname,
+                            'recipient_address' => $recipientaddress,
+                            'body' => $mailitem['body'] . $footer,
+                            'subject' => $mailitem['subject'],
+                            );
+                $item = $object->createItem($args);
+            }
 
         return true;
     }

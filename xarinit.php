@@ -56,11 +56,10 @@
         $query = "CREATE TABLE " . $prefix . "_mailer_history (
             id                integer unsigned NOT NULL auto_increment,
             mail_id           integer unsigned NOT NULL,
-            name              varchar(64) default '' NOT NULL,
             sendername        varchar(254) default '' NOT NULL,
             senderaddress     varchar(254) default '' NOT NULL,
             recipientname     varchar(254) default '' NOT NULL,
-            recipinetaddress  varchar(254) default '' NOT NULL,
+            recipientaddress  varchar(254) default '' NOT NULL,
             subject           text,
             body              text,
             timecreated       int(11) unsigned NOT NULL default '0', 
