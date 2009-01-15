@@ -22,6 +22,7 @@
         <xar:set name="value">xarModItemVars::get('mailer', 'defaultuserobject', $regid)</xar:set>
         <xar:data-input type="object" name="defaultuserobject" value="$value" firstline="Choose a user object" />
     </div>
+    <!--
     <div class="xar-form-input-wrapper">
         <label for="defaultmailobject" title="#xarML('The object this module uses as default to represent email messages')#" class="xar-form-label">
             <xar:mlstring>
@@ -31,4 +32,5 @@
         <xar:set name="value">xarModItemVars::get('mailer', 'defaultmailobject', $regid)</xar:set>
         <xar:data-input type="object" name="defaultmailobject" value="$value" firstline="Choose a mail object" />
     </div>
+    -->
 </xar:template>

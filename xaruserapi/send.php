@@ -28,12 +28,12 @@
 
         // Get the recipient's data
         if (isset($args['role_id'])) {
-            $object = DataObjectMaster::getObject(array('name' => xarModVars::get('mailer','defaultuserobject', xarMod::getID($module))));
+            $object = DataObjectMaster::getObject(array('name' => xarModItemVars::get('mailer','defaultuserobject', xarMod::getID($module))));
             $recipient = $object->getItem(array('itemid' => $args['role_id']));
             $recipientname = $recipient->properties['name']->value;
             $recipientaddress = $recipient->properties['email']->value;
         } else {
-            $recipientname = isset($args['recipientname']) ? $args['recipientname'] : xarModVars::get('mailer','defaultrecipientname', xarMod::getID($module));
+            $recipientname = isset($args['recipientname']) ? $args['recipientname'] : xarModItemVars::get('mailer','defaultrecipientname', xarMod::getID($module));
             $recipientaddress = $args['recipientaddress'];
         }
         
@@ -41,14 +41,15 @@
             $recipientlocale = isset($args['locale']) ? $args['locale'] : '';
             if (empty($recipientlocale) && isset($recipient->properties['locale'])) $recipientlocale = $recipient->properties['locale']->value;
             if (empty($recipientlocale) && isset($object) && ($object->name == 'roles_users')) $recipientlocale = $recipient->properties['locale']->value;
-            if (empty($recipientlocale)) $recipientlocale = xarModVars::get('mailer','defaultlocale', xarMod::getID($module));
+            if (empty($recipientlocale)) $recipientlocale = xarModItemVars::get('mailer','defaultlocale', xarMod::getID($module));
             
         // Get the list of message aliases (translations of the same message)
-            $object = DataObjectMaster::getObjectList(array('name' => xarModVars::get('mailer','defaultmailobject', xarMod::getID($module))));
+            $object = DataObjectMaster::getObjectList(array('name' => xarModItemVars::get('mailer','defaultmailobject', xarMod::getID($module))));
             $where = "locale = '" . $recipientlocale . "' AND alias = " . $args['id'];
             $mailitems = $object->getItems(array('where' => $where));
             
         // Sanity check: do we have a message?
+        var_dump($object->name);exit;
             if (empty($mailitems)) return false;
 
         // Grab the first one that fits
@@ -63,8 +64,8 @@
             }
             
         // Check if there is a default redirect
-            if (xarModVars::get('mailer','defaultredirect', xarMod::getID($module))) {
-                $redirectaddress = xarModVars::get('mailer','defaultredirectaddress', xarMod::getID($module));
+            if (xarModItemVars::get('mailer','defaultredirect', xarMod::getID($module))) {
+                $redirectaddress = xarModItemVars::get('mailer','defaultredirectaddress', xarMod::getID($module));
                 if (empty($redirectaddress)) return false;
                 $recipientaddress = $redirectaddress;
             }
@@ -77,9 +78,9 @@
             
         // Get the sender's data
             $sendername = isset($args['sendername']) ? $args['sendername'] : $mailitem['sender_name'];
-            if (empty($sendername)) $sendername = xarModVars::get('mailer','defaultsendername', xarMod::getID($module));
+            if (empty($sendername)) $sendername = xarModItemVars::get('mailer','defaultsendername', xarMod::getID($module));
             $senderaddress = isset($args['senderaddress']) ? $args['senderaddress'] : $mailitem['sender_address'];
-            if (empty($senderaddress)) $senderaddress = xarModVars::get('mailer','defaultsenderaddress', xarMod::getID($module));
+            if (empty($senderaddress)) $senderaddress = xarModItemVars::get('mailer','defaultsenderaddress', xarMod::getID($module));
         
         // Bundle the data into a nice array
             $args = array('info'         => $recipientaddress,
