@@ -30,6 +30,13 @@
                 </label>
                 <xar:data-input type="language" name="locale" value="$locale" />
             </div>
+            <div class="xar-form-input-wrapper">
+                <label for="message" title="#xarML('The address the message is sent to')#" class="xar-form-label">
+                    Recipient Address
+                </label>
+                <xar:data-input type="textbox" name="recipientaddress" value="$recipientaddress" />
+                &#160;(uses defaults if empty)
+            </div>
             <xar:if condition="isset($sent) AND $sent">
                 <div class="xar-form-input-wrapper-after" style="color: red; margin-top: 20px; margin-bottom: 20px">
                     <xar:if condition="$result">
