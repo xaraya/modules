@@ -3,7 +3,7 @@
  * Sitecontact itemtype management
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -126,8 +126,8 @@ function sitecontact_admin_managesctypes()
              $updatedscid=xarModAPIFunc('sitecontact','admin','updatesctype', $item);
 
              if (!$updatedscid) {
-                  xarSessionSetVar('statusmsg',xarML('Problem updating site contact form #(1)',$item['sctypename']));
-                $msg = xarML('Problem updating a Sitecontact Forum with ID of #(1)',$item['scid']);
+                xarSessionSetVar('statusmsg',xarML('Problem updating Sitecontact form #(1)',$item['sctypename']));
+                $msg = xarML('Problem updating a Sitecontact form with ID of #(1)',$item['scid']);
                 xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
                 return false;

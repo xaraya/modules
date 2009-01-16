@@ -1,22 +1,18 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
+<xar:comment>
+  The javascript variables "fieldRequired" and "fieldDescription" carry the names of  
+  mandatory fields and the descriptions to appear in the dialog box if that field is empty. 
+</xar:comment>
 <xar:if condition="isset($AntiBot_Available) AND $AntiBot_Available AND $useantibot">
     <script type="text/javascript">
-    <!--
-        // Enter name of mandatory fields
         var fieldRequired = Array("useremail", "usermessage","username","antibotcode");
-        // Enter field description to appear in the dialog box
-        var fieldDescription = Array("Your Email","Your message", "Your Name", "Anti-Bot Code");
-    //-->
+        var fieldDescription = Array("#xarML('Your Email')#","#xarML('Your message')#", "#xarML('Your Name')#", "#xarML('Anti-Bot Code')#");
     </script>
 <xar:else />
     <script type="text/javascript">
-    <!--
-        // Enter name of mandatory fields
         var fieldRequired = Array("useremail", "usermessage","username");
-        // Enter field description to appear in the dialog box
-        var fieldDescription = Array("Your Email","Your message", "Your Name");
-    //-->
+        var fieldDescription = Array("#xarML('Your Email')#","#xarML('Your message')#", "#xarML('Your Name')#");
     </script>
 </xar:if>
 

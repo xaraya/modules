@@ -102,7 +102,7 @@
 
             <div class="xar-form-input-wrapper">
                 <span class="xar-form-label">   
-                    <xar:mlstring>BB Copy list:</xar:mlstring>
+                    <xar:mlstring>BCC list:</xar:mlstring>
                 </span>
                 <xar:if condition="is_array($bccrecipients)">
                     <xar:foreach in="$bccrecipients" key="$k" value="$v">
