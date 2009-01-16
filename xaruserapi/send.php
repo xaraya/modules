@@ -48,19 +48,17 @@
             $where = "locale = '" . $recipientlocale . "' AND alias = " . $args['id'];
             $mailitems = $object->getItems(array('where' => $where));
             
-            if (!empty($mailitems)) {
-        // Grab the first one that fits
-                $mailitem = current($mailitems);
-
-            
-            } else {
+            if (empty($mailitems)) {
         // If no message based on the alias use the ID
                 $where = "id = " . $args['id'];
                 $mailitems = $object->getItems(array('where' => $where));
+
         // Still no message? Bail
-            if (empty($mailitems)) return false;
+                if (empty($mailitems)) return false;
             }
 
+        // Grab the first one that fits
+            $mailitem = current($mailitems);
             
         // Get the footer if this message has one
             $footer = "";
