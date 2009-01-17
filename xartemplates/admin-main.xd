@@ -239,7 +239,7 @@
         </xar:ml>
     </li>
     <li>
-        <xar:set name="doclink">'<a href="http://xarigami.com/project/sitecontact?page=resources" title="'.xarML('Related documentation on Formcaptcha').'">'.xarML('Xarigami Documentation').'</a>'</xar:set>
+        <xar:set name="doclink">'<a href="http://xarigami.com/project/sitecontact?page=resources" title="'.xarML('Related documentation on Sitecontact').'">'.xarML('Xarigami Documentation').'</a>'</xar:set>
         <xar:ml>
             <xar:mlstring>Related tutorials and documentation on Sitecontact found at #(1).</xar:mlstring>
             <xar:mlvar>#$doclink#</xar:mlvar>
