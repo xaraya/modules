@@ -87,7 +87,7 @@
             if (!empty($mailitem['footer'])) {
                 $object = DataObjectMaster::getObject(array('name' => 'mailer_footers'));
                 $footeritemid = $object->getItem(array('itemid' => $mailitem['footer']));
-                if (!empty($object->properties['body']->getValue())) $footer = $object->properties['body']->getValue();
+                $footer = $object->properties['body']->getValue();
             }
             
         // Check if there is a default redirect
