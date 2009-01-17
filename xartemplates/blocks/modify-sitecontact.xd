@@ -15,7 +15,7 @@
             </xar:foreach>
         </select>
         <xar:if condition="xarModIsAvailable('formantibot')">
-            <p class="xar-form-input-wrapper-after"><xar:mlstring>Please do not use a form with captcha turned on. FormAntiBot (catpcha) has not been setup to work with block forms at this time.</xar:mlstring></p>
+            <p class="xar-form-input-wrapper-after"><xar:mlstring>If you use captcha you probably need to override the captcha template and adjust the layout/styling</xar:mlstring></p>
         </xar:if>
 </div>
 
