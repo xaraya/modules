@@ -12,8 +12,8 @@ function pmember_subscriptionblock_init()
  */
 function pmember_subscriptionblock_info()
 {
-    return array('text_type' => 'Subscription',
-         'text_type_long' => 'Display subscription icon in block format',
+    return array('text_type' => xarML('Subscription'),
+         'text_type_long' => xarML('Display subscription icon in block format'),
          'module' => 'pmember',
          'allow_multiple' => true,
          'form_content' => false,

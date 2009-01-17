@@ -3,15 +3,12 @@
 <h2><xar:mlstring>Subscribe</xar:mlstring></h2>
 <div style="margin: auto;">
 <p>
+  <xar:ml>
     <xar:mlstring>
-        You can subscribe to more features within
+        You can subscribe to more features within  #(1) payable via PayPal. To subscribe, simply click on the button below and follow the instructions from PayPal.  When you return to this site, your membership will automatically be upgraded to that of a subscriber. The benefits of subscribing are as follows:
     </xar:mlstring>
-
-    #xarModGetVar('themes', 'SiteName', 1)#
-
-    <xar:mlstring>
-        payable via PayPal.  To subscribe, simply click on the button below and follow the instructions from PayPal.  When you return to this site, your membership will automatically be upgraded to that of a subscriber.  The benefits of subscribing are as follows:
-    </xar:mlstring>
+    <xar:mlvar>#xarModGetVar('themes', 'SiteName', 1)#</xar:mlvar>
+  </xar:ml>
 </p>
 <p>
     #xarModGetVar('pmember', 'benefits')#
@@ -19,13 +16,13 @@
 
 <xar:if condition="xarModGetVar('pmember', 'typeoffee') eq 'fee'">
 <p>
+  <xar:ml>
     <xar:mlstring>
-        This is a one time fee for subscribing of 
+        This is a one time fee for subscribing of #(1)&nbsp;#(2). No other fees will be charged to you after this transaction. 
     </xar:mlstring>
-    $#xarModGetVar('pmember', 'price')#&nbsp;#xarModGetVar('paypalsetup', 'currency_code')#
-    <xar:mlstring>
-        .  No other fees will be charged to you after this transaction.
-    </xar:mlstring>
+    <xar:mlvar>#xarModGetVar('pmember', 'price')#</xar:mlvar>
+    <xar:mlvar>#xarModGetVar('paypalsetup', 'currency_code')#</xar:mlvar>
+  </xar:ml>
 </p>
 <!-- PayNow Button -->
 <div>
@@ -54,16 +51,19 @@
         <input type="hidden" name="day_phone_a" value="#xarUserGetVar('day_phone_a')#">
         <input type="hidden" name="day_phone_b" value="#xarUserGetVar('day_phone_b')#">
         <input type="hidden" name="day_phone_c" value="#xarUserGetVar('day_phone_c')#">
-        <input type="image" src="#xarTplGetImage('buy.gif', 'paypalsetup')#" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
+        <input type="image" src="#xarTplGetImage('buy.gif', 'paypalsetup')#" border="0" name="submit" alt="#xarML("Make payments with PayPal - it's fast, free and secure!")#">
     </form>
 </div>
 <xar:else />
 <!-- Subscription Button -->
 <p>
+  <xar:ml>
     <xar:mlstring>
-        This is a reoccurring subscription fee of
+        This is a reoccurring subscription fee of #(1)&nbsp;#(2). 
     </xar:mlstring>
-    $#xarModGetVar('pmember', 'price')#&nbsp;#xarModGetVar('paypalsetup', 'currency_code')#.
+    <xar:mlvar>#xarModGetVar('pmember', 'price')#</xar:mlvar>
+    <xar:mlvar>#xarModGetVar('paypalsetup', 'currency_code')#</xar:mlvar>
+  </xar:ml>
 </p>
 <div>
     <form name="_xclick" action="https://www.paypal.com/cgi-bin/webscr" method="post">
@@ -71,7 +71,7 @@
         <input type="hidden" name="business" value="#xarModGetVar('paypalsetup', 'business')#">
         <input type="hidden" name="currency_code" value="#xarModGetVar('paypalsetup', 'currency_code')#">
         <input type="hidden" name="no_shipping" value="1">
-        <input type="image" src="#xarTplGetImage('subscribe.gif', 'paypalsetup')#" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
+        <input type="image" src="#xarTplGetImage('subscribe.gif', 'paypalsetup')#" border="0" name="submit" alt="#xarML("Make payments with PayPal - it's fast, free and secure!")#">
         <input type="hidden" name="item_name" value="Subscription to #xarModGetVar('themes', 'SiteName', 1)#">
         <input type="hidden" name="item_number" value="#xarUserGetVar('uid')#">
         <input type="hidden" name="a3" value="#xarModGetVar('pmember', 'price')#">
