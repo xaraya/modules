@@ -43,8 +43,8 @@
                 $result = $object->getItem(array('itemid' => $args['role_id']));
                 if (!$result) return 7;
                 if (!isset($object->properties['name']) ||!isset($object->properties['email'])) return 7;
-                $recipientname = $object->properties['name']->value;
-                $recipientaddress = $object->properties['email']->value;
+                $recipientname = $object->properties['name']->getValue();
+                $recipientaddress = $object->properties['email']->getValue();
         } else {
             $recipientname = isset($args['recipientname']) ? $args['recipientname'] : xarModItemVars::get('mailer','defaultrecipientname', xarMod::getID($module));
             $recipientaddress = isset($args['recipientaddress']) ? $args['recipientaddress'] : '';
@@ -52,8 +52,8 @@
         }
         // Get the recipient's locale
             $recipientlocale = isset($args['locale']) ? $args['locale'] : '';
-            if (empty($recipientlocale) && isset($recipient->properties['locale'])) $recipientlocale = $recipient->properties['locale']->value;
-            if (empty($recipientlocale) && isset($object) && ($object->name == 'roles_users')) $recipientlocale = $recipient->properties['locale']->value;
+            if (empty($recipientlocale) && isset($recipient->properties['locale'])) $recipientlocale = $recipient->properties['locale']->getValue();
+            if (empty($recipientlocale) && isset($object) && ($object->name == 'roles_users')) $recipientlocale = $recipient->properties['locale']->getValue();
             if (empty($recipientlocale)) $recipientlocale = xarModItemVars::get('mailer','defaultlocale', xarMod::getID($module));
             
         // Get the list of message aliases (translations of the same message)
@@ -87,7 +87,7 @@
             if (!empty($mailitem['footer'])) {
                 $object = DataObjectMaster::getObject(array('name' => 'mailer_footers'));
                 $footeritemid = $object->getItem(array('itemid' => $mailitem['footer']));
-                if (!empty($object->properties['body']->value)) $footer = $object->properties['body']->value;
+                if (!empty($object->properties['body']->getValue())) $footer = $object->properties['body']->getValue();
             }
             
         // Check if there is a default redirect
