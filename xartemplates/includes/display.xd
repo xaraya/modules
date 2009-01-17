@@ -20,7 +20,7 @@
             </xar:mlstring>
         </label>
         <xar:set name="value">xarModItemVars::get('mailer', 'defaultuserobject', $regid)</xar:set>
-        <xar:data-input type="object" name="defaultuserobject" value="$value" firstline="Choose a user object" />
+        <xar:data-input type="objectref" name="defaultuserobject" value="$value" firstline="Choose a user object" />
     </div>
     <!--
     <div class="xar-form-input-wrapper">
