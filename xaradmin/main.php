@@ -2,19 +2,19 @@
 /**
  * The main administration function
  *
- * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @package Xaraya 
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
+ * @link http://xaraya.com
  *
  * @subpackage SiteContact Module
- * @link http://xaraya.com/index.php/release/890.html
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @copyright (C) 2004-2009 2skies.com
+ * @link http://xarigami.com/project/sitecontact
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 
 /**
  * The main administration function
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 function sitecontact_admin_main()
 {

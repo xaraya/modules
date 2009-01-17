@@ -12,22 +12,23 @@
     <h3>
       <xar:mlstring>What is it?</xar:mlstring>
     </h3>
-        <p> <em><xar:mlstring>SiteContact
-            is a simple module that allows visitors to easily contact the Site
-            Administrator by email. The module allows you to setup one or more forms with different fields and configurations using dynamic data. It comes preinstalled with one default Contact Form.</xar:mlstring></em>
+        <p> <em><xar:mlstring>SiteContact is a simple to use module that enables a site administrator to quickly and easily setup one or more forms with
+        different fields and configurations using dynamic data. The responses can be emailed back to nominated Administrator(s).
+        The module comes preinstalled with one default Contact Form and can be custom templated per form.</xar:mlstring></em>
         </p>
-        <p><xar:mlstring>Administrators can also allow form responses to be saved to the database</xar:mlstring>
+        <p><xar:mlstring>Forms can be used with captcha for anonymous users, and form responses can also be saved in your database for review by administrators.</xar:mlstring>
         </p>
     <h2>
         <xar:mlstring>How to use it?</xar:mlstring>
     </h2>
         <p> <xar:mlstring>Install SiteContact
-            as usual from the administration Module listing. There is one table (sitecontact) currently used to hold different contact form definitions. Then, setup the module configuration in Modify Config option.
+            as usual from the Module listing. There is a table (sitecontact) currently used to hold different contact form definitions and one table for storage of form responses where configured for saving.
+            The module supports a Global Configuration applicable to all forms, and individual form configurations through the Modify Config option.
             </xar:mlstring>
         </p>
         <p>
             <xar:mlstring>Sitecontact is ready to go. You can use the default form without any further configuration.
-            If you want to configure your default contact form, or create further forms, review the following.
+            If you want to configure your default contact form, or create further forms, please review the following.
             </xar:mlstring>
         </p>
         <h3><xar:mlstring>Using and Customizing Display and Email Forms</xar:mlstring></h3>
@@ -37,23 +38,37 @@
         </xar:mlstring></li>
 
         <li><xar:mlstring>
-        You can provide a link to any form by appending the form name variable called: <strong>scform</strong> and a form name, for example 'myniceform', to the main user url eg <strong>index.php?module=sitecontact&amp;scform=myniceform</strong> or
-         with short urls <strong>index.php/sitecontact/myniceform</strong>
+            <strong>Form URLS</strong>: You can provide a link to any form by appending the form name variable called: <strong>scform</strong> and a form name, for example 'myniceform', to the main user url eg <strong>index.php?module=sitecontact&amp;scform=myniceform</strong> or
+            with short urls <strong>index.php/sitecontact/myniceform</strong>
         </xar:mlstring></li>
 
         <li><xar:mlstring>
-        All forms will use the default display template (<code>user-main.xd</code>) for display of the form on your site.
-        You can also create custom templates with the name of your form appended to the end (user-main-<code>myform</code>.xd).
-        Form templates can be overridden in your theme as per other Xaraya templates (eg create <code>user-main-myform.xt</code> in
-         your themes/yourtheme/modules/sitecontact directory), and will fall back to the default template if no others exist.</xar:mlstring></li>
-        <li><xar:mlstring>You can also create override templates that are used to send the emails to Admins of your site, or the users when they request a copy of the email. Each has both a HTML and TEXT template. The <strong>admin</strong> default html
-         and text email templates are <code>user-adminmail-html.xd</code> and <code>user-adminmail-text.xd</code> respectively.
-          The <strong>user</strong> templates are <code>user-usermail-html.xd</code> and <code>user-usermail-text.xd</code> respectively.
-         Override them in your theme.
+            <strong>Customizing entry display page/template</strong>: All forms will use the default display template (<code>user-main.xd</code>) for display of the form on your site.
+            You can also create custom templates with the name of your form appended to the end (user-main-<code>myform</code>.xd).
+            Form templates can be overridden in your theme as per other Xaraya templates (eg create <code>user-main-myform.xt</code> in
+            your themes/yourtheme/modules/sitecontact directory), and will fall back to the default template if no others exist.</xar:mlstring></li>
+      <li><xar:mlstring>
+            <strong>Customizing the form submission result page</strong>: This page is now called user-result.xt and can be overridden in the usual way in your theme.
+        </xar:mlstring></li>
+        <li><xar:mlstring>
+           <strong>Customizing email templates</strong>: You can also create override templates that are used to send the emails to Admins of your site, or the users when they request a copy of the email.
+           Each usertype has both an HTML and TEXT template. The <strong>admin</strong> default html
+           and text email templates are <code>user-adminmail-html.xd</code> and <code>user-adminmail-text.xd</code> respectively.
+            The <strong>user</strong> templates are <code>user-usermail-html.xd</code> and <code>user-usermail-text.xd</code> respectively.
+            Override theses in your theme by creating an override template with a <code>.xt</code> extension and placing them in your
+            <code>themes/YOURTHEME/modules/sitecontact </code> directory.
         </xar:mlstring>
         </li>
-        <li><xar:mlstring>You can go further and create custom email templates for html and text for each FORM. eg if your
-         form is called <strong>basic</strong> you can create an override text email template called <code>user-usermail-html_basic.xt</code></xar:mlstring>
+        <li><xar:mlstring>
+             <strong>Customizing email text or html templates</strong>:You can go further and create custom email templates for html and text for each FORM. eg if your
+             form is called <strong>basic</strong> you can create an override for the text or html email template in your theme by appending  <code>-FORMNAME.xt</code> to the existing template.
+             Please note the name of the template is created with a HYPHEN and FORMNAME appended to the respective html or text template
+             eg  <code>user-usermail-text-basic.xt</code> for the Basic default form (this changed in version 1.1.0 to HYPEN and was previously an underscore).</xar:mlstring>
+        </li>
+        <li><xar:mlstring>
+             <strong>Customizing Admin display pages</strong>: Overriding the Administration View and Display page for individually saved forms is also now available
+             using <code>admin-view-FORMNAME.xt</code> and <code>admin-display-FORMNAME.xt</code> respectively.
+            </xar:mlstring>
         </li>
         </ol>
 
@@ -67,7 +82,7 @@
         <li><xar:mlstring>
         You can create new forms that will initially have configuration settings populated with the default values that you have set in the global Modify Config option (see below).
         </xar:mlstring></li>
-
+        
         <li><xar:mlstring>
          Options available in the Global Modify Configuration can be overridden by editing the specific custom form options.
         </xar:mlstring></li>
@@ -76,7 +91,7 @@
         <h3><xar:mlstring>Modify Configuration (Global Configuration)</xar:mlstring><a name="modifyconfig" title="Modify Config">&nbsp;</a></h3>
         <p style="margin-left: 1em; margin-right: 1em; text-align:left;">
         <xar:mlstring>There are a number of variables you can set in the Modify Config
-                option. These options are preset on install but you can change them. They are the GLOBAL options for sitecontact
+                option. These options are preset on install but you can change them. They are the GLOBAL options for sitecontact 
                 and will be used by default for all *new* contact forms that you create.</xar:mlstring>
         </p>
           <ol>
@@ -109,22 +124,23 @@
             Admin notification email (user-adminmail-text.xd and user-adminmail-html.xd) and the user (user-
             usermail-text.xd and user-usermail-html.xd).
             </xar:mlstring></li>
-            <li><xar:mlstring><strong>Allow copy to sender</strong> - if checked, will allow logged in users on your site to send themselves a copy of their form data by email.</xar:mlstring></li>
-            <li><xar:mlstring><strong>Allow anonymous users to request a copy</strong> - if checked, will allow anonymous users to send themselves a copy of their form data by email, if the Allow Copy to Sender checkbox is also checked. </xar:mlstring></li>
+            <li><xar:mlstring><strong>Allow copy to sender</strong> - if checked, will allow logged in users on your site to send themselves a copy of their form data by email.</xar:mlstring></li>            
+            <li><xar:mlstring><strong>Allow anonymous users to request a copy</strong> - if checked, will allow anonymous users to send themselves a copy of their form data by email, if the Allow Copy to Sender checkbox is also checked. </xar:mlstring></li>            
             </ol>
     <h3><xar:mlstring>CC or BC to other Recipients</xar:mlstring></h3>
-    <p><xar:mlstring>You can configure your forms with a list of CC or BC recipients from the
-        configuration for each form. The CC and BC fields take a list of recipient emails and
-        optionally a name for each. These emails and names must be in the correct format. Make
-        sure you understand the <span class="xar-error">POTENTIAL PROBLEMS</span> of adding these fields to your forms on an open access website where potential spammers can gain access!
+    <p><xar:mlstring>You can configure your forms with a list of CC or BC recipients from the 
+        configuration for each form. The CC and BC fields take a list of recipient emails and 
+        optionally a name for each. These emails and names must be in the correct format. Make 
+        sure you understand the <span class="xar-error">POTENTIAL PROBLEMS</span> of adding these fields to your forms on an open access website where potential spammers can gain access! 
         It is an option best kept protected by using Site Contact permissions for trusted user groups on your site. Keep in mind the following:</xar:mlstring></p>
-    <ol>
-            <li><xar:mlstring>If you have a list of email addresses, separate each by a semicolon (;) eg <code>person1@somedomain.com;person2@anotherdomain.com</code>
+        
+    <ol>     <li><xar:mlstring>If you have a list of email addresses, separate each by a semicolon (;) eg <code>person1@somedomain.com;person2@anotherdomain.com</code>
             </xar:mlstring><br /></li>
             <li><xar:mlstring>If you have a list of email addresses and optional names, separate the name from the email addres with a comma eg<br />
             <code>person1@somedomain.com,name1;person2@anotherdomain.com,name2</code>
             </xar:mlstring></li>
         </ol>
+        <p><xar:mlstring>From the Configuration option for each Form, you can also set a special CC list setup by Admin only.</xar:mlstring></p>
         <p><xar:mlstring>NOTE: CC and BC do not work with Windows and the mail() function. They both should work with SMTP mail.</xar:mlstring></p>
     <h3><xar:mlstring>Extend Forms with Dynamic Data</xar:mlstring></h3>
     <ol>
@@ -148,58 +164,98 @@
         <xar:mlstring>Saving SiteContact Forms </xar:mlstring>
     </h3>
     <p>
-        <xar:mlstring>Sitecontact allows administrators to choose form responses to be saved to
-        their database. There is also an option available to Administrators to allow users to give
-        their permission to save data to the database. In this case, the contact forms are still
-        emailed but data will only be saved if user explicitly checks the permission checkbox.
-        Users must have comment level access to the form to have the data saved else they can only read and submit the form.</xar:mlstring>
+        <xar:mlstring>Sitecontact allows administrators to choose form responses to be saved to 
+        their database. There is also an option available to Administrators to allow users to give 
+        their permission to save data to the database. In this case, the contact forms are still 
+        emailed but data will only be saved if user explicitly checks the permission checkbox. 
+        Users must have COMMENT (Submit) level access to the form to have the data saved else they can only read and submit the form.</xar:mlstring>
     </p>
-
+ 
    <h3>
         <xar:mlstring>SiteContact Permissions</xar:mlstring>
     </h3>
-    <p><xar:mlstring>Sitecontact provides Xaraya permissions to manage user access to your forms.
+    <p><xar:mlstring>Sitecontact provides Xaraya permissions to manage user access to your forms. 
     You can provide access to users for all forms, or for specific form instances.</xar:mlstring></p>
    <ul>
     <li><xar:mlstring>Read Level Access - allows filling out a form and emailing it.</xar:mlstring></li>
-    <li><xar:mlstring>Comment Level Access - allows filling out a form and emailing it and also saving the form to the database, if you have activated this option for this form.</xar:mlstring></li>
-    <li><xar:mlstring>Edit Level Access - for All forms, allows editing and modification of form configuration.</xar:mlstring></li>
-    <li><xar:mlstring>Admin Level Access - for All forms, allows all administration functions for your forms.</xar:mlstring></li>
+    <li><xar:mlstring>Comment Level Access - allows filling out a form and emailing it and also saving the form to the database, if you have activated this option for this form.</xar:mlstring></li> 
+    <li><xar:mlstring>Edit Level Access - for All forms, allows editing and modification of form configuration.</xar:mlstring></li> 
+    <li><xar:mlstring>Admin Level Access - for All forms, allows all administration functions for your forms.</xar:mlstring></li> 
     </ul>
-
+    <h3>
+        <xar:mlstring>Processing forms from other modules, and preprocessing data</xar:mlstring>
+    </h3>
+    <p><xar:mlstring>With the use of the respond GUI and API functions you can now provide your own forms in other modules,
+       and submit those forms to the sitecontact respond.php file for processing. As part of this, you may also wish to add some
+       preprocessing of data that can be performed by creating your own function and adding it to the workflowapi directory in the module.
+       Functions should be named after the custom form name (eg myform.php) and the file will be included for processing in respond.php prior
+       to any saving of the data, and emailing of responses.</xar:mlstring></p>
     <h3>
         <xar:mlstring>Extra Security Features</xar:mlstring>
     </h3>
-    <p><xar:mlstring>Starting with Sitecontact version 1.0.0 there is the ability to add anti-bot
-        security to your form by installing the FormAntiBot module. This provides what is also commonly
-        known as CAPTCHA as a configured option for each form.</xar:mlstring></p>
+    <ol>
+    <li><p><xar:mlstring><strong>CAPTCHA</strong>.There is the ability to add anti-bot
+        security to your form by installing the FormAntiBot module. These provide what is also commonly
+        known as CAPTCHA as a configured option for each form. Check the Use Captcha checkbox when creating or editing a form to use Captcha.</xar:mlstring></p>
     <p><xar:mlstring>Some drawbacks of using CAPTCHA with the current Sitecontact module are loss of accessibility for sight impared,
-    and, loss of form data on resubmits for large forms due to a mistyped captcha code. The default fields in a form will always be repopulated,
-    but currently any extra dynamic data data is lost on resubmission and needs to be reentered.</xar:mlstring></p>
+    and, loss of form data on resubmits for large forms due to a mistyped captcha code. The default fields in a form will always be repopulated.</xar:mlstring></p>
+    <br /></li>
+    <li><xar:mlstring><strong>Email Obfuscation</strong>. This special Sitecontact function allows you to disguise emails you have on your site,
+    so that they are not easily harvested for spamming purposes from your website. See the obfuemail.php function in the xaruserapi directory for more information on usage
+    or visit the Sitecontact Project Home page at xarigami.com for documentation. This obfuscation is also integrated into the Email dynamicdata property validation in our Xarigami Core.
+    </xar:mlstring></li>
+    </ol>
     <h2>
         <xar:mlstring>Included Blocks</xar:mlstring>
     </h2>
     <ul>
        <li><xar:mlstring><strong>Sitecontact Block</strong>: allows choice of one of the active forms for display in a block on your site.
        The block requires at least Read level (ReadBlock) privileges for viewing, and is privilege aware using Block privileges.
-       This means you can selectively apply privileges for the given block by creating a Blocks module privilege on the Sitecontact block.</xar:mlstring></li>
+       This means you can selectively apply privileges for the given block by creating a Blocks module privilege on the Sitecontact block.</xar:mlstring><br /></li>
+       <li><xar:mlstring><strong>Waiting Content Block functionality</strong>: This is strictly not a sitecontact block but Sitecontact provides the code for
+           the Base Waiting Content block so you can use it to see latest submitted responses. To use it:</xar:mlstring>
+          <ol>
+              <li><xar:mlstring>Create a Base module 'waiting content block' for your site</xar:mlstring></li>
+              <li><xar:mlstring>Go to Modules -&gt; Configure hooks, and click on Sitecontact</xar:mlstring></li>
+            <li><xar:mlstring>Find Base module and click on the radio button to allow all sitecontact hooks</xar:mlstring></li>
+            <li><xar:mlstring>If you want to activate waiting content for SOME sitecontact forms ONLY, then you will also
+                need to find Sitecontact in this list and check "Enable sitecontact functionality for SOME itemtypes in sitecontact".
+                Then check the individual form checkboxes. For more information please check the Resource page for Sitecontact at the Xarigami website.</xar:mlstring></li>
+          </ol>
+       </li>
     </ul>
     <h2>
         <xar:mlstring>Further Information</xar:mlstring>
     </h2>
-    <p>
-        <xar:mlstring>Further information on the Sitecontact module can be found at</xar:mlstring>
-    </p>
-       <ul>
-              <li><xar:mlstring>Sitecontact Extension page at</xar:mlstring> <a title="#xarML('Sitecontact Module - Xaraya Extension 890')#" href="http://www.xaraya.com/index.php/release/890.html">Xaraya Extension and Releases</a>.
-              <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
-              </li>
-              <li><xar:mlstring>Related tutorials and documentation on the Sitecontact found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/sitecontact/" title="#xarML('Related documentation on Sitecontact')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
-              </li>
-         </ul>
-         <p class="xar-sub">
-             <strong>&nbsp;<xar:mlstring>Sitecontact Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Doc Version</xar:mlstring> 1.6.4&nbsp; 2007-12-06
-         </p>
-      </div>
+  <p>
+    <xar:mlstring>Further information on the Sitecontact module can be found at</xar:mlstring>
+  </p>
+  <ul>
+    <xar:set name="sclink">'<a title="'.xarML('Sitecontact Module - Xaraya Extension 890').'" href="http://xarigami.com/project/sitecontact">'.xarML('Xarigami Projects').'</a>'</xar:set>
+    <li>
+        <xar:ml>
+            <xar:mlstring>Sitecontact Extension page at #(1)</xar:mlstring>
+            <xar:mlvar>#$sclink#</xar:mlvar>
+        </xar:ml>
+    </li>
+    <li>
+        <xar:set name="doclink">'<a href="http://xarigami.com/project/sitecontact?page=resources" title="'.xarML('Related documentation on Formcaptcha').'">'.xarML('Xarigami Documentation').'</a>'</xar:set>
+        <xar:ml>
+            <xar:mlstring>Related tutorials and documentation on Sitecontact found at #(1).</xar:mlstring>
+            <xar:mlvar>#$doclink#</xar:mlvar>
+        </xar:ml>
+    </li>
+    <li>
+        <xar:set name="tracklink">'<a href="http://xarigami.com/contrails/displayproject/sicon" title="'.xarML('Sitecontact project tracker').'">'.xarML('Sitecontact project tracker').'</a>'</xar:set>
+        <xar:ml>
+            <xar:mlstring>Please log bugs and feature requests at #(1).</xar:mlstring> 
+            <xar:mlvar>#$tracklink#</xar:mlvar>
+        </xar:ml>
+    </li>
+  </ul>
+  <p class="xar-sub">
+    <strong>&#160;<xar:mlstring>Sitecontact Module Overview</xar:mlstring></strong><br />&#160;<xar:mlstring>Overview Revision</xar:mlstring> 1.5.1&#160;2009-01-17
+  </p>
+</div>
 
 

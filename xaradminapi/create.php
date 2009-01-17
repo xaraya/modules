@@ -2,14 +2,14 @@
 /**
  * Create a response record
  *
- * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @package Xaraya
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
+ * @link http://xaraya.com
  *
  * @subpackage SiteContact Module
- * @link http://xaraya.com/index.php/release/890.html
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @copyright (C) 2004-2008 2skies.com
+ * @link http://xarigami.com/project/sitecontact
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 
 /**
@@ -61,6 +61,21 @@ function sitecontact_adminapi_create($args)
     // Default publication date is now
     if (!isset($responsetime) || empty($responsetime)) {
         $responsetime = time();
+    }
+    
+    /* get the Dynamic Object defined for this module (and itemtype, if relevant) */
+    $object = xarModAPIFunc('dynamicdata','user','getobject',
+                             array('module' => 'sitecontact',
+                                   'itemtype' => $scid));
+    if (!isset($object)) return;  /* throw back */
+    $objectid=$object->objectid;      
+
+    /*we just want a copy of data - don't need to save it in a table yet */
+    if (isset($object) && !empty($object->objectid)) {
+        /* check the input values for this object and do ....what here? */
+        $isvalid = $object->checkInput();         
+        // $dditems =& $object->getProperties();
+        $dditems = $object->properties;
     }
 
     // Get database setup

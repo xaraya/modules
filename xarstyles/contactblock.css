@@ -1,19 +1,55 @@
+
+
 .contactblock, .contactblock input, .contactblock textarea, .contactblock select {
-    font-size:11px;
+
+    font-size:1em;
+    width: 12em;
+
 }
 
-.xar-blockform-label-short {
+.contactblock form fieldset {
+    width: 14em;
+}
+
+div.contactblock .xar-blockform-label-short {
+
     width: 3.75em;
+
     display: block;
+
     float: left;
+
+    font-size: .9em;
+
 }
-.xar-blockform-input-wrapper-after {
+
+div.contactblock .xar-blockform-input-wrapper-after {
+
     width: auto;
+
     padding-left: 1em;
+
     margin-bottom: 4px;
+
     clear: both;
+    font-size:smaller;
+
 }
-.xar-blockform-input-wrapper {
+
+div.contactblock .xar-blockform-input-wrapper, div.contactblock .xar-blockform-input-wrapper input,
+div.contactblock .xar-blockform-input-wrapper select
+ {
+
     margin-bottom: 4px;
+
     overflow:auto;
+}
+
+div.contactblock .xar-blockform-input-wrapper input,
+div.contactblock .xar-blockform-input-wrapper select
+ {
+
+    font-size: 0.85em;
+    height: auto;
+
 }

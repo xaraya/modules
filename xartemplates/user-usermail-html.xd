@@ -1,34 +1,50 @@
 <p>#$notetouser#</p>
+<hr />
 <xar:mlstring>You submitted the following information:</xar:mlstring>
-<p>
-    <xar:mlstring>Name:</xar:mlstring> #$username#
-</p>
-<p>
-    <xar:mlstring>Email:</xar:mlstring> #$useremail#
-</p>
-<p>
-    <xar:mlstring>Organization:</xar:mlstring> #$company#
-</p>
-<p>
-    <xar:mlstring>Subject:</xar:mlstring> #$requesttext#
-</p>
-<p>
-    <xar:mlstring>Comments:</xar:mlstring> #$usermessage#
-</p>
-
- <xar:if condition="isset($propdata) and count($propdata) gt 0">
-    <xar:foreach in="$propdata" key="$name">
-<p>
-    #$propdata[$name]['label']#:  #$propdata[$name]['value']#
-</p>
+<xar:if condition="!empty($username)">
+    <p>
+        <xar:mlstring>Name:</xar:mlstring>&#160; #$username#
+    </p>
+</xar:if>
+<xar:if condition="!empty($useremail)">
+    <p>
+        <xar:mlstring>Email:</xar:mlstring>&#160; #$useremail#
+    </p>
+</xar:if>
+<xar:if condition="!empty($company)">
+    <p>
+        <xar:mlstring>Organization:</xar:mlstring>&#160; #$company#
+    </p>
+</xar:if>
+<xar:if condition="!empty($requesttext)">
+    <p>
+        <xar:mlstring>Subject:</xar:mlstring>&#160; #$requesttext#
+    </p>
+</xar:if>
+<xar:if condition="!empty($usermessage)">
+    <p>
+        <xar:mlstring>Comments:</xar:mlstring>
+    </p>
+    <p>
+        #$usermessage#
+    </p>
+</xar:if>
+<xar:if condition="isset($properties) and count($properties) gt 0">
+    <xar:foreach in="$properties" key="$name">
+        <p>
+            <xar:data-label property="$properties[$name]" />:&#160;<xar:data-output property="$properties[$name]" />
+        </p>
     </xar:foreach>
 </xar:if>
 
-
 <hr />
 <p>
-    #$sitename# <xar:mlstring>at</xar:mlstring> #$siteurl#
+    #$sitename# &#160;<xar:mlstring>at</xar:mlstring>&#160; #$siteurl#
 </p>
+<p>
+    <xar:mlstring>Form: </xar:mlstring> #$sctypedesc#
+</p>
+
 <p>
     #$todaydate#
 </p>

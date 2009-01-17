@@ -2,14 +2,14 @@
 /**
  * Utility function to retrieve the list of item types
  *
-* @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @package Xaraya
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
+ * @link http://xaraya.com
  *
  * @subpackage SiteContact Module
- * @link http://xaraya.com/index.php/release/890.html
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @copyright (C) 2004-2008 2skies.com
+ * @link http://xarigami.com/project/sitecontact
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 /**
  * Utility function to retrieve the list of item types of this module (if any)
@@ -30,6 +30,7 @@ function sitecontact_userapi_getitemtypes($args)
                                 'url'   => xarModURL('sitecontact','user','view',array('scid' => $contacttype['scid']))
                                );
    }
+
    return $itemtypes;
 }
 ?>

@@ -2,14 +2,14 @@
 /**
  * Encode short urls
  *
- * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @package Xaraya
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
+ * @link http://xaraya.com
  *
  * @subpackage SiteContact Module
- * @link http://xaraya.com/index.php/release/890.html
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @copyright (C) 2004-2009 2skies.com
+ * @link http://xarigami.com/project/sitecontact
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 
 /**
@@ -17,8 +17,7 @@
  *
  * @author Jo Dalle Nogare
  * @param  $args the function and arguments passed to xarModURL
- * @returns string
- * @return path to be added to index.php for a short URL, or empty if failed
+ * @return string path to be added to index.php for a short URL, or empty if failed
  */
 function sitecontact_userapi_encode_shorturl($args)
 {
@@ -29,7 +28,6 @@ function sitecontact_userapi_encode_shorturl($args)
     if (!isset($func)) {
         return;
     }
-
     $aliasisset = xarModGetVar('sitecontact', 'useModuleAlias');
     $aliasname = xarModGetVar('sitecontact','aliasname');
     if (($aliasisset) && isset($aliasname)) {
@@ -69,26 +67,25 @@ function sitecontact_userapi_encode_shorturl($args)
                $path = '/' . $module . '/' . $scform;
             }
         }
-    } elseif ($func == 'contactus') {
+    } elseif ($func == 'contactus' || $func == 'respond') {
           if (($module == $alias) && ($usealias)){
-              $path = '/' . $aliasname . '/contactus';
+              $path = '/' . $aliasname . '/respond';
 
               if (isset($message)&& is_numeric($message) && isset($scid) && is_numeric($scid)) {
-                  $path = '/' .$aliasname  . '/contactus/' . $message.'/'. $scid;
+                  $path = '/' .$aliasname  . '/respond/' . $message.'/'. $scid;
               } elseif (isset($message) && is_numeric($message) && !isset($scid)) {
-                     $path = '/' .$aliasname  . '/contactus/' .$message;
+                     $path = '/' .$aliasname  . '/respond/' .$message;
               }
           }else {
            if (isset($message) && is_numeric($message) && isset($scid) && is_numeric($scid)) {
-                  $path = '/' .$module  . '/contactus/' .$message.'/'. $scid;
+                  $path = '/' .$module  . '/respond/' .$message.'/'. $scid;
               } elseif (!isset($message) && isset($scid)){
-                    $path = '/' .$module  . '/contactus/' .$scform;
+                    $path = '/' .$module  . '/respond/' .$scform;
               } elseif (isset($message) && !isset($scid)) {
-                     $path = '/' .$module  . '/contactus/'. $message;
+                     $path = '/' .$module  . '/respond/'. $message;
               }
           }
-    }
-
+    } 
     /* add some other module arguments as standard URL parameters */
     if (!empty($path)) {
         $pathExtras = array();

@@ -1,22 +1,30 @@
-<xar:mlstring>Submitted By:</xar:mlstring> #$username#
+<xar:if condition="!empty($username)">
+    <xar:mlstring>Name: </xar:mlstring> #$username#
+</xar:if>
 
 -------------------------------------------------------------
 
-<xar:mlstring>Email:</xar:mlstring> #$useremail#
+<xar:if condition="!empty($useremail)">
+    <xar:mlstring>Email: </xar:mlstring> #$useremail#
+</xar:if>
 
-<xar:mlstring>Organization:</xar:mlstring> #$company#
+<xar:if condition="!empty($company)">
+    <xar:mlstring>Organization: </xar:mlstring> #$company#
+</xar:if>
 
-<xar:mlstring>Subject:</xar:mlstring> #$requesttext#
+<xar:if condition="!empty($requesttext)">
+    <xar:mlstring>Subject: </xar:mlstring> #$requesttext#
+</xar:if>
 
-<xar:mlstring>Comments:</xar:mlstring>
+<xar:if condition="!empty($usermessage)">
+<xar:mlstring>Comments: </xar:mlstring>
 
 #$usermessage#
+</xar:if>
 
- <xar:if condition="isset($propdata) and count($propdata) gt 0">
-    <xar:foreach in="$propdata" key="$name">
-
-#$propdata[$name]['label']#: #$propdata[$name]['value']#
-
+<xar:if condition="isset($properties) and count($properties) gt 0">
+    <xar:foreach in="$properties" key="$name">
+            <xar:data-label property="$properties[$name]" />: <xar:data-output property="$properties[$name]" />
     </xar:foreach>
 </xar:if>
 
@@ -24,13 +32,16 @@
 
 <xar:mlstring>User information:</xar:mlstring>
 
-<xar:mlstring>Sender:</xar:mlstring> #$useripaddress#
+<xar:mlstring>Sender:  </xar:mlstring> #$useripaddress#
 
-<xar:mlstring>Referer:</xar:mlstring> #$userreferer#
+<xar:mlstring>Referer: </xar:mlstring> #$userreferer#
+
+<xar:mlstring>Form:    </xar:mlstring> #$sctypedesc#
+
 
 -------------------------------------------------------------
 
-#$sitename# <xar:mlstring>at</xar:mlstring> #$siteurl#
+#$sitename# <xar:mlstring> at </xar:mlstring> #$siteurl#
 
 #$todaydate#
 

@@ -2,14 +2,14 @@
 /**
  * Getall responses
  *
- * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @package Xaraya
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
+ * @link http://xaraya.com
  *
  * @subpackage SiteContact Module
- * @link http://xaraya.com/index.php/release/890.html
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @copyright (C) 2004-2009 2skies.com
+ * @link http://xarigami.com/project/sitecontact
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 /**
  * Get all response items
@@ -94,7 +94,11 @@ function sitecontact_userapi_getall($args)
     if (!empty($scrid)) {
         $result =& $dbconn->Execute($query,$bindvars);
     } else {
-        $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1,$bindvars );
+        if ($numitems > 0) {
+            $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1,$bindvars );
+        } else {
+            $result =& $dbconn->Execute($query, $bindvars );        
+        }
     }
 
     if ($result->EOF) {

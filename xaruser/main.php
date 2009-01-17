@@ -1,17 +1,16 @@
 <?php
 /**
- * Main user function
+ * Standard main user function
  *
- * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @package Xaraya 
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
+ * @link http://xaraya.com
  *
  * @subpackage SiteContact Module
- * @link http://xaraya.com/index.php/release/890.html
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @copyright (C) 2004-2009 2skies.com
+ * @link http://xarigami.com/project/sitecontact
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
-
 /**
  * Main user function
  * This function is the default function, and is called whenever the module is
@@ -19,46 +18,50 @@
  *
  * @author Jo Dalle Nogare
  */
+ 
 function sitecontact_user_main($args)
 {
     extract($args);
 
     $defaultformid=(int)xarModGetVar('sitecontact','defaultform');
-
-    if(!xarVarFetch('company',    'str:1:', $company,    NULL, XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if(!xarVarFetch('message',    'isset',  $message,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('antibotinvalid','int:0:1',  $antibotinvalid, NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('requesttext','isset',  $requesttext,    NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('usermessage','isset',  $usermessage,    NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('sctypename', 'str:0:', $sctypename, NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('scform',     'str:0:', $scform,     NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('botreset',   'bool',   $botreset,     false, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('scid',       'int:1:', $scid,       $defaultformid, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('userreferer', 'str:1:', $userreferer, '', XARVAR_NOT_REQUIRED)) return;
-
+   
+    if(!xarVarFetch('company',       'str:1:',  $company,        NULL,    XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+    if(!xarVarFetch('message',       'isset',   $message,        NULL,    XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('antibotinvalid','int:0:1', $antibotinvalid, NULL,    XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('requesttext',   'isset',   $requesttext,    NULL,    XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('usermessage',   'isset',   $usermessage,    NULL,    XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('sctypename',    'pre:trim:passthru:str:0:', $sctypename, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('scform',        'str:0:',  $scform,         NULL,    XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('botreset',      'bool',    $botreset,       false,   XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('scid',          'int:1:',  $scid,           $defaultformid, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('userreferer',  'str:1:',  $userreferer,    '',      XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('casmsg',       'str:1',   $casmsg,         '',      XARVAR_NOT_REQUIRED)) {return;} //formcaptcha
+    if (!xarVarFetch('submitted',    'int:0:1', $submitted,      0,       XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('customcontact', 'str:0:', $customcontact,  '',    XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     $formdata=array();
-    if (isset($sctypename) && trim($sctypename) !=''){
-        $sctypename=trim($sctypename);
-    }
-    if (isset($scform) && (trim($scform) !='')) { //provide alternate entry name
-        $sctypename=trim($scform);
-    }
+
+    if (isset($scform) && !empty($scform)) $sctypename = $scform; //provide alternate entry name
 
     //Have we got a form that is available and active?
     if (isset($sctypename) && trim($sctypename) !='') {
-        $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('sctypename'=> $sctypename));
+       $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('sctypename'=> $sctypename));
     }elseif (isset($scid) && is_int($scid)) {
-        $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $scid));
+       $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $scid));
     } else {
         $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $defaultformid));
     }
 
     //Have we got an active form
-    if (!is_array($formdata)) { //exists but not active
-        //fallback to default form again
-        $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $defaultformid));
+    if (!is_array($formdata) || empty($formdata)) { //exists but not active
+      //fallback to default form again
+      $formdata = xarModAPIFunc('sitecontact','user','getcontacttypes',array('scid' => $defaultformid));
     }
-    $formdata=$formdata[0];
+    if (!is_array($formdata) || empty($formdata)) 
+    {
+        return; //default form
+    } else {
+        $formdata=$formdata[0];
+    }
 
     if ($formdata['scactive'] !=1) { //form but not active
         $msg = xarML('The form requested is not available');
@@ -66,23 +69,28 @@ function sitecontact_user_main($args)
         return;
     }
 
+    $scid = $formdata['scid'];
+    //now we have a form id - check the user has access
+    if (!xarSecurityCheck('ViewSiteContact',0,'ContactForm',"$scid")) {
+    $msg = xarML('You do not have permission to access the form you requested.');
+        xarErrorSet(XAR_USER_EXCEPTION, 'NO_PRIVILEGES', new DefaultUserException($msg));
+        return;
+    }
     // Set up defaults returned from any invalid captcha input
-    // TODO - set this up for DD fields as well
+
     $data['company'] = $company;
     $data['usermessage'] = $usermessage;
     $data['antibotinvalid'] =$antibotinvalid;
-    /* Security Check */
-    if(!xarSecurityCheck('ViewSiteContact')) return;
-
+    //formcaptcha
+    $data['casmsg']= isset($casmsg)?$casmsg:'';
     /*  Generate a onetime authorisation code for this operation */
     $data['authid'] = xarSecGenAuthKey('sitecontact');
-
     if (!empty($invalid)) {
         $data['invalid']=$invalid;
     }
 
     $data['submit'] = xarML('Submit');
-
+    //get the options for the form
     if (isset($formdata['soptions'])) {
         $soptions=unserialize($formdata['soptions']);
         if (is_array($soptions)) {
@@ -99,7 +107,8 @@ function sitecontact_user_main($args)
     if (!isset($data['savedata']))$data['savedata']=xarModGetVar('sitecontact','savedata')?xarModGetVar('sitecontact','savedata'):0;
     if (!isset($data['permissioncheck']))$data['permissioncheck']=xarModGetVar('sitecontact','permissioncheck');
     if (!isset($data['termslink']))$data['termslink']=xarModGetVar('sitecontact','termslink');
-
+    if (!isset($data['ccrecipients']))$data['ccrecipients']='';
+    if (!isset($data['bccrecipients']))$data['bccrecipients']='';
     $customtext   = $formdata['customtext'];
     $customtitle  = $formdata['customtitle'];
     $usehtmlemail = $formdata['usehtmlemail'];
@@ -115,20 +124,13 @@ function sitecontact_user_main($args)
     $optionset  = array();
     $selectitem = array();
     $optionset  = explode(',',$optiontext);
-    $data['optionset']=$optionset;
+    $data['optionset'] = $optionset;
     $optionitems = array();
     foreach ($optionset as $optionitem) {
       $optionitems[] = explode(';',$optionitem);
     }
     $data['optionitems'] = $optionitems;
-    /*  The IP capturing has now been moved to contactus function  with a call to the getcurrent ip function
-                This could be removed at some time along with the hidden field in the form
-          */
-    $HTTP_REMOTE_ADDR = xarServerGetVar('REMOTE_ADDR');
-    if (empty($HTTP_REMOTE_ADDR)) {
-        $HTTP_REMOTE_ADDR= isset($_SERVER['$REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
-    }
-    $data['useripaddress'] = $HTTP_REMOTE_ADDR;
+
     if ($botreset== false) { //we don't want to set referer to our own form on an anti-bot return, keep the original referer
         $HTTP_REFERER = xarServerGetVar('HTTP_REFERER');
         if (empty($HTTP_REFERER)) {
@@ -137,43 +139,40 @@ function sitecontact_user_main($args)
         $data['userreferer']=$HTTP_REFERER;
         if (isset($data['userreferer']) && !empty($data['userreferer'])) {
             $data['userreferer']=xarVarPrepForDisplay($data['userreferer']);
-        }
+        }    
     } else {
         $data['userreferer']=$userreferer;
     }
+
     $setmail='';
-    if (isset($customtitle)){
-        xarTplSetPageTitle(xarVarPrepForDisplay(xarML($customtitle)));
-    } else {
-         xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Site Contact')));
-    }
-    if (!isset($requesttext) ) {
-        $requesttext='';
-    }
-    $data['requesttext']=$requesttext;
+    $custitle = isset($customtitle)?xarML($customtitle):xarML('Site Contact');
+    xarTplSetPageTitle(xarVarPrepForDisplay($custitle));
+    
+    $data['requesttext']=isset($requesttext)?$requesttext: '';
 
-    $properties = null;
-        $withupload = (int) false;
-            if (xarModIsAvailable('dynamicdata')) {
-                // get the Dynamic Object defined for this module
-                $object =  xarModAPIFunc('dynamicdata','user','getobject',
-                array('module' =>'sitecontact',
+    $properties = array();
+    $withupload = (int) false;
+    if (xarModIsHooked('dynamicdata','sitecontact', $formdata['scid'])) {
+            // get the Dynamic Object defined for this module
+        $object =  xarModAPIFunc('dynamicdata','user','getobject',
+                array('moduleid' =>xarModGetIdFromName('sitecontact'),
                       'itemtype'=>$formdata['scid']));
+        if (isset($object) && !empty($object->objectid)) {
+            $properties = &$object->getProperties();
+        }
 
-                if (isset($object) && !empty($object->objectid)) {
-                    $properties =& $object->getProperties();
-                }
-                if (is_array($properties)) {
-                    foreach ($properties as $key => $ddprop) {
-                        if (isset($ddprop->upload) && $ddprop->upload == true) {
-                            $withupload = (int) true;
-                        }
-                    }
-                }
+        if (is_array($properties)) {
+             //get the dd upload value and also name/value pairs
+            foreach ($properties as $name => $ddprop) {
+                 if (isset($ddprop->upload) && $ddprop->upload == true) {
+                     $withupload = (int) true;
+                 }
             }
-    unset($properties);
+        }
+    }
+
     $data['withupload']=$withupload;
-    //$webconfirmtext = trim(xarModGetVar('sitecontact','webconfirmtext'));
+
     $webconfirmtext = trim($formdata['webconfirmtext']);
     if (empty($webconfirmtext) || !isset($webconfirmtext)) {
 
@@ -190,7 +189,9 @@ function sitecontact_user_main($args)
         $data['message']='';
         $data['messagetxt'] = '';
     }
-
+    //initialize an array used for error holding later
+    $data['invalid']=array();
+    
     $data['scid']=$formdata['scid'];
     $data['sctypename']=$formdata['sctypename'];
     $data['permissioncheck']=$formdata['permissioncheck'];
@@ -198,22 +199,40 @@ function sitecontact_user_main($args)
     $data['permission']=false; //set it to false and require user to check
     $data['termslink']=trim($formdata['termslink']);
     if (!empty($data['sctypename'])){
-        $template = 'main-' . $data['sctypename'];
-      } else {
-        $template =  'main';
+        $template =  $data['sctypename'];
+    } else {
+        $template =  '';
     }
     $data['scform']=$data['sctypename'];
+    //include custom functions for preprocessing data
 
+
+    $customfunc = 'modules/sitecontact/xarworkflowapi/'.$data['sctypename'].'.php';
+
+    if (file_exists($customfunc)) {
+         include_once($customfunc);
+    }
+
+    //backward compatibility
     if (xarModIsAvailable('formantibot')) {
         $data['AntiBot_Available'] = TRUE;
     }
 
-    $templatedata = xarTplModule('sitecontact', 'user', $template, $data);
-
-    if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
-        xarErrorHandled();
-        $templatedata = xarTplModule('sitecontact', 'user', 'main', $data);
+   if (!empty($formdata['scid'])) {
+        // preset some variables for hook modules
+        $item['module'] = 'sitecontact';
+        $item['itemid'] = 0;
+        $item['itemtype'] = $formdata['scid'];
+        //$item['antibotinvalid'] = isset($antibotinvalid)?$antibotinvalid:0;
+        $hooks = xarModCallHooks('item','new','',$item);
     }
+    if (empty($hooks)) {
+        $hooks = '';
+    }
+    $data['hooks'] = $hooks;
+
+
+    $templatedata = xarTplModule('sitecontact', 'user', 'main', $data, $template);
 
    return $templatedata;
 }

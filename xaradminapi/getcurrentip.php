@@ -2,14 +2,14 @@
 /**
  * Get an IP address from current user
  *
- * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @package Xaraya
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
+ * @link http://xaraya.com
  *
  * @subpackage SiteContact Module
- * @link http://xaraya.com/index.php/release/890.html
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @copyright (C) 2004-2008 2skies.com
+ * @link http://xarigami.com/project/sitecontact
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 
 /**
@@ -41,7 +41,7 @@ function sitecontact_adminapi_getcurrentip()
     
     /* Gets the proxy ip if it exists and  sent */
 
-    if (!empty($x_fowarded_for)){
+    if (!empty($x_forwarded_for)){
         $proxyip = $x_forwarded_for;
     } elseif (!empty($x_forwarded)) {
         $proxyip = $x_forwarded;

@@ -2,20 +2,20 @@
 /**
  * Update configuration settings
  *
- * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @package Xaraya
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
+ * @link http://xaraya.com
  *
  * @subpackage SiteContact Module
- * @link http://xaraya.com/index.php/release/890.html
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @copyright (C) 2004-2008 2skies.com
+ * @link http://xarigami.com/project/sitecontact
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 
 /**
  * This is a standard function to update the configuration parameters of the
  * module given the information passed back by the modification form
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 function sitecontact_admin_updateconfig()
 {
@@ -45,8 +45,16 @@ function sitecontact_admin_updateconfig()
     if (!xarVarFetch('allowbcc', 'checkbox', $allowbcc, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('allowanoncopy', 'checkbox', $allowanoncopy, false, XARVAR_NOT_REQUIRED)) return;
 
+    if (!xarVarFetch('adminccs', 'checkbox', $adminccs, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('admincclist', 'str:0:', $admincclist, '', XARVAR_NOT_REQUIRED)) return;
+
     $allowanoncopy = ($allowcopy && $allowanoncopy)? true :false; //only allow anonymous if allow copy for registered too
-    $soptions=array('allowcc'=>$allowcc,'allowbcc'=>$allowbcc,'allowanoncopy'=>$allowanoncopy);
+    $soptions=array('allowcc'=>$allowcc,
+                    'allowbcc'=>$allowbcc,
+                    'allowanoncopy'=>$allowanoncopy,
+                    'adminccs'=>$adminccs,
+                    'admincclist' => $admincclist);
+
     $soptions=serialize($soptions);
     xarModSetVar('sitecontact', 'customtext', $customtext);
     xarModSetVar('sitecontact', 'customtitle', $customtitle);
@@ -95,17 +103,30 @@ function sitecontact_admin_updateconfig()
     $hasalias= xarModGetAlias($currentalias);
     $useAliasName= xarModGetVar('sitecontact','useModuleAlias');
 
-    if (($useAliasName==1) && !empty($newalias)){
-        /* we want to use an aliasname */
-        /* First check for old alias and delete it */
-        if (isset($hasalias) && ($hasalias =='sitecontact')){
-            xarModDelAlias($currentalias,'sitecontact');
-        }
-        /* now set the new alias if it's a new one */
-          xarModSetAlias($newalias,'sitecontact');
+    if ($useAliasName && !empty($newalias)) {
+         if ($aliasname != $currentalias)
+         /* First check for old alias and delete it */
+            if (isset($hasalias) && ($hasalias =='sitecontact')){
+                xarModDelAlias($currentalias,'sitecontact');
+            }
+            /* now set the new alias if it's a new one */
+            $newalias = xarModSetAlias($newalias,'sitecontact');
+            if (!$newalias) { //name already taken so unset
+                 xarModSetVar('sitecontact', 'aliasname', '');
+                 xarModSetVar('sitecontact', 'useModuleAlias', false);
+            } else { //it's ok to set the new alias name
+                xarModSetVar('sitecontact', 'aliasname', $aliasname);
+                xarModSetVar('sitecontact', 'useModuleAlias', $modulealias);
+            }
+    } else {
+       //remove any existing alias and set the vars to none and false
+            if (isset($hasalias) && ($hasalias =='sitecontact')){
+                xarModDelAlias($currentalias,'sitecontact');
+            }
+            xarModSetVar('sitecontact', 'aliasname', '');
+            xarModSetVar('sitecontact', 'useModuleAlias', false);
     }
-    /* now set the alias modvar */
-    xarModSetVar('sitecontact', 'aliasname', $newalias);
+
 
     xarModCallHooks('module','updateconfig','sitecontact',
               array('module' => 'sitecontact'));

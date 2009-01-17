@@ -24,63 +24,60 @@
                 <span class="xar-form-label">   
                     <xar:mlstring>User name:</xar:mlstring>
                 </span>
-                #xarVarPrepForDisplay($username)#
+                <xar:data-output type="textbox" value="$username" />
             </div>
             <div class="xar-form-input-wrapper">
                 <span class="xar-form-label">   
                     <xar:mlstring>Email:</xar:mlstring>
                 </span>
-                #$useremail#
+                <xar:data-output type="email" value="$useremail" />
             </div>
             <div class="xar-form-input-wrapper">
                 <span class="xar-form-label">   
                     <xar:mlstring>Subject:</xar:mlstring>
                 </span>
-                #xarVarPrepForDisplay($requesttext)#
+                 <xar:data-output type="textbox" value="$requesttext" />
             </div>
             <div class="xar-form-input-wrapper">
                 <span class="xar-form-label">   
                     <xar:mlstring>Organization:</xar:mlstring>
                 </span>
-                #xarVarPrepForDisplay($company)#
+                <xar:data-output type="textbox" value="$company" />
             </div>           
             <div class="xar-form-input-wrapper">
                 <span class="xar-form-label">   
                     <xar:mlstring>Message:</xar:mlstring>
                 </span>
-                <span class="xar-form-container">#$usermessage#</span>
+                <xar:if condition="FALSE eq $usehtmlemail">
+                    <xar:set name="$usermessage">nl2br($usermessage)</xar:set>
+                </xar:if>
+                <div class="xar-form-container-after">
+                    <xar:data-output type="textbox" value="$usermessage" />
+                 </div>
             </div>           
             <div class="xar-form-input-wrapper">
                 <span class="xar-form-label">   
                     <xar:mlstring>User IP:</xar:mlstring>
                 </span>
-                #$useripaddress#
+                <xar:data-output type="textbox" value="$useripaddress" />
             </div>      
             <div class="xar-form-input-wrapper">
                 <span class="xar-form-label">   
                    <xar:mlstring>Referer:</xar:mlstring>
                 </span>
-                #$userreferer#
+                <xar:data-output type="url" value="$userreferer" />
             </div>
             <div class="xar-form-input-wrapper">
                 <span class="xar-form-label">   
                     <xar:mlstring>Requested a copy?</xar:mlstring>
                 </span>
-                <xar:if condition="$sendcopy">
-                   <xar:mlstring>Yes</xar:mlstring>
-                <xar:else />
-                   <xar:mlstring>No</xar:mlstring>
-                </xar:if>
+                 <xar:data-output type="checkbox" value="$sendcopy" />
             </div>
             <div class="xar-form-input-wrapper">
                 <span class="xar-form-label">   
                     <xar:mlstring>Permission given?</xar:mlstring>
                 </span>
-                <xar:if condition="$permission">
-                    <xar:mlstring>Yes</xar:mlstring>
-                <xar:else />
-                    <xar:mlstring>No</xar:mlstring>
-                </xar:if>
+                <xar:data-output type="checkbox" value="$permission" />
                 <xar:if condition="$permissioncheck">
                     <xar:mlstring> (Permission requested)</xar:mlstring>
                  <xar:else />
@@ -97,6 +94,9 @@
                     </xar:foreach>
                 <xar:else/>
                     <xar:mlstring>None</xar:mlstring>
+                </xar:if>
+                <xar:if condition="!empty($admincclist)">
+                    &#160;<xar:mlstring>(including Admin cc list)</xar:mlstring>
                 </xar:if>
             </div>
 
@@ -119,15 +119,18 @@
                 #xarLocaleGetFormattedDate('medium', $responsetime)#
                 #xarLocaleGetFormattedTime('medium', $responsetime)#               
             </div>                                                               
-            <xar:if condition="xarModIsHooked('dynamicdata')">
+            <xar:if condition="xarModIsHooked('dynamicdata', 'sitecontact',$scid)">
                 <xar:data-getitem name="$properties" module="sitecontact" itemid="$scrid" itemtype="$scid" />
                 <xar:if condition="isset($properties) and count($properties) gt 0">
                     <xar:foreach in="$properties" key="$name">
+                    <div class="xar-form-input-wrapper">
                         <span class="xar-form-label">  
                             <xar:data-label property="$properties[$name]" />:
                         </span>                    
                         <xar:data-output property="$properties[$name]" />
+                    </div>
                     </xar:foreach>
+
                 </xar:if>
             </xar:if>
     </fieldset>

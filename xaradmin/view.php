@@ -2,14 +2,14 @@
 /**
  * View responses
  *
- * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @package Xaraya
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
+ * @link http://xaraya.com
  *
  * @subpackage SiteContact Module
- * @link http://xaraya.com/index.php/release/890.html
- * @author Jo Dalle Nogare <jojodee@xaraya.com>
+ * @copyright (C) 2004-2008 2skies.com
+ * @link http://xarigami.com/project/sitecontact
+ * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 /**
  * view responses
@@ -62,7 +62,7 @@ function sitecontact_admin_view($args)
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                         new SystemException($msg));
         return;
-    } elseif (!xarSecurityCheck('EditSitecontact',0,'ContactForm',"$scid:All:All")) {
+    } elseif (!xarSecurityCheck('EditSitecontact',0,'ContactForm',"$scid")) {
         $msg = xarML('You have no permission to edit #(1)',
                      $thisform['sctypename']);
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
@@ -100,30 +100,31 @@ function sitecontact_admin_view($args)
             $response = array();
             $response = $responses[$i];
 
-            if (xarSecurityCheck('EditSiteContact', 0, 'ContactForm', "$response[scid]:All:All")) {
+            if (xarSecurityCheck('EditSiteContact', 0, 'ContactForm', "$response[scid]")) {
                 $responses[$i]['viewurl'] = xarModURL('sitecontact','admin','display', array('scrid' => $response['scrid']));
             } else {
             $responses[$i]['viewurl'] = '';
             }
 /* We don't really want to allow editing the user response forms ...
-            if (xarSecurityCheck('EditSiteContact', 0, 'ContactForm', "$response[scid]:All:All")) {
+            if (xarSecurityCheck('EditSiteContact', 0, 'ContactForm', "$response[scid]")) {
                 $responses[$i]['editurl'] = xarModURL('sitecontact','admin','modify', array('scrid' => $response['scrid']));
             } else {
             $responses[$i]['editurl'] = '';
           }
 */
-            if (xarSecurityCheck('DeleteSiteContact', 0, 'ContactForm', "$response[scid]:All:All")) {
+            if (xarSecurityCheck('DeleteSiteContact', 0, 'ContactForm', "$response[scid]")) {
                 $responses[$i]['deleteurl'] = xarModURL('sitecontact','admin','delete',array('scrid' => $response['scrid']));
             } else {
                 $responses[$i]['deleteurl'] = '';
             }
         }
-     /* Add the array of items to the template variables */
-    $data['deletetitle'] = xarML('Delete');
-    $data['edittitle'] = xarML('Edit');
-    $data['viewtitle'] = xarML('View');
+         /* Add the array of items to the template variables */
+        $data['deletetitle'] = xarML('Delete');
+        $data['edittitle'] = xarML('Edit');
+        $data['viewtitle'] = xarML('View');
   
-    $data['responses'] = $responses;
+        $data['responses'] = $responses;
+        $data['totalresponses'] = $totalresponses;
     } else {
         $data['responses']='';
     }
@@ -144,7 +145,7 @@ function sitecontact_admin_view($args)
     // Create filters based on publication type
     $formfilters = array();
     foreach ($scformtypes as $id => $formtype) {
-        if (!xarSecurityCheck('EditSiteContact',0,'ContactForm',"$formtype[scid]:All:All")) {
+        if (!xarSecurityCheck('EditSiteContact',0,'ContactForm',"$formtype[scid]")) {
             continue;
         }
         $responseitem = array();
@@ -165,7 +166,12 @@ function sitecontact_admin_view($args)
     if (!empty($scid) && !empty($formtypes[$scid]['sctypename'])) {
         xarVarSetCached('Blocks.sitecontact','formname',$formtypes[$scid]['sctypename']);
     }
+    
+    $template = !empty($data['formname']) ? $data['formname'] : '';
+    
+    $templatedata = xarTplModule('sitecontact', 'admin', 'view', $data, $template);
 
-    return $data;
+    xarTplSetPageTitle(xarVarPrepForDisplay($data['formname']));
+    return $templatedata;
 }
 ?>

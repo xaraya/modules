@@ -20,22 +20,27 @@
  * @return number of items held by this module
  * @raise DATABASE_ERROR
  */
-function sitecontact_userapi_countitems($args)
+function sitecontact_userapi_countresponseitems($args)
 {
     extract($args);
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     
-    $sitecontactTable = $xartable['sitecontact'];
+    $sitecontactTable = $xartable['sitecontact_response'];
 
- $query = "SELECT COUNT(1)
+    $query = "SELECT xar_scid, COUNT(*)
             FROM $sitecontactTable";
-
+    $query .= ' GROUP BY xar_scid ';
     $result = &$dbconn->Execute($query,array());
     if (!$result) return;
     /* Obtain the number of items */
-    list($numitems) = $result->fields;
+    $numitems=array();
+    while (!$result->EOF) {
+        list($scid, $count) = $result->fields;
+        $numitems[$scid] = $count;
+        $result->MoveNext();
+    }
     $result->Close();
     /* Return the number of items */
     return $numitems;

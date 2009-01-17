@@ -1,7 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:comment>Common Administration menu</xar:comment>
 <xar:style scope="module" module="base" file="navtabs" />
-
 <xar:set name="request">xarRequestGetInfo()</xar:set>
 <xar:set name="activetab">#$request.2#</xar:set>
 <div>
@@ -16,6 +15,8 @@
                 <xar:mlstring>Manage Contact Forms</xar:mlstring>
             </a>
         </dd>
+    </xar:sec>
+    <xar:sec mask="EditSiteContact" catch="false">
         <xar:if condition="$activetab eq 'view' or $activetab eq 'display' or $activetab eq 'delete'">
             <xar:set name="tabclass">'active'</xar:set>
         <xar:else />
@@ -34,7 +35,7 @@
             <xar:mlstring>Modify Global Config</xar:mlstring>
           </a>
         </dd>
-        <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
+        <xar:set name="tabclass">$activetab=='overview'?'active':''</xar:set>
         <dd class="#$tabclass#">
             <a href="&xar-modurl-sitecontact-admin-overview;">
                 <xar:mlstring>Overview</xar:mlstring>

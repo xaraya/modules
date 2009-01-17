@@ -1,0 +1,11 @@
+<p><strong><xar:mlstring>In Sitecontact</xar:mlstring> : </strong></p>
+<xar:if condition="empty($loop)">
+    <p><xar:mlstring>None</xar:mlstring></p>
+<xar:else />
+    <p>
+        <xar:foreach in="$loop" value="$item">
+           <a href="#$item['sclink']#" title="#$item['sctypename']#">#$item['sctypename']#</a>
+           : <strong>#$item['sccount']#</strong><br />
+        </xar:foreach>
+    </p>
+</xar:if>
