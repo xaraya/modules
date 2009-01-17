@@ -37,21 +37,23 @@
                 <xar:data-input type="textbox" name="recipientaddress" value="$recipientaddress" />
                 &#160;(uses defaults if empty)
             </div>
-            <div class="xar-form-input-wrapper-after" style="color: red; margin-top: 20px; margin-bottom: 20px">
-                <xar:if condition="$result == 0">
-                    Message sent
-                <xar:elseif condition="$result == 1" />
-                    Message not sent: No recipient address available
-                <xar:elseif condition="$result == 2" />
-                    Message not sent: No message available
-                <xar:elseif condition="$result == 3" />
-                    Message not sent: Default redirect checked, but no redirect address available
-                <xar:elseif condition="$result == 4" />
-                    Message not sent: Message redirect checked, but no redirect address available
-                <xar:elseif condition="$result == 5" />
-                    Message not sent: Sending message failed
-                </xar:if>
-            </div>
+            <xar:if condition="isset($result)">
+                <div class="xar-form-input-wrapper-after" style="color: red; margin-top: 20px; margin-bottom: 20px">
+                    <xar:if condition="$result == 0">
+                        Message sent
+                    <xar:elseif condition="$result == 1" />
+                        Message not sent: No recipient address available
+                    <xar:elseif condition="$result == 2" />
+                        Message not sent: No message available
+                    <xar:elseif condition="$result == 3" />
+                        Message not sent: Default redirect checked, but no redirect address available
+                    <xar:elseif condition="$result == 4" />
+                        Message not sent: Message redirect checked, but no redirect address available
+                    <xar:elseif condition="$result == 5" />
+                        Message not sent: Sending message failed
+                    </xar:if>
+                </div>
+            </xar:if>
         </fieldset>
         <fieldset>
             <div class="xar-form-input-wrapper-after">
