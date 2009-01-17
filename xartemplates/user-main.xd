@@ -181,7 +181,8 @@
                 </xar:foreach>
             </xar:if>
         
-            <xar:comment>Anti spam formcaptcha code</xar:comment>
+            <xar:comment>Anti spam Formcaptcha code - Formantibot is via modules</xar:comment>
+            <xar:comment> - only used for Formcaptcha module - not Formantibot
             <xar:if condition="$useantibot eq '1' and xarModIsAvailable('formcaptcha') and xarModGetVar('formcaptcha','usecaptcha') eq true">
                 <div class="xar-form-input-wrapper">
                     <xar:set name="dumdum">require('modules/formcaptcha/xaruser/anticonfig.php');</xar:set>
@@ -203,7 +204,7 @@
                     </div>
                 </div>
              </xar:if>
-
+        </xar:comment>
        <xar:comment>End captcha support code</xar:comment>
 
        <div class="xar-form-input-wrapper-after xar-padding-thicktop">

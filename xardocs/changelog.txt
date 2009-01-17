@@ -5,7 +5,8 @@ Version 1.1.1 17 Jan 2009
   sicon-000157 Block Dynamic Data always displays 
   sicon-000204 Short URL does not work with Numbers....     
   sicon-000236 IP address not correct 
-- hooks (inaddition to existing dd) added to sitecontact block and some css cleanup
+  sicon-000309 Support for hooked formantibot captcha  
+- hooks (in addition to existing dd) added to sitecontact block and some css cleanup
 - template cleanups  including MLS strings and deprecated tags
  
 

@@ -195,8 +195,8 @@
     </h3>
     <ol>
     <li><p><xar:mlstring><strong>CAPTCHA</strong>.There is the ability to add anti-bot
-        security to your form by installing the FormAntiBot module or FormCaptcha module. These provide what is also commonly
-        known as CAPTCHA as a configured option for each form.</xar:mlstring></p>
+        security to your form by installing the FormAntiBot module. These provide what is also commonly
+        known as CAPTCHA as a configured option for each form. Check the Use Captcha checkbox when creating or editing a form to use Captcha.</xar:mlstring></p>
     <p><xar:mlstring>Some drawbacks of using CAPTCHA with the current Sitecontact module are loss of accessibility for sight impared,
     and, loss of form data on resubmits for large forms due to a mistyped captcha code. The default fields in a form will always be repopulated.</xar:mlstring></p>
     <br /></li>
@@ -231,11 +231,26 @@
     <xar:mlstring>Further information on the Sitecontact module can be found at</xar:mlstring>
   </p>
   <ul>
-    <li><xar:mlstring>Sitecontact Extension page at</xar:mlstring> <a title="#xarML('Sitecontact Module - Xaraya Extension 890')#" href="http://xarigami.com/project/sitecontact">Xarigami Projects</a>.
+    <xar:set name="sclink">'<a title="'.xarML('Sitecontact Module - Xaraya Extension 890').'" href="http://xarigami.com/project/sitecontact">'.xarML('Xarigami Projects').'</a>'</xar:set>
+    <li>
+        <xar:ml>
+            <xar:mlstring>Sitecontact Extension page at #(1)</xar:mlstring>
+            <xar:mlvar>#$sclink#</xar:mlvar>
+        </xar:ml>
     </li>
-    <li><xar:mlstring>Related tutorials and documentation on Sitecontact found at</xar:mlstring> <a href="http://xarigami.com/project/sitecontact?page=resources" title="#xarML('Related documentation on Formcaptcha')#"><xar:mlstring>Xarigami Documentation.</xar:mlstring></a>
+    <li>
+        <xar:set name="doclink">'<a href="http://xarigami.com/project/sitecontact?page=resources" title="'.xarML('Related documentation on Formcaptcha').'">'.xarML('Xarigami Documentation').'</a>'</xar:set>
+        <xar:ml>
+            <xar:mlstring>Related tutorials and documentation on Sitecontact found at #(1).</xar:mlstring>
+            <xar:mlvar>#$doclink#</xar:mlvar>
+        </xar:ml>
     </li>
-    <li><xar:mlstring>Please log bugs and feature requests at</xar:mlstring> <a href="http://xarigami.com/?module=contrails&amp;func=displayproject&amp;projectid=5" title="#xarML('Sitecontact project tracker')#"><xar:mlstring>Sitecontact project tracker.</xar:mlstring></a>
+    <li>
+        <xar:set name="tracklink">'<a href="http://xarigami.com/contrails/displayproject/sicon" title="'.xarML('Sitecontact project tracker').'">'.xarML('Sitecontact project tracker').'</a>'</xar:set>
+        <xar:ml>
+            <xar:mlstring>Please log bugs and feature requests at #(1).</xar:mlstring> 
+            <xar:mlvar>#$tracklink#</xar:mlvar>
+        </xar:ml>
     </li>
   </ul>
   <p class="xar-sub">

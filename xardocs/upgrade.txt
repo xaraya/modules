@@ -8,7 +8,10 @@ Version 1.1.1 is a bug fix release. There are no major template changes in this 
 If you are upgrading from a version less than 1.1.0 please read the detailed instructions below 
 or in the 1.1.0 release page at http://xarigami.com/resources/sitecontact_1.1.0
 
-The main template change in version 1.1.1 is in the sitecontact/templates/blocks/sitecontact.xt template.
+* There were changes to add hooks, and some cleanups in the sitecontact block template at 
+  modules/sitecontact/xartemplates/blocks/sitecontact.xd.
+* The user main template at sitecontact/templates/user-main.xd has also been cleaned up to work 
+   with formantibot hooks, rather than hard coded into the page.
 
 If possible, test the upgrade and template changes on your local development
 copy of your site. You can prepare any new changed override templates that you may require 

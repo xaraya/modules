@@ -120,6 +120,40 @@ function sitecontact_admin_managesctypes()
    
             $sctype = xarModAPIFunc('sitecontact','admin','createsctype',$item);
 
+            // Enable antibot hooks if formantibot is available
+            if (xarModIsAvailable('formantibot')) {
+                // Make sure the overall module hook is disabled so we can do each forum
+                xarModAPIFunc(
+                    'modules', 'admin', 'disablehooks',
+                    array(
+                        'callerModName'    => 'sitecontact',
+                        'callerItemType'   => 0,
+                        'hookModName'      => 'formantibot'
+                    )
+                );
+
+                if ($useantibot) {
+                    xarModAPIFunc(
+                        'modules', 'admin', 'enablehooks',
+                        array(
+                            'callerModName'    => 'sitecontact',
+                            'callerItemType'   => $scid,
+                            'hookModName'      => 'formantibot'
+                        )
+                    );
+                } else {
+                    xarModAPIFunc(
+                        'modules', 'admin', 'disablehooks',
+                        array(
+                            'callerModName'    => 'sitecontact',
+                            'callerItemType'   => $scid,
+                            'hookModName'      => 'formantibot'
+                        )
+                    );
+                }
+            }
+
+
             if (isset($sctype) && $sctype['created']==1) {
                // Redirect to the admin view page
                 xarSessionSetVar('statusmsg',xarML('New Sitecontact Form created'));
