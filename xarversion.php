@@ -7,7 +7,7 @@
  * @link http://xaraya.com
  *
  * @subpackage SiteContact Module
- * @copyright (C) 2004-2008 2skies.com
+ * @copyright (C) 2004-2009 2skies.com
  * @link http://xarigami.com/project/sitecontact
  * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
@@ -19,7 +19,7 @@
   */
 $modversion['name']           = 'sitecontact';
 $modversion['id']             = '890';
-$modversion['version']        = '1.1.0';
+$modversion['version']        = '1.1.1';
 $modversion['displayname']    = 'SiteContact';
 $modversion['description']    = 'Contact site admin by email';
 $modversion['credits']        = 'xardocs/credits.txt';

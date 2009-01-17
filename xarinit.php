@@ -7,7 +7,7 @@
  * @link http://xaraya.com
  *
  * @subpackage SiteContact Module
- * @copyright (C) 2004-2008 2skies.com
+ * @copyright (C) 2004-2009 2skies.com
  * @link http://xarigami.com/project/sitecontact
  * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
@@ -237,9 +237,11 @@ function sitecontact_upgrade($oldversion)
           xarRegisterMask('DeleteSiteContact',    'All', 'sitecontact', 'ContactForm', 'All', 'ACCESS_DELETE');
           xarRegisterMask('AdminSiteContact',     'All', 'sitecontact', 'ContactForm', 'All', 'ACCESS_ADMIN');
 
-       case '1.1.0': //current version
+       case '1.1.0': 
           xarModSetVar('sitecontact','adminccs',false);
           xarModSetVar('sitecontact','admincclist','');
+             
+        case '1.1.1' : //current version
              break;
     }
     // Update successful

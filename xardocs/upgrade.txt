@@ -1,21 +1,27 @@
 
-Upgrading to Sitecontact 1.1.0
+Upgrading to Sitecontact 1.1.1
 ==============================
 
 You must be on at least version 0.6.1 of Sitecontact to upgrade to this version.
 
+Version 1.1.1 is a bug fix release. There are no major template changes in this version. 
+If you are upgrading from a version less than 1.1.0 please read the detailed instructions below 
+or in the 1.1.0 release page at http://xarigami.com/resources/sitecontact_1.1.0
+
+The main template change in version 1.1.1 is in the sitecontact/templates/blocks/sitecontact.xt template.
+
 If possible, test the upgrade and template changes on your local development
-copy of your site. You can prepare the changed templates in advance and update
-them to your live site at the time you upgrade your module. The changes are
-provided here in detail making them look a little more extensive than what they
-really are.
+copy of your site. You can prepare any new changed override templates that you may require 
+in advance and update them to your live site at the time you upgrade your module. 
 
+* Changes marked Critical are required otherwise the module to fail if not completed.
 
-Critical changes that may cause module to fail if not completed are marked.
-Changes marked as important are required to ensure you get the fixed or improved
-functionality. Other changes are code efficiency or tidy changes, and may
+* Changes marked Important are required to ensure you get the fixed or improved
+functionality.
+
+* Other changes are code efficiency or tidy changes, and may
 improve display output. For best results diff your custom templates against the
-corresponding new Sitecontact template.
+corresponding new Sitecontact module template.
 
 Steps
 =====
@@ -31,16 +37,15 @@ Steps
       template and the form name eg user-usermail-html-myform.xt rather than
       user-usermail-html_myform.xt
 
-    b. Important change - All email forms (user, admin and both html and text)
-       were revised for content and if possible, you should use a good diff
-       application to copy over the new changes to your customized templates.
+    b. You should use a good diff application to copy over any new changes
+    in system templates to your customized templates.
 
 3.  In your custom or form specific user-main.xt template:
-    a. Critical change - ensure you change contactus.php to respond.php in the
+    a. Critical change upgrading to 1.1.x- ensure you change contactus.php to respond.php in the
     form tag. The contactus.php function is now deprecated and respond.php is
     the function the form submits to.
     
-    b. Important change - Compare the new user-main.xd template at the point and
+    b. Important change upgrading to 1.1.x- Compare the new user-main.xd template at the point and
     your customized template. Note where username and useremail input tags are
     added. If you are using these fields, ensure you have the new
     <xar:set /> and <xar:data-input /> tags and their content. For the
@@ -48,17 +53,17 @@ Steps
     
             <span class="xar-error">#$invalid['useremail']#</span>
             
-    c. Critical change - Ensure you have all the template code in the new
+    c. Critical change for 1.1.0 - Ensure you have all the template code in the new
     user-main.xd template between the comments "Dynamic Data properties input"
     and "Dynamic Data properties input -end" added to your template to replace
     existing DD property input.
 
-    d. Important change - Ensure you have all the template code in the new
+    d. Important change for 1.1.0- Ensure you have all the template code in the new
     user-main.xd template between the comments "Start captcha support "
     and "End captcha support" added to your template to replace any existing
     formcaptcha template code.
 
-4.  A new user-result.xd template exists that is displayed to the user on
+4.  Critical change for 1.1.0 - A new user-result.xd template exists that is displayed to the user on
     successful fom submission. You can override this to form a custom page as
     is, or for a specific form by appending the form name in the usual way
     see the module Overview).

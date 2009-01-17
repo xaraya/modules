@@ -1,3 +1,14 @@
+Version 1.1.1 17 Jan 2009
+- Bug fix release covering logged issues:
+  sicon-000155 Respond Func issues? 
+  sicon-000156 Invalid Error text in sitecontact blocks     
+  sicon-000157 Block Dynamic Data always displays 
+  sicon-000204 Short URL does not work with Numbers....     
+  sicon-000236 IP address not correct 
+- hooks (inaddition to existing dd) added to sitecontact block and some css cleanup
+- template cleanups  including MLS strings and deprecated tags
+ 
+
 Version 1.1.0 8 Jan 2008
 - move key areas to dynamic data retaining backward compat where possible
 - add ability to add custom func for preprocessing data
