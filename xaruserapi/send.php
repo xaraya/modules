@@ -27,6 +27,8 @@
  *  3 default redirect checked, but no redirect address available
  *  4 message redirect checked, but no redirect address available
  *  5 sending message failed
+ *  6 BL compilation failed
+ *  7 no correct user object available
  */
     function mailer_userapi_send($args)
     {
@@ -36,10 +38,14 @@
 
         // Get the recipient's data
         if (isset($args['role_id'])) {
-            $object = DataObjectMaster::getObject(array('name' => xarModItemVars::get('mailer','defaultuserobject', xarMod::getID($module))));
-            $recipient = $object->getItem(array('itemid' => $args['role_id']));
-            $recipientname = $recipient->properties['name']->value;
-            $recipientaddress = $recipient->properties['email']->value;
+            try {
+                $object = DataObjectMaster::getObject(array('name' => xarModItemVars::get('mailer','defaultuserobject', xarMod::getID($module))));
+                $recipient = $object->getItem(array('itemid' => $args['role_id']));
+                $recipientname = $recipient->properties['name']->value;
+                $recipientaddress = $recipient->properties['email']->value;
+            } catch (Exception $e) {
+                return 7;
+            }
         } else {
             $recipientname = isset($args['recipientname']) ? $args['recipientname'] : xarModItemVars::get('mailer','defaultrecipientname', xarMod::getID($module));
             $recipientaddress = isset($args['recipientaddress']) ? $args['recipientaddress'] : '';
