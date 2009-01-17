@@ -11,6 +11,7 @@
  * @param  $recipientaddress
  * @param  $locale
  * @param  $module
+ * @param  $data
  *
  * The sequence of overrides is
  *  1. params passed to this function
@@ -98,18 +99,22 @@
             if (($mailitem['mail_type'] == 3) || ($mailitem['mail_type'] == 4)) {
                 sys::import('blocklayout.compiler');
                 $blCompiler = xarBLCompiler::instance();
-                $foo = array();
+                $data = isset($args['data']) ? $args['data'] : array();
 
-                $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
-                $tplString .= $subject;
-                $tplString .= '</xar:template>';
-                $subject = $blCompiler->compilestring($tplString);
-                $subject = xarTplString($subject,$foo);
-                $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
-                $tplString .= $message;
-                $tplString .= '</xar:template>';
-                $message = $blCompiler->compilestring($tplString);
-                $message = xarTplString($message,$foo);
+                try {
+                    $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
+                    $tplString .= $subject;
+                    $tplString .= '</xar:template>';
+                    $subject = $blCompiler->compilestring($tplString);
+                    $subject = xarTplString($subject,$data);
+                    $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
+                    $tplString .= $message;
+                    $tplString .= '</xar:template>';
+                    $message = $blCompiler->compilestring($tplString);
+                    $message = xarTplString($message,$data);
+                } catch (Exception $e) {
+                    return 6;
+                }
             }
             
         // Bundle the data into a nice array

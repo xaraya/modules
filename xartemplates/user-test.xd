@@ -51,6 +51,8 @@
                         Message not sent: Message redirect checked, but no redirect address available
                     <xar:elseif condition="$result == 5" />
                         Message not sent: Sending message failed
+                    <xar:elseif condition="$result == 6" />
+                        Message not sent: Blocklayout compilation failed
                     </xar:if>
                 </div>
             </xar:if>
