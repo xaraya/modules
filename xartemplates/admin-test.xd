@@ -9,7 +9,7 @@
   <p><xar:mlstring>First, a simple test - this div  should turn red when you hover over it.</xar:mlstring></p>
 <div id="ie7div"></div>
 
-Now, if you see pull out menus here using IE then you have won!
+<xar:mlstring>Now, if you see pull out menus here using IE then you have won!</xar:mlstring>
 
 <div id="ie7test">
   <ul> 

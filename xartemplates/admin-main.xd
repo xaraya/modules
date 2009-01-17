@@ -19,23 +19,23 @@
         Xaraya-ized version of his work.
    </xar:mlstring></p>
 
-   <p><xar:mlstring>Dean's script can be found at </xar:mlstring><a href="http://dean.edwards.name/IE7">his site</a></p>
+   <p><xar:mlstring>Dean's script can be found at </xar:mlstring><a href="http://dean.edwards.name/IE7"><xar:mlstring>his site</xar:mlstring></a></p>
 
 <h2><xar:mlstring>How to use it?</xar:mlstring></h2>
 <p><xar:mlstring>First, check your theme to make sure your head javascript appears before any
 css is loaded. eg the tag <code>&lt;xar:base-render-javascript position="head" /&gt;</code> should appear before any css in your main page templates.
 </xar:mlstring></p>
 
-<p><xar:mlstring>Second, enable IE7 in the </xar:mlstring><a href="&xar-modurl-ie7-admin-modifyconfig;">modify config</a><xar:mlstring> pages.</xar:mlstring></p>
+<p><xar:mlstring>Second, enable IE7 in the page</xar:mlstring> <a href="&xar-modurl-ie7-admin-modifyconfig;"><xar:mlstring>Modify Config</xar:mlstring></a></p>
 
 <p><xar:mlstring>Third, add all those CSS features you've been holding back on for years!</xar:mlstring></p>
 
 <h3><xar:mlstring>Tests</xar:mlstring></h3>
  <ul>
-  <li><a href="#xarModURL('ie7', 'admin', 'test')#">Xaraya test suite</a></li>
+  <li><a href="#xarModURL('ie7', 'admin', 'test')#"><xar:mlstring>Xaraya test suite</xar:mlstring></a></li>
   <li>
    <a href="#xarServerGetBaseURI()#/modules/ie7/xarincludes/ie7/index.html">
-    ie7 test suite
+    <xar:mlstring>ie7 test suite</xar:mlstring>
    </a>
   </li>
  </ul>
