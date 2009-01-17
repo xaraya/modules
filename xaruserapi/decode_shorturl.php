@@ -59,7 +59,7 @@ function sitecontact_userapi_decode_shorturl($params)
             $args['scid'] = null;
         }
         return array('respond', $args);
-    } elseif (!empty($params[0]) && (preg_match('/^(\d+)/', $params[0], $matches))) {
+    } elseif (!empty($params[0]) && (preg_match('/^(\d+)/', $params[0], $matches)) && $matches[0] <=2) {
         $args['message'] = $matches[0];
         if (!empty($params[1])  &&  (preg_match('/^(\d+)/', $params[1], $matches))) {
             $args['scid'] = (int)$matches[0];
