@@ -272,12 +272,12 @@
 
         <div class="xar-form-input-wrapper-after">
             <xar:data-input type="checkbox" name="scactive" id="scactive1" value="$item['scactive']" />
-            <xar:if condition="xarModGetVar('sitecontact','defaultform') eq $item.scid">
-                <xar:mlstring>Must be checked (active) for Default Form</xar:mlstring>
-            </xar:if>
             <label for="scactive1" title="#xarML('Sitecontact form is active and available?')#">
                  <xar:mlstring>Form is active?</xar:mlstring>
             </label>
+            <xar:if condition="xarModGetVar('sitecontact','defaultform') eq $item.scid">
+                &#160;[<xar:mlstring>The Default Form must be active (checked)</xar:mlstring>]
+            </xar:if>
        </div>
 
         <div class="xar-form-input-wrapper-after">
@@ -286,7 +286,7 @@
                  <xar:mlstring>Use form captcha (formcaptcha or formantibot) ?</xar:mlstring>
             </label>
             <xar:if condition="!xarModIsAvailable('formantibot')">
-            <p class="xar-error"><xar:mlstring>You must install the FormCaptcha or FormAntiBot module for this Anti-Bot CAPTCHA to work.</xar:mlstring></p>
+            <p class="xar-error"><xar:mlstring>You must install the FormCaptcha or FormAntiBot module for CAPTCHA to work.</xar:mlstring></p>
             </xar:if>
        </div>
     </fieldset>
