@@ -1,10 +1,17 @@
 <items>
   <mailer_footers itemid="1">
     <id>1</id>
-    <name>Default Footer</name>
-    <body>
------------------------------------------------------------------------
+    <name>Test Footer</name>
+    <body>-----------------------------------------------------------------------
 This is the default footer text for messages sent by the mailer module.</body>
     <created>1232012708</created>
+  </mailer_footers>
+  <mailer_footers itemid="2">
+    <id>2</id>
+    <name>Test footer (BL)</name>
+    <body>&lt;xar:br /&gt;
+-----------------------------------------------------------------------&lt;xar:br /&gt;
+The site name is: #xarModVars::get('themes','SiteName')#</body>
+    <created>1232188033</created>
   </mailer_footers>
 </items>

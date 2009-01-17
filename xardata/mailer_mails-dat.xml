@@ -1,7 +1,7 @@
 <items>
   <mailer_mails itemid="1">
     <id>1</id>
-    <name>Test Email in English</name>
+    <name>Test Email</name>
     <sender_name></sender_name>
     <sender_address></sender_address>
     <subject>Mailer Module Test Email</subject>
@@ -15,6 +15,29 @@
     <redirect_address></redirect_address>
     <mail_type>1</mail_type>
     <alias>1</alias>
+    <state>3</state>
+  </mailer_mails>
+  <mailer_mails itemid="2">
+    <id>2</id>
+    <name>Second Test Email (BL)</name>
+    <sender_name></sender_name>
+    <sender_address></sender_address>
+    <subject>Mailer Module Test Email</subject>
+    <body>This email uses Blocklayout tags for layout&lt;xar:br /&gt;
+&lt;xar:br /&gt;
+It also has access to the full range of Xaraya functions: &lt;xar:br /&gt;
+The current user is: #xarUserGetVar('uname')#&lt;xar:br /&gt;
+&lt;xar:br /&gt;
+&lt;xar:br /&gt;</body>
+    <footer>2</footer>
+    <locale>en_US.utf-8</locale>
+    <created>1232131628</created>
+    <modified>1232131628</modified>
+    <owner>5</owner>
+    <redirect>0</redirect>
+    <redirect_address></redirect_address>
+    <mail_type>3</mail_type>
+    <alias>0</alias>
     <state>3</state>
   </mailer_mails>
 </items>
