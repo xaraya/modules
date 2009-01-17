@@ -25,10 +25,7 @@
                                     'recipientaddress' => $data['recipientaddress'],
                                 )
                             );
-                $data['sent'] = true;
             }
-        } else {
-            $data['sent'] = false;
         }
         return $data;
     }

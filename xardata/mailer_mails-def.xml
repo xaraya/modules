@@ -149,7 +149,7 @@
       <source>xar_mailer_mails.type</source>
       <status>33</status>
       <seq>14</seq>
-      <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:14:"1,text;2,html;";}</configuration>
+      <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:74:"1,text to text;2,text to html;3,blocklayout to text;4,blocklayout to html;";}</configuration>
     </property>
     <property name="alias">
       <id>1078</id>

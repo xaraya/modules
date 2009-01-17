@@ -18,7 +18,13 @@
  *  3. settings of the module passed ot this function
  *  4. settings of the mailer module
  *
- * returns true on success, false on failure
+ * Returns
+ *  0 on success
+ *  1 no recipient address available
+ *  2 no message available
+ *  3 default redirect checked, but no redirect address available
+ *  4 message redirect checked, but no redirect address available
+ *  5 sending message failed
  */
     function mailer_userapi_send($args)
     {
@@ -34,9 +40,9 @@
             $recipientaddress = $recipient->properties['email']->value;
         } else {
             $recipientname = isset($args['recipientname']) ? $args['recipientname'] : xarModItemVars::get('mailer','defaultrecipientname', xarMod::getID($module));
-            $recipientaddress = $args['recipientaddress'];
+            $recipientaddress = isset($args['recipientaddress']) ? $args['recipientaddress'] : '';
+            if (empty($recipientaddress)) return 1;
         }
-        
         // Get the recipient's locale
             $recipientlocale = isset($args['locale']) ? $args['locale'] : '';
             if (empty($recipientlocale) && isset($recipient->properties['locale'])) $recipientlocale = $recipient->properties['locale']->value;
@@ -54,7 +60,7 @@
                 $mailitems = $object->getItems(array('where' => $where));
 
         // Still no message? Bail
-                if (empty($mailitems)) return false;
+                if (empty($mailitems)) return 2;
             }
 
         // Grab the first one that fits
@@ -71,13 +77,13 @@
         // Check if there is a default redirect
             if (xarModItemVars::get('mailer','defaultredirect', xarMod::getID($module))) {
                 $redirectaddress = xarModItemVars::get('mailer','defaultredirectaddress', xarMod::getID($module));
-                if (empty($redirectaddress)) return false;
+                if (empty($redirectaddress)) return 3;
                 $recipientaddress = $redirectaddress;
             }
 
         // Check if there is a redirect in the message
             if ($mailitem['redirect']) {
-                if (empty($mailitem['redirect_address'])) return false;
+                if (empty($mailitem['redirect_address'])) return 4;
                 $recipientaddress = $mailitem['redirect_address'];
             }
             
@@ -87,12 +93,31 @@
             $senderaddress = isset($args['senderaddress']) ? $args['senderaddress'] : $mailitem['sender_address'];
             if (empty($senderaddress)) $senderaddress = xarModItemVars::get('mailer','defaultsenderaddress', xarMod::getID($module));
         
+            $subject = $mailitem['subject'];
+            $message = $mailitem['body'] . $footer;
+            if (($mailitem['mail_type'] == 3) || ($mailitem['mail_type'] == 4)) {
+                sys::import('blocklayout.compiler');
+                $blCompiler = xarBLCompiler::instance();
+                $foo = array();
+
+                $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
+                $tplString .= $subject;
+                $tplString .= '</xar:template>';
+                $subject = $blCompiler->compilestring($tplString);
+                $subject = xarTplString($subject,$foo);
+                $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
+                $tplString .= $message;
+                $tplString .= '</xar:template>';
+                $message = $blCompiler->compilestring($tplString);
+                $message = xarTplString($message,$foo);
+            }
+            
         // Bundle the data into a nice array
             $args = array('info'         => $recipientaddress,
                           'name'         => $recipientname,
-                          'subject'      => $mailitem['subject'],
-                          'message'      => $mailitem['body'] . $footer,
-                          'htmlmessage'  => $mailitem['body'] . $footer,
+                          'subject'      => $subject,
+                          'message'      => $message,
+                          'htmlmessage'  => $message,
                           'from'         => $senderaddress,
                           'fromname'     => $sendername,
                           'attachName'   => '',
@@ -100,10 +125,10 @@
                           'usetemplates' => false);
 
         // Pass it to the mail module for processing
-        if ($mailitem['mail_type'] == 2) {
-            if (!xarModAPIFunc('mail','admin','sendhtmlmail', $args)) return;
+        if (($mailitem['mail_type'] == 2) || ($mailitem['mail_type'] == 4)) {
+            if (!xarModAPIFunc('mail','admin','sendhtmlmail', $args)) return 5;
         } else {
-            if (!xarModAPIFunc('mail','admin','sendmail', $args)) return;
+            if (!xarModAPIFunc('mail','admin','sendmail', $args)) return 5;
         }
         
         // Check we want to save this message and if so do it
@@ -121,6 +146,6 @@
                 $item = $object->createItem($args);
             }
 
-        return true;
+        return 0;
     }
 ?>
