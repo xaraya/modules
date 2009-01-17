@@ -11,7 +11,7 @@
         if (xarModVars::get('modules', 'disableoverview') == 0) {
             return array();
         } else {
-            xarResponseRedirect(xarModURL('mailer', 'admin', 'modifyconfig'));
+            xarResponseRedirect(xarModURL('mailer', 'admin', 'view'));
         }
         // success
         return true;
