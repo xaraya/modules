@@ -38,14 +38,12 @@
 
         // Get the recipient's data
         if (isset($args['role_id'])) {
-            try {
                 $object = DataObjectMaster::getObject(array('name' => xarModItemVars::get('mailer','defaultuserobject', xarMod::getID($module))));
+                if (!is_object($object)) return 7;
                 $recipient = $object->getItem(array('itemid' => $args['role_id']));
+                if (!isset($$recipient->properties['name']) ||!isset($$recipient->properties['email'])) return 7;
                 $recipientname = $recipient->properties['name']->value;
                 $recipientaddress = $recipient->properties['email']->value;
-            } catch (Exception $e) {
-                return 7;
-            }
         } else {
             $recipientname = isset($args['recipientname']) ? $args['recipientname'] : xarModItemVars::get('mailer','defaultrecipientname', xarMod::getID($module));
             $recipientaddress = isset($args['recipientaddress']) ? $args['recipientaddress'] : '';
