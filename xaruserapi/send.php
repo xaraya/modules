@@ -4,6 +4,7 @@
  *
  * @param  $module
  * @param  $id
+ * @param  $name
  * @param  $role_id
  * @param  $sendername
  * @param  $senderaddress
@@ -52,6 +53,15 @@
             
         // Get the list of message aliases (translations of the same message)
             $object = DataObjectMaster::getObjectList(array('name' => xarModItemVars::get('mailer','defaultmailobject', xarMod::getID($module))));
+            if (isset($args['name'])) {
+                $where = "name = '" . $args['name'];
+                $mailitems = $object->getItems(array('where' => $where));
+                if (empty($mailitems)) return 2;
+        // Grab the first one that fits
+                $mailitem = current($mailitems);
+                $args['id'] = $mailitem['id'];
+            }
+            
             $where = "locale = '" . $recipientlocale . "' AND alias = " . $args['id'];
             $mailitems = $object->getItems(array('where' => $where));
             
