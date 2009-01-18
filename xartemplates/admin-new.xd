@@ -1,58 +1,37 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Trackback Administration</xar:mlstring></span></div>
-<!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
 <h2><xar:mlstring>Send a Trackback Ping</xar:mlstring></h2>
 <form method="post" action="#xarModURL('trackback', 'admin', 'create')#" enctype="application/x-www-form-urlencoded" >
-    <div style="clear: both; padding-top: 10px;">
-    <input type="hidden" name="authid" value="#$authid#" />
-    <span style="float: left; width: 20%; text-align: right;">
-        <span class="help" title="#xarML('The url that you are notifying for trackback.')#"><label for="pingurl"><xar:mlstring>TrackBack Ping URL</xar:mlstring></label></span>
-    </span>
-    <span style="float: right; width: 78%; text-align: left;">
-        <input type="text" name="pingurl" id="pingurl" value="" size="50" maxlength="200" />
-    </span>
-    </div>
-
-    <div style="clear: both; padding-top: 10px;">
-    <span style="float: left; width: 20%; text-align: right;">
-        <span class="help" title="#xarML('The title of your ping.')#"><label for="title"><xar:mlstring>Title:</xar:mlstring></label></span>
-    </span>
-    <span style="float: right; width: 78%; text-align: left;">
-        <input type="text" name="title" id="title" value="" size="30" maxlength="200" />
-    </span>
-    </div>
-
-    <div style="clear: both; padding-top: 10px;">
-    <span style="float: left; width: 20%; text-align: right;">
-        <span class="help" title="#xarML('Your site name, or title of content type.')#"><label for="title"><xar:mlstring>Site Name:</xar:mlstring></label></span>
-    </span>
-    <span style="float: right; width: 78%; text-align: left;">
-        <input type="text" name="sitename" id="sitename" value="#xarModGetVar('themes', 'SiteName', 1)#" size="30" maxlength="200" />
-    </span>
-    </div>
-
-    <div style="clear: both; padding-top: 10px;">
-    <span style="float: left; width: 20%; text-align: right;">
-        <span class="help" title="#xarML('Comment that you wish to attach to the trackback.')#"><label for="excerpt"><xar:mlstring>Excerpt:</xar:mlstring></label></span>
-    </span>
-    <span style="float: right; width: 78%; text-align: left;">
-        <input type="text" name="excerpt" id="excerpt" value="" size="50" maxlength="200" />
-    </span>
-    </div>
-
-    <div style="clear: both; padding-top: 10px;">
-    <span style="float: left; width: 20%; text-align: right;">
-        <span class="help" title="#xarML('The URL that you are sending as a trackback.')#"><label for="permalink"><xar:mlstring>Permalink URL:</xar:mlstring></label></span>
-    </span>
-    <span style="float: right; width: 78%; text-align: left;">
-        <input type="text" name="permalink" id="permalink" value="" size="50" maxlength="200" />
-    </span>
-    </div>
-
-    <div style="clear: both; padding-top: 10px;">
-    <span style="float: right; width: 78%; text-align: left;">
-        <input type="submit" value="#$submitlabel#"/>
-    </span>
-    </div>
+    <fieldset>
+        <legend>
+            <xar:mlstring>
+                Trackback Ping Options
+            </xar:mlstring>
+        </legend>
+        <div class="xar-form-input-wrapper">
+            <label for="pingurl" class="xar-form-label help" title="#xarML('The url that you are notifying for trackback.')#"><xar:mlstring>TrackBack Ping URL</xar:mlstring></label>
+            <input type="text" name="pingurl" id="pingurl" value="" size="50" maxlength="200" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="title" class="xar-form-label help" title="#xarML('The title of your ping.')#"><xar:mlstring>Title:</xar:mlstring></label>
+            <input type="text" name="title" id="title" value="" size="30" maxlength="200" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="title" class="xar-form-label help" title="#xarML('Your site name, or title of content type.')#"><xar:mlstring>Site Name:</xar:mlstring></label>
+            <input type="text" name="sitename" id="sitename" value="#xarModGetVar('themes', 'SiteName', 1)#" size="30" maxlength="200" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="excerpt" class="xar-form-label help" title="#xarML('Comment that you wish to attach to the trackback.')#"><xar:mlstring>Excerpt:</xar:mlstring></label>
+            <input type="text" name="excerpt" id="excerpt" value="" size="50" maxlength="200" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="permalink" class="xar-form-label help" title="#xarML('The URL that you are sending as a trackback.')#"><xar:mlstring>Permalink URL:</xar:mlstring></label>
+            <input type="text" name="permalink" id="permalink" value="" size="50" maxlength="200" />
+        </div>
+        <div class="xar-form-input-wrapper-after">
+            <input type="hidden" name="authid" value="#$authid#" />
+            <input type="submit" value="#$submitlabel#"/>
+        </div>
+    </fieldset>
 </form>
 </div>
