@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -23,7 +23,7 @@ function articles_userapi_getstates()
                  1 => xarML('Rejected'),
                  2 => xarML('Approved'),
                  3 => xarML('Frontpage'),
-           //    4 => xarML('Unknown')
+                 4 => xarML('Draft')
                  );
 }
 ?>
