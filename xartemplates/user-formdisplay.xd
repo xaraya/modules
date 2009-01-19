@@ -13,112 +13,112 @@
 </span>
 <label for="addbbcode20">
     <xar:mlstring>
-        Font color 
+        Font color
     </xar:mlstring>
     :
 </label>
 <select name="addbbcode20" onchange="bbfontstyle('[color=' + this.form.addbbcode20.options[this.form.addbbcode20.selectedIndex].value + ']', '[/color]');this.selectedIndex=0;" onmouseover="document.post.helpbox.value='#xarML("Font color: [color=red]text[/color]  Tip: you can also use")# color=#FF0000'; return true">
     <option style="color:black; background-color: #FAFAFA" value="#444444" class="xar-bbcode-genmed">
         <xar:mlstring>
-            Default 
+            Default
         </xar:mlstring>
     </option>
     <option style="color:darkred; background-color: #FAFAFA" value="darkred" class="xar-bbcode-genmed">
         <xar:mlstring>
-            Dark Red 
+            Dark Red
         </xar:mlstring>
     </option>
     <option style="color:red; background-color: #FAFAFA" value="red" class="xar-bbcode-genmed">
         <xar:mlstring>
-            Red 
+            Red
         </xar:mlstring>
     </option>
     <option style="color:orange; background-color: #FAFAFA" value="orange" class="xar-bbcode-genmed">
         <xar:mlstring>
-            Orange 
+            Orange
         </xar:mlstring>
     </option>
     <option style="color:brown; background-color: #FAFAFA" value="brown" class="xar-bbcode-genmed">
         <xar:mlstring>
-            Brown 
+            Brown
         </xar:mlstring>
     </option>
     <option style="color:yellow; background-color: #FAFAFA" value="yellow" class="xar-bbcode-genmed">
         <xar:mlstring>
-            Yellow 
+            Yellow
         </xar:mlstring>
     </option>
     <option style="color:green; background-color: #FAFAFA" value="green" class="xar-bbcode-genmed">
         <xar:mlstring>
-            Green 
+            Green
         </xar:mlstring>
     </option>
     <option style="color:olive; background-color: #FAFAFA" value="olive" class="xar-bbcode-genmed">
         <xar:mlstring>
-            Olive 
+            Olive
         </xar:mlstring>
     </option>
     <option style="color:cyan; background-color: #FAFAFA" value="cyan" class="xar-bbcode-genmed">
         <xar:mlstring>
-            Cyan 
+            Cyan
         </xar:mlstring>
     </option>
     <option style="color:blue; background-color: #FAFAFA" value="blue" class="xar-bbcode-genmed">
         <xar:mlstring>
-            Blue 
+            Blue
         </xar:mlstring>
     </option>
     <option style="color:darkblue; background-color: #FAFAFA" value="darkblue" class="xar-bbcode-genmed">
         <xar:mlstring>
-            Dark Blue 
+            Dark Blue
         </xar:mlstring>
     </option>
     <option style="color:indigo; background-color: #FAFAFA" value="indigo" class="xar-bbcode-genmed">
         <xar:mlstring>
-            Indigo 
+            Indigo
         </xar:mlstring>
     </option>
     <option style="color:violet; background-color: #FAFAFA" value="violet" class="xar-bbcode-genmed">
         <xar:mlstring>
-            Violet 
+            Violet
         </xar:mlstring>
     </option>
     <option style="color:white; background-color: #FAFAFA" value="white" class="xar-bbcode-genmed">
         <xar:mlstring>
-            White 
+            White
         </xar:mlstring>
     </option>
     <option style="color:black; background-color: #FAFAFA" value="black" class="xar-bbcode-genmed">
         <xar:mlstring>
-            Black 
+            Black
         </xar:mlstring>
     </option>
 </select>
 <label for="addbbcode22">
     <xar:mlstring>
-        Font size 
+        Font size
     </xar:mlstring>
     :
 </label>
-<select name="addbbcode22" onchange="bbfontstyle('[size=' + this.form.addbbcode22.options[this.form.addbbcode22.selectedIndex].value + ']', '[/size]')" onmouseover="document.post.helpbox.value='#xarML("Font size: [size=x-small]small text[/size]")#'; return true">
+<select name="addbbcode22" onchange="bbfontstyle('[size=' + this.form.addbbcode22.options[this.form.addbbcode22.selectedIndex].value + ']', '[/size]');this.selectedIndex=2;" onmouseover="document.post.helpbox.value='#xarML("Font size: [size=x-small]small text[/size]")#'; return true">
     <option value="7" class="xar-bbcode-genmed">
         <xar:mlstring>
-            Tiny 
+            Tiny
         </xar:mlstring>
     </option>
     <option value="9" class="xar-bbcode-genmed">
         <xar:mlstring>
-            Small 
+            Small
         </xar:mlstring>
     </option>
     <option value="12" selected="selected" class="xar-bbcode-genmed">
         <xar:mlstring>
-            Normal 
+            Normal
         </xar:mlstring>
     </option>
     <option value="18" class="xar-bbcode-genmed">
         <xar:mlstring>
-            Large 
+            Large
         </xar:mlstring>
     </option>
     <option value="24" class="xar-bbcode-genmed">
