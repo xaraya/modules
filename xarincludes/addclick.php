@@ -47,6 +47,15 @@ function linktracker_addclick()
     $page_parsed = parse_url($page);
     $target_parsed = parse_url($target);
 
+    // Some default values that the URL may not contain (usually hacking attempts).
+    if (!isset($page_parsed['host'])) $page_parsed['host'] = '';
+    if (!isset($page_parsed['path'])) $page_parsed['path'] = '';
+    if (!isset($page_parsed['query'])) $page_parsed['query'] = '';
+
+    if (!isset($target_parsed['host'])) $target_parsed['host'] = '';
+    if (!isset($target_parsed['path'])) $target_parsed['path'] = '';
+    if (!isset($target_parsed['query'])) $target_parsed['query'] = '';
+
     // Check the referrer domain matches the current script domain.
     $http_host = $_SERVER['HTTP_HOST'];
     if (!empty($http_host) && $http_host != $page_parsed['host']) return false;
