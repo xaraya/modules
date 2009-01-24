@@ -102,7 +102,7 @@ function julian_init()
               summary         C(255)      default '',
               dtstart         T   NULL,
               duration        C(50)   NULL,
-              isallday        L   DEFAULT 0,
+              isallday        I1  DEFAULT 0,
               rrule           I   NOTNULL DEFAULT 0,
               recur_freq      I   DEFAULT 0,
               recur_count     I   DEFAULT 0,
