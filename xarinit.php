@@ -86,7 +86,7 @@ function julian_init()
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
     $category_properties_fields="
                                 cid I NOTNULL default 0,
-                                color C(15) NOTNULL default ''
+                                color C(15) NULL
                                 ";
     /* Create or alter the table as necessary */
     $result = $datadict->changeTable($category_properties_table, $category_properties_fields);
