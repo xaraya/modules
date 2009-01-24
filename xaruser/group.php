@@ -5,15 +5,13 @@ function newsgroups_user_group()
     // Security Check
     if(!xarSecurityCheck('ReadNewsGroups')) return;
 
-    xarVarFetch('group', 'str:1', $group);
+    xarVarFetch('group', 'str:1', $group, NULL, XARVAR_DONT_REUSE, XARVAR_PREP_FOR_DISPLAY);
     xarVarFetch('startnum', 'id', $startnum, NULL, XARVAR_NOT_REQUIRED);
     xarVarFetch('sortby', 'enum:thread:article', $sortby, '', XARVAR_NOT_REQUIRED);
     if (empty($sortby)) {
         $sortby = xarModGetVar('newsgroups','sortby');
     }
 
-    // Fix the input
-    $group = xarVarPrepForDisplay($group);
     xarTplSetPageTitle($group);
 
     $numitems = xarModGetVar('newsgroups', 'numitems');
@@ -29,15 +27,21 @@ function newsgroups_user_group()
         $startnum = $data['counts']['last'];
     }
 
-    // Call the xarTPL helper function to produce a pager in case of there
-    // being many items to display.
+    // Call the xarTPL helper function to produce a pager.
+    // $data['counts']['count'] may be to small because of deleted articles
+    $articlespan = $data['counts']['last'] - $data['counts']['first'] + 1;
+
+    // Newsgroups are listed backwards. To let the last page show as much
+    // articles as wanted in $numitems we have to correct the firstitem
+    $firstitem = $data['counts']['last'] - floor($articlespan / $numitems) * $numitems;
+
     $data['pager'] = xarTplGetPager($startnum,
-                                    $data['counts']['count'],  //['last'],
-                                    xarModURL('newsgroups', 'user', 'group', 
+                                    $articlespan,
+                                    xarModURL('newsgroups', 'user', 'group',
                                               array('group' => $group,
                                                     'startnum' => '%%')),
                                     $numitems, // articles per page
-                                    array('firstitem' => $data['counts']['first'],
+                                    array('firstitem' => $firstitem,
                                           'blocksize' => 5)
                                     );
 

@@ -6,13 +6,10 @@ function newsgroups_user_article()
     // Security Check
     if(!xarSecurityCheck('ReadNewsGroups')) return;
 
-    xarVarFetch('group', 'str:1', $group);
-    xarVarFetch('article', 'int', $article, 0, XARVAR_NOT_REQUIRED);
+    xarVarFetch('group', 'str:1', $group, NULL, XARVAR_DONT_REUSE, XARVAR_PREP_FOR_DISPLAY);
+    xarVarFetch('article', 'int', $article, 0, XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY);
     xarVarFetch('messageid', 'str:1', $messageid, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY);
 
-    // fix the input
-    $group = xarVarPrepForDisplay($group);
-    $article = xarVarPrepForDisplay($article);
     xarTplSetPageTitle($group . ' - ' . $article);
 
     if (empty($article) && empty($messageid)) {
@@ -41,7 +38,7 @@ function newsgroups_user_article()
     $data['article']        = nl2br(xarVarPrepForDisplay($data['body']));
 
     if(xarSecurityCheck('DeleteNewsGroups', false)) {
-        $data['deleteurl'] = xarModURL('newsgroups', 'user', 'cancel', 
+        $data['deleteurl'] = xarModURL('newsgroups', 'admin', 'delete',
                                         array('group'     => $group,
                                               'from'      => $data['headers']['From'],
                                               'messageid' => $data['headers']['Message-ID'],
@@ -51,25 +48,29 @@ function newsgroups_user_article()
         $data['deleteurl'] = '';
     }
 
+    // $data['counts']['count'] may be to small because of deleted articles
+    $articlespan = $data['counts']['last'] - $data['counts']['first'] + 1;
+
     $data['pager'] = xarTplGetPager($data['articlenum'],
-                                    $data['counts']['count'],
-                                    xarModURL('newsgroups', 'user', 'article', 
+                                    $articlespan,
+                                    xarModURL('newsgroups', 'user', 'article',
                                               array('group' => $group,
                                                     'article' => '%%')
                                               ),
                                     1, // one article (=item) per "page" here
                                     array('firstitem' => $data['counts']['first'],
                                           'blocksize' => 1));
-                                          
-    // getting the start number for this articles group page
-    // youngest article is on top, so adding $numitems-1 to article number 
-    $numitems = xarModGetVar('newsgroups', 'numitems');                                     
-    $pagergroup =   xarTplPagerInfo($data['articlenum'] + $numitems - 1 ,
-                                    $data['counts']['count'],
-                                    $numitems, // articles per group page
-                                    array('firstitem' => $data['counts']['first'],
-                                          'blocksize' => 1));
-    $data['groupstartnum'] = $pagergroup['blockfirstitem'];
+
+    // We want a link to the group view page where this particular article is
+    // listed. So we need the start article number on that group view page.
+    $numitems = xarModGetVar('newsgroups', 'numitems');
+    if ($data['counts']['count'] > $numitems) {
+        // How many pages are we away from the last item
+        $i = floor(($data['counts']['last'] - $data['articlenum']) / $numitems);
+        $data['groupstartnum'] = $data['counts']['last'] - $i * $numitems;
+    } else {
+        $data['groupstartnum'] = Null;
+    }
 
     // Return the template variables defined in this function
     return $data;

@@ -14,14 +14,13 @@
 
 $modversion['name'] = 'NewsGroups';
 $modversion['id'] = '802';
-$modversion['version'] = '1.0.3';
+$modversion['version'] = '1.1.0';
 $modversion['displayname']    = xarML('Newsgroups');
 $modversion['description'] = 'A newsgroup reader for Xaraya';
 $modversion['credits'] = 'xardocs/credits.txt';
-$modversion['help'] = 'xardocs/help.txt';
+$modversion['help'] = '';
 $modversion['changelog'] = 'xardocs/changelog.txt';
-$modversion['license'] = 'xardocs/license.txt';
-$modversion['coding'] = 'xardocs/coding.txt';
+$modversion['license'] = '';
 $modversion['official'] = 1;
 $modversion['author'] = 'John Cox';
 $modversion['contact'] = 'admin@dinerminor.com';

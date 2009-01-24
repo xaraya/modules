@@ -22,10 +22,11 @@
               <xar:if condition="!empty($deleteurl)">
                 <xar:if condition="$group eq 'xaraya.test' OR false">
                   <xar:comment>
-                    Delete the condition for canceling posts in others than the test group
+                    It is not recommended to delete the condition above to enable
+                    canceling posts in others than the test group.
                   </xar:comment>
-                  <div style="float: right; text-align: right;">
-                    <a href="#$deleteurl#">
+                  <div class="xar-floatright xar-align-right">
+                    <a href="#$deleteurl#" title="#xarML('Deleting messages destroys their continuous sequence. This may affect the navigation in this view.')#">
                       <xar:mlstring>Delete Message</xar:mlstring>
                     </a>
                   </div>
