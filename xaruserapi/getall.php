@@ -1,11 +1,11 @@
 <?PHP
 /**
- * Julian module get all events and place in date array
+ * Get all events.
  *
  * @package modules
- * @copyright (C) 2004 by Metrostat Technologies, Inc.
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.metrostat.net
+ * @link http://www.xaraya.com
  *
  * @subpackage Julian Module
  * @link http://xaraya.com/index.php/release/319.html
@@ -131,7 +131,8 @@ function julian_userapi_getall($args)
      * Switch query according to db type
      * MySQL friendly query is standard
      */
-
+    //type cast to ensure we have an int
+    $current_user = (int)$current_user;
     $dbtype = xarDBGetType();
     if (substr($dbtype,0,5) == 'pgsql' || substr($dbtype,0,8) == 'postgres') {
         /**
