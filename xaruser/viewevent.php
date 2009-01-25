@@ -3,7 +3,7 @@
  * Displays an event
  *
  * @package modules
- * @copyright (C) 2005-2008 The Digital Development Foundation
+ * @copyright (C) 2005-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -144,8 +144,6 @@ function julian_user_viewevent()
 
     */
 
-
-
     $event = xarModAPIFunc('julian', 'user', 'get', array('event_id'=>$event_id));
     $bl_data = array();
     // Put all vars into the template array, and sanitize meanwhile
@@ -170,47 +168,47 @@ function julian_user_viewevent()
              $bl_data['eRecur'] = $event['eRecur'];
              $bl_data['eDuration'] = $event['eDuration'];
              $bl_data['eDurationHours'] = $event['eDurationHours'];
-             $bl_data['eRrule'] = $event['eRrule'];
-             $bl_data['eIsallday'] = $event['eIsallday'];
+             $bl_data['eRrule'] = $event['rrule'];
+             $bl_data['isallday'] = $event['eIsallday'];
              $bl_data['eFee'] = $event['eFee'];
                 // Migrated from get()']; in preparation for merging.
              $bl_data['event_id'] =$event['eID'];
-             $bl_data['calendar_id'] =$event['eCalendarID'];
-             $bl_data['type'] = $event['eType'];
+             $bl_data['calendar_id'] =$event['calendar_id'];
+             $bl_data['type'] = $event['type'];
              $bl_data['organizer'] = $event['eOrganizer'];
              $bl_data['contact'] = $event['eContact'];
              $bl_data['url'] = $event['eUrl'];
-             $bl_data['summary'] = xarVarPrepForDisplay($event['eName']);
-             $bl_data['description'] = xarVarPrepForDisplay($event['eDescription']);
-             $bl_data['related_to'] = $event['eRelatedTo'];
-             $bl_data['reltype'] = $event['eReltype'];
-             $bl_data['class'] = $event['eClass'];
-             $bl_data['share_uids'] = $event['eShareUIDs'];
-             $bl_data['priority'] = $event['ePriority'];
-             $bl_data['status'] = $event['eStatus'];
-             $bl_data['location'] = xarVarPrepForDisplay($event['eLocation']);
-             $bl_data['street1'] = xarVarPrepForDisplay($event['eStreet1']);
-             $bl_data['street2'] = xarVarPrepForDisplay($event['eStreet2']);
-             $bl_data['city'] = xarVarPrepForDisplay($event['eCity']);
-             $bl_data['state'] = xarVarPrepForDisplay($event['eState']);
-             $bl_data['zip'] = xarVarPrepForDisplay($event['eZip']);
-             $bl_data['phone'] = xarVarPrepForDisplay($event['ePhone']);
-             $bl_data['email'] = xarVarPrepEmailDisplay($event['eEmail']);
-             $bl_data['fee'] = $event['eFee'];
-             $bl_data['exdate'] = $event['eExdate'];
-             $bl_data['categories'] = $event['eCategories'];
-             $bl_data['recur_freq'] = $event['eRecurFreq'];
+             $bl_data['summary'] = xarVarPrepForDisplay($event['summary']);
+             $bl_data['description'] = xarVarPrepForDisplay($event['description']);
+             $bl_data['related_to'] = $event['related_to'];
+             $bl_data['reltype'] = $event['reltype'];
+             $bl_data['class'] = $event['class'];
+             $bl_data['share_uids'] = $event['share_uids'];
+             $bl_data['priority'] = $event['priority'];
+             $bl_data['status'] = $event['status'];
+             $bl_data['location'] = xarVarPrepForDisplay($event['location']);
+             $bl_data['street1'] = xarVarPrepForDisplay($event['street1']);
+             $bl_data['street2'] = xarVarPrepForDisplay($event['street2']);
+             $bl_data['city'] = xarVarPrepForDisplay($event['city']);
+             $bl_data['state'] = xarVarPrepForDisplay($event['state']);
+             $bl_data['zip'] = xarVarPrepForDisplay($event['zip']);
+             $bl_data['phone'] = xarVarPrepForDisplay($event['phone']);
+             $bl_data['email'] = xarVarPrepEmailDisplay($event['email']);
+             $bl_data['fee'] = $event['fee'];
+             $bl_data['exdate'] = $event['exdate'];
+             $bl_data['categories'] = $event['categories'];
+             $bl_data['recur_freq'] = $event['recur_freq'];
              $bl_data['recur_until'] = $event['eRecur'];
-             $bl_data['recur_count'] = $event['eRecurCount'];
-             $bl_data['recur_interval'] = $event['eRecurInterval'];
-             $bl_data['dtstart'] = $event['eStart'];
-             $bl_data['dtend'] = $event['eDtend'];
-             $bl_data['duration'] = $event['eDuration'];
-             $bl_data['freebusy'] = $event['eFreebusy'];
-             $bl_data['due'] = $event['eDue'];
-             $bl_data['transp'] = $event['eTransp'];
-             $bl_data['created'] = $event['eCreated'];
-             $bl_data['last_modified'] = $event['eLastModified'];
+             $bl_data['recur_count'] = $event['recur_count'];
+             $bl_data['recur_interval'] = $event['recur_interval'];
+             $bl_data['dtstart'] = $event['dtstart'];
+             $bl_data['dtend'] = $event['dtend'];
+             $bl_data['duration'] = $event['duration'];
+             $bl_data['freebusy'] = $event['freebusy'];
+             $bl_data['due'] = $event['due'];
+             $bl_data['transp'] = $event['transp'];
+             $bl_data['created'] = $event['created'];
+             $bl_data['last_modified'] = $event['last_modified'];
 
     // Security check
     if (!xarSecurityCheck('ReadJulian', 1, 'Item', "$event_id:$bl_data[organizer]:$bl_data[calendar_id]:All")) return;
