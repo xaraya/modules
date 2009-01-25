@@ -140,11 +140,9 @@ function julian_user_viewevent()
                 'transp' => $eTransp,
                 'created' => $eCreated,
                 'last_modified' => $eLastModified
-
-
     */
-
     $event = xarModAPIFunc('julian', 'user', 'get', array('event_id'=>$event_id));
+    
     $bl_data = array();
     // Put all vars into the template array, and sanitize meanwhile
 
@@ -209,7 +207,8 @@ function julian_user_viewevent()
              $bl_data['transp'] = $event['transp'];
              $bl_data['created'] = $event['created'];
              $bl_data['last_modified'] = $event['last_modified'];
-
+             $bl_data['color'] = xarVarPrepForDisplay($event['color']);             
+            
     // Security check
     if (!xarSecurityCheck('ReadJulian', 1, 'Item', "$event_id:$bl_data[organizer]:$bl_data[calendar_id]:All")) return;
 
