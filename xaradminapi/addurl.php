@@ -3,7 +3,7 @@
  * Window Module ADD URL
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -120,6 +120,12 @@ function window_adminapi_addurl($args)
             if (!xarModAPIFunc('window', 'admin', 'update', $fargs)) {
                 return false;
             }
+        }
+
+        // Use this URL as default value if that modvar is still empty
+        $defaulturl = xarModGetVar('window', 'defaulturl');
+        if (empty($defaulturl)) {
+          xarModSetVar('window', 'defaulturl', $host);
         }
 
     }

@@ -154,7 +154,7 @@
                 <div class="xar-form-input-wrapper-after">
                     <input type="hidden" name="authid" id="authid" value="#$authid#" />
                     <input type="hidden" name="tab" id="tab" value="#$tab#" />
-                    <input type="submit" value="Save Changes"  tabindex="21" />
+                    <input type="submit" value="#xarML('Save Changes')#" tabindex="21" />
                 </div>
             </fieldset>
         </form>
@@ -179,17 +179,24 @@
                         <xar:mlstring>Default URL for Users:</xar:mlstring>
                     </label>
                       <select name="defaulturl" id="defaulturl">
+                          <xar:set name="urlselected">false</xar:set>
                           <xar:loop name="$urllist">
                               <xar:if condition="xarModGetVar('window','defaulturl') eq $loop:item['name']">
                                   <option value="#$loop:item['name']#" selected="selected">
                                       #$loop:item['name']#
                                   </option>
+                                  <xar:set name="urlselected">true</xar:set>
                                   <xar:else />
                                   <option value="#$loop:item['name']#">
                                       #$loop:item['name']# 
                                   </option>
                               </xar:if>
                           </xar:loop>
+                          <xar:if condition="$urlselected eq false">
+                            <option value="" selected="selected">
+                              <xar:mlstring>-- choose --</xar:mlstring>
+                            </option>
+                          </xar:if>
                       </select>
                   </div>
                   <div class="xar-form-input-wrapper-after">
@@ -216,7 +223,7 @@
                 <div class="xar-form-input-wrapper-after">
                     <input type="hidden" name="authid" id="authid" value="#$authid#" />
                     <input type="hidden" name="tab" id="tab" value="#$tab#" />
-                    <input type="submit" value="Save Changes"  tabindex="21" />
+                    <input type="submit" value="#xarML('Save Changes')#" tabindex="21" />
                 </div>
             </fieldset>
         </form>

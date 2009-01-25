@@ -20,7 +20,6 @@
 
     <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
             <p><xar:mlstring>There are two options that allow you to configure urls. The general modify configuration option, and one for managing URL specific settings.</xar:mlstring></p>
-            <p><xar:mlstring></xar:mlstring> </p>
             <h4><xar:mlstring>Modify Config Options</xar:mlstring></h4>
             <p>
               <xar:mlstring>Modify configuration settings are valid for all URLs and are available for General URL settings and Display options. </xar:mlstring>
@@ -81,7 +80,4 @@
     <li><xar:mlstring>Related tutorials and documentation on Window found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/window/" title="#xarML('Related documentation on Window')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
     </li>
   </ul>
-  <p class="xar-sub">
-    <strong>&nbsp;<xar:mlstring>Window Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.1&nbsp; 2006-09-04
-  </p>
 </div>

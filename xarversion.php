@@ -3,7 +3,7 @@
  * Window Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -15,7 +15,7 @@ $modversion['name'] = 'window';
 $modversion['id'] = '3002';
 $modversion['version'] = '1.1.4';
 $modversion['displayname']    = xarML('Window');
-$modversion['description'] = 'Incorporate external sites or standalone apps';
+$modversion['description'] = xarML('Incorporate external sites or standalone apps');
 $modversion['credits'] = 'docs/credits.txt';
 $modversion['help'] = 'docs/install.txt';
 $modversion['changelog'] = 'docs/changelog.txt';
