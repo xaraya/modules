@@ -9,19 +9,35 @@
 
   <h3><xar:mlstring>What is it?</xar:mlstring></h3>
   <p>
-    <em><xar:mlstring>Wiki module is a simple imlementation of some aspects of wikis.</xar:mlstring></em>
-    <xar:mlstring>It is currently responsible for providing the ability to transform <a href="http://en.wikipedia.org/wiki/Wikipedia:How_to_edit_a_page#Wiki_markup">wiki markup</a> in a module itemtype when hooked to the module or itemtype. </xar:mlstring></p>
-    <p><xar:mlstring>At the current time it provides transformation of wiki formatting markup tags,
+    <em><xar:mlstring>Wiki module is a simple implementation of wiki markup text formatting.</xar:mlstring></em>
+  </p>
+  <p>
+    <xar:mlstring>It transforms text containing <a href="http://en.wikipedia.org/wiki/Wikipedia:How_to_edit_a_page#Wiki_markup">wiki markup</a> in a module itemtype.
+    </xar:mlstring> <xar:mlstring>At the current time it provides transformation of wiki formatting markup tags,
      not wiki markup for wiki linking and wiki words.</xar:mlstring>
   </p>
 
   <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
   <p>
+    <xar:mlstring>Use this markups in the text:</xar:mlstring>
+    <ul>
+      <li><xar:mlstring>'' Two single quotes or two underscores for <em>&lt;em&gt; emphazised</em> format</xar:mlstring></li>
+      <li><xar:mlstring>''' Three single quotes for <strong>&lt;strong&gt; bold</strong> format</xar:mlstring></li>
+      <li><xar:mlstring>--- Three hyphens for <center>&lt;center&gt; centered text</center></xar:mlstring></li>
+      <li><xar:mlstring>{tab} A tabulator at the beginning of a line for <pre>&lt;pre&gt; preformated output</pre></xar:mlstring></li>
+      <li><xar:mlstring>{tab}* A tabulator followed by an asterisk for an <ul><li>&lt;ul&gt;&lt;li&gt;item on a bullet point list</li></ul></xar:mlstring></li>
+      <li><xar:mlstring>{tab}1 A tabulator followed by the char 1 for an <br>&nbsp;&nbsp;1.&nbsp;&lt;ol&gt;&lt;li&gt;item on an ordered list</xar:mlstring></li>
+    </ul>
+  </p>
+  <p>
+    <xar:mlstring>Three space characters count as tabulator. The complete list of formating options is in the <a href="modules/wiki/xardocs/help.txt"> help file</a> of this module</xar:mlstring>
+  </p>
+  <p>
     <xar:mlstring>Hook the wiki module to any content module and/or it's itemtypes that supports hooks. For example the Articles module and any of it's publication types.</xar:mlstring>
   </p>
 
   <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
-  <p><xar:mlstring>There are no blocks included at this time</xar:mlstring></p>
+  <p><xar:mlstring>There are no included blocks.</xar:mlstring></p>
 
   <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
   <p>
@@ -37,17 +53,14 @@
     <xar:mlstring>Further Information</xar:mlstring>
   </h3>
   <p>
-    <xar:mlstring>Further information on the Example module can be found at</xar:mlstring>
+    <xar:mlstring>Further information on the Wiki module can be found at</xar:mlstring>
   </p>
   <ul>
-    <li><xar:mlstring>Example Extension page at</xar:mlstring> <a title="#xarML('Example Module - Xaraya Extension 36')#" href="http://www.xaraya.com/index.php/release/36.html">Xaraya Extension and Releases</a>.
+    <li><xar:mlstring>Wiki Extension page at</xar:mlstring> <a title="#xarML('Wiki Module - Xaraya Extension 28')#" href="http://www.xaraya.com/index.php/release/28.html">Xaraya Extension and Releases</a>.
       <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
     </li>
-    <li><xar:mlstring>Related tutorials and documentation on Example found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/example/" title="#xarML('Related documentation on Example')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    <li><xar:mlstring>Related tutorials and documentation on Wiki found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/wiki/" title="#xarML('Related documentation on Wiki')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
     </li>
   </ul>
-  <p class="xar-sub">
-    <strong>&nbsp;<xar:mlstring>Example Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-03-08
-  </p>
 </div>
 

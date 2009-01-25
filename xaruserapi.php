@@ -3,7 +3,7 @@
  * Wiki
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -127,7 +127,8 @@ function XARwikiInclude($retour)
 /**
  * transform text
  *
- * @param  $args ['objectid'] string or array of text items
+ * @param array $args['objectid'] string or array of text items
+ * @param array $args['extrainfo'] string or array of text items
  * @returns string
  * @return string or array of transformed text items
  */
@@ -142,13 +143,13 @@ function wiki_userapi_transform($args)
     }
     // Argument check
     if (!isset($objectid)) {
-        $msg = xarML('Invalid parameter for #(2) function #(3)() in module #(4)',
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'objectid', 'userapi', 'transform', 'wiki');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     if (!isset($extrainfo)) {
-        $msg = xarML('Invalid parameter for #(2) function #(3)() in module #(4)',
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'extrainfo', 'userapi', 'transform', 'wiki');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
@@ -158,8 +159,12 @@ function wiki_userapi_transform($args)
     // FIXME: This regexp is a nice attemp to quality the wiki format, but it fails
     // silently without telling the user anything at all, rethink this. For now
     // let the regexp just match anything
-    $regexp = "/('''|\t+\*|\t+1|\t+\s:|---|__|(\[[\w ]+\|$XARAllowedProtocols))/";
-    $regexp ="/.*/";
+//  $regexp = "/('''|\t+\*|\t+1|\t+\s:|---|__|(\[[\w ]+\|$XARAllowedProtocols))/";
+//  $regexp ="/.*/";
+    // Hb: Matching anything can change content even in URL data fields, similar to
+    // bug 5960. So the deal here is to decide if the particular string is parsed
+    // at all. A useful regexp is "/\n/" for data to contain at least one newline.
+    $regexp ="/./";
     if (is_array($extrainfo)) {
         // if extrainfo['transform'] contains the stuff, transform that
         if (isset($extrainfo['transform']) && is_array($extrainfo['transform'])) {
