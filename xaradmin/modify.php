@@ -14,6 +14,8 @@
         if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
 
         $data['object'] = DataObjectMaster::getObject(array('name' => $name));
+        $data['object']->getItem(array('itemid' => $itemid,));
+
         $data['tplmodule'] = 'foo';
         $data['authid'] = xarSecGenAuthKey('foo');
 
@@ -21,7 +23,7 @@
         
             // Check for a valid confirmation key
             if(!xarSecConfirmAuthKey()) return;
-            echo "X";
+
             // Get the data from the form
             $isvalid = $data['object']->checkInput();
             
