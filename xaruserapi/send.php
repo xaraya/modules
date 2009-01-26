@@ -30,6 +30,8 @@
  *  6 BL compilation failed
  *  7 no correct user object available
  */
+    sys::import('modules.dynamicdata.class.objects.master');
+    
     function mailer_userapi_send($args)
     {
         $module = isset($args['module']) ? $args['module'] : 'mailer';
