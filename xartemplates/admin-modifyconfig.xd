@@ -71,7 +71,7 @@
     <form class="xar-formwidget" method="post" action="&xar-modurl-multisites-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
     <input type="hidden" name="authid" value="#$authid#" />
 
-    <fieldset class="formelements xar-norm">
+    <fieldset>
         <legend><xar:mlstring>Server Configuration</xar:mlstring></legend>
 
         <p class="xar-form-container-after">
@@ -80,18 +80,25 @@
           One or the other may not always work on your system, depending on the
           way your server is configured.</xar:mlstring>
         </p>
-        <p class="param">
+      <div class="xar-form-input-wrapper">
+        <label class="xar-form-label" title="#xarML('Value delivered from webserver')#">
+          <xar:mlstring>Your SERVER_NAME value</xar:mlstring>
+        </label>
+        <input type="text" name="servername" id="servername" value="#$SERVER_NAME#" class="xar-form-textlong" disabled="disabled"/>
+      </div>
+      <div class="xar-form-input-wrapper">
+        <label class="xar-form-label" title="#xarML('Value delivered from webserver')#">
+            <xar:mlstring>Your HTTP_HOST value</xar:mlstring>
+        </label>
+        <input type="text" name="httphost" id="httphost" value="#$HTTP_HOST#" class="xar-form-textlong" disabled="disabled"/>
+      </div>
+
+      <div class="xar-form-input-wrapper">
         <label for="servervar" class="xar-form-label">
-            <span class="help" title="#xarML('SERVER_NAME or HTTP_HOST')#">
-
-                <xar:mlstring>Your SERVER_NAME value&nbsp;=&nbsp;&nbsp;</xar:mlstring>#$SERVER_NAME#
-                <br /><br />
-               <xar:mlstring>Your HTTP_HOST value&nbsp;&nbsp;=&nbsp;</xar:mlstring>
-               <span style="color: red">#$HTTP_HOST#</span>
-
+          <span class="help" title="#xarML('Variable used by Multisites to detect the call')#">
+            <xar:mlstring>Multisites variable</xar:mlstring>
             </span>
         </label>
-
             <select name="servervar" id="servervar" size="1" tabindex="1">
                 <xar:if condition="xarModGetVar('multisites', 'servervar') eq 'HTTP_HOST'">
                     <option value="HTTP_HOST" selected="selected"><xar:mlstring>HTTP_HOST</xar:mlstring></option>
@@ -101,7 +108,7 @@
                     <option value="SERVER_NAME" selected="selected"><xar:mlstring>SERVER_NAME</xar:mlstring></option>
                 </xar:if>
              </select>
-             </p>
+      </div>
 
           <p class="xar-form-container-after">
           <xar:mlstring>If the HTTP_HOST value above displays your correct domain
@@ -116,7 +123,7 @@
 
         </fieldset>
 
-        <fieldset class="formelements xar-norm">
+        <fieldset>
             <legend><xar:mlstring>File Paths &amp; Domain Types</xar:mlstring></legend>
 
               <div class="xar-form-container-after">
@@ -141,7 +148,7 @@
                         (/Don't want this changed!)</td>
                     </tr>
 </xar:comment>
-            <p class="param">
+            <div class="xar-form-input-wrapper">
                 <label for="masterfolder" class="xar-form-label">
                     <span class="help" title="#xarML('Master directory')#">
                         <xar:mlstring>Default Master Data Directory Path</xar:mlstring>:
@@ -150,8 +157,8 @@
                  <input type="text" name="masterfolder" id="masterfolder" size="30" maxlength="40" value="#xarModGetVar('multisites', 'masterfolder')#" />
                  <xar:mlstring>NOTE: Do not enter trailing slashes.</xar:mlstring>
                  
-             </p>
-            <p class="param">
+            </div>
+            <div class="xar-form-input-wrapper">
                 <label for="DNexts" class="xar-form-label">
                     <span class="help" title="#xarML('Domain and subdomain extensions that you are using')#">
                             <xar:mlstring>Domain &amp; subdomain extensions</xar:mlstring>:
@@ -159,7 +166,7 @@
                 </label>
                 <input type="text" name="DNexts" id="DNexts" size="30" maxlength="80" value="#$DNexts#" />
                 <xar:mlstring>Separate each by a comma (,)</xar:mlstring>
-            </p>
+            </div>
 
            <p class="xar-form-container-after">
            <xar:mlstring>The common extensions are .com, .net, .org.

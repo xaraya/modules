@@ -11,7 +11,7 @@
 <xar:if condition="$mastersite eq false">
 
    <p>
-                <xar:mlstring>$infomsg</xar:mlstring>
+    $infomsg
    </p>
 <xar:else condition="$mastersite eq true" />
     <p>
@@ -77,7 +77,10 @@
                     </td>
                     <td>
                            <input type="checkbox" name="removedatadir" id="removedatadir" value="1" checked="checked" />
-                        <xar:mlstring>Will remove all directories and content for the&nbsp;</xar:mlstring>#$mssite#<xar:mlstring>&nbsp;site data directory!</xar:mlstring>
+                      <xar:ml>
+                        <xar:mlstring>Will remove all directories and content for the #(1) site data directory!</xar:mlstring>
+                        <xar:mlvar>#$mssite#</xar:mlvar>
+                      </xar:ml>
                     </td>
                 </tr>
 

@@ -1,9 +1,8 @@
 <?php
-// File: $Id$
 /*
  * Xaraya Multisites
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2003 - 2009by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.org
  *
@@ -52,10 +51,10 @@ function multisites_admin_delete($args)
        $data['removedatadir'] = 0;
 
 
-   } else {  //this is not the Master, or Master site not configured
+   } else {
 
       $data['mastersite']= false;
-      $data['infomsg']=xarML('Sorry, no authority for Deleting subsites.');
+      $data['infomsg']=xarML('This is not the Master site or it is not configured.');
    }
     // Return the template variables defined in this function
     return $data;
