@@ -143,7 +143,7 @@ function bbcode_transform($text)
     $bbcode->addCode ('bild', 'usecontent', 'do_bbcode_img', array (),
                       'image', array ('listitem', 'block', 'inline', 'link'), array ());
     // Bug, nested tags not transformed inside size tag
-    $bbcode->addCode ('size', 'callback_replace', 'do_bbcode_size', array ('usecontent_param' => 'default'), 'inline', array ('listitem', 'block','inline', 'link'), array ());
+    $bbcode->addCode ('size', 'callback_replace', 'do_bbcode_size', array ('usecontent_param' => 'default'), 'inline', array ('listitem', 'block','inline'), array ());
     /*
     $bbcode->addCode ('size', 'usecontent', 'do_bbcode_size', array (),
                       'inline', array ('listitem', 'block', 'inline', 'link'), array ());
