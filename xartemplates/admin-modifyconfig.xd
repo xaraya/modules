@@ -1,0 +1,82 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>Twitter Administration</xar:mlstring></span>
+</div>
+<div id="twitter-admin-modofyconfig" class="xar-mod-body">
+ <xar:template type="module" file="admin-menu" />
+  <xar:if condition="xarSessionGetVar('statusmsg') != ''">
+    <p>#xarSessionGetVar('statusmsg')#</p>
+  </xar:if>
+  <form method="post" id="post" action="&xar-modurl-twitter-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
+    <fieldset>
+      <legend><xar:mlstring>System Options</xar:mlstring></legend>
+      <div class="xar-form-input-wrapper">
+        <label for="shorturls" class="xar-form-label" title="#xarML('Enable short URLS?')#">
+          <xar:mlstring>Enable short URLs?</xar:mlstring>
+        </label>
+        <xar:data-input type="checkbox" name="shorturls" id="shorturls" checked="$shorturls" />
+      </div>
+      <div class="xar-form-input-wrapper">
+        <label for = "usealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
+          <xar:mlstring>Use a module alias</xar:mlstring>
+        </label>
+        <xar:data-input type="checkbox" name="usealias" id="usealias" checked="$usealias" />
+      </div>
+      <div class="xar-form-input-wrapper">
+        <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
+          <xar:mlstring>
+            Module Alias Name
+          </xar:mlstring>
+        </label>
+        <input type="text" name="aliasname" id="aliasname" value="#$aliasname#" size="32" maxlength="100" />
+      </div>
+    </fieldset>
+    <fieldset>
+        <legend>
+            <xar:mlstring>Twitter Account</xar:mlstring>
+        </legend>
+        <div class="xar-form-input-wrapper">
+            <label for="username" class="xar-form-label help">
+                <xar:mlstring>Username</xar:mlstring>
+            </label>
+            <input type="text" name="username" id="username" value="#$username#" maxlength="64" class="xar-form-textmedium" autocomplete="off" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="username" class="xar-form-label help">
+                <xar:mlstring>Password</xar:mlstring>
+            </label>
+            <input type="password" name="password" id="password" value="#$password#" maxlength="64" class="xar-form-textmedium" autocomplete="off" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="owner" class="xar-form-label help">
+                <xar:mlstring>Account owner</xar:mlstring>
+            </label>
+            <xar:data-input type="userlist" name="owner" id="owner" value="$owner" />
+        </div>
+    </fieldset>
+    <fieldset>
+      <legend><xar:mlstring>Display Options</xar:mlstring></legend>
+      <div class="xar-form-input-wrapper">
+        <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of tweets per page')#">
+          <xar:mlstring>Items Per Page:</xar:mlstring>
+        </label>
+        <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsperpage#" maxlength="3" class="xar-form-textshort" />
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
+      <xar:if condition="!empty($hooks)">
+        <xar:foreach in="$hooks" key="$hookmodule">
+          #$hooks[$hookmodule]#
+        </xar:foreach>
+      </xar:if>
+    </fieldset>
+
+    <div class="xar-form-input-wrapper-after">
+        <input type="hidden" name="phase" id="phase" value="update" />
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="submit" value="#xarML('Update Configuration')#" />
+    </div>
+  </form>
+</div>
+<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

@@ -1,0 +1,44 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+<xar:set name="request">xarRequestGetInfo()</xar:set>
+<xar:set name="activefunc">#$request.2#</xar:set>
+<xar:if condition="empty($timeline)"><xar:set name="timeline">''</xar:set></xar:if>
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="#xarML('Choose an action to perform')#">
+      <xar:mlstring>Timelines:</xar:mlstring>
+    </dt>
+    <xar:sec mask="ViewTwitter" catch="false">
+        <xar:set name="tabclass">$timeline=='public'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="#xarModURL('twitter', 'user', 'main', array('timeline' => 'public'))#">
+            <xar:mlstring>Public</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+    <xar:if condition="!empty($username)">
+        <xar:sec mask="ReadTwitter" catch="false">
+            <xar:set name="tabclass">$timeline=='user'?'active':''</xar:set>
+            <dd class="#$tabclass#">
+              <a href="#xarModURL('twitter', 'user', 'main', array('timeline' => 'user'))#">
+                #$username#
+              </a>
+            </dd>
+            <xar:set name="tabclass">$timeline=='friends'?'active':''</xar:set>
+            <dd class="#$tabclass#">
+              <a href="#xarModURL('twitter', 'user', 'main', array('timeline' => 'friends'))#">
+                <xar:mlstring>Friends</xar:mlstring>
+              </a>
+            </dd>
+        </xar:sec>
+    </xar:if>
+    <xar:sec mask="AddTwitter" catch="false">
+        <xar:set name="tabclass">$activefunc=='tweet'?'active':''</xar:set>
+        <dd>
+          <a href="#xarModURL('twitter', 'user', 'tweet')#">
+            <xar:mlstring>New Tweet</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+  </dl>
+</div>

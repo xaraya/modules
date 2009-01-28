@@ -1,0 +1,15 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<ul>
+<xar:foreach in="$items" key="$key" value="$item">
+    <li>#$item.screen_name#
+        <p>
+            #$item.text#
+        </p>
+        <xar:base-timesince stamp="$item['created_at']" /> <xar:mlstring>ago, via </xar:mlstring>#$item.source#
+    </li>
+</xar:foreach>
+</ul>
+
+
+
+

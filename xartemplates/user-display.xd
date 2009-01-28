@@ -1,0 +1,66 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- common user menu for this module - remove link to the current function -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Example</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+
+    <!-- the variables used in this menu templte  come from example_user_menu() -->
+    <xar:template type="module" file="user-menu" />
+
+    <h2><xar:mlstring>Example Item</xar:mlstring></h2>
+
+    <!-- the specific template for the current function comes here -->
+
+    <!-- some status given by the function using this template -->
+    
+    <!-- Note : we use an if/else structure here, either to show a status *or*
+         to show the details of a particular item -->
+    
+    <xar:if condition="!empty($status)">
+        <strong>#$status#</strong>
+    <xar:else />
+
+        <!-- some item variables given by the function using this template -->
+
+        <p>
+            <xar:mlstring>Example item name:</xar:mlstring> 
+
+            <!-- display depends on another variable specified by the function -->
+
+            <xar:if condition="!empty($is_bold)">
+                <strong>#$name_value#</strong> <xar:mlstring>(in bold now)</xar:mlstring>
+            <xar:else />
+                    #$name_value# <xar:mlstring>(not in bold now)</xar:mlstring>
+            </xar:if>
+        </p>
+        <p>
+              <xar:mlstring>Example item number:</xar:mlstring> 
+            #$number_value#
+        </p>
+
+        <!-- if you want to extend this module with dynamic data, you can retrieve
+        //   that data in the code via APIs, or use e.g. the following BL tags here.
+        //   For the different options, see the overview of dynamicdata...
+        -->
+        <xar:if condition="xarModIsHooked('dynamicdata')">
+            <!-- 1. retrieve any dynamic properties defined for this object -->
+            <xar:data-getitem name="$properties" module="example" itemid="$exid" />
+            <!-- 2. for each property, display its label and value in output format -->
+            <xar:if condition="isset($properties) and count($properties) gt 0">
+                <xar:foreach in="$properties" key="$name">
+                          <xar:data-label property="$properties[$name]" />:
+                        <xar:data-output property="$properties[$name]" />
+                </xar:foreach>
+            </xar:if>
+        </xar:if>
+
+    <!-- add the output from the different display hooks here -->
+    <xar:if condition="!empty($hookoutput)">
+        <xar:foreach in="$hookoutput" key="$hookmodule">
+            #$hookoutput[$hookmodule]#
+        </xar:foreach>
+    </xar:if>
+
+</xar:if>
+</div>
