@@ -1,9 +1,9 @@
 <?php
 /**
- * Purpose of File
+ * Show output as array or as templated string
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002 - 2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,9 +14,14 @@
 /**
  * show output for uploads module (used in DD properties)
  *
- * @param string $value The current value(s)
- * @param string $format Format specifying 'fileupload', 'textupload' or 'upload'
- * @return string containing the uploads output
+ * @param string $args['value']    Optional, the current value(s), default is Null
+ * @param string $args['format']   Optional, specifying 'fileupload', 'textupload' or
+                                   'upload' as output format, default is fileupload
+ * @param bool   $args['multiple'] Optional, Deliver several files, default is false
+ * @param string $args['style']    Optional, specifing 'icon' gives templated
+ *                                 output, default is Null
+ *
+ * @return array or string containing the uploads output, default is array
  */
 function uploads_userapi_showoutput($args)
 {
@@ -63,14 +68,13 @@ function uploads_userapi_showoutput($args)
         return array();
     }
 
-
     // FIXME: Quick Fix - Forcing return of raw array of fileId's with their metadata for now
-    // Rabbitt :: March 29th, 2004
 
-    // 2008-10-13: pass the style down the chain.
-    if (isset($style)) $data['style'] = $style;
+    if (isset($style)) {
+        $data['style'] = $style;
+    }
 
-    if (isset($style) && $style = 'icon') {
+    if (isset($style) && $style == 'icon') {
         if (is_array($value) && count($value)) {
             $data['Attachments'] = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $value));
         } else {

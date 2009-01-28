@@ -33,30 +33,29 @@
                 The import engine will try to make a best guess for the name of the file you are trying to import.
                 In the event that it cannot figure out what the file name is it will use the following methods:
             </xar:mlstring>
+        </p>
+        <p>
             <ul>
                 <li>
                     <xar:mlstring><strong>HTTP and HTTPS</strong></xar:mlstring>
-                    <p>
+                      <br />
                         <xar:mlstring>
                             In the event that the filename for an HTTP import can not be determined, the file will be
                             named based on the host name of the server the file was imported from. For example, importing
                             http://www.xaraya.com/ would return a file with the name of www_xaraya_com.html
                         </xar:mlstring>
-                    </p>
                 </li>
                 <li>
                     <strong>FTP</strong>
-                    <p>
+                      <br />
                         <xar:mlstring>
                             Due to the underlying nature of the FTP protocol, it is impossible to successfully access a file
                             on a system without providing a viable file name. In this case, no file name 'guessing' will be
                             attempted and the import will fail.
                         </xar:mlstring>
-                    </p>
                 </li>
             </ul>
         </p>
-
         <h3>
             <xar:mlstring>Local Imports Sandbox</xar:mlstring>
         </h3>

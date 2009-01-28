@@ -3,7 +3,7 @@
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -11,11 +11,6 @@
  * @link http://xaraya.com/index.php/release/666.html
  * @author Uploads Module Development Team
  */
-// File: $Id$
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
 // ----------------------------------------------------------------------
 // Original Author of file: Marie Altobelli (Ladyofdragons)
 // Current Maintainer: Michael Cortez (mcortez)
@@ -142,8 +137,9 @@ function uploads_init()
     xarDefineInstance('uploads', 'File', $instances);
 
     xarRegisterMask('ViewUploads',  'All','uploads','File','All:All:All:All','ACCESS_READ');
-    xarRegisterMask('AddUploads',   'All','uploads','File','All:All:All:All','ACCESS_ADD');
+    xarRegisterMask('CommentUploads','All','uploads','File','All:All:All:All','ACCESS_COMMENT');
     xarRegisterMask('EditUploads',  'All','uploads','File','All:All:All:All','ACCESS_EDIT');
+    xarRegisterMask('AddUploads',   'All','uploads','File','All:All:All:All','ACCESS_ADD');
     xarRegisterMask('DeleteUploads','All','uploads','File','All:All:All:All','ACCESS_DELETE');
     xarRegisterMask('AdminUploads', 'All','uploads','File','All:All:All:All','ACCESS_ADMIN');
 
@@ -563,6 +559,9 @@ function uploads_upgrade($oldversion)
                                    'uploads', 'admin', 'waitingcontent')) {
                 return false;
             }
+        case '1.1.0':
+            xarRegisterMask('CommentUploads','All','uploads','File','All:All:All:All','ACCESS_COMMENT');
+
         default:
             return true;
     }

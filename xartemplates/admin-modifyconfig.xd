@@ -55,11 +55,13 @@
                     <input type="text" name="file[maxsize]" value="#$file['maxsize']#"/>
                     in bytes (commas are fine)
                     <p class="xar-form-input-wrapper-after">
+                      <xar:set name="url">xarModurl('base','admin','sysinfo', array('what' => '4'))</xar:set>
+                      <xar:ml>
                         <xar:mlstring>
-                        This is the maximum size an uploaded file may be.<br />
-                        NOTE: The server wide PHP setting, if set to a lower value, <em>will</em> override this setting.
-                        Please ask your web host provider for details on the settings that they use for uploaded files.
+                          This is the maximum size an uploaded file may be. The PHP setting <a href="#(1)"> upload_max_filesize</a> <em>will</em> override this, if set to a lower value.
                         </xar:mlstring>
+                        <xar:mlvar>#$url#</xar:mlvar>
+                      </xar:ml>
                     </p>
                  </div>
                  <div class="xar-form-input-wrapper">
@@ -300,7 +302,7 @@
                     </xar:foreach>
                 <xar:else/>
                     <xar:mlstring>No hooks configured. </xar:mlstring>
-                    <a href="&xar-modurl-modules-admin-hooks;"><xar:mlstring>Configure hooks now</xar:mlstring></a>.
+                    <a href="&xar-modurl-modules-admin-hooks;&amp;hook=uploads"><xar:mlstring>Configure hooks now</xar:mlstring></a>.
                 </xar:if>
                 </div>
             </fieldset>
