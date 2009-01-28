@@ -159,8 +159,8 @@ function julian_user_viewevents($args)
     if (!isset($events) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     // Sanitize all items
-
     foreach ($events as $key=>$event) {
+
          $event['eID'] = $event['eID'];
          $event['eName'] = xarVarPrepForDisplay($event['eName']);
          $event['eDescription'] = xarVarPrepForDisplay($event['eDescription']);
@@ -186,42 +186,42 @@ function julian_user_viewevents($args)
          $event['eFee'] = $event['eFee'];
             // Migrated from get()']; in preparation for merging.
          $event['event_id'] =$event['eID'];
-         $event['calendar_id'] =$event['eCalendarID'];
-         $event['type'] = $event['eType'];
-         $event['organizer'] = $event['eOrganizer'];
-         $event['contact'] = $event['eContact'];
-         $event['url'] = $event['eUrl'];
-         $event['summary'] = xarVarPrepForDisplay($event['eName']);
-         $event['description'] = xarVarPrepForDisplay($event['eDescription']);
-         $event['related_to'] = $event['eRelatedTo'];
-         $event['reltype'] = $event['eReltype'];
-         $event['class'] = $event['eClass'];
-         $event['share_uids'] = $event['eShareUIDs'];
-         $event['priority'] = $event['ePriority'];
-         $event['status'] = $event['eStatus'];
-         $event['location'] = xarVarPrepForDisplay($event['eLocation']);
-         $event['street1'] = xarVarPrepForDisplay($event['eStreet1']);
-         $event['street2'] = xarVarPrepForDisplay($event['eStreet2']);
-         $event['city'] = xarVarPrepForDisplay($event['eCity']);
-         $event['state'] = xarVarPrepForDisplay($event['eState']);
-         $event['zip'] = xarVarPrepForDisplay($event['eZip']);
-         $event['phone'] = xarVarPrepForDisplay($event['ePhone']);
-         $event['email'] = xarVarPrepEmailDisplay($event['eEmail']);
-         $event['fee'] = $event['eFee'];
-         $event['exdate'] = $event['eExdate'];
-         $event['categories'] = $event['eCategories'];
-         $event['recur_freq'] = $event['eRecurFreq'];
-         $event['recur_until'] = $event['eRecur'];
-         $event['recur_count'] = $event['eRecurCount'];
-         $event['recur_interval'] = $event['eRecurInterval'];
-         $event['dtstart'] = $event['eStart'];
-         $event['dtend'] = $event['eDtend'];
-         $event['duration'] = $event['eDuration'];
-         $event['freebusy'] = $event['eFreebusy'];
-         $event['due'] = $event['eDue'];
-         $event['transp'] = $event['eTransp'];
-         $event['created'] = $event['eCreated'];
-         $event['last_modified'] = $event['eLastModified'];
+         $bl_data['calendar_id'] =$event['calendar_id'];
+         $event['type'] = $event['type'];
+         $event['organizer'] = $event['organizer'];
+         $event['contact'] = $event['contact'];
+         $event['url'] = $event['url'];
+         $event['summary'] = xarVarPrepForDisplay($event['summary']);
+         $event['description'] = xarVarPrepForDisplay($event['description']);
+         $event['related_to'] = $event['related_to'];
+         $event['reltype'] = $event['reltype'];
+         $event['class'] = $event['class'];
+         $event['share_uids'] = $event['share_uids'];
+         $event['priority'] = $event['priority'];
+         $event['status'] = $event['status'];
+         $event['location'] = xarVarPrepForDisplay($event['location']);
+         $event['street1'] = xarVarPrepForDisplay($event['street1']);
+         $event['street2'] = xarVarPrepForDisplay($event['street2']);
+         $event['city'] = xarVarPrepForDisplay($event['city']);
+         $event['state'] = xarVarPrepForDisplay($event['state']);
+         $event['zip'] = xarVarPrepForDisplay($event['zip']);
+         $event['phone'] = xarVarPrepForDisplay($event['phone']);
+         $event['email'] = xarVarPrepEmailDisplay($event['email']);
+         $event['fee'] = $event['fee'];
+         $event['exdate'] = $event['exdate'];
+         $event['categories'] = $event['categories'];
+         $event['recur_freq'] = $event['recur_freq'];
+         $event['recur_until'] = $event['recur_until'];
+         $event['recur_count'] = $event['recur_count'];
+         $event['recur_interval'] = $event['recur_interval'];
+         $event['dtstart'] = $event['dtstart'];
+         $event['dtend'] = $event['dtend'];
+         $event['duration'] = $event['duration'];
+         $event['freebusy'] = $event['freebusy'];
+         $event['due'] = $event['due'];
+         $event['transp'] = $event['transp'];
+         $event['created'] = $event['created'];
+         $event['last_modified'] = $event['last_modified']; 
          $events[$key] = $event;
     }
 
