@@ -308,6 +308,7 @@ function do_bbcode_url ($action, $attributes, $content, $params, &$node_object)
 
 function is_valid_url($url)
 {
+    if ($url == 'http://') return false;
     $parsed_url = parse_url($url);
     if (!isset($parsed_url['scheme'])){
         return false;
