@@ -1,0 +1,22 @@
+Third point upgrade to v0.0.2 
+
+Function changes
++ Updated function headers
++ Removed redundant functions and templates
++ Added caching to get methods, requires writable var/cache
++ Added try post via json for cases when cURL fails
+
+GUI changes to user-tweet.xd
++ Changed text input to textarea so spellcheckers work
++ Added characters left count to new tweet GUI
+
+GUI changes to admin-modifyconfig.xd
++ Added config validation error messages
++ Added options for which timelines to display
++ Added option to specify default timeline
+
+GUI changes to admin-main.xd 
++ Updated Overview
+
+GUI changes to /includes/user-menu.xd
++ Fixed tabs

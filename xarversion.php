@@ -1,19 +1,19 @@
 <?php
 /**
- * Example Module - documented module template
+ * Twitter Module 
  *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Example Module
- * @link http://xaraya.com/index.php/release/36.html
- * @author Example Module Development Team
+ * @subpackage Twitter Module
+ * @link http://xaraya.com/index.php/release/991.html
+ * @author Chris Powis (crisp@crispcreations.co.uk)
  */
-$modversion['name']           = 'twitter'; /* lowercase, no spaces or special chars */
+$modversion['name']           = 'twitter';
 $modversion['id']             = '991';
-$modversion['version']        = '0.0.1'; /* three point version number */
+$modversion['version']        = '0.0.2';
 $modversion['displayname']    = xarML('Twitter');
 $modversion['description']    = 'Twitter module';
 $modversion['credits']        = 'xardocs/credits.txt';
@@ -25,7 +25,7 @@ $modversion['author']         = 'Chris Powis';
 $modversion['contact']        = 'http://crispcreations.co.uk/';
 $modversion['admin']          = 1;
 $modversion['user']           = 1;
-$modversion['class']          = 'Complete'; /* Complete|Utility|Miscellaneous|Authentication are available options for non-core */
-$modversion['category']       = 'Content';  /* Global|Content|User & Group|Miscellaneous available for non-core */
+$modversion['class']          = 'Complete';
+$modversion['category']       = 'Content';
 
 ?>

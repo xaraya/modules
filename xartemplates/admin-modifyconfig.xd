@@ -5,7 +5,7 @@
 <div id="twitter-admin-modofyconfig" class="xar-mod-body">
  <xar:template type="module" file="admin-menu" />
   <xar:if condition="xarSessionGetVar('statusmsg') != ''">
-    <p>#xarSessionGetVar('statusmsg')#</p>
+    <p class="xar-error">#xarSessionGetVar('statusmsg')#</p>
   </xar:if>
   <form method="post" id="post" action="&xar-modurl-twitter-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
     <fieldset>
@@ -40,12 +40,18 @@
                 <xar:mlstring>Username</xar:mlstring>
             </label>
             <input type="text" name="username" id="username" value="#$username#" maxlength="64" class="xar-form-textmedium" autocomplete="off" />
+            <xar:if condition="isset($invalid['username'])">
+                <span class="xar-error">#$invalid['username']#</span>
+            </xar:if>
         </div>
         <div class="xar-form-input-wrapper">
             <label for="username" class="xar-form-label help">
                 <xar:mlstring>Password</xar:mlstring>
             </label>
             <input type="password" name="password" id="password" value="#$password#" maxlength="64" class="xar-form-textmedium" autocomplete="off" />
+            <xar:if condition="isset($invalid['password'])">
+                <span class="xar-error">#$invalid['password']#</span>
+            </xar:if>
         </div>
         <div class="xar-form-input-wrapper">
             <label for="owner" class="xar-form-label help">
@@ -56,11 +62,50 @@
     </fieldset>
     <fieldset>
       <legend><xar:mlstring>Display Options</xar:mlstring></legend>
+        <div class="xar-form-input-wrapper">
+            <label for="owner" class="xar-form-label help">
+                <xar:mlstring>Default Timeline</xar:mlstring>
+            </label>
+            <xar:data-input type="dropdown" name="deftimeline" id="deftimeline" options="$validtls" value="$deftimeline" />
+            <xar:if condition="isset($invalid['deftimeline'])">
+                <span class="xar-error">#$invalid['deftimeline']#</span>
+            </xar:if>
+        </div>
+      <div class="xar-form-input-wrapper">
+        <label for="showpublic" class="xar-form-label" title="#xarML('Show the public timeline in user display')#">
+          <xar:mlstring>Show Public Timeline?</xar:mlstring>
+        </label>
+        <xar:data-input type="checkbox" name="showpublic" id="showpublic" checked="$showpublic" />
+        <xar:if condition="isset($invalid['showpublic'])">
+            <span class="xar-error">#$invalid['showpublic']#</span>
+        </xar:if>
+      </div>
+      <div class="xar-form-input-wrapper">
+        <label for="showuser" class="xar-form-label" title="#xarML('Show the timeline of the specified Twitter account')#">
+          <xar:mlstring>Show User Timeline?</xar:mlstring>
+        </label>
+        <xar:data-input type="checkbox" name="showuser" id="showuser" checked="$showuser" />
+        <xar:if condition="isset($invalid['showuser'])">
+            <span class="xar-error">#$invalid['showuser']#</span>
+        </xar:if>
+      </div>
+      <div class="xar-form-input-wrapper">
+        <label for="shortfriends" class="xar-form-label" title="#xarML('Show the timeline of the specified Twitter account and all friends')#">
+          <xar:mlstring>Show Friends Timeline?</xar:mlstring>
+        </label>
+        <xar:data-input type="checkbox" name="showfriends" id="showfriends" checked="$showfriends" />
+        <xar:if condition="isset($invalid['showfriends'])">
+            <span class="xar-error">#$invalid['showfriends']#</span>
+        </xar:if>
+      </div>
       <div class="xar-form-input-wrapper">
         <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of tweets per page')#">
           <xar:mlstring>Items Per Page:</xar:mlstring>
         </label>
         <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsperpage#" maxlength="3" class="xar-form-textshort" />
+        <xar:if condition="isset($invalid['itemsperpage'])">
+            <span class="xar-error">#$invalid['itemsperpage']#</span>
+        </xar:if>
       </div>
     </fieldset>
     <fieldset>

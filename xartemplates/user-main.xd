@@ -20,6 +20,7 @@
         </h2>
         <div class="xar-clearboth"></div>
     </div>
+    <xar:if condition="!empty($items)">
     <xar:foreach in="$items" key="$key" value="$item">
         <div class="xar-accent-outline xar-margin-thickbottom xar-padding-thick">
             <span class="xar-floatleft" style="width: 50px;">
@@ -35,6 +36,7 @@
             <div class="xar-clearboth"></div>
         </div>
     </xar:foreach>
+    </xar:if>
 </div>
 
 

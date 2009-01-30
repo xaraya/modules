@@ -1,23 +1,17 @@
 /**
- * Example Standard Style Sheet
+ * Twitter Module 
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Example Module
- * @link http://xaraya.com/index.php/release/36.html
- * @author Example Module Development Team
+ * @subpackage Twitter Module
+ * @link http://xaraya.com/index.php/release/991.html
+ * @author Chris Powis (crisp@crispcreations.co.uk)
  */
 /**
  * Standard Style Sheet
  *
- * This is the file to place your module specific CSS in...
- *
- * You call this file by adding the tag <xar:style scope="module" />
- * to your templates. This tag implies that this style sheet is called style.css
- * You can extend the tag with <xar:style scope="module" file="name" />. That will add the file 'name.css' to your template.
- *
- * @author Example Module development team
+ * @author Chris Powis (crisp@crispcreations.co.uk)
  */

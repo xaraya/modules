@@ -1,29 +1,28 @@
 <?php
 /**
- * Display an item
+ * Twitter Module 
  *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Example Module
- * @link http://xaraya.com/index.php/release/36.html
- * @author Example Module Development Team
+ * @subpackage Twitter Module
+ * @link http://xaraya.com/index.php/release/991.html
+ * @author Chris Powis (crisp@crispcreations.co.uk)
  */
 /**
- * Display an item
+ * Update Twitter status
  *
  * This is a standard function to provide detailed information on a single item
  * available from the module.
  *
  * @author the Example module development team
  * @param  array $args an array of arguments (if called by other modules)
- * @param  int $args['objectid'] a generic object id (if called by other modules)
- * @param  int $args['exid'] the item id used for this example module
- * @return array $data The array that contains all data for the template
+ * @param  int $args['phase'] function phase, form (default) or update on submit
+ * @param  int $args['text'] the twitter status to send
+ * @return array mixed $data The array that contains all data for the template or true on update
  */
-include_once('modules/twitter/xarclass/twitterAPI.php');
 function twitter_user_tweet($args)
 {
     if (!xarSecurityCheck('AddTwitter')) return;
@@ -39,6 +38,7 @@ function twitter_user_tweet($args)
       default:
         $data['isowner'] = $isowner;
         $data['text'] = '';
+        $data['username'] = xarModGetVar('twitter', 'username');
       break;
       case 'update':
         if (!xarVarFetch('text', 'str:1', $text, '', XARVAR_NOT_REQUIRED)) return;
@@ -55,12 +55,16 @@ function twitter_user_tweet($args)
         }
         if (empty($text)) $invalid['text'] = 'text';
           if (empty($invalid)) {
-          $t = new twitter();
-          $t->username = $username;
-          $t->password = $password;
-          $result = $t->update($text);  
-          if ($result === false) {
-            $invalid['update'] = 'update';
+          $response = xarModAPIFunc('twitter', 'user', 'status_methods',
+            array(
+              'method' => 'update',
+              'username' => $username,
+              'password' => $password,
+              'status' => $text
+            ));
+          if (!$response) {
+            $invalid[] = 'post';
+            xarSessionSetVar('statusmsg', xarML('Unable to update status'));
           }
         } 
         if (empty($invalid)) {
@@ -69,13 +73,18 @@ function twitter_user_tweet($args)
           return true;
         } 
         $data['text'] = $text;
-        $data['password'] = $password;
         $data['username'] = $username;
       break;
     }
     $data['invalid'] = $invalid;
     $data['authid'] = xarSecGenAuthKey('twitter');
-
+    $data['activetab'] = 'tweet';
+    $data['isowner']    = $isowner;
+    $data['itemsperpage'] = xarModGetVar('twitter', 'itemsperpage');
+    $data['showpublic'] = xarModGetVar('twitter', 'showpublic');
+    $data['showuser'] = xarModGetVar('twitter', 'showuser');
+    $data['showfriends'] = xarModGetVar('twitter', 'showfriends');
+    $data['deftimeline'] = xarModGetVar('twitter', 'deftimeline');
     return $data;
 }
 ?>

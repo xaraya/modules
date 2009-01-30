@@ -1,36 +1,32 @@
 <?php
 /**
- * The main administration function
+ * Twitter Module 
  *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Example Module
- * @link http://xaraya.com/index.php/release/36.html
- * @author Example Module Development Team
+ * @subpackage Twitter Module
+ * @link http://xaraya.com/index.php/release/991.html
+ * @author Chris Powis (crisp@crispcreations.co.uk)
  */
 
 /**
  * The main administration function
  *
- * This function is the default function, and is called whenever the
- * module is initiated without defining arguments. As such it can
- * be used for a number of things, but most commonly it either just
- * shows the module menu and returns or calls whatever the module
- * designer feels should be the default function (often this is the
- * view() function)
- *
- * @author Example Module Development Team
+ * @author Chris Powis (crisp@crispcreations.co.uk)
  * @access public
- * @return Specify your return type here
+ * @return true
  */
 function twitter_admin_main()
 {
+   /* Security Check */
+    if (!xarSecurityCheck('AdminTwitter',0)) return;
 
-    xarResponseRedirect(xarModURL('twitter', 'admin', 'modifyconfig'));
+    $data=array();
 
-    return true;
+    return $data;
+
 }
 ?>

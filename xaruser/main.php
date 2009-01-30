@@ -23,69 +23,44 @@
  * @author the Example module development team
  * @return array $data An array with the data for the template
  */
-include_once('modules/twitter/xarclass/twitterAPI.php');
 function twitter_user_main()
 {
 
     if (!xarSecurityCheck('ViewTwitter')) return;
-    if (!xarVarFetch('timeline', 'str:1', $timeline, 'public', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('timeline', 'str:1', $timeline, '', XARVAR_NOT_REQUIRED)) return;
 
     $data = array();
-    $username = xarModGetVar('twitter', 'username');
+
+    $data['username'] = xarModGetVar('twitter', 'username');
     $password = xarModGetVar('twitter', 'password');
-    $numitems = xarModGetVar('twitter', 'itemsperpage');
+    $data['isowner']    = xarUserGetVar('uid') == xarModGetVar('twitter', 'owner') ? true : false;
+    $data['itemsperpage'] = xarModGetVar('twitter', 'itemsperpage');
+    $data['showpublic'] = xarModGetVar('twitter', 'showpublic');
+    $data['showuser'] = xarModGetVar('twitter', 'showuser');
+    $data['showfriends'] = xarModGetVar('twitter', 'showfriends');
+    $data['deftimeline'] = xarModGetVar('twitter', 'deftimeline');
 
-    if (empty($username) || empty($password)) $timeline = 'public';
-
-    $t = new twitter();
-
-    switch ($timeline) {
-      case 'public':
-      default:
-        $res = $t->publicTimeline();
-      break;
-      case 'user':
-        $t->username=$username;
-        $t->password=$password;
-        $res = $t->userTimeline(false, $numitems);
-      break;
-      case 'friends':
-        $t->username=$username;
-        $t->password=$password;
-        $res = $t->friendsTimeline();
-      break;
+    $timelines = array();
+    if ($data['showpublic']) $timelines[] = array('id' => 'public', 'name' => 'Public');
+    if (!empty($data['username']) && !empty($password)) {
+      if ($data['showuser']) $timelines[] = array('id' => 'user', 'name' => 'User');
+      if ($data['showfriends']) $timelines[] = array('id' => 'friends', 'name' => 'Friends');
     }
+    $data['timelines'] = $timelines;
 
-    $items = array();
-    if ($res) {
-      $i = 0;
-      foreach ($res->status as $tweet) {
-        $thistext = $tweet->text;
-        // urls
-        $thistext = preg_replace("#(^|[\n ])([\w]+?://[^ \"\n\r\t<]*)#is", "\\1<a href=\"\\2\" rel=\"external\">\\2</a>", $thistext); 
-        // hashtags
-        $thistext = preg_replace("/(?:^|\W)\#([a-zA-Z0-9\-_\.+:=]+\w)(?:\W|$)/is", " <a href=\"http://hashtags.org/tag/\\1/messages\">#\\1</a> ", $thistext);
-        // at tags
-        $thistext = preg_replace("/(?:^|\W|#)@(\w+)/is", " <a href=\"http://twitter.com/\\1\">@\\1</a> ", $thistext);
-        $items[$i] = array(
-          'created_at' => strtotime($tweet->created_at),
-          'screen_name' => $tweet->user->screen_name,          
-          'name' => $tweet->user->name,
-          'profile_image_url' => $tweet->user->profile_image_url,
-          'text' => $thistext,
-          'id' => $tweet->id,
-          'source' => $tweet->source
-        );
-        $i++;
-        if ($i == $numitems-1) break;
-      }
-    }
-    //print_r($res);
-    $data['items'] = $items;   
-    $data['username'] = $username;
+    if (empty($timeline)) $timeline = $data['deftimeline'];
     $data['timeline'] = $timeline;
+    
+    $items = xarModAPIFunc('twitter', 'user', 'status_methods',
+      array(
+        'method' => $timeline.'_timeline',
+        'username' => $data['username'],
+        'password' => $password
+      ));
 
-    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Welcome')));
+    $data['items'] = $items;   
+    $data['activetab'] = $timeline;
+    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Timeline')));
     /* Return the template variables defined in this function */
     return $data;
 

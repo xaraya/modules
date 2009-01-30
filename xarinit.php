@@ -1,25 +1,20 @@
 <?php
 /**
- * Example Module - initialization functions
+ * Twitter Module 
  *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Example Module
- * @link http://xaraya.com/index.php/release/36.html
- * @author Example Module Development Team
+ * @subpackage Twitter Module
+ * @link http://xaraya.com/index.php/release/991.html
+ * @author Chris Powis (crisp@crispcreations.co.uk)
  */
 /**
  * Initialise the module
  *
- * This function is only ever called once during the lifetime of a particular
- * module instance. It holds all the installation routines and sets the variables used
- * by this module. This function is the place to create you database structure and define
- * the privileges your module uses.
- *
- * @author Example Module Development Team
+ * @author Chris Powis (crisp@crispcreations.co.uk)
  * @param none
  * @return bool true on success of installation
  */
@@ -33,7 +28,6 @@ function twitter_init()
     xarModSetVar('twitter', 'SupportShortURLs', 0);
     xarModSetVar('twitter', 'itemsperpage', 20);
 
-    /* Register Block types (this *should* happen at activation/deactivation) */
     if (!xarModAPIFunc('blocks',
             'admin',
             'register_block_type',
@@ -73,11 +67,7 @@ function twitter_init()
 /**
  * Upgrade the module from an old version
  *
- * This function can be called multiple times. It holds all the routines for each version
- * of the module that are necessary to upgrade to a new version. It is very important to keep the
- * initialisation and the upgrade compatible with eachother.
- *
- * @author Example Module Development Team
+ * @author Chris Powis (crisp@crispcreations.co.uk)
  * @param string oldversion. This function takes the old version that is currently stored in the module db
  * @return bool true on succes of upgrade
  * @throws mixed This function can throw all sorts of errors, depending on the functions present
@@ -91,7 +81,10 @@ function twitter_upgrade($oldversion)
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
     switch ($oldversion) {
       case '0.0.1':
-
+        xarModSetVar('twitter', 'deftimeline', 'public');
+        xarModSetVar('twitter', 'showpublic', true);
+        xarModSetVar('twitter', 'showuser', xarModGetVar('username') ? true : false);
+        xarModSetVar('twitter', 'showfriends', xarModGetVar('username') ? true : false);
       case '0.0.2':
 
       break;
@@ -103,9 +96,7 @@ function twitter_upgrade($oldversion)
 /**
  * Delete the module
  *
- * This function is only ever called once during the lifetime of a particular
- * module instance
- * @author Example Module Development Team
+ * @author Chris Powis (crisp@crispcreations.co.uk)
  * @param none
  * @return bool true on succes of deletion
  */
