@@ -83,8 +83,8 @@ function twitter_upgrade($oldversion)
       case '0.0.1':
         xarModSetVar('twitter', 'deftimeline', 'public');
         xarModSetVar('twitter', 'showpublic', true);
-        xarModSetVar('twitter', 'showuser', xarModGetVar('username') ? true : false);
-        xarModSetVar('twitter', 'showfriends', xarModGetVar('username') ? true : false);
+        xarModSetVar('twitter', 'showuser', false);
+        xarModSetVar('twitter', 'showfriends', false);
       case '0.0.2':
 
       break;
