@@ -38,8 +38,8 @@ function twitter_userapi_process($args)
     $refresh = empty($refresh) ? 300 : $refresh;
     $cachedir = empty($cachedir) ? 'cache' : $cachedir;
     $extension = empty($extension) ? '.xml' : $extension;
-    $superrors = empty($superrors) ? true : $superrors;
   } 
+  $superrors = empty($superrors) ? true : $superrors;
   // check if this file is already cached
   if ($cached) {
       $vardir = xarCoreGetVarDirPath();
