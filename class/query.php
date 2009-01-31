@@ -734,7 +734,8 @@ class Query
         $condition = $this->conditions[$key];
 
         if (!isset($condition['field2']) || $condition['field2'] === 'NULL') {
-                return $condition['field1'] . " IS NULL";
+            if ($condition['op'] == '=') return $condition['field1'] . " IS NULL";
+            if ($condition['op'] == '!=') return $condition['field1'] . " IS NOT NULL";
         }
 
         if (in_array(strtolower($condition['op']),array('in','not in'))) {
