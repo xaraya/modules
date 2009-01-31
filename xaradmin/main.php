@@ -25,7 +25,10 @@ function twitter_admin_main()
     if (!xarSecurityCheck('AdminTwitter',0)) return;
 
     $data=array();
-
+    $modname = 'twitter';
+    $modid = xarModGetIDFromName($modname);
+    $modinfo = xarModGetInfo($modid);
+    $data['version'] = $modinfo['version'];
     return $data;
 
 }

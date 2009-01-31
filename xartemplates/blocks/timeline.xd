@@ -1,14 +1,58 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<ul>
-<xar:foreach in="$items" key="$key" value="$item">
-    <li>#$item.screen_name#
-        <p>
-            #$item.text#
-        </p>
-        <xar:base-timesince stamp="$item['created_at']" /> <xar:mlstring>ago, via </xar:mlstring>#$item.source#
-    </li>
-</xar:foreach>
-</ul>
+<xar:if condition="$showmodule">
+    <h4 class="xar-margin-nonetop xar-valign-middle">
+        <xar:if condition="$showmyimage and $timeline ne 'public'">
+            <span class="xar-floatleft">
+                <img src="#$userinfo['profile_image_url']#" />
+            </span>
+        </xar:if>
+        <a href="#xarModURL('twitter', 'user', 'main', array('timeline' => $timeline))#">
+            <xar:if condition="$timeline eq 'friends'">
+                #$username# <xar:mlstring>and friends</xar:mlstring>
+            <xar:elseif condition="$timeline eq 'user'" />
+                #$username# <xar:mlstring>timeline</xar:mlstring>
+            <xar:else />
+                <xar:mlstring>Public timeline</xar:mlstring>
+            </xar:if>
+        </a>
+    </h4>
+</xar:if>
+<xar:if condition="!empty($items)">
+    <ul class="xar-clearboth">
+        <xar:foreach in="$items" key="$key" value="$item">
+            <li>
+                <h4 class="xar-margin-none">
+                    <a href="http://twitter.com/#$item.screen_name#" rel="external">
+                        #$item.screen_name#
+                    </a>
+                </h4>
+                <p>
+                    <xar:if condition="$showimages">
+                        <span class="xar-floatleft">
+                            <img src="#$item.profile_image_url#" style="height: 20px; width: 20px;" alt="#xarML('profile image')#" title="#$item.screen_name#" />
+                        <span>
+                    </xar:if>
+                    #$item.text#
+                </p>
+                <span class="xar-sub">
+                    <xar:base-timesince stamp="$item['created_at']" />
+                    <xar:if condition="$showsource">
+                        <xar:mlstring> ago, via </xar:mlstring>#$item.source#
+                    <xar:else />
+                        <xar:mlstring> ago</xar:mlstring>
+                    </xar:if>
+                </span>
+            </li>
+        </xar:foreach>
+    </ul>
+</xar:if>
+<xar:if condition="$showfollow">
+    <p class="xar-align-right">
+        <a href="http://twitter.com/#$username#" rel="external">
+            <xar:mlstring>Follow</xar:mlstring> #$username#
+        </a>
+    </p>
+</xar:if>
 
 
 

@@ -92,6 +92,20 @@ function twitter_admin_modifyconfig()
         if (!empty($username) && empty($password)) {
           $invalid['password'] = xarML('A password is required to access your Twitter account');
         }
+        if (!empty($username) && !empty($password)) {
+          $isvalid = xarModAPIFunc('twitter', 'user', 'account_methods', 
+            array(
+              'method' => 'verify_credentials',
+              'username' => $username, 
+              'password' => $password,
+              'cache' => true,
+              'refresh' => 3600
+            ));
+          if (!$isvalid) {
+            $invalid['username'] = xarML('*Invalid username or password');
+            $invalid['password'] = '*';
+          }
+        }
         if ($deftimeline == 'public' && !$showpublic) {
           //$invalid['deftimeline'] = xarML('Public timeline is not enabled*');
           $invalid['showpublic'] = xarML('Selected as default but not enabled');
@@ -123,7 +137,7 @@ function twitter_admin_modifyconfig()
           
           xarModCallHooks('module','updateconfig', $modname,
                      array('module' => $modname));
-          xarSessionSetVar('statusmsg', xarML('Twitter Module Configuration Updated'));
+          xarSessionSetVar('statusmsg', xarML('Twitter Module Configuration Updated Successfully'));
           xarResponseRedirect(xarModURL($modname, 'admin', 'modifyconfig'));
           return true;
         }

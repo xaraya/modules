@@ -3,18 +3,28 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Twitter</xar:mlstring></span>
 </div>
-<div class="xar-mod-body">
+<div id="twitter-user-main-#$timeline#" class="xar-mod-body">
     <xar:template type="module" module="twitter" file="user-menu" />
     <div>
-        <xar:if condition="!empty($username)">
-            <div class="xar-floatright">
+        <xar:if condition="!empty($userinfo)">
+            <div class="xar-floatright xar-align-right">
                 <a style="font-size: 10px; text-decoration: none" href="http://twitter.com/#$username#"><img border="0" src="http://static.twitter.com/images/twitter_bubble_logo.gif"/></a>
+                <br />
+                <xar:ml>
+                    <xar:mlstring>#(1) followers</xar:mlstring>
+                    <xar:mlvar>#$userinfo['followers_count']#</xar:mlvar>
+                </xar:ml>
             </div>
         </xar:if>
-        <h2>
+        <h2 class="xar-valign-middle">
             <xar:if condition="$timeline eq 'public'">
                 <xar:mlstring>Public Timeline</xar:mlstring>
             <xar:else />
+                <xar:if condition="!empty($userinfo) and $timeline ne 'public'">
+                    <span class="xar-floatleft">
+                        <img src="#$userinfo['profile_image_url']#" alt="#xarML('profile image')#" title="#$userinfo['screen_name']#" />
+                    </span>
+                </xar:if>
                 #$username#
             </xar:if>
         </h2>

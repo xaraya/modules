@@ -26,7 +26,7 @@
  * @param superrors bool optionally suppress errors accessing urls (default true - set false for debugging)
  * @return mixed array containing the items, bool true on success or bool false on failure
  */
-function twitter_userapi_status_methods($args)
+function twitter_userapi_account_methods($args)
 { 
 
   extract($args);
@@ -42,84 +42,29 @@ function twitter_userapi_status_methods($args)
   $extension = empty($extension) ? '.xml' : $extension;
   $superrors = empty($superrors) ? true : $superrors;
   $numitems = empty($numitems) ? 20 : $numitems;
+  
+  // account methods always require these
+  if (empty($username) || empty($password)) return;
 
   if (empty($method)) return;
   switch ($method) {
-    case 'public_timeline':
-    default:
-      $output = 'status_elements';
-      $cache = true;
-      $refresh = 60;
+    case 'verify_credentials':
+      $output = 'user_element'; // nfi?
     break;
-    case 'friends_timeline':
-      if (empty($username) || empty($password)) return;
-      if (!empty($since)) {
-        $get['since'] = urlencode($since);
-      }
-      if (!empty($since_id)) {
-        $get['since_id'] = urlencode($since_id);
-      }
-      if (!empty($count)) {
-        $get['count'] = urlencode($count);
-      }
-      if (!empty($page)) {
-        $get['page'] = urlencode($page);
-      }
-      $output = 'status_elements';
-    break;
-    case 'user_timeline':
-      if (empty($username) || empty($password)) return;
-      if (!empty($user_id)) {
-        $path .= '/'.urlencode($user_id);
-      }
-      if (!empty($since)) {
-        $get['since'] = urlencode($since);
-      }
-      if (!empty($since_id)) {
-        $get['since_id'] = urlencode($since_id);
-      }
-      if (!empty($count)) {
-        $get['count'] = urlencode($count);
-      }
-      if (!empty($page)) {
-        $get['page'] = urlencode($page);
-      }
-      $output = 'status_elements';
-    break;
-    case 'show':
-      if (!empty($status_id)) {
-        $path .= '/'.urlencode($status_id);
-      }
-      $output = 'status_element';
-    break;
-    case 'update':
-      if (empty($username) || empty($password) || empty($status)) return;
-      $post['status'] = urlencode($status);
-      $output = 'status_element';
-    break;
-    case 'replies':
-      if (empty($username) || empty($password) || empty($status)) return;
-      if (!empty($since)) {
-        $get['since'] = urlencode($since);
-      }
-      if (!empty($since_id)) {
-        $get['since_id'] = urlencode($since_id);
-      }
-      if (!empty($page)) {
-        $get['page'] = urlencode($page);
-      }
-      $output = 'status_elements';
-    break;
-    case 'destroy':
-      if (!empty($status_id)) {
-        $path .= '/'.urlencode($status_id);
-      }    
+    case 'end_session': 
       $post = (bool) true;
-      $output = 'status_element';
+      $cache = false;
     break;
+    case 'update_delivery_device':
+      if (empty($device) || !ereg("^sms|im|none", $device)) return;
+      $post['device'] = urlencode($device);
+      $output = 'basic_user_information';
+      $cache = false;
+    break;
+
   }
   
-  $url = $uri.'/statuses/'.$method.$path.'.'.$format;
+  $url = $uri.'/account/'.$method.$path.'.'.$format;
   if (empty($post)) {
     $params = array();
     foreach ($get as $k => $v) {
@@ -159,30 +104,13 @@ function twitter_userapi_status_methods($args)
     if (!$response) return;
     return true;
   }
+
   if (class_exists('SimpleXMLElement')){
     $xml = new SimpleXMLElement($response);
     $items = array();
     if ($xml) {
-      $i = 0;
-      foreach ($xml->status as $tweet) {
-        $thistext = $tweet->text;
-        // urls
-        $thistext = preg_replace("#(^|[\n ])([\w]+?://[^ \"\n\r\t<]*)#is", "\\1<a href=\"\\2\" rel=\"external\">\\2</a>", $thistext); 
-        // hashtags
-        $thistext = preg_replace("/(?:^|\W)\#([a-zA-Z0-9\-_\.+:=]+\w)(?:\W|$)/is", " <a href=\"http://hashtags.org/tag/\\1/messages\">#\\1</a> ", $thistext);
-        // at tags
-        $thistext = preg_replace("/(?:^|\W|#)@(\w+)/is", " <a href=\"http://twitter.com/\\1\">@\\1</a> ", $thistext);
-        $items[$i] = array(
-          'created_at' => strtotime($tweet->created_at),
-          'screen_name' => $tweet->user->screen_name,          
-          'name' => $tweet->user->name,
-          'profile_image_url' => $tweet->user->profile_image_url,
-          'text' => $thistext,
-          'id' => $tweet->id,
-          'source' => $tweet->source
-        );
-        $i++;
-        if ($i == $numitems) break;
+      foreach ($xml as $key => $value) {
+          $items[$key] = $value;
       }
     }
     return ($items);

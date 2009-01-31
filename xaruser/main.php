@@ -27,7 +27,7 @@ function twitter_user_main()
 {
 
     if (!xarSecurityCheck('ViewTwitter')) return;
-    if (!xarVarFetch('timeline', 'str:1', $timeline, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('timeline', 'enum:public:user:friends', $timeline, '', XARVAR_NOT_REQUIRED)) return;
 
     $data = array();
 
@@ -47,20 +47,36 @@ function twitter_user_main()
       if ($data['showfriends']) $timelines[] = array('id' => 'friends', 'name' => 'Friends');
     }
     $data['timelines'] = $timelines;
+    
 
     if (empty($timeline)) $timeline = $data['deftimeline'];
+    $checkline = 'show'.$timeline;
+    $isavailable = $data[$checkline];
     $data['timeline'] = $timeline;
-    
-    $items = xarModAPIFunc('twitter', 'user', 'status_methods',
-      array(
-        'method' => $timeline.'_timeline',
-        'username' => $data['username'],
-        'password' => $password
-      ));
-
+    $items = array();
+    if ($isavailable) {
+      $items = xarModAPIFunc('twitter', 'user', 'status_methods',
+        array(
+          'method' => $timeline.'_timeline',
+          'username' => $data['username'],
+          'password' => $password
+        ));
+    }
+    $userinfo = array();
+    if (!empty($data['username']) && !empty($password)) {
+      $userinfo = xarModAPIFunc('twitter', 'user', 'account_methods', 
+        array(
+          'method' => 'verify_credentials',
+          'username' => $data['username'], 
+          'password' => $password,
+          'cache' => true,
+          'refresh' => 3600
+        ));
+    }
+    $data['userinfo'] = $userinfo;
     $data['items'] = $items;   
     $data['activetab'] = $timeline;
-    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Timeline')));
+    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('#(1) timeline',ucfirst($timeline))));
     /* Return the template variables defined in this function */
     return $data;
 

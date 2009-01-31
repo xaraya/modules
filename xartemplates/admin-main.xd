@@ -4,13 +4,13 @@
     <xar:mlstring>Twitter Administration</xar:mlstring>
   </span>
 </div>
-<div id="notsogoodbutok" class="xar-mod-body">
+<div id="twitter-admin-main" class="xar-mod-body">
   <xar:template type="module" module="twitter" file="admin-menu" />
   <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
 
   <h3><xar:mlstring>What is it?</xar:mlstring></h3>
   <p>
-    <em><xar:mlstring>Twitter Module provide a wrapper for twitters API function.</xar:mlstring></em>
+    <em><xar:mlstring>Twitter Module provides a wrapper for Twitters API functions.</xar:mlstring></em>
     <xar:mlstring>It is currently responsible for accomplishing two main tasks:</xar:mlstring>
   </p>
   <ol>
@@ -25,10 +25,10 @@
 
   <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
   <ul>
-    <li><xar:mlstring>timeline</xar:mlstring></li>
+    <li><xar:mlstring>timeline -- Allows you to display public, user, or friends timeline within a block</xar:mlstring></li>
   </ul>
 
-  <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+  <h3><xar:mlstring>Included Hooks (not yet)</xar:mlstring></h3>
   <ul>
     <li><xar:mlstring>Create -- Allows a status to be sent for a specified user when new items are created. Status will include a link to the item, you can optionally specify a field to use as the status.</xar:mlstring></li>
   </ul>
@@ -69,7 +69,7 @@
     </li>
   </ul>
   <p class="xar-sub">
-    <strong>&nbsp;<xar:mlstring>Twitter Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 0.0.2&nbsp; 2009-01-30
+    <strong>&nbsp;<xar:mlstring>Twitter Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> #$version#
   </p>
 </div>
 

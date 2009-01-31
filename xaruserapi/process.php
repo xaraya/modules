@@ -21,13 +21,23 @@
 function twitter_userapi_process($args)
 { 
   extract($args);
+  
+  $modname = 'twitter';
+  $modid = xarModGetIDFromName($modname);
+  $modinfo = xarModGetInfo($modid);
+  $modver = $modinfo['version'];
+
+  $client     = 'Xaraya Twitter Module';
+  $clientver  = $modver;
+  $clienturl  = 'http://www.xaraya.com/index.php/release/991.html';
+  $useragent  = 'Xaraya Twitter Module v'.$modver;
 
   if (empty($url)) return;
   if (empty($postargs)) {
-    $cached = !isset($cached) ? true : false;
+    $cached = !isset($cached) ? true : $cached;
     $refresh = empty($refresh) ? 300 : $refresh;
     $cachedir = empty($cachedir) ? 'cache' : $cachedir;
-    $extension = empty($extension) ? 'xml' : $extension;
+    $extension = empty($extension) ? '.xml' : $extension;
     $superrors = empty($superrors) ? true : $superrors;
   } 
   // check if this file is already cached
@@ -65,13 +75,11 @@ function twitter_userapi_process($args)
 
   // if we got no response we either got postargs or getfile failed, try curl 
   if ((!isset($response) || $response==false) && function_exists('curl_init')) {
-    $useragent = 'Xaraya Twitter Module v0.0.2';
     $headers = array(
-      'X-Twitter-Client: Xaraya Twitter Module',
-      'X-Twitter-Client-Version: 0.0.2',
-      'X-Twitter-Client-URL: http://www.xaraya.com/index.php/release/991.html',
-      'Exist: '
-    );
+      'X-Twitter-Client: '.$client,
+      'X-Twitter-Client-Version: '.$clientver,
+      'X-Twitter-Client-URL: '.$clienturl,
+      'Exist: ');
     $ch = curl_init($url);
 
     if(!empty($postargs)){
@@ -96,6 +104,12 @@ function twitter_userapi_process($args)
     curl_close($ch);
     
     if(intval($responseInfo['http_code'])!=200){
+      if (!$superrors){
+        $msg = xarML('URL #(1) returned response #(2)', $url, $responseInfo['http_code']);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                        new SystemException($msg));
+        return;
+      }
       $response = false;
     }
     if (empty($postargs) && !empty($response) && $cached && is_dir($vardir . '/' . $cachedir)) {
@@ -132,16 +146,23 @@ function twitter_userapi_process($args)
       ."Authorization: Basic ".base64_encode ($username.':'.$password)."\r\n"
       ."Content-type: application/x-www-form-urlencoded\r\n"
       ."Content-length: ".strlen ("$postargs")."\r\n"
-      ."User-Agent: Xaraya Twitter Module v0.0.2\r\n"
-      ."X-Twitter-Client: Xaraya Twitter Module\r\n"
-      ."X-Twitter-Client-Version: 0.0.2\r\n"
-      ."X-Twitter-Client-URL: http://www.xaraya.com/index.php/release/991.html\r\n"
+      ."User-Agent: ".$useragent."\r\n"
+      ."X-Twitter-Client: ".$client."\r\n"
+      ."X-Twitter-Client-Version: ".$clientver."\r\n"
+      ."X-Twitter-Client-URL: ".$clienturl."\r\n"
       ."Connection: Close\r\n\r\n";
       if ($postargs !== true) {
         $out .= "$postargs";
       }
     $fp = fsockopen ('twitter.com', 80);
-    if (!$fp) return false;
+    if (!$fp) {
+        if (!$superrors){
+        $msg = xarML('Error opening URL #(1)', $url);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                        new SystemException($msg));
+        }
+        return;
+    }
     fwrite ($fp, $out);
     $response =  '';
     while(!feof($fp)) { $response .= fgets($fp,8192); }
