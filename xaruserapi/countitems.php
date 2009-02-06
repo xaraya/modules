@@ -32,7 +32,7 @@ function sitecontact_userapi_countitems($args)
  $query = "SELECT COUNT(1)
             FROM $sitecontactTable";
 
-    $result = &$dbconn->Execute($query,array());
+    $result = $dbconn->Execute($query,array());
     if (!$result) return;
     /* Obtain the number of items */
     list($numitems) = $result->fields;
