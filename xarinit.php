@@ -170,8 +170,7 @@ function netquery_upgrade($oldversion)
         case '4.0.5':
             xarModSetVar('netquery', 'bb_display_stats', 'session');
             xarModAPIFunc('blocks', 'admin', 'unregister_block_type', array('modName' => 'netquery', 'blockType' => 'nqmonitor'));
-            //return netquery_upgrade('4.1.2');
-            //fallthrough
+            return netquery_upgrade('4.1.1');
         case '4.1.0':
         case '4.1.1':
             xarUnRegisterMask('OverviewNetquery');
@@ -181,8 +180,9 @@ function netquery_upgrade($oldversion)
             xarModSetVar('netquery', 'bb_httpbl_key', '');
             xarModSetVar('netquery', 'bb_httpbl_threat', 25);
             xarModSetVar('netquery', 'bb_httpbl_maxage', 10);
-            return netquery_upgrade('4.1.3');
+            return netquery_upgrade('4.1.4');
         case '4.1.3':
+        case '4.1.4':
         default:
             break;
     }

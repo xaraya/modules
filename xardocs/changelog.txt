@@ -86,3 +86,6 @@ Version 4.12 2007-12-11
 Version 4.13 2008-08-20
    - Spambot blocker updated based on Bad Behavior v2.0.22
    - GeoIP countries data updated based on MaxMind 2008-08-03
+Version 4.14 2009-02-02
+   - Spambot blocker updated based on Bad Behavior v2.0.26
+   - GeoIP countries data updated based on MaxMind 2009-02-01

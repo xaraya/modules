@@ -1,7 +1,7 @@
 form.nquser, form.nqadmin, table.nqoutput th, table.nqinput th
 {
   color: #FFFFFF;
-	background-color: #739FC4;
+  background-color: #739FC4;
 }
 form.nquser legend, form.nqadmin legend, input.gobutton, img.gobutton, input.gobuttonup, img.gobuttonup, input.inset
 {

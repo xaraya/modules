@@ -72,6 +72,7 @@ function bb2_blacklist($package)
         ".NET CLR 1)",      // free poker, etc.
         "POE-Component-Client", // free poker, etc.
         "Turing Machine",   // www.anonymizer.com abuse
+        "User-agent: ",		// spam harvester/splogger
         "WebaltBot",        // spam harvester
         "WISEbot",      // spam harvester
         "WISEnutbot",       // spam harvester
@@ -94,7 +95,7 @@ function bb2_blacklist($package)
 
     // Do not edit below this line.
 
-    $ua = $package['headers_mixed']['User-Agent'];
+    @$ua = $package['headers_mixed']['User-Agent'];
 
     foreach ($bb2_spambots_0 as $spambot) {
         $pos = strpos($ua, $spambot);

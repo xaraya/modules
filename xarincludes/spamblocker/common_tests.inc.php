@@ -15,7 +15,7 @@ function bb2_protocol($settings, $package)
     if ($settings['strict'] && !strcmp($package['server_protocol'], "HTTP/1.1")) {
         if (array_key_exists('Pragma', $package['headers_mixed']) && strpos($package['headers_mixed']['Pragma'], "no-cache") !== FALSE && !array_key_exists('Cache-Control', $package['headers_mixed'])) {
             return "41feed15";
-          }
+        }
     }
     return false;
 }
@@ -24,7 +24,8 @@ function bb2_cookies($settings, $package)
 {
     // Enforce RFC 2965 sec 3.3.5 and 9.1
     // Bots wanting new-style cookies should send Cookie2
-    if (array_key_exists('Cookie', $package['headers_mixed']) && strpos($package['headers_mixed']['Cookie'], '$Version=0') !== FALSE && !array_key_exists('Cookie2', $package['headers_mixed'])) {
+    // FIXME: Amazon Kindle is broken; Amazon has been notified 9/24/08
+    if (array_key_exists('Cookie', $package['headers_mixed']) && strpos($package['headers_mixed']['Cookie'], '$Version=0') !== FALSE && !array_key_exists('Cookie2', $package['headers_mixed']) && strpos($package['headers_mixed']['User-Agent'], "Kindle/") === FALSE) {
         return '6c502ff1';
     }
     return false;
@@ -32,7 +33,7 @@ function bb2_cookies($settings, $package)
 
 function bb2_misc_headers($settings, $package)
 {
-    $ua = $package['headers_mixed']['User-Agent'];
+    @$ua = $package['headers_mixed']['User-Agent'];
 
     if (!strcmp($package['request_method'], "POST") && empty($ua)) {
         return "f9f2b8b9";
@@ -51,7 +52,7 @@ function bb2_misc_headers($settings, $package)
     // Exceptions: MT (not fixable); LJ (refuses to fix; may be
     // blocked again in the future)
     if (array_key_exists('Range', $package['headers_mixed']) && strpos($package['headers_mixed']['Range'], "=0-") !== FALSE) {
-        if (strncmp($ua, "MovableType", 11) && strncmp($ua, "URI::Fetch", 10)) {
+        if (strncmp($ua, "MovableType", 11) && strncmp($ua, "URI::Fetch", 10) && strncmp($ua, "php-openid/", 11)) {
             return "7ad04a8a";
         }
     }
@@ -65,7 +66,7 @@ function bb2_misc_headers($settings, $package)
     // Exceptions: Clearswift uses lowercase via (refuses to fix;
     // may be blocked again in the future)
     if (array_key_exists('via', $package['headers']) &&
-        strpos($package['headers']['via'],'Clearswift') === FALSE) {
+    strpos($package['headers']['via'],'Clearswift') === FALSE) {
         return "9c9e4979";
     }
 
