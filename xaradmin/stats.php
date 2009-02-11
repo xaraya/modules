@@ -1,22 +1,22 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
  * view statistics
  */
-function articles_admin_stats($args = array())
+function publications_admin_stats($args = array())
 {
-    if (!xarSecurityCheck('AdminArticles')) return;
+    if (!xarSecurityCheck('AdminPublications')) return;
     if (!xarVarFetch('group','isset',$group,array(),XARVAR_NOT_REQUIRED)) return;
     extract($args);
 
@@ -29,22 +29,22 @@ function articles_admin_stats($args = array())
         $group = $newgroup;
     }
     if (empty($group)) {
-        $group = array('pubtypeid', 'status', 'authorid');
+        $group = array('pubtype_id', 'state', 'owner');
     }
 
     $data = array();
     $data['group'] = $group;
-    $data['stats'] = xarModAPIFunc('articles','admin','getstats',
+    $data['stats'] = xarModAPIFunc('publications','admin','getstats',
                                    array('group' => $group));
-    $data['pubtypes'] = xarModAPIFunc('articles','user','getpubtypes');
-    $data['statuslist'] = xarModAPIFunc('articles','user','getstates');
-    $data['fields'] = array('pubtypeid'     => xarML('Publication Type'),
-                            'status'        => xarML('Status'),
-                            'authorid'      => xarML('Author'),
+    $data['pubtypes'] = xarModAPIFunc('publications','user','getpubtypes');
+    $data['statelist'] = xarModAPIFunc('publications','user','getstates');
+    $data['fields'] = array('pubtype_id'     => xarML('Publication Type'),
+                            'state'        => xarML('Status'),
+                            'owner'      => xarML('Author'),
                             'pubdate_year'  => xarML('Publication Year'),
                             'pubdate_month' => xarML('Publication Month'),
                             'pubdate_day'   => xarML('Publication Day'),
-                            'language'      => xarML('Language'));
+                            'locale'      => xarML('Language'));
     return $data;
 }
 

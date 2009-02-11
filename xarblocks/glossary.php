@@ -1,25 +1,25 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
  * Original Author of file: Jim McDonald
- * Purpose of file: Articles Block
+ * Purpose of file: Publications Block
  */
 
 /**
  * initialise block
  */
-function articles_glossaryblock_init()
+function publications_glossaryblock_init()
 {
     return array(
         'paramname' => 'glossaryterm',
@@ -35,12 +35,12 @@ function articles_glossaryblock_init()
 /**
  * get information on block
  */
-function articles_glossaryblock_info()
+function publications_glossaryblock_info()
 {
     // Values
     return array(
         'text_type' => 'Glossary',
-        'module' => 'articles',
+        'module' => 'publications',
         'text_type_long' => 'Show a glossary summary in a side block.',
         'allow_multiple' => true,
         'form_content' => false,
@@ -52,11 +52,11 @@ function articles_glossaryblock_info()
 /**
  * display block
  */
-function articles_glossaryblock_display($blockinfo)
+function publications_glossaryblock_display($blockinfo)
 {
     // Security check.
     // TODO: this is being phased out.
-    //if(!xarSecurityCheck('ReadArticlesBlock', 1, 'Block', $blockinfo['title'])) {return;}
+    //if(!xarSecurityCheck('ReadPublicationsBlock', 1, 'Block', $blockinfo['title'])) {return;}
 
     // Get variables from content block
     if (!is_array($blockinfo['content'])) {
@@ -86,7 +86,7 @@ function articles_glossaryblock_display($blockinfo)
     }
 
     // Attempt to find an article with this title and optional category/pubtype.
-    $article = xarModAPIfunc('articles', 'user', 'get', $articlecriteria);
+    $article = xarModAPIfunc('publications', 'user', 'get', $articlecriteria);
 
     if (!empty($vars['cid']) && array_search($vars['cid'], $article['cids']) === NULL) {
         // Category not assigned to article.
@@ -98,8 +98,8 @@ function articles_glossaryblock_display($blockinfo)
         $vars['definition'] = $article['summary'];
         $vars['term'] = $glossaryterm;
         $vars['detailurl'] = xarModURL(
-            'articles', 'user', 'display',
-            array('id' => $article['id'], 'ptid' => $article['pubtypeid'])
+            'publications', 'user', 'display',
+            array('id' => $article['id'], 'ptid' => $article['pubtype_id'])
         );
         $vars['detailavailable'] = !empty($article['body']);
     }
@@ -123,7 +123,7 @@ function articles_glossaryblock_display($blockinfo)
 /**
  * modify block settings
  */
-function articles_glossaryblock_modify($blockinfo)
+function publications_glossaryblock_modify($blockinfo)
 {
     // Get current content
     if (!is_array($blockinfo['content'])) {
@@ -133,7 +133,7 @@ function articles_glossaryblock_modify($blockinfo)
     }
 
     // Pub type drop-down list values.
-    $vars['pubtypes'] = xarModAPIFunc('articles', 'user', 'getpubtypes');
+    $vars['pubtypes'] = xarModAPIFunc('publications', 'user', 'getpubtypes');
 
     // Categories drop-down list values.
     $vars['categorylist'] = xarModAPIFunc('categories', 'user', 'getcat');
@@ -158,7 +158,7 @@ function articles_glossaryblock_modify($blockinfo)
 /**
  * update block settings
  */
-function articles_glossaryblock_update($blockinfo)
+function publications_glossaryblock_update($blockinfo)
 {
     $vars = array();
 
@@ -173,7 +173,7 @@ function articles_glossaryblock_update($blockinfo)
 /**
  * built-in block help/information system.
  */
-function articles_glossaryblock_help()
+function publications_glossaryblock_help()
 {
     return (
         'Use {term} in the block title as a placeholder for the glossary term.'

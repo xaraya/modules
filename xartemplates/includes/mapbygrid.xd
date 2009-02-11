@@ -3,14 +3,14 @@
     <xar:if condition="empty($descr)">
         <h2>
             <xar:mlstring>
-                Article Map by Grid
+                Publication Map by Grid
             </xar:mlstring>
         </h2>
         <xar:else />
         <h2>
             <xar:ml>
                 <xar:mlstring>
-                    Article Map by Grid for #(1)
+                    Publication Map by Grid for #(1)
                 </xar:mlstring>
                 <xar:mlvar>
                     #$descr#

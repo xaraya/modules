@@ -3,7 +3,7 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>
-            Articles Administration
+            Publications Administration
         </xar:mlstring>
     </span>
 </div>
@@ -107,7 +107,7 @@
                                 <input type="text" name="label[#$field['name']#]" id="label_#$field['name']#" value="#$field['label']#" />
                             </td>
                             <td class="xar-norm">
-                                <xar:articles-field type="fieldtype" name="format['.$field['name'].']" value="$field['format']" />
+                                <xar:publications-field type="fieldtype" name="format['.$field['name'].']" value="$field['format']" />
                             </td>
                             <td class="xar-align-center">
                                 <xar:if condition="$field['input']">
@@ -124,10 +124,10 @@
                 </table>
                 <p>
                     <xar:mlstring>
-                        Note:<strong> articles of this publication type will use the templates <em>user-display-[publicationtype].xd</em> and <em>user-summary-[publicationtype].xd</em> by default.
+                        Note:<strong> publications of this publication type will use the templates <em>user-display-[publicationtype].xd</em> and <em>user-summary-[publicationtype].xd</em> by default.
                         
                         <br />
-                        Don't forget to provide those templates before trying to add new articles...
+                        Don't forget to provide those templates before trying to add new publications...
                         </strong>
                     </xar:mlstring>
                 </p>
@@ -165,7 +165,7 @@
                             </label>
                         </td>
                         <td class="xar-align-left">
-                            <input type="text" name="descr" id="descr" value="#xarVarPrepForDisplay($item['descr'])#" size="50" maxlength="250" />
+                            <input type="text" name="descr" id="descr" value="#xarVarPrepForDisplay($item['description'])#" size="50" maxlength="250" />
                         </td>
                     </tr>
                 </table>
@@ -220,7 +220,7 @@
                                 <xar:set name="editvalidation">
                                     xarML('Edit validation for property "#(1)"',$field['name'])
                                 </xar:set>
-                                <a href="#xarModURL('articles','admin','showpropval',array('ptid' => $ptid, 'field' => $field['name']))#" title="#xarVarPrepForDisplay($editvalidation)#">
+                                <a href="#xarModURL('publications','admin','showpropval',array('ptid' => $ptid, 'field' => $field['name']))#" title="#xarVarPrepForDisplay($editvalidation)#">
                                     <label for="label_#$field['name']#">#$field['name']#</label>
                                 </a>
                             <xar:else />
@@ -231,7 +231,7 @@
                                 <input type="text" name="label[#$field['name']#]" id="label_#$field['name']#" value="#$field['label']#" />
                             </td>
                             <td class="xar-norm">
-                                <xar:articles-field type="fieldtype" name="format['.$field['name'].']" value="$field['format']" />
+                                <xar:publications-field type="fieldtype" name="format['.$field['name'].']" value="$field['format']" />
                             </td>
                             <td class="xar-align-center">
                                 <xar:if condition="$field['input']">
@@ -256,7 +256,7 @@
                                     <xar:set name="editvalidation">
                                         xarML('Edit validation for property "#(1)"',$field['name'])
                                     </xar:set>
-                                    <a href="#xarModURL('articles','admin','showpropval',array('ptid' => $ptid, 'field' => $field['name']))#" title="#xarVarPrepForDisplay($editvalidation)#">
+                                    <a href="#xarModURL('publications','admin','showpropval',array('ptid' => $ptid, 'field' => $field['name']))#" title="#xarVarPrepForDisplay($editvalidation)#">
                                         <xar:mlstring>
                                             Validation
                                         </xar:mlstring>
@@ -275,10 +275,10 @@
                 <input type="submit" value="#$buttonlabel#" />
             </div>
         </form>
-        <xar:if condition="xarModIsHooked('dynamicdata','articles',$ptid)">
-            #xarModFunc('dynamicdata','admin','modifyconfighook',array('extrainfo' => array('module' => 'articles','itemtype' => $ptid)))#
+        <xar:if condition="xarModIsHooked('dynamicdata','publications',$ptid)">
+            #xarModFunc('dynamicdata','admin','modifyconfighook',array('extrainfo' => array('module' => 'publications','itemtype' => $ptid)))#
         </xar:if>
-        <h3 class="xar-align-left"><a href="#xarModURL('articles','admin','exportpubtype',array('ptid' => $ptid))#">
+        <h3 class="xar-align-left"><a href="#xarModURL('publications','admin','exportpubtype',array('ptid' => $ptid))#">
                 <xar:mlstring>
                     Export Definition to XML
                 </xar:mlstring>
@@ -313,21 +313,21 @@
                             :
                         </td>
                         <td class="xar-align-left">
-                            #xarVarPrepForDisplay($item['descr'])#
+                            #xarVarPrepForDisplay($item['description'])#
                         </td>
                     </tr>
                 </table>
                 <p>
                     <xar:ml>
                         <xar:mlstring>
-                            The #(1) articles of this publication type will also be deleted.
+                            The #(1) publications of this publication type will also be deleted.
                         </xar:mlstring>
                         <xar:mlvar>
                             #$numitems#
                         </xar:mlvar>
                     </xar:ml>
                 </p>
-                <xar:if condition="$ptid eq xarModVars::get('articles','defaultpubtype')">
+                <xar:if condition="$ptid eq xarModVars::get('publications','defaultpubtype')">
                     <p>
                         <strong>
                             <xar:mlstring>
@@ -344,7 +344,7 @@
                 <input type="submit" value="#$buttonlabel#" />
                 <br />
                 <br />
-                <a href="&xar-modurl-articles-admin-pubtypes;">
+                <a href="&xar-modurl-publications-admin-pubtypes;">
                     <xar:mlstring>
                         Cancel Delete
                     </xar:mlstring>
@@ -382,7 +382,7 @@
                         #$pubtype['name']#
                     </td>
                     <td class="xar-norm">
-                        #xarVarPrepForDisplay($pubtype['descr'])#
+                        #xarVarPrepForDisplay($pubtype['description'])#
                     </td>
                     <td class="xar-norm">
                         <xar:if condition="!empty($pubtype['editurl'])">
@@ -412,43 +412,43 @@
                         <xar:if condition="!empty($pubtype['configurl'])">
                             <a href="#$pubtype['configurl']#">
                                 <xar:mlstring>
-                                    Article Config
+                                    Publication Config
                                 </xar:mlstring>
                             </a>
                             <xar:else />
                             <xar:mlstring>
-                                Article Config
+                                Publication Config
                             </xar:mlstring>
                         </xar:if>
                         |
                         <xar:if condition="!empty($pubtype['viewurl'])">
                             <a href="#$pubtype['viewurl']#">
                                 <xar:mlstring>
-                                    View Articles
+                                    View Publications
                                 </xar:mlstring>
                             </a>
                             <xar:else />
                             <xar:mlstring>
-                                View Articles
+                                View Publications
                             </xar:mlstring>
                         </xar:if>
                         |
                         <xar:if condition="!empty($pubtype['addurl'])">
                             <a href="#$pubtype['addurl']#">
                                 <xar:mlstring>
-                                    Add Article
+                                    Add Publication
                                 </xar:mlstring>
                             </a>
                             <xar:else />
                             <xar:mlstring>
-                                Add Article
+                                Add Publication
                             </xar:mlstring>
                         </xar:if>
                     </td>
                 </tr>
             </xar:foreach>
         </table>
-        <h3 class="xar-align-left"><a href="#xarModURL('articles','admin','importpubtype')#">
+        <h3 class="xar-align-left"><a href="#xarModURL('publications','admin','importpubtype')#">
                 <xar:mlstring>
                     Import Definition from XML
                 </xar:mlstring>

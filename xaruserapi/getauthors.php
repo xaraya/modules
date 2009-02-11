@@ -1,14 +1,14 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
@@ -17,24 +17,24 @@
  * @param $args['cids'] array of cids that we are counting for (OR/AND)
  * @param $args['andcids'] true means AND-ing categories listed in cids
  *
- * @param $args['authorid'] the ID of the author
+ * @param $args['owner'] the ID of the author
  * @param $args['ptid'] publication type ID (for news, sections, reviews, ...)
- * @param $args['status'] array of requested status(es) for the articles
- * @param $args['startdate'] articles published at startdate or later
+ * @param $args['state'] array of requested status(es) for the publications
+ * @param $args['startdate'] publications published at startdate or later
  *                           (unix timestamp format)
- * @param $args['enddate'] articles published before enddate
+ * @param $args['enddate'] publications published before enddate
  *                         (unix timestamp format)
  * @return array of author id => author name
  */
-function articles_userapi_getauthors($args)
+function publications_userapi_getauthors($args)
 {
     // Database information
     $dbconn = xarDB::getConn();
 
-    // Get the field names and LEFT JOIN ... ON ... parts from articles
+    // Get the field names and LEFT JOIN ... ON ... parts from publications
     // By passing on the $args, we can let leftjoin() create the WHERE for
-    // the articles-specific columns too now
-    $articlesdef = xarModAPIFunc('articles','user','leftjoin',$args);
+    // the publications-specific columns too now
+    $publicationsdef = xarModAPIFunc('publications','user','leftjoin',$args);
 
     // Load API
     if (!xarModAPILoad('roles', 'user')) return;
@@ -44,12 +44,12 @@ function articles_userapi_getauthors($args)
 
 // TODO: make sure this is SQL standard
     // Start building the query
-    $query = 'SELECT DISTINCT ' . $articlesdef['authorid'] . ', ' . $usersdef['name'];
-    $query .= ' FROM ' . $articlesdef['table'];
+    $query = 'SELECT DISTINCT ' . $publicationsdef['owner'] . ', ' . $usersdef['name'];
+    $query .= ' FROM ' . $publicationsdef['table'];
 
     // Add the LEFT JOIN ... ON ... parts from users
     $query .= ' LEFT JOIN ' . $usersdef['table'];
-    $query .= ' ON ' . $usersdef['field'] . ' = ' . $articlesdef['authorid'];
+    $query .= ' ON ' . $usersdef['field'] . ' = ' . $publicationsdef['owner'];
 
     if (!isset($args['cids'])) {
         $args['cids'] = array();
@@ -62,7 +62,7 @@ function articles_userapi_getauthors($args)
         if (!xarModAPILoad('categories', 'user')) return;
 
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from categories
-        $args['modid'] = xarModGetIDFromName('articles');
+        $args['modid'] = xarModGetIDFromName('publications');
         if (isset($args['ptid']) && !isset($args['itemtype'])) {
             $args['itemtype'] = $args['ptid'];
         }
@@ -70,16 +70,16 @@ function articles_userapi_getauthors($args)
 
         $query .= ' LEFT JOIN ' . $categoriesdef['table'];
         $query .= ' ON ' . $categoriesdef['field'] . ' = '
-                . $articlesdef['id'];
+                . $publicationsdef['id'];
         $query .= $categoriesdef['more'];
         $docid = 1;
     }
 
     // Create the WHERE part
     $where = array();
-    // we rely on leftjoin() to create the necessary articles clauses now
-    if (!empty($articlesdef['where'])) {
-        $where[] = $articlesdef['where'];
+    // we rely on leftjoin() to create the necessary publications clauses now
+    if (!empty($publicationsdef['where'])) {
+        $where[] = $publicationsdef['where'];
     }
     if (!empty($docid)) {
         // we rely on leftjoin() to create the necessary categories clauses

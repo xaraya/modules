@@ -1,14 +1,14 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
@@ -22,7 +22,7 @@
                                     'input'  => 1),
                  ...);
  */
-function articles_userapi_getpubfields($args)
+function publications_userapi_getpubfields($args)
 {
     return array(
         'title'    => array('label'  => xarML('Title'),
@@ -37,14 +37,14 @@ function articles_userapi_getpubfields($args)
         'notes'    => array('label'  => xarML('Notes'),
                             'format' => 'textarea',
                             'input'  => 0),
-        'authorid' => array('label'  => xarML('Author'),
+        'owner' => array('label'  => xarML('Author'),
                             'format' => 'username',
                             'input'  => 0),
         'pubdate'  => array('label'  => xarML('Publication Date'),
                             'format' => 'calendar',
                             'input'  => 0),
-        'status'   => array('label'  => xarML('Status'),
-                            'format' => 'status',
+        'state'   => array('label'  => xarML('Status'),
+                            'format' => 'state',
                             'input'  => 0),
     );
 }

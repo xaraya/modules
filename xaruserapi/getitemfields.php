@@ -1,14 +1,14 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
@@ -17,18 +17,18 @@
  * @param $args['itemtype'] item type (optional)
  * @return array Array containing the item field definitions
  */
-function articles_userapi_getitemfields($args)
+function publications_userapi_getitemfields($args)
 {
     extract($args);
 
     $itemfields = array();
 
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
 
     if (!empty($itemtype) && !empty($pubtypes[$itemtype])) {
         $fields = $pubtypes[$itemtype]['config'];
     } else {
-        $fields = xarModAPIFunc('articles','user','getpubfields');
+        $fields = xarModAPIFunc('publications','user','getpubfields');
     }
     foreach ($fields as $name => $info) {
         if (empty($info['label'])) continue;

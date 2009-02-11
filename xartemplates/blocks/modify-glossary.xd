@@ -8,9 +8,9 @@
         <option value="0"><xar:mlstring>All</xar:mlstring></option>
             <xar:foreach in="$pubtypes" key="$pubid" value="$pubtype">
                 <xar:if condition="!empty($ptid) and $ptid eq $pubid">
-                    <option value="#$pubid#" selected="selected">#$pubtype['descr']#</option>
+                    <option value="#$pubid#" selected="selected">#$pubtype['description']#</option>
                 <xar:else />
-                    <option value="#$pubid#">#$pubtype['descr']#</option>
+                    <option value="#$pubid#">#$pubtype['description']#</option>
                 </xar:if>
             </xar:foreach>
     </select>

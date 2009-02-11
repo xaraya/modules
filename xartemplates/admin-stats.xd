@@ -3,7 +3,7 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>
-            Articles Administration
+            Publications Administration
         </xar:mlstring>
     </span>
 </div>
@@ -16,7 +16,7 @@
     </h2>
       <xar:template type="module" file="util-menu" />
     <h3><xar:mlstring>Statistics</xar:mlstring></h3>
-    <form method="post" action="#xarModURL('articles','admin','stats')#">
+    <form method="post" action="#xarModURL('publications','admin','stats')#">
         <xar:mlstring>
             Group by
         </xar:mlstring>
@@ -39,19 +39,19 @@
         </xar:for>
         <input type="submit" value="#xarML('Select')#" />
     </form>
-    <xar:set name="pubtypeid">
+    <xar:set name="pubtype_id">
         null
     </xar:set>
-    <xar:set name="authorid">
+    <xar:set name="owner">
         null
     </xar:set>
-    <xar:set name="status">
+    <xar:set name="state">
         null
     </xar:set>
     <xar:set name="pubdate">
         null
     </xar:set>
-    <xar:set name="language">
+    <xar:set name="locale">
         null
     </xar:set>
     <xar:if condition="!empty($group[0])">

@@ -50,7 +50,7 @@
         <xar:set name="i">
             1
         </xar:set>
-        <xar:foreach in="$articles" value="$article">
+        <xar:foreach in="$publications" value="$article">
             <xar:if condition="$i++ and $i % 2 eq 0">
                 <tr class="xar-accent">
                     <xar:foreach in="$article['cats']" value="$cat">

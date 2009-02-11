@@ -7,8 +7,8 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  *
  */
@@ -16,14 +16,14 @@
  * initialise block
  * @author Roger Keays
  */
-function articles_randomblock_init()
+function publications_randomblock_init()
 {
     // Default values to initialize the block.
     return array(
-        'pubtypeid'     => 0,
+        'pubtype_id'     => 0,
         'catfilter'     => 0,
-        'status'        => '3,2',
-        'language'      => '',
+        'state'        => '3,2',
+        'locale'      => '',
         'numitems'      => 1,
         'alttitle'      => '',
         'altsummary'    => '',
@@ -43,12 +43,12 @@ function articles_randomblock_init()
 /**
  * get information on block
  */
-function articles_randomblock_info()
+function publications_randomblock_info()
 {
     // Return details about this block.
     return array(
         'text_type' => 'Random article',
-        'module' => 'articles',
+        'module' => 'publications',
         'text_type_long' => 'Show a single random article',
         'allow_multiple' => true,
         'form_content' => false, // Deprecated
@@ -60,10 +60,10 @@ function articles_randomblock_info()
 /**
  * display block
  */
-function articles_randomblock_display($blockinfo)
+function publications_randomblock_display($blockinfo)
 {
     // Security check
-    if (!xarSecurityCheck('ReadArticlesBlock', 0, 'Block', $blockinfo['title'])) {return;}
+    if (!xarSecurityCheck('ReadPublicationsBlock', 0, 'Block', $blockinfo['title'])) {return;}
 
     // Get variables from block content.
     if (!is_array($blockinfo['content'])) {
@@ -72,25 +72,25 @@ function articles_randomblock_display($blockinfo)
         $vars = $blockinfo['content'];
     }
 
-    // frontpage or approved status
-    if (empty($vars['status'])) {
-            $statusarray = array(2,3);
-    } elseif (!is_array($vars['status'])) {
-            $statusarray = split(',', $vars['status']);
+    // frontpage or approved state
+    if (empty($vars['state'])) {
+            $statearray = array(2,3);
+    } elseif (!is_array($vars['state'])) {
+            $statearray = split(',', $vars['state']);
     } else {
-            $statusarray = $vars['status'];
+            $statearray = $vars['state'];
     }
 
-    if (empty($vars['language'])) {
+    if (empty($vars['locale'])) {
         $lang = null;
-    } elseif ($vars['language'] == 'current') {
+    } elseif ($vars['locale'] == 'current') {
         $lang = xarMLSGetCurrentLocale();
     } else {
-        $lang = $vars['language'];
+        $lang = $vars['locale'];
     }
 
     // get cids for security check in getall
-    $fields = array('id', 'title', 'body', 'notes', 'pubtypeid', 'cids', 'authorid');
+    $fields = array('id', 'title', 'body', 'notes', 'pubtype_id', 'cids', 'owner');
 
     if (!empty($vars['showpubdate'])) {
         array_push($fields, 'pubdate');
@@ -104,8 +104,8 @@ function articles_randomblock_display($blockinfo)
     if (!empty($vars['alttitle'])) {
         $blockinfo['title'] = $vars['alttitle'];
     }
-    if (empty($vars['pubtypeid'])) {
-        $vars['pubtypeid'] = 0;
+    if (empty($vars['pubtype_id'])) {
+        $vars['pubtype_id'] = 0;
     }
 
     if (!empty($vars['catfilter'])) {
@@ -118,31 +118,31 @@ function articles_randomblock_display($blockinfo)
     }
 
     // check if dynamicdata is hooked for all pubtypes or the current one (= defaults to 0 anyway here)
-    if (!empty($vars['showdynamic']) && xarModIsHooked('dynamicdata', 'articles', $vars['pubtypeid'])) {
+    if (!empty($vars['showdynamic']) && xarModIsHooked('dynamicdata', 'publications', $vars['pubtype_id'])) {
         array_push($fields, 'dynamicdata');
     }
 
     if (empty($vars['numitems'])) $vars['numitems'] = 1;
 
-    $articles = xarModAPIFunc('articles','user','getrandom',
-                              array('ptid'     => $vars['pubtypeid'],
+    $publications = xarModAPIFunc('publications','user','getrandom',
+                              array('ptid'     => $vars['pubtype_id'],
                                     'cids'     => $cidsarray,
                                     'andcids'  => false,
-                                    'status'   => $statusarray,
-                                    'language' => $lang,
+                                    'state'   => $statearray,
+                                    'locale' => $lang,
                                     'numitems' => $vars['numitems'],
                                     'fields'   => $fields,
                                     'unique'   => true));
 
-    if (!isset($articles) || !is_array($articles) || count($articles) == 0) {
+    if (!isset($publications) || !is_array($publications) || count($publications) == 0) {
         return;
     } else {
-        foreach (array_keys($articles) as $key) {
+        foreach (array_keys($publications) as $key) {
             // for template compatibility :-(
-            if (!empty($articles[$key]['author']) && !empty($vars['showauthor'])) {
-                $articles[$key]['authorname'] = $articles[$key]['author'];
+            if (!empty($publications[$key]['author']) && !empty($vars['showauthor'])) {
+                $publications[$key]['authorname'] = $publications[$key]['author'];
             }
-            $vars['items'][] = $articles[$key];
+            $vars['items'][] = $publications[$key];
         }
     }
 
@@ -158,7 +158,7 @@ function articles_randomblock_display($blockinfo)
 /**
  * built-in block help/information system.
  */
-function articles_randomblock_help()
+function publications_randomblock_help()
 {
     // No information yet.
     return '';

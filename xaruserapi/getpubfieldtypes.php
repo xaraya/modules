@@ -1,14 +1,14 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
@@ -18,16 +18,16 @@
                  'summary' => 'text',
                  ...);
  */
-function articles_userapi_getpubfieldtypes($args)
+function publications_userapi_getpubfieldtypes($args)
 {
     return array(
         'title'    => 'string',
         'summary'  => 'text',
         'notes'    => 'text',
         'body'     => 'text',
-        'authorid' => 'integer',
+        'owner' => 'integer',
         'pubdate'  => 'integer',
-        'status'   => 'integer',
+        'state'   => 'integer',
     );
 }
 

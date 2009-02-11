@@ -1,14 +1,14 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
@@ -16,21 +16,21 @@
  *
  * @return array Array containing the menulinks for the main menu items.
  */
-function articles_userapi_getmenulinks()
+function publications_userapi_getmenulinks()
 {
     $menulinks = array();
 
     // Security Check
-    if (!xarSecurityCheck('ViewArticles',0)) {
+    if (!xarSecurityCheck('ViewPublications',0)) {
         return $menulinks;
     }
 
 // TODO: re-evaluate for browsing by category
 
-    $menulinks[] = Array('url'   => xarModURL('articles',
+    $menulinks[] = Array('url'   => xarModURL('publications',
                                               'user',
                                               'view'),
-                         'title' => xarML('Highlighted Articles'),
+                         'title' => xarML('Highlighted Publications'),
                          'label' => xarML('Front Page'));
 
     if(!xarVarFetch('ptid',     'isset', $ptid,      NULL, XARVAR_DONT_SET)) {return;}
@@ -43,17 +43,17 @@ function articles_userapi_getmenulinks()
             $ptid = null;
         }
     }
-    $publinks = xarModAPIFunc('articles','user','getpublinks',
-                              //array('status' => array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED), 'ptid' => $ptid));
+    $publinks = xarModAPIFunc('publications','user','getpublinks',
+                              //array('state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED), 'ptid' => $ptid));
                               // we show all links here
-                              array('status' => array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED)));
+                              array('state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED)));
     foreach ($publinks as $pubitem) {
         $menulinks[] = Array('url'   => $pubitem['publink'],
                              'title' => xarML('Display #(1)',$pubitem['pubtitle']),
                              'label' => $pubitem['pubtitle']);
         if (isset($ptid) && $pubitem['pubid'] == $ptid) {
-            if (xarSecurityCheck('SubmitArticles',0,'Article',$ptid.':All:All:All')) {
-                $menulinks[] = Array('url'   => xarModURL('articles',
+            if (xarSecurityCheck('SubmitPublications',0,'Publication',$ptid.':All:All:All')) {
+                $menulinks[] = Array('url'   => xarModURL('publications',
                                                           'admin',
                                                           'new',
                                                           array('ptid' => $ptid)),
@@ -61,9 +61,9 @@ function articles_userapi_getmenulinks()
                                      'label' => '&#160;' . xarML('Submit Now'));
             }
 
-            $settings = unserialize(xarModVars::get('articles', 'settings.'.$ptid));
+            $settings = unserialize(xarModVars::get('publications', 'settings.'.$ptid));
             if (!empty($settings['showarchives'])) {
-                $menulinks[] = Array('url'   => xarModURL('articles',
+                $menulinks[] = Array('url'   => xarModURL('publications',
                                                           'user',
                                                           'archive',
                                                           array('ptid' => $ptid)),
@@ -72,12 +72,12 @@ function articles_userapi_getmenulinks()
             }
 
 /*
-            $menulinks[] = Array('url'   => xarModURL('articles',
+            $menulinks[] = Array('url'   => xarModURL('publications',
                                                       'user',
                                                       'viewmap',
                                                       array('ptid' => $ptid)),
                                  'title' => xarML('Displays a map of all published content'),
-                                 'label' => '&#160;' . xarML('Article Map'));
+                                 'label' => '&#160;' . xarML('Publication Map'));
 */
         }
     }
@@ -85,14 +85,14 @@ function articles_userapi_getmenulinks()
 /*
     if (empty($ptid)) {
 */
-        $menulinks[] = Array('url'   => xarModURL('articles',
+        $menulinks[] = Array('url'   => xarModURL('publications',
                                                   'user',
                                                   'viewmap',
                                                   array('ptid' => $ptid)),
                              'title' => xarML('Displays a map of all published content'),
-                             'label' => xarML('Article Map'));
+                             'label' => xarML('Publication Map'));
 /*
-        $menulinks[] = Array('url'   => xarModURL('articles',
+        $menulinks[] = Array('url'   => xarModURL('publications',
                                                   'user',
                                                   'archive'),
                              'title' => xarML('Displays an archive for all published content'),

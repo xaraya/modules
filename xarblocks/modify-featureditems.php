@@ -7,8 +7,8 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  *
  */
@@ -17,7 +17,7 @@
  * @author Jonn Beames et al
  */
 
-function articles_featureditemsblock_modify($blockinfo)
+function publications_featureditemsblock_modify($blockinfo)
 {
     // Get current content
     if (!is_array($blockinfo['content'])) {
@@ -27,9 +27,9 @@ function articles_featureditemsblock_modify($blockinfo)
     }
 
     // Defaults
-    if (empty($vars['pubtypeid'])) {$vars['pubtypeid'] = '';}
+    if (empty($vars['pubtype_id'])) {$vars['pubtype_id'] = '';}
     if (empty($vars['catfilter'])) {$vars['catfilter'] = '';}
-    if (empty($vars['status'])) {$vars['status'] = array(3, 2);}
+    if (empty($vars['state'])) {$vars['state'] = array(3, 2);}
     if (empty($vars['itemlimit'])) {$vars['itemlimit'] = 0;}
     if (empty($vars['featuredid'])) {$vars['featuredid'] = 0;}
     if (empty($vars['alttitle'])) {$vars['alttitle'] = '';}
@@ -52,10 +52,10 @@ function articles_featureditemsblock_modify($blockinfo)
 
     $vars['fields'] = array('id', 'title');
 
-    if (!is_array($vars['status'])) {
-        $statusarray = array($vars['status']);
+    if (!is_array($vars['state'])) {
+        $statearray = array($vars['state']);
     } else {
-        $statusarray = $vars['status'];
+        $statearray = $vars['state'];
     }
 
     if(!empty($vars['catfilter'])) {
@@ -68,8 +68,8 @@ function articles_featureditemsblock_modify($blockinfo)
     $article_args = array();
 
     // Only include pubtype if a specific pubtype is selected
-    if (!empty($vars['pubtypeid'])) {
-        $article_args['ptid'] = $vars['pubtypeid'];
+    if (!empty($vars['pubtype_id'])) {
+        $article_args['ptid'] = $vars['pubtype_id'];
     }
 
     // If itemlimit is set to 0, then don't pass to getall
@@ -80,12 +80,12 @@ function articles_featureditemsblock_modify($blockinfo)
     // Add the rest of the arguments
     $article_args['cids'] = $cidsarray;
     $article_args['enddate'] = time();
-    $article_args['status'] = $statusarray;
+    $article_args['state'] = $statearray;
     $article_args['fields'] = $vars['fields'];
     $article_args['sort'] = $vars['toptype'];
 
     $vars['filtereditems'] = xarModAPIFunc(
-        'articles', 'user', 'getall', $article_args );
+        'publications', 'user', 'getall', $article_args );
 
     // Check for exceptions
     if (!isset($vars['filtereditems']) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
@@ -98,9 +98,9 @@ function articles_featureditemsblock_modify($blockinfo)
         }
     }
 
-    $vars['pubtypes'] = xarModAPIFunc('articles', 'user', 'getpubtypes');
+    $vars['pubtypes'] = xarModAPIFunc('publications', 'user', 'getpubtypes');
     $vars['categorylist'] = xarModAPIFunc('categories', 'user', 'getcat');
-    $vars['statusoptions'] = array(
+    $vars['stateoptions'] = array(
         array('id' => '', 'name' => xarML('All Published')),
         array('id' => '3', 'name' => xarML('Frontpage')),
         array('id' => '2', 'name' => xarML('Approved'))
@@ -114,7 +114,7 @@ function articles_featureditemsblock_modify($blockinfo)
         array('id' => 'title', 'name' => xarML('Title'))
     );
 
-    //Put together the additional featured articles list
+    //Put together the additional featured publications list
     for($idx=0; $idx < count($vars['filtereditems']); ++$idx) {
         $vars['filtereditems'][$idx]['selected'] = '';
         for($mx=0; $mx < count($vars['moreitems']); ++$mx) {
@@ -123,7 +123,7 @@ function articles_featureditemsblock_modify($blockinfo)
             }
         }
     }
-    $vars['morearticles'] = $vars['filtereditems'];
+    $vars['morepublications'] = $vars['filtereditems'];
     $vars['blockid'] = $blockinfo['bid'];
 
     // Return output (template data)
@@ -134,13 +134,13 @@ function articles_featureditemsblock_modify($blockinfo)
  * update block settings
  */
 
-function articles_featureditemsblock_update($blockinfo)
+function publications_featureditemsblock_update($blockinfo)
 {
     // Make sure we retrieve the new pubtype from the configuration form.
     // TODO: use xarVarFetch()
-    xarVarFetch('pubtypeid', 'id', $vars['pubtypeid'], 0, XARVAR_NOT_REQUIRED);
+    xarVarFetch('pubtype_id', 'id', $vars['pubtype_id'], 0, XARVAR_NOT_REQUIRED);
     xarVarFetch('catfilter', 'id', $vars['catfilter'], 0, XARVAR_NOT_REQUIRED);
-    xarVarFetch('status', 'int:0:4', $vars['status'], NULL, XARVAR_NOT_REQUIRED);
+    xarVarFetch('state', 'int:0:4', $vars['state'], NULL, XARVAR_NOT_REQUIRED);
     xarVarFetch('itemlimit', 'int:1', $vars['itemlimit'], 0, XARVAR_NOT_REQUIRED);
     xarVarFetch('toptype', 'enum:author:date:hits:rating:title', $vars['toptype'], 'date', XARVAR_NOT_REQUIRED);
     xarVarFetch('featuredid', 'id', $vars['featuredid'], 0, XARVAR_NOT_REQUIRED);

@@ -1,33 +1,44 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
- * Display article
+ * Display publication
  *
  * @param int id
  * @param int page
  * @param int ptid The publication Type ID
  * @return array with template information
  */
-function articles_user_display($args)
+
+sys::import('modules.dynamicdata.class.objects.master');
+
+function publications_user_display($args)
 {
     extract ($args);
     // Get parameters from user
-    if(!xarVarFetch('id',  'id',    $id,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('itemid',  'id',    $itemid,   NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('page', 'int:1', $page,  NULL, XARVAR_NOT_REQUIRED)) {return;}
 // this is used to determine whether we come from a pubtype-based view or a
 // categories-based navigation
     if(!xarVarFetch('ptid', 'id',    $ptid,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+
+    $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
+    $pubtypeobject->getItem(array('itemid' => $ptid));
+    $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
+    $data['object']->getItem(array('itemid' => $itemid));
+
+    return xarTplModule('publications', 'user', 'display', $data);
+
 
 /*
     // TEST - highlight search terms
@@ -38,65 +49,61 @@ function articles_user_display($args)
     extract($args);
 
     // Defaults
-    if (!isset($page)) {
-        $page = 1;
-    }
+    if (!isset($page)) $page = 1;
+
     // via arguments only
-    if (!isset($preview)) {
-        $preview = 0;
-    }
+    if (!isset($preview)) $preview = 0;
 
+/*
     if ($preview) {
-        if (!isset($article)) {
-            return xarML('Invalid article');
+        if (!isset($publication)) {
+            return xarML('Invalid publication');
         }
-        $id = $article['id'];
+        $id = $publication->properties['id']->value;
     } elseif (!isset($id) || !is_numeric($id) || $id < 1) {
-        return xarML('Invalid article ID');
+        return xarML('Invalid publication ID');
     }
+*/
 
-    // Load API
-    if (!xarModAPILoad('articles', 'user')) return;
-
-    // Get article
+/*    // Get publication
     if (!$preview) {
-        $article = xarModAPIFunc('articles',
+        $publication = xarModAPIFunc('publications',
                                 'user',
                                 'get',
                                 array('id' => $id,
                                       'withcids' => true));
     }
 
-    if (!is_array($article)) {
-        $msg = xarML('Failed to retrieve article in #(3)_#(1)_#(2).php', 'userapi', 'get', 'articles');
+    if (!is_array($publication)) {
+        $msg = xarML('Failed to retrieve publication in #(3)_#(1)_#(2).php', 'userapi', 'get', 'publications');
         throw new DataNotFoundException(null, $msg);
     }
-
     // Get publication types
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
 
-    // Check that the publication type is valid, otherwise use the article's pubtype
+    // Check that the publication type is valid, otherwise use the publication's pubtype
     if (!empty($ptid) && !isset($pubtypes[$ptid])) {
-        $ptid = $article['pubtypeid'];
+        $ptid = $publication['pubtype_id'];
     }
 
+*/
 // keep original ptid (if any)
-//    $ptid = $article['pubtypeid'];
-    $pubtypeid = $article['pubtypeid'];
-    $authorid = $article['authorid'];
-    if (!isset($article['cids'])) {
-        $article['cids'] = array();
+//    $ptid = $publication['pubtype_id'];
+//    $pubtype_id = $publication->properties['itemtype']->value;
+//    $owner = $publication->properties['author']->value;
+/*    if (!isset($publication['cids'])) {
+        $publication['cids'] = array();
     }
-    $cids = $article['cids'];
-
-    // Get the article settings for this publication type
+    $cids = $publication['cids'];
+*/
+    // Get the publication settings for this publication type
     if (empty($ptid)) {
-        $settings = unserialize(xarModVars::get('articles', 'settings'));
+        $settings = unserialize(xarModVars::get('publications', 'settings'));
     } else {
-        $settings = unserialize(xarModVars::get('articles', 'settings.'.$ptid));
+        $settings = unserialize(xarModVars::get('publications', 'settings.'.$ptid));
     }
 
-    // show the number of articles for each publication type
+    // show the number of publications for each publication type
     if (!isset($showpubcount)) {
         if (!isset($settings['showpubcount']) || !empty($settings['showpubcount'])) {
             $showpubcount = 1; // default yes
@@ -104,7 +111,7 @@ function articles_user_display($args)
             $showpubcount = 0;
         }
     }
-    // show the number of articles for each category
+    // show the number of publications for each category
     if (!isset($showcatcount)) {
         if (empty($settings['showcatcount'])) {
             $showcatcount = 0; // default no
@@ -114,23 +121,23 @@ function articles_user_display($args)
     }
 
     // Initialize the data array
-    $data = array();
+    $data = $publication->getFieldValues();
     $data['ptid'] = $ptid; // navigation pubtype
-    $data['pubtypeid'] = $pubtypeid; // article pubtype
+    $data['pubtype_id'] = $pubtype_id; // publication pubtype
 
     // Security check for EDIT access
     if (!$preview) {
         $input = array();
-        $input['article'] = $article;
-        $input['mask'] = 'EditArticles';
-        if (xarModAPIFunc('articles','user','checksecurity',$input)) {
-            $data['editurl'] = xarModURL('articles', 'admin', 'modify',
-                                         array('id' => $article['id']));
-        // don't show unapproved articles to non-editors
-        } elseif ($article['status'] < 2) {
-            $status = xarModAPIFunc('articles', 'user', 'getstatusname',
-                                    array('status' => $article['status']));
-            return xarML('You have no permission to view this item [Status: #(1)]', $status);
+        $input['publication'] = $publication;
+        $input['mask'] = 'EditPublications';
+        if (xarModAPIFunc('publications','user','checksecurity',$input)) {
+            $data['editurl'] = xarModURL('publications', 'admin', 'modify',
+                                         array('id' => $publication['id']));
+        // don't show unapproved publications to non-editors
+        } elseif ($publication['state'] < 2) {
+            $state = xarModAPIFunc('publications', 'user', 'getstatename',
+                                    array('state' => $publication['state']));
+            return xarML('You have no permission to view this item [Status: #(1)]', $state);
         }
     }
     $data['edittitle'] = xarML('Edit');
@@ -140,6 +147,7 @@ function articles_user_display($args)
     $data['topic_images'] = array();
     $data['topic_urls'] = array();
     $data['topic_names'] = array();
+    /*
     if (count($cids) > 0) {
         if (!xarModAPILoad('categories', 'user')) return;
         $catlist = xarModAPIFunc('categories',
@@ -147,8 +155,8 @@ function articles_user_display($args)
                                 'getcatinfo',
                                 array('cids' => $cids));
         foreach ($catlist as $cat) {
-            $link = xarModURL('articles','user','view',
-                             array(//'status' => array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED).
+            $link = xarModURL('publications','user','view',
+                             array(//'state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED).
                                    'ptid' => $ptid,
                                    'catid' => $cat['cid']));
             $name = xarVarPrepForDisplay($cat['name']);
@@ -168,19 +176,19 @@ function articles_user_display($args)
             }
         }
     }
-
+*/
     // multi-page output for 'body' field (mostly for sections at the moment)
     $themeName = xarVarGetCached('Themes.name','CurrentTheme');
     if ($themeName != 'print'){
-        if (strstr($article['body'],'<!--pagebreak-->')) {
+        if (strstr($publication->properties['body']->value,'<!--pagebreak-->')) {
             if ($preview) {
-                $article['body'] = preg_replace('/<!--pagebreak-->/',
+                $publication['body'] = preg_replace('/<!--pagebreak-->/',
                                                 '<hr/><div style="text-align: center;">'.xarML('Page Break').'</div><hr/>',
-                                                $article['body']);
+                                                $publication->properties['body']->value);
                 $data['previous'] = '';
                 $data['next'] = '';
             } else {
-                $pages = explode('<!--pagebreak-->',$article['body']);
+                $pages = explode('<!--pagebreak-->',$publication->properties['body']->value);
 
                 // For documents with many pages, the pages can be
                 // arranged in blocks.
@@ -195,7 +203,7 @@ function articles_user_display($args)
                 $numpages = $pagerinfo['totalpages'];
 
                 // Discard everything but the current page.
-                $article['body'] = $pages[$page - 1];
+                $publication['body'] = $pages[$page - 1];
                 unset($pages);
 
                 if ($page > 1) {
@@ -211,7 +219,7 @@ function articles_user_display($args)
                 // The pager template (last parameter) could be an
                 // option for the publication type.
                 $urlmask = xarModURL(
-                    'articles','user','display',
+                    'publications','user','display',
                     array('ptid' => $ptid, 'id' => $id, 'page' => '%%')
                 );
                 $data['pager'] = xarTplGetPager(
@@ -235,9 +243,9 @@ function articles_user_display($args)
             $data['next'] = '';
         }
     } else {
-        $article['body'] = preg_replace('/<!--pagebreak-->/',
+        $publication['body'] = preg_replace('/<!--pagebreak-->/',
                                         '',
-                                        $article['body']);
+                                        $publication['body']);
     }
 
     // TEST
@@ -248,34 +256,34 @@ function articles_user_display($args)
         if(!array_key_exists('defaultsort',$settings)) {
             $settings['defaultsort'] = 'id';
         }
-        $prevart = xarModAPIFunc('articles','user','getprevious',
+        $prevart = xarModAPIFunc('publications','user','getprevious',
                                  array('id' => $id,
                                        'ptid' => $ptid,
                                        'sort' => $settings['defaultsort'],
-                                       'status' => array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED),
+                                       'state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED),
                                        'enddate' => time()));
         if (!empty($prevart['id'])) {
-            //Make all previous article info available to template
+            //Make all previous publication info available to template
             $data['prevartinfo'] = $prevart;
 
-            $data['prevart'] = xarModURL('articles','user','display',
-                                         array('ptid' => $prevart['pubtypeid'],
+            $data['prevart'] = xarModURL('publications','user','display',
+                                         array('ptid' => $prevart['pubtype_id'],
                                                'id' => $prevart['id']));
         } else {
             $data['prevart'] = '';
         }
-        $nextart = xarModAPIFunc('articles','user','getnext',
+        $nextart = xarModAPIFunc('publications','user','getnext',
                                  array('id' => $id,
                                        'ptid' => $ptid,
                                        'sort' => $settings['defaultsort'],
-                                       'status' => array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED),
+                                       'state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED),
                                        'enddate' => time()));
         if (!empty($nextart['id'])) {
             //Make all next art info available to template
             $data['nextartinfo'] = $nextart;
 
-            $data['nextart'] = xarModURL('articles','user','display',
-                                         array('ptid' => $nextart['pubtypeid'],
+            $data['nextart'] = xarModURL('publications','user','display',
+                                         array('ptid' => $nextart['pubtype_id'],
                                                'id' => $nextart['id']));
         } else {
             $data['nextart'] = '';
@@ -285,105 +293,14 @@ function articles_user_display($args)
         $data['nextart'] = '';
     }
 
-    // Display article
+    // Display publication
+    unset($publication);
 
-    // Fill in the fields based on the pubtype configuration
-    foreach ($pubtypes[$pubtypeid]['config'] as $field => $value) {
-        if (empty($value['label'])) {
-            $data[$field] = '';
-            continue;
-        }
-        switch ($value['format']) {
-            case 'username':
-            case 'userlist':
-                $data[$field] = $article[$field];
-        // TODO: replace by authorid and sync with templates
-                $data['author'] = xarUserGetVar('name', $article[$field]);
-                if (!isset($data['author'])) {
-                    $data['author'] = '';
-                    // clear error retrieving non-existing author
-                    xarErrorFree();
-                } elseif (empty($data['author'])) {
-                    $data['author'] = xarUserGetVar('uname', $article[$field]);
-                }
-                if ($article[$field] > _XAR_ID_UNREGISTERED) {
-                    $data['profile'] = xarModURL('roles','user','display',
-                                                array('uid' => $article[$field]));
-                }
-                break;
-            case 'status':
-                $data[$field] = $article[$field];
-                break;
-            case 'calendar':
-                // Make sure there is a value date
-                if (!empty($article[$field])) {
-                    // all calendar fields are passed "as is" now, so you can format them in the templates
-                    $data[$field] = $article[$field];
-                    // legacy support for $date variable in templates
-                    if ($field == 'pubdate') {
-                        // the date for this field is represented in the user's timezone for display
-                        $data['date'] = xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $article[$field]);
-                    }
-                } else {
-                    $data[$field] = '';
-                    // legacy support for $date variable in templates
-                    if ($field == 'pubdate') {
-                        $data['date'] = '';
-                    }
-                }
-                break;
-            case 'url':
-                $data[$field] = xarVarPrepHTMLDisplay($article[$field]);
-                if (!empty($article[$field]) && $article[$field] != 'http://') {
-                    $data['redirect'] = xarModURL('articles','user','redirect',
-                                                  array('ptid' => $ptid,
-                                                        'id' => $id));
-                } else {
-                    $data['redirect'] = '';
-                }
-                break;
-            case 'urltitle':
-                // fall through
-        // TEST ONLY
-            case 'webpage':
-                if (empty($value['validation'])) {
-                    $value['validation'] = 'modules/articles';
-                }
-                // fall through
-            case 'imagelist':
-                if (empty($value['validation'])) {
-                    $value['validation'] = 'modules/articles/xarimages';
-                }
-                // fall through
-            case 'dropdown':
-                if (empty($value['validation'])) {
-                    $value['validation'] = '';
-                }
-                if (!empty($article[$field])) {
-                    $data[$field] = xarModAPIFunc('dynamicdata','user','showoutput',
-                                                  array('name' => $field,
-                                                        'type' => $value['format'],
-                                                        'configuration' => $value['validation'],
-                                                        'value' => $article[$field]));
-                } else {
-                    $data[$field] = '';
-                }
-                break;
-            default:
-                $data[$field] = xarVarPrepHTMLDisplay($article[$field]);
-                //$data[$field] = $article[$field];
-        }
-    }
-    unset($article);
-
-    if (xarModIsHooked('uploads', 'articles', $pubtypeid)) {
-        xarVarSetCached('Hooks.uploads','ishooked',1);
-    }
     // temp. fix to include dynamic data fields without changing templates
-    if (xarModIsHooked('dynamicdata','articles',$pubtypeid)) {
+    if (xarModIsHooked('dynamicdata','publications',$pubtype_id)) {
         list($properties) = xarModAPIFunc('dynamicdata','user','getitemfordisplay',
-                                          array('module'   => 'articles',
-                                                'itemtype' => $pubtypeid,
+                                          array('module'   => 'publications',
+                                                'itemtype' => $pubtype_id,
                                                 'itemid'   => $id,
                                                 'preview'  => $preview));
         if (!empty($properties) && count($properties) > 0) {
@@ -406,12 +323,12 @@ function articles_user_display($args)
     // You'll need to specify the item id, and an array containing all the
     // pieces of text that you want to transform (e.g. for autolinks, wiki,
     // smilies, bbcode, ...).
-    $data['itemtype'] = $pubtypeid;
+    $data['itemtype'] = $pubtype_id;
     // TODO: what about transforming DDfields ?
     // <mrb> see above for a hack, needs to be a lot better.
 
-    // Summary is always included, is that handled somewhere else? (article config says i can ex/include it)
-    // <mikespub> articles config allows you to call transforms for the articles summaries in the view function
+    // Summary is always included, is that handled somewhere else? (publication config says i can ex/include it)
+    // <mikespub> publications config allows you to call transforms for the publications summaries in the view function
     if (!isset($titletransform)) {
         if (empty($settings['titletransform'])) {
             $data['transform'][] = 'summary';
@@ -425,12 +342,15 @@ function articles_user_display($args)
             $data['transform'][] = 'notes';
         }
     }
-    $data = xarModCallHooks('item', 'transform', $id, $data, 'articles');
+    $data = xarModCallHooks('item', 'transform', $id, $data, 'publications');
+
+    return xarTplModule('publications', 'user', 'display', $data);
+
 
     if (!empty($data['title'])) {
         // CHECKME: <rabbit> Strip tags out of the title - the <title> tag shouldn't have any other tags in it.
         $title = strip_tags($data['title']);
-        xarTplSetPageTitle(xarVarPrepForDisplay($title), xarVarPrepForDisplay($pubtypes[$pubtypeid]['descr']));
+        xarTplSetPageTitle(xarVarPrepForDisplay($title), xarVarPrepForDisplay($pubtypes[$data['itemtype']]['description']));
 
         // Save some variables to (temporary) cache for use in blocks etc.
         xarVarSetCached('Comments.title','title',$data['title']);
@@ -447,15 +367,15 @@ function articles_user_display($args)
 
     // Navigation links
     $data['publabel'] = xarML('Publication');
-    $data['publinks'] = xarModAPIFunc('articles','user','getpublinks',
-                                     array('status' => array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED),
-                                           'count' => $showpubcount));
+    $data['publinks'] = array(); //xarModAPIFunc('publications','user','getpublinks',
+                                 //    array('state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED),
+                                 //          'count' => $showpubcount));
     if (isset($showmap)) {
         $settings['showmap'] = $showmap;
     }
     if (!empty($settings['showmap'])) {
-        $data['maplabel'] = xarML('View Article Map');
-        $data['maplink'] = xarModURL('articles','user','viewmap',
+        $data['maplabel'] = xarML('View Publication Map');
+        $data['maplink'] = xarModURL('publications','user','viewmap',
                                     array('ptid' => $ptid));
     }
     if (isset($showarchives)) {
@@ -463,7 +383,7 @@ function articles_user_display($args)
     }
     if (!empty($settings['showarchives'])) {
         $data['archivelabel'] = xarML('View Archives');
-        $data['archivelink'] = xarModURL('articles','user','archive',
+        $data['archivelink'] = xarModURL('publications','user','archive',
                                         array('ptid' => $ptid));
     }
     if (isset($showpublinks)) {
@@ -478,7 +398,7 @@ function articles_user_display($args)
 
     // Tell the hitcount hook not to display the hitcount, but to save it
     // in the variable cache.
-    if (xarModIsHooked('hitcount','articles',$pubtypeid)) {
+    if (xarModIsHooked('hitcount','publications',$pubtype_id)) {
         xarVarSetCached('Hooks.hitcount','save',1);
         $data['dohitcount'] = 1;
     } else {
@@ -486,29 +406,13 @@ function articles_user_display($args)
     }
 
     // Tell the ratings hook to save the rating in the variable cache.
-    if (xarModIsHooked('ratings','articles',$pubtypeid)) {
+    if (xarModIsHooked('ratings','publications',$pubtype_id)) {
         xarVarSetCached('Hooks.ratings','save',1);
         $data['doratings'] = 1;
     } else {
         $data['doratings'] = 0;
     }
 
-    // Hooks
-    if ($preview) {
-        $data['hooks'] = '';
-    } else {
-        $data['hooks'] = xarModCallHooks('item', 'display', $id,
-                                         array('module'    => 'articles',
-                                               'itemtype'  => $pubtypeid,
-                                               'returnurl' => xarModURL('articles',
-                                                                        'user',
-                                                                        'display',
-                                                                        array('ptid' => $ptid,
-                                                                              'id' => $id))
-                                              ),
-                                         'articles'
-                                        );
-    }
 
     // Retrieve the current hitcount from the variable cache
     if ($data['dohitcount'] && xarVarIsCached('Hooks.hitcount','value')) {
@@ -525,44 +429,44 @@ function articles_user_display($args)
     }
 
     // Save some variables to (temporary) cache for use in blocks etc.
-    xarVarSetCached('Blocks.articles','title',$data['title']);
+    xarVarSetCached('Blocks.publications','title',$data['title']);
 
     // Generating keywords from the API now instead of setting the entire
     // body into the cache.
-    $keywords = xarModAPIFunc('articles',
+    $keywords = xarModAPIFunc('publications',
                               'user',
                               'generatekeywords',
                               array('incomingkey' => $data['body']));
 
-    xarVarSetCached('Blocks.articles','body',$keywords);
-    xarVarSetCached('Blocks.articles','summary',$data['summary']);
-    xarVarSetCached('Blocks.articles','id',$id);
-    xarVarSetCached('Blocks.articles','ptid',$ptid);
-    xarVarSetCached('Blocks.articles','cids',$cids);
-    xarVarSetCached('Blocks.articles','authorid',$authorid);
+    xarVarSetCached('Blocks.publications','body',$keywords);
+    xarVarSetCached('Blocks.publications','summary',$data['summary']);
+    xarVarSetCached('Blocks.publications','id',$id);
+    xarVarSetCached('Blocks.publications','ptid',$ptid);
+    xarVarSetCached('Blocks.publications','cids',$cids);
+    xarVarSetCached('Blocks.publications','owner',$owner);
     if (isset($data['author'])) {
-        xarVarSetCached('Blocks.articles','author',$data['author']);
+        xarVarSetCached('Blocks.publications','author',$data['author']);
     }
-// TODO: add this to articles configuration ?
+// TODO: add this to publications configuration ?
 //if ($shownavigation) {
     $data['id'] = $id;
     $data['cids'] = $cids;
-    xarVarSetCached('Blocks.categories','module','articles');
+    xarVarSetCached('Blocks.categories','module','publications');
     xarVarSetCached('Blocks.categories','itemtype',$ptid);
     xarVarSetCached('Blocks.categories','itemid',$id);
     xarVarSetCached('Blocks.categories','cids',$cids);
 
-    if (!empty($ptid) && !empty($pubtypes[$ptid]['descr'])) {
-        xarVarSetCached('Blocks.categories','title',$pubtypes[$ptid]['descr']);
+    if (!empty($ptid) && !empty($pubtypes[$ptid]['description'])) {
+        xarVarSetCached('Blocks.categories','title',$pubtypes[$ptid]['description']);
     }
 
     // optional category count
     if ($showcatcount && !empty($ptid)) {
-        $pubcatcount = xarModAPIFunc('articles',
+        $pubcatcount = xarModAPIFunc('publications',
                                     'user',
                                     'getpubcatcount',
                                     // frontpage or approved
-                                    array('status' => array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED),
+                                    array('state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED),
                                           'ptid' => $ptid));
         if (!empty($pubcatcount[$ptid])) {
             xarVarSetCached('Blocks.categories','catcount',$pubcatcount[$ptid]);
@@ -573,7 +477,7 @@ function articles_user_display($args)
 //}
 
     // Module template depending on publication type
-    $template = $pubtypes[$pubtypeid]['name'];
+    $template = $pubtypes[$pubtype_id]['name'];
 
     // Page template depending on publication type (optional)
     // Note : this cannot be overridden in templates
@@ -586,8 +490,12 @@ function articles_user_display($args)
         $data['layout'] = $layout;
     }
 
-    // return template out
-    return xarTplModule('articles', 'user', 'display', $data, $template);
+    $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
+    $pubtypeobject->getItem(array('itemid' => $ptid));
+    $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
+    $data['object']->getItem(array('itemid' => $itemid));
+
+    return xarTplModule('publications', 'user', 'display', $data, $template);
 }
 
 ?>

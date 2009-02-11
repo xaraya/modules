@@ -1,20 +1,20 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
  * redirect to a site based on some URL field of the item
  */
-function articles_user_redirect($args)
+function publications_user_redirect($args)
 {
     // Get parameters from user
     if(!xarVarFetch('id', 'id', $id, NULL, XARVAR_NOT_REQUIRED)) {return;}
@@ -27,23 +27,23 @@ function articles_user_redirect($args)
     }
 
     // Load API
-    if (!xarModAPILoad('articles', 'user')) return;
+    if (!xarModAPILoad('publications', 'user')) return;
 
     // Get article
-    $article = xarModAPIFunc('articles',
+    $article = xarModAPIFunc('publications',
                             'user',
                             'get',
                             array('id' => $id));
 
     if (!is_array($article)) {
-        $msg = xarML('Failed to retrieve article in #(3)_#(1)_#(2).php', 'user', 'get', 'articles');
+        $msg = xarML('Failed to retrieve article in #(3)_#(1)_#(2).php', 'user', 'get', 'publications');
         throw new DataNotFoundException(null, $msg);
     }
 
-    $ptid = $article['pubtypeid'];
+    $ptid = $article['pubtype_id'];
 
     // Get publication types
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
 
 // TODO: improve this e.g. when multiple URL fields are present
     // Find an URL field based on the pubtype configuration
@@ -54,10 +54,10 @@ function articles_user_redirect($args)
         if ($value['format'] == 'url' && !empty($article[$field]) && $article[$field] != 'http://') {
 // TODO: add some verifications here !
             $hooks = xarModCallHooks('item', 'display', $id,
-                                     array('module'    => 'articles',
+                                     array('module'    => 'publications',
                                            'itemtype'  => $ptid,
                                           ),
-                                     'articles'
+                                     'publications'
                                     );
             xarResponseRedirect($article[$field]);
             return true;
@@ -65,10 +65,10 @@ function articles_user_redirect($args)
             $array = unserialize($article[$field]);
             if (!empty($array['link']) && $array['link'] != 'http://') {
                 $hooks = xarModCallHooks('item', 'display', $id,
-                                         array('module'    => 'articles',
+                                         array('module'    => 'publications',
                                                'itemtype'  => $ptid,
                                               ),
-                                         'articles'
+                                         'publications'
                                         );
                 xarResponseRedirect($array['link']);
                 return true;

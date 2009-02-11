@@ -1,24 +1,24 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
- * search articles (called as hook from search module, or directly with pager)
+ * search publications (called as hook from search module, or directly with pager)
  *
  * @param $args['objectid'] could be the query ? (currently unused)
  * @param $args['extrainfo'] all other parameters ? (currently unused)
  * @return array output
  */
-function articles_user_search($args)
+function publications_user_search($args)
 {
     // pager stuff
     if(!xarVarFetch('startnum', 'int:0', $startnum,  NULL, XARVAR_NOT_REQUIRED)) {return;}
@@ -35,8 +35,8 @@ function articles_user_search($args)
     if(!xarVarFetch('ptids',    'array', $ptids,     NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // date stuff via forms
-    if(!xarVarFetch('articles_startdate','str', $startdate, NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('articles_enddate',  'str', $enddate,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('publications_startdate','str', $startdate, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('publications_enddate',  'str', $enddate,   NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // date stuff via URLs
     if(!xarVarFetch('start',    'int:0', $start,     NULL, XARVAR_NOT_REQUIRED)) {return;}
@@ -45,8 +45,8 @@ function articles_user_search($args)
     // search button was pressed
     if(!xarVarFetch('search',   'str',   $search,    NULL, XARVAR_NOT_REQUIRED)) {return;}
 
-    // select by article status (array or string)
-    if(!xarVarFetch('status',   'isset', $status,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    // select by article state (array or string)
+    if(!xarVarFetch('state',   'isset', $state,    NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // yes, this is the query
     if(!xarVarFetch('q',        'str',   $q,         NULL, XARVAR_NOT_REQUIRED)) {return;}
@@ -62,7 +62,7 @@ function articles_user_search($args)
     //if(!xarVarFetch('bool',     'str',   $bool,   NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // search in specific fields
-    if(!xarVarFetch('articles_fields', 'isset', $fields, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('publications_fields', 'isset', $fields, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     if(!xarVarFetch('searchtype', 'isset', $searchtype, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
@@ -91,39 +91,39 @@ function articles_user_search($args)
         $numitems = 20;
     }
 
-    if (!xarModAPILoad('articles', 'user')) return;
+    if (!xarModAPILoad('publications', 'user')) return;
 
     // Get publication types
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
 
-    if (xarSecurityCheck('AdminArticles',0)) {
+    if (xarSecurityCheck('AdminPublications',0)) {
         $isadmin = true;
     } else {
         $isadmin = false;
     }
 
-    // frontpage or approved status
-    if (!$isadmin || !isset($status)) {
-        $status = array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED);
-    } elseif (is_string($status)) {
-        if (strpos($status,' ')) {
-            $status = explode(' ',$status);
-        } elseif (strpos($status,'+')) {
-            $status = explode('+',$status);
+    // frontpage or approved state
+    if (!$isadmin || !isset($state)) {
+        $state = array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED);
+    } elseif (is_string($state)) {
+        if (strpos($state,' ')) {
+            $state = explode(' ',$state);
+        } elseif (strpos($state,'+')) {
+            $state = explode('+',$state);
         } else {
-            $status = array($status);
+            $state = array($state);
         }
     }
-    $seenstatus = array();
-    foreach ($status as $that) {
+    $seenstate = array();
+    foreach ($state as $that) {
         if (empty($that) || !is_numeric($that)) continue;
-        $seenstatus[$that] = 1;
+        $seenstate[$that] = 1;
     }
-    $status = array_keys($seenstatus);
-    if (count($status) != 2 || !in_array(ARTCLES_STATE_APPROVED,$status) || !in_array(ARTCLES_STATE_FRONTPAGE,$status)) {
-        $statusline = implode('+',$status);
+    $state = array_keys($seenstate);
+    if (count($state) != 2 || !in_array(PUBLICATIONS_STATE_APPROVED,$state) || !in_array(PUBLICATIONS_STATE_FRONTPAGE,$state)) {
+        $stateline = implode('+',$state);
     } else {
-        $statusline = null;
+        $stateline = null;
     }
 
     if (!isset($sort)) {
@@ -133,7 +133,7 @@ function articles_user_search($args)
     // default publication type(s) to search in
     if (!empty($ptid) && isset($pubtypes[$ptid])) {
         $ptids = array($ptid);
-        $settings = unserialize(xarModVars::get('articles', 'settings.'.$ptid));
+        $settings = unserialize(xarModVars::get('publications', 'settings.'.$ptid));
         if (empty($settings['showcategories'])) {
             $showcategories = 0;
         } else {
@@ -145,7 +145,7 @@ function articles_user_search($args)
         }
         $showcategories = 1;
     } elseif (!isset($ptids)) {
-    //    $ptids = array(xarModVars::get('articles','defaultpubtype'));
+    //    $ptids = array(xarModVars::get('publications','defaultpubtype'));
         $ptids = array();
         foreach ($pubtypes as $pubid => $pubtype) {
             $ptids[] = $pubid;
@@ -203,13 +203,13 @@ function articles_user_search($args)
         $user = xarModAPIFunc('roles','user','get',
                              array('name' => $author));
         if (!empty($user['uid'])) {
-            $authorid = $user['uid'];
+            $owner = $user['uid'];
         } else {
-            $authorid = null;
+            $owner = null;
             $author = null;
         }
     } else {
-        $authorid = null;
+        $owner = null;
         $author = null;
     }
 
@@ -231,7 +231,7 @@ function articles_user_search($args)
     }
 
     // Set default searchtype to 'fulltext' if necessary
-    $fulltext = xarModVars::get('articles', 'fulltextsearch');
+    $fulltext = xarModVars::get('publications', 'fulltextsearch');
     if (!isset($searchtype) && !empty($fulltext)) {
         $searchtype = 'fulltext';
     }
@@ -242,7 +242,7 @@ function articles_user_search($args)
 
     $data = array();
     $data['results'] = array();
-    $data['status'] = '';
+    $data['state'] = '';
     $data['ishooked'] = $ishooked;
     // TODO: MichelV: $ishooked is never empty, but either 0 or 1
     if (empty($ishooked)) {
@@ -251,10 +251,10 @@ function articles_user_search($args)
         $data['searchtype'] = $searchtype;
     }
     if ($isadmin) {
-        $states = xarModAPIFunc('articles','user','getstates');
-        $data['statuslist'] = array();
+        $states = xarModAPIFunc('publications','user','getstates');
+        $data['statelist'] = array();
         foreach ($states as $id => $name) {
-            $data['statuslist'][] = array('id' => $id, 'name' => $name, 'checked' => in_array($id,$status));
+            $data['statelist'][] = array('id' => $id, 'name' => $name, 'checked' => in_array($id,$state));
         }
     // TODO: show field labels when we're dealing with only 1 pubtype
         $data['fieldlist'] = array(
@@ -273,7 +273,7 @@ function articles_user_search($args)
             $checked = '';
         }
         $data['publications'][] = array('pubid' => $pubid,
-                                        'pubdescr' => xarVarPrepForDisplay($pubtype['descr']),
+                                        'pubdescr' => xarVarPrepForDisplay($pubtype['description']),
                                         'pubchecked' => $checked);
     }
 
@@ -282,7 +282,7 @@ function articles_user_search($args)
         $catarray = array();
         foreach ($ptids as $curptid) {
             // get root categories for this publication type
-            $catlinks = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles','itemtype' => $curptid));
+            $catlinks = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'publications','itemtype' => $curptid));
             foreach ($catlinks as $cat) {
                 $catarray[$cat['category_id']] = $cat['name'];
             }
@@ -338,8 +338,8 @@ function articles_user_search($args)
         $data['enddate'] = $enddate;
     }
 
-    if (!empty($q) || (!empty($author) && isset($authorid)) || !empty($search) || !empty($ptid) || !empty($startdate) || $enddate != $now || !empty($catid)) {
-        $getfields = array('id','title', 'pubdate','pubtypeid','cids');
+    if (!empty($q) || (!empty($author) && isset($owner)) || !empty($search) || !empty($ptid) || !empty($startdate) || $enddate != $now || !empty($catid)) {
+        $getfields = array('id','title', 'pubdate','pubtype_id','cids');
         // Return the relevance when using MySQL full-text search
         //if (!empty($search) && !empty($searchtype) && substr($searchtype,0,8) == 'fulltext') {
         //    $getfields[] = 'relevance';
@@ -347,17 +347,17 @@ function articles_user_search($args)
         $count = 0;
         // TODO: allow combination of searches ?
         foreach ($ptids as $curptid) {
-            $articles = xarModAPIFunc('articles',
+            $publications = xarModAPIFunc('publications',
                                      'user',
                                      'getall',
                                      array('startnum' => $startnum,
                                            'cids' => $cids,
                                            'andcids' => $andcids,
                                            'ptid' => $curptid,
-                                           'authorid' => $authorid,
+                                           'owner' => $owner,
                                            'sort' => $sort,
                                            'numitems' => $numitems,
-                                           'status' => $status,
+                                           'state' => $state,
                                            'startdate' => $startdate,
                                            'enddate' => $enddate,
                                            'searchfields' => $fieldlist,
@@ -367,13 +367,13 @@ function articles_user_search($args)
                                           )
                                     );
         // TODO: re-use article output code from elsewhere (view / archive / admin)
-            if (!empty($articles) && count($articles) > 0) {
+            if (!empty($publications) && count($publications) > 0) {
 
                 // retrieve the categories for each article
                 $catinfo = array();
                 if ($showcategories) {
                     $cidlist = array();
-                    foreach ($articles as $article) {
+                    foreach ($publications as $article) {
                         if (!empty($article['cids']) && count($article['cids']) > 0) {
                             foreach ($article['cids'] as $cid) {
                                 $cidlist[$cid] = 1;
@@ -384,16 +384,16 @@ function articles_user_search($args)
                         $catinfo = xarModAPIFunc('categories','user','getcatinfo',
                                                  array('cids' => array_keys($cidlist)));
                         // get root categories for this publication type
-                        $catroots = xarModAPIFunc('articles',
+                        $catroots = xarModAPIFunc('publications',
                                                   'user',
                                                   'getrootcats',
                                                   array('ptid' => $curptid));
-                        $catroots = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles','itemtype' => $curptid));
+                        $catroots = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'publications','itemtype' => $curptid));
 
                     }
                     foreach ($catinfo as $cid => $info) {
                         $catinfo[$cid]['name'] = xarVarPrepForDisplay($info['name']);
-                        $catinfo[$cid]['link'] = xarModURL('articles','user','view',
+                        $catinfo[$cid]['link'] = xarModURL('publications','user','view',
                                                            array('ptid' => $curptid,
                                                                  'catid' => (($catid && $andcids) ? $catid . '+' . $cid : $cid) ));
                         // only needed when sorting by root category id
@@ -420,11 +420,11 @@ function articles_user_search($args)
                 $GLOBALS['artsearchcatinfo'] = $catinfo;
 
                 $items = array();
-                foreach ($articles as $article) {
+                foreach ($publications as $article) {
                     $count++;
-                    $curptid = $article['pubtypeid'];
-                    $link = xarModURL('articles','user','display',
-                                     array('ptid' => $article['pubtypeid'],
+                    $curptid = $article['pubtype_id'];
+                    $link = xarModURL('publications','user','display',
+                                     array('ptid' => $article['pubtype_id'],
                                            'id' => $article['id']));
                     // publication date of article (if needed)
                     if (!empty($pubtypes[$curptid]['config']['pubdate']['label'])
@@ -446,11 +446,11 @@ function articles_user_search($args)
 
                         $cidlist = $article['cids'];
                         // order cids by root category order
-                        usort($cidlist,'articles_search_sortbyorder');
+                        usort($cidlist,'publications_search_sortbyorder');
                         // order cids by root category id
-                        //usort($cidlist,'articles_search_sortbyroot');
+                        //usort($cidlist,'publications_search_sortbyroot');
                         // order cids by position in Celko tree
-                        //usort($cidlist,'articles_search_sortbyleft');
+                        //usort($cidlist,'publications_search_sortbyleft');
 
                         $join = '';
                         foreach ($cidlist as $cid) {
@@ -475,34 +475,34 @@ function articles_user_search($args)
                                      'relevance' => isset($article['relevance']) ? $article['relevance'] : null,
                                      'categories' => $categories);
                 }
-                unset($articles);
+                unset($publications);
 
                 // Pager
-// TODO: make count depend on language in the future
+// TODO: make count depend on locale in the future
                 $pager = xarTplGetPager($startnum,
-                                        xarModAPIFunc('articles', 'user', 'countitems',
+                                        xarModAPIFunc('publications', 'user', 'countitems',
                                                       array('cids' => $cids,
                                                             'andcids' => $andcids,
                                                             'ptid' => $curptid,
-                                                            'authorid' => $authorid,
-                                                            'status' => $status,
+                                                            'owner' => $owner,
+                                                            'state' => $state,
                                                             'startdate' => $startdate,
                                                             'enddate' => $enddate,
                                                             'searchfields' => $fieldlist,
                                                             'searchtype' => $searchtype,
                                                             'search' => $q)),
 
-/* trick : use *this* articles search instead of global search for pager :-)
+/* trick : use *this* publications search instead of global search for pager :-)
                                         xarModURL('search', 'user', 'main',
 */
-                                        xarModURL('articles', 'user', 'search',
+                                        xarModURL('publications', 'user', 'search',
                                                   array('ptid' => $curptid,
                                                         'catid' => $catid,
                                                         'q' => isset($q) ? $q : null,
                                                         'author' => isset($author) ? $author : null,
                                                         'start' => $startdate,
                                                         'end' => ($enddate != $now) ? $enddate : null,
-                                                        'status' => $statusline,
+                                                        'state' => $stateline,
                                                         'sort' => $sort,
                                                         'fields' => $fields,
                                                         'searchtype' => !empty($searchtype) ? $searchtype : null,
@@ -515,7 +515,7 @@ function articles_user_search($args)
                     } else {
                         $othersort = null;
                     }
-                    $sortlink = xarModURL('articles',
+                    $sortlink = xarModURL('publications',
                                          'user',
                                          'search',
                                          array('ptid' => $curptid,
@@ -524,7 +524,7 @@ function articles_user_search($args)
                                                'author' => isset($author) ? $author : null,
                                                'start' => $startdate,
                                                'end' => ($enddate != $now) ? $enddate : null,
-                                               'status' => $statusline,
+                                               'state' => $stateline,
                                                'fields' => $fields,
                                                'searchtype' => !empty($searchtype) ? $searchtype : null,
                                                'sort' => $othersort));
@@ -535,7 +535,7 @@ function articles_user_search($args)
                               xarML('sort by') . ' ' . xarML($othersort) . '</a>';
                 }
 
-                $data['results'][] = array('description' => xarVarPrepForDisplay($pubtypes[$curptid]['descr']),
+                $data['results'][] = array('description' => xarVarPrepForDisplay($pubtypes[$curptid]['description']),
                                            'items' => $items,
                                            'pager' => $pager);
             }
@@ -546,36 +546,36 @@ function articles_user_search($args)
 
         if ($count > 0) {
             // bail out, we have what we needed
-            return xarTplModule('articles','user','search',$data);
+            return xarTplModule('publications','user','search',$data);
         }
 
-        $data['status'] = xarML('No articles found matching this search');
+        $data['state'] = xarML('No publications found matching this search');
     }
 
-    return xarTplModule('articles','user','search',$data);
+    return xarTplModule('publications','user','search',$data);
 }
 
 /**
  * sorting function for article categories
  */
-function articles_search_sortbyroot ($a,$b)
+function publications_search_sortbyroot ($a,$b)
 {
     if ($GLOBALS['artsearchcatinfo'][$a]['root'] == $GLOBALS['artsearchcatinfo'][$b]['root']) {
-        return articles_search_sortbyleft($a,$b);
+        return publications_search_sortbyleft($a,$b);
     }
     return ($GLOBALS['artsearchcatinfo'][$a]['root'] > $GLOBALS['artsearchcatinfo'][$b]['root']) ? 1 : -1;
 }
 
-function articles_search_sortbyleft ($a,$b)
+function publications_search_sortbyleft ($a,$b)
 {
     if ($GLOBALS['artsearchcatinfo'][$a]['left'] == $GLOBALS['artsearchcatinfo'][$b]['left']) return 0;
     return ($GLOBALS['artsearchcatinfo'][$a]['left'] > $GLOBALS['artsearchcatinfo'][$b]['left']) ? 1 : -1;
 }
 
-function articles_search_sortbyorder ($a,$b)
+function publications_search_sortbyorder ($a,$b)
 {
     if ($GLOBALS['artsearchcatinfo'][$a]['order'] == $GLOBALS['artsearchcatinfo'][$b]['order']) {
-        return articles_search_sortbyleft($a,$b);
+        return publications_search_sortbyleft($a,$b);
     }
     return ($GLOBALS['artsearchcatinfo'][$a]['order'] > $GLOBALS['artsearchcatinfo'][$b]['order']) ? 1 : -1;
 }

@@ -1,14 +1,14 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
@@ -19,7 +19,7 @@
  * @param $args['config'] configuration of the publication type
  * @return int publication type ID on success, false on failure
  */
-function articles_adminapi_createpubtype($args)
+function publications_adminapi_createpubtype($args)
 {
     // Get arguments from argument array
     extract($args);
@@ -38,7 +38,7 @@ function articles_adminapi_createpubtype($args)
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'admin', 'createpubtype','Articles');
+                    join(', ',$invalid), 'admin', 'createpubtype','Publications');
         throw new BadParameterException(null,$msg);
     }
 
@@ -50,12 +50,12 @@ function articles_adminapi_createpubtype($args)
     $name = strtolower($name);
 
     // Security check - we require ADMIN rights here
-    if (!xarSecurityCheck('AdminArticles')) return;
+    if (!xarSecurityCheck('AdminPublications')) return;
 
-    if (!xarModAPILoad('articles', 'user')) return;
+    if (!xarModAPILoad('publications', 'user')) return;
 
     // Make sure we have all the configuration fields we need
-    $pubfields = xarModAPIFunc('articles','user','getpubfields');
+    $pubfields = xarModAPIFunc('publications','user','getpubfields');
     foreach ($pubfields as $field => $value) {
         if (!isset($config[$field])) {
             $config[$field] = '';
@@ -71,7 +71,7 @@ function articles_adminapi_createpubtype($args)
     $nextId = $dbconn->GenId($pubtypestable);
 
     // Insert the publication type
-    $query = "INSERT INTO $pubtypestable (pubtypeid, pubtypename,
+    $query = "INSERT INTO $pubtypestable (pubtype_id, pubtypename,
             pubtypedescr, pubtypeconfig)
             VALUES (?,?,?,?)";
     $bindvars = array($nextId, $name, $descr, serialize($config));
@@ -79,7 +79,7 @@ function articles_adminapi_createpubtype($args)
     if (!$result) return;
 
     // Get ptid to return
-    $ptid = $dbconn->PO_Insert_ID($pubtypestable, 'pubtypeid');
+    $ptid = $dbconn->PO_Insert_ID($pubtypestable, 'pubtype_id');
 
     // Don't call creation hooks here...
     //xarModCallHooks('item', 'create', $ptid, 'ptid');

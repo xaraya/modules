@@ -1,19 +1,19 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 
 /**
- * Initial setup for the articles module
+ * Initial setup for the publications module
  */
 
 // TODO: load configuration from file(s) ?
@@ -35,7 +35,7 @@
         'notes' => array('label'  => xarML('Notes'),
                          'format' => 'textarea',
                          'input'  => 0),
-        'authorid' => array('label'  => xarML('Author'),
+        'owner' => array('label'  => xarML('Author'),
                          'format' => 'username',
                          'input'  => 0),
         'pubdate' => array('label'  => xarML('Publication Date'),
@@ -58,7 +58,7 @@
         'notes' => array('label'  => '',
                          'format' => 'static',
                          'input'  => 0),
-        'authorid' => array('label'  => '',
+        'owner' => array('label'  => '',
                          'format' => 'static',
                          'input'  => 0),
         'pubdate' => array('label'  => '',
@@ -82,7 +82,7 @@
         'notes' => array('label'  => xarML('Image'),
                          'format' => 'image',
                          'input'  => 1),
-        'authorid' => array('label'  => xarML('Reviewer'),
+        'owner' => array('label'  => xarML('Reviewer'),
                          'format' => 'username',
                          'input'  => 0),
         'pubdate' => array('label'  => xarML('Date'),
@@ -105,7 +105,7 @@
         'notes' => array('label'  => xarML('Submitted by'),
                          'format' => 'textbox',
                          'input'  => 1),
-        'authorid' => array('label'  => '',
+        'owner' => array('label'  => '',
                          'format' => 'static',
                          'input'  => 0),
         'pubdate' => array('label'  => '',
@@ -128,7 +128,7 @@
         'notes' => array('label'  => xarML('Comments'),
                          'format' => 'textarea',
                          'input'  => 1),
-        'authorid' => array('label'  => xarML('Author'),
+        'owner' => array('label'  => xarML('Author'),
                          'format' => 'username',
                          'input'  => 0),
         'pubdate' => array('label'  => xarML('Publication Date'),
@@ -152,7 +152,7 @@
         'notes' => array('label'  => xarML('Source'),
                          'format' => 'textbox',
                          'input'  => 1),
-        'authorid' => array('label'  => xarML('Submitter'),
+        'owner' => array('label'  => xarML('Submitter'),
                          'format' => 'username',
                          'input'  => 0),
         'pubdate' => array('label'  => xarML('Submitted on'),
@@ -176,7 +176,7 @@
         'notes' => array('label'  => '',
                          'format' => 'static',
                          'input'  => 0),
-        'authorid' => array('label'  => xarML('Submitted By'),
+        'owner' => array('label'  => xarML('Submitted By'),
                          'format' => 'username',
                          'input'  => 0),
         'pubdate' => array('label'  => xarML('Submitted On'),
@@ -200,7 +200,7 @@
         'notes' => array('label'  => xarML('Upload File'),
                          'format' => 'fileupload',
                          'input'  => 1),
-        'authorid' => array('label'  => xarML('Author'),
+        'owner' => array('label'  => xarML('Author'),
                          'format' => 'username',
                          'input'  => 0),
         'pubdate' => array('label'  => xarML('Submitted On'),
@@ -224,7 +224,7 @@
         'notes' => array('label'  => xarML('Notes'),
                          'format' => 'textarea',
                          'input'  => 0),
-        'authorid' => array('label'  => xarML('Author'),
+        'owner' => array('label'  => xarML('Author'),
                          'format' => 'username',
                          'input'  => 0),
         'pubdate' => array('label'  => xarML('Publication Date'),
@@ -238,7 +238,7 @@
 
     // The list of currently supported publication types
     $pubtypes = array(
-                    array(1, 'news', 'News Articles',
+                    array(1, 'news', 'News Publications',
                           serialize($config['news'])),
                     array(2, 'docs', 'Documents',
                           serialize($config['docs'])),
@@ -300,12 +300,12 @@
                           'children' => array('Download Category 1',
                                               'Download Category 2'));
 
-    // articles settings for each publication type
+    // publications settings for each publication type
     $settings = array();
 
 // TODO: split into content- & publication-related settings in the future ?
 
-    // news articles can be in old-style Topics & Categories, and in new Generic1
+    // news publications can be in old-style Topics & Categories, and in new Generic1
     $settings[1] = array('number_of_columns'    => 2,
                          'itemsperpage'         => 10,
                          'defaultview'          => 1,
@@ -532,7 +532,7 @@
                          'categories'           => array('Generic1',
                                                          'Generic2'));
 
-    // default publication type is news articles
+    // default publication type is news publications
     $defaultpubtype = 1;
 
 ?>

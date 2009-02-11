@@ -1,35 +1,36 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
  * view items
  */
-function articles_admin_view($args)
+function publications_admin_view($args)
 {
     // Get parameters
     if(!xarVarFetch('startnum', 'isset', $startnum, 1,    XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('ptid',     'isset', $ptid,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('status',   'isset', $status,   NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('state',   'isset', $state,   NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('itemtype', 'isset', $itemtype, NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('catid',    'isset', $catid,    NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('sort', 'strlist:,:pre', $sort, NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('authorid', 'isset', $authorid, NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('owner', 'isset', $owner, NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('lang',     'isset', $lang,     NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('pubdate',  'str:1', $pubdate,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('object',   'str:1', $object,  NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     extract($args);
 
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
 
     // Default parameters
     if (!isset($ptid)) {
@@ -38,11 +39,11 @@ function articles_admin_view($args)
             $ptid = $itemtype;
         } else {
             // we default to this for convenience
-            $default = xarModVars::get('articles','defaultpubtype');
-            if (!empty($default) && !xarSecurityCheck('EditArticles',0,'Article',"$default:All:All:All")) {
+            $default = xarModVars::get('publications','defaultpubtype');
+            if (!empty($default) && !xarSecurityCheck('EditPublications',0,'Publication',"$default:All:All:All")) {
                 // try to find some alternate starting pubtype if necessary
                 foreach ($pubtypes as $id => $pubtype) {
-                    if (xarSecurityCheck('EditArticles',0,'Article',"$id:All:All:All")) {
+                    if (xarSecurityCheck('EditPublications',0,'Publication',"$id:All:All:All")) {
                         $ptid = $id;
                         break;
                     }
@@ -61,8 +62,8 @@ function articles_admin_view($args)
     $data = array();
     $data['ptid'] = $ptid;
     $data['sort'] = $sort;
-    $data['authorid'] = $authorid;
-    $data['language'] = $lang;
+    $data['owner'] = $owner;
+    $data['locale'] = $lang;
     $data['pubdate'] = $pubdate;
 
     if (!empty($catid)) {
@@ -83,24 +84,24 @@ function articles_admin_view($args)
     $data['catid'] = $catid;
 
     if (empty($ptid)) {
-        if (!xarSecurityCheck('EditArticles',0,'Article',"All:All:All:All")) {
+        if (!xarSecurityCheck('EditPublications',0,'Publication',"All:All:All:All")) {
             $msg = xarML('You have no permission to edit #(1)',
-                         'Articles');
+                         'Publications');
         throw new ForbiddenOperationException(null, $msg);
         }
     } elseif (!is_numeric($ptid) || !isset($pubtypes[$ptid])) {
         $msg = xarML('Invalid publication type');
         throw new BadParameterException(null,$msg);
-    } elseif (!xarSecurityCheck('EditArticles',0,'Article',"$ptid:All:All:All")) {
+    } elseif (!xarSecurityCheck('EditPublications',0,'Publication',"$ptid:All:All:All")) {
         $msg = xarML('You have no permission to edit #(1)',
-                     $pubtypes[$ptid]['descr']);
+                     $pubtypes[$ptid]['description']);
         throw new ForbiddenOperationException(null, $msg);
     }
 
     if (!empty($ptid)) {
-        $settings = unserialize(xarModVars::get('articles', 'settings.'.$ptid));
+        $settings = unserialize(xarModVars::get('publications', 'settings.'.$ptid));
     } else {
-        $string = xarModVars::get('articles', 'settings');
+        $string = xarModVars::get('publications', 'settings');
         if (!empty($string)) {
             $settings = unserialize($string);
         }
@@ -111,59 +112,63 @@ function articles_admin_view($args)
         $numitems = 30;
     }
 
+    /*
     // Get item information
-    $articles = xarModAPIFunc('articles',
+    $publications = xarModAPIFunc('publications',
                              'user',
                              'getall',
                              array('startnum' => $startnum,
                                    'numitems' => $numitems,
                                    'ptid'     => $ptid,
-                                   'authorid' => $authorid,
-                                   'language' => $lang,
+                                   'owner' => $owner,
+                                   'locale' => $lang,
                                    'pubdate'  => $pubdate,
                                    'cids'     => $cids,
                                    'sort'     => $sort,
                                    'andcids'  => $andcids,
                                    'extra'  => array('cids'),
-                                   'status'   => $status));
-
+                                   'state'   => $state));
+*/
     // Save the current admin view, so that we can return to it after update
     $lastview = array('ptid' => $ptid,
-                      'authorid' => $authorid,
-                      'language' => $lang,
+                      'owner' => $owner,
+                      'locale' => $lang,
                       'catid' => $catid,
-                      'status' => $status,
+                      'state' => $state,
                       'pubdate' => $pubdate,
                       'startnum' => $startnum > 1 ? $startnum : null);
-    xarSession::setVar('Articles.LastView',serialize($lastview));
+    xarSession::setVar('Publications.LastView',serialize($lastview));
 
     $labels = array();
+/*
     if (!empty($ptid)) {
         foreach ($pubtypes[$ptid]['config'] as $field => $value) {
             $labels[$field] = $value['label'];
         }
     } else {
-        $pubfields = xarModAPIFunc('articles','user','getpubfields');
+        $pubfields = xarModAPIFunc('publications','user','getpubfields');
         foreach ($pubfields as $field => $value) {
             $labels[$field] = $value['label'];
         }
     }
+    */
     $data['labels'] = $labels;
 
     // only show the date if this publication type has one
     $showdate = !empty($labels['pubdate']);
     $data['showdate'] = $showdate;
-    // only show the status if this publication type has one
-    $showstatus = !empty($labels['status']);
+    // only show the state if this publication type has one
+    $showstate = !empty($labels['state']);
                   // and if we're not selecting on it already
-                  //&& (!is_array($status) || !isset($status[0]));
-    $data['showstatus'] = $showstatus;
+                  //&& (!is_array($state) || !isset($state[0]));
+    $data['showstate'] = $showstate;
 
-    $data['states'] = xarModAPIFunc('articles','user','getstates');
+    $data['states'] = xarModAPIFunc('publications','user','getstates');
 
     $items = array();
-    if ($articles != false) {
-        foreach ($articles as $article) {
+    /*
+    if ($publications != false) {
+        foreach ($publications as $article) {
 
             $item = array();
 
@@ -181,10 +186,10 @@ function articles_admin_view($args)
             if ($showdate) {
                 $item['pubdate'] = $article['pubdate']; //strftime('%x %X %z', $article['pubdate']);
             }
-            if ($showstatus) {
-                $item['status'] = $data['states'][$article['status']];
+            if ($showstate) {
+                $item['state'] = $data['states'][$article['state']];
                 // pre-select all submitted items
-                if ($article['status'] == 0) {
+                if ($article['state'] == 0) {
                     $item['selected'] = 'checked';
                 } else {
                     $item['selected'] = '';
@@ -194,45 +199,45 @@ function articles_admin_view($args)
             // Security check
             $input = array();
             $input['article'] = $article;
-            $input['mask'] = 'DeleteArticles';
-            if (xarModAPIFunc('articles','user','checksecurity',$input)) {
-                $item['deleteurl'] = xarModURL('articles',
+            $input['mask'] = 'ManagePublications';
+            if (xarModAPIFunc('publications','user','checksecurity',$input)) {
+                $item['deleteurl'] = xarModURL('publications',
                                               'admin',
                                               'delete',
                                               array('id' => $article['id']));
-                $item['editurl'] = xarModURL('articles',
+                $item['editurl'] = xarModURL('publications',
                                             'admin',
                                             'modify',
                                             array('id' => $article['id']));
-                $item['viewurl'] = xarModURL('articles',
+                $item['viewurl'] = xarModURL('publications',
                                             'user',
                                             'display',
                                             array('id' => $article['id'],
-                                                  'ptid' => $article['pubtypeid']));
+                                                  'ptid' => $article['pubtype_id']));
             } else {
                 $item['deleteurl'] = '';
 
-                $input['mask'] = 'EditArticles';
-                if (xarModAPIFunc('articles','user','checksecurity',$input)) {
-                    $item['editurl'] = xarModURL('articles',
+                $input['mask'] = 'EditPublications';
+                if (xarModAPIFunc('publications','user','checksecurity',$input)) {
+                    $item['editurl'] = xarModURL('publications',
                                                 'admin',
                                                 'modify',
                                                 array('id' => $article['id']));
-                    $item['viewurl'] = xarModURL('articles',
+                    $item['viewurl'] = xarModURL('publications',
                                                 'user',
                                                 'display',
                                                 array('id' => $article['id'],
-                                                      'ptid' => $article['pubtypeid']));
+                                                      'ptid' => $article['pubtype_id']));
                 } else {
                     $item['editurl'] = '';
 
-                    $input['mask'] = 'ReadArticles';
-                    if (xarModAPIFunc('articles','user','checksecurity',$input)) {
-                        $item['viewurl'] = xarModURL('articles',
+                    $input['mask'] = 'ReadPublications';
+                    if (xarModAPIFunc('publications','user','checksecurity',$input)) {
+                        $item['viewurl'] = xarModURL('publications',
                                                     'user',
                                                     'display',
                                                     array('id' => $article['id'],
-                                                          'ptid' => $article['pubtypeid']));
+                                                          'ptid' => $article['pubtype_id']));
                     } else {
                         $item['viewurl'] = '';
                     }
@@ -246,67 +251,72 @@ function articles_admin_view($args)
             $items[] = $item;
         }
     }
+    */
     $data['items'] = $items;
 
+/*
     // Add pager
     $data['pager'] = xarTplGetPager($startnum,
-                            xarModAPIFunc('articles', 'user', 'countitems',
+                            xarModAPIFunc('publications', 'user', 'countitems',
                                           array('ptid' => $ptid,
-                                                'authorid' => $authorid,
-                                                'language' => $lang,
+                                                'owner' => $owner,
+                                                'locale' => $lang,
                                                 'pubdate' => $pubdate,
                                                 'cids' => $cids,
                                                 'andcids' => $andcids,
-                                                'status' => $status)),
-                            xarModURL('articles', 'admin', 'view',
+                                                'state' => $state)),
+                            xarModURL('publications', 'admin', 'view',
                                       array('startnum' => '%%',
                                             'ptid' => $ptid,
-                                            'authorid' => $authorid,
-                                            'language' => $lang,
+                                            'owner' => $owner,
+                                            'locale' => $lang,
                                             'pubdate' => $pubdate,
                                             'catid' => $catid,
-                                            'status' => $status)),
+                                            'state' => $state)),
                             $numitems);
 
     // Create filters based on publication type
+    */
     $pubfilters = array();
+    /*
     foreach ($pubtypes as $id => $pubtype) {
-        if (!xarSecurityCheck('EditArticles',0,'Article',"$id:All:All:All")) {
+        if (!xarSecurityCheck('EditPublications',0,'Publication',"$id:All:All:All")) {
             continue;
         }
         $pubitem = array();
         if ($id == $ptid) {
             $pubitem['plink'] = '';
         } else {
-            $pubitem['plink'] = xarModURL('articles','admin','view',
+            $pubitem['plink'] = xarModURL('publications','admin','view',
                                          array('ptid' => $id));
         }
-        $pubitem['ptitle'] = $pubtype['descr'];
+        $pubitem['ptitle'] = $pubtype['description'];
         $pubfilters[] = $pubitem;
     }
+*/
     $data['pubfilters'] = $pubfilters;
-    // Create filters based on article status
-    $statusfilters = array();
-    if (!empty($labels['status'])) {
-        $statusfilters[] = array('stitle' => xarML('All'),
-                                 'slink' => !is_array($status) ? '' :
-                                                xarModURL('articles','admin','view',
+    // Create filters based on article state
+    $statefilters = array();
+    if (!empty($labels['state'])) {
+        $statefilters[] = array('stitle' => xarML('All'),
+                                 'slink' => !is_array($state) ? '' :
+                                                xarModURL('publications','admin','view',
                                                           array('ptid' => $ptid,
                                                                 'catid' => $catid)));
         foreach ($data['states'] as $id => $name) {
-            $statusfilters[] = array('stitle' => $name,
-                                     'slink' => (is_array($status) && $status[0] == $id) ? '' :
-                                                    xarModURL('articles','admin','view',
+            $statefilters[] = array('stitle' => $name,
+                                     'slink' => (is_array($state) && $state[0] == $id) ? '' :
+                                                    xarModURL('publications','admin','view',
                                                               array('ptid' => $ptid,
                                                                     'catid' => $catid,
-                                                                    'status' => array($id))));
+                                                                    'state' => array($id))));
         }
     }
-    $data['statusfilters'] = $statusfilters;
-    $data['changestatuslabel'] = xarML('Change Status');
+    $data['statefilters'] = $statefilters;
+    $data['changestatelabel'] = xarML('Change Status');
     // Add link to create new article
-    if (xarSecurityCheck('SubmitArticles',0,'Article',"$ptid:All:All:All")) {
-        $newurl = xarModURL('articles',
+    if (xarSecurityCheck('SubmitPublications',0,'Publication',"$ptid:All:All:All")) {
+        $newurl = xarModURL('publications',
                            'admin',
                            'new',
                            array('ptid' => $ptid));
@@ -317,12 +327,12 @@ function articles_admin_view($args)
     }
     $data['newurl'] = $newurl;
 // TODO: Hook category block someday ?
-    xarVarSetCached('Blocks.categories','module','articles');
+    xarVarSetCached('Blocks.categories','module','publications');
     xarVarSetCached('Blocks.categories','type','admin');
     xarVarSetCached('Blocks.categories','func','view');
     xarVarSetCached('Blocks.categories','itemtype',$ptid);
-    if (!empty($ptid) && !empty($pubtypes[$ptid]['descr'])) {
-        xarVarSetCached('Blocks.categories','title',$pubtypes[$ptid]['descr']);
+    if (!empty($ptid) && !empty($pubtypes[$ptid]['description'])) {
+        xarVarSetCached('Blocks.categories','title',$pubtypes[$ptid]['description']);
     }
     xarVarSetCached('Blocks.categories','cids',$cids);
 
@@ -332,7 +342,20 @@ function articles_admin_view($args)
 // TODO: allow templates per category ?
        $template = null;
     }
-    return xarTplModule('articles', 'admin', 'view', $data, $template);
+    
+    // Get the available publications objects
+    $object = DataObjectMaster::getObjectList(array('objectid' => 1));
+    $items = $object->getItems();
+    $options = array();
+    foreach ($items as $item)
+        if (strpos($item['name'],'publications_') !== false)
+            $options[] = array('id' => $item['objectid'], 'name' => $item['name'], 'title' => $item['label']);
+    $data['objects'] = $options;
+
+    $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
+    $pubtypeobject->getItem(array('itemid' => $ptid));
+    $data['object'] = DataObjectMaster::getObjectList(array('name' => $pubtypeobject->properties['name']->value));
+    return xarTplModule('publications', 'admin', 'view', $data, $template);
 }
 
 ?>

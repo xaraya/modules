@@ -1,0 +1,43 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:data-input property="$properties['id']" hidden="hidden" />
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">Name</xar:var>
+        <xar:data-label property="$properties['name']" for="id" label="$label" />
+        <xar:data-input property="$properties['name']" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">Title</xar:var>
+        <xar:data-label property="$properties['title']" for="id" label="$label" />
+        <xar:data-input property="$properties['title']" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">Description</xar:var>
+        <xar:data-label property="$properties['description']" for="id" label="$label" />
+        <xar:data-input property="$properties['description']" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">Summary</xar:var>
+        <xar:data-label property="$properties['summary']" for="id" label="$label" />
+        <xar:data-input property="$properties['summary']" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">Body 1</xar:var>
+        <xar:data-label property="$properties['body_1']" for="id" label="$label" />
+        <xar:data-input property="$properties['body_1']" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">Body 2</xar:var>
+        <xar:data-label property="$properties['body_2']" for="id" label="$label" />
+        <xar:data-input property="$properties['body_2']" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">Body 3</xar:var>
+        <xar:data-label property="$properties['body_3']" for="id" label="$label" />
+        <xar:data-input property="$properties['body_3']" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">Notes</xar:var>
+        <xar:data-label property="$properties['notes']" for="id" label="$label" />
+        <xar:data-input property="$properties['notes']" />
+    </div>
+</xar:template>

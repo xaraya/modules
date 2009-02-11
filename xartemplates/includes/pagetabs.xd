@@ -1,0 +1,45 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:style scope="module" module="base" file="navtabs" />
+    <xar:set name="object">DataObjectMaster::getObjectList(array('name' => 'publications_types'))</xar:set>
+    <xar:set name="items">$object->getItems()</xar:set>
+    <xar:var name="tabs">3</xar:var>
+    <xar:if condition="!isset($tab)">
+        <xar:set name="tab">'content'</xar:set>
+    </xar:if>
+
+    <dl class="xar-tabs">
+        <dt class="help">
+            View:
+        </dt>
+        <xar:if condition="$tab eq 'content'">
+            <xar:set name="class">"active"</xar:set>
+        <xar:else/>
+            <xar:set name="class">""</xar:set>
+        </xar:if>
+        <dd class="#$class#" id="tab-1">
+            <a href="javascript:showtab(1,#$tabs#)">
+                Content
+            </a>
+        </dd>
+        <xar:if condition="$tab eq 'settings'">
+            <xar:set name="class">"active"</xar:set>
+        <xar:else/>
+            <xar:set name="class">""</xar:set>
+        </xar:if>
+        <dd class="#$class#" id="tab-2">
+            <a href="javascript:showtab(2,#$tabs#)">
+                Settings
+            </a>
+        </dd>
+        <xar:if condition="$tab eq 'preview'">
+            <xar:set name="visible">'block'</xar:set>
+        <xar:else />
+            <xar:set name="visible">'none'</xar:set>
+        </xar:if>
+            <xar:set name="class">"active"</xar:set>
+            <dd class="#$class#" id="tab-3" style="display: #$visible#">
+                <a href="javascript:showtab(3,#$tabs#)">
+                Preview</a>
+            </dd>
+    </dl>
+</xar:template>

@@ -1,14 +1,14 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
@@ -19,13 +19,13 @@
  * @param $args['article'] the article array (if already retrieved)
  * @param $args['id'] the article ID (if known, and article array not
                        already retrieved)
- * @param $args['authorid'] the user ID of the author (if not already included)
+ * @param $args['owner'] the user ID of the author (if not already included)
  * @param $args['ptid'] the publication type ID (if not already included)
  * @param $args['cids'] array of additional required category checks
  *
  * @return bool true if OK, false if not OK
  */
-function articles_userapi_checksecurity($args)
+function publications_userapi_checksecurity($args)
 {
     // Get arguments from argument array
     extract($args);
@@ -34,22 +34,22 @@ function articles_userapi_checksecurity($args)
     if (isset($access) && !isset($mask)) {
         switch ($access) {
             case ACCESS_OVERVIEW:
-                $mask = 'ViewArticles';
+                $mask = 'ViewPublications';
                 break;
             case ACCESS_READ:
-                $mask = 'ReadArticles';
+                $mask = 'ReadPublications';
                 break;
             case ACCESS_COMMENT:
-                $mask = 'SubmitArticles';
+                $mask = 'SubmitPublications';
                 break;
             case ACCESS_EDIT:
-                $mask = 'EditArticles';
+                $mask = 'EditPublications';
                 break;
             case ACCESS_DELETE:
-                $mask = 'DeleteArticles';
+                $mask = 'ManagePublications';
                 break;
             case ACCESS_ADMIN:
-                $mask = 'AdminArticles';
+                $mask = 'AdminPublications';
                 break;
             default:
                 $mask = '';
@@ -61,8 +61,8 @@ function articles_userapi_checksecurity($args)
     }
 
     // Get article information
-    if (!isset($article) && !empty($id) && $mask != 'SubmitArticles') {
-        $article = xarModAPIFunc('articles',
+    if (!isset($article) && !empty($id) && $mask != 'SubmitPublications') {
+        $article = xarModAPIFunc('publications',
                                 'user',
                                 'get',
                                 array('id' => $id,
@@ -79,46 +79,46 @@ function articles_userapi_checksecurity($args)
     }
 
     // Get author ID
-    if (isset($article['authorid']) && empty($authorid)) {
-        $authorid = $article['authorid'];
+    if (isset($article['owner']) && empty($owner)) {
+        $owner = $article['owner'];
     }
 
-    // Get status
-    if (isset($article['status']) && !isset($status)) {
-        $status = $article['status'];
+    // Get state
+    if (isset($article['state']) && !isset($state)) {
+        $state = $article['state'];
     }
-    if (empty($status)) {
-        $status = 0;
+    if (empty($state)) {
+        $state = 0;
     }
-    // reject reading access to unapproved articles
-    if ($status < 2 && ($mask == 'ViewArticles' || $mask == 'ReadArticles')) {
+    // reject reading access to unapproved publications
+    if ($state < 2 && ($mask == 'ViewPublications' || $mask == 'ReadPublications')) {
         return false;
     }
 
     // Get publication type ID
-    if (isset($article['pubtypeid'])) {
+    if (isset($article['pubtype_id'])) {
         if (!isset($ptid)) {
-            $ptid = $article['pubtypeid'];
-        } elseif ($ptid != $article['pubtypeid'] && $mask != 'EditArticles') {
+            $ptid = $article['pubtype_id'];
+        } elseif ($ptid != $article['pubtype_id'] && $mask != 'EditPublications') {
             return false;
         }
     }
 
     // Get root categories for this publication type
     if (!empty($ptid)) {
-        $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles', 'itemtype' => $ptid));
+        $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'publications', 'itemtype' => $ptid));
     } else {
         $ptid = null;
     }
     if (!isset($rootcids)) {
     // TODO: handle cross-pubtype views better
-        $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles'));
+        $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'publications'));
     }
 
     // Get category information for this article
     if (!isset($article['cids']) && !empty($id)) {
         if (!xarModAPILoad('categories', 'user')) return;
-        $info = xarMod::getBaseInfo('articles');
+        $info = xarMod::getBaseInfo('publications');
         $sysid = $info['systemid'];
         $articlecids = xarModAPIFunc('categories',
                                     'user',
@@ -169,9 +169,9 @@ function articles_userapi_checksecurity($args)
     if (count($jointcids) == 0) {
         $jointcids['All'] = 1;
     }
-// TODO: check for anonymous articles
-    if (!isset($authorid)) {
-        $authorid = 'All';
+// TODO: check for anonymous publications
+    if (!isset($owner)) {
+        $owner = 'All';
     }
     if (empty($id)) {
         $id = 'All';
@@ -181,7 +181,7 @@ function articles_userapi_checksecurity($args)
     $result = false;
     foreach (array_keys($jointcids) as $cid) {
 // TODO: do we want all-or-nothing access here, or is one access enough ?
-        if (xarSecurityCheck($mask,0,'Article',"$ptid:$cid:$authorid:$id")) {
+        if (xarSecurityCheck($mask,0,'Publication',"$ptid:$cid:$owner:$id")) {
             $result = true;
         }
     }

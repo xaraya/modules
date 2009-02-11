@@ -1,14 +1,14 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
@@ -20,7 +20,7 @@
  * @return array
  * @TODO specify return format
  */
-function articles_userapi_getrootcats($args)
+function publications_userapi_getrootcats($args)
 {
     extract($args);
 
@@ -31,12 +31,12 @@ function articles_userapi_getrootcats($args)
     // see which root categories we need to handle
     $rootcats = array();
     if (!empty($ptid)) {
-        $rootcats = unserialize(xarModUserVars::get('articles','basecids',$ptid));
+        $rootcats = unserialize(xarModUserVars::get('publications','basecids',$ptid));
     } elseif (empty($all)) {
-        $rootcats = unserialize(xarModVars::get('articles','basecids'));
+        $rootcats = unserialize(xarModVars::get('publications','basecids'));
     } else {
         // Get publication types
-        $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+        $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
         // get base categories for all publication types here
         $publist = array_keys($pubtypes);
         // add the defaults too, in case we have other base categories there
@@ -45,9 +45,9 @@ function articles_userapi_getrootcats($args)
         $catlist = array();
         foreach ($publist as $pubid) {
             if (empty($pubid)) {
-                $cidstring = xarModVars::get('articles','basecids');
+                $cidstring = xarModVars::get('publications','basecids');
             } else {
-                $cidstring = xarModUserVars::get('articles','basecids',$pubid);
+                $cidstring = xarModUserVars::get('publications','basecids',$pubid);
             }
             if (!empty($cidstring)) {
                 $rootcats = unserialize($cidstring);
@@ -86,7 +86,7 @@ function articles_userapi_getrootcats($args)
         $item = array();
         $item['catid'] = $info['cid'];
         $item['cattitle'] = xarVarPrepForDisplay($info['name']);
-        $item['catlink'] = xarModURL('articles','user','view',
+        $item['catlink'] = xarModURL('publications','user','view',
                                     array('ptid' => $ptid,
                                           'catid' => $info['cid']));
         if ($isfirst) {

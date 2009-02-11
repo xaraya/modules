@@ -1,23 +1,23 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
  * show monthly archive (Archives-like)
  */
-function articles_user_archive($args)
+function publications_user_archive($args)
 {
     // Get parameters from user
-    if (!xarVarFetch('ptid',  'id',           $ptid,  xarModVars::get('articles','defaultpubtype'), XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('ptid',  'id',           $ptid,  xarModVars::get('publications','defaultpubtype'), XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('sort',  'enum:d:t:1:2', $sort,  'd',  XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('month', 'str',          $month, '',   XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('cids',  'array',        $cids,  NULL, XARVAR_NOT_REQUIRED)) {return;}
@@ -27,7 +27,7 @@ function articles_user_archive($args)
     extract($args);
 
     // Get publication types
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
 
     // Check that the publication type is valid
     if (empty($ptid) || !isset($pubtypes[$ptid])) {
@@ -35,14 +35,14 @@ function articles_user_archive($args)
     }
 
     if (empty($ptid)) {
-        if (!xarSecurityCheck('ViewArticles',0,'Article','All:All:All:All')) {
+        if (!xarSecurityCheck('ViewPublications',0,'Publication','All:All:All:All')) {
             return xarML('You have no permission to view these items');
         }
-    } elseif (!xarSecurityCheck('ViewArticles',0,'Article',$ptid.':All:All:All')) {
+    } elseif (!xarSecurityCheck('ViewPublications',0,'Publication',$ptid.':All:All:All')) {
         return xarML('You have no permission to view these items');
     }
 
-    $status = array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED);
+    $state = array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED);
 
     $seencid = array();
     $andcids = false;
@@ -99,7 +99,7 @@ function articles_user_archive($args)
     }
 
     // Load API
-    if (!xarModAPILoad('articles', 'user')) return;
+    if (!xarModAPILoad('publications', 'user')) return;
 
     if (!empty($ptid) && !empty($pubtypes[$ptid]['config']['pubdate']['label'])) {
         $showdate = 1;
@@ -114,9 +114,9 @@ function articles_user_archive($args)
     }
 
     // Get monthly statistics
-    $monthcount = xarModAPIFunc('articles','user','getmonthcount',
+    $monthcount = xarModAPIFunc('publications','user','getmonthcount',
                                array('ptid' => $ptid,
-                                     'status' => $status,
+                                     'state' => $state,
                                      'enddate' => time()));
     if(empty($monthcount)) {
         $monthcount = array();
@@ -129,7 +129,7 @@ function articles_user_archive($args)
         if ($thismonth == $month) {
             $mlink = '';
         } else {
-            $mlink = xarModURL('articles','user','archive',
+            $mlink = xarModURL('publications','user','archive',
                               array('ptid' => $ptid,
                                     'month' => $thismonth));
         }
@@ -139,14 +139,14 @@ function articles_user_archive($args)
         $total += $count;
     }
     if (empty($ptid)) {
-        $thismonth = xarML('All Articles');
+        $thismonth = xarML('All Publications');
     } else {
-        $thismonth = xarML('All') . ' ' . $pubtypes[$ptid]['descr'];
+        $thismonth = xarML('All') . ' ' . $pubtypes[$ptid]['description'];
     }
     if ($month == 'all') {
         $mlink = '';
     } else {
-        $mlink = xarModURL('articles','user','archive',
+        $mlink = xarModURL('publications','user','archive',
                           array('ptid' => $ptid,
                                 'month' => 'all'));
     }
@@ -159,9 +159,9 @@ function articles_user_archive($args)
 
     // Get the list of root categories for this publication type
     if (!empty($ptid)) {
-        $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles','itemtype' => $ptid));
+        $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'publications','itemtype' => $ptid));
     } else {
-        $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles','itemtype' => 0));
+        $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'publications','itemtype' => 0));
     }
     $catlist = array();
     $catinfo = array();
@@ -186,12 +186,12 @@ function articles_user_archive($args)
                 $item['root'] = $cid['category_id'];
                 $catinfo[$info['cid']] = $item;
             }
-            // don't allow sorting by category when viewing all articles
+            // don't allow sorting by category when viewing all publications
             //if ($sort == $count || $month == 'all') {
             if ($sort == $count) {
                 $link = '';
             } else {
-                $link = xarModURL('articles','user','archive',
+                $link = xarModURL('publications','user','archive',
                                  array('ptid' => $ptid,
                                        'month' => $month,
                                        'sort' => $count));
@@ -215,54 +215,54 @@ function articles_user_archive($args)
         }
     }
 
-    // Get articles
+    // Get publications
     if ($month == 'all' || ($startdate && $enddate)) {
-        $articles = xarModAPIFunc('articles',
+        $publications = xarModAPIFunc('publications',
                                  'user',
                                  'getall',
                                  array('ptid' => (isset($ptid) ? $ptid : null),
                                        'startdate' => $startdate,
                                        'enddate' => $enddate,
-                                       'status' => $status,
+                                       'state' => $state,
                                        'cids' => $cids,
                                        'andcids' => $andcids,
                                        'fields' => array('id','title',
-                                                  'pubdate','pubtypeid','cids')
+                                                  'start_date','pubtype_id','cids')
                                       )
                                 );
-        if (!is_array($articles)) {
-            $msg = xarML('Failed to retrieve articles in #(3)_#(1)_#(2).php', 'user', 'getall', 'articles');
+        if (!is_array($publications)) {
+            $msg = xarML('Failed to retrieve publications in #(3)_#(1)_#(2).php', 'user', 'getall', 'publications');
             throw new DataNotFoundException(null, $msg);
         }
     } else {
-        $articles = array();
+        $publications = array();
     }
 
 // TODO: add print / recommend_us link for each article ?
 // TODO: add view count to table/query/template someday ?
-    foreach ($articles as $key => $article) {
-        $articles[$key]['link'] = xarModURL('articles','user','display',
-                               array('ptid' => isset($ptid) ? $articles[$key]['pubtypeid'] : null,
-                                     'id' => $articles[$key]['id']));
-        if (empty($articles[$key]['title'])) {
-            $articles[$key]['title'] = xarML('(none)');
+    foreach ($publications as $key => $article) {
+        $publications[$key]['link'] = xarModURL('publications','user','display',
+                               array('ptid' => isset($ptid) ? $publications[$key]['pubtype_id'] : null,
+                                     'id' => $publications[$key]['id']));
+        if (empty($publications[$key]['title'])) {
+            $publications[$key]['title'] = xarML('(none)');
         }
 /* TODO: move date formatting to template, delete this code after testing
-        if ($showdate && !empty($articles[$key]['pubdate'])) {
-            $articles[$key]['date'] = xarLocaleFormatDate("%Y-%m-%d %H:%M:%S",
-                                               $articles[$key]['pubdate']);
+        if ($showdate && !empty($publications[$key]['pubdate'])) {
+            $publications[$key]['date'] = xarLocaleFormatDate("%Y-%m-%d %H:%M:%S",
+                                               $publications[$key]['pubdate']);
         } else {
-            $articles[$key]['date'] = '';
+            $publications[$key]['date'] = '';
         }
 */
 // TODO: find some better way to do this...
         $list = array();
         // get all the categories for that article and put them under the
         // right root category
-        if (!isset($articles[$key]['cids'])) {
-            $articles[$key]['cids'] = array();
+        if (!isset($publications[$key]['cids'])) {
+            $publications[$key]['cids'] = array();
         }
-        foreach ($articles[$key]['cids'] as $cid) {
+        foreach ($publications[$key]['cids'] as $cid) {
             // skip unknown categories (e.g. when not under root categories)
             if (!isset($catinfo[$cid])) {
                 continue;
@@ -273,7 +273,7 @@ function articles_user_archive($args)
             array_push($list[$catinfo[$cid]['root']],$cid);
         }
         // fill in the column corresponding to each root category
-        $articles[$key]['cats'] = array();
+        $publications[$key]['cats'] = array();
         foreach ($catlist as $cat) {
             if (isset($list[$cat['cid']])) {
                 $descr = '';
@@ -284,24 +284,24 @@ function articles_user_archive($args)
                     }
                     $descr .= $catinfo[$cid]['name'];
                 }
-                $articles[$key]['cats'][] = array('list' => $descr);
+                $publications[$key]['cats'][] = array('list' => $descr);
             } else {
-                $articles[$key]['cats'][] = array('list' => '-');
+                $publications[$key]['cats'][] = array('list' => '-');
             }
         }
     }
 
-    // sort articles as requested
+    // sort publications as requested
     if ($sort == 2 && count($catlist) > 1) {
-        usort($articles,'articles_archive_sortbycat10');
+        usort($publications,'publications_archive_sortbycat10');
     } elseif ($sort == 1) {
         if (count($catlist) > 1) {
-            usort($articles,'articles_archive_sortbycat01');
+            usort($publications,'publications_archive_sortbycat01');
         } elseif (count($catlist) > 0) {
-            usort($articles,'articles_archive_sortbycat0');
+            usort($publications,'publications_archive_sortbycat0');
         }
     } elseif ($sort == 't') {
-        usort($articles,'articles_archive_sortbytitle');
+        usort($publications,'publications_archive_sortbytitle');
     } else {
         $sort = 'd';
         // default sort by date is already done in getall() function
@@ -311,7 +311,7 @@ function articles_user_archive($args)
     if ($sort == 't') {
         $link = '';
     } else {
-        $link = xarModURL('articles','user','archive',
+        $link = xarModURL('publications','user','archive',
                          array('ptid' => $ptid,
                                'month' => $month,
                                'sort' => 't'));
@@ -326,7 +326,7 @@ function articles_user_archive($args)
         if ($sort == 'd') {
             $link = '';
         } else {
-            $link = xarModURL('articles','user','archive',
+            $link = xarModURL('publications','user','archive',
                              array('ptid' => $ptid,
                                    'month' => $month));
         }
@@ -337,24 +337,24 @@ function articles_user_archive($args)
     }
 
     // Save some variables to (temporary) cache for use in blocks etc.
-    xarVarSetCached('Blocks.articles','ptid',$ptid);
+    xarVarSetCached('Blocks.publications','ptid',$ptid);
     if (!empty($cids)) {
-        xarVarSetCached('Blocks.articles','cids',$cids);
+        xarVarSetCached('Blocks.publications','cids',$cids);
     }
 //if ($shownavigation) {
-    xarVarSetCached('Blocks.categories','module','articles');
+    xarVarSetCached('Blocks.categories','module','publications');
     xarVarSetCached('Blocks.categories','itemtype',$ptid);
-    if (!empty($ptid) && !empty($pubtypes[$ptid]['descr'])) {
-        xarVarSetCached('Blocks.categories','title',$pubtypes[$ptid]['descr']);
-        xarTplSetPageTitle(xarML('Archive'), $pubtypes[$ptid]['descr']);
+    if (!empty($ptid) && !empty($pubtypes[$ptid]['description'])) {
+        xarVarSetCached('Blocks.categories','title',$pubtypes[$ptid]['description']);
+        xarTplSetPageTitle(xarML('Archive'), $pubtypes[$ptid]['description']);
     } else {
         xarTplSetPageTitle(xarML('Archive'));
     }
 //}
     if (!empty($ptid)) {
-        $settings = unserialize(xarModVars::get('articles', 'settings.'.$ptid));
+        $settings = unserialize(xarModVars::get('publications', 'settings.'.$ptid));
     } else {
-        $string = xarModVars::get('articles', 'settings');
+        $string = xarModVars::get('publications', 'settings');
         if (!empty($string)) {
             $settings = unserialize($string);
         }
@@ -366,7 +366,7 @@ function articles_user_archive($args)
             $showpublinks = 0;
         }
     }
-    // show the number of articles for each publication type
+    // show the number of publications for each publication type
     if (!isset($showpubcount)) {
         if (!isset($settings['showpubcount']) || !empty($settings['showpubcount'])) {
             $showpubcount = 1; // default yes
@@ -378,29 +378,29 @@ function articles_user_archive($args)
 
     // return template out
     $data = array('months' => $months,
-                 'articles' => $articles,
+                 'publications' => $publications,
                  'catlist' => $catlist,
                  'catsel' => $catsel,
                  'ptid' => $ptid,
                  'month' => $month,
-                 'curlink' => xarModURL('articles','user','archive',
+                 'curlink' => xarModURL('publications','user','archive',
                                         array('ptid' => $ptid,
                                               'month' => $month,
                                                'sort' => $sort)),
                  'showdate' => $showdate,
                  'showpublinks' => $showpublinks,
                  'publabel' => xarML('Publication'),
-                 'publinks' => xarModAPIFunc('articles','user','getpublinks',
+                 'publinks' => xarModAPIFunc('publications','user','getpublinks',
                                             array('ptid' => $ptid,
-                                                  'status' => array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED),
+                                                  'state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED),
                                                   'count' => $showpubcount,
                                                   // override default 'view'
                                                   'func' => 'archive')),
-                 'maplabel' => xarML('View Article Map'),
-                 'maplink' => xarModURL('articles','user','viewmap',
+                 'maplabel' => xarML('View Publication Map'),
+                 'maplink' => xarModURL('publications','user','viewmap',
                                        array('ptid' => $ptid)),
-                 'viewlabel' => (empty($ptid) ? xarML('Back to Articles') : xarML('Back to') . ' ' . $pubtypes[$ptid]['descr']),
-                 'viewlink' => xarModURL('articles','user','view',
+                 'viewlabel' => (empty($ptid) ? xarML('Back to Publications') : xarML('Back to') . ' ' . $pubtypes[$ptid]['description']),
+                 'viewlink' => xarModURL('publications','user','view',
                                         array('ptid' => $ptid)));
 
     if (!empty($ptid)) {
@@ -410,19 +410,19 @@ function articles_user_archive($args)
        $template = null;
     }
 
-    return xarTplModule('articles', 'user', 'archive', $data, $template);
+    return xarTplModule('publications', 'user', 'archive', $data, $template);
 }
 
 /**
  * sorting functions for archive
  */
 
-function articles_archive_sortbycat0 ($a,$b)
+function publications_archive_sortbycat0 ($a,$b)
 {
     return strcmp($a['cats'][0]['list'],$b['cats'][0]['list']);
 }
 
-function articles_archive_sortbycat01 ($a,$b)
+function publications_archive_sortbycat01 ($a,$b)
 {
     if ($a['cats'][0]['list'] == $b['cats'][0]['list']) {
         return strcmp($a['cats'][1]['list'],$b['cats'][1]['list']);
@@ -431,7 +431,7 @@ function articles_archive_sortbycat01 ($a,$b)
     }
 }
 
-function articles_archive_sortbycat10 ($a,$b)
+function publications_archive_sortbycat10 ($a,$b)
 {
     if ($a['cats'][1]['list'] == $b['cats'][1]['list']) {
         return strcmp($a['cats'][0]['list'],$b['cats'][0]['list']);
@@ -440,7 +440,7 @@ function articles_archive_sortbycat10 ($a,$b)
     }
 }
 
-function articles_archive_sortbytitle ($a,$b)
+function publications_archive_sortbytitle ($a,$b)
 {
     return strcmp($a['title'],$b['title']);
 }

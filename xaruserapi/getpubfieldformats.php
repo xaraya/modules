@@ -1,14 +1,14 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
@@ -21,7 +21,7 @@
                  'textbox' => xarML('Text Box'),
                  ...);
  */
-function articles_userapi_getpubfieldformats($args)
+function publications_userapi_getpubfieldformats($args)
 {
     $fieldlist=array(
         'static'          => xarML('Static Text'),
@@ -40,8 +40,8 @@ function articles_userapi_getpubfieldformats($args)
         'webpage'         => xarML('HTML Page'),
         'username'        => xarML('Username'),
         'userlist'        => xarML('User List'),
-        'status'          => xarML('Status'),
-        'language'        => xarML('Language List'),
+        'state'          => xarML('Status'),
+        'locale'        => xarML('Language List'),
     // TODO: add more property types after testing
    //other 'text' DD property types won't give significant performance hits
     );

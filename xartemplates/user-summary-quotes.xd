@@ -23,7 +23,7 @@
                     (#$counter#&#160;<xar:mlstring>reads</xar:mlstring>)
                 </xar:if>
             </xar:if>
-            <xar:if condition="xarModIsHooked('ratings','articles',6)">
+            <xar:if condition="xarModIsHooked('ratings','publications',6)">
                 | <a href="#$link#">
                     <xar:mlstring>
                         Rate / Comment

@@ -1,28 +1,28 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
  * get an array of child categories with links and optional counts
  *
- * @param $args['status'] array of requested status(es) for the articles
+ * @param $args['state'] array of requested status(es) for the publications
  * @param $args['ptid'] publication type ID
  * @param $args['cid'] parent category ID
  * @param $args['showcid'] false (default) means skipping the parent cid
- * @param $args['count'] true (default) means counting the number of articles
+ * @param $args['count'] true (default) means counting the number of publications
  * @param $args['filter'] additional categories we're filtering on (= catid)
  * @return array
  */
-function articles_userapi_getchildcats($args)
+function publications_userapi_getchildcats($args)
 {
     extract($args);
 
@@ -32,9 +32,9 @@ function articles_userapi_getchildcats($args)
     if (empty($ptid)) {
         $ptid = null;
     }
-    if (!isset($status)) {
+    if (!isset($state)) {
         // frontpage or approved
-        $status = array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED);
+        $state = array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED);
     }
     if (!isset($showcid)) {
         $showcid = false;
@@ -68,11 +68,11 @@ function articles_userapi_getchildcats($args)
             $andcids = true;
         }
 
-        $pubcatcount = xarModAPIFunc('articles',
+        $pubcatcount = xarModAPIFunc('publications',
                                     'user',
                                     'getpubcatcount',
                                     // frontpage or approved
-                                    array('status' => array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED),
+                                    array('state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED),
                                           'cids' => $childlist,
                                           'andcids' => $andcids,
                                           'ptid' => $ptid,
@@ -95,7 +95,7 @@ function articles_userapi_getchildcats($args)
             $catid = $info['id'];
         }
 // TODO: show icons instead of (or in addition to) a link if available ?
-        $info['link'] = xarModURL('articles','user','view',
+        $info['link'] = xarModURL('publications','user','view',
                                  array('ptid' => $ptid,
                                        'catid' => $catid));
         $info['name'] = xarVarPrepForDisplay($info['name']);

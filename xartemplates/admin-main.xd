@@ -3,13 +3,13 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>
-            Administration - Articles
+            Administration - Publications
         </xar:mlstring>
     </span>
 </div>
 <div class="xar-mod-body">
       <xar:template type="module" file="admin-menu" />
-    <img class="xar-module-icon" src="modules/articles/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+    <img class="xar-module-icon" src="modules/publications/xarimages/admin.gif" alt="official icon" width="96" height="96" />
     <h2>
         <xar:mlstring>
             Overview
@@ -22,7 +22,7 @@
     <p>
         <em>
             <xar:mlstring>
-                Articles is a Xaraya Content Module responsible for the handling of generic and complex content structures.
+                Publications is a Xaraya Content Module responsible for the handling of generic and complex content structures.
             </xar:mlstring>
         </em>
     </p>
@@ -33,7 +33,7 @@
     </h3>
     <p>
         <xar:mlstring>
-            If this is your first visit to this part of your Xaraya site, please take a minute to read through the following introduction, in order to explore the different possibilities offered by the articles module.
+            If this is your first visit to this part of your Xaraya site, please take a minute to read through the following introduction, in order to explore the different possibilities offered by the publications module.
         </xar:mlstring>
     </p>
     <h3>
@@ -43,12 +43,12 @@
     </h3>
     <p>
         <xar:mlstring>
-            The articles module can manage 'articles' of different types at the same time, for instance news articles, longer documents in different sections, frequently asked questions, and so on.
+            The publications module can manage 'publications' of different types at the same time, for instance news publications, longer documents in different sections, frequently asked questions, and so on.
         </xar:mlstring>
     </p>
     <p>
         <xar:mlstring>
-            These types are called 'publication types', and each type of article can make use of a different set of data fields, with a different meaning for each data field. For example, the 'summary' field could be used for an Introduction in news articles, for providing some details about a question in FAQs, or not be used at all for section documents.
+            These types are called 'publication types', and each type of article can make use of a different set of data fields, with a different meaning for each data field. For example, the 'summary' field could be used for an Introduction in news publications, for providing some details about a question in FAQs, or not be used at all for section documents.
         </xar:mlstring>
     </p>
     <p>
@@ -73,47 +73,47 @@
     </h3>
     <p>
         <xar:mlstring>
-            Articles (of any type) can be organised into categories. You could use one or more common categories across different publication types, or use specific categories for each type of article, or any combination that you might prefer for your site.
+            Publications (of any type) can be organised into categories. You could use one or more common categories across different publication types, or use specific categories for each type of article, or any combination that you might prefer for your site.
         </xar:mlstring>
     </p>
     <p>
         <xar:mlstring>
-            Before you start specifying which article types will be using what categories, you should create the categorization you want via the <a href="index.php?module=categories&amp;type=admin">Categories</a> administration menu. A default set of categories has been defined for articles when you installed this module, as an example to get you started. (You can adapt the categories later on, of course.)
+            Before you start specifying which article types will be using what categories, you should create the categorization you want via the <a href="index.php?module=categories&amp;type=admin">Categories</a> administration menu. A default set of categories has been defined for publications when you installed this module, as an example to get you started. (You can adapt the categories later on, of course.)
         </xar:mlstring>
     </p>
     <p>
         <xar:mlstring>
-            Once you have a set of categories you would like to use for your articles, you can go to <strong>Articles Configuration</strong>, and specify the number of categories that can be used for each publication type, and the 'base categories' to be used.
+            Once you have a set of categories you would like to use for your publications, you can go to <strong>Publications Configuration</strong>, and specify the number of categories that can be used for each publication type, and the 'base categories' to be used.
         </xar:mlstring>
     </p>
     <p>
         <xar:mlstring>
-            A 'base category' is any starting point somewhere in your tree of categories, below which you will have the actual list (or subtree) of categories people can choose from when they submit or view articles. For example, you could have a 'base category' called Topics, with a list of different topics relevant to your site below it, and another 'base category' called Cities, with a list of cities or places that you would provide regional news for.
+            A 'base category' is any starting point somewhere in your tree of categories, below which you will have the actual list (or subtree) of categories people can choose from when they submit or view publications. For example, you could have a 'base category' called Topics, with a list of different topics relevant to your site below it, and another 'base category' called Cities, with a list of cities or places that you would provide regional news for.
         </xar:mlstring>
     </p>
     <p>
         <xar:mlstring>
-            One topic might be 'Good Restaurants', and one city might 'Brussels', so people would be able to browse through any articles about good restaurants in Brussels, for instance.
-        </xar:mlstring>
-    </p>
-    <h3>
-        <xar:mlstring>
-            3. Submitting or adding articles
-        </xar:mlstring>
-    </h3>
-    <p>
-        <xar:mlstring>
-            status = submitted, rejected, approved or on frontpage (for those pubtypes that use it !)
+            One topic might be 'Good Restaurants', and one city might 'Brussels', so people would be able to browse through any publications about good restaurants in Brussels, for instance.
         </xar:mlstring>
     </p>
     <h3>
         <xar:mlstring>
-            4. Managing the overview and display of articles per publication type
+            3. Submitting or adding publications
         </xar:mlstring>
     </h3>
     <p>
         <xar:mlstring>
-            In <strong>Articles Configuration</strong>, set start view (list/browse), ## of columns and items, show category links + ## of comments (+ performance impact)
+            state = submitted, rejected, approved or on frontpage (for those pubtypes that use it !)
+        </xar:mlstring>
+    </p>
+    <h3>
+        <xar:mlstring>
+            4. Managing the overview and display of publications per publication type
+        </xar:mlstring>
+    </h3>
+    <p>
+        <xar:mlstring>
+            In <strong>Publications Configuration</strong>, set start view (list/browse), ## of columns and items, show category links + ## of comments (+ performance impact)
         </xar:mlstring>
     </p>
     <p>
@@ -128,7 +128,7 @@
     </h3>
     <p>
         <xar:mlstring>
-            cfr. frontpage status and ## of columns and items - needs to be extended
+            cfr. frontpage state and ## of columns and items - needs to be extended
         </xar:mlstring>
     </p>
     <h3>
@@ -158,7 +158,7 @@
     </h3>
     <p>
         <xar:mlstring>
-            overall enable/disable in 'base' admin + specific enable/disable in 'articles' admin + use of module aliases
+            overall enable/disable in 'base' admin + specific enable/disable in 'publications' admin + use of module aliases
         </xar:mlstring>
     </p>
     <p>
@@ -205,7 +205,7 @@
     </h3>
     <p>
         <xar:mlstring>
-            Search hook which provides the functionality to search your individual articles.
+            Search hook which provides the functionality to search your individual publications.
         </xar:mlstring>
     </p>
 </div>

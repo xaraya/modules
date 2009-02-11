@@ -1,29 +1,29 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
  * export the definition of a publication type (+ map it to a pseudo-DD format)
  */
-function articles_admin_exportpubtype($args)
+function publications_admin_exportpubtype($args)
 {
     extract($args);
 
     // Get parameters
     if (!xarVarFetch('ptid','isset', $ptid, NULL, XARVAR_DONT_SET)) {return;}
 
-    if (!xarSecurityCheck('AdminArticles')) return;
+    if (!xarSecurityCheck('AdminPublications')) return;
 
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
 
     if (empty($ptid) || empty($pubtypes[$ptid])) {
         $msg = xarML('Invalid publication type #(1)',
@@ -34,14 +34,14 @@ function articles_admin_exportpubtype($args)
 
     // Initialise the template variables
     $data = array();
-    $data['descr'] = $pubtype['descr'];
+    $data['descr'] = $pubtype['description'];
 
 // TODO: migrate pubtype definitions + merge with DD export later on
 
     // Start the dynamic object definition (cfr. DD export)
     $data['xml'] = '<object name="' . $pubtype['name'] . '">
-  <label>' . xarVarPrepForDisplay($pubtype['descr']) . '</label>
-  <moduleid>' . xarModGetIDFromName('articles') . '</moduleid>
+  <label>' . xarVarPrepForDisplay($pubtype['description']) . '</label>
+  <moduleid>' . xarModGetIDFromName('publications') . '</moduleid>
   <itemtype>' . $ptid . '</itemtype>
   <urlparam>id</urlparam>
   <maxid>0</maxid>
@@ -49,7 +49,7 @@ function articles_admin_exportpubtype($args)
 ';
 
     // Get the article settings for this pubtype
-    $settings = xarModVars::get('articles','settings.'.$ptid);
+    $settings = xarModVars::get('publications','settings.'.$ptid);
     $unsettings = unserialize($settings);
     unset($unsettings['cids']);
     unset($unsettings['number_of_categories']);
@@ -60,7 +60,7 @@ function articles_admin_exportpubtype($args)
     }
 
     // Check if we're using this as an alias for short URLs
-    if (xarModGetAlias($pubtype['name']) == 'articles') {
+    if (xarModGetAlias($pubtype['name']) == 'publications') {
         $isalias = 1;
     } else {
         $isalias = 0;
@@ -71,24 +71,24 @@ function articles_admin_exportpubtype($args)
   <properties>
     <property name="id">
       <id>1</id>
-      <label>Article ID</label>
+      <label>Publication ID</label>
       <type>itemid</type>
       <default></default>
-      <source>xar_articles.id</source>
+      <source>xar_publications.id</source>
       <status>1</status>
     </property>
-    <property name="pubtypeid">
+    <property name="pubtype_id">
       <id>2</id>
       <label>Publication Type</label>
       <type>itemtype</type>
       <default>1</default>
-      <source>xar_articles.pubtypeid</source>
+      <source>xar_publications.pubtype_id</source>
       <status>1</status>
     </property>
 ';
 
-    // Configurable fields for articles
-    $fields = array('title','summary','body','notes','authorid','pubdate','status');
+    // Configurable fields for publications
+    $fields = array('title','summary','body','notes','owner','pubdate','status');
     $id = 3;
     foreach ($fields as $field) {
         $specs = $pubtype['config'][$field];
@@ -113,21 +113,21 @@ function articles_admin_exportpubtype($args)
       <label>' . $specs['label'] . '</label>
       <type>' . $specs['format'] . '</type>
       <default></default>
-      <source>xar_articles.' . $field . '</source>
+      <source>xar_publications.' . $field . '</source>
       <input>' . $specs['input'] . '</input>
       <status>' . $status . '</status>
       <validation>' . xarVarPrepForDisplay($specs['validation']) . '</validation>
     </property>
 ';
-        // $specs['type'] = fixed for articles fields + unused in DD
+        // $specs['type'] = fixed for publications fields + unused in DD
         $id++;
     }
 
     // Retrieve any dynamic object for this pubtype, or create a dummy one
     $object = xarModAPIFunc('dynamicdata','user','getobject',
                              array('name'     => $pubtype['name'],
-                                   'label'    => $pubtype['descr'],
-                                   'moduleid' => xarModGetIDFromName('articles'),
+                                   'label'    => $pubtype['description'],
+                                   'moduleid' => xarModGetIDFromName('publications'),
                                    'itemtype' => $ptid,
                                    'urlparam' => 'id',
                                    'isalias'  => $isalias,
@@ -194,25 +194,25 @@ function articles_admin_exportpubtype($args)
                                    'label'  => $specs['label'],
                                    'status' => $status,
                                    'type'   => $specs['format'],
-                                   'source' => 'xar_articles.'.$field));
+                                   'source' => 'xar_publications.'.$field));
     // these field specs have no equivalent in DD :
         // $specs['input'], // we'll guess this on import
-        // $specs['type'], // unused/fixed for articles
+        // $specs['type'], // unused/fixed for publications
     }
 
-    // Predefined fields for articles
-    $object->addProperty(array('name'   => 'pubtypeid',
+    // Predefined fields for publications
+    $object->addProperty(array('name'   => 'pubtype_id',
                                'label'  => 'Publication Type',
                                'status' => 1,
                                'type'   => 'itemtype',
                                'default' => $ptid,
-                               'source' => 'xar_articles.pubtypeid'));
+                               'source' => 'xar_publications.pubtype_id'));
 
     $object->addProperty(array('name'   => 'id',
-                               'label'  => 'Article ID',
+                               'label'  => 'Publication ID',
                                'status' => 1,
                                'type'   => 'itemid',
-                               'source' => 'xar_articles.id'));
+                               'source' => 'xar_publications.id'));
 
     // Reverse the properties list for nicer export
     $object->properties = array_reverse($object->properties);

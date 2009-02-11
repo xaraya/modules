@@ -1,14 +1,14 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
@@ -17,16 +17,16 @@
  * It currently redirects to the admin-view function
  * @return bool true on success
  */
-function articles_admin_main()
+function publications_admin_main()
 {
 
 // Security Check
-    if (!xarSecurityCheck('EditArticles')) return;
+    if (!xarSecurityCheck('EditPublications')) return;
        $welcome = '';
 
         // Return the template variables defined in this function
         //return array('welcome' => $welcome);
-        xarResponseRedirect(xarModURL('articles', 'admin', 'view'));
+        xarResponseRedirect(xarModURL('publications', 'admin', 'view'));
     // success
     return true;
 

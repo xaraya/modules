@@ -1,20 +1,20 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
  * delete item
  */
-function articles_admin_delete()
+function publications_admin_delete()
 {
     // Get parameters
     if (!xarVarFetch('id', 'id', $id)) return;
@@ -22,27 +22,27 @@ function articles_admin_delete()
     if (!xarVarFetch('return_url', 'str:1', $return_url, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // Get article information
-    $article = xarModAPIFunc('articles',
+    $article = xarModAPIFunc('publications',
                              'user',
                              'get',
                              array('id' => $id,
                                    'withcids' => true));
     if (!isset($article) || $article == false) {
         $msg = xarML('Unable to find #(1) item #(2)',
-                     'Article', xarVarPrepForDisplay($id));
+                     'Publication', xarVarPrepForDisplay($id));
         throw new ForbiddenOperationException(null, $msg);
     }
 
-    $ptid = $article['pubtypeid'];
+    $ptid = $article['pubtype_id'];
 
     // Security check
     $input = array();
     $input['article'] = $article;
-    $input['mask'] = 'DeleteArticles';
-    if (!xarModAPIFunc('articles','user','checksecurity',$input)) {
-        $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $input['mask'] = 'ManagePublications';
+    if (!xarModAPIFunc('publications','user','checksecurity',$input)) {
+        $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
         $msg = xarML('You have no permission to delete #(1) item #(2)',
-                     $pubtypes[$ptid]['descr'], xarVarPrepForDisplay($id));
+                     $pubtypes[$ptid]['description'], xarVarPrepForDisplay($id));
         throw new ForbiddenOperationException(null, $msg);
     }
 
@@ -53,9 +53,9 @@ function articles_admin_delete()
         // Specify for which item you want confirmation
         $data['id'] = $id;
 
-        // Use articles user GUI function (not API) for preview
-        if (!xarModLoad('articles','user')) return;
-        $data['preview'] = xarModFunc('articles', 'user', 'display',
+        // Use publications user GUI function (not API) for preview
+        if (!xarModLoad('publications','user')) return;
+        $data['preview'] = xarModFunc('publications', 'user', 'display',
                                       array('preview' => true, 'article' => $article));
 
         // Add some other data you'll want to display in the template
@@ -67,18 +67,18 @@ function articles_admin_delete()
 
         $data['return_url'] = $return_url;
 
-        $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+        $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
         $template = $pubtypes[$ptid]['name'];
 
         // Return the template variables defined in this function
-        return xarTplModule('articles', 'admin', 'delete', $data, $template);
+        return xarTplModule('publications', 'admin', 'delete', $data, $template);
     }
 
     // Confirmation present
     if (!xarSecConfirmAuthKey()) return;
 
     // Pass to API
-    if (!xarModAPIFunc('articles',
+    if (!xarModAPIFunc('publications',
                      'admin',
                      'delete',
                      array('id' => $id,
@@ -87,7 +87,7 @@ function articles_admin_delete()
     }
 
     // Success
-    xarSession::setVar('statusmsg', xarML('Article Deleted'));
+    xarSession::setVar('statusmsg', xarML('Publication Deleted'));
 
     // Return return_url
     if (!empty($return_url)) {
@@ -96,21 +96,21 @@ function articles_admin_delete()
     }
 
     // Return to the original admin view
-    $lastview = xarSession::getVar('Articles.LastView');
+    $lastview = xarSession::getVar('Publications.LastView');
     if (isset($lastview)) {
         $lastviewarray = unserialize($lastview);
         if (!empty($lastviewarray['ptid']) && $lastviewarray['ptid'] == $ptid) {
             extract($lastviewarray);
-            xarResponseRedirect(xarModURL('articles', 'admin', 'view',
+            xarResponseRedirect(xarModURL('publications', 'admin', 'view',
                                           array('ptid' => $ptid,
                                                 'catid' => $catid,
-                                                'status' => $status,
+                                                'state' => $state,
                                                 'startnum' => $startnum)));
             return true;
         }
     }
 
-    xarResponseRedirect(xarModURL('articles', 'admin', 'view',
+    xarResponseRedirect(xarModURL('publications', 'admin', 'view',
                                   array('ptid' => $ptid)));
 
     return true;

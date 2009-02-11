@@ -7,25 +7,25 @@
     </label> <input type="text" name="numitems" id="numitems#$blockid#" value="#$numitems#" size="5" maxlength="5" /> 
 </div>
 <div class="xar-form-input-wrapper">
-    <label class="help xar-form-label" for="pubtypeid#$blockid#" title="#xarML('Choose the publication type for the featured items.')#">
+    <label class="help xar-form-label" for="pubtype_id#$blockid#" title="#xarML('Choose the publication type for the featured items.')#">
         <xar:mlstring>
             Publication Type
         </xar:mlstring>
     </label>
-    <select name="pubtypeid" id="pubtypeid#$blockid#">
+    <select name="pubtype_id" id="pubtype_id#$blockid#">
         <option value="0">
             <xar:mlstring>
                 All 
             </xar:mlstring>
         </option>
         <xar:foreach in="$pubtypes" key="$pubid" value="$pubtype">
-            <xar:if condition="!empty($pubtypeid) and $pubtypeid eq $pubid">
+            <xar:if condition="!empty($pubtype_id) and $pubtype_id eq $pubid">
                 <option value="#$pubid#" selected="selected">
-                    #$pubtype['descr']# 
+                    #$pubtype['description']# 
                 </option>
                 <xar:else />
                 <option value="#$pubid#">
-                    #$pubtype['descr']# 
+                    #$pubtype['description']# 
                 </option>
             </xar:if>
         </xar:foreach>
@@ -57,38 +57,38 @@
     </select> 
 </div>
 <div class="xar-form-input-wrapper">
-    <label class="help xar-form-label" title="#xarML('Choose the status (e.g. Approved, Front Page) for the featured items.')#" for="status#$blockid#"> 
+    <label class="help xar-form-label" title="#xarML('Choose the state (e.g. Approved, Front Page) for the featured items.')#" for="state#$blockid#"> 
         <xar:mlstring>
             Status 
         </xar:mlstring>
     </label>
-    <select name="status" id="status#$blockid#" size="1">
-        <xar:foreach in="$statusoptions" value="$statusoption">
-            <xar:if condition="!empty($status) and $status eq $statusoption['id']">
-                <option value="#$statusoption['id']#" selected="selected">
-                    #$statusoption['name']# 
+    <select name="state" id="state#$blockid#" size="1">
+        <xar:foreach in="$stateoptions" value="$stateoption">
+            <xar:if condition="!empty($state) and $state eq $stateoption['id']">
+                <option value="#$stateoption['id']#" selected="selected">
+                    #$stateoption['name']# 
                 </option>
                 <xar:else />
-                <option value="#$statusoption['id']#">
-                    #$statusoption['name']# 
+                <option value="#$stateoption['id']#">
+                    #$stateoption['name']# 
                 </option>
             </xar:if>
         </xar:foreach>
     </select> 
 </div>
 <div class="xar-form-input-wrapper">
-    <label class="help xar-form-label" title="#xarML('Choose the locale for the random items.')#" for="language#$blockid#"> 
+    <label class="help xar-form-label" title="#xarML('Choose the locale for the random items.')#" for="locale#$blockid#"> 
         <xar:mlstring>
             Locale 
         </xar:mlstring>
     </label>
-    <select name="language" id="language#$blockid#" size="1">
+    <select name="locale" id="locale#$blockid#" size="1">
         <option value="">
             <xar:mlstring>
                 All 
             </xar:mlstring>
         </option>
-        <xar:if condition="!empty($language) and $language eq 'current'">
+        <xar:if condition="!empty($locale) and $locale eq 'current'">
             <option value="current" selected="selected">
                 <xar:mlstring>
                     Current 
@@ -102,7 +102,7 @@
             </option>
         </xar:if>
         <xar:foreach in="$locales" value="$locale">
-            <xar:if condition="!empty($language) and $language eq $locale">
+            <xar:if condition="!empty($locale) and $locale eq $locale">
                 <option value="#$locale#" selected="selected">
                     #$locale# 
                 </option>
@@ -190,7 +190,7 @@
         </xar:mlstring>
     </label> 
 </div>
-<xar:if condition="xarModIsHooked('dynamicdata','articles',$pubtypeid)">
+<xar:if condition="xarModIsHooked('dynamicdata','publications',$pubtype_id)">
     <div class="xar-form-input-wrapper-after">
         <xar:if condition="empty($showdynamic)">
             <input type="checkbox" name="showdynamic" id="showdynamic#$blockid#" value="1" /> 

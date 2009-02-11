@@ -1,15 +1,28 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="publinks" type="module" />
-    <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="articles" itemtype="$ptid" itemid="$id" cids="$cids" showcatcount="$showcatcount" showempty="0" />
-
+    <!--
+    <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" itemid="$id" cids="$cids" showcatcount="$showcatcount" showempty="0" />
+    -->
     <table border="0" cellpadding="3" cellspacing="0">
         <tr>
             <td align="left" colspan="2" class="xar-normal">
-                <a class="xar-title" href="#$redirect#">#$title#</a>
-            <xar:if condition="!empty($editurl)"> [<a href="#$editurl#">#$edittitle#</a>]
+                <!-- <a class="xar-title" href="#$redirect#"> -->
+                <a class="xar-title" href="#">
+                    <xar:data-output property="$properties['title']" />
+                </a>
+            <xar:if condition="!empty($editurl)">
+                [<a href="#$editurl#">#$edittitle#</a>]
             </xar:if>
             <br />
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+            <xar:mlstring>Web Site</xar:mlstring>:
+            </td>
+            <td align="left">
+                <xar:data-output property="$properties['website']" />
             </td>
         </tr>
         <tr>
@@ -17,16 +30,16 @@
             <xar:mlstring>Description</xar:mlstring>:
             </td>
             <td align="left">
-            #$summary#
+                <xar:data-output property="$properties['description']" />
             </td>
         </tr>
-        <xar:if condition="!empty($notes)">
+        <xar:if condition="!empty($properties['source']->value)">
             <tr>
                 <td align="right">
                     <xar:mlstring>Source</xar:mlstring>:
                 </td>
                 <td align="left">
-                    #$notes#
+                    <xar:data-output property="$properties['source']" />
                 </td>
             </tr>
         </xar:if>
@@ -35,8 +48,8 @@
                 <xar:mlstring>Added on</xar:mlstring>:
             </td>
             <td align="left">
-                #xarLocaleGetFormattedDate('long',$pubdate)#
-                #xarLocaleGetFormattedTime('long',$pubdate)#
+                #xarLocaleGetFormattedDate('long',$properties['modified']->getValue())#
+                #xarLocaleGetFormattedTime('long',$properties['modified']->getValue())#
             </td>
         </tr>
         <tr>
@@ -45,13 +58,15 @@
             </td>
             <td align="left">
                 <xar:if condition="!empty($profile)">
-                    <a href="#$profile#">#$author#</a>
+                    <a href="#$profile#">
+                        <xar:data-output property="$properties['author']" />
+                    </a>
                     <xar:else />
-                        #$author#
+                        <xar:data-output property="$properties['author']" />
                 </xar:if>
             </td>
         </tr>
-        <xar:if condition="$dohitcount">
+        <xar:if condition="!empty($counter)">
             <tr>
                 <td align="right">
                     <xar:mlstring>Hits</xar:mlstring>:
@@ -71,13 +86,6 @@
                     <td align="right">&#160;<xar:if condition="!empty($nextart)"> <a href="#$nextart#"><xar:mlstring>next</xar:mlstring> &gt;</a></xar:if></td>
                 </tr>
             </table>
-    </xar:if>
-
-    <xar:if condition="!empty($hooks)">
-        <br />
-        <xar:foreach in="$hooks" key="$hookmodule">
-            #$hooks[$hookmodule]#
-        </xar:foreach>
     </xar:if>
 
     <xar:template file="navtabs-user" type="module" />

@@ -1,14 +1,14 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 
@@ -17,13 +17,13 @@
  *
  * I'll handle it as an API call once I have my seperate integration module built;) JC.
  */
-function articles_user_formhooks($ptid = '')
+function publications_user_formhooks($ptid = '')
 {
 
     $hooks = array();
     // call the right hooks, i.e. not the ones for the comments module :)
-    $hooks['formaction']              = xarModCallHooks('item', 'formaction', '', array(), 'articles', $ptid);
-    $hooks['formdisplay']             = xarModCallHooks('item', 'formdisplay', '', array(), 'articles', $ptid);
+    $hooks['formaction']              = xarModCallHooks('item', 'formaction', '', array(), 'publications', $ptid);
+    $hooks['formdisplay']             = xarModCallHooks('item', 'formdisplay', '', array(), 'publications', $ptid);
 
     if (empty($hooks['formaction'])){
         $hooks['formaction'] = '';

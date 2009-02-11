@@ -8,16 +8,16 @@
         : 
     </dt>
     <dd>
-        <a href="#xarModURL('articles','user','viewmap',array('by' => 'cat'))#">
+        <a href="#xarModURL('publications','user','viewmap',array('by' => 'cat'))#">
             <xar:mlstring>
-                Article Map by Category 
+                Publication Map by Category 
             </xar:mlstring>
         </a>
     </dd>
     <dd>
-        <a href="#xarModURL('articles','user','viewmap',array('by' => 'pub','ptid' => $ptid))#">
+        <a href="#xarModURL('publications','user','viewmap',array('by' => 'pub','ptid' => $ptid))#">
             <xar:mlstring>
-                Article Map by Publication Type 
+                Publication Map by Publication Type 
             </xar:mlstring>
         </a>
     </dd>

@@ -1,14 +1,14 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
@@ -16,16 +16,16 @@
  * @param $args['ptid'] optional publication type ID for which you *don't*
  *                      want a link (e.g. for the current publication type)
  * @param $args['all'] optional flag (1) if you want to include publication
- *                     types that don't have articles too (default 0)
- * @param $args['status'] array of requested status(es) for the articles
+ *                     types that don't have publications too (default 0)
+ * @param $args['state'] array of requested status(es) for the publications
  * @param $args['func'] optional function to be called with the link
- * @param $args['count'] true (default) means counting the number of articles
+ * @param $args['count'] true (default) means counting the number of publications
  * @return array of array('pubtitle' => descr,
  *                        'pubid' => id,
  *                        'publink' => link,
  *                        'pubcount' => count)
  */
-function articles_userapi_getpublinks($args)
+function publications_userapi_getpublinks($args)
 {
     // Get arguments from argument array
     extract($args);
@@ -46,35 +46,38 @@ function articles_userapi_getpublinks($args)
     if (!isset($count)) {
         $count = true;
     }
+    if (!isset($state)) {
+        $state = array(0);
+    }
     if (!$count) {
         $all = 1;
     }
 
     // Get publication types
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
 
     if ($count) {
-        if (isset($status)) {
-            $pubcount = xarModAPIFunc('articles','user','getpubcount',
-                                     array('status' => $status));
+        if (isset($state)) {
+            $pubcount = xarModAPIFunc('publications','user','getpubcount',
+                                     array('state' => $state));
         } else {
-            $pubcount = xarModAPIFunc('articles','user','getpubcount');
+            $pubcount = xarModAPIFunc('publications','user','getpubcount');
         }
     }
 
     $publinks = array();
     $isfirst = 1;
     foreach ($pubtypes as $id => $pubtype) {
-        if (!xarSecurityCheck('ViewArticles',0,'Article',$id.':All:All:All')) {
+        if (!xarSecurityCheck('ViewPublications',0,'Publication',$id.':All:All:All')) {
             continue;
         }
         if ($all || (isset($pubcount[$id]) && $pubcount[$id] > 0)) {
-             $item['pubtitle'] = $pubtype['descr'];
+             $item['pubtitle'] = $pubtype['description'];
              $item['pubid'] = $id;
              if (isset($ptid) && $ptid == $id) {
                  $item['publink'] = '';
              } else {
-                 $item['publink'] = xarModURL('articles',$typemod,$func,array('ptid' => $id));
+                 $item['publink'] = xarModURL('publications',$typemod,$func,array('ptid' => $id));
              }
              if ($count && isset($pubcount[$id])) {
                  $item['pubcount'] = $pubcount[$id];

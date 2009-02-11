@@ -1,14 +1,14 @@
 <?php
 /**
- * Articles module related articles block
+ * Publications module related publications block
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
@@ -17,7 +17,7 @@
 /**
  * initialise block
  */
-function articles_relatedblock_init()
+function publications_relatedblock_init()
 {
     return array(
         'numitems' => 5,
@@ -32,12 +32,12 @@ function articles_relatedblock_init()
 /**
  * get information on block
  */
-function articles_relatedblock_info()
+function publications_relatedblock_info()
 {
     // Values
     return array(
         'text_type' => 'Related',
-        'module' => 'articles',
+        'module' => 'publications',
         'text_type_long' => 'Show related categories and author links',
         'allow_multiple' => true,
         'form_content' => false,
@@ -49,10 +49,10 @@ function articles_relatedblock_info()
 /**
  * display block
  */
-function articles_relatedblock_display($blockinfo)
+function publications_relatedblock_display($blockinfo)
 {
     // Security check
-    if (!xarSecurityCheck('ReadArticlesBlock', 0, 'Block', $blockinfo['title'])) {return;}
+    if (!xarSecurityCheck('ReadPublicationsBlock', 0, 'Block', $blockinfo['title'])) {return;}
 
     // Get variables from content block
     if (!is_array($blockinfo['content'])) {
@@ -71,46 +71,46 @@ function articles_relatedblock_display($blockinfo)
 
     // Trick : work with cached variables here (set by the module function)
 
-    // Check if we've been through articles display
-    if (!xarVarIsCached('Blocks.articles','id')) {
+    // Check if we've been through publications display
+    if (!xarVarIsCached('Blocks.publications','id')) {
         return;
     }
 
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
 
     $links = 0;
     // Show publication type (for now)
-    if (xarVarIsCached('Blocks.articles','ptid')) {
-        $ptid = xarVarGetCached('Blocks.articles','ptid');
-        if (!empty($ptid) && isset($pubtypes[$ptid]['descr'])) {
-            $vars['pubtypelink'] = xarModURL('articles','user','view',
+    if (xarVarIsCached('Blocks.publications','ptid')) {
+        $ptid = xarVarGetCached('Blocks.publications','ptid');
+        if (!empty($ptid) && isset($pubtypes[$ptid]['description'])) {
+            $vars['pubtypelink'] = xarModURL('publications','user','view',
                                              array('ptid' => $ptid));
-            $vars['pubtypename'] = $pubtypes[$ptid]['descr'];
+            $vars['pubtypename'] = $pubtypes[$ptid]['description'];
             $links++;
         }
     }
     // Show categories (for now)
-    if (xarVarIsCached('Blocks.articles','cids')) {
-        $cids = xarVarGetCached('Blocks.articles','cids');
+    if (xarVarIsCached('Blocks.publications','cids')) {
+        $cids = xarVarGetCached('Blocks.publications','cids');
         // TODO: add related links
     }
     // Show author (for now)
-    if (xarVarIsCached('Blocks.articles','authorid') &&
-        xarVarIsCached('Blocks.articles','author')) {
-        $authorid = xarVarGetCached('Blocks.articles','authorid');
-        $author = xarVarGetCached('Blocks.articles','author');
-        if (!empty($authorid) && !empty($author)) {
-            $vars['authorlink'] = xarModURL('articles','user','view',
+    if (xarVarIsCached('Blocks.publications','owner') &&
+        xarVarIsCached('Blocks.publications','author')) {
+        $owner = xarVarGetCached('Blocks.publications','owner');
+        $author = xarVarGetCached('Blocks.publications','author');
+        if (!empty($owner) && !empty($author)) {
+            $vars['authorlink'] = xarModURL('publications','user','view',
                                             array('ptid' => (!empty($ptid) ? $ptid : null),
-                                                  'authorid' => $authorid));
+                                                  'owner' => $owner));
             $vars['authorname'] = $author;
-            $vars['authorid'] = $authorid;
+            $vars['owner'] = $owner;
             if (!empty($vars['showvalue'])) {
-                $vars['authorcount'] = xarModAPIFunc('articles','user','countitems',
+                $vars['authorcount'] = xarModAPIFunc('publications','user','countitems',
                                                      array('ptid' => (!empty($ptid) ? $ptid : null),
-                                                           'authorid' => $authorid,
-                                                           // limit to approved / frontpage articles
-                                                           'status' => array(2,3),
+                                                           'owner' => $owner,
+                                                           // limit to approved / frontpage publications
+                                                           'state' => array(2,3),
                                                            'enddate' => time()));
             }
             $links++;
@@ -132,7 +132,7 @@ function articles_relatedblock_display($blockinfo)
 /**
  * modify block settings
  */
-function articles_relatedblock_modify($blockinfo)
+function publications_relatedblock_modify($blockinfo)
 {
     // Get current content
     if (!is_array($blockinfo['content'])) {
@@ -158,7 +158,7 @@ function articles_relatedblock_modify($blockinfo)
 /**
  * update block settings
  */
-function articles_relatedblock_update($blockinfo)
+function publications_relatedblock_update($blockinfo)
 {
     $vars = array();
     if (!xarVarFetch('numitems', 'int:1:100', $vars['numitems'], 5, XARVAR_NOT_REQUIRED)) {return;}
@@ -172,7 +172,7 @@ function articles_relatedblock_update($blockinfo)
 /**
  * built-in block help/information system.
  */
-function articles_relatedblock_help()
+function publications_relatedblock_help()
 {
     return '';
 }

@@ -1,14 +1,14 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
@@ -17,11 +17,11 @@
  * @param array group
  * @return array number of items with descriptors
  */
-function articles_adminapi_getstats($args)
+function publications_adminapi_getstats($args)
 {
     extract($args);
 
-    $allowedfields = array('pubtypeid', 'status', 'authorid', 'language', 'pubdate_year', 'pubdate_month', 'pubdate_day');
+    $allowedfields = array('pubtype_id', 'state', 'owner', 'locale', 'pubdate_year', 'pubdate_month', 'pubdate_day');
     if (empty($group)) {
         $group = array();
     }
@@ -97,8 +97,8 @@ function articles_adminapi_getstats($args)
         }
     }
     if (empty($newfields) || count($newfields) < 1) {
-        $newfields = array('pubtypeid', 'status', 'authorid');
-        $newgroups = array('pubtypeid', 'status', 'authorid');
+        $newfields = array('pubtype_id', 'state', 'owner');
+        $newgroups = array('pubtype_id', 'state', 'owner');
     }
 
     // Database information
@@ -106,7 +106,7 @@ function articles_adminapi_getstats($args)
     $xartables = xarDB::getTables();
 
     $query = 'SELECT ' . join(', ', $newfields) . ', COUNT(*)
-              FROM ' . $xartables['articles'] . '
+              FROM ' . $xartables['publications'] . '
               GROUP BY ' . join(', ', $newgroups) . '
               ORDER BY ' . join(', ', $newgroups);
 

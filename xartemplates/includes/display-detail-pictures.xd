@@ -1,14 +1,15 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <xar:style scope="module" module="articles" file="gallery" />
-    <xar:base-include-javascript filename="xar_articles_pictures.js" />
+    <xar:style scope="module" module="publications" file="gallery" />
+    <xar:base-include-javascript filename="xar_publications_pictures.js" />
     <xar:template file="publinks" type="module" />
-    <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="articles" itemtype="$ptid" itemid="$id" cids="$cids" showcatcount="$showcatcount" showempty="0" />
-
+    <!--
+    <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" itemid="$id" cids="$cids" showcatcount="$showcatcount" showempty="0" />
+    -->
     <div id="wrap">
         <div id="header">
             <h1>
-                #$title#
+                <xar:data-output property="$properties['title']" />
             </h1>
             <p>
                 <xar:if condition="!empty($counter)">
@@ -29,10 +30,11 @@
         <div id="main-content">
             <div id="fullplate-photo">
                 <p>
-                    #$notes#
+                    <xar:data-output property="$properties['picture']" />
                 </p>
+                <!--
                 <div id='photoholder'>
-                    <xar:if condition="xarModIsHooked('uploads','articles',$pubtypeid) and substr($body,0,1) eq ';'">
+                    <xar:if condition="xarModIsHooked('uploads','publications',$pubtype_id) and substr($body,0,1) eq ';'">
                         <xar:set name="img_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $body, 'multiple' => true))</xar:set>
                         <xar:foreach in="$img_output" key="$fileId" value="$fileInfo">
                             <a href="#$fileInfo['fileDownload']#" alt="#xarMl('View full sized image')#">
@@ -45,9 +47,10 @@
                             </a>
                         </xar:foreach>
                     <xar:else />
-                        <img src="#$body#" border="0" alt="#$title#" id="thephoto" />
+                        <img src="#$body#" border="0" alt="#$properties['title']->getValue()#" id="thephoto" />
                     </xar:if>
                 </div>
+                -->
                 <xar:if condition="!empty($prevart) || !empty($nextart)">
                     <ul id="fullplate-navigation">
                         <xar:if condition="!empty($prevart)">
@@ -61,13 +64,5 @@
             </div>
         </div>
     </div>
-
-    <br /><br />
-    <xar:if condition="!empty($hooks)">
-        <xar:foreach in="$hooks" key="$hookmodule">
-            #$hooks[$hookmodule]#
-        </xar:foreach>
-    </xar:if>
-
     <xar:template file="navtabs-user" type="module" />
 </xar:template>

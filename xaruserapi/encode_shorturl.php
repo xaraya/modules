@@ -1,14 +1,14 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
@@ -17,7 +17,7 @@
  * @param $args the function and arguments passed to xarModURL
  * @return string path to be added to index.php for a short URL, or empty if failed
  */
-function articles_userapi_encode_shorturl($args)
+function publications_userapi_encode_shorturl($args)
 {
     // Get arguments from argument array
     extract($args);
@@ -32,9 +32,9 @@ function articles_userapi_encode_shorturl($args)
     //Let's make provision for this
     $string=''; //initialize
     if (!empty($ptid)) {
-        $string = xarModVars::get('articles', 'settings.'.$ptid);
+        $string = xarModVars::get('publications', 'settings.'.$ptid);
     } else {
-        $string = xarModVars::get('articles', 'settings');
+        $string = xarModVars::get('publications', 'settings');
     }
     if (!empty($string)) {
         $settings = unserialize($string);
@@ -66,9 +66,9 @@ function articles_userapi_encode_shorturl($args)
     // if we want to add some common arguments as URL parameters below
     $join = '?';
     // we can't rely on xarModGetName() here (yet) !
-    $module = 'articles';
+    $module = 'publications';
 
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
 
     // specify some short URLs relevant to your module
     if ($func == 'main') {
@@ -81,7 +81,7 @@ function articles_userapi_encode_shorturl($args)
         }
     } elseif ($func == 'view') {
 // TODO: review logic of possible combinations
-        if (isset($authorid) && $authorid > 0) {
+        if (isset($owner) && $owner > 0) {
             if (isset($ptid) && isset($pubtypes[$ptid])) {
                 $alias = xarModGetAlias($pubtypes[$ptid]['name']);
                 if ($module == $alias) {
@@ -93,7 +93,7 @@ function articles_userapi_encode_shorturl($args)
             } else {
                 $path = '/' . $module . '/';
             }
-            $path .= xarML('by_author') . '/' . $authorid;
+            $path .= xarML('by_author') . '/' . $owner;
         } elseif (!empty($catid)) {
             if (isset($ptid) && isset($pubtypes[$ptid])) {
                 if (isset($bycat)) {
@@ -167,7 +167,7 @@ function articles_userapi_encode_shorturl($args)
             // Check to see if we want to encode using Title
             if( $encodeUsingTitle )
             {
-                $path .= articles_encodeUsingTitle($id, $encodeUsingTitle, $ptid);
+                $path .= publications_encodeUsingTitle($id, $encodeUsingTitle, $ptid);
             } else {
                 $path .= $id;
             }
@@ -178,7 +178,7 @@ function articles_userapi_encode_shorturl($args)
             // Check to see if we want to encode using Title
             if( $encodeUsingTitle )
             {
-                $path .= articles_encodeUsingTitle($id, $encodeUsingTitle, '');
+                $path .= publications_encodeUsingTitle($id, $encodeUsingTitle, '');
             } else {
                 $path .= "$id";
             }
@@ -267,9 +267,9 @@ function articles_userapi_encode_shorturl($args)
             $path .= $join . 'end=' . $end;
             $join = '&';
         }
-        // by status
-        if (isset($status)) {
-            $path .= $join . 'status=' . $status;
+        // by state
+        if (isset($state)) {
+            $path .= $join . 'state=' . $state;
             $join = '&';
         }
         // field list
@@ -299,7 +299,7 @@ function articles_userapi_encode_shorturl($args)
             $path .= $join . 'startnum=' . $startnum;
             $join = '&';
         }
-        // multi-page articles
+        // multi-page publications
         if (isset($page)) {
             $path .= $join . 'page=' . $page;
             $join = '&';
@@ -319,10 +319,10 @@ function articles_userapi_encode_shorturl($args)
     return $path;
 }
 
-function articles_encodeUsingTitle( $id, $encodeUsingTitle = 1, $ptid = '' )
+function publications_encodeUsingTitle( $id, $encodeUsingTitle = 1, $ptid = '' )
 {
     $searchArgs['id'] = $id;
-    $article = xarModAPIFunc('articles','user','get', $searchArgs);
+    $article = xarModAPIFunc('publications','user','get', $searchArgs);
 
     if (empty($article)) {
         // default to just the article ID
@@ -354,10 +354,10 @@ function articles_encodeUsingTitle( $id, $encodeUsingTitle = 1, $ptid = '' )
         $searchArgs['searchtype'] = 'equal whole string';
         // if $ptid is set, it will be part of the URL so we can use it to refine the search
         if (!empty($ptid)) {
-            $searchArgs['ptid'] = $article['pubtypeid'];
+            $searchArgs['ptid'] = $article['pubtype_id'];
         }
 
-        $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
+        $publications = xarModAPIFunc('publications', 'user', 'getall', $searchArgs);
     }
 
     if ( strpos($article['title'],'_') === FALSE )
@@ -373,18 +373,18 @@ function articles_encodeUsingTitle( $id, $encodeUsingTitle = 1, $ptid = '' )
         // Ignore duplicates
         $path = $encodedTitle;
 
-    // Check to find out how many articles come back from the search.
-    } elseif ( count($articles) == 1 ) {
+    // Check to find out how many publications come back from the search.
+    } elseif ( count($publications) == 1 ) {
         // Only finding one article through search, we're good to go.
         $path = $encodedTitle;
 
-    } elseif (count($articles) == 0) {
+    } elseif (count($publications) == 0) {
         // Can't find article through search, won't be able to find it on decode
         // default to just the article ID
         $path = $id;
 
     } else {
-        // Finding multiple articles through search, add a duplication resolution flag
+        // Finding multiple publications through search, add a duplication resolution flag
         switch( $dupeResolutionMethod )
         {
             case 'Append ID':

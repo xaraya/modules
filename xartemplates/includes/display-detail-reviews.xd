@@ -1,15 +1,16 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="publinks" type="module" />
-    <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="articles" itemtype="$ptid" itemid="$id" cids="$cids" showcatcount="$showcatcount" showempty="0" />
-
+    <!--
+    <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" itemid="$id" cids="$cids" showcatcount="$showcatcount" showempty="0" />
+    -->
     <table border="0" cellpadding="3" cellspacing="0">
     <tr>
       <td align="right">
         <xar:mlstring>Title:</xar:mlstring>
       </td>
       <td align="left">
-        #$title#
+        <xar:data-output property="$properties['title']" />
         <xar:if condition="!empty($editurl)"> [<a href="#$editurl#">#$edittitle#</a>]
         </xar:if>
         <br />
@@ -21,7 +22,7 @@
         <xar:mlstring>Image:</xar:mlstring>
       </td>
       <td align="center">
-        <img src="#$notes#" border="0" alt="#$title#" />
+        <img src="#$properties['image']->getValue()#" border="0" alt="#$properties['title']->getValue()#" />
         &#160;
       </td>
     </tr>
@@ -31,7 +32,7 @@
         <xar:mlstring>Review:</xar:mlstring>
       </td>
       <td align="left">
-        #$summary#
+        <xar:data-output property="$properties['review']" />
       </td>
     </tr>
     <tr>
@@ -39,8 +40,8 @@
         <xar:mlstring>Added on:</xar:mlstring>
       </td>
       <td align="left">
-        #xarLocaleGetFormattedDate('long',$pubdate)#
-        #xarLocaleGetFormattedTime('long',$pubdate)#
+        #xarLocaleGetFormattedDate('long',$properties['modified']->getValue())#
+        #xarLocaleGetFormattedTime('long',$properties['modified']->getValue())#
       </td>
     </tr>
     <tr>
@@ -49,9 +50,11 @@
       </td>
       <td align="left">
         <xar:if condition="!empty($profile)">
-          <a href="#$profile#">#$author#</a>
+          <a href="#$profile#">
+          <xar:data-output property="$properties['author']" />
+          </a>
         <xar:else />
-          #$author#
+          <xar:data-output property="$properties['author']" />
         </xar:if>
       </td>
     </tr>
@@ -62,9 +65,11 @@
       </td>
       <td align="left">
         <xar:if condition="!empty($redirect)">
-            <a href="#$redirect#">#$body#</a>
+            <a href="#$redirect#">
+                <xar:data-output property="$properties['related_link']" />
+            </a>
         <xar:else/>
-            #$body#
+            <xar:data-output property="$properties['related_link']" />
         </xar:if>
         &#160;
       </td>
@@ -100,13 +105,6 @@
         <td align="right">&#160;<xar:if condition="!empty($nextart)"> <a href="#$nextart#"><xar:mlstring>next</xar:mlstring> &gt;</a></xar:if></td>
     </tr>
     </table>
-    </xar:if>
-
-    <xar:if condition="!empty($hooks)">
-    <br />
-    <xar:foreach in="$hooks" key="$hookmodule">
-    #$hooks[$hookmodule]#
-    </xar:foreach>
     </xar:if>
 
     <xar:template file="navtabs-user" type="module" />

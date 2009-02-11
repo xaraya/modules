@@ -1,6 +1,6 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<p><strong><xar:mlstring>In Articles</xar:mlstring>:</strong></p>
+<p><strong><xar:mlstring>In Publications</xar:mlstring>:</strong></p>
 <xar:if condition="empty($loop)">
     <xar:mlstring>No Waiting Content</xar:mlstring>
 <xar:else />

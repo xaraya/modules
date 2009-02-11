@@ -1,19 +1,23 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+
+<xar:data-display object="$object" tplmodule="publications" />
+
+<!--
     <xar:template file="publinks" type="module" />
-    <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="articles" itemtype="$ptid" itemid="$id" cids="$cids" showcatcount="$showcatcount" showempty="0" />
+    <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" itemid="$id" cids="$cids" showcatcount="$showcatcount" showempty="0" />
     <div class="xar-error">
         <p>
             <xar:mlstring>
                 <strong>Note:</strong> when you create a new publication type,
-                the articles module will automatically use the templates
+                the publications module will automatically use the templates
                 <em>user-display-[publicationtype].xd</em>
                 and <em>user-summary-[publicationtype].xd</em>.
                 If those templates do not exist when you try to preview or display a new article,
                 you'll get this warning :-)
             </xar:mlstring>
             <xar:mlstring>
-                Please place your own templates in themes/<em>yourtheme</em>/modules/articles . The templates will get the extension .xt there.
+                Please place your own templates in themes/<em>yourtheme</em>/modules/publications . The templates will get the extension .xt there.
             </xar:mlstring>
         </p>
     </div>
@@ -51,4 +55,5 @@
             </xar:foreach>
         </xar:if>
     </div>
+    -->
 </xar:template>

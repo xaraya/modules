@@ -1,0 +1,86 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-norm xar-standard-box-padding">
+        <xar:if condition="!empty($categories) and count($categories) gt 0">
+            [
+            <xar:foreach in="$categories" value="$cat">
+                #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
+            </xar:foreach>
+            ]
+        </xar:if>
+        <h1> <a class="xar-title" href="#xarModURL('publications','user','display',array('itemid' => $properties['id']->getValue(),'ptid' => $properties['itemtype']->value))#">
+                <xar:data-output property="$properties['title']" />
+            </a>
+        </h1>
+        <div class="xar-accent xar-padding-thick">
+            <span class="xar-sub">
+                <xar:ml>
+                    <xar:mlstring>
+                        Posted by: #(1) on #(2) #(3)
+                    </xar:mlstring>
+                    <xar:mlvar>
+                        #$properties['author']->getValue()#
+                    </xar:mlvar>
+                    <xar:mlvar>
+                        #xarLocaleGetFormattedDate('long',$properties['start_date']->getValue())#
+                    </xar:mlvar>
+                    <xar:mlvar>
+                        #xarLocaleGetFormattedTime('long',$properties['start_date']->getValue())#
+                    </xar:mlvar>
+                </xar:ml>
+                <xar:if condition="!empty($counter)">
+                    <xar:if condition="$counter eq 1">
+                        (#$counter#&#160;                    
+                            read                    
+                        )
+                        <xar:else />
+                        (#$counter#&#160;                    
+                            reads                    
+                        )
+                    </xar:if>
+                </xar:if>
+            </span>
+        </div>
+        <div class="xar-align-right">
+        <!--
+            <span class="xar-sub"> #$topic_icons# </span>
+        -->
+        </div>
+        <div class="xar-publications-summary">
+            <xar:data-output property="$properties['introduction']" />
+        </div>
+        <xar:if condition="!empty($properties['notes']->value)">
+            <div class="xar-publications-notes">            
+                Note:&#160;   
+                <xar:data-output property="$properties['notes']" />
+            </div>
+        </xar:if>
+        <div class="xar-align-right">
+            <xar:if condition="!empty($words)">
+                <xar:comment>
+                    Note : you can use $bytes here too if you prefer the geeky way of counting
+                </xar:comment>
+                <a href="#$link#">                
+                    Read More
+                </a>
+                <xar:if condition="$words eq 1">
+                    (#$words#&#160;                
+                        word                
+                    )
+                    <xar:else />
+                    (#$words#&#160;                
+                        words                
+                    )
+                </xar:if>
+            </xar:if>
+            <div class="xar-publications-keywords">
+                <xar:if condition="!empty($keywords)">                
+                    Keywords
+                    <xar:loop name="$keywords">
+                        <a href="#xarModUrl('keywords', 'user', 'main', array('keyword'=> $loop:item['keyword']))#" title="#$loop:item['keyword']#">#$loop:item['keyword']#</a>
+                    </xar:loop>
+                </xar:if>
+            </div>
+        </div>
+    </div>
+</xar:template>

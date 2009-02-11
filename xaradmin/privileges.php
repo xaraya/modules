@@ -1,14 +1,14 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
@@ -16,7 +16,7 @@
  *
  * @return array for template
  */
-function articles_admin_privileges($args)
+function publications_admin_privileges($args)
 {
     extract($args);
 
@@ -49,9 +49,9 @@ function articles_admin_privileges($args)
 
     if (empty($ptid) || $ptid == 'All' || !is_numeric($ptid)) {
         $ptid = 0;
-        if (!xarSecurityCheck('AdminArticles')) return;
+        if (!xarSecurityCheck('AdminPublications')) return;
     } else {
-        if (!xarSecurityCheck('AdminArticles',1,'Article',"$ptid:All:All:All")) return;
+        if (!xarSecurityCheck('AdminPublications',1,'Publication',"$ptid:All:All:All")) return;
     }
 
 // TODO: do something with cid for security check
@@ -75,14 +75,14 @@ function articles_admin_privileges($args)
     }
     $title = '';
     if (!empty($id)) {
-        $article = xarModAPIFunc('articles','user','get',
+        $article = xarModAPIFunc('publications','user','get',
                                  array('id'      => $id,
                                        'withcids' => true));
         if (empty($article)) {
             $id = 0;
         } else {
             // override whatever other params we might have here
-            $ptid = $article['pubtypeid'];
+            $ptid = $article['pubtype_id'];
         // TODO: review when we can handle multiple categories and/or subtrees in privilege instances
             if (!empty($article['cids']) && count($article['cids']) == 1) {
                 // if we don't have a category, or if we have one but this article doesn't belong to it
@@ -94,7 +94,7 @@ function articles_admin_privileges($args)
                 // we'll take no categories
                 $cid = 0;
             }
-            $uid = $article['authorid'];
+            $uid = $article['owner'];
             $title = $article['title'];
         }
     }
@@ -145,7 +145,7 @@ function articles_admin_privileges($args)
     }
 
     // get the list of current authors
-    $authorlist =  xarModAPIFunc('articles','user','getauthors',
+    $authorlist =  xarModAPIFunc('publications','user','getauthors',
                                  array('ptid' => $ptid,
                                        'cids' => empty($cid) ? array() : array($cid)));
     if (!empty($author) && isset($authorlist[$uid])) {
@@ -153,10 +153,10 @@ function articles_admin_privileges($args)
     }
 
     if (empty($id)) {
-        $numitems = xarModAPIFunc('articles','user','countitems',
+        $numitems = xarModAPIFunc('publications','user','countitems',
                                   array('ptid' => $ptid,
                                         'cids' => empty($cid) ? array() : array($cid),
-                                        'authorid' => $uid));
+                                        'owner' => $uid));
     } else {
         $numitems = 1;
     }
@@ -179,20 +179,20 @@ function articles_admin_privileges($args)
                  );
 
     // Get publication types
-    $data['pubtypes'] = xarModAPIFunc('articles','user','getpubtypes');
+    $data['pubtypes'] = xarModAPIFunc('publications','user','getpubtypes');
 
     $catlist = array();
     if (!empty($ptid)) {
-        $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles', 'itemtype' => $ptid));
+        $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'publications', 'itemtype' => $ptid));
         foreach ($basecats as $catid) $catlist[$catid['id']] = 1;
-        if (empty($data['pubtypes'][$ptid]['config']['authorid']['label'])) {
+        if (empty($data['pubtypes'][$ptid]['config']['owner']['label'])) {
             $data['showauthor'] = 0;
         } else {
             $data['showauthor'] = 1;
         }
     } else {
         foreach (array_keys($data['pubtypes']) as $pubid) {
-            $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles', 'itemtype' => $pubid));
+            $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'publications', 'itemtype' => $pubid));
             foreach ($basecats as $catid) {
                 $catlist[$catid['id']] = 1;
             }
