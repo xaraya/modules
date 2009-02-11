@@ -29,6 +29,10 @@ table.nqoutput, table.nqinput, form.nquser fieldset, form.nqadmin fieldset
   color: #000000;
   background-color: #D0E0F0;
 }
+table.nqoutput, table.nqinput
+{
+  margin: 0 auto;
+}
 table.nqoutput th a:link, table.nqinput th a:link
 {
   color: #D0E0F0;
@@ -150,6 +154,7 @@ div.nqinput, div.nqinput label, div.nqconfig, div.nqconfig label
 }
 div.nqresults
 {
+  margin: 0 auto;
   text-align: center;
   width: 80%;
 }

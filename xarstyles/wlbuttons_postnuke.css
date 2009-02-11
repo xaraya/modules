@@ -29,6 +29,10 @@ table.nqoutput, table.nqinput, form.nquser fieldset, form.nqadmin fieldset
   color: #000000;
   background-color: #D0E0F0;
 }
+table.nqoutput, table.nqinput
+{
+  margin: 0 auto;
+}
 table.nqoutput th a:link, table.nqinput th a:link
 {
   color: #A8C4DB;
@@ -112,7 +116,7 @@ input.inset, input.outset
   padding: 0;
   margin: 0 0 0 2px;
 }
-input.floatbutton, img.floatbutton, input.floatbutton2, img.floatbutton2, input.gobutton, img.gobutton, input.gobuttonup, img.gobuttonup
+input.gobutton, img.gobutton, input.gobuttonup, img.gobuttonup
 {
   width: 21px;
   height: 22px;
@@ -150,6 +154,7 @@ div.nqinput, div.nqinput label, div.nqconfig, div.nqconfig label
 }
 div.nqresults
 {
+  margin: 0 auto;
   text-align: center;
   width: 80%;
 }
