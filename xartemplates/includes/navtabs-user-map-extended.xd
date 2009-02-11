@@ -8,17 +8,17 @@
         : 
     </dt>
     <dd>
-        <a href="#xarModURL('articles','user','viewmap',array('by' => 'pub','ptid' => $ptid))#">
+        <a href="#xarModURL('publications','user','viewmap',array('by' => 'pub','ptid' => $ptid))#">
             <xar:mlstring>
-                Article Map by Publication Type 
+                Publication Map by Publication Type 
             </xar:mlstring>
         </a>
     </dd>
     <xar:if condition="count($catfilter) eq 2">
         <dd>
-            <a href="#xarModURL('articles','user','viewmap',array('by' => 'grid'))#">
+            <a href="#xarModURL('publications','user','viewmap',array('by' => 'grid'))#">
                 <xar:mlstring>
-                    Article Map by Grid 
+                    Publication Map by Grid 
                 </xar:mlstring>
             </a>
         </dd>

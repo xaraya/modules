@@ -11,22 +11,22 @@
     <dt class="help" title="Choose an action to perform">
       <xar:mlstring>Utility:</xar:mlstring>
     </dt>
-    <xar:sec mask="AdminArticles" catch="false">
+    <xar:sec mask="AdminPublications" catch="false">
         <xar:set name="tabclass">$activetab=='stats'?'active':''</xar:set>
         <dd class="#$tabclass#">
-          <a href="&xar-modurl-articles-admin-stats;">
+          <a href="&xar-modurl-publications-admin-stats;">
             <xar:mlstring>Statistics</xar:mlstring>
           </a>
         </dd>
         <xar:set name="tabclass">$activetab=='importpictures'?'active':''</xar:set>
         <dd class="#$tabclass#">
-          <a href="&xar-modurl-articles-admin-importpictures;">
+          <a href="&xar-modurl-publications-admin-importpictures;">
             <xar:mlstring>Import Pictures</xar:mlstring>
           </a>
         </dd>
         <xar:set name="tabclass">$activetab=='importpages'?'active':''</xar:set>
         <dd class="#$tabclass#">
-          <a href="&xar-modurl-articles-admin-importpages;">
+          <a href="&xar-modurl-publications-admin-importpages;">
             <xar:mlstring>Import Pages</xar:mlstring>
           </a>
         </dd>

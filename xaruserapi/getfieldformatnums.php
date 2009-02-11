@@ -1,14 +1,14 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
@@ -20,7 +20,7 @@
                  'textbox' => 2,
                  ...);
  */
-function articles_userapi_getfieldformatnums($args)
+function publications_userapi_getfieldformatnums($args)
 {
     $fieldnames= array(
         'static'          => 1,
@@ -32,12 +32,12 @@ function articles_userapi_getfieldformatnums($args)
         'username'        => 7,
         'calendar'        => 8,
         'fileupload'      => 9,
-        'status'          => 10,
+        'state'          => 10,
         'url'             => 11,
         'image'           => 12,
         'webpage'         => 13,
         'imagelist'       => 35,
-        'language'        => 36,
+        'locale'        => 36,
         'userlist'        => 37,
         'textupload'      => 38,
         'urltitle'        => 41,

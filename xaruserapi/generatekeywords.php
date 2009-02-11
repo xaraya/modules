@@ -1,14 +1,14 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
@@ -17,7 +17,7 @@
  * @param $args array containing text from an article
  * @return string
  */
-function articles_userapi_generatekeywords($args)
+function publications_userapi_generatekeywords($args)
 {
     extract($args);
 

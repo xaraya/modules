@@ -1,0 +1,12 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:if condition="!isset($layout) OR empty($layout)">
+        <xar:set name="layout">'default'</xar:set>
+    </xar:if>
+
+    <xar:if condition="$layout eq 'default' OR $layout eq 'detail'">
+        <xar:template file="display-detail-faqs" />
+    <xar:elseif condition="$layout eq 'summary'" />
+        <xar:template file="display-summary-faqs" />
+    </xar:if>
+</xar:template>

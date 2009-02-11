@@ -7,8 +7,8 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  *
  */
@@ -16,12 +16,12 @@
  * initialise block
  * @author Jim McDonald
  */
-function articles_topitemsblock_init()
+function publications_topitemsblock_init()
 {
     // Initial values when the block is created.
     return array(
         'numitems' => 5,
-        'pubtypeid' => 0,
+        'pubtype_id' => 0,
         'nopublimit' => false,
         'linkpubtype' => true,
         'catfilter' => 0,
@@ -44,13 +44,13 @@ function articles_topitemsblock_init()
 /**
  * get information on block
  */
-function articles_topitemsblock_info()
+function publications_topitemsblock_info()
 {
     // Values
     return array(
         'text_type' => 'Top Items',
-        'module' => 'articles',
-        'text_type_long' => 'Show top articles',
+        'module' => 'publications',
+        'text_type_long' => 'Show top publications',
         'allow_multiple' => true,
         'form_content' => false, // Deprecated.
         'form_refresh' => false,
@@ -62,10 +62,10 @@ function articles_topitemsblock_info()
  * display block
  * @author Jim McDonald
  */
-function articles_topitemsblock_display($blockinfo)
+function publications_topitemsblock_display($blockinfo)
 {
     // Security check
-    if (!xarSecurityCheck('ReadArticlesBlock', 0, 'Block', $blockinfo['title'])) {return;}
+    if (!xarSecurityCheck('ReadPublicationsBlock', 0, 'Block', $blockinfo['title'])) {return;}
 
     // Get variables from content block
     if (is_string($blockinfo['content'])) {
@@ -80,8 +80,8 @@ function articles_topitemsblock_display($blockinfo)
     }
 
     // see if we're currently displaying an article
-    if (xarVarIsCached('Blocks.articles', 'id')) {
-        $curid = xarVarGetCached('Blocks.articles', 'id');
+    if (xarVarIsCached('Blocks.publications', 'id')) {
+        $curid = xarVarGetCached('Blocks.publications', 'id');
     } else {
         $curid = -1;
     }
@@ -109,8 +109,8 @@ function articles_topitemsblock_display($blockinfo)
             // use the current category
             // Jonn: this currently only works with one category at a time
             // it could be reworked to support multiple cids
-            if (xarVarIsCached('Blocks.articles', 'cids')) {
-                $curcids = xarVarGetCached('Blocks.articles', 'cids');
+            if (xarVarIsCached('Blocks.publications', 'cids')) {
+                $curcids = xarVarGetCached('Blocks.publications', 'cids');
                 if (!empty($curcids)) {
                     if ($curid == -1) {
                         //$cid = $curcids[0]['name'];
@@ -151,7 +151,7 @@ function articles_topitemsblock_display($blockinfo)
 
     // Get publication types
     // MarieA - moved to always get pubtypes.
-    $pubtypes = xarModAPIFunc('articles', 'user', 'getpubtypes');
+    $pubtypes = xarModAPIFunc('publications', 'user', 'getpubtypes');
 
     if (!empty($vars['nopublimit'])) {
         //don't limit by pubtype
@@ -162,23 +162,23 @@ function articles_topitemsblock_display($blockinfo)
     } else {
         // MikeC: Check to see if admin has specified that only a specific
         // Publication Type should be displayed.  If not, then default to original TopItems configuration.
-        if ($vars['pubtypeid'] == 0)
+        if ($vars['pubtype_id'] == 0)
         {
-            if (xarVarIsCached('Blocks.articles', 'ptid')) {
-                $ptid = xarVarGetCached('Blocks.articles', 'ptid');
+            if (xarVarIsCached('Blocks.publications', 'ptid')) {
+                $ptid = xarVarGetCached('Blocks.publications', 'ptid');
             }
             if (empty($ptid)) {
                 // default publication type
-                $ptid = xarModVars::get('articles', 'defaultpubtype');
+                $ptid = xarModVars::get('publications', 'defaultpubtype');
             }
         } else {
             // MikeC: Admin Specified a publication type, use it.
-            $ptid = $vars['pubtypeid'];
+            $ptid = $vars['pubtype_id'];
         }
 
         if (!empty($vars['dynamictitle'])) {
-            if (!empty($ptid) && isset($pubtypes[$ptid]['descr'])) {
-                $blockinfo['title'] .= ' ' . xarVarPrepForDisplay($pubtypes[$ptid]['descr']);
+            if (!empty($ptid) && isset($pubtypes[$ptid]['description'])) {
+                $blockinfo['title'] .= ' ' . xarVarPrepForDisplay($pubtypes[$ptid]['description']);
             } else {
                 $blockinfo['title'] .= ' ' . xarML('Content');
             }
@@ -195,11 +195,11 @@ function articles_topitemsblock_display($blockinfo)
     }
 
     // get cids for security check in getall
-    $fields = array('id', 'title', 'pubtypeid', 'cids');
-    if ($vars['toptype'] == 'rating' && xarModIsHooked('ratings', 'articles', $ptid)) {
+    $fields = array('id', 'title', 'pubtype_id', 'cids');
+    if ($vars['toptype'] == 'rating' && xarModIsHooked('ratings', 'publications', $ptid)) {
         array_push($fields, 'rating');
         $sort = 'rating';
-    } elseif ($vars['toptype'] == 'hits' && xarModIsHooked('hitcount', 'articles', $ptid)) {
+    } elseif ($vars['toptype'] == 'hits' && xarModIsHooked('hitcount', 'publications', $ptid)) {
         array_push($fields, 'counter');
         $sort = 'hits';
     } else {
@@ -210,12 +210,12 @@ function articles_topitemsblock_display($blockinfo)
     if (!empty($vars['showsummary'])) {
         array_push($fields, 'summary');
     }
-    if (!empty($vars['showdynamic']) && xarModIsHooked('dynamicdata', 'articles', $ptid)) {
+    if (!empty($vars['showdynamic']) && xarModIsHooked('dynamicdata', 'publications', $ptid)) {
         array_push($fields, 'dynamicdata');
     }
 
-    $articles = xarModAPIFunc(
-        'articles','user','getall',
+    $publications = xarModAPIFunc(
+        'publications','user','getall',
         array(
             'ptid' => $ptid,
             'cids' => $cidsarray,
@@ -228,20 +228,20 @@ function articles_topitemsblock_display($blockinfo)
         )
     );
 
-    if (!isset($articles) || !is_array($articles) || count($articles) == 0) {
+    if (!isset($publications) || !is_array($publications) || count($publications) == 0) {
        return;
     }
 
     $items = array();
-    foreach ($articles as $article) {
+    foreach ($publications as $article) {
         $article['title'] = xarVarPrepHTMLDisplay($article['title']);
         if ($article['id'] != $curid) {
             // Use the filtered category if set, and not including children
             $article['link'] = xarModURL(
-                'articles', 'user', 'display',
+                'publications', 'user', 'display',
                 array(
                     'id' => $article['id'],
-                    'ptid' => (!empty($vars['linkpubtype']) ? $article['pubtypeid'] : NULL),
+                    'ptid' => (!empty($vars['linkpubtype']) ? $article['pubtype_id'] : NULL),
                     'catid' => ((!empty($vars['linkcat']) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)
                 )
             );
@@ -279,16 +279,16 @@ function articles_topitemsblock_display($blockinfo)
         if (!empty($vars['showsummary'])) {
             $article['summary']  = xarVarPrepHTMLDisplay($article['summary']);
             $article['transform'] = array('summary', 'title');
-            $article = xarModCallHooks('item', 'transform', $article['id'], $article, 'articles');
+            $article = xarModCallHooks('item', 'transform', $article['id'], $article, 'publications');
         } else {
             $article['summary'] = '';
         }
 
         // MarieA: Bring the pubtype description back as $descr
         if (!empty($vars['nopublimit'])) {
-            $article['pubtypedescr'] = $pubtypes[$article['pubtypeid']]['descr'];
+            $article['pubtypedescr'] = $pubtypes[$article['pubtype_id']]['description'];
             //jojodee: while we are here bring the pubtype name back as well
-            $article['pubtypename'] = $pubtypes[$article['pubtypeid']]['name'];
+            $article['pubtypename'] = $pubtypes[$article['pubtype_id']]['name'];
         }
         // this will also pass any dynamic data fields (if any)
         $items[] = $article;
@@ -304,7 +304,7 @@ function articles_topitemsblock_display($blockinfo)
 /**
  * built-in block help/information system.
  */
-function articles_topitemsblock_help()
+function publications_topitemsblock_help()
 {
     return '';
 }

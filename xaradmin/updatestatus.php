@@ -1,24 +1,24 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
- * update item from articles_admin_modify
+ * update item from publications_admin_modify
  */
-function articles_admin_updatestatus()
+function publications_admin_updatestate()
 {
     // Get parameters
     if(!xarVarFetch('ids',   'isset', $ids,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('status', 'isset', $status,  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('state', 'isset', $state,  NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('catid',  'isset', $catid,   NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('ptid',   'isset', $ptid,    NULL, XARVAR_DONT_SET)) {return;}
 
@@ -27,24 +27,24 @@ function articles_admin_updatestatus()
     if (!xarSecConfirmAuthKey()) return;
 
     if (!isset($ids) || count($ids) == 0) {
-        $msg = xarML('No articles selected');
+        $msg = xarML('No publications selected');
         throw new DataNotFoundException(null, $msg);
     }
-    $states = xarModAPIFunc('articles','user','getstates');
-    if (!isset($status) || !is_numeric($status) || $status < -1 || ($status != -1 && !isset($states[$status]))) {
-        $msg = xarML('Invalid status');
+    $states = xarModAPIFunc('publications','user','getstates');
+    if (!isset($state) || !is_numeric($state) || $state < -1 || ($state != -1 && !isset($states[$state]))) {
+        $msg = xarML('Invalid state');
         throw new BadParameterException(null,$msg);
     }
 
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
     if (!empty($ptid)) {
-        $descr = $pubtypes[$ptid]['descr'];
+        $descr = $pubtypes[$ptid]['description'];
     } else {
-        $descr = xarML('Articles');
+        $descr = xarML('Publications');
         $ptid = null;
     }
 
-    // We need to tell some hooks that we are coming from the update status screen
+    // We need to tell some hooks that we are coming from the update state screen
     // and not the update the actual article screen.  Right now, the keywords vanish
     // into thin air.  Bug 1960 and 3161
     xarVarSetCached('Hooks.all','noupdate',1);
@@ -54,7 +54,7 @@ function articles_admin_updatestatus()
             continue;
         }
         // Get original article information
-        $article = xarModAPIFunc('articles',
+        $article = xarModAPIFunc('publications',
                                  'user',
                                  'get',
                                  array('id' => $id,
@@ -64,32 +64,32 @@ function articles_admin_updatestatus()
                          $descr, xarVarPrepForDisplay($id));
             throw new BadParameterException(null,$msg);
         }
-        $article['ptid'] = $article['pubtypeid'];
+        $article['ptid'] = $article['pubtype_id'];
         // Security check
         $input = array();
         $input['article'] = $article;
-        if ($status < 0) {
-            $input['mask'] = 'DeleteArticles';
+        if ($state < 0) {
+            $input['mask'] = 'ManagePublications';
         } else {
-            $input['mask'] = 'EditArticles';
+            $input['mask'] = 'EditPublications';
         }
-        if (!xarModAPIFunc('articles','user','checksecurity',$input)) {
+        if (!xarModAPIFunc('publications','user','checksecurity',$input)) {
             $msg = xarML('You have no permission to modify #(1) item #(2)',
                          $descr, xarVarPrepForDisplay($id));
             throw new ForbiddenOperationException(null, $msg);
         }
 
-        if ($status < 0) {
+        if ($state < 0) {
             // Pass to API
-            if (!xarModAPIFunc('articles', 'admin', 'delete', $article)) {
+            if (!xarModAPIFunc('publications', 'admin', 'delete', $article)) {
                 return; // throw back
             }
         } else {
-            // Update the status now
-            $article['status'] = $status;
+            // Update the state now
+            $article['state'] = $state;
 
             // Pass to API
-            if (!xarModAPIFunc('articles', 'admin', 'update', $article)) {
+            if (!xarModAPIFunc('publications', 'admin', 'update', $article)) {
                 return; // throw back
             }
         }
@@ -97,15 +97,15 @@ function articles_admin_updatestatus()
     unset($article);
 
     // Return to the original admin view
-    $lastview = xarSession::getVar('Articles.LastView');
+    $lastview = xarSession::getVar('Publications.LastView');
     if (isset($lastview)) {
         $lastviewarray = unserialize($lastview);
         if (!empty($lastviewarray['ptid']) && $lastviewarray['ptid'] == $ptid) {
             extract($lastviewarray);
-            xarResponseRedirect(xarModURL('articles', 'admin', 'view',
+            xarResponseRedirect(xarModURL('publications', 'admin', 'view',
                                           array('ptid' => $ptid,
                                                 'catid' => $catid,
-                                                'status' => $status,
+                                                'state' => $state,
                                                 'startnum' => $startnum)));
             return true;
         }
@@ -114,7 +114,7 @@ function articles_admin_updatestatus()
     if (empty($catid)) {
         $catid = null;
     }
-    xarResponseRedirect(xarModURL('articles', 'admin', 'view',
+    xarResponseRedirect(xarModURL('publications', 'admin', 'view',
                                   array('ptid' => $ptid, 'catid' => $catid)));
 
     return true;

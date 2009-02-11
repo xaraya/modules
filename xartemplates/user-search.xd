@@ -1,13 +1,13 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<h2><xar:mlstring>Search in Articles</xar:mlstring></h2>
+<h2><xar:mlstring>Search in Publications</xar:mlstring></h2>
 
-<xar:set name="fulltext">xarModVars::get('articles', 'fulltextsearch')</xar:set>
+<xar:set name="fulltext">xarModVars::get('publications', 'fulltextsearch')</xar:set>
 <xar:if condition="!empty($fulltext)">
     <xar:set name="fulltextfields">explode(',',$fulltext)</xar:set>
 </xar:if>
 
-<form method="post" action="&xar-modurl-articles-user-search;">
+<form method="post" action="&xar-modurl-publications-user-search;">
 <table border="0" cellpadding="4" cellspacing="0">
   <xar:if condition="empty($ishooked)">
         <tr>
@@ -51,7 +51,7 @@
                 </xar:if>
                 <xar:set name="pubtype">array_pop($publications)</xar:set>
         <!--          <input type="checkbox" name="ptids[]" id="#$pubtype['pubdescr']#" value="#$pubtype['pubid']#"#$pubtype['pubchecked']# /> -->
-                  <input type="checkbox" name="ptids[]" id="#$pubtype['pubdescr']#" value="#$pubtype['pubid']#" />
+                  <input type="checkbox" name="ptids[]" id="#$pubtype['description']#" value="#$pubtype['pubid']#" />
                   <label for="#$pubtype['pubdescr']#">#$pubtype['pubdescr']#</label> <br />
                   <xar:if condition="$i++ and $i % 2 eq 0">
                     <xar:break />
@@ -67,19 +67,19 @@
   </tr>
   <tr>
     <td><xar:mlstring>Published</xar:mlstring></td>
-    <td><label for="articles_startdate"><xar:mlstring>between</xar:mlstring></label> <xar:data-input name="articles_startdate" value="$startdate" type="calendar" /> &#160;<label for="articles_enddate"><xar:mlstring>and</xar:mlstring></label>  <xar:data-input name="articles_enddate" value="$enddate" type="calendar" /></td>
+    <td><label for="publications_startdate"><xar:mlstring>between</xar:mlstring></label> <xar:data-input name="publications_startdate" value="$startdate" type="calendar" /> &#160;<label for="publications_enddate"><xar:mlstring>and</xar:mlstring></label>  <xar:data-input name="publications_enddate" value="$enddate" type="calendar" /></td>
   </tr>
 
-  <xar:if condition="!empty($statuslist)">
+  <xar:if condition="!empty($statelist)">
     <tr>
       <td><xar:mlstring>Status</xar:mlstring></td>
-      <td><xar:foreach in="$statuslist" value="$item">
+      <td><xar:foreach in="$statelist" value="$item">
           <xar:if condition="$item['checked']">
-            <input type="checkbox" name="status[]" id="status_#$item['id']#" value="#$item['id']#" checked="checked" />
+            <input type="checkbox" name="state[]" id="state_#$item['id']#" value="#$item['id']#" checked="checked" />
             <xar:else/>
-            <input type="checkbox" name="status[]" id="status_#$item['id']#" value="#$item['id']#" />
+            <input type="checkbox" name="state[]" id="state_#$item['id']#" value="#$item['id']#" />
           </xar:if>
-          <label for="status_#$item['id']#">#$item['name']#</label>
+          <label for="state_#$item['id']#">#$item['name']#</label>
       </xar:foreach></td>
     </tr>
   </xar:if>
@@ -89,13 +89,13 @@
       <td><xar:mlstring>Fields</xar:mlstring></td>
       <td><xar:foreach in="$fieldlist" value="$item">
           <xar:if condition="!empty($fulltextfields) and in_array($item['id'],$fulltextfields)">
-            <input type="checkbox" name="articles_fields[#$item['id']#]" id="articles_fields_#$item['id']#" value="1" checked="checked" disabled="disabled" />
+            <input type="checkbox" name="publications_fields[#$item['id']#]" id="publications_fields_#$item['id']#" value="1" checked="checked" disabled="disabled" />
             <xar:elseif condition="$item['checked']"/>
-            <input type="checkbox" name="articles_fields[#$item['id']#]" id="articles_fields_#$item['id']#" value="1" checked="checked" />
+            <input type="checkbox" name="publications_fields[#$item['id']#]" id="publications_fields_#$item['id']#" value="1" checked="checked" />
             <xar:else/>
-            <input type="checkbox" name="articles_fields[#$item['id']#]" id="articles_fields_#$item['id']#" value="1" />
+            <input type="checkbox" name="publications_fields[#$item['id']#]" id="publications_fields_#$item['id']#" value="1" />
           </xar:if>
-          <label for="articles_fields_#$item['id']#">#$item['name']#</label>
+          <label for="publications_fields_#$item['id']#">#$item['name']#</label>
       </xar:foreach></td>
     </tr>
   </xar:if>
@@ -163,8 +163,8 @@
   #$result['pager']#
 </xar:foreach>
 
-<xar:if condition="!empty($status)">
-  <br />#$status#<br />
+<xar:if condition="!empty($state)">
+  <br />#$state#<br />
 </xar:if>
 
 <br />

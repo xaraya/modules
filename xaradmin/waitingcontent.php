@@ -1,26 +1,26 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
  * display waiting content as a hook
  */
-function articles_admin_waitingcontent()
+function publications_admin_waitingcontent()
 {
 
     // Get publication types
     unset($publinks);
-    $publinks = xarModAPIFunc('articles', 'user', 'getpublinks',
-                          array('status' => array(0),
+    $publinks = xarModAPIFunc('publications', 'user', 'getpublinks',
+                          array('state' => array(0),
                                 'typemod' => 'admin'));
 
      $data['loop'] = $publinks;

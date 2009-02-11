@@ -1,14 +1,14 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
@@ -16,25 +16,25 @@
  *
  * @return array Array containing the item types and their description
  */
-function articles_userapi_getitemtypes($args)
+function publications_userapi_getitemtypes($args)
 {
     $itemtypes = array();
 
-    $itemtypes[300] = array('label' => xarML('Bare Article'),
-                          'title' => xarML('View Bare Article'),
-                          'url'   => xarModURL('articles','user','view')
+    $itemtypes[300] = array('label' => xarML('Bare Publication'),
+                          'title' => xarML('View Bare Publication'),
+                          'url'   => xarModURL('publications','user','view')
                          );
     // Get publication types
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
 
     foreach ($pubtypes as $id => $pubtype) {
-        $itemtypes[$id] = array('label' => xarVarPrepForDisplay($pubtype['descr']),
-                                'title' => xarVarPrepForDisplay(xarML('Display #(1)',$pubtype['descr'])),
-                                'url'   => xarModURL('articles','user','view',array('ptid' => $id))
+        $itemtypes[$id] = array('label' => xarVarPrepForDisplay($pubtype['description']),
+                                'title' => xarVarPrepForDisplay(xarML('Display #(1)',$pubtype['description'])),
+                                'url'   => xarModURL('publications','user','view',array('ptid' => $id))
                                );
     }
 
-    $extensionitemtypes = xarModAPIFunc('dynamicdata','user','getmoduleitemtypes',array('moduleid' => 151, 'native' =>false));
+    $extensionitemtypes = xarModAPIFunc('dynamicdata','user','getmoduleitemtypes',array('moduleid' => 30065, 'native' =>false));
 
     /* TODO: activate this code when we move to php5
     $keys = array_merge(array_keys($itemtypes),array_keys($extensionitemtypes));

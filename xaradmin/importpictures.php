@@ -1,22 +1,22 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
- * import pictures into articles
+ * import pictures into publications
  */
-function articles_admin_importpictures()
+function publications_admin_importpictures()
 {
-    if (!xarSecurityCheck('AdminArticles')) return;
+    if (!xarSecurityCheck('AdminPublications')) return;
 
     // Get parameters
     if(!xarVarFetch('basedir',      'isset', $basedir,      NULL, XARVAR_DONT_SET)) {return;}
@@ -37,7 +37,7 @@ function articles_admin_importpictures()
     $data = array();
 
     if (!isset($baseurl)) {
-        $data['baseurl'] = 'modules/articles/xarimages/';
+        $data['baseurl'] = 'modules/publications/xarimages/';
     } else {
         $data['baseurl'] = $baseurl;
     }
@@ -53,7 +53,7 @@ function articles_admin_importpictures()
         $data['thumbnail'] = $thumbnail;
     }
 
-    $data['filelist'] = xarModAPIFunc('articles','admin','browse',
+    $data['filelist'] = xarModAPIFunc('publications','admin','browse',
                                       array('basedir' => $data['basedir'],
                                             'filetype' => '(gif|jpg|jpeg|png)'));
 
@@ -103,7 +103,7 @@ function articles_admin_importpictures()
     $data['authid'] = xarSecGenAuthKey();
 
     // Get current publication types
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
 
     // Set default pubtype to Pictures (if it exists)
     if (!isset($ptid) && isset($pubtypes[5])) {
@@ -119,9 +119,9 @@ function articles_admin_importpictures()
     if (!empty($ptid)) {
         $data['ptid'] = $ptid;
 
-        $pubfields = xarModAPIFunc('articles','user','getpubfields');
-        $pubfieldtypes = xarModAPIFunc('articles','user','getpubfieldtypes');
-        $pubfieldformats = xarModAPIFunc('articles','user','getpubfieldformats');
+        $pubfields = xarModAPIFunc('publications','user','getpubfields');
+        $pubfieldtypes = xarModAPIFunc('publications','user','getpubfieldtypes');
+        $pubfieldformats = xarModAPIFunc('publications','user','getpubfieldformats');
         foreach ($pubfields as $field => $dummy) {
             if (($pubfieldtypes[$field] == 'text' || $pubfieldtypes[$field] == 'string') &&
                 !empty($pubtypes[$ptid]['config'][$field]['label']) &&
@@ -132,7 +132,7 @@ function articles_admin_importpictures()
         }
 
         $catlist = array();
-        $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles','itemtype' => $ptid));
+        $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'publications','itemtype' => $ptid));
         foreach ($rootcats as $catid) {
             $catlist[$catid['category_id']] = 1;
         }
@@ -184,7 +184,7 @@ function articles_admin_importpictures()
     if (isset($data['ptid']) && isset($data['content']) && count($data['selected']) > 0
         && (isset($test) || isset($import))) {
 
-// TODO: allow changing the order of import + editing the titles etc. before creating the articles
+// TODO: allow changing the order of import + editing the titles etc. before creating the publications
 
         $data['logfile'] = '';
         foreach (array_keys($data['selected']) as $file) {
@@ -218,12 +218,12 @@ function articles_admin_importpictures()
                              'body' => '',
                              'notes' => '',
                              'pubdate' => (empty($usefilemtime) ? time() : filemtime($curfile)),
-                             'status' => 2,
+                             'state' => 2,
                              'ptid' => $data['ptid'],
                              'cids' => $cids,
                           // for preview
-                             'pubtypeid' => $data['ptid'],
-                             'authorid' => xarUserGetVar('id'),
+                             'pubtype_id' => $data['ptid'],
+                             'owner' => xarUserGetVar('id'),
                              'id' => 0);
             if (!empty($data['title']) && !empty($filename)) {
                 $article[$data['title']] = $filename;
@@ -236,15 +236,15 @@ function articles_admin_importpictures()
             }
             if (isset($test)) {
                 // preview the first file as a test
-                $data['preview'] = xarModFunc('articles','user','display',
+                $data['preview'] = xarModFunc('publications','user','display',
                                               array('article' => $article, 'preview' => true));
                 break;
             } else {
-                $id = xarModAPIFunc('articles', 'admin', 'create', $article);
+                $id = xarModAPIFunc('publications', 'admin', 'create', $article);
                 if (empty($id)) {
                     return; // throw back
                 } else {
-                    $data['logfile'] .= xarML('File #(1) was imported as #(2) #(3)',$curfile,$pubtypes[$data['ptid']]['descr'],$id);
+                    $data['logfile'] .= xarML('File #(1) was imported as #(2) #(3)',$curfile,$pubtypes[$data['ptid']]['description'],$id);
                     $data['logfile'] .= '<br />';
                 }
             }

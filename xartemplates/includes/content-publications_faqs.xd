@@ -1,0 +1,23 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:data-input property="$properties['id']" hidden="hidden" />
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">Question</xar:var>
+        <xar:data-label property="$properties['question']" for="id" label="$label" />
+        <xar:data-input property="$properties['question']" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">Details</xar:var>
+        <xar:data-label property="$properties['details']" for="id" label="$label" />
+        <xar:data-input property="$properties['details']" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">Answer</xar:var>
+        <xar:data-label property="$properties['answer']" for="id" label="$label" />
+        <xar:data-input property="$properties['answer']" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:var name="label">Submitted By</xar:var>
+        <xar:data-label property="$properties['submitted_by']" for="id" label="$label" />
+        <xar:data-input property="$properties['submitted_by']" />
+    </div>
+</xar:template>

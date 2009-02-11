@@ -1,19 +1,19 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
  * return the field names and correct values for querying (or joining on)
- * the articles table
+ * the publications table
  * example 1 : SELECT ..., $title, $body,...
  *             FROM $table
  *             WHERE $title LIKE 'Hello world%'
@@ -30,27 +30,27 @@
  * Note : the following arguments are all optional :
  *
  * @param $args['ids'] optional array of ids that we are selecting on
- * @param $args['authorid'] the ID of the author
+ * @param $args['owner'] the ID of the author
  * @param $args['ptid'] publication type ID (for news, sections, reviews, ...) or array of pubtype IDs
- * @param $args['status'] array of requested status(es) for the articles
+ * @param $args['state'] array of requested status(es) for the publications
  * @param $args['search'] search text parameter(s)
  * @param $args['searchfields'] array of fields to search in
  * @param $args['searchtype'] start, end, like, eq, gt, ... (TODO)
- * @param $args['pubdate'] articles published in a certain year (YYYY), month (YYYY-MM) or day (YYYY-MM-DD)
- * @param $args['startdate'] articles published at startdate or later
+ * @param $args['pubdate'] publications published in a certain year (YYYY), month (YYYY-MM) or day (YYYY-MM-DD)
+ * @param $args['startdate'] publications published at startdate or later
  *                           (unix timestamp format)
- * @param $args['enddate'] articles published before enddate
+ * @param $args['enddate'] publications published before enddate
  *                         (unix timestamp format)
  * @param $args['where'] additional where clauses (myfield gt 1234)
- * @param $args['language'] language/locale (if not using multi-sites, categories etc.)
- * @return array('table' => 'nuke_articles',
- *               'field' => 'nuke_articles.id',
- *               'where' => 'nuke_articles.id IN (...)',
- *               'title'  => 'nuke_articles.title',
+ * @param $args['locale'] language/locale (if not using multi-sites, categories etc.)
+ * @return array('table' => 'nuke_publications',
+ *               'field' => 'nuke_publications.id',
+ *               'where' => 'nuke_publications.id IN (...)',
+ *               'title'  => 'nuke_publications.title',
  *               ...
- *               'body'  => 'nuke_articles.body')
+ *               'body'  => 'nuke_publications.body')
  */
-function articles_userapi_leftjoin($args)
+function publications_userapi_leftjoin($args)
 {
     // Get arguments from argument array
     extract($args);
@@ -65,31 +65,31 @@ function articles_userapi_leftjoin($args)
     // Table definition
     $xartable = xarDB::getTables();
     $dbconn   = xarDB::getConn();
-    $articlestable = $xartable['articles'];
+    $publicationstable = $xartable['publications'];
 
     $leftjoin = array();
 
-    // Add available columns in the articles table (for now)
-    $columns = array('id','title','summary','authorid','pubdate','pubtypeid',
-                     'notes','status','body','language');
+    // Add available columns in the publications table (for now)
+    $columns = array('id','title','summary','owner','pubtype_id',
+                     'notes','state','body','locale');
     foreach ($columns as $column) {
-        $leftjoin[$column] = $articlestable . '.' . $column;
+        $leftjoin[$column] = $publicationstable . '.' . $column;
     }
 
     // Specify LEFT JOIN ... ON ... [WHERE ...] parts
-    $leftjoin['table'] = $articlestable;
+    $leftjoin['table'] = $publicationstable;
     $leftjoin['field'] = $leftjoin['id'];
 
     // Specify the WHERE part
     // FIXME: <mrb> someone better informed about this should replace
     // the xar-varprepforstore with qstr() method where appropriate
     $whereclauses = array();
-    if (!empty($authorid) && is_numeric($authorid)) {
-        $whereclauses[] = $leftjoin['authorid'] . ' = ' . $authorid;
+    if (!empty($owner) && is_numeric($owner)) {
+        $whereclauses[] = $leftjoin['owner'] . ' = ' . $owner;
     }
     if (!empty($ptid)) {
         if (is_numeric($ptid)) {
-            $whereclauses[] = $leftjoin['pubtypeid'] . ' = ' . $ptid;
+            $whereclauses[] = $leftjoin['pubtype_id'] . ' = ' . $ptid;
         } elseif (is_array($ptid) && count($ptid) > 0) {
             $seenptid = array();
             foreach ($ptid as $id) {
@@ -105,12 +105,12 @@ function articles_userapi_leftjoin($args)
             }
         }
     }
-    if (!empty($status) && is_array($status)) {
-        if (count($status) == 1 && is_numeric($status[0])) {
-            $whereclauses[] = $leftjoin['status'] . ' = ' . $status[0];
-        } elseif (count($status) > 1) {
-            $allstatus = join(', ',$status);
-            $whereclauses[] = $leftjoin['status'] . ' IN (' . $allstatus . ')';
+    if (!empty($state) && is_array($state)) {
+        if (count($state) == 1 && is_numeric($state[0])) {
+            $whereclauses[] = $leftjoin['state'] . ' = ' . $state[0];
+        } elseif (count($state) > 1) {
+            $allstate = join(', ',$state);
+            $whereclauses[] = $leftjoin['state'] . ' IN (' . $allstate . ')';
         }
     }
     if (!empty($pubdate)) {
@@ -147,20 +147,22 @@ function articles_userapi_leftjoin($args)
     if (!empty($startdate) && is_numeric($startdate)) {
         $whereclauses[] = $leftjoin['pubdate'] . ' >= ' . $startdate;
     }
+    /*
     if (!empty($enddate) && is_numeric($enddate)) {
         $whereclauses[] = $leftjoin['pubdate'] . ' < ' . $enddate;
     }
+    */
 /* Example: automatically filter by the current locale - cfr. bug 3454
-    if (empty($language)) {
-        $language = xarMLSGetCurrentLocale();
+    if (empty($locale)) {
+        $locale = xarMLSGetCurrentLocale();
     }
 */
-    if (!empty($language) && is_string($language)) {
-        $whereclauses[] = $leftjoin['language'] . " = " . $dbconn->qstr($language);
+    if (!empty($locale) && is_string($locale)) {
+        $whereclauses[] = $leftjoin['locale'] . " = " . $dbconn->qstr($locale);
     }
     if (count($ids) > 0) {
         $allids = join(', ', $ids);
-        $whereclauses[] = $articlestable . '.id IN (' . $allids .')';
+        $whereclauses[] = $publicationstable . '.id IN (' . $allids .')';
     }
 
     if (!empty($where)) {
@@ -244,7 +246,7 @@ function articles_userapi_leftjoin($args)
         // 0. Check for fulltext or fulltext boolean searchtypes (MySQL only)
     // CHECKME: switch to other search type if $search is less than min. length ?
         if (!empty($searchtype) && substr($searchtype,0,8) == 'fulltext') {
-            $fulltext = xarModVars::get('articles', 'fulltextsearch');
+            $fulltext = xarModVars::get('publications', 'fulltextsearch');
             if (!empty($fulltext)) {
                 $fulltextfields = explode(',',$fulltext);
             } else {

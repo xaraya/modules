@@ -1,6 +1,6 @@
 <?php
 /**
- * Article Status Property
+ * Publication Status Property
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
@@ -17,21 +17,21 @@
 sys::import('modules.base.xarproperties.dropdown');
 
 /**
- * handle the status property
+ * handle the state property
  *
  * @package dynamicdata
  */
 class StatusProperty extends SelectProperty
 {
     public $id         = 10;
-    public $name       = 'status';
-    public $desc       = 'Article Status';
-    public $reqmodules = array('articles');
+    public $name       = 'state';
+    public $desc       = 'Publication Status';
+    public $reqmodules = array('publications');
 
     function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
-        $this->filepath   = 'modules/articles/xarproperties';
+        $this->filepath   = 'modules/publications/xarproperties';
     }
 
     function getOptions()

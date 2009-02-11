@@ -1,26 +1,19 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:style scope="module" module="base" file="navtabs" />
-<dl class="xar-tabs">
-    <dt class="help">
-        <xar:mlstring>
-            Select Publication 
-        </xar:mlstring>
-        : 
-    </dt>
-    <xar:foreach in="$pubfilters" value="$pubfilter">
-        <xar:if condition="empty($pubfilter['plink'])">
-            <dd class="active">
-                <a href="#xarServerGetCurrentURL()#" title="#$pubfilter['ptitle']#">
-                    #$pubfilter['ptitle']# 
-                </a>
-            </dd>
-            <xar:else />
-            <dd>
-                <a href="#$pubfilter['plink']#" title="#$pubfilter['ptitle']#">
-                    #$pubfilter['ptitle']# 
-                </a>
-            </dd>
-        </xar:if>
-    </xar:foreach>
-</dl>
+    <xar:base-include-javascript module="publications" filename="tabs.js" />
+    <xar:style scope="module" module="base" file="navtabs" />
+    <xar:set name="object">DataObjectMaster::getObjectList(array('name' => 'publications_types'))</xar:set>
+    <xar:set name="items">$object->getItems()</xar:set>
+
+    <dl class="xar-tabs">
+        <dt class="help">
+            Select Publication Type             : 
+        </dt>
+        <xar:set name="newurl">"document.location.href='" . xarModURL('publications','admin','modifyconfig') . "&amp;ptid='+this.value"</xar:set>
+        <xar:data-input type="objectref" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" onchange="$newurl" />
+        <dd style="float:right">
+            <a href="#xarModURL('publications','admin','view',array('ptid' => $ptid))#">
+                Publications List
+            </a>
+        </dd>
+    </dl>
 </xar:template>

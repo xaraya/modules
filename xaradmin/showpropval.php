@@ -1,20 +1,20 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
  * Show validation of some property
  */
-function articles_admin_showpropval($args)
+function publications_admin_showpropval($args)
 {
     extract($args);
 
@@ -25,7 +25,7 @@ function articles_admin_showpropval($args)
     if (!xarVarFetch('confirm', 'isset', $confirm, NULL, XARVAR_DONT_SET)) {return;}
 
     // Get current publication types
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
 
     if (empty($pubtypes[$ptid]['config'][$field])) {
         $msg = xarML('Invalid item id');
@@ -35,13 +35,13 @@ function articles_admin_showpropval($args)
     // Get current configuration
     $info = $pubtypes[$ptid]['config'][$field];
 
-    $fieldformatnums = xarModAPIFunc('articles','user','getfieldformatnums');
+    $fieldformatnums = xarModAPIFunc('publications','user','getfieldformatnums');
     $proptype = $fieldformatnums[$info['format']];
     $validation = !empty($info['validation']) ? $info['validation'] : '';
     $id = 0;
 
     // check if the module+itemtype this property belongs to is hooked to the uploads module
-    if (xarModIsHooked('uploads', 'articles', $ptid)) {
+    if (xarModIsHooked('uploads', 'publications', $ptid)) {
         xarVarSetCached('Hooks.uploads','ishooked',1);
     }
 
@@ -72,11 +72,11 @@ function articles_admin_showpropval($args)
             if (!empty($confirm)) {
                 if (!xarSecConfirmAuthKey()) return;
 
-                $descr = $pubtypes[$ptid]['descr'];
+                $descr = $pubtypes[$ptid]['description'];
                 $config = $pubtypes[$ptid]['config'];
                 $config[$field]['validation'] = $configuration;
 
-                if (!xarModAPIFunc('articles', 'admin', 'updatepubtype',
+                if (!xarModAPIFunc('publications', 'admin', 'updatepubtype',
                                    array('ptid' => $ptid,
                                          'descr' => $descr,
                                          'config' => $config))) {
@@ -86,7 +86,7 @@ function articles_admin_showpropval($args)
                 if (!xarVarFetch('return_url', 'isset', $return_url,  NULL, XARVAR_DONT_SET)) {return;}
                 if (empty($return_url)) {
                     // return to modifyprop
-                    $return_url = xarModURL('articles', 'admin', 'pubtypes',
+                    $return_url = xarModURL('publications', 'admin', 'pubtypes',
                                             array('ptid' => $ptid,
                                                   'action' => 'modify'));
                 }

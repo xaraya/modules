@@ -1,23 +1,23 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
  * Import an object definition or an object item from XML
  */
-function articles_adminapi_importpubtype($args)
+function publications_adminapi_importpubtype($args)
 {
     // Security check - we require ADMIN rights here
-    if (!xarSecurityCheck('AdminArticles')) return;
+    if (!xarSecurityCheck('AdminPublications')) return;
 
     extract($args);
 
@@ -29,7 +29,7 @@ function articles_adminapi_importpubtype($args)
         throw new BadParameterException(null,$msg);
     }
 
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
 
     $proptypes = DataPropertyMaster::getPropertyTypes();
     $name2id = array();
@@ -177,7 +177,7 @@ function articles_adminapi_importpubtype($args)
                     $field = $property['name'];
                     switch($field) {
                         case 'id':
-                        case 'pubtypeid':
+                        case 'pubtype_id':
                             // skip these
                             break;
 
@@ -185,9 +185,9 @@ function articles_adminapi_importpubtype($args)
                         case 'summary':
                         case 'body':
                         case 'notes':
-                        case 'authorid':
+                        case 'owner':
                         case 'pubdate':
-                        case 'status':
+                        case 'state':
                             // convert property type to string if necessary
                             if (is_numeric($property['type'])) {
                                 if (isset($proptypes[$property['type']])) {
@@ -197,7 +197,7 @@ function articles_adminapi_importpubtype($args)
                                 }
                             }
                             // reset disabled field labels to empty
-                            if (empty($property['status'])) {
+                            if (empty($property['state'])) {
                                 $property['label'] = '';
                             }
                             if (!isset($property['validation'])) {
@@ -225,16 +225,16 @@ function articles_adminapi_importpubtype($args)
                 }
 
                 // 3. create the pubtype
-                $ptid = xarModAPIFunc('articles','admin','createpubtype',
+                $ptid = xarModAPIFunc('publications','admin','createpubtype',
                                       array('name' => $object['name'],
                                             'descr' => $object['label'],
                                             'config' => $fields));
                 if (empty($ptid)) return;
 
                 // 4. set the module variables
-                xarModVars::set('articles', 'settings.'.$ptid, $object['config']);
-                xarModVars::set('articles', 'number_of_categories.'.$ptid, 0);
-                xarModVars::set('articles', 'mastercids.'.$ptid, '');
+                xarModVars::set('publications', 'settings.'.$ptid, $object['config']);
+                xarModVars::set('publications', 'number_of_categories.'.$ptid, 0);
+                xarModVars::set('publications', 'mastercids.'.$ptid, '');
 
                 // 5. create a dynamic object if necessary
                 if (count($extra) > 0) {
@@ -263,9 +263,9 @@ function articles_adminapi_importpubtype($args)
                     }
 
                     // 7. check if we need to enable DD hooks for this pubtype
-                    if (!xarModIsHooked('dynamicdata','articles')) {
+                    if (!xarModIsHooked('dynamicdata','publications')) {
                         xarModAPIFunc('modules','admin','enablehooks',
-                                      array('callerModName' => 'articles',
+                                      array('callerModName' => 'publications',
                                             'callerItemType' => $ptid,
                                             'hookModName' => 'dynamicdata'));
                     }
@@ -282,7 +282,7 @@ function articles_adminapi_importpubtype($args)
             }
 
         } elseif ($what == 'item') {
-/* skip this for articles
+/* skip this for publications
             if (preg_match('#<([^> ]+) itemid="(\d+)">#',$line,$matches)) {
                 // find out what kind of item we're dealing with
                 $objectname = $matches[1];
@@ -364,7 +364,7 @@ function articles_adminapi_importpubtype($args)
                 }
                 $item[$closetag] .= $line;
             } elseif (preg_match('#</items>#',$line)) {
-skip this for articles */
+skip this for publications */
             if (preg_match('#</items>#',$line)) {
                 $what = 'object';
             } elseif (preg_match('#</object>#',$line)) {

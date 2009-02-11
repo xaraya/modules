@@ -2,12 +2,12 @@
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:template file="publinks" type="module" />
 <xar:if condition="!empty($ptid) or !empty($catid)">
-    <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="articles" itemtype="$ptid" catid="$catid" showcatcount="$showcatcount" showempty="1" />
+    <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" catid="$catid" showcatcount="$showcatcount" showempty="1" />
 </xar:if>
 
     <xar:comment>
         You can use different user-view-[pubtype].xd templates for different pubtypes,
-        and also a separate user-view-frontpage.xd template for the articles frontpage
+        and also a separate user-view-frontpage.xd template for the publications frontpage
     </xar:comment>
 
 <xar:if condition="!empty($author)">
@@ -45,13 +45,13 @@
 #$output#
 <xar:if condition="!empty($showcols)">
     <xar:if condition="$showcols eq 1">
-        <a href="#xarModURL('articles','user','view',array('numcols' => 1))#">
+        <a href="#xarModURL('publications','user','view',array('numcols' => 1))#">
             <xar:mlstring>
                 single-column display
             </xar:mlstring>
         </a>
         <xar:else />
-        <a href="#xarModURL('articles','user','view')#">
+        <a href="#xarModURL('publications','user','view')#">
             <xar:ml>
                 <xar:mlstring>
                     #(1)-column display
@@ -86,5 +86,5 @@
 </xar:if>
 
 <xar:template file="navtabs-user" type="module" />
-<xar:style scope="module" module="articles" file="gallery" />
+<xar:style scope="module" module="publications" file="gallery" />
 </xar:template>

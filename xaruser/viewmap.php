@@ -1,20 +1,20 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage publications Module
+ 
  * @author mikespub
  */
 /**
  * view article map
  */
-function articles_user_viewmap($args)
+function publications_user_viewmap($args)
 {
     // Don't use standard categories function for this
     //xarModLoad('categories', 'user');
@@ -30,7 +30,7 @@ function articles_user_viewmap($args)
     // Override if needed from argument array
     extract($args);
 
-    $default = xarModVars::get('articles','defaultpubtype');
+    $default = xarModVars::get('publications','defaultpubtype');
     if (empty($by)) {
         if (empty($default) && empty($ptid)) {
             $by = 'cat';
@@ -65,7 +65,7 @@ function articles_user_viewmap($args)
     }
 
     // Get publication types
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
 
     // Check that the publication type is valid
     if (!empty($ptid) && !isset($pubtypes[$ptid])) {
@@ -79,7 +79,7 @@ function articles_user_viewmap($args)
         } else {
             $catid = NULL;
         }
-        $url = xarModURL('articles','user','view',array('ptid' => $ptid, 'catid' => $catid));
+        $url = xarModURL('publications','user','view',array('ptid' => $ptid, 'catid' => $catid));
         xarResponseRedirect($url);
         return;
     }
@@ -94,11 +94,11 @@ function articles_user_viewmap($args)
     $publinks = array();
 
     if ($by == 'cat') {
-        $data['maplink'] = xarModURL('articles','user','viewmap',array('by' => 'cat'));
+        $data['maplink'] = xarModURL('publications','user','viewmap',array('by' => 'cat'));
 
     // TODO: re-evaluate this after user feedback...
         // *trick* Use the 'default' categories here, instead of all rootcats
-        $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles'));
+        $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'publications'));
 
         $catlist = array();
         foreach ($basecats as $basecat) {
@@ -112,11 +112,11 @@ function articles_user_viewmap($args)
             if (empty($val)) {
                 continue;
             }
-            $data['cattree'][$cid] = xarModAPIFunc('articles',
+            $data['cattree'][$cid] = xarModAPIFunc('publications',
                                                    'user',
                                                    'getchildcats',
                                                          // frontpage or approved
-                                                   array('status' => array(ARTCLES_STATE_APPROVED,ARTCLES_STATE_FRONTPAGE),
+                                                   array('state' => array(PUBLICATIONS_STATE_APPROVED,PUBLICATIONS_STATE_FRONTPAGE),
                                                          'cid' => $cid,
                                                          'ptid' => null,
                                                          // keep a link to the parent cid
@@ -130,9 +130,9 @@ function articles_user_viewmap($args)
 
         // Get the base categories
         if (!empty($ptid)) {
-            $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles','itemtype' => $ptid));
+            $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'publications','itemtype' => $ptid));
         } else {
-            $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles','itemtype' => 0));
+            $rootcats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'publications','itemtype' => 0));
             $ptid = null;
         }
 
@@ -152,11 +152,11 @@ function articles_user_viewmap($args)
                 if (empty($val)) {
                     continue;
                 }
-                $cattree[$cid] = xarModAPIFunc('articles',
+                $cattree[$cid] = xarModAPIFunc('publications',
                                                'user',
                                                'getchildcats',
                                                    // frontpage or approved
-                                               array('status' => array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED),
+                                               array('state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED),
                                                      'cid' => $cid,
                                                      'ptid' => $ptid,
                                                      // keep a link to the parent cid
@@ -206,11 +206,11 @@ function articles_user_viewmap($args)
             }
 
             // Get the counts for all groups of (N) categories
-            $pubcatcount = xarModAPIFunc('articles',
+            $pubcatcount = xarModAPIFunc('publications',
                                          'user',
                                          'getpubcatcount',
                                          // frontpage or approved
-                                         array('status' => array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED),
+                                         array('state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED),
                                                'ptid' => $ptid,
                                                'groupcids' => 2,
                                                'reverse' => 1));
@@ -224,13 +224,13 @@ function articles_user_viewmap($args)
             foreach ($pubcatcount as $cids => $counts) {
                 list($ca,$cb) = explode('+',$cids);
                 if (isset($rowcid[$ca]) && isset($colcid[$cb])) {
-                    $link = xarModURL('articles','user','view',
+                    $link = xarModURL('publications','user','view',
                                       array('ptid' => $ptid,
                                             'catid' => $ca . '+' . $cb));
                     $data['catgrid'][$rowcid[$ca]][$colcid[$cb]] = '<a href="' . $link . '"> ' . $counts[$what] . ' </a>';
                 }
                 if (isset($rowcid[$cb]) && isset($colcid[$ca])) {
-                    $link = xarModURL('articles','user','view',
+                    $link = xarModURL('publications','user','view',
                                       array('ptid' => $ptid,
                                             'catid' => $cb . '+' . $ca));
                     $data['catgrid'][$rowcid[$cb]][$colcid[$ca]] = '<a href="' . $link . '"> ' . $counts[$what] . ' </a>';
@@ -239,15 +239,15 @@ function articles_user_viewmap($args)
         }
 
         if (!empty($ptid)) {
-            $descr = $pubtypes[$ptid]['descr'];
+            $descr = $pubtypes[$ptid]['description'];
         }
 
     } else {
-        $data['maplink'] = xarModURL('articles','user','viewmap',array('by' => 'pub'));
+        $data['maplink'] = xarModURL('publications','user','viewmap',array('by' => 'pub'));
 
         // get the links and counts for all publication types
-        $publinks = xarModAPIFunc('articles','user','getpublinks',
-                                  array('status' => array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED),
+        $publinks = xarModAPIFunc('publications','user','getpublinks',
+                                  array('state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED),
                                         'all' => 1));
 
         // build the list of root categories for all publication types
@@ -255,7 +255,7 @@ function articles_user_viewmap($args)
         $catlist = array();
         for ($i=0;$i<count($publinks);$i++) {
             $pubid = $publinks[$i]['pubid'];
-            $cidstring = xarModVars::get('articles','mastercids.'.$pubid);
+            $cidstring = xarModVars::get('publications','mastercids.'.$pubid);
             if (!empty($cidstring)) {
                 $rootcats = explode(';',$cidstring);
                 foreach ($rootcats as $cid) {
@@ -274,11 +274,11 @@ function articles_user_viewmap($args)
             // for each root category of this publication type
             foreach ($publinks[$i]['rootcats'] as $cid) {
                 // add the category tree to the list of categories to show
-                $childcats =  xarModAPIFunc('articles',
+                $childcats =  xarModAPIFunc('publications',
                                             'user',
                                             'getchildcats',
                                             // frontpage or approved
-                                            array('status' => array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED),
+                                            array('state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED),
                                                   'cid' => $cid,
                                                   'ptid' => $pubid,
                                                   // keep a link to the parent cid
@@ -307,16 +307,16 @@ function articles_user_viewmap($args)
     }
 
     if (empty($descr)) {
-        $descr = xarML('Articles');
+        $descr = xarML('Publications');
         $data['descr'] = '';
     } else {
         $data['descr'] = $descr;
     }
 
     // Save some variables to (temporary) cache for use in blocks etc.
-    xarVarSetCached('Blocks.articles','ptid',$ptid);
+    xarVarSetCached('Blocks.publications','ptid',$ptid);
 //if ($shownavigation) {
-    xarVarSetCached('Blocks.categories','module','articles');
+    xarVarSetCached('Blocks.categories','module','publications');
     xarVarSetCached('Blocks.categories','itemtype',$ptid);
     if (!empty($descr)) {
         xarVarSetCached('Blocks.categories','title',$descr);
@@ -330,10 +330,10 @@ function articles_user_viewmap($args)
     $data['publinks'] = $publinks;
     $data['ptid'] = $ptid;
     $data['viewlabel'] = xarML('Back to') . ' ' . $descr;
-    $data['viewlink'] = xarModURL('articles','user','view',
+    $data['viewlink'] = xarModURL('publications','user','view',
                                   array('ptid' => $ptid));
     $data['archivelabel'] = xarML('View Archives');
-    $data['archivelink'] = xarModURL('articles','user','archive',
+    $data['archivelink'] = xarModURL('publications','user','archive',
                                      array('ptid' => $ptid));
     $data['dump'] = $dump;
     if (count($data['catfilter']) == 2) {
@@ -346,7 +346,7 @@ function articles_user_viewmap($args)
        $template = null;
     }
 
-    return xarTplModule('articles', 'user', 'viewmap', $data, $template);
+    return xarTplModule('publications', 'user', 'viewmap', $data, $template);
 }
 
 ?>

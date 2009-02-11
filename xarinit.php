@@ -1,20 +1,20 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
- * initialise the articles module
+ * initialise the publications module
  */
-function articles_init()
+function publications_init()
 {
     // Get database information
     $dbconn = xarDB::getConn();
@@ -22,31 +22,46 @@ function articles_init()
 
     //Load Table Maintainance API
     sys::import('xaraya.tableddl');
+    sys::import('xaraya.structures.query');
 
-// TODO: Somewhere in the future, status should be managed by a workflow module
+# --------------------------------------------------------
+#
+# Set tables
+#
+    $q = new Query();
+    $prefix = xarDB::getPrefix();
 
-    // Create tables
-    $articlestable = $xartable['articles'];
-/*
-    $query = "CREATE TABLE $articlestable (
-            id INT(10) NOT NULL AUTO_INCREMENT,
-            title VARCHAR(255) NOT NULL DEFAULT '',
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_publications";
+    if (!$q->run($query)) return;
+    $query = "CREATE TABLE " . $prefix . "_publications (
+            id integer unsigned NOT NULL auto_increment,
+            name varchar(64) NOT NULL DEFAULT '',
+            title varchar(255) NOT NULL DEFAULT '',
+            description TEXT,
             summary TEXT,
-            body TEXT,
+            body1 TEXT,
+            body2 TEXT,
+            body3 TEXT,
             notes TEXT,
-            status TINYINT(2) NOT NULL DEFAULT '0',
-            authorid INT(11) NOT NULL,
-            pubdate INT UNSIGNED NOT NULL,
-            pubtypeid INT(4) NOT NULL DEFAULT '1',
-            pages INT UNSIGNED NOT NULL,
-            language VARCHAR(30) NOT NULL DEFAULT '',
+            pubtype_id INT(4) NOT NULL DEFAULT '1',
+            pages INT UNSIGNED NOT NULL DEFAULT '1',
+            locale varchar(20) NOT NULL DEFAULT '',
+            start_date integer unsigned NOT NULL,
+            end_date integer unsigned NOT NULL,
+            owner integer unsigned NULL,
+            version integer unsigned NULL,
+            create_date integer unsigned NULL,
+            modify_date integer unsigned NULL,
+            state tinyint NOT NULL DEFAULT '3',
+            process_state tinyint NOT NULL DEFAULT '1',
             PRIMARY KEY(id),
-            KEY authorid (authorid),
-            KEY pubtypeid (pubtypeid),
-            KEY pubdate (pubdate),
-            KEY status (status)
+            KEY owner (owner),
+            KEY pubtype_id (pubtype_id),
+            KEY state (state)
             )";
-*/
+    if (!$q->run($query)) return;
+
+/*
     $fields = array(
         'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
 //        'id'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
@@ -55,16 +70,16 @@ function articles_init()
         'body'=>array('type'=>'text'),
         'notes'=>array('type'=>'text'),
         'status'=>array('type'=>'integer','size'=>'tiny','null'=>FALSE,'default'=>'0'),
-        'authorid'=>array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        'owner'=>array('type'=>'integer','null'=>FALSE,'default'=>'0'),
         'pubdate'=>array('type'=>'integer','unsigned'=>TRUE,'null'=>FALSE,'default'=>'0'),
-        'pubtypeid'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'1'),
+        'pubtype_id'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'1'),
         'pages'=>array('type'=>'integer','unsigned'=>TRUE,'null'=>FALSE,'default'=>'1'),
         'language'=>array('type'=>'varchar','size'=>30,'null'=>FALSE,'default'=>'')
     );
 
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $query is empty
-    $query = xarDBCreateTable($articlestable,$fields);
+    $query = xarDBCreateTable($publicationstable,$fields);
     if (empty($query)) return; // throw back
 
     // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
@@ -72,83 +87,68 @@ function articles_init()
     if (!$result) return;
 
     $index = array(
-        'name'      => 'i_' . xarDB::getPrefix() . '_articles_authorid',
-        'fields'    => array('authorid'),
+        'name'      => 'i_' . xarDB::getPrefix() . '_publications_owner',
+        'fields'    => array('owner'),
         'unique'    => false
     );
-    $query = xarDBCreateIndex($articlestable,$index);
+    $query = xarDBCreateIndex($publicationstable,$index);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
     $index = array(
-        'name'      => 'i_' . xarDB::getPrefix() . '_articles_pubtypeid',
-        'fields'    => array('pubtypeid'),
+        'name'      => 'i_' . xarDB::getPrefix() . '_publications_pubtype_id',
+        'fields'    => array('pubtype_id'),
         'unique'    => false
     );
-    $query = xarDBCreateIndex($articlestable,$index);
+    $query = xarDBCreateIndex($publicationstable,$index);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
     $index = array(
-        'name'      => 'i_' . xarDB::getPrefix() . '_articles_pubdate',
+        'name'      => 'i_' . xarDB::getPrefix() . '_publications_pubdate',
         'fields'    => array('pubdate'),
         'unique'    => false
     );
-    $query = xarDBCreateIndex($articlestable,$index);
+    $query = xarDBCreateIndex($publicationstable,$index);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
     $index = array(
-        'name'      => 'i_' . xarDB::getPrefix() . '_articles_status',
+        'name'      => 'i_' . xarDB::getPrefix() . '_publications_status',
         'fields'    => array('status'),
         'unique'    => false
     );
-    $query = xarDBCreateIndex($articlestable,$index);
+    $query = xarDBCreateIndex($publicationstable,$index);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
     $index = array(
-        'name'      => 'i_' . xarDB::getPrefix() . '_articles_language',
+        'name'      => 'i_' . xarDB::getPrefix() . '_publications_language',
         'fields'    => array('language'),
         'unique'    => false
     );
-    $query = xarDBCreateIndex($articlestable,$index);
+    $query = xarDBCreateIndex($publicationstable,$index);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-
-    // Create tables
-    $pubtypestable = $xartable['publication_types'];
-/*
-    $query = "CREATE TABLE $pubtypestable (
-            pubtypeid INT(4) NOT NULL AUTO_INCREMENT,
-            pubtypename VARCHAR(30) NOT NULL,
-            pubtypedescr VARCHAR(255) NOT NULL DEFAULT '',
-            pubtypeconfig TEXT,
-            PRIMARY KEY(pubtypeid))";
 */
-    $fields = array(
-        'pubtypeid' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-//        'pubtypeid'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'pubtypename'=>array('type'=>'varchar','size'=>30,'null'=>FALSE,'default'=>''),
-        'pubtypedescr'=>array('type'=>'varchar','size'=>254,'null'=>FALSE,'default'=>''),
-        'pubtypeconfig'=>array('type'=>'text')
-    );
 
-    // Create the Table - the function will return the SQL is successful or
-    // raise an exception if it fails, in this case $query is empty
-    $query = xarDBCreateTable($pubtypestable,$fields);
-    if (empty($query)) return; // throw back
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_publications_types";
+    if (!$q->run($query)) return;
+    $query = "CREATE TABLE " . $prefix . "_publications_types (
+            id integer unsigned NOT NULL auto_increment,
+            name varchar(64) NOT NULL DEFAULT '',
+            description varchar(255) NOT NULL DEFAULT '',
+            configuration TEXT,
+            state tinyint unsigned NOT NULL DEFAULT '0',
+            PRIMARY KEY(id))";
+    if (!$q->run($query)) return;
 
-    // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-// TODO: load configuration from file(s) ?
+/* 
 
 // TODO: remove this code and the setup.php file
     // Load the initial setup of the publication types
-    if (file_exists('modules/articles/xarsetup.php')) {
-        include 'modules/articles/xarsetup.php';
+    if (file_exists('modules/publications/xarsetup.php')) {
+        include 'modules/publications/xarsetup.php';
     } else {
         // TODO: add some defaults here
         $pubtypes = array();
@@ -163,35 +163,40 @@ function articles_init()
         list($id,$name,$descr,$config) = $pubtype;
         $nextId = $dbconn->GenId($pubtypestable);
         $query = "INSERT INTO $pubtypestable
-                (pubtypeid, pubtypename, pubtypedescr,
+                (pubtype_id, pubtypename, pubtypedescr,
                  pubtypeconfig)
                 VALUES (?,?,?,?)";
         $bindvars = array($nextId, $name, $descr, $config);
         $result =& $dbconn->Execute($query,$bindvars);
         if (!$result) return;
-        $ptid = $dbconn->PO_Insert_ID($pubtypestable, 'pubtypeid');
+        $ptid = $dbconn->PO_Insert_ID($pubtypestable, 'pubtype_id');
         $pubid[$id] = $ptid;
     }
-// ----------------------------------------------------
+*/
 
 # --------------------------------------------------------
 #
 # Create DD objects
 #
-    $module = 'articles';
+    $module = 'publications';
     $objects = array(
-//                     'articles_news',
-//                     'articles_documents',
-//                     'articles_faqs',
-//                     'articles_reviews',
-//                     'articles_weblinks',
+                     'publications_types',
+                     'publications_documents',
+                     'publications_downloads',
+                     'publications_faqs',
+                     'publications_generic',
+                     'publications_news',
+                     'publications_pictures',
+                     'publications_quotes',
+                     'publications_reviews',
+                     'publications_translations',
+                     'publications_weblinks',
                      );
 
     if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
 
-
         $categories = array();
-    // Create articles categories
+    // Create publications categories
     $cids = array();
     foreach ($categories as $category) {
         $cid[$category['name']] = xarModAPIFunc('categories',
@@ -210,10 +215,21 @@ function articles_init()
         }
     }
 
-    // Set up module variables
-    xarModVars::set('articles', 'SupportShortURLs', 1);
+# --------------------------------------------------------
+#
+# Set up modvars
+#
+    xarModVars::set('publications', 'itemsperpage', 20);
+    xarModVars::set('publications', 'useModuleAlias',0);
+    xarModVars::set('publications', 'aliasname','Publications');
+    xarModVars::set('publications', 'defaultmastertable','publications_documents');
+    xarModVars::set('publications', 'SupportShortURLs', 1);
+    xarModVars::set('publications', 'defaultpubtype', 1);
+    xarModVars::set('publications', 'fulltextsearch', '');
+    xarModVars::set('publications', 'defaultpubtype', 1);
 
-    // Save articles settings for each publication type
+    // Save publications settings for each publication type
+    /*
     foreach ($settings as $id => $values) {
         if (isset($pubid[$id])) {
             $id = $pubid[$id];
@@ -228,18 +244,18 @@ function articles_init()
             }
             unset($values['categories']);
             if (!empty($id)) {
-                xarModVars::set('articles', 'number_of_categories.'.$id, count($cidlist));
-                xarModVars::set('articles', 'mastercids.'.$id, join(';',$cidlist));
+                xarModVars::set('publications', 'number_of_categories.'.$id, count($cidlist));
+                xarModVars::set('publications', 'mastercids.'.$id, join(';',$cidlist));
             } else {
-                xarModVars::set('articles', 'number_of_categories', count($cidlist));
-                xarModVars::set('articles', 'mastercids', join(';',$cidlist));
+                xarModVars::set('publications', 'number_of_categories', count($cidlist));
+                xarModVars::set('publications', 'mastercids', join(';',$cidlist));
             }
         } elseif (!empty($id)) {
-            xarModVars::set('articles', 'number_of_categories.'.$id, 0);
-            xarModVars::set('articles', 'mastercids.'.$id, '');
+            xarModVars::set('publications', 'number_of_categories.'.$id, 0);
+            xarModVars::set('publications', 'mastercids.'.$id, '');
         } else {
-            xarModVars::set('articles', 'number_of_categories', 0);
-            xarModVars::set('articles', 'mastercids', '');
+            xarModVars::set('publications', 'number_of_categories', 0);
+            xarModVars::set('publications', 'mastercids', '');
         }
         if (isset($values['defaultview']) && !is_numeric($values['defaultview'])) {
             if (isset($cid[$values['defaultview']])) {
@@ -249,65 +265,60 @@ function articles_init()
             }
         }
         if (!empty($id)) {
-            xarModVars::set('articles', 'settings.'.$id,serialize($values));
+            xarModVars::set('publications', 'settings.'.$id,serialize($values));
         } else {
-            xarModVars::set('articles', 'settings',serialize($values));
+            xarModVars::set('publications', 'settings',serialize($values));
         }
     }
 
-    // Set default publication type
-    xarModVars::set('articles', 'defaultpubtype', $defaultpubtype);
-
-    // Enable/disable full-text search with MySQL (for all pubtypes and all text fields)
-    xarModVars::set('articles', 'fulltextsearch', '');
-
+*/
     // Register blocks
     if (!xarModAPIFunc('blocks',
                        'admin',
                        'register_block_type',
-                       array('modName'  => 'articles',
+                       array('modName'  => 'publications',
                              'blockType'=> 'related'))) return;
 
     if (!xarModAPIFunc('blocks',
                        'admin',
                        'register_block_type',
-                       array('modName'  => 'articles',
+                       array('modName'  => 'publications',
                              'blockType'=> 'topitems'))) return;
 
     if (!xarModAPIFunc('blocks',
                        'admin',
                        'register_block_type',
-                       array('modName'  => 'articles',
+                       array('modName'  => 'publications',
                              'blockType'=> 'featureditems'))) return;
 
     if (!xarModAPIFunc('blocks',
                        'admin',
                        'register_block_type',
-                       array('modName'  => 'articles',
+                       array('modName'  => 'publications',
                              'blockType'=> 'random'))) return;
 
     if (!xarModAPIFunc('blocks',
                        'admin',
                        'register_block_type',
-                       array('modName'  => 'articles',
+                       array('modName'  => 'publications',
                              'blockType'=> 'glossary'))) return;
 
     if (!xarModRegisterHook('item', 'search', 'GUI',
-                           'articles', 'user', 'search')) {
+                           'publications', 'user', 'search')) {
         return false;
     }
 
     if (!xarModRegisterHook('item', 'waitingcontent', 'GUI',
-                           'articles', 'admin', 'waitingcontent')) {
+                           'publications', 'admin', 'waitingcontent')) {
         return false;
     }
 
 // TODO: move this to some common place in Xaraya (base module ?)
     // Register BL tags
-    xarTplRegisterTag('articles', 'articles-field',
+    xarTplRegisterTag('publications', 'publications-field',
                       //array(new xarTemplateAttribute('bid', XAR_TPL_STRING|XAR_TPL_REQUIRED)),
                       array(),
-                      'articles_userapi_handlefieldtag');
+                      'publications_userapi_handlefieldtag');
 
 # --------------------------------------------------------
 #
@@ -315,35 +326,35 @@ function articles_init()
 #
     sys::import('xaraya.structures.hooks.observer');
 
-    $observer = new BasicObserver('articles','admin','getconfighook');
+    $observer = new BasicObserver('publications','admin','getconfighook');
     $observer->register('module', 'getconfig', 'API');
     $subject = new HookSubject('listings');
     $subject->attach($observer);
 
-    // Enable articles hooks for search
+    // Enable publications hooks for search
     if (xarModIsAvailable('search')) {
         xarModAPIFunc('modules','admin','enablehooks',
-                      array('callerModName' => 'search', 'hookModName' => 'articles'));
+                      array('callerModName' => 'search', 'hookModName' => 'publications'));
     }
 
-    // Enable categories hooks for articles
+    // Enable categories hooks for publications
 /*    xarModAPIFunc('modules','admin','enablehooks',
-                  array('callerModName' => 'articles', 'hookModName' => 'categories'));
+                  array('callerModName' => 'publications', 'hookModName' => 'categories'));
 */
-    // Enable comments hooks for articles
+    // Enable comments hooks for publications
     if (xarModIsAvailable('comments')) {
         xarModAPIFunc('modules','admin','enablehooks',
-                      array('callerModName' => 'articles', 'hookModName' => 'comments'));
+                      array('callerModName' => 'publications', 'hookModName' => 'comments'));
     }
-    // Enable hitcount hooks for articles
+    // Enable hitcount hooks for publications
     if (xarModIsAvailable('hitcount')) {
         xarModAPIFunc('modules','admin','enablehooks',
-                      array('callerModName' => 'articles', 'hookModName' => 'hitcount'));
+                      array('callerModName' => 'publications', 'hookModName' => 'hitcount'));
     }
-    // Enable ratings hooks for articles
+    // Enable ratings hooks for publications
     if (xarModIsAvailable('ratings')) {
         xarModAPIFunc('modules','admin','enablehooks',
-                      array('callerModName' => 'articles', 'hookModName' => 'ratings'));
+                      array('callerModName' => 'publications', 'hookModName' => 'ratings'));
     }
 
     /*********************************************************************
@@ -351,128 +362,65 @@ function articles_init()
     * Format is
     * xarDefineInstance(Module,Component,Querystring,ApplicationVar,LevelTable,ChildIDField,ParentIDField)
     *********************************************************************/
-    $info = xarMod::getBaseInfo('articles');
+    $info = xarMod::getBaseInfo('publications');
     $sysid = $info['systemid'];
     $xartable = xarDB::getTables();
     $instances = array(
                        array('header' => 'external', // this keyword indicates an external "wizard"
-                             'query'  => xarModURL('articles', 'admin', 'privileges'),
+                             'query'  => xarModURL('publications', 'admin', 'privileges'),
                              'limit'  => 0
                             )
                     );
-    xarDefineInstance('articles', 'Article', $instances);
+    xarDefineInstance('publications', 'Publication', $instances);
 
     $query = "SELECT DISTINCT instances.title FROM $xartable[block_instances] as instances LEFT JOIN $xartable[block_types] as btypes ON btypes.id = instances.type_id WHERE modid = $sysid";
     $instances = array(
-                        array('header' => 'Article Block Title:',
+                        array('header' => 'Publication Block Title:',
                                 'query' => $query,
                                 'limit' => 20
                             )
                     );
-    xarDefineInstance('articles','Block',$instances);
+    xarDefineInstance('publications','Block',$instances);
 
-// TODO: pubtype ?
+# --------------------------------------------------------
+#
+# Set up masks
+#
+    xarRegisterMask('ViewPublications','All','publications','All','All','ACCESS_OVERVIEW');
+    xarRegisterMask('ReadPublications','All','publications','All','All','ACCESS_READ');
+    xarRegisterMask('SubmitPublications','All','publications','All','All','ACCESS_COMMENT');
+    xarRegisterMask('ModeratePublications','All','publications','All','All','ACCESS_MODERATE');
+    xarRegisterMask('EditPublications','All','publications','All','All','ACCESS_EDIT');
+    xarRegisterMask('AddPublications','All','publications','All','All','ACCESS_ADD');
+    xarRegisterMask('ManagePublications','All','publications','All','All','ACCESS_DELETE');
+    xarRegisterMask('AdminPublications','All','publications','All','All','ACCESS_ADMIN');
 
-    /*********************************************************************
-    * Register the module components that are privileges objects
-    * Format is
-    * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
-    *********************************************************************/
+# --------------------------------------------------------
+#
+# Set up privileges
+#
+    xarRegisterPrivilege('ViewPublications','All','publications','All','All','ACCESS_OVERVIEW');
+    xarRegisterPrivilege('ReadPublications','All','publications','All','All','ACCESS_READ');
+    xarRegisterPrivilege('SubmitPublications','All','publications','All','All','ACCESS_COMMENT');
+    xarRegisterPrivilege('ModeratePublications','All','publications','All','All','ACCESS_MODERATE');
+    xarRegisterPrivilege('EditPublications','All','publications','All','All','ACCESS_EDIT');
+    xarRegisterPrivilege('AddPublications','All','publications','All','All','ACCESS_ADD');
+    xarRegisterPrivilege('ManagePublications','All','publications','All','All','ACCESS_DELETE');
+    xarRegisterPrivilege('AdminPublications','All','publications','All','All','ACCESS_ADMIN');
 
-    xarRegisterMask('ViewArticles','All','articles','Article','All','ACCESS_OVERVIEW');
-    xarRegisterMask('ReadArticles','All','articles','Article','All','ACCESS_READ');
-    xarRegisterMask('SubmitArticles','All','articles','Article','All','ACCESS_COMMENT');
-// No special meaning here at the moment
-//    xarRegisterMask('ModerateArticles','All','articles','Article','All','ACCESS_MODERATE');
-    xarRegisterMask('EditArticles','All','articles','Article','All','ACCESS_EDIT');
-// Submitting articles only requires COMMENT privileges, not ADD privileges
-//    xarRegisterMask('AddArticles','All','articles','Article','All','ACCESS_ADD');
-    xarRegisterMask('DeleteArticles','All','articles','Article','All','ACCESS_DELETE');
-    xarRegisterMask('AdminArticles','All','articles','Article','All','ACCESS_ADMIN');
-
-
-    xarRegisterMask('ReadArticlesBlock','All','articles','Block','All','ACCESS_READ');
+    xarRegisterMask('ReadPublicationsBlock','All','publications','Block','All','ACCESS_READ');
 
     // Initialisation successful
     return true;
 }
 
 /**
- * upgrade the articles module from an old version
+ * upgrade the publications module from an old version
  */
-function articles_upgrade($oldversion)
+function publications_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch($oldversion) {
-        case '1.4':
-            // Get current publication types
-            $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
-            // Get configurable fields for articles
-            $pubfields = xarModAPIFunc('articles','user','getpubfields');
-            // Update the configuration of each publication type
-            foreach ($pubtypes as $ptid => $pubtype) {
-                // Map the (bodytext + bodyfile) fields to a single body field
-                // + use the textupload format if relevant
-                $pubtype['config']['body'] = $pubtype['config']['bodytext'];
-                if (!empty($pubtype['config']['bodyfile']['label'])) {
-                    $pubtype['config']['body']['format'] = 'textupload';
-                    if (empty($pubtype['config']['body']['label'])) {
-                        $pubtype['config']['body']['label'] = $pubtype['config']['bodyfile']['label'];
-                    }
-                }
-                $config = array();
-                foreach (array_keys($pubfields) as $field) {
-                    $config[$field] = $pubtype['config'][$field];
-                }
-                if (!xarModAPIFunc('articles', 'admin', 'updatepubtype',
-                                   array('ptid' => $ptid,
-                                   //      'name' => $name, /* not allowed here */
-                                         'descr' => $pubtype['descr'],
-                                         'config' => $config))) {
-                    return false;
-                }
-            }
-
-        // no upgrade for random block here - you can register it via blocks admin
-        case '1.5':
-        case '1.5.0':
-            // Upgrade the glossary block - we'll be kind :-)
-            if (!xarModAPIFunc(
-                'blocks', 'admin', 'register_block_type',
-                array(
-                    'modName'  => 'articles',
-                    'blockType'=> 'glossary'
-                )
-            )) {return;}
-
-        case '1.5.1':
-            // Code to upgrade from version 1.5.1 goes here
-
-            // Enable/disable full-text search with MySQL (for all pubtypes and all text fields)
-            xarModVars::set('articles', 'fulltextsearch', '');
-
-/* skip for now...
-            // Get database information
-            $dbconn = xarDB::getConn();
-            $xartable = xarDB::getTables();
-
-            //Load Table Maintainance API
-            sys::import('xaraya.tableddl');
-
-            $articlestable = $xartable['articles'];
-
-            $index = array(
-                'name'      => 'i_' . xarDB::getPrefix() . '_articles_language',
-                'fields'    => array('language'),
-                'unique'    => false
-            );
-            $query = xarDBCreateIndex($articlestable,$index);
-            $result =& $dbconn->Execute($query);
-            if (!$result) return;
-*/
-
-        case '1.5.2':
-            // Code to upgrade from version 1.5.2 goes here
 
         case '2.0.0':
             // Code to upgrade from version 2.0 goes here
@@ -485,11 +433,11 @@ function articles_upgrade($oldversion)
 }
 
 /**
- * delete the articles module
+ * delete the publications module
  */
-function articles_delete()
+function publications_delete()
 {
-    $module = 'articles';
+    $module = 'publications';
     return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => $module));
 
    // TODO: remove everything below here
@@ -501,7 +449,7 @@ function articles_delete()
     sys::import('xaraya.tableddl');
 
     // Generate the SQL to drop the table using the API
-    $query = xarDBDropTable($xartable['articles']);
+    $query = xarDBDropTable($xartable['publications']);
     if (empty($query)) return; // throw back
 
     // Drop the table and send exception if returns false.
@@ -509,7 +457,7 @@ function articles_delete()
     if (!$result) return;
 
     // Generate the SQL to drop the table using the API
-    $query = xarDBDropTable($xartable['publication_types']);
+    $query = xarDBDropTable($xartable['publications_types']);
     if (empty($query)) return; // throw back
 
     // Drop the table and send exception if returns false.
@@ -521,60 +469,60 @@ function articles_delete()
     // Delete module variables
 
     //FIXME: This is breaking the removal of the module...
-    xarModVars::delete('articles', 'itemsperpage');
+    xarModVars::delete('publications', 'itemsperpage');
 
-    xarModVars::delete('articles', 'SupportShortURLs');
+    xarModVars::delete('publications', 'SupportShortURLs');
 
-    xarModVars::delete('articles', 'number_of_categories');
-    xarModVars::delete('articles', 'mastercids');
+    xarModVars::delete('publications', 'number_of_categories');
+    xarModVars::delete('publications', 'mastercids');
 
 // TODO: remove all current pubtypes
 
-    xarModVars::delete('articles', 'settings.1');
-    xarModVars::delete('articles', 'settings.2');
-    xarModVars::delete('articles', 'settings.3');
-    xarModVars::delete('articles', 'settings.4');
-    xarModVars::delete('articles', 'settings.5');
-    xarModVars::delete('articles', 'settings.6');
+    xarModVars::delete('publications', 'settings.1');
+    xarModVars::delete('publications', 'settings.2');
+    xarModVars::delete('publications', 'settings.3');
+    xarModVars::delete('publications', 'settings.4');
+    xarModVars::delete('publications', 'settings.5');
+    xarModVars::delete('publications', 'settings.6');
 
-    xarModVars::delete('articles', 'defaultpubtype');
+    xarModVars::delete('publications', 'defaultpubtype');
 
     // UnRegister blocks
     if (!xarModAPIFunc('blocks',
                        'admin',
                        'unregister_block_type',
-                       array('modName'  => 'articles',
+                       array('modName'  => 'publications',
                              'blockType'=> 'related'))) return;
 
     if (!xarModAPIFunc('blocks',
                        'admin',
                        'unregister_block_type',
-                       array('modName'  => 'articles',
+                       array('modName'  => 'publications',
                              'blockType'=> 'topitems'))) return;
 
     if (!xarModAPIFunc('blocks',
                        'admin',
                        'unregister_block_type',
-                       array('modName'  => 'articles',
+                       array('modName'  => 'publications',
                              'blockType'=> 'featureditems'))) return;
 
     if (!xarModAPIFunc('blocks',
                        'admin',
                        'unregister_block_type',
-                       array('modName'  => 'articles',
+                       array('modName'  => 'publications',
                              'blockType'=> 'glossary'))) return;
 
 // TODO: move this to some common place in Xaraya (base module ?)
     // Unregister BL tags
-    xarTplUnregisterTag('articles-field');
+    xarTplUnregisterTag('publications-field');
 
     /**
      * Remove instances
      */
 
     // Remove Masks and Instances
-    xarRemoveMasks('articles');
-    xarRemoveInstances('articles');
+    xarRemoveMasks('publications');
+    xarRemoveInstances('publications');
 
 
     // Deletion successful

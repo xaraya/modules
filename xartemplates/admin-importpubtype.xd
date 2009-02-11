@@ -2,7 +2,7 @@
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>Articles Administration</xar:mlstring>
+        <xar:mlstring>Publications Administration</xar:mlstring>
     </span>
 </div>
 <div class="xar-mod-body">
@@ -15,10 +15,10 @@
     </h3>
     <strong>#$warning#</strong>
     <br />
-    <form method="post" action="#xarModURL('articles','admin','importpubtype')#">
+    <form method="post" action="#xarModURL('publications','admin','importpubtype')#">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <xar:mlstring>Filter</xar:mlstring>:
-        <strong>modules/articles/*.xml</strong>
+        <strong>modules/publications/*.xml</strong>
         <br />
         <br />
         <xar:mlstring>File</xar:mlstring>:
@@ -34,7 +34,7 @@
         <br />
         <xar:mlstring>Select a file in the list above, or paste the definition in here</xar:mlstring>:
         <br />
-        <textarea name="xml" id="xml" rows="30" cols="80"></textarea>
+        <textarea name="xml" id="xml" rows="30" cols="80">&#160;</textarea>
     </form>
 </div>
 </xar:template>

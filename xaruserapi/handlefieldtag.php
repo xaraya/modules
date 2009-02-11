@@ -1,30 +1,30 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
- * Handle <xar:articles-field ...> form field tags
- * Format : <xar:articles-field definition="$definition" /> with $definition an array
+ * Handle <xar:publications-field ...> form field tags
+ * Format : <xar:publications-field definition="$definition" /> with $definition an array
  *                                             containing the type, name, value, ...
- *       or <xar:articles-field name="thisname" type="thattype" value="$val" ... />
+ *       or <xar:publications-field name="thisname" type="thattype" value="$val" ... />
  *
  * @param $args array containing the form field definition or the type, name, value, ...
  * @return string The PHP code needed to invoke showfield() in the BL template
  * @TODO : move this to some common place in Xaraya (base module ?)
  */
-function articles_userapi_handlefieldtag($args)
+function publications_userapi_handlefieldtag($args)
 {
-    $out = "xarModAPILoad('articles','user');
-echo xarModAPIFunc('articles',
+    $out = "xarModAPILoad('publications','user');
+echo xarModAPIFunc('publications',
                    'user',
                    'showfield',\n";
     if (isset($args['definition'])) {

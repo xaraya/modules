@@ -1,20 +1,20 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
- * get the number of articles per publication type and category
+ * get the number of publications per publication type and category
  *
- * @param $args['status'] array of requested status(es) for the articles
+ * @param $args['state'] array of requested status(es) for the publications
  * @param $args['ptid'] publication type ID
  * @param $args['cids'] array of category IDs (OR/AND)
  * @param $args['andcids'] true means AND-ing categories listed in cids
@@ -23,7 +23,7 @@
  * @return array array( $ptid => array( $cid => $count) ),
  *         or false on failure
  */
-function articles_userapi_getpubcatcount($args)
+function publications_userapi_getpubcatcount($args)
 {
 /*
     static $pubcatcount = array();
@@ -37,13 +37,13 @@ function articles_userapi_getpubcatcount($args)
     // Get database setup
     $dbconn = xarDB::getConn();
 
-    // Get the LEFT JOIN ... ON ...  and WHERE parts from articles
-    $articlesdef = xarModAPIFunc('articles','user','leftjoin',$args);
+    // Get the LEFT JOIN ... ON ...  and WHERE parts from publications
+    $publicationsdef = xarModAPIFunc('publications','user','leftjoin',$args);
 
     // Load API
     if (!xarModAPILoad('categories', 'user')) return;
 
-    $args['modid'] = xarMod::getID('articles');
+    $args['modid'] = xarMod::getID('publications');
     if (isset($args['ptid']) && !isset($args['itemtype'])) {
         $args['itemtype'] = $args['ptid'];
     }
@@ -51,14 +51,14 @@ function articles_userapi_getpubcatcount($args)
     $categoriesdef = xarModAPIFunc('categories','user','leftjoin',$args);
 
     // Get count
-    $query = 'SELECT '. $articlesdef['pubtypeid'] .', '. $categoriesdef['category_id']
+    $query = 'SELECT '. $publicationsdef['pubtype_id'] .', '. $categoriesdef['category_id']
            .', COUNT(*)
-            FROM '. $articlesdef['table'] . '
+            FROM '. $publicationsdef['table'] . '
             LEFT JOIN ' . $categoriesdef['table'] .'
-            ON '. $categoriesdef['field'] . ' = ' . $articlesdef['field'] .
+            ON '. $categoriesdef['field'] . ' = ' . $publicationsdef['field'] .
             $categoriesdef['more'] . '
-            WHERE '. $categoriesdef['where'] .' AND '. $articlesdef['where'] .'
-            GROUP BY '. $articlesdef['pubtypeid'] .', '. $categoriesdef['category_id'];
+            WHERE '. $categoriesdef['where'] .' AND '. $publicationsdef['where'] .'
+            GROUP BY '. $publicationsdef['pubtype_id'] .', '. $categoriesdef['category_id'];
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;

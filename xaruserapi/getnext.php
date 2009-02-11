@@ -1,14 +1,14 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
@@ -18,13 +18,13 @@
  * @param $args['id'] the article ID we want to have the next article of
  * @param $args['ptid'] publication type ID (for news, sections, reviews, ...)
  * @param $args['sort'] sort order ('date','title','hits','rating',...)
- * @param $args['authorid'] the ID of the author
- * @param $args['status'] array of requested status(es) for the articles
- * @param $args['enddate'] articles published before enddate
+ * @param $args['owner'] the ID of the author
+ * @param $args['state'] array of requested status(es) for the publications
+ * @param $args['enddate'] publications published before enddate
  *                         (unix timestamp format)
  * @return array of article fields, or false on failure
  */
-function articles_userapi_getnext($args)
+function publications_userapi_getnext($args)
 {
     // Get arguments from argument array
     extract($args);
@@ -33,48 +33,48 @@ function articles_userapi_getnext($args)
     if (empty($sort)) {
         $sort = 'date';
     }
-    if (!isset($status)) {
+    if (!isset($state)) {
         // frontpage or approved
-        $status = array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED);
+        $state = array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED);
     }
 
-    // Default fields in articles (for now)
+    // Default fields in publications (for now)
     $fields = array('id','title');
 
     // Security check
-    if (!xarSecurityCheck('ViewArticles')) return;
+    if (!xarSecurityCheck('ViewPublications')) return;
 
     // Database information
     $dbconn = xarDB::getConn();
 
-    // Get the field names and LEFT JOIN ... ON ... parts from articles
+    // Get the field names and LEFT JOIN ... ON ... parts from publications
     // By passing on the $args, we can let leftjoin() create the WHERE for
-    // the articles-specific columns too now
-    $articlesdef = xarModAPIFunc('articles','user','leftjoin',$args);
+    // the publications-specific columns too now
+    $publicationsdef = xarModAPIFunc('publications','user','leftjoin',$args);
 
     // Create the query
-    $query = "SELECT $articlesdef[id], $articlesdef[title], $articlesdef[pubtypeid], $articlesdef[authorid]
-                FROM $articlesdef[table] WHERE ";
+    $query = "SELECT $publicationsdef[id], $publicationsdef[title], $publicationsdef[pubtype_id], $publicationsdef[owner]
+                FROM $publicationsdef[table] WHERE ";
 
-    // we rely on leftjoin() to create the necessary articles clauses now
-    if (!empty($articlesdef['where'])) {
-        $query .= " $articlesdef[where] AND ";
+    // we rely on leftjoin() to create the necessary publications clauses now
+    if (!empty($publicationsdef['where'])) {
+        $query .= " $publicationsdef[where] AND ";
     }
 
     // Get current article
-    $current = xarModAPIFunc('articles','user','get',array('id' => $id));
+    $current = xarModAPIFunc('publications','user','get',array('id' => $id));
 
      // Create the ORDER BY part
     switch($sort) {
     case 'title':
-        $query .= $articlesdef['title'] . ' > ' . $dbconn->qstr($current['title']) . ' ORDER BY ' . $articlesdef['title'] . ' ASC, ' . $articlesdef['id'] . ' ASC';
+        $query .= $publicationsdef['title'] . ' > ' . $dbconn->qstr($current['title']) . ' ORDER BY ' . $publicationsdef['title'] . ' ASC, ' . $publicationsdef['id'] . ' ASC';
         break;
     case 'id':
-        $query .= $articlesdef['id'] . ' > ' . $current['id'] . ' ORDER BY ' . $articlesdef['id'] . ' ASC';
+        $query .= $publicationsdef['id'] . ' > ' . $current['id'] . ' ORDER BY ' . $publicationsdef['id'] . ' ASC';
         break;
     case 'data':
     default:
-        $query .= $articlesdef['pubdate'] . ' > ' . $dbconn->qstr($current['pubdate']) . ' ORDER BY ' . $articlesdef['pubdate'] . ' ASC, ' . $articlesdef['id'] . ' ASC';
+        $query .= $publicationsdef['pubdate'] . ' > ' . $dbconn->qstr($current['pubdate']) . ' ORDER BY ' . $publicationsdef['pubdate'] . ' ASC, ' . $publicationsdef['id'] . ' ASC';
     }
 
     // Run the query - finally :-)
@@ -83,14 +83,14 @@ function articles_userapi_getnext($args)
     if (!$result) return;
 
     $item = array();
-    list($item['id'],$item['title'],$item['pubtypeid'],$item['authorid']) = $result->fields;
+    list($item['id'],$item['title'],$item['pubtype_id'],$item['owner']) = $result->fields;
 
     $result->Close();
 
     // TODO: grab categories & check against them too
 
     // check security - don't generate an exception here
-    if (!xarSecurityCheck('ViewArticles',0,'Article',"$item[pubtypeid]:All:$item[authorid]:$item[id]")) {
+    if (!xarSecurityCheck('ViewPublications',0,'Publication',"$item[pubtype_id]:All:$item[owner]:$item[id]")) {
         return array();
     }
 

@@ -1,36 +1,36 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:if condition="!empty($maplink) or !empty($archivelink) or !empty($submitlink)">
-    <xar:style scope="module" module="base" file="navtabs" />
-    <dl class="xar-tabs">
-        <dt class="help">
-            <xar:mlstring>
-                Options 
-            </xar:mlstring>
-            : 
-        </dt>
-        <xar:if condition="!empty($maplink)">
-            <dd>
-                <a href="#$maplink#">
-                    #$maplabel# 
-                </a>
-            </dd>
-        </xar:if>
-        <xar:if condition="!empty($submitlink)">
-            <dd>
-                <a href="#$submitlink#" title="Submit Article">
-                    <xar:mlstring>
-                        Contribute 
-                    </xar:mlstring>
-                </a>
-            </dd>
-        </xar:if>
-        <xar:if condition="!empty($archivelink)">
-            <dd>
-                <a href="#$archivelink#">
-                    #$archivelabel# 
-                </a>
-            </dd>
-        </xar:if>
-    </dl>
-</xar:if>
+    <xar:if condition="!empty($settings['showmap']) or !empty($settings['showarchives']) or !empty($settings['showsubmit'])">
+        <xar:style scope="module" module="base" file="navtabs" />
+        <dl class="xar-tabs">
+            <dt class="help">
+                <xar:mlstring>
+                    Options 
+                </xar:mlstring>
+                : 
+            </dt>
+            <xar:if condition="!empty($settings['showmap'])">
+                <dd>
+                    <a href="#xarModURL('publications', 'user', 'viewmap', array('ptid' => !empty($ptid) ? $ptid : null))#">
+                        #xarML('View Publication Map')# 
+                    </a>
+                </dd>
+            </xar:if>
+            <xar:if condition="!empty($settings['showsubmit'])">
+                <dd>
+                    <a href="#xarModURL('publications', 'user', 'new', array('ptid' => !empty($ptid) ? $ptid : null))#" title="Submit Publication">
+                        <xar:mlstring>
+                            Contribute 
+                        </xar:mlstring>
+                    </a>
+                </dd>
+            </xar:if>
+            <xar:if condition="!empty($settings['showarchives'])">
+                <dd>
+                    <a href="xarModURL('publications', 'user', 'archive', array('ptid' => !empty($ptid) ? $ptid : null))">
+                        #xarML('View Archives')# 
+                    </a>
+                </dd>
+            </xar:if>
+        </dl>
+    </xar:if>
 </xar:template>

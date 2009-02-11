@@ -1,14 +1,14 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
@@ -21,90 +21,60 @@
  * @param string return_url The url to return to
  * @return mixed call to template with data array and name of template to use
  */
-function articles_admin_new($args)
+
+sys::import('modules.dynamicdata.class.objects.master');
+
+function publications_admin_new($args)
 {
     extract($args);
 
     // Get parameters
-    if (!xarVarFetch('ptid',        'id',    $ptid,       NULL,  XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('ptid',        'id',    $data['ptid'],       xarModVars::get('publications', 'defaultpubtype'),  XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('catid',       'str',   $catid,      NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('itemtype',    'id',    $itemtype,   NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('return_url',  'str:1', $return_url, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
-    if (!empty($preview) && isset($article)) {
-        $ptid = $article['ptid'];
-    } elseif (!isset($ptid) && !empty($itemtype) && is_numeric($itemtype)) {
-        // when we use some categories filter
-        $ptid = $itemtype;
-    }
-    $data = array();
-    $data['ptid'] = $ptid;
     $data['catid'] = $catid;
 
     if (!isset($article)) {
         $article = array();
     }
-    if (!isset($articles['cids']) && !empty($catid)) {
+    if (!isset($publications['cids']) && !empty($catid)) {
         $article['cids'] = preg_split('/[ +-]/',$catid);
     }
 
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
 
-    // Security check
-    if (empty($ptid)) {
-        $ptid = '';
-    // TODO: check by category too ?
-        if (!xarSecurityCheck('SubmitArticles')) {
-               $msg = xarML('You have no permission to submit Articles');
+    if (isset($article['cids']) && count($article['cids']) > 0) {
+        foreach ($article['cids'] as $cid) {
+            if (!xarSecurityCheck('SubmitPublications',1,'Publication',$data['ptid'] . ":$cid:All:All")) {
+                $catinfo = xarModAPIFunc('categories', 'user', 'getcatinfo',
+                                         array('cid' => $cid));
+                if (empty($catinfo['name'])) {
+                    $catinfo['name'] = $cid;
+                }
+                $msg = xarML('You have no permission to submit #(1) in category #(2)',
+                             $pubtypes[$data['ptid']]['description'],$catinfo['name']);
                 throw new ForbiddenOperationException(null, $msg);
+            }
         }
     } else {
-        if (isset($article['cids']) && count($article['cids']) > 0) {
-            foreach ($article['cids'] as $cid) {
-                if (!xarSecurityCheck('SubmitArticles',1,'Article',"$ptid:$cid:All:All")) {
-                    $catinfo = xarModAPIFunc('categories', 'user', 'getcatinfo',
-                                             array('cid' => $cid));
-                    if (empty($catinfo['name'])) {
-                        $catinfo['name'] = $cid;
-                    }
-                    $msg = xarML('You have no permission to submit #(1) in category #(2)',
-                                 $pubtypes[$ptid]['descr'],$catinfo['name']);
-                    throw new ForbiddenOperationException(null, $msg);
-                }
-            }
-        } else {
-            if (!xarSecurityCheck('SubmitArticles',1,'Article',"$ptid:All:All:All")) {
-                $msg = xarML('You have no permission to submit #(1)',
-                             $pubtypes[$ptid]['descr']);
-                throw new ForbiddenOperationException(null, $msg);
-            }
-        }
-        if (xarModIsHooked('uploads', 'articles', $ptid)) {
-            xarVarSetCached('Hooks.uploads','ishooked',1);
+        if (!xarSecurityCheck('SubmitPublications',1,'Publication',$data['ptid'] . ":All:All:All")) {
+            $msg = xarML('You have no permission to submit #(1)',
+                         $pubtypes[$data['ptid']]['description']);
+            throw new ForbiddenOperationException(null, $msg);
         }
     }
+
     if (!empty($preview)) {
-        // Use articles user GUI function (not API) for preview
-        if (!xarModLoad('articles','user')) return;
-        $preview = xarModFunc('articles', 'user', 'display',
+        // Use publications user GUI function (not API) for preview
+        if (!xarModLoad('publications','user')) return;
+        $preview = xarModFunc('publications', 'user', 'display',
                              array('preview' => true, 'article' => $article));
     } else {
         $preview = '';
     }
     $data['preview'] = $preview;
 
-    if (!empty($ptid)) {
-        // preset some variables for hook modules
-        $article['module'] = 'articles';
-        $article['itemid'] = 0;
-        $article['itemtype'] = $ptid;
-
-        $hooks = xarModCallHooks('item','new','',$article);
-    }
-    if (empty($hooks)) {
-        $hooks = '';
-    }
-    $data['hooks'] = $hooks;
 
     // Array containing the different labels
     $labels = array();
@@ -113,103 +83,34 @@ function articles_admin_new($args)
     $pubfilters = array();
     foreach ($pubtypes as $id => $pubtype) {
         $pubitem = array();
-        if ($id == $ptid) {
+        if ($id == $data['ptid']) {
             $pubitem['plink'] = '';
         } else {
-            if (!xarSecurityCheck('SubmitArticles',0,'Article',$id.':All:All:All')) {
+            if (!xarSecurityCheck('SubmitPublications',0,'Publication',$id.':All:All:All')) {
                 continue;
             }
-            $pubitem['plink'] = xarModURL('articles','admin','new',
+            $pubitem['plink'] = xarModURL('publications','admin','new',
                                           array('ptid' => $id,
                                                 'catid' => $catid));
         }
-        $pubitem['ptitle'] = $pubtype['descr'];
+        $pubitem['ptitle'] = $pubtype['description'];
         $pubfilters[] = $pubitem;
     }
     $data['pubfilters'] = $pubfilters;
 
-    // Array containing the different values (except the article fields)
-    $values = array();
+    $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
+    $pubtypeobject->getItem(array('itemid' => $data['ptid']));
+    $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
+    $data['properties'] = $data['object']->getProperties();
 
-    // TODO - language
-
-// Note : this determines which fields are really shown in the template !!!
-    // Show actual data fields
-    $fields = array();
-    $data['withupload'] = 0;
-    if (!empty($ptid)) {
-        $settings = unserialize(xarModVars::get('articles', 'settings.'.$ptid));
-    // TODO: make order dependent on pubtype or not ?
-    //    foreach ($pubtypes[$ptid]['config'] as $field => $value) {}
-        $pubfields = xarModAPIFunc('articles','user','getpubfields');
-        foreach ($pubfields as $field => $dummy) {
-            $value = $pubtypes[$ptid]['config'][$field];
-            if (empty($value['label']) || empty($value['input'])) {
-                continue;
-            }
-            $input = array();
-            $input['name'] = $field;
-            $input['type'] = $value['format'];
-            $input['id'] = $field;
-            if (!empty($preview) && isset($article[$field])) {
-                $input['value'] = $article[$field];
-            } elseif ($field == 'pubdate') {
-                // default publication time is now
-                $input['value'] = time();
-            } elseif ($field == 'status' && isset($settings['defaultstatus'])) {
-                // default status (only if allowed on input)
-                $input['value'] = $settings['defaultstatus'];
-            } else {
-                $input['value'] = '';
-            }
-            if (isset($value['validation'])) {
-                $input['configuration'] = $value['validation'];
-            }
-
-            if ($input['type'] == 'fileupload' || $input['type'] == 'textupload' ) {
-                $data['withupload'] = 1;
-            }
-            if (!empty($preview) && isset($invalid) && !empty($invalid[$field])) {
-                $input['invalid'] = $invalid[$field];
-            }
-            $fields[$field] = array('label' => $value['label'], 'id' => $field,
-                                    'definition' => $input);
-        }
-    }
-    $data['fields'] = $fields;
-
-    if (!empty($ptid) && empty($data['withupload']) &&
-        (xarVarIsCached('Hooks.dynamicdata','withupload') || xarModIsHooked('uploads', 'articles', $ptid)) ) {
-        $data['withupload'] = 1;
-    }
-
-    // Show allowable HTML
-    $data['allowedhtml'] = '';
-    foreach (xarConfigVars::get(null,'Site.Core.AllowableHTML') as $k=>$v) {
-        if ($v) {
-            $data['allowedhtml'] .= '&lt;' . $k . '&gt; ';
-        }
-    }
-
-    if (!empty($ptid)) {
-        $formhooks = articles_user_formhooks($ptid);
-        $data['formhooks'] = $formhooks;
-    }
-
-    $data['previewlabel'] = xarVarPrepForDisplay(xarML('Preview'));
-    $data['addlabel'] = xarVarPrepForDisplay(xarML('Add Article'));
-    $data['authid'] = xarSecGenAuthKey('articles');
-    $data['return_url'] = $return_url;
-    $data['values'] = $values;
-
-    if (!empty($ptid)) {
-        $template = $pubtypes[$ptid]['name'];
+    if (!empty($data['ptid'])) {
+        $template = $pubtypes[$data['ptid']]['name'];
     } else {
 // TODO: allow templates per category ?
        $template = null;
     }
 
-    return xarTplModule('articles', 'admin', 'new', $data, $template);
+    return xarTplModule('publications', 'admin', 'new', $data, $template);
 }
 
 ?>

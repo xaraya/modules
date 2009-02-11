@@ -1,34 +1,49 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="publinks" type="module" />
-    <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="articles" itemtype="$ptid" itemid="$id" cids="$cids" />
-
+    <!--
+    <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" itemid="$id" cids="$cids" />
+    -->
     <div class="article-view">
-        <h3><span>#$title#</span></h3>
+        <h3>
+            <xar:data-output property="$properties['title']" />
+        </h3>
             <xar:if condition="!empty($categories) and count($categories) gt 0">
                 [ <xar:foreach in="$categories" value="$cat">
                     #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
                 </xar:foreach> ]
             </xar:if>
         <h5><xar:mlstring>Summary</xar:mlstring>:</h5>
-        <p>#$summary#</p>
+        <p>
+            <xar:data-output property="$properties['summary']" />
+        </p>
         <h5><xar:mlstring>Download</xar:mlstring>:</h5>
         <xar:if condition="empty($notes)">
-        <xar:elseif condition="xarModIsHooked('uploads','articles',$pubtypeid) and substr($notes,0,1) eq ';'" />
+        <xar:elseif condition="xarModIsHooked('uploads','publications',$pubtype_id) and substr($notes,0,1) eq ';'" />
         <xar:comment>
-            If you hook the uploads module to articles, then file upload fields will contain
+            If you hook the uploads module to publications, then file upload fields will contain
             a comma-separated list of file ids, and you will need to call an API function to
             retrieve the file information. For dynamic extra fields, you can use [fieldname]_output
             directly to access the file information.
         </xar:comment>
             <xar:set name="notes_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $notes, 'multiple' => true))</xar:set>
             <xar:foreach in="$notes_output" key="$fileid" value="$fileinfo">
-                <p><a href="#$fileinfo['fileDownload']#">#$fileinfo['fileName']#</a></p>
+                <p>
+                    <a href="#$fileinfo['fileDownload']#">
+                        #$fileinfo['fileName']#
+                    </a>
+                </p>
             </xar:foreach>
         <xar:elseif condition="file_exists('var/uploads/'.$notes)" />
-            <p><a href="var/uploads/#$notes#" title="#$notes#">#$notes#</a></p>
+            <p>
+                <a href="var/uploads/#$notes#" title="#$notes#">
+                    <xar:data-output property="$properties['notes']" />
+                </a>
+            </p>
         <xar:else />
-            <p>#$notes#</p>
+            <p>
+                <xar:data-output property="$properties['notes']" />
+            </p>
         </xar:if>
     </div>
 
@@ -40,13 +55,6 @@
         <td align="right">&#160;<xar:if condition="!empty($nextart)"> <a href="#$nextart#"><xar:mlstring>next</xar:mlstring> &gt;</a></xar:if></td>
     </tr>
     </table>
-    </xar:if>
-
-    <xar:if condition="!empty($hooks)">
-    <br />
-    <xar:foreach in="$hooks" key="$hookmodule">
-    #$hooks[$hookmodule]#
-    </xar:foreach>
     </xar:if>
 
     <xar:template file="navtabs-user" type="module" />

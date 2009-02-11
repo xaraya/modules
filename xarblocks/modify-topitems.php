@@ -7,8 +7,8 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  *
  */
@@ -16,7 +16,7 @@
  * modify block settings
  * @author Jim McDonald
  */
-function articles_topitemsblock_modify($blockinfo)
+function publications_topitemsblock_modify($blockinfo)
 {
     // Get current content
     if (!is_array($blockinfo['content'])) {
@@ -34,7 +34,7 @@ function articles_topitemsblock_modify($blockinfo)
         $vars['linkcat'] = false;
     }
 
-    $vars['pubtypes'] = xarModAPIFunc('articles', 'user', 'getpubtypes');
+    $vars['pubtypes'] = xarModAPIFunc('publications', 'user', 'getpubtypes');
     $vars['categorylist'] = xarModAPIFunc('categories', 'user', 'getcat');
 
     $vars['sortoptions'] = array(
@@ -43,7 +43,7 @@ function articles_topitemsblock_modify($blockinfo)
         array('id' => 'date', 'name' => xarML('Date'))
     );
 
-    $vars['statusoptions'] = array(
+    $vars['stateoptions'] = array(
         array('id' => '2,3', 'name' => xarML('All Published')),
         array('id' => '3', 'name' => xarML('Frontpage')),
         array('id' => '2', 'name' => xarML('Approved'))
@@ -58,10 +58,10 @@ function articles_topitemsblock_modify($blockinfo)
  * update block settings
  * @author Jim McDonald
  */
-function articles_topitemsblock_update($blockinfo)
+function publications_topitemsblock_update($blockinfo)
 {
     if (!xarVarFetch('numitems', 'int:1:200', $vars['numitems'], 5, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('pubtypeid', 'id', $vars['pubtypeid'], 0, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('pubtype_id', 'id', $vars['pubtype_id'], 0, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('linkpubtype', 'checkbox', $vars['linkpubtype'], false, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('nopublimit', 'checkbox', $vars['nopublimit'], false, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('catfilter', 'id', $vars['catfilter'], 0, XARVAR_NOT_REQUIRED)) {return;}
@@ -73,10 +73,10 @@ function articles_topitemsblock_update($blockinfo)
     if (!xarVarFetch('showsummary', 'checkbox', $vars['showsummary'], false, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('showdynamic', 'checkbox', $vars['showdynamic'], false, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('showvalue', 'checkbox', $vars['showvalue'], false, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('status', 'strlist:,:int:1:4', $vars['status'])) {return;}
+    if (!xarVarFetch('state', 'strlist:,:int:1:4', $vars['state'])) {return;}
 
     if ($vars['nopublimit'] == true) {
-        $vars['pubtypeid'] = 0;
+        $vars['pubtype_id'] = 0;
     }
     if ($vars['nocatlimit'] == true) {
         $vars['catfilter'] = 0;

@@ -12,9 +12,9 @@
         <xar:else />
         <input type="checkbox" name="showvalue" id="showvalue#$bid#" value="1" checked="checked" /> 
     </xar:if>
-    <label class="help" title="#xarML('Check this box to show the number of articles.')#" for="showvalue#$bid#"> 
+    <label class="help" title="#xarML('Check this box to show the number of publications.')#" for="showvalue#$bid#"> 
         <xar:mlstring>
-            Show number of articles 
+            Show number of publications 
         </xar:mlstring>
     </label> 
 </div>

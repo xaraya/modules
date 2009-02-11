@@ -1,24 +1,24 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:style scope="module" module="base" file="navtabs" />
-<xar:if condition="!empty($statusfilters)">
+<xar:if condition="!empty($statefilters)">
     <dl class="xar-tabs">
-        <dt class="help" title="#xarML('Click on a tab to display articles from that publication type')#">
+        <dt class="help" title="#xarML('Click on a tab to display publications from that publication type')#">
             <xar:mlstring>
                 Status
             </xar:mlstring>
             :
         </dt>
-        <xar:foreach in="$statusfilters" value="$statusfilter">
-            <xar:if condition="empty($statusfilter['slink'])">
+        <xar:foreach in="$statefilters" value="$statefilter">
+            <xar:if condition="empty($statefilter['slink'])">
                 <dd class="active">
-                    <a href="#xarServerGetCurrentURL()#" title="#$statusfilter['stitle']#">
-                        #$statusfilter['stitle']#
+                    <a href="#xarServerGetCurrentURL()#" title="#$statefilter['stitle']#">
+                        #$statefilter['stitle']#
                     </a>
                 </dd>
             <xar:else />
                 <dd>
-                    <a href="#$statusfilter['slink']#" title="#$statusfilter['stitle']#">
-                        #$statusfilter['stitle']#
+                    <a href="#$statefilter['slink']#" title="#$statefilter['stitle']#">
+                        #$statefilter['stitle']#
                     </a>
                 </dd>
             </xar:if>

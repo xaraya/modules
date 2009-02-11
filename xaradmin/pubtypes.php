@@ -1,28 +1,28 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
  * manage publication types (all-in-one function for now)
  */
-sys::import('modules.query.class.query');
+sys::import('xaraya.structures.query');
 
-function articles_admin_pubtypes()
+function publications_admin_pubtypes()
 {
-    if (!xarSecurityCheck('AdminArticles')) return;
+    if (!xarSecurityCheck('AdminPublications')) return;
     /*
     $myobject = DataObjectMaster::getObjectList(array('name' => 'objects'));
     $conditions = new Query();
-    $conditions->eq('object_moduleid',xarMod::getRegID('articles'));
+    $conditions->eq('object_moduleid',xarMod::getRegID('publications'));
     $return_url = xarServerGetCurrentURL();
 
     return array('return_url'=>$return_url, 'object'=>$myobject, 'conditions' => $conditions);
@@ -42,9 +42,9 @@ function articles_admin_pubtypes()
     // Publication types can only be managed with ADMIN rights
     if (empty($ptid)) {
         $ptid = '';
-        if (!xarSecurityCheck('AdminArticles')) return;
+        if (!xarSecurityCheck('AdminPublications')) return;
     } else {
-        if (!xarSecurityCheck('AdminArticles',1,'Article',"$ptid:All:All:All")) return;
+        if (!xarSecurityCheck('AdminPublications',1,'Publication',"$ptid:All:All:All")) return;
     }
     if (!isset($action)) {
         xarSession::setVar('statusmsg', '');
@@ -54,7 +54,7 @@ function articles_admin_pubtypes()
     $data['pubtypes'] = array();
 
     // Get current publication types
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
 
     // Verify the action
     if (!isset($action) || ($action != 'new' && $action != 'create' &&
@@ -78,15 +78,15 @@ function articles_admin_pubtypes()
                 if (isset($validation[$field])) {
                     $config[$field]['validation'] = $validation[$field];
                 } elseif ($value == 'imagelist') {
-                    $config[$field]['validation'] = 'modules/articles/xarimages';
+                    $config[$field]['validation'] = 'modules/publications/xarimages';
                 } elseif ($value == 'webpage') {
-                    $config[$field]['validation'] = 'modules/articles';
+                    $config[$field]['validation'] = 'modules/publications';
                 }
             }
             foreach ($input as $field => $value) {
                 $config[$field]['input'] = 1;
             }
-            $ptid = xarModAPIFunc('articles',
+            $ptid = xarModAPIFunc('publications',
                                  'admin',
                                  'createpubtype',
                                  array('name' => $name,
@@ -95,10 +95,10 @@ function articles_admin_pubtypes()
             if (empty($ptid)) {
                 return; // throw back
             } else {
-                if (empty($config['status']['label'])) {
-                    $status = 2;
+                if (empty($config['state']['label'])) {
+                    $state = 2;
                 } else {
-                    $status = 0;
+                    $state = 0;
                 }
                 $settings = array('number_of_columns'    => 0,
                                   'itemsperpage'         => 20,
@@ -119,16 +119,16 @@ function articles_admin_pubtypes()
                                   'usealias'             => 0,
                                   'page_template'        => '',
                                   'usetitleforurl'       => 0,
-                                  'defaultstatus'        => $status,
+                                  'defaultstate'        => $state,
                                   'defaultsort'          => 'date');
-                xarModVars::set('articles', 'settings.'.$ptid,serialize($settings));
-                xarModVars::set('articles', 'number_of_categories.'.$ptid, 0);
-                xarModVars::set('articles', 'mastercids.'.$ptid, '');
+                xarModVars::set('publications', 'settings.'.$ptid,serialize($settings));
+                xarModVars::set('publications', 'number_of_categories.'.$ptid, 0);
+                xarModVars::set('publications', 'mastercids.'.$ptid, '');
 
                 // Redirect to the admin view page
                 xarSession::setVar('statusmsg',
                                 xarML('Publication type created'));
-                xarResponseRedirect(xarModURL('articles', 'admin', 'pubtypes',
+                xarResponseRedirect(xarModURL('publications', 'admin', 'pubtypes',
                                               array('action' => 'view')));
                 return true;
             }
@@ -143,15 +143,15 @@ function articles_admin_pubtypes()
                 if (isset($validation[$field])) {
                     $config[$field]['validation'] = $validation[$field];
                 } elseif ($value == 'imagelist') {
-                    $config[$field]['validation'] = 'modules/articles/xarimages';
+                    $config[$field]['validation'] = 'modules/publications/xarimages';
                 } elseif ($value == 'webpage') {
-                    $config[$field]['validation'] = 'modules/articles';
+                    $config[$field]['validation'] = 'modules/publications';
                 }
             }
             foreach ($input as $field => $value) {
                 $config[$field]['input'] = 1;
             }
-            if (!xarModAPIFunc('articles',
+            if (!xarModAPIFunc('publications',
                               'admin',
                               'updatepubtype',
                               array('ptid' => $ptid,
@@ -163,30 +163,30 @@ function articles_admin_pubtypes()
                 // Redirect back to the admin modify page to continue editing publication type
                 xarSession::setVar('statusmsg',
                                 xarML('Publication type updated'));
-                xarResponseRedirect(xarModURL('articles', 'admin', 'pubtypes',array('ptid'=>$ptid,'action' => 'modify')));
+                xarResponseRedirect(xarModURL('publications', 'admin', 'pubtypes',array('ptid'=>$ptid,'action' => 'modify')));
                 return true;
             }
         } elseif ($action == 'confirm') {
-        // TODO: clean up more stuff here, like articles etc. ?
-            if (!xarModAPIFunc('articles',
+        // TODO: clean up more stuff here, like publications etc. ?
+            if (!xarModAPIFunc('publications',
                               'admin',
                               'deletepubtype',
                               array('ptid' => $ptid))) {
                 return; // throw back
             } else {
-                xarModVars::delete('articles', 'settings.'.$ptid);
-                xarModDelAlias($pubtypes[$ptid]['name'],'articles');
-                xarModVars::delete('articles', 'number_of_categories.'.$ptid);
-                xarModVars::delete('articles', 'mastercids.'.$ptid);
-                $default = xarModVars::get('articles','defaultpubtype');
+                xarModVars::delete('publications', 'settings.'.$ptid);
+                xarModDelAlias($pubtypes[$ptid]['name'],'publications');
+                xarModVars::delete('publications', 'number_of_categories.'.$ptid);
+                xarModVars::delete('publications', 'mastercids.'.$ptid);
+                $default = xarModVars::get('publications','defaultpubtype');
                 if ($ptid == $default) {
-                    xarModVars::set('articles','defaultpubtype','');
+                    xarModVars::set('publications','defaultpubtype','');
                 }
 
                 // Redirect to the admin view page
                 xarSession::setVar('statusmsg',
                                 xarML('Publication type deleted'));
-                xarResponseRedirect(xarModURL('articles', 'admin', 'pubtypes',
+                xarResponseRedirect(xarModURL('publications', 'admin', 'pubtypes',
                                               array('action' => 'view')));
                 return true;
             }
@@ -195,7 +195,7 @@ function articles_admin_pubtypes()
 
     // Create Edit/Delete links
     foreach ($pubtypes as $id => $pubtype) {
-        if (!xarSecurityCheck('AdminArticles',0,'Article',"$id:All:All:All")) {
+        if (!xarSecurityCheck('AdminPublications',0,'Publication',"$id:All:All:All")) {
             $pubtypes[$id]['editurl'] = '';
             $pubtypes[$id]['deleteurl'] = '';
             $pubtypes[$id]['configurl'] = '';
@@ -203,38 +203,38 @@ function articles_admin_pubtypes()
             $pubtypes[$id]['addurl'] = '';
             continue;
         }
-        $pubtypes[$id]['editurl'] = xarModURL('articles',
+        $pubtypes[$id]['editurl'] = xarModURL('publications',
                                              'admin',
                                              'pubtypes',
                                              array('ptid' => $id,
                                                    'action' => 'modify'));
-        $pubtypes[$id]['deleteurl'] = xarModURL('articles',
+        $pubtypes[$id]['deleteurl'] = xarModURL('publications',
                                                'admin',
                                                'pubtypes',
                                                array('ptid' => $id,
                                                      'action' => 'delete'));
-        $pubtypes[$id]['configurl'] = xarModURL('articles',
+        $pubtypes[$id]['configurl'] = xarModURL('publications',
                                                'admin',
                                                'modifyconfig',
                                                array('ptid' => $id));
-        $pubtypes[$id]['viewurl'] = xarModURL('articles',
+        $pubtypes[$id]['viewurl'] = xarModURL('publications',
                                                'admin',
                                                'view',
                                                array('ptid' => $id));
-        $pubtypes[$id]['addurl'] = xarModURL('articles',
+        $pubtypes[$id]['addurl'] = xarModURL('publications',
                                                'admin',
                                                'new',
                                                array('ptid' => $id));
     }
     $data['pubtypes'] = $pubtypes;
-    $data['newurl'] = xarModURL('articles',
+    $data['newurl'] = xarModURL('publications',
                                'admin',
                                'pubtypes',
                                array('action' => 'new'));
 
 /*
     // Get the list of defined field formats
-    $pubfieldformats = xarModAPIFunc('articles','user','getpubfieldformats');
+    $pubfieldformats = xarModAPIFunc('publications','user','getpubfieldformats');
     $data['formats'] = array();
     foreach ($pubfieldformats as $fname => $flabel) {
         $data['formats'][] = array('fname' => $fname, 'flabel' => $flabel);
@@ -244,50 +244,33 @@ function articles_admin_pubtypes()
     if ($action == 'new') {
         $data['authid'] = xarSecGenAuthKey();
         $data['buttonlabel'] = xarML('Create');
-        $data['link'] = xarModURL('articles','admin','pubtypes',
+        $data['link'] = xarModURL('publications','admin','pubtypes',
                                  array('action' => 'create'));
 
         $data['fields'] = array();
-        $pubfieldtypes = xarModAPIFunc('articles','user','getpubfieldtypes');
+        $pubfieldtypes = xarModAPIFunc('publications','user','getpubfieldtypes');
         // Fill in the *default* configuration fields
-        $pubfields = xarModAPIFunc('articles','user','getpubfields');
-        foreach ($pubfields as $field => $value) {
-            $data['fields'][] = array('name'   => $field,
-                                      'label'  => $value['label'],
-                                      'format' => $value['format'],
-                                      'validation' => !empty($value['validation']) ? $value['validation'] : '',
-                                      'type'   => $pubfieldtypes[$field],
-                                      'input'  => !empty($value['input']));
-        }
+        $pubfields = xarModAPIFunc('publications','user','getpubfields');
     } elseif ($action == 'modify') {
         $data['item'] = $pubtypes[$ptid];
         $data['authid'] = xarSecGenAuthKey();
         $data['buttonlabel'] = xarML('Modify');
-        $data['link'] = xarModURL('articles','admin','pubtypes',
+        $data['link'] = xarModURL('publications','admin','pubtypes',
                                  array('action' => 'update'));
 
         $data['fields'] = array();
-        $pubfieldtypes = xarModAPIFunc('articles','user','getpubfieldtypes');
+        $pubfieldtypes = xarModAPIFunc('publications','user','getpubfieldtypes');
         // Fill in the *current* configuration fields
     // TODO: make order dependent on pubtype or not ?
     //    foreach ($pubtypes[$ptid]['config'] as $field => $value) {
-        $pubfields = xarModAPIFunc('articles','user','getpubfields');
-        foreach ($pubfields as $field => $dummy) {
-            $value = $pubtypes[$ptid]['config'][$field];
-            $data['fields'][] = array('name'   => $field,
-                                      'label'  => $value['label'],
-                                      'format' => $value['format'],
-                                      'validation' => !empty($value['validation']) ? $value['validation'] : '',
-                                      'type'   => $pubfieldtypes[$field],
-                                      'input'  => !empty($value['input']));
-        }
+        $pubfields = xarModAPIFunc('publications','user','getpubfields');
     } elseif ($action == 'delete') {
         $data['item'] = $pubtypes[$ptid];
         $data['authid'] = xarSecGenAuthKey();
         $data['buttonlabel'] = xarML('Delete');
-        $data['numitems'] = xarModAPIFunc('articles','user','countitems',
+        $data['numitems'] = xarModAPIFunc('publications','user','countitems',
                                           array('ptid' => $ptid));
-        $data['link'] = xarModURL('articles','admin','pubtypes',
+        $data['link'] = xarModURL('publications','admin','pubtypes',
                                  array('action' => 'confirm'));
     }
 

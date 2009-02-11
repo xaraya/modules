@@ -1,61 +1,56 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
- * get the number of articles per publication type
- * @param $args['status'] array of requested status(es) for the articles
+ * get the number of publications per publication type
+ * @param $args['state'] array of requested status(es) for the publications
  * @return array array(id => count), or false on failure
  */
-function articles_userapi_getpubcount($args)
+function publications_userapi_getpubcount($args)
 {
-    if (empty($args['status'])) {
-        $key = 'all';
+    if (!empty($args['state'])) {
+        $statestring = 'all';
+    } else if (is_array($args['state'])) {
+        sort($args['state']);
+        $statestring = join('+',$args['state']);
     } else {
-        sort($args['status']);
-        $key = join('+',$args['status']);
+        $statestring = $args['state'];
     }
-    if (xarVarIsCached('Articles.PubCount',$key)) {
-        return xarVarGetCached('Articles.PubCount',$key);
+    
+    if (xarVarIsCached('Publications.PubCount',$statestring)) {
+        return xarVarGetCached('Publications.PubCount',$statestring);
     }
 
     $pubcount = array();
 
-    // Get database setup
     $dbconn = xarDB::getConn();
-
-    // Get the LEFT JOIN ... ON ...  and WHERE parts from articles
-    $articlesdef = xarModAPIFunc('articles','user','leftjoin',$args);
-
-    $query = 'SELECT ' . $articlesdef['pubtypeid'] . ', COUNT(*)
-            FROM ' . $articlesdef['table'];
-    if (!empty($articlesdef['where'])) {
-        $query .= ' WHERE ' . $articlesdef['where'];
+    $tables = xarDB::getTables();
+    $q = new Query('SELECT', $tables['publications']);
+    $q->addfield('pubtype_id');
+    $q->addfield('COUNT(state) AS count');
+    $q->addgroup('pubtype_id');
+    if (!empty($args['state'])) {
+    } else if (is_array($args['state'])) {
+        $q->in('state', $args['state']);
+    } else {
+        $q->eq('state', $args['state']);
     }
-    $query .= ' GROUP BY ' . $articlesdef['pubtypeid'];
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    if ($result->EOF) {
-        xarVarSetCached('Articles.PubCount',$key,$pubcount);
-        return $pubcount;
-    }
-    while (!$result->EOF) {
-        list($id, $count) = $result->fields;
-        $pubcount[$id] = $count;
-        $result->MoveNext();
-    }
-
-    xarVarSetCached('Articles.PubCount',$key,$pubcount);
+//    $q->qecho();
+    if (!$q->run()) return;
+    
+    $pubcount = array();
+    foreach ($q->output() as $key => $value) $pubcount[$key] = $value;
+    xarVarSetCached('Publications.PubCount',$statestring,$pubcount);
     return $pubcount;
 }
 

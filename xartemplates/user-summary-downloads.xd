@@ -13,8 +13,8 @@
     <h4>
     <xar:mlstring>Download</xar:mlstring>:</h4>
     <xar:if condition="empty($notes)">
-        <xar:elseif condition="xarModIsHooked('uploads','articles',$pubtypeid) and substr($notes,0,1) eq ';'" />
-        <xar:comment>If you hook the uploads module to articles, then file upload fields will contain a comma-separated list of file ids, and you will need to call an API function to retrieve the file information. For dynamic extra fields, you can use [fieldname]_output directly to access the file information.</xar:comment>
+        <xar:elseif condition="xarModIsHooked('uploads','publications',$pubtype_id) and substr($notes,0,1) eq ';'" />
+        <xar:comment>If you hook the uploads module to publications, then file upload fields will contain a comma-separated list of file ids, and you will need to call an API function to retrieve the file information. For dynamic extra fields, you can use [fieldname]_output directly to access the file information.</xar:comment>
         <xar:set name="notes_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $notes, 'multiple' => true))</xar:set>
         <xar:foreach in="$notes_output" key="$fileid" value="$fileinfo">
             <p>
@@ -28,7 +28,7 @@
         <xar:else />
         <p>#$notes#</p>
     </xar:if>
-    <div class="xar-articles-keywords">
+    <div class="xar-publications-keywords">
         <xar:if condition="!empty($keywords)">
         <xar:mlstring>Keywords</xar:mlstring>:
         <xar:loop name="$keywords">

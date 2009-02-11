@@ -1,14 +1,14 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
@@ -19,11 +19,11 @@
  * @return array containing func the function to be called and args the query
  *         string arguments, or empty if it failed
  */
-function articles_userapi_decode_shorturl($params)
+function publications_userapi_decode_shorturl($params)
 {
     $args = array();
 
-    $module = 'articles';
+    $module = 'publications';
 
     $foundalias = 0;
 
@@ -32,7 +32,7 @@ function articles_userapi_decode_shorturl($params)
         $alias = xarModGetAlias($params[0]);
         if ($module == $alias) {
             // yup, looks like it
-            $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+            $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
             foreach ($pubtypes as $id => $pubtype) {
                 if ($params[0] == $pubtype['name']) {
                     $foundalias = 1;
@@ -45,9 +45,9 @@ function articles_userapi_decode_shorturl($params)
 
     // Get the article settings for this publication type
     if (!empty($args['ptid'])) {
-        $settings = unserialize(xarModVars::get('articles', 'settings.'.$args['ptid']));
+        $settings = unserialize(xarModVars::get('publications', 'settings.'.$args['ptid']));
     } else {
-        $string = xarModVars::get('articles', 'settings');
+        $string = xarModVars::get('publications', 'settings');
         if (!empty($string)) {
             $settings = unserialize($string);
         }
@@ -88,7 +88,7 @@ function articles_userapi_decode_shorturl($params)
 
     } elseif ($params[1] == xarML('by_author')) {
         if (!empty($params[2]) && preg_match('/^(\d+)/',$params[2],$matches)) {
-            $args['authorid'] = $matches[1];
+            $args['owner'] = $matches[1];
             return array('view', $args);
         }
 
@@ -102,7 +102,7 @@ function articles_userapi_decode_shorturl($params)
         $catid = $matches[1];
         $args['catid'] = $catid;
         if (!empty($params[2])) {
-            $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+            $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
             foreach ($pubtypes as $id => $pubtype) {
                 if ($params[1] == $pubtype['name']) {
                     $args['ptid'] = $id;
@@ -128,12 +128,12 @@ function articles_userapi_decode_shorturl($params)
 
     } else {
 
-        // normalize $params to articles/pubtype/... for title decoding
+        // normalize $params to publications/pubtype/... for title decoding
         if ($foundalias) {
             array_unshift($params, $module);
         }
         // Get all publication types present
-        $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+        $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
         foreach ($pubtypes as $id => $pubtype) {
             if ($params[1] == $pubtype['name']) {
                 $args['ptid'] = $id;
@@ -174,14 +174,14 @@ function articles_userapi_decode_shorturl($params)
                         }
                     } else {
                         // Now that we find out that we're in a specific pubtype, get specific pubtype settings again
-                        $settings = unserialize(xarModVars::get('articles', 'settings.'.$args['ptid']));
+                        $settings = unserialize(xarModVars::get('publications', 'settings.'.$args['ptid']));
 
                         // check if we want to decode URLs using their titles rather then their ID
                         $decodeUsingTitle = empty($settings['usetitleforurl']) ? 0 : $settings['usetitleforurl'];
 
                         // Decode using title
                         if( $decodeUsingTitle ) {
-                            $args['id'] = articles_decodeIDUsingTitle( $params, $args['ptid'], $decodeUsingTitle );
+                            $args['id'] = publications_decodeIDUsingTitle( $params, $args['ptid'], $decodeUsingTitle );
                             return array('display', $args);
                         }
 
@@ -195,7 +195,7 @@ function articles_userapi_decode_shorturl($params)
 
         // Decode using title
         if( $decodeUsingTitle ) {
-            $args['id'] = articles_decodeIDUsingTitle( $params, '', $decodeUsingTitle );
+            $args['id'] = publications_decodeIDUsingTitle( $params, '', $decodeUsingTitle );
             return array('display', $args);
         }
     }
@@ -209,7 +209,7 @@ function articles_userapi_decode_shorturl($params)
  * @return int id The article ID
  * @todo bug 5878 Why does a title need higher privileges than the usual id in a short title?
  */
-function articles_decodeIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 1 )
+function publications_decodeIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 1 )
 {
     switch ($decodeUsingTitle)
     {
@@ -270,17 +270,17 @@ function articles_decodeIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 1
     $searchArgs['searchfields'] = array('title');
     $searchArgs['searchtype'] = 'equal whole string';
 
-    $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
+    $publications = xarModAPIFunc('publications', 'user', 'getall', $searchArgs);
 
-    if( (count($articles) == 0) && (strpos($decodedTitle,'_') !== false) ) {
+    if( (count($publications) == 0) && (strpos($decodedTitle,'_') !== false) ) {
         $searchArgs['search'] = str_replace('_',' ',$decodedTitle);
         $searchArgs['searchfields'] = array('title');
         $searchArgs['searchtype'] = 'equal whole string';
-        $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
+        $publications = xarModAPIFunc('publications', 'user', 'getall', $searchArgs);
     }
 
-    if( count($articles) == 1 ) {
-        $theArticle = $articles[0];
+    if( count($publications) == 1 ) {
+        $thePublication = $publications[0];
     } else {
         // NOTE: We could probably just loop through the various dupe detection methods rather then
         // pulling from a config variable.  This would allow old URLs encoded using one system
@@ -291,11 +291,11 @@ function articles_decodeIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 1
                 // Look for ID appended after title
                 if( !empty($params[$paramidx]) )
                 {
-                    foreach ($articles as $article)
+                    foreach ($publications as $article)
                     {
                         if( $article['id'] == $params[$paramidx] )
                         {
-                            $theArticle = $article;
+                            $thePublication = $article;
                             break;
                         }
                     }
@@ -306,11 +306,11 @@ function articles_decodeIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 1
                 // Look for date appended after title
                 if( !empty($params[$paramidx]) )
                 {
-                    foreach ($articles as $article)
+                    foreach ($publications as $article)
                     {
                         if( date('Y-m-d H:i',$article['pubdate']) == $params[$paramidx] )
                         {
-                            $theArticle = $article;
+                            $thePublication = $article;
                             break;
                         }
                     }
@@ -320,15 +320,15 @@ function articles_decodeIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 1
             case 'ALL':
                 if( !empty($params[$paramidx]) )
                 {
-                    foreach ($articles as $article)
+                    foreach ($publications as $article)
                     {
                         if( date('Y-m-d H:i',$article['pubdate']) == $params[$paramidx] )
                         {
-                            $theArticle = $article;
+                            $thePublication = $article;
                             break;
                         } else if( $article['id'] == $params[$paramidx] )
                         {
-                            $theArticle = $article;
+                            $thePublication = $article;
                             break;
                         }
                     }
@@ -338,15 +338,15 @@ function articles_decodeIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 1
             case 'Ignore':
             default:
                 // Just use the first one that came back
-                if (!empty($articles)) {
-                    $theArticle = $articles[0];
+                if (!empty($publications)) {
+                    $thePublication = $publications[0];
                 }
         }
     }
 
-    if( !empty($theArticle) )
+    if( !empty($thePublication) )
     {
-        $id = $theArticle['id'];
+        $id = $thePublication['id'];
         return $id;
     }
 }

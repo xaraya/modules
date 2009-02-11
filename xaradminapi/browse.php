@@ -1,17 +1,17 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
-function articles_adminapi_browse($args)
+function publications_adminapi_browse($args)
 {
     // Get arguments from argument array
     extract($args);
@@ -22,14 +22,14 @@ function articles_adminapi_browse($args)
     if (empty($basedir) || empty($filetype)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'base directory', 'admin', 'browse',
-                    'Articles');
+                    'Publications');
         throw new BadParameterException(null,$msg);
     }
 
     $filelist = array();
 
     // Security Check
-    if (!xarSecurityCheck('SubmitArticles',0)) return $filelist;
+    if (!xarSecurityCheck('SubmitPublications',0)) return $filelist;
 
     // not supported under safe_mode
     @set_time_limit(120);

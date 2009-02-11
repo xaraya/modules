@@ -8,25 +8,25 @@
 </div>
 <xar:if condition="empty($nopublimit)">
     <div class="xar-form-input-wrapper">
-        <label class="xar-form-label help" title="#xarML('Choose the publication type you want to display with top items.')#" for="pubtypeid#$blockid#"> 
+        <label class="xar-form-label help" title="#xarML('Choose the publication type you want to display with top items.')#" for="pubtype_id#$blockid#"> 
             <xar:mlstring>
                 Publication Type
             </xar:mlstring>
         </label> 
-        <select name="pubtypeid" id="pubtypeid#$blockid#">
+        <select name="pubtype_id" id="pubtype_id#$blockid#">
             <option value="0">
                 <xar:mlstring>
                     Default / Current 
                 </xar:mlstring>
             </option>
             <xar:foreach in="$pubtypes" key="$pubid" value="$pubtype">
-                <xar:if condition="!empty($pubtypeid) and $pubtypeid eq $pubid">
+                <xar:if condition="!empty($pubtype_id) and $pubtype_id eq $pubid">
                     <option value="#$pubid#" selected="selected">
-                        #$pubtype['descr']# 
+                        #$pubtype['description']# 
                     </option>
                     <xar:else />
                     <option value="#$pubid#">
-                        #$pubtype['descr']# 
+                        #$pubtype['description']# 
                     </option>
                 </xar:if>
             </xar:foreach>
@@ -102,7 +102,7 @@
             <xar:else />
             <input type="checkbox" name="includechildren" id="includechildren#$blockid#" value="1" checked="checked" /> 
         </xar:if>
-        <label class="help" title="#xarML('Check this if you want to display all articles in all subcategories of the current or selected category.')#" for="includechildren#$blockid#"> 
+        <label class="help" title="#xarML('Check this if you want to display all publications in all subcategories of the current or selected category.')#" for="includechildren#$blockid#"> 
             <xar:mlstring>
                 Include Child Category Content 
             </xar:mlstring>
@@ -151,7 +151,7 @@
             </xar:if>
         </xar:foreach>
     </select>
-    <xar:mlstring>Hook Hitcount or Ratings to Articles to use these sort types</xar:mlstring>
+    <xar:mlstring>Hook Hitcount or Ratings to Publications to use these sort types</xar:mlstring>
 
 </div>
 <div class="xar-form-input-wrapper-after">
@@ -179,25 +179,25 @@
     </label> 
 </div> 
 <div class="xar-form-input-wrapper">
-    <label class="xar-form-label help" title="#xarML('Choose the status (e.g. Approved, Front Page) for the featured items.')#" for="status#$blockid#"> 
+    <label class="xar-form-label help" title="#xarML('Choose the state (e.g. Approved, Front Page) for the featured items.')#" for="state#$blockid#"> 
         <xar:mlstring>
             Status 
         </xar:mlstring>
-    </label><select name="status" id="status#$blockid#" size="1"> 
-        <xar:foreach in="$statusoptions" value="$statusoption">
-            <xar:if condition="!empty($status) and $status eq $statusoption['id']">
-                <option value="#$statusoption['id']#" selected="selected">
-                    #$statusoption['name']# 
+    </label><select name="state" id="state#$blockid#" size="1"> 
+        <xar:foreach in="$stateoptions" value="$stateoption">
+            <xar:if condition="!empty($state) and $state eq $stateoption['id']">
+                <option value="#$stateoption['id']#" selected="selected">
+                    #$stateoption['name']# 
                 </option>
                 <xar:else />
-                <option value="#$statusoption['id']#">
-                    #$statusoption['name']# 
+                <option value="#$stateoption['id']#">
+                    #$stateoption['name']# 
                 </option>
             </xar:if>
         </xar:foreach>
     </select>
 </div>
-<xar:if condition="xarModIsHooked('dynamicdata','articles',$pubtypeid)">
+<xar:if condition="xarModIsHooked('dynamicdata','publications',$pubtype_id)">
     <div class="xar-form-input-wrapper-after">
         <xar:if condition="empty($showdynamic)">
             <input type="checkbox" name="showdynamic" id="showdynamic#$blockid#" value="1" /> 
@@ -212,7 +212,7 @@
     </div>
 <xar:else />
     <div class="xar-form-input-wrapper-after">
-    <xar:mlstring>Hook Dynamic Data to articles or itemtypes for Dynamic Data option</xar:mlstring>
+    <xar:mlstring>Hook Dynamic Data to publications or itemtypes for Dynamic Data option</xar:mlstring>
     </div>
 </xar:if>
 </xar:template>

@@ -4,7 +4,7 @@
     <a name="titles">
     </a>
     <xar:if condition="!empty($ptid) or !empty($catid)">
-        <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="articles" itemtype="$ptid" catid="$catid" showcatcount="$showcatcount" showempty="1" />
+        <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" catid="$catid" showcatcount="$showcatcount" showempty="1" />
     </xar:if>
     <xar:if condition="!empty($titles) and count($titles) gt 0">
         <ul>
@@ -39,13 +39,13 @@
     #$output#
     <xar:if condition="!empty($showcols)">
         <xar:if condition="$showcols eq 1">
-            <a href="#xarModURL('articles','user','view',array('numcols' => 1))#">
+            <a href="#xarModURL('publications','user','view',array('numcols' => 1))#">
                 <xar:mlstring>
                     single-column display
                 </xar:mlstring>
             </a>
             <xar:else />
-            <a href="#xarModURL('articles','user','view')#">
+            <a href="#xarModURL('publications','user','view')#">
                 <xar:ml>
                     <xar:mlstring>
                         #(1)-column display
@@ -85,7 +85,7 @@
             </xar:if>
             <xar:if condition="!empty($submitlink)">
                 <li style="display:inline;padding:0 .5em;">
-                    <a href="#$submitlink#" title="Submit Article">
+                    <a href="#$submitlink#" title="Submit Publication">
                         <xar:mlstring>
                             Contribute
                         </xar:mlstring>
@@ -113,7 +113,7 @@
             </xar:if>
             <xar:if condition="!empty($submitlink)">
             <span style="text-align: center; padding: 50px">
-                <a href="#$submitlink#" title="Submit Article"><xar:mlstring>Contribute</xar:mlstring></a>
+                <a href="#$submitlink#" title="Submit Publication"><xar:mlstring>Contribute</xar:mlstring></a>
             </span>
             </xar:if>
             <xar:if condition="!empty($archivelink)">

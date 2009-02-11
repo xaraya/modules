@@ -1,29 +1,29 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
  * get an array of parent categories with links and counts
  *
- * @param $args['status'] array of requested status(es) for the articles
+ * @param $args['state'] array of requested status(es) for the publications
  * @param $args['ptid'] publication type ID
  * @param $args['cids'] array of category IDs
  * @param $args['showcids'] true (default) means keeping a link for the cids
  * @param $args['sort'] currently used only to override default start view
- * @param $args['count'] true (default) means counting the number of articles
+ * @param $args['count'] true (default) means counting the number of publications
  * @return array
 // TODO: specify return format
  */
-function articles_userapi_getparentcats($args)
+function publications_userapi_getparentcats($args)
 {
     extract($args);
 
@@ -33,9 +33,9 @@ function articles_userapi_getparentcats($args)
     if (empty($ptid)) {
         $ptid = null;
     }
-    if (!isset($status)) {
+    if (!isset($state)) {
         // frontpage or approved
-        $status = array(ARTCLES_STATE_FRONTPAGE,ARTCLES_STATE_APPROVED);
+        $state = array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED);
     }
     if (!isset($showcids)) {
         $showcids = true;
@@ -49,10 +49,10 @@ function articles_userapi_getparentcats($args)
 
     // get the counts for all child categories
     if ($count) {
-        $pubcatcount = xarModAPIFunc('articles',
+        $pubcatcount = xarModAPIFunc('publications',
                                     'user',
                                     'getpubcatcount',
-                                    array('status' => $status,
+                                    array('state' => $state,
                                           'cids' => $cids,
                                           'ptid' => $ptid,
                                           'reverse' => 1));
@@ -84,7 +84,7 @@ function articles_userapi_getparentcats($args)
 
         $trailitem['parentlinks'] = array();
         $item = array();
-        $item['plink'] = xarModURL('articles','user','view',
+        $item['plink'] = xarModURL('publications','user','view',
                                   array('ptid' => $ptid,
                                         'sort' => $sort));
         $item['ptitle'] = xarML('All');
@@ -92,7 +92,7 @@ function articles_userapi_getparentcats($args)
         $trailitem['parentlinks'][] = $item;
 // TODO: make sure permissions are taken into account here !
         foreach ($trail as $info) {
-            $item['plink'] = xarModURL('articles',
+            $item['plink'] = xarModURL('publications',
                                       'user',
                                       'view',
                                        array('ptid' => $ptid,
@@ -112,7 +112,7 @@ function articles_userapi_getparentcats($args)
                     $trailitem['icon'] = array('image' => $info['image'],
                                                'text' => $item['ptitle'],
                                                'link' =>
-                          xarModURL('articles','user','view',
+                          xarModURL('publications','user','view',
                                    array('ptid' => $ptid,
                                          'catid' => $info['cid'])));
                 }

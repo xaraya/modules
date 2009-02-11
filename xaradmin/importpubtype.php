@@ -1,22 +1,22 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
  * Import an object definition or an object item from XML
  */
-function articles_admin_importpubtype($args)
+function publications_admin_importpubtype($args)
 {
-    if (!xarSecurityCheck('AdminArticles')) return;
+    if (!xarSecurityCheck('AdminPublications')) return;
 
     if(!xarVarFetch('import', 'isset', $import,  NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('xml', 'isset', $xml,  NULL, XARVAR_DONT_SET)) {return;}
@@ -29,7 +29,7 @@ function articles_admin_importpubtype($args)
     $data['warning'] = '';
     $data['options'] = array();
 
-    $basedir = 'modules/articles';
+    $basedir = 'modules/publications';
     $filetype = 'xml';
     $files = xarModAPIFunc('dynamicdata','admin','browse',
                            array('basedir' => $basedir,
@@ -54,10 +54,10 @@ function articles_admin_importpubtype($args)
                 $msg = xarML('File not found');
                 throw new BadParameterException(null,$msg);
             }
-            $ptid = xarModAPIFunc('articles','admin','importpubtype',
+            $ptid = xarModAPIFunc('publications','admin','importpubtype',
                                   array('file' => $basedir . '/' . $file));
         } else {
-            $ptid = xarModAPIFunc('articles','admin','importpubtype',
+            $ptid = xarModAPIFunc('publications','admin','importpubtype',
                                   array('xml' => $xml));
         }
         if (empty($ptid)) return;

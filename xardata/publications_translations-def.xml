@@ -1,0 +1,187 @@
+<object name="publications_translations">
+  <objectid>27</objectid>
+  <label>Translations</label>
+  <module_id>182</module_id>
+  <itemtype>12</itemtype>
+  <class>DataObject</class>
+  <filepath></filepath>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config>a:1:{s:5:&quot;where&quot;;s:12:&quot;itemtype = 9&quot;;}</config>
+  <sources>a:1:{s:11:&quot;publication&quot;;s:16:&quot;xar_publications&quot;;}</sources>
+  <relations>a:0:{}</relations>
+  <objects>a:0:{}</objects>
+  <isalias>0</isalias>
+  <properties>
+    <property name="id">
+      <id>244</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <defaultvalue></defaultvalue>
+      <source>publication.id</source>
+      <status>65</status>
+      <seq>1</seq>
+      <configuration></configuration>
+    </property>
+    <property name="title">
+      <id>245</id>
+      <label>Title</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>publication.name</source>
+      <status>33</status>
+      <seq>2</seq>
+      <configuration></configuration>
+    </property>
+    <property name="source">
+      <id>247</id>
+      <label>Source Text</label>
+      <type>textarea_large</type>
+      <defaultvalue></defaultvalue>
+      <source>publication.body1</source>
+      <status>34</status>
+      <seq>4</seq>
+      <configuration></configuration>
+    </property>
+    <property name="translation">
+      <id>247</id>
+      <label>Translation</label>
+      <type>textarea_large</type>
+      <defaultvalue></defaultvalue>
+      <source>publication.body2</source>
+      <status>34</status>
+      <seq>4</seq>
+      <configuration></configuration>
+    </property>
+    <property name="notes">
+      <id>248</id>
+      <label>Notes</label>
+      <type>textarea</type>
+      <defaultvalue></defaultvalue>
+      <source>publication.notes</source>
+      <status>34</status>
+      <seq>5</seq>
+      <configuration></configuration>
+    </property>
+    <property name="author">
+      <id>250</id>
+      <label>Author</label>
+      <type>username</type>
+      <defaultvalue>xarUserGetVar('uname')</defaultvalue>
+      <source>publication.owner</source>
+      <status>33</status>
+      <seq>20</seq>
+      <configuration>a:6:{s:16:"display_linkrule";s:1:"0";s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:20:"validation_existrule";s:1:"0";s:25:"initialization_store_type";s:2:"id";}</configuration>
+    </property>
+    <property name="state">
+      <id>258</id>
+      <label>State</label>
+      <type>dropdown</type>
+      <defaultvalue>3</defaultvalue>
+      <source>publication.state</source>
+      <status>33</status>
+      <seq>21</seq>
+      <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:50:"0,Deleted;1,Inactive;2,Draft;3,Active;4,Frontpage;";}</configuration>
+    </property>
+    <property name="pages">
+      <id>254</id>
+      <label>Pages</label>
+      <type>integerbox</type>
+      <defaultvalue>1</defaultvalue>
+      <source>publication.pages</source>
+      <status>33</status>
+      <seq>22</seq>
+      <configuration></configuration>
+    </property>
+    <property name="locale">
+      <id>255</id>
+      <label>Language</label>
+      <type>language</type>
+      <defaultvalue>xarConfigVars::get(null, 'Site.MLS.DefaultLocale')</defaultvalue>
+      <source>publication.locale</source>
+      <status>33</status>
+      <seq>23</seq>
+      <configuration></configuration>
+    </property>
+    <property name="itemtype">
+      <id>249</id>
+      <label>Itemtype</label>
+      <type>objectref</type>
+      <defaultvalue>9</defaultvalue>
+      <source>publication.pubtype_id</source>
+      <status>34</status>
+      <seq>24</seq>
+      <configuration>a:4:{s:14:"display_layout";s:7:"default";s:24:"initialization_refobject";s:18:"publications_types";s:25:"initialization_store_prop";s:2:"id";s:27:"initialization_display_prop";s:11:"description";}</configuration>
+    </property>
+    <property name="start_date">
+      <id>251</id>
+      <label>Start Date</label>
+      <type>formatteddatetime</type>
+      <defaultvalue>time()</defaultvalue>
+      <source>publication.start_date</source>
+      <status>34</status>
+      <seq>25</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="end_date">
+      <id>252</id>
+      <label>End Date</label>
+      <type>formatteddatetime</type>
+      <defaultvalue>time()+31536000</defaultvalue>
+      <source>publication.end_date</source>
+      <status>34</status>
+      <seq>26</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="version">
+      <id>253</id>
+      <label>Version</label>
+      <type>integerbox</type>
+      <defaultvalue>1</defaultvalue>
+      <source>publication.version</source>
+      <status>65</status>
+      <seq>27</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="categories">
+      <id>303</id>
+      <label>Categories</label>
+      <type>categories</type>
+      <defaultvalue></defaultvalue>
+      <source></source>
+      <status>34</status>
+      <seq>28</seq>
+      <configuration>a:3:{s:14:"display_layout";s:7:"default";s:21:"validation_categories";s:1:"0";s:19:"validation_override";s:1:"1";}</configuration>
+    </property>
+    <property name="created">
+      <id>256</id>
+      <label>Created</label>
+      <type>formatteddatetime</type>
+      <defaultvalue>time()</defaultvalue>
+      <source>publication.create_date</source>
+      <status>66</status>
+      <seq>29</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="modified">
+      <id>257</id>
+      <label>Modified</label>
+      <type>formatteddatetime</type>
+      <defaultvalue>time()</defaultvalue>
+      <source>publication.modify_date</source>
+      <status>66</status>
+      <seq>30</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
+    <property name="process_state">
+      <id>259</id>
+      <label>Process State</label>
+      <type>dropdown</type>
+      <defaultvalue>1</defaultvalue>
+      <source>publication.process_state</source>
+      <status>34</status>
+      <seq>31</seq>
+      <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:58:"0,Rejected;1,Submitted;2,On Hold;3,Approved;4,Checked Out;";}</configuration>
+    </property>
+  </properties>
+</object>

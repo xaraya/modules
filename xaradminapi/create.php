@@ -1,33 +1,33 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
  * Create a new article
- * Usage : $id = xarModAPIFunc('articles', 'admin', 'create', $article);
+ * Usage : $id = xarModAPIFunc('publications', 'admin', 'create', $article);
  *
  * @param string $args['title'] name of the item (this is the only mandatory argument)
  * @param string $args['summary'] summary for this item
  * @param string $args['body'] body text for this item
  * @param string $args['notes'] notes for the item
- * @param int    $args['status'] status of the item
+ * @param int    $args['state'] state of the item
  * @param int    $args['ptid'] publication type ID for the item
  * @param int    $args['pubdate'] publication date in unix time format (or default now)
- * @param int    $args['authorid'] ID of the author (default is current user)
- * @param string $args['language'] language of the item
+ * @param int    $args['owner'] ID of the author (default is current user)
+ * @param string $args['locale'] language of the item
  * @param array  $args['cids'] category IDs this item belongs to
- * @return int articles item ID on success, false on failure
+ * @return int publications item ID on success, false on failure
  */
-function articles_adminapi_create($args)
+function publications_adminapi_create($args)
 {
     // Get arguments from argument array
     extract($args);
@@ -35,7 +35,7 @@ function articles_adminapi_create($args)
     // Argument check (all the rest is optional, and set to defaults below)
     if (empty($title)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'title', 'admin', 'create', 'Articles');
+                    'title', 'admin', 'create', 'Publications');
         throw new BadParameterException(null,$msg);
     }
 
@@ -44,10 +44,10 @@ function articles_adminapi_create($args)
 
     // Default publication type is defined in the admin interface
     if (empty($ptid) || !is_numeric($ptid)) {
-        $ptid = xarModVars::get('articles', 'defaultpubtype');
+        $ptid = xarModVars::get('publications', 'defaultpubtype');
         if (empty($ptid)) {
             $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                        'ptid', 'admin', 'create', 'Articles');
+                        'ptid', 'admin', 'create', 'Publications');
             throw new BadParameterException(null,$msg);
         }
         // for security check below
@@ -55,13 +55,13 @@ function articles_adminapi_create($args)
     }
 
     // Default author ID is the current user, or Anonymous (1) otherwise
-    if (empty($authorid) || !is_numeric($authorid)) {
-        $authorid = xarUserGetVar('id');
-        if (empty($authorid)) {
-            $authorid = _XAR_ID_UNREGISTERED;
+    if (empty($owner) || !is_numeric($owner)) {
+        $owner = xarUserGetVar('id');
+        if (empty($owner)) {
+            $owner = _XAR_ID_UNREGISTERED;
         }
         // for security check below
-        $args['authorid'] = $authorid;
+        $args['owner'] = $owner;
     }
 
     // Default categories is none
@@ -74,12 +74,12 @@ function articles_adminapi_create($args)
     }
 
     // Security check
-    if (!xarModAPILoad('articles', 'user')) return;
+    if (!xarModAPILoad('publications', 'user')) return;
 
-    $args['mask'] = 'SubmitArticles';
-    if (!xarModAPIFunc('articles','user','checksecurity',$args)) {
+    $args['mask'] = 'SubmitPublications';
+    if (!xarModAPIFunc('publications','user','checksecurity',$args)) {
         $msg = xarML('Not authorized to add #(1) items',
-                    'Article');
+                    'Publication');
         throw new ForbiddenOperationException(null, $msg);
     }
 
@@ -88,14 +88,14 @@ function articles_adminapi_create($args)
         $pubdate = time();
     }
 
-    // Default status is Submitted (0)
-    if (empty($status) || !is_numeric($status)) {
-        $status = 0;
+    // Default state is Submitted (0)
+    if (empty($state) || !is_numeric($state)) {
+        $state = 0;
     }
 
-    // Default language is current locale
-    if (empty($language)) {
-        $language = xarMLSGetCurrentLocale();
+    // Default locale is current locale
+    if (empty($locale)) {
+        $locale = xarMLSGetCurrentLocale();
     }
 
     // Default summary is empty
@@ -116,51 +116,51 @@ function articles_adminapi_create($args)
     // Get database setup
     $dbconn = xarDB::getConn();
     $xartable = xarDB::getTables();
-    $articlestable = $xartable['articles'];
+    $publicationstable = $xartable['publications'];
 
     // Get next ID in table
     if (empty($id) || !is_numeric($id) || $id == 0) {
-        $result = $dbconn->Execute("SELECT MAX(id) FROM $articlestable");
+        $result = $dbconn->Execute("SELECT MAX(id) FROM $publicationstable");
         list($id) = $result->fields;
         $id++;
     }
 
     // Add item
-    $query = "INSERT INTO $articlestable (
+    $query = "INSERT INTO $publicationstable (
               id,
               title,
               summary,
               body,
-              authorid,
+              owner,
               pubdate,
-              pubtypeid,
+              pubtype_id,
               notes,
-              status,
-              language)
+              state,
+              locale)
               VALUES (?,?,?,?,?,?,?,?,?,?)";
     $bindvars = array($id,
                       (string)  $title,
                       (string)  $summary,
                       (string)  $body,
-                      (int)     $authorid,
+                      (int)     $owner,
                       (int)     $pubdate,
                       (int)     $ptid,
                       (string)  $notes,
-                      (int)     $status,
-                      (string)  $language);
+                      (int)     $state,
+                      (string)  $locale);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
 // Get id to return
     if (empty($id) || !is_numeric($id) || $id == 0) {
-        $id = $dbconn->PO_Insert_ID($articlestable, 'id');
+        $id = $dbconn->PO_Insert_ID($publicationstable, 'id');
     }
 
     if (empty($cids)) {
         $cids = array();
     }
 
-/* ---------------------------- TODO: Remove once articles uses dd objects */
+/* ---------------------------- TODO: Remove once publications uses dd objects */
     sys::import('modules.dynamicdata.class.properties.master');
     $categories = DataPropertyMaster::getProperty(array('name' => 'categories'));
     $categories->checkInput('categories',$id);
@@ -170,7 +170,7 @@ function articles_adminapi_create($args)
     // Call create hooks for categories, hitcount etc.
     $args['id'] = $id;
 // Specify the module, itemtype and itemid so that the right hooks are called
-    $args['module'] = 'articles';
+    $args['module'] = 'publications';
     $args['itemtype'] = $ptid;
     $args['itemid'] = $id;
 // TODO: get rid of this

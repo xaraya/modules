@@ -1,25 +1,25 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
- * Function to decode status
+ * Function to decode state
  */
-function articles_userapi_getstatusname( $args )
+function publications_userapi_getstatusname( $args )
 {
     extract($args);
-    $states = xarModAPIFunc('articles','user','getstates');
-    if (isset($status) && isset($states[$status])) {
-        return $states[$status];
+    $states = xarModAPIFunc('publications','user','getstates');
+    if (isset($state) && isset($states[$state])) {
+        return $states[$state];
     } else {
         return xarML('Unknown');
     }

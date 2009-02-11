@@ -1,0 +1,106 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <fieldset>
+        <legend>
+            Characteristics
+        </legend>
+        <div class="xar-form-input-wrapper">
+            <xar:var name="label">Document ID</xar:var>
+            <xar:data-label property="$properties['id']" for="id" label="$label" />
+            <xar:data-input property="$properties['id']" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <xar:var name="label">Publication Type</xar:var>
+            <xar:data-label property="$properties['itemtype']" for="id" label="$label" />
+            <xar:data-input property="$properties['itemtype']" value="$ptid" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <xar:var name="label">Language</xar:var>
+            <xar:data-label property="$properties['locale']" for="id" label="$label" />
+            <xar:data-input property="$properties['locale']" value="$ptid" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <xar:var name="label">Current Version</xar:var>
+            <xar:data-label property="$properties['version']" for="id" label="$label" />
+            <xar:data-input property="$properties['version']" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <xar:var name="label">Author</xar:var>
+            <xar:data-label property="$properties['author']" for="id" label="$label" />
+            <xar:data-input property="$properties['author']" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <xar:var name="label">Number of Pages</xar:var>
+            <xar:data-label property="$properties['pages']" for="id" label="$label" />
+            <xar:data-input property="$properties['pages']" />
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>
+            Publication
+        </legend>
+        <div class="xar-form-input-wrapper">
+            <xar:var name="label">Start Publication</xar:var>
+            <xar:data-label property="$properties['start_date']" for="id" label="$label" />
+            <xar:data-input property="$properties['start_date']" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <xar:var name="label">End Publicazion</xar:var>
+            <xar:data-label property="$properties['end_date']" for="id" label="$label" />
+            <xar:data-input property="$properties['end_date']" />
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>
+            Status
+        </legend>
+        <div class="xar-form-input-wrapper">
+            <xar:var name="label">Document State</xar:var>
+            <xar:data-label property="$properties['state']" for="id" label="$label" />
+            <xar:data-input property="$properties['state']" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <xar:var name="label">Process State</xar:var>
+            <xar:data-label property="$properties['process_state']" for="id" label="$label" />
+            <xar:data-input property="$properties['process_state']" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <xar:var name="label">Date Created</xar:var>
+            <xar:data-label property="$properties['created']" for="id" label="$label" />
+            <xar:data-input property="$properties['created']" />
+        </div>
+        <div class="xar-form-input-wrapper">
+            <xar:var name="label">Date Last Modified</xar:var>
+            <xar:data-label property="$properties['modified']" for="id" label="$label" />
+            <xar:data-input property="$properties['modified']" />
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>
+            Categories
+        </legend>
+        <div class="xar-form-input-wrapper">
+            <xar:var name="label">Categories</xar:var>
+            <xar:data-label property="$properties['categories']" for="id" label="$label" />
+            <xar:data-input property="$properties['categories']" />
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>
+            Allowed Tags
+        </legend>
+        <div class="xar-form-input-wrapper">
+            <label class="xar-form-label help" title="#xarML('This is the allowed HTML that this website has configured.')#">
+                <xar:mlstring>Allowed HTML tags</xar:mlstring>
+            </label>
+            <xar:set name="tags">xarConfigVars::get(null,'Site.Core.AllowableHTML')</xar:set>
+            <div class="xar-form-container-after">
+                <xar:set name="tagstring">""</xar:set>
+                <xar:foreach in="$tags" key="$key" value="$value">
+                    <xar:if condition="$value">
+                        <xar:set name="tagstring">$tagstring . '&#60;' . $key . '&#62;'</xar:set>
+                    </xar:if>
+                </xar:foreach>
+            </div>
+        </div>
+    </fieldset>
+</xar:template>

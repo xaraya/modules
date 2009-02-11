@@ -7,8 +7,8 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  *
  */
@@ -17,7 +17,7 @@
  * @author Roger Keays
  */
 
-function articles_randomblock_modify($blockinfo)
+function publications_randomblock_modify($blockinfo)
 {
     // Get current content
     if (!is_array($blockinfo['content'])) {
@@ -27,10 +27,10 @@ function articles_randomblock_modify($blockinfo)
     }
 
     // Defaults
-    if (empty($vars['pubtypeid'])) {$vars['pubtypeid'] = '';}
+    if (empty($vars['pubtype_id'])) {$vars['pubtype_id'] = '';}
     if (empty($vars['catfilter'])) {$vars['catfilter'] = '';}
-    if (empty($vars['status'])) {$vars['status'] = array(3, 2);}
-    if (empty($vars['language'])) {$vars['language'] = '';}
+    if (empty($vars['state'])) {$vars['state'] = array(3, 2);}
+    if (empty($vars['locale'])) {$vars['locale'] = '';}
     if (empty($vars['numitems'])) {$vars['numitems'] = 5;}
     if (empty($vars['alttitle'])) {$vars['alttitle'] = '';}
     if (empty($vars['altsummary'])) {$vars['altsummary'] = '';}
@@ -41,9 +41,9 @@ function articles_randomblock_modify($blockinfo)
     if (empty($vars['showsubmit'])) {$vars['showsubmit'] = false;}
     if (empty($vars['showdynamic'])) {$vars['showdynamic'] = false;}
     if (empty($vars['linkpubtype'])) {$vars['linkpubtype'] = false;}
-    $vars['pubtypes'] = xarModAPIFunc('articles', 'user', 'getpubtypes');
+    $vars['pubtypes'] = xarModAPIFunc('publications', 'user', 'getpubtypes');
     $vars['categorylist'] = xarModAPIFunc('categories', 'user', 'getcat');
-    $vars['statusoptions'] = array(
+    $vars['stateoptions'] = array(
         array('id' => '', 'name' => xarML('All Published')),
         array('id' => '3', 'name' => xarML('Frontpage')),
         array('id' => '2', 'name' => xarML('Approved'))
@@ -66,14 +66,14 @@ function articles_randomblock_modify($blockinfo)
  * update block settings
  */
 
-function articles_randomblock_update($blockinfo)
+function publications_randomblock_update($blockinfo)
 {
     // Make sure we retrieve the new pubtype from the configuration form.
     // TODO: use xarVarFetch()
-    xarVarFetch('pubtypeid', 'id', $vars['pubtypeid'], 0, XARVAR_NOT_REQUIRED);
+    xarVarFetch('pubtype_id', 'id', $vars['pubtype_id'], 0, XARVAR_NOT_REQUIRED);
     xarVarFetch('catfilter', 'id', $vars['catfilter'], 0, XARVAR_NOT_REQUIRED);
-    xarVarFetch('status', 'int:0:4', $vars['status'], NULL, XARVAR_NOT_REQUIRED);
-    xarVarFetch('language', 'str', $vars['language'], '', XARVAR_NOT_REQUIRED);
+    xarVarFetch('state', 'int:0:4', $vars['state'], NULL, XARVAR_NOT_REQUIRED);
+    xarVarFetch('locale', 'str', $vars['locale'], '', XARVAR_NOT_REQUIRED);
     xarVarFetch('alttitle', 'str', $vars['alttitle'], '', XARVAR_NOT_REQUIRED);
     xarVarFetch('altsummary', 'str', $vars['altsummary'], '', XARVAR_NOT_REQUIRED);
     if (!xarVarFetch('numitems', 'int:1:100', $vars['numitems'], 5, XARVAR_NOT_REQUIRED)) {return;}

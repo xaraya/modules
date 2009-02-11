@@ -10,7 +10,7 @@
     hide the menu unless they have edit level privs.
     The New tab is redundant if you only have submit level privs.
 </xar:comment>
-<xar:sec mask="EditArticles" catch="false">
+<xar:sec mask="EditPublications" catch="false">
 <div>
   <dl class="xar-tabs">
     <dt class="help" title="Choose an action to perform">
@@ -23,26 +23,26 @@
              <xar:set name="tabclass">''</xar:set>
         </xar:if>
         <dd class="#$tabclass#">
-          <a href="&xar-modurl-articles-admin-view;">
-            <xar:mlstring>Manage Articles</xar:mlstring>
+          <a href="&xar-modurl-publications-admin-view;">
+            <xar:mlstring>Manage Publications</xar:mlstring>
           </a>
         </dd>
 
         <xar:set name="tabclass">$activetab=='new'?'active':''</xar:set>
         <dd class="#$tabclass#">
-            <a href="&xar-modurl-articles-admin-new;" >
-                <xar:mlstring>New Article</xar:mlstring>
+            <a href="&xar-modurl-publications-admin-new;" >
+                <xar:mlstring>New Publication</xar:mlstring>
             </a>
         </dd>
 
-    <xar:sec mask="AdminArticles" catch="false">
+    <xar:sec mask="AdminPublications" catch="false">
         <xar:if condition="$request.2 eq 'pubtypes' or $request.2 eq 'importpubtype'  or $request.2 eq 'exportpubtype'">
             <xar:set name="tabclass">'active'</xar:set>
         <xar:else />
              <xar:set name="tabclass">''</xar:set>
         </xar:if>
         <dd class="#$tabclass#">
-          <a href="&xar-modurl-articles-admin-pubtypes;">
+          <a href="&xar-modurl-publications-admin-pubtypes;">
             <xar:mlstring>Publication Types</xar:mlstring>
           </a>
         </dd>
@@ -52,20 +52,20 @@
             <xar:set name="tabclass">''</xar:set>
         </xar:if>
         <dd class="#$tabclass#">
-          <a href="&xar-modurl-articles-admin-stats;">
+          <a href="&xar-modurl-publications-admin-stats;">
             <xar:mlstring>Utilities</xar:mlstring>
           </a>
         </dd>
         <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
         <dd class="#$tabclass#">
-          <a href="&xar-modurl-articles-admin-modifyconfig;">
+          <a href="&xar-modurl-publications-admin-modifyconfig;">
             <xar:mlstring>Modify Config</xar:mlstring>
           </a>
         </dd>
     </xar:sec>
         <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
         <dd class="#$tabclass#">
-          <a href="&xar-modurl-articles-admin-overview;">
+          <a href="&xar-modurl-publications-admin-overview;">
             <xar:mlstring>Overview</xar:mlstring>
           </a>
         </dd>

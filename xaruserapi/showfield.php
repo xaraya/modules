@@ -1,14 +1,14 @@
 <?php
 /**
- * Articles module
+ * Publications module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
@@ -18,7 +18,7 @@
  * @return string containing the HTML (or other) text to output in the BL template
  * @TODO move this to some common place in Xaraya (base module ?)
  */
-function articles_userapi_showfield($args)
+function publications_userapi_showfield($args)
 {
     if (empty($args['type']) || $args['type'] != 'fieldtype') {
         // let DynamicData handle it
@@ -48,7 +48,7 @@ function articles_userapi_showfield($args)
 
     // Note: if we want to re-use this for dynamic data, types are numeric there
     if (is_numeric($type)) {
-        $fieldformatnums = xarModAPIFunc('articles','user','getfieldformatnums');
+        $fieldformatnums = xarModAPIFunc('publications','user','getfieldformatnums');
         foreach ($fieldformatnums as $fname => $fid) {
             if ($fid == $type) {
                 $type = $fname;
@@ -62,11 +62,11 @@ function articles_userapi_showfield($args)
     // yes, we auto-declare the allowed field types here too :-)
         case 'fieldtype':
             // Get the list of defined field formats
-            $pubfieldformats = xarModAPIFunc('articles','user','getpubfieldformats');
+            $pubfieldformats = xarModAPIFunc('publications','user','getpubfieldformats');
 
         // Note: if we want to re-use this for dynamic data, id's need to be numeric
             if (!empty($numeric_id)) {
-                $fieldformatnums = xarModAPIFunc('articles','user','getfieldformatnums');
+                $fieldformatnums = xarModAPIFunc('publications','user','getfieldformatnums');
             }
 
             $output .= '<select name="'.$name.'"'.$id.$tabindex.'>';

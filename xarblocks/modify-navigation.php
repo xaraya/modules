@@ -1,14 +1,14 @@
 <?php
 /**
- * Articles Navigation Block
+ * Publications Navigation Block
  *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  */
 /**
@@ -17,7 +17,7 @@
 /**
  * modify block settings
  */
-function articles_navigationblock_modify($blockinfo)
+function publications_navigationblock_modify($blockinfo)
 {
     // Get current content
     if (!is_array($blockinfo['content'])) {
@@ -121,10 +121,10 @@ function articles_navigationblock_modify($blockinfo)
                     'name' => str_repeat($indent, $indent_level) . $modlabel . $itemtypelabel . ' ' . $catlist
                 );
 
-                // Individual articles a level deeper.
+                // Individual publications a level deeper.
                 $indent_level += 1;
 
-                // Individual base articles where there are more than one.
+                // Individual base publications where there are more than one.
                 if (count($itemtypecatbase['catbases']) > 1) {
                     foreach($itemtypecatbase['catbases'] as $itemtypecatbases) {
                         $catlist = '[' . $itemtypecatbases['category']['name'] . ']';
@@ -141,13 +141,13 @@ function articles_navigationblock_modify($blockinfo)
 
     $vars['blockid'] = $blockinfo['bid'];
     // Return output
-    return xarTplBlock('articles', 'nav-admin', $vars);
+    return xarTplBlock('publications', 'nav-admin', $vars);
 }
 
 /**
  * update block settings
  */
-function articles_navigationblock_update($blockinfo)
+function publications_navigationblock_update($blockinfo)
 {
     $vars = array();
     if(!xarVarFetch('layout',       'isset', $vars['layout'],       NULL, XARVAR_DONT_SET)) {return;}
@@ -165,7 +165,7 @@ function articles_navigationblock_update($blockinfo)
 /**
  * built-in block help/information system.
  */
-function articles_navigationblock_help()
+function publications_navigationblock_help()
 {
     return '';
 }

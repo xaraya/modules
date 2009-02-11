@@ -7,8 +7,8 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Articles Module
- * @link http://xaraya.com/index.php/release/151.html
+ * @subpackage Publications Module
+ 
  * @author mikespub
  *
  */
@@ -19,7 +19,7 @@
  *
  */
 
-function articles_featureditemsblock_init()
+function publications_featureditemsblock_init()
 {
     return array(
         'featuredid'       => 0,
@@ -28,9 +28,9 @@ function articles_featureditemsblock_init()
         'moreitems'         => array(),
         'toptype'           => 'date',
         'showvalue'         => true,
-        'pubtypeid'         => '',
+        'pubtype_id'         => '',
         'catfilter'         => '',
-        'status'            => array(3, 2),
+        'state'            => array(3, 2),
         'itemlimit'         => 10,
         'showfeaturedsum'   => false,
         'showfeaturedbod'   => false,
@@ -44,13 +44,13 @@ function articles_featureditemsblock_init()
 /**
  * get information on block
  */
-function articles_featureditemsblock_info()
+function publications_featureditemsblock_info()
 {
     // Details of block.
     return array(
         'text_type'         => 'Featured Items',
-        'module'            => 'articles',
-        'text_type_long'    => 'Show featured articles',
+        'module'            => 'publications',
+        'text_type_long'    => 'Show featured publications',
         'allow_multiple'    => true,
         'form_content'      => false,
         'form_refresh'      => false,
@@ -61,11 +61,11 @@ function articles_featureditemsblock_info()
 /**
  * display block
  */
-function articles_featureditemsblock_display(& $blockinfo)
+function publications_featureditemsblock_display(& $blockinfo)
 {
     // Security check
     // TODO: can be removed when handled centrally.
-    if (!xarSecurityCheck('ReadArticlesBlock', 0, 'Block', $blockinfo['title'])) {return;}
+    if (!xarSecurityCheck('ReadPublicationsBlock', 0, 'Block', $blockinfo['title'])) {return;}
 
     // Get variables from content block
     if (is_string($blockinfo['content'])) {
@@ -102,26 +102,26 @@ function articles_featureditemsblock_display(& $blockinfo)
     // Setup featured item
     if ($featuredid > 0) {
 
-        if (xarModIsHooked('uploads', 'articles', $vars['pubtypeid'])) {
+        if (xarModIsHooked('uploads', 'publications', $vars['pubtype_id'])) {
             xarVarSetCached('Hooks.uploads','ishooked',1);
         }
 
           if($featart = xarModAPIFunc(
-            'articles','user','getall',
+            'publications','user','getall',
             array(
                 'ids' => array($featuredid),
                 'extra' => array('cids','dynamicdata')))) {
 
                 foreach($featart as $featuredart) {
 
-            $fieldlist = array('id', 'title', 'summary', 'authorid', 'pubdate',
-                               'pubtypeid', 'notes', 'status', 'body', 'cids');
+            $fieldlist = array('id', 'title', 'summary', 'owner', 'pubdate',
+                               'pubtype_id', 'notes', 'state', 'body', 'cids');
 
             $featuredlink = xarModURL(
-                'articles', 'user', 'display',
+                'publications', 'user', 'display',
                 array(
                     'id' => $featuredart['id'],
-                    'itemtype' => (!empty($vars['linkpubtype']) ? $featuredart['pubtypeid'] : NULL),
+                    'itemtype' => (!empty($vars['linkpubtype']) ? $featuredart['pubtype_id'] : NULL),
                     'catid' => ((!empty($vars['linkcat']) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)
                 )
             );
@@ -138,7 +138,7 @@ function articles_featureditemsblock_display(& $blockinfo)
                 'featureddesc'      => $featuredart['summary'],
                 'featuredbody'      => $featuredart['body'],
                 'featuredcids'      => $featuredart['cids'],
-                'pubtypeid'         => $featuredart['pubtypeid'],
+                'pubtype_id'         => $featuredart['pubtype_id'],
                 'featuredid'       => $featuredart['id'],
                 'featureddate'      => $featuredart['pubdate']
             );
@@ -157,7 +157,7 @@ function articles_featureditemsblock_display(& $blockinfo)
     }
 
     // Setup additional items
-    $fields = array('id', 'title', 'pubtypeid', 'cids');
+    $fields = array('id', 'title', 'pubtype_id', 'cids');
 
     // Added the 'summary' field to the field list.
     if (!empty($vars['showsummary'])) {
@@ -178,8 +178,8 @@ function articles_featureditemsblock_display(& $blockinfo)
     }
 
     if (!empty($vars['moreitems'])) {
-        $articles = xarModAPIFunc(
-            'articles', 'user', 'getall',
+        $publications = xarModAPIFunc(
+            'publications', 'user', 'getall',
             array(
                 'ids' => $vars['moreitems'],
                 'enddate' => time(),
@@ -189,19 +189,19 @@ function articles_featureditemsblock_display(& $blockinfo)
         );
 
         // See if we're currently displaying an article
-        if (xarVarIsCached('Blocks.articles', 'id')) {
-            $curid = xarVarGetCached('Blocks.articles', 'id');
+        if (xarVarIsCached('Blocks.publications', 'id')) {
+            $curid = xarVarGetCached('Blocks.publications', 'id');
         } else {
             $curid = -1;
         }
 
-        foreach ($articles as $article) {
+        foreach ($publications as $article) {
             if ($article['id'] != $curid) {
                 $link = xarModURL(
-                    'articles', 'user', 'display',
+                    'publications', 'user', 'display',
                     array (
                         'id' => $article['id'],
-                        'itemtype' => (!empty($vars['linkpubtype']) ? $article['pubtypeid'] : NULL),
+                        'itemtype' => (!empty($vars['linkpubtype']) ? $article['pubtype_id'] : NULL),
                         'catid' => ((!empty($vars['linkcat']) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)
                     )
                 );
@@ -264,7 +264,7 @@ function articles_featureditemsblock_display(& $blockinfo)
 /**
  * built-in block help/information system.
  */
-function articles_featureditemsblock_help()
+function publications_featureditemsblock_help()
 {
     // No information yet.
     return '';

@@ -11,32 +11,32 @@
 <ul>
     <xar:foreach in="$curvalue" key="$subkey" value="$subvalue">
         <li>
-            <xar:if condition="$curfield eq 'pubtypeid'">
+            <xar:if condition="$curfield eq 'pubtype_id'">
                 <xar:set name="curlabel">
-                    #$pubtypes[$subkey]['descr']# 
+                    #$pubtypes[$subkey]['description']# 
                 </xar:set>
-                <xar:set name="pubtypeid">
+                <xar:set name="pubtype_id">
                     #$subkey# 
                 </xar:set>
-                <xar:elseif condition="$curfield eq 'status'" />
+                <xar:elseif condition="$curfield eq 'state'" />
                 <xar:set name="curlabel">
-                    #$statuslist[$subkey]# 
+                    #$statelist[$subkey]# 
                 </xar:set>
-                <xar:set name="status">
+                <xar:set name="state">
                     #$subkey# 
                 </xar:set>
-                <xar:elseif condition="$curfield eq 'authorid'" />
+                <xar:elseif condition="$curfield eq 'owner'" />
                 <xar:set name="curlabel">
                     #xarUserGetVar('name',$subkey)# 
                 </xar:set>
-                <xar:set name="authorid">
+                <xar:set name="owner">
                     #$subkey# 
                 </xar:set>
-                <xar:elseif condition="$curfield eq 'language'" />
+                <xar:elseif condition="$curfield eq 'locale'" />
                 <xar:set name="curlabel">
                     #$subkey# 
                 </xar:set>
-                <xar:set name="language">
+                <xar:set name="locale">
                     #$subkey# 
                 </xar:set>
                 <xar:elseif condition="$curfield eq 'pubdate_year' or $curfield eq 'pubdate_month' or $curfield eq 'pubdate_day'" />
@@ -47,7 +47,7 @@
                     #$subkey# 
                 </xar:set>
             </xar:if>
-            <a href="#xarModURL('articles','admin','view',array('ptid' => $pubtypeid, 'authorid' => $authorid, 'lang' => $language, 'status[]' => $status, 'pubdate' => $pubdate))#">#$curlabel# </a> 
+            <a href="#xarModURL('publications','admin','view',array('ptid' => $pubtype_id, 'owner' => $owner, 'lang' => $locale, 'state[]' => $state, 'pubdate' => $pubdate))#">#$curlabel# </a> 
 <xar:comment>
     Include template recursively here
 </xar:comment>
@@ -59,20 +59,20 @@
             <xar:else/>
                 #$subvalue#
             </xar:if>
-            <xar:if condition="$curfield eq 'pubtypeid'">
-                <xar:set name="pubtypeid">
+            <xar:if condition="$curfield eq 'pubtype_id'">
+                <xar:set name="pubtype_id">
                     null 
                 </xar:set>
-                <xar:elseif condition="$curfield eq 'status'" />
-                <xar:set name="status">
+                <xar:elseif condition="$curfield eq 'state'" />
+                <xar:set name="state">
                     null 
                 </xar:set>
-                <xar:elseif condition="$curfield eq 'authorid'" />
-                <xar:set name="authorid">
+                <xar:elseif condition="$curfield eq 'owner'" />
+                <xar:set name="owner">
                     null 
                 </xar:set>
-                <xar:elseif condition="$curfield eq 'language'" />
-                <xar:set name="language">
+                <xar:elseif condition="$curfield eq 'locale'" />
+                <xar:set name="locale">
                     null 
                 </xar:set>
                 <xar:elseif condition="$curfield eq 'pubdate_year' or $curfield eq 'pubdate_month' or $curfield eq 'pubdate_day'" />

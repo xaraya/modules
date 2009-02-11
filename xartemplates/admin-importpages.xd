@@ -2,7 +2,7 @@
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>Articles Administration</xar:mlstring>
+        <xar:mlstring>Publications Administration</xar:mlstring>
     </span>
 </div>
 <div class="xar-mod-body">
@@ -18,7 +18,7 @@
         <xar:if condition="!empty($logfile)">#$logfile#
         <br />
         <br /></xar:if>
-        <form method="post" action="&xar-modurl-articles-admin-importpages;">
+        <form method="post" action="&xar-modurl-publications-admin-importpages;">
             <table width="100%" border="0" cellpadding="2" cellspacing="1">
                 <tr>
                     <td class="xar-align-left">
@@ -62,9 +62,9 @@
                             <option value=""></option>
                             <xar:foreach in="$pubtypes" key="$pubid" value="$pubtype">
                                 <xar:if condition="!empty($ptid) and $pubid eq $ptid">
-                                    <option value="#$pubid#" selected="selected">#$pubtype['descr']#</option>
-                                    <xar:else />
-                                    <option value="#$pubid#">#$pubtype['descr']#</option>
+                                    <option value="#$pubid#" selected="selected">#$pubtype['description']#</option>
+                                <xar:else />
+                                    <option value="#$pubid#">#$pubtype['description']#</option>
                                 </xar:if>
                             </xar:foreach>
                         </select>
