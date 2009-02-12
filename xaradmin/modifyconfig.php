@@ -29,20 +29,9 @@ function accessmethods_admin_modifyconfig()
 
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
-
-    // Specify some labels and values for display
-    $data['boldlabel'] = xarML('Display item names in bold');
-    $data['boldchecked'] = xarModGetVar('accessmethods','bold') ? 'checked' : '';
-    $data['itemslabel'] = xarML('Items Per Page');
-    $data['itemsvalue'] = xarModGetVar('accessmethods', 'itemsperpage');
-    $data['updatebutton'] = xarML('Update Configuration');
-
-    // Note : if you don't plan on providing encode/decode functions for
-    // short URLs (see xaruserapi.php), you should remove these from your
-    // admin-modifyconfig.xard template !
-    $data['shorturlslabel'] = xarML('Enable short URLs');
-    $data['shorturlschecked'] = xarModGetVar('accessmethods','SupportShortURLs') ?
-                                'checked' : '';
+    
+    $data['webmastergroup'] = xarModGetVar('accessmethods', 'webmastergroup');
+    $data['itemsperpage'] = xarModGetVar('accessmethods', 'itemsperpage');
 
     $hooks = xarModCallHooks('module', 'modifyconfig', 'accessmethods',
                             array('module' => 'accessmethods'));

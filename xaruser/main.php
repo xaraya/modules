@@ -21,18 +21,12 @@
  */
 function accessmethods_user_main()
 {
-    if (!xarSecurityCheck('ViewDynExample')) return;
+    if (!xarSecurityCheck('ViewAccessMethods')) return;
 
-    $data = xarModAPIFunc('accessmethods','user','menu');
+    $data = array();
+    $data['menutitle'] = xarML('Online Account Access Methods Overview');
+    $data['welcome'] = xarML('Access listings must be viewed through the Access Methods Administration');
 
-    // Specify some other variables used in the blocklayout template
-    $data['welcome'] = xarML('Welcome to this Dynamic Example module...');
-    $data['welcome'] .= '<br /><br />';
-    $data['welcome'] .= xarML('You will find 4 different approaches for viewing and displaying dynamic items, as explained in the code and templates.');
-    $data['welcome'] .= '<br /><br />';
-    $data['welcome'] .= xarML('For your own modules, choose any one of them depending on how much (and where) you want to customize...');
-
-    // Return the template variables defined in this function
     return $data;
 
 }

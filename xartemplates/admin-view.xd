@@ -1,48 +1,63 @@
-<xar:template type="module" file="admin-menu" />
+<xar:style scope="module" file="accessmethods" module="accessmethods" />
+
+<xar:if condition="!$inline">
+    <xar:template type="module" file="admin-menu" />
+</xar:if>
 <xar:data-getitem name="$properties" module="accessmethods" itemtype="1" itemid="$accessmethods_objectid" />
+
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Access Method List</xar:mlstring></span></div>
 <div class="xar-mod-body">
-<div align="center">
 
 <table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
     <tr>
 
-        <th><xar:mlstring>Access Method Name</xar:mlstring></th>
-        <th><xar:mlstring>Type</xar:mlstring></th>
-        <th><xar:mlstring>Client</xar:mlstring></th>
-        <th><xar:mlstring>SLA</xar:mlstring></th>
+        <th><xar:if condition="empty($sortby) OR $sortby eq 'site_name'"><xar:mlstring>Access Method Name</xar:mlstring><xar:else /><a href="#xarModURL('accessmethods','admin','view',array('sortby'=> 'site_name','accesstype'=>$accesstype,'sla'=>$sla,'clientid'=>$clientid,'webmasterid'=>$webmasterid))#"><xar:mlstring>Access Method Name</xar:mlstring></a></xar:if></th>
+        <th><xar:if condition="$sortby eq 'accesstype'"><xar:mlstring>Type</xar:mlstring><xar:else /><a href="#xarModURL('accessmethods','admin','view',array('sortby'=> 'accesstype','sla'=>$sla,'clientid'=>$clientid,'webmasterid'=>$webmasterid))#"><xar:mlstring>Type</xar:mlstring></a></xar:if></th>
+        <th><xar:if condition="$sortby eq 'client'"><xar:mlstring>Client</xar:mlstring><xar:else /><a href="#xarModURL('accessmethods','admin','view',array('sortby'=> 'client','sla'=>$sla,'accesstype'=>$accesstype,'webmasterid'=>$webmasterid))#"><xar:mlstring>Client</xar:mlstring></a></xar:if></th>
+        <th><xar:if condition="$sortby eq 'sla'"><xar:mlstring>SLA</xar:mlstring><xar:else /><a href="#xarModURL('accessmethods','admin','view',array('sortby'=> 'sla','accesstype'=>$accesstype,'clientid'=>$clientid,'webmasterid'=>$webmasterid))#"><xar:mlstring>SLA</xar:mlstring></a></xar:if></th>
         <th><xar:mlstring>Webmaster</xar:mlstring></th>
-        <th><xar:mlstring>Options</xar:mlstring></th>
+        <xar:if condition="!$inline">
+            <th><xar:mlstring>Options</xar:mlstring></th>
+        </xar:if>
     </tr>
 
-    <xar:loop name="$items">
-        <tr><td class="xar-norm">
-                <xar:if condition="empty($loop:item['link'])">#$loop:item['site_name']#<xar:else /><a href="#$loop:item['link']#">#$loop:item['site_name']#</a></xar:if>
+    <xar:foreach in="$items" value="$item">
+        <tr><td class="xar-access-items">
+                <xar:if condition="empty($item['link'])">
+                    <xar:data-output property="$properties['site_name']" value="$item['site_name']" />
+                <xar:else />
+                    <a href="#$item['link']#">
+                        <xar:data-output property="$properties['site_name']" value="$item['site_name']" />
+                    </a>
+                </xar:if>
+                <xar:if condition="!empty($item['accesslogin'])">
+                    / <xar:data-output property="$properties['accesslogin']" value="$item['accesslogin']" />
+                </xar:if>
             </td>
         
-            <td class="xar-norm" style="text-align: center;">#$loop:item['accesstype']#</td>
+            <td class="xar-access-items"><a href="&xar-modurl-accessmethods-admin-view;&amp;accesstype=#$item['accesstype']#"><xar:data-output property="$properties['accesstype']" value="$item['accesstype']" /></a></td>
             
-            <xar:set name="companyinfo">xarModAPIFunc('addressbook','user','getdetailvalues',array('id'=>$loop->item['clientid']))</xar:set>
-            <td class="xar-norm" style="text-align: center;">#$companyinfo['company']#</td>
+            <td class="xar-access-items"><xar:data-output property="$properties['clientid']" value="$item['clientid']" /></td>
         
-            <td class="xar-norm" style="text-align: center;">#$loop:item['sla']#</td>
+            <td class="xar-access-items"><a href="&xar-modurl-accessmethods-admin-view;&amp;sla=#$item['sla']#"><xar:data-output property="$properties['sla']" value="$item['sla']" /></a></td>
             
-            <td class="xar-norm" style="text-align: center;">
-            <xar:if condition="$loop:item['webmasterid'] gt 0">
-                <xar:set name="webmasterinfo">xarModAPIFunc('roles','user','get',array('uid'=>$loop->item['webmasterid']))</xar:set>
+            <td class="xar-access-items">
+            <xar:if condition="$item['webmasterid'] gt 0">
+                <xar:set name="webmasterinfo">xarModAPIFunc('roles','user','get',array('uid'=>$item['webmasterid']))</xar:set>
                 #$webmasterinfo['uname']#
             </xar:if>
             </td>
         
-            <td class="xar-norm" style="text-align: center;">[&nbsp;<xar:if condition="empty($loop:item['editurl'])"><xar:mlstring>Edit</xar:mlstring><xar:else /><a href="#$loop:item['editurl']#"><xar:mlstring>Edit</xar:mlstring></a></xar:if>&nbsp;|&nbsp;<xar:if condition="empty($loop:item['deleteurl'])"><xar:mlstring>Delete</xar:mlstring><xar:else /><a href="#$loop:item['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a></xar:if>&nbsp;]</td>
-    
+            <xar:if condition="!$inline">
+                <td style="text-align: center;" class="xar-access-items"><xar:if condition="empty($item['editurl'])"><img src="modules/accessmethods/xarimages/button.edit.gif"><xar:else /><a href="#$item['editurl']#"><img src="modules/accessmethods/xarimages/button.edit.gif"></a></xar:if><xar:if condition="empty($item['deleteurl'])"><img src="modules/accessmethods/xarimages/button.delete.gif"><xar:else /><a href="#$item['deleteurl']#"><img src="modules/accessmethods/xarimages/button.delete.gif"></a></xar:if></td>
+            </xar:if>    
         </tr>
             
-    </xar:loop>
+    </xar:foreach>
     
 </table>
 
 <br />
 
 </div>
-</div>
+<div class="xar-mod-foot"><div style="text-align: center;">#$pager#</div></div>

@@ -52,10 +52,15 @@ function accessmethods_init()
     }
 
     $accessmethods_objectid = xarModAPIFunc('dynamicdata','util','import',
-                              array('file' => 'modules/accessmethods/accessmethods.xml'));
+                              array('file' => 'modules/accessmethods/xardata/accessmethods.xml'));
     if (empty($accessmethods_objectid)) return;
     // save the object id for later
     xarModSetVar('accessmethods','accessmethods_objectid',$accessmethods_objectid);
+
+    $modulesettings = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => 'modules/accessmethods/xardata/modulesettings.xml'));
+    if (empty($modulesettings)) return;
+    xarModSetVar('accessmethods','modulesettings',$modulesettings);
 
     xarModSetVar('accessmethods','bold',0);
     xarModSetVar('accessmethods','itemsperpage',20);
@@ -78,8 +83,15 @@ function accessmethods_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch($oldversion) {
-        case '1.0':
-            // Code to upgrade from version 2.0 goes here
+        case '1.0.0':
+            
+            $modulesettings = xarModAPIFunc('dynamicdata','util','import',
+                                      array('file' => 'modules/accessmethods/xardata/modulesettings.xml'));
+            if (empty($modulesettings)) return;
+            xarModSetVar('accessmethods','modulesettings',$modulesettings);
+            
+            
+        case '1.0.1':
             break;
     }
 
@@ -107,6 +119,12 @@ function accessmethods_delete()
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $accessmethods_objectid));
     }
     xarModDelVar('accessmethods','accessmethods_objectid');
+
+    $modulesettings = xarModGetVar('accessmethods','modulesettings');
+    if (!empty($modulesettings)) {
+        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $modulesettings));
+    }
+    xarModDelVar('accessmethods','modulesettings');
     
     $aliasname =xarModGetVar('accessmethods','aliasname');
     $isalias = xarModGetAlias($aliasname);

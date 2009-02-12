@@ -20,16 +20,11 @@
  */
 function accessmethods_admin_overview()
 {
-   /* Security Check */
     if (!xarSecurityCheck('AdminAccessMethods',0)) return;
 
     $data = xarModAPIFunc('accessmethods','admin','menu');
 
-    /* if there is a separate overview function return data to it
-     * else just call the main function that usually displays the overview 
-     */
-
-    return xarTplModule('accessmethods', 'admin', 'main', $data,'main');
+    return xarTplModule('accessmethods', 'admin', 'main', $data, 'main');
 }
 
 ?>

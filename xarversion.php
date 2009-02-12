@@ -13,7 +13,7 @@
  */
 $modversion['name'] = 'accessmethods';
 $modversion['id'] = '732';
-$modversion['version'] = '1.0.0';
+$modversion['version'] = '1.0.1';
 $modversion['displayname']    = xarML('Account Access Methods');
 $modversion['description'] = 'Managed Website Tool';
 $modversion['credits'] = 'xardocs/credits.txt';

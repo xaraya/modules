@@ -19,27 +19,16 @@
     </tr>
     <tr>
         <td><xar:data-label property="$properties['clientid']" /></td>
-        <td>
-            <xar:set name="companylist">xarModAPIFunc('addressbook','user','getaddresslist')</xar:set>
-            <xar:set name="companies">array('0' => "Select a Client Company")</xar:set>
-            <xar:foreach in="$companylist.searchResults" value="$companyinfo">
-                <xar:set name="companyid">$companyinfo['id']</xar:set>
-                    <xar:set name="companies[$companyid]">$companyinfo['company']</xar:set>
-            </xar:foreach>
-            <xar:data-input type="dropdown" validation="$companies" name="clientid" value="$item['clientid']" />
-        </td>
+        <td><xar:data-input property="$properties['clientid']" name="clientid" value="$item['clientid']" /></td>
     </tr>
     <tr>
         <td><xar:data-label property="$properties['webmasterid']" /></td>
-        <td>
-            <xar:set name="webmasterlist">xarModAPIFunc('roles','user','getall',array('group' => "Administrators"))</xar:set>
-            <xar:set name="webmasters">array('0' => "Select a Webmaster")</xar:set>
-            <xar:foreach in="$webmasterlist" value="$webmasterinfo">
-                <xar:set name="webmasterid">$webmasterinfo['uid']</xar:set>
-                <xar:set name="webmasters[$webmasterid]">$webmasterinfo['uname']</xar:set>
-            </xar:foreach>
-            <xar:data-input type="dropdown" validation="$webmasters" name="webmasterid" value="$item['webmasterid']" />
-        </td>
+        <xar:set name="webmastergroup">xarModGetVar('accessmethods', 'webmastergroup')</xar:set>
+        <xar:if condition="empty($webmastergroup)">
+            <td><xar:data-input property="$properties['webmasterid']" name="webmasterid" value="$item['webmasterid']" /></td>
+        <xar:else />
+            <td><xar:data-input property="$properties['webmasterid']" name="webmasterid" value="$item['webmasterid']" /></td>
+        </xar:if>
     </tr>
     <tr>
         <td><xar:data-label property="$properties['url']" /></td>

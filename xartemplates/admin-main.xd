@@ -1,9 +1,35 @@
-<table border="1" width="100%" cellpadding="2" cellspacing="0">
-    <tr>
-        <th align="center">#$menutitle#</th>
-    </tr>
-</table>
-<br />
-
-<div align="center"><b> <xar:mlstring>Welcome to the Access Methods Administration</xar:mlstring> </b></div>
-
+<xar:template type="module" file="admin-menu" />
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Welcome to the Access Methods Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+
+    <p><xar:mlstring>The Access Methods module is used to store login and access details for sites and services that you need to keep track of. Whether it's your online bank login, a client FTP, or the administrative password for a mailing list, you can keep track of it here.</xar:mlstring></p>
+
+    <p><xar:mlstring>The records that are stored utilize DynamicData for control over the options available in the dropdowns on the create/edit forms.</xar:mlstring></p>
+    
+    <p><xar:mlstring>The default installation of this module provides the following options</xar:mlstring>:
+        <ul>
+            <li><xar:mlstring>Access Types</xar:mlstring>
+                <ul>
+                    <li><xar:mlstring>Website Login</xar:mlstring>
+                    <li><xar:mlstring>FTP</xar:mlstring>
+                    <li><xar:mlstring>CPanel</xar:mlstring>
+                    <li><xar:mlstring>WHM</xar:mlstring>
+                    <li><xar:mlstring>Listserv</xar:mlstring>
+                    <li><xar:mlstring>Other Login</xar:mlstring>
+                </ul>
+                
+            <li><xar:mlstring>SLA - Service Level Agreement Types</xar:mlstring>
+                <ul>
+                    <li><xar:mlstring>Unsupported</xar:mlstring>
+                    <li><xar:mlstring>Pro Bono</xar:mlstring>
+                    <li><xar:mlstring>Client</xar:mlstring>
+                    <li><xar:mlstring>Service Contract</xar:mlstring>
+                    <li><xar:mlstring>Private</xar:mlstring>
+                </ul>
+        </ul>
+
+    <p>
+</div>
+<div class="xar-mod-foot"></div>
+

@@ -15,6 +15,9 @@ function accessmethods_userapi_getall($args)
 {
     extract($args);
 
+    if (!isset($sortby)) {
+        $sortby = "";
+    }
     if (!isset($startnum)) {
         $startnum = 1;
     }
@@ -62,37 +65,40 @@ function accessmethods_userapi_getall($args)
                   accesspwd,
                   related_sites
             FROM $accessmethodstable";
-            
-            
-//	$sql .= " WHERE $taskcolumn[parentid] = $parentid";
-//	$sql .= " AND $taskcolumn[projectid] = $projectid";
-//	if($groupid > 0) $sql .= " AND $taskcolumn[groupid] = $groupid";
-    $sql .= " ORDER BY accesstype, site_name";
 
-/*
-    if ($selected_project != "all") {
-        $sql .= " AND $accessmethods_todos_column[project_id]=".$selected_project;
-
-    if (xarSessionGetVar('accessmethods_my_tasks') == 1 ) {
-        // show only tasks where I'm responsible for
-        $query .= "
-            AND $accessmethods_responsible_persons_column[user_id] = ".xarUserGetVar('uid')."
-            AND $accessmethods_todos_column[todo_id] = $accessmethods_responsible_persons_column[todo_id]";
+    $whereclause = array();
+    if(!empty($clientid)) {
+        $whereclause[] = "clientid = '".$clientid."'";
     }
-
-    // WHERE CLAUSE TO NOT PULL IF TASK IS PRIVATE AND USER IS NOT OWNER, CREATOR, ASSIGNER, OR ADMIN
-    // CLAUSE TO FILTER BY STATUS, MIN PRIORITY, OR DATES
-    // CLAUSE WHERE USER IS OWNER
-    // CLAUSE WHERE USER IS CREATOR
-    // CLAUSE WHERE USER IS ASSIGNER
-    // CLAUSE FOR ACTIVE ONLY (ie. started but not yet completed)
-    // CLAUSE BY TEAM/GROUPID (always on?)
-    //
-    // CLAUSE TO PULL PARENT TASK SETS
-    // or
-    // USERAPI_GET FOR EACH PARENT LEVEL
-*/
-
+    if(!empty($accesstype)) {
+        $whereclause[] = "accesstype = '".$accesstype."'";
+    }
+    if(!empty($sla)) {
+        $whereclause[] = "sla = '".$sla."'";
+    }
+    if(!empty($webmasterid)) {
+        $whereclause[] = "webmasterid = '".$webmasterid."'";
+    }
+    if(count($whereclause) > 0) {
+        $sql .= " WHERE ".implode(" AND ", $whereclause);
+    }
+            
+    switch($sortby) {
+        case "accesstype":
+            $sql .= " ORDER BY accesstype, site_name";
+            break;
+        case "sla":
+            $sql .= " ORDER BY sla, site_name";
+            break;
+        case "client":
+            $sql .= " ORDER BY clientid, site_name";
+            break;
+        case "site_name":
+        default:
+            $sql .= " ORDER BY site_name";
+            break;
+    }
+    
     $result = $dbconn->SelectLimit($sql, $numitems, $startnum-1);
 
     if ($dbconn->ErrorNo() != 0) {
