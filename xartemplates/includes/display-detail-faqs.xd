@@ -27,9 +27,9 @@
                 </xar:if>
                 <xar:if condition="!empty($submitted_by)">
                     <span class="xar-quote">
-                        <xar:mlstring>
+                        
                             Submitted by
-                        </xar:mlstring>
+                        
                         <xar:data-output property="$properties['submitted_by']" />
                     </span>
                     <br />
@@ -52,9 +52,9 @@
                 <td align="left">
                     <xar:if condition="!empty($prevart)">
                         <a href="#$prevart#">&lt;
-                            <xar:mlstring>
+                            
                                 prev
-                            </xar:mlstring>
+                            
                         </a>
                     </xar:if>
                     &#160;
@@ -63,9 +63,9 @@
                     &#160;
                     <xar:if condition="!empty($nextart)">
                         <a href="#$nextart#">
-                            <xar:mlstring>
+                            
                                 next
-                            </xar:mlstring>
+                            
                             &gt;</a>
                     </xar:if>
                 </td>

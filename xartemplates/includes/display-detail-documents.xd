@@ -30,7 +30,7 @@
                 <br />
                 -->
                 <br />
-                <xar:data-output property="$properties['body1']" />
+                <xar:data-output property="$properties['body']" />
                 <br />
                 <span class="xar-quote">
                     <xar:data-output property="$properties['notes']" /> 

@@ -14,9 +14,9 @@
             <p>
                 <xar:if condition="!empty($counter)">
                     ( #$counter#
-                    <xar:mlstring>
+                    
                         Reads
-                    </xar:mlstring>)
+                    )
                 </xar:if>
                 <xar:if condition="!empty($editurl)">
                     [

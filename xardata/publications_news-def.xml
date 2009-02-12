@@ -7,7 +7,7 @@
   <filepath></filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
-  <config>a:1:{s:8:&quot;itemtype&quot;;s:1:&quot;1&quot;;}</config>
+  <config>a:1:{s:5:&quot;where&quot;;s:12:&quot;itemtype = 1&quot;;}</config>
   <sources>a:1:{s:11:&quot;publication&quot;;s:16:&quot;xar_publications&quot;;}</sources>
   <relations>a:0:{}</relations>
   <objects>a:0:{}</objects>
