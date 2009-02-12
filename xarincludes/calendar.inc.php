@@ -145,6 +145,7 @@ class ieventsCalendar {
 
     //****** Class variables that apply only to the small calendar format ******
 
+    var $showTitle;
     /*
     This defines the border width of the table cells for the small month format.
     */
@@ -243,6 +244,7 @@ class ieventsCalendar {
     var $dayNames;
     var $dayNamesShort;
     var $dayNamesXShort;
+    var $dayNamesXXShort;
 
     // List of month names, one-indexed, with 1=January
     var $monthNames;
@@ -257,7 +259,8 @@ class ieventsCalendar {
         // Set up the default day names.
         if (!isset($this->dayNames)) $this->dayNames = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
         if (!isset($this->dayNamesShort)) $this->dayNamesShort = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
-        if (!isset($this->dayNamesXShort)) $this->dayNamesShort = array('Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa');
+        if (!isset($this->dayNamesXShort)) $this->dayNamesXShort = array('Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa');
+        if (!isset($this->dayNamesXXShort)) $this->dayNamesXXShort = array('S', 'M', 'T', 'W', 'T', 'F', 'S');
 
         // Set up the default month names.
         if (!isset($this->monthNames)) {
@@ -468,6 +471,7 @@ class ieventsCalendar {
     */
     function getMonth($m, $y) {
         // Get the name of the month based on the monthFormat variable.
+        $m = (int)$m;
         switch (strtolower($this->monthFormat)) {
             case 'long':
                 if (isset($this->monthNames[$m])) {
@@ -486,7 +490,6 @@ class ieventsCalendar {
             default:
                 $month = '';
         }
-
         return $month;
     }
 
@@ -524,6 +527,15 @@ class ieventsCalendar {
                     $weekday = $this->dayNamesXShort[$dow % 7];
                 } else {
                     $weekday = 'Un';
+                }
+            
+                break;
+
+            case 'xxshort':
+                if (isset($this->dayNamesXXShort[$dow % 7])) {
+                    $weekday = $this->dayNamesXXShort[$dow % 7];
+                } else {
+                    $weekday = '?';
                 }
             
                 break;
@@ -605,6 +617,7 @@ class ieventsCalendar {
         	'np' => $np,
         	'cid' => $this->cid,
         	'showyear' => $showyear,
+            'showtitle' => $this->showTitle,
         	'linkmonth' => $linkMonth,
         	'month' => $month,
         	'year' => $year,

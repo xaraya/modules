@@ -30,8 +30,8 @@ function ievents_userapi_list_calendars($args)
     // Get all calendars the user is allowed to submit to.
     $calendars = xarModAPifunc('ievents', 'user','getcalendars', array('event_priv' => $priv_level, 'status' => $status));
 
-    // If mandatory is present, and is not set, then include the 'any' option in the list.
-    if (isset($mandatory) && empty($mandatory)) {
+    // If mandatory is present, and is not true, then include the 'any' option in the list.
+    if (isset($mandatory) && !$mandatory) {
         $return = array(0 => xarML('-- Any calendar --'));
     } else {
         $return = array();

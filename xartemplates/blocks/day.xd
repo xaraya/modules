@@ -1,0 +1,8 @@
+#$cal_output#
+<xar:if condition="true">
+    <div class="xar-align-center">
+        <a href="#xarModURL('ievents','user','view',array('group' => $group, 'startdate' => $startdate, 'enddate' => $enddate))#">
+            <xar:mlstring>Full Month</xar:mlstring>
+        </a>
+    </div>
+</xar:if>

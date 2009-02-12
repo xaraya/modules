@@ -67,6 +67,7 @@
 
     //******************** Set defaults for small calendars ********************
 
+    $this->showTitle = true;
     //Set the small month border to 0.
     $this->smallMonthBorder = "0";
     //Set the small month border to 0.

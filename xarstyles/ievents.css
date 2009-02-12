@@ -405,7 +405,7 @@ td.ievents-calendar-yearmonth {
 	background-color: transparent;
 }
 table.ievents-calendar-largemonth {
-	margin: .5em .25em;
+	margin: 1em auto !important;
 	border-collapse: collapse;
 	border: 1px solid;
 }
@@ -434,7 +434,7 @@ table.ievents-calendar-smallmonth td {
 	height: auto;
 	text-align: center;
 	border: 1px solid;
-	padding: .2em 0;
+	padding: .2em .1em;
 }
 table.ievents-calendar-week {
 	margin: .5em .25em;

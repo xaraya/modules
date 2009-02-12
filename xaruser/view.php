@@ -158,7 +158,7 @@ function ievents_user_view($args)
     // Grouping should affect the sorting too, since grouping my a time period
     // would imply sorting by that time period too.
     // The default grouping is configurable (with no grouping - '' - being an option)
-    xarVarFetch('group', 'pre:lower:passthru:enum:day:week:month:quarter:year:none', $group, $default_group, XARVAR_NOT_REQUIRED);
+    xarVarFetch('group', 'pre:lower:passthru:enum:day:week:month:smallmonth:quarter:year:none', $group, $default_group, XARVAR_NOT_REQUIRED);
     if ($group == 'none') $group = '';
 
     // Event ID.
@@ -230,6 +230,7 @@ function ievents_user_view($args)
                 break;
 
             case 'month':
+            case 'smallmonth':
                 $ustartdate = strtotime(date('Ym', $ustartdate) . '01');
                 $uenddate = strtotime('+1 month -1 day', $ustartdate);
                 $cal_links_labels['this_view'] = $locale['months']['long'][(date('m', $ustartdate) + 11) % 12 + 1] . ' ' . date('Y', $ustartdate);
@@ -394,9 +395,7 @@ function ievents_user_view($args)
 
     // Fetch the events.
     $events = xarModAPIfunc('ievents', 'user', 'getevents', $event_params);
-    //echo "<pre>"; var_dump($events); echo "</pre>";
 
-    //
     // If the user has selected a specific event, then
     // we need to work out where it appears in the list, and also
     // provide some next/previous links (the links would contain
@@ -603,6 +602,11 @@ function ievents_user_view($args)
             case 'month':
                 $cal->calFormat = 'largeMonth';
                 break;
+            case 'smallmonth':
+                $cal->calFormat = 'smallMonth';
+                $cal->monthFormat = 'short'; 
+                $cal->DOWformat = 'xxshort';
+                break;
             case 'week':
                 $cal->calFormat = 'weekly';
                 $cal->DOWformat = 'short';
@@ -628,6 +632,7 @@ function ievents_user_view($args)
         $cal->dayNames = $locale['days']['long'];
         $cal->dayNamesShort = $locale['days']['short'];
         $cal->dayNamesXShort = $locale['days']['xshort'];
+        $cal->dayNamesXXShort = $locale['days']['xshort'];
 
         $cal->monthNames = $locale['months']['long'];
         $cal->monthNamesShort = $locale['months']['short'];

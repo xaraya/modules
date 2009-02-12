@@ -175,6 +175,8 @@ function ievents_userapi_params($args)
 
         // Days are zero-indexed. They will be rotated so the start day of the week comes first. Sunday is zero.
         for($i = 1; $i <= 7; $i+=1) {
+            $params['locale']['days']['xxshort'][($i + $startdayofweek + 6) % 7] =
+                substr($localeData["/dateSymbols/weekdays/" . (($i + $startdayofweek + 6) % 7 + 1) . "/short"], 0, 1);
             $params['locale']['days']['xshort'][($i + $startdayofweek + 6) % 7] =
                 substr($localeData["/dateSymbols/weekdays/" . (($i + $startdayofweek + 6) % 7 + 1) . "/short"], 0, 2);
             $params['locale']['days']['short'][($i + $startdayofweek + 6) % 7] =

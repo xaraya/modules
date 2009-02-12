@@ -1,13 +1,15 @@
 <div class="ievents-calendar-smallmonth">
-	<h4>
-		#$prevlink# 
-		<xar:if condition="$linkmonth">
-			<a href="#xarModURL('ievents','user','view',array('cid' => $cid, 'startdate' => $startdate, 'enddate' => $enddate, 'format' => 'cal', 'group' => 'month'))#">#$month# #$year#</a> 
-		<xar:else />
-			#$month# #$year# 
-		</xar:if>
-		#$nextlink#
-	</h4>
+    <xar:if condition="$showtitle">
+    	<h4>
+	    	#$prevlink# 
+		    <xar:if condition="$linkmonth">
+    			<a href="#xarModURL('ievents','user','view',array('cid' => $cid, 'startdate' => $startdate, 'enddate' => $enddate, 'format' => 'cal', 'group' => 'month'))#">#$month# #$year#</a> 
+	    	<xar:else />
+    			#$month# #$year# 
+    		</xar:if>
+    		#$nextlink#
+    	</h4>
+    </xar:if>
 	<table class="ievents-calendar-smallmonth">
 		<tr>
 			<xar:for start="$i = 0" test="$i lt 7" iter="$i++">

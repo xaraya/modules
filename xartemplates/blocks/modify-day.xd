@@ -1,0 +1,31 @@
+<div class="xar-form-input-wrapper">
+    <label class="xar-form-label help" title="#xarML('Choose the calendar to display.')#" for="cid">
+        <xar:mlstring>Calendar</xar:mlstring>
+    </label>
+    <xar:if condition="!empty($calendarlist) and count($calendarlist) gt 0">
+        <xar:data-input name="cid" id="cid" type="6" validation="$calendarlist" value="$cid" />
+	<xar:else />
+		<xar:mlstring>No calendars available.</xar:mlstring>
+		<input type="hidden" name="cid" id="cid" value="0" />
+    </xar:if>
+</div>
+<div class="xar-form-input-wrapper-after">
+	<xar:if condition="$usecalname">
+		<input type="checkbox" name="usecalname" id="usecalname" checked="checked" />
+	<xar:else />
+		<input type="checkbox" name="usecalname" id="usecalname" />
+	</xar:if>
+    <label class="help" title="#xarML('Replace the block title with calendar name.')#" for="usecalname">
+        <xar:mlstring>Use Calendar name as block title</xar:mlstring>
+    </label>
+</div>
+<div class="xar-form-input-wrapper-after">
+	<xar:if condition="$showfulllink">
+		<input type="checkbox" name="showfulllink" id="showfulllink" checked="checked" />
+	<xar:else />
+		<input type="checkbox" name="showfulllink" id="showfulllink" />
+	</xar:if>
+    <label class="help" title="#xarML('Display a link to the full calendar view.')#" for="showfulllink">
+        <xar:mlstring>Show link to full month calendar view</xar:mlstring>
+    </label>
+</div>

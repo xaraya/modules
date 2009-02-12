@@ -283,7 +283,27 @@ function ievents_init()
         'Admin' . $comp, 'All', $module, $comp, 'All', 'ACCESS_ADMIN',
         xarML('Administer module')
     );
+/*
+    // Set up component 'Block'.
+    $comp = 'Block';
+    $instances = array (
+        array (
+            'header' => 'Block ID',
+            'query' => "SELECT DISTINCT instances.xar_title FROM $xartable[block_instances] as instances LEFT JOIN $xartable[block_types] as btypes ON btypes.xar_id = instances.xar_type_id WHERE xar_module = 'ievents'",
+            'limit' => 50
+        )
+    );
+    xarDefineInstance(
+        $module, $comp, $instances, 0, 'All', 'All', 'All',
+        xarML('Security component for #(1) #(2)', $module, $comp)
+    );
 
+    // Masks for the component 'IEventBlock'.
+    xarRegisterMask(
+        'View' . $comp, 'Block', $module, $comp, 'All', 'ACCESS_OVERVIEW',
+        xarML('Edit details for a IEvents block')
+    );
+*/
     // Switch on all hooks from categories.
     // Do *not* hook dynamicdata (DD) to this module, since it uses DD directly.
     if (xarModIsAvailable('dynamicdata')) {
@@ -294,8 +314,18 @@ function ievents_init()
 
 
     // Register block types.
-    // None.
-
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'register_block_type',
+                       array('modName'  => 'ievents',
+                             'blockType'=> 'month'))) return;
+/*
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'register_block_type',
+                       array('modName'  => 'ievents',
+                             'blockType'=> 'day'))) return;
+*/
     // Set up module hooks
     // None.
 
