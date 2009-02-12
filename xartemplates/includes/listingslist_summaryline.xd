@@ -17,7 +17,6 @@
     <xar:if condition="($layout eq 'publications') or ($layout eq 'default')">
         <div class="xar-floatright xar-padding-thick xar-halfwidth xar-align-right" style="padding-top:1em;">
             <xar:sec mask="AddListings" catch="false">
-                <xar:set name="returnurl">xarModURL('publications','admin','pubtypes')</xar:set>
                 <a style="font-weight:bold;" href ="#xarModURL('publications','admin','new',array('ptid'=> $object->properties['itemtype']->defaultvalue, 'tplmodule'=> $localmodule))#">Add A New Publication</a>
             </xar:sec>
         </div>

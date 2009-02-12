@@ -42,7 +42,7 @@
              <xar:set name="tabclass">''</xar:set>
         </xar:if>
         <dd class="#$tabclass#">
-          <a href="&xar-modurl-publications-admin-pubtypes;">
+          <a href="&xar-modurl-publications-admin-viewpubtypes;">
             <xar:mlstring>Publication Types</xar:mlstring>
           </a>
         </dd>
