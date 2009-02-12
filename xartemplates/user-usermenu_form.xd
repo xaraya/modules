@@ -1,0 +1,247 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:base-include-javascript position="head" module="base" filename="xmlhttprequest.js" />
+
+<xar:set name="dummy">xarVarFetch('mode','str::',$mode,'',XARVAR_NOT_REQUIRED)</xar:set>
+<xar:set name="dummy">xarVarFetch('contactid','str::',$contactid,0,XARVAR_NOT_REQUIRED)</xar:set>
+<xar:set name="dummy">xarVarFetch('locationid','str::',$locationid,0,XARVAR_NOT_REQUIRED)</xar:set>
+
+<xar:data-getitem name="$properties" module="dossier" itemtype="1" itemid="$contactid" />
+
+<xar:data-getitem name="$locations_properties" module="dossier" itemtype="2" itemid="$locationid" />
+
+<xar:if condition="empty($returnurl)">
+    <xar:set name="formatted_returnurl">urlencode(xarModURL('roles','user','account',array('moduleload'=>"dossier",'contactid'=>$contactid)))</xar:set>
+<xar:else />
+    <xar:set name="formatted_returnurl">urlencode($returnurl)</xar:set>
+</xar:if>
+
+<xar:comment>
+    need to figure a way for specifying default profile when more than one exist
+    use a user-var to set
+    display new profile link
+    display profile list
+    display primary or selected profile
+    display new profile form if none exist
+</xar:comment>
+    
+<xar:set name="contactlist">xarModAPIFunc('dossier','user','getall',array('userid'=> xarSessionGetVar('uid')))</xar:set>
+
+<xar:if condition="count($contactlist) eq 1 and is_numeric($contactid) and $contactid eq 0">
+    <xar:foreach in="$contactlist" value="$contactdetails">
+        <xar:set name="contactid">$contactdetails['contactid']</xar:set>
+    </xar:foreach>
+</xar:if>
+
+<!--<pre><xar:set name="dummy">print_r($contactlist)</xar:set></pre> -->
+
+<xar:set name="locationcid">xarModGetVar('dossier', 'locationcid')</xar:set>
+<xar:set name="dummy">xarModAPILoad('categories', 'user')</xar:set>
+<xar:set name="catlist">xarModAPIFunc('categories', 'user', 'getchildren', array('cid' => $locationcid ) )</xar:set>
+
+<xar:if condition="is_numeric($contactid) and $contactid gt 0">
+    <xar:set name="contactinfo">$contactlist[$contactid]</xar:set>
+<xar:else />
+    <xar:comment>populate a dummy object for the field values</xar:comment>
+    <xar:set name="contactinfo">array('prefix' => "",
+                                    'fname' => "",
+                                    'lname' => "",
+                                    'company' => "",
+                                    'title' => "",
+                                    'ownerid' => "",
+                                    'dateofbirth' => "",
+                                    'contactpref' => "",
+                                    'phone_work' => "",
+                                    'phone_cell' => "",
+                                    'phone_fax' => "",
+                                    'phone_home' => "",
+                                    'email_1' => "",
+                                    'email_2' => "",
+                                    'chat_AIM' => "",
+                                    'chat_YIM' => "",
+                                    'chat_ICQ' => "",
+                                    'chat_MSNM' => "")</xar:set>
+</xar:if>
+
+<xar:set name="locationinfo">array('address_1' => "",
+                                'address_2' => "",
+                                'city' => "",
+                                'us_state' => "",
+                                'postalcode' => "",
+                                'country' => "")</xar:set>
+
+<xar:set name="multicontact">xarModGetVar('dossier', 'multicontact')</xar:set>
+<xar:if condition="$multicontact or true">
+    <div style="border: 1px solid black; padding: 5px; margin-bottom: 10px;">
+        <span class="headlines2">
+            <xar:mlstring>Select A Contact Profile to Edit</xar:mlstring>
+        </span><br />
+        
+        <xar:foreach in="$contactlist" value="$contactdetails">
+            <xar:set name="locationlist">xarModAPIFunc('dossier','locations','getallcontact',array('contactid'=>$contactdetails['contactid']))</xar:set>
+            
+          <!--  <pre><xar:set name="dummy">print_r($locationlist)</xar:set></pre> -->
+            
+            <xar:if condition="count($locationlist) gt 0">
+                <xar:foreach in="$locationlist" value="$locationdetails">
+                    <xar:set name="catname">""</xar:set>
+                    
+                    <xar:set name="cat_id">0</xar:set>
+                    <xar:if condition="isset($locationdetails['cat_id'])">
+                        <xar:set name="cat_id">$locationdetails['cat_id']</xar:set>
+                    </xar:if>
+                    <xar:if condition="isset($catlist[$cat_id])">
+                        <xar:set name="catname">$catlist[$cat_id]['name']</xar:set>
+                    </xar:if>
+                    <xar:if condition="$locationdetails['locationid'] eq $locationid">
+                        <xar:set name="locationinfo">$locationdetails</xar:set>
+                    </xar:if>
+                    <div>
+                        <xar:if condition="!empty($catname)"><strong>#$catname#</strong> </xar:if><xar:if condition="!empty($contactdetails['sortname'])">#$contactdetails['sortname']#</xar:if><xar:if condition="!empty($contactdetails['company'])"> - <strong>#$contactdetails['company']#</strong></xar:if> <xar:if condition="!empty($locationdetails['address_1'])">@ #$locationdetails['address_1']#</xar:if> [ <a href="#xarModURL('roles','user','account',array('moduleload'=>"dossier",'contactid'=>$contactdetails['contactid'], 'locationid'=>$locationdetails['locationid']))#">edit</a> | <a href="#xarModURL('dossier','admin','delete',array('contactid'=>$contactdetails['contactid']))#&amp;returnurl=#$formatted_returnurl#" onClick="return loadContent(this.href,'contactform');">delete</a> | <a href="#xarModURL('roles','user','account',array('moduleload'=>"dossier",'contactid'=>$contactdetails['contactid']))#">new location</a> ]
+                    </div>
+                
+                </xar:foreach>
+            <xar:else />
+                <div>
+                    <xar:if condition="!empty($contactdetails['sortname'])">#$contactdetails['sortname']#</xar:if><xar:if condition="!empty($contactdetails['company'])"> - <strong>#$contactdetails['company']#</strong></xar:if> [ <a href="#xarModURL('roles','user','account',array('moduleload'=>"dossier",'contactid'=>$contactdetails['contactid']))#">edit</a> | <a href="#xarModURL('dossier','admin','delete',array('contactid'=>$contactdetails['contactid']))#&amp;returnurl=#$formatted_returnurl#" onClick="return loadContent(this.href,'contactform');">delete</a> ]
+                </div>
+            
+            </xar:if>
+        </xar:foreach>
+       <!-- <br />
+        <div>Click <a href="&xar-modurl-roles-user-account;&amp;moduleload=dossier&amp;contactid=new" style="text-decoration: underline;">here</a> to create an additional profile.</div>
+-->
+    </div>    
+</xar:if>
+
+<div id="contactform">
+
+    <table width="100%" style="padding: 8px; padding-top: 0px;"><tr><td valign="top">
+        
+        <xar:if condition="$contactid gt 0 or count($contactlist) lt 2 or !is_numeric($contactid)">
+            <div class="xar-mod-body" style="overflow: hidden;">
+                <span class="headlines2">
+                    <xar:if condition="is_numeric($contactid) and $contactid gt 0">
+                        <xar:mlstring>Edit Contact Info</xar:mlstring>
+                    <xar:else />
+                        <xar:mlstring>Add Contact Info</xar:mlstring>
+                    </xar:if>
+                </span><br><br>
+                
+                <form action="&xar-modurl-dossier-user-usermenu;" method="post" enctype="application/x-www-form-urlencoded">
+                    <xar:if condition="is_numeric($contactid) and $contactid gt 0">
+                        <input type="hidden" name="contactid" value="#$contactid#">
+                    </xar:if>
+                    <xar:if condition="is_numeric($locationid) and $locationid gt 0">
+                        <input type="hidden" name="locationid" value="#$locationid#">
+                    </xar:if>
+                    
+                    <table width="100%" border="0" cellspacing="0" cellpadding="2">
+                        <tr>
+                            <td><xar:mlstring>Contact Name</xar:mlstring></td>
+                            <td><xar:data-input property="$properties['prefix']" name="prefix" value="$contactinfo['prefix']" /> <xar:data-label property="$properties['fname']" /> <xar:data-input property="$properties['fname']" name="fname" size="15" value="$contactinfo['fname']" /></td>
+                            <td><xar:data-label property="$properties['lname']" /></td>
+                            <td><xar:data-input property="$properties['lname']" name="lname" size="20" value="$contactinfo['lname']" /></td>
+                        </tr>
+                        <tr>
+                            <td><xar:data-label property="$properties['company']" /></td>
+                            <td><xar:data-input property="$properties['company']" name="company" size="20" value="$contactinfo['company']" /></td>
+                            <td><xar:data-label property="$properties['title']" /></td>
+                            <td><xar:data-input property="$properties['title']" name="title" size="15" value="$contactinfo['title']" /></td>
+                        </tr>
+                        <tr>
+                            <td><xar:data-label property="$properties['contactpref']" /></td>
+                            <td><xar:data-input property="$properties['contactpref']" name="contactpref" value="$contactinfo['contactpref']" /></td>
+                            <td><xar:data-label property="$properties['dateofbirth']" /></td>
+                            <td><xar:data-input property="$properties['dateofbirth']" name="dateofbirth" value="$contactinfo['dateofbirth']" /></td>
+                        </tr>
+                        <tr>
+                            <td><xar:data-label property="$properties['phone_work']" /></td>
+                            <td><xar:data-input property="$properties['phone_work']" name="phone_work" size="20" value="$contactinfo['phone_work']" /></td>
+                            <td><xar:data-label property="$properties['phone_cell']" /></td>
+                            <td><xar:data-input property="$properties['phone_cell']" name="phone_cell" size="20" value="$contactinfo['phone_cell']" /></td>
+                        </tr>
+                        <tr>
+                            <td><xar:data-label property="$properties['phone_fax']" /></td>
+                            <td><xar:data-input property="$properties['phone_fax']" name="phone_fax" size="20" value="$contactinfo['phone_fax']" /></td>
+                            <td><xar:data-label property="$properties['phone_home']" /></td>
+                            <td><xar:data-input property="$properties['phone_home']" name="phone_home" size="20" value="$contactinfo['phone_home']" /></td>
+                        </tr>
+                        <tr>
+                            <td><xar:data-label property="$properties['email_1']" /></td>
+                            <td><xar:data-input property="$properties['email_1']" name="email_1" size="20" value="$contactinfo['email_1']" /></td>
+                            <td><xar:data-label property="$properties['email_2']" /></td>
+                            <td><xar:data-input property="$properties['email_2']" name="email_2" size="20" value="$contactinfo['email_2']" /></td>
+                        </tr>
+                        
+                        <xar:if condition="count($locationinfo) gt 0">
+                            <tr><th><xar:mlstring>Add New Location</xar:mlstring></th></tr>
+                        </xar:if>
+                        
+                        <tr>
+                            <td><xar:data-label property="$locations_properties['cat_id']" /></td>
+                            <td>
+                                <select name="cat_id">
+                                    <xar:if condition="is_array($catlist)">
+                                        <xar:foreach in="$catlist" value="$catinfo">
+                                            <xar:set name="selected">""</xar:set>
+                                            <xar:if condition="isset($locationinfo['cat_id']) and $catinfo['cid'] eq $locationinfo['cat_id']">
+                                                <xar:set name="selected">"selected"</xar:set>
+                                            </xar:if>
+                                            <option value="#$catinfo['cid']#" #$selected#>#$catinfo['name']#</option>
+                                        </xar:foreach>
+                                    </xar:if>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><xar:data-label property="$locations_properties['address_1']" /></td>
+                            <td colspan="2"><xar:data-input property="$locations_properties['address_1']" name="address_1" value="$locationinfo['address_1']" /></td>
+                        </tr>
+                        <tr>
+                            <td><xar:data-label property="$locations_properties['address_2']" /></td>
+                            <td colspan="2"><xar:data-input property="$locations_properties['address_2']" name="address_2" value="$locationinfo['address_2']" /></td>
+                        </tr>
+                        <tr>
+                            <td><xar:data-label property="$locations_properties['city']" /></td>
+                            <td colspan="2"><xar:data-input property="$locations_properties['city']" name="city" value="$locationinfo['city']" /></td>
+                        </tr>
+                        <tr>
+                            <td><xar:data-label property="$locations_properties['us_state']" /></td>
+                            <td><xar:data-input property="$locations_properties['us_state']" name="us_state" value="$locationinfo['us_state']" /></td>
+                            <td><xar:data-label property="$locations_properties['postalcode']" /></td>
+                            <td><xar:data-input property="$locations_properties['postalcode']" name="postalcode" value="$locationinfo['postalcode']" /></td>
+                        </tr>
+                        <tr>
+                            <td><xar:data-label property="$locations_properties['country']" /></td>
+                            <td colspan="2"><xar:data-input property="$locations_properties['country']" name="country" value="$locationinfo['country']" /></td>
+                        </tr>
+                        <tr>
+                            <td><xar:data-label property="$properties['private']" /></td>
+                            <xar:set name="private">isset($contactinfo['private']) ? $contactinfo['private'] : 0</xar:set>
+                            <td colspan="2"><xar:data-input property="$properties['private']" name="private" value="$private" />
+                                <xar:mlstring>A private profile cannot be seen by other users. A public profile allows you to showcase yourself, you business, and your network.</xar:mlstring></td>
+                        </tr>
+                    </table>
+                
+            
+                    <div class="xar-align-center">
+                        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                        <input type="hidden" name="returnurl" id="returnurl" value="#xarModURL('roles', 'user', 'account',array('moduleload'=&gt;"dossier"))#" />
+                        <input type="hidden" name="userid" id="userid" value="#$uid#" />
+                        <xar:if condition="is_numeric($contactid) and $contactid gt 0">
+                            <input type="hidden" name="phase" id="phase" value="update" />
+                            <input type="submit" value="#xarML('Update Contact Info')#" />
+                        <xar:else />
+                            <input type="hidden" name="phase" id="phase" value="create" />
+                            <input type="submit" value="#xarML('Create Contact Profile')#" />
+                        </xar:if>
+                    </div>
+            
+                </form>
+            </div>
+        </xar:if>
+    </td></tr></table>
+</div>
+
+

@@ -1,0 +1,268 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:data-getitem name="$properties" module="dossier" itemtype="1" itemid="0" />
+<xar:data-getitem name="$logproperties" module="dossier" itemtype="4" itemid="0" />
+
+<xar:set name="encoded_returnurl">urlencode(xarModURL('dossier','admin','display',array('contactid'=>$contactid)))</xar:set>
+<xar:set name="encoded_delete_returnurl">urlencode(xarModURL('dossier','admin','view'))</xar:set>
+
+<xar:set name="id_list">array()</xar:set>
+<xar:set name="id_list[]">$contactid</xar:set>
+<xar:data-getitems name="$moreproperties" value="$values" module="dossier" itemtype="0" itemid="$id_list" />
+
+<xar:if condition="!isset($showmenu) or $showmenu eq 1">
+    <xar:template type="module" file="admin-menu" />
+</xar:if>
+
+<div class="xar-mod-body">
+    <xar:if condition="!empty($status)">
+
+        <h3>#$status#</h3>
+    <xar:else />
+        <table width="100%" border="0" cellspacing="1" cellpadding="2" id="xproject_info" class="xar-accent">
+            <tr>
+                <td class="xar-title"><xar:mlstring>Contact Name</xar:mlstring></td>
+                <td colspan="3" class="xar-norm">
+                    <span style="float: left;"><xar:data-output property="$properties['prefix']" value="$item['prefix']" /> <xar:data-output property="$properties['fname']" value="$item['fname']" /> <xar:data-output property="$properties['lname']" value="$item['lname']" />
+                        <xar:if condition="empty($item['fname']) and empty($item['lname'])">
+                            <xar:data-output property="$properties['sortname']" value="$item['sortname']" />
+                        </xar:if>
+                    </span>
+                    <span style="float: right;">
+                        [ <a href="&xar-modurl-dossier-admin-modify;&amp;contactid=#$item['contactid']#&amp;returnurl=#$encoded_returnurl#"><xar:mlstring>Edit</xar:mlstring></a>
+                         | <a class="thickbox" href="&xar-modurl-dossier-admin-delete;&amp;contactid=#$item['contactid']#&amp;pageName=module&amp;returnurl=#$encoded_delete_returnurl#"><xar:mlstring>Delete</xar:mlstring></a>
+                         ]
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="xar-title"><xar:data-label property="$properties['company']" /></td>
+                <td class="xar-norm"><xar:data-output property="$properties['company']" value="$item['company']" /></td>
+                <td class="xar-title"><xar:data-label property="$properties['title']" /></td>
+                <td class="xar-norm"><xar:data-output property="$properties['title']" value="$item['title']" /></td>
+            </tr>
+            <tr>
+                <td class="xar-title" style="width: 30%;"><xar:data-label property="$properties['cat_id']" /></td>
+                <td class="xar-norm">
+                    <xar:set name="contactcid">xarModGetVar('dossier', 'contactcid')</xar:set>
+                    <xar:set name="dummy">xarModAPILoad('categories', 'user')</xar:set>
+                    <xar:set name="catinfo">xarModAPIFunc('categories', 'user', 'getcatinfo', array('cid' => $item['cat_id'] ) )</xar:set>
+                    #$catinfo['name']#
+                </td>
+                <td class="xar-title"><xar:data-label property="$properties['contactcode']" /></td>
+                <td class="xar-norm"><xar:data-output property="$properties['contactcode']" value="$item['contactcode']" /></td>
+            </tr>
+            <tr>
+                <td class="xar-title"><xar:data-label property="$properties['agentuid']" /></td>
+                <td class="xar-norm"><xar:data-output property="$properties['agentuid']" value="$item['agentuid']" /></td>
+                <td class="xar-title"><xar:data-label property="$properties['private']" /></td>
+                <td class="xar-norm"><xar:data-output property="$properties['private']" value="$item['private']" />
+                    &nbsp;[<xar:data-output property="$properties['userid']" value="$item['userid']" />]</td>
+            </tr>
+            <tr>
+                <td class="xar-title"><xar:data-label property="$properties['dateofbirth']" /></td>
+                <td class="xar-norm" colspan="3"><xar:data-output property="$properties['dateofbirth']" value="$item['dateofbirth']" dateformat="%B %d" /></td>
+            </tr>
+            <tr>
+                <td class="xar-title"><xar:mlstring>Date Created</xar:mlstring></td>
+                <xar:set name="datecreated">date('r', strtotime($item['datecreated']))</xar:set>
+                <td class="xar-norm" colspan="3">#$datecreated#</td>
+            </tr>
+            <tr>
+                <td class="xar-title"><xar:mlstring>Date Modified</xar:mlstring></td>
+                <xar:set name="datemodified">date('r', strtotime($item['datemodified']))</xar:set>
+                <td class="xar-norm" colspan="3">#$datemodified#</td>
+            </tr>
+            <tr>
+                <td class="xar-title"><xar:data-label property="$properties['contactpref']" /></td>
+                <td class="xar-norm" colspan="3"><xar:data-output property="$properties['contactpref']" value="$item['contactpref']" /></td>
+            </tr>
+            <tr>
+                <td class="xar-title"><xar:data-label property="$properties['phone_work']" /></td>
+                <td class="xar-norm"><xar:data-output property="$properties['phone_work']" value="$item['phone_work']" /></td>
+                <td class="xar-title"><xar:data-label property="$properties['phone_cell']" /></td>
+                <td class="xar-norm"><xar:data-output property="$properties['phone_cell']" value="$item['phone_cell']" /></td>
+            </tr>
+            <tr>
+                <td class="xar-title"><xar:data-label property="$properties['phone_fax']" /></td>
+                <td class="xar-norm"><xar:data-output property="$properties['phone_fax']" value="$item['phone_fax']" /></td>
+                <td class="xar-title"><xar:data-label property="$properties['phone_home']" /></td>
+                <td class="xar-norm"><xar:data-output property="$properties['phone_home']" value="$item['phone_home']" /></td>
+            </tr>
+            <tr>
+                <td class="xar-title"><xar:data-label property="$properties['email_1']" /></td>
+                <td class="xar-norm"><xar:data-output property="$properties['email_1']" value="$item['email_1']" /></td>
+                <td class="xar-title"><xar:data-label property="$properties['email_2']" /></td>
+                <td class="xar-norm"><xar:data-output property="$properties['email_2']" value="$item['email_2']" /></td>
+            </tr>
+            <tr>
+                <td class="xar-title"><xar:data-label property="$properties['chat_AIM']" /></td>
+                <td class="xar-norm"><xar:data-output property="$properties['chat_AIM']" value="$item['chat_AIM']" /></td>
+                <td class="xar-title"><xar:data-label property="$properties['chat_YIM']" /></td>
+                <td class="xar-norm"><xar:data-output property="$properties['chat_YIM']" value="$item['chat_YIM']" /></td>
+            </tr>
+            <tr>
+                <td class="xar-title"><xar:data-label property="$properties['chat_ICQ']" /></td>
+                <td class="xar-norm"><xar:data-output property="$properties['chat_ICQ']" value="$item['chat_ICQ']" /></td>
+                <td class="xar-title"><xar:data-label property="$properties['chat_MSNM']" /></td>
+                <td class="xar-norm"><xar:data-output property="$properties['chat_MSNM']" value="$item['chat_MSNM']" /></td>
+            </tr>
+            <xar:if condition="isset($values[$contactid])">
+                <xar:foreach in="$values[$contactid]" key="$field" value="$nextvalue" >
+                    <tr valign="top">
+                        <td class="xar-title"><xar:data-label property="$moreproperties[$field]" /></td>
+                        <td class="xar-norm"><xar:data-output property="$moreproperties[$field]" value="$values[$contactid][$field]" /></td>
+                    </tr>
+                </xar:foreach>
+            </xar:if>
+            <tr>
+                <td class="xar-title"><xar:data-label property="$properties['notes']" /></td>
+                <td class="xar-norm" colspan="2"><xar:data-output property="$properties['notes']" value="$item['notes']" /></td>
+                
+                <td class="xar-title">
+                    <xar:if condition="$item['img'] and is_numeric($item['img'])">
+                        <xar:set name="imagelist">xarModApiFunc('uploads','user','db_get_file', array('fileId'=>$item['img']))</xar:set>
+                        <xar:if condition="!empty($imagelist)">
+                            <xar:set name="imageinfo">current($imagelist)</xar:set>                  
+                            <xar:image-resize src="$imageinfo[fileId]" width="200px" height="200px" constrain="yes" label="my image" align="right" />
+                        </xar:if>
+                    </xar:if>
+                    <xar:data-label property="$properties['img']" />
+                </td>
+            </tr>
+                                
+            <xar:set name="returnurl">urlencode(xarServerGetCurrentURL())</xar:set>
+            
+            <xar:set name="newargs">"&amp;inline=1&amp;returnurl=".$encoded_returnurl</xar:set>
+            
+            <tr>
+                <td class="xar-norm"><xar:mlstring>Address List</xar:mlstring> [ <a class="thickbox" href="&xar-modurl-dossier-locations-new;&amp;contactid=#$contactid##$newargs#&amp;pageName=module"><xar:mlstring>New</xar:mlstring></a> ]</td>
+                <td class="xar-norm" colspan="3">
+                    <div name="newlocation" id="newlocation"></div>
+                    <xar:foreach in="$addresslist" value="$addressinfo">
+                        <div style="float: left; width: 300px;">
+                            <div>#$addressinfo['address_1']#</div>
+                            <div>#$addressinfo['city']#, #$addressinfo['us_state']# #$addressinfo['postalcode']#</div>
+                        </div>                            
+                        <div style="float: left; width: 65px;">
+                            <a class="thickbox" href="&xar-modurl-dossier-locations-modify;&amp;locationid=#$addressinfo['locationid']#&amp;contactid=#$contactid#&amp;pageName=module"><img src="modules/dossier/xarimages/button.edit.gif"></a>
+                            <a class="thickbox" href="&xar-modurl-dossier-locations-delete;&amp;locationid=#$addressinfo['locationid']#&amp;contactid=#$contactid#&amp;pageName=module"><img src="modules/dossier/xarimages/button.delete.gif"></a>
+                        </div>                            
+                        <div style="clear: both;"></div>
+                    </xar:foreach>
+                </td>
+            </tr>
+        </table>
+            
+        <xar:comment>Company directory, if any</xar:comment>
+
+        <!-- contacts in same company -->
+        <xar:if condition="!empty($item['company'])">
+            <xar:set name="companycontacts">xarModAPIFunc('dossier', 'user', 'getall', array('company' => $item['company']))</xar:set>
+            <xar:if condition="count($companycontacts) gt 1"> 
+                <div class="dossier-section-head" style="height: 22px;"><span class="xar-mod-title" style="float: left;"><xar:mlstring>Other Company Contacts</xar:mlstring></span><span style="float: right;"><a href="javascript: void twist_open('companycontacts');"><img src="modules/xtasks/xarimages/rotate.gif" border="0" /></a></span></div>
+                <div id="companycontacts" style="display: none;">
+                    <xar:foreach in="$companycontacts" value="$contactinfo">
+                        <xar:if condition="$contactinfo['contactid'] ne $item['contactid']">
+                            <div class="dossier-section-item">
+                                <a href="&xar-modurl-dossier-admin-display;&amp;contactid=#$contactinfo['contactid']#">#$contactinfo['sortname']#</a>
+                            </div>
+                        </xar:if>
+                    </xar:foreach>
+                </div>
+            </xar:if>
+        </xar:if>
+            
+        <xar:if condition="xarModIsAvailable('labaccounting')">
+        <xar:comment>Account List</xar:comment>
+
+        <!-- projects this contact is the client for -->
+        <xar:if condition="!empty($item['contactid'])">
+            <xar:set name="journallist">xarModAPIFunc('labaccounting', 'journals', 'getall', array('contactid' => $item['contactid']))</xar:set>
+            <xar:if condition="count($journallist) gt 0"> 
+                <div class="dossier-section-head" style="height: 22px;"><span class="xar-mod-title" style="float: left;"><xar:mlstring>Accounts</xar:mlstring></span><span style="float: right;"><a href="javascript: void dossier_twist('journallist');"><img src="modules/xtasks/xarimages/rotate.gif" border="0" /></a></span></div>
+                <div id="journallist" style="display: block;">
+                    <xar:foreach in="$journallist" value="$journalinfo">
+                        <div class="dossier-section-item">
+                            <strong><a href="&xar-modurl-labaccounting-journals-display;&amp;journalid=#$journalinfo['journalid']#">#$journalinfo['account_title']#</a></strong>
+                        </div>
+                    </xar:foreach>
+                </div>
+            </xar:if>
+        </xar:if>
+        </xar:if>
+            
+        <xar:if condition="xarModIsAvailable('xproject')">
+        <xar:comment>Project List</xar:comment>
+
+        <!-- projects this contact is the client for -->
+        <xar:if condition="!empty($item['contactid'])">
+            <xar:set name="projectlist">xarModAPIFunc('xproject', 'user', 'getall', array('clientid' => $item['contactid']))</xar:set>
+            <xar:if condition="count($projectlist) gt 0"> 
+                <div class="dossier-section-head" style="height: 22px;"><span class="xar-mod-title" style="float: left;"><xar:mlstring>Projects</xar:mlstring></span><span style="float: right;"><a href="javascript: void dossier_twist('projectlist');"><img src="modules/xtasks/xarimages/rotate.gif" border="0" /></a></span></div>
+                <div id="projectlist" style="display: block;">
+                    <xar:foreach in="$projectlist" value="$projectinfo">
+                        <div class="dossier-section-item">
+                            <strong><a href="&xar-modurl-xproject-admin-display;&amp;projectid=#$projectinfo['projectid']#">#$projectinfo['project_name']#</a></strong>
+                        </div>
+                    </xar:foreach>
+                </div>
+                </xar:if>
+            </xar:if>
+        </xar:if>
+          
+        <xar:if condition="empty($mode)"><xar:set name="mode">""</xar:set></xar:if>
+        <xar:if condition="$mode eq 'contactlog' or empty($mode)">
+            <xar:set name="contactlog_style">"display: block;"</xar:set>
+        <xar:else />
+            <xar:set name="contactlog_style">"display: none;"</xar:set>
+        </xar:if>          
+        <xar:set name="contactlog_style">"display: block;"</xar:set>  
+        <div class="dossier-section-head" style="height: 22px;"><span class="xar-mod-title" style="float: left;"><xar:mlstring>Contact Log</xar:mlstring> [ <a class="thickbox" href="&xar-modurl-dossier-logs-new;&amp;contactid=#$contactid##$newargs#&amp;pageName=module" onclick="twist_open('contactlogs');"><xar:mlstring>New Log Entry</xar:mlstring></a> ]</span><span style="float: right;"><a href="javascript: void twist('contactlogs');"><img src="modules/dossier/xarimages/rotate.gif" border="0" /></a></span></div>
+        <div style="#$contactlog_style#" id="contactlogs">
+            <div id="newcontactlog"></div>
+            <xar:if condition="is_array($contactlogs)">
+                <xar:template type="module" file="contactlogs" subdata="array('contactlogs'=&gt;$contactlogs,'contactid'=&gt;$contactid)" />
+            </xar:if>
+        </div>
+        
+        <xar:if condition="empty($mode)"><xar:set name="mode">""</xar:set></xar:if>
+        <xar:if condition="$mode eq 'reminders'">
+            <xar:set name="reminders_style">"display: block;"</xar:set>
+        <xar:else />
+            <xar:set name="reminders_style">"display: none;"</xar:set>
+        </xar:if>
+        <xar:set name="reminders_style">"display: block;"</xar:set>
+    
+        <div class="dossier-section-head" style="height: 22px;"><span class="xar-mod-title" style="float: left;"><xar:mlstring>Reminders</xar:mlstring> [ <a class="thickbox" href="&xar-modurl-dossier-reminders-new;&amp;contactid=#$contactid##$newargs#&amp;pageName=module" onclick="twist_open('reminders');"><xar:mlstring>Add a Reminder</xar:mlstring></a> ]</span><span style="float: right;"><a href="javascript: void twist('reminders');"><img src="modules/dossier/xarimages/rotate.gif" border="0" /></a></span></div>
+        <div style="#$reminders_style#" id="reminders">
+            <div id="newreminder"></div>
+            <xar:if condition="is_array($reminders)">
+                <xar:template type="module" file="reminders" subdata="array('reminders'=&gt;$reminders)" />
+            </xar:if>
+        </div>
+        
+        <xar:if condition="empty($mode)"><xar:set name="mode">""</xar:set></xar:if>
+        <xar:if condition="$mode eq 'relationships'">
+            <xar:set name="relationships_style">"display: block;"</xar:set>
+        <xar:else />
+            <xar:set name="relationships_style">"display: none;"</xar:set>
+        </xar:if>
+        <xar:set name="relationships_style">"display: block;"</xar:set>
+    
+        <div class="dossier-section-head" style="height: 22px;"><span class="xar-mod-title" style="float: left;"><xar:mlstring>Relationships</xar:mlstring> [ <a class="thickbox" href="&xar-modurl-dossier-relationships-new;&amp;contactid=#$contactid##$newargs#&amp;pageName=module" onclick="twist_open('reminders');"><xar:mlstring>Add a Relationship</xar:mlstring></a> ]</span><span style="float: right;"><a href="javascript: void twist('reminders');"><img src="modules/dossier/xarimages/rotate.gif" border="0" /></a></span></div>
+        <div style="#$relationships_style#" id="relationships">
+            <div id="newrelationship"></div>
+            <xar:if condition="is_array($relationships)">
+                <xar:template type="module" file="relationships" subdata="array('relationships'=&gt;$relationships, 'contactid' =&gt; $contactid)" />
+            </xar:if>
+        </div>
+                        
+        <xar:if condition="!empty($hookoutput)">
+            #$hookoutput#
+        </xar:if>
+    </xar:if>
+</div>
+<div class="xar-mod-foot"></div>
+
+

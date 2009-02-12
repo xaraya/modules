@@ -1,0 +1,75 @@
+<xar:data-getitem name="$properties" module="dossier" itemtype="1" itemid="0" />
+
+<xar:style scope="module" module="dossier" file="default" />
+
+<xar:set name="contactcid">xarModGetVar('dossier', 'contactcid')</xar:set>
+<xar:set name="dummy">xarModAPILoad('categories', 'user')</xar:set>
+<xar:set name="catlist">xarModAPIFunc('categories', 'user', 'getchildren', array('cid' => $contactcid ) )</xar:set>
+
+<xar:template type="module" file="admin-menu" />
+
+<div class="xar-mod-head">
+
+    <xar:comment>Contact category, privacy and search field</xar:comment>
+    <form method="post" action="&xar-modurl-dossier-admin-view;" style="display: inline;">
+        <div style="text-align: left;">
+            <span style="padding-right: 10px;"><xar:mlstring>SEARCH CONTACTS</xar:mlstring>:</span>
+            <span style="padding-right: 10px; margin-top: -2px; text-align: right;">
+                <input type="text" name="q" value="#$q#" />
+            </span>
+            <span style="margin-top: -2px;">
+                <input type="submit" value="SEARCH" />
+            </span>
+        </div>
+    </form>
+    
+
+    <div style="text-align: center;">
+        <xar:template type="module" file="alphanav" subdata="array('pagetype'=&gt;$pagetype,
+                                                                    'itemsperpage'=&gt;$itemsperpage,
+                                                                    'startnum'=&gt;$startnum,
+                                                                    'sortby'=&gt;$sortby,
+                                                                    'private'=&gt;$private,
+                                                                    'cat_id'=&gt;$cat_id,
+                                                                    'q'=&gt;$q,
+                                                                    'ltr'=&gt;$ltr)" />
+    </div>
+</div>
+<div class="xar-mod-body">
+    <div class="contactlist">
+        <xar:comment>Contact List</xar:comment>
+        <table border="0" cellpadding="2" cellspacing="1" class="xar-sub" style="width: 99%;">
+            <tr>
+                <xar:if condition="$sortby eq 'sortcompany'">
+                    <th><strong><a href="#xarModURL('dossier','admin','view',array('sortby'=>'sortname'))#" style="font-weight: bold;"><xar:mlstring>NAME</xar:mlstring></a></strong></th>
+                    <th><xar:mlstring>COMPANY</xar:mlstring></th>
+                <xar:else />
+                    <th><xar:mlstring>NAME</xar:mlstring></th>
+                    <th><strong><a href="#xarModURL('dossier','admin','view',array('sortby'=>'sortcompany'))#" style="font-weight: bold;"><xar:mlstring>COMPANY</xar:mlstring></a></strong></th>
+                </xar:if>
+                <th style="text-align: center;"><xar:mlstring>WORK PHONE</xar:mlstring></th>
+                <th style="text-align: center;"><xar:mlstring>CELL PHONE</xar:mlstring></th>
+                <th style="text-align: right;"><xar:mlstring>EMAIL</xar:mlstring></th>
+            </tr>
+        
+            <xar:loop name="$items">
+                <tr><td><a href="&xar-modurl-dossier-admin-display;&amp;contactid=#$loop:item['contactid']#">#$loop:item['sortname']#</a></td>
+                
+                    <td><xar:data-output property="$properties['sortcompany']" value="$loop-&gt;item['sortcompany']" /></td>
+                
+                    <td style="text-align: center;"><xar:data-output property="$properties['phone_work']" value="$loop-&gt;item['phone_work']" /></td>
+    
+                    <td style="text-align: center;"><xar:data-output property="$properties['phone_fax']" value="$loop-&gt;item['phone_cell']" /></td>
+                
+                    <td style="text-align: right;"><xar:data-output property="$properties['email_1']" value="$loop-&gt;item['email_1']" /></td>
+            
+                    <td><a href="#xarModURL('dossier','user','vcard',array('contactid'=&gt;$loop:item['contactid']))#">.vcf</a></td>
+                </tr>
+                    
+            </xar:loop>
+            
+        </table>
+    
+    </div>
+</div>
+<div class="xar-mod-foot"></div>

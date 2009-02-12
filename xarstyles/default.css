@@ -1,0 +1,27 @@
+.contactlist a {
+   text-decoration: none;
+   font-weight: normal;
+   }
+.contactlist .xar-form-container-after {
+    margin-left: 0;
+    
+}
+.contactlist .xar-form-textxlong {
+    width: 99%;
+}
+.dossier-section-head {
+    font-size: 120%;
+    font-weight: bold;
+    border-top: 3px solid black;
+    border-bottom: 1px solid black;
+
+}
+
+.dossier-section-item {
+	border: 1px solid #089b00;
+    padding: 4px 4px 4px 4px;
+    margin: 2px;
+    -moz-border-radius: 8px; 
+    -khtml-border-radius: 8px;
+    border-radius: 8px;
+}

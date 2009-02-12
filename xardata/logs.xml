@@ -1,0 +1,82 @@
+<object name="dossier_logs">
+  <objectid>63</objectid>
+  <label>Contact Log Records</label>
+  <moduleid>829</moduleid>
+  <itemtype>4</itemtype>
+  <urlparam>logid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="logid">
+      <id>559</id>
+      <label>Log ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_dossier_logs.logid</source>
+      <status>2</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="contactid">
+      <id>560</id>
+      <label>Contact</label>
+      <type>hidden</type>
+      <default></default>
+      <source>xar_dossier_logs.contactid</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="ownerid">
+      <id>561</id>
+      <label>Contact With</label>
+      <type>userlist</type>
+      <default></default>
+      <source>xar_dossier_logs.ownerid</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="logtype">
+      <id>562</id>
+      <label>Log Type</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>xar_dossier_logs.logtype</source>
+      <status>1</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="logdate">
+      <id>563</id>
+      <label>Log Date</label>
+      <type>calendar</type>
+      <default></default>
+      <source>xar_dossier_logs.logdate</source>
+      <status>1</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="createdate">
+      <id>564</id>
+      <label>createdate</label>
+      <type>calendar</type>
+      <default></default>
+      <source>xar_dossier_logs.createdate</source>
+      <status>2</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="notes">
+      <id>565</id>
+      <label>Notes</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>xar_dossier_logs.notes</source>
+      <status>1</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

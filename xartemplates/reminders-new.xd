@@ -1,0 +1,42 @@
+<xar:data-getitem name="$properties" module="dossier" itemtype="5" itemid="0" />
+
+<xar:if condition="!isset($ownerid)">
+    <xar:set name="ownerid">xarSessionGetVar('uid')</xar:set>
+</xar:if>
+
+<div class="xar-mod-body">
+    <div align="center">
+    
+        <form method="post" action="&xar-modurl-dossier-reminders-create;">
+        
+            <input type="hidden" name="authid" value="#$authid#" />
+            <input type="hidden" name="contactid" value="#$contactid#" />
+            <input type="hidden" name="returnurl" value="#$returnurl#" />
+            
+            <table width="100%" border="0" cellspacing="0" cellpadding="2">
+                <tr>
+                    <td><xar:data-label property="$properties['ownerid']" /></td>
+                    <td><xar:data-input property="$properties['ownerid']" name="ownerid" value="$ownerid" /></td>
+                </tr>
+                <tr>
+                    <td><xar:data-label property="$properties['reminderdate']" /></td>
+                    <td><xar:data-input property="$properties['reminderdate']" name="reminderdate" /></td>
+                </tr>
+                <tr>
+                    <td><xar:data-label property="$properties['warningtime']" /></td>
+                    <td><xar:data-input property="$properties['warningtime']" name="warningtime" /></td>
+                </tr>
+                <tr>
+                    <td><xar:data-label property="$properties['notes']" /></td>
+                    <td><xar:data-input property="$properties['notes']" name="notes" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><br /><input type="submit" name="submit" value="#$addbutton#" /></td>
+                </tr>
+            </table>
+            
+            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('dossier')#" />
+        
+        </form>
+    </div>
+</div>

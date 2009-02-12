@@ -1,0 +1,24 @@
+<!-- START TITLE BAR -->
+<xar:template compile="false" file="admin-menu" type="module" />
+<!-- END TITLE BAR -->
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    
+    <h3><xar:mlstring>What is Dossier?</xar:mlstring></h3>
+    <p><xar:mlstring>This module was written after laboriously compiling a list of development best practices to serve as the requirements.</xar:mlstring></p>
+    
+    <h3><xar:mlstring>Features</xar:mlstring></h3>
+    <ul>
+        <li><xar:mlstring>Manage contact data about your clients, vendors, friends, family, whoever.</xar:mlstring></li>
+        <li><xar:mlstring>Provide for multiple locations per contact record, including dates of occupancy.</xar:mlstring></li>
+        <li><xar:mlstring>Set contact reminders.</xar:mlstring></li>
+        <li><xar:mlstring>Log conversations and discussions.</xar:mlstring></li>
+        <li><xar:mlstring>Call Rotator customer service mode has a convenient interface designed to ease contact record lookups.</xar:mlstring></li>
+        <li><xar:mlstring>Have Skype automatically open a browser window to Dossier, searching by phone number, as returned in the URL by Skype.</xar:mlstring></li>
+        <li><xar:mlstring>The Contact List field property allows selection of Dossier contacts for use as centralized contact repository.</xar:mlstring></li>
+        <li><xar:mlstring>The Contact Phone field property allows for an auto-tabbed array of text fields to capture formatted phone numbers.</xar:mlstring></li> 
+    </ul>
+        
+</div>
+<div class="xar-mod-foot"></div>
+

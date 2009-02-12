@@ -1,0 +1,37 @@
+<script type="text/JavaScript">
+<!--
+function MM_callJS(jsStr) { //v2.0
+  return eval(jsStr)
+}
+//-->
+</script>
+
+<xar:template compile="false" file="mod-title" type="module" />
+<div class="xar-alt-outline" style="padding: 4em; text-align:center; ">
+<strong>#$confirmDeleteTEXT#</strong>
+<br />
+<br />
+<xar:if condition="!empty($lname)">
+    <xar:if condition="!empty($fname)">
+        #$fname#&nbsp;#$lname#<br />
+        <xar:if condition="!empty($company)">
+            #$company#<br />
+        </xar:if>
+    <xar:else />
+        #$lname#<br />
+        <xar:if condition="!empty($company)">
+            #$company#<br />
+        </xar:if>
+    </xar:if>
+<xar:else />
+    #$company#<br />
+</xar:if>
+
+<form action="#xarModURL('dossier', 'user', 'dodelete',$menuValues)#" method="post" enctype="application/x-www-form-urlencoded" name="deleteContact" id="deleteContact">
+  <input type="hidden" id="authid" name="authid" value="#$authid#" />
+  <input type="hidden" id="id" name="id" value="#$id#" /><br />
+  <input name="#$buttonDelete#" type="submit" id="#$buttonDelete#" value="#$buttonDelete#" />&nbsp;&nbsp;&nbsp;
+  <input name="#$buttonCancel#" type="button" id="#$buttonCancel#" onClick="MM_callJS('javascript:history.go(-1)')" value="#$buttonCancel#" />
+</form>
+</div>
+<xar:template compile="false" file="mod-footer" type="module" />

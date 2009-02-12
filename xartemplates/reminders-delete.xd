@@ -1,0 +1,55 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="contacts_objectid">xarModGetVar('dossier','contacts_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="dossier" itemtype="1" itemid="$contacts_objectid" />
+<xar:set name="reminders_objectid">xarModGetVar('dossier','reminders_objectid')</xar:set>
+<xar:data-getitem name="$reminderproperties" module="dossier" itemtype="5" itemid="$reminders_objectid" />
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Delete Reminder</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<div align="center">
+
+<form method="post" action="&xar-modurl-dossier-reminders-delete;">
+    <input type="hidden" name="authid" value="#$authid#" />
+    <input type="hidden" name="confirm" value="true" />
+    <input type="hidden" name="reminderid" value="#$reminderid#" />
+
+    <table border="0" cellpadding="2" cellspacing="0">
+        <tr>
+            <td align="right" width="30%">
+                <xar:mlstring>Contact</xar:mlstring>
+            </td>
+            <td><strong>#$contactinfo['sortname']#</strong> (ID: #$contactinfo['contactid']#)</td>
+        </tr>
+        <tr>
+            <td align="right" width="20%">
+                <xar:data-label property="$reminderproperties['ownerid']" />
+            </td>
+            <td>
+                <xar:data-output property="$reminderproperties['ownerid']" value="$item['ownerid']" />
+            </td>
+        </tr>
+        <tr>
+            <td align="right" width="20%">
+                <xar:data-label property="$reminderproperties['reminderdate']" />
+            </td>
+            <td>
+                <xar:data-output property="$reminderproperties['reminderdate']" value="$item['reminderdate']" />
+            </td>
+        </tr>
+        <tr>
+            <td align="right" width="20%">
+                <xar:data-label property="$reminderproperties['notes']" />
+            </td>
+            <td>
+                <xar:data-output property="$reminderproperties['notes']" value="$item['notes']" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><br />
+                    <input type="submit" value="#$confirmbutton#"  />
+            </td>
+        </tr>
+    </table>
+</form>
+</div>
+</div>

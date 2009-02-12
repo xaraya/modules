@@ -1,0 +1,24 @@
+<xar:template type="module" file="admin-menu" />
+
+<div class="xar-mod-head">
+</div>
+<div style="border-width: 1px; background-color:#DEDEDE; border-style: solid; border-color: #666666; padding: 2px; text-align:center;">
+    <br />
+    <strong><xar:mlstring>You are not authorized to perform this function</xar:mlstring></strong>
+    <br />
+    </div>
+    <div style="text-align:center; border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
+            <br />
+            <br />
+            <br />
+            <strong>
+                        <xar:ml>
+                            <xar:mlstring>Please click <a href="#(1)">here</a> return to the start.</xar:mlstring>
+                            <xar:mlvar>#xarModURL('dossier')#</xar:mlvar>
+                        </xar:ml>
+            </strong>
+            <br />
+            <br />
+            <br />
+    </div>
+<xar:template compile="false" file="mod-footer" type="module" />

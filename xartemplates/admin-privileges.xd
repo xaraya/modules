@@ -1,0 +1,190 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Privileges Administration</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2>
+        <xar:ml>
+            <xar:mlstring>Select Dossier Contacts for Privilege '#(1)'</xar:mlstring>
+            <xar:mlvar>#$extname#</xar:mlvar>
+        </xar:ml>
+    </h2>
+        <form method="post" action="&xar-modurl-dossier-admin-privileges;">
+            <div>
+            <input type="hidden" name="extpid" id="extpid" value="#$extpid#" />
+            <input type="hidden" name="extname" id="extname" value="#$extname#" />
+            <input type="hidden" name="extrealm" id="extrealm" value="#$extrealm#" />
+            <input type="hidden" name="extmodule" id="extmodule" value="#$extmodule#" />
+            <input type="hidden" name="extcomponent" id="extcomponent" value="#$extcomponent#" />
+            <input type="hidden" name="pparentid" id="pparentid" value="#$pparentid#" />
+            <table border="1" cellpadding="8" cellspacing="0">
+                <tr>
+                    <th valign="top" align="right">
+                        <xar:mlstring>Category</xar:mlstring>
+                    </th>
+                    <td>
+                        <xar:foreach in="$cats" key="$catid">#$cats[$catid]#
+                        <br />
+                        <br /></xar:foreach>
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top" align="right">
+                        <xar:mlstring>Associated User Account</xar:mlstring>
+                    </th>
+                    <td>
+                        <select name="userid" id="userid" onchange="javascript:this.form.submit();">
+                            <option value="0">
+                                <xar:mlstring>All / Other --&gt;</xar:mlstring>
+                            </option>
+                            <xar:foreach in="$userlist" key="$id">
+                                <xar:if condition="$id eq $userid">
+                                    <option value="#$id#" selected="selected">#xarVarPrepForDisplay($userlist[$id])#</option>
+                                    <xar:else />
+                                    <option value="#$id#">#xarVarPrepForDisplay($userlist[$id])#</option>
+                                </xar:if>
+                            </xar:foreach>
+                        </select>
+                        <input type="text" name="username" id="username" value="#$username#" size="15" onchange="javascript:this.form.submit();" />
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top" align="right">
+                        <xar:mlstring>Company</xar:mlstring>
+                    </th>
+                    <td>
+                        <select name="company" id="company" onchange="javascript:this.form.submit();">
+                            <option value="0">
+                                <xar:mlstring>All / Other --&gt;</xar:mlstring>
+                            </option>
+                            <xar:foreach in="$companylist" value="$companyinfo">
+                                <xar:if condition="$companyinfo['id']">
+                                    <xar:if condition="$companyinfo['id'] eq $company">
+                                        <option value="#$companyinfo['id']#" selected="selected">#xarVarPrepForDisplay($companyinfo['name'])#</option>
+                                        <xar:else />
+                                        <option value="#$companyinfo['id']#">#xarVarPrepForDisplay($companyinfo['name'])#</option>
+                                    </xar:if>
+                                </xar:if>
+                            </xar:foreach>
+                        </select>
+                        <input type="text" name="companyname" id="companyname" value="#$companyname#" size="15" onchange="javascript:this.form.submit();" />
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top" align="right">
+                        <xar:mlstring>Agent</xar:mlstring>
+                    </th>
+                    <td>
+                        <select name="ownerid" id="ownerid" onchange="javascript:this.form.submit();">
+                            <option value="0">
+                                <xar:mlstring>All / Other --&gt;</xar:mlstring>
+                            </option>
+                            <xar:foreach in="$userlist" key="$id">
+                                <xar:if condition="$id eq $ownerid">
+                                    <option value="#$id#" selected="selected">#xarVarPrepForDisplay($userlist[$id])#</option>
+                                    <xar:else />
+                                    <option value="#$id#">#xarVarPrepForDisplay($userlist[$id])#</option>
+                                </xar:if>
+                            </xar:foreach>
+                        </select>
+                        <input type="text" name="ownername" id="ownername" value="#$ownername#" size="15" onchange="javascript:this.form.submit();" />
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top" align="right">
+                        <xar:mlstring>Access Level</xar:mlstring>
+                    </th>
+                    <td>
+                        <select name="extlevel" id="extlevel">
+                            <xar:if condition="$extlevel eq 0">
+                                <option value="0" selected="selected">
+                                    <xar:mlstring>No Access</xar:mlstring>
+                                </option>
+                                <xar:else />
+                                <option value="0">
+                                    <xar:mlstring>No Access</xar:mlstring>
+                                </option>
+                            </xar:if>
+                            <xar:if condition="$extlevel eq 100">
+                                <option value="100" selected="selected">
+                                    <xar:mlstring>Overview</xar:mlstring>
+                                </option>
+                                <xar:else />
+                                <option value="100">
+                                    <xar:mlstring>Overview</xar:mlstring>
+                                </option>
+                            </xar:if>
+                            <xar:if condition="$extlevel eq 200">
+                                <option value="200" selected="selected">
+                                    <xar:mlstring>Read</xar:mlstring>
+                                </option>
+                                <xar:else />
+                                <option value="200">
+                                    <xar:mlstring>Read</xar:mlstring>
+                                </option>
+                            </xar:if>
+                            <xar:if condition="$extlevel eq 300">
+                                <option value="300" selected="selected">
+                                    <xar:mlstring>Submit (Comment)</xar:mlstring>
+                                </option>
+                                <xar:else />
+                                <option value="300">
+                                    <xar:mlstring>Submit (Comment)</xar:mlstring>
+                                </option>
+                            </xar:if>
+                            <xar:if condition="$extlevel eq 500">
+                                <option value="500" selected="selected">
+                                    <xar:mlstring>Edit / Approve</xar:mlstring>
+                                </option>
+                                <xar:else />
+                                <option value="500">
+                                    <xar:mlstring>Edit / Approve</xar:mlstring>
+                                </option>
+                            </xar:if>
+                            <xar:if condition="$extlevel eq 700">
+                                <option value="700" selected="selected">
+                                    <xar:mlstring>Delete</xar:mlstring>
+                                </option>
+                                <xar:else />
+                                <option value="700">
+                                    <xar:mlstring>Delete</xar:mlstring>
+                                </option>
+                            </xar:if>
+                            <xar:if condition="$extlevel eq 800">
+                                <option value="800" selected="selected">
+                                    <xar:mlstring>Admin</xar:mlstring>
+                                </option>
+                                <xar:else />
+                                <option value="800">
+                                    <xar:mlstring>Admin</xar:mlstring>
+                                </option>
+                            </xar:if>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" value="#$refreshlabel#" />
+                    </td>
+                </tr>
+            </table>
+            <hr />
+            <br />(Instance Definition #$extinstance#)
+            <br />
+            <br />
+            <input type="submit" name="apply" value="#$applylabel#" /></div>
+        </form>
+        <br />
+        <xar:mlstring>Some examples : (assuming your users have read access by default)
+        <br />
+        <br />- In order to allow 'Friends' to submit News Articles (and only that), define a privilege 'SubmitNews' (or whatever name you prefer), and choose the publication type "News Articles" (instance 1:All:All:All) and access level "Submit (Comment)" above. Press "Finish and Apply to Privilege", and then assign that privilege to the 'Friends' role.
+        <br />
+        <br />- In order to stop 'Strangers' from viewing Documents, define some privilege 'NoDocuments' with publication type "Documents" (instance 2:All:All:All) and access level "No Access". Then assign that privilege to the 'Strangers' role.
+        <br />
+        <br />- ...
+        <br />
+        <br /></xar:mlstring>
+        <xar:mlstring>Note: if you want to deny access to all articles in a particular category with ID 123, you can also define a privilege for module 'categories', component 'Category', category name 'All' and category ID '123'. This will remove the category from the articles map and categories navigation as well.</xar:mlstring>
+</div>

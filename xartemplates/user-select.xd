@@ -1,0 +1,58 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:if condition="empty($size)">
+    <xar:set name="size">1</xar:set>
+    <xar:if condition="!isset($multiple) or empty($multiple)">
+        <xar:set name="size">5</xar:set>
+    </xar:if>
+</xar:if>
+
+<xar:set name="arraypos">strpos($fieldname, "[]")</xar:set>
+<xar:set name="fieldname_id">$fieldname</xar:set>
+<xar:if condition="$arraypos gt 0">
+    <xar:set name="fieldname_id">substr($fieldname, 0, $arraypos)</xar:set>
+</xar:if>
+
+<xar:set name="multipleparam">""</xar:set>
+<xar:if condition="!empty($multiple)">
+    <xar:set name="multipleparam">"multiple='multiple'"</xar:set>
+</xar:if>
+
+<select name="#$fieldname#" id="#$fieldname_id#" #$multipleparam# size="#$size#" onChange="dossier_reloadcontactlist('#$fieldname#','#$fieldname_id#','#$size#')" onKeyup="dossier_reloadcontactlist('#$fieldname#','#$fieldname_id#','#$size#')" >
+    <xar:if condition="$size eq 1">
+        <xar:if condition="$company eq 'select_company'">
+            <option value="">Select a company...</option>
+            <option value="+">Select independent contact...</option>
+        <xar:elseif condition="$company eq ' '" />
+            <option value="">Select independent contact...</option>
+            <option value="select_company">Select from a company...</option>
+        <xar:else />
+            <option value="">Select #$company# contact...</option>
+            <option value="+">Select independent contact...</option>
+            <option value="select_company">Select another company...</option>
+        </xar:if>
+    </xar:if>
+    <xar:if condition="count($companylist) gt 0">
+        <xar:foreach in="$companylist" value="$option" >
+            <option value="#$option['id']#">#$option['name']#</option>
+        </xar:foreach>
+    <xar:else />
+        <xar:foreach in="$options" value="$option" >
+            <xar:if condition="empty($option['contactid']) or $option['contactid'] ne $option['sortname']">
+                <xar:if condition="$option['contactid'] eq $contactid" >
+                    <option value="#$option['contactid']#" selected="selected">#$option['sortname']#</option>
+                <xar:else />
+                    <option value="#$option['contactid']#">#$option['sortname']#</option>
+                </xar:if>
+            <xar:elseif condition="$option['contactid'] eq $contactid" />
+                <option value="#$option['contactid']#" selected="selected">#$option['sortname']#</option>
+            <xar:else />
+                <option value="#$option['contactid']#">#$option['sortname']#</option>
+            </xar:if>
+        </xar:foreach>
+    </xar:if>
+</select>
+
+<xar:if condition="!empty($invalid)">
+    <span class="xar-error">#$invalid#</span>
+</xar:if>

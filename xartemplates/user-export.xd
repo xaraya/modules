@@ -1,0 +1,7 @@
+<!-- START TITLE BAR -->
+<xar:template compile="false" file="mod-admin-title" type="module" />
+<!-- END TITLE BAR -->
+<div class="xar-mod-body">
+
+</div>
+<xar:template compile="false" file="mod-footer" type="module" />

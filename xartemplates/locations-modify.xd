@@ -1,0 +1,70 @@
+<xar:data-getitem name="$properties" module="dossier" itemtype="2" itemid="0" />
+<xar:data-getitem name="$dataproperties" module="dossier" itemtype="3" itemid="0" />
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Modify Address / Location</xar:mlstring></span></div>
+<div class="xar-mod-body">
+
+<form method="post" action="&xar-modurl-dossier-locations-update;">
+
+<input type="hidden" name="authid" value="#$authid#" />
+<input type="hidden" name="locationid" value="#$locationid#" />
+<input type="hidden" name="contactid" value="#$contactid#" />
+
+<table width="100%" border="0" cellspacing="0" cellpadding="2">
+    <tr>
+        <td><xar:data-label property="$properties['cat_id']" /></td>
+        <td>
+            <xar:set name="locationcid">xarModGetVar('dossier', 'locationcid')</xar:set>
+            <xar:set name="dummy">xarModAPILoad('categories', 'user')</xar:set>
+            <xar:set name="catlist">xarModAPIFunc('categories', 'user', 'getchildren', array('cid' => $locationcid ) )</xar:set>
+            <xar:set name="cat_options">array('0' => "unfiled")</xar:set>
+            <xar:foreach in="$catlist" value="$catinfo">
+                <xar:set name="catid">$catinfo['cid']</xar:set>
+                <xar:set name="cat_options[$catid]">$catinfo['name']</xar:set>
+            </xar:foreach>
+            <xar:data-input type="dropdown" validation="$cat_options" name="cat_id" value="$item['cat_id']" />
+        </td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['address_1']" /></td>
+        <td><xar:data-input property="$properties['address_1']" name="address_1" value="$item['address_1']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['address_2']" /></td>
+        <td><xar:data-input property="$properties['address_2']" name="address_2" value="$item['address_2']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['city']" /></td>
+        <td><xar:data-input property="$properties['city']" name="city" value="$item['city']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['us_state']" /></td>
+        <td><xar:data-input property="$properties['us_state']" name="us_state" value="$item['us_state']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['postalcode']" /></td>
+        <td><xar:data-input property="$properties['postalcode']" name="postalcode" value="$item['postalcode']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['country']" /></td>
+        <td><xar:data-input property="$properties['country']" name="country" value="$item['country']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['latitude']" /></td>
+        <td><xar:data-input property="$properties['latitude']" name="latitude" value="$item['latitude']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['longitude']" /></td>
+        <td><xar:data-input property="$properties['longitude']" name="longitude" value="$item['longitude']" /></td>
+    </tr>
+    <tr>
+        <xar:set name="updatebtn"><xar:mlstring>Modify Contact</xar:mlstring></xar:set>
+        <td colspan=2 align="center"><br /><input type="submit" name="submit" value="#$updatebtn#"></td>
+    </tr>
+</table>
+
+<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('dossier')#" />
+
+</form>
+
+</div>

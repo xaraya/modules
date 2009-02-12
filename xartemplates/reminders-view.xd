@@ -1,0 +1,34 @@
+<xar:set name="worklog_objectid">xarModGetVar('xtasks','worklog_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="xtasks" itemtype="2" itemid="$worklog_objectid" />
+<xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
+<xar:data-getitem name="$xproject_properties" module="xproject" itemtype="1" itemid="$projects_objectid" />
+    
+<xar:template type="module" file="admin-menu" />
+<div class="xar-mod-body">
+    <h2 style="text-align: center;">Work Log</h2>
+
+    <div style="width: 655px;">
+        <div>
+            <div class="xar-title" style="float: left; width: 150px; margin-left: 50px;"><strong><xar:mlstring>Project</xar:mlstring></strong></div>
+            <div class="xar-title" style="float: left; width: 150px;"><strong><xar:mlstring>Client</xar:mlstring></strong></div>
+            <div class="xar-title" style="float: left; width: 100px;"><strong><xar:mlstring>Date</xar:mlstring></strong></div>
+            <div class="xar-title" style="float: left; width: 120px;"><strong><xar:mlstring>Hours</xar:mlstring></strong></div>
+            <div class="xar-title" style="float: right; width: 50px;"><strong><xar:mlstring>Options</xar:mlstring></strong></div>
+            <div style="clear: both;"></div>
+        </div>
+        <xar:foreach in="$worklog" value="$workdetails">
+            <div class="xar-alt"><strong><xar:mlstring>Task</xar:mlstring>: <a href="&xar-modurl-xtasks-user-display;&amp;taskid=#$workdetails.taskid#">#$workdetails['taskname']#</a></strong></div>
+            <div>
+                <div class="xar-sub" style="float: left; width: 150px; margin-left: 50px;"><xar:if condition="$workdetails.projectid gt 0"><a href="&xar-modurl-xproject-admin-display;&amp;projectid=#$workdetails['projectid']#"><xar:data-output property="$xproject_properties['project_name']" value="$workdetails['project_name']" /></a></xar:if>&nbsp;</div>
+                <div class="xar-sub" style="float: left; width: 150px;"><xar:if condition="$workdetails.clientid gt 0"><a href="&xar-modurl-dossier-user-display;&amp;contactid=#$workdetails['clientid']#"><xar:data-output property="$xproject_properties['clientid']" value="$workdetails['clientid']" /></a></xar:if>&nbsp;</div>
+                <div class="xar-sub" style="float: left; width: 100px;"><xar:data-output property="$properties['reminderdate']" value="$workdetails['eventdate']" dateformat="%d-%b-%Y" />&nbsp;</div>
+                <div class="xar-sub" style="float: left; width: 120px;"><xar:data-output property="$properties['hours']" value="$workdetails['hours']" />&nbsp;hrs&nbsp;[<xar:data-output property="$properties['ownerid']" value="$workdetails['ownerid']" />]</div>
+                <div class="xar-sub" style="float: right; width: 50px; text-align: right; word-wrap: nowrap;"><a href="&xar-modurl-xtasks-worklog-modify;&amp;worklogid=#$workdetails['worklogid']#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0" align="bottom" /></a>&nbsp;<a href="&xar-modurl-xtasks-worklog-delete;&amp;worklogid=#$workdetails['worklogid']#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0" align="bottom" /></a></div>
+                <div style="clear: both;"></div>
+            </div>
+            <xar:if condition="!empty($workdetails['notes'])">
+                <div class="xar-tiny" style="margin-left: 50px;"><em><xar:data-output property="$properties['notes']" value="$workdetails['notes']" /></em></div>
+            </xar:if>
+        </xar:foreach>
+    </div>
+</div>

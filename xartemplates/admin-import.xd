@@ -1,0 +1,3 @@
+Total new contacts added: #$newcontacts#
+<br />
+Total contacts in import table: #$importsize#

@@ -1,0 +1,56 @@
+<xar:set name="reminders_objectid">xarModGetVar('dossier','reminders_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="dossier" itemtype="4" itemid="$reminders_objectid" />
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Edit Log Record</xar:mlstring></span></div>
+<div class="xar-mod-body">
+
+    <form method="post" action="&xar-modurl-dossier-logs-update;">
+    
+    <input type="hidden" name="authid" value="#$authid#" />
+    <input type="hidden" name="logid" value="#$logid#" />
+    
+    <table width="100%" border="0" cellspacing="0" cellpadding="2">
+        <tr>
+            <td><xar:mlstring>Contact Name</xar:mlstring></td>
+            <td><strong>#$contactinfo['sortname']#</strong></td>
+        </tr>
+        <tr>
+            <td><xar:data-label property="$properties['ownerid']" /></td>
+            <td><xar:data-input property="$properties['ownerid']" name="ownerid" value="$item['ownerid']" /></td>
+        </tr>
+        <tr>
+            <td><xar:data-label property="$properties['logtype']" /></td>
+            <td>
+                <xar:set name="logcid">xarModGetVar('dossier', 'logcid')</xar:set>
+                <xar:set name="dummy">xarModAPILoad('categories', 'user')</xar:set>
+                <xar:set name="catlist">xarModAPIFunc('categories', 'user', 'getchildren', array('cid' => $logcid ) )</xar:set>
+                <select name="logtype">
+                    <option value=""><xar:mlstring>General</xar:mlstring></option>
+                    <xar:if condition="is_array($catlist)">
+                        <xar:foreach in="$catlist" value="$catinfo">
+                            <xar:if condition="$catinfo['cid'] eq $item['logtype']">
+                                <xar:set name="selected">"selected"</xar:set>
+                            <xar:else />
+                                <xar:set name="selected">""</xar:set>
+                            </xar:if>
+                            <option value="#$catinfo['name']#" #$selected#>#$catinfo['name']#</option>
+                        </xar:foreach>
+                    </xar:if>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><xar:data-label property="$properties['logdate']" /></td>
+            <td><xar:data-input property="$properties['logdate']" name="logdate" value="$item['logdate']" /></td>
+        </tr>
+        <tr>
+            <td><xar:data-label property="$properties['notes']" /></td>
+            <td><xar:data-input property="$properties['notes']" name="notes" value="$item['notes']" /></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><br /><input type="submit" value="#$updatebutton#" /></td>
+        </tr>
+    </table>
+    
+    </form>
+</div>

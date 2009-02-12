@@ -1,0 +1,52 @@
+<object name="dossier_locationdata">
+  <objectid>15</objectid>
+  <label>Location Duration</label>
+  <moduleid>829</moduleid>
+  <itemtype>3</itemtype>
+  <urlparam>locationid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="locationid">
+      <id>51</id>
+      <label>Location ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>dossier_locationdata.locationid</source>
+      <status>2</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="contactid">
+      <id>52</id>
+      <label>Contact ID</label>
+      <type>hidden</type>
+      <default></default>
+      <source>dossier_locationdata.contactid</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="startdate">
+      <id>53</id>
+      <label>Start Date</label>
+      <type>calendar</type>
+      <default></default>
+      <source>dossier_locationdata.startdate</source>
+      <status>1</status>
+      <order>3</order>
+      <validation>date</validation>
+    </property>
+    <property name="enddate">
+      <id>54</id>
+      <label>End Date</label>
+      <type>calendar</type>
+      <default></default>
+      <source>dossier_locationdata.enddate</source>
+      <status>1</status>
+      <order>4</order>
+      <validation>date</validation>
+    </property>
+  </properties>
+</object>

@@ -1,0 +1,50 @@
+<xar:data-getitem name="$properties" module="dossier" itemtype="4" itemid="0" />
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>New Contact Log Entry</xar:mlstring></span></div>
+<div class="xar-mod-body">
+
+    <form method="post" action="&xar-modurl-dossier-logs-create;">
+    
+        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('dossier')#" />
+        <input type="hidden" name="contactid" value="#$contactid#" />
+        <input type="hidden" name="returnurl" value="#$returnurl#" />
+        <xar:set name="ownerid">xarSessionGetVar('uid')</xar:set>
+        
+        <table width="100%" border="0" cellspacing="0" cellpadding="2">
+            <tr>
+                <td><xar:data-label property="$properties['logtype']" /></td>
+                <td>
+                    <xar:set name="logcid">xarModGetVar('dossier', 'logcid')</xar:set>
+                    <xar:set name="dummy">xarModAPILoad('categories', 'user')</xar:set>
+                    <xar:set name="catlist">xarModAPIFunc('categories', 'user', 'getchildren', array('cid' => $logcid ) )</xar:set>
+                    <select name="logtype">
+                        <option value=""><xar:mlstring>General</xar:mlstring></option>
+                        <xar:if condition="is_array($catlist)">
+                            <xar:foreach in="$catlist" value="$catinfo">
+                                <option value="#$catinfo['cid']#">#$catinfo['name']#</option>
+                            </xar:foreach>
+                        </xar:if>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['ownerid']" /></td>
+                <td><xar:data-input property="$properties['ownerid']" name="ownerid" value="$ownerid" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['logdate']" /></td>
+                <xar:set name="currentdate">date("Y-m-d H:i:s", xarMLS_userTime())</xar:set>
+                <td><xar:data-input property="$properties['logdate']" name="logdate" value="$currentdate" dateformat="%Y-%m-%d %H:%M:%S" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['notes']" /></td>
+                <td><xar:data-input property="$properties['notes']" name="notes" /></td>
+            </tr>
+            <tr>
+                <xar:set name="updatebtn"><xar:mlstring>Create Record of Contact</xar:mlstring></xar:set>
+                <td colspan=2 align="center"><br /><input type="submit" name="submit" value="#$updatebtn#"></td>
+            </tr>
+        </table>
+    
+    </form>
+</div>

@@ -1,0 +1,49 @@
+<xar:set name="log_objectid">xarModGetVar('dossier','log_objectid')</xar:set>
+<xar:data-getitem name="$logproperties" module="dossier" itemtype="4" itemid="$log_objectid" />
+
+<xar:style scope="module" module="dossier" file="default" />
+
+<xar:if condition="!isset($showmenu) or $showmenu eq 1">
+    <xar:template type="module" file="admin-menu" />
+</xar:if>
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Contact Log</xar:mlstring> :: #xarUserGetVar('name',$ownerid)#</span>
+</div>
+
+<div class="xar-mod-body">
+
+    <table width="100%" border="0">
+        <xar:if condition="count($contactlogs) gt 0">
+            <xar:foreach in="$contactlogs" value="$loginfo">
+                <xar:if condition="!$loginfo['logtype']">
+                    <xar:set name="logtypename">"General"</xar:set>
+                <xar:elseif condition="!is_numeric($loginfo['logtype'])" />
+                    <xar:set name="logtypename">$loginfo['logtype']</xar:set>
+                <xar:else />
+                    <xar:set name="logtypedetails">xarModAPIFunc('categories', 'user', 'getcatinfo', array('cid' => $loginfo['logtype']))</xar:set>
+                    <xar:set name="logtypename">$logtypedetails['name']</xar:set>
+                </xar:if>
+                <tr>
+                    <td>
+                        <div>
+                            <div style="float: left; width: auto;"><strong>#$logtypename#</strong> <xar:mlstring>contact with/from</xar:mlstring> <a href="#xarModURL('dossier','admin','display',array('contactid'=>$loginfo['contactid']))#">#$loginfo['sortname']#</a></div>
+                            <div style="float: right; width: 200px; font-size: 10px;"><xar:data-output property="$logproperties['logdate']" value="$loginfo['logdate']" /></div>
+                            <div style="clear: both;"></div>
+                        </div>
+                        <div style="padding-left: 20px; max-height: 200px; overflow-y: auto;"><em>#$loginfo['notes']#</em></div>
+                    </td>
+                    <td width="65" valign="top" align="right">
+                        <a class="thickbox" href="&xar-modurl-dossier-logs-modify;&amp;logid=#$loginfo['logid']#&amp;contactid=#$loginfo['contactid']#&amp;pageName=module"><img src="modules/dossier/xarimages/button.edit.gif"></a>
+                        <a class="thickbox" href="&xar-modurl-dossier-logs-delete;&amp;logid=#$loginfo['logid']#&amp;contactid=#$loginfo['contactid']#&amp;pageName=module"><img src="modules/dossier/xarimages/button.delete.gif"></a>
+                    </td>
+                </tr>
+            </xar:foreach>
+        <xar:else />
+            <xar:mlstring>No Record of Contact</xar:mlstring>
+        </xar:if>
+    </table>
+
+</div>
+
+<div class="xar-mod-foot"></div>
+

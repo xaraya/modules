@@ -1,0 +1,193 @@
+<xar:base-include-javascript position="body" module="base" filename="xmlhttprequest.js" />
+
+<xar:comment>Pull and compile a list of events.</xar:comment>
+
+<xar:comment>Display three calendars with javascript to send details to the sidebar, summarized by day.</xar:comment>
+
+<xar:set name="ttldashboardcalendars">xarModGetVar('dossier', 'ttldashboardcalendars')</xar:set>
+<xar:if condition="$ttldashboardcalendars le 0">
+    <xar:set name="ttldashboardcalendards">"3"</xar:set>
+</xar:if>
+
+<xar:if condition="!isset($displaymonth)">
+    <xar:set name="displaymonth">date("Y-m")</xar:set>
+</xar:if>
+
+<xar:set name="d_year">""</xar:set>
+<xar:set name="d_month">""</xar:set>
+<xar:set name="dummy">list($d_year, $d_month) = explode("-", $displaymonth)</xar:set>
+
+<xar:set name="tempdate">mktime(12,0,0,$d_month,1,$d_year)</xar:set>
+<xar:set name="unixdate">mktime(12,0,0,$d_month,15,$d_year)</xar:set>
+<xar:set name="daysinmonth">date("t", $unixdate)</xar:set>
+<xar:set name="monthname">date("F", $unixdate)</xar:set>
+<xar:set name="thisyear">date("Y", $tempdate)</xar:set>
+<xar:set name="thismonth">date("m", $tempdate)</xar:set>
+<xar:if condition="$thismonth eq 1">
+    <xar:set name="prevyear">$thisyear - 1</xar:set>
+    <xar:set name="prevmonth">12</xar:set>
+<xar:else />
+    <xar:set name="prevyear">date("Y", $tempdate)</xar:set>
+    <xar:set name="prevmonth">$thismonth - 1</xar:set>
+</xar:if>
+<xar:if condition="$thismonth eq 12">
+    <xar:set name="nextyear">$thisyear + 1</xar:set>
+    <xar:set name="nextmonth">1</xar:set>
+<xar:else />
+    <xar:set name="nextyear">date("Y", $tempdate)</xar:set>
+    <xar:set name="nextmonth">$thismonth + 1</xar:set>
+</xar:if>
+
+<style>
+    .calendarboxheader {
+        height: 16px; 
+        color: #FFFFFF; 
+        background-color: #000000;
+    }
+    .weekdayheader {
+        font-size: 10px;
+        float: left;
+        width: 17px;
+        text-align: center;
+        border-right: 1px solid #00549a;
+        border-bottom: 1px solid #00549a;
+    }
+    .weekdayheader-first {
+        border-left: 1px solid #00549a;
+    }
+    .weekday {
+        font-size: 12px;
+        float: left;
+        width: 17px;
+        text-align: center;
+        border-right: 1px solid #00549a;
+        border-bottom: 1px solid #00549a;
+    }
+    .weekday-first {
+        border-left: 1px solid #00549a;
+    }
+    .monthheader {
+        border: 1px solid #00549a;
+        background-color: #00549a;
+        color: #FFFFFF;
+        font-size: 14px;
+        font-weight: bold;
+        text-align: center;
+    }
+</style>
+
+<div style="width: 735px; border: 1px solid #cccccc;" id="dashboardcalendar" name="dashboardcalendar">
+    <div id="dashboardcalendars" style="float: left; width: 475px; border-right: 1px dashed #cccccc; padding-bottom: 5px;">
+        <div class="calendarboxheader">&nbsp;&nbsp;<strong><xar:mlstring>MY CALENDAR TOOL &amp; DAILY PLANNER</xar:mlstring></strong></div>
+            
+        <xar:comment>Display left nav arrow</xar:comment>
+        <div style="float: left; width: 26px; height: auto; padding-left: 12px; padding-top: 65px;">
+            <a href="&xar-modurl-dossier-user-dashboard;&amp;displaymonth=#$prevyear#-#$prevmonth#" onClick="return loadContent(this.href,'dashboardcalendar');">
+                <img src="modules/dossier/xarimages/arrow-left.gif">
+            </a>
+        </div>
+        
+        <xar:comment>cycle through three calendars</xar:comment>
+        <xar:for start="$i = 1" test="$i le $ttldashboardcalendards" iter="$i++">
+            <xar:set name="ttlweeks">1</xar:set>
+            <xar:set name="daysinmonth">date("t", $unixdate)</xar:set>
+            <xar:set name="monthname">date("F", $unixdate)</xar:set>
+            <xar:set name="thisyear">date("Y", $tempdate)</xar:set>
+            <xar:set name="monthdate">date("Ym", $unixdate)."01"</xar:set>
+            <xar:set name="firstdayofweek">"1"</xar:set>
+            <div style="float: left; width: 127px; padding-right: 9px; margin-top: 10px;">
+            
+                <xar:comment>display weekday headers</xar:comment>
+                <div class="monthheader">#$monthname# #$thisyear#</div>
+                <div style="xar-sub">
+                    <div class="weekdayheader weekdayheader-first">su</div>
+                    <div class="weekdayheader">mn</div>
+                    <div class="weekdayheader">tu</div>
+                    <div class="weekdayheader">wd</div>
+                    <div class="weekdayheader">th</div>
+                    <div class="weekdayheader">fr</div>
+                    <div class="weekdayheader">st</div>
+                    <div style="clear: both;"></div>
+                </div>
+                
+                <xar:comment>display initial empty days</xar:comment>
+                <xar:set name="dayofweek">date("w", $tempdate)</xar:set>
+                <xar:for start="$k = 1" test="$k le $dayofweek" iter="$k++">
+                    <xar:if condition="$firstdayofweek eq 1">
+                        <div class="weekday weekday-first">&nbsp;</div>
+                        <xar:set name="firstdayofweek">""</xar:set>
+                    <xar:else />
+                        <div class="weekday">&nbsp;</div>
+                    </xar:if>
+                </xar:for>
+                
+                <xar:comment>display days</xar:comment>
+                <xar:for start="$j = 1" test="$j le $daysinmonth" iter="$j++">
+                    <xar:set name="thisday">date("j", $tempdate)</xar:set>
+                    <xar:set name="thismonth">date("m", $tempdate)</xar:set>
+                    <xar:if condition="$firstdayofweek eq 1">
+                        <div class="weekday weekday-first">
+                        <xar:set name="firstdayofweek">""</xar:set>
+                    <xar:else />
+                        <div class="weekday">
+                    </xar:if>
+                        <xar:if condition="isset($eventlist[$thisyear][$thismonth][$thisday])">
+                            <a href="&xar-modurl-dossier-user-dayschedule;&amp;displaydate=#$thisyear#-#$thismonth#-#$thisday#" onClick="return loadContent(this.href,'dayview');">#$j#</a>
+                        <xar:else />
+                            #$j#
+                        </xar:if>
+                    </div>
+                    <xar:set name="dayofweek">date("w", $tempdate)</xar:set>
+                    <xar:if condition="$dayofweek eq 6">
+                        <div style="clear: both;"></div>
+                        <xar:set name="ttlweeks">$ttlweeks + 1</xar:set>
+                        <xar:set name="firstdayofweek">"1"</xar:set>
+                    </xar:if>        
+                    <xar:set name="tempdate">$tempdate + (24 * 3600)</xar:set>
+                </xar:for>
+                
+                <xar:comment>display ending empty days</xar:comment>
+                <xar:set name="dayofweek">date("w", $tempdate)</xar:set>
+                <xar:for start="$k = $dayofweek" test="$k lt 7" iter="$k++">
+                    <xar:if condition="$firstdayofweek eq 1">
+                        <div class="weekday weekday-first">&nbsp;</div>
+                        <xar:set name="firstdayofweek">""</xar:set>
+                    <xar:else />
+                        <div class="weekday">&nbsp;</div>
+                    </xar:if>
+                </xar:for>
+                <div style="clear: both;"></div>
+                
+                
+                <xar:comment>display extra empty row, if needed</xar:comment>
+                <xar:set name="firstdayofweek">1</xar:set>
+                <xar:if condition="$ttlweeks lt 6">
+                    <xar:for start="$k = 1" test="$k le 7" iter="$k++">
+                        <xar:if condition="$firstdayofweek eq 1">
+                            <div class="weekday weekday-first">&nbsp;</div>
+                            <xar:set name="firstdayofweek">""</xar:set>
+                        <xar:else />
+                            <div class="weekday">&nbsp;</div>
+                        </xar:if>
+                    </xar:for>
+                </xar:if>
+                <div style="clear: both;"></div>
+                <div style="text-align: center; height: 20; padding-top: 3px;">[ <a href="&xar-modurl-julian-user-month;&amp;cal_date=#$monthdate#">edit month</a> ]</div>
+            </div>
+            <xar:set name="unixdate">$unixdate + (30 * 24 * 3600)</xar:set>
+        </xar:for>
+        
+        <xar:comment>display right nav arrow</xar:comment>
+        <div style="float: left; width: 18px; height: 100px; padding-left: 10px; padding-top: 65px;">
+            <a href="&xar-modurl-dossier-user-dashboard;&amp;displaymonth=#$nextyear#-#$nextmonth#" onClick="return loadContent(this.href,'dashboardcalendar');">
+                <img src="modules/dossier/xarimages/arrow-right.gif">
+            </a>
+        </div>
+    </div>
+    
+    <xar:comment>display summary of day's schedule</xar:comment>
+    <div style="float:left; width: 259px; padding-left: 0px;">
+        <div id="dayview" name="dayview">#$dayview#</div>
+    </div>
+    <div style="clear: both;"></div>
+</div>

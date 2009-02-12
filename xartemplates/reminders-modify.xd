@@ -1,0 +1,36 @@
+<xar:data-getitem name="$properties" module="dossier" itemtype="5" itemid="0" />
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Change Reminder</xar:mlstring></span></div>
+<div class="xar-mod-body">
+
+    <form method="post" action="&xar-modurl-dossier-reminders-update;">
+
+    <input type="hidden" name="authid" value="#$authid#" />
+    <input type="hidden" name="reminderid" value="#$reminderid#" />
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="2">
+        <tr>
+            <td><xar:mlstring>Contact Name</xar:mlstring></td>
+            <td><strong>#$contactinfo['sortname']#</strong></td>
+        </tr>
+        <tr>
+            <td><xar:data-label property="$properties['ownerid']" /></td>
+            <td><xar:data-input property="$properties['ownerid']" name="ownerid" value="$item['ownerid']" /></td>
+        </tr>
+        <tr>
+            <td><xar:data-label property="$properties['reminderdate']" /></td>
+            <td><xar:data-input property="$properties['reminderdate']" name="reminderdate" value="$item['reminderdate']" /></td>
+        </tr>
+        <tr>
+            <td><xar:data-label property="$properties['notes']" /></td>
+            <td><xar:data-input property="$properties['notes']" name="notes" value="$item['notes']" /></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><br /><input type="submit" value="#$updatebutton#" /></td>
+        </tr>
+    </table>
+
+    </form>
+
+</div>
+

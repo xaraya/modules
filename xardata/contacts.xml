@@ -1,0 +1,302 @@
+<object name="dossier_contacts">
+  <objectid>58</objectid>
+  <label>Dossier Contacts</label>
+  <moduleid>829</moduleid>
+  <itemtype>1</itemtype>
+  <urlparam>contactid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="contactid">
+      <id>504</id>
+      <label>Contact ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_dossier_contacts.contactid</source>
+      <status>2</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="cat_id">
+      <id>505</id>
+      <label>Category</label>
+      <type>static</type>
+      <default></default>
+      <source>xar_dossier_contacts.cat_id</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="agentuid">
+      <id>506</id>
+      <label>Agent/Owner</label>
+      <type>userlist</type>
+      <default></default>
+      <source>xar_dossier_contacts.agentuid</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="userid">
+      <id>507</id>
+      <label>Associated User Account</label>
+      <type>userlist</type>
+      <default></default>
+      <source>xar_dossier_contacts.userid</source>
+      <status>1</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="private">
+      <id>508</id>
+      <label>Private</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>xar_dossier_contacts.private</source>
+      <status>1</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="contactcode">
+      <id>509</id>
+      <label>Code</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_dossier_contacts.contactcode</source>
+      <status>1</status>
+      <order>6</order>
+      <validation>0:16</validation>
+    </property>
+    <property name="prefix">
+      <id>510</id>
+      <label>Prefix</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>xar_dossier_contacts.prefix</source>
+      <status>1</status>
+      <order>7</order>
+      <validation>;Mr.;Mrs.;Ms.;Dr.</validation>
+    </property>
+    <property name="lname">
+      <id>511</id>
+      <label>Last Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_dossier_contacts.lname</source>
+      <status>1</status>
+      <order>8</order>
+      <validation>:24</validation>
+    </property>
+    <property name="fname">
+      <id>512</id>
+      <label>First Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_dossier_contacts.fname</source>
+      <status>1</status>
+      <order>9</order>
+      <validation>:24</validation>
+    </property>
+    <property name="sortname">
+      <id>513</id>
+      <label>Sort Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_dossier_contacts.sortname</source>
+      <status>1</status>
+      <order>10</order>
+      <validation></validation>
+    </property>
+    <property name="dateofbirth">
+      <id>514</id>
+      <label>Birthday</label>
+      <type>calendar</type>
+      <default></default>
+      <source>xar_dossier_contacts.dateofbirth</source>
+      <status>1</status>
+      <order>11</order>
+      <validation></validation>
+    </property>
+    <property name="title">
+      <id>515</id>
+      <label>Title</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_dossier_contacts.title</source>
+      <status>1</status>
+      <order>12</order>
+      <validation></validation>
+    </property>
+    <property name="company">
+      <id>516</id>
+      <label>Company</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_dossier_contacts.company</source>
+      <status>1</status>
+      <order>13</order>
+      <validation></validation>
+    </property>
+    <property name="sortcompany">
+      <id>517</id>
+      <label>Sort Company</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_dossier_contacts.sortcompany</source>
+      <status>1</status>
+      <order>14</order>
+      <validation></validation>
+    </property>
+    <property name="img">
+      <id>518</id>
+      <label>Logo</label>
+      <type>static</type>
+      <default></default>
+      <source>xar_dossier_contacts.img</source>
+      <status>1</status>
+      <order>15</order>
+      <validation></validation>
+    </property>
+    <property name="phone_work">
+      <id>519</id>
+      <label>Work Phone</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_dossier_contacts.phone_work</source>
+      <status>1</status>
+      <order>16</order>
+      <validation></validation>
+    </property>
+    <property name="phone_cell">
+      <id>520</id>
+      <label>Cellphone</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_dossier_contacts.phone_cell</source>
+      <status>1</status>
+      <order>17</order>
+      <validation></validation>
+    </property>
+    <property name="phone_fax">
+      <id>521</id>
+      <label>Fax</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_dossier_contacts.phone_fax</source>
+      <status>1</status>
+      <order>18</order>
+      <validation></validation>
+    </property>
+    <property name="phone_home">
+      <id>522</id>
+      <label>Home Phone</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_dossier_contacts.phone_home</source>
+      <status>1</status>
+      <order>19</order>
+      <validation></validation>
+    </property>
+    <property name="email_1">
+      <id>523</id>
+      <label>Email</label>
+      <type>email</type>
+      <default></default>
+      <source>xar_dossier_contacts.email_1</source>
+      <status>1</status>
+      <order>20</order>
+      <validation></validation>
+    </property>
+    <property name="email_2">
+      <id>524</id>
+      <label>Alt.Email</label>
+      <type>email</type>
+      <default></default>
+      <source>xar_dossier_contacts.email_2</source>
+      <status>1</status>
+      <order>21</order>
+      <validation></validation>
+    </property>
+    <property name="chat_AIM">
+      <id>525</id>
+      <label>AIM</label>
+      <type>aim</type>
+      <default></default>
+      <source>xar_dossier_contacts.chat_AIM</source>
+      <status>1</status>
+      <order>22</order>
+      <validation></validation>
+    </property>
+    <property name="chat_ICQ">
+      <id>526</id>
+      <label>ICQ</label>
+      <type>icq</type>
+      <default></default>
+      <source>xar_dossier_contacts.chat_ICQ</source>
+      <status>1</status>
+      <order>23</order>
+      <validation></validation>
+    </property>
+    <property name="chat_MSNM">
+      <id>527</id>
+      <label>MSN Messenger</label>
+      <type>msn</type>
+      <default></default>
+      <source>xar_dossier_contacts.chat_MSNM</source>
+      <status>1</status>
+      <order>24</order>
+      <validation></validation>
+    </property>
+    <property name="chat_YIM">
+      <id>528</id>
+      <label>Yahoo Messenger</label>
+      <type>yahoo</type>
+      <default></default>
+      <source>xar_dossier_contacts.chat_YIM</source>
+      <status>1</status>
+      <order>25</order>
+      <validation></validation>
+    </property>
+    <property name="contactpref">
+      <id>529</id>
+      <label>Preferred Contact Method</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>xar_dossier_contacts.contactpref</source>
+      <status>1</status>
+      <order>26</order>
+      <validation>;none,Do Not Contact;phone_work,Work Phone;phone_cell,Cellphone;phone_fax,Fax;phone_home,Home Phone;email_1,Email 1;email_2,Email 2;chat_AIM,AIM;chat_ICQ,ICQ;chat_YIM,YIM;chat_MSNM,MSNM</validation>
+    </property>
+    <property name="mailinglocid">
+      <id>530</id>
+      <label>Mailing Address</label>
+      <type>hidden</type>
+      <default></default>
+      <source>xar_dossier_contacts.mailinglocid</source>
+      <status>1</status>
+      <order>27</order>
+      <validation></validation>
+    </property>
+    <property name="billinglocid">
+      <id>531</id>
+      <label>Billing Address</label>
+      <type>hidden</type>
+      <default></default>
+      <source>xar_dossier_contacts.billinglocid</source>
+      <status>1</status>
+      <order>28</order>
+      <validation></validation>
+    </property>
+    <property name="notes">
+      <id>532</id>
+      <label>Notes</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>xar_dossier_contacts.notes</source>
+      <status>1</status>
+      <order>29</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

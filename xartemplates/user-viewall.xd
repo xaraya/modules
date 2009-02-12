@@ -1,0 +1,194 @@
+<xar:template compile="false" file="mod-title" type="module" />
+<div class="xar-mod-body" style="display:block;">
+<div class="xar-alt-outline">
+  <div style="margin:1em; text-align:center;">
+  <xar:if condition="!$userIsLoggedIn and $globalprotect">
+    <div style="text-align:center;">
+      <br />
+      <p>
+      <xar:ml>
+          <xar:mlstring>You must be a registered user before you can view the #(1).</xar:mlstring>
+          <xar:mlvar>#xarModGetVar('dossier','abtitle')#</xar:mlvar>
+      </xar:ml>
+      </p>
+      <p>
+      <xar:ml>
+          <xar:mlstring><a href="#(1)">Register</a> for free, or <a href="#(2)">log in</a> if you are already registered.</xar:mlstring>
+          <xar:mlvar>#xarModURL('roles', 'user', 'register')#</xar:mlvar>
+          <xar:mlvar>#xarModURL('roles', 'user', 'showloginform')#</xar:mlvar>
+      </xar:ml>
+      </p>
+    </div>
+    <xar:elseif condition="!$userCanViewModule" />
+    <div style="text-align:center;">
+      <p>
+      <xar:ml>
+          <xar:mlstring>We're sorry. You do not have authorization to access the #(1).</xar:mlstring>
+          <xar:mlvar>#xarModGetVar('dossier','abtitle')#</xar:mlvar>
+      </xar:ml>
+      </p>
+      <p>
+      <xar:ml>
+          <xar:mlstring>Please contact the <a href="mailto:#(1)">Site Admin</a> for further assistance</xar:mlstring>
+          <xar:mlvar>#xarModGetVar('dossier','rptErrAdminEmail')#</xar:mlvar>
+      </xar:ml>
+      </p>
+    </div>
+    <xar:elseif condition="!$userCanViewEntries" />
+    <div style="text-align:center;">
+      <p>
+      <xar:ml>
+          <xar:mlstring>We're sorry. You do not have authorization to view #(1) entries</xar:mlstring>
+          <xar:mlvar>#xarModGetVar('dossier','abtitle')#</xar:mlvar>
+      </xar:ml>
+      </p>
+      <p>
+      <xar:ml>
+          <xar:mlstring>Please contact the <a href="mailto:#(1)">Site Admin</a> for further assistance</xar:mlstring>
+          <xar:mlvar>#xarModGetVar('dossier','rptErrAdminEmail')#</xar:mlvar>
+      </xar:ml>
+      </p>
+    </div>
+    <xar:else />
+    <!-- START: display the menu & data -->
+    <div>
+    <xar:if condition="!$show_menu_off">
+      <div>
+      <table cellspacing="0" cellpadding="5">
+        <tr>
+          <td>
+          <div id="formContainer" class="xar-alt-outline">
+          <form name="catform" id="catform" action="#xarModURL('dossier','user','viewall')#" method="post" enctype="application/x-www-form-urlencoded">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="sortview" id="sortview" value="#$sortview#" />
+            <input type="hidden" name="menuprivate" id="menuprivate" value="#$menuprivate#" />
+            <input type="hidden" name="all" id="all" value="#$all#" />
+            <!--<input type="hidden" name="total" id="total" value="#$total#" />-->
+            <input type="hidden" name="page" id="page" value="#$page#" />
+            <input type="hidden" name="char" id="char" value="#$char#" />
+            <div>
+              <label for="catview"><xar:mlstring>Category</xar:mlstring>:</label>
+              <select name="catview" id="catview" size="1" onchange="javascript:this.form.submit();">
+                <option value="0"><xar:mlstring>All Categories</xar:mlstring></option>
+                <xar:foreach in="$cats" value="$cat">
+                  <xar:if condition="$cat['id'] ne $catview">
+                <option value="#$cat['id']#">#$cat['name']#</option>
+                  <xar:else />
+                <option selected="selected" value="#$cat['id']#">#$cat['name']#</option>
+                  </xar:if>
+                </xar:foreach>
+              </select>
+            </div>
+          </form>
+          </div>
+          </td>
+          <td>
+          <div id="formContainer" class="xar-alt-outline">
+          <form name="sortform" id="sortform" action="#xarModURL('dossier','user','viewall')#" method="post" enctype="application/x-www-form-urlencoded">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="catview" id="catview" value="#$catview#" />
+            <input type="hidden" name="menuprivate" id="menuprivate" value="#$menuprivate#" />
+            <input type="hidden" name="all" id="all" value="#$all#" />
+            <!--<input type="hidden" name="total" id="total" value="#$total#" />-->
+            <input type="hidden" name="page" id="page" value="#$page#" />
+            <input type="hidden" name="char" id="char" value="#$char#" />
+            <div>
+              <label for="sortview"><xar:mlstring>Sort&nbsp;by</xar:mlstring>:</label>
+              <select name="sortview" id="sortview" size="1" onchange="this.form.submit();">
+                <xar:foreach in="$sortby" value="$sb">
+                  <xar:if condition="$sb['id'] ne $sortview">
+                <option value="#$sb['id']#">#$sb['name']#</option>
+                  <xar:else />
+                <option selected="selected" value="#$sb['id']#">#$sb['name']#</option>
+                  </xar:if>
+                </xar:foreach>
+              </select>
+            </div>
+          </form>
+          </div>
+          </td>
+          <td>
+          <div id="formContainer" class="xar-alt-outline">
+          <form name="searchform" id="searchform" action="#xarModURL('dossier', 'user', 'viewall')#" method="post" enctype="application/x-www-form-urlencoded">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="catview" id="catview" value="#$catview#" />
+            <input type="hidden" name="sortview" id="sortview" value="#$sortview#" />
+            <input type="hidden" name="menuprivate" id="menuprivate" value="#$menuprivate#" />
+            <input type="hidden" name="all" id="all" value="#$all#" />
+            <div>
+              <label for="formSearch"><xar:mlstring>Search</xar:mlstring>:</label>
+              <input type="text" name="formSearch" id="formSearch" value="" size="12" maxlength="60" tabindex="1" />
+            </div>
+          </form>
+          </div>
+          </td>
+        </tr>
+        <xar:if condition="(xarModGetVar('dossier', 'menu_semi') ne 1) or (xarSecurityCheck('EditDOSSIER',0))">
+        <tr align="center" valign="middle">
+          <td align="center" valign="middle">
+          <xar:if condition="xarUserIsLoggedIn()">
+          <div class="xar-alt-outline" style="padding:.5em;">
+            <a href="#xarModURL('dossier', 'user', 'viewall',$menuprivateParams)#">
+              #$viewPrivateTEXT# [#$privateIndicator#]</a>
+          </div>
+          </xar:if>
+          </td>
+          <td align="center" valign="middle">
+          <div class="xar-alt-outline" style="padding:.5em;">
+            <a href="#xarModURL('dossier','user','viewall',$azParams)#">[#$azInidcator#] #$azMenuTEXT#</a> | <a href="#xarModURL('dossier','user','viewall',$allParams)#"> #$allMenuTEXT# [#$allInidcator#]</a>
+          </div>
+          </td>
+          <td align="center" valign="middle">
+          <xar:if condition="$addNewAddress">
+          <div class="xar-alt-outline" style="padding:.5em;">
+            <a href="#xarModURL('dossier','user','insertedit',$menuValues)#">[#$newAddrLinkTEXT#...]</a>
+          </div>
+          </xar:if>
+          </td>
+        </tr>
+        </xar:if>
+      </table>
+      </div>
+      <br />
+    </xar:if>
+      <div>
+    <xar:if condition="!$all">
+        <div style="text-align:center;">
+        <xar:foreach in="$azLinks" value="$link">
+            #$link['azLink']#
+        </xar:foreach>
+        </div>
+        </xar:if>
+        <br />
+        <xar:if condition="!$total">
+        <div class="xar-alt-outline" style="padding: 1em; text-align:center">
+          <br />
+          <strong><xar:template compile="false" file="mod-info-msg" type="module" /></strong>
+          <br />
+        </div>
+        <xar:else />
+        <div align="center">
+          <xar:template file="user-viewall-results" compile="false" type="module" />
+        </div>
+        <br />
+        <div style="text-align:center;">
+          <xar:foreach in="$pageNav" value="$pn">
+            <xar:if condition="$pn['pageNum'] ne 1">
+            &nbsp;|&nbsp;
+            </xar:if>
+            <xar:if condition="$pn['pageNum'] eq $pn['absolutePage']">
+            <b><u>#$pn['pageNum']#</u></b>
+            <xar:else />
+            <a href="#$pn['pageURL']#">#$pn['pageNum']#</a>
+            </xar:if>
+          </xar:foreach>
+          </div>
+        </xar:if>
+          <br />
+          </div>
+        </div>
+      </xar:if>
+    </div>
+  </div>
+</div>
+<xar:template compile="false" file="mod-footer" type="module" />

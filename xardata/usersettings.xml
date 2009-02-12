@@ -1,0 +1,22 @@
+<object name="dossier_usersettings">
+  <objectid>12</objectid>
+  <label>User Settings For labDossier</label>
+  <moduleid>27</moduleid>
+  <itemtype>829</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="emailtaskupdates">
+      <id>70</id>
+      <label>Receive email when a new task is assigned to you or a task assigned to you is updated by someone else.</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>user settings</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+</object>
+

@@ -1,0 +1,178 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:data-getitem name="$properties" module="dossier" itemtype="1" itemid="0" />
+<xar:data-getitem name="$logproperties" module="dossier" itemtype="4" itemid="0" />
+
+<xar:set name="encoded_returnurl">urlencode(xarModURL('dossier','admin','display',array('contactid'=>$contactid)))</xar:set>
+<xar:set name="encoded_delete_returnurl">urlencode(xarModURL('dossier','admin','view'))</xar:set>
+
+<xar:set name="id_list">array()</xar:set>
+<xar:set name="id_list[]">$contactid</xar:set>
+<xar:data-getitems name="$moreproperties" value="$values" module="dossier" itemtype="0" itemid="$id_list" />
+
+<xar:template type="module" file="user-menu" />
+
+<div class="xar-mod-body">
+    <xar:if condition="!empty($status)">
+
+        <h3>#$status#</h3>
+    <xar:else />
+        <table width="100%" border="0" cellspacing="1" cellpadding="2" id="contact_info">
+            <tr>
+                <td><xar:mlstring>Contact Name</xar:mlstring></td>
+                <td colspan="3">
+                    <xar:data-output property="$properties['prefix']" value="$item['prefix']" /> <xar:data-output property="$properties['fname']" value="$item['fname']" /> <xar:data-output property="$properties['lname']" value="$item['lname']" />
+                    <xar:if condition="empty($item['fname']) and empty($item['lname'])">
+                        <xar:data-output property="$properties['sortname']" value="$item['sortname']" />
+                    </xar:if>
+                </td>
+            </tr>
+            
+            <tr>
+                <td><xar:data-label property="$properties['company']" /></td>
+                <td><xar:data-output property="$properties['company']" value="$item['company']" /></td>
+                <td><xar:data-label property="$properties['title']" /></td>
+                <td><xar:data-output property="$properties['title']" value="$item['title']" /></td>
+            </tr>
+            
+            <xar:if condition="!empty($item['dateofbirth'])">
+                <tr>
+                    <td class="xar-norm"><xar:data-label property="$properties['dateofbirth']" /></td>
+                    <td class="xar-norm" colspan="3"><xar:data-output property="$properties['dateofbirth']" value="$item['dateofbirth']" dateformat="%B %d" /></td>
+                </tr>
+            </xar:if>
+            
+            <xar:if condition="!empty($item['contactpref'])">
+                <tr>
+                    <td class="xar-norm"><xar:data-label property="$properties['contactpref']" /></td>
+                    <td class="xar-norm" colspan="3"><xar:data-output property="$properties['contactpref']" value="$item['contactpref']" /></td>
+                </tr>
+            </xar:if>
+            
+            <xar:if condition="!empty($item['phone_work'])">
+                <tr>
+                    <td><xar:data-label property="$properties['phone_work']" /></td>
+                    <td><xar:data-output property="$properties['phone_work']" value="$item['phone_work']" /></td>
+                </tr>
+            </xar:if>
+            
+            <xar:if condition="!empty($item['phone_cell'])">
+                <tr>
+                    <td><xar:data-label property="$properties['phone_cell']" /></td>
+                    <td><xar:data-output property="$properties['phone_cell']" value="$item['phone_cell']" /></td>
+                </tr>
+            </xar:if>
+            
+            <xar:if condition="!empty($item['phone_fax'])">
+                <tr>
+                    <td><xar:data-label property="$properties['phone_fax']" /></td>
+                    <td><xar:data-output property="$properties['phone_fax']" value="$item['phone_fax']" /></td>
+                </tr>
+            </xar:if>
+            
+            <xar:if condition="!empty($item['phone_home'])">
+                <tr>
+                    <td><xar:data-label property="$properties['phone_home']" /></td>
+                    <td><xar:data-output property="$properties['phone_home']" value="$item['phone_home']" /></td>
+                </tr>
+            </xar:if>
+            
+            <xar:if condition="!empty($item['email_1'])">
+                <tr>
+                    <td><xar:data-label property="$properties['email_1']" /></td>
+                    <td><xar:data-output property="$properties['email_1']" value="$item['email_1']" /></td>
+                </tr>
+            </xar:if>
+            
+            <xar:if condition="!empty($item['email_2'])">
+                <tr>
+                    <td><xar:data-label property="$properties['email_2']" /></td>
+                    <td><xar:data-output property="$properties['email_2']" value="$item['email_2']" /></td>
+                </tr>
+            </xar:if>
+            
+            <xar:if condition="!empty($item['chat_AIM'])">
+                <tr>
+                    <td><xar:data-label property="$properties['chat_AIM']" /></td>
+                    <td><xar:data-output property="$properties['chat_AIM']" value="$item['chat_AIM']" /></td>
+                </tr>
+            </xar:if>
+            
+            <xar:if condition="!empty($item['chat_YIM'])">
+                <tr>
+                    <td><xar:data-label property="$properties['chat_YIM']" /></td>
+                    <td><xar:data-output property="$properties['chat_YIM']" value="$item['chat_YIM']" /></td>
+                </tr>
+            </xar:if>
+            
+            <xar:if condition="!empty($item['chat_ICQ'])">
+                <tr>
+                    <td><xar:data-label property="$properties['chat_ICQ']" /></td>
+                    <td><xar:data-output property="$properties['chat_ICQ']" value="$item['chat_ICQ']" /></td>
+                </tr>
+            </xar:if>
+            
+            <xar:if condition="!empty($item['chat_MSNM'])">
+                <tr>
+                    <td><xar:data-label property="$properties['chat_MSNM']" /></td>
+                    <td><xar:data-output property="$properties['chat_MSNM']" value="$item['chat_MSNM']" /></td>
+                </tr>
+            </xar:if>
+                
+            <xar:if condition="isset($values[$contactid])">
+                <xar:foreach in="$values[$contactid]" key="$field" value="$nextvalue" >
+                    <tr valign="top">
+                        <td class="xar-title"><xar:data-label property="$moreproperties[$field]" /></td>
+                        <td class="xar-norm"><xar:data-output property="$moreproperties[$field]" value="$values[$contactid][$field]" /></td>
+                    </tr>
+                </xar:foreach>
+            </xar:if>
+
+            <tr>
+                <td class="xar-norm"><xar:mlstring>Location(s)</xar:mlstring></td>
+                <td class="xar-norm" colspan="3">
+                    <div name="newlocation" id="newlocation"></div>
+                    <xar:foreach in="$addresslist" value="$addressinfo">
+                        <div style="width: 300px;">
+                            <div>#$addressinfo['address_1']#</div>
+                            <div>#$addressinfo['city']#, #$addressinfo['us_state']# #$addressinfo['postalcode']#</div>
+                        </div>
+                    </xar:foreach>
+                </td>
+            </tr>
+            
+            <xar:comment>Company directory, if any</xar:comment>
+
+            <!-- contacts in same company -->
+            <xar:if condition="!empty($item['company'])">
+                <xar:set name="companycontacts">xarModAPIFunc('dossier', 'user', 'getall', array('company' => $item['company']))</xar:set>
+                <xar:if condition="count($companycontacts) gt 1">
+                    <tr><td colspan="4">  
+                        <div class="xar-mod-head" style="height: 22px; border: 1px solid black;"><span class="xar-mod-title" style="float: left;"><xar:mlstring>Other Company Contacts</xar:mlstring></span><span style="float: right;"><a href="javascript: void dossier_twist('companycontacts');"><img src="modules/xtasks/xarimages/rotate.gif" border="0" /></a></span></div>
+                        <div id="companycontacts" style="display: none;">
+                            <xar:foreach in="$companycontacts" value="$contactinfo">
+                                <xar:if condition="$contactinfo['contactid'] ne $item['contactid']">
+                                    <div>
+                                        <div style="float: left; width: 200px;">
+                                            <a href="&xar-modurl-dossier-admin-display;&amp;contactid=#$contactinfo['contactid']#">#$contactinfo['sortname']#</a>
+                                        </div>
+                                        <div style="clear: both;"></div>
+                                    </div>
+                                </xar:if>
+                            </xar:foreach>
+                        </div>
+                    </td></tr>
+                </xar:if>
+            </xar:if>
+                            
+            <xar:if condition="!empty($hookoutput)">
+                <tr>
+                    <td colspan="4" class="xar-norm">
+                        #$hookoutput#
+                    </td>
+                </tr>
+            </xar:if>
+        </table>
+    </xar:if>
+</div>
+

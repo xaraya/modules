@@ -1,0 +1,47 @@
+<xar:set name="contacts_objectid">xarModGetVar('dossier','contacts_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="dossier" itemtype="1" itemid="$contacts_objectid" />
+
+<xar:style scope="module" module="dossier" file="default" />
+
+<xar:set name="contactcid">xarModGetVar('dossier', 'contactcid')</xar:set>
+<xar:set name="dummy">xarModAPILoad('categories', 'user')</xar:set>
+<xar:set name="catlist">xarModAPIFunc('categories', 'user', 'getchildren', array('cid' => $contactcid ) )</xar:set>
+
+<xar:template type="module" file="admin-menu" />
+
+<div class="xar-mod-head">
+
+</div>
+
+<div class="xar-mod-body contactlist">
+    <xar:set name="ttladdressbook">count($addressbooklist)</xar:set>
+    Total Addressbook Contacts: #$ttladdressbook#
+    <xar:comment>Contact List</xar:comment>
+    <table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
+        <tr>
+    
+            <th><xar:mlstring>NAME</xar:mlstring></th>
+            <th><xar:mlstring>COMPANY</xar:mlstring></th>
+            <th style="text-align: center;"><xar:mlstring>PHONE</xar:mlstring></th>
+            <th style="text-align: center;"><xar:mlstring>FAX</xar:mlstring></th>
+            <th style="text-align: right;"><xar:mlstring>EMAIL</xar:mlstring></th>
+        </tr>
+    
+        <xar:loop name="$newcontacts">
+            <tr><td class="xar-norm"><a href="&xar-modurl-dossier-admin-display;&amp;contactid=#$loop:item['contactid']#">#$loop:item['sortname']#</a></td>
+            
+                <td class="xar-norm"><xar:data-output property="$properties['sortcompany']" value="$loop-&gt;item['sortcompany']" /></td>
+            
+                <td class="xar-norm" style="text-align: center;"><xar:data-output property="$properties['phone_work']" value="$loop-&gt;item['phone_work']" /></td>
+
+                <td class="xar-norm" style="text-align: center;"><xar:data-output property="$properties['phone_fax']" value="$loop-&gt;item['phone_fax']" /></td>
+            
+                <td class="xar-norm" style="text-align: right;"><xar:data-output property="$properties['email_1']" value="$loop-&gt;item['email_1']" /></td>
+        
+            </tr>
+                
+        </xar:loop>
+        
+    </table>
+
+</div>

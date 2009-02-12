@@ -1,0 +1,50 @@
+<xar:data-getitem name="$properties" module="dossier" itemtype="6" itemid="0" />
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>New Relationship</xar:mlstring></span></div>
+<div class="xar-mod-body">
+
+    <form method="post" action="&xar-modurl-dossier-relationships-create;">
+    
+        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('dossier')#" />
+        <input type="hidden" name="contactid" value="#$contactid#" />
+        <input type="hidden" name="returnurl" value="#$returnurl#" />
+        <xar:set name="ownerid">xarSessionGetVar('uid')</xar:set>
+        
+        <table width="100%" border="0" cellspacing="0" cellpadding="2">
+            <tr>
+                <td class="xar-title"><xar:data-label property="$properties['contactid']" /></td>
+                <td class="xar-norm"><xar:data-output property="$properties['contactid']" name="contactid" value="$contactid" /></td>
+            </tr>
+            <tr>
+                <td class="xar-title"><xar:data-label property="$properties['connectedid']" /></td>
+                <td class="xar-norm"><xar:data-input property="$properties['connectedid']" name="connectedid" /></td>
+            </tr>
+            <tr>
+                <td class="xar-title">They are [<em>relationship to you</em>]</td>
+                <td class="xar-norm"><xar:data-input property="$properties['relationship']" name="relationship" />
+                    <xar:data-input property="$properties['private']" name="private" value="1" /><xar:data-label property="$properties['private']" />
+                </td>
+            </tr>
+            <tr>
+                <td class="xar-title">You are [<em>relationship to them</em>]</td>
+                <td class="xar-norm"><em><xar:mlstring>Optional</xar:mlstring></em>: <xar:data-input type="checkbox" name="bidirectional" />
+                    <xar:data-input property="$properties['relationship']" name="relationship2" />
+                    <xar:data-input property="$properties['private']" name="private2" value="1" /><xar:data-label property="$properties['private']" /></td>
+            </tr>
+            <tr>
+                <td class="xar-title"><xar:data-label property="$properties['dateadded']" /></td>
+                <xar:set name="currentdate">date("Y-m-d H:i:s", xarMLS_userTime())</xar:set>
+                <td class="xar-norm"><xar:data-output property="$properties['dateadded']" name="logdate" value="$currentdate" dateformat="%Y-%m-%d %H:%M:%S" /></td>
+            </tr>
+            <tr>
+                <td class="xar-title"><xar:data-label property="$properties['notes']" /></td>
+                <td class="xar-norm"><xar:data-input property="$properties['notes']" name="notes" /></td>
+            </tr>
+            <tr>
+                <xar:set name="updatebtn"><xar:mlstring>Add Relationship</xar:mlstring></xar:set>
+                <td colspan=2 align="center"><br /><input type="submit" name="submit" value="#$updatebtn#"></td>
+            </tr>
+        </table>
+    
+    </form>
+</div>

@@ -1,0 +1,191 @@
+<xar:data-getitem name="$properties" module="dossier" itemtype="1" itemid="0" />
+<xar:data-getitem name="$logproperties" module="dossier" itemtype="4" itemid="0" />
+
+<xar:style scope="module" module="dossier" file="default" />
+
+<xar:set name="contactcid">xarModGetVar('dossier', 'contactcid')</xar:set>
+<xar:set name="dummy">xarModAPILoad('categories', 'user')</xar:set>
+<xar:set name="catlist">xarModAPIFunc('categories', 'user', 'getchildren', array('cid' => $contactcid ) )</xar:set>
+
+<xar:template type="module" file="admin-menu" />
+
+<div class="xar-mod-head">
+
+    <xar:comment>Contact category, privacy and search field</xar:comment>
+    <form method="post" action="#xarModURL('dossier','user','process')#" style="display: inline;">
+        <input type="hidden" name="agentuid" value="#$ownerid#" />
+        <div style="text-align: left;">
+            <span style="padding-right: 10px;"><xar:mlstring>REFINE YOUR SEARCH</xar:mlstring>:</span>
+            <span style="padding-right: 10px; margin-top: -2px; text-align: right;">
+                <input type="text" name="q" value="#$q#" style="width: 150px;" />
+                &nbsp;&nbsp;Phone:
+                <input type="text" name="searchphone" value="#$searchphone#" style="width: 100px;" />
+            </span>
+            <span style="margin-top: -2px;">
+                <input type="submit" value="SEARCH" />
+            </span>
+        </div>
+    </form>
+    
+</div>
+
+<div class="xar-mod-body contactlist">
+    <form method="post" action="#xarModURL('dossier','user','process')#" style="display: inline;">
+    
+        <div style="padding: 0 5px 5px 15px;"><xar:mlstring>INSTRUCTIONS: Check the customer name against similar names listed in the database. If the customer already exists, select it and submit the new call record. If the customer does not already exist, check the 'Create New Record' box and submit or leave 'Create New Contact' checked and continue searching for a possible match.</xar:mlstring></div>
+        <div style="float: left; width: 45%;">
+            <fieldset>
+                <legend><strong><xar:mlstring>MATCHING CONTACT RECORDS</xar:mlstring></strong></legend>
+                <table border="0" cellpadding="0" cellspacing="1" class="dossier-list xar-sub" style="width: 99%;">
+                    <tr>
+                        <th></th>
+                        <th style="text-align: left;"><xar:mlstring>EXISTING CONTACTS</xar:mlstring></th>
+                        <th style="text-align: right;"><xar:mlstring>LAST LOG</xar:mlstring></th>
+                    </tr>
+                    
+                    <xar:comment>get GMT time</xar:comment>
+                    <xar:set name="nowtime">strtotime(strftime("%D %T")." GMT")</xar:set>
+                    
+                    <xar:foreach in="$items" value="$item">
+                        <xar:set name="logdate">""</xar:set>
+                        <xar:if condition="!empty($item['logdate'])">
+                            <xar:set name="unix_logdate">strtotime($item['logdate'])</xar:set>
+                            <xar:set name="timesince">$nowtime - $unix_logdate</xar:set>
+                            <xar:set name="logdate2">xarLocaleFormatDate('%T',$unix_logdate)</xar:set>
+                            
+                            <xar:if condition="$timesince lt 3600">
+                                <xar:set name="logdate">(int)($timesince / 60)." ".xarML(' minutes ago')</xar:set>
+                            <xar:elseif condition="$timesince lt 86400" />
+                                <xar:set name="logdate">(int)($timesince / 3600)." ".xarML(' hours ago')</xar:set>
+                            <xar:elseif condition="$timesince lt 604800" />
+                                <xar:set name="logdate">(int)($timesince / 86400)." ".xarML(' days ago')</xar:set>
+                            <xar:else />
+                                <xar:set name="logdate">xarML('on')." ".xarLocaleGetFormattedDate('short',$unix_logdate)</xar:set>
+                            </xar:if>
+                        </xar:if>
+                        <tr>
+                            <td>
+                                <input type="radio" name="contactid" value="#$item['contactid']#" onclick="document.getElementById('newcontactinfo').style.display='none';" />
+                            </td>
+                            
+                            <td style="padding-bottom: 5px; overflow:"><strong><a href="#xarModURL('dossier','admin','display',array('contactid'=>$item['contactid']))#">#$item['sortname']#</a></strong>
+                                <div><strong><xar:data-output property="$properties['sortcompany']" value="$item['sortcompany']" /></strong></div>
+                                <xar:if condition="!empty($item['email_1'])">
+                                    <div>#$item['email_1']#</div>
+                                <xar:elseif condition="!empty($item['email_2'])" />
+                                    <div>#$item['email_2']#</div>
+                                </xar:if>
+                                
+                                <xar:if condition="!empty($item['phone_work'])">
+                                    <div>work: #$item['phone_work']#</div>
+                                </xar:if>
+                                
+                                <xar:if condition="!empty($item['phone_cell'])">
+                                    <div>cell: #$item['phone_cell']#</div>
+                                </xar:if>
+                                
+                                <xar:if condition="!empty($item['phone_home'])">
+                                    <div>home: #$item['phone_home']#</div>
+                                </xar:if>
+                                
+                                <xar:if condition="!empty($item['chat_AIM'])">
+                                    <div>AIM: #$item['chat_AIM']#</div>
+                                </xar:if>
+                            </td>
+                        
+                            <td class="xar-nowrap xar-align-right">
+                                <xar:if condition="$logdate"><xar:comment>#xarUserGetVar('name',$item['agentuid'])#</xar:comment>
+                                    #$logdate#
+                                </xar:if>
+                            </td>
+            
+                        </tr>
+                            
+                    </xar:foreach>
+                    
+                </table>
+            </fieldset>
+        </div>
+        <div style="float: right; width: 51%; margin-right: 1%;">
+            <fieldset><legend><strong><xar:mlstring>LOG CONTACT</xar:mlstring></strong></legend>
+                
+                <div>
+                    <xar:mlstring>Sales Agent</xar:mlstring>: <xar:data-input property="$logproperties['ownerid']" name="ownerid" value="$ownerid" />
+                
+                    <xar:set name="logcid">xarModGetVar('dossier', 'logcid')</xar:set>
+                    <xar:set name="dummy">xarModAPILoad('categories', 'user')</xar:set>
+                    <xar:set name="catlist">xarModAPIFunc('categories', 'user', 'getchildren', array('cid' => $logcid ) )</xar:set>
+                    <xar:mlstring>Contact Type</xar:mlstring>: <select name="logtype">
+                        <option value=""><xar:mlstring>General</xar:mlstring></option>
+                        <xar:if condition="is_array($catlist)">
+                            <xar:foreach in="$catlist" value="$catinfo">
+                                <xar:set name="selected">""</xar:set>
+                                <xar:if condition="$catinfo['name'] eq $logtype">
+                                    <xar:set name="selected">"selected"</xar:set>
+                                </xar:if>
+                                <option value="#$catinfo['name']#"#$selected# >#$catinfo['name']#</option>
+                            </xar:foreach>
+                        </xar:if>
+                    </select>
+                </div>
+                <div><xar:data-label property="$logproperties['logdate']" />: <xar:data-input property="$logproperties['logdate']" name="logdate" value="$currentdate" dateformat="%Y-%m-%d %H:%M:%S" /></div>
+                <div><xar:data-input property="$logproperties['notes']" name="notes" value="$notes" cols="25" /></div>
+    
+<!--                <select name="agentuid">
+                <xar:foreach in="$stafflist" value="$staffinfo">
+                    <option value="#$staffinfo['uid']#">#$staffinfo['name']#</option>
+                </xar:foreach>
+                </select>
+    -->            
+                <input type="submit" name="submit" value="#xarML('Submit')#" />
+                <input type="radio" name="contactid" value="newcontact" onclick="document.getElementById('newcontactinfo').style.display='block';" /> <xar:mlstring>Create New Contact</xar:mlstring>
+                <input type="radio" name="contactid" value="search" onclick="document.getElementById('newcontactinfo').style.display='none';" checked /> <xar:mlstring>New Search</xar:mlstring>
+
+                <div style="display: none;" id="newcontactinfo" name="newcontactinfo">
+                    <h4><xar:mlstring>New Contact Info</xar:mlstring></h4>
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('dossier')#" />
+                    <input type="hidden" name="userid" id="userid" value="" />
+                    <input type="hidden" name="private" id="private" value="1" />
+                    
+                    <table width="100%" border="0" cellspacing="0" cellpadding="2">
+                        <tr>
+                            <td><em><xar:data-label property="$properties['cat_id']" /></em></td>
+                            <td>
+                                <xar:set name="contactcid">xarModGetVar('dossier', 'contactcid')</xar:set>
+                                <xar:set name="dummy">xarModAPILoad('categories', 'user')</xar:set>
+                                <xar:set name="catlist">xarModAPIFunc('categories', 'user', 'getchildren', array('cid' => $contactcid ) )</xar:set>
+                                <select name="cat_id">
+                                    <option value=""><xar:mlstring>unfiled</xar:mlstring></option>
+                                    <xar:foreach in="$catlist" value="$catinfo">
+                                        <option value="#$catinfo['cid']#">#$catinfo['name']#</option>
+                                    </xar:foreach>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><em><xar:data-label property="$properties['fname']" /></em><br />
+                                <xar:data-input property="$properties['fname']" name="fname" /></td>
+                            <td><em><xar:data-label property="$properties['lname']" /></em><br />
+                                <xar:data-input property="$properties['lname']" name="lname" /></td>
+                        </tr>
+                        <tr>
+                            <td><em><xar:data-label property="$properties['company']" /></em><br />
+                                <xar:data-input property="$properties['company']" name="company" /></td>
+                            <td><em><xar:data-label property="$properties['title']" /></em><br />
+                                <xar:data-input property="$properties['title']" name="title" /></td>
+                        </tr>
+                        <tr>
+                            <td><em><xar:data-label property="$properties['email_1']" /></em><br />
+                                <xar:data-input property="$properties['email_1']" name="email_1" /></td>
+                            <td><em><xar:data-label property="$properties['phone_work']" /></em><br />
+                                <xar:data-input property="$properties['phone_work']" name="phone_work" /></td>
+                        </tr>
+                    </table>
+                </div>
+            </fieldset>
+        </div>    
+        <div style="clear: both;"></div>
+    </form>
+</div>
+
+<div class="xar-mod-foot"></div>

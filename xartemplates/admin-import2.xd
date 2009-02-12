@@ -1,0 +1,5 @@
+Total new contacts added: #$newcontacts#
+<br />
+Total contacts in import table: #$importsize#
+<br />
+summary; <pre><xar:set name="dummy">print_r($orderitemsummary)</xar:set></pre>

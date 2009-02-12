@@ -1,0 +1,156 @@
+<xar:data-getitem name="$properties" module="dossier" itemtype="1" itemid="0" />
+<xar:data-getitem name="$location_properties" module="dossier" itemtype="2" itemid="0" />
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>New Contact</xar:mlstring></span></div>
+<div class="xar-mod-body">
+
+    <form method="post" action="&xar-modurl-dossier-admin-create;">
+        
+        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('dossier')#" />
+        <input type="hidden" name="returnurl" id="returnurl" value="#$returnurl#" />
+        
+        <table class="xar-sub" width="100%" border="0" cellspacing="0" cellpadding="2">
+            <tr>
+                <td><xar:mlstring>Contact Name</xar:mlstring></td>
+                <td><xar:data-input property="$properties['prefix']" name="prefix" /> <xar:data-label property="$properties['fname']" /> <xar:data-input property="$properties['fname']" name="fname" /></td>
+                <td><xar:data-label property="$properties['lname']" /></td>
+                <td><xar:data-input property="$properties['lname']" name="lname" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['company']" /></td>
+                <td><xar:data-input property="$properties['company']" name="company" /></td>
+                <td><xar:data-label property="$properties['title']" /></td>
+                <td><xar:data-input property="$properties['title']" name="title" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['cat_id']" /></td>
+                <td>
+                    <xar:set name="contactcid">xarModGetVar('dossier', 'contactcid')</xar:set>
+                    <xar:set name="dummy">xarModAPILoad('categories', 'user')</xar:set>
+                    <xar:set name="catlist">xarModAPIFunc('categories', 'user', 'getchildren', array('cid' => $contactcid ) )</xar:set>
+                    <select name="cat_id">
+                        <option value=""><xar:mlstring>unfiled</xar:mlstring></option>
+                        <xar:foreach in="$catlist" value="$catinfo">
+                            <option value="#$catinfo['cid']#">#$catinfo['name']#</option>
+                        </xar:foreach>
+                    </select>
+                </td>
+                <td><xar:data-label property="$properties['contactcode']" /></td>
+                <td><xar:data-input property="$properties['contactcode']" name="contactcode" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['agentuid']" /></td>
+                <xar:set name="userid">xarUserGetVar('uid')</xar:set>
+                <td><xar:data-input property="$properties['agentuid']" name="agentuid" value="$userid" /></td>
+                <td><xar:data-label property="$properties['private']" /></td>
+                <td><xar:data-input property="$properties['private']" name="private" />
+                    <xar:data-input property="$properties['userid']" name="userid" value="$userid" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['dateofbirth']" /></td>
+                <td colspan="3"><xar:data-input property="$properties['dateofbirth']" name="dateofbirth" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['contactpref']" /></td>
+                <td colspan="3"><xar:data-input property="$properties['contactpref']" name="contactpref" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['phone_work']" /></td>
+                <td><xar:data-input property="$properties['phone_work']" name="phone_work" /></td>
+                <td><xar:data-label property="$properties['phone_cell']" /></td>
+                <td><xar:data-input property="$properties['phone_cell']" name="phone_cell" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['phone_fax']" /></td>
+                <td><xar:data-input property="$properties['phone_fax']" name="phone_fax" /></td>
+                <td><xar:data-label property="$properties['phone_home']" /></td>
+                <td><xar:data-input property="$properties['phone_home']" name="phone_home" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['email_1']" /></td>
+                <td><xar:data-input property="$properties['email_1']" name="email_1" /></td>
+                <td><xar:data-label property="$properties['email_2']" /></td>
+                <td><xar:data-input property="$properties['email_2']" name="email_2" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['chat_AIM']" /></td>
+                <td><xar:data-input property="$properties['chat_AIM']" name="chat_AIM" /></td>
+                <td><xar:data-label property="$properties['chat_YIM']" /></td>
+                <td><xar:data-input property="$properties['chat_YIM']" name="chat_YIM" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['chat_ICQ']" /></td>
+                <td><xar:data-input property="$properties['chat_ICQ']" name="chat_ICQ" /></td>
+                <td><xar:data-label property="$properties['chat_MSNM']" /></td>
+                <td><xar:data-input property="$properties['chat_MSNM']" name="chat_MSNM" /></td>
+            </tr>
+            
+            <xar:if condition="!empty($hooks)">
+                <tr>
+                    <td colspan="4">#$hooks#</td>
+                </tr>
+            </xar:if>
+                        
+            <tr>
+                <th colspan="2"><xar:mlstring>Address Information</xar:mlstring></th>
+                <th colspan="2"><xar:data-label property="$properties['img']" /></th>
+            </tr>
+            
+            <tr>
+                <td><xar:data-label property="$location_properties['cat_id']" /></td>
+                <td>
+                    <xar:set name="locationcid">xarModGetVar('dossier', 'locationcid')</xar:set>
+                    <xar:set name="dummy">xarModAPILoad('categories', 'user')</xar:set>
+                    <xar:set name="catlist">xarModAPIFunc('categories', 'user', 'getchildren', array('cid' => $locationcid ) )</xar:set>
+                    <select name="cat_id">
+                        <option value=""><xar:mlstring>unfiled</xar:mlstring></option>
+                        <xar:if condition="is_array($catlist)">
+                            <xar:foreach in="$catlist" value="$catinfo">
+                                <option value="#$catinfo['cid']#">#$catinfo['name']#</option>
+                            </xar:foreach>
+                        </xar:if>
+                    </select>
+                </td>
+                <td colspan="2" rowspan="9">
+                    <xar:data-input property="$properties['img']" />
+                </td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$location_properties['address_1']" /></td>
+                <td><xar:data-input property="$location_properties['address_1']" name="address_1" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$location_properties['address_2']" /></td>
+                <td><xar:data-input property="$location_properties['address_2']" name="address_2" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$location_properties['city']" /></td>
+                <td><xar:data-input property="$location_properties['city']" name="city" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$location_properties['us_state']" /></td>
+                <td><xar:data-input property="$location_properties['us_state']" name="us_state" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$location_properties['postalcode']" /></td>
+                <td><xar:data-input property="$location_properties['postalcode']" name="postalcode" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$location_properties['country']" /></td>
+                <td><xar:data-input property="$location_properties['country']" name="country" /></td>
+            </tr>
+            
+            <tr>
+                <td><xar:data-label property="$properties['notes']" /></td>
+                <td colspan="3"><xar:data-input property="$properties['notes']" name="notes" /></td>
+            </tr>
+            <tr>
+                <xar:set name="updatebtn"><xar:mlstring>Add Contact</xar:mlstring></xar:set>
+                <td colspan="4" align="center"><br /><input type="submit" name="submit" value="#$updatebtn#"></td>
+            </tr>
+        </table>
+        
+    </form>
+</div>
+
+<div class="xar-mod-foot"></div>

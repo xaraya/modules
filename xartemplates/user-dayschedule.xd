@@ -1,0 +1,31 @@
+
+<style>
+    .dayboxheader {
+        height: 16px; 
+        color: #FFFFFF; 
+        background-color: #00549a;
+    }
+</style>
+
+<div class="dayboxheader">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>#$formatted_displaydate#</strong></div>
+
+<xar:for start="$j = 8" test="$j le 18" iter="$j++">
+    <xar:if condition="$j gt 12">
+        <xar:set name="displayhour">sprintf("%02d", $j - 12)</xar:set>
+    <xar:else />
+        <xar:set name="displayhour">sprintf("%02d", $j)</xar:set>
+    </xar:if>
+    <div>
+        <div style="float: left; width: 20px; height: 15px; padding-left: 15px;">#$displayhour#:</div>
+        <div style="float: left; width: 100;">
+            <xar:if condition="isset($eventlist[$j])">
+                <xar:foreach in="$eventlist[$j]" value="$eventdetails">
+                    <div style="height: 15px;"><a href="#$eventdetails['eventlink']#">#$eventdetails['details']#</a></div>
+                </xar:foreach>
+            <xar:else />
+                <div style="height: 15px;">_______________________________</div>
+            </xar:if>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+</xar:for>
