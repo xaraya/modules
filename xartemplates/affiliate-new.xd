@@ -1,0 +1,84 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>labAffiliate Affiliate</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+
+    <h2><xar:mlstring>New Affiliate</xar:mlstring></h2>
+<xar:if condition="isset($invalid)">
+	<xar:set name="foo">var_dump($invalid, 1)</xar:set>
+	#$foo#
+</xar:if>
+
+    <form method="post" action="&xar-modurl-labaffiliate-affiliate-create;">
+
+		<div class="xar-form-input-wrapper">
+		    <label for="primaryprogramid" class="xar-form-label">
+		        <xar:mlstring>Primary Program ID:</xar:mlstring>
+		    </label>
+			<select name="primaryprogramid" id="primaryprogramid">
+				<option value=""></option>
+				<xar:foreach in="$programs" key="$k" value="$v">
+					<xar:if condition="$primaryprogramid eq $v.programid">
+						<option value="#$v.programid#" selected="selected">#$v.program_name#</option>
+					<xar:else />
+						<option value="#$v.programid#">#$v.program_name#</option>
+					</xar:if>
+				</xar:foreach>
+			</select>
+		</div>
+
+		<div class="xar-form-input-wrapper">
+		    <label for="secondaryprogramid" class="xar-form-label">
+		        <xar:mlstring>Secondary Program ID:</xar:mlstring>
+		    </label>
+			<select name="secondaryprogramid" id="secondaryprogramid">
+				<option value=""></option>
+				<xar:foreach in="$programs" key="$k" value="$v">
+					<xar:if condition="$secondaryprogramid eq $v.programid">
+						<option value="#$v.programid#" selected="selected">#$v.program_name#</option>
+					<xar:else />
+						<option value="#$v.programid#">#$v.program_name#</option>
+					</xar:if>
+				</xar:foreach>
+			</select>
+		</div>
+
+		<div class="xar-form-input-wrapper">
+		    <label for="marketing_copy" title="#xarML('Program marketing copy override')#" class="xar-form-label">
+		        <xar:mlstring>Marketing Copy:</xar:mlstring>
+		    </label>
+			<xar:if condition="isset($marketing_copy)">
+				<textarea name="marketing_copy" id="marketing_copy" class="xar-form-textareamedium">#$marketing_copy#</textarea>
+			<xar:else />
+				<textarea name="marketing_copy" id="marketing_copy" class="xar-form-textareamedium">#$item.marketing_copy#</textarea>
+			</xar:if>
+			<xar:if condition="!empty($invalid['marketing_copy'])">
+				<div class="xar-error">
+					<xar:mlstring>ERROR! This is not a valid marketing_copy</xar:mlstring>
+				</div>
+			</xar:if>
+		</div>
+
+		<xar:if condition="!empty($hookoutput) and is_array($hookoutput) and count($hookoutput) gt 0">
+        	<fieldset>
+            	<legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+
+                <xar:foreach in="$hookoutput" key="$hookmodule">
+	                #$hookoutput[$hookmodule]#
+                </xar:foreach>
+	        </fieldset>
+        </xar:if>
+
+	    <div class="xar-align-center xar-margin-thickends">
+	        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+	        <input type="hidden" name="programid" id="programid" value="#$programid#" />
+	        <input type="hidden" name="uplineid" id="uplineid" value="3" />
+	        <input type="hidden" name="userid" id="userid" value="3" />
+
+	        <input type="submit" value="#xarML('Create Affiliate')#" />
+	    </div>
+
+	</form>
+</div>

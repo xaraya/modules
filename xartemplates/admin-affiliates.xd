@@ -1,0 +1,64 @@
+<xar:data-getitem name="$properties" module="labaffiliate" itemtype="2" itemid="0" />
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>labAffiliate Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+
+    <h2><xar:mlstring>View Affiliates</xar:mlstring></h2>
+
+	<xar:if condition="count($items) lt 1">
+		<p class="xar-align-center">
+			<xar:mlstring>No programs found.</xar:mlstring>
+		</p>
+	<xar:else />
+		<table class="xar-fullwidth">
+			<tr>
+				<th><xar:data-label property="$properties['affiliateid']" /></th>
+				<th><xar:mlstring>Affiliate User</xar:mlstring></th>
+				<th><xar:data-label property="$properties['uplineid']" /></th>
+				<th><xar:data-label property="$properties['primaryprogramid']" /></th>
+				<th><xar:data-label property="$properties['secondaryprogramid']" /></th>
+				<th><xar:data-label property="$properties['status']" /></th>
+				<th><xar:mlstring>Options</xar:mlstring></th>
+			</tr>
+			<xar:foreach in="$items" value="$item">
+				<tr>
+					<td>
+						<a href="#xarModURL('labaffiliate', 'affiliate', 'display', array('affiliateid' => $item['affiliateid']))#">#$item.affiliateid#</a> (#$item.ttldownline#)
+					</td>
+					<td>
+						#xarUserGetVar('name', $item.userid)#
+					</td>
+					<td>
+                        <xar:if condition="$item['uplineid'] gt 0">
+    						#xarUserGetVar('name', $item.uplineuserid)#
+	                    </xar:if>
+    				</td>
+					<td>
+						#$item.primaryprogramname#
+					</td>
+					<td>
+						#$item.secondaryprogramname#
+					</td>
+					<td>
+						#$item.status#
+					</td>
+					<td class="xar-align-center">
+						<xar:if condition="empty($item['editurl'])">
+							<xar:mlstring>Edit</xar:mlstring>
+						<xar:else />
+							<a href="#$item.editurl#"><xar:mlstring>Edit</xar:mlstring></a>
+						</xar:if>
+						|
+						<xar:if condition="empty($item['deleteurl'])">
+							<xar:mlstring>Delete</xar:mlstring>
+						<xar:else />
+							<a href="#$item.deleteurl#"><xar:mlstring>Delete</xar:mlstring></a>
+						</xar:if>
+					</td>
+				</tr>
+			</xar:foreach>
+		</table>
+	</xar:if>
+</div>

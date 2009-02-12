@@ -1,0 +1,48 @@
+<fieldset>
+    <legend>
+        <xar:mlstring>Customize Main Affiliate Page</xar:mlstring>
+    </legend>
+    
+    <form method="post" action="#xarModURL('roles','user','account',array('moduleload'=&gt;'labaffiliate', 'form'=&gt;'edit'))#">
+    
+        <div>
+            <xar:mlstring>Primary Affiliate Program</xar:mlstring>: 
+            <select name="primaryprogramid">
+                <option value=""><xar:mlstring>-program list-</xar:mlstring></option>
+                <xar:foreach in="$programlist" value="$programinfo">
+                    <xar:if condition="$programinfo['programid'] eq $affiliateinfo['primaryprogramid']">
+                        <option value="#$programinfo['programid']#" selected>#$programinfo['program_name']#</option>    
+                    <xar:else />
+                        <option value="#$programinfo['programid']#">#$programinfo['program_name']#</option>    
+                    </xar:if>
+                </xar:foreach>
+            </select>
+        </div>
+    
+        <div>
+            <xar:mlstring>Secondary Affiliate Program</xar:mlstring>: 
+            <select name="secondaryprogramid">
+                <option value=""><xar:mlstring>-program list-</xar:mlstring></option>
+                <xar:foreach in="$programlist" value="$programinfo">
+                    <xar:if condition="$programinfo['programid'] eq $affiliateinfo['secondaryprogramid']">
+                        <option value="#$programinfo['programid']#" selected>#$programinfo['program_name']#</option>    
+                    <xar:else />
+                        <option value="#$programinfo['programid']#">#$programinfo['program_name']#</option>    
+                    </xar:if>
+                </xar:foreach>
+            </select>
+        </div>
+
+        <strong><xar:mlstring>Marketing Verbiage</xar:mlstring></strong>
+        
+        <div>
+            <textarea name="marketing_copy" rows="20" cols="80">#$marketing_copy#</textarea>
+        </div>
+        
+        <input type="hidden" name="affiliateid" value="#$affiliateid#" />
+        
+        <input type="submit" value="#xarML('Update')#" />
+    
+    </form>
+    
+</fieldset>

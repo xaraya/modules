@@ -1,0 +1,43 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- common admin menu for this module - remove link to the current function -->
+<!-- the variables used in this menu come from mp3jukebox_admin_menu() -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>labAffiliate Membership</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <h2><xar:mlstring>Delete Membership</xar:mlstring></h2>
+
+    <!-- the specific template for the current admin function comes here -->
+
+    <h3 class="xar-align-center"><xar:mlstring>Confirm deleting this membership?</xar:mlstring></h3>
+
+    <form method="post" action="&xar-modurl-labaffiliate-membership-delete;">
+
+            <p><xar:mlstring>Program:</xar:mlstring>
+              #$program.program_name# (#$program.programid#)
+            </p>
+
+            <p><xar:mlstring>Affiliate ID:</xar:mlstring>
+              #$affiliateid#
+            </p>
+
+            <p><xar:mlstring>Program Key:</xar:mlstring>
+              #$program_key#
+            </p>
+
+            <div class="xar-align-center">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="confirm" id="confirm" value="true" />
+                <input type="hidden" name="membershipid" id="membershipid" value="#$membershipid#" />
+                <input type="submit" value="#xarML('Confirm')#" />
+
+            </div>
+
+             <p class="xar-align-center">
+             <a href="&xar-modurl-labaffiliate-membership-view;">
+                 <xar:mlstring>Cancel and Return</xar:mlstring>
+             </a>
+             </p>
+    </form>
+</div>

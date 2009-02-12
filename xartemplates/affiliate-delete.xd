@@ -1,0 +1,40 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- common admin menu for this module - remove link to the current function -->
+<!-- the variables used in this menu come from mp3jukebox_admin_menu() -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>labAffiliate Affiliate</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <h2><xar:mlstring>Delete Affiliate</xar:mlstring></h2>
+
+    <!-- the specific template for the current admin function comes here -->
+
+    <h3 class="xar-align-center"><xar:mlstring>Confirm deleting this affiliate?</xar:mlstring></h3>
+
+    <form method="post" action="&xar-modurl-labaffiliate-affiliate-delete;">
+
+	<p>Upline ID: #$uplineid#</p>
+
+	<p>User ID: #$userid#</p>
+
+	<p>Primary Program: <a href="#xarModURL('labaffiliate','admin','display', array('programid' => $primaryprogramid))#">#$primaryprogram.program_name#</a></p>
+
+	<p>Secondary Program: <a href="#xarModURL('labaffiliate','admin','display', array('programid' => $secondaryprogramid))#">#$secondaryprogram.program_name#</a></p>
+
+
+            <div class="xar-align-center">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="confirm" id="confirm" value="true" />
+                <input type="hidden" name="affiliateid" id="affiliateid" value="#$affiliateid#" />
+                <input type="submit" value="#xarML('Confirm')#" />
+
+            </div>
+
+             <p class="xar-align-center">
+             <a href="&xar-modurl-labaffiliate-affiliate-view;">
+                 <xar:mlstring>Cancel and Return</xar:mlstring>
+             </a>
+             </p>
+    </form>
+</div>

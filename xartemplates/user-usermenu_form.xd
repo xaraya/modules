@@ -1,0 +1,61 @@
+
+<xar:if condition="isset($uplineleader)">
+    <fieldset>
+        <legend><xar:mlstring>Contact Upline Leader</xar:mlstring><legend>
+    
+        <form method="post" action="#xarModURL('labaffiliate', 'user', 'contactleader')#">
+            <input type="hidden" name="uplineid" value="#$uplineid#" />
+            <input type="hidden" name="affiliateid" value="#$affiliateid#" />
+            <textarea name="message" rows="4" cols="65"></textarea>
+            <input type="submit" value="#xarML('Send Message')#" />
+        </form>
+    
+    </fieldset>
+</xar:if>
+
+<xar:if condition="isset($programlist)">
+    <fieldset><legend><xar:mlstring>Affiliate Programs</xar:mlstring> [<a href="#xarModURL('roles','user','account',array('moduleload'=&gt;'labaffiliate','form'=&gt;'edit'))#"><xar:mlstring>edit main</xar:mlstring></a>]</legend>
+        <xar:foreach in="$programlist" value="$programinfo">
+            <xar:set name="programid">$programinfo['programid']</xar:set>
+            <div>
+                <span class="xar-float-left">
+                    [<a href="#xarModURL('roles', 'user', 'account', array('moduleload' => 'labaffiliate', 'form' => 'program', 'programid' => $programid))#"><xar:mlstring>edit</xar:mlstring></a>]
+                    &nbsp;
+                    <xar:if condition="!empty($programinfo['membershipinfo']['program_key'])">
+                        <a href="#xarModURL('labaffiliate', 'user', 'display', array('programid' => $programid, 'affiliateid' => $programinfo['membershipinfo']['affiliateid']))#">#$programinfo['program_name']#</a>
+                    <xar:else />
+                        #$programinfo['program_name']# [<a href="#$programinfo['programurl']#">get</a>]
+                    </xar:if>
+                </span>
+                <span class="xar-float-right">
+                    #$programinfo['details']#
+                </span>    
+            </div>
+            
+        </xar:foreach>
+    </fieldset>
+</xar:if>
+
+<xar:if condition="isset($downlinelist) and count($downlinelist) gt 0">
+    <fieldset><legend><xar:mlstring>Downline</xar:mlstring></legend>
+        <xar:foreach in="$downlinelist" value="$downlineinfo">
+            <div>
+                <span class="xar-float-left">
+                    [<a href="#xarModURL('roles', 'user', 'account', array('moduleload' => 'labaffiliate', 'form' => 'program', 'programid' => $programid))#"><xar:mlstring>edit</xar:mlstring></a>]
+                    &nbsp;
+                    <xar:if condition="$downlineinfo['userid'] eq true">
+                        <a href="#xarModURL('labaffiliate', 'user', 'display', array('affiliateid' => $downlineinfo['affiliateid']))#">#xarUserGetVar('name', $downlineinfo['userid'])#</a>
+                    </xar:if>
+                </span>
+                <span class="xar-float-right">
+                    <xar:mlstring>Affiliate ID</xar:mlstring>: #$downlineinfo['affiliateid']#
+                </span>    
+            </div>
+        
+        
+            <pre><xar:set name="foo">print_r($programinfo)</xar:set></pre>
+        
+        
+        </xar:foreach>
+    </fieldset>
+</xar:if>

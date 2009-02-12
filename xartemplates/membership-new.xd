@@ -1,0 +1,84 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>labAffiliate Membership</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+
+    <h2><xar:mlstring>New Membership</xar:mlstring></h2>
+
+    <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
+    <script type="text/javascript">
+    <!--
+        // Enter name of mandatory fields
+        var fieldRequired = Array("membership");
+        // Enter field description to appear in the dialog box
+        var fieldDescription = Array("Membership");
+    // -->
+    </script>
+
+    <form method="post" action="&xar-modurl-labaffiliate-membership-create;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+
+		<div class="xar-form-input-wrapper">
+		    <label for="programid" class="xar-form-label">
+		        <xar:mlstring>Program:</xar:mlstring>
+		    </label>
+			<select name="programid" id="programid">
+				<option value=""></option>
+				<xar:foreach in="$programs" key="$k" value="$v">
+					<xar:if condition="$programid eq $v.programid">
+						<option value="#$v.programid#" selected="selected">#$v.program_name#</option>
+					<xar:else />
+						<option value="#$v.programid#">#$v.program_name#</option>
+					</xar:if>
+				</xar:foreach>
+			</select>
+		</div>
+
+		<div class="xar-form-input-wrapper">
+		    <label for="program_key" title="#xarML('Text')#" class="xar-form-label">
+		        <xar:mlstring>Program Key:</xar:mlstring>
+		    </label>
+			<input type="text" name="program_key" id="program_key" class="xar-form-textlong" value="" />
+			<xar:if condition="!empty($invalid['program_key'])">
+				<div class="xar-error">
+					<xar:mlstring>ERROR! This is not a valid program key</xar:mlstring>
+				</div>
+			</xar:if>
+		</div>
+
+		<div class="xar-form-input-wrapper">
+		    <label for="marketing_copy" title="#xarML('Program marketing copy override')#" class="xar-form-label">
+		        <xar:mlstring>Marketing Copy:</xar:mlstring>
+		    </label>
+			<xar:if condition="isset($marketing_copy)">
+				<textarea name="marketing_copy" id="marketing_copy" class="xar-form-textareamedium">#$marketing_copy#</textarea>
+			<xar:else />
+				<textarea name="marketing_copy" id="marketing_copy" class="xar-form-textareamedium">#$item.marketing_copy#</textarea>
+			</xar:if>
+			<xar:if condition="!empty($invalid['marketing_copy'])">
+				<div class="xar-error">
+					<xar:mlstring>ERROR! This is not a valid marketing_copy</xar:mlstring>
+				</div>
+			</xar:if>
+		</div>
+
+		<xar:if condition="!empty($hookoutput) and is_array($hookoutput) and count($hookoutput) gt 0">
+        	<fieldset>
+            	<legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+
+                <xar:foreach in="$hookoutput" key="$hookmodule">
+	                #$hookoutput[$hookmodule]#
+                </xar:foreach>
+	        </fieldset>
+        </xar:if>
+
+	    <div class="xar-align-center xar-margin-thickends">
+	        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+	        <input type="hidden" name="affiliateid" id="programid" value="#$affiliateid#" />
+
+	        <input type="submit" value="#xarML('Create Membership')#" />
+	    </div>
+
+	</form>
+</div>

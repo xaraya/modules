@@ -1,0 +1,15 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>labAffiliate</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+
+	<h1>#$program_name#</h1>
+
+	<div>
+		#$marketing_copy#
+	</div>
+
+    <div class="labaffiliate-join"><a href="#$affiliateurl##$membershipinfo['program_key']#"><xar:mlstring>Join Now!</xar:mlstring></a></div>
+
+</div>

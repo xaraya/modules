@@ -1,0 +1,126 @@
+<xar:data-getitem name="$properties" module="labaffiliate" itemtype="1" itemid="0" />
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>labAffiliate Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+
+    <h2><xar:mlstring>New Program</xar:mlstring></h2>
+
+    <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
+    <script type="text/javascript">
+    <!--
+        // Enter name of mandatory fields
+        var fieldRequired = Array("program_name", "programurl", "affiliateurl", "details", "marketing_copy");
+        // Enter field description to appear in the dialog box
+        var fieldDescription = Array("Program name", "ProgramURL", "Affiliate URL", "Details", "Marketing Copy");
+    // -->
+    </script>
+
+    <form method="post" action="&xar-modurl-labaffiliate-admin-create;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+
+		<div class="xar-form-input-wrapper">
+		    <label for="program_name" title="#xarML('Name of the program')#" class="xar-form-label">
+		        <xar:mlstring>Program Name:</xar:mlstring>
+		    </label>
+			<xar:if condition="isset($program_name)">
+				<input type="text" name="program_name" id="program_name" value="#$program_name#" maxlength="128" class="xar-form-textlong" />
+			<xar:else />
+				<input type="text" name="program_name" id="program_name" value="#$item.program_name#" maxlength="128" class="xar-form-textlong" />
+			</xar:if>
+			<xar:if condition="!empty($invalid['program_name'])">
+				<div class="xar-error">
+					<xar:mlstring>ERROR! This is not a valid program name</xar:mlstring>
+				</div>
+			</xar:if>
+		</div>
+
+		<div class="xar-form-input-wrapper">
+		    <label for="programurl" title="#xarML('URL of the program')#" class="xar-form-label">
+		        <xar:mlstring>Program URL:</xar:mlstring>
+		    </label>
+			<xar:if condition="isset($programurl)">
+				<input type="text" name="programurl" id="programurl" value="#$programurl#" maxlength="128" class="xar-form-textlong" />
+			<xar:else />
+				<input type="text" name="programurl" id="programurl" value="#$item.programurl#" maxlength="128" class="xar-form-textlong" />
+			</xar:if>
+			<xar:if condition="!empty($invalid['programurl'])">
+				<div class="xar-error">
+					<xar:mlstring>ERROR! This is not a valid program URL</xar:mlstring>
+				</div>
+			</xar:if>
+		</div>
+
+		<div class="xar-form-input-wrapper">
+		    <label for="affiliateurl" title="#xarML('URL of the affiliate')#" class="xar-form-label">
+		        <xar:mlstring>Affiliate URL:</xar:mlstring>
+		    </label>
+			<xar:if condition="isset($affiliateurl)">
+				<input type="text" name="affiliateurl" id="affiliateurl" value="#$affiliateurl#" maxlength="128" class="xar-form-textlong" />
+			<xar:else />
+				<input type="text" name="affiliateurl" id="affiliateurl" value="#$item.affiliateurl#" maxlength="128" class="xar-form-textlong" />
+			</xar:if>
+			<xar:if condition="!empty($invalid['affiliateurl'])">
+				<div class="xar-error">
+					<xar:mlstring>ERROR! This is not a valid affiliate URL</xar:mlstring>
+				</div>
+			</xar:if>
+		</div>
+
+		<div class="xar-form-input-wrapper">
+		    <label for="details" title="#xarML('Program details')#" class="xar-form-label">
+		        <xar:mlstring>Details:</xar:mlstring>
+		    </label>
+			<xar:if condition="isset($details)">
+				<textarea name="details" id="details" class="xar-form-textareamedium">#$details#</textarea>
+			<xar:else />
+				<textarea name="details" id="details" class="xar-form-textareamedium">#$item.details#</textarea>
+			</xar:if>
+			<xar:if condition="!empty($invalid['details'])">
+				<div class="xar-error">
+					<xar:mlstring>ERROR! This is not a valid details</xar:mlstring>
+				</div>
+			</xar:if>
+		</div>
+
+		<div class="xar-form-input-wrapper">
+		    <label for="marketing_copy" title="#xarML('Program marketing copy')#" class="xar-form-label">
+		        <xar:mlstring>Marketing Copy:</xar:mlstring>
+		    </label>
+			<xar:if condition="isset($marketing_copy)">
+				<textarea name="marketing_copy" id="marketing_copy" class="xar-form-textareamedium">#$marketing_copy#</textarea>
+			<xar:else />
+				<textarea name="marketing_copy" id="marketing_copy" class="xar-form-textareamedium">#$item.marketing_copy#</textarea>
+			</xar:if>
+			<xar:if condition="!empty($invalid['marketing_copy'])">
+				<div class="xar-error">
+					<xar:mlstring>ERROR! This is not a valid marketing_copy</xar:mlstring>
+				</div>
+			</xar:if>
+		</div>
+
+		<div class="xar-form-input-wrapper">
+		    <label for="program_name" title="#xarML('Status')#" class="xar-form-label">
+		        <xar:mlstring>Status:</xar:mlstring>
+		    </label>
+            <xar:data-input property="$properties['status']" name="status" id="status" value="#$item.status#" maxlength="128" />
+		</div>
+
+		<xar:if condition="!empty($hookoutput) and is_array($hookoutput) and count($hookoutput) gt 0">
+        	<fieldset>
+            	<legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+
+                <xar:foreach in="$hookoutput" key="$hookmodule">
+	                #$hookoutput[$hookmodule]#
+                </xar:foreach>
+	        </fieldset>
+        </xar:if>
+
+	    <div class="xar-align-center xar-margin-thickends">
+	        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+	        <input type="submit" value="#xarML('Create Program')#" />
+	    </div>
+
+	</form>
+</div>

@@ -1,0 +1,40 @@
+
+
+<fieldset>
+    <legend>
+        <xar:mlstring>External Affiliate Info For</xar:mlstring> #$programinfo.program_name#
+    </legend>
+
+    <form method="post" action="#xarModURL('roles','user','account',array('moduleload' =&gt; 'labaffiliate','form' =&gt; 'program'))#">
+
+
+		<div class="xar-form-input-wrapper">
+		    <label for="program_key" class="xar-form-label">
+		        <xar:mlstring>Primary Program ID:</xar:mlstring>
+		    </label>
+            <input type="text" name="program_key" id="program_key" value="#$membershipinfo['program_key']#" />
+            
+		</div>
+
+
+		<div class="xar-form-input-wrapper">
+		    <label for="marketing_copy" title="#xarML('Program marketing copy override')#" class="xar-form-label">
+		        <xar:mlstring>Marketing Copy:</xar:mlstring>
+		    </label>
+            <textarea name="marketing_copy" id="marketing_copy" class="xar-form-textareamedium">#$membershipinfo.marketing_copy#</textarea>
+			<xar:if condition="empty($membershipinfo['marketing_copy'])">
+				<div class="xar-error">
+					<xar:mlstring>Default marketing copy will be used if left blank.</xar:mlstring>
+				</div>
+			</xar:if>
+		</div>
+
+	    <div class="xar-align-center xar-margin-thickends">
+	        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+	        <input type="hidden" name="programid" id="programid" value="#$programinfo.programid#" />
+	        <input type="hidden" name="affiliateid" id="affiliateid" value="#$affiliateid#" />
+
+	        <input type="submit" value="#xarML('Update')#" />
+	    </div>
+    </form>
+</fieldset>

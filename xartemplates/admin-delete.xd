@@ -1,0 +1,72 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!-- common admin menu for this module - remove link to the current function -->
+<!-- the variables used in this menu come from mp3jukebox_admin_menu() -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>labAffiliate Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <h2><xar:mlstring>Delete Program</xar:mlstring></h2>
+
+    <!-- the specific template for the current admin function comes here -->
+
+    <h3 class="xar-align-center"><xar:mlstring>Confirm deleting this program?</xar:mlstring></h3>
+
+    <form method="post" action="&xar-modurl-labaffiliate-admin-delete;">
+
+            <p>
+             <strong>
+                <xar:mlstring>Prograam Name:</xar:mlstring>
+             </strong>
+              #$program_name#
+            </p>
+
+            <p>
+             <strong>
+                <xar:mlstring>Program URL:</xar:mlstring>
+             </strong>
+              #$programurl#
+            </p>
+
+            <p>
+             <strong>
+                <xar:mlstring>Affiliate URL:</xar:mlstring>
+             </strong>
+              #$affiliateurl#
+            </p>
+
+            <p>
+             <strong>
+                <xar:mlstring>Details:</xar:mlstring>
+             </strong>
+            </p>
+
+			<div>
+				#$details#
+			</div>
+
+            <p>
+             <strong>
+                <xar:mlstring>Marketing Copy:</xar:mlstring>
+             </strong>
+            </p>
+
+			<div>
+				#$marketing_copy#
+			</div>
+
+            <div class="xar-align-center">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="confirm" id="confirm" value="true" />
+                <input type="hidden" name="programid" id="programid" value="#$programid#" />
+                <input type="submit" value="#xarML('Confirm')#" />
+
+            </div>
+
+             <p class="xar-align-center">
+             <a href="&xar-modurl-labaffiliate-admin-view;">
+                 <xar:mlstring>Cancel and Return</xar:mlstring>
+             </a>
+             </p>
+    </form>
+</div>

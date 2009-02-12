@@ -1,0 +1,37 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>labAffiliate</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+
+	<h1>#$displaytitle#</h1>
+
+	<div>
+		#$marketing_copy#
+	</div>
+    
+    <div class="labaffiliate-join">
+        <xar:if condition="xarUserIsLoggedIn()">
+            <a href="#xarModURL('roles','user','account',array('moduleload'=&gt;'labaffiliate'))#"><xar:mlstring>Join Now!</xar:mlstring></a>
+        </xar:if>
+    </div>
+
+    <xar:if condition="isset($programlist)">
+        <fieldset><legend><xar:mlstring>Affiliate Programs</xar:mlstring></legend>
+            <xar:foreach in="$programlist" value="$programinfo">
+                <xar:set name="programid">$programinfo['programid']</xar:set>
+                <xar:if condition="!empty($programinfo['membershipinfo']['program_key'])">
+                    <div>
+                        <span class="xar-float-left">
+                            <a href="#xarModURL('labaffiliate', 'user', 'display', array('programid' => $programid, 'affiliateid' => $programinfo['membershipinfo']['affiliateid']))#">#$programinfo['program_name']#</a>
+                        </span>
+                        <span class="xar-float-right">
+                            #$programinfo['details']#
+                        </span>    
+                    </div>
+                </xar:if>
+                
+            </xar:foreach>
+        </fieldset>
+    </xar:if>
+</div>

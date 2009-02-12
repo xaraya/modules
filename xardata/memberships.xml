@@ -1,0 +1,52 @@
+<object name="labaffiliate_memberships">
+  <objectid>105</objectid>
+  <label>Affiliate Memberships</label>
+  <moduleid>919</moduleid>
+  <itemtype>3</itemtype>
+  <urlparam>membershipid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="membershipid">
+      <id>1061</id>
+      <label>Membership ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_labaffiliate_membership.xar_membershipid</source>
+      <status>3</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="programid">
+      <id>1062</id>
+      <label>Program ID</label>
+      <type>static</type>
+      <default></default>
+      <source>xar_labaffiliate_membership.xar_programid</source>
+      <status>2</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="affiliateid">
+      <id>1063</id>
+      <label>Affiliate ID</label>
+      <type>static</type>
+      <default></default>
+      <source>xar_labaffiliate_membership.xar_affiliateid</source>
+      <status>2</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="program_key">
+      <id>1064</id>
+      <label>Program Key</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_labaffiliate_membership.xar_program_key</source>
+      <status>1</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

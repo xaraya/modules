@@ -1,0 +1,62 @@
+<object name="labaffiliate_affiliates">
+  <objectid>104</objectid>
+  <label>Affiliate Members</label>
+  <moduleid>919</moduleid>
+  <itemtype>2</itemtype>
+  <urlparam>affiliateid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="affiliateid">
+      <id>1056</id>
+      <label>Affiliate ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_labaffiliate_affiliates.xar_affiliateid</source>
+      <status>2</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="uplineid">
+      <id>1057</id>
+      <label>Upline ID</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_labaffiliate_affiliates.xar_uplineid</source>
+      <status>2</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="userid">
+      <id>1058</id>
+      <label>User ID</label>
+      <type>userlist</type>
+      <default></default>
+      <source>xar_labaffiliate_affiliates.xar_userid</source>
+      <status>2</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="primaryprogramid">
+      <id>1059</id>
+      <label>Primary Program ID</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>xar_labaffiliate_affiliates.xar_primaryprogramid</source>
+      <status>1</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="secondaryprogramid">
+      <id>1060</id>
+      <label>Secondary Program ID</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>xar_labaffiliate_affiliates.xar_secondaryprogramid</source>
+      <status>1</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

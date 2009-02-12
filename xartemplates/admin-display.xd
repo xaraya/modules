@@ -1,0 +1,37 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>labAffiliate Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+
+    <h2><xar:mlstring>View Program</xar:mlstring></h2>
+
+	<h3>#$program_name#</h3>
+
+	<p><xar:mlstring>Program URL:</xar:mlstring> #$programurl#</p>
+
+	<p><xar:mlstring>Affiliate URL:</xar:mlstring> #$affiliateurl#</p>
+
+	<h4><xar:mlstring>Details:</xar:mlstring></h4>
+
+	<div>
+		#$details#
+	</div>
+
+	<h4><xar:mlstring>Marketing Copy:</xar:mlstring></h4>
+
+	<div>
+		#$marketing_copy#
+	</div>
+
+    <xar:if condition="isset($affiliatelist)">
+        <xar:foreach in="$affiliatelist" value="$affiliateinfo">
+            <div>
+                <pre><xar:set name="foo">print_r($affiliateinfo)</xar:set></pre>
+            </div>
+        </xar:foreach>
+    </xar:if>
+    
+    
+</div>

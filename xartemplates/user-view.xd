@@ -1,0 +1,26 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>labAffiliate</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>View Programs</xar:mlstring></h2>
+
+	<xar:if condition="count($items) lt 1">
+		<p class="xar-align-center">
+			<xar:mlstring>No programs found.</xar:mlstring>
+		</p>
+	<xar:else />
+		<table class="xar-fullwidth">
+			<xar:foreach in="$items" value="$item">
+				<tr>
+					<td>
+						<a href="#xarmodURL('labaffiliate','user','display', array('programid' => $item.programid))#">#$item.program_name#</a>
+					</td>
+					<td>
+						#$item['details']#
+					</td>
+				</tr>
+			</xar:foreach>
+		</table>
+	</xar:if>
+</div>

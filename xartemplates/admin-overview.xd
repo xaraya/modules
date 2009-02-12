@@ -1,0 +1,72 @@
+<div class="xar-mod-head">
+	<span class="xar-mod-title"><xar:mlstring>labAffiliate Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+	<xar:template type="module" module="labaffiliate" file="admin-menu" />
+	<img src="#xarTplGetImage('admin.gif','labaffiliate')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+
+	<h3><xar:mlstring>What is it?</xar:mlstring></h3>
+	<p>
+	  <em><xar:mlstring>labAffiliate provides for management of structured affiliate programs.</xar:mlstring></em>
+	  <xar:mlstring>Registered/authorized visitors are assigned an global Affiliate ID for the site's own affiliate program. Each can then enter their external Affiliate ID for any of the Affiliate Programs created on the site (eg. Amazon, CafePress, et al.).</xar:mlstring>
+	</p>
+
+    <p>
+        <xar:mlstring>Each Affiliate member may specify a primary and secondary program to feature on their main Affiliate page. Each may also provide an HTML override to the default Affiliate page verbiage specified in the module settings.</xar:mlstring>
+    </p>
+    
+    <p>
+        <xar:mlstring>For each external Affiliate Program, a marketing page is available. Individual Affiliate members can provide HTML to override the marketing verbiage used.</xar:mlstring>
+    </p>
+    
+    <p>
+        <xar:mlstring>All members that register via a given Affiliate ID become that Affiliate's "downline". That Affiliate, in turn, becomes the "upline" for the new Affiliate members.</xar:mlstring>
+    </p>
+    
+    <p>
+        <xar:mlstring>Affiliates with a "downline" above the leadership mark specified in the module settings become flagged as "upline leaders".</xar:mlstring>
+    </p>
+    
+    <p>
+        <xar:mlstring>To assist with getting the most out of the system, it may become neccesary to ask for help. There is an upline leader contact system in place for this purpose, to ensure that requests go to the most qualified and available Affiliate member.</xar:mlstring>
+    </p>
+    
+	<h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+	<p>
+	  <xar:mlstring>Use the User functions to view programs, and the Admin, Affiliate, and Membership functions to manage them.</xar:mlstring>
+	</p>
+
+	<h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+	<p>
+	  <xar:mlstring>The UplineCapture block should be placed in the site header (like the 'meta' block) to capture Affiliate ID's sent in URL's to any site page and use them as the Upline Affiliate ID for new Affilaites.</xar:mlstring>
+	</p>
+
+
+	<h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+	<p>
+	  <xar:mlstring>There are no included hooks at this Time.</xar:mlstring>
+	</p>
+
+	<h3><xar:mlstring>Included Dynamic Data Properties</xar:mlstring></h3>
+	<p>
+	  <xar:mlstring>There are no included properties at this Time.</xar:mlstring>
+	</p>
+
+	<h3>
+	  <xar:mlstring>Further Information</xar:mlstring>
+	</h3>
+	<p>
+	  <xar:mlstring>Further information on the labAffiliate module can be found at</xar:mlstring>
+	</p>
+	<ul>
+	  <li><xar:mlstring>LabAffiliate Extension page at</xar:mlstring> <a title="#xarML('labAffiliate Module - Xaraya Extension ')#" href="http://www.xaraya.com/index.php/release/919.html">Xaraya Extension and Releases</a>.
+		<xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+	  </li>
+	  <li><xar:mlstring>Related tutorials and programation on labAffiliate found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/labaffiliate/" title="#xarML('Related programation on labAffiliate')#"><xar:mlstring>Xaraya Programation.</xar:mlstring></a>
+	  </li>
+	</ul>
+	<p class="xar-sub">
+	  <strong>&nbsp;<xar:mlstring>labAffiliate Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2007-6-18
+	</p>
+</div>
+

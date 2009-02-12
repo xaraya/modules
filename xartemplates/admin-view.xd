@@ -1,0 +1,54 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>labAffiliate Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+
+    <h2><xar:mlstring>View Programs</xar:mlstring></h2>
+
+	<xar:if condition="count($items) lt 1">
+		<p class="xar-align-center">
+			<xar:mlstring>No programs found.</xar:mlstring>
+		</p>
+	<xar:else />
+		<table class="xar-fullwidth">
+			<tr>
+				<th><xar:mlstring>Program Name</xar:mlstring></th>
+				<th><xar:mlstring>Program URL</xar:mlstring></th>
+				<th><xar:mlstring>Affiliate URL</xar:mlstring></th>
+				<th><xar:mlstring>Status</xar:mlstring></th>
+				<th><xar:mlstring>Actions</xar:mlstring></th>
+			</tr>
+			<xar:foreach in="$items" value="$item">
+				<tr>
+					<td>
+						<a href="#xarModURL('labaffiliate', 'admin', 'display', array('programid' => $item['programid']))#">#$item.program_name#</a>
+					</td>
+					<td>
+						#$item.programurl#
+					</td>
+					<td>
+						#$item.affiliateurl#
+					</td>
+					<td>
+						#$item.status#
+					</td>
+					<td class="xar-align-center">
+						<xar:if condition="empty($item['editurl'])">
+							<xar:mlstring>Edit</xar:mlstring>
+						<xar:else />
+							<a href="#$item.editurl#"><xar:mlstring>Edit</xar:mlstring></a>
+						</xar:if>
+						|
+						<xar:if condition="empty($item['deleteurl'])">
+							<xar:mlstring>Delete</xar:mlstring>
+						<xar:else />
+							<a href="#$item.deleteurl#"><xar:mlstring>Delete</xar:mlstring></a>
+						</xar:if>
+					</td>
+				</tr>
+			</xar:foreach>
+		</table>
+	</xar:if>
+</div>

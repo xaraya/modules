@@ -1,0 +1,35 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>labAffiliate Affiliate</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+
+    <h2><xar:mlstring>View Affiliate</xar:mlstring></h2>
+
+	<p>Affiliate ID: #$affiliateid#</p>
+
+	<p>Upline ID: #$uplineid#</p>
+
+	<p>User ID: #xarUserGetVar('name', $userid)#</p>
+
+	<p>Primary Program: <a href="#xarModURL('labaffiliate','admin','display', array('programid' => $primaryprogramid))#">#$primaryprogram.program_name#</a></p>
+
+	<p>Secondary Program: <a href="#xarModURL('labaffiliate','admin','display', array('programid' => $secondaryprogramid))#">#$secondaryprogram.program_name#</a></p>
+
+    <fieldset>
+        <form method="post" action="#xarModURL('labaffiliate', 'membership', 'new', array('affiliateid' =&gt; $affiliateid))#">
+            <select name="programid">
+                <option value=""><xar:mlstring>-select a program to add-</xar:mlstring></option>
+                <xar:foreach in="$programlist" value="$programinfo">
+                    <option value="#$programinfo['programid']#">#$programinfo['program_name']#</option>
+                    
+                </xar:foreach>
+            </select>
+            <input type="text" name="program_key">
+            <input type="submit" value="#xarML('Add an affiliate program, with affiliate ID')#" />
+        </form>
+    </fieldset>
+    <pre><xar:set name="foo">print_r($program_memberships)</xar:set></pre>
+
+</div>

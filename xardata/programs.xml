@@ -1,0 +1,72 @@
+<object name="labaffiliate_programs">
+  <objectid>103</objectid>
+  <label>Affiliate Programs</label>
+  <moduleid>919</moduleid>
+  <itemtype>1</itemtype>
+  <urlparam>programid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="programid">
+      <id>1050</id>
+      <label>Program ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_labaffiliate_programs.xar_programid</source>
+      <status>3</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="program_name">
+      <id>1051</id>
+      <label>Program Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_labaffiliate_programs.xar_program_name</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="programurl">
+      <id>1052</id>
+      <label>Program URL</label>
+      <type>url</type>
+      <default></default>
+      <source>xar_labaffiliate_programs.xar_programurl</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="affiliateurl">
+      <id>1053</id>
+      <label>Affiliate URL</label>
+      <type>url</type>
+      <default></default>
+      <source>xar_labaffiliate_programs.xar_affiliateurl</source>
+      <status>1</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="details">
+      <id>1054</id>
+      <label>Details</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>xar_labaffiliate_programs.xar_details</source>
+      <status>1</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="marketing_copy">
+      <id>1055</id>
+      <label>Marketing Copy</label>
+      <type>xartinymce</type>
+      <default></default>
+      <source>xar_labaffiliate_programs.xar_marketing_copy</source>
+      <status>1</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>
