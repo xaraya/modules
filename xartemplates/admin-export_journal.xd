@@ -1,0 +1,5 @@
+<xar:data-getitem name="$properties" module="labaccounting" itemtype="1" itemid="0" />
+<xar:foreach in="$transactionlist" value="$transactioninfo">
+    <xar:data-output type="calendar" value="$transactioninfo['transdate']" dateformat="%m-%d-%Y" />,<xar:data-output property="$properties['journaltype']" name="journaltype" value="$item['journaltype']" />,#$transactioninfo['journal_title']#,#$transactioninfo['title']#,#$transactioninfo['amount']#
+    <br />
+</xar:foreach>

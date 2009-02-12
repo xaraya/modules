@@ -1,0 +1,122 @@
+<object name="modulesettings">
+  <objectid>563</objectid>
+  <label>labAccounting Module Settings</label>
+  <moduleid>11</moduleid>
+  <itemtype>706</itemtype>
+  <urlparam>transactionid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="displaytitle">
+      <id>6820</id>
+      <label>Module Display Title</label>
+      <type>static</type>
+      <default></default>
+      <source>module variables</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="boilerplate">
+      <id>6821</id>
+      <label>Site Accounting Boilerplate</label>
+      <type>static</type>
+      <default></default>
+      <source>module variables</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="allowuseraccess">
+      <id>6822</id>
+      <label>Allow User Access to their Journal accounts?</label>
+      <type>static</type>
+      <default></default>
+      <source>module variables</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="maxmultinew">
+      <id>6823</id>
+      <label>Number of new transactions allowed on multiple creation form</label>
+      <type>static</type>
+      <default></default>
+      <source>module variables</source>
+      <status>1</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="firstaccountid">
+      <id>6824</id>
+      <label>Initial/First Account ID (to set number of digits)</label>
+      <type>static</type>
+      <default></default>
+      <source>module variables</source>
+      <status>1</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="firsttransid">
+      <id>6825</id>
+      <label>Initial/First Transaction ID (to set number of digits)</label>
+      <type>static</type>
+      <default></default>
+      <source>module variables</source>
+      <status>1</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="mastercid">
+      <id>6826</id>
+      <label>Master labAccounting Category</label>
+      <type>static</type>
+      <default></default>
+      <source>module variables</source>
+      <status>1</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+    <property name="journalcid">
+      <id>6827</id>
+      <label>Journal account Category List</label>
+      <type>static</type>
+      <default></default>
+      <source>module variables</source>
+      <status>1</status>
+      <order>8</order>
+      <validation></validation>
+    </property>
+    <property name="journaltranscid">
+      <id>6828</id>
+      <label>Journal Transaction Category List</label>
+      <type>static</type>
+      <default></default>
+      <source>module variables</source>
+      <status>1</status>
+      <order>9</order>
+      <validation></validation>
+    </property>
+    <property name="ledgercid">
+      <id>6829</id>
+      <label>Ledger account Category List</label>
+      <type>static</type>
+      <default></default>
+      <source>module variables</source>
+      <status>1</status>
+      <order>10</order>
+      <validation></validation>
+    </property>
+    <property name="ledgertranscid">
+      <id>6830</id>
+      <label>Ledger Transaction Category List</label>
+      <type>static</type>
+      <default></default>
+      <source>module variables</source>
+      <status>1</status>
+      <order>11</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

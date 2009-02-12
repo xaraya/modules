@@ -1,0 +1,37 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="ledgers_objectid">xarModGetVar('labaccounting','ledgers_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="labaccounting" itemtype="2" itemid="$ledgers_objectid" />
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Delete Ledger Transaction</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<div align="center">
+
+<form method="post" action="&xar-modurl-labaccounting-ledgertransactions-delete;">
+    <input type="hidden" name="authid" value="#$authid#" />
+    <input type="hidden" name="confirm" value="true" />
+    <input type="hidden" name="transactionid" value="#$transactionid#" />
+    <input type="hidden" name="returnurl" value="#$returnurl#" />
+
+    <table border="0" cellpadding="2" cellspacing="0">
+        <tr>
+            <td align="right" width="30%">
+                <xar:mlstring>Ledger Transaction</xar:mlstring>
+            </td>
+            <td><strong>#$item['title']#</strong><xar:if condition="!empty($item['transnum'])"> (ID: #$item['transnum']#)</xar:if></td>
+        </tr>
+        <tr>
+            <td align="right" width="30%">
+                <xar:mlstring>Summary</xar:mlstring>
+            </td>
+            <td><strong>$#$item['amount']#</strong> on #$item['transdate']#</td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><br />
+                    <input type="submit" value="#$confirmbutton#"  />
+            </td>
+        </tr>
+    </table>
+</form>
+</div>
+</div>
+<div class="xar-mod-foot"></div>

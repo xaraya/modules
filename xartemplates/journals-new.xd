@@ -1,0 +1,87 @@
+<xar:data-getitem name="$properties" module="labaccounting" itemtype="1" itemid="0" />
+
+<xar:set name="ownerid">xarModGetUserVar('xproject', 'mymemberid')</xar:set>
+<xar:if condition="!isset($ownerid)"><xar:set name="ownerid">"0"</xar:set></xar:if>
+
+<xar:if condition="!$inline">
+    <xar:template type="module" file="admin-menu" />
+</xar:if>
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>New Journal</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<div align="left">
+
+<form method="post" action="&xar-modurl-labaccounting-journals-create;">
+
+<input type="hidden" name="authid" value="#$authid#" />
+
+<input type="hidden" name="returnurl" value="#$returnurl#" />
+
+<xar:if condition="isset($parentid)">
+    <input type="hidden" name="parentid" value="#$parentid#" />
+</xar:if>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="2">
+    <tr>
+        <td><xar:data-label property="$properties['account_title']" /></td>
+        <td><xar:data-input property="$properties['account_title']" name="account_title" /></td>
+        <td><xar:data-label property="$properties['agentuid']" /></td>
+        <td><xar:data-input property="$properties['agentuid']" name="agentuid" value="$agentuid" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['owneruid']" /></td>
+        <td><xar:data-input property="$properties['owneruid']" name="owneruid" value="$owneruid" /></td>
+        <td><xar:data-label property="$properties['contactid']" /></td>
+        <td><xar:data-input property="$properties['contactid']" name="contactid" value="$contactid" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['journaltype']" /></td>
+        <td><xar:data-input property="$properties['journaltype']" name="journaltype" value="$journaltype" /></td>
+        <td><xar:data-label property="$properties['currency']" /></td>
+        <td><xar:data-input property="$properties['currency']" name="currency" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['acctnum']" /></td>
+        <td><xar:data-input property="$properties['acctnum']" name="acctnum" /></td>
+        <td><xar:data-label property="$properties['acctlogin']" /></td>
+        <td><xar:data-input property="$properties['acctlogin']" name="acctlogin" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['accturl']" /></td>
+        <td><xar:data-input property="$properties['accturl']" name="accturl" /></td>
+        <td><xar:data-label property="$properties['acctpwd']" /></td>
+        <td><xar:data-input property="$properties['acctpwd']" name="acctpwd" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['notes']" /></td>
+        <td colspan="3"><xar:data-input property="$properties['notes']" name="notes" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['opendate']" /></td>
+        <td><xar:data-input property="$properties['opendate']" name="opendate" value="$opendate" /></td>
+        <td><xar:data-label property="$properties['closedate']" /></td>
+        <td><xar:data-input property="$properties['closedate']" name="closedate" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['billdate']" /></td>
+        <td><xar:data-input property="$properties['billdate']" name="billdate" value="$billdate" /></td>
+        <td><xar:data-label property="$properties['status']" /></td>
+        <td><xar:data-input property="$properties['status']" name="status" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['invoicefreq']" /></td>
+        <td><xar:data-input property="$properties['invoicefreq']" name="invoicefreq" value="$invoicefreq" /></td>
+        <td><xar:data-label property="$properties['invoicefrequnits']" /></td>
+        <td><xar:data-input property="$properties['invoicefrequnits']" name="invoicefrequnits" /></td>
+    </tr>
+    <tr>
+        <xar:set name="updatebtn"><xar:mlstring>Create Journal</xar:mlstring></xar:set>
+        <td colspan="2" align="center"><br /><input type="submit" name="submit" value="#$updatebtn#" /></td>
+    </tr>
+</table>
+
+</form>
+</div>
+</div>
+<div class="xar-mod-foot"></div>
+

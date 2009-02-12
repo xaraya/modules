@@ -1,0 +1,37 @@
+
+<xar:if condition="!isset($inline)">
+    <xar:template type="module" file="admin-menu" />
+</xar:if>
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Account Summary</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <xar:comment>content: My accounts list with balances (and due dates), last X deposits, last X expenses</xar:comment>
+    <div style="float: left; width: 50%;">
+            <div class="labaccounting-blockheader">
+                <xar:mlstring>My Accounts</xar:mlstring>
+            </div>
+            <div class="labaccounting-blockbody">
+            
+            </div>
+        </div>
+    <div style="float: right; width: 50%;">
+        <div>
+            <div class="labaccounting-blockheader">
+                <xar:mlstring>Last 10 Deposits</xar:mlstring>
+            </div>
+            <div class="labaccounting-blockbody">
+            
+            </div>
+        </div>
+        <div>
+            <div class="labaccounting-blockheader">
+                <xar:mlstring>Last 10 Expenses</xar:mlstring>
+            </div>
+            <div class="labaccounting-blockbody">
+            
+            </div>
+        </div>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+<div class="xar-mod-foot"></div>

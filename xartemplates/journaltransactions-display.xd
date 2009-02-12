@@ -1,0 +1,50 @@
+<xar:data-getitem name="$properties" module="labaccounting" itemtype="3" itemid="0" />
+    
+<div class="xar-mod-head"><xar:mlstring>Journal Transaction</xar:mlstring>: <xar:data-output property="$properties['title']" value="$item['title']" /></div>
+<div class="xar-mod-body">
+    
+    <xar:if condition="!empty($status)">
+
+        <h3>#$status#</h3>
+    <xar:else />
+        <table width="100%" border="0" cellspacing="1" cellpadding="2" id="xproject_info" class="xar-accent">
+            <tr>
+                <td><xar:data-label property="$properties['transtype']" /></td>
+                <td><xar:data-output property="$properties['transtype']" value="$item['transtype']" /></td>
+                <td><xar:data-label property="$properties['creatorid']" /></td>
+                <td><xar:data-output property="$properties['creatorid']" value="$item['creatorid']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['transnum']" /></td>
+                <td><xar:data-output property="$properties['transnum']" value="$item['transnum']" /></td>
+                <td><xar:data-label property="$properties['amount']" /></td>
+                <td><xar:data-output property="$properties['amount']" value="$item['amount']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['transtype']" /></td>
+                <td><xar:data-output property="$properties['transtype']" value="$item['transtype']" /></td>
+                <td><xar:data-label property="$properties['transdate']" /></td>
+                <td><xar:data-output property="$properties['transdate']" value="$item['transdate']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['status']" /></td>
+                <td colspan="3"><xar:data-output property="$properties['status']" value="$item['status']" />
+                    <xar:data-output property="$properties['verified']" value="$item['verified']" />
+                    <xar:data-label property="$properties['verified']" />
+                    <xar:data-output property="$properties['cleared']" value="$item['cleared']" />
+                    <xar:data-label property="$properties['cleared']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['source']" /></td>
+                <td><xar:data-output property="$properties['source']" value="$item['source']" /></td>
+                <td><xar:data-label property="$properties['sourceid']" /></td>
+                <td><xar:data-output property="$properties['sourceid']" value="$item['sourceid']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['details']" /></td>
+                <td colspan="3"><xar:data-output property="$properties['details']" value="$item['details']" /></td>
+            </tr>
+        </table>
+    </xar:if>
+</div>
+<div class="xar-mod-foot"></div>

@@ -1,0 +1,176 @@
+<?php
+// ----------------------------------------------------------------------
+// LICENSE
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License (GPL)
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// To read the license please visit http://www.gnu.org/copyleft/gpl.html
+// ----------------------------------------------------------------------
+// Original Author of file: Chad Kraeft <cdavidkraeft@miragelab.com>
+//
+// Copyright (c)2004 Chad Kraeft
+// ----------------------------------------------------------------------
+
+function labAccounting_userapi_getchartdropdown()
+{
+
+    $options = array();
+    $options[] = array('id' => '', 'name' => "Chart of Accounts");
+    $options[] = array('id' => 'Assets', 'name' => " --Asset Accounts--");
+    $options[] = array('id' => 'Assets', 'name' => " -Current Assets-");
+    $options[] = array('id' => 1000, 'name' => "Petty Cash");      
+    $options[] = array('id' => 1010, 'name' => "Cash on Hand (e.g. in cash registers)");      
+    $options[] = array('id' => 1020, 'name' => "Regular Checking Account");      
+    $options[] = array('id' => 1030, 'name' => "Payroll Checking Account");      
+    $options[] = array('id' => 1040, 'name' => "Savings Account");    
+    $options[] = array('id' => 1050, 'name' => "Special Account");      
+    $options[] = array('id' => 1060, 'name' => "Investments - Money Market");      
+    $options[] = array('id' => 1070, 'name' => "Investments - Certificates of Deposit");      
+    $options[] = array('id' => 1100, 'name' => "Accounts Receivable");      
+    $options[] = array('id' => 1140, 'name' => "Other Receivables");      
+    $options[] = array('id' => 1150, 'name' => "Allowance for Doubtful Accounts");      
+    $options[] = array('id' => 1200, 'name' => "Raw Materials Inventory");      
+    $options[] = array('id' => 1205, 'name' => "Supplies Inventory");      
+    $options[] = array('id' => 1210, 'name' => "Work in Progress Inventory");      
+    $options[] = array('id' => 1215, 'name' => "Finished Goods Inventory");      
+    $options[] = array('id' => 1400, 'name' => "Prepaid Expenses");      
+    $options[] = array('id' => 1410, 'name' => "Employee Advances");      
+    $options[] = array('id' => 1420, 'name' => "Notes Receivable - Current");      
+    $options[] = array('id' => 1430, 'name' => "Prepaid Interest");      
+    $options[] = array('id' => 1470, 'name' => "Other Current Assets");      
+    $options[] = array('id' => 'Assets', 'name' => " -Fixed Assets-");
+    $options[] = array('id' => 1500, 'name' => "Furniture and Fixtures");      
+    $options[] = array('id' => 1510, 'name' => "Equipment");      
+    $options[] = array('id' => 1520, 'name' => "Vehicles");      
+    $options[] = array('id' => 1530, 'name' => "Other Depreciable Property");      
+    $options[] = array('id' => 1540, 'name' => "Leasehold Improvements");      
+    $options[] = array('id' => 1550, 'name' => "Buildings");      
+    $options[] = array('id' => 1560, 'name' => "Building Improvements");      
+    $options[] = array('id' => 1690, 'name' => "Land");      
+    $options[] = array('id' => 1700, 'name' => "Accumulated Depreciation, Furniture and Fixtures");      
+    $options[] = array('id' => 1710, 'name' => "Accumulated Depreciation, Equipment");      
+    $options[] = array('id' => 1720, 'name' => "Accumulated Depreciation, Vehicles");      
+    $options[] = array('id' => 1730, 'name' => "Accumulated Depreciation, Other");      
+    $options[] = array('id' => 1740, 'name' => "Accumulated Depreciation, Leasehold");      
+    $options[] = array('id' => 1750, 'name' => "Accumulated Depreciation, Buildings");      
+    $options[] = array('id' => 1760, 'name' => "Accumulated Depreciation, Building Improvements");   
+    $options[] = array('id' => 'Assets', 'name' => " -Other Assets-");   
+    $options[] = array('id' => 1900, 'name' => "Deposits");      
+    $options[] = array('id' => 1910, 'name' => "Organization Costs");      
+    $options[] = array('id' => 1915, 'name' => "Accumulated Amortization, Organization Costs");      
+    $options[] = array('id' => 1920, 'name' => "Notes Receivable, Non-current");      
+    $options[] = array('id' => 1990, 'name' => "Other Non-current Assets");     
+    $options[] = array('id' => 'Liabilities', 'name' => " --Liability Accounts--");  
+    $options[] = array('id' => 'Liabilities', 'name' => " -Current Liabilities-");
+    $options[] = array('id' => 2000, 'name' => "Accounts Payable");      
+    $options[] = array('id' => 2300, 'name' => "Accrued Expenses");      
+    $options[] = array('id' => 2310, 'name' => "Sales Tax Payable");      
+    $options[] = array('id' => 2320, 'name' => "Wages Payable");      
+    $options[] = array('id' => 2330, 'name' => "401-K Deductions Payable");      
+    $options[] = array('id' => 2335, 'name' => "Health Insurance Payable");      
+    $options[] = array('id' => 2340, 'name' => "Federal Payroll Taxes Payable");      
+    $options[] = array('id' => 2350, 'name' => "FUTA Tax Payable");      
+    $options[] = array('id' => 2360, 'name' => "State Payroll Taxes Payable");      
+    $options[] = array('id' => 2370, 'name' => "SUTA Payable");      
+    $options[] = array('id' => 2380, 'name' => "Local Payroll Taxes Payable");      
+    $options[] = array('id' => 2390, 'name' => "Income Taxes Payable");      
+    $options[] = array('id' => 2400, 'name' => "Other Taxes Payable");      
+    $options[] = array('id' => 2410, 'name' => "Employee Benefits Payable");      
+    $options[] = array('id' => 2420, 'name' => "Current Portion of Long-term Debt");      
+    $options[] = array('id' => 2440, 'name' => "Deposits from Customers");      
+    $options[] = array('id' => 2480, 'name' => "Other Current Liabilities");     
+    $options[] = array('id' => 'Liabilities', 'name' => " -Long-term Liabilities-");
+    $options[] = array('id' => 2700, 'name' => "Notes Payable");      
+    $options[] = array('id' => 2710, 'name' => "Land Payable");      
+    $options[] = array('id' => 2720, 'name' => "Equipment Payable");      
+    $options[] = array('id' => 2730, 'name' => "Vehicles Payable");      
+    $options[] = array('id' => 2740, 'name' => "Bank Loans Payable");      
+    $options[] = array('id' => 2750, 'name' => "Deferred Revenue");      
+    $options[] = array('id' => 2760, 'name' => "Other Long-term Liabilities");    
+    $options[] = array('id' => 'Equity', 'name' => " --Equity Accounts--");  
+    $options[] = array('id' => 3010, 'name' => "Stated Capital");      
+    $options[] = array('id' => 3020, 'name' => "Capital Surplus");      
+    $options[] = array('id' => 3030, 'name' => "Retained Earnings");    
+    $options[] = array('id' => 'Revenue', 'name' => " --Revenue Accounts--");  
+    $options[] = array('id' => 4000, 'name' => "Product Sales");      
+    $options[] = array('id' => 4060, 'name' => "Interest Income");      
+    $options[] = array('id' => 4080, 'name' => "Other Income");      
+    $options[] = array('id' => 4540, 'name' => "Finance Charge Income");      
+    $options[] = array('id' => 4550, 'name' => "Shipping Charges Reimbursed");      
+    $options[] = array('id' => 4800, 'name' => "Sales Returns and Allowances");
+    $options[] = array('id' => 4900, 'name' => "Sales Discounts");    
+    $options[] = array('id' => 'Cost of Goods Sold', 'name' => " -Cost of Goods Sold-");  
+    $options[] = array('id' => 5000, 'name' => "Product Cost");      
+    $options[] = array('id' => 5050, 'name' => "Raw Material Purchases");      
+    $options[] = array('id' => 5100, 'name' => "Direct Labor Costs");      
+    $options[] = array('id' => 5150, 'name' => "Indirect Labor Costs");      
+    $options[] = array('id' => 5200, 'name' => "Heat and Power");      
+    $options[] = array('id' => 5250, 'name' => "Commissions");      
+    $options[] = array('id' => 5300, 'name' => "Miscellaneous Factory Costs");      
+    $options[] = array('id' => 5700, 'name' => "Cost of Goods Sold, Salaries and Wages");      
+    $options[] = array('id' => 5730, 'name' => "Cost of Goods Sold, Contract Labor");      
+    $options[] = array('id' => 5750, 'name' => "Cost of Goods Sold, Freight");      
+    $options[] = array('id' => 5800, 'name' => "Cost of Goods Sold, Other");      
+    $options[] = array('id' => 5850, 'name' => "Inventory Adjustments");      
+    $options[] = array('id' => 5900, 'name' => "Purchase Returns and Allowances");      
+    $options[] = array('id' => 5950, 'name' => "Purchase Discounts");
+    $options[] = array('id' => 'Expenses', 'name' => " --Expenses--");
+    $options[] = array('id' => 6000, 'name' => "Default Purchase Expense");
+    $options[] = array('id' => 6010, 'name' => "Advertising Expense");
+    $options[] = array('id' => 6050, 'name' => "Amortization Expense");
+    $options[] = array('id' => 6100, 'name' => "Auto Expenses");
+    $options[] = array('id' => 6150, 'name' => "Bad Debt Expense");
+    $options[] = array('id' => 6200, 'name' => "Bank Fees");
+    $options[] = array('id' => 6250, 'name' => "Cash Over and Short");
+    $options[] = array('id' => 6300, 'name' => "Charitable Contributions Expense");
+    $options[] = array('id' => 6350, 'name' => "Commissions and Fees Expense");
+    $options[] = array('id' => 6400, 'name' => "Depreciation Expense");
+    $options[] = array('id' => 6450, 'name' => "Dues and Subscriptions Expense");
+    $options[] = array('id' => 6500, 'name' => "Employee Benefit Expense, Health Insurance");
+    $options[] = array('id' => 6510, 'name' => "Employee Benefit Expense, Pension Plans");
+    $options[] = array('id' => 6520, 'name' => "Employee Benefit Expense, Profit Sharing Plan");
+    $options[] = array('id' => 6530, 'name' => "Employee Benefit Expense, Other");
+    $options[] = array('id' => 6550, 'name' => "Freight Expense");
+    $options[] = array('id' => 6600, 'name' => "Gifts Expense");
+    $options[] = array('id' => 6650, 'name' => "Income Tax Expense, Federal");
+    $options[] = array('id' => 6660, 'name' => "Income Tax Expense, State");
+    $options[] = array('id' => 6670, 'name' => "Income Tax Expense, Local");
+    $options[] = array('id' => 6700, 'name' => "Insurance Expense, Product Liability");
+    $options[] = array('id' => 6710, 'name' => "Insurance Expense, Vehicle");
+    $options[] = array('id' => 6750, 'name' => "Interest Expense");
+    $options[] = array('id' => 6800, 'name' => "Laundry and Dry Cleaning Expense");
+    $options[] = array('id' => 6850, 'name' => "Legal and Professional Expense");
+    $options[] = array('id' => 6900, 'name' => "Licenses Expense");
+    $options[] = array('id' => 6950, 'name' => "Loss on NSF Checks");
+    $options[] = array('id' => 8000, 'name' => "Maintenance Expense");
+    $options[] = array('id' => 8050, 'name' => "Meals and Entertainment Expense");
+    $options[] = array('id' => 8100, 'name' => "Office Expense");
+    $options[] = array('id' => 8200, 'name' => "Payroll Tax Expense");
+    $options[] = array('id' => 8250, 'name' => "Penalties and Fines Expense");
+    $options[] = array('id' => 8300, 'name' => "Other Taxes");
+    $options[] = array('id' => 8350, 'name' => "Postage Expense");
+    $options[] = array('id' => 8400, 'name' => "Rent or Lease Expense");
+    $options[] = array('id' => 8450, 'name' => "Repair and Maintenance Expense, Office");
+    $options[] = array('id' => 8460, 'name' => "Repair and Maintenance Expense, Vehicle");
+    $options[] = array('id' => 8550, 'name' => "Supplies Expense, Office");
+    $options[] = array('id' => 8600, 'name' => "Telephone Expense");
+    $options[] = array('id' => 8620, 'name' => "Training Expense");
+    $options[] = array('id' => 8650, 'name' => "Travel Expense");
+    $options[] = array('id' => 8700, 'name' => "Salaries Expense, Officers");
+    $options[] = array('id' => 8750, 'name' => "Wages Expense");
+    $options[] = array('id' => 8800, 'name' => "Utilities Expense");
+    $options[] = array('id' => 8900, 'name' => "Other Expense");
+    $options[] = array('id' => 9000, 'name' => "Gain/Loss on Sale of Assets");
+    
+    return $options;
+}
+
+?>

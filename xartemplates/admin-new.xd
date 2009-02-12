@@ -1,0 +1,46 @@
+<xar:template type="module" file="admin-menu" />
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Add to the Chart of Accounts</xar:mlstring></span></div>
+<div class="xar-mod-body">
+
+<xar:if condition="!empty($preview)">
+  <table width="100%" border="1" cellspacing="0" cellpadding="4">
+    <tr>
+      <td align="center">
+        <xar:mlstring>Preview</xar:mlstring>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <xar:data-display object="$object" tplmodule="labaccounting" />
+      </td>
+    </tr>
+  </table>
+</xar:if>
+
+<xar:set name="withupload">#$object->upload#</xar:set>
+<xar:set name="enctype">'application/x-www-form-urlencoded'</xar:set>
+<xar:if condition="!empty($withupload)">
+  <xar:set name="enctype">'multipart/form-data'</xar:set>
+</xar:if>
+<form method="post" action="#xarModURL('labaccounting','admin','create')#" enctype="#$enctype#">
+  <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+  <input type="hidden" name="itemtype" id="itemtype" value="5" />
+  <table width="100%" border="0" cellpadding="4" cellspacing="0">
+    <!-- this does most of the hard work :) -->
+    <xar:data-form object="$object" tplmodule="labaccounting" />
+    <tr><td colspan="2">
+        #$hooks#
+    </td></tr>
+    <tr>
+      <td colspan="2" align="center">
+        <input type="submit" name="preview" value="#xarML('Preview')#" />
+        &nbsp;&nbsp;&nbsp;
+        <input type="submit" value="#xarML('Create')#" />
+      </td>
+    </tr>
+  </table>
+</form>
+
+</div>
+<div class="xar-mod-foot"></div>

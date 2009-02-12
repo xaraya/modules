@@ -1,0 +1,61 @@
+<xar:data-getitem name="$properties" module="labaccounting" itemtype="1" itemid="0" />
+<xar:set name="foo">xarTplSetPageTitle($item['account_title'])</xar:set>
+
+<xar:template type="module" file="user-menu" />
+    
+<div class="xar-mod-head">
+    <span style="float: left;">
+        <xar:mlstring>Account</xar:mlstring>: <xar:data-output property="$properties['account_title']" value="$item['account_title']" />
+    </span>
+    <xar:if condition="xarSecurityCheck('ManageJournal', 0, 'Item', 'All')">
+        <span style="float: right;">
+            [ <a href="&xar-modurl-labaccounting-journals-display;&amp;journalid=#$item['journalid']#"><xar:mlstring>Manage</xar:mlstring></a>
+             ]
+        </span>
+    </xar:if>
+</div>
+<div class="xar-mod-body">
+    
+    <xar:if condition="!empty($status)">
+
+        <h3>#$status#</h3>
+    <xar:else />
+        <table width="100%" border="0" cellspacing="1" cellpadding="2" id="xproject_info" class="xar-accent">
+            <tr>
+                <td><xar:data-label property="$properties['account_title']" /></td>
+                <td><xar:data-output property="$properties['account_title']" name="account_title" value="$item['account_title']" /></td>
+                <td><xar:data-label property="$properties['agentuid']" /></td>
+                <td><xar:data-output property="$properties['agentuid']" name="agentuid" value="$item['agentuid']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['owneruid']" /></td>
+                <td><xar:data-output property="$properties['owneruid']" value="$item['owneruid']" /></td>
+                <td><xar:data-label property="$properties['contactid']" /></td>
+                <td><xar:data-output property="$properties['contactid']" value="$item['contactid']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['opendate']" /></td>
+                <td><xar:data-output property="$properties['opendate']" name="opendate" value="$item['opendate']" /></td>
+                <xar:if condition="$item['closedate']">
+                    <td><xar:data-label property="$properties['closedate']" /></td>
+                    <td><xar:data-output property="$properties['closedate']" name="closedate" value="$item['closedate']" /></td>
+                </xar:if>
+            </tr>
+            <tr>
+                <xar:if condition="$item['billdate']">
+                    <td><xar:data-label property="$properties['billdate']" /></td>
+                    <td><xar:data-output property="$properties['billdate']" name="billdate" value="$item['billdate']" />
+                        &nbsp;[&nbsp;<xar:data-output property="$properties['invoicefreq']" name="invoicefreq" value="$item['invoicefreq']" /> <xar:data-output property="$properties['invoicefrequnits']" name="invoicefreq" value="$item['invoicefrequnits']" />&nbsp;]</td>
+                </xar:if>
+                <td><xar:data-label property="$properties['status']" /></td>
+                <td><xar:data-output property="$properties['status']" name="status" value="$item['status']" /></td>
+            </tr>
+        </table>
+        
+        <xar:template file="user-journaltransactions" type="module" subdata="array('transactionlist'=&gt;$transactionlist,'journalid'=&gt;$journalid,'beginningbalance'=&gt;$beginningbalance,'startdate'=&gt;$startdate,'monthshown'=&gt;$monthshown,'yearshown'=&gt;$yearshown,'authid'=&gt;$authid)" />
+        
+    </xar:if>
+</div>
+<div class="xar-mod-foot" style="text-align: center;">
+#$pager#
+</div>

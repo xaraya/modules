@@ -1,0 +1,14 @@
+
+.labaccounting-blockheader {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.labaccounting-blockbody {
+    font-size: 10px;
+    font-weight: normal;
+}
+
+td.xar-align-right input {
+    text-align: right;
+    }

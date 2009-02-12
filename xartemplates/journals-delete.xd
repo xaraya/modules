@@ -1,0 +1,80 @@
+<xar:data-getitem name="$properties" module="labaccounting" itemtype="1" itemid="0" />
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Delete Journal</xar:mlstring>: #$item['account_title']#</span></div>
+<div class="xar-mod-body">
+<div align="center">
+
+<form method="post" action="&xar-modurl-labaccounting-journals-delete;">
+    <input type="hidden" name="authid" value="#$authid#" />
+    <input type="hidden" name="confirm" value="true" />
+    <input type="hidden" name="journalid" value="#$journalid#" />
+    <input type="hidden" name="returnurl" value="#$returnurl#" />
+        <table width="100%" border="0" cellspacing="1" cellpadding="2" id="xproject_info" class="xar-accent">
+            <tr>
+                <td><xar:data-label property="$properties['parentid']" /></td>
+                <td colspan="3">
+                    <span style="float: left;"><xar:if condition="isset($parentinfo['account_title'])"><a href="#xarModURL('labaccounting', 'journals', 'display', array('journalid' =&gt; $item['parentid']))#">#$parentinfo['account_title']#</a><xar:else /><xar:mlstring>Primary Journal Account</xar:mlstring></xar:if></span>
+                </td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['owneruid']" /></td>
+                <td><xar:data-output property="$properties['owneruid']" value="$item['owneruid']" /></td>
+                <td><xar:data-label property="$properties['contactid']" /></td>
+                <td><xar:data-output property="$properties['contactid']" value="$item['contactid']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['account_title']" /></td>
+                <td><strong><xar:data-output property="$properties['account_title']" name="account_title" value="$item['account_title']" /></strong></td>
+                <td><xar:data-label property="$properties['agentuid']" /></td>
+                <td><xar:data-output property="$properties['agentuid']" name="agentuid" value="$item['agentuid']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['journaltype']" /></td>
+                <td><xar:data-output property="$properties['journaltype']" name="journaltype" value="$item['journaltype']" /></td>
+                <td><xar:data-label property="$properties['currency']" /></td>
+                <td><xar:data-output property="$properties['currency']" name="currency" value="$item['currency']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['opendate']" /></td>
+                <td><xar:data-output property="$properties['opendate']" name="opendate" value="$item['opendate']" /></td>
+                <td><xar:data-label property="$properties['closedate']" /></td>
+                <td><xar:data-output property="$properties['closedate']" name="closedate" value="$item['closedate']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['billdate']" /></td>
+                <td><xar:data-output property="$properties['billdate']" name="billdate" value="$item['billdate']" /></td>
+                <td><xar:data-label property="$properties['status']" /></td>
+                <td><xar:data-output property="$properties['status']" name="status" value="$item['status']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['invoicefreq']" /></td>
+                <td><xar:data-output property="$properties['invoicefreq']" name="invoicefreq" value="$item['invoicefreq']" /></td>
+                <td><xar:data-label property="$properties['invoicefrequnits']" /></td>
+                <td><xar:data-output property="$properties['invoicefrequnits']" name="invoicefrequnits" value="$item['invoicefrequnits']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['acctnum']" /></td>
+                <td><xar:data-output property="$properties['acctnum']" name="acctnum" value="$item['acctnum']" /></td>
+                <td><xar:data-label property="$properties['acctlogin']" /></td>
+                <td><xar:data-output property="$properties['acctlogin']" name="acctlogin" value="$item['acctlogin']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['accturl']" /></td>
+                <td><xar:data-output property="$properties['accturl']" name="accturl" value="$item['accturl']" /></td>
+                <td><xar:data-label property="$properties['acctpwd']" /></td>
+                <td><xar:data-output property="$properties['acctpwd']" name="acctpwd" value="$item['acctpwd']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['notes']" /></td>
+                <td colspan="3"><xar:data-output property="$properties['notes']" name="notes" value="$item['notes']" /></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><br />
+                        <input type="submit" value="#$confirmbutton#"  />
+                </td>
+            </tr>
+        </table>
+</form>
+</div>
+</div>
+<div class="xar-mod-foot"></div>

@@ -1,0 +1,177 @@
+<xar:data-getitem name="$properties" module="labaccounting" itemtype="1" itemid="0" />
+
+<xar:set name="ownerid">xarModGetUserVar('xproject', 'mymemberid')</xar:set>
+<xar:if condition="!isset($ownerid)"><xar:set name="ownerid">"0"</xar:set></xar:if>
+
+
+<xar:if condition="!$inline">
+    <xar:template type="module" file="admin-menu" />
+</xar:if>
+    
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Modify Journal</xar:mlstring>: <xar:data-output property="$properties['account_title']" value="$item['account_title']" /></span>
+</div>
+<div class="xar-mod-body">
+    
+    <form method="post" action="&xar-modurl-labaccounting-journals-update;">
+        
+    <div align="left">
+        
+        <input type="hidden" name="journalid" value="#$journalid#" />
+        
+        <input type="hidden" name="authid" value="#$authid#" />
+        
+        <input type="hidden" name="returnurl" value="#$returnurl#" />
+        
+        <xar:if condition="isset($parentid)">
+            <input type="hidden" name="parentid" value="#$parentid#" />
+        </xar:if>
+        
+        <table width="100%" border="0" cellspacing="0" cellpadding="2">
+            <tr>
+                <td><xar:data-label property="$properties['account_title']" /></td>
+                <td><xar:data-input property="$properties['account_title']" name="account_title" value="$item['account_title']" /></td>
+                <td><xar:data-label property="$properties['agentuid']" /></td>
+                <td><xar:data-input property="$properties['agentuid']" name="agentuid" value="$item['agentuid']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['currency']" /></td>
+                <td><xar:data-input property="$properties['currency']" name="currency" value="$item['currency']" /></td>
+                <td><xar:data-label property="$properties['journaltype']" /></td>
+                <td><xar:data-input property="$properties['journaltype']" name="journaltype" value="$item['journaltype']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['parentid']" /></td>
+                <td><select name="parentid">
+                        <option value="">Primary Journal Account</option>
+                        <xar:foreach in="$journals" key="$journalid" value="$journalinfo">
+                            <xar:if condition="$journalid eq $item['parentid']">
+                                <option value="#$journalid#" selected>#$journalinfo['account_title']#</option>
+                            <xar:else />
+                                <option value="#$journalid#">#$journalinfo['account_title']#</option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                </td>
+                <td rowspan="2"><xar:data-label property="$properties['contactid']" /></td>
+                <td rowspan="2"><xar:data-input property="$properties['contactid']" name="contactid" value="$item['contactid']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['owneruid']" /></td>
+                <td><xar:data-input property="$properties['owneruid']" name="owneruid" value="$item['owneruid']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['acctnum']" /></td>
+                <td><xar:data-input property="$properties['acctnum']" name="acctnum" value="$item['acctnum']" /></td>
+                <td><xar:data-label property="$properties['acctlogin']" /></td>
+                <td><xar:data-input property="$properties['acctlogin']" name="acctlogin" value="$item['acctlogin']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['accturl']" /></td>
+                <td><xar:data-input property="$properties['accturl']" name="accturl" value="$item['accturl']" /></td>
+                <td><xar:data-label property="$properties['acctpwd']" /></td>
+                <td><xar:data-input property="$properties['acctpwd']" name="acctpwd" value="$item['acctpwd']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['notes']" /></td>
+                <td colspan="3"><xar:data-input property="$properties['notes']" name="notes" value="$item['notes']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['opendate']" /></td>
+                <td><xar:data-input property="$properties['opendate']" name="opendate" value="$item['opendate']" /></td>
+                <td><xar:data-label property="$properties['closedate']" /></td>
+                <td><xar:data-input property="$properties['closedate']" name="closedate" value="$item['closedate']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['billdate']" /></td>
+                <td><xar:data-input property="$properties['billdate']" name="billdate" value="$item['billdate']" /></td>
+                <td><xar:data-label property="$properties['status']" /></td>
+                <td><xar:data-input property="$properties['status']" name="status" value="$item['status']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['invoicefreq']" /></td>
+                <td><xar:data-input property="$properties['invoicefreq']" name="invoicefreq" value="$item['invoicefreq']" /></td>
+                <td><xar:data-label property="$properties['invoicefrequnits']" /></td>
+                <td><xar:data-input property="$properties['invoicefrequnits']" name="invoicefrequnits" value="$item['invoicefrequnits']" /></td>
+            </tr>
+            <tr>
+                <xar:set name="updatebtn"><xar:mlstring>Modify Journal</xar:mlstring></xar:set>
+                <td colspan="2" align="center"><br /><input type="submit" name="submit" value="#$updatebtn#" /></td>
+            </tr>
+        </table>
+    </div>
+    
+    <div>
+        <table width="100%">
+            <tr>
+                <th>
+                    <xar:mlstring>Ledger Number</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Ledger Name</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Debit</xar:mlstring>
+                </th>
+                <th>
+                    <xar:mlstring>Credit</xar:mlstring>
+                </th> 
+                <th>
+                    <xar:mlstring>Disabled</xar:mlstring>
+                </th>
+            </tr>
+            <xar:foreach in="$ledgerlist" value="$ledgerinfo">
+                <tr>
+                    <td>
+                        #$ledgerinfo.chartacctnum#
+                    </td>
+                    <td>
+                        #$ledgerinfo.account_title#
+                    </td>
+                    
+                    <xar:set name="checked">""</xar:set>
+                    <xar:if condition="strtolower($ledgerinfo.activebalance) eq 'debit'">
+                        <xar:set name="checked">"checked"</xar:set>
+                    </xar:if>
+                    
+                    <xar:set name="cellcolor">"background: #CCCCCC"</xar:set>
+                    <xar:if condition="$ledgerinfo.normalbalance eq 'Debit'">
+                        <xar:set name="cellcolor">""</xar:set>
+                    </xar:if>
+                    
+                    <td style="#$cellcolor#">
+                        <input type="radio" name="ledgers[#$ledgerinfo.ledgerid#]" value="debit" #$checked#>
+                    </td>
+                    
+                    <xar:set name="checked">""</xar:set>
+                    <xar:if condition="strtolower($ledgerinfo.activebalance) eq 'credit'">
+                        <xar:set name="checked">"checked"</xar:set>
+                    </xar:if>
+                    
+                    <xar:set name="cellcolor">"background: #CCCCCC"</xar:set>
+                    <xar:if condition="$ledgerinfo.normalbalance eq 'Credit'">
+                        <xar:set name="cellcolor">""</xar:set>
+                    </xar:if>
+                    
+                    <td style="#$cellcolor#">
+                        <input type="radio" name="ledgers[#$ledgerinfo.ledgerid#]" value="credit" #$checked#>
+                    </td>
+                    
+                    <xar:set name="checked">""</xar:set>
+                    <xar:if condition="$ledgerinfo.activebalance eq 'none'">
+                        <xar:set name="checked">"checked"</xar:set>
+                    </xar:if>
+                    
+                    <td style="background: #CCCCCC;">
+                        <input type="radio" name="ledgers[#$ledgerinfo.ledgerid#]" value="none" #$checked#>
+                    </td>
+                </tr>
+            </xar:foreach>
+        </table>
+    </div>
+        
+    </form>
+    
+</div>
+<div class="xar-mod-foot"></div>
+

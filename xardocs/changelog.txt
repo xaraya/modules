@@ -1,0 +1,20 @@
+labAccounting Changelog
+///////////////////////
+
+
+version 1.0.5 Notes:
+* added usermenu hook
+
+
+Version 1.0.4 Notes:
+* Added "isinvoice" field to Journal Transaction table
+* Revised ddata object management during init to remove need for objectid storage in modvars
+
+Version 1.0.3 Notes:
+* Added isinvoice field to journaltransactions for setting up invoices
+
+Version 1.0.2 Notes:
+* Added source and sourceid (for uploads property) to both transaction tables for recording scanned receipts, etc.
+
+version 1.0.1 Notes:
+* Added journaltransid field to ledgertransactions table for back-referencing

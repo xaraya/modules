@@ -1,0 +1,50 @@
+<table border="1" width="100%" cellpadding="2" cellspacing="0">
+  <tr>
+    <th align="center">#$menutitle#</th>
+  </tr>
+</table>
+<br />
+
+<h2><xar:mlstring>Modify a Dynamic Example</xar:mlstring></h2>
+
+<table width="100%" border="1" cellspacing="0" cellpadding="4">
+  <tr>
+    <td align="center">
+      <b><xar:mlstring>Preview</xar:mlstring></b>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <xar:data-display object="$object" tplmodule="dyn_example" />
+    </td>
+  </tr>
+</table>
+<br />
+
+<xar:set name="withupload">#$object->upload#</xar:set>
+<xar:set name="enctype">'application/x-www-form-urlencoded'</xar:set>
+<xar:if condition="!empty($withupload)">
+  <xar:set name="enctype">'multipart/form-data'</xar:set>
+</xar:if>
+<form method="POST" action="#xarModURL('dyn_example', 'admin', 'update')#" enctype="#$enctype#">
+  <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+  <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
+  
+  <table width="100%" border="0" cellspacing="0" cellpadding="4">
+    
+    <!-- this does most of the hard work :) -->
+    <xar:data-form object="$object" tplmodule="dyn_example" />
+    <tr><td colspan="2">
+        #$hooks#
+    </td></tr>
+    <tr>
+      <td colspan="2" align="center">
+        <input type="submit" name="preview" value="#xarML('Preview')#" />
+        &nbsp;&nbsp;&nbsp;
+        <input type="submit" value="#xarML('Update')#" />
+      </td>
+    </tr>
+  </table>
+</form>
+
+

@@ -1,0 +1,113 @@
+<table border="1" width="100%" cellpadding="2" cellspacing="0">
+  <tr>
+    <th align="center">#$menutitle#</th>
+  </tr>
+</table>
+<br />
+
+<h2><xar:mlstring>View Dynamic Examples</xar:mlstring></h2>
+
+
+<p><b><xar:mlstring>APPROACH # 1a : the &lt;xar:data-view ...&gt; tag</xar:mlstring></b></p>
+
+<p><xar:mlstring>This tag will automatically retrieve the list of items from DynamicData,
+    and present them according to its standard objects/showview.xd template.</xar:mlstring></p>
+
+<xar:data-view module="dyn_example" itemtype="0" catid="$catid" numitems="$itemsperpage" startnum="$startnum" />
+
+<p><xar:mlstring>If you want to provide your own presentation here, you can specify a
+    different layout="..." to use in the default template, or you can specify your
+    own template="..." here as well.</xar:mlstring></p>
+
+
+
+<p><b><xar:mlstring>APPROACH # 1b : the &lt;xar:data-view ...&gt; tag with parameters</xar:mlstring></b></p>
+
+<p><xar:mlstring>Here's an example that uses the layout="list", and linkfield="name"
+    to tell DynamicData which field should be linked to a display of the item. It also
+    uses fieldlist="name,age" to show only a selected list of fields.</xar:mlstring></p>
+
+<xar:data-view module="dyn_example" itemtype="0" catid="$catid" numitems="$itemsperpage" startnum="$startnum" layout="list" linkfield="name" fieldlist="name,age" />
+
+
+
+<p><b><xar:mlstring>APPROACH # 2 : the &lt;xar:data-getitems ...&gt; tag</xar:mlstring></b></p>
+
+<p><xar:mlstring>This tag will retrieve the properties and values from DynamicData and
+    make them available in the 'properties' and 'values' variables in your template.</xar:mlstring></p>
+
+<p><xar:mlstring>You can then use those variables to build your own layout. The &lt;xar:data-label ...&gt; and &lt;xar:data-output ...&gt; tags allow you to show individual labels or value outputs in the template.</xar:mlstring></p>
+
+<p><xar:mlstring>See the admin list for an example... We'll skip this one here, since we'll be retrieving 'properties' and 'values' 
+    via the module code instead, with the next approach.</xar:mlstring></p>
+
+<!--xar:data-getitems name="$properties" value="$values" module="dyn_example" itemtype="0" catid="$catid" numitems="$itemsperpage" startnum="$startnum" /-->
+
+
+
+<p><b><xar:mlstring>APPROACH # 3 : getting the object list via API</xar:mlstring></b></p>
+
+<p><xar:mlstring>After retrieving the object list via API, you can pass along the whole object list to the template and use &lt;xar:data-view object="$mylist" /&gt; to let DynamicData handle the view. Or you can use &lt;xar:data-view object="$mylist" tplmodule="dyn_example" /&gt; if you want to provide your own view template in this module :</xar:mlstring></p>
+
+<xar:data-view object="$mylist" tplmodule="dyn_example" />
+
+<p><xar:mlstring>or you can pass along the properties and values and work like in APPROACH # 2.</xar:mlstring></p>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="4">
+  <xar:foreach in="$values" key="$itemid" value="$fields">
+    <tr>
+      <td>
+        <table width="100%" border="0" cellspacing="0" cellpadding="4">
+          <xar:foreach in="$fields" key="$name" value="$value">
+            <tr>
+              <td align="right" valign="top" width="15%"><xar:data-label property="$properties[$name]" /> :</td>
+              <td><xar:data-output property="$properties[$name]" value="$value" /></td>
+            </tr>
+          </xar:foreach>
+          <tr>
+            <td>&nbsp;</td>
+            <td><a href="#xarModURL('dyn_example','user','display',array('itemid' => $itemid))#"><xar:mlstring>Display</xar:mlstring></a></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        &nbsp;
+      </td>
+    </tr>
+  </xar:foreach>
+</table>
+
+
+
+<p><b><xar:mlstring>APPROACH # 4 : getting the raw item values via API</xar:mlstring></b></p>
+
+<p><xar:mlstring>Here you'll have to handle the output format of the values yourself - in the module code and/or template...</xar:mlstring></p>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="4">
+  <xar:foreach in="$items" key="$itemid" value="$fields">
+    <tr>
+      <td>
+        <table width="100%" border="0" cellspacing="0" cellpadding="4">
+          <xar:foreach in="$fields" key="$name" value="$value">
+            <tr>
+              <td align="right" valign="top" width="15%">#$labels[$name]# :</td>
+              <td>#$value#</td>
+            </tr>
+          </xar:foreach>
+          <tr>
+            <td>&nbsp;</td>
+            <td><a href="#xarModURL('dyn_example','user','display',array('itemid' => $itemid))#"><xar:mlstring>Display</xar:mlstring></a></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        &nbsp;
+      </td>
+    </tr>
+  </xar:foreach>
+</table>
+

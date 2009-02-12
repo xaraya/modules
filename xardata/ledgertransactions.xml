@@ -1,0 +1,112 @@
+<object name="ledgertransactions">
+  <objectid>563</objectid>
+  <label>labAccounting Ledger Transactions</label>
+  <moduleid>706</moduleid>
+  <itemtype>4</itemtype>
+  <urlparam>transactionid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="transactionid">
+      <id>6809</id>
+      <label>Trans. ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="ledgerid">
+      <id>6810</id>
+      <label>Ledger</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="creatorid">
+      <id>6813</id>
+      <label>Created By</label>
+      <type>userlist</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="title">
+      <id>6814</id>
+      <label>Transaction Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="details">
+      <id>6815</id>
+      <label>Notes</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>7</order>
+      <validation>:20</validation>
+    </property>
+    <property name="transnum">
+      <id>6816</id>
+      <label>Trans.Num</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>8</order>
+      <validation>:20</validation>
+    </property>
+    <property name="amount">
+      <id>6817</id>
+      <label>Amount</label>
+      <type>floatbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>9</order>
+      <validation>:9</validation>
+    </property>
+    <property name="status">
+      <id>6818</id>
+      <label>Status</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>10</order>
+      <validation>:20</validation>
+    </property>
+    <property name="transdate">
+      <id>6819</id>
+      <label>Trans.Date</label>
+      <type>calendar</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>11</order>
+      <validation>:20</validation>
+    </property>
+    <property name="journaltransid">
+      <id>6823</id>
+      <label>Originating Transaction</label>
+      <type>static</type>
+      <default></default>
+      <source>xar_labaccounting_ledgertransactions.journaltransid</source>
+      <status>1</status>
+      <order>12</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

@@ -1,0 +1,82 @@
+<object name="chartofaccounts">
+  <objectid>562</objectid>
+  <label>Chart of Accounts</label>
+  <moduleid>706</moduleid>
+  <itemtype>5</itemtype>
+  <urlparam>chartid</urlparam>
+  <maxid>134</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="chartid">
+      <id>6802</id>
+      <label>Chart Account ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>2</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="accountnumstart">
+      <id>6803</id>
+      <label>Account Start Number</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="ledgertype">
+      <id>6804</id>
+      <label>Ledger Type</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>3</order>
+      <validation>Assets;Liabilities;Equity;Revenue;Cost of Goods Sold;Expenses</validation>
+    </property>
+    <property name="active">
+      <id>6805</id>
+      <label>Active</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="accttype">
+      <id>6806</id>
+      <label>Account Type</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>5</order>
+      <validation>1:255</validation>
+    </property>
+    <property name="normalbalance">
+      <id>6807</id>
+      <label>Normal Balance</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>6</order>
+      <validation>Credit;Debit</validation>
+    </property>
+    <property name="notes">
+      <id>6808</id>
+      <label>Notes</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>2</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

@@ -1,0 +1,5 @@
+<xar:template type="module" file="admin-menu" />
+
+<xar:template type="module" file="chart-submenu" />
+
+<xar:data-list object="$object" tplmodule="labaccounting" active="$active" />

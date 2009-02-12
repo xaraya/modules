@@ -1,0 +1,109 @@
+<xar:data-getitem name="$properties" module="labaccounting" itemtype="1" itemid="0" />
+<xar:data-getitem name="$trans_properties" module="labaccounting" itemtype="3" itemid="0" />
+<xar:set name="foo">xarTplSetPageTitle($item['account_title'])</xar:set>
+<xar:style scope="module" module="labaccounting" file="print" />
+    
+<div class="xar-mod-head"><h1><xar:data-output property="$properties['account_title']" value="$item['account_title']" /> - <xar:data-output property="$trans_properties['transdate']" value="$transaction['transdate']" dateformat="%B %d, %G" /></h1></div>
+<div class="xar-mod-body">
+    
+    <xar:if condition="!empty($status)">
+
+        <h3>#$status#</h3>
+    <xar:else />
+        <table width="100%" border="0" cellspacing="1" cellpadding="2">
+            <tr>
+                <td>Account</td>
+                <td><xar:data-output property="$properties['account_title']" name="account_title" value="$item['account_title']" /></td>
+                <td><xar:data-label property="$properties['agentuid']" /></td>
+                <td><xar:data-output property="$properties['agentuid']" name="agentuid" value="$item['agentuid']" /></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <xar:if condition="isset($agentinfo['fname'])">
+                        <strong><xar:mlstring>Please submit payment to</xar:mlstring>:</strong>
+                        <div class="dossier_address_line">#$agentinfo['fname']# #$agentinfo['lname']#</div>
+                        <div class="dossier_address_line">#$agentinfo['company']#</div>
+                        <xar:if condition="isset($agentlocation['address_1'])">
+                            <div class="dossier_address_line">#$agentlocation['address_1']#</div>
+                            <div class="dossier_address_line">#$agentlocation['address_2']#</div>
+                            <div class="dossier_address_line">#$agentlocation['city']#, #$agentlocation['us_state']#  #$agentlocation['postalcode']#</div>
+                        </xar:if>
+                        <div class="dossier_address_line">#$agentinfo['phone_work']#</div>
+                        <div class="dossier_address_line">#$agentinfo['phone_cell']#</div>
+                        <div class="dossier_address_line">#$agentinfo['email_1']#</div>
+                    </xar:if>
+                </td>
+                <td colspan="2">
+                    <xar:if condition="isset($contactinfo['fname'])">
+                        <strong><xar:mlstring>Billing address</xar:mlstring>:</strong>
+                        <div class="dossier_address_line">#$contactinfo['fname']# #$contactinfo['lname']#</div>
+                        <div class="dossier_address_line">#$contactinfo['company']#</div>
+                        <xar:if condition="isset($location['address_1'])">
+                            <div class="dossier_address_line">#$location['address_1']#</div>
+                            <div class="dossier_address_line">#$location['address_2']#</div>
+                            <div class="dossier_address_line">#$location['city']#, #$location['us_state']#  #$location['postalcode']#</div>
+                        </xar:if>
+                        <div class="dossier_address_line">#$contactinfo['phone_work']#</div>
+                        <div class="dossier_address_line">#$contactinfo['phone_cell']#</div>
+                        <div class="dossier_address_line">#$contactinfo['email_1']#</div>
+                    </xar:if>
+                </td>
+            </tr>
+        </table>
+        
+        
+        <h4>
+            <xar:if condition="!empty($startdate)">
+                <xar:mlstring>Invoice From</xar:mlstring>: <xar:data-output property="$properties['closedate']" name="closedate" value="$startdate" dateformat="%D" /> - <xar:data-output property="$properties['closedate']" name="closedate" value="$enddate" dateformat="%D" />
+            <xar:else />
+                <xar:mlstring>Invoice Through</xar:mlstring>: <xar:data-output property="$properties['closedate']" name="closedate" value="$enddate" dateformat="%D" />
+            </xar:if>
+        </h4>
+        
+        <div class="xar-alt">
+            <xar:data-output property="$trans_properties['details']" value="$transaction['details']" />
+        </div>
+        
+        <xar:data-getitem name="$properties" module="labaccounting" itemtype="3" itemid="0" />
+        
+        <table border="2" width="99%" style="width: 99%;">
+            <tr>
+                <th><xar:mlstring>Date</xar:mlstring></th>
+                <th><xar:data-label property="$properties['title']" /></th>
+                <th><xar:mlstring>Charges</xar:mlstring></th>
+                <th><xar:mlstring>Payments</xar:mlstring></th>
+                <th><xar:mlstring>Balance</xar:mlstring></th>
+            </tr>
+            <xar:set name="journal_title">""</xar:set>
+            <xar:set name="runningbalance">$beginningbalance</xar:set>
+            <tr>
+                <th colspan="4"><xar:mlstring>Beginning Balance</xar:mlstring></th>
+                <th>$ <xar:data-output property="$properties['amount']" value="$beginningbalance" /></th>
+            </tr>
+            
+            <xar:foreach in="$transactionlist" value="$transactioninfo">
+                
+                <tr>
+                    <td style="white-space: nowrap;"><xar:data-output type="calendar" value="$transactioninfo['transdate']" dateformat="%b %d" /></td>
+                    <td><xar:data-output property="$properties['title']" value="$transactioninfo['title']" /></td>
+
+                    <xar:if condition="$transactioninfo['amount'] gt 0">
+                        <td align="right" style="text-align: right;"><xar:data-output property="$properties['amount']" value="$transactioninfo['amount']" /></td>
+                        <td></td>
+                    <xar:else />
+                        <td></td>
+                        <td align="right" style="text-align: right;"><xar:data-output property="$properties['amount']" value="$transactioninfo['amount']" /></td>
+                    </xar:if>
+                    
+                    <xar:set name="runningbalance">sprintf("%0.2f",($runningbalance + $transactioninfo['amount']))</xar:set>
+                    <td align="right" style="text-align: right;"><xar:data-output property="$properties['amount']" value="$runningbalance" /></td>
+                </tr>
+            </xar:foreach>
+            <tr>
+                <td>&nbsp;</td>
+                <th align="left" colspan="3" style="text-align: left;">Balance</th>
+                <th align="right" style="text-align: right;">#$invoicebalance#</th>
+            </tr>
+        </table>
+    </xar:if>
+</div>

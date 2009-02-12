@@ -1,0 +1,128 @@
+<xar:data-getitem name="$properties" module="labaccounting" itemtype="1" itemid="0" />
+<xar:data-getitem name="$transproperties" module="labaccounting" itemtype="3" itemid="0" />
+<xar:set name="foo">xarTplSetPageTitle($journaltype)</xar:set>
+<xar:if condition="!isset($inline)">
+    <xar:template type="module" file="admin-menu" />
+</xar:if>
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Journal List</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="journal-submenu" />
+    
+    <form method="post" action="#xarModURL('labaccounting', 'journals', 'view', array('journaltype'=&gt; $journaltype))#">
+        
+        <strong>
+            <input type="button" value="#xarML('Create New Journal')#" onclick="window.location='#xarModURL('labaccounting','journals','new', array('journaltype'=&gt;$journaltype))#';">
+            &nbsp;
+            <xar:mlstring>Show:</xar:mlstring>
+            &nbsp;
+            <xar:if condition="in_array('All', $statuslist)">
+                <input type="checkbox" name="statuslist[]" value="All" checked /> <xar:mlstring>All</xar:mlstring>
+            <xar:else />
+                <input type="checkbox" name="statuslist[]" value="All" /> <xar:mlstring>All</xar:mlstring>
+            </xar:if>
+            
+            <xar:if condition="in_array('Active', $statuslist)">
+                <input type="checkbox" name="statuslist[]" value="Active" checked /> <xar:mlstring>Active</xar:mlstring>
+            <xar:else />
+                <input type="checkbox" name="statuslist[]" value="Active" /> <xar:mlstring>Active</xar:mlstring>
+            </xar:if>
+            
+            <xar:if condition="in_array('Pending', $statuslist)">
+                <input type="checkbox" name="statuslist[]" value="Pending" checked /> <xar:mlstring>Pending</xar:mlstring>
+            <xar:else />
+                <input type="checkbox" name="statuslist[]" value="Pending" /> <xar:mlstring>Pending</xar:mlstring>
+            </xar:if>
+            
+            <xar:if condition="in_array('Archived', $statuslist)">
+                <input type="checkbox" name="statuslist[]" value="Archived" checked /> <xar:mlstring>Archived</xar:mlstring>
+            <xar:else />
+                <input type="checkbox" name="statuslist[]" value="Archived" /> <xar:mlstring>Archived</xar:mlstring>
+            </xar:if>
+            &nbsp;
+            <input type="submit" value="Refresh" />
+            &nbsp;
+            <xar:mlstring>Search</xar:mlstring>:
+            <input type="text" name="q" value="#$q#" size="12" />
+        </strong>
+    </form>
+    
+    <xar:comment>content: Ordered and categorized general journal of actual journals</xar:comment>
+
+    <form method="post" action="#xarModURL('labaccounting', 'journals', 'group_update')#">
+    <input type="hidden" name="authid" value="#$authid#" />
+    <table width="100%" style="width: 100%;">
+        <tr style="background-color: #999999;">
+            <th><xar:data-label property="$properties['account_title']" /></th>
+            <th><xar:data-label property="$properties['acctnum']" /></th>
+            <th><xar:mlstring>Balance</xar:mlstring></th>
+            <th>
+                <xar:set name="statusoptions">$properties['status']->options</xar:set>
+                <xar:set name="foo">1;array_unshift($properties['status']->options, array('id'=>'','name'=>'Change Status'))</xar:set>
+                <xar:data-input property="$properties['status']" name="status" />
+                <xar:set name="foo">1;$properties['status']->options = $statusoptions</xar:set>
+            </th>
+            <th style="white-space: nowrap; text-align: right;">
+                <xar:data-input property="$properties['journaltype']" name="journaltype" value="$journaltype" />
+                <input type="submit" value="Go" />
+            </th>
+        </tr>
+        <xar:set name="rowstyle">""</xar:set>
+        <xar:foreach in="$items" value="$journalinfo">
+            <xar:if condition="!empty($rowstyle)">
+                <xar:set name="rowstyle">""</xar:set>
+            <xar:else />
+                <xar:set name="rowstyle">"xar-accent"</xar:set>
+            </xar:if>
+            <tr class="#$rowstyle#">
+                <td><a href="&xar-modurl-labaccounting-journals-display;&amp;journalid=#$journalinfo['journalid']#"><xar:data-output property="$properties['account_title']" value="$journalinfo['account_title']" /></a></td>
+                <td><xar:data-output property="$properties['acctnum']" value="$journalinfo['acctnum']" /></td>
+                <td class="xar-align-right"><xar:data-output property="$transproperties['amount']" value="$journalinfo['balance']" /></td>
+                <td class="xar-align-center"><xar:data-output property="$properties['status']" value="$journalinfo['status']" /></td>
+                <td style="white-space: nowrap; text-align: right;">
+                    <input type="submit" name="parentid[#$journalinfo['journalid']#]" value="^" />
+                    &nbsp;
+                    <input type="checkbox" name="journals[#$journalinfo['journalid']#]" value="1" />
+                    &nbsp;
+                    <a href="&xar-modurl-labaccounting-journals-modify;&amp;journalid=#$journalinfo['journalid']#">
+                        <img src="modules/labaccounting/xarimages/button.edit.gif" border="0" align="top" />
+                    </a>
+                    &nbsp;
+                    <a href="&xar-modurl-labaccounting-journals-delete;&amp;journalid=#$journalinfo['journalid']#">
+                        <img src="modules/labaccounting/xarimages/button.delete.gif" align="top" border="0" />
+                    </a></td>
+            </tr>
+            <xar:if condition="count($journalinfo['subjournals']) gt 0">
+                <xar:foreach in="$journalinfo['subjournals']" value="$subjournalinfo">
+                    <xar:if condition="!empty($rowstyle)">
+                        <xar:set name="rowstyle">""</xar:set>
+                    <xar:else />
+                        <xar:set name="rowstyle">"xar-accent"</xar:set>
+                    </xar:if>
+                    <tr class="#$rowstyle#">
+                        <td>&middot;&nbsp;&nbsp;<em><a href="&xar-modurl-labaccounting-journals-display;&amp;journalid=#$subjournalinfo['journalid']#"><xar:data-output property="$properties['account_title']" value="$subjournalinfo['account_title']" /></a></em></td>
+                        <td><xar:data-output property="$properties['acctnum']" value="$subjournalinfo['acctnum']" /></td>
+                        <td class="xar-align-right"><xar:data-output property="$transproperties['amount']" value="$subjournalinfo['balance']" /></td>
+                        <td class="xar-align-center"><xar:data-output property="$properties['status']" value="$subjournalinfo['status']" /></td>
+                        <td style="white-space: nowrap; text-align: right;">
+                            <input type="submit" name="parentid[#$subjournalinfo['journalid']#]" value="^" />
+                            &nbsp;
+                            <input type="checkbox" name="journals[#$subjournalinfo['journalid']#]" value="1" />
+                            &nbsp;
+                            <a href="&xar-modurl-labaccounting-journals-modify;&amp;journalid=#$subjournalinfo['journalid']#">
+                                <img src="modules/labaccounting/xarimages/button.edit.gif" border="0" align="top" />
+                            </a>
+                            &nbsp;
+                            <a class="thickbox" href="&xar-modurl-labaccounting-journals-delete;&amp;journalid=#$subjournalinfo['journalid']#&amp;pageName=module">
+                                <img src="modules/labaccounting/xarimages/button.delete.gif" align="top" border="0" />
+                            </a></td>
+                    </tr>
+                </xar:foreach>
+            </xar:if>
+        </xar:foreach>
+    </table>
+    
+    </form>
+    
+</div>
+<div class="xar-mod-foot"></div>

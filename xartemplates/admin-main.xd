@@ -1,0 +1,65 @@
+
+<xar:if condition="!isset($inline)">
+    <xar:template type="module" file="admin-menu" />
+</xar:if>
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>labAccounting  Overview</xar:mlstring></span></div>
+<div class="xar-mod-body">
+
+    <div align="center"><b> <xar:mlstring>Welcome to the Administration of labAccounting</xar:mlstring> </b></div>
+
+    <p>labAccounting was created to facilitate financial tracking for everything from personal checking and billing through small business General Ledger transactions up to corporate and enterprise level cost center accounting.</p>
+    
+    <p>Development of labAccounting was conducted with the intent of providing an open source alternative to existing major proprietary bookkeeping software. It was originally written by Chad Kraeft on the PostNuke platform and later migrated to Xaraya when Chad shifted focus to that platform.</p>
+    
+    <p>The module is organized using Ledgers and Journals. Ledgers are accounts that contain specific categories of transactions, including Accounts Receivable, Accounts Payable and Expenses. Journals are accounts used to record daily transactions. Journal accounts are then used to organize and properly distribute transactions. A check received from a client may be recorded once in a Journal, but may then be divided into Ledger accounts to debit the client's ledger account and credit a capital account, for example.</p>   
+    
+    <p>labAccounting offers double-entry bookkeeping in Ledgers via use of Journal accounts. A Journal is created using a combination of several Ledger accounts, each defaulted to either credit or debit values entered. A Journal transaction can thus be distributed between Ledger accounts.</p>
+    
+    <p>General Accounting Resources:
+    
+        <ul>
+            <li></li>
+        </ul>
+    </p>
+    
+    <h4>Primary Ledger Account Categories</h4>
+    <ul>
+        <li>Assets
+            <ul>
+                <li>Current Assets
+                <li>Long-term Assets
+            </ul>
+        <li>Liabilities
+            <ul>
+                <li>Current Liabilities
+                <li>Long-term Liabilities
+            </ul>
+        <li>Equity
+        <li>Revenue
+        <li>Cost of Goods Sold
+        <li>Expenses
+    </ul>
+
+    
+    <!--
+    
+    General Debit/Credit (account specific)
+    Accounts Payable Debit/Credit
+    Cash Debit/Credit
+    Accounts Receivable Debit/Credit
+    
+    Salaries Debit
+    Sales Credit
+    Customer Account / Invoice Number
+    Purchases Debit
+    -->
+    
+    <hr>
+    
+    <p>For assistance or general information, please visit <a href="http://www.miragelab.com">MirageLab.com</a>.</p>
+    
+    DEV NOTES: when journal and ledger accounts are "closed", the transactions for the period being closed are saved as (encrypted?) XML that can be more easily archived and retrieved.
+    
+</div>
+<div class="xar-mod-foot"></div>

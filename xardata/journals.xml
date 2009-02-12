@@ -1,0 +1,212 @@
+<object name="journals">
+  <objectid>549</objectid>
+  <label>labAccounting Journals</label>
+  <moduleid>706</moduleid>
+  <itemtype>1</itemtype>
+  <urlparam>journalid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="journalid">
+      <id>6699</id>
+      <label>Journal ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="parentid">
+      <id>6700</id>
+      <label>Parent Journal</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="owneruid">
+      <id>6701</id>
+      <label>Account Owner</label>
+      <type>userlist</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="contactid">
+      <id>6702</id>
+      <label>Account Contact</label>
+      <type>contactlist</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="currency">
+      <id>6703</id>
+      <label>Currency</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>5</order>
+      <validation>$,US Dollar;Y,Yen</validation>
+    </property>
+    <property name="account_title">
+      <id>6704</id>
+      <label>Journal Title</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="journaltype">
+      <id>6705</id>
+      <label>Journal Type</label>
+      <type>static</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+    <property name="agentuid">
+      <id>6706</id>
+      <label>Account Agent</label>
+      <type>userlist</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>8</order>
+      <validation></validation>
+    </property>
+    <property name="acctnum">
+      <id>6707</id>
+      <label>Account Number</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>9</order>
+      <validation></validation>
+    </property>
+    <property name="acctlogin">
+      <id>6708</id>
+      <label>Account Login</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>10</order>
+      <validation></validation>
+    </property>
+    <property name="acctname">
+      <id>6709</id>
+      <label>Account Name</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>11</order>
+      <validation></validation>
+    </property>
+    <property name="accturl">
+      <id>6710</id>
+      <label>Online Account URL</label>
+      <type>url</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>12</order>
+      <validation></validation>
+    </property>
+    <property name="acctpwd">
+      <id>6711</id>
+      <label>Online Login Password</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>13</order>
+      <validation>:20</validation>
+    </property>
+    <property name="notes">
+      <id>6712</id>
+      <label>Notes</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>14</order>
+      <validation></validation>
+    </property>
+    <property name="opendate">
+      <id>6713</id>
+      <label>Date Opened</label>
+      <type>calendar</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>15</order>
+      <validation>date</validation>
+    </property>
+    <property name="closedate">
+      <id>6714</id>
+      <label>Date Closed</label>
+      <type>calendar</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>16</order>
+      <validation>date</validation>
+    </property>
+    <property name="billdate">
+      <id>6715</id>
+      <label>Billing Date</label>
+      <type>calendar</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>17</order>
+      <validation>date</validation>
+    </property>
+    <property name="status">
+      <id>6716</id>
+      <label>Status</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>18</order>
+      <validation>Pending;Active;Archived</validation>
+    </property>
+    <property name="invoicefreq">
+      <id>6717</id>
+      <label>Invoice Frequency</label>
+      <type>textbox</type>
+      <default>1</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>19</order>
+      <validation>:2</validation>
+    </property>
+    <property name="invoicefrequnits">
+      <id>6718</id>
+      <label>Units</label>
+      <type>dropdown</type>
+      <default>M</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>20</order>
+      <validation>D,Days;W,Weeks;M,Months;Y,Years</validation>
+    </property>
+  </properties>
+</object>

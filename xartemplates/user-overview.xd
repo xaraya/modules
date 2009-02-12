@@ -1,0 +1,6 @@
+<xar:data-getitem name="$properties" module="labaccounting" itemtype="1" itemid="0" />
+
+<xar:template type="module" file="user-menu" />
+
+<h2><xar:mlstring>labAccounting Overview</xar:mlstring></h2>
+

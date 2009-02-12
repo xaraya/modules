@@ -1,0 +1,92 @@
+<object name="ledgers">
+  <objectid>551</objectid>
+  <label>labAccounting Ledgers</label>
+  <moduleid>706</moduleid>
+  <itemtype>2</itemtype>
+  <urlparam>ledgerid</urlparam>
+  <maxid>272</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="ledgerid">
+      <id>6729</id>
+      <label>Ledger ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="parentid">
+      <id>6730</id>
+      <label>Parent Journal</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="ownerid">
+      <id>6731</id>
+      <label>Account Owner</label>
+      <type>userlist</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="accttype">
+      <id>6732</id>
+      <label>Account Type</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>4</order>
+      <validation>Assets;Liabilities;Equity;Revenue;Cost of Goods Sold;Expenses</validation>
+    </property>
+    <property name="chartacctnum">
+      <id>6733</id>
+      <label>General Ledger Number</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="account_title">
+      <id>6734</id>
+      <label>Ledger Title</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="normalbalance">
+      <id>6735</id>
+      <label>Normal Balance</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>7</order>
+      <validation>Credit;Debit</validation>
+    </property>
+    <property name="notes">
+      <id>6736</id>
+      <label>Notes</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>8</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

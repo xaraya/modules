@@ -1,0 +1,51 @@
+<xar:data-getitem name="$properties" module="labaccounting" itemtype="3" itemid="0" />
+
+<xar:set name="foo">$properties['transtype']->validation = ";".$properties['transtype']->validation</xar:set>
+
+<xar:set name="ownerid">xarModGetUserVar('xproject', 'mymemberid')</xar:set>
+<xar:if condition="!isset($ownerid)"><xar:set name="ownerid">"0"</xar:set></xar:if>
+
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>New Journal Transaction</xar:mlstring></span></div>
+<div class="xar-mod-body">
+
+    <form method="post" action="&xar-modurl-labaccounting-journaltransactions-multi_create;">
+    
+        <input type="hidden" name="authid" value="#$authid#" />
+        
+        <input type="hidden" name="returnurl" value="#$returnurl#" />
+        
+        <input type="hidden" name="journalid" value="#$journalid#" />
+        
+        <input type="hidden" name="status" value="Submitted" />
+        
+        <table width="100%" border="0" cellspacing="0" cellpadding="2">
+
+            <tr>
+                <th><xar:data-label property="$properties['title']" /></th>
+                <th><xar:data-label property="$properties['transtype']" /></th>
+                <th><xar:data-label property="$properties['transdate']" /></th>
+                <th><xar:data-label property="$properties['amount']" /></th>
+            </tr>
+            <xar:set name="currentdate">date("Y-m-d")</xar:set>
+            <xar:for start="$i = 0" test="$i le 10" iter="$i++">
+                <xar:set name="title_var">"title[".$i."]"</xar:set>
+                <xar:set name="transtype_var">"transtype[".$i."]"</xar:set>
+                <xar:set name="transdate_var">"transdate[".$i."]"</xar:set>
+                <xar:set name="amount_var">"amount[".$i."]"</xar:set>
+                <tr>
+                    <td><xar:data-input property="$properties['title']" name="$title_var" /></td>
+                    <td><xar:data-input type="6" name="$transtype_var" validation="$properties['transtype']-&gt;validation" /></td>
+                    <td><xar:data-input property="$properties['transdate']" name="$transdate_var" value="$currentdate" /></td>
+                    <td>$ <xar:data-input property="$properties['amount']" name="$amount_var" value=".00" /></td>
+                </tr>
+            </xar:for>
+            <tr>
+                <xar:set name="updatebtn"><xar:mlstring>Create Journal Transaction</xar:mlstring></xar:set>
+                <td colspan="4" align="center"><br /><input type="submit" name="submit" value="#$updatebtn#" /></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="xar-mod-foot"></div>
+

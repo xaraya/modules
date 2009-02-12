@@ -1,0 +1,107 @@
+<table border="1" width="100%" cellpadding="2" cellspacing="0">
+    <tr>
+        <th align="center">#$menutitle#</th>
+    </tr>
+</table>
+<br />
+
+<h2><xar:mlstring>Display a Dynamic Example</xar:mlstring></h2>
+
+<p><b><xar:mlstring>APPROACH # 1 : the &lt;xar:data-display ...&gt; tag</xar:mlstring></b></p>
+
+<p><xar:mlstring>This tag will automatically retrieve the item from DynamicData,
+     and present it according to its standard objects/showdisplay.xd template.</xar:mlstring></p>
+
+<xar:data-display module="dyn_example" itemtype="0" itemid="$itemid" />
+
+<p><xar:mlstring>If you want to provide your own presentation here, you can specify a
+     different layout="..." to use in the default template, or you can specify your
+     own template="..." here as well.</xar:mlstring></p>
+
+
+
+<p><b><xar:mlstring>APPROACH # 2 : the &lt;xar:data-getitem ...&gt; tag</xar:mlstring></b></p>
+
+<p><xar:mlstring>This tag will retrieve the properties of this item from DynamicData and
+     make them available in the 'properties' variable in your template.</xar:mlstring></p>
+
+<xar:data-getitem name="$properties" module="dyn_example" itemtype="0" itemid="$itemid" />
+
+<p><xar:mlstring>You can then use that variable to build your own layout. The &lt;xar:data-label ...&gt; and &lt;xar:data-output ...&gt; tags allow you to show individual labels or value outputs in the template.</xar:mlstring></p>
+
+    <table border="0" cellspacing="0" cellpadding="4">
+    <xar:foreach in="$properties" key="$name">
+        <tr align="left" valign="middle">
+            <td align="right">
+                <b><xar:data-label property="$properties[$name]" /> :</b>
+            </td>
+            <td align="left">
+                <xar:if condition="!empty($is_bold) and $name eq 'name'">
+                    <b><xar:data-output property="$properties[$name]" /></b> (<xar:mlstring>let's be bold now</xar:mlstring>)
+                <xar:else />
+                    <xar:data-output property="$properties[$name]" />
+                </xar:if>
+            </td>
+        </tr>
+    </xar:foreach>
+    </table>
+
+
+
+<p><b><xar:mlstring>APPROACH # 3 : getting the object via API</xar:mlstring></b></p>
+
+<p><xar:mlstring>After retrieving the object via API, you can pass along the whole object to the template and use &lt;xar:data-display object="$object" /&gt; to let DynamicData handle the display. Or you can use &lt;xar:data-display object="$object" tplmodule="dyn_example" /&gt; if you want to provide your own display template in this module :</xar:mlstring></p>
+
+<xar:data-display object="$object" tplmodule="dyn_example" />
+
+<p><xar:mlstring>Otherwise you can pass along the properties and work like in APPROACH # 2.</xar:mlstring></p>
+
+    <table border="0" cellspacing="0" cellpadding="4">
+    <xar:foreach in="$properties" key="$name">
+        <tr align="left" valign="middle">
+            <td align="right">
+                <b><xar:data-label property="$properties[$name]" /> :</b>
+            </td>
+            <td align="left">
+                <xar:if condition="!empty($is_bold) and $name eq 'name'">
+                    <b><xar:data-output property="$properties[$name]" /></b> (<xar:mlstring>let's be bold now</xar:mlstring>)
+                <xar:else />
+                    <xar:data-output property="$properties[$name]" />
+                </xar:if>
+            </td>
+        </tr>
+    </xar:foreach>
+    </table>
+
+
+<p><b><xar:mlstring>APPROACH # 4 : getting the raw item values via API</xar:mlstring></b></p>
+
+<p><xar:mlstring>Here you'll have to handle the output format of the values yourself - in the module code and/or template...</xar:mlstring></p>
+
+    <table border="0" cellspacing="0" cellpadding="4">
+    <xar:foreach in="$values" key="$name" value="$value">
+        <tr align="left" valign="middle">
+            <td align="right">
+                <b>#$labels[$name]# :</b>
+            </td>
+            <td align="left">
+                <xar:if condition="!empty($is_bold) and $name eq 'name'">
+                    <b>#$value#</b> (<xar:mlstring>let's be bold now</xar:mlstring>)
+                <xar:else />
+                    #$value#
+                </xar:if>
+            </td>
+        </tr>
+    </xar:foreach>
+    </table>
+
+<p><xar:mlstring>Notice for instance that you don't get the option to automatically display the image with &lt;xar:data-output ... &gt; or not here.</xar:mlstring></p>
+
+<!-- add the output from the different display hooks here -->
+<xar:if condition="!empty($hookoutput)">
+<br />
+<xar:foreach in="$hookoutput" key="$hookmodule">
+    #$hookoutput[$hookmodule]#
+</xar:foreach>
+</xar:if>
+

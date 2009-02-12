@@ -1,0 +1,31 @@
+<xar:data-getitem name="$properties" module="labaccounting" itemtype="2" itemid="0" />
+
+<xar:if condition="!isset($inline)">
+    <xar:template type="module" file="admin-menu" />
+</xar:if>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>General Ledger</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="ledger-submenu" />
+    
+    <table width="100%" style="width: 100%;">
+        <tr><th colspan="5"><a href="#xarModURL('labaccounting','ledgers','new')#"><xar:mlstring>Create New</xar:mlstring></th></tr>
+        <tr>
+            <th><xar:mlstring>GL#</xar:mlstring></th>
+            <th><xar:data-label property="$properties['account_title']" /></th>
+            <th><xar:data-label property="$properties['ownerid']" /></th>
+            <th><xar:data-label property="$properties['accttype']" /></th>
+            <th><xar:data-label property="$properties['normalbalance']" /></th>
+        </tr>
+        <xar:foreach in="$items" value="$ledgerinfo">
+            <tr>
+                <td><xar:data-output property="$properties['chartacctnum']" value="$ledgerinfo['chartacctnum']" /></td>
+                <td><a href="&xar-modurl-labaccounting-ledgers-display;&amp;ledgerid=#$ledgerinfo['ledgerid']#"><xar:data-output property="$properties['account_title']" value="$ledgerinfo['account_title']" /></a></td>
+                <td><xar:data-output property="$properties['ownerid']" value="$ledgerinfo['ownerid']" /></td>
+                <td style="white-space: nowrap;"><xar:data-output property="$properties['accttype']" value="$ledgerinfo['accttype']" /> : #$ledgerinfo['chartaccttype']#</td>
+                <td><xar:data-output property="$properties['normalbalance']" value="$ledgerinfo['normalbalance']" /></td>
+                <td style="white-space: nowrap;"><a href="&xar-modurl-labaccounting-ledgers-modify;&amp;ledgerid=#$ledgerinfo['ledgerid']#"><img src="modules/labaccounting/xarimages/button.edit.gif" border="0" align="top" /></a>&nbsp;<a href="&xar-modurl-labaccounting-ledgers-delete;&amp;ledgerid=#$ledgerinfo['ledgerid']#"><img src="modules/labaccounting/xarimages/button.delete.gif" align="top" border="0" /></a></td>
+            </tr>
+        </xar:foreach>
+    </table>
+</div>
+<div class="xar-mod-foot"></div>

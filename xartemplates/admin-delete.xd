@@ -1,0 +1,24 @@
+<table border="1" width="100%" cellpadding="2" cellspacing="0">
+    <tr>
+        <th align="center">#$menutitle#</th>
+    </tr>
+</table>
+<br />
+
+<h2><xar:mlstring>Delete Dynamic Example Item</xar:mlstring></h2>
+
+<div align="center"><b><xar:mlstring>Confirm deleting this item ?</xar:mlstring></b></div><br />
+
+<xar:data-display object="$object" tplmodule="dyn_example" />
+
+<div align="center">
+<form method="post" action="#xarModURL('dyn_example', 'admin', 'delete')#">
+    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+    <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
+
+    <input type="submit" name="confirm" value=" #xarML('Yes')# " />
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="submit" name="noconfirm" value="  #xarML('No')#  " />
+</form>
+</div>
+

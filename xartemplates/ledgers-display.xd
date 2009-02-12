@@ -1,0 +1,35 @@
+<xar:data-getitem name="$properties" module="labaccounting" itemtype="2" itemid="0" />
+
+<xar:if condition="!isset($inline)">
+    <xar:template type="module" file="admin-menu" />
+</xar:if>
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Ledger Details</xar:mlstring>: <xar:data-output property="$properties['account_title']" value="$item['account_title']" /></span></div>
+<div class="xar-mod-body">
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="2">
+        <tr>
+            <td><xar:data-label property="$properties['ownerid']" /></td>
+            <td><xar:data-output property="$properties['ownerid']" value="$item['ownerid']" /></td>
+        </tr>
+        <tr>
+            <td><xar:data-label property="$properties['accttype']" /></td>
+            <td><xar:data-output property="$properties['accttype']" value="$item['accttype']" /></td>
+        </tr>
+        <tr>
+            <td><xar:data-label property="$properties['chartacctnum']" /></td>
+            <td><xar:data-output property="$properties['chartacctnum']" value="$item['chartacctnum']" /></td>
+        </tr>
+        <tr>
+            <td><xar:data-label property="$properties['normalbalance']" /></td>
+            <td><xar:data-output property="$properties['normalbalance']" value="$item['normalbalance']" /></td>
+        </tr>
+        <tr>
+            <td><xar:data-label property="$properties['notes']" /></td>
+            <td><xar:data-output property="$properties['notes']" value="$item['notes']" /></td>
+        </tr>
+    </table>
+    <xar:template file="ledgertransactions" type="module" subdata="array('transactionlist'=&gt;$transactionlist,'ledgerid'=&gt;$ledgerid,'beginningbalance'=&gt;$beginningbalance,'monthshown'=&gt;$monthshown,'yearshown'=&gt;$yearshown)" />
+</div>
+<div class="xar-mod-foot"></div>
+

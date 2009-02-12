@@ -1,0 +1,30 @@
+<xar:data-getitem name="$properties" module="labaccounting" itemtype="3" itemid="0" />
+
+<xar:if condition="!isset($inline)">
+    <xar:template type="module" file="admin-menu" />
+</xar:if>
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Journal List</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <xar:comment>content: Ordered and categorized general journal of actual journals</xar:comment>
+    <table width="100%" style="width: 100%;">
+        <tr>
+            <td><xar:data-label property="$properties['account_title']" /></td>
+            <td><xar:data-label property="$properties['owneruid']" /></td>
+            <td><xar:data-label property="$properties['journaltype']" /></td>
+            <td><xar:data-label property="$properties['status']" /></td>
+            <td><xar:data-label property="$properties['acctnum']" /></td>
+        </tr>
+        <xar:foreach in="$items" value="$journalinfo">
+            <tr>
+                <td><a href="&xar-modurl-labaccounting-journals-display;&amp;journalid=#$journalinfo['journalid']#"><xar:data-output property="$properties['account_title']" value="$journalinfo['account_title']" /></a></td>
+                <td><xar:data-output property="$properties['owneruid']" value="$journalinfo['owneruid']" /></td>
+                <td><xar:data-output property="$properties['journaltype']" value="$journalinfo['journaltype']" /></td>
+                <td><xar:data-output property="$properties['status']" value="$journalinfo['status']" /></td>
+                <td><xar:data-output property="$properties['acctnum']" value="$journalinfo['acctnum']" /></td>
+                <td><a href="&xar-modurl-labaccounting-journals-modify;&amp;journalid=#$journalinfo['journalid']#"><img src="modules/labaccounting/xarimages/button.edit.gif" border="0" align="top" /></a>&nbsp;<a href="&xar-modurl-labaccounting-journals-delete;&amp;journalid=#$journalinfo['journalid']#"><img src="modules/labaccounting/xarimages/button.delete.gif" align="top" border="0" /></a></td>
+            </tr>
+        </xar:foreach>
+    </table>
+</div>
+<div class="xar-mod-foot"></div>

@@ -1,0 +1,29 @@
+<xar:data-getitem name="$properties" module="labaccounting" itemtype="2" itemid="0" />
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Delete Ledger</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<div align="center">
+
+<form method="post" action="&xar-modurl-labaccounting-ledgers-delete;">
+    <input type="hidden" name="authid" value="#$authid#" />
+    <input type="hidden" name="confirm" value="true" />
+    <input type="hidden" name="ledgerid" value="#$ledgerid#" />
+    <input type="hidden" name="returnurl" value="#$returnurl#" />
+
+    <table border="0" cellpadding="2" cellspacing="0">
+        <tr>
+            <td align="right" width="30%">
+                <xar:mlstring>Ledger</xar:mlstring>
+            </td>
+            <td><strong>#$item['account_title']#</strong> (ID: #$item['chartacctnum']#)</td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><br />
+                    <input type="submit" value="#$confirmbutton#"  />
+            </td>
+        </tr>
+    </table>
+</form>
+</div>
+</div>
+<div class="xar-mod-foot"></div>

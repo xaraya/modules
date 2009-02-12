@@ -1,0 +1,31 @@
+<xar:data-getitem name="$properties" module="labaccounting" itemtype="4" itemid="0" />
+
+<xar:if condition="!isset($inline)">
+    <xar:template type="module" file="admin-menu" />
+</xar:if>
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Ledger Transactions List</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<pre><xar:set name="dummy">print_r($transactionlist)</xar:set></pre>
+    <table width="100%" style="width: 100%;">
+        <tr><th colspan="5"><a href="#xarModURL('labaccounting','ledgertransactions','new', array('ledgerid' =&gt; $ledgerid))#"><xar:mlstring>Create New</xar:mlstring></th></tr>
+        <tr>
+            <th><xar:mlstring>Date</xar:mlstring></th>
+            <th>Created By</th>
+            <th><xar:data-label property="$properties['title']" /></th>
+            <th><xar:data-label property="$properties['amount']" /></th>
+            <th><xar:data-label property="$properties['status']" /></th>
+        </tr>
+        <xar:foreach in="$transactionlist" value="$transactioninfo">
+            <tr>
+                <td><xar:data-output type="calendar" value="$transactioninfo['transdate']" /></td>
+                <td><xar:data-output type="userlist" value="$transactioninfo['creatorid']" /></td>
+                <td><a href="&xar-modurl-labaccounting-ledgertransactions-display;&amp;journalid=#$transactioninfo['transactionid']#"><xar:data-output property="$properties['title']" value="$transactioninfo['title']" /></a></td>
+                <td><xar:data-output property="$properties['amount']" value="$transactioninfo['amount']" /></td>
+                <td><xar:data-output property="$properties['status']" value="$transactioninfo['status']" /></td>
+                <td><a href="&xar-modurl-labaccounting-journals-modify;&amp;journalid=#$transactioninfo['transactionid']#"><img src="modules/labaccounting/xarimages/button.edit.gif" border="0" align="top" /></a>&nbsp;<a href="&xar-modurl-labaccounting-journals-delete;&amp;journalid=#$transactioninfornalinfo['transactionid']#"><img src="modules/labaccounting/xarimages/button.delete.gif" align="top" border="0" /></a></td>
+            </tr>
+        </xar:foreach>
+    </table>
+</div>
+<div class="xar-mod-foot"></div>

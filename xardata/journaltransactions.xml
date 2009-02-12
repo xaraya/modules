@@ -1,0 +1,142 @@
+<object name="journaltransactions">
+  <objectid>550</objectid>
+  <label>labAccounting Journal Transactions</label>
+  <moduleid>706</moduleid>
+  <itemtype>3</itemtype>
+  <urlparam>transactionid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="journalid">
+      <id>6719</id>
+      <label>Journal Transaction ID</label>
+      <type>static</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="transtype">
+      <id>6720</id>
+      <label>Transaction Type</label>
+      <type>radio</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>Cash;Check;Online Payment</validation>
+    </property>
+    <property name="creatorid">
+      <id>6721</id>
+      <label>Submitted By</label>
+      <type>userlist</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="title">
+      <id>6722</id>
+      <label>Transaction Description</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="details">
+      <id>6723</id>
+      <label>Details</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>5</order>
+      <validation>:20</validation>
+    </property>
+    <property name="transnum">
+      <id>6724</id>
+      <label>Transaction/Tracking Number</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="amount">
+      <id>6725</id>
+      <label>Amount</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>7</order>
+      <validation>:9</validation>
+    </property>
+    <property name="transdate">
+      <id>6726</id>
+      <label>Transaction Date</label>
+      <type>calendar</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>8</order>
+      <validation>date</validation>
+    </property>
+    <property name="verified">
+      <id>6727</id>
+      <label>Verified</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>9</order>
+      <validation></validation>
+    </property>
+    <property name="status">
+      <id>6728</id>
+      <label>Status</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>11</order>
+      <validation>Submitted;Approved;Denied</validation>
+    </property>
+    <property name="cleared">
+      <id>6820</id>
+      <label>Cleared</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>11</order>
+      <validation></validation>
+    </property>
+    <property name="source">
+      <id>6821</id>
+      <label>Source</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_labaccounting_journaltransactions.source</source>
+      <status>1</status>
+      <order>12</order>
+      <validation></validation>
+    </property>
+    <property name="sourceid">
+      <id>6822</id>
+      <label>Source File</label>
+      <type>uploads</type>
+      <default></default>
+      <source>xar_labaccounting_journaltransactions.sourceid</source>
+      <status>1</status>
+      <order>13</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

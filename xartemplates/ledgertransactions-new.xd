@@ -1,0 +1,46 @@
+<xar:data-getitem name="$properties" module="labaccounting" itemtype="4" itemid="0" />
+
+<form method="post" action="&xar-modurl-labaccounting-ledgertransactions-create;">
+
+    <input type="hidden" name="ledgerid" value="#$ledgerid#" />
+    
+    <input type="hidden" name="authid" value="#$authid#" />
+    
+    <input type="hidden" name="returnurl" value="#$returnurl#" />
+    
+    <table width="100%" border="0" cellspacing="0" cellpadding="2">
+        <tr>
+            <td><xar:data-label property="$properties['title']" /></td>
+            <td><xar:data-input property="$properties['title']" name="title" value="$item['title']" /></td>
+        </tr>
+        <tr>
+            <td><xar:data-label property="$properties['transdate']" /></td>
+            <td><xar:data-input property="$properties['transdate']" name="transdate" value="$item['transdate']" /></td>
+        </tr>
+        <tr>
+            <td><xar:data-label property="$properties['amount']" /></td>
+            <td><xar:data-input property="$properties['amount']" name="amount" value="$item['amount']" /> #$ledgerinfo['normalbalance']#</td>
+        </tr>
+        <tr>
+            <td><xar:data-label property="$properties['transnum']" /></td>
+            <td><xar:data-input property="$properties['transnum']" name="transnum" value="$item['transnum']" /></td>
+        </tr>
+        <tr>
+            <td><xar:data-label property="$properties['creatorid']" /></td>
+            <td><xar:data-input property="$properties['creatorid']" name="creatorid" value="$item['creatorid']" /></td>
+        </tr>
+        <tr>
+            <td><xar:data-label property="$properties['status']" /></td>
+            <td><xar:data-input property="$properties['status']" name="status" value="$item['status']" /></td>
+        </tr>
+        <tr>
+            <td><xar:data-label property="$properties['details']" /></td>
+            <td><xar:data-input property="$properties['details']" name="details" value="$item['details']" /></td>
+        </tr>
+        <tr>
+            <xar:set name="updatebtn"><xar:mlstring>Create Transaction</xar:mlstring></xar:set>
+            <td colspan="2" align="center"><br /><input type="submit" name="submit" value="#xarML('Update')#" /></td>
+        </tr>
+    </table>
+
+</form>

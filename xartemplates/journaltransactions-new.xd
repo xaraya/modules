@@ -1,0 +1,91 @@
+<xar:data-getitem name="$properties" module="labaccounting" itemtype="3" itemid="0" />
+
+<xar:set name="ownerid">xarModGetUserVar('xproject', 'mymemberid')</xar:set>
+<xar:if condition="!isset($ownerid)"><xar:set name="ownerid">"0"</xar:set></xar:if>
+
+<xar:if condition="!$inline and false">
+    <xar:template type="module" file="admin-menu" />
+</xar:if>
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>New Journal Transaction</xar:mlstring></span></div>
+<div class="xar-mod-body">
+
+    <form method="post" action="&xar-modurl-labaccounting-journaltransactions-create;">
+    
+        <input type="hidden" name="authid" value="#$authid#" />
+        
+        <input type="hidden" name="returnurl" value="#$returnurl#" />
+        
+        <table width="100%" border="0" cellspacing="0" cellpadding="2">
+            <tr>
+                <td><xar:mlstring>Post to Journal</xar:mlstring></td>
+                <td>
+                    <select name="journalid">
+                        <xar:foreach in="$journallist" value="$journalinfo">
+                            <xar:if condition="$journalinfo['parentid'] eq 0">
+                                <xar:if condition="$journalinfo['journalid'] eq $journalid">
+                                    <option value="#$journalinfo['journalid']#" selected>#$journalinfo['account_title']#</option>
+                                <xar:else />
+                                    <option value="#$journalinfo['journalid']#">#$journalinfo['account_title']#</option>
+                                </xar:if>
+                            <xar:elseif condition="$journalinfo['journalid'] eq $journalid" />
+                                <option value="#$journalinfo['journalid']#" selected>&nbsp;&nbsp;&middot;#$journalinfo['account_title']#</option>
+                            <xar:else />
+                                <option value="#$journalinfo['journalid']#">&nbsp;&nbsp;&middot;#$journalinfo['account_title']#</option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['transtype']" /></td>
+                <td><xar:data-input property="$properties['transtype']" name="transtype" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['title']" /></td>
+                <td><xar:data-input property="$properties['title']" name="title" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['details']" /></td>
+                <td><xar:data-input property="$properties['details']" name="details" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['transnum']" /></td>
+                <td><xar:data-input property="$properties['transnum']" name="transnum" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['amount']" /></td>
+                <td><xar:data-input property="$properties['amount']" name="amount" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['transdate']" /></td>
+                <td><xar:data-input property="$properties['transdate']" name="transdate" value="$transdate" /></td>
+            </tr>
+                <tr>
+                    <td><xar:data-label property="$properties['source']" /></td>
+                    <td><xar:data-input property="$properties['source']" name="source" /></td>
+                </tr>
+                <tr>
+                    <td><xar:data-label property="$properties['sourceid']" /></td>
+                    <td><xar:data-input property="$properties['sourceid']" name="sourceid" /></td>
+                </tr>
+            <tr>
+                <td><xar:data-label property="$properties['status']" /></td>
+                <td><xar:data-input property="$properties['status']" name="status" />
+                    <xar:data-label property="$properties['verified']" />
+                    <xar:data-input property="$properties['verified']" name="verified" />
+                    <xar:data-label property="$properties['cleared']" />
+                    <xar:data-input property="$properties['cleared']" name="cleared" />
+                    <xar:data-label property="$properties['isinvoice']" />
+                    <xar:data-input property="$properties['isinvoice']" name="isinvoice" /></td>
+            </tr>
+            <tr>
+                <xar:set name="updatebtn"><xar:mlstring>Create Journal Transaction</xar:mlstring></xar:set>
+                <td colspan="2" align="center"><br /><input type="submit" name="submit" value="#$updatebtn#" /></td>
+            </tr>
+        </table>
+    
+    </form>
+</div>
+<div class="xar-mod-foot"></div>
+

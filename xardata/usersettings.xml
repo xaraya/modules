@@ -1,0 +1,12 @@
+<object name="usersettings">
+  <objectid>563</objectid>
+  <label>labAccounting User Settings</label>
+  <moduleid>27</moduleid>
+  <itemtype>706</itemtype>
+  <urlparam>uid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+  </properties>
+</object>

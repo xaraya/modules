@@ -1,0 +1,31 @@
+<xar:data-getitem name="$properties" module="labaccounting" itemtype="1" itemid="0" />
+
+<xar:template type="module" file="user-menu" />
+
+<h2><xar:mlstring>My Accounting Journals</xar:mlstring></h2>
+
+<xar:set name="journaltype">""</xar:set>
+
+<xar:if condition="isset($journals)">
+    <xar:foreach in="$journals" value="$journalinfo">
+        <xar:set name="journalid">$journalinfo['journalid']</xar:set>
+        <xar:if condition="$journalinfo['journaltype'] ne $journaltype">
+            <xar:set name="journaltype">$journalinfo['journaltype']</xar:set>
+            <h4>
+                <a href="#xarModURL('labaccounting', 'user', 'main', array('journaltype' => $journalid))#">
+                    <xar:data-output property="$properties['journaltype']" value="$journalinfo['journaltype']" />
+                </a>
+            </h4>
+        </xar:if>
+        <div class="account_journal_summary">
+            <span class="xar-float-left">
+                <a href="#xarModURL('labaccounting', 'user', 'account', array('journalid' => $journalid))#">
+                    <xar:data-output property="$properties['account_title']" value="$journalinfo['account_title']" />
+                </a> [<xar:data-label property="$properties['agentuid']" /> <xar:data-output property="$properties['agentuid']" value="$journalinfo['agentuid']" />]
+            </span>
+            <span class="xar-float-right">
+                #$journalinfo['balance']#
+            </span>    
+        </div>
+    </xar:foreach>
+</xar:if>
