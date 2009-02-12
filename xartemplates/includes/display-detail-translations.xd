@@ -19,9 +19,9 @@
                 <!--
                 <xar:if condition="!empty($counter)">
                     (#$counter#
-                    <xar:mlstring>
+                    
                         Reads
-                    </xar:mlstring>
+                    
                     )
                 </xar:if>
                 <div align="right">
@@ -54,9 +54,9 @@
                 <td align="left">
                     <xar:if condition="!empty($prevart)">
                         <a href="#$prevart#">&lt;
-                            <xar:mlstring>
+                            
                                 prev
-                            </xar:mlstring>
+                            
                         </a>
                     </xar:if>
                     &#160;
@@ -65,9 +65,9 @@
                     &#160;
                     <xar:if condition="!empty($nextart)">
                         <a href="#$nextart#">
-                            <xar:mlstring>
+                            
                                 next
-                            </xar:mlstring>
+                            
                             &gt;</a>
                     </xar:if>
                 </td>

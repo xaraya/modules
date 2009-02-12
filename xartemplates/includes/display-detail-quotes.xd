@@ -10,22 +10,22 @@
     <xar:if condition="!empty($editurl)"> [<a href="#$editurl#">#$edittitle#</a>]
     </xar:if>
     <div class="xar-norm">
-        <xar:mlstring>
+        
             Quote
-        </xar:mlstring>
+        
         : <xar:data-output property="$properties['quote']" />
     </div>
     <div class="xar-sub">
-        <xar:mlstring>
+        
             Added on
-        </xar:mlstring>
+        
         : #xarLocaleGetFormattedDate('long',$properties['modified']->getValue())#
           #xarLocaleGetFormattedTime('long',$properties['modified']->getValue())#
     </div>
     <div class="xar-sub">
-        <xar:mlstring>
+        
             By
-        </xar:mlstring>
+        
         :
         <xar:if condition="!empty($profile)">
             <a href="#$profile#">
@@ -38,7 +38,7 @@
     <xar:if condition="!empty($counter)">
         <div class="xar-sub">
             <xar:ml>
-                <xar:mlstring>(#(1) Hits)</xar:mlstring>
+                (#(1) Hits)
                 <xar:mlvar>#$counter#</xar:mlvar>
             </xar:ml>
         </div>
@@ -48,17 +48,17 @@
         <xar:if condition="!empty($prevart)">
             <a href="#$prevart#">
                 &lt;
-                <xar:mlstring>
+                
                     prev
-                </xar:mlstring>
+                
             </a>
         </xar:if>
         &#160;&#160;
         <xar:if condition="!empty($nextart)">
             <a href="#$nextart#">
-                <xar:mlstring>
+                
                     next
-                </xar:mlstring>
+                
                 &gt;
             </a>
         </xar:if>

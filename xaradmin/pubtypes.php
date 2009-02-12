@@ -193,7 +193,7 @@ function publications_admin_pubtypes()
         }
     }
 
-    // Create Edit/Delete links
+/*    // Create Edit/Delete links
     foreach ($pubtypes as $id => $pubtype) {
         if (!xarSecurityCheck('AdminPublications',0,'Publication',"$id:All:All:All")) {
             $pubtypes[$id]['editurl'] = '';
@@ -232,7 +232,7 @@ function publications_admin_pubtypes()
                                'pubtypes',
                                array('action' => 'new'));
 
-/*
+
     // Get the list of defined field formats
     $pubfieldformats = xarModAPIFunc('publications','user','getpubfieldformats');
     $data['formats'] = array();

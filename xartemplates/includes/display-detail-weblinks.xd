@@ -19,7 +19,7 @@
         </tr>
         <tr>
             <td align="right">
-            <xar:mlstring>Web Site</xar:mlstring>:
+            Web Site:
             </td>
             <td align="left">
                 <xar:data-output property="$properties['website']" />
@@ -27,7 +27,7 @@
         </tr>
         <tr>
             <td align="right">
-            <xar:mlstring>Description</xar:mlstring>:
+            Description:
             </td>
             <td align="left">
                 <xar:data-output property="$properties['description']" />
@@ -36,7 +36,7 @@
         <xar:if condition="!empty($properties['source']->value)">
             <tr>
                 <td align="right">
-                    <xar:mlstring>Source</xar:mlstring>:
+                    Source:
                 </td>
                 <td align="left">
                     <xar:data-output property="$properties['source']" />
@@ -45,7 +45,7 @@
         </xar:if>
         <tr>
             <td align="right">
-                <xar:mlstring>Added on</xar:mlstring>:
+                Added on:
             </td>
             <td align="left">
                 #xarLocaleGetFormattedDate('long',$properties['modified']->getValue())#
@@ -54,7 +54,7 @@
         </tr>
         <tr>
             <td align="right">
-                <xar:mlstring>By</xar:mlstring>:
+                By:
             </td>
             <td align="left">
                 <xar:if condition="!empty($profile)">
@@ -69,7 +69,7 @@
         <xar:if condition="!empty($counter)">
             <tr>
                 <td align="right">
-                    <xar:mlstring>Hits</xar:mlstring>:
+                    Hits:
                 </td>
                 <td align="left">
                     #$counter#
@@ -82,8 +82,8 @@
         <br />
             <table border="0" width="95%">
                 <tr>
-                    <td align="left"><xar:if condition="!empty($prevart)"><a href="#$prevart#">&lt; <xar:mlstring>prev</xar:mlstring> </a></xar:if>&#160;</td>
-                    <td align="right">&#160;<xar:if condition="!empty($nextart)"> <a href="#$nextart#"><xar:mlstring>next</xar:mlstring> &gt;</a></xar:if></td>
+                    <td align="left"><xar:if condition="!empty($prevart)"><a href="#$prevart#">&lt; prev </a></xar:if>&#160;</td>
+                    <td align="right">&#160;<xar:if condition="!empty($nextart)"> <a href="#$nextart#">next &gt;</a></xar:if></td>
                 </tr>
             </table>
     </xar:if>

@@ -11,15 +11,37 @@
         <h2>        
             Modify Configuration        
         </h2>
-        <div class="xar-form-input-wrapper">
-            <label class="help xar-form-label" title="#xarML('Select the type of publication whose settings you want to configure')#">                    
-                Select Publication Type                    
-            </label>
-            <xar:set name="newurl">"document.location.href='" . xarModURL('publications','admin','modifyconfig') . "&amp;ptid='+this.value"</xar:set>
-            <xar:data-input type="objectref" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" onchange="$newurl" />
-        </div>
-        <form class="xar-formwidget" action="&xar-modurl-publications-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
-            <xar:if condition="empty($id)">
+        
+         <xar:style scope="module" module="base" file="navtabs" />
+        <br />
+        <dl class="xar-tabs">
+            <dt class="help">
+                <xar:mlstring>
+                    Applies to:
+                </xar:mlstring>
+            </dt>
+            <xar:if condition="$tab eq 'global'">
+                <xar:set name="class">"active"</xar:set>
+            <xar:else/>
+                <xar:set name="class">""</xar:set>
+            </xar:if>
+            <dd class="#$class#">
+                <a href="#xarModURL('publications', 'admin', 'modifyconfig', array('tab' => 'global'))#">
+                <xar:mlstring>Global</xar:mlstring></a>
+            </dd>
+            <xar:if condition="$tab eq 'pubtypes'">
+                <xar:set name="class">"active"</xar:set>
+            <xar:else/>
+                <xar:set name="class">""</xar:set>
+            </xar:if>
+            <dd class="#$class#">
+                <a href="#xarModURL('publications', 'admin', 'modifyconfig', array('tab' => 'pubtypes'))#">
+                <xar:mlstring>Punlication Types</xar:mlstring></a>
+            </dd>
+        </dl>
+
+       <form class="xar-formwidget" action="&xar-modurl-publications-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
+            <xar:if condition="$tab eq 'global'">
                 <fieldset class="xar-norm">
                     <legend>
                         Global Configuration
@@ -38,7 +60,7 @@
                         <xar:data-input type="checkbox" name="shorturls" checked="$shorturls" />
                     </div>
                     <div class="xar-form-input-wrapper">
-                        <label class="help xar-form-label" for="sortpubtypes" title="#xarML('Sort order for Publication Types in menus, article map etc.')#">
+                        <label class="help xar-form-label" for="sortpubtypes" title="#xarML('Sort order for Publication Types in menus, publication map etc.')#">
                             Publication Type Sort Order
                         </label>
                         <xar:set name="options">
@@ -64,344 +86,343 @@
                     </div>
                     </xar:if>
                 </fieldset>
+                <fieldset class="xar-norm">
+                    <legend>
+                        Site Configuration
+                    </legend>
+                    <input type="hidden" name="id" id="id" value="#$ptid#" />
+                    <div class="xar-form-input-wrapper">
+                        <label class="help xar-form-label" for="usealias" title="#xarML('Removes the publications module name from the short url.')#">
+                            Alias for short URLs
+                        </label>
+                        <xar:data-input type="checkbox" name="usealias" checked="$usealias" />&#160;
+                        <xar:ml>
+                                Use '#(1)' as alias in short URLs
+                            <xar:mlvar>
+                                #$alias#
+                            </xar:mlvar>
+                        </xar:ml>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label class="help xar-form-label" for="page_template" title="#xarML('Change the theme/themename/pages/ template that you use with this publication type.')#">                    
+                            Use different page template                    
+                        </label> 
+                        <input type="text" name="settings[page_template]" id="page_template" size="20" maxlength="60" value="#$settings['page_template']#" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label class="help xar-form-label" for="usetitleforurl" title="#xarML('Note: if a title contains characters that are illegal in a URL, the title will not be used..')#">                    
+                            Use title in short URLs                    
+                        </label>
+                        <xar:comment>
+                            You can add your own formats here and in encode/decode_shorturl
+                        </xar:comment>
+                        <xar:set name="options">
+                            array(
+                                array('id' => 0, 'name' => 'No'),
+                                array('id' => 1, 'name' => 'Yes, and append date for duplicates'),
+                                array('id' => '2', 'name' => 'Yes, and append publication id for duplicates'),
+                                array('id' => '3', 'name' => 'Yes, but use publication ids for duplicates'),
+                                array('id' => '4', 'name' => 'Yes, and ignore duplicates (faster)'),
+                            )
+                        </xar:set>
+                        <xar:data-input name="usetitleforurl" type="dropdown" options="$options" value="$usetitleforurl" />&#160;
+                    </div>
+                </fieldset>
+            <xar:else />
+                <div class="xar-form-input-wrapper">
+                    <label class="help xar-form-label" title="#xarML('Select the type of publication whose settings you want to configure')#">                    
+                        Publication Type                    
+                    </label>
+                    <xar:set name="newurl">"document.location.href='" . xarModURL('publications','admin','modifyconfig',array('tab' => 'pubtypes')) . "&amp;ptid='+this.value"</xar:set>
+                    <xar:data-input type="objectref" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" onchange="$newurl" />
+                </div>
+                <fieldset class="xar-norm">
+                    <legend>
+                        View Settings
+                    </legend>
+                    <table class="xar-fullwidth">
+                        <tr>
+                            <td valign="top" style="width: 50%">
+                                <div class="xar-form-input-wrapper">
+                                    <label class="help xar-form-label" for="defaultview" title="#xarML('Sorting by default.')#">
+                                        Default start view
+                                    </label> 
+                                    <xar:data-input type="dropdown" name="settings[defaultview]" id="settings_defaultview" options="$viewoptions" value="$settings['defaultview']" />
+                                </div>
+                                <div class="xar-form-input-wrapper">
+                                    <label class="help xar-form-label" for="defaultsort" title="#xarML('Sorting by default.')#">
+                                        Default sort order
+                                    </label>
+                                    <xar:set name="options">
+                                        array(
+                                            array('id' => 'date', 'name' => 'Date'),
+                                            array('id' => 'title', 'name' => 'Title'),
+                                            array('id' => 'hits', 'name' => 'Hits'),
+                                            array('id' => 'rating', 'name' => 'Rating'),
+                                            array('id' => 'id', 'name' => 'Publication ID'),
+                                            array('id' => 'author', 'name' => 'Author'),
+                                            array('id' => 'summary', 'name' => 'Summary'),
+                                            array('id' => 'date ASC', 'name' => 'Date (oldest first)'),
+                                            array('id' => 'pubtype_id,date', 'name' => 'Customized'),
+                                        )
+                                    </xar:set>
+                                    <xar:data-input name="settings[defaultsort]" type="dropdown" options="$options" value="$settings['defaultsort']" />&#160;
+                                </div>
+                                <div class="xar-form-input-wrapper">
+                                    <label for="number_of_columns" class="help xar-form-label" title="#xarML('Number of columns to display on view pages.')#">
+                                        Number of columns
+                                    </label> 
+                                    <input type="text" name="settings[number_of_columns]" id="settings_number_of_columns" size="1" maxlength="2" value="#$settings['number_of_columns']#" />
+                                </div>
+                            </td>
+                            <td valign="top" style="width: 50%">
+                                <div class="xar-form-input-wrapper">
+                                    <label for="itemsperpage" class="help xar-form-label" title="#xarML('Number of items to display on user view.')#">
+                                        Items per page on user view
+                                    </label> 
+                                    <input type="text" name="settings[itemsperpage]" id="settings_itemsperpage" size="3" maxlength="3" value="#$settings['itemsperpage']#" />
+                                </div>
+                                <div class="xar-form-input-wrapper">
+                                    <label for="adminitemsperpage" class="help xar-form-label" title="#xarML('Number of items to display on admin view.')#">
+                                            Items per page on admin view
+                                    </label> 
+                                    <input type="text" name="settings[adminitemsperpage]" id="settings_adminitemsperpage" size="3" maxlength="3" value="#$settings['adminitemsperpage']#" />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+                <fieldset class="xar-norm">
+                    <legend>
+                        Display Settings
+                    </legend>
+                    <div class="xar-form-input-wrapper">
+                        <label for="prevnextart" class="help xar-form-label" title="#xarML('Show link to previous/next item in display.')#">                    
+                            Show link to previous/next item in display
+                        </label>
+                        <xar:data-input type="checkbox" name="settings[prevnextart]" checked="$settings['prevnextart']" />
+                    </div>
+                </fieldset>
+                <fieldset class="xar-norm">
+                    <legend>
+                        Utility Modules
+                    </legend>
+                    <table class="xar-fullwidth">
+                        <tr>
+                            <td valign="top" style="width: 50%">
+                        <div class="xar-form-input-wrapper">
+                            <label for="showkeywords" class="help xar-form-label" title="#xarML('Show keywords on view page.')#">
+                                Show Keywords
+                            </label>
+                            <xar:if condition="!empty($seenhook['keywords'])">
+                                <xar:data-input type="checkbox" name="settings[showkeywords]" checked="$settings['showkeywords']" />
+                            <xar:else />
+                                <input type="hidden" name="settings[showkeywords]" id="settings_showkeywords" value="#$settings['showkeywords']#" />&#160;
+                                N/A,&#10; the keywords module is not hooked
+                            </xar:if>
+                        </div>
+                        <div class="xar-form-input-wrapper">
+                            <label for="showhitcounts" class="help xar-form-label" title="#xarML('Show hit counts on view page.')#">
+                                Show Hit Counts
+                            </label>
+                            <xar:if condition="!empty($seenhook['hitcount'])">
+                                <xar:data-input type="checkbox" name="settings[showhitcounts]" checked="$settings['showhitcounts']" />
+                            <xar:else />
+                                <input type="hidden" name="settings[showhitcounts]" id="settings_showhitcounts" value="#$settings['showhitcounts']#" />&#160;
+                                N/A,&#10; the hitcount module is not hooked
+                            </xar:if>
+                        </div>
+                            </td>
+                            <td valign="top" style="width: 50%">
+                        <div class="xar-form-input-wrapper">
+                            <label for="showratings" class="help xar-form-label" title="#xarML('Show ratings on view page.')#">
+                                Show Ratings
+                            </label>
+                            <xar:if condition="!empty($seenhook['ratings'])">
+                                <xar:data-input type="checkbox" name="settings[showratings]" checked="$settings['showratings']" />
+                            <xar:else />
+                                <input type="hidden" name="settings[showratings]" id="settings_showratings" value="#$settings['showratings']#" />&#160;
+                                N/A,&#10; the ratings module is not hooked
+                            </xar:if>
+                        </div>
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+                <fieldset class="xar-norm">
+                    <legend>
+                        Internal Links
+                    </legend>
+                    <table class="xar-fullwidth">
+                        <tr>
+                            <td valign="top" style="width: 50%">
+                                <div class="xar-form-input-wrapper">
+                                    <label for="showpublinks" class="help xar-form-label" title="#xarML('Show links to publication types.')#">
+                                        Show links to publication types
+                                    </label>
+                                    <xar:data-input type="checkbox" name="settings[showpublinks]" checked="$settings['showpublinks']" />
+                                </div>
+                                <div class="xar-form-input-wrapper">
+                                    <label for="showpubcount" class="help xar-form-label" title="#xarML('Show links to publication types.')#">
+                                        Show number of publications in publication links
+                                    </label>
+                                    <xar:data-input type="checkbox" name="settings[showpubcount]" checked="$settings['showpubcount']" />
+                                </div>
+                            </td>
+                            <td valign="top" style="width: 50%">
+                                <div class="xar-form-input-wrapper">
+                                    <label for="showarchives" class="help xar-form-label" title="#xarML('Show link to archives.')#">
+                                        Show link to archives
+                                    </label>
+                                    <xar:data-input type="checkbox" name="settings[showarchives]" checked="$settings['showarchives']" />
+                                </div>
+                                <div class="xar-form-input-wrapper">
+                                    <label for="showmap" class="help xar-form-label" title="#xarML('Show link to publication map.')#">
+                                        Show link to publication map
+                                    </label>
+                                    <xar:data-input type="checkbox" name="settings[showmap]" checked="$settings['showmap']" />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+                <fieldset class="xar-norm">
+                    <legend>
+                        Transforms
+                    </legend>
+                    <table class="xar-fullwidth">
+                        <tr>
+                            <td valign="top" style="width: 50%">
+                                <div class="xar-form-input-wrapper">
+                                    <label for="dotransform" class="help xar-form-label" title="#xarML('Call transform hooks in summaries.')#">
+                                        Transform hooks in summaries
+                                    </label>
+                                    <xar:data-input type="checkbox" name="settings[dotransform]" checked="$settings['dotransform']" />
+                                </div>
+                            </td>
+                            <td valign="top" style="width: 50%">
+                                <div class="xar-form-input-wrapper">
+                                    <label for="titletransform" class="help xar-form-label" title="#xarML('Call transform hooks in titles.')#">
+                                        Transform hooks in titles
+                                    </label>
+                                    <xar:data-input type="checkbox" name="settings[titletransform]" checked="$settings['titletransform']" />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+                <fieldset class="xar-norm">
+                    <legend>
+                        Publication States
+                    </legend>
+                    <table class="xar-fullwidth">
+                        <tr>
+                            <td valign="top" style="width: 50%">
+                                <div class="xar-form-input-wrapper">
+                                    <label class="help xar-form-label" for="defaultstate" title="#xarML('Default start state.')#">
+                                        Default start state
+                                    </label>
+                                    <xar:if condition="!empty($withstate)">
+                                        <select name="settings[defaultstate]" id="settings_defaultstate">
+                                            <xar:foreach in="$stateoptions" value="$stateoption">
+                                                <xar:if condition="$stateoption['value'] eq $defaultstate">
+                                                    <option value="#$stateoption['value']#" selected="selected">
+                                                        #$stateoption['label']#
+                                                    </option>
+                                                    <xar:else />
+                                                    <option value="#$stateoption['value']#">
+                                                        #$stateoption['label']#
+                                                    </option>
+                                                </xar:if>
+                                            </xar:foreach>
+                                        </select>
+                                    <xar:else />
+                                        <input type="hidden" name="settings[defaultstate]" id="settings_defaultstate" value="2" />
+                                            N/A
+                                    </xar:if>
+                                </div>
+                            </td>
+                            <td valign="top" style="width: 50%">
+                                <div class="xar-form-input-wrapper">
+                                    <label class="help xar-form-label" for="defaultprocessstate" title="#xarML('Default process state.')#">
+                                        Default process state
+                                    </label>
+                                    <xar:if condition="!empty($withstate)">
+                                        <select name="settings[defaultprocessstate]" id="settings_defaultprocessstate">
+                                            <xar:foreach in="$stateoptions" value="$stateoption">
+                                                <xar:if condition="$stateoption['value'] eq $defaultprocessstate">
+                                                    <option value="#$stateoption['value']#" selected="selected">
+                                                        #$stateoption['label']#
+                                                    </option>
+                                                    <xar:else />
+                                                    <option value="#$stateoption['value']#">
+                                                        #$stateoption['label']#
+                                                    </option>
+                                                </xar:if>
+                                            </xar:foreach>
+                                        </select>
+                                    <xar:else />
+                                        <input type="hidden" name="settings[defaultprocessstate]" id="settings_defaultprocessstate" value="2" />
+                                            N/A
+                                    </xar:if>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+                <fieldset class="xar-norm">
+                    <legend>
+                        Categories/Comments
+                    </legend>
+                    <table class="xar-fullwidth">
+                        <tr>
+                            <td valign="top" style="width: 50%">
+                                <div class="xar-form-input-wrapper">
+                                    <label for="showcategories" class="help xar-form-label" title="#xarML('Show category links in publication summaries .')#">
+                                        Category links in summaries
+                                    </label>
+                                    <xar:data-input type="checkbox" name="settings[showcategories]" checked="$settings['showcategories']" />
+                                </div>
+                                <div class="xar-form-input-wrapper">
+                                    <label for="showcatcount" class="help xar-form-label" title="#xarML('Show number of publications in category navigation.')#">
+                                        Show number of publications in category navigation
+                                    </label>
+                                    <xar:data-input type="checkbox" name="settings[showcatcount]" checked="$settings['showcatcount']" />
+                                </div>
+                            </td>
+                            <td valign="top" style="width: 50%">
+                                <div class="xar-form-input-wrapper">
+                                    <label for="showprevnext" class="help xar-form-label" title="#xarML('Show previous/next category.')#">
+                                        Show previous/next category
+                                    </label>
+                                    <xar:data-input type="checkbox" name="settings[showprevnext]" checked="$settings['showprevnext']" />
+                                </div>
+                                <div class="xar-form-input-wrapper">
+                                    <label for="showcomments" class="help xar-form-label" title="#xarML('Show comments on view page.')#">
+                                        Show number of comments
+                                    </label>
+                                    <xar:if condition="!empty($seenhook['comments'])">
+                                        <xar:data-input type="checkbox" name="settings[showcomments]" checked="$settings['showcomments']" />
+                                    <xar:else />
+                                        <input type="hidden" name="settings[showcomments]" id="settings_showcomments" value="#$settings['showcomments']#" />&#160;
+                                        N/A,&#10; the keywords module is not hooked
+                                    </xar:if>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <xar:data-input type="categorypicker" name="basecid" module="publications" itemtype="$ptid" />
+                </fieldset>
             </xar:if>
-            <fieldset class="xar-norm">
-                <legend>
-                    Site Configuration
-                </legend>
-                <input type="hidden" name="authid" id="authid" value="#$authid#" /> 
-                <input type="hidden" name="id" id="id" value="#$ptid#" />
-                <div class="xar-form-input-wrapper">
-                    <label class="help xar-form-label" for="usealias" title="#xarML('Removes the publications module name from the short url.')#">
-                        Alias for short URLs
-                    </label>
-                    <xar:data-input type="checkbox" name="usealias" checked="$usealias" />&#160;
-                    <xar:ml>
-                            Use '#(1)' as alias in short URLs
-                        <xar:mlvar>
-                            #$alias#
-                        </xar:mlvar>
-                    </xar:ml>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label class="help xar-form-label" for="page_template" title="#xarML('Change the theme/themename/pages/ template that you use with this publication type.')#">                    
-                        Use different page template                    
-                    </label> 
-                    <input type="text" name="settings[page_template]" id="page_template" size="20" maxlength="60" value="#$settings['page_template']#" />
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label class="help xar-form-label" for="usetitleforurl" title="#xarML('Note: if a title contains characters that are illegal in a URL, the title will not be used..')#">                    
-                        Use title in short URLs                    
-                    </label>
-                    <xar:comment>
-                        You can add your own formats here and in encode/decode_shorturl
-                    </xar:comment>
-                    <xar:set name="options">
-                        array(
-                            array('id' => 0, 'name' => 'No'),
-                            array('id' => 1, 'name' => 'Yes, and append date for duplicates'),
-                            array('id' => '2', 'name' => 'Yes, and append publication id for duplicates'),
-                            array('id' => '3', 'name' => 'Yes, but use publication ids for duplicates'),
-                            array('id' => '4', 'name' => 'Yes, and ignore duplicates (faster)'),
-                        )
-                    </xar:set>
-                    <xar:data-input name="usetitleforurl" type="dropdown" options="$options" value="$usetitleforurl" />&#160;
-                </div>
-            </fieldset>
-            <fieldset class="xar-norm">
-                <legend>
-                    View Settings
-                </legend>
-                <table class="xar-fullwidth">
-                    <tr>
-                        <td valign="top" style="width: 50%">
-                            <div class="xar-form-input-wrapper">
-                                <label class="help xar-form-label" for="defaultview" title="#xarML('Sorting by default.')#">
-                                    Default start view
-                                </label> <select name="settings[defaultview]" id="settings_defaultview">
-                                    <xar:foreach in="$viewoptions" value="$viewoption">
-                                        <xar:if condition="$viewoption['value'] eq $settings['defaultview']">
-                                            <option value="#$viewoption['value']#" selected="selected">
-                                                #$viewoption['label']#
-                                            </option>
-                                            <xar:else />
-                                            <option value="#$viewoption['value']#">
-                                                #$viewoption['label']#
-                                            </option>
-                                        </xar:if>
-                                    </xar:foreach>
-                                </select>
-                            </div>
-                            <div class="xar-form-input-wrapper">
-                                <label class="help xar-form-label" for="defaultsort" title="#xarML('Sorting by default.')#">
-                                    Default sort order
-                                </label>
-                                <xar:set name="options">
-                                    array(
-                                        array('id' => 'date', 'name' => 'Date'),
-                                        array('id' => 'title', 'name' => 'Title'),
-                                        array('id' => 'hits', 'name' => 'Hits'),
-                                        array('id' => 'rating', 'name' => 'Rating'),
-                                        array('id' => 'id', 'name' => 'Publication ID'),
-                                        array('id' => 'author', 'name' => 'Author'),
-                                        array('id' => 'summary', 'name' => 'Summary'),
-                                        array('id' => 'date ASC', 'name' => 'Date (oldest first)'),
-                                        array('id' => 'pubtype_id,date', 'name' => 'Customized'),
-                                    )
-                                </xar:set>
-                                <xar:data-input name="settings[defaultsort]" type="dropdown" options="$options" value="$settings['defaultsort']" />&#160;
-                            </div>
-                            <div class="xar-form-input-wrapper">
-                                <label for="number_of_columns" class="help xar-form-label" title="#xarML('Number of columns to display on view pages.')#">
-                                    Number of columns
-                                </label> 
-                                <input type="text" name="settings[number_of_columns]" id="settings_number_of_columns" size="1" maxlength="2" value="#$settings['number_of_columns']#" />
-                            </div>
-                        </td>
-                        <td valign="top" style="width: 50%">
-                            <div class="xar-form-input-wrapper">
-                                <label for="itemsperpage" class="help xar-form-label" title="#xarML('Number of items to display on user view.')#">
-                                    Items per page on user view
-                                </label> 
-                                <input type="text" name="settings[itemsperpage]" id="settings_itemsperpage" size="3" maxlength="3" value="#$settings['itemsperpage']#" />
-                            </div>
-                            <div class="xar-form-input-wrapper">
-                                <label for="adminitemsperpage" class="help xar-form-label" title="#xarML('Number of items to display on admin view.')#">
-                                        Items per page on admin view
-                                </label> 
-                                <input type="text" name="settings[adminitemsperpage]" id="settings_adminitemsperpage" size="3" maxlength="3" value="#$settings['adminitemsperpage']#" />
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </fieldset>
-            <fieldset class="xar-norm">
-                <legend>
-                    Display Settings
-                </legend>
-                <div class="xar-form-input-wrapper">
-                    <label for="prevnextart" class="help xar-form-label" title="#xarML('Show link to previous/next article in display.')#">                    
-                        Show link to previous/next article in display
-                    </label>
-                    <xar:data-input type="checkbox" name="settings[prevnextart]" checked="$settings['prevnextart']" />
-                </div>
-            </fieldset>
-            <fieldset class="xar-norm">
-                <legend>
-                    Utility Modules
-                </legend>
-                <table class="xar-fullwidth">
-                    <tr>
-                        <td valign="top" style="width: 50%">
-                    <div class="xar-form-input-wrapper">
-                        <label for="showkeywords" class="help xar-form-label" title="#xarML('Show keywords on view page.')#">
-                            Show Keywords
-                        </label>
-                        <xar:if condition="!empty($seenhook['keywords'])">
-                            <xar:data-input type="checkbox" name="settings[showkeywords]" checked="$settings['showkeywords']" />
-                        <xar:else />
-                            <input type="hidden" name="settings[showkeywords]" id="settings_showkeywords" value="#$settings['showkeywords']#" />&#160;
-                            N/A,&#10; the keywords module is not hooked
-                        </xar:if>
-                    </div>
-                    <div class="xar-form-input-wrapper">
-                        <label for="showhitcounts" class="help xar-form-label" title="#xarML('Show hit counts on view page.')#">
-                            Show Hit Counts
-                        </label>
-                        <xar:if condition="!empty($seenhook['hitcount'])">
-                            <xar:data-input type="checkbox" name="settings[showhitcounts]" checked="$settings['showhitcounts']" />
-                        <xar:else />
-                            <input type="hidden" name="settings[showhitcounts]" id="settings_showhitcounts" value="#$settings['showhitcounts']#" />&#160;
-                            N/A,&#10; the hitcount module is not hooked
-                        </xar:if>
-                    </div>
-                        </td>
-                        <td valign="top" style="width: 50%">
-                    <div class="xar-form-input-wrapper">
-                        <label for="showratings" class="help xar-form-label" title="#xarML('Show ratings on view page.')#">
-                            Show Ratings
-                        </label>
-                        <xar:if condition="!empty($seenhook['ratings'])">
-                            <xar:data-input type="checkbox" name="settings[showratings]" checked="$settings['showratings']" />
-                        <xar:else />
-                            <input type="hidden" name="settings[showratings]" id="settings_showratings" value="#$settings['showratings']#" />&#160;
-                            N/A,&#10; the ratings module is not hooked
-                        </xar:if>
-                    </div>
-                        </td>
-                    </tr>
-                </table>
-            </fieldset>
-            <fieldset class="xar-norm">
-                <legend>
-                    Internal Links
-                </legend>
-                <table class="xar-fullwidth">
-                    <tr>
-                        <td valign="top" style="width: 50%">
-                            <div class="xar-form-input-wrapper">
-                                <label for="showpublinks" class="help xar-form-label" title="#xarML('Show links to publication types.')#">
-                                    Show links to publication types
-                                </label>
-                                <xar:data-input type="checkbox" name="settings[showpublinks]" checked="$settings['showpublinks']" />
-                            </div>
-                            <div class="xar-form-input-wrapper">
-                                <label for="showpubcount" class="help xar-form-label" title="#xarML('Show links to publication types.')#">
-                                    Show number of publications in publication links
-                                </label>
-                                <xar:data-input type="checkbox" name="settings[showpubcount]" checked="$settings['showpubcount']" />
-                            </div>
-                        </td>
-                        <td valign="top" style="width: 50%">
-                            <div class="xar-form-input-wrapper">
-                                <label for="showarchives" class="help xar-form-label" title="#xarML('Show link to archives.')#">
-                                    Show link to archives
-                                </label>
-                                <xar:data-input type="checkbox" name="settings[showarchives]" checked="$settings['showarchives']" />
-                            </div>
-                            <div class="xar-form-input-wrapper">
-                                <label for="showmap" class="help xar-form-label" title="#xarML('Show link to article map.')#">
-                                    Show link to article map
-                                </label>
-                                <xar:data-input type="checkbox" name="settings[showmap]" checked="$settings['showmap']" />
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </fieldset>
-            <fieldset class="xar-norm">
-                <legend>
-                    Transforms
-                </legend>
-                <table class="xar-fullwidth">
-                    <tr>
-                        <td valign="top" style="width: 50%">
-                            <div class="xar-form-input-wrapper">
-                                <label for="dotransform" class="help xar-form-label" title="#xarML('Call transform hooks in summaries.')#">
-                                    Transform hooks in summaries
-                                </label>
-                                <xar:data-input type="checkbox" name="settings[dotransform]" checked="$settings['dotransform']" />
-                            </div>
-                        </td>
-                        <td valign="top" style="width: 50%">
-                            <div class="xar-form-input-wrapper">
-                                <label for="titletransform" class="help xar-form-label" title="#xarML('Call transform hooks in titles.')#">
-                                    Transform hooks in titles
-                                </label>
-                                <xar:data-input type="checkbox" name="settings[titletransform]" checked="$settings['titletransform']" />
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </fieldset>
-            <fieldset class="xar-norm">
-                <legend>
-                    Publication States
-                </legend>
-                <table class="xar-fullwidth">
-                    <tr>
-                        <td valign="top" style="width: 50%">
-                            <div class="xar-form-input-wrapper">
-                                <label class="help xar-form-label" for="defaultstate" title="#xarML('Default start state.')#">
-                                    Default start state
-                                </label>
-                                <xar:if condition="!empty($withstate)">
-                                    <select name="settings[defaultstate]" id="settings_defaultstate">
-                                        <xar:foreach in="$stateoptions" value="$stateoption">
-                                            <xar:if condition="$stateoption['value'] eq $defaultstate">
-                                                <option value="#$stateoption['value']#" selected="selected">
-                                                    #$stateoption['label']#
-                                                </option>
-                                                <xar:else />
-                                                <option value="#$stateoption['value']#">
-                                                    #$stateoption['label']#
-                                                </option>
-                                            </xar:if>
-                                        </xar:foreach>
-                                    </select>
-                                <xar:else />
-                                    <input type="hidden" name="settings[defaultstate]" id="settings_defaultstate" value="2" />
-                                        N/A
-                                </xar:if>
-                            </div>
-                        </td>
-                        <td valign="top" style="width: 50%">
-                            <div class="xar-form-input-wrapper">
-                                <label class="help xar-form-label" for="defaultprocessstate" title="#xarML('Default process state.')#">
-                                    Default process state
-                                </label>
-                                <xar:if condition="!empty($withstate)">
-                                    <select name="settings[defaultprocessstate]" id="settings_defaultprocessstate">
-                                        <xar:foreach in="$stateoptions" value="$stateoption">
-                                            <xar:if condition="$stateoption['value'] eq $defaultprocessstate">
-                                                <option value="#$stateoption['value']#" selected="selected">
-                                                    #$stateoption['label']#
-                                                </option>
-                                                <xar:else />
-                                                <option value="#$stateoption['value']#">
-                                                    #$stateoption['label']#
-                                                </option>
-                                            </xar:if>
-                                        </xar:foreach>
-                                    </select>
-                                <xar:else />
-                                    <input type="hidden" name="settings[defaultprocessstate]" id="settings_defaultprocessstate" value="2" />
-                                        N/A
-                                </xar:if>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </fieldset>
-            <fieldset class="xar-norm">
-                <legend>
-                    Categories/Comments
-                </legend>
-                <table class="xar-fullwidth">
-                    <tr>
-                        <td valign="top" style="width: 50%">
-                            <div class="xar-form-input-wrapper">
-                                <label for="showcategories" class="help xar-form-label" title="#xarML('Show category links in article summaries .')#">
-                                    Category links in summaries
-                                </label>
-                                <xar:data-input type="checkbox" name="settings[showcategories]" checked="$settings['showcategories']" />
-                            </div>
-                            <div class="xar-form-input-wrapper">
-                                <label for="showcatcount" class="help xar-form-label" title="#xarML('Show number of publications in category navigation.')#">
-                                    Show number of publications in category navigation
-                                </label>
-                                <xar:data-input type="checkbox" name="settings[showcatcount]" checked="$settings['showcatcount']" />
-                            </div>
-                        </td>
-                        <td valign="top" style="width: 50%">
-                            <div class="xar-form-input-wrapper">
-                                <label for="showprevnext" class="help xar-form-label" title="#xarML('Show previous/next category.')#">
-                                    Show previous/next category
-                                </label>
-                                <xar:data-input type="checkbox" name="settings[showprevnext]" checked="$settings['showprevnext']" />
-                            </div>
-                            <div class="xar-form-input-wrapper">
-                                <label for="showcomments" class="help xar-form-label" title="#xarML('Show comments on view page.')#">
-                                    Show number of comments
-                                </label>
-                                <xar:if condition="!empty($seenhook['comments'])">
-                                    <xar:data-input type="checkbox" name="settings[showcomments]" checked="$settings['showcomments']" />
-                                <xar:else />
-                                    <input type="hidden" name="settings[showcomments]" id="settings_showcomments" value="#$settings['showcomments']#" />&#160;
-                                    N/A,&#10; the keywords module is not hooked
-                                </xar:if>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-                <xar:data-input type="categorypicker" name="basecid" module="publications" itemtype="$ptid" />
-            </fieldset>
             <div class="xar-form-input-wrapper">
                 <div class="xar-form-container-after">
-                    <input type="submit" value="#xarML('Submit')#" />
-                    <xar:comment>
-                    <input type="reset" value="#xarML('Reset')#" />
-                    </xar:comment>
+                    <xar:set name="label">xarML('Update Configuration')</xar:set>
+                    <xar:button type="submit" label="$label" />
+                    &#160;
+                    <xar:set name="label">xarML('Reset')</xar:set>
+                    <xar:button type="reset" label="$label" />
+                    <input type="hidden" name="tab" id="tab" value="#$tab#" />
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" /> 
                 </div>
             </div>
         </form>

@@ -25,23 +25,19 @@ function publications_admin_updateconfig()
     //A lot of these probably are bools, still might there be a need to change the template to return
     //'true' and 'false' to use those...
     if(!xarVarFetch('settings',          'array',   $settings,      array(), XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('shorturls',         'isset', $shorturls,         0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('usetitleforurl',    'isset', $usetitleforurl,    0,  XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('defaultpubtype',    'isset', $defaultpubtype,    1,  XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('sortpubtypes',      'isset', $sortpubtypes,   'id',  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('defaultstate',     'isset', $defaultstate,     0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('defaultsort',       'isset', $defaultsort,  'date',  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('usealias',          'isset', $usealias,          0,  XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('ptid',              'isset', $ptid,              10,  XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('ptid',              'isset', $ptid,              xarModVars::get('publications', 'defaultpubtype'),  XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'global', XARVAR_NOT_REQUIRED)) return;
 
-    if (empty($ptid)) {
-        $ptid = '';
-        if (!xarSecurityCheck('AdminPublications')) return;
-    } else {
-        if (!xarSecurityCheck('AdminPublications',1,'Publication',"$ptid:All:All:All")) return;
-    }
+    if (!xarSecurityCheck('AdminPublications',1,'Publication',"$ptid:All:All:All")) return;
 
-    if (empty($ptid)) {
+    if ($data['tab'] == 'global') {
+        if(!xarVarFetch('shorturls',         'isset', $shorturls,         0,  XARVAR_NOT_REQUIRED)) {return;}
+        if(!xarVarFetch('defaultpubtype',    'isset', $defaultpubtype,    1,  XARVAR_NOT_REQUIRED)) {return;}
+        if(!xarVarFetch('sortpubtypes',      'isset', $sortpubtypes,   'id',  XARVAR_NOT_REQUIRED)) {return;}
         xarModVars::set('publications', 'SupportShortURLs', $shorturls);
         xarModVars::set('publications', 'defaultpubtype', $defaultpubtype);
         xarModVars::set('publications', 'sortpubtypes', $sortpubtypes);
@@ -73,7 +69,7 @@ function publications_admin_updateconfig()
                 xarModVars::set('publications', 'fulltextsearch', join(',',$searchfields));
             }
         }
-    }
+    } else {
 
         // Get the publication type for this display and save the settings to it
         $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
@@ -91,18 +87,13 @@ function publications_admin_updateconfig()
             xarModDelAlias($pubtypes[$ptid]['name'],'publications');
         }
 
-        // Call updateconfig hooks with module + itemtype
-        xarModCallHooks('module','updateconfig','publications',
-                        array('module'   => 'publications',
-                              'itemtype' => $ptid));
-
-//echo "<pre>";var_dump($settings);exit;
-//    var_dump($_POST);//exit;
-    // Pull the base category ids from the template and save them
-    $picker = DataPropertyMaster::getProperty(array('name' => 'categorypicker'));
-    $picker->checkInput('basecid');
+    //echo "<pre>";var_dump($settings);exit;
+        // Pull the base category ids from the template and save them
+        $picker = DataPropertyMaster::getProperty(array('name' => 'categorypicker'));
+        $picker->checkInput('basecid');
+    }
     xarResponseRedirect(xarModURL('publications', 'admin', 'modifyconfig',
-                                  array('ptid' => $ptid)));
+                                  array('ptid' => $ptid, 'tab' => $data['tab'])));
     return true;
 }
 ?>

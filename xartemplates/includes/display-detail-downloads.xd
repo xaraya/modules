@@ -13,11 +13,11 @@
                     #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
                 </xar:foreach> ]
             </xar:if>
-        <h5><xar:mlstring>Summary</xar:mlstring>:</h5>
+        <h5>Summary:</h5>
         <p>
             <xar:data-output property="$properties['summary']" />
         </p>
-        <h5><xar:mlstring>Download</xar:mlstring>:</h5>
+        <h5>Download:</h5>
         <xar:if condition="empty($notes)">
         <xar:elseif condition="xarModIsHooked('uploads','publications',$pubtype_id) and substr($notes,0,1) eq ';'" />
         <xar:comment>
@@ -51,8 +51,8 @@
     <br />
     <table border="0" width="95%">
     <tr>
-        <td align="left"><xar:if condition="!empty($prevart)"><a href="#$prevart#">&lt; <xar:mlstring>prev</xar:mlstring> </a></xar:if>&#160;</td>
-        <td align="right">&#160;<xar:if condition="!empty($nextart)"> <a href="#$nextart#"><xar:mlstring>next</xar:mlstring> &gt;</a></xar:if></td>
+        <td align="left"><xar:if condition="!empty($prevart)"><a href="#$prevart#">&lt; prev </a></xar:if>&#160;</td>
+        <td align="right">&#160;<xar:if condition="!empty($nextart)"> <a href="#$nextart#">next &gt;</a></xar:if></td>
     </tr>
     </table>
     </xar:if>
