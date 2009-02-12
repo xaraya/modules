@@ -51,7 +51,7 @@ function publications_adminapi_getmenulinks()
     if (xarSecurityCheck('AdminPublications',0)) {
         $menulinks[] = Array('url'   => xarModURL('publications',
                                                    'admin',
-                                                   'pubtypes'),
+                                                   'viewpubtypes'),
                               'title' => xarML('View and edit publication types'),
                               'label' => xarML('Publication Types'));
 
