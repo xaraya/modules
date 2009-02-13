@@ -178,9 +178,11 @@ function xarbb_user_main()
     $data['items'] = $items;
 
     // Check the cookie for the date to display
-    $lastvisitdate = xarModAPIfunc('xarbb', 'admin', 'get_cookie', array('name' => 'lastvisit'));
-    $data['lastvisitdate'] = (!empty($lastvisitdate) ? $lastvisitdate : $now);
-
+    //$lastvisitdate = xarModAPIfunc('xarbb', 'admin', 'get_cookie', array('name' => 'lastvisit'));
+    //$data['lastvisitdate'] = (!empty($lastvisitdate) ? $lastvisitdate : $now);
+    // v1.3.2 fix for Bug 5774
+    // using a module user var to track last visit
+    $data['lastvisitdate'] = xarModGetUserVar('xarbb', 'lastvisit');
     xarTplSetPageTitle(xarML('Forum Index'));
 
     return $data;
