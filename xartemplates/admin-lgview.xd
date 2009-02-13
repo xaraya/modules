@@ -11,6 +11,7 @@
   <xar:template type="module" module="netquery" file="admin-menu" />
 
 <div class="xar-accent">
+  <a href="#$lgalink.url#">#$lgalink.title#</a>
   <table class="nqinput">
     <tr>
       <th colspan="2">
@@ -78,12 +79,6 @@
       </tr>
     </xar:if>
     </xar:loop>
-    <tr>
-      <th class="nq-center" colspan="3">
-        <a href="#$lgalink.url#">#$lgalink.title#</a> -
-        <a href="#$cfglink.url#">#$cfglink.title#</a>
-      </th>
-    </tr>
   </table>
 </div>
 </div>

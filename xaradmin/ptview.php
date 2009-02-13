@@ -1,4 +1,16 @@
 <?php
+/**
+ * Displaying the port service configuration
+ *
+ * @package modules
+ * @copyright (C) 2002-2009 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Netquery Module
+ * @link http://xaraya.com/index.php/release/230.html
+ */
+
 function netquery_admin_ptview()
 {
     if (!xarSecurityCheck('EditNetquery')) return;
@@ -41,8 +53,8 @@ function netquery_admin_ptview()
         $portdata[$i]['deletetitle'] = xarML('Delete');
     }
     $data['items'] = $portdata;
-    $data['portnumlabel'] = 'Port #';
-    $data['pflaglabel'] = 'Flag #';
+    $data['portnumlabel'] = xarML('Port #');
+    $data['pflaglabel'] = xarML('Flag #');
     $data['portnum'] = $portnum;
     $data['pflag'] = $pflag;
     $data['cfglink'] = Array('url'   => xarModURL('netquery', 'admin', 'config'),

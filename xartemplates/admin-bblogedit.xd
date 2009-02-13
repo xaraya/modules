@@ -22,10 +22,17 @@
         </xar:if>
     </xar:if>
 <xar:else />
-    <xar:mlstring>Access monitor is NOT running</xar:mlstring>. <xar:mlstring>To activate</xar:mlstring>,
-    <a href="#xarModURL('blocks', 'admin', 'new_instance')#"><xar:mlstring>load its CMS block</xar:mlstring></a>.
+    <xar:ml>
+      <xar:mlstring>Access monitor is NOT running. To activate <a href="#(1)">load its CMS block</a>.</xar:mlstring>
+      <xar:mlvar>#xarModURL('blocks', 'admin', 'new_instance')#</xar:mlvar>
+    </xar:ml>
 </xar:if>
-<br /><xar:mlstring>Spambot blocker has denied</xar:mlstring> <strong>#$bbstats#</strong> <xar:mlstring>access attempts in the last</xar:mlstring> #$bbsettings.log_retain# <xar:mlstring>days</xar:mlstring>.
+<br />
+  <xar:ml>
+    <xar:mlstring>Spambot blocker has denied <strong>#(1)</strong> access attempts in the last #(2) days.</xar:mlstring>
+    <xar:mlvar>#$bbstats#</xar:mlvar>
+    <xar:mlvar>#$bbsettings.log_retain#</xar:mlvar>
+  </xar:ml>
 </p>
 
 <form action="#xarModURL('netquery', 'admin', 'bblogedit')#" method="post">
@@ -34,22 +41,22 @@
 <legend><xar:mlstring>Entries In Access Log Table</xar:mlstring></legend>
 <table>
 <tr><td>
-Show all where
+<xar:mlstring>Show all where</xar:mlstring>
 <select name="field" id="field" size="1">
-     <option value="id">ID</option>
-     <option value="ip">IP</option>
-     <option value="request_entity">Request entity</option>
-     <option value="request_method">Request method</option>
-     <option value="request_uri">Request URL</option>
-     <option value="server_protocol">Server Protocol</option>
-     <option value="user_agent">User agent</option>
-     <option value="http_headers">HTTP Headers</option>
-     <option value="bb_key">Key</option>
+     <option value="id"><xar:mlstring>ID</xar:mlstring></option>
+     <option value="ip"><xar:mlstring>IP</xar:mlstring></option>
+     <option value="request_entity"><xar:mlstring>Request entity</xar:mlstring></option>
+     <option value="request_method"><xar:mlstring>Request method</xar:mlstring></option>
+     <option value="request_uri"><xar:mlstring>Request URL</xar:mlstring></option>
+     <option value="server_protocol"><xar:mlstring>Server Protocol</xar:mlstring></option>
+     <option value="user_agent"><xar:mlstring>User agent</xar:mlstring></option>
+     <option value="http_headers"><xar:mlstring>HTTP Headers</xar:mlstring></option>
+     <option value="bb_key"><xar:mlstring>Key</xar:mlstring></option>
 </select>
 <select name="where" id="where" size="1">
-     <option value="=">Is</option>
-     <option value="!=">Is not</option>
-     <option value="LIKE">Includes</option>
+     <option value="="><xar:mlstring>Is</xar:mlstring></option>
+     <option value="!="><xar:mlstring>Is not</xar:mlstring></option>
+     <option value="LIKE"><xar:mlstring>Includes</xar:mlstring></option>
 </select>
 <input type="text" name="search" id="search" value="" size="10" maxlength="300" />
 Limit <input type="text" name="limit" id="limit" value="30" size="3" maxlength="3" />&nbsp;
@@ -62,12 +69,12 @@ Limit <input type="text" name="limit" id="limit" value="30" size="3" maxlength="
 <xar:if condition="$bbmode eq 'all'">
     <table>
     <tr>
-        <th width="20px">id</th>
-        <th width="40px">ip</th>
-        <th width="40px">date</th>
-        <th width="20px">request method</th>
-        <th width="60px">request uri</th>
-        <th width="30px">server protocol</th>
+        <th width="20px"><xar:mlstring>id</xar:mlstring></th>
+        <th width="40px"><xar:mlstring>ip</xar:mlstring></th>
+        <th width="40px"><xar:mlstring>date</xar:mlstring></th>
+        <th width="20px"><xar:mlstring>request method</xar:mlstring></th>
+        <th width="60px"><xar:mlstring>request uri</xar:mlstring></th>
+        <th width="30px"><xar:mlstring>server protocol</xar:mlstring></th>
     </tr>
     <tr>
         <td>#$entry.id#</td>
@@ -78,10 +85,10 @@ Limit <input type="text" name="limit" id="limit" value="30" size="3" maxlength="
         <td>#$entry.server_protocol#</td>
     </tr>
     <tr>
-        <th colspan="1">user agent</th>
-        <th colspan="3">http headers</th>
-        <th colspan="1">request entity</th>
-        <th colspan="1">key</th>
+        <th colspan="1"><xar:mlstring>user agent</xar:mlstring></th>
+        <th colspan="3"><xar:mlstring>http headers</xar:mlstring></th>
+        <th colspan="1"><xar:mlstring>request entity</xar:mlstring></th>
+        <th colspan="1"><xar:mlstring>key</xar:mlstring></th>
     </tr>
     <tr>
         <td colspan="1">#$entry.user_agent#</td>
@@ -111,12 +118,12 @@ Limit <input type="text" name="limit" id="limit" value="30" size="3" maxlength="
     <table>
     <tr>
         <th><input type="checkbox" name="checker" id="checker" onclick="NQcheckall(bbselect, checker)" /></th>
-        <th width="40px">Entry</th>
-        <th width="40px">Show</th>
-        <th width="100px">Whois&nbsp;IP</th>
-        <th width="130px">Date&nbsp;Time</th>
-        <th width="65px">Key</th>
-        <th width="40px">Drop</th>
+        <th width="40px"><xar:mlstring>Entry</xar:mlstring></th>
+        <th width="40px"><xar:mlstring>Show</xar:mlstring></th>
+        <th width="100px"><xar:mlstring>Whois&nbsp;IP</xar:mlstring></th>
+        <th width="130px"><xar:mlstring>Date</xar:mlstring></th>
+        <th width="65px"><xar:mlstring>Key</xar:mlstring></th>
+        <th width="40px"><xar:mlstring>Drop</xar:mlstring></th>
     </tr>
     <xar:if condition="!empty($entries)">
         <xar:foreach in="$entries" value="$entry">
@@ -139,19 +146,24 @@ Limit <input type="text" name="limit" id="limit" value="30" size="3" maxlength="
         </tr>
     <xar:else />
         <tr>
-            <td colspan="7">NO RECORDS FOUND</td>
+            <td colspan="7"><xar:mlstring>NO RECORDS FOUND</xar:mlstring></td>
         </tr>
     </xar:if>
-    <tr>
-      <th colspan="7">
-        &nbsp;<a href="#$cfglink.url#">#$cfglink.title#</a>
-      </th>
-    </tr>
     </table>
     </form>
 </xar:if>
 
-<p align="center"><xar:mlstring>Spambot blocker module for Xaraya based on</xar:mlstring> Bad Behavior #$bbsettings.version#<br />
-<xar:mlstring>For more information please visit the</xar:mlstring> <a href="http://www.homelandstupidity.us/software/bad-behavior/">Bad Behavior</a> <xar:mlstring>homepage</xar:mlstring>.</p>
+<p align="center">
+<xar:ml>
+  <xar:mlstring>Spambot blocker module for Xaraya based on Bad Behavior #(1)</xar:mlstring>
+  <xar:mlvar>#$bbsettings.version#</xar:mlvar>
+</xar:ml>
+  <br />
+<xar:set name="str">'http://www.homelandstupidity.us/software/bad-behavior/'</xar:set>
+<xar:ml>
+  <xar:mlstring>For more information please visit the <a href="#(1)">Bad Behavior</a> homepage.</xar:mlstring>
+  <xar:mlvar>#$str#</xar:mlvar>
+</xar:ml>
+</p>
 
 </div>

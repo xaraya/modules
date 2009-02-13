@@ -397,7 +397,12 @@
     <xar:else />
         <xar:mlstring>Access monitor is NOT running</xar:mlstring>
     </xar:if>
-    <br /><xar:mlstring>Spambot blocker has denied</xar:mlstring> <strong>#$bbstats#</strong> <xar:mlstring>access attempts in the last</xar:mlstring> #$bbsettings.log_retain# <xar:mlstring>days</xar:mlstring>.
+    <br />
+    <xar:ml>
+      <xar:mlstring>Spambot blocker has denied <strong>#(1)</strong> access attempts in the last #(2) days.</xar:mlstring>
+      <xar:mlvar>#$bbstats#</xar:mlvar>
+      <xar:mlvar>#$bbsettings.log_retain#</xar:mlvar>
+    </xar:ml>
     </p>
 </xar:if>
 
