@@ -40,6 +40,8 @@ function xtasks_worklog_delete($args)
         $data['taskid'] = $item['taskid'];
         $data['taskinfo'] = $taskinfo;
         
+        $data['confirmbutton'] = xarML('Confirm');
+
         $data['authid'] = xarSecGenAuthKey();
 
         return $data;

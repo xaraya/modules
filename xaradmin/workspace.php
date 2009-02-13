@@ -10,7 +10,7 @@ function xtasks_admin_workspace($args)
         
     $data = array();
 
-    if (!xarSecurityCheck('AddXTask')) {
+    if (!xarSecurityCheck('AddXTask', 0)) {
         return;
     }
     
@@ -41,7 +41,7 @@ function xtasks_admin_workspace($args)
     }
     
     if(!strpos($data['returnurl'], "mode")) {
-        $data['returnurl'] = $data['returnurl']."&amp;mode=tasklist";
+        $data['returnurl'] = $data['returnurl']."&amp;mode=tasks";
     }
     
     if (isset($args['modid'])) {
@@ -88,7 +88,9 @@ function xtasks_admin_workspace($args)
     $data['addbutton'] = xarVarPrepForDisplay(xarML('Add'));
 
     $data['xtasks_objectid'] = xarModGetVar('xtasks', 'xtasks_objectid');
-//    xarModAPILoad('xtaskss', 'user');
+//echo "modid: ".$modid;
+//echo "<br>itemtype: ".$itemtype;
+//echo "<br>objectid: ".$objectid;
     $items = xarModAPIFunc('xtasks', 'user', 'getall',
                             array('modid'    => $modid,
                                   'itemtype' => $itemtype,
@@ -97,7 +99,7 @@ function xtasks_admin_workspace($args)
                                   'memberid' => isset($memberid) ? $memberid : false,
                                   'mymemberid' => isset($mymemberid) ? $mymemberid : false,
                                   'orderby'  => $orderby,
-                                  'numitems' => xarModGetVar('xtasks','itemsperpage')));
+                                  'numitems' => -1)); // xarModGetVar('xtasks','itemsperpage')));
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
     
     for ($i = 0; $i < count($items); $i++) {
@@ -138,8 +140,8 @@ function xtasks_admin_workspace($args)
     $data['show_project'] = xarModGetUserVar('xtasks', 'show_project');
     $data['show_client'] = xarModGetUserVar('xtasks', 'show_client');
     $data['verbose'] = xarModGetUserVar('xtasks', 'verbose');
-    
-    return $data;
+    $template = "jquery";
+    return xarTplModule('xtasks', 'admin', 'workspace', $data, $template);
 }
 
 ?>

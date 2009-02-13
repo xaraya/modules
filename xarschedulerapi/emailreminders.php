@@ -27,23 +27,12 @@ function xtasks_schedulerapi_emailreminders($args)
 {
     extract ($args);
     
-            if (!xarModAPIFunc('mail', 'admin', 'sendmail',
-                     array('from'        => "testing@miragelab.com",
-                           'fromname'    => "labXarTesting,
-                           'info'        => xarUserGetVar('email'),
-                           'subject'     => xarML('Event Alert'),
-                           'message'     => "test test test"))) {
-                return;
-            }
-            return 1;
-    
-    if(!xarModLoad('addressbook', 'user')) return;
-    xarModAPILoad('addressbook', 'user');
-    
     // TODO possibility to configure when alerts are send (1 day before?, 1 week?)
     //get tomorrow's events
-    $startdate = date("Y-m-d",strtotime("today"));
-    $enddate = date("Y-m-d",strtotime("tomorrow"));
+//    $lastrun = xarModGetVar('scheduler', 'lastrun');  // useless, is always 1 minute ago...
+    $startdate = date("Y-m-d H:i:s");
+    $end_time = time() + (3600 * 24);
+    $enddate = date("Y-m-d H:i:s",$end_time);
     
     $from_email = xarModGetVar('julian','from_email');
     $from_name =  xarModGetVar('julian','from_name');
@@ -59,11 +48,13 @@ function xtasks_schedulerapi_emailreminders($args)
                   eventdate,
                   reminder
             FROM $reminderstable
-            WHERE eventdate > '".$startdate."'
-            AND eventdate < '".$enddate."'
+            WHERE eventdate > ?
+            AND eventdate < ?
             ORDER BY eventdate";
 
-    $result = $dbconn->Execute($sql);
+    $bindvars = array($startdate,$enddate);
+
+    $result = $dbconn->Execute($sql,$bindvars);
 
     if (!$result) return;
     
@@ -85,7 +76,7 @@ function xtasks_schedulerapi_emailreminders($args)
         }
         
         if(isset($projectinfo) && $projectinfo['clientid'] > 0) {
-            $clientinfo = xarModAPIFunc('addressbook', 'user', 'getdetailvalues', array('id' => $projectinfo['clientid']));
+            $clientinfo = xarModAPIFunc('dossier', 'user', 'get', array('contactid' => $projectinfo['clientid']));
         } else {
             $clientinfo = array();
         }
@@ -110,33 +101,40 @@ function xtasks_schedulerapi_emailreminders($args)
         $htmlmessage  = $message."<br /><br />";
         $txtmessage = $message."\n\n";
         foreach ($alertevents as $event) {
-            //html message
-            $htmlmessage .=
-                $event['clientinfo']['company'].'<br />'.
-                $event['projectinfo']['project_name'].'<br />'.
-                $event['eventdate'].' <a href="'.
-                xarModURL('xtasks','admin','display',
-                          array(
-                              'taskid' => $event['taskid']
-                         )).
-                '">'.$event['taskinfo']['task_name'].'</a><br />'.
-                '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$event['taskinfo']['description'].'<br />';          
-            //text message
-            $txtmessage .=
-                $event['clientinfo']['sortname']."\n".
-                $event['projectinfo']['project_name']."\n".
-                $event['eventdate']." ".$event['taskinfo']['task_name']."\n".
-                "     ".$event['taskinfo']['description']."\n"; 
-        
-            // send mail with mail module
-            if (!xarModAPIFunc('mail', 'admin', 'sendmail',
-                     array('from'        => $from_email,
-                           'fromname'    => $from_name,
-                           'info'        => xarUserGetVar('email', $event['ownerid']),
-                           'subject'     => xarML('Event Alert'),
-                           'message'     => $txtmessage,
-                           'htmlmessage' => $htmlmessage))) {
-                return;
+            $eventowner = xarModAPIFunc('dossier','user','get',array('contactid'=>$event['ownerid']));
+            if(isset($eventowner) && !empty($eventowner['email_1'])) {
+                //html message
+                $htmlmessage .=
+                    $event['clientinfo']['company'].'<br />'.
+                    $event['projectinfo']['project_name'].'<br />'.
+                    $event['eventdate'].' <a href="'.
+                    xarModURL('xtasks','admin','display',
+                              array(
+                                  'taskid' => $event['taskid']
+                             ))
+                    .'">'.$event['taskinfo']['task_name'].'</a><br />'
+                    .$event['reminder'].'<br />'.
+                    '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$event['taskinfo']['description'].'<br />'
+                    .xarModURL('xtasks','admin','display',array('taskid' => $event['taskid'])).'<br />';         
+                //text message
+                $txtmessage .=
+                    $event['clientinfo']['sortname']."\n".
+                    $event['projectinfo']['project_name']."\n".
+                    $event['eventdate']." ".$event['taskinfo']['task_name']."\n".
+                    $event['reminder']."\n".
+                    "     ".$event['taskinfo']['description']."\n"
+                    .xarModURL('xtasks','admin','display',array('taskid' => $event['taskid']))."\n";         
+            
+                // send mail with mail module
+                if (!xarModAPIFunc('mail', 'admin', 'sendmail',
+                         array('from'        => $from_email,
+                               'fromname'    => $from_name,
+                               'info'        => $eventowner['email_1'],
+                               'subject'     => xarML('Task Reminder Alert'),
+                               'message'     => $txtmessage,
+                               'htmlmessage' => $htmlmessage))) {
+                    return;
+                }
             }
         }
     }

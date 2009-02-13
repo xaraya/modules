@@ -6,227 +6,144 @@
 <xar:template type="module" file="admin-menu" />
 
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Work Log</xar:mlstring></span>
+    <span class="xar-mod-title">Work Log</span>
 </div>
 <div class="xar-mod-body">    
     <form method="post" action="#xarModURL('xtasks','worklog','report')#">
-        <fieldset><legend><xar:mlstring>Filter Results</xar:mlstring></legend>
-			<div class="xar-floatright xar-quarterwidth xar-align-right">
-				<input type="submit" value="#xarML('Go')#" />
-			</div>
-
-			<div class="xar-form-input-wrapper">
-			    <label for="reportview" class="xar-form-label">
-			        <xar:mlstring>Report View</xar:mlstring>
-			    </label>
-				<select name="reportview" id="reportview">
-	                <option value="thisprojectid:taskownerid:workdate"><xar:mlstring>Project / Staff / Date</xar:mlstring></option>
-	                <option value="thisprojectid:workdate:taskownerid"><xar:mlstring>Project / Date / Staff</xar:mlstring></option>
-	                <option value="taskownerid:thisprojectid:workdate"><xar:mlstring>Staff / Project / Date</xar:mlstring></option>
-	                <option value="taskownerid:workdate:thisprojectid"><xar:mlstring>Staff / Date / Project</xar:mlstring></option>
-	                <option value="workdate:thisprojectid:taskownerid"><xar:mlstring>Date / Project / Staff</xar:mlstring></option>
-	                <option value="workdate:taskownerid:thisprojectid"><xar:mlstring>Date / Staff / Project</xar:mlstring></option>
-	            </select>
-			</div>
-
-			<div class="xar-form-input-wrapper">
-			    <label for="projectid" class="xar-form-label">
-			        <xar:mlstring>By Project</xar:mlstring>
-			    </label>
-				<select name="projectid" id="projectid">
-	            	<option value=""></option>
-		            <xar:set name="projectlist">xarModAPIFunc('xproject','user','getall',array('sortby'=>"project_name"))</xar:set>
-		            <xar:foreach in="$projectlist" value="$projectinfo">
-		                <xar:if condition="$projectinfo['projectid'] eq $projectid">
-		                    <option value="#$projectinfo['projectid']#" selected>#$projectinfo['project_name']#</option>
-		                <xar:else />
-		                    <option value="#$projectinfo['projectid']#">#$projectinfo['project_name']#</option>
-		                </xar:if>
-		            </xar:foreach>
-	            </select>
-			</div>
-
-			<div class="xar-form-input-wrapper">
-			    <label for="ownerid" class="xar-form-label">
-			        <xar:mlstring>By Staff Member</xar:mlstring>
-			    </label>
-			    <xar:data-input property="$properties['ownerid']" name="ownerid" value="$ownerid" />
-			</div>
-
-			<div class="xar-form-input-wrapper-after">
-				<xar:if condition="isset($ownerid) and $ownderid gt 0">
-				    <input type="checkbox" name="ownersearch" id="ownersearch" value="1" checked="checked" />
-				<xar:else />
-				    <input type="checkbox" name="ownersearch" id="ownersearch" value="1" />
-				</xar:if>
-			    <label for="ownersearch">
-			        <xar:mlstring>Filter by Staff Member</xar:mlstring>
-			    </label>
-			</div>
-
-	        <div>
-				<label for="mindate_input">
-					<xar:mlstring>From</xar:mlstring>
-				</label>
-				<xar:data-input type="calendar" name="mindate" value="$mindate" />
-				<label for="maxdate_input" style="margin-left: 2em;">
-					<xar:mlstring>to</xar:mlstring>
-				</label>
-	             <xar:data-input type="calendar" name="maxdate" value="$maxdate" />
-	        </div>
-	        <div>
-				<xar:mlstring>(or)</xar:mlstring>
-			</div>
-
-			<div class="xar-form-input-wrapper">
-			    <label for="ttldays" class="xar-form-label">
-			        <xar:mlstring>Days Displayed</xar:mlstring>
-			    </label>
-			    <input type="text" name="ttldays" id="ttldays" value="#$ttldays#" class="xar-form-textshort" />
-			</div>
+        <fieldset><legend><strong>Filter Results: </strong><input type="submit" value="Go" /></legend>
+        <div>Report View: <select name="reportview">
+                <option value="thisprojectid:taskownerid:workdate">Project / Staff / Date</option>
+                <option value="thisprojectid:workdate:taskownerid">Project / Date / Staff</option>
+                <option value="taskownerid:thisprojectid:workdate">Staff / Project / Date</option>
+                <option value="taskownerid:workdate:thisprojectid">Staff / Date / Project</option>
+                <option value="workdate:thisprojectid:taskownerid">Date / Project / Staff</option>
+                <option value="workdate:taskownerid:thisprojectid">Date / Staff / Project</option>
+            </select>
+        </div>
+        <div>By Project: <select name="projectid">
+            <option value=""></option>
+            <xar:set name="projectlist">xarModAPIFunc('xproject','user','getall',array('sortby'=>"project_name"))</xar:set>
+            <xar:foreach in="$projectlist" value="$projectinfo">
+                <xar:if condition="$projectinfo['projectid'] eq $projectid">
+                    <option value="#$projectinfo['projectid']#" selected>#$projectinfo['project_name']#</option>
+                <xar:else />
+                    <option value="#$projectinfo['projectid']#">#$projectinfo['project_name']#</option>
+                </xar:if>
+            </xar:foreach>
+            </select>
+        </div>
+        <xar:set name="ownersearchchecked">($ownerid ? "checked" : "")</xar:set>
+        <div>By Staff member: <xar:data-input property="$properties['ownerid']" name="ownerid" value="$ownerid" /><input type="checkbox" name="ownersearch" value="1" #$ownersearchchecked#/> <xar:mlstring>Filter by Staff Member?</xar:mlstring></div>
+        <div>From <xar:data-input type="calendar" name="mindate" value="$mindate" />
+             to <xar:data-input type="calendar" name="maxdate" value="$maxdate" />#$ownerid#
+        </div>
+        (or)
+        <div>Days Displayed: <input type="text" name="ttldays" value="#$ttldays#" size="3" /></div>
         </fieldset>
     </form>
     
-	<table class="xar-fullwidth">
-		</tr>
-            <th>
-				<xar:mlstring>Date</xar:mlstring>
-			</th>
-            <th>
-				<xar:mlstring>Staff</xar:mlstring>
-			</th>
-            <th>
-				<xar:mlstring>Hours</xar:mlstring>
-			</th>
-            <th>
-				<xar:mlstring>Tasks</xar:mlstring>
-			</th>
-		</tr>
-
-        <xar:set name="rowclass">"xar-norm"</xar:set>
+    <div style="width: 100%;">
+        <div>
+            <div class="xtasks-tasklist-header" style="float: left; width: 60px;"><strong><xar:mlstring>Date</xar:mlstring></strong></div>
+            <div class="xtasks-tasklist-header" style="float: left; width: 120px; text-align: center;"><strong><xar:mlstring>Staff</xar:mlstring></strong></div>
+            <div class="xtasks-tasklist-header" style="float: left; width: 60px; text-align: center;"><strong><xar:mlstring>Hours</xar:mlstring></strong></div>
+            <div class="xtasks-tasklist-header" style="float: left; width: 60px; text-align: center;"><strong><xar:mlstring>Tasks</xar:mlstring></strong></div>
+            <div style="clear: both;"></div>
+        </div>
+        
+        <xar:set name="rowclass">"xtasks-norm-row"</xar:set>
         <xar:set name="prev_projectid">0</xar:set>
         <xar:set name="prev_ownerid">0</xar:set>
         <xar:set name="firstproject">1</xar:set>
         <xar:if condition="$reportview eq 'thisprojectid:taskownerid:workdate'">
             <xar:foreach in="$worksummary" key="$projectid" value="$projectsummary">
-				<xar:if condition="count($worksummary) lt 1">
-					<xar:continue />
-				</xar:if>
                 <xar:foreach in="$projectsummary" key="$ownerid" value="$staffhours">
-					<xar:if condition="count($staffhours) lt 1">
-						<xar:continue />
-					</xar:if>
                     <xar:foreach in="$staffhours" key="$workdate" value="$workhours">
+                    
                         <xar:if condition="$projectid ne $prev_projectid or $firstproject">
                             <xar:set name="projectinfo">xarModAPIFunc('xproject','user','get',array('projectid'=>$projectid))</xar:set>
                             <xar:set name="firstproject">0</xar:set>
                             <xar:set name="errortype">xarCurrentErrorType()</xar:set>
-                        
-                        	<tr>
-								<th colspan="4" class="xar-alt xar-align-left">
-		                            <xar:if condition="!empty($errortype)">
-		                                <xar:set name="dummy">xarErrorFree()</xar:set>
-										[ <em><xar:mlstring>project deleted</xar:mlstring></em> ]
-		                            <xar:else />
-										#$projectinfo['project_name']# [<a href="index.php?module=xproject&amp;type=admin&amp;func=display&amp;projectid=#$projectid#&amp;mode=worklog"><xar:mlstring>View</xar:mlstring></a>]
-		                            </xar:if>
-								</th>
-							</tr>
-
-                            <xar:set name="rowclass">"xar-alt"</xar:set>
+                            
+                            <xar:if condition="!$firstproject">
+                                </fieldset>
+                            </xar:if>
+                            
+                            <xar:if condition="!empty($errortype)">
+                                <xar:set name="dummy">xarErrorFree()</xar:set>
+                                <fieldset><legend><span class="xar-title">[project deleted]</span></legend>
+                            <xar:else />
+                                <fieldset><legend><span class="xar-title">#$projectinfo['project_name']#</span> [<a href="index.php?module=xproject&amp;type=admin&amp;func=display&amp;projectid=#$projectid#&amp;mode=worklog">view</a>]</legend>
+                            </xar:if>
+                            <xar:set name="rowclass">"xtasks-alt-row"</xar:set>
                             <xar:set name="prev_projectid">$projectid</xar:set>
                         </xar:if>
-                
-                        <xar:if condition="$rowclass eq 'xar-norm'">
-                            <xar:set name="rowclass">"xar-alt"</xar:set>
+                    
+                    
+                        <xar:if condition="$rowclass eq 'xtasks-norm-row'">
+                            <xar:set name="rowclass">"xtasks-alt-row"</xar:set>
                         <xar:else />
-                            <xar:set name="rowclass">"xar-norm"</xar:set>
+                            <xar:set name="rowclass">"xtasks-norm-row"</xar:set>
                         </xar:if>
-                    
+                        
                         <xar:set name="dummy">$workhours['hours'] = sprintf("%.02f", $workhours['hours'])</xar:set>
-                    
-                        <tr class="#$rowclass#">
-                            <td>
-								<xar:data-output property="$properties['eventdate']" value="$workdate" dateformat="%d-%b" />&nbsp;
-							</td>
-                            <td>
-								<xar:data-output property="$properties['ownerid']" value="$ownerid" />&nbsp;
-							</td>
-                            <td class="xar-align-right">
-								<xar:data-output property="$properties['hours']" value="$workhours['hours']" />
-							</td>
-                            <td class="xar-align-right">
-								<xar:data-output property="$properties['hours']" value="$workhours['ttltasks']" />
-							</td>
-                        </tr>
+                        
+                        <div class="#$rowclass#">
+                            <div class="xtasks-tasklist-data" style="float: left; width: 60px;"><xar:data-output property="$properties['eventdate']" value="$workdate" dateformat="%d-%b" />&nbsp;</div>
+                            <div class="xtasks-tasklist-data" style="float: left; width: 120px;"><xar:data-output property="$properties['ownerid']" value="$ownerid" />&nbsp;</div>
+                            <div class="xtasks-tasklist-data" style="float: left; width: 60px; text-align: right;"><xar:data-output property="$properties['hours']" value="$workhours['hours']" />&nbsp;hrs</div>
+                            <div class="xtasks-tasklist-data" style="float: left; width: 60px; text-align: right;"><xar:data-output property="$properties['hours']" value="$workhours['ttltasks']" />&nbsp;tasks</div>
+                            <div style="clear: both;"></div>
+                        </div>
                     </xar:foreach>
                 </xar:foreach>
             </xar:foreach>
         <xar:elseif condition="$reportview eq 'thisprojectid:workdate:taskownerid'" />
             <xar:foreach in="$worksummary" key="$projectid" value="$projectsummary">
-				<xar:if condition="count($projectsummary) lt 1">
-					<xar:continue />
-				</xar:if>
                 <xar:foreach in="$projectsummary" key="$workdate" value="$workhours">
-					<xar:if condition="count($workhours) lt 1">
-						<xar:continue />
-					</xar:if>
                     <xar:foreach in="$workhours" key="$ownerid" value="$staffhours">
+                    
                         <xar:if condition="$projectid ne $prev_projectid or $firstproject">
                             <xar:set name="projectinfo">xarModAPIFunc('xproject','user','get',array('projectid'=>$projectid))</xar:set>
                             <xar:set name="firstproject">0</xar:set>
                             <xar:set name="errortype">xarCurrentErrorType()</xar:set>
-
-                        	<tr>
-								<th colspan="4" class="xar-alt xar-align-left">
-		                            <xar:if condition="!empty($errortype)">
-		                                <xar:set name="dummy">xarErrorFree()</xar:set>
-										[ <em><xar:mlstring>project deleted</xar:mlstring></em> ]
-		                            <xar:else />
-										#$projectinfo['project_name']# [<a href="index.php?module=xproject&amp;type=admin&amp;func=display&amp;projectid=#$projectid#&amp;mode=worklog"><xar:mlstring>View</xar:mlstring></a>]
-		                            </xar:if>
-								</th>
-							</tr>
-
-                            <xar:set name="rowclass">"xar-alt"</xar:set>
+                            
+                            <xar:if condition="!$firstproject">
+                                </fieldset>
+                            </xar:if>
+                            
+                            <xar:if condition="!empty($errortype)">
+                                <xar:set name="dummy">xarErrorFree()</xar:set>
+                                <fieldset><legend><span class="xar-title">[project deleted]</span></legend>
+                            <xar:else />
+                                <fieldset><legend><span class="xar-title">#$projectinfo['project_name']#</span> [<a href="index.php?module=xproject&amp;type=admin&amp;func=display&amp;projectid=#$projectid#&amp;mode=worklog">view</a>]</legend>
+                            </xar:if>
+                            <xar:set name="rowclass">"xtasks-alt-row"</xar:set>
                             <xar:set name="prev_projectid">$projectid</xar:set>
                         </xar:if>
                     
                     
-                        <xar:if condition="$rowclass eq 'xar-norm'">
-                            <xar:set name="rowclass">"xar-alt"</xar:set>
+                        <xar:if condition="$rowclass eq 'xtasks-norm-row'">
+                            <xar:set name="rowclass">"xtasks-alt-row"</xar:set>
                         <xar:else />
-                            <xar:set name="rowclass">"xar-norm"</xar:set>
+                            <xar:set name="rowclass">"xtasks-norm-row"</xar:set>
                         </xar:if>
                         
                         <xar:set name="dummy">$workhours['hours'] = sprintf("%.02f", $workhours['hours'])</xar:set>
                         
-		                 <tr class="#$rowclass#">
-                            <td>
-								<xar:data-output property="$properties['eventdate']" value="$workdate" dateformat="%d-%b" />&nbsp;
-							</td>
-                            <td>
-								<xar:data-output property="$properties['ownerid']" value="$ownerid" />&nbsp;
-							</td>
-                            <td class="xar-align-right">
-								<xar:data-output property="$properties['hours']" value="$workhours['hours']" />
-							</td>
-                            <td class="xar-align-right">
-								<xar:data-output property="$properties['hours']" value="$workhours['ttltasks']" />
-							</td>
-                        </tr>
+                        <div class="#$rowclass#">
+                            <div class="xtasks-tasklist-data" style="float: left; width: 60px;"><xar:data-output property="$properties['eventdate']" value="$workdate" dateformat="%d-%b" />&nbsp;</div>
+                            <div class="xtasks-tasklist-data" style="float: left; width: 120px;"><xar:data-output property="$properties['ownerid']" value="$ownerid" />&nbsp;</div>
+                            <div class="xtasks-tasklist-data" style="float: left; width: 60px; text-align: right;"><xar:data-output property="$properties['hours']" value="$workhours['hours']" />&nbsp;hrs</div>
+                            <div class="xtasks-tasklist-data" style="float: left; width: 60px; text-align: right;"><xar:data-output property="$properties['hours']" value="$workhours['ttltasks']" />&nbsp;tasks</div>
+                            <div style="clear: both;"></div>
+                        </div>
                     </xar:foreach>
                 </xar:foreach>
             </xar:foreach>
         <xar:elseif condition="$reportview eq 'taskownerid:thisprojectid:workdate'" />
             <xar:foreach in="$worksummary" key="$projectid" value="$projectsummary">
-				<xar:if condition="count($projectsummary) lt 1">
-					<xar:continue />
-				</xar:if>
                 <xar:foreach in="$projectsummary" key="$ownerid" value="$staffhours">
-					<xar:if condition="count($staffhours) lt 1">
-						<xar:continue />
-					</xar:if>
                     <xar:foreach in="$staffhours" key="$workdate" value="$workhours">
                     
                         <xar:if condition="$projectid ne $prev_projectid or $firstproject">
@@ -234,55 +151,42 @@
                             <xar:set name="firstproject">0</xar:set>
                             <xar:set name="errortype">xarCurrentErrorType()</xar:set>
                             
-                        	<tr>
-								<th colspan="4" class="xar-alt xar-align-left">
-		                            <xar:if condition="!empty($errortype)">
-		                                <xar:set name="dummy">xarErrorFree()</xar:set>
-										[ <em><xar:mlstring>project deleted</xar:mlstring></em> ]
-		                            <xar:else />
-										#$projectinfo['project_name']# [<a href="index.php?module=xproject&amp;type=admin&amp;func=display&amp;projectid=#$projectid#&amp;mode=worklog"><xar:mlstring>View</xar:mlstring></a>]
-		                            </xar:if>
-								</th>
-							</tr>
-
-                            <xar:set name="rowclass">"xar-alt"</xar:set>
+                            <xar:if condition="!$firstproject">
+                                </fieldset>
+                            </xar:if>
+                            
+                            <xar:if condition="!empty($errortype)">
+                                <xar:set name="dummy">xarErrorFree()</xar:set>
+                                <fieldset><legend><span class="xar-title">[project deleted]</span></legend>
+                            <xar:else />
+                                <fieldset><legend><span class="xar-title">#$projectinfo['project_name']#</span> [<a href="index.php?module=xproject&amp;type=admin&amp;func=display&amp;projectid=#$projectid#&amp;mode=worklog">view</a>]</legend>
+                            </xar:if>
+                            <xar:set name="rowclass">"xtasks-alt-row"</xar:set>
                             <xar:set name="prev_projectid">$projectid</xar:set>
                         </xar:if>
                     
-                        <xar:if condition="$rowclass eq 'xar-norm'">
-                            <xar:set name="rowclass">"xar-alt"</xar:set>
+                    
+                        <xar:if condition="$rowclass eq 'xtasks-norm-row'">
+                            <xar:set name="rowclass">"xtasks-alt-row"</xar:set>
                         <xar:else />
-                            <xar:set name="rowclass">"xar-norm"</xar:set>
+                            <xar:set name="rowclass">"xtasks-norm-row"</xar:set>
                         </xar:if>
                         
                         <xar:set name="dummy">$workhours['hours'] = sprintf("%.02f", $workhours['hours'])</xar:set>
                         
-		                 <tr class="#$rowclass#">
-                            <td>
-								<xar:data-output property="$properties['eventdate']" value="$workdate" dateformat="%d-%b" />&nbsp;
-							</td>
-                            <td>
-								<xar:data-output property="$properties['ownerid']" value="$ownerid" />&nbsp;
-							</td>
-                            <td class="xar-align-right">
-								<xar:data-output property="$properties['hours']" value="$workhours['hours']" />
-							</td>
-                            <td class="xar-align-right">
-								<xar:data-output property="$properties['hours']" value="$workhours['ttltasks']" />
-							</td>
-                        </tr>
-					</xar:foreach>
+                        <div class="#$rowclass#">
+                            <div class="xtasks-tasklist-data" style="float: left; width: 60px;"><xar:data-output property="$properties['eventdate']" value="$workdate" dateformat="%d-%b" />&nbsp;</div>
+                            <div class="xtasks-tasklist-data" style="float: left; width: 120px;"><xar:data-output property="$properties['ownerid']" value="$ownerid" />&nbsp;</div>
+                            <div class="xtasks-tasklist-data" style="float: left; width: 60px; text-align: right;"><xar:data-output property="$properties['hours']" value="$workhours['hours']" />&nbsp;hrs</div>
+                            <div class="xtasks-tasklist-data" style="float: left; width: 60px; text-align: right;"><xar:data-output property="$properties['hours']" value="$workhours['ttltasks']" />&nbsp;tasks</div>
+                            <div style="clear: both;"></div>
+                        </div>
+                    </xar:foreach>
                 </xar:foreach>
             </xar:foreach>
         <xar:elseif condition="$reportview eq 'taskownerid:workdate:thisprojectid'" />
             <xar:foreach in="$worksummary" key="$projectid" value="$projectsummary">
-				<xar:if condition="count($projectsummary) lt 1">
-					<xar:continue />
-				</xar:if>
                 <xar:foreach in="$projectsummary" key="$ownerid" value="$staffhours">
-					<xar:if condition="count($staffhours) lt 1">
-						<xar:continue />
-					</xar:if>
                     <xar:foreach in="$staffhours" key="$workdate" value="$workhours">
                     
                         <xar:if condition="$projectid ne $prev_projectid or $firstproject">
@@ -290,56 +194,42 @@
                             <xar:set name="firstproject">0</xar:set>
                             <xar:set name="errortype">xarCurrentErrorType()</xar:set>
                             
-                        	<tr>
-								<th colspan="4" class="xar-alt xar-align-left">
-		                            <xar:if condition="!empty($errortype)">
-		                                <xar:set name="dummy">xarErrorFree()</xar:set>
-										[ <em><xar:mlstring>project deleted</xar:mlstring></em> ]
-		                            <xar:else />
-										#$projectinfo['project_name']# [<a href="index.php?module=xproject&amp;type=admin&amp;func=display&amp;projectid=#$projectid#&amp;mode=worklog"><xar:mlstring>View</xar:mlstring></a>]
-		                            </xar:if>
-								</th>
-							</tr>
+                            <xar:if condition="!$firstproject">
+                                </fieldset>
+                            </xar:if>
                             
-                            <xar:set name="rowclass">"xar-alt"</xar:set>
+                            <xar:if condition="!empty($errortype)">
+                                <xar:set name="dummy">xarErrorFree()</xar:set>
+                                <fieldset><legend><span class="xar-title">[project deleted]</span></legend>
+                            <xar:else />
+                                <fieldset><legend><span class="xar-title">#$projectinfo['project_name']#</span> [<a href="index.php?module=xproject&amp;type=admin&amp;func=display&amp;projectid=#$projectid#&amp;mode=worklog">view</a>]</legend>
+                            </xar:if>
+                            <xar:set name="rowclass">"xtasks-alt-row"</xar:set>
                             <xar:set name="prev_projectid">$projectid</xar:set>
                         </xar:if>
                     
                     
-                        <xar:if condition="$rowclass eq 'xar-norm'">
-                            <xar:set name="rowclass">"xar-alt"</xar:set>
+                        <xar:if condition="$rowclass eq 'xtasks-norm-row'">
+                            <xar:set name="rowclass">"xtasks-alt-row"</xar:set>
                         <xar:else />
-                            <xar:set name="rowclass">"xar-norm"</xar:set>
+                            <xar:set name="rowclass">"xtasks-norm-row"</xar:set>
                         </xar:if>
                         
                         <xar:set name="dummy">$workhours['hours'] = sprintf("%.02f", $workhours['hours'])</xar:set>
                         
-		                 <tr class="#$rowclass#">
-                            <td>
-								<xar:data-output property="$properties['eventdate']" value="$workdate" dateformat="%d-%b" />&nbsp;
-							</td>
-                            <td>
-								<xar:data-output property="$properties['ownerid']" value="$ownerid" />&nbsp;
-							</td>
-                            <td class="xar-align-right">
-								<xar:data-output property="$properties['hours']" value="$workhours['hours']" />
-							</td>
-                            <td class="xar-align-right">
-								<xar:data-output property="$properties['hours']" value="$workhours['ttltasks']" />
-							</td>
-                        </tr>
+                        <div class="#$rowclass#">
+                            <div class="xtasks-tasklist-data" style="float: left; width: 60px;"><xar:data-output property="$properties['eventdate']" value="$workdate" dateformat="%d-%b" />&nbsp;</div>
+                            <div class="xtasks-tasklist-data" style="float: left; width: 120px;"><xar:data-output property="$properties['ownerid']" value="$ownerid" />&nbsp;</div>
+                            <div class="xtasks-tasklist-data" style="float: left; width: 60px; text-align: right;"><xar:data-output property="$properties['hours']" value="$workhours['hours']" />&nbsp;hrs</div>
+                            <div class="xtasks-tasklist-data" style="float: left; width: 60px; text-align: right;"><xar:data-output property="$properties['hours']" value="$workhours['ttltasks']" />&nbsp;tasks</div>
+                            <div style="clear: both;"></div>
+                        </div>
                     </xar:foreach>
                 </xar:foreach>
             </xar:foreach>
         <xar:elseif condition="$reportview eq 'workdate:thisprojectid:taskownerid'" />
             <xar:foreach in="$worksummary" key="$projectid" value="$projectsummary">
-				<xar:if condition="count($projectsummary) lt 1">
-					<xar:continue />
-				</xar:if>
                 <xar:foreach in="$projectsummary" key="$ownerid" value="$staffhours">
-					<xar:if condition="count($staffhours) lt 1">
-						<xar:continue />
-					</xar:if>
                     <xar:foreach in="$staffhours" key="$workdate" value="$workhours">
                     
                         <xar:if condition="$projectid ne $prev_projectid or $firstproject">
@@ -347,55 +237,42 @@
                             <xar:set name="firstproject">0</xar:set>
                             <xar:set name="errortype">xarCurrentErrorType()</xar:set>
                             
-                        	<tr>
-								<th colspan="4" class="xar-alt xar-align-left">
-		                            <xar:if condition="!empty($errortype)">
-		                                <xar:set name="dummy">xarErrorFree()</xar:set>
-										[ <em><xar:mlstring>project deleted</xar:mlstring></em> ]
-		                            <xar:else />
-										#$projectinfo['project_name']# [<a href="index.php?module=xproject&amp;type=admin&amp;func=display&amp;projectid=#$projectid#&amp;mode=worklog"><xar:mlstring>View</xar:mlstring></a>]
-		                            </xar:if>
-								</th>
-							</tr>
-                            <xar:set name="rowclass">"xar-alt"</xar:set>
+                            <xar:if condition="!$firstproject">
+                                </fieldset>
+                            </xar:if>
+                            
+                            <xar:if condition="!empty($errortype)">
+                                <xar:set name="dummy">xarErrorFree()</xar:set>
+                                <fieldset><legend><span class="xar-title">[project deleted]</span></legend>
+                            <xar:else />
+                                <fieldset><legend><span class="xar-title">#$projectinfo['project_name']#</span> [<a href="index.php?module=xproject&amp;type=admin&amp;func=display&amp;projectid=#$projectid#&amp;mode=worklog">view</a>]</legend>
+                            </xar:if>
+                            <xar:set name="rowclass">"xtasks-alt-row"</xar:set>
                             <xar:set name="prev_projectid">$projectid</xar:set>
                         </xar:if>
                     
                     
-                        <xar:if condition="$rowclass eq 'xar-norm'">
-                            <xar:set name="rowclass">"xar-alt"</xar:set>
+                        <xar:if condition="$rowclass eq 'xtasks-norm-row'">
+                            <xar:set name="rowclass">"xtasks-alt-row"</xar:set>
                         <xar:else />
-                            <xar:set name="rowclass">"xar-norm"</xar:set>
+                            <xar:set name="rowclass">"xtasks-norm-row"</xar:set>
                         </xar:if>
                         
                         <xar:set name="dummy">$workhours['hours'] = sprintf("%.02f", $workhours['hours'])</xar:set>
                         
-		                 <tr class="#$rowclass#">
-                            <td>
-								<xar:data-output property="$properties['eventdate']" value="$workdate" dateformat="%d-%b" />&nbsp;
-							</td>
-                            <td>
-								<xar:data-output property="$properties['ownerid']" value="$ownerid" />&nbsp;
-							</td>
-                            <td class="xar-align-right">
-								<xar:data-output property="$properties['hours']" value="$workhours['hours']" />
-							</td>
-                            <td class="xar-align-right">
-								<xar:data-output property="$properties['hours']" value="$workhours['ttltasks']" />
-							</td>
-                        </tr>
-                     </xar:foreach>
+                        <div class="#$rowclass#">
+                            <div class="xtasks-tasklist-data" style="float: left; width: 60px;"><xar:data-output property="$properties['eventdate']" value="$workdate" dateformat="%d-%b" />&nbsp;</div>
+                            <div class="xtasks-tasklist-data" style="float: left; width: 120px;"><xar:data-output property="$properties['ownerid']" value="$ownerid" />&nbsp;</div>
+                            <div class="xtasks-tasklist-data" style="float: left; width: 60px; text-align: right;"><xar:data-output property="$properties['hours']" value="$workhours['hours']" />&nbsp;hrs</div>
+                            <div class="xtasks-tasklist-data" style="float: left; width: 60px; text-align: right;"><xar:data-output property="$properties['hours']" value="$workhours['ttltasks']" />&nbsp;tasks</div>
+                            <div style="clear: both;"></div>
+                        </div>
+                    </xar:foreach>
                 </xar:foreach>
             </xar:foreach>
         <xar:elseif condition="$reportview eq 'workdate:taskownerid:thisprojectid'" />
             <xar:foreach in="$worksummary" key="$projectid" value="$projectsummary">
-				<xar:if condition="count($projectsummary) lt 1">
-					<xar:continue />
-				</xar:if>
                 <xar:foreach in="$projectsummary" key="$ownerid" value="$staffhours">
-					<xar:if condition="count($staffhours) lt 1">
-						<xar:continue />
-					</xar:if>
                     <xar:foreach in="$staffhours" key="$workdate" value="$workhours">
                     
                         <xar:if condition="$projectid ne $prev_projectid or $firstproject">
@@ -403,46 +280,41 @@
                             <xar:set name="firstproject">0</xar:set>
                             <xar:set name="errortype">xarCurrentErrorType()</xar:set>
                             
-                        	<tr>
-								<th colspan="4" class="xar-alt xar-align-left">
-		                            <xar:if condition="!empty($errortype)">
-		                                <xar:set name="dummy">xarErrorFree()</xar:set>
-										[ <em><xar:mlstring>project deleted</xar:mlstring></em> ]
-		                            <xar:else />
-										#$projectinfo['project_name']# [<a href="index.php?module=xproject&amp;type=admin&amp;func=display&amp;projectid=#$projectid#&amp;mode=worklog"><xar:mlstring>View</xar:mlstring></a>]
-		                            </xar:if>
-								</th>
-							</tr>
-                            <xar:set name="rowclass">"x-alt"</xar:set>
+                            <xar:if condition="!$firstproject">
+                                </fieldset>
+                            </xar:if>
+                            
+                            <xar:if condition="!empty($errortype)">
+                                <xar:set name="dummy">xarErrorFree()</xar:set>
+                                <fieldset><legend><span class="xar-title">[project deleted]</span></legend>
+                            <xar:else />
+                                <fieldset><legend><span class="xar-title">#$projectinfo['project_name']#</span> [<a href="index.php?module=xproject&amp;type=admin&amp;func=display&amp;projectid=#$projectid#&amp;mode=worklog">view</a>]</legend>
+                            </xar:if>
+                            <xar:set name="rowclass">"xtasks-alt-row"</xar:set>
                             <xar:set name="prev_projectid">$projectid</xar:set>
                         </xar:if>
                     
                     
-                        <xar:if condition="$rowclass eq 'xar-norm'">
-                            <xar:set name="rowclass">"xar-alt"</xar:set>
+                        <xar:if condition="$rowclass eq 'xtasks-norm-row'">
+                            <xar:set name="rowclass">"xtasks-alt-row"</xar:set>
                         <xar:else />
-                            <xar:set name="rowclass">"xar-norm"</xar:set>
+                            <xar:set name="rowclass">"xtasks-norm-row"</xar:set>
                         </xar:if>
                         
                         <xar:set name="dummy">$workhours['hours'] = sprintf("%.02f", $workhours['hours'])</xar:set>
                         
-		                 <tr class="#$rowclass#">
-                            <td>
-								<xar:data-output property="$properties['eventdate']" value="$workdate" dateformat="%d-%b" />&nbsp;
-							</td>
-                            <td>
-								<xar:data-output property="$properties['ownerid']" value="$ownerid" />&nbsp;
-							</td>
-                            <td class="xar-align-right">
-								<xar:data-output property="$properties['hours']" value="$workhours['hours']" />
-							</td>
-                            <td class="xar-align-right">
-								<xar:data-output property="$properties['hours']" value="$workhours['ttltasks']" />
-							</td>
-                        </tr>
-                     </xar:foreach>
+                        <div class="#$rowclass#">
+                            <div class="xtasks-tasklist-data" style="float: left; width: 60px;"><xar:data-output property="$properties['eventdate']" value="$workdate" dateformat="%d-%b" />&nbsp;</div>
+                            <div class="xtasks-tasklist-data" style="float: left; width: 120px;"><xar:data-output property="$properties['ownerid']" value="$ownerid" />&nbsp;</div>
+                            <div class="xtasks-tasklist-data" style="float: left; width: 60px; text-align: right;"><xar:data-output property="$properties['hours']" value="$workhours['hours']" />&nbsp;hrs</div>
+                            <div class="xtasks-tasklist-data" style="float: left; width: 60px; text-align: right;"><xar:data-output property="$properties['hours']" value="$workhours['ttltasks']" />&nbsp;tasks</div>
+                            <div style="clear: both;"></div>
+                        </div>
+                    </xar:foreach>
                 </xar:foreach>
             </xar:foreach>
         </xar:if>
-	</table>
+    </div>
+    <br />
 </div>
+<div class="xar-mod-foot"></div>

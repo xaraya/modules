@@ -1,13 +1,11 @@
-<xar:set name="xtasks_objectid">xarModGetVar('xtasks','xtasks_objectid')</xar:set>
-<xar:data-getitem name="$properties" module="xtasks" itemtype="1" itemid="$xtasks_objectid" />
-<xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
-<xar:data-getitem name="$xproject_properties" module="xproject" itemtype="1" itemid="$projects_objectid" />
+<xar:data-getitem name="$properties" module="xtasks" itemtype="1" itemid="0" />
+<xar:data-getitem name="$xproject_properties" module="xproject" itemtype="1" itemid="0" />
 
 <xar:set name="encoded_returnurl">urlencode($returnurl)</xar:set>
 
-<xar:template type="module" file="admin-menu" />
-
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>My Task List</xar:mlstring></span></div>
+<a name="newtask"></a>
+<div id="newtask"></div>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>My Task List</xar:mlstring> [ #$mymemberinfo['sortname']# ] <xar:mlstring>Not you?</xar:mlstring> <a href="#xarModURL('xproject','user','settings')#"><xar:mlstring>select profile</xar:mlstring></a></span></div>
 <div class="xar-mod-body">
 
 <xar:if condition="!xarUserIsLoggedIn()">
@@ -16,10 +14,10 @@
     <table border="0" cellpadding="2" cellspacing="1" style="width: 100%;">
         <tr>
             <th class="xtasks-tasklist-header" style="width: auto;" colspan="2"><xar:mlstring>Task Name / Project / Client</xar:mlstring></th>
-            <th class="xtasks-tasklist-header"><xar:mlstring>Importance</xar:mlstring></th>
-            <th class="xtasks-tasklist-header"><xar:mlstring>Priority</xar:mlstring></th>
-            <th class="xtasks-tasklist-header"><xar:mlstring>Date Due</xar:mlstring></th>
-            <th class="xtasks-tasklist-header"><a href="&xar-modurl-xtasks-user-mytasks;&amp;theme=print" target="_blank"><xar:mlstring>Printable</xar:mlstring></a></th>
+            <th class="xtasks-tasklist-header"><a href="#xarModURL('xtasks','user','mytasks',array('orderby'=>'importance'))#"><xar:mlstring>Importance</xar:mlstring></a></th>
+            <th class="xtasks-tasklist-header"><a href="#xarModURL('xtasks','user','mytasks',array('orderby'=>'priority'))#"><xar:mlstring>Priority</xar:mlstring></a></th>
+            <th class="xtasks-tasklist-header"><a href="#xarModURL('xtasks','user','mytasks',array('orderby'=>'status'))#"><xar:mlstring>Date Due</xar:mlstring></a></th>
+            <th class="xtasks-tasklist-header" style="text-align: right;"><xar:mlstring>Options</xar:mlstring>&nbsp;|&nbsp;<a href="&xar-modurl-xtasks-user-mytasks;&amp;theme=print" target="_blank"><xar:mlstring>Printable</xar:mlstring></a></th>
         </tr>
     
         <xar:set name="displaystatus">""</xar:set>
@@ -50,7 +48,7 @@
                 <xar:if condition="$taskinfo['projectinfo']['projectid'] gt 0">
                     <tr>
                         <td class="xtasks-tasklist-data" colspan="6">
-                            <xar:if condition="isset($taskinfo['projectinfo']['project_name']) and !empty($taskinfo['projectinfo']['project_name'])">Project: <strong><a href="&xar-modurl-xproject-admin-display;&amp;projectid=#$taskinfo['projectinfo']['projectid']#&amp;mode=tasklist" style="font-size: 130%; font-weight: bold;">#$taskinfo['projectinfo']['project_name']#</a></strong></xar:if>
+                            <xar:if condition="isset($taskinfo['projectinfo']['project_name']) and !empty($taskinfo['projectinfo']['project_name'])">Project: <strong><a href="&xar-modurl-xproject-admin-display;&amp;projectid=#$taskinfo['projectinfo']['projectid']#&amp;mode=tasks" style="font-size: 130%; font-weight: bold;">#$taskinfo['projectinfo']['project_name']#</a></strong></xar:if>
                             <xar:if condition="isset($taskinfo['projectinfo']['clientid']) and !empty($taskinfo['projectinfo']['clientid'])">&nbsp;[ <a href="&xar-modurl-addressbook-user-viewdetail;&amp;id=#$taskinfo['projectinfo']['clientid']#"><xar:data-output property="$xproject_properties['clientid']" value="$taskinfo['projectinfo']['clientid']" /></a> ]</xar:if>
                         </td>
                     </tr>
@@ -67,7 +65,7 @@
                 </td>
                     
                 <xar:set name="importance">$taskinfo['importance']</xar:set>
-                <td class="xtasks-tasklist-data" style="text-align: center;">
+                <td class="xtasks-tasklist-data">
                     <xar:if condition="$importance le 1">
                         <strong><xar:data-output property="$properties['importance']" value="$importance" /></strong>
                     <xar:elseif condition="$importance ge 9" />
@@ -79,16 +77,16 @@
             
                 <xar:set name="priority">$taskinfo['priority']</xar:set>
                 <td class="xtasks-tasklist-data" style="text-align: center;">
-                    <div style="float: left; width: 10px;">
+                    <div style="float: left; width: auto;">
                         <xar:if condition="$priority le 1">
-                            <strong>#$taskinfo['priority']#</strong>
+                            <strong><xar:data-output property="$properties['priority']" value="$taskinfo['priority']" /></strong>
                         <xar:elseif condition="$priority ge 9" />
-                            <em>#$taskinfo['priority']#</em>
+                            <em><xar:data-output property="$properties['priority']" value="$taskinfo['priority']" /></em>
                         <xar:else />
-                            #$taskinfo['priority']#
+                            <xar:data-output property="$properties['priority']" value="$taskinfo['priority']" />
                         </xar:if>
                     </div>
-                    <div style="width: 10px; float: right; vertical-align: middle; padding-top: .2em;">
+                    <div style="width: 10px; float: left; vertical-align: middle; padding-top: .2em;">
                         <div style="height: 7px;">
                             <xar:if condition="$taskinfo.priority gt 1">
                                 <a href="&xar-modurl-xtasks-admin-reprioritize;&amp;taskid=#$taskinfo.taskid#&amp;mode=decr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/up.gif" align="top" /></a>
@@ -114,13 +112,12 @@
                     </xar:if>
                 </td>
             
-                <td class="xar-norm" style="text-align: right; white-space: nowrap;"><a href="&xar-modurl-xtasks-admin-reassign;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.reassign.gif" border="0" /></a>&nbsp;<a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0" /></a>&nbsp;<a href="&xar-modurl-xtasks-admin-delete;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0" /></a></td>
-            
+                <td class="xar-norm" style="text-align: right; white-space: nowrap;"><xar:if condition="count($taskinfo['worklog']) gt 0"><a href="javascript: void twist('worklist#$taskinfo['taskid']#');" title="View Task Update"><img src="modules/xtasks/xarimages/rotate.gif" border="0" /></a></xar:if><a class="thickbox" href="&xar-modurl-xtasks-worklog-new;&amp;pageName=module&amp;taskid=#$taskinfo['taskid']#&amp;inline=1&amp;returnurl=#$encoded_returnurl#" onClick="twist_open('worklist#$taskinfo['taskid']#');" title="Document Work Performed"><img src="modules/xtasks/xarimages/button.work.gif" border="0" /></a><a href="&xar-modurl-xtasks-admin-reassign;&amp;taskid=#$taskinfo['taskid']#&amp;inline=1&amp;returnurl=#$encoded_returnurl#" onClick="return loadContent(this.href,'newtask');" title="Reassign Task"><img src="modules/xtasks/xarimages/button.reassign.gif" border="0" /></a><a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$taskinfo['taskid']#&amp;inline=1&amp;returnurl=#$encoded_returnurl#" onClick="return loadContent(this.href,'newtask');" title="Modify Task Details"><img src="modules/xtasks/xarimages/button.edit.gif" border="0" align="bottom" /></a><a href="&xar-modurl-xtasks-admin-delete;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#" title="Close or Delete Task"><img src="modules/xtasks/xarimages/button.delete.gif" border="0" align="bottom" /></a></td>
             </tr>
             <xar:if condition="!empty($taskinfo['description'])">
                 <tr><td>&nbsp;</td><td class="xtasks-tasklist-data" colspan="5" style="padding-left: 25px;"><em>#$taskinfo['description']#</em></td></tr>
             </xar:if>
-            <tr><td colspan="6" class="xtasks-tasklist-data">&nbsp;</td></tr>
+            <tr><td>&nbsp;</td><td class="xtasks-tasklist-data" colspan="5" style="padding-left: 25px;"><div id="worklist#$taskinfo['taskid']#" style="display: none;"><xar:template type="module" file="worklog" subdata="array('worklog'=&gt;$taskinfo['worklog'])" /></div></td></tr>
         </xar:foreach>
     
     

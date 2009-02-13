@@ -1,53 +1,21 @@
 <!-- task agnostic worklog by timeframe -->
 
-<xar:set name="worklog_objectid">xarModGetVar('xtasks','worklog_objectid')</xar:set>
-<xar:data-getitem name="$properties" module="xtasks" itemtype="2" itemid="$worklog_objectid" />
-<div class="xar-fullwidth">
+<xar:data-getitem name="$properties" module="xtasks" itemtype="2" itemid="0" />
+<div style="width: auto; text-align: left; background-color: #A0A080; margin: 5px;">
     <xar:if condition="count($worklog) gt 0">
-		<table class="xar-fullwidth">
-			<tr>
-				<th>
-					<xar:mlstring>Date</xar:mlstring>
-				</th>
-				<th>
-					<xar:mlstring>Owner</xar:mlstring>
-				</th>
-				<th>
-					<xar:mlstring>Hours</xar:mlstring>
-				</th>
-				<th>
-					<xar:mlstring>Actions</xar:mlstring>
-				</th>
-			</tr>
-	        <xar:foreach in="$worklog" value="$workdetails">
-				<tr>
-	                <td>
-						<xar:data-output property="$properties['eventdate']" value="$workdetails['eventdate']" dateformat="%d-%b-%Y" />
-					</td>
-	                <td>
-						<xar:data-output property="$properties['ownerid']" value="$workdetails['ownerid']" />
-					</td>
-	                <td>
-						<xar:data-output property="$properties['hours']" value="$workdetails['hours']" />&nbsp;hrs
-					</td>
-	                <td class="xar-align-center">
-						<a href="&xar-modurl-xtasks-worklog-modify;&amp;worklogid=#$workdetails['worklogid']#" title="#xarML('Edit')#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0" align="bottom"></a>
-						&nbsp;<a href="&xar-modurl-xtasks-worklog-delete;&amp;worklogid=#$workdetails['worklogid']#" title="#xarML('Delete')#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0" alt=""></a>
-					</td>
-				</tr>
-				<xar:set name="notes">$workdetails['formatted_notes']</xar:set>
-				<xar:if condition="trim($notes) ne ''">
-		            <tr>
-						<td colspan="4" class="xtasks-desc">
-							<xar:data-output property="$properties['notes']" value="$workdetails['formatted_notes']" />
-						</td>
-					</tr>
-				</xar:if>
-	        </xar:foreach>
-		</table>
+        <xar:foreach in="$worklog" value="$workdetails">
+            <div style="border-top: 1px solid black; position: relative;" class="xar-title">
+                <span style="float: left; width: 200px; background-color: #A0A080;">#xarLocaleGetFormattedDate("medium", strtotime($workdetails['eventdate']))# #xarLocaleGetFormattedTime("medium", strtotime($workdetails['eventdate']))#
+                </span>
+                <span style="float: left; width: 200px; background-color: #A0A080; text-align: center;"><xar:data-output property="$properties['ownerid']" value="$workdetails['ownerid']" /></span>
+                <span style="float: left; width: 90px; background-color: #A0A080;"><xar:data-output property="$properties['hours']" value="$workdetails['hours']" />&nbsp;hrs</span>
+                <span style="float: right; width: 50px; background-color: #A0A080;"><a href="&xar-modurl-xtasks-worklog-modify;&amp;worklogid=#$workdetails['worklogid']#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0" align="bottom"></a>&nbsp;<a href="&xar-modurl-xtasks-worklog-delete;&amp;worklogid=#$workdetails['worklogid']#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0" align="bottom"></a></span>
+                <div style="clear: right;"></div>
+            </div>
+
+            <div class="xar-tiny" style="margin-left: 0px; overflow: hidden;"><xar:data-output property="$properties['notes']" value="$workdetails['formatted_notes']" /></div>
+        </xar:foreach>
     <xar:else />
-        <p class="xar-align-center">
-			<xar:mlstring>No Work Recorded</xar:mlstring>
-		</p>
+        <div class="xar-norm; background-color: #A0A080;"><xar:mlstring>No Work Recorded</xar:mlstring></div>
     </xar:if>
 </div>

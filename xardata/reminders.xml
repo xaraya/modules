@@ -20,7 +20,7 @@
     </property>
     <property name="eventdate">
       <id>2762</id>
-      <label>Event Date</label>
+      <label>eventdate</label>
       <type>calendar</type>
       <default></default>
       <source>dynamic_data</source>

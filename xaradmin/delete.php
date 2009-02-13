@@ -27,7 +27,7 @@ function xtasks_admin_delete($args)
         $taskid = $objectid;
     }
     if (!isset($returnurl)) {
-        $returnurl = xarServerGetVar('HTTP_REFERER');
+        $returnurl = $_SERVER['HTTP_REFERER'];
     }
     if (empty($returnurl)) {
         $returnurl = xarModURL('xtasks', 'admin', 'view');

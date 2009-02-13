@@ -29,6 +29,9 @@ function xtasks_worklogapi_update($args)
     if (!xarSecurityCheck('AuditWorklog', 1, 'Item', "All:All:All")) {
         return;
     }
+    
+    $offset = xarMLS_userOffset($eventdate);
+    $eventdate = date("Y-m-d H:i:s", strtotime($eventdate) - ($offset * 3600));
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -36,7 +39,7 @@ function xtasks_worklogapi_update($args)
     $worklogtable = $xartable['xtasks_worklog'];
 
     $query = "UPDATE $worklogtable
-            SET eventdate =?, 
+            SET eventdate = ?, 
                   hours = ?,
                   notes = ?
             WHERE worklogid = ?";

@@ -16,11 +16,8 @@ function xtasks_userapi_menu()
     $menu = array();
 
     $menu['menutitle'] = xarModGetVar('xtasks','todoheading');
-
-    $menu['menulabel_view'] = xarML('Tasks');
-    $menu['menulabel_new'] = xarML('New Task');
-    $menu['menulabel_search'] = xarML('Search');
-    $menu['menulabel_config'] = xarML('Config');
+     
+    $menu['statusmsg'] = '';
 
     return $menu;
 }

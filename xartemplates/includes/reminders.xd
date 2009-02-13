@@ -1,44 +1,23 @@
-<xar:set name="reminders_objectid">xarModGetVar('xtasks','reminders_objectid')</xar:set>
-<xar:data-getitem name="$properties" module="xtasks" itemtype="3" itemid="$reminders_objectid" />
-    
-<div class="xar-fullwidth">
-    <xar:if condition="count($reminders) gt 0">
-		<table class="xar-fullwidth">
-			<tr>
-				<th>
-					<xar:mlstring>Reminder Date</xar:mlstring>
-				</th>
-				<th>
-					<xar:mlstring>For</xar:mlstring></strong>
-				</th>
-				<th>
-					<xar:mlstring>Actions</xar:mlstring>
-				</th>
-			</tr>
-
-	        <xar:foreach in="$reminders" value="$reminderdetails">
-	            <tr>
-	                <td>
-						<xar:data-output property="$properties['eventdate']" value="$reminderdetails['eventdate']" dateformat="%d-%b-%Y @%H:%M%p" />
-					</td>
-	                <td>
-						<xar:data-output property="$properties['ownerid']" value="$reminderdetails['ownerid']" />
-					</td>
-	                <td class="xar-align-center">
-						<a href="&xar-modurl-xtasks-reminders-modify;&amp;reminderid=#$reminderdetails['reminderid']#" title="#xarML('Edit')#"><img src="modules/xtasks/xarimages/button.edit.gif" alt="" /></a>
-						<a href="&xar-modurl-xtasks-reminders-delete;&amp;reminderid=#$reminderdetails['reminderid']#" title="#xarML('Delete')#"><img src="modules/xtasks/xarimages/button.delete.gif" alt="" /></a>
-					</td>
-				</tr>
-				<tr>
-	                <td colspan="3" class="xtasks-desc">
-						<xar:data-output property="$properties['reminder']" value="$reminderdetails['reminder']" />
-					</td>
-	            </tr>
-	        </xar:foreach>
-		</table>
-    <xar:else />
-        <p class="xar-align-center">
-			<xar:mlstring>No Reminders Recorded</xar:mlstring>
-		</p>
-    </xar:if>
-</div>
+<xar:data-getitem name="$properties" module="xtasks" itemtype="3" itemid="0" />
+<xar:if condition="count($reminders) gt 0">
+    <div class="xar-mod-body">
+        <div style="text-align: left;">
+            <div class="xar-title">
+                <span style="float: left; width: 150px;"><strong><xar:mlstring>Reminder Date</xar:mlstring></strong></span>
+                <span style="float: left; width: 120px;"><strong><xar:mlstring>For</xar:mlstring></strong></span>
+                <span style="float: left; width: 50px;"><strong><xar:mlstring>Notes</xar:mlstring></strong></span>
+                <span style="float: right; width: 50px;"><strong><xar:mlstring>Options</xar:mlstring></strong></span>
+                <div style="clear: right;"></div>
+            </div>
+            <xar:foreach in="$reminders" value="$reminderdetails">
+                <div class="xar-normal">
+                    <span style="float: left; width: 150px;"><xar:data-output property="$properties['eventdate']" value="$reminderdetails['eventdate']" dateformat="%d-%b-%Y @%H:%M%p" />&nbsp;</span>
+                    <span style="float: left; width: 120px;"><xar:data-output property="$properties['ownerid']" value="$reminderdetails['ownerid']" /></span>
+                    <span style="float: left; width: 120px;"><xar:data-output property="$properties['reminder']" value="$reminderdetails['reminder']" /></span>
+                    <span style="float: right; width: 50px; text-align: right; word-wrap: nowrap;"><a href="&xar-modurl-xtasks-reminders-modify;&amp;reminderid=#$reminderdetails['reminderid']#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0" align="bottom" /></a>&nbsp;<a href="&xar-modurl-xtasks-reminders-delete;&amp;reminderid=#$reminderdetails['reminderid']#"><img src="modules/xtasks/xarimages/button.delete.gif" border="0" align="bottom" /></a></span>
+                    <div style="clear: right;"></div>
+                </div>
+            </xar:foreach>
+        </div>
+    </div>
+</xar:if>

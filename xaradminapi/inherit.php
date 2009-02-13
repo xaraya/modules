@@ -48,6 +48,8 @@ function xtasks_adminapi_inherit($args)
         if (!xarSecurityCheck('EditXTask', 1, 'Item', "$parentinfo[task_name]:All:$parentid")) {
             return;
         }
+    } else {
+        $parentinfo = array();
     }
     
     $taskinfo = xarModAPIFunc('xtasks',
@@ -67,26 +69,27 @@ function xtasks_adminapi_inherit($args)
     }
     
     // MUST ENSURE THAT PARENT IS NOT PRESENT IN THE TASK LINEAGE, THUS CREATING A LOOP
-    if($parentinfo['parentid'] == $taskinfo['taskid']) {
-        $msg = xarML('Cannot move a parent task under its own children!');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-            new SystemException($msg));
-        return;
-    }
-
-    while($parentinfo['parentid'] > 0) {
-        if($taskinfo['taskid'] == $parentinfo['parentid']) {
+    if(isset($parentinfo['parentid'])) {
+        if($parentinfo['parentid'] == $taskinfo['taskid']) {
             $msg = xarML('Cannot move a parent task under its own children!');
             xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                 new SystemException($msg));
             return;
         }
-        $parentinfo = xarModAPIFunc('xtasks',
-                                'user',
-                                'get',
-                                array('taskid' => $parentinfo['parentid']));
-    }
     
+        while($parentinfo['parentid'] > 0) {
+            if($taskinfo['taskid'] == $parentinfo['parentid']) {
+                $msg = xarML('Cannot move a parent task under its own children!');
+                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                    new SystemException($msg));
+                return;
+            }
+            $parentinfo = xarModAPIFunc('xtasks',
+                                    'user',
+                                    'get',
+                                    array('taskid' => $parentinfo['parentid']));
+        }
+    }    
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

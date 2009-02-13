@@ -5,8 +5,7 @@
 
 <xar:style scope="module" file="xtasks" module="xtasks" />
 
-<xar:set name="xtasks_objectid">xarModGetVar('xtasks','xtasks_objectid')</xar:set>
-<xar:data-getitem name="$properties" module="xTasks" itemtype="1" itemid="$xtasks_objectid" />
+<xar:data-getitem name="$properties" module="xTasks" itemtype="1" itemid="0" />
     
 <xar:set name="statusbgcolor">array()</xar:set>
 <xar:set name="dummy">$statusbgcolor['Draft'] = "#CCCCCC"</xar:set>
@@ -17,7 +16,7 @@
 <xar:set name="encoded_returnurl">urlencode($returnurl)</xar:set>
 
 <xar:set name="dummy">xarVarFetch('mode', 'str::', $mode, '', XARVAR_NOT_REQUIRED)</xar:set>
-<xar:if condition="$mode eq 'tasklist' or empty($mode) or $showajax">
+<xar:if condition="$mode eq 'tasks' or empty($mode) or $showajax">
     <xar:set name="tasks_style">"display: block;"</xar:set>
 <xar:else />
     <xar:set name="tasks_style">"display: none;"</xar:set>
@@ -35,15 +34,19 @@
 </xar:if>
 <xar:set name="newargs">$newargs."&amp;showajax=1&amp;inline=1"</xar:set>
 
-<div><h3><span class="xar-mod-title" style="float: left;"><xar:mlstring>Sub-Tasks</xar:mlstring> [ <a href="#xarModUrl('xtasks','admin','new')##$newargs#" onclick="twist_open('workspace_tasks'); return loadContent(this.href,'newtask')"><xar:mlstring>Add Task</xar:mlstring></a> ]</span><span style="float: right;"><a href="javascript: void twist('workspace_tasks');"><img src="modules/xtasks/xarimages/rotate.gif" border="0" /></a></span></h3></div>
-<div style="clear: both;"></div>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <a href="javascript: void twist('workspace_tasks');"><img src="modules/xtasks/xarimages/rotate.gif" border="0" align="right" /></a>
+        <xar:mlstring>Sub-Tasks</xar:mlstring> [ <a href="&xar-modurl-xtasks-admin-new;#$newargs#" onclick="twist_open('workspace_tasks'); return loadContent(this.href,'newtask')"><xar:mlstring>Add Task</xar:mlstring></a> ]
+    </span>
+</div>
     
 <div align="left" style="#$tasks_style# height: 600px; overflow: auto;" id="workspace_tasks">
     <a name="newtask"></a>
     <div id="newtask"></div>
 
         
-    <form method="post" action="#xarModUrl('xtasks','admin','process')#" style="display: inline;">
+    <form method="post" action="&xar-modurl-xtasks-admin-process;" style="display: inline;">
         <input type="hidden" name="authid" value="#$authid#" />
         <input type="hidden" name="returnurl" value="#$returnurl#" />
         
@@ -72,14 +75,14 @@
                     
                     <div>
                         <div style="float: left;"><input type="checkbox" DISABLED /><input type="submit" name="taskfocus[0]" value="+" style="color: black; display: inline;" /> <xar:mlstring>Move checked sub-tasks directly under this project.</xar:mlstring></div>           
-                        <div style="float: right;"><xar:data-input property="$properties['status']" name="status" /><input type="submit" name="chngstatus" value="Go" onclick="return confirmSubmit()" /></div>          
+                        <div style="float: right;"><xar:data-input property="$properties['status']" name="status" /><input type="submit" name="chngstatus" value="Go" onClick="return confirmSubmit()" /></div>          
                         <div style="clear: both;"></div>        
                     </div>
                 <xar:else />
                     
                     <div>
                         <div style="float: left;"><input type="checkbox" DISABLED /><input type="submit" name="taskfocus[0]" value="+" style="color: black; display: inline;" /> <xar:mlstring>Move checked sub-tasks directly under this item.</xar:mlstring></div>           
-                        <div style="float: right;"><xar:data-input property="$properties['status']" name="status" /><input type="submit" name="chngstatus" value="Go" onclick="return confirmSubmit()" /></div>         
+                        <div style="float: right;"><xar:data-input property="$properties['status']" name="status" /><input type="submit" name="chngstatus" value="Go" onClick="return confirmSubmit()" /></div>         
                         <div style="clear: both;"></div>        
                     </div>
                 </xar:if>
@@ -110,14 +113,14 @@
                 </xar:if>
                 <xar:if condition="$show_importance and $orderby ne 'importance'">
                     <xar:set name="ttlcolumns">$ttlcolumns+1</xar:set>
-                    <th style="width: 80px;"><a href="&xar-modurl-xtasks-admin-workspace;&amp;#$newargs#&amp;orderby=importance&amp;returnurl=#$encoded_returnurl#" onclick="return loadContent(this.href,'workspace_tasks');"><xar:mlstring>Importance</xar:mlstring></a></th>
+                    <th style="width: 80px;"><a href="&xar-modurl-xtasks-admin-workspace;&amp;#$newargs#&amp;orderby=importance&amp;returnurl=#$encoded_returnurl#" onClick="return loadContent(this.href,'workspace_tasks');"><xar:mlstring>Importance</xar:mlstring></a></th>
                 </xar:if>
                 <xar:if condition="$show_priority and $orderby ne 'priority'">
                     <xar:set name="ttlcolumns">$ttlcolumns+1</xar:set>
-                    <th style="width: 80px;"><a href="&xar-modurl-xtasks-admin-workspace;&amp;#$newargs#&amp;orderby=priority&amp;returnurl=#$encoded_returnurl#" onclick="return loadContent(this.href,'workspace_tasks');"><xar:mlstring>Priority</xar:mlstring></a></th>
+                    <th style="width: 80px;"><a href="&xar-modurl-xtasks-admin-workspace;&amp;#$newargs#&amp;orderby=priority&amp;returnurl=#$encoded_returnurl#" onClick="return loadContent(this.href,'workspace_tasks');"><xar:mlstring>Priority</xar:mlstring></a></th>
                 </xar:if>
                 <xar:if condition="$orderby ne 'status'">
-                    <th style="width: 80px;"><a href="&xar-modurl-xtasks-admin-workspace;&amp;#$newargs#&amp;orderby=status&amp;returnurl=#$encoded_returnurl#" onclick="return loadContent(this.href,'workspace_tasks');"><xar:mlstring>Status</xar:mlstring></a></th>
+                    <th style="width: 80px;"><a href="&xar-modurl-xtasks-admin-workspace;&amp;#$newargs#&amp;orderby=status&amp;returnurl=#$encoded_returnurl#" onClick="return loadContent(this.href,'workspace_tasks');"><xar:mlstring>Status</xar:mlstring></a></th>
                 </xar:if>
                 <th style="width: 50px;"><a href="&xar-modurl-xtasks-user-settings;&amp;returnurl=#$encoded_returnurl#"><xar:mlstring>Options</xar:mlstring></a></th>
             </tr>
@@ -242,7 +245,7 @@
                         <td class="xtasks-tasklist-data" style="text-align: center; background-color: #$rowcolor#;">#$taskinfo['status']#</td>
                     </xar:if>
                     
-                    <td class="xtasks-tasklist-data" style="text-align: center; vertical-align: bottom; background-color: #$rowcolor#; white-space: pre; text-align: right;"><xar:if condition="count($taskinfo['worklog']) gt 0"><a href="javascript: void twist('worklist#$taskinfo['taskid']#');" title="View Worklog"><img src="modules/xtasks/xarimages/rotate.gif" border="0" /></a></xar:if><a href="#newtask" onclick="twist_open('worklist#$taskinfo['taskid']#'); return loadContent('&xar-modurl-xtasks-worklog-new;&amp;taskid=#$taskinfo['taskid']#&amp;inline=1&amp;returnurl=#$encoded_returnurl#','newtask');" title="Document Work Performed"><img src="modules/xtasks/xarimages/button.work.gif" border="0" /></a><a href="&xar-modurl-xtasks-admin-reassign;&amp;taskid=#$taskinfo['taskid']#&amp;inline=1&amp;returnurl=#$encoded_returnurl#" onclick="return loadContent(this.href,'newtask');" title="Reassign Task"><img src="modules/xtasks/xarimages/button.reassign.gif" border="0" /></a><a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$taskinfo['taskid']#&amp;inline=1&amp;returnurl=#$encoded_returnurl#" onclick="return loadContent(this.href,'newtask');" title="Modify Task Details"><img src="modules/xtasks/xarimages/button.edit.gif" border="0" align="bottom" /></a><a href="&xar-modurl-xtasks-admin-delete;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#" title="Close or Delete Task"><img src="modules/xtasks/xarimages/button.delete.gif" border="0" align="bottom" /></a></td>
+                    <td class="xtasks-tasklist-data" style="text-align: center; vertical-align: bottom; background-color: #$rowcolor#; white-space: pre; text-align: right;"><xar:if condition="count($taskinfo['worklog']) gt 0"><a href="javascript: void twist('worklist#$taskinfo['taskid']#');" title="View Task Update"><img src="modules/xtasks/xarimages/rotate.gif" border="0" /></a></xar:if><a href="#newtask" onClick="twist_open('worklist#$taskinfo['taskid']#'); return loadContent('&xar-modurl-xtasks-worklog-new;&amp;taskid=#$taskinfo['taskid']#&amp;inline=1&amp;returnurl=#$encoded_returnurl#','newtask');" title="Document Work Performed"><img src="modules/xtasks/xarimages/button.work.gif" border="0" /></a><a href="&xar-modurl-xtasks-admin-reassign;&amp;taskid=#$taskinfo['taskid']#&amp;inline=1&amp;returnurl=#$encoded_returnurl#" onClick="return loadContent(this.href,'newtask');" title="Reassign Task"><img src="modules/xtasks/xarimages/button.reassign.gif" border="0" /></a><a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$taskinfo['taskid']#&amp;inline=1&amp;returnurl=#$encoded_returnurl#" onClick="return loadContent(this.href,'newtask');" title="Modify Task Details"><img src="modules/xtasks/xarimages/button.edit.gif" border="0" align="bottom" /></a><a href="&xar-modurl-xtasks-admin-delete;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#" title="Close or Delete Task"><img src="modules/xtasks/xarimages/button.delete.gif" border="0" align="bottom" /></a></td>
                 
                 </tr>
                     

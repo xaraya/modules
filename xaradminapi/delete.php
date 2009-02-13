@@ -58,7 +58,7 @@ function xtasks_adminapi_delete($args)
     
     $mymemberid = xarModGetUserVar('xproject', 'mymemberid');
     if(!empty($taskinfo['owner'])) {
-        xarModAPIFunc('xtasks', 'user', 'notify', array('contacttype' => 735, 'owner' => $taskinfo['owner'], 'taskid' => $taskid, 'action' => "DELETE"));
+        xarModAPIFunc('xtasks', 'user', 'notify', array('contacttype' => 779, 'owner' => $taskinfo['owner'], 'taskid' => $taskid, 'action' => "DELETE"));
     }
 
     $dbconn =& xarDBGetConn();

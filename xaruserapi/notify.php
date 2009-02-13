@@ -3,10 +3,10 @@
 function xtasks_userapi_notify($args)
 {
     extract($args);
-
+    
     if(!$owner) return;
     if(!isset($taskid) && !isset($worklogid) && !isset($projectid)) return;
-    if(!isset($contacttype)) $contacttype = 0;
+    if(!isset($contacttype)) $contacttype = 779;
     if(!isset($taskid)) $taskid = 0;
     if(!isset($worklogid)) $worklogid = 0;
     if(!isset($projectid)) $projectid = 0;
@@ -18,8 +18,6 @@ function xtasks_userapi_notify($args)
     
     $from_email = xarModGetVar('julian','from_email');
     $from_name =  xarModGetVar('julian','from_name');
-
-    if(!xarModLoad('addressbook', 'user')) return;
     
     if($worklogid > 0) {
         $workloginfo = xarModAPIFunc('xtasks', 'worklog', 'get', array('worklogid' => $worklogid));
@@ -41,7 +39,7 @@ function xtasks_userapi_notify($args)
     if(empty($taskinfo['task_name'])) $taskinfo['task_name'] = "<no task name>";
     
     $projectinfo = array();
-    if($taskinfo['projectid']) {
+    if(isset($taskinfo['projectid']) && $taskinfo['projectid'] > 0) {
         $projectinfo = xarModAPIFunc('xproject', 'user', 'get', array('projectid' => $taskinfo['projectid']));
     }
     if($projectinfo == false) return;
@@ -50,6 +48,7 @@ function xtasks_userapi_notify($args)
     // default to userlist
     switch($contacttype) {
         case 735: // addressbook
+            break; // not used anymore
             $ownerinfo = xarModAPIFunc('addressbook', 'user', 'getdetailvalues', array('id' => $owner));
             // send mail with mail module
             switch($ownerinfo['c_main']) {
@@ -86,37 +85,13 @@ function xtasks_userapi_notify($args)
             
         case 779: // dossier
             $ownerinfo = xarModAPIFunc('dossier', 'user', 'get', array('contactid' => $owner));
-            if(empty($ownerinfo['email_1'])) $member_email = $ownerinfo['email_1'];
-            elseif(empty($ownerinfo['email_2'])) $member_email = $ownerinfo['email_2'];
-            switch($ownerinfo['c_main']) {
-                case 0:
-                    $member_email = $ownerinfo['contact_1'];
-                    break;
-                case 1:    
-                    $member_email = $ownerinfo['contact_2'];
-                    break;
-                case 2:    
-                    $member_email = $ownerinfo['contact_3'];
-                    break;
-                case 3:    
-                    $member_email = $ownerinfo['contact_4'];
-                    break;
-                case 4:    
-                    $member_email = $ownerinfo['contact_5'];
-                    break;
-            }
-            if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$", $member_email)) {
-        //        $member_email = $member_email;
-            } elseif(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$", $ownerinfo['contact_1'])) {
-                $member_email = $ownerinfo['contact_1'];
-            } elseif(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$", $ownerinfo['contact_2'])) {
-                $member_email = $ownerinfo['contact_2'];
-            } elseif(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$", $ownerinfo['contact_3'])) {
-                $member_email = $ownerinfo['contact_3'];
-            } elseif(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$", $ownerinfo['contact_4'])) {
-                $member_email = $ownerinfo['contact_4'];
-            } elseif(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$", $ownerinfo['contact_5'])) {
-                $member_email = $ownerinfo['contact_5'];
+            if($ownerinfo == false) return;
+            $member_email = "";
+            if(!empty($ownerinfo['email_1'])) $member_email = $ownerinfo['email_1'];
+            elseif(!empty($ownerinfo['email_2'])) $member_email = $ownerinfo['email_2'];
+//            else mail("chad@mindsmack.com", "contact creation test for: ".$owner, "contact creation test for: ".$owner);
+            if(!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$", $member_email)) {
+                return;
             }
             break;
                
@@ -130,7 +105,7 @@ function xtasks_userapi_notify($args)
     if(!isset($member_email)) $member_email = "";
 
     $messagetext = "Project: ".$projectinfo['project_name']." ("
-                    ."<a href='".xarModURL('xproject', 'admin', 'display', array('projectid' => $projectid))."&amp;mode=tasklist'>click here</a>)";
+                    ."<a href='".xarModURL('xproject', 'admin', 'display', array('projectid' => $projectid))."&amp;mode=tasks'>click here</a>)";
     if($component == "TASK" || $component == "WORK") {
         $messagetext .= "<hr>Task: ".$taskinfo['task_name']."\n"
                     .$taskinfo['formatted_desc']."\n"

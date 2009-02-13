@@ -6,7 +6,7 @@ function xtasks_user_quicktask($args)
     
     if (!xarVarFetch('projectid', 'int:1:', $projectid, 0, XARVAR_NOT_REQUIRED)) return;
     
-    if (!xarSecurityCheck('AddXTask')) {
+    if (!xarSecurityCheck('AddXTask', 0)) {
         return;
     }
     

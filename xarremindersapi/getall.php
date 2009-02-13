@@ -5,6 +5,7 @@ function xtasks_remindersapi_getall($args)
     extract($args);
 
     $invalid = array();
+    
     if (!isset($ownerid) || !is_numeric($ownerid)) {
         $invalid[] = 'ownerid';
     }
@@ -15,13 +16,18 @@ function xtasks_remindersapi_getall($args)
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
+    
+    $items = array();
 
     if (!xarSecurityCheck('UseReminders', 0, 'Item', "All:All:All")) {//TODO: security
+        /* FAIL SILENTLY
         $msg = xarML('Not authorized to access #(1) items',
                     'xtasks');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
+        */
+        return $items;
     }
 
     $dbconn =& xarDBGetConn();
@@ -33,16 +39,27 @@ function xtasks_remindersapi_getall($args)
                   taskid,
                   ownerid,
                   eventdate,
-                  reminder
+                  reminder,
+                  warning
             FROM $reminderstable
-            WHERE ownerid = $ownerid
-            ORDER BY eventdate";
+            WHERE ownerid = $ownerid";
+            
+    $whereclause = array();
+    if(!empty($startdate)) {
+        $whereclause[] = "DATE_SUB(eventdate, INTERVAL warning MINUTE) >= '".$startdate."'";
+    }
+    if(!empty($enddate)) {
+        $whereclause[] = "eventdate <= '".$enddate."'";
+    }
+    if(count($whereclause) > 0) {
+        $sql .= " AND ".implode(" AND ", $whereclause);
+    }
+    
+    $sql .= " ORDER BY eventdate";
 
     $result = $dbconn->Execute($sql);
 
     if (!$result) return;
-    
-    $items = array();
 
     for (; !$result->EOF; $result->MoveNext()) {
         list($reminderid,
@@ -60,7 +77,7 @@ function xtasks_remindersapi_getall($args)
     }
 
     $result->Close();
-
+    
     return $items;
 }
 

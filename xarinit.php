@@ -224,6 +224,9 @@ function xtasks_init()
 
 //    xarBlockTypeRegister('xtasks', 'first');
 //    xarBlockTypeRegister('xtasks', 'others');
+    
+    if (!xarModRegisterHook('item', 'usermenu', 'GUI','xtasks', 'user', 'usermenu'))
+        return false;
 
     if (!xarModRegisterHook('item', 'display', 'GUI', 'xtasks', 'admin', 'workspace')) {
         return false;
@@ -747,6 +750,13 @@ function xtasks_upgrade($oldversion)
                 }
                 xarSessionDelVar('prop_data_cached');
             }
+        case '1.8.0':
+        
+    
+            if (!xarModRegisterHook('item', 'usermenu', 'GUI','xtasks', 'user', 'usermenu'))
+                return false;
+        
+        case '1.8.1':
             break;
 
     }

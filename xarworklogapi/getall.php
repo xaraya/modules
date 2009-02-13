@@ -20,6 +20,9 @@ function xtasks_worklogapi_getall($args)
     if (!isset($numitems) || !is_numeric($numitems)) {
         $invalid[] = 'numitems';
     }
+    if (!isset($projecttype)) {
+        $projecttype = "";
+    }
 
     $invalid = array();
     if (count($invalid) > 0) {
@@ -29,13 +32,18 @@ function xtasks_worklogapi_getall($args)
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
+    
+    $items = array();
 
     if (!xarSecurityCheck('ViewWorklog', 0, 'Item', "All:All:All")) {//TODO: security
+        /* FAIL SILENTLY
         $msg = xarML('Not authorized to access #(1) items',
                     'xproject');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
+        */
+        return $items;
     }
     
     if(!empty($maxdate) && !empty($ttldays)) {
@@ -81,6 +89,9 @@ function xtasks_worklogapi_getall($args)
     if(!empty($projectid)) {
         $whereclause[] = "b.projectid = '".$projectid."'";
     }
+    if(!empty($projecttype)) {
+        $whereclause[] = "c.projecttype = '".$projecttype."'";
+    }
     if(count($whereclause) > 0) {
         $sql .= " AND ".implode(" AND ", $whereclause);
     }
@@ -90,8 +101,6 @@ function xtasks_worklogapi_getall($args)
     $result = $dbconn->SelectLimit($sql, $numitems, $startnum-1);
 
     if (!$result) return;
-    
-    $items = array();
 
     for (; !$result->EOF; $result->MoveNext()) {
         list($worklogid,
@@ -111,8 +120,8 @@ function xtasks_worklogapi_getall($args)
             $formatted_notes = nl2br($notes);
         }
         
-        $formatted_notes = ereg_replace("[[:alpha:]]+://[^<>[:space:]]+[[:alnum:]/]",
-                 "<a href=\"\\0\" target=\"new\">\\0</a>", $formatted_notes);
+//        $formatted_notes = ereg_replace("[[:alpha:]]+://[^<>[:space:]]+[[:alnum:]/]",
+//                 "<a href=\"\\0\" target=\"new\">\\0</a>", $formatted_notes);
                  
         $items[] = array('worklogid'        => $worklogid,
                           'taskid'          => $taskid,

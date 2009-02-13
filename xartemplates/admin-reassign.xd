@@ -1,50 +1,38 @@
 <xar:set name="xtasks_objectid">xarModGetVar('xtasks','xtasks_objectid')</xar:set>
 <xar:data-getitem name="$properties" module="xTasks" itemtype="1" itemid="$xtasks_objectid" />
 
-<div class="xar-mod-head">
-	<span class="xar-mod-title"><xar:mlstring>xTasks Administration</xar:mlstring></span>
-</div>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Re-Assign Task</xar:mlstring></span></div>
 <div class="xar-mod-body">
+<div align="center">
 
-    <h2><xar:mlstring>Re-Assign Task</xar:mlstring></h2>
+<form method="post" action="&xar-modurl-xtasks-admin-updateassign;">
 
-	<xar:template type="module" file="admin-menu" />
+<input type="hidden" name="authid" value="#$authid#" />
+<input type="hidden" name="taskid" value="#$item.taskid#" />
+<input type="hidden" name="returnurl" value="#$returnurl#" />
 
-	<form method="post" action="#xarModUrl('xtasks','admin','updateassign')#">
+<table width="100%" border="0" cellspacing="0" cellpadding="2">
+    <tr>
+        <td><xar:data-label property="$properties['task_name']" /></td>
+        <td><strong><xar:data-output property="$properties['task_name']" name="task_name" value="$item['task_name']" /></strong></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['date_end_planned']" /></td>
+        <td><xar:data-input property="$properties['date_end_planned']" name="date_end_planned" value="$item['date_end_planned']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['owner']" /></td>
+        <td><xar:data-input property="$properties['owner']" name="owner" value="$item['owner']" /></td>
+    </tr>
+    <tr>
+        <td><xar:data-label property="$properties['description']" /></td>
+        <td><xar:data-input property="$properties['description']" name="description" value="$item['description']" /></td>
+    </tr>
+    <tr>
+        <td colspan=2 align="center"><br /><input type="submit" value="#$updatebutton#"></td>
+    </tr>
+</table>
 
-		<div class="xar-form-input-wrapper">
-		    <label for="task_name" class="xar-form-label">
-		        <xar:data-label property="$properties['task_name']" />
-		    </label>
-		    <strong><xar:data-output property="$properties['task_name']" name="task_name" value="$item['task_name']" /></strong>
-		</div>
-
-		<div class="xar-form-input-wrapper">
-		    <label for="date_end_planned_input" class="xar-form-label">
-		        <xar:data-label property="$properties['date_end_planned']" />
-		    </label>
-		    <xar:data-input property="$properties['date_end_planned']" name="date_end_planned" value="$item['date_end_planned']" />
-		</div>
-
-		<div class="xar-form-input-wrapper">
-		    <label for="owner" class="xar-form-label">
-		        <xar:data-label property="$properties['owner']" />
-		    </label>
-		    <xar:data-input property="$properties['owner']" name="owner" value="$item['owner']" />
-		</div>
-
-		<div class="xar-form-input-wrapper">
-		    <label for="description" class="xar-form-label">
-		        <xar:data-label property="$properties['description']" />
-		    </label>
-		    <xar:data-input property="$properties['description']" name="description" value="$item['description']" />
-		</div>
-
-		<div class="xar-align-center xar-margin-thickends">
-			<input type="hidden" name="authid" value="#$authid#" />
-			<input type="hidden" name="taskid" value="#$item.taskid#" />
-			<input type="hidden" name="returnurl" value="#$returnurl#" />
-			<input type="submit" value="#xarML('Update')#" />
-		</div>
-	</form>
+</form>
+</div>
 </div>
