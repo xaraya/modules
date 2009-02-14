@@ -59,7 +59,7 @@
       <source>xar_categories.child_object</source>
       <status>34</status>
       <seq>5</seq>
-      <configuration>a:5:{s:14:"display_layout";s:7:"default";s:25:"initialization_store_prop";s:4:"name";s:24:"initialization_refobject";s:7:"objects";s:27:"initialization_display_prop";s:4:"name";s:24:"initialization_firstline";s:28:"No external child categories";}</configuration>
+      <configuration>a:5:{s:14:"display_layout";s:7:"default";s:25:"initialization_store_prop";s:4:"name";s:24:"initialization_refobject";s:7:"objects";s:27:"initialization_display_prop";s:4:"name";s:24:"initialization_firstline";s:29:",No external child categories";}</configuration>
     </property>
     <property name="position">
       <id>3120</id>
