@@ -1,0 +1,46 @@
+<xar:data-getitem name="$properties" module="dossier" itemtype="1" itemid="0" />
+<xar:data-getitem name="$relationshipproperties" module="dossier" itemtype="6" itemid="0" />
+
+<xar:if condition="count($relationships) gt 0">
+    <table width="100%" border="0">
+        <xar:foreach in="$relationships" value="$relationshipinfo">
+            <xar:set name="dateadded">xarLocaleFormatDate(strtotime($relationshipinfo['dateadded']))</xar:set>
+            <xar:if condition="!$relationshipinfo['relationship']">
+                <xar:set name="foo">$relationshipinfo['relationship'] = "General"</xar:set>
+            </xar:if>
+            <tr>
+                <td>
+                    <div>
+                        <xar:if condition="$relationshipinfo['private']">
+                            <em>
+                            <strong>[<xar:data-output property="$relationshipproperties['relationship']" value="$relationshipinfo['relationship']" />]</strong>
+                            &nbsp;
+                            <a class="thickbox" href="#xarModURL('dossier','admin','display',array('pageName'=&gt;'module','contactid'=&gt;$relationshipinfo['connectedid']))#"><xar:data-output property="$relationshipproperties['connectedid']" value="$relationshipinfo['connectedid']" /></a>
+                            </em>
+                        <xar:else />
+                            <strong>[<xar:data-output property="$relationshipproperties['relationship']" value="$relationshipinfo['relationship']" />]</strong>
+                            &nbsp;
+                            <a class="thickbox" href="#xarModURL('dossier','admin','display',array('pageName'=&gt;'module','contactid'=&gt;$relationshipinfo['connectedid']))#"><xar:data-output property="$relationshipproperties['connectedid']" value="$relationshipinfo['connectedid']" /></a>
+                        </xar:if>
+                    </div>
+                    <div style="padding-left: 20px; max-height: 200px; overflow-y: auto;"><em>#$relationshipinfo['notes']#</em></div>
+                </td>
+                <td width="65" valign="top" align="right"><div class="xar-nowrap">
+                        [<a onclick="dossier_showrelationships(#$relationshipinfo['connectedid']#,'relationships_#$contactid#_#$relationshipinfo['connectedid']#');">relationships</a>]
+                        &nbsp;
+                        <a class="thickbox" href="&xar-modurl-dossier-relationships-modify;&amp;relationshipid=#$relationshipinfo['relationshipid']#&amp;contactid=#$contactid#&amp;pageName=module"><img src="modules/dossier/xarimages/button.edit.gif"></a>
+                        <a class="thickbox" href="&xar-modurl-dossier-relationships-delete;&amp;relationshipid=#$relationshipinfo['relationshipid']#&amp;contactid=#$contactid#&amp;pageName=module"><img src="modules/dossier/xarimages/button.delete.gif"></a>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="padding-left: 50px;"><div id="relationships_#$contactid#_#$relationshipinfo['connectedid']#"></div></td>
+                   
+            </tr>
+        </xar:foreach>
+    </table>
+<xar:else />
+    <xar:mlstring>No relationships recorded...</xar:mlstring>
+</xar:if>
+
+

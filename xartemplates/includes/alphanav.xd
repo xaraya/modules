@@ -1,0 +1,63 @@
+<xar:set name="urlparams">""</xar:set>
+<xar:set name="pageurlparams">""</xar:set>
+<xar:if condition="!empty($q)">
+    <xar:set name="urlparams">$urlparams . "&amp;q=".$q</xar:set>
+</xar:if>
+<xar:if condition="!empty($sortby)">
+    <xar:set name="urlparams">$urlparams . "&amp;sortby=".$sortby</xar:set>
+</xar:if>
+<xar:if condition="!empty($private)">
+    <xar:set name="urlparams">$urlparams . "&amp;private=".$private</xar:set>
+</xar:if>
+<xar:if condition="!empty($cat_id)">
+    <xar:set name="urlparams">$urlparams . "&amp;cat_id=".$cat_id</xar:set>
+</xar:if>
+<xar:if condition="!empty($ltr)">
+    <xar:set name="pageurlparams">$urlparams . "&amp;ltr=".$ltr</xar:set>
+</xar:if>
+<xar:if condition="empty($navurl)">
+    <xar:set name="navurl">xarModURL('dossier','admin','view')</xar:set>
+</xar:if>
+
+
+
+<xar:set name="splitter">"|"</xar:set>
+
+<div style="margin-bottom: 20px;">
+    <div style="font-size: 10px; width: 100%; display: inline; font-weight: bold;">
+        <xar:if condition="$pagetype eq 'mid' OR $pagetype eq 'last'">
+            <xar:set name="prevstartnum">$startnum - $itemsperpage</xar:set>
+            <a href="#$navurl#&amp;startnum=#$prevstartnum##$pageurlparams#" style="margin: 2px; text-decoration: none;">&lt;&lt;</a>
+        <xar:else />
+            <span style="margin: 2px;">&lt;&lt;</span>
+        </xar:if>
+        &nbsp;&nbsp;
+        
+        <xar:if condition="!empty($ltr)">
+            <a href="#$navurl##$urlparams#" style="margin: 2px; text-decoration: none;"><xar:mlstring>All</xar:mlstring></a>
+        <xar:else />
+                <strong style="font-size: 120%; text-decoration: underline;"><xar:mlstring>All</xar:mlstring></strong>
+        </xar:if>
+            
+        #$splitter#
+        <xar:for start="$i = 65" test="$i le 90" iter="$i++">
+            <xar:set name="navltr">chr($i)</xar:set>
+            <xar:if condition="$ltr eq $navltr">
+                <strong style="font-size: 120%; text-decoration: underline;">#$navltr#</strong>
+            <xar:else />
+                <a href="#$navurl#&amp;ltr=#$navltr##$urlparams#" style="margin: 2px; text-decoration: none;">#$navltr#</a>
+            </xar:if>
+            #$splitter#
+        </xar:for>
+    
+        <a href="#$navurl#&amp;ltr=Other#$urlparams#" style="margin: 2px; text-decoration: none;"><xar:mlstring>Other</xar:mlstring></a>
+    
+        &nbsp;&nbsp;
+        <xar:if condition="$pagetype eq 'mid' OR $pagetype eq 'first'">
+            <xar:set name="nextstartnum">$startnum + $itemsperpage</xar:set>
+            <a href="#$navurl#&amp;startnum=#$nextstartnum##$pageurlparams#" style="margin: 2px; text-decoration: none;">&gt;&gt;</a>
+        <xar:else />
+            <span style="margin: 2px;">&gt;&gt;</span>
+        </xar:if>
+    </div>
+</div>

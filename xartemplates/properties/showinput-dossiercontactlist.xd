@@ -1,0 +1,16 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:set name="arraypos">strpos($id, "[]")</xar:set>
+<xar:set name="fieldname_id">$id</xar:set>
+<xar:if condition="$arraypos gt 0">
+    <xar:set name="fieldname_id">substr($id, 0, $arraypos)</xar:set>
+</xar:if>
+
+    
+<span id="contactselect_#$fieldname_id#">
+    #$contactselect#
+</span>
+
+<xar:sec id="newcontactlink" mask="TeamDossierAccess" catch="false" component="Contact">
+    [<a class="thickbox" href="#xarModURL('dossier','user','new',array('pageName'=&gt;'module','returnurl'=&gt;xarServerGetCurrentURL()))#">new</a>]
+</xar:sec>

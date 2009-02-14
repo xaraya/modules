@@ -1,0 +1,10 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:if condition="!empty($NPA)">
+    #$NPA#-#$NXX#-#$phone#
+    <xar:if condition="!empty($extension)">
+        x#$extension#
+    </xar:if>
+<xar:else/>
+    #$value#
+</xar:if>

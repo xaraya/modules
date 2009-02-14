@@ -1,0 +1,25 @@
+<xar:data-getitem name="$properties" module="dossier" itemtype="5" itemid="0" />
+    
+<div style="width: auto; position: relative;"">
+    <div style="position: relative;">
+        <div class="xar-title" style="float: left; width: 150px; margin-left: 50px;"><strong><xar:mlstring>Reminder Date</xar:mlstring></strong></div>
+        <div class="xar-title" style="float: left; width: 120px;"><strong><xar:mlstring>For</xar:mlstring></strong></div>
+        <div class="xar-title" style="float: left; width: auto;"><strong><xar:mlstring>Notes</xar:mlstring></strong></div>
+        <div style="clear: both;"></div>
+    </div>
+    <xar:foreach in="$reminders" value="$reminderdetails">
+        <div class="xar-sub">
+            <div style="float: left; width: 150px; margin-left: 50px;">
+                <xar:if condition="!empty($reminderdetails['reminderdate']) and $reminderdetails['reminderdate'] ne '0000-00-00 00:00:00'">
+                    <xar:data-output property="$properties['reminderdate']" value="$reminderdetails['reminderdate']" dateformat="%d-%b-%Y @%H:%M%p" />
+                </xar:if>
+                &nbsp;
+            </div>
+            <div style="float: left; width: 120px;"><xar:data-output property="$properties['ownerid']" value="$reminderdetails['ownerid']" /></div>
+            <div style="float: left; width: auto;"><xar:data-output property="$properties['notes']" value="$reminderdetails['notes']" /></div>
+            <div style="float: right; width: 50px; text-align: right; word-wrap: nowrap;"><a href="&xar-modurl-dossier-reminders-modify;&amp;reminderid=#$reminderdetails['reminderid']#"><img src="modules/dossier/xarimages/button.edit.gif" border="0" align="bottom" /></a>&nbsp;<a href="&xar-modurl-dossier-reminders-delete;&amp;reminderid=#$reminderdetails['reminderid']#"><img src="modules/dossier/xarimages/button.delete.gif" border="0" align="bottom" /></a></div>
+            <div style="clear: both;"></div>
+        </div>
+    </xar:foreach>
+</div>
+

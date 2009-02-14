@@ -1,0 +1,24 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+
+<xar:if condition="$standard eq 1">
+    <xar:if condition="empty($tabindex)">
+        <input type="text" name="#$name#[country]" id="#$id#" value="#$country#" size="3" maxlength="3" style="width: 21px;" />
+    <xar:else/>
+        <input type="text" name="#$name#[country]" id="#$id#" value="#$country#" size="3" maxlength="3" style="width: 21px;" tab="#$tabindex#" />
+    </xar:if>
+    <input type="text" name="#$name#[NPA]" id="#$id#_NPA" value="#$NPA#" size="4" maxlength="3" style="width: 21px;" onKeyup="autotab(this, #$id#_NXX)" />
+    <input type="text" name="#$name#[NXX]" id="#$id#_NXX" value="#$NXX#" size="2" maxlength="3" style="width: 21px;" onKeyup="autotab(this, #$id#_phone)" />
+    <input type="text" name="#$name#[phone]" id="#$id#_phone" value="#$phone#" size="2" maxlength="4" style="width: 28px;" onKeyup="autotab(this, #$id#_extension)" />
+    x<input type="text" name="#$name#[extension]" id="#$id#_extension" value="#$extension#" size="4" maxlength="6" style="width: 42px;" />
+<xar:else />
+    <xar:if condition="empty($tabindex)">
+        <input type="text" name="#$name#" id="#$id#" value="#$value#" size="20" maxlength="24" />
+    <xar:else/>
+        <input type="text" name="#$name#" id="#$id#" value="#$value#" size="20" maxlength="24" tab="#$tabindex#" />
+    </xar:if>
+</xar:if>
+<xar:if condition="!empty($invalid)">
+    <span class="xar-error">#$invalid#</span>
+</xar:if>
+
