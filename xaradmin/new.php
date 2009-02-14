@@ -15,13 +15,10 @@
  * add new item
  */
 function accessmethods_admin_new()
-{    
-    xarModLoad('addressbook', 'admin');
+{
     $data = xarModAPIFunc('accessmethods','admin','menu');
 
-    $data['accessmethods_objectid'] = xarModGetVar('xproject', 'accessmethods_objectid');
-
-    if (!xarSecurityCheck('AddXProject')) {
+    if (!xarSecurityCheck('AddAccessMethods')) {
         return;
     }
 

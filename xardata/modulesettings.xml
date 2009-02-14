@@ -1,0 +1,23 @@
+<object name="modulesettings_accessmethods">
+  <objectid>16</objectid>
+  <label>Module Settings for Account Access Methods</label>
+  <moduleid>1</moduleid>
+  <itemtype>732</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="webmastergroup">
+      <id>172</id>
+      <label>Account Owner / Webmaster</label>
+      <type>grouplist</type>
+      <default></default>
+      <source>module variables</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>
+

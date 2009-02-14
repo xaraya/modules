@@ -31,7 +31,7 @@ function accessmethods_adminapi_delete($args)
 
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
-    if (!xarSecurityCheck('DeleteAccessMethods', 1, 'Item', "$item[site_name]:All:$siteid")) {
+    if (!xarSecurityCheck('DeleteAccessMethods', 1, 'All', "$item[webmasterid]")) {
         $msg = xarML('Not authorized to delete #(1) item #(2)',
                     'accessmethods', xarVarPrepForStore($projectid));
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',

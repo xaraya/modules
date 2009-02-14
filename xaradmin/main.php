@@ -16,7 +16,7 @@
  */
 function accessmethods_admin_main()
 {
-    if (!xarSecurityCheck('EditAccessMethods')) return;
+    if (!xarSecurityCheck('ModerateAccessMethods')) return;
 
     $data = xarModAPIFunc('accessmethods','admin','menu');
 

@@ -16,8 +16,10 @@ function accessmethods_admin_display($args)
     extract($args);
     if (!xarVarFetch('siteid', 'id', $siteid)) return;
     if (!xarVarFetch('objectid', 'id', $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
-
-    $data['accessmethods_objectid'] = xarModGetVar('accessmethods', 'accessmethods_objectid');
+    
+    if (!xarSecurityCheck('AdminAccessMethods')) {
+        return false;
+    }
 
     if (!xarModAPILoad('accessmethods', 'user')) return;
 
@@ -51,6 +53,15 @@ function accessmethods_admin_display($args)
     $data['authid'] = xarSecGenAuthKey();
     $data['site_name'] = $item['site_name'];
     $data['description'] = $item['description'];
+
+    $logs = xarModAPIFunc('accessmethods',
+                          'log',
+                          'getall',
+                          array('siteid' => $siteid));
+                          
+    if($logs === false) return;
+    
+    $data['logs'] = $logs;
 
     $hooks = xarModCallHooks('item',
                              'display',

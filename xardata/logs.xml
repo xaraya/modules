@@ -1,0 +1,62 @@
+<object name="accessmethods_log">
+  <objectid>120</objectid>
+  <label>Audit Log</label>
+  <moduleid>732</moduleid>
+  <itemtype>2</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="logid">
+      <id>1188</id>
+      <label>logid</label>
+      <type>itemid</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>2</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="userid">
+      <id>1189</id>
+      <label>User</label>
+      <type>userlist</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="createdate">
+      <id>1190</id>
+      <label>createdate</label>
+      <type>calendar</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="changetype">
+      <id>1191</id>
+      <label>changetype</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>4</order>
+      <validation>Created;Modified;Delayed;Closed</validation>
+    </property>
+    <property name="details">
+      <id>1192</id>
+      <label>details</label>
+      <type>textarea_small</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

@@ -28,7 +28,7 @@ function accessmethods_adminapi_create($args)
         return;
     }
 
-    if (!xarSecurityCheck('AddAccessMethods', 1, 'Item', "$site_name:All:All")) {
+    if (!xarSecurityCheck('AddAccessMethods', 1, 'All', "All")) {
         $msg = xarML('Not authorized to add #(1) items',
                     'accessmethods');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION', new SystemException($msg));
@@ -46,15 +46,20 @@ function accessmethods_adminapi_create($args)
                   siteid,
                   accesstype,
                   clientid,
+                  
                   webmasterid,
                   site_name,
                   url,
+                  
                   description,
                   sla,
                   accesslogin,
+                  
                   accesspwd,
-                  related_sites)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+                  related_sites,
+                  lastmodifiedby,
+                  lastmodifiedon)
+            VALUES (?,?,?, ?,?,?, ?,?,?, ?,?,?,NOW() )";
 
     $bindvars = array(
               $nextId,
@@ -67,7 +72,8 @@ function accessmethods_adminapi_create($args)
               $sla,
               $accesslogin,
               $accesspwd,
-              $related_sites ? $related_sites : "");
+              $related_sites ? $related_sites : "",
+              xarUserGetVar('uid'));
               
     $result = &$dbconn->Execute($query,$bindvars);
     if (!$result) return;

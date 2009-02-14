@@ -2,8 +2,6 @@
 
 function accessmethods_admin_modify($args)
 {
-    xarModLoad('addressbook', 'user');
-
 	extract($args);
     
     if (!xarVarFetch('siteid',     'id',     $siteid,     $siteid,     XARVAR_NOT_REQUIRED)) return;
@@ -18,13 +16,11 @@ function accessmethods_admin_modify($args)
 	
 	if (!isset($project) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
-    if (!xarSecurityCheck('EditAccessMethods', 1, 'Item', "$item[site_name]:All:$siteid")) {
+    if (!xarSecurityCheck('EditAccessMethods', 1, 'All', "$item[webmasterid]")) {
         return;
     }
     
     $data = xarModAPIFunc('accessmethods','admin','menu');
-
-    $data['accessmethods_objectid'] = xarModGetVar('accessmethods', 'accessmethods_objectid');
     
 	$data['siteid'] = $item['siteid'];
 	
@@ -33,6 +29,15 @@ function accessmethods_admin_modify($args)
 	$item['module'] = 'accessmethods';
 
 	$data['item'] = $item;
+
+    $logs = xarModAPIFunc('accessmethods',
+                          'log',
+                          'getall',
+                          array('siteid' => $siteid));
+                          
+    if($logs === false) return;
+    
+    $data['logs'] = $logs;
 
     $hooks = xarModCallHooks('item','modify',$siteid,$item);
 

@@ -1,5 +1,4 @@
-<xar:set name="accessmethods_objectid">xarModGetVar('accessmethods','accessmethods_objectid')</xar:set>
-<xar:data-getitem name="$properties" module="accessmethods" itemtype="1" itemid="$accessmethods_objectid" />
+<xar:data-getitem name="$properties" module="accessmethods" itemtype="1" itemid="0" />
 
 <xar:template type="module" file="admin-menu" />
 
@@ -51,6 +50,10 @@
         <td><xar:data-input property="$properties['accesspwd']" name="accesspwd" value="$item['accesspwd']" /></td>
     </tr>
     <tr>
+        <td><xar:data-label property="$properties['lastmodifiedby']" /></td>
+        <td><xar:data-output property="$properties['lastmodifiedby']" value="$item['lastmodifiedby']" /> <xar:mlstring>on</xar:mlstring> <xar:data-output property="$properties['lastmodifiedon']" value="$item['lastmodifiedon']" /></td>
+    </tr>
+    <tr>
         <td><xar:data-label property="$properties['description']" /></td>
         <td><xar:data-input property="$properties['description']" name="description" value="$item['description']" /></td>
     </tr>
@@ -67,6 +70,8 @@
 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('accessmethods')#" />
 
 </form>
+            
+            <xar:template type="module" file="log-view" subdata="array('logs'=&gt;$logs)" />
 </div>
 </div>
 <div class="xar-mod-foot">#$hooks#</div>

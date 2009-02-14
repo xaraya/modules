@@ -13,7 +13,7 @@
  */
 $modversion['name'] = 'accessmethods';
 $modversion['id'] = '732';
-$modversion['version'] = '1.0.1';
+$modversion['version'] = '1.2.0';
 $modversion['displayname']    = xarML('Account Access Methods');
 $modversion['description'] = 'Managed Website Tool';
 $modversion['credits'] = 'xardocs/credits.txt';
@@ -25,9 +25,9 @@ $modversion['author'] = 'St.Ego';
 $modversion['contact'] = 'http://www.miragelab.com/';
 $modversion['admin'] = 1;
 $modversion['user'] = 0;
-$modversion['securityschema'] = array('accessmethods::item' => 'Access Method name::Access Method ID');
+//$modversion['securityschema'] = array('accessmethods::item' => 'Access Method name::Access Method ID');
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';
 /* Add dependencies var if applicable or remove - example is HTML module using its ID */
-$modversion['dependency']     = array(66417); /* This module depends on the addressbook module */
+$modversion['dependency'] = array(829,934); /* This module depends on the Dossier and jQuery modules */
 ?>

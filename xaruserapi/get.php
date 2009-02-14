@@ -39,7 +39,9 @@ function accessmethods_userapi_get($args)
                   sla,
                   accesslogin,
                   accesspwd,
-                  related_sites
+                  related_sites,
+                  lastmodifiedby,
+                  lastmodifiedon
             FROM $accessmethodstable
             WHERE siteid = ?";
     $result = &$dbconn->Execute($query,array($siteid));
@@ -64,11 +66,13 @@ function accessmethods_userapi_get($args)
           $sla,
           $accesslogin,
           $accesspwd,
-          $related_sites) = $result->fields;
+          $related_sites,
+          $lastmodifiedby,
+          $lastmodifiedon) = $result->fields;
 
     $result->Close();
 
-    if (!xarSecurityCheck('ReadAccessMethods', 1, 'Item', "$site_name:All:$siteid")) {
+    if (!xarSecurityCheck('ReadAccessMethods', 1, 'All', "$webmasterid")) {
         $msg = xarML('Not authorized to view this site.');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'AUTH_FAILED',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
@@ -85,7 +89,9 @@ function accessmethods_userapi_get($args)
                   'sla'             => $sla,
                   'accesslogin'        => $accesslogin,
                   'accesspwd'        => $accesspwd,
-                  'related_sites'   => $related_sites);
+                  'related_sites'   => $related_sites,
+                  'lastmodifiedby'   => $lastmodifiedby,
+                  'lastmodifiedon'   => $lastmodifiedon);
 
     return $item;
 }

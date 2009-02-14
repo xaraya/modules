@@ -18,10 +18,13 @@ function accessmethods_userapi_getall($args)
     if (!isset($sortby)) {
         $sortby = "";
     }
+    if (!isset($q)) {
+        $q = "";
+    }
     if (!isset($startnum)) {
         $startnum = 1;
     }
-    if (!isset($numitems)) {
+    if (!isset($numitems) || $numitems == false) {
         $numitems = -1;
     }
 
@@ -40,7 +43,7 @@ function accessmethods_userapi_getall($args)
         return;
     }
 
-    if (!xarSecurityCheck('ViewXProject', 0, 'Item', "All:All:All")) {//TODO: security
+    if (!xarSecurityCheck('ViewAccessMethods', 0, 'All', "All:All:All")) {//TODO: security
         $msg = xarML('Not authorized to access #(1) items',
                     'accessmethods');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
@@ -63,7 +66,9 @@ function accessmethods_userapi_getall($args)
                   sla,
                   accesslogin,
                   accesspwd,
-                  related_sites
+                  related_sites,
+                  lastmodifiedby,
+                  lastmodifiedon
             FROM $accessmethodstable";
 
     $whereclause = array();
@@ -78,6 +83,9 @@ function accessmethods_userapi_getall($args)
     }
     if(!empty($webmasterid)) {
         $whereclause[] = "webmasterid = '".$webmasterid."'";
+    }
+    if(!empty($q)) {
+        $whereclause[] = "site_name LIKE '%".$q."%'";
     }
     if(count($whereclause) > 0) {
         $sql .= " WHERE ".implode(" AND ", $whereclause);
@@ -100,7 +108,7 @@ function accessmethods_userapi_getall($args)
     }
     
     $result = $dbconn->SelectLimit($sql, $numitems, $startnum-1);
-
+    
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarML('DATABASE_ERROR: '.$sql);
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
@@ -121,8 +129,12 @@ function accessmethods_userapi_getall($args)
               $sla,
               $accesslogin,
               $accesspwd,
-              $related_sites) = $result->fields;
-        if (xarSecurityCheck('ReadAccessMethods', 0, 'Item', "$site_name:All:$siteid")) {
+              $related_sites,
+              $lastmodifiedby,
+              $lastmodifiedon) = $result->fields;
+              
+        if (xarSecurityCheck('ReadAccessMethods', 0, 'All', "$webmasterid")) {
+        
             $sitelist[] = array('siteid'        => $siteid,
                               'clientid'        => $clientid,
                               'webmasterid'     => $webmasterid,
@@ -133,7 +145,9 @@ function accessmethods_userapi_getall($args)
                               'sla'             => $sla,
                               'accesslogin'        => $accesslogin,
                               'accesspwd'        => $accesspwd,
-                              'related_sites'   => $related_sites);
+                              'related_sites'   => $related_sites,
+                              'lastmodifiedby'   => $lastmodifiedby,
+                              'lastmodifiedon'   => $lastmodifiedon);
         }
     }
 

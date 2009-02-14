@@ -48,10 +48,10 @@ function accessmethods_adminapi_update($args)
 
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
-    if (!xarSecurityCheck('EditXProject', 1, 'Item', "$item[site_name]:All:$siteid")) {
+    if (!xarSecurityCheck('EditAccessMethods', 1, 'All', "$item[webmasterid]")) {
         return;
     }
-    if (!xarSecurityCheck('EditXProject', 1, 'Item', "$site_name:All:$siteid")) {
+    if (!xarSecurityCheck('EditAccessMethods', 1, 'All', "$webmasterid")) {
         return;
     }
 
@@ -70,7 +70,9 @@ function accessmethods_adminapi_update($args)
                   sla = ?,
                   accesslogin = ?,
                   accesspwd = ?,
-                  related_sites = ?
+                  related_sites = ?,
+                  lastmodifiedby = ?,
+                  lastmodifiedon = NOW()
             WHERE siteid = ?";
 
     $bindvars = array(
@@ -84,12 +86,44 @@ function accessmethods_adminapi_update($args)
               $accesslogin,
               $accesspwd,
               $related_sites,
+              xarUserGetVar('uid'),
               $siteid);
               
     $result = &$dbconn->Execute($query,$bindvars);
 
     if (!$result) return;
 
+    $userid = xarUserGetVar('uid');
+    $logdetails = "Access listing modified.";
+    if($site_name != $item['site_name'])
+        $logdetails .= "<br>Access listing name changed from ".$item['site_name']." to ".$site_name;
+    if($clientid != $item['clientid'])
+        $logdetails .= "<br>Access listing clientid changed from ".$item['clientid']." to ".$clientid;
+    if($webmasterid != $item['webmasterid'])
+        $logdetails .= "<br>Access listing webmasterid changed from ".$item['webmasterid']." to ".$webmasterid;
+    if($url != $item['url'])
+        $logdetails .= "<br>Access listing url changed from ".$item['url']." to ".$url;
+    if($description != $item['description'])
+        $logdetails .= "<br>Access listing description changed from ".$item['description']." to ".$description;
+    if($accesstype != $item['accesstype'])
+        $logdetails .= "<br>Access listing accesstype changed from ".$item['accesstype']." to ".$accesstype;
+    if($sla != $item['sla'])
+        $logdetails .= "<br>Access listing sla changed from ".$item['sla']." to ".$sla;
+    if($accesslogin != $item['accesslogin'])
+        $logdetails .= "<br>Access listing accesslogin changed from ".$item['accesslogin']." to ".$accesslogin;
+    if($accesspwd != $item['accesspwd'])
+        $logdetails .= "<br>Access listing accesspwd changed from ".$item['accesspwd']." to ".$accesspwd;
+
+    $logid = xarModAPIFunc('accessmethods',
+                        'log',
+                        'create',
+                        array('siteid'   => $siteid,
+                            'userid'        => $userid,
+                            'details'        => $logdetails,
+                            'changetype'    => "MODIFIED"));
+                            
+    if($logid == false) return;
+    
     $item['module'] = 'accessmethods';
     $item['itemid'] = $siteid;
     $item['name'] = $site_name;

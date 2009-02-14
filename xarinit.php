@@ -35,9 +35,30 @@ function accessmethods_init()
                                 'sla'               =>  array('type'=>'varchar','size'=>32,'null'=>FALSE,'default'=>''),
                                 'accesslogin'       =>  array('type'=>'varchar','size'=>32,'null'=>FALSE,'default'=>''),
                                 'accesspwd'         =>  array('type'=>'varchar','size'=>32,'null'=>FALSE,'default'=>''),
-                                'related_sites'     =>  array('type'=>'varchar','size'=>255,'null'=>FALSE,'default'=>'') );
+                                'related_sites'     =>  array('type'=>'varchar','size'=>255,'null'=>FALSE,'default'=>''),
+                                'lastmodifiedby'    =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
+                                'lastmodifiedon'    =>  array('type'=>'datetime','null'=>TRUE) );
     $query = xarDBCreateTable($accessmethods_table,$accessmethods_fields);
     if (empty($query)) return;
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $log_table = $xarTables['accessmethods_log'];
+    $log_fields = array('logid'         =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+                        'siteid'        =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
+                        'userid'        =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
+                        'changetype'    =>  array('type'=>'varchar','size'=>255,'null'=>FALSE,'default'=>''),
+                        'createdate'    =>  array('type'=>'datetime','null'=>TRUE),
+                        'details'       =>  array('type'=>'text','null'=>FALSE,'default'=>'') );
+    $query = xarDBCreateTable($log_table,$log_fields);
+    if (empty($query)) return;
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_siteid',
+                   'fields'    => array('siteid'),
+                   'unique'    => FALSE);
+    $query = xarDBCreateIndex($log_table,$index);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
     
@@ -54,23 +75,34 @@ function accessmethods_init()
     $accessmethods_objectid = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => 'modules/accessmethods/xardata/accessmethods.xml'));
     if (empty($accessmethods_objectid)) return;
-    // save the object id for later
-    xarModSetVar('accessmethods','accessmethods_objectid',$accessmethods_objectid);
+
+    $logs_objectid = xarModAPIFunc('dynamicdata','util','import',
+                              array('file' => 'modules/accessmethods/xardata/logs.xml'));
+    if (empty($logs_objectid)) return;
 
     $modulesettings = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => 'modules/accessmethods/xardata/modulesettings.xml'));
     if (empty($modulesettings)) return;
-    xarModSetVar('accessmethods','modulesettings',$modulesettings);
 
     xarModSetVar('accessmethods','bold',0);
     xarModSetVar('accessmethods','itemsperpage',20);
-                             
-    xarRegisterMask('ViewAccessMethods', 'All', 'accessmethods', 'Item', 'All:All:All', 'ACCESS_OVERVIEW');
-    xarRegisterMask('ReadAccessMethods', 'All', 'accessmethods', 'Item', 'All:All:All', 'ACCESS_READ');
-    xarRegisterMask('EditAccessMethods', 'All', 'accessmethods', 'Item', 'All:All:All', 'ACCESS_EDIT');
-    xarRegisterMask('AddAccessMethods', 'All', 'accessmethods', 'Item', 'All:All:All', 'ACCESS_ADD');
-    xarRegisterMask('DeleteAccessMethods', 'All', 'accessmethods', 'Item', 'All:All:All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminAccessMethods', 'All', 'accessmethods', 'Item', 'All:All:All', 'ACCESS_ADMIN');
+    
+    $instances = array(
+                       array('header' => 'external', // this keyword indicates an external "wizard"
+                             'query'  => xarModURL('accessmethods', 'admin', 'privileges'),
+                             'limit'  => 0
+                            )
+                    );
+    xarDefineInstance('accessmethods', 'All', $instances);
+    
+    xarRegisterMask('ViewAccessMethods',    'All','accessmethods','All','All','ACCESS_OVERVIEW');
+    xarRegisterMask('ReadAccessMethods',    'All','accessmethods','All','All','ACCESS_READ');
+    xarRegisterMask('CommentAccessMethods', 'All','accessmethods','All','All','ACCESS_COMMENT');
+    xarRegisterMask('ModerateAccessMethods', 'All','accessmethods','All','All','ACCESS_MODERATE');
+    xarRegisterMask('AddAccessMethods',     'All','accessmethods','All','All','ACCESS_MODERATE');
+    xarRegisterMask('EditAccessMethods',    'All','accessmethods','All','All','ACCESS_MODERATE');
+    xarRegisterMask('DeleteAccessMethods',  'All','accessmethods','All','All','ACCESS_MODERATE');
+    xarRegisterMask('AdminAccessMethods',   'All','accessmethods','All','All','ACCESS_ADMIN');
     
     return true;
 }
@@ -81,6 +113,13 @@ function accessmethods_init()
  */
 function accessmethods_upgrade($oldversion)
 {
+    $dbconn =& xarDBGetConn();
+    $xarTables =& xarDBGetTables();
+
+    xarDBLoadTableMaintenanceAPI();
+
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    
     // Upgrade dependent on old version number
     switch($oldversion) {
         case '1.0.0':
@@ -91,7 +130,58 @@ function accessmethods_upgrade($oldversion)
             xarModSetVar('accessmethods','modulesettings',$modulesettings);
             
             
-        case '1.0.1':
+        case '1.0.1': 
+        case '1.1.0':      
+        
+            xarRemoveMasks('accessmethods');
+            xarRemoveInstances('accessmethods');
+    
+            $instances = array(
+                               array('header' => 'external', // this keyword indicates an external "wizard"
+                                     'query'  => xarModURL('accessmethods', 'admin', 'privileges'),
+                                     'limit'  => 0
+                                    )
+                            );
+            xarDefineInstance('accessmethods', 'All', $instances);
+            
+            xarRegisterMask('ViewAccessMethods',    'All','accessmethods','All','All','ACCESS_OVERVIEW');
+            xarRegisterMask('ReadAccessMethods',    'All','accessmethods','All','All','ACCESS_READ');
+            xarRegisterMask('CommentAccessMethods', 'All','accessmethods','All','All','ACCESS_COMMENT');
+            xarRegisterMask('ModerateAccessMethods', 'All','accessmethods','All','All','ACCESS_MODERATE');
+            xarRegisterMask('AddAccessMethods',     'All','accessmethods','All','All','ACCESS_MODERATE');
+            xarRegisterMask('EditAccessMethods',    'All','accessmethods','All','All','ACCESS_MODERATE');
+            xarRegisterMask('DeleteAccessMethods',  'All','accessmethods','All','All','ACCESS_MODERATE');
+            xarRegisterMask('AdminAccessMethods',   'All','accessmethods','All','All','ACCESS_ADMIN');
+            
+        case '1.1.1':   
+            
+            $accessmethods_table = $xarTables['accessmethods'];
+            
+            $result = $datadict->addColumn($accessmethods_table, 'lastmodifiedby I(11) NotNull');
+            if (!$result) return;
+            $result = $datadict->addColumn($accessmethods_table, 'lastmodifiedon T');
+            if (!$result) return;
+
+            $log_table = $xarTables['accessmethods_log'];
+            $log_fields = array('logid'         =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+                                'siteid'        =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
+                                'userid'        =>  array('type'=>'integer','size'=>11,'null'=>FALSE,'default'=>'0'),
+                                'changetype'    =>  array('type'=>'varchar','size'=>255,'null'=>FALSE,'default'=>''),
+                                'createdate'    =>  array('type'=>'datetime','null'=>TRUE),
+                                'details'       =>  array('type'=>'text','null'=>FALSE,'default'=>'') );
+            $query = xarDBCreateTable($log_table,$log_fields);
+            if (empty($query)) return;
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+        
+            $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_siteid',
+                           'fields'    => array('siteid'),
+                           'unique'    => FALSE);
+            $query = xarDBCreateIndex($log_table,$index);
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+            
+        case '1.2.0':   
             break;
     }
 
@@ -118,13 +208,11 @@ function accessmethods_delete()
     if (!empty($accessmethods_objectid)) {
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $accessmethods_objectid));
     }
-    xarModDelVar('accessmethods','accessmethods_objectid');
 
     $modulesettings = xarModGetVar('accessmethods','modulesettings');
     if (!empty($modulesettings)) {
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $modulesettings));
     }
-    xarModDelVar('accessmethods','modulesettings');
     
     $aliasname =xarModGetVar('accessmethods','aliasname');
     $isalias = xarModGetAlias($aliasname);

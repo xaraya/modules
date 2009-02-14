@@ -21,6 +21,8 @@ function accessmethods_xartables()
     $xartable = array();
     $accessmethods_table = xarDBGetSiteTablePrefix() . '_accessmethods';
     $xartable['accessmethods'] = $accessmethods_table;
+    $log_table = xarDBGetSiteTablePrefix() . '_accessmethods_log';
+    $xartable['accessmethods_log'] = $log_table;
     return $xartable;
 }
 

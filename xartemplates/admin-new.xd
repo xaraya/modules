@@ -1,5 +1,4 @@
-<xar:set name="accessmethods_objectid">xarModGetVar('accessmethods','accessmethods_objectid')</xar:set>
-<xar:data-getitem name="$properties" module="accessmethods" itemtype="1" itemid="$accessmethods_objectid" />
+<xar:data-getitem name="$properties" module="accessmethods" itemtype="1" itemid="0" />
 
 <xar:template type="module" file="admin-menu" />
 

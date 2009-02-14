@@ -1,5 +1,5 @@
 <xar:set name="modulesettings">xarModGetVar('accessmethods','modulesettings')</xar:set>
-<xar:data-getitem name="$properties" module="modules" itemtype="732" itemid="$modulesettings" />
+<xar:data-getitem name="$properties" module="modules" itemtype="732" itemid="0" />
 
 <xar:template type="module" file="admin-menu" />
 
@@ -31,17 +31,6 @@
         </label>
         <xar:data-input property="$properties['itemsperpage']" name="itemsperpage" value="$itemsperpage" />
     </div>
-
-    <div class="xar-form-input-wrapper">
-        <label class="xar-form-label">
-            <xar:mlstring>SLA / Access Type</xar:mlstring>
-        </label>
-        <xar:set name="accessmethods_objectid">xarModGetVar('accessmethods','accessmethods_objectid')</xar:set>
-        <a href="#xarModURL('dynamicdata','admin','modifyprop',array('itemid'=>$accessmethods_objectid))#"><xar:mlstring>Modify DynamicData</xar:mlstring></a>
-    </div>
-
-    <br />
-    <div><xar:mlstring>You may enable the DynamicData or Categories hooks to provide additional data fields for access records.</xar:mlstring></div>
     
     <br />
     #$hooks#
