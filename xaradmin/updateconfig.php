@@ -69,6 +69,9 @@ function publications_admin_updateconfig()
                 xarModVars::set('publications', 'fulltextsearch', join(',',$searchfields));
             }
         }
+        // Pull the base category ids from the template and save them
+        $picker = DataPropertyMaster::getProperty(array('name' => 'categorypicker'));
+        $picker->checkInput('basecid');
     } else {
 
         // Get the publication type for this display and save the settings to it
@@ -87,10 +90,6 @@ function publications_admin_updateconfig()
             xarModDelAlias($pubtypes[$ptid]['name'],'publications');
         }
 
-    //echo "<pre>";var_dump($settings);exit;
-        // Pull the base category ids from the template and save them
-        $picker = DataPropertyMaster::getProperty(array('name' => 'categorypicker'));
-        $picker->checkInput('basecid');
     }
     xarResponseRedirect(xarModURL('publications', 'admin', 'modifyconfig',
                                   array('ptid' => $ptid, 'tab' => $data['tab'])));

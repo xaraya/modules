@@ -19,11 +19,7 @@
 function publications_userapi_getmenulinks()
 {
     $menulinks = array();
-
-    // Security Check
-    if (!xarSecurityCheck('ViewPublications',0)) {
-        return $menulinks;
-    }
+    if (!xarSecurityCheck('ViewPublications',0)) return $menulinks;
 
 // TODO: re-evaluate for browsing by category
 
@@ -33,73 +29,39 @@ function publications_userapi_getmenulinks()
                          'title' => xarML('Highlighted Publications'),
                          'label' => xarML('Front Page'));
 
-    if(!xarVarFetch('ptid',     'isset', $ptid,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemtype', 'isset', $itemtype,  NULL, XARVAR_DONT_SET)) {return;}
+    $pubtypeobject = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
+    $items = $pubtypeobject->getItems(array('where' => 'state = 3'));
 
-    if (empty($ptid)) {
-        if (!empty($itemtype)) {
-            $ptid = $itemtype;
-        } else {
-            $ptid = null;
-        }
-    }
-    $publinks = xarModAPIFunc('publications','user','getpublinks',
-                              //array('state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED), 'ptid' => $ptid));
-                              // we show all links here
-                              array('state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED)));
-    foreach ($publinks as $pubitem) {
-        $menulinks[] = Array('url'   => $pubitem['publink'],
-                             'title' => xarML('Display #(1)',$pubitem['pubtitle']),
-                             'label' => $pubitem['pubtitle']);
-        if (isset($ptid) && $pubitem['pubid'] == $ptid) {
-            if (xarSecurityCheck('SubmitPublications',0,'Publication',$ptid.':All:All:All')) {
+    foreach ($items as $item) {
+        $menulinks[] = Array('url'   => xarModURL('publications','user','view',array('ptid' => $item['id'])),
+                             'title' => xarML('Display #(1)',$item['description']),
+                             'label' => $item['description']);
+
+            if (xarSecurityCheck('SubmitPublications',0,'Publication',$item['id'].':All:All:All')) {
                 $menulinks[] = Array('url'   => xarModURL('publications',
                                                           'admin',
                                                           'new',
-                                                          array('ptid' => $ptid)),
-                                     'title' => xarML('Submit #(1)',$pubitem['pubtitle']),
+                                                          array('ptid' => $item['id'])),
+                                     'title' => xarML('Submit #(1)',$item['description']),
                                      'label' => '&#160;' . xarML('Submit Now'));
             }
 
-            $settings = unserialize(xarModVars::get('publications', 'settings.'.$ptid));
             if (!empty($settings['showarchives'])) {
                 $menulinks[] = Array('url'   => xarModURL('publications',
                                                           'user',
                                                           'archive',
-                                                          array('ptid' => $ptid)),
-                                     'title' => xarML('View #(1) Archive',$pubitem['pubtitle']),
+                                                          array('ptid' => $item['id'])),
+                                     'title' => xarML('View #(1) Archive',$item['description']),
                                      'label' => '&#160;' . xarML('Archives'));
             }
-
-/*
-            $menulinks[] = Array('url'   => xarModURL('publications',
-                                                      'user',
-                                                      'viewmap',
-                                                      array('ptid' => $ptid)),
-                                 'title' => xarML('Displays a map of all published content'),
-                                 'label' => '&#160;' . xarML('Publication Map'));
-*/
-        }
     }
 
-/*
-    if (empty($ptid)) {
-*/
-        $menulinks[] = Array('url'   => xarModURL('publications',
-                                                  'user',
-                                                  'viewmap',
-                                                  array('ptid' => $ptid)),
-                             'title' => xarML('Displays a map of all published content'),
-                             'label' => xarML('Publication Map'));
-/*
-        $menulinks[] = Array('url'   => xarModURL('publications',
-                                                  'user',
-                                                  'archive'),
-                             'title' => xarML('Displays an archive for all published content'),
-                             'label' => xarML('Archives'));
-    }
-*/
-
+    $menulinks[] = Array('url'   => xarModURL('publications',
+                                              'user',
+                                              'viewmap'),
+                         'title' => xarML('Displays a map of all published content'),
+                         'label' => xarML('Publication Map'));
+                             
     return $menulinks;
 }
 
