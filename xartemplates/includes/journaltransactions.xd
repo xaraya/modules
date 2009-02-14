@@ -1,0 +1,207 @@
+<xar:comment>Load AJAX to display new transaction form inline</xar:comment>
+<xar:base-include-javascript position="head" module="base" filename="xmlhttprequest.js" />
+
+<xar:comment>New transaction form needs the calendar javascript</xar:comment>
+<xar:base-include-javascript position="body" module="base" filename="calendar.js" />
+
+<xar:data-getitem name="$properties" module="labaccounting" itemtype="3" itemid="0" />
+
+<script type="text/javascript">
+	$(document).ready(function() {
+	    $("#multiformlink").click(function() {
+	        $.ajax({
+	            type: "GET",
+	            url: $(this).attr("href"),
+	            success: function(msg){
+	                $("#transactionform").html(msg);
+	            }
+	    });
+	    return false;
+	});
+</script>
+
+<xar:set name="subdata">array('journalid'   => $journalid,
+                            'yearshown'     => $yearshown,
+                            'monthshown'    => $monthshown,
+                            'order'         => $order)</xar:set>
+<xar:template type="module" file="journaltransactionmenu" subdata="$subdata" />
+
+<xar:set name="runningbalance">sprintf("%0.2f",$beginningbalance[0])</xar:set>
+
+<div style="overflow-x: scroll;">
+
+<table width="100%" style="width: 100%;">
+    <tr><th colspan="9">
+            <a href="#xarModURL('labaccounting','journaltransactions','new', array('journalid' =&gt; $journalid, 'monthshown' =&gt; $monthshown, 'yearshown' =&gt; $yearshown))#" onClick="return loadContent(this.href,'transactionform');"><xar:mlstring>Create New</xar:mlstring></a>
+            &nbsp;|&nbsp;
+            <a href="#xarModURL('labaccounting','journaltransactions','multi_new', array('journalid' =&gt; $journalid))#" onClick="return loadContent(this.href,'transactionform');"><xar:mlstring>Create Multiple New</xar:mlstring></a>
+            &nbsp;|&nbsp;
+            <a id="multiformlink" href="#xarModURL('labaccounting','journaltransactions','multi_new', array('journalid' =&gt; $journalid, 'pageName' =&gt; 'module'))#"><xar:mlstring>Create Multiple New (jquery)</xar:mlstring></a>
+        </th>
+    </tr>
+    <tr><td colspan="9">
+            <div id="transactionform"></div>
+        </td>
+    </tr>
+    <tr>
+        <th><xar:mlstring>Date</xar:mlstring></th>
+        <th><xar:data-label property="$properties['title']" /></th>
+        <th><xar:mlstring>Credits</xar:mlstring></th>
+        <th><xar:mlstring>Debits</xar:mlstring></th>
+        <th><xar:mlstring>Balance</xar:mlstring></th>
+        <xar:foreach in="$activeledgerlist" value="$ledgerinfo">
+            <th>#$ledgerinfo['title']#
+                <br />
+                #$ledgerinfo['normalbalance']#</th>
+        </xar:foreach>
+        <th><xar:mlstring>Remainder</xar:mlstring></th>
+        <th><xar:data-label property="$properties['status']" /></th>
+        <th><xar:mlstring>Options</xar:mlstring></th>
+    </tr>
+    <xar:if condition="isset($runningbalance) and $runningbalance gt 0">
+        <tr>
+            <td><xar:data-output type="calendar" value="$startdate" dateformat="%b %d" /></td>
+            <td><xar:mlstring>Beginning Balance</xar:mlstring></td>
+            <td></td>
+            <td></td>
+            <td class="xar-align-right">$ <xar:data-output property="$properties['amount']" value="$runningbalance" /></td>
+            <xar:set name="extracols">count($activeledgerlist) + 2</xar:set>
+            <td colspan="#$extracols#"></td>
+        </tr>
+    </xar:if>
+    <xar:set name="journal_title">""</xar:set>
+    <xar:set name="prev_trans_year">false</xar:set>
+    <xar:set name="totalcredits">0</xar:set>
+    <xar:set name="totaldebits">0</xar:set>
+    <xar:foreach in="$transactionlist" value="$transactioninfo">
+        
+        <xar:set name="next_trans_year">date("Y", strtotime($transactioninfo['transdate']))</xar:set>
+        <xar:if condition="$next_trans_year ne $prev_trans_year">
+            <tr>
+                <th colspan="2" style="border: 1px solid #666666;">
+                    #$next_trans_year#
+                    &nbsp;[ <a href="#xarModURL('labaccounting','admin','export_journal',array('journalid'=&gt;$journalid, 'yearshown'=&gt;$next_trans_year))#">export</a> ]
+                </th>
+                <xar:if condition="$order eq 'chrono'">
+                    <th class="xar-align-right xar-nowrap">
+                        $ #$totalcredits#
+                    </th>
+                    <th class="xar-align-right xar-nowrap">
+                        $ #$totaldebits#
+                    </th>
+                <xar:else />
+                    <th colspan="2"></th>
+                </xar:if>
+                <th class="xar-align-right xar-nowrap">
+                    <xar:if condition="$order eq 'chrono'">
+                        $ #$runningbalance#
+                    <xar:else />
+                        <xar:set name="runningbalance">sprintf("%0.2f",$transactioninfo['balance'])</xar:set>
+                        $ #$runningbalance#
+                    </xar:if>
+                </th>
+            </tr>
+            <xar:set name="prev_trans_year">$next_trans_year</xar:set>
+        </xar:if>
+        
+        <xar:set name="totalcredits">sprintf("%0.2f",$transactioninfo['totalcredits'])</xar:set>
+        <xar:set name="totaldebits">sprintf("%0.2f",$transactioninfo['totaldebits'])</xar:set>
+        
+        <xar:if condition="$transactioninfo['journal_title'] ne $journal_title">
+            <tr>
+                <td colspan="2">
+                    <strong><a href="#xarModURL('labaccounting', 'journals', 'display', array('journalid' =&gt; $transactioninfo['journalid']))#">#$transactioninfo['journal_title']#</a></strong>
+                </td>
+            </tr>
+            <xar:set name="journal_title">$transactioninfo['journal_title']</xar:set>
+        </xar:if>
+        
+        <tr>
+            <td style="white-space: nowrap;"><xar:data-output type="calendar" value="$transactioninfo['transdate']" dateformat="%b %d" /></td>
+            <td>
+                <xar:if condition="$transactioninfo['isinvoice'] eq false">
+                    <a class="thickbox" href="&xar-modurl-labaccounting-journaltransactions-display;&amp;transactionid=#$transactioninfo['transactionid']#&amp;pageName=module" title="#$transactioninfo['details']#"><xar:data-output property="$properties['title']" value="$transactioninfo['title']" /></a>
+                        <xar:if condition="!empty($transactioninfo['details'])">&nbsp;*</xar:if>
+                <xar:else />
+                    <strong>
+                    <a href="#xarModURL('labaccounting','journals','invoice', array('transactionid' =&gt; $transactioninfo['transactionid']))#"><xar:data-output property="$properties['title']" value="$transactioninfo['title']" /></a>
+                        <xar:if condition="!empty($transactioninfo['details'])">&nbsp;*</xar:if>
+                    </strong>
+                </xar:if>
+            </td>
+                    
+            <xar:if condition="$transactioninfo['amount'] gt 0">
+                <td class="xar-align-right"><xar:data-output property="$properties['amount']" value="$transactioninfo['amount']" /></td>
+                <td></td>
+            <xar:elseif condition="$transactioninfo['amount'] lt 0" />
+                <td></td>
+                <td class="xar-align-right"><xar:data-output property="$properties['amount']" value="$transactioninfo['amount']" /></td>
+            <xar:else />
+                <td></td>
+                <td></td>
+            </xar:if>
+            <xar:set name="runningbalance">sprintf("%0.2f",$transactioninfo['balance'])</xar:set>
+            <td class="xar-align-right">
+                <xar:data-output property="$properties['amount']" value="$runningbalance" />
+                <form method="post" action="#xarModURL('labaccounting', 'journaltransactions', 'updateledgers')#" style="display: inline;">
+                <input type="hidden" name="transactionid" value="#$transactioninfo['transactionid']#" />
+                <input type="hidden" name="journalid" value="#$transactioninfo['journalid']#" />
+                <input type="hidden" name="authid" value="#$authid#" />
+            </td>
+            
+            
+            <xar:set name="linetotal">0</xar:set>
+            <xar:set name="transid">$transactioninfo['transactionid']</xar:set>
+            <xar:foreach in="$activeledgerlist" value="$ledgerinfo">
+                <xar:set name="ledgerid">$ledgerinfo['ledgerid']</xar:set>
+                <xar:set name="fieldname">"ledgeramounts[".$ledgerid."]"</xar:set>
+                <xar:if condition="isset($ledgertransactionlist[$transid]) and isset($ledgertransactionlist[$transid][$ledgerid])">
+                    <xar:set name="linetotal">$linetotal + $ledgertransactionlist[$transid][$ledgerid]['amount']</xar:set>
+                    <td class="xar-align-right"><xar:data-input type="floatbox" name="$fieldname" value="$ledgertransactionlist[$transid][$ledgerid]['amount']" /></td>
+                <xar:else />
+                    <td class="xar-align-right"><xar:data-input type="floatbox" name="$fieldname" value="0.00" /></td>
+                </xar:if>
+            </xar:foreach>
+            <xar:set name="remainder">sprintf("%0.2f",$transactioninfo['amount'] - $linetotal)</xar:set>
+            <td class="xar-align-right"><xar:data-output property="$properties['amount']" value="$remainder" /></td>
+            <td><xar:data-output property="$properties['status']" value="$transactioninfo['status']" /></td>
+            <td style="white-space: nowrap;">
+                <input type="submit" value="^" />
+                </form>
+                <a class="thickbox" href="&xar-modurl-labaccounting-journaltransactions-modify;&amp;transactionid=#$transactioninfo['transactionid']#&amp;pageName=module"><img src="modules/labaccounting/xarimages/button.edit.gif" border="0" align="top" /></a>&nbsp;<a class="thickbox" href="&xar-modurl-labaccounting-journaltransactions-delete;&amp;transactionid=#$transactioninfo['transactionid']#&amp;pageName=module"><img src="modules/labaccounting/xarimages/button.delete.gif" align="top" border="0" /></a></td>
+        </tr>
+    </xar:foreach>
+    <xar:set name="totalcredits">sprintf("%0.2f",$totalcredits)</xar:set>
+    <xar:set name="totaldebits">sprintf("%0.2f",$totaldebits)</xar:set>
+    <tr>
+        <xar:if condition="$order eq 'chrono'">
+            <th colspan="2" style="border: 1px solid #666666;">
+                <xar:mlstring>Totals</xar:mlstring>
+            </th>
+            <th class="xar-align-right xar-nowrap">
+                $ #$totalcredits#
+            </th>
+            <th class="xar-align-right xar-nowrap">
+                $ #$totaldebits#
+            </th>
+            <th class="xar-align-right xar-nowrap">
+                $ #$runningbalance#
+            </th>
+        <xar:else />
+            <th colspan="2" style="border: 1px solid #666666;">
+                <xar:mlstring>Beginning Balance</xar:mlstring>
+            </th>
+            <th class="xar-align-right xar-nowrap">
+            
+            </th>
+            <th class="xar-align-right xar-nowrap">
+            
+            </th>
+            <th class="xar-align-right xar-nowrap">
+                $ #$beginningbalance[0]#
+            </th>
+        </xar:if>
+    </tr>
+</table>
+
+</div>

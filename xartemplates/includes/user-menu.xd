@@ -1,0 +1,87 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:base-include-javascript position="head" filename="jquery.js" module="jquery" />
+<xar:base-include-javascript position="head" filename="jquery.pack.js" module="jquery" />
+<xar:base-include-javascript position="head" filename="jquery.compat-1.1.js" module="jquery" />
+
+<xar:base-include-javascript position="body" module="base" filename="calendar.js" />
+<xar:style scope="module" file="labaccounting" />
+
+<xar:style scope="module" module="base" file="navtabs" />
+
+<xar:set name="mymemberid">xarModGetUserVar('xproject', 'mymemberid')</xar:set>
+<xar:set name="dummy">xarVarFetch('module', 'str::', $currentmodname, '', XARVAR_NOT_REQUIRED)</xar:set>
+<xar:set name="dummy">xarVarFetch('type', 'str::', $currentmodtype, '', XARVAR_NOT_REQUIRED)</xar:set>
+<xar:set name="dummy">xarVarFetch('func', 'str::', $currentmodfunc, '', XARVAR_NOT_REQUIRED)</xar:set>
+
+<xar:set name="displaytitle">xarModGetVar('labaccounting', 'displaytitle')</xar:set>
+<xar:if condition="empty($displaytitle)">
+    <xar:set name="displaytitle">xarML('labAccounting')</xar:set>
+</xar:if>
+
+<div class="xar-mod-head">
+    <span class="xar-mod-title">#$displaytitle#</span>
+</div>
+<div class="xar-mod-body">
+    <dl class="xar-tabs">
+        <dt class="help" title="Choose an action to perform">
+          <xar:mlstring>Actions:</xar:mlstring>
+        </dt>
+        
+        <xar:if condition="$currentmodname eq 'labaccounting' 
+                            and ( $_bl_module_type eq 'user' or empty($_bl_module_type) ) 
+                            and  ( $_bl_module_func eq 'overview' )">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+          <a href="#xarModURL('labaccounting','user','overview')#">
+            <xar:mlstring>Overview</xar:mlstring></strong>
+          </a>
+        </dd>
+        
+        <xar:if condition="$currentmodname eq 'labaccounting' 
+                            and ( $_bl_module_type eq 'user' or empty($_bl_module_type) ) 
+                            and  ( $_bl_module_func eq 'main' or empty($_bl_module_func) )">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+          <a href="#xarModURL('labaccounting','user','main')#">
+            <xar:mlstring>My Accounts</xar:mlstring></strong>
+          </a>
+        </dd>
+        
+        <dd>
+          <a href="#xarModURL('roles','user','account', array('moduleload' => "labaccounting"))#">
+            <xar:mlstring>My Settings</xar:mlstring></strong>
+          </a>
+        </dd>
+        
+        <xar:if condition="xarSecurityCheck('AdminAccounting', 0, 'Item', 'All')">
+            <dd>
+              <a href="#xarModURL('labaccounting','admin','main')#">
+                <xar:mlstring>Admin</xar:mlstring></strong>
+              </a>
+            </dd>
+            
+            <dd>
+              <a href="#xarModURL('labaccounting','admin','modifyconfig')#">
+                <xar:mlstring>Modify Config</xar:mlstring></strong>
+              </a>
+            </dd>
+        </xar:if>        
+    </dl>
+</div>
+
+<div class="xar-mod-foot">
+    <xar:set name="statusmsg">xarSessionGetVar('statusmsg')</xar:set>
+    <xar:if condition="!empty($statusmsg)">
+        <div style="border: 2px solid black; background-color: red; color: black; padding: 2px; text-align: center;">
+            #$statusmsg#
+        </div>
+        <xar:set name="dummy">xarSessionSetVar('statusmsg',"")</xar:set>
+    </xar:if>
+</div>

@@ -1,0 +1,34 @@
+<div class="xar-align-center">
+    <form method="post" action="#xarModURL('labaccounting','journals','display',array('journalid'=>$journalid))#">
+        
+        <input type="hidden" name="yearshown" value="#$yearshown#" />
+        <input type="hidden" name="order" value="#$order#" />
+        
+        <xar:set name="lastyear">$yearshown - 1</xar:set>
+        <xar:set name="nextyear">$yearshown + 1</xar:set>
+        
+        <a href="#xarModURL('labaccounting','journals','display',array('journalid'=&gt;$journalid,'yearshown'=&gt;$lastyear))#">&lt;&lt; #$lastyear#</a>
+        &nbsp;&nbsp;
+        <select name="monthshown" id="monthshown" size="1" tabindex="1">
+            <option value="">All</option>
+            <xar:for start="$i = 1" test="$i le 12" iter="$i++">
+                <xar:set name="monthname">date("F", mktime(0, 0, 0, $i, 1, $yearshown) )</xar:set>
+                <xar:if condition="$i eq $monthshown">
+                    <option value="#$i#" selected>#$monthname#</option>
+                <xar:else />
+                    <option value="#$i#">#$monthname#</option>
+                </xar:if>
+            </xar:for>
+        </select>
+        <input type="submit" value="#xarML('View')#" tabindex="2" />
+        &nbsp;&nbsp;
+        <xar:if condition="$order eq 'chrono'">
+            ( <strong>chrono</strong> | <a href="#xarModURL('labaccounting','journals','display',array('journalid'=&gt;$journalid, 'order' =&gt; 'latest','yearshown'=&gt;$yearshown,'monthshown'=&gt;$monthshown))#">latest</a> )
+        <xar:else />
+            ( <a href="#xarModURL('labaccounting','journals','display',array('journalid'=&gt;$journalid, 'order' =&gt; 'chrono','yearshown'=&gt;$yearshown,'monthshown'=&gt;$monthshown))#">chrono</a> | <strong>latest</strong> )
+        </xar:if>
+        &nbsp;&nbsp;
+        <a href="#xarModURL('labaccounting','journals','display',array('journalid'=&gt;$journalid,'yearshown'=&gt;$nextyear))#">#$nextyear# &gt;&gt;</a>
+    </form>
+</div>
+

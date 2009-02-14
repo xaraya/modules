@@ -1,0 +1,100 @@
+<xar:base-include-javascript position="body" module="base" filename="calendar.js" />
+<xar:style scope="module" file="labaccounting" />
+
+<xar:style scope="module" module="base" file="navtabs" />
+
+<xar:set name="dummy">xarVarFetch('module', 'str::', $currentmodname, '', XARVAR_NOT_REQUIRED)</xar:set>
+<xar:set name="dummy">xarVarFetch('type', 'str::', $currentmodtype, '', XARVAR_NOT_REQUIRED)</xar:set>
+<xar:set name="dummy">xarVarFetch('func', 'str::', $currentmodfunc, '', XARVAR_NOT_REQUIRED)</xar:set>
+<xar:set name="dummy">xarVarFetch('accttype', 'str::', $accttype, '', XARVAR_NOT_REQUIRED)</xar:set>
+
+    <dl class="xar-tabs">
+        <dt class="help" title="Choose an account type to filter the General Ledger by.">
+          <xar:mlstring>Account Type Filter:</xar:mlstring>
+        </dt>
+        
+        <xar:if condition="$currentmodname eq 'labaccounting' 
+                            and ( $_bl_module_type eq 'ledgers' or empty($_bl_module_type) ) 
+                            and  ( $_bl_module_func eq 'general' or empty($_bl_module_func) ) 
+                            and  ( $accttype eq 'All' or empty($accttype) )">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+          <a href="#xarModURL('labaccounting','ledgers','general')#">
+            <xar:mlstring>All</xar:mlstring></strong>
+          </a>
+        </dd>
+        
+        <xar:if condition="$currentmodname eq 'labaccounting' 
+                            and ( $_bl_module_type eq 'ledgers' ) 
+                            and  ( $_bl_module_func eq 'general' ) 
+                            and  ( $accttype eq 'Assets' )">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+          <a href="#xarModURL('labaccounting','ledgers','general', array('accttype'=&gt;"Assets"))#">
+            <xar:mlstring>Assets</xar:mlstring></strong>
+          </a>
+        </dd>
+        
+        <xar:if condition="$currentmodname eq 'labaccounting' 
+                            and ( $_bl_module_type eq 'ledgers' ) 
+                            and  ( $_bl_module_func eq 'general' ) 
+                            and  ( $accttype eq 'Liabilities' )">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+          <a href="#xarModURL('labaccounting','ledgers','general', array('accttype'=&gt;"Liabilities"))#">
+            <xar:mlstring>Liabilities</xar:mlstring></strong>
+          </a>
+        </dd>
+        
+        <xar:if condition="$currentmodname eq 'labaccounting' 
+                            and ( $_bl_module_type eq 'ledgers' ) 
+                            and  ( $_bl_module_func eq 'general' ) 
+                            and  ( $accttype eq 'Revenue' )">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+          <a href="#xarModURL('labaccounting','ledgers','general', array('accttype'=&gt;"Revenue"))#">
+            <xar:mlstring>Revenue</xar:mlstring></strong>
+          </a>
+        </dd>
+        
+        <xar:if condition="$currentmodname eq 'labaccounting' 
+                            and ( $_bl_module_type eq 'ledgers' ) 
+                            and  ( $_bl_module_func eq 'general' ) 
+                            and  ( $accttype eq 'Cost of Goods Sold' )">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+          <a href="#xarModURL('labaccounting','ledgers','general', array('accttype'=&gt;"Cost of Goods Sold"))#">
+            <xar:mlstring>Cost of Goods Sold</xar:mlstring></strong>
+          </a>
+        </dd>
+        
+        <xar:if condition="$currentmodname eq 'labaccounting' 
+                            and ( $_bl_module_type eq 'ledgers' ) 
+                            and  ( $_bl_module_func eq 'general' ) 
+                            and  ( $accttype eq 'Expenses' )">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+          <a href="#xarModURL('labaccounting','ledgers','general', array('accttype'=&gt;"Expenses"))#">
+            <xar:mlstring>Expenses</xar:mlstring></strong>
+          </a>
+        </dd>
+        
+    </dl>

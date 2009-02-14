@@ -1,0 +1,59 @@
+<xar:comment>Load AJAX to display new transaction form inline</xar:comment>
+<xar:base-include-javascript position="head" module="base" filename="xmlhttprequest.js" />
+
+<xar:comment>New transaction form needs the calendar javascript</xar:comment>
+<xar:base-include-javascript position="body" module="base" filename="calendar.js" />
+
+<xar:data-getitem name="$properties" module="labaccounting" itemtype="4" itemid="0" />
+
+<xar:template type="module" file="ledgertransactionmenu" subdata="array('ledgerid' =&gt; $ledgerid,'yearshown'=&gt;$yearshown,'monthshown'=&gt;$monthshown)" />
+
+<table width="100%" style="width: 100%;">
+    <tr><th colspan="8"><a href="#xarModURL('labaccounting','ledgertransactions','new', array('ledgerid' =&gt; $ledgerid))#" onClick="return loadContent(this.href,'transactionform');"><xar:mlstring>Create New</xar:mlstring>
+            <div id="transactionform"></div>
+        </th>
+    </tr>
+    <tr>
+        <th><xar:mlstring>Date</xar:mlstring></th>
+        <th>Created By</th>
+        <th><xar:data-label property="$properties['title']" /></th>
+        <th><xar:mlstring>Credits</xar:mlstring></th>
+        <th><xar:mlstring>Debits</xar:mlstring></th>
+        <th><xar:mlstring>Balance</xar:mlstring></th>
+        <th><xar:data-label property="$properties['status']" /></th>
+    </tr>
+    <xar:if condition="$beginningbalance gt 0">
+        <tr>
+            <td><xar:if condition="isset($startdate)"><xar:data-output type="calendar" value="$startdate" dateformat="%b %d" /></xar:if></td>
+            <td></td>
+            <td><xar:mlstring>Beginning Balance</xar:mlstring></td>
+            <td></td>
+            <td></td>
+            <td class="xar-align-right"><xar:data-output property="$properties['amount']" value="$beginningbalance" /></td>
+        </tr>
+    </xar:if>
+    <xar:if condition="count($transactionlist) gt 0">
+        <xar:set name="runningbalance">$beginningbalance</xar:set>
+        <xar:foreach in="$transactionlist" value="$transactioninfo">
+            <tr>
+                <td><xar:data-output type="calendar" value="$transactioninfo['transdate']" dateformat="%b %d %H:%I" /></td>
+                <td><xar:data-output type="userlist" value="$transactioninfo['creatorid']" /></td>
+                <td><a href="&xar-modurl-labaccounting-ledgertransactions-display;&amp;journalid=#$transactioninfo['transactionid']#"><xar:data-output property="$properties['title']" value="$transactioninfo['title']" /></a></td>
+                
+                <xar:if condition="$transactioninfo['amount'] gt 0">
+                    <td class="xar-align-right"><xar:data-output property="$properties['amount']" value="$transactioninfo['amount']" /></td>
+                    <td></td>
+                <xar:else />
+                    <td></td>
+                    <td class="xar-align-right"><xar:data-output property="$properties['amount']" value="$transactioninfo['amount']" /></td>
+                </xar:if>
+                <xar:set name="runningbalance">sprintf('%01.2f',$runningbalance + $transactioninfo['amount'])</xar:set>
+                <td class="xar-align-right"><xar:data-output property="$properties['amount']" value="$runningbalance" /></td>
+                <td><xar:data-output property="$properties['status']" value="$transactioninfo['status']" /></td>
+                <td><a href="&xar-modurl-labaccounting-ledgertransactions-modify;&amp;transactionid=#$transactioninfo['transactionid']#" onClick="return loadContent(this.href,'transactionform');"><img src="modules/labaccounting/xarimages/button.edit.gif" border="0" align="top" /></a>&nbsp;<a href="&xar-modurl-labaccounting-ledgertransactions-delete;&amp;transactionid=#$transactioninfo['transactionid']#" onClick="return loadContent(this.href,'transactionform');"><img src="modules/labaccounting/xarimages/button.delete.gif" align="top" border="0" /></a></td>
+            </tr>
+        </xar:foreach>
+    <xar:else />
+        <tr><td colspan="7"><h4>No transactions for this accounting period</h3></td></tr>
+    </xar:if>
+</table>

@@ -1,0 +1,184 @@
+<xar:base-include-javascript position="body" module="base" filename="calendar.js" />
+<xar:style scope="module" file="labaccounting" />
+
+<xar:style scope="module" module="base" file="navtabs" />
+
+<xar:set name="dummy">xarVarFetch('module', 'str::', $currentmodname, '', XARVAR_NOT_REQUIRED)</xar:set>
+<xar:set name="dummy">xarVarFetch('type', 'str::', $currentmodtype, '', XARVAR_NOT_REQUIRED)</xar:set>
+<xar:set name="dummy">xarVarFetch('func', 'str::', $currentmodfunc, '', XARVAR_NOT_REQUIRED)</xar:set>
+<xar:set name="dummy">xarVarFetch('journaltype', 'str::', $journaltype, '', XARVAR_NOT_REQUIRED)</xar:set>
+
+    <dl class="xar-tabs">
+        <dt class="help" title="Choose an account type to filter the General Ledger by.">
+          <xar:mlstring>Account Type Filter:</xar:mlstring>
+        </dt>
+        
+        <xar:if condition="$currentmodname eq 'labaccounting' 
+                            and ( $_bl_module_type eq 'journals' ) 
+                            and  ( $_bl_module_func eq 'view' ) 
+                            and  ( $journaltype eq 'master' )">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+          <a href="#xarModURL('labaccounting','journals','view', array('journaltype'=&gt;"master"))#">
+            <xar:mlstring>Master</xar:mlstring></strong>
+          </a>
+        </dd>
+        
+        <xar:if condition="$currentmodname eq 'labaccounting' 
+                            and ( $_bl_module_type eq 'journals' ) 
+                            and  ( $_bl_module_func eq 'view' ) 
+                            and  ( $journaltype eq 'all' )">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+          <a href="#xarModURL('labaccounting','journals','view', array('journaltype'=&gt;"all"))#">
+            <xar:mlstring>All</xar:mlstring></strong>
+          </a>
+        </dd>
+        
+        <xar:if condition="$currentmodname eq 'labaccounting' 
+                            and ( $_bl_module_type eq 'journals' ) 
+                            and  ( $_bl_module_func eq 'view' ) 
+                            and  ( $journaltype eq 'ecommerce' )">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+          <a href="#xarModURL('labaccounting','journals','view', array('journaltype'=&gt;"ecommerce"))#">
+            <xar:mlstring>eCommerce</xar:mlstring></strong>
+          </a>
+        </dd>
+        
+        <xar:if condition="$currentmodname eq 'labaccounting' 
+                            and ( $_bl_module_type eq 'journals' ) 
+                            and  ( $_bl_module_func eq 'view' ) 
+                            and  ( $journaltype eq 'roles' )">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+          <a href="#xarModURL('labaccounting','journals','view', array('journaltype'=&gt;"roles"))#">
+            <xar:mlstring>User</xar:mlstring></strong>
+          </a>
+        </dd>
+        
+        <xar:if condition="$currentmodname eq 'labaccounting' 
+                            and ( $_bl_module_type eq 'journals' ) 
+                            and  ( $_bl_module_func eq 'view' ) 
+                            and  ( $journaltype eq 'dossier' )">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+          <a href="#xarModURL('labaccounting','journals','view', array('journaltype'=&gt;"dossier"))#">
+            <xar:mlstring>Client</xar:mlstring></strong>
+          </a>
+        </dd>
+        
+        <xar:if condition="$currentmodname eq 'labaccounting' 
+                            and ( $_bl_module_type eq 'journals' ) 
+                            and  ( $_bl_module_func eq 'view' ) 
+                            and  ( $journaltype eq 'assets' )">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+          <a href="#xarModURL('labaccounting','journals','view', array('journaltype'=&gt;"assets"))#">
+            <xar:mlstring>Assets</xar:mlstring></strong>
+          </a>
+        </dd>
+        
+        <xar:if condition="$currentmodname eq 'labaccounting' 
+                            and ( $_bl_module_type eq 'journals' ) 
+                            and  ( $_bl_module_func eq 'view' ) 
+                            and  ( $journaltype eq 'liabilities' )">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+          <a href="#xarModURL('labaccounting','journals','view', array('journaltype'=&gt;"liabilities"))#">
+            <xar:mlstring>Billpay</xar:mlstring></strong>
+          </a>
+        </dd>
+        
+        <xar:if condition="$currentmodname eq 'labaccounting' 
+                            and ( $_bl_module_type eq 'journals' ) 
+                            and  ( $_bl_module_func eq 'view' ) 
+                            and  ( $journaltype eq 'revenue' )">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+          <a href="#xarModURL('labaccounting','journals','view', array('journaltype'=&gt;"revenue"))#">
+            <xar:mlstring>Income</xar:mlstring></strong>
+          </a>
+        </dd>
+        
+        <xar:if condition="$currentmodname eq 'labaccounting' 
+                            and ( $_bl_module_type eq 'journals' ) 
+                            and  ( $_bl_module_func eq 'view' ) 
+                            and  ( $journaltype eq 'cogs' )">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+          <a href="#xarModURL('labaccounting','journals','view', array('journaltype'=&gt;"cogs"))#">
+            <xar:mlstring>Payroll</xar:mlstring></strong>
+          </a>
+        </dd>
+        
+        <xar:if condition="$currentmodname eq 'labaccounting' 
+                            and ( $_bl_module_type eq 'journals' ) 
+                            and  ( $_bl_module_func eq 'view' ) 
+                            and  ( $journaltype eq 'expenses' )">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+          <a href="#xarModURL('labaccounting','journals','view', array('journaltype'=&gt;"expenses"))#">
+            <xar:mlstring>Expenses</xar:mlstring></strong>
+          </a>
+        </dd>
+        
+        <xar:if condition="$currentmodname eq 'labaccounting' 
+                            and ( $_bl_module_type eq 'journals' or empty($_bl_module_type) ) 
+                            and  ( $_bl_module_func eq 'view' or empty($_bl_module_func) ) 
+                            and  ( $journaltype eq 'private' )">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+          <a href="#xarModURL('labaccounting','journals','view', array('journaltype'=&gt;"private"))#">
+            <xar:mlstring>Private</xar:mlstring></strong>
+          </a>
+        </dd>
+        
+        <xar:if condition="$currentmodname eq 'labaccounting' 
+                            and ( $_bl_module_type eq 'journals' or empty($_bl_module_type) ) 
+                            and  ( $_bl_module_func eq 'view' or empty($_bl_module_func) ) 
+                            and  ( empty($journaltype) )">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+          <a href="#xarModURL('labaccounting','journals','view')#">
+            <xar:mlstring>Unsorted</xar:mlstring></strong>
+          </a>
+        </dd>
+        
+    </dl>
