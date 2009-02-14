@@ -31,11 +31,11 @@
 function publications_user_view($args)
 {
     // Get parameters
+    if (!xarVarFetch('ptid',     'id',    $ptid,      xarModVars::get('publications', 'defaultpubtype'), XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('startnum', 'int:0', $startnum,  NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('cids',     'array', $cids,      NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('andcids',  'str',   $andcids,   NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('catid',    'str',   $catid,     NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('ptid',     'id',    $ptid,      NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('itemtype', 'id',    $itemtype,  NULL, XARVAR_NOT_REQUIRED)) {return;}
     // TODO: put the query string through a proper parser, so searches on multiple words can be done.
     if (!xarVarFetch('q',        'pre:trim:passthru:str:1:200',   $q,   NULL, XARVAR_NOT_REQUIRED)) {return;}
@@ -85,8 +85,16 @@ function publications_user_view($args)
     // Get the publication type for this display
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $ptid));
+
+    // Get the settings of this publication type
     $data['settings'] = $pubtypeobject->properties['configuration']->getValue();
 
+    // Get the template for this publication type
+    if ($ishome) $data['template'] = 'frontpage';
+    else $data['template'] = $pubtypeobject->properties['template']->getValue();
+
+    
+    
     $isdefault = 0;
     // check default view for this type of publications
     if (empty($catid) && empty($cids) && empty($owner) && empty($sort)) {
@@ -514,30 +522,11 @@ function publications_user_view($args)
     // Specific layout within a template (optional)
     if (isset($layout)) $data['layout'] = $layout;
 
-    if ($ishome) {
-        $template = 'frontpage';
-    } elseif (!empty($ptid)) {
-        $template = $pubtypes[$ptid]['name'];
-    } else {
-        // TODO: allow templates per category ?
-        if (!isset($template)) $template = null;
-    }
-    
     // Get the publications we want to view
     $object = DataObjectMaster::getObjectList(array('name' => $pubtypeobject->properties['name']->value));
     $data['items'] = $object->getItems();
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
 
-    // Get the appropriate template FIXME
-    if (empty($data['items'])) {
-        // No publications
-        if ($ishome) $template = 'frontpage';
-        elseif (!empty($ptid)) $template = $pubtypes[$ptid]['name'];
-        else {
-            // TODO: allow templates per category ?
-            if (!isset($template)) $template = null;
-        }
-    }
 
 
     // Adjust the display to the correct number of cilumns
@@ -547,7 +536,9 @@ function publications_user_view($args)
     $data['colwidth'] = round(100 / $maxcols);
     $data['settings']['showcols'] = 1;
 
-    return xarTplModule('publications', 'user', 'view', $data, $template);
+    $data['object'] = DataObjectMaster::getObjectList(array('name' => $pubtypeobject->properties['name']->value));
+    
+    return xarTplModule('publications', 'user', 'view', $data, $data['template']);
 }
 
 ?>

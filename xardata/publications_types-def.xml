@@ -43,6 +43,16 @@
       <seq>3</seq>
       <configuration>a:0:{}</configuration>
     </property>
+    <property name="template">
+      <id>306</id>
+      <label>Template</label>
+      <type>textbox</type>
+      <defaultvalue></defaultvalue>
+      <source>pubtypes.template</source>
+      <status>33</status>
+      <seq>4</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
     <property name="configuration">
       <id>307</id>
       <label>Configuration</label>
@@ -50,7 +60,7 @@
       <defaultvalue></defaultvalue>
       <source>pubtypes.configuration</source>
       <status>34</status>
-      <seq>4</seq>
+      <seq>5</seq>
       <configuration>a:7:{s:15:"display_columns";s:2:"30";s:12:"display_rows";s:1:"1";s:17:"display_key_label";s:3:"Key";s:19:"display_value_label";s:5:"Value";s:14:"display_layout";s:7:"default";s:19:"initialization_rows";s:1:"2";s:32:"initialization_associative_array";s:1:"1";}</configuration>
     </property>
     <property name="state">
@@ -60,7 +70,7 @@
       <defaultvalue>3</defaultvalue>
       <source>pubtypes.state</source>
       <status>33</status>
-      <seq>5</seq>
+      <seq>6</seq>
       <configuration>a:2:{s:14:"display_layout";s:7:"default";s:22:"initialization_options";s:30:"0,Deleted;1,Inactive;3,Active;";}</configuration>
     </property>
   </properties>

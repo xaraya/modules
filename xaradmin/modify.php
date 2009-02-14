@@ -20,7 +20,7 @@
 
 sys::import('modules.dynamicdata.class.objects.master');
 
-function publications_admin_modify($args)
+function publications_user_modify($args)
 {
     extract($args);
 
@@ -42,7 +42,7 @@ function publications_admin_modify($args)
        $template = null;
     }
 
-    return xarTplModule('publications', 'admin', 'modify', $data, $template);
+    return xarTplModule('publications', 'user', 'modify', $data, $template);
 
 
 

@@ -128,6 +128,12 @@
                         <xar:data-input name="usetitleforurl" type="dropdown" options="$options" value="$usetitleforurl" />&#160;
                     </div>
                 </fieldset>
+                <fieldset class="xar-norm">
+                    <legend>
+                        Categories
+                    </legend>
+                    <xar:data-input type="categorypicker" name="basecid" module="publications" itemtype="$ptid" />
+                </fieldset>
             <xar:else />
                 <div class="xar-form-input-wrapper">
                     <label class="help xar-form-label" title="#xarML('Select the type of publication whose settings you want to configure')#">                    
@@ -411,7 +417,6 @@
                             </td>
                         </tr>
                     </table>
-                    <xar:data-input type="categorypicker" name="basecid" module="publications" itemtype="$ptid" />
                 </fieldset>
             </xar:if>
             <div class="xar-form-input-wrapper">

@@ -27,11 +27,11 @@
       <id>245</id>
       <label>Title</label>
       <type>textbox</type>
-      <defaultvalue></defaultvalue>
+      <defaultvalue>New Translation</defaultvalue>
       <source>publication.name</source>
       <status>33</status>
       <seq>2</seq>
-      <configuration></configuration>
+      <configuration>a:4:{s:12:"display_size";s:2:"50";s:17:"display_maxlength";s:3:"254";s:14:"display_layout";s:7:"default";s:21:"validation_min_length";s:1:"2";}</configuration>
     </property>
     <property name="source">
       <id>247</id>

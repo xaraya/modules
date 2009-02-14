@@ -50,7 +50,7 @@
                 <xar:set name="visible">array('block','none','none')</xar:set>
             </xar:if>
             <xar:template file="pagetabs" type="module" />
-            <div id="page-1" style="display: #$visible[0]#">
+            <div id="page-1" style="display: block">
                 <xar:set name="contentfile">'content-' . $object->name</xar:set>
                 <xar:template file="$contentfile" type="module" />
             </div>

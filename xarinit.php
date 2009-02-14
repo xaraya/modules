@@ -61,118 +61,17 @@ function publications_init()
             )";
     if (!$q->run($query)) return;
 
-/*
-    $fields = array(
-        'id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
-//        'id'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'title'=>array('type'=>'varchar','size'=>254,'null'=>FALSE,'default'=>''),
-        'summary'=>array('type'=>'text'),
-        'body'=>array('type'=>'text'),
-        'notes'=>array('type'=>'text'),
-        'status'=>array('type'=>'integer','size'=>'tiny','null'=>FALSE,'default'=>'0'),
-        'owner'=>array('type'=>'integer','null'=>FALSE,'default'=>'0'),
-        'pubdate'=>array('type'=>'integer','unsigned'=>TRUE,'null'=>FALSE,'default'=>'0'),
-        'pubtype_id'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'1'),
-        'pages'=>array('type'=>'integer','unsigned'=>TRUE,'null'=>FALSE,'default'=>'1'),
-        'language'=>array('type'=>'varchar','size'=>30,'null'=>FALSE,'default'=>'')
-    );
-
-    // Create the Table - the function will return the SQL is successful or
-    // raise an exception if it fails, in this case $query is empty
-    $query = xarDBCreateTable($publicationstable,$fields);
-    if (empty($query)) return; // throw back
-
-    // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    $index = array(
-        'name'      => 'i_' . xarDB::getPrefix() . '_publications_owner',
-        'fields'    => array('owner'),
-        'unique'    => false
-    );
-    $query = xarDBCreateIndex($publicationstable,$index);
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    $index = array(
-        'name'      => 'i_' . xarDB::getPrefix() . '_publications_pubtype_id',
-        'fields'    => array('pubtype_id'),
-        'unique'    => false
-    );
-    $query = xarDBCreateIndex($publicationstable,$index);
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    $index = array(
-        'name'      => 'i_' . xarDB::getPrefix() . '_publications_pubdate',
-        'fields'    => array('pubdate'),
-        'unique'    => false
-    );
-    $query = xarDBCreateIndex($publicationstable,$index);
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    $index = array(
-        'name'      => 'i_' . xarDB::getPrefix() . '_publications_status',
-        'fields'    => array('status'),
-        'unique'    => false
-    );
-    $query = xarDBCreateIndex($publicationstable,$index);
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    $index = array(
-        'name'      => 'i_' . xarDB::getPrefix() . '_publications_language',
-        'fields'    => array('language'),
-        'unique'    => false
-    );
-    $query = xarDBCreateIndex($publicationstable,$index);
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-*/
-
     $query = "DROP TABLE IF EXISTS " . $prefix . "_publications_types";
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_publications_types (
             id integer unsigned NOT NULL auto_increment,
             name varchar(64) NOT NULL DEFAULT '',
             description varchar(255) NOT NULL DEFAULT '',
+            template varchar(255) NOT NULL DEFAULT '',
             configuration TEXT,
             state tinyint unsigned NOT NULL DEFAULT '0',
             PRIMARY KEY(id))";
     if (!$q->run($query)) return;
-
-/* 
-
-// TODO: remove this code and the setup.php file
-    // Load the initial setup of the publication types
-    if (file_exists('modules/publications/xarsetup.php')) {
-        include 'modules/publications/xarsetup.php';
-    } else {
-        // TODO: add some defaults here
-        $pubtypes = array();
-        $categories = array();
-        $settings = array();
-        $defaultpubtype = 0;
-    }
-
-    // Save publication types
-    $pubid = array();
-    foreach ($pubtypes as $pubtype) {
-        list($id,$name,$descr,$config) = $pubtype;
-        $nextId = $dbconn->GenId($pubtypestable);
-        $query = "INSERT INTO $pubtypestable
-                (pubtype_id, pubtypename, pubtypedescr,
-                 pubtypeconfig)
-                VALUES (?,?,?,?)";
-        $bindvars = array($nextId, $name, $descr, $config);
-        $result =& $dbconn->Execute($query,$bindvars);
-        if (!$result) return;
-        $ptid = $dbconn->PO_Insert_ID($pubtypestable, 'pubtype_id');
-        $pubid[$id] = $ptid;
-    }
-*/
 
 # --------------------------------------------------------
 #
