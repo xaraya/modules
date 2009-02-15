@@ -83,15 +83,15 @@ function publications_user_view($args)
     }
 
     // Get the publication type for this display
-    $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
-    $pubtypeobject->getItem(array('itemid' => $ptid));
+    $data['pubtypeobject'] = DataObjectMaster::getObject(array('name' => 'publications_types'));
+    $data['pubtypeobject']->getItem(array('itemid' => $ptid));
 
     // Get the settings of this publication type
-    $data['settings'] = $pubtypeobject->properties['configuration']->getValue();
+    $data['settings'] = $data['pubtypeobject']->properties['configuration']->getValue();
 
     // Get the template for this publication type
     if ($ishome) $data['template'] = 'frontpage';
-    else $data['template'] = $pubtypeobject->properties['template']->getValue();
+    else $data['template'] = $data['pubtypeobject']->properties['template']->getValue();
 
     
     
@@ -523,10 +523,11 @@ function publications_user_view($args)
     if (isset($layout)) $data['layout'] = $layout;
 
     // Get the publications we want to view
-    $object = DataObjectMaster::getObjectList(array('name' => $pubtypeobject->properties['name']->value));
+    $data['object'] = DataObjectMaster::getObject(array('name' => $data['pubtypeobject']->properties['name']->value));
+    
+    $object = DataObjectMaster::getObjectList(array('name' => $data['pubtypeobject']->properties['name']->value));
     $data['items'] = $object->getItems();
-    $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
-
+    $data['object'] = DataObjectMaster::getObject(array('name' => $data['pubtypeobject']->properties['name']->value));
 
 
     // Adjust the display to the correct number of cilumns
@@ -536,8 +537,6 @@ function publications_user_view($args)
     $data['colwidth'] = round(100 / $maxcols);
     $data['settings']['showcols'] = 1;
 
-    $data['object'] = DataObjectMaster::getObjectList(array('name' => $pubtypeobject->properties['name']->value));
-    
     return xarTplModule('publications', 'user', 'view', $data, $data['template']);
 }
 

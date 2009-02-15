@@ -18,7 +18,7 @@
                 <xar:else />
                     <td>
                         <xar:if condition="xarUserIsLoggedIn() AND $field eq $keyfieldalias AND xarSecurityCheck('EditListings',0)">
-                            <a href="#xarModURL('publications','admin','modify',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname,'tplmodule' => $localmodule))#">
+                            <a href="#xarModURL('publications','user','modify',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname,'tplmodule' => $localmodule))#">
                                 <xar:data-output property="$properties[$column]" value="$value" />
                             </a>
                         <xar:else />
