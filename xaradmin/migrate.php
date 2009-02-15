@@ -154,7 +154,7 @@ function dossier_admin_migrate()
             
             $contactid = xarModAPIFunc('dossier','admin','create',
                                     array('cat_id'      => $contactinfo['cat_id'],
-                                       'ownerid'        => 0,
+                                       'agentuid'        => 0,
                                        'userid'         => $contactinfo['user'],
                                        'private'        => $contactinfo['private'],
                                        'contactcode'    => "",

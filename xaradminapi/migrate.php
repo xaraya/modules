@@ -110,7 +110,7 @@ function dossier_adminapi_migrate($args)
             $fields = xarModAPIFunc('dynamicdata','user','getprop',
                                     array('objectid' => $projects_objectid));
             foreach ($fields as $name => $info) {
-                if($name == "ownerid") {
+                if($name == "agentuid") {
                     $contact_type = $info['type'];
                     switch($contact_type) {
                         case 735:
@@ -126,8 +126,8 @@ function dossier_adminapi_migrate($args)
                             }
                         
                             $query = "UPDATE $xProjects_table a, $addressbook_links_table b
-                                    SET a.ownerid = b.contactid
-                                    WHERE a.ownerid = b.addressbook_id";
+                                    SET a.agentuid = b.contactid
+                                    WHERE a.agentuid = b.addressbook_id";
                             $result = &$dbconn->Execute($query);
                             if (!$result) {return;}
                             break;
@@ -147,8 +147,8 @@ function dossier_adminapi_migrate($args)
                             }
                             
                             $query = "UPDATE $xProjects_table a, $dossier_table b, $roles_table c
-                                    SET a.ownerid = b.contactid
-                                    WHERE a.ownerid = c.xar_uid
+                                    SET a.agentuid = b.contactid
+                                    WHERE a.agentuid = c.xar_uid
                                     AND b.email_1 = c.xar_email";
                             $result = &$dbconn->Execute($query);
                             if (!$result) {return;}
@@ -395,7 +395,7 @@ function dossier_adminapi_migrate($args)
             $fields = xarModAPIFunc('dynamicdata','user','getprop',
                                     array('objectid' => $reminders_objectid));
             foreach ($fields as $name => $info) {
-                if($name == "ownerid") {
+                if($name == "agentuid") {
                     $contact_type = $info['type'];
                     switch($contact_type) {
                         case 735:
@@ -432,8 +432,8 @@ function dossier_adminapi_migrate($args)
                             }
                             
                             $query = "UPDATE $reminders_table a, $dossier_table b, $roles_table c
-                                    SET a.ownerid = b.contactid
-                                    WHERE a.ownerid = c.xar_uid
+                                    SET a.agentuid = b.contactid
+                                    WHERE a.agentuid = c.xar_uid
                                     AND b.email_1 = c.xar_email";
                             $result = &$dbconn->Execute($query);
                             if (!$result) {return;}
@@ -453,7 +453,7 @@ function dossier_adminapi_migrate($args)
             $fields = xarModAPIFunc('dynamicdata','user','getprop',
                                     array('objectid' => $worklog_objectid));
             foreach ($fields as $name => $info) {
-                if($name == "ownerid") {
+                if($name == "agentuid") {
                     $contact_type = $info['type'];
                     switch($contact_type) {
                         case 735:
@@ -469,8 +469,8 @@ function dossier_adminapi_migrate($args)
                             }
                         
                             $query = "UPDATE $worklog_table a, $addressbook_links_table b
-                                    SET a.ownerid = b.contactid
-                                    WHERE a.ownerid = b.addressbook_id";
+                                    SET a.agentuid = b.contactid
+                                    WHERE a.agentuid = b.addressbook_id";
                             $result = &$dbconn->Execute($query);
                             if (!$result) {return;}       
                             break;
@@ -490,8 +490,8 @@ function dossier_adminapi_migrate($args)
                             }
                             
                             $query = "UPDATE $worklog_table a, $dossier_table b, $roles_table c
-                                    SET a.ownerid = b.contactid
-                                    WHERE a.ownerid = c.xar_uid
+                                    SET a.agentuid = b.contactid
+                                    WHERE a.agentuid = c.xar_uid
                                     AND b.email_1 = c.xar_email";
                             $result = &$dbconn->Execute($query);
                             if (!$result) {return;}

@@ -14,8 +14,15 @@ function dossier_locations_modify($args)
                          array('locationid' => $locationid));
 
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    
+    $contactinfo = xarModAPIFunc('dossier',
+                        'user',
+                        'get',
+                        array('contactid' => $contactid));
 
-    if (!xarSecurityCheck('PublicDossierAccess', 1, 'Contact', "All:All:All:All")) {
+    if (!isset($contactinfo) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+
+    if (!xarSecurityCheck('PublicDossierAccess', 1, 'Contact', $contactinfo['cat_id'].":".$contactinfo['userid'].":".$contactinfo['company'].":".$contactinfo['agentuid'])) {
         return;
     }
 

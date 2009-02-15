@@ -34,7 +34,7 @@ function dossier_adminapi_delete($args)
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
     if ($item['userid'] != $uid) {
-        if (!xarSecurityCheck('AuditDossierLog', 1, 'Contact', "All:All:All:All")) {
+        if (!xarSecurityCheck('AuditDossierLog', 1, 'Contact', $item['cat_id'].":".$item['userid'].":".$item['company'].":".$item['agentuid'])) {
             $msg = xarML('Not authorized to delete #(1) item #(2)',
                         'dossier', xarVarPrepForStore($projectid));
             xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',

@@ -15,15 +15,7 @@ function dossier_remindersapi_getallcontact($args)
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
-/*
-    if (!xarSecurityCheck('UseReminders', 0, 'Item', "All:All:All")) {//TODO: security
-        $msg = xarML('Not authorized to access #(1) items',
-                    'dossier');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
-*/
+
     $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
 
@@ -52,7 +44,7 @@ function dossier_remindersapi_getallcontact($args)
               $reminderdate,
               $warningtime,
               $notes) = $result->fields;
-        if (xarSecurityCheck('UseDossierReminders', 0, 'Reminders', "All:All:All:All")) {
+        if (xarSecurityCheck('UseDossierReminders', 0, 'Reminders')) {
             $items[] = array('reminderid'       => $reminderid,
                               'contactid'       => $contactid,
                               'ownerid'         => $ownerid,

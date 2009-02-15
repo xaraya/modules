@@ -18,7 +18,7 @@ function dossier_locationsapi_getall($args)
 
     $invalid = array();
     if (!isset($contactid) || !is_numeric($contactid)) {
-        $invalid[] = 'contactid';
+//        $invalid[] = 'contactid';
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -28,7 +28,7 @@ function dossier_locationsapi_getall($args)
         return;
     }
 
-    if (!xarSecurityCheck('PublicDossierAccess', 1, 'Contact', "All:All:All:All")) {//TODO: security
+    if (!xarSecurityCheck('PublicDossierAccess', 1, 'Contact')) {//TODO: security
         $msg = xarML('Not authorized to access #(1) items',
                     'dossier');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
@@ -70,19 +70,18 @@ function dossier_locationsapi_getall($args)
             $country,
             $latitude,
             $longitude) = $result->fields;
-        if (xarSecurityCheck('PublicAccess', 0, 'Item', "$us_state:All:$city")) {                    
-            $items[$locationid] = array(
-                            'locationid'    => $locationid,
-                            'cat_id'        => $cat_id,
-                            'address_1'     => $address_1,
-                            'address_2'     => $address_2,
-                            'city'          => $city,
-                            'us_state'      => $us_state,
-                            'postalcode'    => $postalcode,
-                            'country'       => $country,
-                            'latitude'      => $latitude,
-                            'longitude'     => $longitude);
-        }
+                           
+        $items[$locationid] = array(
+                        'locationid'    => $locationid,
+                        'cat_id'        => $cat_id,
+                        'address_1'     => $address_1,
+                        'address_2'     => $address_2,
+                        'city'          => $city,
+                        'us_state'      => $us_state,
+                        'postalcode'    => $postalcode,
+                        'country'       => $country,
+                        'latitude'      => $latitude,
+                        'longitude'     => $longitude);
     }
 
     $result->Close();

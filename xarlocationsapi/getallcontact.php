@@ -30,7 +30,14 @@ function dossier_locationsapi_getallcontact($args)
     
     $items = array();
 
-    if (!xarSecurityCheck('PublicDossierAccess', 0, 'Contact', "All:All:All:All")) {//TODO: security
+    $item = xarModAPIFunc('dossier',
+                        'user',
+                        'get',
+                        array('contactid' => $contactid));
+
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+
+    if (!xarSecurityCheck('PublicDossierAccess', 1, 'Contact', $item['cat_id'].":".$item['userid'].":".$item['company'].":".$item['agentuid'])) {
         /* Fail silently
         $msg = xarML('Not authorized to access #(1) items',
                     'dossier');
@@ -101,7 +108,7 @@ function dossier_locationsapi_getallcontact($args)
             $country,
             $latitude,
             $longitude) = $result->fields;
-        if (xarSecurityCheck('PublicDossierAccess', 0, 'Contact', "All:All:All:All")) {                    
+        if (xarSecurityCheck('PublicDossierAccess', 0, 'Contact')) {                    
             $items[$locationid] = array(
                             'contactid'     => $contactid,
                             'locationid'    => $locationid,

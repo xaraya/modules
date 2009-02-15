@@ -12,8 +12,8 @@ function dossier_userapi_getallbirthdays($args)
     }
 
     $invalid = array();
-//    if (!isset($ownerid) || !is_numeric($ownerid)) {
-//        $invalid[] = 'ownerid';
+//    if (!isset($agentuid) || !is_numeric($agentuid)) {
+//        $invalid[] = 'agentuid';
 //    }
     if (!isset($startdate) || !is_string($startdate)) {
         $invalid[] = 'startnum';
@@ -29,7 +29,7 @@ function dossier_userapi_getallbirthdays($args)
         return;
     }
 
-    if (!xarSecurityCheck('PublicAccess', 0, 'Item', "All:All:All")) {//TODO: security
+    if (!xarSecurityCheck('PublicDossierAccess', 0)) {//TODO: security
         $msg = xarML('Not authorized to access #(1) items',
                     'dossier');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
@@ -44,7 +44,7 @@ function dossier_userapi_getallbirthdays($args)
 
     $sql = "SELECT contactid,
                   cat_id,
-                  ownerid,
+                  agentuid,
                   private,
                   contactcode,
                   prefix,
@@ -69,9 +69,11 @@ function dossier_userapi_getallbirthdays($args)
                   contactpref,
                   notes,
                   datemodified
-            FROM $contactstable
-            WHERE dateofbirth >= '".$startdate."'
-            ORDER BY dateofbirth";
+            FROM $contactstable";
+    if($startdate && $startdate != "0000-00-00") {
+        $sql .= " WHERE dateofbirth >= '".$startdate."'";
+    }
+    $sql .= " ORDER BY dateofbirth";
 
     $result = $dbconn->SelectLimit($sql, $numitems);
 
@@ -82,7 +84,7 @@ function dossier_userapi_getallbirthdays($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($contactid,
             $cat_id,
-            $ownerid,
+            $agentuid,
             $private,
             $contactcode,
             $prefix,
@@ -107,38 +109,37 @@ function dossier_userapi_getallbirthdays($args)
             $contactpref,
             $notes,
             $datemodified) = $result->fields;
-        if (xarSecurityCheck('ClientAccess', 0, 'Item', "All:All:All")) {
-    
-            if($dateofbirth == "0000-00-00") $dateofbirth = "";
             
-            $items[] = array('contactid'    => $contactid,
-                              'cat_id'      => $cat_id,
-                              'ownerid'     => $ownerid,
-                              'private'     => $private,
-                              'contactcode' => $contactcode,
-                              'prefix'      => $prefix,
-                              'lname'       => $lname,
-                              'fname'       => $fname,
-                              'sortname'    => $sortname,
-                              'dateofbirth' => $dateofbirth,
-                              'title'       => $title,
-                              'company'     => $company,
-                              'sortcompany' => $sortcompany,
-                              'img'         => $img,
-                              'phone_work'  => $phone_work,
-                              'phone_cell'  => $phone_cell,
-                              'phone_fax'   => $phone_fax,
-                              'phone_home'  => $phone_home,
-                              'email_1'     => $email_1,
-                              'email_2'     => $email_2,
-                              'chat_AIM'    => $chat_AIM,
-                              'chat_YIM'    => $chat_YIM,
-                              'chat_MSNM'   => $chat_MSNM,
-                              'chat_ICQ'    => $chat_ICQ,
-                              'contactpref' => $contactpref,
-                              'notes'       => $notes,
-                              'datemodified'=> $datemodified);
-        }
+    
+        if($dateofbirth == "0000-00-00") $dateofbirth = "";
+        
+        $items[] = array('contactid'    => $contactid,
+                          'cat_id'      => $cat_id,
+                          'agentuid'     => $agentuid,
+                          'private'     => $private,
+                          'contactcode' => $contactcode,
+                          'prefix'      => $prefix,
+                          'lname'       => $lname,
+                          'fname'       => $fname,
+                          'sortname'    => $sortname,
+                          'dateofbirth' => $dateofbirth,
+                          'title'       => $title,
+                          'company'     => $company,
+                          'sortcompany' => $sortcompany,
+                          'img'         => $img,
+                          'phone_work'  => $phone_work,
+                          'phone_cell'  => $phone_cell,
+                          'phone_fax'   => $phone_fax,
+                          'phone_home'  => $phone_home,
+                          'email_1'     => $email_1,
+                          'email_2'     => $email_2,
+                          'chat_AIM'    => $chat_AIM,
+                          'chat_YIM'    => $chat_YIM,
+                          'chat_MSNM'   => $chat_MSNM,
+                          'chat_ICQ'    => $chat_ICQ,
+                          'contactpref' => $contactpref,
+                          'notes'       => $notes,
+                          'datemodified'=> $datemodified);
     }
 
     $result->Close();

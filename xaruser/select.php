@@ -30,7 +30,7 @@ function dossier_user_select($args)
     $uid = xarUserGetVar('uid');
     
     if((!empty($company) || $company == " ") && $company != "[blank]" && $company != "select_company") {
-        if(xarSecurityCheck('AuditDossier', 0, 'Contact', "All:All:All:All")) {
+        if(xarSecurityCheck('AuditDossier', 0, 'Contact')) {
             $optionlist = xarModAPIFunc('dossier','user','getall',array('company'=>$company, 'sortby' => "sortname"));
             if($optionlist === false) return 1;
         } elseif(xarSecurityCheck('TeamDossierAccess', 0, 'Contact', "All:All:All:".$uid)) {
@@ -43,11 +43,11 @@ function dossier_user_select($args)
     
         if (!isset($optionlist)) $optionlist = array();
     } else {
-        if(xarSecurityCheck('AuditDossier', 0, 'Contact', "All:All:All:All")) {
+        if(xarSecurityCheck('AuditDossier', 0, 'Contact')) {
             $companylist = xarModAPIFunc('dossier', 'user', 'getcompanies');
             if($companylist === false) return 4;
         } elseif(xarSecurityCheck('TeamDossierAccess', 0, 'Contact', "All:All:All:".$uid)) {
-            $companylist = xarModAPIFunc('dossier', 'user', 'getcompanies', array('ownerid' => $uid));
+            $companylist = xarModAPIFunc('dossier', 'user', 'getcompanies', array('agentuid' => $uid));
             if($companylist === false) return 5;
         } elseif(xarSecurityCheck('ClientDossierAccess', 0, 'Contact', "All:".$uid.":All:All")) {
             $companylist = xarModAPIFunc('dossier', 'user', 'getcompanies', array('userid' => $uid));

@@ -17,7 +17,7 @@ function dossier_admin_modify($args)
 	
 	if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
-    if (!xarSecurityCheck('TeamDossierAccess', 1, 'Contact', "All:$item[userid]:All:$item[agentuid]")) {
+    if (!xarSecurityCheck('TeamDossierAccess', 1, 'Contact', $item['cat_id'].":".$item['userid'].":".$item['company'].":".$item['agentuid'])) {
         return;
     }
     

@@ -110,7 +110,7 @@ class Dynamic_DossierContactList_Property extends Dynamic_Select_Property
             if(xarSecurityCheck('AuditDossier', 0, 'Contact', "All:All:All:All")) {
                 $optionlist = xarModAPIFunc('dossier', 'user', 'getcompanies');
             } elseif(xarSecurityCheck('TeamDossierAccess', 0, 'Contact', "All:All:All:".$uid)) {
-                $optionlist = xarModAPIFunc('dossier', 'user', 'getcompanies', array('ownerid' => $uid));
+                $optionlist = xarModAPIFunc('dossier', 'user', 'getcompanies', array('agentuid' => $uid));
             } elseif(xarSecurityCheck('ClientDossierAccess', 0, 'Contact', "All:".$uid.":All:All")) {
                 $optionlist = xarModAPIFunc('dossier', 'user', 'getcompanies', array('userid' => $uid));
             }

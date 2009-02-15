@@ -31,7 +31,7 @@ function dossier_adminapi_create($args)
     }
 
 /* MUST BE OPEN TO ALLOW CREATION OF RECORDS BY ANON DURING REGISTRATION
-    if (!xarSecurityCheck('TeamAccess', 1, 'Item', "All:All:All") && false) {
+    if (!xarSecurityCheck('TeamDossierAccess', 1, 'Item', $item[cat_id].":".$item[userid].":".$item[company].":".$item[agentuid]) && false) {
         $msg = xarML('Not authorized to add #(1) items',
                     'dossier');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION', new SystemException($msg));

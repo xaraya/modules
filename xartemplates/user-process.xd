@@ -7,22 +7,22 @@
 <xar:set name="dummy">xarModAPILoad('categories', 'user')</xar:set>
 <xar:set name="catlist">xarModAPIFunc('categories', 'user', 'getchildren', array('cid' => $contactcid ) )</xar:set>
 
-<xar:template type="module" file="admin-menu" />
+<xar:template type="module" file="user-menu" />
 
 <div class="xar-mod-head">
 
     <xar:comment>Contact category, privacy and search field</xar:comment>
     <form method="post" action="#xarModURL('dossier','user','process')#" style="display: inline;">
-        <input type="hidden" name="agentuid" value="#$ownerid#" />
+        <input type="hidden" name="agentuid" value="#$agentuid#" />
         <div style="text-align: left;">
             <span style="padding-right: 10px;"><xar:mlstring>REFINE YOUR SEARCH</xar:mlstring>:</span>
             <span style="padding-right: 10px; margin-top: -2px; text-align: right;">
                 <input type="text" name="q" value="#$q#" style="width: 150px;" />
-                &nbsp;&nbsp;Phone:
+                &nbsp;&nbsp;<xar:mlstring>Phone:</xar:mlstring>
                 <input type="text" name="searchphone" value="#$searchphone#" style="width: 100px;" />
             </span>
             <span style="margin-top: -2px;">
-                <input type="submit" value="SEARCH" />
+                <input type="submit" value="#xarML('SEARCH')#" />
             </span>
         </div>
     </form>
@@ -110,7 +110,7 @@
             <fieldset><legend><strong><xar:mlstring>LOG CONTACT</xar:mlstring></strong></legend>
                 
                 <div>
-                    <xar:mlstring>Sales Agent</xar:mlstring>: <xar:data-input property="$logproperties['ownerid']" name="ownerid" value="$ownerid" />
+                    <xar:mlstring>Sales Agent</xar:mlstring>: <xar:data-input property="$logproperties['ownerid']" name="agentuid" value="$agentuid" />
                 
                     <xar:set name="logcid">xarModGetVar('dossier', 'logcid')</xar:set>
                     <xar:set name="dummy">xarModAPILoad('categories', 'user')</xar:set>

@@ -19,7 +19,7 @@ function dossier_user_dayschedule($args)
     
     $data = xarModAPIFunc('dossier','user','menu');
 
-    if (!xarSecurityCheck('TeamAccess')) {
+    if (!xarSecurityCheck('TeamDossierAccess')) {
         return;
     }
     if(empty($displaydate)) {
@@ -34,29 +34,30 @@ function dossier_user_dayschedule($args)
     $data['formatted_displaydate'] = date("l, M jS, Y", strtotime($displaydate));
     $nextday = date("Y-m-d", strtotime($displaydate) + (24 * 3600));
     
-    if(!xarModAPILoad('julian', 'user')) return;
-    
     $eventlist = array();
     
-    if(!empty($displaydate)) {
-        $julian_dates = xarModAPIFunc('julian', 
-                                    'user', 
-                                    'getall', 
-                                    array('startdate' => $displaydate,
-                                        'enddate' => $enddate));
-        if(!$julian_dates) $julian_dates = array();
+    if(xarModAPILoad('julian', 'user')) {
     
-        foreach($julian_dates as $julianeventlist) {
-            foreach($julianeventlist as $eventinfo) {
-                $starthour = substr($eventinfo['time'],0,strpos($eventinfo['time'],":"));
-                $eventlist[$starthour][] = array('eventlink' => xarModURL('julian', 'user', 'viewevent', array('event_id'=>$eventinfo['event_id'])),
-                                                'event_id' => $eventinfo['event_id'],
-                                                'starthour' => $starthour,
-                                                'details' => $eventinfo['summary']);
+        if(!empty($displaydate)) {
+            $julian_dates = xarModAPIFunc('julian', 
+                                        'user', 
+                                        'getall', 
+                                        array('startdate' => $displaydate,
+                                            'enddate' => $enddate));
+            if(!$julian_dates) $julian_dates = array();
+        
+            foreach($julian_dates as $julianeventlist) {
+                foreach($julianeventlist as $eventinfo) {
+                    $starthour = substr($eventinfo['time'],0,strpos($eventinfo['time'],":"));
+                    $eventlist[$starthour][] = array('eventlink' => xarModURL('julian', 'user', 'viewevent', array('event_id'=>$eventinfo['event_id'])),
+                                                    'event_id' => $eventinfo['event_id'],
+                                                    'starthour' => $starthour,
+                                                    'details' => $eventinfo['summary']);
+                }
             }
         }
     }
-    
+        
     $ownerid = xarSessionGetVar('uid');
     $reminder_dates = xarModAPIFunc('dossier', 
                                     'reminders', 

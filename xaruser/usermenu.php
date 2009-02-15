@@ -285,7 +285,7 @@ function dossier_user_usermenu($args)
 
         case 'create':
             if (!xarVarFetch('cat_id', 'id', $cat_id, 0, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('ownerid', 'id', $ownerid, 0, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('agentuid', 'id', $agentuid, 0, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('userid', 'id', $userid, 0, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('private', 'str:1:', $private, $private, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('contactcode', 'str:1:', $contactcode, $contactcode, XARVAR_NOT_REQUIRED)) return;
@@ -396,7 +396,7 @@ function dossier_user_usermenu($args)
                                 'admin',
                                 'create',
                                 array('cat_id' 	    => $cat_id,
-                                    'ownerid'	    => $ownerid,
+                                    'agentuid'	    => $agentuid,
                                     'userid'	    => $userid,
                                     'private'	    => $private,
                                     'contactcode'	=> $contactcode,

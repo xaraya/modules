@@ -18,7 +18,7 @@ function dossier_admin_privileges($args)
     if (!xarVarFetch('username',     'isset', $username,     NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('company',      'isset', $company,      NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('companyname',    'isset', $companyname,      NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('ownerid',      'isset', $ownerid,      NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('agentuid',      'isset', $agentuid,      NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('ownername',    'isset', $ownername,      NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('apply',        'isset', $apply,        NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('extpid',       'isset', $extpid,       NULL, XARVAR_DONT_SET)) {return;}
@@ -35,7 +35,7 @@ function dossier_admin_privileges($args)
         if (count($parts) > 0 && !empty($parts[0])) $cid = $parts[0];
         if (count($parts) > 1 && !empty($parts[1])) $userid = $parts[1];
         if (count($parts) > 2 && !empty($parts[2])) $company = $parts[2];
-        if (count($parts) > 3 && !empty($parts[3])) $ownerid = $parts[3];
+        if (count($parts) > 3 && !empty($parts[3])) $agentuid = $parts[3];
     }
     
     if (empty($cid) || $cid == 'All' || !is_numeric($cid)) {
@@ -68,17 +68,17 @@ function dossier_admin_privileges($args)
             }
         }
     }
-    if (strtolower($ownerid) == 'myself') {
-        $ownerid = 'Myself';
+    if (strtolower($agentuid) == 'myself') {
+        $agentuid = 'Myself';
         $ownername = 'Myself';
-    } elseif (empty($ownerid) || $ownerid == 'All' || (!is_numeric($ownerid) && (strtolower($ownerid) != 'myself'))) {
-        $ownerid = 0;
+    } elseif (empty($agentuid) || $agentuid == 'All' || (!is_numeric($agentuid) && (strtolower($agentuid) != 'myself'))) {
+        $agentuid = 0;
         if (!empty($ownername)) {
             $user = xarModAPIFunc('roles', 'user', 'get',
                                   array('name' => $ownername));
             if (!empty($user) && !empty($user['uid'])) {
-                if (strtolower($ownername) == 'myself') $ownerid = 'Myself';
-                else $ownerid = $user['uid'];
+                if (strtolower($ownername) == 'myself') $agentuid = 'Myself';
+                else $agentuid = $user['uid'];
             } else {
                 $ownername = '';
             }
@@ -90,7 +90,7 @@ function dossier_admin_privileges($args)
     $newinstance[] = empty($cid) ? 'All' : $cid;
     $newinstance[] = empty($userid) ? 'All' : $userid;
     $newinstance[] = empty($company) ? 'All' : $company;
-    $newinstance[] = empty($ownerid) ? 'All' : $ownerid;
+    $newinstance[] = empty($agentuid) ? 'All' : $agentuid;
 
     if (!empty($apply)) {
         // create/update the privilege
@@ -111,7 +111,7 @@ function dossier_admin_privileges($args)
     if (!empty($username) && isset($userlist[$userid])) {
         $username = '';
     }
-    if (!empty($ownername) && isset($userlist[$ownerid])) {
+    if (!empty($ownername) && isset($userlist[$agentuid])) {
         $ownername = '';
     }
     
@@ -124,7 +124,7 @@ function dossier_admin_privileges($args)
                   'company'       => xarVarPrepForDisplay($company),
                   'companyname'       => xarVarPrepForDisplay($companyname),
                   'companylist'       => $companylist,
-                  'ownerid'          => $ownerid,
+                  'agentuid'          => $agentuid,
                   'ownername'          => $ownername,
                   'userlist'    => $userlist,
                   'extpid'       => $extpid,

@@ -22,8 +22,8 @@ function dossier_userapi_getcompanies($args)
 {
     extract($args);
     
-    if (!isset($ownerid) || !is_numeric($ownerid)) {
-        $ownerid = 0;
+    if (!isset($agentuid) || !is_numeric($agentuid)) {
+        $agentuid = 0;
     }
     if (!isset($userid) || !is_numeric($userid)) {
         $userid = 0;
@@ -39,9 +39,9 @@ function dossier_userapi_getcompanies($args)
             
     $bindvars = array();
     
-    if($ownerid > 0) {
-        $sql .= " AND ownerid = ?";
-        $bindvars[] = $ownerid;
+    if($agentuid > 0) {
+        $sql .= " AND agentuid = ?";
+        $bindvars[] = $agentuid;
     } elseif($userid > 0) {
         $sql .= " AND userid = ?";
         $bindvars[] = $userid;

@@ -19,7 +19,7 @@ function dossier_user_birthdays($args)
 
     $data = xarModAPIFunc('dossier','user','menu');
 
-    if (!xarSecurityCheck('PublicAccess')) {
+    if (!xarSecurityCheck('PublicDossierAccess')) {
         return;
     }
 

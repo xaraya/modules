@@ -22,10 +22,10 @@ function dossier_adminapi_getmenulinks()
     if (xarSecurityCheck('TeamDossierAccess',0)) {
 
         $menulinks[] = Array('url'   => xarModURL('dossier',
-                                                   'user',
-                                                   'dashboard'),
-                              'title' => xarML('Dossier CRM Dashboard'),
-                              'label' => xarML('Dashboard'));
+                                                   'admin',
+                                                   'main'),
+                              'title' => xarML('Overview'),
+                              'label' => xarML('Overview'));
 
         $menulinks[] = Array('url'   => xarModURL('dossier',
                                                    'admin',

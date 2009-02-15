@@ -27,7 +27,7 @@ function dossier_user_main()
     if (!xarVarFetch('city', 'str::', $city, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('us_state', 'str::', $us_state, '', XARVAR_NOT_REQUIRED)) return;
             
-    if (!xarSecurityCheck('PublicDossierAccess', 0, 'Contact', "All:All:All:All")) {//TODO: security
+    if (!xarSecurityCheck('PublicDossierAccess', 0, 'Contact')) {//TODO: security
         $msg = xarML('Not authorized to access #(1) items',
                     'dossier');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',

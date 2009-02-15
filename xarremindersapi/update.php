@@ -23,7 +23,7 @@ function dossier_remindersapi_update($args)
 
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
-    if (!xarSecurityCheck('UseDossierReminders', 1, 'Reminders', "All:All:All:All")) {
+    if (!xarSecurityCheck('UseDossierReminders', 1, 'Reminders')) {
         return;
     }
 

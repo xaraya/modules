@@ -18,9 +18,7 @@ function dossier_userapi_search($args)
     }
 
     $invalid = array();
-//    if (!isset($ownerid) || !is_numeric($ownerid)) {
-//        $invalid[] = 'ownerid';
-//    }
+    
     if (!isset($startnum) || !is_numeric($startnum)) {
         $invalid[] = 'startnum';
     }
@@ -35,7 +33,7 @@ function dossier_userapi_search($args)
         return;
     }
 
-    if (!xarSecurityCheck('PublicDossierAccess', 0, 'Contact', "All:All:All:All")) {//TODO: security
+    if (!xarSecurityCheck('PublicDossierAccess', 0, 'Contact')) {//TODO: security
         $msg = xarML('Not authorized to access #(1) items',
                     'dossier');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
@@ -200,14 +198,11 @@ function dossier_userapi_search($args)
                 $longitude) = $result->fields;
             if (
                   (
-                    xarSecurityCheck('ClientAccess', 0, 'Item', "All:All:All") 
-                    && !empty($private) 
-                    && $private == 1
+                    !$private && xarSecurityCheck('PublicDossierAccess', 0, 'Contact', "$cat_id:$userid:$company:$agentuid") 
                   )
-                ||
+                  ||
                   (
-                    xarSecurityCheck('PublicAccess', 0, 'Item', "All:All:All") 
-                    && $private != 1
+                    xarSecurityCheck('ClientDossierAccess', 0, 'Contact', "$cat_id:$userid:$company:$agentuid") 
                   )
                 ) {
                 $items[] = array('contactid'    => $contactid,

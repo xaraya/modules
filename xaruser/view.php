@@ -17,12 +17,11 @@ function dossier_user_view($args)
     if (!xarVarFetch('startnum', 'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('ltr', 'str::', $ltr, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('sortby', 'str::', $sortby, 'sortcompany', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('private', 'str::', $private, "off", XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('cat_id', 'str::', $cat_id, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('q', 'str::', $q, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('searchphone', 'str::', $searchphone, '', XARVAR_NOT_REQUIRED)) return;
             
-    if (!xarSecurityCheck('PublicDossierAccess', 0, 'Contact', "All:All:All:All")) {//TODO: security
+    if (!xarSecurityCheck('PublicDossierAccess', 0, 'Contact')) {//TODO: security
         $msg = xarML('Not authorized to access #(1) items',
                     'dossier');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
@@ -35,14 +34,13 @@ function dossier_user_view($args)
     $data['ltr'] = $ltr;
     $data['sortby'] = $sortby;
     $data['startnum'] = $startnum;
-    $data['private'] = $private ? $private : "off";
     $data['cat_id'] = $cat_id;
     $data['q'] = $q;
 
     $contactlist = xarModAPIFunc('dossier', 'user', 'getall',
                             array('ltr' => $ltr,
                                   'sortby' => $sortby,
-                                  'private' => $private,
+                                  'private' => "off",
                                   'cat_id' => $cat_id,
                                   'q' => $q,
                                   'searchphone' => $searchphone,
@@ -65,7 +63,7 @@ function dossier_user_view($args)
                             'countitems', 
                             array('ltr' => $ltr,
                                   'sortby' => $sortby,
-                                  'private' => $private,
+                                  'private' => "off",
                                   'cat_id' => $cat_id,
                                   'q' => $q));
                                   

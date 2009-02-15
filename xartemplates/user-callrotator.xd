@@ -8,7 +8,7 @@
 <xar:set name="dummy">xarModAPILoad('categories', 'user')</xar:set>
 <xar:set name="catlist">xarModAPIFunc('categories', 'user', 'getchildren', array('cid' => $contactcid ) )</xar:set>
 
-<xar:template type="module" file="admin-menu" />
+<xar:template type="module" file="user-menu" />
 
 <form method="post" action="#xarModURL('dossier','user','process')#" style="display: inline;">
 
@@ -19,11 +19,11 @@
             <span style="padding-right: 10px;"><xar:mlstring>LOOK UP CONTACT RECORDS</xar:mlstring>:</span>
             <span style="padding-right: 10px; margin-top: -2px; text-align: right;">
                 <input type="text" name="q" value="#$q#" style="width: 150px;" />
-                &nbsp;&nbsp;Phone:
+                &nbsp;&nbsp;<xar:mlstring>Phone:</xar:mlstring>
                 <input type="text" name="searchphone" style="width: 100px;" />
             </span>
             <span style="margin-top: -2px;">
-                <input type="submit" value="SEARCH" style="margin-top: -2px;" />
+                <input type="submit" value="#xarML('SEARCH')#" style="margin-top: -2px;" />
             </span>
         </div>
     </div>

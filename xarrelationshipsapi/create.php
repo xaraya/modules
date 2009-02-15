@@ -26,8 +26,15 @@ function dossier_relationshipsapi_create($args)
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
+    
+    $item = xarModAPIFunc('dossier',
+                            'user',
+                            'get',
+                            array('contactid' => $contactid));
 
-    if (!xarSecurityCheck('AddDossierLog', 1, 'Log', "All:All:All:All")) {
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+
+    if (!xarSecurityCheck('AddDossierLog', 1, 'Log', $item['cat_id'].":".$item['userid'].":".$item['company'].":".$item['agentuid'])) {
         $msg = xarML('Not authorized to add #(1) items',
                     'dossier');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION', new SystemException($msg));

@@ -31,7 +31,7 @@ function dossier_locationsapi_delete($args)
 
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
-    if (!xarSecurityCheck('PublicDossierAccess', 1, 'Contact', "All:All:All:All")) {
+    if (!xarSecurityCheck('AuditDossierLog', 1, 'Contact')) {
         $msg = xarML('Not authorized to delete #(1) item #(2)',
                     'dossier', $projectid);
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',

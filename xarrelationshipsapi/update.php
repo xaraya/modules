@@ -29,7 +29,7 @@ function dossier_relationshipsapi_update($args)
 
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
-    if (!xarSecurityCheck('MyDossierLog', 1, 'Log', "All:All:All:All")) {
+    if (!xarSecurityCheck('MyDossierLog', 1, 'Log')) {
         return;
     }
 

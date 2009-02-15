@@ -24,7 +24,7 @@ function dossier_adminapi_fixcountries($args)
 {
     extract($args);
     
-    if (!xarSecurityCheck('TeamAccess', 1, 'Item', "All:All:All")) {
+    if (!xarSecurityCheck('TeamDossierAccess', 1)) {
         return;
     }
     

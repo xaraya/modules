@@ -69,7 +69,7 @@ function dossier_remindersapi_getall($args)
               $reminderdate,
               $warningtime,
               $notes) = $result->fields;
-        if (xarSecurityCheck('ViewDossierReminders', 0, 'Reminders', "All:All:All:All")) {
+        if (xarSecurityCheck('ViewDossierReminders', 0, 'Reminders')) {
             $items[] = array('reminderid'       => $reminderid,
                               'contactid'          => $contactid, 
                               'ownerid'         => $ownerid,

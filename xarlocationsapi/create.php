@@ -44,7 +44,7 @@ function dossier_locationsapi_create($args)
         $country = ''; //[missing country]';
     }
 
-    if (!xarSecurityCheck('PublicDossierAccess', 1, 'Contact', "All:All:All:All")) {
+    if (!xarSecurityCheck('PublicDossierAccess', 1)) {
         $msg = xarML('Not authorized to add #(1) items',
                     'dossier');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION', new SystemException($msg));

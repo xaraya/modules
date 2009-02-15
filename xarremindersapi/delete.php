@@ -19,8 +19,15 @@ function dossier_remindersapi_delete($args)
                             array('reminderid' => $reminderid));
 
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    
+    $contactinfo = xarModAPIFunc('dossier',
+                            'user',
+                            'get',
+                            array('contactid' => $contactid));
 
-    if (!xarSecurityCheck('UseDossierReminders', 1, 'Reminders', "All:All:All:All")) {
+    if (!isset($contactinfo) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+
+    if (!xarSecurityCheck('UseDossierReminders', 1, 'Reminders', $contactinfo['cat_id'].":".$contactinfo['userid'].":".$contactinfo['company'].":".$contactinfo['agentuid'])) {
         $msg = xarML('Not authorized to delete #(1) item #(2)',
                     'dossier', $projectid);
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',

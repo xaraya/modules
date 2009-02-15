@@ -19,8 +19,15 @@ function dossier_relationshipsapi_delete($args)
                             array('relationshipid' => $relationshipid));
 
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    
+    $contactinfo = xarModAPIFunc('dossier',
+                            'user',
+                            'get',
+                            array('contactid' => $contactid));
 
-    if (!xarSecurityCheck('MyDossierLog', 1, 'Log', "All:All:All:All")) {
+    if (!isset($contactinfo) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+
+    if (!xarSecurityCheck('MyDossierLog', 1, 'Log', $contactinfo['cat_id'].":".$contactinfo['userid'].":".$contactinfo['company'].":".$contactinfo['agentuid'])) {
         $msg = xarML('Not authorized to delete #(1) item #(2)',
                     'xtasks', $relationshipid);
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',

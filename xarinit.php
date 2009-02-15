@@ -554,7 +554,7 @@ function dossier_init()
     xarRegisterMask('PublicDossierAccess',      'All','dossier','Contact','All:All:All:All','ACCESS_OVERVIEW');
     xarRegisterMask('ClientDossierAccess',      'All','dossier','Contact','All:All:All:All','ACCESS_READ');
     xarRegisterMask('TeamDossierAccess',        'All','dossier','Contact','All:All:All:All','ACCESS_COMMENT');
-    xarRegisterMask('AuditDossierLog',          'All','dossier','Contact','All:All:All:All','ACCESS_MODERATE');
+    xarRegisterMask('AuditDossier',             'All','dossier','Contact','All:All:All:All','ACCESS_MODERATE');
     xarRegisterMask('AdminDossier',             'All','dossier','Contact','All:All:All:All','ACCESS_ADMIN');
     
     xarRegisterMask('ViewDossierReminders',        'All','dossier','Reminders','All:All:All:All','ACCESS_READ');

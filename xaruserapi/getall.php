@@ -121,7 +121,7 @@ function dossier_userapi_getall($args)
     }
     if(!empty($private)) {
         if($private == "on") {
-        $whereclause[] = "a.private = 1";
+            $whereclause[] = "a.private = 1";
         } elseif($private == "off") {
             $whereclause[] = "a.private = 0";
         }

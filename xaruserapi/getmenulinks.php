@@ -25,6 +25,25 @@ function dossier_userapi_getmenulinks()
 
         $menulinks[] = Array('url'   => xarModURL('dossier',
                                                    'user',
+                                                   'main'),
+                              'title' => xarML('Overview'),
+                              'label' => xarML('Overview'));
+
+        $menulinks[] = Array('url'   => xarModURL('roles',
+                                                   'user',
+                                                   'account',
+                                                   array('moduleload' => 'dossier')),
+                              'title' => xarML('My Contacts'),
+                              'label' => xarML('My Contacts'));
+
+        $menulinks[] = Array('url'   => xarModURL('dossier',
+                                                   'user',
+                                                   'view'),
+                              'title' => xarML('Contact List'),
+                              'label' => xarML('Contact List'));
+
+        $menulinks[] = Array('url'   => xarModURL('dossier',
+                                                   'user',
                                                    'callrotator'),
                               'title' => xarML('Call Rotator'),
                               'label' => xarML('Call Rotator'));
@@ -34,30 +53,6 @@ function dossier_userapi_getmenulinks()
                                                    'birthdays'),
                               'title' => xarML('Upcoming birthdays of contacts'),
                               'label' => xarML('Birthdays'));
-
-        $menulinks[] = Array('url'   => xarModURL('dossier',
-                                                   'admin',
-                                                   'new'),
-                              'title' => xarML('Add a new Contact'),
-                              'label' => xarML('New Contact'));
-    }
-
-    if (xarSecurityCheck('TeamDossierAccess',0)) {
-
-        $menulinks[] = Array('url'   => xarModURL('dossier',
-                                                   'admin',
-                                                   'view'),
-                              'title' => xarML('View contact list entries'),
-                              'label' => xarML('View Contact List'));
-    }
-
-    if (xarSecurityCheck('AdminDossier',0)) {
-
-        $menulinks[] = Array('url'   => xarModURL('dossier',
-                                                   'admin',
-                                                   'modifyconfig'),
-                              'title' => xarML('Modify module settings'),
-                              'label' => xarML('Configuration'));
     }
     
     return $menulinks;

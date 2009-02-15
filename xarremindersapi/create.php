@@ -23,8 +23,15 @@ function dossier_remindersapi_create($args)
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
+    
+    $item = xarModAPIFunc('dossier',
+                            'user',
+                            'get',
+                            array('contactid' => $contactid));
 
-    if (!xarSecurityCheck('UseDossierReminders', 1, 'Reminders', "All:All:All:All")) {
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+
+    if (!xarSecurityCheck('UseDossierReminders', 1, 'Reminders', $item['cat_id'].":".$item['userid'].":".$item['company'].":".$item['agentuid'])) {
         $msg = xarML('Not authorized to add #(1) items',
                     'reminder');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION', new SystemException($msg));

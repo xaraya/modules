@@ -17,14 +17,18 @@ function dossier_userapi_countitems($args)
             FROM $contactstable";
             
     $whereclause = array();
-    if(!empty($ownerid)) {
-        $whereclause[] = "ownerid = ".$ownerid;
+    if(!empty($agentuid)) {
+        $whereclause[] = "agentuid = ".$agentuid;
     }
     if(!empty($cat_id)) {
         $whereclause[] = "cat_id = ".$cat_id;
     }
-    if(!empty($private) && $private == "on") {
-        $whereclause[] = "private = 1";
+    if(!empty($private)) {
+        if($private == "on") {
+            $whereclause[] = "private = 1";
+        } elseif($private == "off") {
+            $whereclause[] = "private = 0";
+        }
     }
     if(!empty($q)) {
         $whereclause[] = "sortcompany LIKE \"%".xarVar_addSlashes($q)."%\" OR sortname LIKE \"%".xarVar_addSlashes($q)."%\"";

@@ -45,8 +45,15 @@ function dossier_remindersapi_get($args)
           $notes) = $result->fields;
 
     $result->Close();
+    
+    $item = xarModAPIFunc('dossier',
+                            'user',
+                            'get',
+                            array('contactid' => $contactid));
 
-    if (!xarSecurityCheck('UseDossierReminders', 1, 'Reminders', "All:All:All:All")) {
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+
+    if (!xarSecurityCheck('UseDossierReminders', 1, 'Reminders', $item['cat_id'].":".$item['userid'].":".$item['company'].":".$item['agentuid'])) {
         $msg = xarML('Not authorized to view this reminder.');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'AUTH_FAILED',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));

@@ -20,7 +20,7 @@ function dossier_reminders_delete($args)
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
 
-    if (!xarSecurityCheck('UseDossierReminders', 1, 'Reminders', "All:All:All:All")) {
+    if (!xarSecurityCheck('UseDossierReminders', 1, 'Reminders')) {
         $msg = xarML('Not authorized to delete #(1) item #(2)',
                     'xtasks', xarVarPrepForDisplay($projectid));
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',

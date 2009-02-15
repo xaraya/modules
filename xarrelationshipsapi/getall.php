@@ -28,7 +28,7 @@ function dossier_relationshipsapi_getall($args)
     
     $items = array();
 
-    if (!xarSecurityCheck('ReadDossierLog', 0, 'Log', "All:All:All:All")) {//TODO: security
+    if (!xarSecurityCheck('ReadDossierLog', 0, 'Log')) {//TODO: security
         /* FAIL SILENTLY
         $msg = xarML('Not authorized to access #(1) items',
                     'dossier');

@@ -77,12 +77,12 @@
                         <xar:mlstring>Agent</xar:mlstring>
                     </th>
                     <td>
-                        <select name="ownerid" id="ownerid" onchange="javascript:this.form.submit();">
+                        <select name="agentuid" id="agentuid" onchange="javascript:this.form.submit();">
                             <option value="0">
                                 <xar:mlstring>All / Other --&gt;</xar:mlstring>
                             </option>
                             <xar:foreach in="$userlist" key="$id">
-                                <xar:if condition="$id eq $ownerid">
+                                <xar:if condition="$id eq $agentuid">
                                     <option value="#$id#" selected="selected">#xarVarPrepForDisplay($userlist[$id])#</option>
                                     <xar:else />
                                     <option value="#$id#">#xarVarPrepForDisplay($userlist[$id])#</option>

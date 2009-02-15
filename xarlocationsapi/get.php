@@ -55,7 +55,7 @@ function dossier_locationsapi_get($args)
 
     $result->Close();
 
-    if (!xarSecurityCheck('PublicDossierAccess', 1, 'Contact', "All:All:All:All")) {
+    if (!xarSecurityCheck('PublicDossierAccess', 1, 'Contact')) {
         $msg = xarML('Not authorized to view this location.');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'AUTH_FAILED',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));

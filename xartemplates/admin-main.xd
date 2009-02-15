@@ -19,6 +19,31 @@
         <li><xar:mlstring>The Contact Phone field property allows for an auto-tabbed array of text fields to capture formatted phone numbers.</xar:mlstring></li> 
     </ul>
         
+    <h3><xar:mlstring>User Pages</xar:mlstring></h3>
+    <ul>
+        <li><strong><xar:mlstring>User Overview</xar:mlstring></strong> - <em><xar:mlstring>Instructions on how to use the Dossier module</xar:mlstring></em></li>
+        <li><strong><xar:mlstring>My Contacts</xar:mlstring></strong> - <em><xar:mlstring>Contact records that belong to the registered member</xar:mlstring></em></li>
+        <li><strong><xar:mlstring>Contact List</xar:mlstring></strong> - <em><xar:mlstring>Public contact records</xar:mlstring></em></li>
+        <li><strong><xar:mlstring>Call Rotator</xar:mlstring></strong> - <em><xar:mlstring>Contact record search with contact log and new contact record forms</xar:mlstring></em></li>
+        <li><strong><xar:mlstring>Birthdays</xar:mlstring></strong> - <em><xar:mlstring>Birthdays of public contact records</xar:mlstring></em></li>
+        <li><strong><xar:mlstring>Dashboard</xar:mlstring></strong> - <em><xar:mlstring>(should be moved to a custom template outside the module)</xar:mlstring></em></li>
+    </ul>
+    <h3><xar:mlstring>Admin Pages</xar:mlstring></h3>
+    <ul>
+        <li><strong><xar:mlstring>Admin Overview</xar:mlstring></strong> - <em><xar:mlstring>(this page)</xar:mlstring></em></li>
+        <li><strong><xar:mlstring>Contact List</xar:mlstring></strong> - <em><xar:mlstring>All contact records, public or private</xar:mlstring></em></li>
+        <li><strong><xar:mlstring>New Contact</xar:mlstring></strong> - <em><xar:mlstring>Create new contacts (and assign them to registered users)</xar:mlstring></em></li>
+        <li><strong><xar:mlstring>Modify Config</xar:mlstring></strong> - <em><xar:mlstring>Update module settings</xar:mlstring></em></li>
+        <li><strong><xar:mlstring>Privileges</xar:mlstring></strong> - <em><xar:mlstring>(available through the privileges module)</xar:mlstring></em></li>
+    </ul>
+    
+    <h3><xar:mlstring>Sub-Components</xar:mlstring></h3>
+    <ul>
+        <li><strong><xar:mlstring>Contact Locations</xar:mlstring></strong> - <em><xar:mlstring>Create locations that contact records can be listed at, with option date range</xar:mlstring></em></li>
+        <li><strong><xar:mlstring>Contact Logs</xar:mlstring></strong> - <em><xar:mlstring>Document phone calls, email et al for each contact</xar:mlstring></em></li>
+        <li><strong><xar:mlstring>Reminders</xar:mlstring></strong> - <em><xar:mlstring>Set up a reminder to contact at a future date (with associated scheduler function)</xar:mlstring></em></li>
+        <li><strong><xar:mlstring>Relationships</xar:mlstring></strong> - <em><xar:mlstring>Show relationships between contacts through multiple degrees of connection</xar:mlstring></em></li>
+    </ul>
 </div>
 <div class="xar-mod-foot"></div>
 

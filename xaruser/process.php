@@ -15,7 +15,7 @@ function dossier_user_process($args) {
     if (!xarVarFetch('cat_id', 'str::', $cat_id, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('q', 'str::', $q, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('searchphone', 'str::', $searchphone, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('ownerid', 'int:1:', $ownerid, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('agentuid', 'int:1:', $agentuid, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('notes', 'str::', $notes, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('logtype', 'str::', $logtype, '', XARVAR_NOT_REQUIRED)) return;
     
@@ -31,7 +31,7 @@ function dossier_user_process($args) {
     
     extract($args);
             
-    if (!xarSecurityCheck('TeamDossierAccess', 0, 'Contact', "All:All:All:All")) {//TODO: security
+    if (!xarSecurityCheck('TeamDossierAccess', 0, 'Contact')) {//TODO: security
         $msg = xarML('Not authorized to access #(1) items',
                     'dossier');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
@@ -58,7 +58,7 @@ function dossier_user_process($args) {
                             'admin',
                             'create',
                             array('cat_id' 	    => $cat_id,
-                                'agentuid'	    => $ownerid,
+                                'agentuid'	    => $agentuid,
                                 'userid'	    => 0,
                                 'private'	    => 1,
                                 'lname'	        => $lname,
@@ -89,7 +89,7 @@ function dossier_user_process($args) {
                             'logs',
                             'create',
                             array('contactid'    => $contactid,
-                                'ownerid'        => $ownerid,
+                                'ownerid'        => $agentuid,
                                 'logtype'        => $logtype,
                                 'logdate'        => $logdate,
                                 'notes'          => $notes));
@@ -119,7 +119,7 @@ function dossier_user_process($args) {
     
     $data['stafflist'] = $stafflist;
     
-    $data['ownerid'] = $ownerid;
+    $data['agentuid'] = $agentuid;
     
     $data['ltr'] = $ltr;
     $data['sortby'] = $sortby;

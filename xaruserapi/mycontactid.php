@@ -85,7 +85,7 @@ function dossier_userapi_mycontactid($args)
             $datecreated,
             $datemodified) = $result->fields;
 
-        if (!xarSecurityCheck('PublicDossierAccess', 1, 'Contact', "All:All:All:All")) {
+        if (!xarSecurityCheck('PublicDossierAccess', 1, 'Contact', $cat_id.":".$userid.":".$company.":".$agentuid)) {
             $msg = xarML('Not authorized to view this contact.');
             xarErrorSet(XAR_SYSTEM_EXCEPTION, 'AUTH_FAILED',
                            new SystemException(__FILE__.'('.__LINE__.'): '.$msg));

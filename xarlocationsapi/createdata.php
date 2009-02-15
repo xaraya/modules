@@ -38,7 +38,14 @@ function dossier_locationsapi_createdata($args)
         $enddate = date("Y-m-d", strtotime($enddate));
     }
     
-    if (!xarSecurityCheck('PublicDossierAccess', 1, 'Contact', "All:All:All:All")) {
+    $item = xarModAPIFunc('dossier',
+                            'user',
+                            'get',
+                            array('contactid' => $contactid));
+
+    if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
+    
+    if (!xarSecurityCheck('PublicDossierAccess', 1, 'Contact', $item['cat_id'].":".$item['userid'].":".$item['company'].":".$item['agentuid'])) {
         $msg = xarML('Not authorized to add #(1) items',
                     'dossier');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION', new SystemException($msg));

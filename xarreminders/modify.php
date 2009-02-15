@@ -13,7 +13,7 @@ function dossier_reminders_modify($args)
     
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return;
 
-    if (!xarSecurityCheck('UseReminders', 1, 'Reminders', "All:All:All:All")) {
+    if (!xarSecurityCheck('UseReminders', 1, 'Reminders')) {
         return;
     }
 

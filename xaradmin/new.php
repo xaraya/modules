@@ -4,8 +4,8 @@ function dossier_admin_new()
 {
     $data = xarModAPIFunc('dossier','admin','menu');
 
-    $ownerid = xarUserGetVar('uid');
-    if (!xarSecurityCheck('TeamDossierAccess', 1, 'Contact', "All:All:All:".$ownerid)) {//TODO: security
+    $agentuid = xarUserGetVar('uid');
+    if (!xarSecurityCheck('TeamDossierAccess', 1, 'Contact', "All:All:All:".$agentuid)) {//TODO: security
 //    if (!xarSecurityCheck('TeamDossierAccess')) {
         return;
     }
