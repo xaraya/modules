@@ -7,7 +7,7 @@
 <xar:set name="dummy">xarModAPILoad('categories', 'user')</xar:set>
 <xar:set name="catlist">xarModAPIFunc('categories', 'user', 'getchildren', array('cid' => $contactcid ) )</xar:set>
 
-<xar:template type="module" file="admin-menu" />
+<xar:template type="module" file="user-menu" />
 
 <div class="xar-mod-head">
 
