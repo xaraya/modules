@@ -37,15 +37,6 @@ function publications_userapi_getmenulinks()
                              'title' => xarML('Display #(1)',$item['description']),
                              'label' => $item['description']);
 
-            if (xarSecurityCheck('SubmitPublications',0,'Publication',$item['id'].':All:All:All')) {
-                $menulinks[] = Array('url'   => xarModURL('publications',
-                                                          'admin',
-                                                          'new',
-                                                          array('ptid' => $item['id'])),
-                                     'title' => xarML('Submit #(1)',$item['description']),
-                                     'label' => '&#160;' . xarML('Submit Now'));
-            }
-
             if (!empty($settings['showarchives'])) {
                 $menulinks[] = Array('url'   => xarModURL('publications',
                                                           'user',
