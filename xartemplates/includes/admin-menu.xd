@@ -7,8 +7,9 @@
 
 <xar:set name="currentmodname">xarModGetName()</xar:set>
 
-<xar:set name="activetab">$_bl_module_func</xar:set>
-<xar:set name="activetype">$_bl_module_type</xar:set>
+<xar:set name="request">xarRequestGetInfo()</xar:set>
+<xar:set name="activetab">#$request.2#</xar:set>
+<xar:set name="activetype">#$request.1#</xar:set>
 <xar:comment>This menu is used by all users not just admin. Let us
     hide the menu unless they have edit level privs.
     The New tab is redundant if you only have submit level privs.
@@ -18,13 +19,61 @@
 
 <div class="xar-mod-body">
     <dl class="xar-tabs">
-        <dt class="help" title="Choose an action to perform">
+        <dt class="help" title="#xarML('Choose an action to perform')#">
           <xar:mlstring>Actions:</xar:mlstring>
         </dt>
-        
-        <xar:if condition="$currentmodname eq 'dossier' 
-                            and ( $_bl_module_type eq 'user' or empty($_bl_module_type) ) 
-                            and  ( $_bl_module_func eq 'main' or empty($_bl_module_func) )">
+
+        <xar:sec id="menu_dashboard" mask="TeamDossierAccess" catch="false">
+          <xar:if condition="$activetab eq 'dashboard'">
+            <xar:set name="tabclass">'active'</xar:set>
+          <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+          </xar:if>
+          <dd class="#$tabclass#">
+            <a href="#xarModURL('dossier','user','dashboard')#" title="#xarML('Dossier CRM Dashboard')#">
+                <xar:mlstring>Dashboard</xar:mlstring>
+            </a>
+          </dd>
+        </xar:sec>
+
+        <xar:sec id="menu_newcontact" mask="TeamDossierAccess" catch="false">
+          <xar:if condition="$activetab eq 'new'">
+            <xar:set name="tabclass">'active'</xar:set>
+          <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+          </xar:if>
+          <dd class="#$tabclass#">
+            <a href="#xarModURL('dossier','admin','new')#" title="#xarML('Add a new Contact')#">
+                <xar:mlstring>New Contact</xar:mlstring>
+            </a>
+          </dd>
+        </xar:sec>
+
+        <xar:if condition="$activetab eq 'view'">
+            <xar:set name="tabclass">'active'</xar:set>
+        <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+          <a href="#xarModURL('dossier','admin','view')#" title="#xarML('View contact list entries')#">
+                <xar:mlstring>Phonebook</xar:mlstring>
+          </a>
+        </dd>
+
+        <xar:sec id="menu_config" mask="AdminDossier" catch="false">
+          <xar:if condition="$activetab eq 'modifyconfig'">
+            <xar:set name="tabclass">'active'</xar:set>
+          <xar:else />
+             <xar:set name="tabclass">''</xar:set>
+          </xar:if>
+          <dd class="#$tabclass#">
+            <a href="#xarModURL('dossier','admin','modifyconfig')#">
+                <xar:mlstring>Modify Config</xar:mlstring>
+            </a>
+          </dd>
+        </xar:sec>
+
+        <xar:if condition="$activetab eq 'main' or $activetab eq 'overview'">
             <xar:set name="tabclass">'active'</xar:set>
         <xar:else />
              <xar:set name="tabclass">''</xar:set>
@@ -32,58 +81,6 @@
         <dd class="#$tabclass#">
           <a href="#xarModURL('dossier','admin','main')#">
             <xar:mlstring>Overview</xar:mlstring></strong>
-          </a>
-        </dd>
-        
-        <xar:if condition="$currentmodname eq 'dossier' 
-                            and ( $_bl_module_type eq 'user' or empty($_bl_module_type) ) 
-                            and ( $_bl_module_func eq 'callrotator' or $_bl_module_func eq 'process' )">
-            <xar:set name="tabclass">'active'</xar:set>
-        <xar:else />
-             <xar:set name="tabclass">''</xar:set>
-        </xar:if>
-        <dd class="#$tabclass#">
-          <a href="#xarModURL('dossier','user','callrotator')#">
-                <xar:mlstring>Call Rotator</xar:mlstring>
-          </a>
-        </dd>
-
-        <xar:if condition="$currentmodname eq 'dossier' 
-                            and $_bl_module_type eq 'admin' 
-                            and $_bl_module_func eq 'new'">
-            <xar:set name="tabclass">'active'</xar:set>
-        <xar:else />
-             <xar:set name="tabclass">''</xar:set>
-        </xar:if>
-        <dd class="#$tabclass#">
-          <a href="#xarModURL('dossier','admin','new')#">
-                <xar:mlstring>New Contact</xar:mlstring>
-          </a>
-        </dd>
-        
-        <xar:if condition="$currentmodname eq 'dossier' 
-                            and $_bl_module_type eq 'admin'
-                            and $_bl_module_func eq 'view'">
-            <xar:set name="tabclass">'active'</xar:set>
-        <xar:else />
-             <xar:set name="tabclass">''</xar:set>
-        </xar:if>
-        <dd class="#$tabclass#">
-          <a href="#xarModURL('dossier','admin','view')#">
-                <xar:mlstring>Phonebook</xar:mlstring>
-          </a>
-        </dd>
-        
-        <xar:if condition="$currentmodname eq 'dossier' 
-                            and $_bl_module_type eq 'admin' 
-                            and $_bl_module_func eq 'modifyconfig'">
-            <xar:set name="tabclass">'active'</xar:set>
-        <xar:else />
-             <xar:set name="tabclass">''</xar:set>
-        </xar:if>
-        <dd class="#$tabclass#">
-          <a href="#xarModURL('dossier','admin','modifyconfig')#">
-                <xar:mlstring>Modify Config</xar:mlstring>
           </a>
         </dd>
     </dl>

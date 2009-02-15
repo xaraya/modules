@@ -18,7 +18,7 @@
                 <input type="text" name="q" value="#$q#" />
             </span>
             <span style="margin-top: -2px;">
-                <input type="submit" value="SEARCH" />
+                <input type="submit" value="#xarML('SEARCH')#" />
             </span>
         </div>
     </form>
