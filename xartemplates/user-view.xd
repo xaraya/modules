@@ -12,6 +12,15 @@
             and also a separate user-view-frontpage.xd template for the publications frontpage
         </xar:comment>
 
+    <xar:set name="instance">$ptid.':All:All:All'</xar:set>
+    <xar:sec mask="SubmitPublications" instance="$instance" >
+        <a href="">
+            <xar:ml>
+                <xar:mlstring>Submit a #(1)</xar:mlstring>
+                <xar:mlvar>#$pubtypeobject->properties['description']->value#</xar:mlvar>
+            </xar:ml>
+        </a>
+    </xar:sec>
     <xar:template file="navtabs-user" type="module" />
 
     <xar:template file="alphapager" type="module" />
