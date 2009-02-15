@@ -2,7 +2,7 @@
   License: GPL http://www.gnu.org/copyleft/gpl.html 
 </xar:comment>
 
-<script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
 
 <script type="text/javascript" >
   <!--
@@ -35,7 +35,7 @@
 
     <xar:set name="dummy">xarSessionSetVar('statusmsg','')</xar:set>
 
-    <form method="post" name="post" id="post" action="&xar-modurl-xarbb-admin-modify;&amp;phase=update" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
+    <form method="post" name="post" id="post" action="&xar-modurl-xarbb-admin-modify;&amp;phase=update" enctype="application/x-www-form-urlencoded" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
         <fieldset >
             <legend>
                 <strong>
@@ -233,7 +233,7 @@
                     </xar:mlvar>
                 </xar:ml>
           </div>
-
+ 
           <xar:if condition="xarModIsAvailable('newsgroups') and xarModGetVar('xarbb', 'masternntpsetting')">
                 <div class="xar-form-input-wrapper">
                     <label for="nntp"  class="xar-form-label" title="#xarML('Associate with which Newsgroup')#">
@@ -252,6 +252,34 @@
             </xar:if>
         </fieldset>
 
+       <xar:comment>xarBB hook only works with Articles at the moment</xar:comment>
+
+        <xar:if condition="($allowhtml or $allowbbcode)">
+        <fieldset>
+            <legend>
+                <xar:mlstring>xarBB Hook Settings</xar:mlstring>
+            </legend>
+              <div class="xar-form-input-wrapper" >
+               <p class="xar-form-input-wrapper-after"><xar:mlstring>Hook xarBB to Articles to auto create a forum topic when an article is created. Must have an article 'summary' and 'title' field.</xar:mlstring></p>
+                    <label for="showsourcelink" class="xar-form-label">
+                            <xar:mlstring>
+                                Insert A Souce Link
+                            </xar:mlstring>
+                    </label>
+                    <xar:data-input type="checkbox" name="showsourcelink" id="showsourcelink" checked="$showsourcelink" />
+                    <em><xar:mlstring>BBCode or HTML must be allowed to insert a link to the source article</xar:mlstring></em>
+              </div>
+              <div class="xar-form-input-wrapper" >
+                    <label for="showitemlink" class="xar-form-label">
+                            <xar:mlstring>
+                                Create Item Discuss Link
+                            </xar:mlstring>
+                    </label>
+                   <xar:data-input type="checkbox" name="showitemlink" id="showitemlink" checked="$showitemlink" />
+                <em><xar:mlstring>Inserts a 'Discuss' link in the original source article to the new forum topic</xar:mlstring></em>                
+              </div>
+         </fieldset>              
+        </xar:if>
         <fieldset>
             <div class="xar-form-input-wrapper-after">
                 <input type="submit" value="#xarML('Submit')#" />

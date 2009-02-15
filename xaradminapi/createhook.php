@@ -3,7 +3,7 @@
  * XarBB - A lightweight BB for Xaraya
  *
  * @package modules
- * @copyright (C) 2003-2006 The Digital Development Foundation.
+ * @copyright (C) 2003-2009 The Digital Development Foundation.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -119,32 +119,65 @@ function xarbb_adminapi_createhook($args)
                                  array('itemtype' => $itemtype,
                                        'itemid' => $itemid));
     }
-
-/*
-    $tpostfull = $tpost;
-    $tpostfull .= "\n\n";
-    $tpostfull .= xarML('Source');
-    $tpostfull .= ': <a href="';
-    $tpostfull .= $item['url'];
-    $tpostfull .= '">';
-    $tpostfull .= $ttitle;
-    $tpostfull .= '</a>';
-*/
+    $settings = xarModGetVar('xarbb', 'settings.' . $fid);
+    $settings = unserialize($settings);
+    
+    $showsourcelink = !isset($settings['showsourcelink']) ? false : $settings['showsourcelink']; 
+    $createtopiclink = !isset($settings['showitemlink']) ? false : $settings['showitemlink']; 
+             
+    $allowhtml = !isset($settings['allowhtml']) ? false:$settings['allowhtml'];
+    $allowbbcode = !isset($settings['allowbbcode']) ? false:$settings['allowbbcode'];
+    $tpostnew = $tpost;
+    if ($showsourcelink) {
+        $tpostfull = $tpost;
+        if ($allowhtml) {
+            $tpostfull .= "<br />"; 
+            $tpostfull .= xarML('Source');        
+            $tpostfull .= ': <a href="'.$item['url'].'" title="'.$ttitle.'">'.$ttitle.'</a>';
+        } elseif ($allowbbcode) {
+            $tpostfull .= "\n\n"; 
+            $tpostfull .= xarML('Source');                      
+            $tpostfull .= ': [url='.$item['url'].']'.$ttitle.'[/url]';
+        } else {
+            $tpostfull = $tpost;
+        }
+        $tpostnew = $tpostfull;
+    }
     $tposter = xarUserGetVar('uid');
     $tstatus = 0;
-
     $tid = xarModAPIFunc('xarbb',
                          'user',
                          'createtopic',
                          array('fid'      => $fid,
                                'ttitle'   => $ttitle,
-                               'tpost'    => $tpost,
+                               'tpost'    => $tpostnew,
                                'tposter'  => $tposter,
                                'tstatus'  => $tstatus));
     if (empty($tid)) {
         return $extrainfo;
     }
 
+    if ($createtopiclink) {
+        $usebbcode = xarModIsHooked('bbcode',$modname,$itemtype) ? true : false;
+        //create link in article that was created
+        $topiclink = xarModURL('xarbb','user','viewtopic',array('tid'=>$tid));
+        $tpostarticle = $tpost;        
+        if ($usebbcode) {
+                $tpostarticle .= "\n\n"; 
+                $tpostarticle .= xarML('Discuss');                      
+                $tpostarticle .= ': [url='.$topiclink.']'.$ttitle.'[/url]';        
+        } else {
+                $tpostarticle .= "<br />"; 
+                $tpostarticle .= xarML('Discuss');        
+                $tpostarticle .= ': <a href="'.$topiclink.'" title="'.$ttitle.'">'.$ttitle.'</a>';
+        }    
+        
+        $article = array('aid'=>(int)$itemid,'ptid'=>(int)$itemtype,'title'=>$ttitle,'summary'=>$tpostarticle);
+  
+        //update the article
+        xarModAPIFunc('articles', 'admin', 'update', $article);
+    }    
+    
     if (!xarModAPIFunc('xarbb',
                        'user',
                        'updateforumview',

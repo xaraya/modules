@@ -222,7 +222,7 @@
                     </xar:mlvar>
                 </xar:ml>
             </div>
-            <xar:comment> take this out for now/
+            <xar:comment> take this out for now
             <xar:if condition="xarModIsAvailable('newsgroups')">
             <div class="xar-form-input-wrapper">
                     <label for="usenntp" class="xar-form-label" title="#xarML('Link to a NNTP server for posting.')#">
@@ -271,7 +271,39 @@
                 </select>
             </div>
         </fieldset>
+        <xar:comment>xarBB hook only works with Articles at the moment</xar:comment>
+        <xar:if condition="($allowhtml or $allowbbcode)">
+        <fieldset>
+            <legend>
+                <strong>
+                    <xar:mlstring>
+                        Default xarBB Hook settings
+                    </xar:mlstring>
+                </strong>
+            </legend>        
+            <div class="xar-form-input-wrapper">
+                <p class="xar-form-input-wrapper-after"><xar:mlstring>Hook xarBB to Articles to auto create a forum topic when an article is created. Must have an article 'summary' and 'title' field.</xar:mlstring></p>
 
+                <label for="showsourcelink" class="xar-form-label">
+                        <xar:mlstring>
+                            Create a Souce Link
+                        </xar:mlstring>
+                </label>
+                <xar:data-input type="checkbox" name="showsourcelink" id="showsourcelink" checked="$showsourcelink" />
+                <em><xar:mlstring>BBCode or HTML must be allowed to insert a link to the source article</xar:mlstring></em>
+            </div>
+            <div class="xar-form-input-wrapper">
+
+                <label for="showitemlink" class="xar-form-label" >
+                        <xar:mlstring>
+                            Create Item Discuss Link
+                        </xar:mlstring>
+                </label>
+                <xar:data-input type="checkbox" name="showitemlink" id="showitemlink" checked="$showitemlink" />
+                <em><xar:mlstring>Inserts a 'Discuss' link in the original source article to the new forum topic</xar:mlstring></em>                
+            </div>        
+        </fieldset>
+        </xar:if>
         <fieldset>
             <legend>
                     <xar:mlstring>

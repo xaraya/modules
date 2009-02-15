@@ -1,15 +1,16 @@
 <?php
 /**
- * Xaraya Modify an existing forum
- * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2005 by the Xaraya Development Team.
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.org
+ * XarBB - A lightweight BB for Xaraya
  *
- * @subpackage  xarbb Module
- * @author John Cox
-*/ 
+ * @package modules
+ * @copyright (C) 2003-2009 The Digital Development Foundation.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage xarigami XarBB Module
+ * @link http://xaraya.com/index.php/release/300.html
+ * @author John Cox, Mikespub, Jo Dalle Nogare
+*/
 
 /**
  * @author John Cox
@@ -68,6 +69,8 @@ function xarbb_admin_modify($args)
                 $data['allowhtml']              = !empty($settings['allowhtml']) ? true : false;
                 $data['allowbbcode']            = !empty($settings['allowbbcode']) ? true : false;
                 $data['editstamp']              = !isset($settings['editstamp']) ? 0 : $settings['editstamp'];
+                $data['showsourcelink']         = !isset($settings['showsourcelink']) ? false : $settings['showsourcelink'];                
+                $data['showitemlink']         = !isset($settings['showitemlink']) ? false : $settings['showitemlink'];   
                 // TODO: can showcats be removed?
                 $data['showcats']               = !empty($settings['showcats']) ? 'checked="checked"' : '';
                 $data['nntp']                   = empty($settings['nntp']) ? '' :$settings['nntp'];
@@ -100,6 +103,12 @@ function xarbb_admin_modify($args)
             if (!isset($data['nntp'])) {
                 $data['nntp'] = '';
             }
+            if (!isset($data['showsourcelink'])) {
+                $data['showsourcelink'] = false;
+            }
+            if (!isset($data['showitemlink'])) {
+                $data['showitemlink'] = false;
+            }                          
             $masternntpsetting = xarModGetVar('xarbb', 'masternntpsetting');
             $masternntpsetting = !isset($masternntpsetting) ? false :$masternntpsetting;
             //jojodee- let's only do this if we allow nntp in the master setting else this is loading each time now
@@ -181,7 +190,8 @@ function xarbb_admin_modify($args)
             if (!xarVarFetch('editstamp', 'int:1:', $editstamp, 0 ,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('showcats', 'checkbox', $showcats, false, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('nntp', 'str:1:', $nntp, '', XARVAR_NOT_REQUIRED)) return;
-
+            if (!xarVarFetch('showsourcelink', 'checkbox', $showsourcelink, false, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('showitemlink', 'checkbox', $showitemlink, false, XARVAR_NOT_REQUIRED)) return;            
             // Confirm authorisation code.
             if (!xarSecConfirmAuthKey()) return;
 
@@ -209,7 +219,8 @@ function xarbb_admin_modify($args)
             $settings['editstamp']          = $editstamp;
             $settings['showcats']           = $showcats;
             $settings['nntp']               = $nntp;
-
+            $settings['showsourcelink']     = ($allowhtml || $allowbbcode) ? $showsourcelink :false;
+            $settings['showitemlink']       =  $showitemlink;            
             xarModSetVar('xarbb', 'settings.' . $fid, serialize($settings));
 
             // Enable bbcode hooks for modified forum

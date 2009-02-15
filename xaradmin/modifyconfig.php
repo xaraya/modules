@@ -42,7 +42,10 @@ function xarbb_admin_modifyconfig()
             $data['nntpport']        = !isset($settings['nntpport']) ? 119 :$settings['nntpport'];
             $data['nntpserver']      = !isset($settings['nntpserver']) ? 'news.xaraya.com' :$settings['nntpserver'];
             $data['nntpgroup']       = !isset($settings['nntpgroup']) ? '' :$settings['nntpgroup'];
-
+            $data['showsourcelink'] = !isset($settings['showsourcelink']) ? false :$settings['showsourcelink'];
+            $data['showitemlink'] = !isset($settings['showitemlink']) ? false :$settings['showitemlink'];            
+            $data['xarbbonline']    = xarModGetVar('xarbb','xarbbonline') ? true:false;
+            
             // User preferences
             $autosubscribe = xarModGetVar('xarbb', 'autosubscribe');
             $data['autosubscribe']   = empty($autosubscribe) ? 'none' : $autosubscribe;
@@ -87,7 +90,9 @@ function xarbb_admin_modifyconfig()
             if (!xarVarFetch('aliasname', 'str:1:', $aliasname, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('masternntpsetting', 'checkbox', $masternntpsetting, false, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('autosubscribe', 'enum:none:topics:replies', $autosubscribe, 'none', XARVAR_NOT_REQUIRED)) return;
-
+            if (!xarVarFetch('xarbbonline', 'checkbox', $xarbbonline, false, XARVAR_NOT_REQUIRED)) return;            
+            if (!xarVarFetch('showsourcelink', 'checkbox', $showsourcelink, false, XARVAR_NOT_REQUIRED)) return; 
+            if (!xarVarFetch('showitemlink', 'checkbox', $showitemlink, false, XARVAR_NOT_REQUIRED)) return;               
             // Update module variables
             xarModSetVar('xarbb', 'SupportShortURLs', $supportshorturls);
             xarModSetVar('xarbb', 'xarbbtitle', $xarbbtitle);
@@ -119,7 +124,8 @@ function xarbb_admin_modifyconfig()
             $settings['nntpport']           = $nntpport;
             $settings['nntpserver']         = $nntpserver;
             $settings['nntpgroup']          = $nntpgroup;
-
+            $settings['showsourcelink']    = $showsourcelink;
+            $settings['showitemlink']    = $showitemlink;            
             // Set default settings
             xarModSetVar('xarbb', 'settings', serialize($settings));
  
