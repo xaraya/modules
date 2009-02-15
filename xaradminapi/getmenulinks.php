@@ -35,7 +35,7 @@ function publications_adminapi_getmenulinks()
     if (xarSecurityCheck('SubmitPublications',0)) {
 
         $menulinks[] = Array('url'   => xarModURL('publications',
-                                                   'admin',
+                                                   'user',
                                                    'new'),
                               'title' => xarML('Add a new publication'),
                               'label' => xarML('Add Publication'));
