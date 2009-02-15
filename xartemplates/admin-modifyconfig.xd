@@ -27,9 +27,9 @@
 
     <div class="xar-form-input-wrapper">
         <label for="itemsperpage" class="xar-form-label">
-            <xar:data-label property="$properties['itemsperpage']" />
+            <xar:mlstring>Items per page</xar:mlstring>
         </label>
-        <xar:data-input property="$properties['itemsperpage']" name="itemsperpage" value="$itemsperpage" />
+        <input type="text" id="itemsperpage" name="itemsperpage" value="#$itemsperpage#" maxlength="3" class="xar-form-textshort" />
     </div>
     
     <br />

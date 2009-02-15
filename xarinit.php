@@ -3,7 +3,7 @@
  * Access Methods Module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,8 +14,6 @@
 
 /**
  * initialise the Access Methods Module
- * This function is only ever called once during the lifetime of a particular
- * module instance
  */
 function accessmethods_init()
 {
@@ -108,7 +106,7 @@ function accessmethods_init()
 }
 
 /**
- * upgrade the example module from an old version
+ * upgrade the module from an old version
  * This function can be called multiple times
  */
 function accessmethods_upgrade($oldversion)
@@ -182,6 +180,7 @@ function accessmethods_upgrade($oldversion)
             if (!$result) return;
             
         case '1.2.0':   
+            xarModDelVar('accessmethods','bold');
             break;
     }
 
@@ -190,7 +189,7 @@ function accessmethods_upgrade($oldversion)
 }
 
 /**
- * delete the example module
+ * delete the module
  * This function is only ever called once during the lifetime of a particular
  * module instance
  */
