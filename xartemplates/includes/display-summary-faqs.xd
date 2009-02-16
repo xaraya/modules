@@ -1,0 +1,33 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <a name="#$id#"></a>
+    <br />
+    <xar:if condition="!empty($categories) and count($categories) gt 0">
+        [ <xar:foreach in="$categories" value="$cat">
+            #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
+        </xar:foreach> ]
+    </xar:if>
+    <a class="xar-title" href="#$link#">
+        <xar:data-output property="$properties['title']" />
+    </a>
+    <xar:if condition="!empty($counter)">
+        <xar:if condition="$counter eq 1">
+            (#$counter#&#160;read)
+        <xar:else />
+            (#$counter#&#160;reads)
+        </xar:if>
+    </xar:if>
+    <xar:if condition="!empty($properties['notes']->value)">
+        by 
+        <xar:data-output property="$properties['notes']" />
+    </xar:if>
+    <xar:if condition="!empty($properties['summary']->value)">
+        <p><em>
+            <xar:data-output property="$properties['summary']" />
+        </em></p>
+    </xar:if>
+    <p>
+    #$body#
+    </p>
+    <p><a href="#xarServerGetCurrentURL()##titles">Back to top</a></p>
+</xar:template>

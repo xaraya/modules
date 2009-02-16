@@ -1,0 +1,47 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-norm xar-standard-box-padding">
+        <h3>
+            <a href="#$link#">
+                <xar:data-output property="$properties['title']" />
+            </a>
+        </h3>
+        <xar:if condition="!empty($categories) and count($categories) gt 0">[
+        <xar:foreach in="$categories" value="$cat">#$cat['cjoin']#
+        <a href="#$cat['clink']#">#$cat['cname']#</a></xar:foreach>]</xar:if>
+        <h4>
+        Summary:</h4>
+        <p>
+            <xar:data-output property="$properties['summary']" />
+        </p>
+        <h4>
+        Download:</h4>
+        <xar:if condition="empty($notes)">
+            <xar:elseif condition="xarModIsHooked('uploads','publications',$pubtype_id) and substr($notes,0,1) eq ';'" />
+            <xar:comment>If you hook the uploads module to publications, then file upload fields will contain a comma-separated list of file ids, and you will need to call an API function to retrieve the file information. For dynamic extra fields, you can use [fieldname]_output directly to access the file information.</xar:comment>
+            <xar:set name="notes_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $notes, 'multiple' => true))</xar:set>
+            <xar:foreach in="$notes_output" key="$fileid" value="$fileinfo">
+                <p>
+                    <a href="#$fileinfo['fileDownload']#">#$fileinfo['fileName']#</a>
+                </p>
+            </xar:foreach>
+            <xar:elseif condition="file_exists('var/uploads/'.$properties['notes']->getValue())" />
+            <p>
+                <a href="var/uploads/#$properties['notes']->getValue()#" title="#$properties['notes']->getValue()#">
+                    <xar:data-output property="$properties['notes']" />
+                </a>
+            </p>
+            <xar:else />
+            <p>
+                <xar:data-output property="$properties['notes']" />
+            </p>
+        </xar:if>
+        <div class="xar-publications-keywords">
+            <xar:if condition="!empty($keywords)">
+            Keywords:
+            <xar:loop name="$keywords">
+                <a href="#xarModUrl('keywords', 'user', 'main', array('keyword' => $loop:item['keyword']))#" title="#$loop:item['keyword']#">#$loop:item['keyword']#</a>
+            </xar:loop></xar:if>
+        </div>
+    </div>
+</xar:template>

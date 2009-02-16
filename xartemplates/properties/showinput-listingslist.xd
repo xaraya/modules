@@ -1,0 +1,33 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:if condition="empty($layout)">
+        <xar:set name="layout">'publications'</xar:set>
+    </xar:if>
+    <xar:if condition="($layout eq 'publications') or ($layout eq 'default')">
+        <xar:set name="url">xarServerGetCurrentURL($params)</xar:set>
+
+        <xar:style scope="module" module="base" file="navtabs" />
+        <xar:template file="listingslist_alphabet" module="$localmodule,listings" />
+
+        <br />
+
+        <xar:template file="listingslist_searchboxline" module="$localmodule,listings" />
+        <xar:template file="listingslist_summaryline" module="$localmodule,listings" />
+        <xar:template file="listingslist_pagerline" module="$localmodule,listings" />
+        <table style="clear:both; width: 100%" border="0">
+            <xar:template file="listingslist_header" module="$localmodule,listings" />
+            <xar:template file="listingslist_body" module="$localmodule,listings" />
+        </table>
+        <xar:if condition="empty($total)">
+                  <p class="xar-align-center">There are no items selected</p>
+        </xar:if>
+        <form  action="#xarModURL('listings','admin','multiops')#" method="post" onsubmit = "listings_getchecked('idlist');document.getElementById('redirecttarget').value = this.value;" style="clear: both">
+            <xar:template file="listingslist_footerline" module="$localmodule,listings" />
+            <input type="hidden" name="returnurl" id="returnurl" value="#xarServerGetCurrentURL()#" />
+            <input type="hidden" name="object" id="object" value="#$objectname#" />
+            <input type="hidden" name="localmodule" id="localmodule" value="#$localmodule#" />
+        </form>
+    <xar:elseif condition="$layout eq 'user-view'" />
+        <xar:template file="view-summaries" />
+    </xar:if>
+</xar:template>

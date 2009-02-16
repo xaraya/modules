@@ -1,0 +1,110 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:set name="context">xarModAPIFunc('publications','user','getsettings',array('ptid' => $properties['itemtype']->value))</xar:set>
+
+    <xar:set name="colwidth">
+        100
+    </xar:set>
+    <xar:set name="maxcols">
+        max(count($items) > $context['number_of_columns'] ? $context['number_of_columns'] : count($items),1)
+    </xar:set>
+    <xar:set name="colwidth">
+        round(100 / $maxcols)
+    </xar:set>
+    
+    <xar:set name="foo">
+        1;$context['showcols'] = 1
+    </xar:set>
+
+        <xar:comment>
+            You can use different user-view-[pubtype].xd templates for different pubtypes,
+            and also a separate user-view-frontpage.xd template for the publications frontpage
+        </xar:comment>
+
+    <xar:template file="navtabs-user" type="module" />
+
+    <xar:template file="alphapager" type="module" />
+
+    <h2>
+        #$object->label#
+    </h2>
+    <xar:set name="instance">$context['pubtypeobject']->properties['id']->value.':All:All:All'</xar:set>
+    <xar:sec mask="SubmitPublications" instance="$instance" >
+        <a href="#xarModURL('publications','user','new',array('ptid' => $context['pubtypeobject']->properties['id']->value))#">
+            <xar:ml>
+                <xar:mlstring>Submit a #(1)</xar:mlstring>
+                <xar:mlvar>#$context['pubtypeobject']->properties['description']->value#</xar:mlvar>
+            </xar:ml>
+        </a>
+        <div style="clear:both">&#160;</div>
+    </xar:sec>
+    
+    <!-- Titles if we are displaying publications of a single author -->
+    <xar:if condition="!empty($author) or !empty($pubdate)">
+        <h2>
+            <xar:if condition="!empty($pubdate)">
+                <xar:ml>
+                    <xar:mlstring>Publication Date : #(1)</xar:mlstring>
+                    <xar:mlvar>#$pubdate#</xar:mlvar>
+                </xar:ml>
+            </xar:if>
+            <xar:if condition="!empty($author)">
+                <xar:ml>
+                    <xar:mlstring>By Author : #(1)</xar:mlstring>
+                    <xar:mlvar>#$author#</xar:mlvar>
+                </xar:ml>
+            </xar:if>
+        </h2>
+    </xar:if>
+
+    <xar:if condition="empty($items)">
+        <div>
+            There are no publications to display
+        </div>
+    <xar:else />
+        <xar:if condition="!empty($context['number_of_columns'])">
+            <div id="article-columns" style="width: 98%;">
+                <xar:foreach in="$items" key="$itemid" value="$item">
+                    <div style="left: 1px; float: left; width: #$colwidth#%; vertical-align: top;">
+                        <xar:set name="dummy">$object->setFieldValues($item)</xar:set>
+                        <xar:data-display object="$object" itemid="$itemid" tplmodule="publications" layout="summary"/>
+                    </div>
+                </xar:foreach>
+            </div>
+        </xar:if>
+
+        <br class="xar-clearboth" />
+
+        <xar:if condition="$context['showcols'] eq 1">
+            <a href="#xarModURL('publications','user','view',array('numcols' =&gt; 1))#">
+                single-column display
+            </a>
+        <xar:else />
+            <a href="#xarModURL('publications','user','view')#">
+                <xar:ml>
+                    <xar:mlstring>#(1)-column display</xar:mlstring>
+                    <xar:mlvar>#$context['showcols']#</xar:mlvar>
+                </xar:ml>
+            </a>
+        </xar:if>
+
+        <div class="xar-align-center">
+            <xar:comment>$pager (combining the pager and the sort links) will be removed in later versions</xar:comment>
+            <!-- <div>#$viewpager#</div> -->
+            <xar:if condition="isset($sortlinks) and count($sortlinks) gt 0">
+                Sort by
+                <xar:foreach in="$sortlinks" value="$sortitem">
+                    <xar:if condition="!empty($sortitem.slink)">
+                        <a href="#$sortitem.slink#">#$sortitem.stitle#</a>
+                    <xar:else/>
+                        #$sortitem.stitle#
+                    </xar:if>
+                </xar:foreach>
+            </xar:if>
+        </div>
+
+        <xar:if condition="!empty($showprevnext)">
+            <xar:data-output type="categorynavigation" layout="prevnext" />
+        </xar:if>
+    </xar:if>
+</xar:template>

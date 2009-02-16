@@ -1,0 +1,56 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="empty($layout)">
+        <xar:set name="layout">'publications'</xar:set>
+    </xar:if>
+    <xar:if condition="($layout eq 'publications') or ($layout eq 'default')">
+        <xar:if condition="xarUserIsLoggedIn() AND xarSecurityCheck('DeleteListings',0)">
+            <td style="text-align: center;">
+                <input type="checkbox" name="optionscheckbox" id="#$loopitem[$primaryalias]#"  />
+            </td>
+        </xar:if>
+    <xar:elseif condition="$layout eq 'pubtypes'" />
+        <td class="xar-norm" nowrap="nowrap">
+            <xar:set name="ptid">$loopitem[$primaryalias]</xar:set>
+            <xar:set name="args">DataObjectDescriptor::getObjectID(array('name' => $properties['name']->value))</xar:set>
+            <xar:sec mask="ManagePublications" catch="false">
+                <a href="#xarModURL('dynamicdata','admin','modify',array('itemid' => $args['objectid']))#">                    
+                    Edit                    
+                </a>
+            <xar:else />                
+                Edit                
+            </xar:sec>
+            &#160;|&#160;
+            <xar:sec mask="ManagePublications" catch="false">
+                <a href="#xarModURL('dynamicdata','admin','delete',array('itemid' => $args['objectid'], 'name' => 'objects'))#">                    
+                    Delete                    
+                </a>
+            <xar:else />                
+                Delete                
+            </xar:sec>
+            &#160;|&#160;
+            <xar:sec mask="AdminPublications" catch="false">
+                <a href="#xarModURL('publications','admin','modifyconfig',array('ptid' => $ptid, 'tab' => 'pubtypes'))#">                    
+                    Publication Config                    
+                </a>
+            <xar:else />                
+                Publication Config                
+            </xar:sec>
+            &#160;|&#160;
+            <xar:sec mask="EditPublications" catch="false">
+                <a href="#xarModURL('publications','admin','view',array('ptid' => $ptid))#">                    
+                    View Publications                    
+                </a>
+            <xar:else />                
+                View Publications                
+            </xar:sec>
+            &#160;|&#160;
+            <xar:sec mask="AddPublications" catch="false">
+                <a href="#xarModURL('publications','admin','new',array('ptid' => $ptid))#">                    
+                    Add Publication                    
+                </a>
+            <xar:else />                
+                Add Publication                
+            </xar:sec>
+        </td>
+    </xar:if>
+</xar:template>

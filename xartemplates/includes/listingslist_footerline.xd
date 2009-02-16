@@ -1,0 +1,26 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="empty($layout)">
+        <xar:set name="layout">'publications'</xar:set>
+    </xar:if>
+    <xar:if condition="($layout eq 'publications') or ($layout eq 'default')">
+        <xar:if condition="xarUserIsLoggedIn() AND xarSecurityCheck('DeleteListings',0) AND $total gt 0">
+            <div style="text-align:center; padding-top:10px;">
+                <input type="hidden" name="idlist" id="idlist" />
+                <input type="hidden" name="redirecttarget" id="redirecttarget" />
+
+                <xar:set name="options">array(
+                    array('id'=>'', 'name'=>'Select action'),
+                    array('id'=>'10','name'=>'Delete Selected Items')
+                    )
+                </xar:set>
+
+                &#160;
+                <xar:data-input type="dropdown" name="operation" options="$options" />&#160;
+                <input type="submit" value="#xarML('Execute')#" />&#160;
+                <xar:base-include-javascript module="listings" filename="checkall.js" />
+                <a href="javascript:listings_checkall(true)">Check All</a>&#160;|&#160;
+                <a href="javascript:listings_checkall(false)">Uncheck All</a>
+            </div>
+        </xar:if>
+    </xar:if>
+</xar:template>
