@@ -132,7 +132,6 @@ function publications_user_view($args)
         )
     );
     $data['pager'] = '';
-    $data['viewpager'] = '';
 
     // Add Sort to data passed to template so that we can automatically turn on alpha pager, if needed
     $data['sort'] = $sort;
@@ -529,13 +528,9 @@ function publications_user_view($args)
     $data['items'] = $object->getItems();
     $data['object'] = DataObjectMaster::getObject(array('name' => $data['pubtypeobject']->properties['name']->value));
 
-
-    // Adjust the display to the correct number of cilumns
-    $data['colwidth'] = 100;
-    $maxcols = count($data['items']) > $data['settings']['number_of_columns'] ? $data['settings']['number_of_columns'] : count($data['items']);
-    $maxcols = max($maxcols,1);
-    $data['colwidth'] = round(100 / $maxcols);
-    $data['settings']['showcols'] = 1;
+    // Throw all the relevant settings we are using into the cache
+    $data['settings']['pubtypeobject'] = $data['pubtypeobject'];
+    xarCore::setCached('publications', 'context' . $ptid, $data['settings']);
 
     return xarTplModule('publications', 'user', 'view', $data, $data['template']);
 }
