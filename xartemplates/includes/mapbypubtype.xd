@@ -12,24 +12,7 @@
                 Filter:
             </xar:mlstring>
             &#160;
-            <select name="ptid" onchange="javascript:this.form.submit();">
-                <option value="">
-                    <xar:mlstring>
-                        Publication
-                    </xar:mlstring>
-                </option>
-                <xar:foreach in="$publinks" value="$pubtype">
-                    <xar:if condition="!empty($ptid) and $pubtype['pubid'] eq $ptid">
-                        <option value="#$pubtype['pubid']#" selected="selected">
-                            - #$pubtype['pubtitle']#
-                        </option>
-                        <xar:else />
-                        <option value="#$pubtype['pubid']#">
-                            - #$pubtype['pubtitle']#
-                        </option>
-                    </xar:if>
-                </xar:foreach>
-            </select>
+            <xar:data-input type="objectref" name="ptid" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" onchange="javascript:this.form.submit();" firstline="0,Publication"/>
             <xar:foreach in="$catfilter" key="$cid">
                 &#160;&#160;&#160;#$catfilter[$cid]#
             </xar:foreach>
