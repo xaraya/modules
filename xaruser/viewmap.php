@@ -7,7 +7,7 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage publications Module
+ * @subpackage Publications Module
  
  * @author mikespub
  */
@@ -16,12 +16,8 @@
  */
 function publications_user_viewmap($args)
 {
-    // Don't use standard categories function for this
-    //xarModLoad('categories', 'user');
-    //return xarModFunc('categories', 'user', 'viewmap');
-
     // Get parameters
-    if(!xarVarFetch('ptid',  'id',    $ptid,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('ptid',  'id',    $ptid,   xarModVars::get('publications', 'defaultpubtype'), XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('by', 'enum:pub:cat:grid',   $by,     NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('go',    'str',   $go,     NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('catid', 'str',   $catid,  NULL, XARVAR_NOT_REQUIRED)) {return;}
@@ -65,12 +61,9 @@ function publications_user_viewmap($args)
     }
 
     // Get publication types
-    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
-
-    // Check that the publication type is valid
-    if (!empty($ptid) && !isset($pubtypes[$ptid])) {
-        $ptid = null;
-    }
+     sys::import('modules.dynamicdata.class.objects.master');
+    $object = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
+    $data['pubtypes'] = $object->getItems();
 
     // redirect to filtered view
     if (!empty($go) && (!empty($ptid) || $by == 'cat')) {
@@ -84,7 +77,6 @@ function publications_user_viewmap($args)
         return;
     }
 
-    $data = array();
     $data['catfilter'] = array();
     $data['cattree'] = array();
     $data['catgrid'] = array();
@@ -239,7 +231,7 @@ function publications_user_viewmap($args)
         }
 
         if (!empty($ptid)) {
-            $descr = $pubtypes[$ptid]['description'];
+            $descr = $data['pubtypes'][$ptid]['description'];
         }
 
     } else {
@@ -340,7 +332,7 @@ function publications_user_viewmap($args)
     }
 
     if (!empty($ptid)) {
-        $template = $pubtypes[$ptid]['name'];
+        $template = $data['pubtypes'][$ptid]['name'];
     } else {
 // TODO: allow templates per category ?
        $template = null;

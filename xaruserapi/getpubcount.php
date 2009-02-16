@@ -47,9 +47,8 @@ function publications_userapi_getpubcount($args)
     }
 //    $q->qecho();
     if (!$q->run()) return;
-    
     $pubcount = array();
-    foreach ($q->output() as $key => $value) $pubcount[$key] = $value;
+    foreach ($q->output() as $key => $value) $pubcount[$value['pubtype_id']] = $value['count'];
     xarVarSetCached('Publications.PubCount',$statestring,$pubcount);
     return $pubcount;
 }
