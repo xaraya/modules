@@ -3,7 +3,7 @@
  * Other block initialization
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -62,7 +62,7 @@ function example_othersblock_display($blockinfo)
     }
 
     /* Security check */
-    if (!xarSecurityCheck('ReadExampleBlock', 0, 'Block', $blockinfo['name'])) {return;}
+    if (!xarSecurityCheck('ReadExampleBlock', 0, 'Block', $blockinfo['bid'])) {return;}
 
     /* Get variables from content block.
      * Content is a serialized array for legacy support, but will be
@@ -86,7 +86,7 @@ function example_othersblock_display($blockinfo)
     $exampletable = $xartable['example'];
 
     /* Query */
-    $sql = "SELECT xar_exid, xar_name
+    $sql = "SELECT xar_exid, xar_name, xar_number
             FROM $exampletable
             WHERE xar_exid != $current_exid
             ORDER by xar_exid DESC";
@@ -105,10 +105,10 @@ function example_othersblock_display($blockinfo)
 
     /* Display each item, permissions permitting */
     for (; !$result->EOF; $result->MoveNext()) {
-        list($exid, $name) = $result->fields;
+        list($exid, $name, $number) = $result->fields;
 
-        if (xarSecurityCheck('ViewExample', 0, 'Item', "$name:All:$exid")) {
-            if (xarSecurityCheck('ReadExample', 0, 'Item', "$name:All:$exid")) {
+        if (xarSecurityCheck('ViewExample', 0, 'Item', "$name:$number:$exid")) {
+            if (xarSecurityCheck('ReadExample', 0, 'Item', "$name:$number:$exid")) {
                 $item = array();
                 $item['link'] = xarModURL(
                     'example', 'user', 'display',

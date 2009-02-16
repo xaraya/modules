@@ -1,6 +1,7 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <!-- This is a standard template for the module overview  -->
-<!-- Each Module Should have an overview explaining exactly what it does, and giving an overview of the blocks and hooks that it includes or accepts. -->
+<!-- Each module should have an overview page explaining what it does and giving 
+     information on the blocks and hooks that it includes or accepts. -->
 <div class="xar-mod-head">
   <span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span>
 </div>
@@ -40,8 +41,11 @@
 
   <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
   <ul>
-    <li><xar:mlstring>first</xar:mlstring></li>
-    <li><xar:mlstring>example</xar:mlstring></li>
+    <li><xar:mlstring><strong>first</strong> displays a specific number of items
+      from the Example module.</xar:mlstring></li>
+    <li><xar:mlstring><strong>others</strong> is only active when an example item 
+      is displayed as main module output. It shows then a specific number of 
+      other example items.</xar:mlstring></li>
   </ul>
 
   <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
@@ -78,8 +82,5 @@
     <li><xar:mlstring>Related tutorials and documentation on Example found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/example/" title="#xarML('Related documentation on Example')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
     </li>
   </ul>
-  <p class="xar-sub">
-    <strong>&nbsp;<xar:mlstring>Example Module - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.3&nbsp; 2005-09-28
-  </p>
 </div>
 

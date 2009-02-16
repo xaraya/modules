@@ -2,8 +2,17 @@
 <h2>
     #$name#  <xar:mlstring>Example Information</xar:mlstring>
 </h2>
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
+<xar:comment> Name and field description of mandatory form fields </xar:comment>
+<script type="text/javascript">
+    var fieldRequired = Array("itemsperpage");
+    var fieldDescription = Array("#xarML('Items Per Page')#");
+    var alertMsg = "#xarML('Please complete the following fields:')#";
+</script>
 
-<form action="&xar-modurl-example-user-usermenu;" method="post" enctype="application/x-www-form-urlencoded">
+<form action="&xar-modurl-example-user-usermenu;" method="post"
+  onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription, alertMsg);"
+  enctype="application/x-www-form-urlencoded">
 <input type="hidden" name="authid" id="authid" value="#$authid#" />
 <input type="hidden" name="uid" id="uid" value="#$uid#" />
 <input type="hidden" name="phase" id="phase" value="update" />

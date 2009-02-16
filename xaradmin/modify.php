@@ -3,7 +3,7 @@
  * Modify an item
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -29,7 +29,6 @@
  */
 function example_admin_modify($args)
 {
-
     /* Admin functions of this type can be called by other modules. If this
      * happens then the calling module will be able to pass in arguments to
      * this function through the $args parameter. Hence we extract these
@@ -84,28 +83,32 @@ function example_admin_modify($args)
      * complete the instance information so this is the first chance we get to
      * do the check
      */
-    if (!xarSecurityCheck('EditExample', 1, 'Item', "$item[name]:All:$exid")) {
+    if (!xarSecurityCheck('EditExample', 1, 'Item', "$item[name]:$item[name]:$exid")) {
         return;
     }
     /* Get menu variables - it helps if all of the module pages have a standard
-     * menu at their head to aid in navigation. The example here includes a
+     * menu at their head to aid in navigation. The example may include a
      * menu for this function, hence the specification of 'modify'
-     * $menu = xarModAPIFunc('example','admin','menu','modify');
      */
+    $menu = xarModAPIFunc('example','admin','menu','modify');
+
     /* Call the hooks
      * This example module doesn't use itemtypes
-     * We will therefor pass NULL as an itemtype. When you define itemtypes, you should 
-     * pass it to the call for the hooks here
+     * We will therefor pass NULL as an itemtype. When you define itemtypes,
+     * you should pass it to the call for the hooks here
      */
     $item['module'] = 'example';
     $item['itemtype'] = NULL;
     $hooks = xarModCallHooks('item', 'modify', $exid, $item);
 
-    /* Return the template variables defined in this function */
+    /* Return the template variables defined in this function. The handling
+     * shown here is not common. Please see delete.php for the usual way.
+     */
     return array('authid'       => xarSecGenAuthKey(),
                  'name'         => $name,
                  'number'       => $number,
                  'invalid'      => $invalid,
+                 'menuitems'    => $menu['menuitems'],
                  'hooks'        => $hooks,
                  'item'         => $item);
 }

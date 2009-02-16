@@ -3,7 +3,7 @@
  * Example Module - initialization functions
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -56,7 +56,7 @@ function example_init()
         );
     */
     $fields = "xar_exid      I         AUTO       PRIMARY,
-               xar_name      C(100)    NotNull    DEFAULT '',
+               xar_name      C(100)    Null,
                xar_number    I4        NotNull    DEFAULT 0
               ";
 
@@ -68,7 +68,7 @@ function example_init()
        B:  BLOB (binary large object)
        D:  Date
        T:  Datetime or Timestamp
-       L:  Integer field suitable for storing booleans (0 or 1)
+       L:  Integer field for storing booleans (fails on PostgreSQL, use I1 instead)
        I:  Integer (mapped to I4)
        I1: 1-byte integer
        I2: 2-byte integer
@@ -83,7 +83,8 @@ function example_init()
        PRIMARY       Same as KEY.
        DEFAULT       The default value. Character strings are auto-quoted unless
                         the string begins and ends with spaces, eg ' SYSDATE '.
-       NOTNULL       If field is not null.
+       NULL          Let the field be null.
+       NOTNULL       If field is not null. (NOTNULL DEFAULT '' fails on PostgreSQL)
        DEFDATE       Set default value to call function to get today's date.
        DEFTIMESTAMP  Set default to call function to get today's datetime.
        NOQUOTE       Prevents autoquoting of default string values.
@@ -162,18 +163,41 @@ function example_init()
             'register_block_type',
             array('modName' => 'example',
                 'blockType' => 'first'))) return;
+
     /* Register our hooks that we are providing to other modules. The example
      * module shows an example hook in the form of the user menu.
      */
     if (!xarModRegisterHook('item', 'usermenu', 'GUI',
-            'example', 'user', 'usermenu')) {
+                            'example', 'user', 'usermenu')) {
         return false;
     }
+    /* Hooking this module to Roles. Roles calls this hook when displaying the
+     * User Account page.
+     */
+    if (xarModIsAvailable('roles')) {
+        xarModAPIFunc('modules','admin','enablehooks',
+                      array('callerModName' => 'roles', 'hookModName' => 'example'));
+    }
+    /* Example provides a search hook too. It is registered and hooked during
+     * initialization too in example_upgrade(). The upgrade function is called
+     * from this function to avoid duplicate code.
+     */
 
     /*
      * Define instances for this module
      * Format is
-     * setInstance(Module,Type,ModuleTable,IDField,NameField,ApplicationVar,LevelTable,ChildIDField,ParentIDField)
+     * xarDefineInstance($module,        module name, 'example' in this case
+     *                   $type,          component name, mostly 'Item'. If the
+     *                                   module has blocks mostly 'Block' is used
+     *                                   Do not use 'All' or 'ALL' as component!
+     *                   $query,         And SQL query or a function to get the
+     *                                   items to check against.
+     *                   $propagate=0,
+     *                   $table2='',
+     *                   $childId='',
+     *                   $parentId='',
+     *                   $description='' A valuable description
+     *                  )
      *
      * Instance definitions serve two purposes:
      * 1. The define "filters" that are added to masks at runtime, allowing us to set
@@ -182,6 +206,8 @@ function example_init()
      *    definng or modifying privileges.
      * For each component we need to tell the system how to generate
      * a list (dropdown) of all the component's instances.
+     * The first field of the selected item is stored as instance parameter.
+     * The optional second field delivers a description for the list item.
      * In addition, we add a header which will be displayed for greater clarity, and a number
      * (limit) which defines the maximum number of rows a dropdown can have. If the number of
      * instances is greater than the limit (e.g. registered users), the UI instead presents an
@@ -189,7 +215,7 @@ function example_init()
      */
     $query1 = "SELECT DISTINCT xar_name FROM " . $exampletable;
     $query2 = "SELECT DISTINCT xar_number FROM " . $exampletable;
-    $query3 = "SELECT DISTINCT xar_exid FROM " . $exampletable;
+    $query3 = "SELECT DISTINCT xar_exid, xar_name FROM " . $exampletable;
     $instances = array(
         array('header' => 'Example Name:',
             'query' => $query1,
@@ -219,9 +245,9 @@ function example_init()
      */
     $instancestable = $xartable['block_instances'];
     $typestable = $xartable['block_types'];
-    $query = "SELECT DISTINCT i.xar_name FROM $instancestable i, $typestable t WHERE t.xar_id = i.xar_type_id AND t.xar_module = 'example'";
+    $query = "SELECT DISTINCT i.xar_id, i.xar_name FROM $instancestable i, $typestable t WHERE t.xar_id = i.xar_type_id AND t.xar_module = 'example'";
     $instances = array(
-        array('header' => 'Example Block Name:',
+        array('header' => 'Example Block ID:',
             'query' => $query,
             'limit' => 20
             )
@@ -244,7 +270,10 @@ function example_init()
     xarRegisterMask('DeleteExample', 'All', 'example', 'Item', 'All:All:All', 'ACCESS_DELETE');
     xarRegisterMask('AdminExample',  'All', 'example', 'Item', 'All:All:All', 'ACCESS_ADMIN');
 
-    /* This init function brings our module to version 1.0, run the upgrades for the rest of the initialisation */
+    /* This example_init function brings our module to version 1.0 and then calls
+     * the upgrades for the rest of the initialisation. This avoids duplicate
+     * code in init and upgrade parts of this file.
+     */
     return example_upgrade('1.0');
 }
 
@@ -297,7 +326,7 @@ function example_upgrade($oldversion)
             /* At the end of the successful completion of this function you can
              * recurse the upgrade to handle any other upgrades that need
              * to be done. In normal cases this is not necessary, as the switch
-             * will continue with the next step untill it hits a break
+             * will continue with the next step until it hits a break.
              * return example_upgrade('1.0.0');
              */
         case '1.0':
@@ -305,11 +334,19 @@ function example_upgrade($oldversion)
               * You are adviced to use three digits in all next versions of your module
               * We still need to catch all possible versions, as 1.0 is not the same as 1.0.0
               */
+             /* The init function brings the module only to version 1.0 and then
+              * calls the upgrade from here. So all following code is done on 
+              * initialization too.
+              */
         case '1.0.0':
             /* Code to upgrade from version 1.0.0 goes here */
-            /* Register search hook */
+            /* Register search hook and hooking this module to Search.*/
             if (!xarModRegisterHook('item', 'search', 'GUI', 'example', 'user', 'search')) {
                return false;
+            }
+            if (xarModIsAvailable('search')) {
+                xarModAPIFunc('modules','admin','enablehooks',
+                              array('callerModName' => 'search', 'hookModName' => 'example'));
             }
             /* If you provide short URL encoding functions you might want to also
              * provide module aliases and have them set in the module's administration.
@@ -318,13 +355,13 @@ function example_upgrade($oldversion)
             xarModSetVar('example', 'useModuleAlias',false);
             xarModSetVar('example','aliasname','');
         case '1.5.0':
-          /* Redefine the block_instances on Name rather than Title. 
+          /* Redefine the block_instances on ID rather than Title.
              Title is a displayable text in the user gui and can also be translated */
           $instancestable = $xartable['block_instances'];
           $typestable = $xartable['block_types'];
-          $query = "SELECT DISTINCT i.xar_name FROM $instancestable i, $typestable t WHERE t.xar_id = i.xar_type_id AND t.xar_module = 'example'";
+          $query = "SELECT DISTINCT i.xar_id, i.xar_name FROM $instancestable i, $typestable t WHERE t.xar_id = i.xar_type_id AND t.xar_module = 'example'";
           $instances = array(
-             array('header' => 'Example Block Name:',
+             array('header' => 'Example Block ID:',
              'query' => $query,
              'limit' => 20
                )
@@ -394,6 +431,10 @@ function example_delete()
     /* Unregister each of the hooks that have been created */
     if (!xarModUnregisterHook('item', 'usermenu', 'GUI',
             'example', 'user', 'usermenu')) {
+        return false;
+    }
+    if (!xarModUnregisterHook('item', 'search', 'GUI',
+                              'example', 'user', 'search')) {
         return false;
     }
     /* Remove Masks and Instances

@@ -3,7 +3,7 @@
  * Display the user menu hook
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -47,7 +47,7 @@ function example_user_usermenu($args)
             /* Now lets send the data to the template which name we choose here. */
             $data = xarTplModule('example', 'user', 'usermenu_icon', array('iconbasic' => $icon));
 
-            break;
+            return $data;
 
         case 'form':
             /* Its good practice for the user menu to be personalized. In order to do so, we
@@ -64,41 +64,38 @@ function example_user_usermenu($args)
              * not have to use a user variable for every module var that the module posses, just
              * the variables that you want to override.
              */
-            $value = xarModGetUserVar('example', 'itemsperpage', $uid);
-            /* if (empty($value)){
-             * $value = xarModGetVar('example', 'itemsperpage');
-             * }
-             * Now lets send the data to the template which name we choose here.
+            $value = xarModGetUserVar('example', 'itemsperpage');
+            /* Now lets send the data to the template which name we choose here.
              */
             $data = xarTplModule('example', 'user', 'usermenu_form', array('authid' => $authid,
                     'name' => $name,
                     'uid' => $uid,
                     'value' => $value));
-            break;
+
+            return $data;
 
         case 'update':
             /* First we need to get the data back from the template in order to process it.
              * The example module is not setting any user vars at this time, but an example
              * might be the number of items to be displayed per page.
              */
-            if (!xarVarFetch('uid', 'int:1:', $uid)) return;
-            if (!xarVarFetch('itemsperpage', 'str:1:100', $itemsperpage, '20', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('name', 'str:1:100', $name, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('itemsperpage', 'int:1:100', $itemsperpage, '20', XARVAR_NOT_REQUIRED)) return;
 
             /* Confirm authorisation code. */
             if (!xarSecConfirmAuthKey()) return;
 
-            xarModSetUserVar('example', 'itemsperpage', $itemsperpage, $uid);
-            /* Redirect back to the account page. We could also redirect back to our form page as
-             * well by adding the phase variable to the array.
+            /* Store the value in an UserVar. Calling a non existent UserVar
+             * defaults to a ModuleVar with the same name.
              */
-            xarResponseRedirect(xarModURL('roles', 'user', 'account'));
+            xarModSetUserVar('example', 'itemsperpage', $itemsperpage);
 
-            break;
+            /* Redirect back to our form. We could also redirect back to the
+             * account page by leaving the array.
+             */
+            xarResponseRedirect(xarModURL('roles', 'user', 'account',
+                                          array ('moduleload' => 'example')));
+
+            return;
     }
-    /* Finally, we need to send our variables to block layout for processing. Since we are
-     * using the data var for processing above, we need to do the same with the return.
-     */
-    return $data;
 }
 ?>

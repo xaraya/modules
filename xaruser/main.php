@@ -3,7 +3,7 @@
  * The main user function
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -34,6 +34,7 @@ function example_user_main()
      * generally either 'overview' or 'read'
      */
     if (!xarSecurityCheck('ViewExample')) return;
+
     /* If you want to go directly to some default function, instead of
      * having a separate main function, you can simply call it here, and
      * use the same template for user-main.xard as for user-view.xard
@@ -44,22 +45,18 @@ function example_user_main()
      * support easy navigation
      */
     $data = xarModAPIFunc('example', 'user', 'menu');
+
     /* Specify some other variables used in the blocklayout template */
     $data['welcome'] = xarML('Welcome to this Example module...');
+
     /* We also may want to change the title of the page for a little
      * better search results from the spiders. All we are doing below
      * Is telling Xaraya what the title of the page should be, and
      * Xaraya controls the rest.
      */
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Welcome')));
+
     /* Return the template variables defined in this function */
     return $data;
-    /* Note : instead of using the $data variable, you could also specify
-     * the different template variables directly in your return statement :
-
-     * return array('menutitle' => ...,
-     * 'welcome' => ...,
-     * ... => ...);
-     */
 }
 ?>

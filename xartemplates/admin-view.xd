@@ -1,14 +1,10 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<!-- common admin menu for this module - remove link to the current function -->
-<!-- the variables used in this menu come from example_admin_menu() -->
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span>
 </div>
 <div id="notsogoodbutok" class="xar-mod-body">
+    <!-- common admin menu for this module - remove link to the current function -->
     <xar:template type="module" file="admin-menu" />
-
-    <fieldset>
-        <legend><xar:mlstring>View Example Items</xar:mlstring></legend>
 
       <!--
           // display a status message to the user if an action has been
@@ -17,7 +13,10 @@
       <xar:if condition="xarSessionGetVar('statusmsg') != ''">
           <p>#xarSessionGetVar('statusmsg')#</p>
       </xar:if>
+
      <!-- the specific template for the current admin function comes here -->
+    <fieldset>
+        <legend><xar:mlstring>View Example Items</xar:mlstring></legend>
 
       <table class="xar-fullwidth">
           <thead>
@@ -59,6 +58,7 @@
               </xar:foreach>
           </tbody>
       </table>
+
       <!-- We could add a xar:sec here on AddExample to hide this link -->
       <!--
         // The loadContent in here is used to produce an xmlhttp request
@@ -68,6 +68,7 @@
       <a href="&xar-modurl-example-admin-new;" onclick="return loadContent(this.href,'example_edit_or_add');">
         <xar:mlstring>Add new item</xar:mlstring>
       </a>
+
       <div class="xar-align-center xar-padding-thick">
           <!-- add the pager here -->
           #$pager#

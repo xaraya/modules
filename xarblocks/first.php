@@ -3,7 +3,7 @@
  * Example Block  - standard Initialization function
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -54,7 +54,7 @@ function example_firstblock_info()
 function example_firstblock_display($blockinfo)
 {
     /* Security check */
-    if (!xarSecurityCheck('ReadExampleBlock', 0, 'Block', $blockinfo['name'])) {return;}
+    if (!xarSecurityCheck('ReadExampleBlock', 0, 'Block', $blockinfo['bid'])) {return;}
 
     /* Get variables from content block.
      * Content is a serialized array for legacy support, but will be
@@ -102,7 +102,8 @@ function example_firstblock_display($blockinfo)
              * Security check 2 - if the user has read access to the item, show a
              * link to display the details of the item
              */
-            if (xarSecurityCheck('ReadExample', 0, 'Item', "$item[name]:All:$item[exid]")) {
+            if (xarSecurityCheck('ReadExample', 0, 'Item',
+                                 "$item[name]:$item[number]:$item[exid]")) {
                 $item['link'] = xarModURL(
                     'example', 'user', 'display',
                     array('exid' => $item['exid'])

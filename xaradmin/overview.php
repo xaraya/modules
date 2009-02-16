@@ -3,7 +3,7 @@
  * Displays standard Overview page
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -26,10 +26,10 @@ function example_admin_overview()
    /* Security Check */
     if (!xarSecurityCheck('AdminExample',0)) return;
 
-    $data=array();
+    $data = xarModAPIFunc('example', 'admin', 'menu');
 
     /* if there is a separate overview function return data to it
-     * else just call the main function that displays the overview
+     * else just call the admin-main template that displays the overview
      */
 
     return xarTplModule('example', 'admin', 'main', $data,'main');

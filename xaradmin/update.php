@@ -3,7 +3,7 @@
  * Standard function to update a current item
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -24,21 +24,11 @@
  */
 function example_admin_update($args)
 {
-    /* Admin functions of this type can be called by other modules. If this
-     * happens then the calling module will be able to pass in arguments to
-     * this function through the $args parameter. Hence we extract these
-     * arguments *before* we have obtained any form-based input through
-     * xarVarFetch(), so that parameters passed by the modules can also be
-     * checked by a certain validation.
+    /* See modify.php for information on passed in arguments
      */
     extract($args);
 
-    /* Get parameters from whatever input we need. All arguments to this
-     * function should be obtained from xarVarFetch(). xarVarFetch allows
-     * the checking of the input variables as well as setting default
-     * values if needed. Getting vars from other places such as the
-     * environment is not allowed, as that makes assumptions that will
-     * not hold in future versions of Xaraya
+    /* See modify.php for information on getting parameters from input
      */
     if (!xarVarFetch('exid',     'id',     $exid,     $exid,     XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid', 'id',     $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
@@ -46,15 +36,7 @@ function example_admin_update($args)
     if (!xarVarFetch('number',   'int:1:', $number,   $number,   XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('name',     'str:1:', $name,     $name,     XARVAR_NOT_REQUIRED)) return;
 
-    /* At this stage we check to see if we have been passed $objectid, the
-     * generic item identifier. This could have been passed in by a hook or
-     * through some other function calling this as part of a larger module, but
-     * if it exists it overrides $exid
-     *
-     * Note that this module could just use $objectid everywhere to avoid all
-     * of this munging of variables, but then the resultant code is less
-     * descriptive, especially where multiple objects are being used. The
-     * decision of which of these ways to go is up to the module developer
+    /* See modify.php for information on the use of $exid and $objectid
      */
     if (!empty($objectid)) {
         $exid = $objectid;
@@ -83,8 +65,8 @@ function example_admin_update($args)
 
     /* check if we have any errors */
     if (count($invalid) > 0) {
-        /* call the admin_new function and return the template vars
-         * (you need to copy admin-new.xd to admin-create.xd here)
+        /* We got an error. So call the admin_modify function and return 
+         * the template vars
          */
         return xarModFunc('example', 'admin', 'modify',
                           array('name'     => $name,
@@ -115,7 +97,7 @@ function example_admin_update($args)
      * the user to an appropriate page for them to carry on their work
      */
     xarResponseRedirect(xarModURL('example', 'admin', 'view'));
-    /* Return */
+
     return true;
 }
 ?>

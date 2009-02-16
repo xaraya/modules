@@ -1,12 +1,36 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<!-- common user menu for this module - remove link to the current function -->
-<!-- the variables used in this menu come from example_user_menu() -->
-<div>
-    <strong class="xar-margin-thickright">#$menutitle#</strong> | 
-    <!-- a link to a particular menu item -->
-       <a href="#$menulink_view#" title="#$menulabel_view#" class="xar-margin-thicksides">#$menulabel_view#</a>
+<xar:comment>In-Page Common menu</xar:comment>
+<xar:comment>
+  Please see full explanation and a ajaxified sample at ./admin-menu.xd.
+  The variables used in this menu come from example_userapi_menu().
+  A menu title is seldomly used
+</xar:comment>
 
-    <!-- more menu items come here... remember to add some kind of 
-      // separator between them
-    -->
-</div>
+<xar:style scope="module" module="base" file="navtabs" />
+<xar:set name="request">xarRequestGetInfo()</xar:set>
+<xar:set name="activetab">#$request.2#</xar:set>
+
+<xar:if condition="xarModGetVar('themes','adminpagemenu')">
+  <div>
+    <strong class="xar-margin-thickright">#$menutitle#</strong>
+    <dl class="xar-tabs">
+      <dt class="help" title="#xarML('Choose an action to perform')#">
+        <xar:mlstring>Actions:</xar:mlstring>
+      </dt>
+      <xar:loop name="$menuitems">
+        <xar:if condition="isset($loop:item['active'])">
+          <xar:set name="tabclass">
+            in_array($activetab, $loop->item['active'])?'active':''
+          </xar:set>
+        <xar:else />
+          <xar:set name="tabclass">''</xar:set>
+        </xar:if>
+        <dd class="#$tabclass#">
+          <a href="#$loop:item.url#" title="#$loop:item.title#">
+            #$loop:item.label#
+          </a>
+        </dd>
+      </xar:loop>
+    </dl>
+  </div>
+</xar:if>

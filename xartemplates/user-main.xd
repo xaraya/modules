@@ -6,11 +6,10 @@
 <div class="xar-mod-body">
     <h2><xar:mlstring>Example</xar:mlstring></h2>
 
-    <!-- the variables used in this menu template  come from example_user_menu() -->
     <xar:template type="module" file="user-menu" />
 
     <!-- the specific template for the current function comes here -->
-    
+
     <!-- some variable filled in by the function using this template -->
 
 </div>

@@ -3,7 +3,7 @@
  * The main administration function
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -43,28 +43,11 @@ function example_admin_main()
          * return xarModFunc('example','admin','view');
          */
 
-        /* Initialise the $data variable that will hold the data to be used in
-         * the blocklayout template, and get the common menu configuration - it
-         * helps if all of the module pages have a standard menu at the top to
-         * support easy navigation
-         */
-        $data = xarModAPIFunc('example', 'admin', 'menu');
-
         /* You could specify some other variables to use in the blocklayout template
          *$data['welcome'] = xarML('Welcome to the administration part of this Example module...');
          * Return the template variables defined in this function
          */
         
-        //return $data;
-
-        /* Note : instead of using the $data variable, you could also specify
-         * the different template variables directly in your return statement :
-         */
-
-        /* return array('menutitle' => ...,
-         * 'welcome' => ...,
-         * ... => ...);
-         */
         /* If no main function as such, just return the view page,
          * or whatever function seems to be the most fitting for this module.
          */
