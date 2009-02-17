@@ -10,7 +10,8 @@
  * @param  $senderaddress
  * @param  $recipientname
  * @param  $recipientaddress
- * @param  $ccaddresses
+ * @param  $ccaddresses         format is an array with elements emailaddr => name
+ * @param  $bccaddresses        format is an array with elements emailaddr => name
  * @param  $module
  * @param  $data
  *
@@ -138,17 +139,19 @@
             
         // Take care of other data passed through directly
             $ccaddresses = isset($args['ccaddresses']) ? $args['ccaddresses'] : '';
+            $bccaddresses = isset($args['bccaddresses']) ? $args['bccaddresses'] : '';
             
         // Bundle the data into a nice array
-            $args = array('info'         => $recipientaddress,
-                          'name'         => $recipientname,
-                          'ccrecipients' => $ccaddresses,
-                          'subject'      => $subject,
-                          'message'      => $message,
-                          'htmlmessage'  => $message,
-                          'from'         => $senderaddress,
-                          'fromname'     => $sendername,
-                          'attachName'   => '',
+            $args = array('info'          => $recipientaddress,
+                          'name'          => $recipientname,
+                          'ccrecipients'  => $ccaddresses,
+                          'bccrecipients' => $bccaddresses,
+                          'subject'       => $subject,
+                          'message'       => $message,
+                          'htmlmessage'   => $message,
+                          'from'          => $senderaddress,
+                          'fromname'      => $sendername,
+                          'attachName'    => '',
                           'attachPath'   => '',
                           'usetemplates' => false);
 
