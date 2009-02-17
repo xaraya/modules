@@ -10,7 +10,7 @@
  * @param  $senderaddress
  * @param  $recipientname
  * @param  $recipientaddress
- * @param  $locale
+ * @param  $ccaddresses
  * @param  $module
  * @param  $data
  *
@@ -139,6 +139,7 @@
         // Bundle the data into a nice array
             $args = array('info'         => $recipientaddress,
                           'name'         => $recipientname,
+                          'ccrecipients' => $ccaddresses,
                           'subject'      => $subject,
                           'message'      => $message,
                           'htmlmessage'  => $message,

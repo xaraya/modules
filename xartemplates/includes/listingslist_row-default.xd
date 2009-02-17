@@ -29,7 +29,6 @@
                 </td>
             </xar:if>
         </xar:foreach>
-
         <xar:template file="listingslist_rowsuffix" module="$localmodule,listings" />
     </tr>
 </xar:template>
