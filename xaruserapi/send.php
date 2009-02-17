@@ -136,6 +136,9 @@
                 }
             }
             
+        // Take care of other data passed through directly
+            $ccaddresses = isset($args['ccaddresses']) ? $args['ccaddresses'] : '';
+            
         // Bundle the data into a nice array
             $args = array('info'         => $recipientaddress,
                           'name'         => $recipientname,
