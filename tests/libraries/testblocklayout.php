@@ -101,6 +101,8 @@
             $tplString .= '</xar:template>';
             $this->expected   = "<?php echo xarML(\$foo);?>";
             $this->actual = $this->myBLC->compileString($tplString);
+            $this->expected = "Hex ".bin2hex($this->expected);
+            $this->actual   = "Hex ".bin2hex($this->actual);
             return $this->assertSame($this->actual,$this->expected,"Variable inside hashes is resolved as PHP");
         }
 
@@ -110,6 +112,8 @@
             $tplString .= '</xar:template>';
             $this->expected   = "<?php echo xarML('foo');?>";
             $this->actual = $this->myBLC->compileString($tplString);
+            $this->expected = "Hex ".bin2hex($this->expected);
+            $this->actual   = "Hex ".bin2hex($this->actual);
             return $this->assertSame($this->actual,$this->expected,"A non-numeric text node containing no special chars is translatable");
         }
 
@@ -119,6 +123,8 @@
             $tplString .= '</xar:template>';
             $this->expected   = "666";
             $this->actual = $this->myBLC->compileString($tplString);
+            $this->expected = "Hex ".bin2hex($this->expected);
+            $this->actual   = "Hex ".bin2hex($this->actual);
             return $this->assertSame($this->actual,$this->expected,"A text node representing a number is untouched");
         }
 
@@ -128,6 +134,8 @@
             $tplString .= '</xar:template>';
             $this->expected   = "<?php echo xarML('foo'.\$bar);?>";
             $this->actual = $this->myBLC->compileString($tplString);
+            $this->expected = "Hex ".bin2hex($this->expected);
+            $this->actual   = "Hex ".bin2hex($this->actual);
             return $this->assertSame($this->actual,$this->expected,"Text + hashvar is translatable");
         }
 
@@ -137,6 +145,8 @@
             $tplString .= '</xar:template>';
             $this->expected   = "<?php echo xarML(\$bar.'foo');?>";
             $this->actual = $this->myBLC->compileString($tplString);
+            $this->expected = "Hex ".bin2hex($this->expected);
+            $this->actual   = "Hex ".bin2hex($this->actual);
             return $this->assertSame($this->actual,$this->expected,"Hashvar + text is translatable");
         }
 
@@ -146,6 +156,8 @@
             $tplString .= '</xar:template>';
             $this->expected   = "<?php echo xarML('foo'.\$bar.'oo');?>";
             $this->actual = $this->myBLC->compileString($tplString);
+            $this->expected = "Hex ".bin2hex($this->expected);
+            $this->actual   = "Hex ".bin2hex($this->actual);
             return $this->assertSame($this->actual,$this->expected,"Text + hashvar + text is translatable");
         }
 
@@ -155,6 +167,8 @@
             $tplString .= '</xar:template>';
             $this->expected   = "<?php echo xarML(\$foo.'bar'.\$oo);?>";
             $this->actual = $this->myBLC->compileString($tplString);
+            $this->expected = "Hex ".bin2hex($this->expected);
+            $this->actual   = "Hex ".bin2hex($this->actual);
             return $this->assertSame($this->actual,$this->expected,"Hashvar + text + hashvar is translatable");
         }
 
@@ -164,6 +178,8 @@
             $tplString .= '</xar:template>';
             $this->expected   = "<?php echo xarML('foobar #cccooo');?>";
             $this->actual = $this->myBLC->compileString($tplString);
+            $this->expected = "Hex ".bin2hex($this->expected);
+            $this->actual   = "Hex ".bin2hex($this->actual);
             return $this->assertSame($this->actual,$this->expected,"Double hash in text should return 1 hash back");
         }
 
@@ -173,6 +189,8 @@
             $tplString .= '</xar:template>';
             $this->expected   = "<?php echo xarML(\$foobar.'#cccooo');?>";
             $this->actual = $this->myBLC->compileString($tplString);
+            $this->expected = "Hex ".bin2hex($this->expected);
+            $this->actual   = "Hex ".bin2hex($this->actual);
             return $this->assertSame($this->actual,$this->expected,"Hashvar and double hash should resolve and return 1 hash back");
         }
 
@@ -182,6 +200,8 @@
             $tplString .= '</xar:template>';
             $this->expected   = "<?php echo xarML('#cccooo'.\$foobar);?>";
             $this->actual = $this->myBLC->compileString($tplString);
+            $this->expected = "Hex ".bin2hex($this->expected);
+            $this->actual   = "Hex ".bin2hex($this->actual);
             return $this->assertSame($this->actual,$this->expected,"Double hash and hashvar should resolve and return 1 hash back");
         }
 
@@ -192,6 +212,8 @@
             $tplString .= '</xar:template>';
             $this->expected   = "<?php echo \$foo; ?>#";
             $this->actual = $this->myBLC->compileString($tplString);
+            $this->expected = "Hex ".bin2hex($this->expected);
+            $this->actual   = "Hex ".bin2hex($this->actual);
             return $this->assertSame($this->actual,$this->expected,"Double hash after variable should return 1 back");
         }
 
@@ -202,6 +224,8 @@
             $tplString .= '</xar:template>';
             $this->expected   = "<?php echo xarML('foo#'); ?>";
             $this->actual = $this->myBLC->compileString($tplString);
+            $this->expected = "Hex ".bin2hex($this->expected);
+            $this->actual   = "Hex ".bin2hex($this->actual);
             return $this->assertSame($this->actual,$this->expected,"Triple hash after variable should return 1 back");
         }
 
@@ -211,6 +235,8 @@
             $tplString .= '</xar:template>';
             $this->expected   = "<?php echo xarML('foo #(1) bar #(2)');?>";
             $this->actual = $this->myBLC->compileString($tplString);
+            $this->expected = "Hex ".bin2hex($this->expected);
+            $this->actual   = "Hex ".bin2hex($this->actual);
             return $this->assertSame($this->actual,$this->expected,"MLS placeholders such as #(1) are untouched");
         }
 
