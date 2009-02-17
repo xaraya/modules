@@ -20,7 +20,7 @@
             <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
             <dd class="#$tabclass#">
               <a href="#xarModURL('dossier','user','main')#">
-                <xar:mlstring>Overview</xar:mlstring></strong>
+                <xar:mlstring>View</xar:mlstring></strong>
               </a>
             </dd>
             
@@ -45,6 +45,13 @@
             <dd class="#$tabclass#">
               <a href="#xarModURL('dossier','user','birthdays')#"  title="#xarML('Upcoming birthdays of contacts')#">
                     <xar:mlstring>Birthdays</xar:mlstring>
+              </a>
+            </dd>
+        </xar:sec>
+        <xar:sec id="menu_newcontact" mask="TeamDossierAccess" catch="false">
+            <xar:set name="tabclass">$activetab=='new'?'active':''</xar:set>
+            <dd class="#$tabclass#">
+              <a href="#xarModURL('dossier','admin','new')#" title="#xarML('Add a new Contact')#">
               </a>
             </dd>
         </xar:sec>
