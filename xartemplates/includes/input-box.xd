@@ -4,17 +4,17 @@
 <xar:comment>
     fieldRequired = Array with names of mandatory fields
     fieldDescription = Array with labels of mandatory fields
+    alertMsg = Message to user if empty field found
 </xar:comment>
 <script type="text/javascript">
-<!--
     var fieldRequired = Array("package[title]", "package[text]");
-    var fieldDescription = Array("Titel", "Comment");
-//-->
+    var fieldDescription = Array("#xarML('Titel')#", "#xarML('Comment')#");
+    var alertMsg = "#xarML('Please complete the following fields:')#;"
 </script>
 
 <xar:sec mask="Comments-Reply" catch="false">
   <h3>#$header['input-title']#</h3> 
-  <form action="#$receipt['post_url']#" method="post" name="post" id="post" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);" #$hooks['formaction']# >
+  <form action="#$receipt['post_url']#" method="post" name="post" id="post" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription, alertMsg);" #$hooks['formaction']# >
     <div class="xar-ib-wrapper xar-accent-outline">
       <xar:if condition="$hooks['formdisplay'] ne ''">
         <div class="xar-ib-actionpanel xar-accent">

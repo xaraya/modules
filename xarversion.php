@@ -1,7 +1,7 @@
 <?php
 /**
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -29,4 +29,9 @@ $modversion['admin'] = 1;
 $modversion['user'] = 0;
 $modversion['class'] = 'Utility';
 $modversion['category'] = 'Content';
+
+if (false) {
+xarML('Comments');
+xarML('Allows users to post comments on items');
+}
 ?>
