@@ -3,7 +3,7 @@
  * Julian Module : calendar with events
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -30,6 +30,7 @@ class Calendar
     var $dayNamesLong = array();
     var $dayNamesMedium = array();
     var $dayNamesShort = array();
+    var $curCharset;
 
     /**
      * constructor
@@ -37,6 +38,8 @@ class Calendar
      */
     function Calendar()
     {
+        // encoding for mb_substr
+        $this->curCharset = xarMLSGetCharsetFromLocale(xarMLSGetCurrentLocale());
         // Set the first day of the week
         $this->startDayOfWeek = xarModGetVar('julian','startDayOfWeek');
         // load the locale date
@@ -96,13 +99,13 @@ class Calendar
         );
 
         // returns just the first letter from the shortDayNames
-        $this->dayNamesShort = array(substr($this->dayNamesMedium[0],0,1),
-                                     substr($this->dayNamesMedium[1],0,1),
-                                     substr($this->dayNamesMedium[2],0,1),
-                                     substr($this->dayNamesMedium[3],0,1),
-                                     substr($this->dayNamesMedium[4],0,1),
-                                     substr($this->dayNamesMedium[5],0,1),
-                                     substr($this->dayNamesMedium[6],0,1));
+        $this->dayNamesShort = array(mb_substr($this->dayNamesMedium[0],0,1,$this->curCharset),
+                                     mb_substr($this->dayNamesMedium[1],0,1,$this->curCharset),
+                                     mb_substr($this->dayNamesMedium[2],0,1,$this->curCharset),
+                                     mb_substr($this->dayNamesMedium[3],0,1,$this->curCharset),
+                                     mb_substr($this->dayNamesMedium[4],0,1,$this->curCharset),
+                                     mb_substr($this->dayNamesMedium[5],0,1,$this->curCharset),
+                                     mb_substr($this->dayNamesMedium[6],0,1,$this->curCharset));
     }
 
     /**
