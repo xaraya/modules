@@ -1,3 +1,5 @@
+<xar:template type="module" module="jquery" file="thickbox" />
+
 <xar:data-getitem name="$properties" module="dossier" itemtype="1" itemid="0" />
 
 <xar:data-getitem name="$logproperties" module="dossier" itemtype="4" itemid="0" />

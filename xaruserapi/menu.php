@@ -3,7 +3,7 @@
  * Dossier Module
  *
  * @package modules
- * @copyright (C) 2002-2007 Chad Kraeft
+ * @copyright (C) 2002-2009 Chad Kraeft
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -29,10 +29,6 @@ function dossier_userapi_menu()
                   array('module' => 'jquery',
                         'filename' => 'jquery.compat-1.1.js'));
     
-    xarModAPIFunc('base','javascript','modulefile',
-                  array('module' => 'jquery',
-                        'filename' => 'thickbox-compressed.js'));
-                        
     // Initialise the array that will hold the menu configuration
     $menu = array();
 
