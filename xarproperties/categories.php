@@ -140,7 +140,7 @@ class CategoriesProperty extends DataProperty
             $result = xarModAPIFunc('categories', 'admin', 'unlink',
                               array('iid' => $itemid,
                                     'itemtype' => $this->localitemtype,
-                                    'modid' => xarMod::getID($localmodule)));
+                                    'modid' => xarMod::getID($this->localmodule)));
         }
 
         if (count($this->categories) > 0) {
@@ -148,7 +148,7 @@ class CategoriesProperty extends DataProperty
                                   array('cids'        => $this->categories,
                                         'iids'        => array($itemid),
                                         'itemtype'    => $this->localitemtype,
-                                        'modid'       => xarMod::getID($localmodule),
+                                        'modid'       => xarMod::getID($this->localmodule),
                                         'basecids'    => $this->basecategories,
                                         'check'       => false,
                                         'clean_first' => true));
