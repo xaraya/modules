@@ -25,7 +25,7 @@
             <label title="#xarML('Select a type of publication to add')#" class="xar-form-label">
                 Publication Type:
             </label>
-            <xar:set name="newurl">"document.location.href='" . xarModURL('publications','admin','new') . "&amp;ptid='+this.value"</xar:set>
+            <xar:set name="newurl">"document.location.href='" . xarModURL('publications','user','new') . "&amp;ptid='+this.value"</xar:set>
             <xar:data-input type="objectref" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" onchange="$newurl" />
         </div>
         <div style="float:right">
@@ -43,14 +43,14 @@
                 'application/x-www-form-urlencoded'
             </xar:set>
         </xar:if>
-        <form method="post" id="post" action="&xar-modurl-publications-admin-create;" enctype="#$enctype#" >
+        <form method="post" id="post" action="&xar-modurl-publications-user-create;" enctype="#$enctype#" >
             <xar:if condition="isset($tab) AND $tab eq 'preview'">
                 <xar:set name="visible">array('none','none','block')</xar:set>
             <xar:else />
                 <xar:set name="visible">array('block','none','none')</xar:set>
             </xar:if>
             <xar:template file="pagetabs" type="module" />
-            <div id="page-1" style="display: block">
+            <div id="page-1" style="display: #$visible[0]#">
                 <xar:set name="contentfile">'content-' . $object->name</xar:set>
                 <xar:template file="$contentfile" type="module" />
             </div>

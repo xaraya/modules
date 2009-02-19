@@ -41,10 +41,12 @@
                 <a href="javascript:showtab(3,#$tabs#)">
                 Preview</a>
             </dd>
-        <dd style="float:right" id="newtranslaiton">
-            <a href="">
-                New Translation
-            </a>
-        </dd>
+        <xar:if condition="!empty($properties['id']->value)">
+            <dd style="float:right" id="newtranslaiton">
+                <a href="">
+                    New Translation
+                </a>
+            </dd>
+        </xar:if>
     </dl>
 </xar:template>
