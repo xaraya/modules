@@ -133,13 +133,14 @@ class CategoriesProperty extends DataProperty
 
     public function createValue($itemid=0)
     {
-        $info = xarMod::getBaseInfo($this->localmodule);
+        // If there was no preceding checkInput, do nothing
+        if (!isset($this->localmodule)) return true;
 
         if (!empty($itemid)) {
             $result = xarModAPIFunc('categories', 'admin', 'unlink',
                               array('iid' => $itemid,
                                     'itemtype' => $this->localitemtype,
-                                    'modid' => $info['systemid']));
+                                    'modid' => xarMod::getID($localmodule)));
         }
 
         if (count($this->categories) > 0) {
@@ -147,7 +148,7 @@ class CategoriesProperty extends DataProperty
                                   array('cids'        => $this->categories,
                                         'iids'        => array($itemid),
                                         'itemtype'    => $this->localitemtype,
-                                        'modid'       => $info['systemid'],
+                                        'modid'       => xarMod::getID($localmodule),
                                         'basecids'    => $this->basecategories,
                                         'check'       => false,
                                         'clean_first' => true));
