@@ -2,7 +2,7 @@
 <xar:set name="projects_objectid">xarModGetVar('xproject','projects_objectid')</xar:set>
 <xar:data-getitem name="$xproject_properties" module="xproject" itemtype="1" itemid="$projects_objectid" />
 
-<xar:template type="module" file="admin-menu" />
+<xar:template type="module" file="user-menu" />
 
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Recent Task Archive</xar:mlstring></span></div>
 <div class="xar-mod-body xtasks">

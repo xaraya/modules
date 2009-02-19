@@ -1,0 +1,42 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:base-include-javascript position="head" module="base" filename="xmlhttprequest.js" />
+<xar:base-include-javascript position="body" module="base" filename="calendar.js" />
+<xar:base-include-javascript position="body" module="xtasks" filename="spinner.js" />
+<xar:style scope="module" file="xtasks" />
+
+<xar:style scope="module" module="base" file="navtabs" />
+
+<xar:set name="request">xarRequestGetInfo()</xar:set>
+<xar:set name="activetab">#$request.2#</xar:set>  
+
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+
+<div class="xar-mod-body">
+    <dl class="xar-tabs">
+        <dt class="help" title="#xarML('Choose an action to perform')#">
+          <xar:mlstring>Actions:</xar:mlstring>
+        </dt>
+        <xar:loop name="xarModAPIFunc('xtasks', 'user', 'getmenulinks')">
+          <xar:if condition="isset($loop:item['active'])">
+            <xar:set name="tabclass">in_array($activetab, $loop->item['active'])?'active':''</xar:set>
+          </xar:if>
+          <dd class="#$tabclass#">
+            <a href="#$loop:item.url#" title="#$loop:item.title#">
+              #$loop:item.label#
+            </a>
+          </dd>
+        </xar:loop>
+
+    </dl>
+</div>
+
+<div class="xar-mod-foot">
+    <xar:set name="statusmsg">xarSessionGetVar('statusmsg')</xar:set>
+    <xar:if condition="!empty($statusmsg)">
+        <div style="border: 2px solid black; background-color: red; color: black; padding: 2px; text-align: center;">
+            #$statusmsg#
+        </div>
+        <xar:set name="dummy">xarSessionSetVar('statusmsg',"")</xar:set>
+    </xar:if>
+</div>
+
