@@ -24,7 +24,7 @@
 
 sys::import('modules.dynamicdata.class.objects.master');
 
-function publications_admin_update()
+function publications_user_update()
 {
     // Get parameters
     if(!xarVarFetch('itemid',       'isset', $itemid,       NULL, XARVAR_DONT_SET)) {return;}
@@ -46,7 +46,7 @@ function publications_admin_update()
         // Preview or bad data: redisplay the form
         $data['properties'] = $data['object']->getProperties();
         if ($data['preview']) $data['tab'] = 'preview';
-        return xarTplModule('publications','admin','modify', $data);    
+        return xarTplModule('publications','user','modify', $data);    
     }
     
     if (empty($itemid) || !is_numeric($itemid)) {

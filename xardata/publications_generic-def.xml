@@ -104,6 +104,16 @@
       <seq>7</seq>
       <configuration></configuration>
     </property>
+    <property name="parent">
+      <id>1565</id>
+      <label>Parent</label>
+      <type>integerbox</type>
+      <defaultvalue>0</defaultvalue>
+      <source>publication.parent_id</source>
+      <status>69</status>
+      <seq>19</seq>
+      <configuration>a:0:{}</configuration>
+    </property>
     <property name="author">
       <id>250</id>
       <label>Author</label>

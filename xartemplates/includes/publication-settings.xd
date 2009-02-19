@@ -98,6 +98,7 @@
                 <xar:foreach in="$tags" key="$key" value="$value">
                     <xar:if condition="$value">
                         <xar:set name="tagstring">$tagstring . '&#60;' . $key . '&#62;'</xar:set>
+                        #$key#&#160;
                     </xar:if>
                 </xar:foreach>
             </div>
