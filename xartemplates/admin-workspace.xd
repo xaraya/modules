@@ -34,7 +34,7 @@
 </xar:if>
 <xar:set name="newargs">$newargs."&amp;showajax=1&amp;inline=1"</xar:set>
 
-<div class="xar-mod-head">
+<div><h3><span class="xar-mod-title" style="float: left;"><xar:mlstring>Sub-Tasks</xar:mlstring> [ <a href="#xarModUrl('xtasks','admin','new')##$newargs#" onclick="twist_open('workspace_tasks'); return loadContent(this.href,'newtask')"><xar:mlstring>Add Task</xar:mlstring></a> ]</span><span style="float: right;"><a href="javascript: void twist('workspace_tasks');"><img src="modules/xtasks/xarimages/rotate.gif" border="0" /></a></span></h3></div>
     <span class="xar-mod-title">
         <a href="javascript: void twist('workspace_tasks');"><img src="modules/xtasks/xarimages/rotate.gif" border="0" align="right" /></a>
         <xar:mlstring>Sub-Tasks</xar:mlstring> [ <a href="&xar-modurl-xtasks-admin-new;#$newargs#" onclick="twist_open('workspace_tasks'); return loadContent(this.href,'newtask')"><xar:mlstring>Add Task</xar:mlstring></a> ]
