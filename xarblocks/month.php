@@ -3,7 +3,7 @@
  * IEvents Month block
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -91,7 +91,7 @@ function ievents_monthblock_display($blockinfo)
     $cal->calFormat = 'smallMonth';
     $cal->monthFormat = 'short';
 
-    if(isset($vars['dowformat'])) {
+    if(isset($vars['dowformat']) && ($vars['dowformat'] == 'long' || $vars['dowformat'] == 'short' || $vars['dowformat'] == 'xshort' || $vars['dowformat'] == 'xxshort')) {
       $cal->DOWformat = $vars['dowformat'];
     }
     else {
