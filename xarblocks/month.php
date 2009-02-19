@@ -90,7 +90,13 @@ function ievents_monthblock_display($blockinfo)
 
     $cal->calFormat = 'smallMonth';
     $cal->monthFormat = 'short';
-    $cal->DOWformat = 'xxshort';
+
+    if(isset($vars['dowformat'])) {
+      $cal->DOWformat = $vars['dowformat'];
+    }
+    else {
+      $cal->DOWformat = 'xxshort';
+    }
 
     $cal->displayPrevNext = false;
     $cal->displayEvents = true;
