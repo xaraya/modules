@@ -17,6 +17,8 @@
  * @todo Pass a 'feed_params' base url to the templates, containing relevant parameters to base a feed off (relative dates, no grouping etc) [half done]
  */
 
+// {ML_include 'modules/ievents/xarincludes/calendar.inc.php'}
+
 function ievents_user_view($args)
 {
     extract($args);

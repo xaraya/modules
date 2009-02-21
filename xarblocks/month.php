@@ -9,6 +9,8 @@
  *
  */
 
+// {ML_include 'modules/ievents/xarincludes/calendar.inc.php'}
+
 /**
  * Block init - holds security.
  */

@@ -335,7 +335,7 @@ class ieventsCalendar {
 
                 // At the start of each week, display the week number.
                 if (date('w', $date) == $this->startingDOW) {
-                    $events .= ' <span class="ievents-week-number"> Week ' . date('W', $date) . '</span>';
+                    $events .= ' <span class="ievents-week-number"> ' . xarML('Week') . ' ' . date('W', $date) . '</span>';
                 }
 
                 $events .= '</div>' . "\n<ul>\n";
