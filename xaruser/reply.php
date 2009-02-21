@@ -3,7 +3,7 @@
  * Comments module - Allows users to post comments on items
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -30,7 +30,7 @@ function comments_user_reply()
     $receipt                      = xarRequestGetVar('receipt');
     $receipt['post_url']          = xarModURL('comments','user','reply');
     $header['input-title']        = xarML('Post a reply');
-    $antibotinvalid = 0; //initialize  
+    $antibotinvalid = 0; //initialize
     if (!isset($package['postanon'])) {
         $package['postanon'] = 0;
     }
@@ -69,14 +69,17 @@ function comments_user_reply()
                          'comment'  => $package['text'],
                          'title'    => $package['title'],
                          'postanon' => $package['postanon']);
-                         
+
             $hookinfo = xarModCallHooks('item', 'submit', $header['objectid'], $args);
             $antibotinvalid = isset($hookinfo['antibotinvalid']) ? $hookinfo['antibotinvalid'] : 0;
-            
-            if ($antibotinvalid != TRUE) {                              
-               xarModAPIFunc('comments','user','add',$args);
 
-               xarResponseRedirect($receipt['returnurl']['decoded']);
+            if ($antibotinvalid != TRUE) {
+               $cid = xarModAPIFunc('comments','user','add',$args);
+
+               // Add the cid to the returnurl with '?' or '&' as separator
+               $url = $receipt['returnurl']['decoded'];
+               $url .= (strpos($url, '?') === FALSE ? '?' : '&') . 'cid=' . $cid;
+               xarResponseRedirect($url);
             return true;
             }
             $package['comments'] = isset($package['comments'])?$package['comments']:array();
@@ -111,7 +114,7 @@ function comments_user_reply()
 
             // get the title and link of the original object
             $modinfo = xarModGetInfo($header['modid']);
-   
+
             $itemlinks = xarModAPIFunc($modinfo['name'],'user','getitemlinks',
                                        array('itemtype' => $header['itemtype'],
                                              'itemids' => array($header['objectid'])),
