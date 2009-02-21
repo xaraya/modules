@@ -199,6 +199,7 @@
                     <xar:mlstring>Mark all forums as read</xar:mlstring>
                 </a>
             </span>
+            <span style="clear:left;">&nbsp;</span>
         </div>
 
         <xar:comment>

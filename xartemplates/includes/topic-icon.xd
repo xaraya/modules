@@ -15,54 +15,68 @@
 </xar:comment>
 
 <xar:if condition="$type eq 'shadow'">
-    <img src="#xarTplGetImage('new/folder_shadow.gif')#" alt="#xarML('Shadow topic')#" />
+    <img src="#xarTplGetImage('new/folder_shadow.gif')#"
+      title="#xarML('Shadow topic')#" alt="#xarML('Shadow topic')#" />
 </xar:if>
 <xar:if condition="$type eq 'normal'">
     <xar:if condition="!empty($new)">
         <xar:if condition="!empty($hot)">
-            <img src="#xarTplGetImage('new/folder_new_hot.gif')#" alt="#xarML('New hot topic')#" />
+            <img src="#xarTplGetImage('new/folder_new_hot.gif')#"
+              title="#xarML('New hot topic')#" alt="#xarML('New hot topic')#" />
         <xar:else />
-            <img src="#xarTplGetImage('new/folder_new.gif')#" alt="#xarML('New post')#" />
+            <img src="#xarTplGetImage('new/folder_new.gif')#"
+              title="#xarML('New post')#" alt="#xarML('New post')#" />
         </xar:if>
     <xar:else />
         <xar:if condition="!empty($hot)">
-            <img src="#xarTplGetImage('new/folder_hot.gif')#" alt="#xarML('Hot topic')#" />
+            <img src="#xarTplGetImage('new/folder_hot.gif')#"
+              title="#xarML('Hot topic')#" alt="#xarML('Hot topic')#" />
         <xar:else />
-            <img src="#xarTplGetImage('new/folder.gif')#" alt="#xarML('No New post')#" />
+            <img src="#xarTplGetImage('new/folder.gif')#"
+              title="#xarML('No New post')#" alt="#xarML('No New post')#" />
         </xar:if>
     </xar:if>
 </xar:if>
 <xar:if condition="$type eq 'announce'">
     <xar:if condition="!empty($lock)">
         <xar:if condition="!empty($new)">
-            <img src="#xarTplGetImage('new/folder_announce_new_lock.gif')#" alt="#xarML('New announcement')#" />
+            <img src="#xarTplGetImage('new/folder_announce_new_lock.gif')#"
+              title="#xarML('New announcement')#" alt="#xarML('New announcement')#" />
         <xar:else />
-            <img src="#xarTplGetImage('new/folder_announce_lock.gif')#" alt="#xarML('Announcement')#" />
+            <img src="#xarTplGetImage('new/folder_announce_lock.gif')#"
+              title="#xarML('Announcement')#" alt="#xarML('Announcement')#" />
         </xar:if>
     <xar:else />
         <xar:if condition="!empty($new)">
-            <img src="#xarTplGetImage('new/folder_announce_new.gif')#" alt="#xarML('New announcement')#" />
+            <img src="#xarTplGetImage('new/folder_announce_new.gif')#"
+              title="#xarML('New announcement')#" alt="#xarML('New announcement')#" />
         <xar:else />
-            <img src="#xarTplGetImage('new/folder_announce.gif')#" alt="#xarML('Announcement')#" />
+            <img src="#xarTplGetImage('new/folder_announce.gif')#"
+              title="#xarML('Announcement')#" alt="#xarML('Announcement')#" />
         </xar:if>
     </xar:if>
 </xar:if>
 <xar:if condition="$type eq 'sticky'">
     <xar:if condition="!empty($lock)">
         <xar:if condition="!empty($new)">
-            <img src="#xarTplGetImage('new/folder_sticky_new_lock.gif')#" alt="#xarML('New sticky topic')#" />
+            <img src="#xarTplGetImage('new/folder_sticky_new_lock.gif')#"
+              title="#xarML('New sticky topic')#" alt="#xarML('New sticky topic')#" />
         <xar:else />
-            <img src="#xarTplGetImage('new/folder_sticky_lock.gif')#" alt="#xarML('Sticky topic')#" />
+            <img src="#xarTplGetImage('new/folder_sticky_lock.gif')#"
+              title="#xarML('Sticky topic')#" alt="#xarML('Sticky topic')#" />
         </xar:if>
     <xar:else />
         <xar:if condition="!empty($new)">
-            <img src="#xarTplGetImage('new/folder_sticky_new.gif')#" alt="#xarML('New sticky topic')#" />
+            <img src="#xarTplGetImage('new/folder_sticky_new.gif')#"
+              title="#xarML('New sticky topic')#" alt="#xarML('New sticky topic')#" />
         <xar:else />
-            <img src="#xarTplGetImage('new/folder_sticky.gif')#" alt="#xarML('Sticky topic')#" />
+            <img src="#xarTplGetImage('new/folder_sticky.gif')#"
+              title="#xarML('Sticky topic')#" alt="#xarML('Sticky topic')#" />
         </xar:if>
     </xar:if>
 </xar:if>
 <xar:comment>The type 'locked' is deprecated, but we still check the 'lock' flag.</xar:comment>
 <xar:if condition="$type eq 'locked'">
-    <img src="#xarTplGetImage('new/folder_lock.gif')#" alt="#xarML('Locked topic')#" />
+    <img src="#xarTplGetImage('new/folder_lock.gif')#"
+      title="#xarML('Locked topic')#" alt="#xarML('Locked topic')#" />
 </xar:if>

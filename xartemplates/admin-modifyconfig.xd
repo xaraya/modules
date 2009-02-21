@@ -1,12 +1,10 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
+
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
 <script type="text/javascript">
-<!--
-    // Enter name of mandatory fields
-    var fieldRequired = Array("hottopic", "fdesc");
-    // Enter field description to appear in the dialog box
-    var fieldDescription = Array("Hot Topic", "Forum Description");
-//-->
+  var alertMsg = "#xarML('Please complete the following fields:')#";
+  var fieldRequired = Array("hottopic");
+  var fieldDescription = Array("#xarML('Hot Topic')#");
 </script>
 
 <div class="xar-mod-head">
@@ -23,7 +21,9 @@
             Modify Configuration
         </xar:mlstring>
     </h2>
-    <form action="&xar-modurl-xarbb-admin-modifyconfig;&amp;phase=update" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
+    <form action="&xar-modurl-xarbb-admin-modifyconfig;&amp;phase=update"
+        method="post" enctype="application/x-www-form-urlencoded"
+        onsubmit="return formCheck(this, fieldRequired, fieldDescription, alertMsg);">
         <fieldset>
             <legend>
                 <strong>
@@ -222,7 +222,6 @@
                     </xar:mlvar>
                 </xar:ml>
             </div>
-            <xar:comment> take this out for now
             <xar:if condition="xarModIsAvailable('newsgroups')">
             <div class="xar-form-input-wrapper">
                     <label for="usenntp" class="xar-form-label" title="#xarML('Link to a NNTP server for posting.')#">
@@ -237,7 +236,6 @@
                     </xar:if>
                 </div>
             </xar:if>
-            </xar:comment>
         </fieldset>
 
         <fieldset>

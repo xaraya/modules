@@ -3,7 +3,7 @@
  * Add a new topic reply
  *
  * @package modules
- * @copyright (C) 2003-2006 The Digital Development Foundation.
+ * @copyright (C) 2003-2009 The Digital Development Foundation.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,16 +14,17 @@
  */
 /**
  *
- * @param int tid Topic ID
- * @param int cid Category ID
+ * @param int tid      ID of topic to reply to
+ * @param int cid      (optional) ID of reply (=comment) to edit
+ * @param int startnum (optional) page with the reply to edit
  * @param string phase Either 'quote' or 'edit'
  * @return array
- * @TODO Finish this function.
  */
 function xarbb_user_newreply()
 {
     if (!xarVarFetch('tid', 'id', $tid, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('cid', 'id', $cid, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum', 'id', $startnum, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('phase', 'enum:quote:edit', $phase, '', XARVAR_NOT_REQUIRED)) return;
 
     // TODO: So, is the topic ID required ot not? If not, then how do we get the topic from a comment ID?
@@ -112,12 +113,16 @@ function xarbb_user_newreply()
     $header['modid']        = xarModGetIDFromName('xarbb');
     $header['objectid']     = $tid;
     $header['itemtype']     = $data['fid'];
-    $header['cid']          = $cid;
+    $header['cid']          = $cid;  //cid of post we answer to, not the new one
 
-    // TODO: can we return the user back closer to where they came from - the comment they just added perhaps?
+    // The form is posted to Comments. Afterwards updatetopic is called for statistics
     if ($phase == 'edit') {
         $action = 'modify';
-        $receipt['returnurl']['decoded'] = xarModURL('xarbb', 'user', 'updatetopic', array('tid' => $tid, 'modify' => 1));
+        $receipt['returnurl']['decoded'] = xarModURL('xarbb', 'user', 'updatetopic',
+                                                      array('tid' => $tid,
+                                                            'cid' => $cid,
+                                                            'startnum' => $startnum,
+                                                            'modify' => 1));
     } else {
         $action = 'reply';
         $receipt['returnurl']['decoded'] = xarModURL('xarbb', 'user', 'updatetopic', array('tid' => $tid));

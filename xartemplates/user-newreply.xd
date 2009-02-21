@@ -7,17 +7,12 @@
 
 <xar:style module="xarbb" scope="module" file="xarbb-layout" />
 
-<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
 <xar:base-include-javascript module="xarbb" filename="popup.js" position="head" />
-<xar:comment>
-    fieldRequired = Array with names of mandatory fields
-    fieldDescription = Array with labels of mandatory fields
-</xar:comment>
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
 <script type="text/javascript">
-<!--
-    var fieldRequired = Array("package[title]", "package[text]");
-    var fieldDescription = Array("Subject", "Body");
-//-->
+  var alertMsg = "#xarML('Please complete the following fields:')#";
+  var fieldRequired = Array("package_title", "package_text");
+  var fieldDescription = Array("#xarML('Subject')#"), "#xarML('Body')#");
 </script>
 
 <div class="xarbb-topiccontrols">
@@ -51,7 +46,8 @@
         <xar:set name="enctype">'application/x-www-form-urlencoded'</xar:set>
     </xar:if>
 
-    <form action="#$receipt.post_url#" method="post" name="post" id="post" enctype="#$enctype#" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+    <form action="#$receipt.post_url#" method="post" id="post" enctype="#$enctype#"
+        onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription, alertMsg);">
         <table>
             <tr>
                 <th colspan="2">

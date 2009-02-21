@@ -3,14 +3,10 @@
 </xar:comment>
 
 <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
-
 <script type="text/javascript" >
-  <!--
-      // Enter name of mandatory fields
-      var fieldRequired = Array("fname", "fdesc");
-      // Enter field description to appear in the dialog box
-      var fieldDescription = Array("Forum Name", "Forum Description");
-      //-->
+  var alertMsg = "#xarML('Please complete the following fields:')#";
+  var fieldRequired = Array("fname", "fdesc");
+  var fieldDescription = Array("#xarML('Forum Name')#"), "#xarML('Forum Description')#");
 </script>
 
 <div class="xar-mod-head">
@@ -35,7 +31,9 @@
 
     <xar:set name="dummy">xarSessionSetVar('statusmsg','')</xar:set>
 
-    <form method="post" name="post" id="post" action="&xar-modurl-xarbb-admin-modify;&amp;phase=update" enctype="application/x-www-form-urlencoded" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+    <form method="post" id="post" enctype="application/x-www-form-urlencoded"
+        action="&xar-modurl-xarbb-admin-modify;&amp;phase=update"
+        onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription, alertMsg);">
         <fieldset >
             <legend>
                 <strong>

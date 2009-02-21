@@ -111,13 +111,13 @@
                 <xar:mlstring>Message</xar:mlstring>
             </th>
         </tr>
-
         <xar:comment>
+
             Display the Topic Post itself - unless it is not the first pager page
             i.e. the first post in a thread will be the topic, and subsequent posts
             will be the replies (comments)
-        </xar:comment>
 
+        </xar:comment>
         <xar:if condition="$startnum eq 1">
             <tr>
                 <td class="xar-norm author">
@@ -181,7 +181,13 @@
                                     </xar:if>
                                 </xar:if>
                                 <xar:sec mask="DeletexarBB" catch="false">
-                                    <a href="#xarModUrl('xarbb', 'user', 'deletetopic', array('tid' => $tid, 'confirmation' => 1, 'authid' => $authid))#" onclick="return xar_base_confirmLink(this, '#xarML('Delete this topic?')#?')" title="#xarML('Delete')#">
+                                    <a href="#xarModUrl('xarbb', 'user', 'deletetopic',
+                                                        array('tid' => $tid,
+                                                              'confirmation' => 1,
+                                                              'authid' => $authid))#"
+                                       onclick="return xar_base_confirmLink(this,
+                                                  '#xarML('Delete this topic?')#')"
+                                       title="#xarML('Delete')#">
                                         <img src="#xarTplGetImage('new/icon_delete.gif')#" alt="#xarML('Delete')#"/>
                                     </a>
                                 </xar:sec>
@@ -295,12 +301,11 @@
                 </td>
             </tr>
         </xar:if>
-
-
         <xar:comment>
-            start the post replies and add alternating row colors 
-        </xar:comment>
 
+            start the post replies and add alternating row colors 
+
+        </xar:comment>
         <xar:foreach in="$items" value="$item" key="$key">
             <xar:if condition="(($key+1) % 2)">
                 <xar:set name="myclass">'xar-accent'</xar:set>
@@ -373,19 +378,35 @@
                                         </xar:if>
                                     </xar:sec>
                                     <xar:if condition="xarUserGetVar('uid') eq $item['xar_uid']">
-                                        <a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'edit'))#" title="#xarML('Edit')#">
+                                        <a href="#xarModUrl('xarbb', 'user', 'newreply',
+                                              array('cid'      => $item['xar_cid'],
+                                                    'tid'      => $tid,
+                                                    'startnum' => $startnum,
+                                                    'phase'    => 'edit'))#"
+                                            title="#xarML('Edit')#">
                                             <img src="#xarTplGetImage('new/icon_edit.gif')#" alt="#xarML('Edit')#"/>
                                         </a>
                                     <xar:else />
                                         <xar:sec mask="ModxarBB" catch="false">
-                                            <a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'edit'))#" title="#xarML('Edit')#">
-                                                <img src="#xarTplGetImage('new/icon_edit.gif')#" alt="#xarML('Edit')#"/>
-                                            </a>
+                                          <a href="#xarModUrl('xarbb', 'user', 'newreply',
+                                                array('cid'      => $item['xar_cid'],
+                                                      'tid'      => $tid,
+                                                      'startnum' => $startnum,
+                                                      'phase'    => 'edit'))#"
+                                             title="#xarML('Edit')#">
+                                            <img src="#xarTplGetImage('new/icon_edit.gif')#" alt="#xarML('Edit')#"/>
+                                          </a>
                                         </xar:sec>
                                     </xar:if>
                                 </xar:if>
                                 <xar:sec mask="DeletexarBB" catch="false">
-                                    <a href="#xarModUrl('xarbb', 'user', 'deletereply', array('cid' => $item['xar_cid'], 'confirmation' => 1, 'authid' => $authid))#" onclick="return xar_base_confirmLink(this, '#xarML('Delete this reply?')#?')" title="#xarML('Delete')#">
+                                    <a href="#xarModUrl('xarbb', 'user', 'deletereply',
+                                                array('cid' => $item['xar_cid'],
+                                                      'confirmation' => 1,
+                                                      'authid' => $authid))#"
+                                       onclick="return xar_base_confirmLink(this,
+                                                  '#xarML('Delete this reply?')#')"
+                                       title="#xarML('Delete')#">
                                         <img src="#xarTplGetImage('new/icon_delete.gif')#" alt="#xarML('Delete')#"/>
                                     </a>
                                 </xar:sec>
@@ -507,9 +528,12 @@
                 <a href="#xarModUrl('xarbb', 'user', 'locktopic', array('tstatus' => 0, 'tid' => $tid))#" title="#xarML('Unlock topic')#"><img src="#xarTplGetImage('new/topic_unlock.gif')#" alt="#xarML('Unlock Topic')#" /></a>
             </xar:if>
             <xar:sec mask="DeletexarBB" catch="false">
-                <a href="#xarModUrl('xarbb', 'user', 'deletetopic', array('tid' => $tid, 'confirmation' => 1, 'authid' => $authid))#" onclick="return xar_base_confirmLink(this, '#xarML('Delete this topic?')#?')" title="#xarML('Delete topic')#">
-                    <img src="#xarTplGetImage('new/icon_delete.gif')#" alt="#xarML('Delete')#"/>
-                </a>
+              <a href="#xarModUrl('xarbb', 'user', 'deletetopic',
+                   array('tid' => $tid, 'confirmation' => 1, 'authid' => $authid))#"
+                 onclick="return xar_base_confirmLink(this, '#xarML('Delete this topic?')#')"
+                 title="#xarML('Delete topic')#">
+                 <img src="#xarTplGetImage('new/icon_delete.gif')#" alt="#xarML('Delete')#"/>
+              </a>
             </xar:sec>
             <a href="#xarModUrl('xarbb', 'user', 'movetopic', array('tid' => $tid))#" title="#xarML('Move topic')#"><img src="#xarTplGetImage('new/topic_move.gif')#" alt="#xarML('Move Topic')#" /></a>
         </div>

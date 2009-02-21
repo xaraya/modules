@@ -1,10 +1,9 @@
 <?php
-
 /**
  * Update a forum topic
  *
  * @package modules
- * @copyright (C) 2003-2006 The Digital Development Foundation.
+ * @copyright (C) 2003-2009 The Digital Development Foundation.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -17,7 +16,9 @@
  * Update a topic with a new reply
  *
  * @param int tid topic id
- * @param int modify
+ * @param int cid optional id of posting (=comment) used as fragment in returnurl
+ * @param int startnum optional page of posting
+ * @param int modify '1' for edits, '0' for new replies
  * @return array
  */
 
@@ -28,6 +29,8 @@ function xarbb_user_updatetopic()
     // topic or go back to the forum of which he came.
 
     if (!xarVarFetch('tid', 'id', $tid)) return;
+    if (!xarVarFetch('cid', 'id', $cid, Null, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum', 'id', $startnum, Null, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('modify', 'int:0:1', $modify, 0, XARVAR_NOT_REQUIRED)) return;
 
     // Need to handle locked topics
@@ -103,12 +106,19 @@ function xarbb_user_updatetopic()
         // While we are here, let's send any subscribers notifications.
         // TODO: provide an option to queue the notificiations, because if there are lot of
         // subscribers, we don't want to delay the posting of a reply while the e-mails are sent.
-        if (!xarModAPIFunc('xarbb', 'user', 'replynotify', array('tid' => $tid))) return;
+        if (!xarModAPIFunc('xarbb', 'user', 'replynotify', array('tid' => $tid))) {
+            return;
+        }
     }
 
     $forumreturn = xarModURL('xarbb', 'user', 'viewforum', array('fid' => $data['fid']));
-    $replyreturn = xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid, 'startnum' => $count));
     $topicreturn = xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid));
+    $replyreturn = xarModURL('xarbb', 'user', 'viewtopic',
+                             array('tid' => $tid,
+                                   'startnum' => (isset($startnum) ? $startnum : $count)),
+                             Null,
+                             $cid
+    );
     $xarbbtitle = xarModGetVar('xarbb', 'xarbbtitle', 0);
     $xarbbtitle = (isset($xarbbtitle) ? $xarbbtitle : '');
 
@@ -120,6 +130,10 @@ function xarbb_user_updatetopic()
             'xarbbtitle'    => $xarbbtitle
         )
     );
+
+    // The refresh data is used by the Meta block
+    xarVarSetCached('Meta.refresh','url', $replyreturn);
+    xarVarSetCached('Meta.refresh','time', 2);
 
     return $data;
 }

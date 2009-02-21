@@ -5,9 +5,13 @@
 
 <xar:style scope="module" module="xarbb" file="xarbb-layout" />
 
-<xar:comment>FIXME: this belongs in the page header</xar:comment>
-<meta http-equiv="refresh" content="3;url=#$topicreturn#"/>
-
+<xar:comment>This is now in the page header, see bug 5586.
+<xar:if condition="!empty($replyreturn)">
+    <meta http-equiv="refresh" content="1;url=#$replyreturn#"/>
+<xar:else />
+    <meta http-equiv="refresh" content="1;url=#$topicreturn#"/>
+</xar:if>
+</xar:comment>
 <h4>
     <a class="xar-title" href="&xar-modurl-xarbb-user-main;">
         <xar:if condition="!empty($xarbbtitle)">
@@ -46,7 +50,7 @@
                 <xar:else />
                     <p>
                         <a href="#$topicreturn#">
-                            <xar:mlstring>Click here to view your message.</xar:mlstring>
+                            <xar:mlstring>Click here to return to the topic.</xar:mlstring>
                         </a>
                     </p>
                 </xar:if>
