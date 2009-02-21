@@ -94,7 +94,7 @@
                         </div>
                     </td>
                     <td class="groupby-cell">
-                        <label for="group">Group by:</label>
+                        <label for="group">#xarML('Group by:')#</label>
                         <xar:set name="grouplist">#xarModAPIfunc('ievents','user','params',array('name'=&gt;'grouplist'))#</xar:set>
                         <xar:data-input name="group" id="group" type="6" validation="$grouplist" value="$group" />
                     </td>
