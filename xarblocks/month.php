@@ -93,12 +93,15 @@ function ievents_monthblock_display($blockinfo)
     $cal->calFormat = 'smallMonth';
     $cal->monthFormat = 'short';
 
-    if(isset($vars['dowformat']) && ($vars['dowformat'] == 'long' || $vars['dowformat'] == 'short' || $vars['dowformat'] == 'xshort' || $vars['dowformat'] == 'xxshort')) {
+    if(xarVarValidate('enum:long:short:xshort:xxshort', $vars['dowformat'])) {
       $cal->DOWformat = $vars['dowformat'];
     }
     else {
       $cal->DOWformat = 'xxshort';
     }
+
+    if(xarVarValidate('bool', $vars['linkmonth'])) $cal->linkMonth = $vars['linkmonth'];
+    if(xarVarValidate('bool', $vars['showtitle'])) $cal->showTitle = $vars['showtitle'];
 
     $cal->displayPrevNext = false;
     $cal->displayEvents = true;

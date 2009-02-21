@@ -250,6 +250,9 @@ class ieventsCalendar {
     var $monthNames;
     var $monthNamesShort;
 
+    // boolean whether show month name as link 
+    var $linkMonth;
+
     //********************** End of variable declarations **********************
 
     /*
@@ -826,7 +829,7 @@ class ieventsCalendar {
         //Check which format to display
         switch ($this->calFormat) {
             case 'smallMonth':
-                $displayCal = $this->showSmallMonth($this->calMonth, $this->calYear, $this->displayPrevNextLinks);
+                $displayCal = $this->showSmallMonth($this->calMonth, $this->calYear, $this->displayPrevNextLinks, true, $this->linkMonth);
                 break;
             case 'largeMonth':
                 $displayCal = $this->showLargeMonth($this->calMonth, $this->calYear);
