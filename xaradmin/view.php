@@ -352,6 +352,11 @@ function publications_admin_view($args)
             $options[] = array('id' => $item['objectid'], 'name' => $item['name'], 'title' => $item['label']);
     $data['objects'] = $options;
 
+    // Only show top level documents, not translations
+    $q = new Query();
+    $q->eq('parent_id',0);
+    $data['conditions'] = $q;
+
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $ptid));
     $data['object'] = DataObjectMaster::getObjectList(array('name' => $pubtypeobject->properties['name']->value));

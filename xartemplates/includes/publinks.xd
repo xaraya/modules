@@ -1,5 +1,5 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:set name="publinks">xarModAPIFunc('publications','user','getpublinks')</xar:set>yyyy
+    <xar:set name="publinks">xarModAPIFunc('publications','user','getpublinks')</xar:set>
     <xar:if condition="!empty($settings['showpublinks'])">
         <!-- show a link to all publication types -->
         #$publabel# :xxxx 
