@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -43,12 +43,12 @@
  *                         (unix timestamp format)
  * @param $args['where'] additional where clauses (myfield gt 1234)
  * @param $args['language'] language/locale (if not using multi-sites, categories etc.)
- * @return array('table' => 'nuke_articles',
- *               'field' => 'nuke_articles.xar_aid',
- *               'where' => 'nuke_articles.xar_aid IN (...)',
- *               'title'  => 'nuke_articles.xar_title',
+ * @return array('table' => 'xar_articles',
+ *               'field' => 'xar_articles.xar_aid',
+ *               'where' => 'xar_articles.xar_aid IN (...)',
+ *               'title' => 'xar_articles.xar_title',
  *               ...
- *               'body'  => 'nuke_articles.xar_body')
+ *               'body'  => 'xar_articles.xar_body')
  */
 function articles_userapi_leftjoin($args)
 {
@@ -293,8 +293,6 @@ function articles_userapi_leftjoin($args)
             }
         }
 
-        // 2. find mandatory +text to include
-        // 3. find mandatory -text to exclude
         // 4. find normal text
         $more = preg_split('/\s+/',$search,-1,PREG_SPLIT_NO_EMPTY);
         $normal = array_merge($normal,$more);
@@ -304,24 +302,31 @@ function articles_userapi_leftjoin($args)
             // jojo: we only want to escape wildcards when we use LIKE clauses
             $searchtext = str_replace('%','\%',$text);
             $searchtext = str_replace('_','\_',$text);
+
+            $findAlternativ = array();
             foreach ($searchfields as $field) {
                 if (empty($leftjoin[$field])) continue;
-                if (empty($searchtype) || $searchtype == 'like') {
-                    $find[] = $leftjoin[$field] . " LIKE " . $dbconn->qstr('%' . $searchtext . '%');
-                } elseif ($searchtype == 'start') {
-                    $find[] = $leftjoin[$field] . " LIKE " . $dbconn->qstr($searchtext . '%');
+                if ($searchtype == 'start') {
+                    $findAlternativ[] = $leftjoin[$field] . " LIKE " .
+                                        $dbconn->qstr($searchtext . '%');
                 } elseif ($searchtype == 'end') {
-                    $find[] = $leftjoin[$field] . " LIKE " . $dbconn->qstr('%' . $searchtext);
+                    $findAlternativ[] = $leftjoin[$field] . " LIKE " .
+                                        $dbconn->qstr('%' . $searchtext);
                 } elseif ($searchtype == 'eq') {
-                    $find[] = $leftjoin[$field] . " = " . $dbconn->qstr($text);
+                    $findAlternativ[] = $leftjoin[$field] . " = " .
+                                        $dbconn->qstr($text);
                 } else {
-                // TODO: other search types ?
-                    $find[] = $leftjoin[$field] . " LIKE " . $dbconn->qstr('%' . $searchtext . '%');
+                // This query is for default or empty searchtypes and for 'like'
+                    $findAlternativ[] = $leftjoin[$field] . " LIKE " .
+                                        $dbconn->qstr('%' . $searchtext . '%');
                 }
             }
+            // The alternatives are any-which-one, don't care about the field
+            $find[] = '(' . join(' OR ',$findAlternativ) . ')';
         }
 
-        $whereclauses[] = '(' . join(' OR ',$find) . ')';
+        // AND search, each keyword needs to occur somewhere in the text
+        $whereclauses[] = '(' . join(' AND ',$find) . ')';
     }
     if (count($whereclauses) > 0) {
         $leftjoin['where'] = join(' AND ', $whereclauses);
