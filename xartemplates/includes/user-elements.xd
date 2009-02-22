@@ -1,0 +1,13 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="!empty($user_elements) && is_array($user_elements)">
+    <xar:if condition="empty($layout) || $layout eq 'default'">
+        <xar:foreach in="$user_elements" value="$item">
+            <a href="http://twitter.com/#$item.screen_name#" title="#$item.screen_name#">
+                <img src="#$item.profile_image_url#" alt="#xarML('profile image')#" title="#$item.screen_name#" />
+            </a>
+        </xar:foreach>
+    <xar:else />
+
+    </xar:if>
+
+</xar:if>

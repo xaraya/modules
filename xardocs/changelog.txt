@@ -1,24 +1,4 @@
-/**
- * Twitter Module 
- *
- * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Twitter Module
- * @link http://xaraya.com/index.php/release/991.html
- * @author Chris Powis (crisp@crispcreations.co.uk)
- */
-/**
- * Changelog
- *
- * @author Chris Powis (crisp@crispcreations.co.uk)
- */
-
-v.0.0.1 - Initial release 28-01-2009
-
-Third point upgrade to v0.0.2  29-01-2009
+Third point upgrade to v0.0.2 
 
 Function changes
 + Updated function headers
@@ -40,21 +20,3 @@ GUI changes to admin-main.xd
 
 GUI changes to /includes/user-menu.xd
 + Fixed tabs
-
-v0.0.2 (no change) 31-01-2009
-
-Blocks changes
-+Timeline block functions added, now fully functional
-+blocks/timeline.xd and blocks modify-timeline.xd updated
-
-Function changes
-+ Added check for valid twitter user when entering username/password
-+ Added account_methods api function
-+ Minor update to process function
-
-GUI changes to admin-modifyconfig.xd
-+ display error message on invalid username/password
-
-GUI changes to user-main.xd
-+ displays user image of specified account in user/friends tabs
-+ displays number of followers below follow me link in user/friends tabs

@@ -1,0 +1,50 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<script type="text/javascript">
+<!-- Dynamic Version by: Nannette Thacker -->
+<!-- http://www.shiningstar.net -->
+<!-- Original by :  Ronnie T. Moore -->
+<!-- Web Site:  The JavaScript Source -->
+<!-- Use one function for multiple text areas on a page -->
+<!-- Limit the number of characters per textarea -->
+<!-- Begin
+function textCounter(field,cntfield,maxlimit) {
+if (field.value.length > maxlimit) // if too long...trim it!
+field.value = field.value.substring(0, maxlimit);
+// otherwise, update 'characters left' counter
+else
+cntfield.value = maxlimit - field.value.length;
+}
+//  End -->
+</script>
+<form method="post" name="tweetForm" action="#xarModURL('twitter', 'user', 'tweet')#" class="xar-margin-nonetop">
+    <fieldset class="xar-margin-nonetop">
+        <legend>
+            <xar:mlstring>What are you doing</xar:mlstring>?
+        </legend>
+        <div class="xar-form-input-wrapper">
+            <span class="xar-floatright xar-align-right">
+                <input type="hidden" name="phase" id="phase" value="update" />
+                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('twitter')#" />
+                <input type="hidden" name="returnurl" id="returnurl" value="#xarServerGetCurrentURL()#" />
+                <input type="hidden" name="screen_name" id="screen_name" value="#$screen_name#" />
+                <input readonly="readonly" type="text" name="remLen1" size="3" maxlength="3" value="140">
+                <xar:comment>
+                <xar:mlstring>characters left</xar:mlstring>
+                </xar:comment>
+                <p>
+                <input type="submit" name="submit" id="submit" value="#xarML('Update Status')#" />
+                </p>
+            </span>
+            <textarea name="text" id="text" cols="60" rows="2"
+onKeyDown="textCounter(document.tweetForm.text,document.tweetForm.remLen1,140)"
+onKeyUp="textCounter(document.tweetForm.text,document.tweetForm.remLen1,140)"></textarea>
+    <xar:if condition="xarSessionGetVar('statusupdate')">
+        <p class="xar-error">
+            #xarSessionGetVar('statusupdate')#
+        </p>
+        <xar:set name="dummy">1;xarSessionDelVar('statusupdate');</xar:set>
+    </xar:if>
+        </div>
+    </fieldset>
+
+</form>

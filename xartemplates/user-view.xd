@@ -1,20 +1,21 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:style scope="module" module="twitter" />
+<!-- common user menu for this module - remove link to the current function -->
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Twitter</xar:mlstring></span>
+    <span class="xar-mod-title"><xar:mlstring>Twitter Users</xar:mlstring></span>
 </div>
-<div id="twitter-user-main" class="xar-mod-body twitter">
+<div id="twitter-user-login" class="xar-mod-body">
     <xar:template type="module" module="twitter" file="user-menu" />
     <img src="#xarTplGetImage('twitter-module-icon3.png','twitter')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
     <h3><xar:mlstring>Twitter: What are you doing?</xar:mlstring></h3>
     <p>
         <xar:mlstring>Twitter is a free social messaging utility for staying connected in real-time.</xar:mlstring>
     </p>
-    <h2><xar:mlstring>Public Timeline</xar:mlstring></h2>
+    <h2><xar:mlstring>Site Twitter Users</xar:mlstring></h2>
     <br class="xar-clearboth" />
-
-    <xar:if condition="!empty($status_elements)">
-        <xar:template type="module" module="twitter" file="status-elements" />
+    <xar:if condition="!empty($items)">
+        <xar:foreach in="$items" key="$uid" value="$userdd">
+            <xar:data-output type="twitterscreenname" value="$userdd[$t_fieldname]" userid="$uid" />
+        </xar:foreach>
     </xar:if>
 </div>
 

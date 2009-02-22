@@ -1,0 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<input type="text" name="#$name#" id="#$id#" value="#$value#" autocomplete="off" />
+<label for="#$id#_pass"><xar:mlstring>Password:</xar:mlstring></label>
+<input type="password" name="#$name#_pass" id="#$id#_pass" value="#$screen_pass#" autocomplete="off" />

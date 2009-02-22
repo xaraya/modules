@@ -1,0 +1,149 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:style scope="module" module="twitter" />
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Twitter</xar:mlstring></span>
+</div>
+<div id="twitter-user-account" class="xar-mod-body twitter">
+    <xar:template type="module" module="twitter" file="user-menu" />
+    <xar:if condition="!empty($user_element)">
+        <xar:template type="module" module="twitter" file="user-element" />
+        <xar:template type="module" module="twitter" file="update-form" />
+        <xar:if condition="!empty($accounttabs)">
+            <div>
+                <dl class="xar-tabs">
+                    <dt class="help" title="#xarML('Account overview options')#">
+                        <xar:mlstring>Options</xar:mlstring>:
+                    </dt>
+                    <xar:foreach in="$accounttabs" value="$accounttab">
+                        <xar:set name="$tabactive">$accounttab['active'] ? 'active' : ''</xar:set>
+                        <dd class="#$tabactive#">
+                            <a href="#$accounttab['url']#" title="#$accounttab['title']#">
+                                #$accounttab.label#
+                            </a>
+                        </dd>
+                    </xar:foreach>
+                </dl>
+            </div>
+        </xar:if>
+        <xar:if condition="xarSessionGetVar('statusmsg') != ''">
+            <p class="xar-error">#xarSessionGetVar('statusmsg')#</p>
+        </xar:if>
+        <xar:if condition="!empty($status_elements)">
+            <xar:template type="module" module="twitter" file="status-elements" />
+        <xar:elseif condition="!empty($user_elements)" />
+            <xar:template type="module" module="twitter" file="user-elements" />
+        <xar:elseif condition="!empty($message_elements)" />
+            <xar:template type="module" module="twitter" file="message-elements" />
+        <xar:elseif condition="$tab eq 'profile_edit'" />
+            <xar:if condition="!empty($edit_options) && is_array($edit_options)">
+            <form method="post" action="#xarModURL('twitter', 'user', 'settings')#">
+                <fieldset>
+                    <legend>
+                        <xar:mlstring>Profile Settings</xar:mlstring>
+                    </legend>
+                    <xar:if condition="isset($edit_options['user_timeline'])">
+                        <div class="xar-form-input-wrapper">
+                            <label for="user_timeline" class="xar-form-label">
+                                <xar:mlstring>Show Timeline Tab</xar:mlstring>?
+                            </label>
+                            <xar:data-input type="checkbox" name="user_timeline" id="user_timeline" checked="$edit_options['user_timeline']" />
+                        </div>
+                    </xar:if>
+                    <xar:if condition="isset($edit_options['friends_display'])">
+                        <div class="xar-form-input-wrapper">
+                            <label for="friends_display" class="xar-form-label">
+                                <xar:mlstring>Show Friends Tab</xar:mlstring>?
+                            </label>
+                            <xar:data-input type="checkbox" name="friends_display" id="friends_display" checked="$edit_options['friends_display']" />
+                        </div>
+                    </xar:if>
+                    <xar:if condition="isset($edit_options['favourites_display'])">
+                        <div class="xar-form-input-wrapper">
+                            <label for="favourites_display" class="xar-form-label">
+                                <xar:mlstring>Show Favourites Tab</xar:mlstring>?
+                            </label>
+                            <xar:data-input type="checkbox" name="favourites_display" id="favourites_display" checked="$edit_options['favourites_display']" />
+                        </div>
+                    </xar:if>
+                    <xar:if condition="isset($edit_options['profile_image'])">
+                        <div class="xar-form-input-wrapper">
+                            <label for="profile_image" class="xar-form-label">
+                                <xar:mlstring>Show Image</xar:mlstring>?
+                            </label>
+                            <xar:data-input type="checkbox" name="profile_image" id="profile_image" checked="$edit_options['profile_image']" />
+                        </div>
+                    </xar:if>
+
+                    <xar:if condition="isset($edit_options['profile_description'])">
+                        <div class="xar-form-input-wrapper">
+                            <label for="profile_description" class="xar-form-label">
+                                <xar:mlstring>Show Bio</xar:mlstring>?
+                            </label>
+                            <xar:data-input type="checkbox" name="profile_description" id="profile_description" checked="$edit_options['profile_description']" />
+                        </div>
+                    </xar:if>
+                     <xar:if condition="isset($edit_options['profile_location'])">
+                        <div class="xar-form-input-wrapper">
+                            <label for="profile_location" class="xar-form-label">
+                                <xar:mlstring>Show Location</xar:mlstring>?
+                            </label>
+                            <xar:data-input type="checkbox" name="profile_location" id="profile_location" checked="$edit_options['profile_location']" />
+                        </div>
+                    </xar:if>
+                    <xar:if condition="isset($edit_options['profile_url'])">
+                        <div class="xar-form-input-wrapper">
+                            <label for="profile_url" class="xar-form-label">
+                                <xar:mlstring>Show Web Link</xar:mlstring>?
+                            </label>
+                            <xar:data-input type="checkbox" name="profile_url" id="profile_url" checked="$edit_options['profile_url']" />
+                        </div>
+                    </xar:if>
+                    <xar:if condition="isset($edit_options['friends_count'])">
+                        <div class="xar-form-input-wrapper">
+                            <label for="friends_count" class="xar-form-label">
+                                <xar:mlstring>Show Following Count</xar:mlstring>?
+                            </label>
+                            <xar:data-input type="checkbox" name="friends_count" id="friends_count" checked="$edit_options['friends_count']" />
+                        </div>
+                    </xar:if>
+                    <xar:if condition="isset($edit_options['followers_count'])">
+                        <div class="xar-form-input-wrapper">
+                            <label for="followers_count" class="xar-form-label">
+                                <xar:mlstring>Show Followers Count</xar:mlstring>?
+                            </label>
+                            <xar:data-input type="checkbox" name="followers_count" id="followers_count" checked="$edit_options['followers_count']" />
+                        </div>
+                    </xar:if>
+
+                    <xar:if condition="isset($edit_options['last_status'])">
+                        <div class="xar-form-input-wrapper">
+                            <label for="last_status" class="xar-form-label">
+                                <xar:mlstring>Show Last Update</xar:mlstring>?
+                            </label>
+                            <xar:data-input type="checkbox" name="last_status" id="last_status" checked="$edit_options['last_status']" />
+                        </div>
+                    </xar:if>
+                    <xar:if condition="isset($edit_options['statuses_count'])">
+                        <div class="xar-form-input-wrapper">
+                            <label for="statuses_count" class="xar-form-label">
+                                <xar:mlstring>Show Update Count</xar:mlstring>?
+                            </label>
+                            <xar:data-input type="checkbox" name="statuses_count" id="statuses_count" checked="$edit_options['statuses_count']" />
+                        </div>
+                    </xar:if>
+                </fieldset>
+                <fieldset>
+                    <div class="xar-form-input-wrapper-after">
+                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('twitter')#" />
+                        <input type="hidden" name="screen_name" id="screen_name" value="#$screen_name#" />
+                        <input type="hidden" name="phase" id="phase" value="update" />
+                        <input type="hidden" name="returnurl" id="returnurl" value="#xarServerGetCurrentURL()#" />
+                        <input type="submit" value="#xarML('Update Settings')#" />
+                    </div>
+                </fieldset>
+            </form>
+            </xar:if>
+        </xar:if>
+    </xar:if>
+</div>
+<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

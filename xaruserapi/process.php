@@ -16,7 +16,7 @@
  * Process requests to Twitter API
  * 
  * @author Chris Powis (crisp@crispcreations.co.uk)
- * @return mixed array containing the items, or false on failure
+ * @return mixed string response or bool false on failure
  */
 function twitter_userapi_process($args)
 { 
@@ -34,12 +34,13 @@ function twitter_userapi_process($args)
 
   if (empty($url)) return;
   if (empty($postargs)) {
-    $cached = !isset($cached) ? true : $cached;
+    $cached = !isset($cached) ? false : $cached;
     $refresh = empty($refresh) ? 300 : $refresh;
     $cachedir = empty($cachedir) ? 'cache' : $cachedir;
     $extension = empty($extension) ? '.xml' : $extension;
+    if (!empty($username)) $extension = '.'.$username.$extension;
   } 
-  $superrors = empty($superrors) ? true : $superrors;
+  $superrors = !isset($superrors) ? true : $superrors;
   // check if this file is already cached
   if ($cached) {
       $vardir = xarCoreGetVarDirPath();

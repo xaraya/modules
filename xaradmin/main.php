@@ -23,8 +23,10 @@ function twitter_admin_main()
 {
    /* Security Check */
     if (!xarSecurityCheck('AdminTwitter',0)) return;
-
-    $data=array();
+    
+    // get the tabs :)
+    $data=xarModAPIFunc('twitter', 'user', 'menu', array('modtype' => 'admin', 'modfunc' => 'main'));
+    // get current module version for display
     $modname = 'twitter';
     $modid = xarModGetIDFromName($modname);
     $modinfo = xarModGetInfo($modid);

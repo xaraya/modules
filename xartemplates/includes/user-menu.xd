@@ -1,49 +1,19 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:style scope="module" module="base" file="navtabs" />
-<div>
-  <dl class="xar-tabs">
-    <dt class="help" title="#xarML('Choose an action to perform')#">
-      <xar:mlstring>Timelines:</xar:mlstring>
-    </dt>
-    <xar:sec mask="ViewTwitter" catch="false">
-        <xar:if condition="$showpublic">
-        <xar:set name="tabclass">$activetab=='public'?'active':''</xar:set>
-        <dd class="#$tabclass#">
-          <a href="#xarModURL('twitter', 'user', 'main', array('timeline' => 'public'))#">
-            <xar:mlstring>Public</xar:mlstring>
-          </a>
-        </dd>
-        </xar:if>
-    </xar:sec>
-    <xar:if condition="!empty($username)">
-        <xar:sec mask="ReadTwitter" catch="false">
-            <xar:if condition="$showuser">
-            <xar:set name="tabclass">$activetab=='user'?'active':''</xar:set>
-            <dd class="#$tabclass#">
-              <a href="#xarModURL('twitter', 'user', 'main', array('timeline' => 'user'))#">
-                #$username#
-              </a>
-            </dd>
-            </xar:if>
-            <xar:if condition="$showfriends">
-            <xar:set name="tabclass">$activetab=='friends'?'active':''</xar:set>
-            <dd class="#$tabclass#">
-              <a href="#xarModURL('twitter', 'user', 'main', array('timeline' => 'friends'))#">
-                <xar:mlstring>Friends</xar:mlstring>
-              </a>
-            </dd>
-            </xar:if>
-        </xar:sec>
-        <xar:if condition="$isowner">
-        <xar:sec mask="AddTwitter" catch="false">
-            <xar:set name="tabclass">$activetab=='tweet'?'active':''</xar:set>
-            <dd class="#$tabclass#">
-              <a href="#xarModURL('twitter', 'user', 'tweet')#">
-                <xar:mlstring>New Tweet</xar:mlstring>
-              </a>
-            </dd>
-        </xar:sec>
-        </xar:if>
-    </xar:if>
-  </dl>
-</div>
+<xar:if condition="!empty($usermenu)">
+    <xar:style scope="module" module="base" file="navtabs" />
+    <div>
+        <dl class="xar-tabs">
+            <dt class="help">
+                <xar:mlstring>View</xar:mlstring>:
+            </dt>
+            <xar:foreach in="$usermenu" value="$menulink">
+                <xar:set name="activetab">$menulink['active'] ? 'active' : ''</xar:set>
+                <dd class="#$activetab#">
+                    <a href="#$menulink.url#">
+                        #$menulink.label#
+                    </a>
+                </dd>
+            </xar:foreach>
+        </dl>
+    </div>
+</xar:if>

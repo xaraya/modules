@@ -1,0 +1,111 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="!empty($user_element) && is_array($user_element)">
+    <div class="user-element">
+        <div class="user-basic">
+            <xar:if condition="!empty($user_settings['profile_image'])">
+                <span class="profile-image">
+                <img src="#$user_element['profile_image_url']#" alt="#xarML('profile image')#" title="#$user_element['screen_name']#" />
+                </span>
+                <h2 class="profile-image-after">
+                    <a class="url" href="#xarModURL('twitter', 'user', 'display', array('screen_name' => $user_element.screen_name))#">#$user_element.screen_name#</a>
+                </h2>
+            <xar:else />
+                <h2>
+                    <a class="url" href="#xarModURL('twitter', 'user', 'display', array('screen_name' => $user_element.screen_name))#">#$user_element.screen_name#</a>
+                </h2>
+            </xar:if>
+            <xar:if condition="!empty($user_settings['last_status']) && !empty($user_element['status'])">
+            <span class="status-body">
+                #$user_element.status.text#
+                <span class="status-info">
+                    <xar:base-timesince stamp="$user_element['status']['created_at']" /> <xar:mlstring>ago</xar:mlstring>
+                </span>
+            </span>
+            </xar:if>
+        </div>
+        <div class="user-info">
+            <ul>
+                <li>
+                    <xar:mlstring>Name</xar:mlstring>:
+                    <xar:if condition="!empty($user_element['uid'])">
+                        <xar:data-output type="username" value="$user_element['uid']" /> /
+                    </xar:if>
+                    <strong>#$user_element.name#</strong>
+                </li>
+                <xar:if condition="!empty($user_settings['profile_location']) && !empty($user_element['location'])">
+                <li>
+                    <xar:mlstring>Location</xar:mlstring>: <strong>#$user_element.location#</strong>
+                </li>
+                </xar:if>
+                <xar:if condition="!empty($user_settings['profile_url']) && !empty($user_element['url'])">
+                <li>
+                    <xar:mlstring>Web</xar:mlstring>: <a href="#$user_element.url#" rel="external">#$user_element.url#</a>
+                </li>
+                </xar:if>
+                <xar:if condition="!empty($user_settings['profile_description']) && !empty($user_element['description'])">
+                <li>
+                    <xar:mlstring>Bio</xar:mlstring>: <strong>#$user_element.description#</strong>
+                </li>
+                </xar:if>
+                <xar:if condition="!empty($user_settings['friends_count']) && !empty($user_element['friends_count'])">
+                <li>
+                    <xar:mlstring>Following</xar:mlstring>: <strong>#$user_element.friends_count#</strong>
+                </li>
+                </xar:if>
+                <xar:if condition="!empty($user_settings['followers_count']) && !empty($user_element['followers_count'])">
+                <li>
+                    <xar:mlstring>Followers</xar:mlstring>: <strong>#$user_element.followers_count#</strong>
+                </li>
+                </xar:if>
+                <xar:if condition="!empty($user_settings['statuses_count']) && !empty($user_element['statuses_count'])">
+                <li>
+                    <xar:mlstring>Updates</xar:mlstring>: <strong>#$user_element.statuses_count#</strong>
+                </li>
+                </xar:if>
+            </ul>
+            <xar:if condition="!empty($user_element['uid']) && $user_element['uid'] != xarUserGetVar('uid')">
+            <p class="xar-align-right">
+                <a href="http://twitter.com/#$user_element.screen_name#" rel="external">
+                    <xar:mlstring>Do you follow me?</xar:mlstring>
+                </a>
+            </p>
+            </xar:if>
+        </div>
+        <br class="xar-clearboth" />
+    </div>
+</xar:if>
+
+<xar:comment>
+    ---- Debug Info - Shows a list of all items in the $user_elements array
+    ---- Uncomment this if you want to see what vars you have available in this template
+    ---- Not recommended on production sites
+</xar:comment>
+<xar:comment>
+<ul>Keys:
+<xar:foreach in="$user_element" key="$key" value="$value">
+    <li>
+        <xar:if condition="is_array($value)">
+            <ul>Key Name : #$key# (array)
+            <xar:foreach in="$value" key="$vkey" value="$item">
+                <li>Key Name : #$vkey# <br />Current Value : #$item#<br />Template Variable : ##$user_element.#$key#.#$vkey###</li>
+            </xar:foreach>
+            </ul>
+        <xar:else />
+            Key Name : #$key#<br />Current Value : #$value#<br />Template Variable : ##$user_element.#$key###
+        </xar:if>
+    </li>
+</xar:foreach>
+</ul>
+</xar:comment>
+<xar:comment>TODO: implement this?</xar:comment>
+<xar:comment>
+<xar:if condition="!empty($user_status)">
+    <div class="xar-accent xar-padding-thick">
+        Rate limit: #$user_status['hourly-limit']# requests / hour Remaining: #$user_status['remaining-hits']# Reset time: #$user_status['reset-time']#
+    </div>
+<xar:elseif condition="!empty($site_status)" />
+    <div class="xar-accent xar-padding-thick">
+        Rate limit: #$site_status['hourly-limit']# requests / hour Remaining: #$site_status['remaining-hits']# Reset time: #$site_status['reset-time']#
+    </div>
+</xar:if>
+</xar:comment>

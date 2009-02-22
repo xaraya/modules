@@ -5,8 +5,8 @@
   </span>
 </div>
 <div id="twitter-admin-main" class="xar-mod-body">
-  <xar:template type="module" module="twitter" file="admin-menu" />
-  <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+  <xar:template type="module" module="twitter" file="user-menu" />
+  <img src="#xarTplGetImage('twitter-module-icon3.png','twitter')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
 
   <h3><xar:mlstring>What is it?</xar:mlstring></h3>
   <p>

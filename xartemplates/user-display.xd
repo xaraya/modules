@@ -1,0 +1,46 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:style scope="module" module="twitter" />
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Twitter</xar:mlstring></span>
+</div>
+<div id="twitter-user-login" class="xar-mod-body twitter">
+    <xar:template type="module" module="twitter" file="user-menu" />
+    <xar:if condition="!empty($user_element)">
+        <xar:template type="module" module="twitter" file="user-element" />
+        <xar:if condition="!empty($t_fieldname) && !empty($user_account) && $screen_name == $user_account['screen_name']">
+            <xar:template type="module" module="twitter" file="update-form" />
+            <p>
+                <xar:ml>
+                    <xar:mlstring>Add your Screen Name and Password to <a href="#(1)">your profile</a> to associate with your account</xar:mlstring>
+                    <xar:mlvar>#xarModURL('roles', 'user', 'account', array('moduleload' => 'roles'))#</xar:mlvar>
+                </xar:ml>
+            </p>
+        </xar:if>
+        <xar:if condition="!empty($displaytabs)">
+            <div>
+                <dl class="xar-tabs">
+                    <dt class="help" title="#xarML('Account display options')#">
+                        <xar:mlstring>Options</xar:mlstring>:
+                    </dt>
+                    <xar:foreach in="$displaytabs" value="$displaytab">
+                        <xar:set name="$tabactive">$displaytab['active'] ? 'active' : ''</xar:set>
+                        <dd class="#$tabactive#">
+                            <a href="#$displaytab.url#" title="#$displaytab.title#">
+                                #$displaytab.label#
+                            </a>
+                        </dd>
+                    </xar:foreach>
+                </dl>
+            </div>
+        </xar:if>
+
+        <xar:if condition="!empty($status_elements)">
+            <xar:template type="module" module="twitter" file="status-elements" />
+        <xar:elseif condition="!empty($user_elements)" />
+            <xar:template type="module" module="twitter" file="user-elements" />
+        <xar:elseif condition="!empty($message_elements)" />
+            <xar:template type="module" module="twitter" file="message-elements" />
+        <xar:else />
+        </xar:if>
+    </xar:if>
+</div>

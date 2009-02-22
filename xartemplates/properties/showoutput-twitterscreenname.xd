@@ -1,0 +1,8 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="!empty($user_element)">
+    <xar:style scope="module" module="twitter" />
+    <div class="twitter">
+        <xar:template module="twitter" type="module" file="user-element"  />
+    </div>
+</xar:if>
+

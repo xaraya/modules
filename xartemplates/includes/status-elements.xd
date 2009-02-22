@@ -1,0 +1,23 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="!empty($status_elements) && is_array($status_elements)">
+    <ul class="statuses">
+    <xar:foreach in="$status_elements" key="$key" value="$item">
+        <li class="element">
+            <span class="profile-image" style="width: 50px;">
+                <a href="http://twitter.com/#$item.user.screen_name#" title="#$item.user.screen_name#">
+                    <img src="#$item.user.profile_image_url#" alt="#xarML('profile image')#" title="#$item.user.screen_name#" />
+                </a>
+            </span>
+            <span class="status-body">
+                <strong>
+                    <a class="url" href="http://twitter.com/#$item.user.screen_name#" title="#$item.user.screen_name#">#$item.user.screen_name#</a>
+                </strong>
+                #$item.text#
+                <span class="status-info">
+                    <xar:base-timesince stamp="$item['created_at']" /> <xar:mlstring>ago, via </xar:mlstring>#$item.source#
+                </span>
+            </span>
+        </li>
+    </xar:foreach>
+    </ul>
+</xar:if>

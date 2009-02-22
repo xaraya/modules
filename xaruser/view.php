@@ -20,9 +20,16 @@
  * @author Chris Powis (crisp@crispcreations.co.uk)
  * @return array $data array with all information for the template
  */
-function twitter_user_view()
+function twitter_user_view($args)
 {
-    xarResponseRedirect(xarModURL('twitter', 'user','main'));
-    return true;
+    if (!xarSecurityCheck('ReadTwitter')) return;
+
+    $data = xarModAPIFunc('twitter', 'user', 'menu', array('modtype' => 'user', 'modfunc' => 'view'));
+
+    if (!empty($data['t_fieldname'] )) {
+      $data['items'] = xarModAPIFunc('dynamicdata', 'user', 'getitems', array('module' => 'roles', 'itemtype' => 0, 'where' => $data['t_fieldname']. ' ne ""', 'fieldlist' => $data['t_fieldname']));
+    }
+
+    return $data;
 }
 ?>

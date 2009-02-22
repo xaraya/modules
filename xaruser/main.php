@@ -1,15 +1,15 @@
 <?php
 /**
- * The main user function
+ * Twitter Module 
  *
  * @package modules
  * @copyright (C) 2002-2006 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Example Module
- * @link http://xaraya.com/index.php/release/36.html
- * @author Example Module Development Team
+ * @subpackage Twitter Module
+ * @link http://xaraya.com/index.php/release/991.html
+ * @author Chris Powis (crisp@crispcreations.co.uk)
  */
 /**
  * The main user function
@@ -20,62 +20,54 @@
  * returns or calls whatever the module designer feels should be the default
  * function (often this is the view() function)
  *
- * @author the Example module development team
+ * @author Chris Powis (crisp@crispcreations.co.uk)
  * @return array $data An array with the data for the template
  */
 function twitter_user_main()
 {
 
     if (!xarSecurityCheck('ViewTwitter')) return;
-    if (!xarVarFetch('timeline', 'enum:public:user:friends', $timeline, '', XARVAR_NOT_REQUIRED)) return;
-
-    $data = array();
-
-    $data['username'] = xarModGetVar('twitter', 'username');
-    $password = xarModGetVar('twitter', 'password');
-    $data['isowner']    = xarUserGetVar('uid') == xarModGetVar('twitter', 'owner') ? true : false;
-    $data['itemsperpage'] = xarModGetVar('twitter', 'itemsperpage');
-    $data['showpublic'] = xarModGetVar('twitter', 'showpublic');
-    $data['showuser'] = xarModGetVar('twitter', 'showuser');
-    $data['showfriends'] = xarModGetVar('twitter', 'showfriends');
-    $data['deftimeline'] = xarModGetVar('twitter', 'deftimeline');
-
-    $timelines = array();
-    if ($data['showpublic']) $timelines[] = array('id' => 'public', 'name' => 'Public');
-    if (!empty($data['username']) && !empty($password)) {
-      if ($data['showuser']) $timelines[] = array('id' => 'user', 'name' => 'User');
-      if ($data['showfriends']) $timelines[] = array('id' => 'friends', 'name' => 'Friends');
-    }
-    $data['timelines'] = $timelines;
+    if (!xarVarFetch('timeline', 'str:1', $timeline, '', XARVAR_NOT_REQUIRED)) return;
     
-
-    if (empty($timeline)) $timeline = $data['deftimeline'];
-    $checkline = 'show'.$timeline;
-    $isavailable = $data[$checkline];
-    $data['timeline'] = $timeline;
+    /* somebody clicked user-main from the menu */
+    if (empty($timeline)) {
+      $timeline = xarModGetVar('twitter', 'main_tab');
+    }
+    // this gets everything we need
+    $data = xarModAPIFunc('twitter', 'user', 'menu', 
+      array('modtype' => 'user', 'modfunc' => 'main', 'timeline' => $timeline));
+    
+    // see if this tag is supposed to be shown
+    $showtab = $timeline == 'new_tweet' || xarModGetVar('twitter', $timeline) ? true : false;
+    
     $items = array();
-    if ($isavailable) {
-      $items = xarModAPIFunc('twitter', 'user', 'status_methods',
-        array(
-          'method' => $timeline.'_timeline',
-          'username' => $data['username'],
-          'password' => $password
-        ));
+    // we're showing this tab
+    if ($showtab) {
+      if ($timeline == 'account_display' && !empty($data['site_account'])) {
+        if ($data['isowner']) {
+          return xarResponseRedirect(xarModURL('twitter', 'user', 'account', array('screen_name' => $data['site_account']['screen_name'])));
+        } else {
+          return xarResponseRedirect(xarModURL('twitter', 'user', 'display', array('screen_name' => $data['site_account']['screen_name'])));
+        }
+      } elseif ($timeline == 'users_display' && !empty($data['t_fieldname'])) {
+        return xarResponseRedirect(xarModURL('twitter', 'user', 'view'));
+      } elseif ($timeline == 'new_tweet') {
+        return xarResponseRedirect(xarModURL('twitter', 'user', 'tweet'));
+      } else {
+        $items = xarModAPIFunc('twitter', 'user', 'rest_methods',
+          array(
+            'area' => 'statuses',
+            'method' => 'public_timeline',
+            'cached' => true,
+            'refresh' => 60,
+            'superrors' => true
+          ));
+      }
     }
-    $userinfo = array();
-    if (!empty($data['username']) && !empty($password)) {
-      $userinfo = xarModAPIFunc('twitter', 'user', 'account_methods', 
-        array(
-          'method' => 'verify_credentials',
-          'username' => $data['username'], 
-          'password' => $password,
-          'cache' => true,
-          'refresh' => 3600
-        ));
-    }
-    $data['userinfo'] = $userinfo;
-    $data['items'] = $items;   
+
+    $data['status_elements'] = $items;
     $data['activetab'] = $timeline;
+    $data['timeline'] = $timeline;
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('#(1) timeline',ucfirst($timeline))));
     /* Return the template variables defined in this function */
     return $data;

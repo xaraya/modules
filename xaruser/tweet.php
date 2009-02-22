@@ -25,66 +25,104 @@
  */
 function twitter_user_tweet($args)
 {
-    if (!xarSecurityCheck('AddTwitter')) return;
+    if (!xarSecurityCheck('CommentTwitter')) return;
     if (!xarVarFetch('phase', 'isset', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('returnurl', 'str:1:', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('screen_name', 'str:1', $screen_name, '', XARVAR_NOT_REQUIRED)) return;
 
-    $data = array();
+    // this function gets everything we need :)
+    $data = xarModAPIFunc('twitter', 'user', 'menu');
+ 
     $invalid = array();
-    $owner = xarModGetVar('twitter', 'owner');
-    $uid = xarUserGetVar('uid');
-    $isowner = $owner == $uid ? true : false;
-    switch($phase) {
-      case 'form':
-      default:
-        $data['isowner'] = $isowner;
-        $data['text'] = '';
-        $data['username'] = xarModGetVar('twitter', 'username');
-      break;
-      case 'update':
-        if (!xarVarFetch('text', 'str:1', $text, '', XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('username', 'str:1', $username, '', XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('password', 'str:1', $password, '', XARVAR_NOT_REQUIRED)) return;
-        
-        if (!xarSecConfirmAuthKey()) return;
-        if (!$isowner) {
-          if (empty($username)) $invalid[] = 'username';
-          if (empty($password)) $invalid[] = 'password';
-        } else {
-          $username = xarModGetVar('twitter', 'username');
-          $password = xarModGetVar('twitter', 'password');
+
+    // the twitter form for site account or user account is shown in display and account functions
+    if ($phase == 'form') {
+      if (!empty($data['user_account'])) {
+        $urlparam = !empty($data['associated']) ? 'account' : 'display';
+        xarResponseRedirect(xarModURL('twitter', 'user', $urlparam, array('screen_name' => $data['user_account']['screen_name'])));
+      }
+    }
+
+    if ($phase == 'update') {
+      if (!xarSecConfirmAuthKey()) return;
+      if (!xarVarFetch('text', 'str:1', $text, '', XARVAR_NOT_REQUIRED)) return;
+      if (!xarVarFetch('screen_pass', 'str:1', $screen_pass, '', XARVAR_NOT_REQUIRED)) return;
+      if (!xarVarFetch('rememberme', 'checkbox', $rememberme, false, XARVAR_NOT_REQUIRED)) return;
+
+      if (empty($text) || strlen($text) > 160) {
+        $invalid['text'] = xarML('Text must be between 1 and 160 characters');
+      }
+      
+      if (!empty($data['site_account']) && $screen_name == $data['site_account']['screen_name'] && $data['isowner']){
+        $screen_pass = xarModGetVar('twitter', 'site_screen_pass');
+      } elseif (!empty($data['user_account']) && $screen_name == $data['user_account']['screen_name']) {
+        if (!empty($data['t_fieldname'])) {
+          $ddval = xarUserGetVar($data['t_fieldname']);
+          if (!empty($ddval) && strpos($ddval, ',') !== false) {
+            list($screen_name, $screen_pass) = explode(',', $ddval);
+          }
         }
-        if (empty($text)) $invalid['text'] = 'text';
-          if (empty($invalid)) {
+        if (empty($screen_pass) && !empty($data['rememberme'])) {
+          $screen_pass = xarSessionGetVar('twitter_screen_pass');
+        }
+      }
+
+      /* oops, we seem to have a problem */
+      if (empty($screen_name) || empty($screen_pass)) {
+        $invalid['screen_name'] = xarML('*Unknown screen name or password');
+        $invalid['screen_pass'] = '*';
+      }
+      if (empty($invalid)) {
+        /* if we don't have a user account we need to validate this user */
+        if (empty($data['user_account'])) {
+          $isvalid = xarModAPIFunc('twitter', 'user', 'account_methods',
+            array(
+              'method' => 'verify_credentials',
+              'username' => $screen_name, 
+              'password' => $screen_pass,
+              'cache' => true,
+              'refresh' => 300
+            ));
+          if (!$isvalid) {
+            $invalid['screen_name'] = xarML('*Unknown screen name or password');
+            $invalid['screen_pass'] = '*';
+          } 
+        }
+        /* if we've not tripped on the validations, we're good to send the update */
+        if (empty($invalid)) {
           $response = xarModAPIFunc('twitter', 'user', 'status_methods',
             array(
               'method' => 'update',
-              'username' => $username,
-              'password' => $password,
+              'username' => $screen_name,
+              'password' => $screen_pass,
               'status' => $text
             ));
           if (!$response) {
             $invalid[] = 'post';
             xarSessionSetVar('statusmsg', xarML('Unable to update status'));
           }
-        } 
+        }
+        /* if we're still valid here, the status was sent */
         if (empty($invalid)) {
-          xarSessionSetVar('statusmsg', xarML('Your tweet was sent succesfully'));
-          xarResponseRedirect(xarModURL('twitter','user', 'tweet'));
-          return true;
-        } 
-        $data['text'] = $text;
-        $data['username'] = $username;
-      break;
+          /* if user ticked remember me, set session vars */
+          if ($rememberme) {
+            xarSessionSetVar('twitter_screen_name', $screen_name);
+            xarSessionSetVar('twitter_screen_pass', $screen_pass);
+          }
+          xarSessionSetVar('statusupdate', xarML('Your status was updated successfully'));
+          if (empty($returnurl)) $returnurl = xarModURL('twitter', 'user', 'tweet');
+          return xarResponseRedirect($returnurl);
+        }
+      }
     }
+    $data['text'] = empty($text) ? '' : $text;
+    $data['screen_name'] = empty($screen_name) ? '' : $screen_name;
+    $data['screen_pass'] = empty($screen_pass) ? '' : $screen_pass;
     $data['invalid'] = $invalid;
     $data['authid'] = xarSecGenAuthKey('twitter');
     $data['activetab'] = 'tweet';
-    $data['isowner']    = $isowner;
     $data['itemsperpage'] = xarModGetVar('twitter', 'itemsperpage');
-    $data['showpublic'] = xarModGetVar('twitter', 'showpublic');
-    $data['showuser'] = xarModGetVar('twitter', 'showuser');
-    $data['showfriends'] = xarModGetVar('twitter', 'showfriends');
-    $data['deftimeline'] = xarModGetVar('twitter', 'deftimeline');
+
     return $data;
 }
 ?>

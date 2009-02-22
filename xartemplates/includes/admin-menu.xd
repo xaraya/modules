@@ -2,27 +2,22 @@
 <xar:comment>Common Administration menu</xar:comment>
 <xar:if condition="xarModGetVar('themes','adminpagemenu')">
     <xar:style scope="module" module="base" file="navtabs" />
-    <xar:set name="request">xarRequestGetInfo()</xar:set>
-    <xar:set name="activetab">#$request.2#</xar:set>
+    <xar:if condition="!empty($adminmenu)">
     <div>
       <dl class="xar-tabs">
         <dt class="help" title="#xarML('Choose an action to perform')#">
           <xar:mlstring>Actions:</xar:mlstring>
         </dt>
-        <xar:sec mask="AdminTwitter" catch="false">
-            <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
+        <xar:foreach in="$adminmenu" value="$menuitem">
+            <xar:set name="tabclass">$menuitem['active']?'active':''</xar:set>
             <dd class="#$tabclass#">
-              <a href="&xar-modurl-twitter-admin-modifyconfig;">
-                <xar:mlstring>Modify Config</xar:mlstring>
+              <a href="#$menuitem['url']#" title="#$menuitem['title']#">
+                #$menuitem['label']#
               </a>
             </dd>
-            <xar:set name="tabclass">($activetab=='main' or $activetab=='overview')?'active':''</xar:set>
-            <dd class="#$tabclass#">
-              <a href="&xar-modurl-twitter-admin-overview;">
-                <xar:mlstring>Overview</xar:mlstring>
-              </a>
-            </dd>
-        </xar:sec>
+        </xar:foreach>
       </dl>
     </div>
+    </xar:if>
+
 </xar:if>

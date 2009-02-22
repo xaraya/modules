@@ -1,58 +1,70 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:style scope="module" module="twitter" />
+<div class="twitter-block">
 <xar:if condition="$showmodule">
-    <h4 class="xar-margin-nonetop xar-valign-middle">
+    <span class="module">
         <xar:if condition="$showmyimage and $timeline ne 'public'">
-            <span class="xar-floatleft">
-                <img src="#$userinfo['profile_image_url']#" />
+            <span class="profile-image">
+                <img src="#$userinfo.profile_image_url#" />
             </span>
-        </xar:if>
-        <a href="#xarModURL('twitter', 'user', 'main', array('timeline' => $timeline))#">
-            <xar:if condition="$timeline eq 'friends'">
-                #$username# <xar:mlstring>and friends</xar:mlstring>
-            <xar:elseif condition="$timeline eq 'user'" />
-                #$username# <xar:mlstring>timeline</xar:mlstring>
-            <xar:else />
-                <xar:mlstring>Public timeline</xar:mlstring>
-            </xar:if>
-        </a>
-    </h4>
-</xar:if>
-<xar:if condition="!empty($items)">
-    <ul class="xar-clearboth">
-        <xar:foreach in="$items" key="$key" value="$item">
-            <li>
-                <h4 class="xar-margin-none">
-                    <a href="http://twitter.com/#$item.screen_name#" rel="external">
-                        #$item.screen_name#
+            <h4 class="profile-image-after">
+                <xar:if condition="$timeline eq 'user'">
+                    <a class="url" href="#xarModURL('twitter', 'user', 'display', array('screen_name' => $userinfo['screen_name']))#">
+                   #$userinfo.screen_name# <xar:mlstring>timeline</xar:mlstring>
+                <xar:else />
+                    <a class="url" href="#xarModURL('twitter', 'user', 'display', array('timeline' => 'public_timeline'))#">
+                        <xar:mlstring>Public timeline</xar:mlstring>
                     </a>
-                </h4>
-                <p>
-                    <xar:if condition="$showimages">
-                        <span class="xar-floatleft">
-                            <img src="#$item.profile_image_url#" style="height: 20px; width: 20px;" alt="#xarML('profile image')#" title="#$item.screen_name#" />
-                        <span>
-                    </xar:if>
-                    #$item.text#
-                </p>
-                <span class="xar-sub">
-                    <xar:base-timesince stamp="$item['created_at']" />
-                    <xar:if condition="$showsource">
-                        <xar:mlstring> ago, via </xar:mlstring>#$item.source#
-                    <xar:else />
-                        <xar:mlstring> ago</xar:mlstring>
-                    </xar:if>
+                </xar:if>
+            </a>
+            </h4>
+        <xar:else />
+            <h4>
+            <a class="url" href="#xarModURL('twitter', 'user', 'main', array('timeline' => $timeline))#">
+                <xar:if condition="$timeline eq 'friends'">
+                    #$username# <xar:mlstring>and friends</xar:mlstring>
+                <xar:elseif condition="$timeline eq 'user'" />
+                    #$username# <xar:mlstring>timeline</xar:mlstring>
+                <xar:else />
+                    <xar:mlstring>Public timeline</xar:mlstring>
+                </xar:if>
+            </a>
+            </h4>
+        </xar:if>
+    </span>
+</xar:if>
+<xar:if condition="!empty($status_elements) && is_array($status_elements)">
+    <ul class="statuses">
+    <xar:foreach in="$status_elements" key="$key" value="$item">
+        <li class="element">
+            <xar:if condition="$showimages">
+            <span class="profile-image">
+                <a href="http://twitter.com/#$item.user.screen_name#" title="#$item.user.screen_name#">
+                    <img src="#$item.user.profile_image_url#" alt="#xarML('profile image')#" title="#$item.user.screen_name#" />
+                </a>
+            </span>
+            </xar:if>
+            <span class="status-body">
+                <strong>
+                    <a class="url" href="http://twitter.com/#$item.user.screen_name#" title="#$item.user.screen_name#">#$item.user.screen_name#</a>
+                </strong>
+                #$item.text#
+                <span class="status-info">
+                    <xar:base-timesince stamp="$item['created_at']" /> <xar:mlstring>ago, via </xar:mlstring>#$item.source#
                 </span>
-            </li>
-        </xar:foreach>
+            </span>
+        </li>
+    </xar:foreach>
     </ul>
 </xar:if>
 <xar:if condition="$showfollow">
-    <p class="xar-align-right">
+    <p class="xar-align-right xar-sub">
         <a href="http://twitter.com/#$username#" rel="external">
             <xar:mlstring>Follow</xar:mlstring> #$username#
         </a>
     </p>
 </xar:if>
+</div>
 
 
 

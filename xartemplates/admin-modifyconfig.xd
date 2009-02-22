@@ -2,126 +2,301 @@
 <div class="xar-mod-head">
   <span class="xar-mod-title"><xar:mlstring>Twitter Administration</xar:mlstring></span>
 </div>
-<div id="twitter-admin-modofyconfig" class="xar-mod-body">
- <xar:template type="module" file="admin-menu" />
-  <xar:if condition="xarSessionGetVar('statusmsg') != ''">
-    <p class="xar-error">#xarSessionGetVar('statusmsg')#</p>
-  </xar:if>
-  <form method="post" id="post" action="&xar-modurl-twitter-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
-    <fieldset>
-      <legend><xar:mlstring>System Options</xar:mlstring></legend>
-      <div class="xar-form-input-wrapper">
-        <label for="shorturls" class="xar-form-label" title="#xarML('Enable short URLS?')#">
-          <xar:mlstring>Enable short URLs?</xar:mlstring>
-        </label>
-        <xar:data-input type="checkbox" name="shorturls" id="shorturls" checked="$shorturls" />
-      </div>
-      <div class="xar-form-input-wrapper">
-        <label for = "usealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
-          <xar:mlstring>Use a module alias</xar:mlstring>
-        </label>
-        <xar:data-input type="checkbox" name="usealias" id="usealias" checked="$usealias" />
-      </div>
-      <div class="xar-form-input-wrapper">
-        <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
-          <xar:mlstring>
-            Module Alias Name
-          </xar:mlstring>
-        </label>
-        <input type="text" name="aliasname" id="aliasname" value="#$aliasname#" size="32" maxlength="100" />
-      </div>
-    </fieldset>
-    <fieldset>
-        <legend>
-            <xar:mlstring>Twitter Account</xar:mlstring>
-        </legend>
-        <div class="xar-form-input-wrapper">
-            <label for="username" class="xar-form-label help">
-                <xar:mlstring>Username</xar:mlstring>
-            </label>
-            <input type="text" name="username" id="username" value="#$username#" maxlength="64" class="xar-form-textmedium" autocomplete="off" />
-            <xar:if condition="isset($invalid['username'])">
-                <span class="xar-error">#$invalid['username']#</span>
-            </xar:if>
-        </div>
-        <div class="xar-form-input-wrapper">
-            <label for="username" class="xar-form-label help">
-                <xar:mlstring>Password</xar:mlstring>
-            </label>
-            <input type="password" name="password" id="password" value="#$password#" maxlength="64" class="xar-form-textmedium" autocomplete="off" />
-            <xar:if condition="isset($invalid['password'])">
-                <span class="xar-error">#$invalid['password']#</span>
-            </xar:if>
-        </div>
-        <div class="xar-form-input-wrapper">
-            <label for="owner" class="xar-form-label help">
-                <xar:mlstring>Account owner</xar:mlstring>
-            </label>
-            <xar:data-input type="userlist" name="owner" id="owner" value="$owner" />
-        </div>
-    </fieldset>
-    <fieldset>
-      <legend><xar:mlstring>Display Options</xar:mlstring></legend>
-        <div class="xar-form-input-wrapper">
-            <label for="owner" class="xar-form-label help">
-                <xar:mlstring>Default Timeline</xar:mlstring>
-            </label>
-            <xar:data-input type="dropdown" name="deftimeline" id="deftimeline" options="$validtls" value="$deftimeline" />
-            <xar:if condition="isset($invalid['deftimeline'])">
-                <span class="xar-error">#$invalid['deftimeline']#</span>
-            </xar:if>
-        </div>
-      <div class="xar-form-input-wrapper">
-        <label for="showpublic" class="xar-form-label" title="#xarML('Show the public timeline in user display')#">
-          <xar:mlstring>Show Public Timeline?</xar:mlstring>
-        </label>
-        <xar:data-input type="checkbox" name="showpublic" id="showpublic" checked="$showpublic" />
-        <xar:if condition="isset($invalid['showpublic'])">
-            <span class="xar-error">#$invalid['showpublic']#</span>
-        </xar:if>
-      </div>
-      <div class="xar-form-input-wrapper">
-        <label for="showuser" class="xar-form-label" title="#xarML('Show the timeline of the specified Twitter account')#">
-          <xar:mlstring>Show User Timeline?</xar:mlstring>
-        </label>
-        <xar:data-input type="checkbox" name="showuser" id="showuser" checked="$showuser" />
-        <xar:if condition="isset($invalid['showuser'])">
-            <span class="xar-error">#$invalid['showuser']#</span>
-        </xar:if>
-      </div>
-      <div class="xar-form-input-wrapper">
-        <label for="shortfriends" class="xar-form-label" title="#xarML('Show the timeline of the specified Twitter account and all friends')#">
-          <xar:mlstring>Show Friends Timeline?</xar:mlstring>
-        </label>
-        <xar:data-input type="checkbox" name="showfriends" id="showfriends" checked="$showfriends" />
-        <xar:if condition="isset($invalid['showfriends'])">
-            <span class="xar-error">#$invalid['showfriends']#</span>
-        </xar:if>
-      </div>
-      <div class="xar-form-input-wrapper">
-        <label for="itemsperpage" class="xar-form-label" title="#xarML('Number of tweets per page')#">
-          <xar:mlstring>Items Per Page:</xar:mlstring>
-        </label>
-        <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsperpage#" maxlength="3" class="xar-form-textshort" />
-        <xar:if condition="isset($invalid['itemsperpage'])">
-            <span class="xar-error">#$invalid['itemsperpage']#</span>
-        </xar:if>
-      </div>
-    </fieldset>
-    <fieldset>
-      <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
-      <xar:if condition="!empty($hooks)">
-        <xar:foreach in="$hooks" key="$hookmodule">
-          #$hooks[$hookmodule]#
-        </xar:foreach>
-      </xar:if>
-    </fieldset>
-
-    <div class="xar-form-input-wrapper-after">
-        <input type="hidden" name="phase" id="phase" value="update" />
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <input type="submit" value="#xarML('Update Configuration')#" />
+<div id="twitter-admin-modifyconfig-#$tab#" class="xar-mod-body">
+    <xar:template type="module" file="user-menu" />
+    <h2><xar:ml><xar:mlstring>Modify #(1) configuration</xar:mlstring><xar:mlvar>#$tab#</xar:mlvar></xar:ml></h2>
+    <div>
+        <dl class="xar-tabs">
+            <dt class="help" title="#xarML('Component to configure')#">
+                <xar:mlstring>Configure</xar:mlstring>:
+             </dt>
+             <xar:set name="$activetab">$tab == 'module' ? 'active' : ''</xar:set>
+             <dd class="#$activetab#">
+                <a href="#xarModURL('twitter', 'admin', 'modifyconfig', array('tab' => 'module'))#">
+                    <xar:mlstring>Module</xar:mlstring>
+                </a>
+             </dd>
+             <xar:set name="$activetab">$tab == 'site' ? 'active' : ''</xar:set>
+             <dd class="#$activetab#">
+                <a href="#xarModURL('twitter', 'admin', 'modifyconfig', array('tab' => 'site'))#">
+                    <xar:mlstring>Site</xar:mlstring>
+                </a>
+             </dd>
+             <xar:set name="$activetab">$tab == 'users' ? 'active' : ''</xar:set>
+             <dd class="#$activetab#">
+                <a href="#xarModURL('twitter', 'admin', 'modifyconfig', array('tab' => 'users'))#">
+                    <xar:mlstring>Users</xar:mlstring>
+                </a>
+             </dd>
+        </dl>
     </div>
-  </form>
+    <xar:if condition="xarSessionGetVar('statusmsg') != ''">
+        <p class="xar-error">#xarSessionGetVar('statusmsg')#</p>
+    </xar:if>
+    <form method="post" id="post" action="&xar-modurl-twitter-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
+        <xar:comment> ----------------- Begin Module Configuration ---------------- </xar:comment>
+        <xar:if condition="$tab eq 'module'">
+            <fieldset>
+                <legend><xar:mlstring>System Options</xar:mlstring></legend>
+                <div class="xar-form-input-wrapper">
+                    <label for="shorturls" class="xar-form-label" title="#xarML('Enable short URLS?')#">
+                        <xar:mlstring>Enable short URLs?</xar:mlstring>
+                    </label>
+                    <xar:data-input type="checkbox" name="shorturls" id="shorturls" checked="$shorturls" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for = "usealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
+                        <xar:mlstring>Use a module alias</xar:mlstring>
+                    </label>
+                    <xar:data-input type="checkbox" name="usealias" id="usealias" checked="$usealias" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
+                        <xar:mlstring>Module Alias Name</xar:mlstring>
+                    </label>
+                    <input type="text" name="aliasname" id="aliasname" value="#$aliasname#" size="32" maxlength="100" />
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>
+                    <xar:mlstring>Menu Options</xar:mlstring>
+                </legend>
+                <div class="xar-form-input-wrapper">
+                    <label for="main_tab" class="xar-form-label help" title="#xarML('Select the default tab to display in user main function.')#">
+                        <xar:mlstring>Default Tab</xar:mlstring>
+                    </label>
+                    <xar:data-input type="dropdown" name="main_tab" id="main_tab" value="$main_tab" options="$main_tabs" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="public_timeline" class="xar-form-label help" title="#xarML('Show the public timeline in menus and tabs.')#">
+                        <xar:mlstring>Public Timeline</xar:mlstring>
+                    </label>
+                    <xar:data-input type="checkbox" name="public_timeline" id="public_timeline" checked="$public_timeline" />
+                    <em><xar:mlstring>Available to visitors with ViewTwitter privilege</xar:mlstring></em>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="account_display" class="xar-form-label help" title="#xarML('Show the site account tab.')#">
+                        <xar:mlstring>Site Account</xar:mlstring>
+                    </label>
+                    <xar:if condition="!empty($site_account)">
+                        <xar:data-input type="checkbox" name="account_display" id="account_display" checked="$account_display" />
+                        <em><xar:mlstring>Available to visitors with ReadTwitter privilege</xar:mlstring></em>
+                    <xar:else />
+                        <em><xar:mlstring>Not configured</xar:mlstring></em>
+                    </xar:if>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label help" title="#xarML('Show the new tweet tab in menus and tabs.')#">
+                        <xar:mlstring>New Tweet</xar:mlstring>
+                    </label>
+                    <em><xar:mlstring>Available to visitors with CommentTwitter privilege</xar:mlstring></em>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="users_display" class="xar-form-label help" title="#xarML('Show the users tab.')#">
+                        <xar:mlstring>Users</xar:mlstring>
+                    </label>
+                    <xar:if condition="!empty($t_fieldname)">
+                        <xar:data-input type="checkbox" name="users_display" id="users_display" checked="$users_display" />
+                        <em><xar:mlstring>Available to visitors with ReadTwitter privilege</xar:mlstring></em>
+                    <xar:else />
+                        <em><xar:mlstring>Not configured</xar:mlstring></em>
+                    </xar:if>
+                </div>
+            </fieldset>
+            <xar:if condition="!empty($hooks)">
+                <fieldset>
+                    <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
+                    <xar:foreach in="$hooks" key="$hookmodule">
+                    #$hooks[$hookmodule]#
+                    </xar:foreach>
+                </fieldset>
+            </xar:if>
+            <fieldset>
+                <div class="xar-form-input-wrapper-after">
+                    <input type="hidden" name="tab" id="tab" value="module" />
+                    <input type="hidden" name="phase" id="phase" value="update" />
+                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                    <input type="submit" value="#xarML('Update Configuration')#" />
+                </div>
+            </fieldset>
+        <xar:comment> ----------------- Begin Site Configuration ---------------- </xar:comment>
+        <xar:elseif condition="$tab eq 'site'" />
+            <xar:template type="module" module="twitter" file="userinfo" />
+            <fieldset>
+                <legend>
+                    <xar:mlstring>Site Twitter Account</xar:mlstring>
+                    [<a href="#xarServerGetCurrentURL()###whatsthis" title="#xarML('What\'s this?')#">?</a>]
+                </legend>
+                <div class="xar-form-input-wrapper">
+                    <label for="username" class="xar-form-label help">
+                        <xar:mlstring>Username</xar:mlstring>
+                    </label>
+                    <input type="text" name="username" id="username" value="#$username#" maxlength="64" class="xar-form-textmedium" autocomplete="off" />
+                    <xar:if condition="isset($invalid['username'])">
+                        <span class="xar-error">#$invalid['username']#</span>
+                    <xar:elseif condition="!empty($site_account) && $site_account['protected'] == 'true'" />
+                        <p class="xar-form-container-after">
+                        <xar:mlstring>Account is protected, only the owner</xar:mlstring>
+                        <xar:if condition="!empty($t_fieldname)">
+                            <xar:mlstring>, and logged in users who are friends or followers</xar:mlstring>
+                        </xar:if>
+                        <xar:mlstring> of the account will see status updates.</xar:mlstring>
+                        </p>
+                    </xar:if>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="username" class="xar-form-label help">
+                        <xar:mlstring>Password</xar:mlstring>
+                    </label>
+                    <input type="password" name="password" id="password" value="#$password#" maxlength="64" class="xar-form-textmedium" autocomplete="off" />
+                    <xar:if condition="isset($invalid['password'])">
+                        <span class="xar-error">#$invalid['password']#</span>
+                    </xar:if>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="owner" class="xar-form-label help">
+                        <xar:mlstring>Account owner</xar:mlstring>
+                    </label>
+                    <xar:data-input type="userlist" name="owner" id="owner" value="$owner" />
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="xar-form-input-wrapper-after">
+                    <input type="hidden" name="tab" id="tab" value="site" />
+                    <input type="hidden" name="phase" id="phase" value="update" />
+                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                    <input type="submit" value="#xarML('Update Configuration')#" />
+                </div>
+            </fieldset>
+            <a name="whatsthis"></a>
+            <h4><xar:mlstring>What's this?</xar:mlstring></h4>
+            <p><xar:mlstring>If you have a Twitter account for your site, or you run a personal site, for instance a blog, you can display the twitter feed to your users and have it be the default display when viewing the Twitter module.</xar:mlstring></p>
+            <h4><xar:mlstring>When to use it?</xar:mlstring></h4>
+            <p><xar:mlstring>If you regularly tweet about updates to your site, such as tweeting about a new blog post, or a new product, by enabling  the site account, you can hook to modules and instantly have a status update sent when new items are created.</xar:mlstring></p>
+            <h4><xar:mlstring>How to use it?</xar:mlstring></h4>
+            <ul>
+                <li><xar:mlstring>You first need to have a Twitter acount, if you haven't already, go sign up for one (it's free)</xar:mlstring></li>
+                <li><xar:mlstring>Enter the username and password of the account you want associated with your site</xar:mlstring></li>
+                <li><xar:mlstring>Select the user who is responsible for the account. This user is expected to be the owner of the account, and will be able to send updates using the account's credentials.</xar:mlstring></li>
+            </ul>
+        <xar:comment> ----------------- Begin Users Configuration ---------------- </xar:comment>
+        <xar:elseif condition="$tab eq 'users'" />
+            <xar:if condition="empty($t_fieldname)">
+                <xar:comment>TODO</xar:comment>
+            <xar:else />
+            </xar:if>
+            <fieldset>
+                <legend>
+                    <xar:mlstring>Status Updates</xar:mlstring>
+                </legend>
+                <div class="xar-form-input-wrapper">
+                    <label for="anonupdates" class="xar-form-label">
+                        <xar:mlstring>Allow Updates</xar:mlstring>
+                    </label>
+                    <p class="xar-form-container-after">
+                    <xar:mlstring>
+                        You can allow your users to post updates to their twitter accounts by granting them CommentTwitter Privileges. The New Tweet tab will be visible to all users with the required privilege. Logged in users will be offered a 'remember me' checkbox, which allows them to enter a screen name and password just once during a session.
+                    </xar:mlstring>
+                    </p>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="userupdates" class="xar-form-label">
+                        <xar:mlstring>User Accounts</xar:mlstring>
+                    </label>
+                    <p class="xar-form-container-after">
+                    <xar:if condition="!empty($t_fieldname)">
+                        <xar:mlstring>
+                            A twitterscreenname property was detected attached to the roles dynamicdata object. Grant your users EditTwitter privileges to give them access to the property.
+                        </xar:mlstring>
+                    <xar:else />
+                        <xar:mlstring>
+                            You can allow your users to associate their twitter account with their site profile by adding a twitterscreenname dd property to the roles dynamicdata object. You will need to give your users EditTwitter privileges in order for them to be able to manage their accounts from your site.
+                        </xar:mlstring>
+                    </xar:if>
+                    </p>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>
+                    <xar:mlstring>Profile Display</xar:mlstring>
+                </legend>
+                <div class="xar-form-input-wrapper">
+                    <label for="user_timeline" class="xar-form-label">
+                        <xar:mlstring>Display Timeline Tab</xar:mlstring>
+                    </label>
+                    <xar:data-input type="dropdown" name="user_timeline" id="user_timeline" value="$user_timeline" options="$displayopts" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="friends_display" class="xar-form-label">
+                        <xar:mlstring>Display Following Tab</xar:mlstring>
+                    </label>
+                    <xar:data-input type="dropdown" name="friends_display" id="friends_display" value="$friends_display" options="$displayopts" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="favourites_display" class="xar-form-label">
+                        <xar:mlstring>Display Favourites Tab</xar:mlstring>
+                    </label>
+                    <xar:data-input type="dropdown" name="favourites_display" id="favourites_display" value="$favourites_display" options="$displayopts" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="profile_image" class="xar-form-label">
+                        <xar:mlstring>Display Image</xar:mlstring>
+                    </label>
+                    <xar:data-input type="dropdown" name="profile_image" id="profile_image" value="$profile_image" options="$displayopts" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="profile_description" class="xar-form-label">
+                        <xar:mlstring>Display Bio</xar:mlstring>
+                    </label>
+                    <xar:data-input type="dropdown" name="profile_description" id="profile_description" value="$profile_description" options="$displayopts" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="profile_url" class="xar-form-label">
+                        <xar:mlstring>Display Web Link</xar:mlstring>
+                    </label>
+                    <xar:data-input type="dropdown" name="profile_url" id="profile_url" value="$profile_url" options="$displayopts" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="profile_location" class="xar-form-label">
+                        <xar:mlstring>Display Location</xar:mlstring>
+                    </label>
+                    <xar:data-input type="dropdown" name="profile_location" id="profile_location" value="$profile_location" options="$displayopts" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="followers_count" class="xar-form-label">
+                        <xar:mlstring>Display Followers Count</xar:mlstring>
+                    </label>
+                    <xar:data-input type="dropdown" name="followers_count" id="followers_count" value="$followers_count" options="$displayopts" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="friends_count" class="xar-form-label">
+                        <xar:mlstring>Display Friends Count</xar:mlstring>
+                    </label>
+                    <xar:data-input type="dropdown" name="friends_count" id="friends_count" value="$friends_count" options="$displayopts" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="statuses_count" class="xar-form-label">
+                        <xar:mlstring>Display Update Count</xar:mlstring>
+                    </label>
+                    <xar:data-input type="dropdown" name="statuses_count" id="statuses_count" value="$statuses_count" options="$displayopts" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="last_status" class="xar-form-label">
+                        <xar:mlstring>Display Last Update</xar:mlstring>
+                    </label>
+                    <xar:data-input type="dropdown" name="last_status" id="last_status" value="$last_status" options="$displayopts" />
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="xar-form-input-wrapper-after">
+                    <input type="hidden" name="tab" id="tab" value="users" />
+                    <input type="hidden" name="phase" id="phase" value="update" />
+                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                    <input type="submit" value="#xarML('Update Configuration')#" />
+                </div>
+            </fieldset>
+        </xar:if>
+    </form>
 </div>
+
 <xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

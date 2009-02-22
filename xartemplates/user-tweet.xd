@@ -22,37 +22,126 @@ cntfield.value = maxlimit - field.value.length;
 </div>
 <div class="xar-mod-body">
     <xar:template type="module" file="user-menu" />
-      <xar:if condition="xarSessionGetVar('statusmsg') != ''">
+    <xar:if condition="xarSessionGetVar('statusmsg') != ''">
         <p class="xar-error">#xarSessionGetVar('statusmsg')#</p>
-      </xar:if>
-    <form method="post" name="tweetForm" action="&xar-modurl-twitter-user-tweet;">
-        <fieldset>
-            <legend>
-                <xar:mlstring>New Tweet</xar:mlstring>
-            </legend>
-            <div class="xar-form-input-wrapper">
-                <label for="text" class="xar-form-label help">
-                    <xar:mlstring>What are you doing?</xar:mlstring>
-                </label>
-                <textarea name="text" id="text" cols="40" rows="4"
-onKeyDown="textCounter(document.tweetForm.text,document.tweetForm.remLen1,140)"
-onKeyUp="textCounter(document.tweetForm.text,document.tweetForm.remLen1,140)">#$text#</textarea>
-                <xar:if condition="isset($invalid['text'])">
-                    <span class="xar-error">* <xar:mlstring>Invalid message</xar:mlstring></span>
+    </xar:if>
+    <img src="#xarTplGetImage('twitter-module-icon3.png','twitter')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+    <h3><xar:mlstring>Twitter: What are you doing?</xar:mlstring></h3>
+    <p>
+        <xar:mlstring>Twitter is a free social messaging utility for staying connected in real-time.</xar:mlstring>
+    </p>
+    <xar:sec mask="CommentTwitter" catch="false">
+        <xar:if condition="empty($user_account)">
+            <p>
+                <xar:ml>
+                    <xar:mlstring>
+                        If you have a Twitter account, you can access it directly right here at #(1)
+                    </xar:mlstring>
+                    <xar:mlvar>#xarModGetVar('themes', 'SiteName')#</xar:mlvar>
+                </xar:ml>
+            </p>
+            <p>
+                <xar:mlstring>
+                    Simply enter your Twitter screen name and account password, and you will be able to send status updates right here on site.
+                </xar:mlstring>
+            </p>
+            <xar:sec mask="EditTwitter" catch="false">
+                <p>
+                    <xar:mlstring>
+                        If you wish to send updates without having to keep entering your password, tick the 'Remember Me' checkbox. Your username and password will be remembered for your current visit.
+                    </xar:mlstring>
+                </p>
+                <p>
+                    <xar:mlstring>
+                        For a more permanent presence, you can also associate your Twitter account with your profile here. If you choose to associate your account with your profile, more options are available to you from your profile page.
+                    </xar:mlstring>
+                </p>
+            </xar:sec>
+        <xar:elseif condition="!empty($user_account)" />
+            <br class="xar-clearboth" />
+            <xar:template type="module" module="twitter" file="userinfo" subdata="array('userinfo' =&gt; $user_account, 'statuslimit' =&gt; $user_status)" />
+        </xar:if>
+
+        <form method="post" name="tweetForm" action="&xar-modurl-twitter-user-tweet;">
+            <fieldset class="xar-alt-outline">
+                <legend class="xar-alt-outline">
+                    <xar:mlstring>Update Your Status</xar:mlstring>
+                </legend>
+                <xar:if condition="!empty($user_account)">
+                        <div class="xar-form-input-wrapper">
+                            <label for="screen_name" class="xar-form-label">
+                                <xar:mlstring>Twitter Screen Name</xar:mlstring>
+                            </label>
+                            <strong>#$user_account['screen_name']#</strong>
+                        </div>
+                     <xar:if condition="$associated">
+                       <div class="xar-form-input-wrapper">
+                            <label for="screen_name" class="xar-form-label">
+                                <xar:mlstring>Associated with</xar:mlstring>
+                            </label>
+                            <xar:data-output type="username" />
+                        </div>
+                    <xar:elseif condition="$rememberme" />
+                        <div class="xar-form-input-wrapper">
+                            <label for="screen_name" class="xar-form-label">
+                                <xar:mlstring>Associated With</xar:mlstring>:
+                            </label>
+                            <xar:ml>
+                                <xar:mlstring>Add your Screen Name and Password to <a href="#(1)">your profile</a> to associate with your account</xar:mlstring>
+                                <xar:mlvar>#xarModURL('roles', 'user', 'account', array('moduleload' => 'roles'))#</xar:mlvar>
+                            </xar:ml>
+                        </div>
+                    </xar:if>
+                <xar:else />
+                    <div class="xar-form-input-wrapper">
+                        <label for="screen_name" class="xar-form-label help">
+                            <xar:mlstring>Twitter Screen Name</xar:mlstring>
+                        </label>
+                        <input type="text" name="screen_name" id="screen_name" value="#$screen_name#" maxlength="64" class="xar-form-textmedium" autocomplete="off" />
+                        <xar:if condition="isset($invalid['screen_name'])">
+                            <span class="xar-error">#$invalid['screen_name']#</span>
+                        </xar:if>
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="username" class="xar-form-label help">
+                            <xar:mlstring>Twitter Password</xar:mlstring>
+                        </label>
+                        <input type="password" name="screen_pass" id="screen_pass" value="#$screen_pass#" maxlength="64" class="xar-form-textmedium" autocomplete="off" />
+                        <xar:if condition="isset($invalid['screen_pass'])">
+                            <span class="xar-error">#$invalid['screen_pass']#</span>
+                        </xar:if>
+                    </div>
+                    <xar:if condition="xarUserIsLoggedIn()">
+                        <p class="xar-form-container-after">
+                            <xar:data-input type="checkbox" name="rememberme" id="rememberme" checked="" />
+                            <label for="rememberme"><xar:mlstring>Remember me</xar:mlstring>?</label>
+                        </p>
+                    </xar:if>
                 </xar:if>
-                <p class="xar-form-container-after">
-                    <input readonly="readonly" type="text" name="remLen1" size="3" maxlength="3" value="140">
-<xar:mlstring>characters left</xar:mlstring>
-                  </p>
-            </div>
-        </fieldset>
-        <fieldset>
-            <div class="xar-form-input-wrapper-after">
-                <input type="hidden" name="phase" id="phase" value="update" />
-                <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <input type="submit" name="submit" id="submit" value="#xarML('Send tweet')#" />
-            </div>
-        </fieldset>
-    </form>
+                <div class="xar-form-input-wrapper">
+                    <label for="text" class="xar-form-label help">
+                        <xar:mlstring>What are you doing?</xar:mlstring>
+                    </label>
+                    <textarea name="text" id="text" cols="40" rows="4"
+    onKeyDown="textCounter(document.tweetForm.text,document.tweetForm.remLen1,140)"
+    onKeyUp="textCounter(document.tweetForm.text,document.tweetForm.remLen1,140)">#$text#</textarea>
+                    <xar:if condition="isset($invalid['text'])">
+                        <span class="xar-error">* <xar:mlstring>Invalid message</xar:mlstring></span>
+                    </xar:if>
+                    <p class="xar-form-container-after">
+                        <input readonly="readonly" type="text" name="remLen1" size="3" maxlength="3" value="140">
+    <xar:mlstring>characters left</xar:mlstring>
+                      </p>
+                </div>
+            </fieldset>
+            <fieldset class="xar-alt-outline">
+                <div class="xar-form-input-wrapper-after">
+                    <input type="hidden" name="phase" id="phase" value="update" />
+                    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                    <input type="submit" name="submit" id="submit" value="#xarML('Send tweet')#" />
+                </div>
+            </fieldset>
+        </form>
+     </xar:sec>
 </div>
 <xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>

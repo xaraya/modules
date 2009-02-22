@@ -58,6 +58,31 @@ function twitter_userapi_encode_shorturl($args)
     } elseif ($func == 'tweet') {
         $path[] = 'tweet';
         unset($get['func']);
+    } elseif ($func == 'view') {
+        $path[] = 'list';
+        unset($get['func']);
+    } elseif ($func == 'account') {
+        if (!empty($get['screen_name'])) {
+          $path[] = $screen_name;
+          unset($get['screen_name']);
+        } else {
+          $path[] = 'account';
+        }
+        if (!empty($get['tab'])) {
+          $path[] = $tab;
+          unset($get['tab']);
+        }
+        unset($get['func']);
+    } elseif ($func == 'display') {
+        if (!empty($get['screen_name'])) {
+          $path[] = $screen_name;
+          unset($get['screen_name']);
+        }
+        if (!empty($get['tab'])) {
+          $path[] = $tab;
+          unset($get['tab']);
+        }
+        unset($get['func']);
     } else {
         // anything else that you haven't defined a short URL equivalent for
         //  -> don't create a path here

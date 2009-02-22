@@ -86,7 +86,49 @@ function twitter_upgrade($oldversion)
         xarModSetVar('twitter', 'showuser', false);
         xarModSetVar('twitter', 'showfriends', false);
       case '0.0.2':
+        xarModSetVar('twitter', 'screen_name', '');
+        xarModSetVar('twitter', 'screen_pass', '');
+      case '0.0.3':
+        xarModSetVar('twitter', 'friends_timeline', 0);
+        xarModSetVar('twitter', 'user_timeline', 0);
+        xarModSetVar('twitter', 'profile_image', 0);
+        xarModSetVar('twitter', 'profile_description',0);
+        xarModSetVar('twitter', 'profile_location',0);
+        xarModSetVar('twitter', 'followers_count',0);
+        xarModSetVar('twitter', 'friends_count',0);
+        xarModSetVar('twitter', 'last_status',0);
+        xarRegisterMask('CommentTwitter',   'All', 'twitter', 'All', 'All', 'ACCESS_COMMENT');
 
+      case '0.0.4':
+        xarModSetVar('twitter', 'main_tab', '');
+        xarModSetVar('twitter', 'profile_tab', '');
+        xarModSetVar('twitter', 'statuses_count', 0);
+        xarModSetVar('twitter', 'favourites_display', 0);
+        xarModSetVar('twitter', 'friends_display', 0);
+        $public_timeline = xarModGetVar('twitter', 'showpublic');
+        xarModSetVar('twitter', 'public_timeline', $public_timeline);
+        $account_display (xarModGetVar('twitter', 'showuser') || xarModGetVar('twitter', 'showfriends')) ? true : false;
+        xarModSetVar('twitter', 'account_display', $account_display);
+        xarModSetVar('twitter', 'users_display', true);
+        $site_screen_name = xarModGetVar('twitter', 'username');
+        $site_screen_pass = xarModGetVar('twitter', 'password');
+        $site_screen_role = xarModGetVar('twitter', 'owner');
+        xarModSetVar('twitter', 'site_screen_pass', $site_screen_pass);
+        xarModSetVar('twitter', 'site_screen_name', $site_screen_name);
+        xarModSetVar('twitter', 'site_screen_role', $site_screen_role);
+
+        xarModDelVar('twitter', 'username');
+        xarModDelVar('twitter', 'password');
+        xarModDelVar('twitter', 'owner');
+        xarModDelVar('twitter', 'showpublic');
+        xarModDelVar('twitter', 'friends_timeline');
+        xarModDelVar('twitter', 'showuser');
+        xarModDelVar('twitter', 'showfriends');
+        xarModDelVar('twitter', 'screen_name');
+        xarModDelVar('twitter', 'screen_pass');
+      
+      // beta 1
+      case '0.1.0': 
       break;
     }
     /* Update successful */
