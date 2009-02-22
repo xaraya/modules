@@ -75,13 +75,15 @@ function twitter_user_tweet($args)
       if (empty($invalid)) {
         /* if we don't have a user account we need to validate this user */
         if (empty($data['user_account'])) {
-          $isvalid = xarModAPIFunc('twitter', 'user', 'account_methods',
+          $isvalid = xarModAPIFunc('twitter', 'user', 'rest_methods',
             array(
+              'area' => 'account',
               'method' => 'verify_credentials',
               'username' => $screen_name, 
               'password' => $screen_pass,
               'cache' => true,
-              'refresh' => 300
+              'refresh' => 300,
+              'superrors' => true
             ));
           if (!$isvalid) {
             $invalid['screen_name'] = xarML('*Unknown screen name or password');
@@ -90,12 +92,14 @@ function twitter_user_tweet($args)
         }
         /* if we've not tripped on the validations, we're good to send the update */
         if (empty($invalid)) {
-          $response = xarModAPIFunc('twitter', 'user', 'status_methods',
+          $response = xarModAPIFunc('twitter', 'user', 'rest_methods',
             array(
+              'area' => 'statuses',
               'method' => 'update',
               'username' => $screen_name,
               'password' => $screen_pass,
-              'status' => $text
+              'status' => $text,
+              'superrors' => true
             ));
           if (!$response) {
             $invalid[] = 'post';
