@@ -63,24 +63,41 @@
                 'application/x-www-form-urlencoded'
             </xar:set>
         </xar:if>
-        <form method="post" name="post" id="post" action="&xar-modurl-publications-admin-update;" enctype="#$enctype#" >
+        <form method="post" name="post" id="post" action="&xar-modurl-publications-user-update;" enctype="#$enctype#" >
+            <xar:set name="itemcount">count($items)</xar:set>
             <xar:template file="pagetabs" type="module" />
-            <xar:if condition="isset($tab) AND $tab eq 'preview'">
-                <xar:set name="visible">array('none','none','block')</xar:set>
-            <xar:else />
-                <xar:set name="visible">array('block','none','none')</xar:set>
-            </xar:if>
-            <div id="page-1" style="display: #$visible[0]#">
-                <xar:set name="contentfile">'content-' . $object->name</xar:set>
-                <xar:template file="$contentfile" type="module" />
-            </div>
-            <div id="page-2" style="display: #$visible[1]#">
-                <xar:template file="publication-settings" type="module" />
-            </div>
-            <div id="page-3" style="display: #$visible[2]#">
-                <fieldset class="xar-standard-box-padding xar-overflow-auto">
-                    <xar:data-display object="$object" tplmodule="publications"/>
-                </fieldset>
+            
+            <xar:set name="index">0</xar:set>
+            <xar:foreach in="$items" key="$key" value="$item">
+                <xar:set name="dummy">$object->setFieldValues($item)</xar:set>
+                <xar:set name="dummy">$object->setFieldPrefix($key)</xar:set>
+                <xar:if condition="isset($tab) AND $tab eq 'preview'">
+                    <xar:set name="visible">array('none','none','block')</xar:set>
+                <xar:else />
+                    <xar:set name="visible">array('block','none','none')</xar:set>
+                </xar:if>
+
+                <xar:set name="index">$index + 1</xar:set>
+                <div id="page-#$index#" style="display: #$visible[0]#">
+                    <xar:set name="contentfile">'content-' . $object->name</xar:set>
+                    <xar:template file="$contentfile" type="module" />
+                </div>
+
+                <xar:set name="index">$index + 1</xar:set>
+                <div id="page-#$index#" style="display: #$visible[1]#">
+                    <xar:template file="publication-settings" type="module" />
+                </div>
+
+                <xar:set name="index">$index + 1</xar:set>
+                <div id="page-#$index#" style="display: #$visible[2]#">
+                    <fieldset class="xar-standard-box-padding xar-overflow-auto">
+                    <!--
+                        <xar:data-display object="$object" tplmodule="publications" fieldprefix=$key/>
+                        -->
+                    </fieldset>
+                </div>
+            </xar:foreach>
+
                 <xar:if condition="!empty($prevart) || !empty($nextart)">
                     <div class="xar-normal xar-overflow-auto">
                         <xar:if condition="!empty($prevart)">
@@ -93,8 +110,6 @@
                     </div>
                 </xar:if>
                 <xar:template file="navtabs-user" type="module" />
-            </div>
-
 <!--            <div class="xar-form-input-wrapper">
                 <label class="xar-form-label help" title="#xarML('This is the category or categories this website is assigned to.')#">
                     <xar:mlstring>Categories</xar:mlstring>
@@ -107,6 +122,8 @@
                     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                     <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#" />
                     <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
+                    <xar:set name="itemkeys">implode(',',array_keys($items))</xar:set>
+                    <input type="hidden" name="items" id="items" value="#$itemkeys#" />
                     <input type="submit" name="preview" id="preview" value="#xarML('Create Preview')#" />
                     <input type="submit" value="#xarML('Update Document')#" />
                     <xar:comment>

@@ -110,7 +110,7 @@
       <type>integerbox</type>
       <defaultvalue>0</defaultvalue>
       <source>publication.parent_id</source>
-      <status>69</status>
+      <status>67</status>
       <seq>19</seq>
       <configuration>a:0:{}</configuration>
     </property>

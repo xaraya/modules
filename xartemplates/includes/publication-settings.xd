@@ -7,6 +7,7 @@
             <xar:var name="label">Document ID</xar:var>
             <xar:data-label property="$properties['id']" for="id" label="$label" />
             <xar:data-input property="$properties['id']" />
+            <xar:data-input property="$properties['parent']" hidden="hidden"/>
         </div>
         <div class="xar-form-input-wrapper">
             <xar:var name="label">Publication Type</xar:var>

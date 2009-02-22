@@ -25,15 +25,23 @@ function publications_user_modify($args)
     extract($args);
 
     // Get parameters
-    if (!xarVarFetch('itemid','isset', $id, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('itemid',     'isset', $id, NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('return_url', 'str:1', $data['return_url'], NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('name', 'str:1', $name, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('name',       'str:1', $name, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('tab',        'str:1', $tab, '', XARVAR_NOT_REQUIRED)) {return;}
+
+    // FIXME: this is too clumsy
+    $data['items'] = array();
+    $data['object'] = DataObjectMaster::getObjectList(array('name' => $name));
+    $where = "id = " . $id;
+    $items = $data['object']->getItems(array('where' => $where));
+    foreach ($items as $key => $value) $data['items'][$key] = $value;
+    $data['object'] = DataObjectMaster::getObjectList(array('name' => $name));
+    $where = "parent = " . $id;
+    $items = $data['object']->getItems(array('where' => $where));
+    foreach ($items as $key => $value) $data['items'][$key] = $value;
 
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
-    $data['object']->getItem(array('itemid' => $id));
-    $data['properties'] = $data['object']->getProperties();
-
-    $data['ptid'] = $data['properties']['itemtype']->value;
     
     if (!empty($ptid)) {
         $template = $pubtypes[$ptid]['name'];
@@ -42,6 +50,22 @@ function publications_user_modify($args)
        $template = null;
     }
 
+    $data['object'] = DataObjectMaster::getObject(array('name' => $name));
+    if ($tab == 'newtranslation') {
+        $data['object']->properties['parent']->setValue($id);
+        $data['items'][0] = $data['object']->getFieldValues();
+        $tab = '';
+    } else {
+        $data['object']->getItem(array('itemid' => $id));
+    }
+
+    // Send the publication type and the object properties to the tempate 
+    $data['properties'] = $data['object']->getProperties();
+    $data['ptid'] = $data['properties']['itemtype']->value;
+    
+    // Get the settings of the publication type we are using
+    $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
+    
     return xarTplModule('publications', 'user', 'modify', $data, $template);
 
 

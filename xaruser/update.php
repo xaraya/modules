@@ -28,6 +28,7 @@ function publications_user_update()
 {
     // Get parameters
     if(!xarVarFetch('itemid',       'isset', $itemid,       NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('items',        'str',   $items,       '', XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('ptid',         'isset', $data['ptid'],      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('modify_cids',  'isset', $cids,      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('preview',      'isset', $data['preview'],   NULL, XARVAR_DONT_SET)) {return;}
@@ -36,11 +37,23 @@ function publications_user_update()
     // This has been disabled for now
 //    if (!xarSecConfirmAuthKey()) return;
 
+    $items = explode(',',$items);
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $data['ptid']));
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
-    $isvalid = $data['object']->checkInput();
-    $data['object']->itemid = $data['object']->properties['id']->value;
+    
+    // First we need to check all the data on the template
+    // If checkInput fails, don't bail
+    $itemsdata = array();
+    $isvalid = true;
+    foreach ($items as $prefix) {
+        $data['object']->setFieldPrefix($prefix);
+        $thisvalid = $data['object']->checkInput();
+        $isvalid = $isvalid && $thisvalid;
+    // Store each item for later processing
+        $itemsdata[$prefix] = $data['object']->getFieldValues();
+    }
+//    var_dump($itemsdata);exit;
     
     if ($data['preview'] || !$isvalid) {
         // Preview or bad data: redisplay the form
@@ -49,13 +62,13 @@ function publications_user_update()
         return xarTplModule('publications','user','modify', $data);    
     }
     
-    if (empty($itemid) || !is_numeric($itemid)) {
+/*    if (empty($itemid) || !is_numeric($itemid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'item id', 'admin', 'update', 'Publications');
         throw new BadParameterException(null,$msg);
     }
 
-/*    if (!empty($cids) && count($cids) > 0) {
+    if (!empty($cids) && count($cids) > 0) {
         $article['cids'] = array_values(preg_grep('/\d+/',$cids));
     } else {
         $article['cids'] = array();
@@ -84,7 +97,14 @@ function publications_user_update()
     $article = xarModCallHooks('item', 'transform-input', $itemid, $article,
                                'publications', $data['ptid']);
 
-    $item = $data['object']->updateItem(array('itemid' => $itemid));
+    // Now talk to the database
+    foreach ($itemsdata as $itemid => $itemdata) {
+        $data['object']->setFieldValues($itemdata);
+        if (empty($itemid)) $item = $data['object']->createItem();
+        else $item = $data['object']->updateItem();
+    // Clear the itemid property in preparation for the next round
+        unset($data['object']->itemid);
+    }
 
     // Success
     xarSession::setVar('statusmsg', xarML('Publication Updated'));
