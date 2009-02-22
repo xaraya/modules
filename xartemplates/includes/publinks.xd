@@ -1,8 +1,8 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:set name="publinks">xarModAPIFunc('publications','user','getpublinks')</xar:set>
+    <xar:set name="publinks">xarModAPIFunc('publications','user','getpublinks')</xar:set>yyyy
     <xar:if condition="!empty($settings['showpublinks'])">
         <!-- show a link to all publication types -->
-        #$publabel# : 
+        #$publabel# :xxxx 
         <xar:foreach in="$publinks" value="$publink">
             #$publink['pubjoin']#
             <xar:if condition="empty($publink['publink'])">

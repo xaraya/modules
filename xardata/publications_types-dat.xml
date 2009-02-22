@@ -4,7 +4,7 @@
     <name>publications_news</name>
     <description>News Publication</description>
     <template></template>
-    <configuration>a:24:{s:17:"number_of_columns";s:1:"1";s:12:"itemsperpage";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";}</configuration>
+    <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:12:"itemsperpage";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:17:"allowtranslations";s:1:"1";}</configuration>
     <state>3</state>
   </publications_types>
   <publications_types itemid="2">
@@ -12,7 +12,7 @@
     <name>publications_documents</name>
     <description>Document</description>
     <template></template>
-    <configuration>a:24:{s:17:"number_of_columns";s:1:"1";s:12:"itemsperpage";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";}</configuration>
+    <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:12:"itemsperpage";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:17:"allowtranslations";s:1:"1";}</configuration>
     <state>3</state>
   </publications_types>
   <publications_types itemid="3">
@@ -20,7 +20,7 @@
     <name>publications_reviews</name>
     <description>Review</description>
     <template></template>
-    <configuration>a:24:{s:17:"number_of_columns";s:1:"1";s:12:"itemsperpage";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";}</configuration>
+    <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:12:"itemsperpage";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:17:"allowtranslations";s:1:"1";}</configuration>
     <state>3</state>
   </publications_types>
   <publications_types itemid="4">
@@ -28,7 +28,7 @@
     <name>publications_faqs</name>
     <description>FAQ</description>
     <template></template>
-    <configuration>a:24:{s:17:"number_of_columns";s:1:"1";s:12:"itemsperpage";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";}</configuration>
+    <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:12:"itemsperpage";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:17:"allowtranslations";s:1:"1";}</configuration>
     <state>3</state>
   </publications_types>
   <publications_types itemid="5">
@@ -36,7 +36,7 @@
     <name>publications_pictures</name>
     <description>Picture</description>
     <template></template>
-    <configuration>a:24:{s:17:"number_of_columns";s:1:"1";s:12:"itemsperpage";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";}</configuration>
+    <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:12:"itemsperpage";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:17:"allowtranslations";s:1:"1";}</configuration>
     <state>3</state>
   </publications_types>
   <publications_types itemid="6">
@@ -44,7 +44,7 @@
     <name>publications_weblinks</name>
     <description>Web Link</description>
     <template></template>
-    <configuration>a:24:{s:17:"number_of_columns";s:1:"1";s:12:"itemsperpage";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";}</configuration>
+    <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:12:"itemsperpage";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:17:"allowtranslations";s:1:"1";}</configuration>
     <state>3</state>
   </publications_types>
   <publications_types itemid="7">
@@ -52,7 +52,7 @@
     <name>publications_quotes</name>
     <description>Quote</description>
     <template></template>
-    <configuration>a:24:{s:17:"number_of_columns";s:1:"1";s:12:"itemsperpage";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";}</configuration>
+    <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:12:"itemsperpage";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:17:"allowtranslations";s:1:"1";}</configuration>
     <state>3</state>
   </publications_types>
   <publications_types itemid="8">
@@ -60,7 +60,7 @@
     <name>publications_downloads</name>
     <description>Download</description>
     <template></template>
-    <configuration>a:24:{s:17:"number_of_columns";s:1:"1";s:12:"itemsperpage";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";}</configuration>
+    <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:12:"itemsperpage";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:17:"allowtranslations";s:1:"1";}</configuration>
     <state>3</state>
   </publications_types>
   <publications_types itemid="9">
@@ -68,7 +68,7 @@
     <name>publications_translations</name>
     <description>Translation</description>
     <template></template>
-    <configuration>a:24:{s:17:"number_of_columns";s:1:"1";s:12:"itemsperpage";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";}</configuration>
+    <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:12:"itemsperpage";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:17:"allowtranslations";s:1:"1";}</configuration>
     <state>3</state>
   </publications_types>
   <publications_types itemid="10">
@@ -76,7 +76,7 @@
     <name>publications_generic</name>
     <description>Default Publication</description>
     <template></template>
-    <configuration>a:24:{s:17:"number_of_columns";s:1:"1";s:12:"itemsperpage";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";}</configuration>
+    <configuration>a:25:{s:17:"number_of_columns";s:1:"1";s:12:"itemsperpage";s:2:"20";s:11:"defaultview";s:8:"Sections";s:14:"showcategories";s:1:"0";s:12:"showcatcount";s:1:"0";s:12:"showprevnext";s:1:"1";s:12:"showcomments";s:1:"0";s:13:"showhitcounts";s:1:"0";s:11:"showratings";s:1:"0";s:12:"showarchives";s:1:"0";s:7:"showmap";s:1:"1";s:12:"showpublinks";s:1:"0";s:12:"showpubcount";s:1:"1";s:11:"dotransform";s:1:"0";s:14:"titletransform";s:1:"0";s:11:"prevnextart";s:1:"1";s:8:"usealias";s:1:"0";s:13:"page_template";s:0:"";s:12:"defaultstate";s:1:"2";s:11:"defaultsort";s:4:"date";s:12:"showkeywords";s:0:"";s:10:"showsubmit";s:0:"";s:17:"adminitemsperpage";s:0:"";s:19:"defaultprocessstate";s:0:"";s:17:"allowtranslations";s:1:"1";}</configuration>
     <state>3</state>
   </publications_types>
 </items>

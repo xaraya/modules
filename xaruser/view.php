@@ -527,6 +527,11 @@ function publications_user_view($args)
     $object = DataObjectMaster::getObjectList(array('name' => $data['pubtypeobject']->properties['name']->value));
     $data['items'] = $object->getItems();
     $data['object'] = DataObjectMaster::getObject(array('name' => $data['pubtypeobject']->properties['name']->value));
+    
+    // Only show top level documents, not translations
+    $q = new Query();
+    $q->eq('parent_id',0);
+    $data['conditions'] = $q;
 
     // Throw all the relevant settings we are using into the cache
     $data['settings']['pubtypeobject'] = $data['pubtypeobject'];

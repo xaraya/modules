@@ -33,7 +33,7 @@ function publications_user_new($args)
     if (!xarVarFetch('catid',       'str',   $catid,      NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('itemtype',    'id',    $itemtype,   NULL, XARVAR_NOT_REQUIRED)) {return;}
 
-    $data['catid'] = $catid;
+/*    $data['catid'] = $catid;
 
     if (!isset($article)) {
         $article = array();
@@ -97,14 +97,14 @@ function publications_user_new($args)
         $pubfilters[] = $pubitem;
     }
     $data['pubfilters'] = $pubfilters;
-
+*/
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $data['ptid']));
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
     $data['properties'] = $data['object']->getProperties();
 
     if (!empty($data['ptid'])) {
-        $template = $pubtypes[$data['ptid']]['name'];
+        $template = $pubtypeobject->properties['template']->value;
     } else {
 // TODO: allow templates per category ?
        $template = null;
