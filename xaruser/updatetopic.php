@@ -109,6 +109,8 @@ function xarbb_user_updatetopic()
         if (!xarModAPIFunc('xarbb', 'user', 'replynotify', array('tid' => $tid))) {
             return;
         }
+        // Bug 6337: get the cid for the reply return fragment
+        $cid = $comments[$totalcomments-1]['xar_cid'];
     }
 
     $forumreturn = xarModURL('xarbb', 'user', 'viewforum', array('fid' => $data['fid']));
