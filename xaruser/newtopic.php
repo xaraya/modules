@@ -249,6 +249,10 @@ function xarbb_user_newtopic()
                 )
             );
 
+            // The refresh data is used by the Meta block
+            xarVarSetCached('Meta.refresh','url', $topicreturn);
+            xarVarSetCached('Meta.refresh','time', 2);
+            
             return $markup;
     } // Switch $phase
 
