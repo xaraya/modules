@@ -33,15 +33,18 @@ function ievents_userapi_format_datetime($args)
     if (!xarVarValidate('int', $enddate, true)) $enddate = NULL;
 
     // TODO: The templates to be defined centrally.
-    $ml_single_date = '#(1)';
+    $ml_allday = xarML('all day');
+
+    // all these variables were NOT localized. That's why it's duplicated. TODO: do it better
+    /*
+    $ml_single_date = '#(1)'; // useless
     $ml_startend_date = '#(1) to #(2)';
     $ml_from_date = '#(1) to TBC';
-
-    $ml_unknown_time = '';
-    $ml_allday = 'all day';
+    $ml_unknown_time = ''; // used nowhere
     $ml_start_time = 'starts #(1)';
     $ml_startend_time = 'starts #(1) ends #(2)';
     $ml_startend_time_dur = '#(1) to #(2) (duration #(3))';
+     */
 
     $short_date = '';
     $medium_date = '';
@@ -53,47 +56,47 @@ function ievents_userapi_format_datetime($args)
     // Is event open-ended (no end date?)
     if (!isset($enddate)) {
         // Event is open-ended
-        $short_date = xarML($ml_from_date, xarLocaleGetFormattedDate('short', $startdate));
-        $medium_date = xarML($ml_from_date, xarLocaleGetFormattedDate('medium', $startdate));
-        $long_date = xarML($ml_from_date, xarLocaleGetFormattedDate('long', $startdate));
+        $short_date = xarML('#(1) to TBC', xarLocaleGetFormattedDate('short', $startdate));
+        $medium_date = xarML('#(1) to TBC', xarLocaleGetFormattedDate('medium', $startdate));
+        $long_date = xarML('#(1) to TBC', xarLocaleGetFormattedDate('long', $startdate));
 
         if ($all_day == 'T') {
             // Just a single start date.
             // All-day times are dealt with below.
             // TODO: don't display any time if in summary page
 
-            $short_time = xarML($ml_start_time, xarLocaleGetFormattedTime('short', $startdate));
-            $medium_time = xarML($ml_start_time, xarLocaleGetFormattedTime('medium', $startdate));
-            $long_time = xarML($ml_start_time, xarLocaleGetFormattedTime('long', $startdate));
+            $short_time = xarML('starts #(1)', xarLocaleGetFormattedTime('short', $startdate));
+            $medium_time = xarML('starts #(1)', xarLocaleGetFormattedTime('medium', $startdate));
+            $long_time = xarML('starts #(1)', xarLocaleGetFormattedTime('long', $startdate));
         }
     } elseif (date('Ymd', $startdate) == date('Ymd', $enddate)) {
         // Same day
-        $short_date = xarML($ml_single_date, xarLocaleGetFormattedDate('short', $startdate));
-        $medium_date = xarML($ml_single_date, xarLocaleGetFormattedDate('medium', $startdate));
-        $long_date = xarML($ml_single_date, xarLocaleGetFormattedDate('long', $startdate));
+        $short_date = xarML('#(1)', xarLocaleGetFormattedDate('short', $startdate));
+        $medium_date = xarML('#(1)', xarLocaleGetFormattedDate('medium', $startdate));
+        $long_date = xarML('#(1)', xarLocaleGetFormattedDate('long', $startdate));
 
         if ($all_day == 'T') {
             // Timed event - show the times.
             if ($enddate == $startdate) {
                 // Duration is zero - don't have an effective end date
-                $short_time = xarML($ml_start_time, xarLocaleGetFormattedTime('short', $startdate));
-                $medium_time = xarML($ml_start_time, xarLocaleGetFormattedTime('medium', $startdate));
-                $long_time = xarML($ml_start_time, xarLocaleGetFormattedTime('long', $startdate));
+                $short_time = xarML('starts #(1)', xarLocaleGetFormattedTime('short', $startdate));
+                $medium_time = xarML('starts #(1)', xarLocaleGetFormattedTime('medium', $startdate));
+                $long_time = xarML('starts #(1)', xarLocaleGetFormattedTime('long', $startdate));
             } else {
                 // Non-zero duration
                 // Calculate the duration.
                 $duration = ievents_userapi_format_datetime_duration($startdate, $enddate);
 
-                $short_time = xarML($ml_startend_time_dur, xarLocaleGetFormattedTime('short', $startdate), xarLocaleGetFormattedTime('short', $enddate), $duration);
-                $medium_time = xarML($ml_startend_time_dur, xarLocaleGetFormattedTime('medium', $startdate), xarLocaleGetFormattedTime('medium', $enddate), $duration);
-                $long_time = xarML($ml_startend_time_dur, xarLocaleGetFormattedTime('long', $startdate), xarLocaleGetFormattedTime('long', $enddate), $duration);
+                $short_time = xarML('#(1) to #(2) (duration #(3))', xarLocaleGetFormattedTime('short', $startdate), xarLocaleGetFormattedTime('short', $enddate), $duration);
+                $medium_time = xarML('#(1) to #(2) (duration #(3))', xarLocaleGetFormattedTime('medium', $startdate), xarLocaleGetFormattedTime('medium', $enddate), $duration);
+                $long_time = xarML('#(1) to #(2) (duration #(3))', xarLocaleGetFormattedTime('long', $startdate), xarLocaleGetFormattedTime('long', $enddate), $duration);
             }
         }
     } else {
         // Multiple-day
-        $short_date = xarML($ml_startend_date, xarLocaleGetFormattedDate('short', $startdate), xarLocaleGetFormattedDate('short', $enddate));
-        $medium_date = xarML($ml_startend_date, xarLocaleGetFormattedDate('medium', $startdate), xarLocaleGetFormattedDate('medium', $enddate));
-        $long_date = xarML($ml_startend_date, xarLocaleGetFormattedDate('long', $startdate), xarLocaleGetFormattedDate('long', $enddate));
+        $short_date = xarML('#(1) to #(2)', xarLocaleGetFormattedDate('short', $startdate), xarLocaleGetFormattedDate('short', $enddate));
+        $medium_date = xarML('#(1) to #(2)', xarLocaleGetFormattedDate('medium', $startdate), xarLocaleGetFormattedDate('medium', $enddate));
+        $long_date = xarML('#(1) to #(2)', xarLocaleGetFormattedDate('long', $startdate), xarLocaleGetFormattedDate('long', $enddate));
 
         if ($all_day == 'T') {
             // Just a single start date.
@@ -101,17 +104,15 @@ function ievents_userapi_format_datetime($args)
             // TODO: don't display if in summary page
 
             // TODO: don't display any time if in summary page
-            $short_time = xarML($ml_startend_time, xarLocaleGetFormattedTime('short', $startdate), xarLocaleGetFormattedTime('short', $enddate));
-            $medium_time = xarML($ml_startend_time, xarLocaleGetFormattedTime('medium', $startdate), xarLocaleGetFormattedTime('medium', $enddate));
-            $long_time = xarML($ml_startend_time, xarLocaleGetFormattedTime('long', $startdate), xarLocaleGetFormattedTime('long', $enddate));
+            $short_time = xarML('starts #(1) ends #(2)', xarLocaleGetFormattedTime('short', $startdate), xarLocaleGetFormattedTime('short', $enddate));
+            $medium_time = xarML('starts #(1) ends #(2)', xarLocaleGetFormattedTime('medium', $startdate), xarLocaleGetFormattedTime('medium', $enddate));
+            $long_time = xarML('starts #(1) ends #(2)', xarLocaleGetFormattedTime('long', $startdate), xarLocaleGetFormattedTime('long', $enddate));
         }
     }
 
     // Time is 'all day' if the flag is set.
     if ($all_day == 'A') {
-        $short_time = xarML($ml_allday);
-        $medium_time = xarML($ml_allday);
-        $long_time = xarML($ml_allday);
+        $short_time = $medium_time = $long_time = $ml_allday;
     }
 
     
