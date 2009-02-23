@@ -107,7 +107,7 @@ function twitter_upgrade($oldversion)
         xarModSetVar('twitter', 'friends_display', 0);
         $public_timeline = xarModGetVar('twitter', 'showpublic');
         xarModSetVar('twitter', 'public_timeline', $public_timeline);
-        $account_display (xarModGetVar('twitter', 'showuser') || xarModGetVar('twitter', 'showfriends')) ? true : false;
+        $account_display = (xarModGetVar('twitter', 'showuser') || xarModGetVar('twitter', 'showfriends')) ? true : false;
         xarModSetVar('twitter', 'account_display', $account_display);
         xarModSetVar('twitter', 'users_display', true);
         $site_screen_name = xarModGetVar('twitter', 'username');
