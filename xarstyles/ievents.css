@@ -428,6 +428,7 @@ table.ievents-calendar-smallmonth {
 table.ievents-calendar-smallmonth th {
 	width: 14%;
 	border: 1px solid;
+	text-align: center;
 }
 table.ievents-calendar-smallmonth td {
 	width: 14%;

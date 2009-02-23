@@ -89,19 +89,27 @@ function ievents_monthblock_display($blockinfo)
     $cal = new ieventsCalendar;
 
     $cal->cid = $vars['cid'];
-
     $cal->calFormat = 'smallMonth';
-    $cal->monthFormat = 'short';
 
-    if(xarVarValidate('enum:long:short:xshort:xxshort', $vars['dowformat'])) {
-      $cal->DOWformat = $vars['dowformat'];
+    if(xarVarValidate('enum:long:short', $vars['monthformat'], true)) {
+      $cal->monthFormat = $vars['monthformat'];
+    } else {
+      $cal->monthFormat = 'short';
     }
-    else {
+
+    if(xarVarValidate('enum:long:short:xshort:xxshort', $vars['dowformat'], true)) {
+      $cal->DOWformat = $vars['dowformat'];
+    } else {
       $cal->DOWformat = 'xxshort';
     }
 
+    if(!empty($vars['showtitle']) && xarVarValidate('bool', $vars['showtitle'])) {
+       $cal->showTitle = $vars['showtitle'];
+    } else {
+       $cal->showTitle = true;
+    }
+
     if(xarVarValidate('bool', $vars['linkmonth'])) $cal->linkMonth = $vars['linkmonth'];
-    if(xarVarValidate('bool', $vars['showtitle'])) $cal->showTitle = $vars['showtitle'];
 
     $cal->displayPrevNext = false;
     $cal->displayEvents = true;
