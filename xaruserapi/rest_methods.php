@@ -119,6 +119,9 @@ function twitter_userapi_rest_methods($args)
           $return_method = 'status_elements';
           $cached = true;
           $refresh = 60;
+          if (!empty($count)) {
+            $get['count'] = urlencode($count);
+          }
         break;
         /** public timeline 
          *  returns an array of status elements 

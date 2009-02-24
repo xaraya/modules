@@ -126,7 +126,8 @@ function twitter_admin_modifyconfig()
                   'username' => $username, 
                   'password' => $password,
                   'cached' => true,
-                  'refresh' => 3600
+                  'refresh' => 3600,
+                  'superrors' => true
                 ));
               if (!$isvalid) {
                 $invalid['username'] = xarML('*Invalid username or password');
