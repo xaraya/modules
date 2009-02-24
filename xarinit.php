@@ -112,7 +112,7 @@ function twitter_upgrade($oldversion)
         xarModSetVar('twitter', 'users_display', true);
         $site_screen_name = xarModGetVar('twitter', 'username');
         $site_screen_pass = xarModGetVar('twitter', 'password');
-        $site_screen_role = xarModGetVar('twitter', 'owner');
+        $site_screen_role = xarModGetVar('roles', 'admin');
         xarModSetVar('twitter', 'site_screen_pass', $site_screen_pass);
         xarModSetVar('twitter', 'site_screen_name', $site_screen_name);
         xarModSetVar('twitter', 'site_screen_role', $site_screen_role);
