@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -69,10 +69,16 @@ function articles_admin_modify($args)
         xarVarSetCached('Hooks.uploads','ishooked',1);
     }
 
-    // Use articles user GUI function (not API) for preview
+    // Use articles user GUI function (not API) for preview, catch exceptions
     if (!xarModLoad('articles','user')) return;
     $data['preview'] = xarModFunc('articles', 'user', 'display',
                                   array('preview' => true, 'article' => $article));
+    // Catch errors from generating the preview
+    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) {
+        $data['preview'] = xarML('An error occurred while processing your request. The details are:');
+        $data['preview'] .= xarErrorRender('text', 'ERROR', true);
+        xarErrorHandled();
+    } 
 
     // preset some variables for hook modules
     $article['module'] = 'articles';

@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2008 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -38,7 +38,7 @@ function articles_admin_create()
             // Catch exception and fall back to preview
             $msg = xarErrorRender('text') . "<br />";
             $msg .= xarML('Article was <strong>NOT</strong> saved, please retry.');
-            xarErrorFree();
+            xarErrorHandled();
             // Save the error message if we are not in preview
             if (!isset($preview)) {
                 xarSessionSetVar('statusmsg', $msg);
@@ -156,6 +156,7 @@ function articles_admin_create()
     $aid = xarModAPIFunc('articles', 'admin', 'create', $article);
 
     if ($aid == false) {
+        // TODO: Avoid dataloss with falling back to preview
         // Throw back any system exceptions (e.g. database failure)
         if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION) {
             return; // throw back
