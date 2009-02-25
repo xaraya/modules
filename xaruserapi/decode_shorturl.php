@@ -68,7 +68,7 @@ function twitter_userapi_decode_shorturl($params)
           if (!empty($userdd) && strpos($userdd, ',') !== false) {
             list ($user_screen_name) = explode(',', $userdd);
           }
-          if (!empty($user_screen_name)) {
+          if (!empty($user_screen_name) && $screen_name == $user_screen_name) {
             $urlparam = 'account';
           }
         }
