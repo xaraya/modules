@@ -121,7 +121,6 @@
             </fieldset>
         <xar:comment> ----------------- Begin Site Configuration ---------------- </xar:comment>
         <xar:elseif condition="$tab eq 'site'" />
-            <xar:template type="module" module="twitter" file="userinfo" />
             <fieldset>
                 <legend>
                     <xar:mlstring>Site Twitter Account</xar:mlstring>
