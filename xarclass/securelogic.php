@@ -9,6 +9,7 @@
  * @subpackage Formantibot
  * @copyright (C) 2008 2skies.com
  * @link http://xarigami.com/project/formantibot
+ * @author Carl P. Corliss <carl.corliss@xaraya.com>
  * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 

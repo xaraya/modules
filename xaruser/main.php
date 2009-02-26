@@ -2,15 +2,14 @@
 /**
  * isformantiboted function
  *
- * @package Modules
- * @copyright (C) 2002-2009 by The Digital Development Foundation
+ * @package Xaraya modules
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
+ * @link http://xaraya.com
  *
- * @subpackage formantibot
- * @link http://xaraya.com/index.php/release/761.html   
+ * @subpackage Formantibot
+ * @copyright (C) 2008 2skies.com
+ * @link http://xarigami.com/project/formantibot
  */
-
 /**
  * Verifies whether a domain is formantiboted or not
  *

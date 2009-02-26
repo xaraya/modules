@@ -12,9 +12,8 @@
  * @link http://xarigami.com/project/formantibot
  */
 /*
- * @author original pradeep
+ * @author original pradeep  http://www.go4expert.com
  * @author Jo Dalle Nogare icedlava@2skies.com - working version for xaraya
- * http://www.go4expert.com
  */
  
 function formantibot_userapi_rgb2hex2rgb($args)
