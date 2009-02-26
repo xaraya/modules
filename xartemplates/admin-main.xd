@@ -11,25 +11,49 @@
   <h3><xar:mlstring>What is it?</xar:mlstring></h3>
   <p>
     <em><xar:mlstring>Twitter Module provides a wrapper for Twitters API functions.</xar:mlstring></em>
-    <xar:mlstring>It is currently responsible for accomplishing two main tasks:</xar:mlstring>
+    <xar:mlstring>It is currently responsible for accomplishing these main tasks:</xar:mlstring>
   </p>
   <ol>
-    <li><xar:mlstring>Providing a display of public timelines, optionally displaying a specific user timeline or user and friends timeline.</xar:mlstring></li>
-    <li><xar:mlstring>Providing a means to update your status at Twitter.</xar:mlstring></li>
-
+    <li><xar:mlstring>Provide a means to send status updates to your Twitter account from your site</xar:mlstring></li>
+    <li><xar:mlstring>Optionally display the Twitter public timeline</xar:mlstring></li>
+    <li><xar:mlstring>Optionally display a specific user timeline associated with your site.</xar:mlstring></li>
+    <li><xar:mlstring>Optionally allow users to update their Twitter status from your site.</xar:mlstring></li>
+    <li><xar:mlstring>Optionally display users Twitter account info in their profiles</xar:mlstring></li>
   </ol>
   <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
-  <p>
-    <xar:mlstring>TODO //</xar:mlstring>
-  </p>
+  <ul>
+        <li>
+            <h4><xar:mlstring>Modify Config</xar:mlstring></h4>
+            <ol>
+                <li>
+                    <xar:mlstring>Module</xar:mlstring>
+                    <br />
+                    - <xar:mlstring>Configure the modules shorturl and alias options</xar:mlstring>
+                    <br />
+                    - <xar:mlstring>Configure the tabs to display, and default tab to show for user main function</xar:mlstring>
+                </li>
+                <li>
+                    <xar:mlstring>Site</xar:mlstring>
+                    <br />
+                    - <xar:mlstring>Configure the site account and owner</xar:mlstring>
+                </li>
+                <li>
+                    <xar:mlstring>Users</xar:mlstring>
+                    <br />
+                    - <xar:mlstring>Configure user profile options</xar:mlstring>
+                </li>
+            </ol>
+        </li>
+  </ul>
 
   <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
   <ul>
-    <li><xar:mlstring>timeline -- Allows you to display public, user, or friends timeline within a block</xar:mlstring></li>
+    <li><xar:mlstring>timeline -- Allows you to display public or a user timeline within a block</xar:mlstring></li>
   </ul>
 
-  <h3><xar:mlstring>Included Hooks (not yet)</xar:mlstring></h3>
-  <ul>
+  <h3><xar:mlstring>Included Hooks (TODO)</xar:mlstring></h3>
+<xar:comment>
+    <ul>
     <li><xar:mlstring>Create -- Allows a status to be sent for a specified user when new items are created. Status will include a link to the item, you can optionally specify a field to use as the status.</xar:mlstring></li>
   </ul>
   <p>
@@ -42,10 +66,14 @@
     <xar:mlstring> From there choose the module(s) and/or itemtype(s) you want to activate create hooks for. You can then configure settings per module/itemtype either from</xar:mlstring> <a href="#xarModURL('twitter', 'admin', 'modifyconfig')#"><xar:mlstring>Twitter - Modify Config</xar:mlstring></a> <xar:mlstring> itself, or from the modify config function of the module you hooked to by enabling 'Allow hook over-rides'.
     </xar:mlstring>
   </p>
+</xar:comment>
 
   <h3><xar:mlstring>Included Dynamic Data Properties</xar:mlstring></h3>
   <ul>
-    <li><xar:mlstring>Twitter provides no dynamic data properties at this time</xar:mlstring></li>
+    <li><xar:mlstring>Twitter provides a twitterscreenname property</xar:mlstring>
+    <br />
+    - <xar:mlstring>Add a twitterscreenname property to the Roles Users dynamicdata object. Once added your users will be able to enter an account name and password. Their Twitter profile will display in their user account profile, and will also be listed in the Users tab (if you enable it in Module Modify Config).</xar:mlstring>
+    </li>
 
   </ul>
 
@@ -56,10 +84,8 @@
     <xar:mlstring>Further information on the Twitter module can be found at</xar:mlstring>
   </p>
   <ul>
-    <xar:comment>
     <li><a title="#xarML('Xaraya Twitter Module')#" href="http://crispcreations.co.uk/xar/mods/twitter"><xar:mlstring>Twitter Module home page</xar:mlstring></a> <xar:mlstring> at CrispCreations</xar:mlstring>
     </li>
-    </xar:comment>
     <li><xar:mlstring>Twitter Extension page at</xar:mlstring> <a title="#xarML('Twitter Module - Xaraya Extension 991')#" href="http://www.xaraya.com/index.php/release/991.html"><xar:mlstring>Xaraya Extension and Releases</xar:mlstring></a>.
       <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
     </li>
