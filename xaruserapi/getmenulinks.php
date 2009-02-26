@@ -1,9 +1,9 @@
 <?php
 /**
- * Twitter Module 
+ * Twitter Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,17 +14,17 @@
 
 /**
  * Utility function pass individual menu items to the main menu
- * 
+ *
  * @author Chris Powis (crisp@crispcreations.co.uk)
  * @return array containing the menulinks for the main menu items.
  */
 function twitter_userapi_getmenulinks()
-{ 
+{
 
     /* Visitors with only view privs */
     if (xarSecurityCheck('ViewTwitter', 0) && xarModGetVar('twitter', 'public_timeline')) {
       $menulinks[] = array(
-          'url'   => xarModURL('twitter','user','main'), 
+          'url'   => xarModURL('twitter','user','main'),
           'title' => xarML('Display twitter timeline'),
           'label' => xarML('Public Timeline')
       );
@@ -34,7 +34,7 @@ function twitter_userapi_getmenulinks()
       $site_screen_name = xarModGetVar('twitter', 'site_screen_name');
       if (!empty($site_screen_name) && (xarModGetVar('twitter', 'account_display') || xarUserGetVar('uid') == xarModGetVar('site_screen_role'))) {
         $menulinks[] = array(
-          'url'   => xarModURL('twitter','user','display', array('screen_name' => $site_screen_name)), 
+          'url'   => xarModURL('twitter','user','display', array('screen_name' => $site_screen_name)),
           'title' => xarML('Display twitter timeline'),
           'label' => $site_screen_name
         );
@@ -45,13 +45,13 @@ function twitter_userapi_getmenulinks()
       $user_screen_name = xarSessionGetVar('twitter_screen_name');
       if (!empty($user_screen_name)) {
           $menulinks[] = array(
-              'url'   => xarModURL('twitter','user','display', array('screen_name' => $user_screen_name)), 
+              'url'   => xarModURL('twitter','user','display', array('screen_name' => $user_screen_name)),
               'title' => xarML('Display twitter timeline'),
               'label' => $user_screen_name
           );
       } else {
           $menulinks[] = array(
-              'url'   => xarModURL('twitter','user','tweet'), 
+              'url'   => xarModURL('twitter','user','tweet'),
               'title' => xarML('Send Twitter Update'),
               'label' => xarML('New Tweet')
           );
@@ -62,7 +62,7 @@ function twitter_userapi_getmenulinks()
       $t_fieldname = xarModGetVar('twitter', 'fieldname');
       if (!empty($t_fieldname)) {
           $menulinks[] = array(
-              'url'   => xarModURL('twitter','user','view'), 
+              'url'   => xarModURL('twitter','user','view'),
               'title' => xarML('View site twitter users'),
               'label' => xarML('Users')
           );
@@ -79,7 +79,7 @@ function twitter_userapi_getmenulinks()
       }
       if (!empty($user_screen_name)) {
           $menulinks[] = array(
-              'url'   => xarModURL('twitter','user','account', array('screen_name' => $user_screen_name)), 
+              'url'   => xarModURL('twitter','user','account', array('screen_name' => $user_screen_name)),
               'title' => xarML('Display twitter timeline'),
               'label' => $user_screen_name
           );
@@ -90,5 +90,5 @@ function twitter_userapi_getmenulinks()
         $menulinks = '';
     }
     return $menulinks;
-} 
+}
 ?>

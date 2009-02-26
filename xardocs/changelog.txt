@@ -1,4 +1,4 @@
-Third point upgrade to v0.0.2 
+Third point upgrade to v0.0.2
 
 Function changes
 + Updated function headers
@@ -15,7 +15,7 @@ GUI changes to admin-modifyconfig.xd
 + Added options for which timelines to display
 + Added option to specify default timeline
 
-GUI changes to admin-main.xd 
+GUI changes to admin-main.xd
 + Updated Overview
 
 GUI changes to /includes/user-menu.xd

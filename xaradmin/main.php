@@ -1,9 +1,9 @@
 <?php
 /**
- * Twitter Module 
+ * Twitter Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -23,7 +23,7 @@ function twitter_admin_main()
 {
    /* Security Check */
     if (!xarSecurityCheck('AdminTwitter',0)) return;
-    
+   
     // get the tabs :)
     $data=xarModAPIFunc('twitter', 'user', 'menu', array('modtype' => 'admin', 'modfunc' => 'main'));
     // get current module version for display

@@ -1,9 +1,9 @@
 <?php
 /**
- * Twitter Module 
+ * Twitter Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,12 +14,12 @@
 
 /**
  * Utility function to prep menu for display
- * 
+ *
  * @author Chris Powis (crisp@crispcreations.co.uk)
  * @return array containing the menulinks for the main menu items.
  */
 function twitter_userapi_menu($args)
-{ 
+{
     extract($args);
     /* set some defaults */
     $menu = $data = array();
@@ -62,20 +62,20 @@ function twitter_userapi_menu($args)
           ));
       }
     }
-    
+   
     /* if current user is owner of the site account, we get them the current rate limit status */
     if (!empty($site_account) && $site_owner) {
       $site_status = xarModAPIFunc('twitter', 'user', 'rest_methods',
         array(
           'area' => 'account',
           'method' => 'rate_limit_status',
-          'username' => $site_screen_name, 
+          'username' => $site_screen_name,
           'password' => $site_screen_pass,
           'cached' => false,
           'superrors' => true
-        ));   
+        ));  
     }
-    
+   
     $data['site_account'] = $site_account;
     $data['site_status'] = $site_status;
     $data['isowner'] = $site_owner;
@@ -94,9 +94,9 @@ function twitter_userapi_menu($args)
           /* if we found a fieldname, we get the dd object property */
           $object = xarModAPIFunc('dynamicdata', 'user', 'getitem',
             array(
-              'module' => 'roles', 
-              'itemtype' => 0, 
-              'itemid' => xarUserGetVar('uid'), 
+              'module' => 'roles',
+              'itemtype' => 0,
+              'itemid' => xarUserGetVar('uid'),
               'fieldlist' => $t_fieldname
             ));
           /* we got a valid property, so we get its value */
@@ -116,9 +116,9 @@ function twitter_userapi_menu($args)
           /* this is a one time deal, we store this for future use throughout the module */
           $object = xarModAPIFunc('dynamicdata', 'user', 'getitem',
             array(
-              'module' => 'roles', 
-              'itemtype' => 0, 
-              'itemid' => xarUserGetVar('uid'), 
+              'module' => 'roles',
+              'itemtype' => 0,
+              'itemid' => xarUserGetVar('uid'),
               'getobject' => true
             ));
           /* having got the object, we look for the twitterscreenname property id */
@@ -138,7 +138,7 @@ function twitter_userapi_menu($args)
           /* if we found a new fieldname, we store it now */
           if (!empty($t_fieldname)) {
             xarModSetVar('twitter', 'fieldname', $t_fieldname);
-          } 
+          }
         }
 
         /* see if we got a username,password combo from dd */
@@ -174,11 +174,11 @@ function twitter_userapi_menu($args)
               array(
                 'area' => 'users',
                 'method' => 'show',
-                'username' => $user_screen_name, 
+                'username' => $user_screen_name,
                 'cached' => true,
                 'refresh' => 3600, // user is currently active in this module, so we refresh cache frequently (1 min)
                 'superrors' => true
-              )); 
+              ));
           /* otherwise we validate credentials for this user */
           /* this means we got a name and password */
           /* in this case the user account function will be displayed to the user when viewing this profile */
@@ -188,7 +188,7 @@ function twitter_userapi_menu($args)
               array(
                 'area' => 'account',
                 'method' => 'verify_credentials',
-                'username' => $user_screen_name, 
+                'username' => $user_screen_name,
                 'password' => $user_screen_pass,
                 'cached' => true,
                 'refresh' => 300, // user is currently active in this module, so we refresh cache frequently (1 min)
@@ -209,7 +209,7 @@ function twitter_userapi_menu($args)
               }
             }
           }
-        } 
+        }
       }
     }
 
@@ -219,7 +219,7 @@ function twitter_userapi_menu($args)
         array(
           'area' => 'account',
           'method' => 'rate_limit_status',
-          'username' => $user_screen_name, 
+          'username' => $user_screen_name,
           'password' => $user_screen_pass,
           'cache' => false,
           'refresh' => 1,
@@ -333,5 +333,5 @@ function twitter_userapi_menu($args)
     $data['usermenu'] = $menu_links;
 
     return $data;
-} 
+}
 ?>

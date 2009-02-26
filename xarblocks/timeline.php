@@ -1,9 +1,9 @@
 <?php
 /**
- * Twitter Module 
+ * Twitter Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -76,11 +76,11 @@ function twitter_timelineblock_display($blockinfo)
     $vars['password'] = !isset($vars['password']) ? $defaults['password'] : $vars['password'];
     $vars['numitems'] = !isset($vars['numitems']) ? $defaults['numitems'] : $vars['numitems'];
     $vars['truncate'] = !isset($vars['truncate']) ? $defaults['truncate'] : $vars['truncate'];
-    $vars['showimages'] = !isset($vars['showimages']) ? $defaults['showimages'] : $vars['showimages']; 
+    $vars['showimages'] = !isset($vars['showimages']) ? $defaults['showimages'] : $vars['showimages'];
     $vars['showmyimage'] = !isset($vars['showmyimage']) ? $defaults['showmyimage'] : $vars['showmyimage'];
     $vars['showsource'] = !isset($vars['showsource']) ? $defaults['showsource'] : $vars['showsource'];
-    $vars['showmodule'] = !isset($vars['showmodule']) ? $defaults['showmodule'] : $vars['showmodule']; 
-    $vars['showfollow'] = !isset($vars['showfollow']) ? $defaults['showfollow'] : $vars['showfollow']; 
+    $vars['showmodule'] = !isset($vars['showmodule']) ? $defaults['showmodule'] : $vars['showmodule'];
+    $vars['showfollow'] = !isset($vars['showfollow']) ? $defaults['showfollow'] : $vars['showfollow'];
     $vars['timeline'] = !isset($vars['timeline']) ? $defaults['timeline'] : $vars['timeline'];
 
     $items = xarModAPIFunc('twitter', 'user', 'rest_methods',
@@ -106,11 +106,11 @@ function twitter_timelineblock_display($blockinfo)
     $data['username'] = xarVarPrepForDisplay($vars['username']);
     $userinfo = array();
     if (!empty($vars['username']) && !empty($vars['password'])) {
-      $userinfo = xarModAPIFunc('twitter', 'user', 'rest_methods', 
+      $userinfo = xarModAPIFunc('twitter', 'user', 'rest_methods',
         array(
           'area' => 'account',
           'method' => 'verify_credentials',
-          'username' => $vars['username'], 
+          'username' => $vars['username'],
           'password' => $vars['password'],
           'cache' => true,
           'refresh' => 3600,
@@ -118,7 +118,7 @@ function twitter_timelineblock_display($blockinfo)
         ));
     }
     $data['userinfo'] = $userinfo;
-    
+   
    /* Now we need to send our output to the template.
      * Just return the template data.
      */
@@ -146,11 +146,11 @@ function twitter_timelineblock_modify($blockinfo)
     $vars['password'] = !isset($vars['password']) ? $defaults['password'] : $vars['password'];
     $vars['numitems'] = !isset($vars['numitems']) ? $defaults['numitems'] : $vars['numitems'];
     $vars['truncate'] = !isset($vars['truncate']) ? $defaults['truncate'] : $vars['truncate'];
-    $vars['showimages'] = !isset($vars['showimages']) ? $defaults['showimages'] : $vars['showimages']; 
+    $vars['showimages'] = !isset($vars['showimages']) ? $defaults['showimages'] : $vars['showimages'];
     $vars['showmyimage'] = !isset($vars['showmyimage']) ? $defaults['showmyimage'] : $vars['showmyimage'];
     $vars['showsource'] = !isset($vars['showsource']) ? $defaults['showsource'] : $vars['showsource'];
-    $vars['showmodule'] = !isset($vars['showmodule']) ? $defaults['showmodule'] : $vars['showmodule']; 
-    $vars['showfollow'] = !isset($vars['showfollow']) ? $defaults['showfollow'] : $vars['showfollow']; 
+    $vars['showmodule'] = !isset($vars['showmodule']) ? $defaults['showmodule'] : $vars['showmodule'];
+    $vars['showfollow'] = !isset($vars['showfollow']) ? $defaults['showfollow'] : $vars['showfollow'];
     $vars['timeline'] = !isset($vars['timeline']) ? $defaults['timeline'] : $vars['timeline'];
 
     $timelines = array();
@@ -159,11 +159,11 @@ function twitter_timelineblock_modify($blockinfo)
     $vars['timelines'] = $timelines;
 
     if (!empty($vars['username']) && !empty($vars['password'])) {
-      $userinfo = xarModAPIFunc('twitter', 'user', 'rest_methods', 
+      $userinfo = xarModAPIFunc('twitter', 'user', 'rest_methods',
         array(
           'area' => 'account',
           'method' => 'verify_credentials',
-          'username' => $vars['username'], 
+          'username' => $vars['username'],
           'password' => $vars['password'],
           'cache' => true,
           'refresh' => 3600,
@@ -177,7 +177,7 @@ function twitter_timelineblock_modify($blockinfo)
       }
     }
     $vars['blockid'] = $blockinfo['bid'];
- 
+
     // Just return the template variables.
     return $vars;
 }
@@ -194,13 +194,13 @@ function twitter_timelineblock_update($blockinfo)
     $vars = array();
     if (!xarVarFetch('username', 'isset', $vars['username'], $defaults['username'], XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('password', 'isset', $vars['password'], $defaults['password'], XARVAR_NOT_REQUIRED)) return;
-    
+   
     if (!empty($vars['username']) && !empty($vars['password'])) {
-      $isvalid = xarModAPIFunc('twitter', 'user', 'rest_methods', 
+      $isvalid = xarModAPIFunc('twitter', 'user', 'rest_methods',
         array(
           'area' => 'account',
           'method' => 'verify_credentials',
-          'username' => $vars['username'], 
+          'username' => $vars['username'],
           'password' => $vars['password'],
           'cache' => true,
           'refresh' => 3600,

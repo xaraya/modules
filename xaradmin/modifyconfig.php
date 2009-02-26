@@ -1,9 +1,9 @@
 <?php
 /**
- * Twitter Module 
+ * Twitter Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -22,7 +22,7 @@
  * @return mixed array on form , bool on update
  */
 function twitter_admin_modifyconfig()
-{ 
+{
 
     if (!xarSecurityCheck('AdminTwitter')) return;
 
@@ -119,11 +119,11 @@ function twitter_admin_modifyconfig()
               $invalid['password'] = xarML('A password is required to access your Twitter account');
             }
             if (!empty($username) && !empty($password)) {
-              $isvalid = xarModAPIFunc('twitter', 'user', 'rest_methods', 
+              $isvalid = xarModAPIFunc('twitter', 'user', 'rest_methods',
                 array(
                   'area' => 'account',
                   'method' => 'verify_credentials',
-                  'username' => $username, 
+                  'username' => $username,
                   'password' => $password,
                   'cached' => true,
                   'refresh' => 3600,

@@ -1,9 +1,9 @@
 <?php
 /**
- * Twitter Module 
+ * Twitter Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,7 +14,7 @@
 
 /**
  * Handle requests to Twitter API status methods
- * 
+ *
  * @author Chris Powis (crisp@crispcreations.co.uk)
  * @param method string Twitter API method to call (required)
  * @param username string Twitter username to authenticate (required for some methods)
@@ -27,11 +27,11 @@
  * @return mixed array containing the items, bool true on success or bool false on failure
  */
 function twitter_userapi_rest_methods($args)
-{ 
+{
 
   // no sec checks here, GUI handles module privs, request credentials handle twitter privs
   extract($args);
-  
+ 
   /* set some defaults for this process */
   $uri = 'http://twitter.com';  // all methods go to this uri
   $format = '.xml';              // request format, one of json|xml for post json|xml|rss for get
@@ -44,7 +44,7 @@ function twitter_userapi_rest_methods($args)
   $cachedir     = !empty($cachedir)   ? $cachedir   : 'cache';
   $extension    = !empty($extension)  ? $extension  : '.xml';
   $superrors    = !empty($superrors)  ? $superrors  : false;
-  
+ 
   /* set some defaults for the items to return */
   $startnum     = !empty($startnum)   ? $startnum   : 1;
   $numitems     = !empty($numitems)   ? $numitems   : 20;
@@ -60,8 +60,8 @@ function twitter_userapi_rest_methods($args)
     /* user methods */
     case 'users':
       switch ($method) {
-        /** show a single user profile 
-         *  returns an array of user info 
+        /** show a single user profile
+         *  returns an array of user info
         **/
         case 'show':
           if (empty($username)) return false;
@@ -77,14 +77,14 @@ function twitter_userapi_rest_methods($args)
     case 'account':
       if (empty($username) || empty($password)) return false;
       switch ($method) {
-        /** verify credentials 
-         *  returns an array of user information 
+        /** verify credentials
+         *  returns an array of user information
         **/
         case 'verify_credentials';
           $return_method = 'extended_user_information';
         break;
         /** end session
-         *  returns an array of user information 
+         *  returns an array of user information
         **/
         case 'end_session':
           $post = (bool) true;
@@ -97,8 +97,8 @@ function twitter_userapi_rest_methods($args)
           $post['device'] = urlencode($device);
           $return_method = 'extended_user_information';
         break;
-        /** rate limit status 
-         *  returns an array of current rate status elements 
+        /** rate limit status
+         *  returns an array of current rate status elements
         **/
         case 'rate_limit_status':
           $return_method = 'rate_status';
@@ -111,8 +111,8 @@ function twitter_userapi_rest_methods($args)
     /* status methods */
     case 'statuses':
       switch ($method) {
-        /** public timeline 
-         *  returns an array of status elements 
+        /** public timeline
+         *  returns an array of status elements
         **/
         case 'public_timeline':
         default:
@@ -123,8 +123,8 @@ function twitter_userapi_rest_methods($args)
             $get['count'] = urlencode($count);
           }
         break;
-        /** public timeline 
-         *  returns an array of status elements 
+        /** public timeline
+         *  returns an array of status elements
         **/
         case 'friends_timeline':
           if (empty($username) || empty($password)) return;
@@ -142,8 +142,8 @@ function twitter_userapi_rest_methods($args)
           }
           $return_method = 'status_elements';
         break;
-        /** user timeline 
-         *  returns an array of status elements 
+        /** user timeline
+         *  returns an array of status elements
         **/
         case 'user_timeline':
           if (empty($username) && empty($user_id)) return;
@@ -165,8 +165,8 @@ function twitter_userapi_rest_methods($args)
           }
           $return_method = 'status_elements';
         break;
-        /** show a status 
-         *  returns a status element array 
+        /** show a status
+         *  returns a status element array
         **/
         case 'show':
           if (!empty($status_id)) {
@@ -174,14 +174,14 @@ function twitter_userapi_rest_methods($args)
           }
           $return_method = 'status_element';
         break;
-        /** update status 
-         *  returns a status element array 
+        /** update status
+         *  returns a status element array
         **/
         case 'update':
           if (empty($username) || empty($password) || empty($status)) return;
           $post['status'] = urlencode($status);
         break;
-        /** @replies  
+        /** @replies 
          *  returns bool true on success
         **/
         case 'replies':
@@ -197,26 +197,26 @@ function twitter_userapi_rest_methods($args)
           }
           $return_method = 'status_elements';
         break;
-        /** destroy a status 
-         *  returns bool true on success 
+        /** destroy a status
+         *  returns bool true on success
         **/
         case 'destroy':
           if (!empty($status_id)) {
             $path .= '/'.urlencode($status_id);
-          }    
+          }   
           $post = (bool) true;
         break;
-        /** friends and followers 
-         *  returns an array of user elements 
+        /** friends and followers
+         *  returns an array of user elements
         **/
         case 'friends':
-        case 'followers': 
+        case 'followers':
           if (empty($username)) return false;
           $path .= '/'.$username;
           if (!empty($page)) {
             $get['page'] = urlencode($page);
           }
-          $return_method = 'basic_users_information'; 
+          $return_method = 'basic_users_information';
         break;
         default:
           $unknown = true;
@@ -279,7 +279,7 @@ function twitter_userapi_rest_methods($args)
   if ($area == $method) {
     $url = $uri . '/' . $area . $path . $format;
   } else {
-    // this is the path to the twitter api method 
+    // this is the path to the twitter api method
     $url = $uri . '/' . $area . '/' . $method . $path . $format;
   }
   $postargs = array();
@@ -306,7 +306,7 @@ function twitter_userapi_rest_methods($args)
   if (!empty($params)) $url .= '?'.join('&', $params);
   //print_r($url);
   /* now we pass the params to the process function, which fetches us the raw request response */
-  $response = xarModAPIFunc('twitter', 'user', 'process', 
+  $response = xarModAPIFunc('twitter', 'user', 'process',
     array(
       'url' => $url,
       'postargs' => !empty($postargs) ? $postargs : null,
@@ -318,7 +318,7 @@ function twitter_userapi_rest_methods($args)
       'username' => !empty($username) ? $username : null,
       'password' => !empty($password) ? $password : null
     ));
-  
+ 
   /* if the response was false we can bail here */
   if (!$response) return false;
 
@@ -343,7 +343,7 @@ function twitter_userapi_rest_methods($args)
   } else {
     return $response;
   }
-  
+ 
   /* if we got here, we have a return method, a response and some xml to parse */
   switch ($return_method) {
     /* the extended user information contains all user info as key = value pairs */
@@ -475,12 +475,13 @@ function twitter_userapi_rest_methods($args)
   return $response;
 }
 
-function twitter_userapi_transform ($text = '') {
+function twitter_userapi_transform ($text = '')
+{
 
   if (empty($text)) return '';
 
   // urls
-  $text = preg_replace("#(^|[\n ])([\w]+?://[^ \"\n\r\t<]*)#is", "\\1<a href=\"\\2\" rel=\"external\">\\2</a>", $text); 
+  $text = preg_replace("#(^|[\n ])([\w]+?://[^ \"\n\r\t<]*)#is", "\\1<a href=\"\\2\" rel=\"external\">\\2</a>", $text);
   // hashtags
   $text = preg_replace("/(?:^|\W)\#([a-zA-Z0-9\-_\.+:=]+\w)(?:\W|$)/is", " <a href=\"http://hashtags.org/tag/\\1/messages\">#\\1</a> ", $text);
   // at tags

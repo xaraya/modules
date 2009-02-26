@@ -1,9 +1,9 @@
 <?php
 /**
- * Twitter Module 
+ * Twitter Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -28,18 +28,18 @@ function twitter_user_main()
 
     if (!xarSecurityCheck('ViewTwitter')) return;
     if (!xarVarFetch('timeline', 'str:1', $timeline, '', XARVAR_NOT_REQUIRED)) return;
-    
+   
     /* somebody clicked user-main from the menu */
     if (empty($timeline)) {
       $timeline = xarModGetVar('twitter', 'main_tab');
     }
     // this gets everything we need
-    $data = xarModAPIFunc('twitter', 'user', 'menu', 
+    $data = xarModAPIFunc('twitter', 'user', 'menu',
       array('modtype' => 'user', 'modfunc' => 'main', 'timeline' => $timeline));
-    
+   
     // see if this tag is supposed to be shown
     $showtab = $timeline == 'new_tweet' || xarModGetVar('twitter', $timeline) ? true : false;
-    
+   
     $items = array();
     // we're showing this tab
     if ($showtab) {

@@ -1,9 +1,9 @@
 <?php
 /**
- * Twitter Module 
+ * Twitter Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -88,7 +88,7 @@ class Dynamic_Twitterscreenname_Property extends Dynamic_Property
               return false;
             }
           }
-        } 
+        }
         $this->value = $value;
         return true;
     }
@@ -107,7 +107,7 @@ class Dynamic_Twitterscreenname_Property extends Dynamic_Property
         if (empty($id)) {
             $id = $name;
         }
-        
+       
         $screen_pass = '';
         if (!empty($value)) {
           // if we got a screen name and password we split for our form
@@ -117,16 +117,16 @@ class Dynamic_Twitterscreenname_Property extends Dynamic_Property
             $screen_pass = $screen_pass;
           }
         }
-        
+       
         $data=array();
         $data['value']= $value;
         $data['name'] = $name;
         $data['id']   = $id;
         $data['screen_pass'] = $screen_pass;
         $data['invalid']  = !empty($this->invalid) ? xarML('Invalid #(1)', $this->invalid) :'';
-        
+       
         $tplmodule = empty($tplmodule) ? 'twitter' : $tplmodule;
-        $template = empty($template) ? 'twitterscreenname' : $template; 
+        $template = empty($template) ? 'twitterscreenname' : $template;
 
         return xarTplProperty($tplmodule, $template, 'showinput', $data);
     }
@@ -146,7 +146,7 @@ class Dynamic_Twitterscreenname_Property extends Dynamic_Property
             $value = $screen_name;
             $screen_pass = $screen_pass;
           }
-        }        
+        }       
         $data = array();
         $data['value'] = $value;
         $data['name']  = $this->name;
@@ -154,7 +154,7 @@ class Dynamic_Twitterscreenname_Property extends Dynamic_Property
         if (!empty($value)) {
           $data['user_element'] = xarModAPIFunc('twitter', 'user', 'rest_methods',
               array(
-                'area' => 'users', 
+                'area' => 'users',
                 'method' => 'show',
                 'username' => $value,
                 'cached' => true,
@@ -177,9 +177,9 @@ class Dynamic_Twitterscreenname_Property extends Dynamic_Property
             $defaults['profile_location'] = xarModGetVar('twitter', 'profile_location');
             $defaults['followers_count'] = xarModGetVar('twitter', 'followers_count');
             $defaults['friends_count'] = xarModGetVar('twitter', 'friends_count');
-            $defaults['last_status'] = xarModGetVar('twitter', 'last_status');   
+            $defaults['last_status'] = xarModGetVar('twitter', 'last_status');  
             $defaults['profile_url'] = xarModGetVar('twitter', 'profile_url');
-            $defaults['statuses_count'] = xarModGetVar('twitter', 'statuses_count');   
+            $defaults['statuses_count'] = xarModGetVar('twitter', 'statuses_count');  
             $defaults['favourites_display'] = xarModGetVar('twitter', 'favourites_display');
             // get the display settings for this users account if allowed
             foreach ($defaults as $key => $value) {
@@ -201,7 +201,7 @@ class Dynamic_Twitterscreenname_Property extends Dynamic_Property
 
 
         $tplmodule = empty($tplmodule) ? 'twitter' : $tplmodule;
-        $template = empty($template) ? 'twitterscreenname' : $template; 
+        $template = empty($template) ? 'twitterscreenname' : $template;
         return xarTplProperty($tplmodule, $template, 'showoutput', $data);
     }
 

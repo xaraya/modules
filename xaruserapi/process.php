@@ -1,9 +1,9 @@
 <?php
 /**
- * Twitter Module 
+ * Twitter Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -14,14 +14,14 @@
 
 /**
  * Process requests to Twitter API
- * 
+ *
  * @author Chris Powis (crisp@crispcreations.co.uk)
  * @return mixed string response or bool false on failure
  */
 function twitter_userapi_process($args)
-{ 
+{
   extract($args);
-  
+ 
   $modname = 'twitter';
   $modid = xarModGetIDFromName($modname);
   $modinfo = xarModGetInfo($modid);
@@ -39,7 +39,7 @@ function twitter_userapi_process($args)
     $cachedir = empty($cachedir) ? 'cache' : $cachedir;
     $extension = empty($extension) ? '.xml' : $extension;
     if (!empty($username)) $extension = '.'.$username.$extension;
-  } 
+  }
   $superrors = !isset($superrors) ? true : $superrors;
   // check if this file is already cached
   if ($cached) {
@@ -48,7 +48,7 @@ function twitter_userapi_process($args)
       $expire = time() - $refresh;
       if (file_exists($file) && filemtime($file) > $expire) {
           $fp = @fopen($file, 'rb');
-          if ($fp != false) {  
+          if ($fp != false) { 
             $response = '';
             while (!feof($fp)) {
                 $response .= fread($fp, filesize($file));
@@ -63,7 +63,7 @@ function twitter_userapi_process($args)
 
   // we can only try GETfile if we're not POSTing
   if (empty($postargs)) {
-    $response = xarModAPIFunc('base', 'user', 'getfile', 
+    $response = xarModAPIFunc('base', 'user', 'getfile',
       array(
         'url' => $url,
         'cached' => $cached,
@@ -72,9 +72,9 @@ function twitter_userapi_process($args)
         'cachedir' => $cachedir,
         'superrors' => $superrors
       ));
-  } 
+  }
 
-  // if we got no response we either got postargs or getfile failed, try curl 
+  // if we got no response we either got postargs or getfile failed, try curl
   if ((!isset($response) || $response==false) && function_exists('curl_init')) {
     $headers = array(
       'X-Twitter-Client: '.$client,
@@ -85,13 +85,13 @@ function twitter_userapi_process($args)
 
     if(!empty($postargs)){
         curl_setopt($ch, CURLOPT_POST, 1);
-        if ($postargs !== true) 
+        if ($postargs !== true)
         curl_setopt($ch, CURLOPT_POSTFIELDS, $postargs);
     }
-    
+   
     if(!empty($username) && !empty($password))
         curl_setopt($ch, CURLOPT_USERPWD, $username.':'.$password);
-    
+   
     curl_setopt($ch, CURLOPT_VERBOSE, 1);
     curl_setopt($ch, CURLOPT_NOBODY, 0);
     curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -100,10 +100,10 @@ function twitter_userapi_process($args)
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     $response = curl_exec($ch);
-    
+   
     $responseInfo=curl_getinfo($ch);
     curl_close($ch);
-    
+   
     if(intval($responseInfo['http_code'])!=200){
       if (!$superrors){
         $msg = xarML('URL #(1) returned response #(2)', $url, $responseInfo['http_code']);
@@ -136,7 +136,7 @@ function twitter_userapi_process($args)
     }
   }
 
-  
+ 
   // if we still got no response and we were posting, try json
   if ((!isset($response) || $response==false) && !empty($postargs)) {
 
@@ -174,7 +174,7 @@ function twitter_userapi_process($args)
         return false;
       }
       $header  = $chunks[count($chunks) - 2];
-      $headers = explode("\n",$header);    
+      $headers = explode("\n",$header);   
       if (!is_array($headers) or count($headers) < 1) return false;
       $httpResponse = strtolower(trim($headers[0]));
       //if ($httpResponse != 'http/1.0 200 ok' && $httpResponse != 'http/1.1 200 ok') return false;
@@ -184,5 +184,5 @@ function twitter_userapi_process($args)
   // give up and just return whatever we found
   return $response;
 
-} 
+}
 ?>

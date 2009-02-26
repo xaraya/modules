@@ -1,9 +1,9 @@
 <?php
 /**
- * Twitter Module 
+ * Twitter Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -32,7 +32,7 @@ function twitter_user_tweet($args)
 
     // this function gets everything we need :)
     $data = xarModAPIFunc('twitter', 'user', 'menu');
- 
+
     $invalid = array();
 
     // the twitter form for site account or user account is shown in display and account functions
@@ -52,7 +52,7 @@ function twitter_user_tweet($args)
       if (empty($text) || strlen($text) > 160) {
         $invalid['text'] = xarML('Text must be between 1 and 160 characters');
       }
-      
+     
       if (!empty($data['site_account']) && $screen_name == $data['site_account']['screen_name'] && $data['isowner']){
         $screen_pass = xarModGetVar('twitter', 'site_screen_pass');
       } elseif (!empty($data['user_account']) && $screen_name == $data['user_account']['screen_name']) {
@@ -79,7 +79,7 @@ function twitter_user_tweet($args)
             array(
               'area' => 'account',
               'method' => 'verify_credentials',
-              'username' => $screen_name, 
+              'username' => $screen_name,
               'password' => $screen_pass,
               'cache' => true,
               'refresh' => 300,
@@ -88,7 +88,7 @@ function twitter_user_tweet($args)
           if (!$isvalid) {
             $invalid['screen_name'] = xarML('*Unknown screen name or password');
             $invalid['screen_pass'] = '*';
-          } 
+          }
         }
         /* if we've not tripped on the validations, we're good to send the update */
         if (empty($invalid)) {

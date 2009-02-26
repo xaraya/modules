@@ -1,9 +1,9 @@
 <?php
 /**
- * Twitter Module 
+ * Twitter Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -15,7 +15,7 @@
  * The user account function
  *
  * @author Chris Powis (crisp@crispcreations.co.uk)
- * @param tab - optional (default user-timeline) 
+ * @param tab - optional (default user-timeline)
  * @param screen_name - required screen name to display account info for
  * @return array $data An array with the data for the template
  */
@@ -33,7 +33,7 @@ function twitter_user_account()
     }
 
     // this gets everything we need
-    $data = xarModAPIFunc('twitter', 'user', 'menu', 
+    $data = xarModAPIFunc('twitter', 'user', 'menu',
       array('modtype' => 'user', 'modfunc' => 'account', 'screen_name' => $screen_name));
 
     // if we're viewing the site account, make sure we're the owner */
@@ -61,7 +61,7 @@ function twitter_user_account()
     $defaults['profile_location'] = xarModGetVar('twitter', 'profile_location');
     $defaults['followers_count'] = xarModGetVar('twitter', 'followers_count');
     $defaults['friends_count'] = xarModGetVar('twitter', 'friends_count');
-    $defaults['last_status'] = xarModGetVar('twitter', 'last_status');  
+    $defaults['last_status'] = xarModGetVar('twitter', 'last_status'); 
     $defaults['profile_url'] = xarModGetVar('twitter', 'profile_url');
     $defaults['statuses_count'] = xarModGetVar('twitter', 'statuses_count');
     $defaults['favourites_display'] = xarModGetVar('twitter', 'favourites_display');
@@ -82,7 +82,7 @@ function twitter_user_account()
       }
     }
     $data['user_settings'] = $user_settings;
-    
+   
     /* start output */
     switch ($tab) {
       case 'user_timeline':
@@ -124,7 +124,7 @@ function twitter_user_account()
               $setting = xarModGetUserVar('twitter', $key);
             }
             $edit_options[$key] = $setting !== null ? $setting : $value;
-          } 
+          }
         }
         $data['edit_options'] = $edit_options;
       break;
@@ -168,7 +168,7 @@ function twitter_user_account()
       case 'favourites':
         $data['status_elements'] = xarModAPIFunc('twitter', 'user', 'rest_methods',
           array(
-            'area' => 'favorites', 
+            'area' => 'favorites',
             'method' => 'favorites',
             'username' => $data['user_element']['screen_name'],
             'password' => $screen_pass,
@@ -180,7 +180,7 @@ function twitter_user_account()
       case 'replies_display':
         $data['status_elements'] = xarModAPIFunc('twitter', 'user', 'rest_methods',
           array(
-            'area' => 'statuses', 
+            'area' => 'statuses',
             'method' => 'replies',
             'username' => $data['user_element']['screen_name'],
             'password' => $screen_pass,
@@ -190,69 +190,69 @@ function twitter_user_account()
           ));
       break;
     }
-    
+   
     $data['tab'] = $tab;
     $data['screen_name'] = $screen_name;
-    
+   
     $accounttabs = array();
 
     $accounttabs[] = array(
       'url' => xarModURL('twitter', 'user', 'account', array('tab' => 'friends_timeline', 'screen_name' => $data['user_element']['screen_name'])),
-      'id' => 'friends_timeline', 
+      'id' => 'friends_timeline',
       'label' => xarML('Home'),
       'title' => xarML('Your twitter timeline including friends statuses'),
       'active' => $tab == 'friends_timeline' ? true : false
     );
     $accounttabs[] = array(
       'url' => xarModURL('twitter', 'user', 'account', array('tab' => 'user_timeline', 'screen_name' => $data['user_element']['screen_name'])),
-      'id' => 'user_timeline', 
+      'id' => 'user_timeline',
       'label' => xarML('Updates'),
       'title' => xarML('Your twitter timeline'),
       'active' => $tab == 'user_timeline' ? true : false
     );
     $accounttabs[] = array(
       'url' => xarModURL('twitter', 'user', 'account', array('tab' => 'replies_display', 'screen_name' => $data['user_element']['screen_name'])),
-      'id' => 'replies_display', 
+      'id' => 'replies_display',
       'label' => xarML('@Replies'),
       'title' => xarML('Your twitter @Replies'),
       'active' => $tab == 'replies_display' ? true : false
     );
     $accounttabs[] = array(
       'url' => xarModURL('twitter', 'user', 'account', array('tab' => 'friends_display', 'screen_name' => $data['user_element']['screen_name'])),
-      'id' => 'friends_display', 
+      'id' => 'friends_display',
       'label' => xarML('Following'),
       'title' => xarML('Your twitter friends'),
       'active' => $tab == 'friends_display' ? true : false
     );
     $accounttabs[] = array(
       'url' => xarModURL('twitter', 'user', 'account', array('tab' => 'followers_display', 'screen_name' => $data['user_element']['screen_name'])),
-      'id' => 'followers_display', 
+      'id' => 'followers_display',
       'label' => xarML('Followers'),
       'title' => xarML('Your twitter followers'),
       'active' => $tab == 'followers_display' ? true : false
     );
     $accounttabs[] = array(
       'url' => xarModURL('twitter', 'user', 'account', array('tab' => 'direct_messages', 'screen_name' => $data['user_element']['screen_name'])),
-      'id' => 'direct_messages', 
+      'id' => 'direct_messages',
       'label' => xarML('Messages'),
       'title' => xarML('Your twitter direct messages'),
       'active' => $tab == 'direct_messages' ? true : false
     );
     $accounttabs[] = array(
       'url' => xarModURL('twitter', 'user', 'account', array('tab' => 'favourites', 'screen_name' => $data['user_element']['screen_name'])),
-      'id' => 'favourites', 
+      'id' => 'favourites',
       'label' => xarML('Favourites'),
       'title' => xarML('Your twitter favourites'),
       'active' => $tab == 'favourites' ? true : false
-    );  
+    ); 
     if ($showedit) {
       $accounttabs[] = array(
         'url' => xarModURL('twitter', 'user', 'account', array('tab' => 'profile_edit', 'screen_name' => $data['user_element']['screen_name'])),
-        'id' => 'profile_edit', 
+        'id' => 'profile_edit',
         'label' => xarML('Edit'),
         'title' => xarML('Edit your twitter account settings'),
         'active' => $tab == 'profile_edit' ? true : false
-      );    
+      );   
     }
     $data['accounttabs'] = $accounttabs;
     /* Return the template variables defined in this function */

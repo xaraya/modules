@@ -1,9 +1,9 @@
 <?php
 /**
- * Twitter Module 
+ * Twitter Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -42,9 +42,9 @@ function twitter_user_settings($args)
     $defaults['profile_location'] = xarModGetVar('twitter', 'profile_location');
     $defaults['followers_count'] = xarModGetVar('twitter', 'followers_count');
     $defaults['friends_count'] = xarModGetVar('twitter', 'friends_count');
-    $defaults['last_status'] = xarModGetVar('twitter', 'last_status');   
+    $defaults['last_status'] = xarModGetVar('twitter', 'last_status');  
     $defaults['profile_url'] = xarModGetVar('twitter', 'profile_url');
-    $defaults['statuses_count'] = xarModGetVar('twitter', 'statuses_count');   
+    $defaults['statuses_count'] = xarModGetVar('twitter', 'statuses_count');  
     $defaults['favourites_display'] = xarModGetVar('twitter', 'favourites_display');
 
     if ($phase == 'update') {
@@ -67,7 +67,7 @@ function twitter_user_settings($args)
       xarResponseRedirect($returnurl);
       return true;
     }
-    
+   
     return $data;
 }
 ?>

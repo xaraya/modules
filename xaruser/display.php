@@ -1,9 +1,9 @@
 <?php
 /**
- * Twitter Module 
+ * Twitter Module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -39,9 +39,9 @@ function twitter_user_display($args)
     $defaults['profile_location'] = xarModGetVar('twitter', 'profile_location');
     $defaults['followers_count'] = xarModGetVar('twitter', 'followers_count');
     $defaults['friends_count'] = xarModGetVar('twitter', 'friends_count');
-    $defaults['last_status'] = xarModGetVar('twitter', 'last_status');   
+    $defaults['last_status'] = xarModGetVar('twitter', 'last_status');  
     $defaults['profile_url'] = xarModGetVar('twitter', 'profile_url');
-    $defaults['statuses_count'] = xarModGetVar('twitter', 'statuses_count');   
+    $defaults['statuses_count'] = xarModGetVar('twitter', 'statuses_count');  
     $defaults['favourites_display'] = xarModGetVar('twitter', 'favourites_display');
     /* account identified as belonging to this user */
     if (!empty($data['user_account']) && $screen_name == $data['user_account']['screen_name']) {
@@ -53,7 +53,7 @@ function twitter_user_display($args)
       /* this scenario uses default settings for the module */
       foreach ($defaults as $key => $value) {
         $settings[$key] = !$value ? false : $value;
-      } 
+      }
     /* account identified as site account */
     } elseif (!empty($data['site_account']) && $screen_name == $data['site_account']['screen_name']) {
       /* user owns the site account */
@@ -69,12 +69,12 @@ function twitter_user_display($args)
             $setting = $value;
           }
           $settings[$key] = !$setting ? false : $setting;
-      } 
+      }
     /* user doesn't own this account, just get the show method */
     } else {
       // TODO: explore authenticating current user here
       // and see if it's possible to establish relationships
-      // eg, if current user is friend or follower of the account being diplayed, 
+      // eg, if current user is friend or follower of the account being diplayed,
       // show applicable options such as friends timeline, send direct message, etc.
       $data['user_element'] = xarModAPIFunc('twitter', 'user', 'rest_methods',
         array(
@@ -139,7 +139,7 @@ function twitter_user_display($args)
               'cached' => true,
               'refresh' => 60,
               'superrors' => true
-            ));          
+            ));         
         } else {
           $data['status_elements'] = xarModAPIFunc('twitter', 'user', 'rest_methods',
             array(
@@ -167,7 +167,7 @@ function twitter_user_display($args)
       case 'favourites_display':
         $data['status_elements'] = xarModAPIFunc('twitter', 'user', 'rest_methods',
           array(
-            'area' => 'favorites', 
+            'area' => 'favorites',
             'method' => 'favorites',
             'username' => $data['user_element']['screen_name'],
             'password' => '',
