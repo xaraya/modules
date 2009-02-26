@@ -66,8 +66,8 @@ function formantibot_adminapi_submithook($args)
     } else {
         $itemid = $objectid;
     }
-    if (empty($itemid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'item id', 'admin', 'createhook', 'formantibot');
+    if (!isset($itemid)) {
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'item id', 'admin', 'submithook', 'formantibot');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         // we *must* return $extrainfo for now, or the next hook will fail
         //return false;
@@ -123,7 +123,6 @@ function formantibot_adminapi_submithook($args)
         }
 
     }
-
     return $extrainfo;
 }
 ?>

@@ -82,7 +82,7 @@ function formantibot_admin_newhook($args)
     } else {
         if(!xarVarFetch('antibotinvalid','int:0:1', $antibotinvalid, NULL,XARVAR_DONT_SET)) {return;}
     }
-    
+
     if (isset($extrainfo['botreset'])) {
         $botreset = $extrainfo['botreset'];
     } else {
