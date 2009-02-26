@@ -96,6 +96,8 @@ function twitter_timelineblock_display($blockinfo)
         'superrors' => true
       ));
 
+    if (count($items) > $vars['numitems']) $items = array_slice($items, 0, $vars['numitems']);
+
     $data['status_elements'] = !$items ? array() : $items;
     $data['showimages'] = $vars['showimages'];
     $data['showmyimage'] = $vars['showmyimage'];
