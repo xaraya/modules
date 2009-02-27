@@ -19,7 +19,7 @@ function xarpages_treeapi_getancestors($args)
 
     if ($id <> 0) {
         // Insert point is a real item.
-        $query = 'SELECT 
+        $query = "SELECT 
                     parent.$idname
                   FROM 
                     $tablename AS node, 
