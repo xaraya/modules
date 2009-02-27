@@ -2,85 +2,74 @@
 
 <xar:data-getitem name="$properties" module="dossier" itemtype="1" itemid="0" />
 
-<xar:template type="module" file="user-menu" />
+<div class="xar-mod-head">
+    <span class="xar-mod-title">#xarModGetVar('dossier', 'displaytitle')#</span>
+</div>
 
 <div class="xar-mod-body">
-<div align="center">
-<xar:if condition="!empty($status)">
-    <div>#$status#</div>
-</xar:if>
+    <xar:set name="statusmsg">xarSessionGetVar('statusmsg')</xar:set>
 
+    <xar:template type="module" file="user-menu" />
 
-<table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
-    <tr>
-        <th><xar:mlstring>Contact Name</xar:mlstring></th>
-        <th><xar:mlstring>Company</xar:mlstring></th>
-        <th><xar:mlstring>Category</xar:mlstring></th>
-        <th><xar:mlstring>Phone</xar:mlstring></th>
-        <th><xar:mlstring>Email</xar:mlstring></th>
-    </tr>
+    <xar:if condition="!empty($status)">
+        <div class="xar-error">
+            #$status#
+        </div>
+    </xar:if>
 
-    <xar:foreach in="$contactlist" value="$contactinfo">
+	<xar:if condition="count($contactlist) gt 0">
+		<table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
+		    <tr>
+		        <th><xar:mlstring>Contact Name</xar:mlstring></th>
+		        <th><xar:mlstring>Company</xar:mlstring></th>
+		        <th><xar:mlstring>Category</xar:mlstring></th>
+		        <th><xar:mlstring>Phone</xar:mlstring></th>
+		        <th><xar:mlstring>Email</xar:mlstring></th>
+		    </tr>
+		    <xar:foreach in="$contactlist" value="$contactinfo">
+		        <tr>
+		            <td class="xar-norm">
+		                <xar:if condition="empty($contactinfo['sortname'])">
+		                    #$contactinfo['task_name']#
+		                <xar:else />
+		                    <a href="#xarModURL('dossier','user','display',array('contactid'=&gt;$contactinfo['contactid']))#">#$contactinfo['sortname']#</a>
+		                </xar:if>
+		            </td>
+		            <td class="xar-norm" align="center">
+		                <xar:if condition="isset($properties['sortcompany'])">
+		                    <xar:data-output property="$properties['sortcompany']" value="$contactinfo['sortcompany']" />
+		                </xar:if>
+		            </td>
+		            <td class="xar-norm" align="center">
+		                <xar:if condition="isset($properties['cat_id'])">
+		                    <xar:set name="dummy">xarModAPILoad('categories', 'user')</xar:set>
+		                    <xar:set name="catinfo">xarModAPIFunc('categories', 'user', 'getcatinfo', array('cid' => $contactinfo['cat_id']) )</xar:set>
+		                    #$catinfo['name']#
+		                </xar:if>
+		            </td>
+		            <td class="xar-norm" align="center">
+		                <xar:if condition="isset($properties['phone_work'])">
+		                    <xar:data-output property="$properties['phone_work']" value="$contactinfo['phone_work']" />
+		                </xar:if>
+		            </td>
+		            <td class="xar-norm" align="center">
+		                <xar:if condition="isset($properties['email_1'])">
+		                    <xar:data-output property="$properties['email_1']" value="$contactinfo['email_1']" />
+		                </xar:if>
+		            </td>
+		        </tr>
+		    </xar:foreach>
+		</table>
 
-        <tr>
-            <td class="xar-norm">
-                <xar:if condition="empty($contactinfo['sortname'])">
-                    #$contactinfo['task_name']#
-                <xar:else />
-                    <a href="#xarModURL('dossier','user','display',array('contactid'=&gt;$contactinfo['contactid']))#">#$contactinfo['sortname']#</a>
-                </xar:if>
-            </td>
-
-            <td class="xar-norm" align="center">
-                <xar:if condition="isset($properties['sortcompany'])">
-                    <xar:data-output property="$properties['sortcompany']" value="$contactinfo['sortcompany']" />
-                </xar:if>
-            </td>
-
-            <td class="xar-norm" align="center">
-                <xar:if condition="isset($properties['cat_id'])">
-                    <xar:set name="dummy">xarModAPILoad('categories', 'user')</xar:set>
-                    <xar:set name="catinfo">xarModAPIFunc('categories', 'user', 'getcatinfo', array('cid' => $contactinfo['cat_id']) )</xar:set>
-                    #$catinfo['name']#
-                </xar:if>
-            </td>
-
-            <td class="xar-norm" align="center">
-                <xar:if condition="isset($properties['phone_work'])">
-                    <xar:data-output property="$properties['phone_work']" value="$contactinfo['phone_work']" />
-                </xar:if>
-            </td>
-
-            <td class="xar-norm" align="center">
-                <xar:if condition="isset($properties['email_1'])">
-                    <xar:data-output property="$properties['email_1']" value="$contactinfo['email_1']" />
-                </xar:if>
-            </td>
-        </tr>
-
-    </xar:foreach>
-
-
-
-
-
-
-
-</table>
-
-
-
-<br />
-
-
-
-</div>
-
-</div>
-
-<div class="xar-mod-foot">
-
-#$pager#
-
+		<xar:if condition="!empty($pager)">
+			<div class="xar-align-center">
+				#$pager#
+			</div>
+		</xar:if>
+	<xar:else />
+		<p class="xar-align-center">
+			<xar:mlstring>No contacts available.</xar:mlstring>
+		</p>
+	</xar:if>
 </div>
 

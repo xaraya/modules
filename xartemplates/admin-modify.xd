@@ -1,131 +1,130 @@
 <xar:data-getitem name="$properties" module="dossier" itemtype="1" itemid="0" />
-
-<xar:template type="module" file="admin-menu" />
-
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Modify Contact</xar:mlstring></span></div>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">#xarModGetVar('dossier', 'displaytitle')#</span>
+</div>
 <div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
 
-<form method="post" action="&xar-modurl-dossier-admin-update;" enctype="multipart/form-data">
+    <h2>
+        <xar:mlstring>Modify Contact</xar:mlstring>
+    </h2>
 
-<input type="hidden" name="authid" value="#$authid#" />
-<input type="hidden" name="contactid" value="#$contactid#" />
-<input type="hidden" name="returnurl" value="#$returnurl#" />
-
-<table class="xar-sub" width="100%" border="0" cellspacing="0" cellpadding="2">
-    <tr>
-        <td><xar:mlstring>Contact Name</xar:mlstring></td>
-        <td><xar:data-input property="$properties['prefix']" name="prefix" value="$item['prefix']" /> <xar:data-label property="$properties['fname']" /> <xar:data-input property="$properties['fname']" name="fname" value="$item['fname']" /></td>
-        <td><xar:data-label property="$properties['lname']" /></td>
-        <td><xar:data-input property="$properties['lname']" name="lname" value="$item['lname']" /></td>
-    </tr>
-    <tr>
-        <td><xar:data-label property="$properties['company']" /></td>
-        <td><xar:data-input property="$properties['company']" name="company" value="$item['company']" /></td>
-        <td><xar:data-label property="$properties['title']" /></td>
-        <td><xar:data-input property="$properties['title']" name="title" value="$item['title']" /></td>
-    </tr>
-    <tr>
-        <td><xar:data-label property="$properties['cat_id']" /></td>
-        <td>
-            <xar:set name="contactcid">xarModGetVar('dossier', 'contactcid')</xar:set>
-            <xar:set name="dummy">xarModAPILoad('categories', 'user')</xar:set>
-            <xar:set name="catlist">xarModAPIFunc('categories', 'user', 'getcat', array('cid' => $contactcid, 'getchildren' => true, 'return_itself' => false ) )</xar:set>
-            <xar:set name="cat_options">array('0' => "unfiled")</xar:set>
-            <xar:foreach in="$catlist" value="$catinfo">
-                <xar:set name="indentspacer">""</xar:set>
-                <xar:if condition="isset($catinfo['indentation'])">
-                    <xar:for start="$i = 1" test="$i le $catinfo['indentation']" iter="$i++">
-                        <xar:set name="indentspacer">$indentspacer."&nbsp;&nbsp;"</xar:set>
-                    </xar:for>
-                </xar:if>
-                <xar:set name="catid">$catinfo['cid']</xar:set>
-                <xar:set name="cat_options[$catid]">$indentspacer.$catinfo['name']</xar:set>
-            </xar:foreach>
-            <xar:data-input type="dropdown" validation="$cat_options" name="cat_id" value="$item['cat_id']" />
-        </td>
-        <td><xar:data-label property="$properties['contactcode']" /></td>
-        <td><xar:data-input property="$properties['contactcode']" name="contactcode" value="$item['contactcode']" /></td>
-    </tr>
-    <tr>
-        <td><xar:data-label property="$properties['agentuid']" /></td>
-        <td><xar:data-input property="$properties['agentuid']" name="agentuid" value="$item['agentuid']" /></td>
-        <td><xar:data-label property="$properties['userid']" /></td>
-        <td><xar:data-input property="$properties['userid']" name="userid" value="$item['userid']" /></td>
-    </tr>
-    <tr>
-        <td><xar:data-label property="$properties['dateofbirth']" /></td>
-        <td><xar:data-input property="$properties['dateofbirth']" name="dateofbirth" value="$item['dateofbirth']" /></td>
-        <td><xar:data-label property="$properties['private']" /></td>
-        <td><xar:data-input property="$properties['private']" name="private" value="$item['private']" /></td>
-    </tr>
-    <tr>
-        <td><xar:data-label property="$properties['contactpref']" /></td>
-        <td colspan="3"><xar:data-input property="$properties['contactpref']" name="contactpref" value="$item['contactpref']" /></td>
-    </tr>
-    <tr>
-        <td><xar:data-label property="$properties['phone_work']" /></td>
-        <td><xar:data-input property="$properties['phone_work']" name="phone_work" value="$item['phone_work']" /></td>
-        <td><xar:data-label property="$properties['phone_cell']" /></td>
-        <td><xar:data-input property="$properties['phone_cell']" name="phone_cell" value="$item['phone_cell']" /></td>
-    </tr>
-    <tr>
-        <td><xar:data-label property="$properties['phone_fax']" /></td>
-        <td><xar:data-input property="$properties['phone_fax']" name="phone_fax" value="$item['phone_fax']" /></td>
-        <td><xar:data-label property="$properties['phone_home']" /></td>
-        <td><xar:data-input property="$properties['phone_home']" name="phone_home" value="$item['phone_home']" /></td>
-    </tr>
-    <tr>
-        <td><xar:data-label property="$properties['email_1']" /></td>
-        <td><xar:data-input property="$properties['email_1']" name="email_1" value="$item['email_1']" /></td>
-        <td><xar:data-label property="$properties['email_2']" /></td>
-        <td><xar:data-input property="$properties['email_2']" name="email_2" value="$item['email_2']" /></td>
-    </tr>
-    <tr>
-        <td><xar:data-label property="$properties['chat_AIM']" /></td>
-        <td><xar:data-input property="$properties['chat_AIM']" name="chat_AIM" value="$item['chat_AIM']" /></td>
-        <td><xar:data-label property="$properties['chat_YIM']" /></td>
-        <td><xar:data-input property="$properties['chat_YIM']" name="chat_YIM" value="$item['chat_YIM']" /></td>
-    </tr>
-    <tr>
-        <td><xar:data-label property="$properties['chat_ICQ']" /></td>
-        <td><xar:data-input property="$properties['chat_ICQ']" name="chat_ICQ" value="$item['chat_ICQ']" /></td>
-        <td><xar:data-label property="$properties['chat_MSNM']" /></td>
-        <td><xar:data-input property="$properties['chat_MSNM']" name="chat_MSNM" value="$item['chat_MSNM']" /></td>
-    </tr>
+    <form method="post" action="&xar-modurl-dossier-admin-update;" enctype="multipart/form-data">
+        <table class="xar-sub" width="100%" border="0" cellspacing="0" cellpadding="2">
+            <tr>
+                <td><xar:mlstring>Contact Name</xar:mlstring></td>
+                <td><xar:data-input property="$properties['prefix']" name="prefix" value="$item['prefix']" /> <xar:data-label property="$properties['fname']" /> <xar:data-input property="$properties['fname']" name="fname" value="$item['fname']" /></td>
+                <td><xar:data-label property="$properties['lname']" /></td>
+                <td><xar:data-input property="$properties['lname']" name="lname" value="$item['lname']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['company']" /></td>
+                <td><xar:data-input property="$properties['company']" name="company" value="$item['company']" /></td>
+                <td><xar:data-label property="$properties['title']" /></td>
+                <td><xar:data-input property="$properties['title']" name="title" value="$item['title']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['cat_id']" /></td>
+                <td>
+                    <xar:set name="contactcid">xarModGetVar('dossier', 'contactcid')</xar:set>
+                    <xar:set name="dummy">xarModAPILoad('categories', 'user')</xar:set>
+                    <xar:set name="catlist">xarModAPIFunc('categories', 'user', 'getcat', array('cid' => $contactcid, 'getchildren' => true, 'return_itself' => false ) )</xar:set>
+                    <xar:set name="cat_options">array('0' => "unfiled")</xar:set>
+                    <xar:foreach in="$catlist" value="$catinfo">
+                        <xar:set name="indentspacer">""</xar:set>
+                        <xar:if condition="isset($catinfo['indentation'])">
+                            <xar:for start="$i = 1" test="$i le $catinfo['indentation']" iter="$i++">
+                                <xar:set name="indentspacer">$indentspacer."&nbsp;&nbsp;"</xar:set>
+                            </xar:for>
+                        </xar:if>
+                        <xar:set name="catid">$catinfo['cid']</xar:set>
+                        <xar:set name="cat_options[$catid]">$indentspacer.$catinfo['name']</xar:set>
+                    </xar:foreach>
+                    <xar:data-input type="dropdown" validation="$cat_options" name="cat_id" value="$item['cat_id']" />
+                </td>
+                <td><xar:data-label property="$properties['contactcode']" /></td>
+                <td><xar:data-input property="$properties['contactcode']" name="contactcode" value="$item['contactcode']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['agentuid']" /></td>
+                <td><xar:data-input property="$properties['agentuid']" name="agentuid" value="$item['agentuid']" /></td>
+                <td><xar:data-label property="$properties['userid']" /></td>
+                <td><xar:data-input property="$properties['userid']" name="userid" value="$item['userid']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['dateofbirth']" /></td>
+                <td><xar:data-input property="$properties['dateofbirth']" name="dateofbirth" value="$item['dateofbirth']" /></td>
+                <td><xar:data-label property="$properties['private']" /></td>
+                <td><xar:data-input property="$properties['private']" name="private" value="$item['private']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['contactpref']" /></td>
+                <td colspan="3"><xar:data-input property="$properties['contactpref']" name="contactpref" value="$item['contactpref']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['phone_work']" /></td>
+                <td><xar:data-input property="$properties['phone_work']" name="phone_work" value="$item['phone_work']" /></td>
+                <td><xar:data-label property="$properties['phone_cell']" /></td>
+                <td><xar:data-input property="$properties['phone_cell']" name="phone_cell" value="$item['phone_cell']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['phone_fax']" /></td>
+                <td><xar:data-input property="$properties['phone_fax']" name="phone_fax" value="$item['phone_fax']" /></td>
+                <td><xar:data-label property="$properties['phone_home']" /></td>
+                <td><xar:data-input property="$properties['phone_home']" name="phone_home" value="$item['phone_home']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['email_1']" /></td>
+                <td><xar:data-input property="$properties['email_1']" name="email_1" value="$item['email_1']" /></td>
+                <td><xar:data-label property="$properties['email_2']" /></td>
+                <td><xar:data-input property="$properties['email_2']" name="email_2" value="$item['email_2']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['chat_AIM']" /></td>
+                <td><xar:data-input property="$properties['chat_AIM']" name="chat_AIM" value="$item['chat_AIM']" /></td>
+                <td><xar:data-label property="$properties['chat_YIM']" /></td>
+                <td><xar:data-input property="$properties['chat_YIM']" name="chat_YIM" value="$item['chat_YIM']" /></td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['chat_ICQ']" /></td>
+                <td><xar:data-input property="$properties['chat_ICQ']" name="chat_ICQ" value="$item['chat_ICQ']" /></td>
+                <td><xar:data-label property="$properties['chat_MSNM']" /></td>
+                <td><xar:data-input property="$properties['chat_MSNM']" name="chat_MSNM" value="$item['chat_MSNM']" /></td>
+            </tr>
             
-    <xar:if condition="!empty($hooks)">
-    <tr>
-        <td colspan="4">#$hooks#</td>
-    </tr>
-    </xar:if>
-                
-    <tr>
-        <td><xar:data-label property="$properties['img']" /></th>
-        <td colspan="3"><xar:data-input property="$properties['img']" name="img" value="$item['img']" />
-        
-            <xar:if condition="$item['img'] and is_numeric($item['img'])">
-                <xar:set name="fileInfo">current( xarModAPIFunc( 'uploads', 'user', 'showoutput', array('value'=>$item['img'], 'multiple'=>false)) )</xar:set>
-                <xar:set name="imagelist">xarModApiFunc('uploads','user','db_get_file', array('fileId'=>$item['img']))</xar:set>
-                <xar:if condition="!empty($imagelist)">
-                    <xar:set name="imageinfo">current($imagelist)</xar:set>
-                </xar:if>
-                <xar:image-resize src="$imageinfo[fileId]" width="200px" height="200px" constrain="yes" label="my image" align="middle" />
-                <input type="checkbox" name="delete_img" value="1" /> <xar:mlstring>delete?</xar:mlstring>
+            <xar:if condition="!empty($hooks)">
+                <tr>
+                    <td colspan="4">#$hooks#</td>
+                </tr>
             </xar:if>
-        </td>
-    </tr>
-    <tr>
-        <td><xar:data-label property="$properties['notes']" /></td>
-        <td colspan="3"><xar:data-input property="$properties['notes']" name="notes" value="$item['notes']" /></td>
-    </tr>
-    <tr>
-        <xar:set name="updatebtn"><xar:mlstring>Modify Contact</xar:mlstring></xar:set>
-        <td colspan="4" align="center"><br /><input type="submit" name="submit" value="#$updatebtn#"></td>
-    </tr>
-</table>
-
-<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('dossier')#" />
-
-</form>
-
+            <tr>
+                <td><xar:data-label property="$properties['img']" /></th>
+                <td colspan="3"><xar:data-input property="$properties['img']" name="img" value="$item['img']" />
+                    <xar:if condition="$item['img'] and is_numeric($item['img'])">
+                        <xar:set name="fileInfo">current( xarModAPIFunc( 'uploads', 'user', 'showoutput', array('value'=>$item['img'], 'multiple'=>false)) )</xar:set>
+                        <xar:set name="imagelist">xarModApiFunc('uploads','user','db_get_file', array('fileId'=>$item['img']))</xar:set>
+                        <xar:if condition="!empty($imagelist)">
+                            <xar:set name="imageinfo">current($imagelist)</xar:set>
+                        </xar:if>
+                        <xar:image-resize src="$imageinfo[fileId]" width="200px" height="200px" constrain="yes" label="my image" align="middle" />
+                        <input type="checkbox" name="delete_img" value="1" /> <xar:mlstring>delete?</xar:mlstring>
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <td><xar:data-label property="$properties['notes']" /></td>
+                <td colspan="3"><xar:data-input property="$properties['notes']" name="notes" value="$item['notes']" /></td>
+            </tr>
+            <tr>
+                <xar:set name="updatebtn"><xar:mlstring>Modify Contact</xar:mlstring></xar:set>
+                <td colspan="4" align="center">
+                    <input type="hidden" name="authid" value="#$authid#" />
+                    <input type="hidden" name="contactid" value="#$contactid#" />
+                    <input type="hidden" name="returnurl" value="#$returnurl#" />
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('dossier')#" />
+                    <input type="submit" name="submit" value="#$updatebtn#">
+                </td>
+            </tr>
+        </table>
+    </form>
 </div>

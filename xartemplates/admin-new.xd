@@ -1,10 +1,14 @@
 <xar:data-getitem name="$properties" module="dossier" itemtype="1" itemid="0" />
 <xar:data-getitem name="$location_properties" module="dossier" itemtype="2" itemid="0" />
-
-<xar:template type="module" file="admin-menu" />
-
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>New Contact</xar:mlstring></span></div>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">#xarModGetVar('dossier', 'displaytitle')#</span>
+</div>
 <div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+
+    <h2>
+        <xar:mlstring>New Contact</xar:mlstring>
+    </h2>
 
     <form method="post" action="&xar-modurl-dossier-admin-create;">
         
@@ -158,8 +162,6 @@
                 <td colspan="4" align="center"><br /><input type="submit" name="submit" value="#$updatebtn#"></td>
             </tr>
         </table>
-        
     </form>
 </div>
-
 <div class="xar-mod-foot"></div>

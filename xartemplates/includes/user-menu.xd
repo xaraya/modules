@@ -8,88 +8,79 @@
 <xar:set name="activetab">#$request.2#</xar:set>
 <xar:set name="activetype">#$request.1#</xar:set>
 
-<div class="xar-mod-head"><span class="xar-mod-title">#xarModGetVar('dossier', 'displaytitle')#</span></div>
 
-<div class="xar-mod-body">
-    <dl class="xar-tabs">
-        <dt class="help" title="#xarML('Choose an action to perform')#">
-          <xar:mlstring>Actions:</xar:mlstring>
-        </dt>
+<div>
+	<dl class="xar-tabs">
+		<dt class="help" title="#xarML('Choose an action to perform')#">
+			<xar:mlstring>Actions:</xar:mlstring>
+		</dt>
 
-        <xar:sec id="menu_view" mask="PublicDossierAccess" catch="false">
-            <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
-            <dd class="#$tabclass#">
-              <a href="#xarModURL('dossier','user','main')#">
-                <xar:mlstring>View</xar:mlstring></strong>
-              </a>
-            </dd>
-            
-            <dd class="">
-              <a href="#xarModURL('roles','user','account',array('moduleload' =&gt; 'dossier'))#">
-                <xar:mlstring>My Contacts</xar:mlstring></strong>
-              </a>
-            </dd>
-        </xar:sec>
+		<xar:sec id="menu_view" mask="PublicDossierAccess" catch="false">
+			<xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
+			<dd class="#$tabclass#">
+				<a href="#xarModURL('dossier','user','main')#">
+					<xar:mlstring>View</xar:mlstring>
+				</a>
+			</dd>
+			
+			<dd class="">
+				<a href="#xarModURL('roles','user','account',array('moduleload' =&gt; 'dossier'))#">
+					<xar:mlstring>My Contacts</xar:mlstring>
+				</a>
+			</dd>
+		</xar:sec>
 
-        <xar:sec id="menu_callrotator" mask="TeamDossierAccess" catch="false">
-            <xar:set name="tabclass">$activetab=='callrotator' or $activetab=='process'?'active':''</xar:set>
-            <dd class="#$tabclass#">
-              <a href="#xarModURL('dossier','user','callrotator')#">
-                    <xar:mlstring>Call Rotator</xar:mlstring>
-              </a>
-            </dd>
-        </xar:sec>
-        
-        <xar:sec id="menu_birthdays" mask="TeamDossierAccess" catch="false">
-            <xar:set name="tabclass">$activetab=='birthdays'?'active':''</xar:set>
-            <dd class="#$tabclass#">
-              <a href="#xarModURL('dossier','user','birthdays')#"  title="#xarML('Upcoming birthdays of contacts')#">
-                    <xar:mlstring>Birthdays</xar:mlstring>
-              </a>
-            </dd>
-        </xar:sec>
-        <xar:sec id="menu_newcontact" mask="TeamDossierAccess" catch="false">
-            <xar:set name="tabclass">$activetab=='new'?'active':''</xar:set>
-            <dd class="#$tabclass#">
-              <a href="#xarModURL('dossier','admin','new')#" title="#xarML('Add a new Contact')#">
-              </a>
-            </dd>
-        </xar:sec>
-        
-        <xar:sec id="menu_phonebook" mask="PublicDossierAccess" catch="false">
-            <xar:if condition="$activetab eq 'view'">
-                <xar:set name="tabclass">'active'</xar:set>
-            <xar:else />
-                 <xar:set name="tabclass">''</xar:set>
-            </xar:if>
-            <dd class="#$tabclass#">
-              <a href="#xarModURL('dossier','user','view')#" title="#xarML('View contact list entries')#">
-                    <xar:mlstring>Contact List</xar:mlstring>
-              </a>
-            </dd>
-        </xar:sec>
-        
-        <xar:sec id="menu_config" mask="AdminDossier" catch="false">
-            <xar:if condition="$activetab eq 'modifyconfig'">
-                <xar:set name="tabclass">'active'</xar:set>
-            <xar:else />
-                 <xar:set name="tabclass">''</xar:set>
-            </xar:if>
-            <dd class="#$tabclass#">
-              <a href="#xarModURL('dossier','admin','modifyconfig')#">
-                    <xar:mlstring>Modify Config</xar:mlstring>
-              </a>
-            </dd>
-        </xar:sec>
-    </dl>
-</div>
+		<xar:sec id="menu_callrotator" mask="TeamDossierAccess" catch="false">
+			<xar:set name="tabclass">$activetab=='callrotator' or $activetab=='process'?'active':''</xar:set>
+			<dd class="#$tabclass#">
+				<a href="#xarModURL('dossier','user','callrotator')#">
+					<xar:mlstring>Call Rotator</xar:mlstring>
+				</a>
+			</dd>
+		</xar:sec>
 
-<div class="xar-mod-body">
-    <xar:set name="statusmsg">xarSessionGetVar('statusmsg')</xar:set>
-    <xar:if condition="!empty($statusmsg)">
-        <div style="border: 2px solid black; background-color: red; color: black; padding: 2px; text-align: center;">
-            #$statusmsg#
-        </div>
-        <xar:set name="dummy">xarSessionSetVar('statusmsg',"")</xar:set>
-</xar:if>
+		<xar:sec id="menu_birthdays" mask="TeamDossierAccess" catch="false">
+			<xar:set name="tabclass">$activetab=='birthdays'?'active':''</xar:set>
+			<dd class="#$tabclass#">
+				<a href="#xarModURL('dossier','user','birthdays')#"  title="#xarML('Upcoming birthdays of contacts')#">
+					<xar:mlstring>Birthdays</xar:mlstring>
+				</a>
+			</dd>
+		</xar:sec>
+
+		<xar:sec id="menu_newcontact" mask="TeamDossierAccess" catch="false">
+			<xar:set name="tabclass">$activetab=='new'?'active':''</xar:set>
+			<dd class="#$tabclass#">
+				<a href="#xarModURL('dossier','admin','new')#" title="#xarML('Add a new Contact')#">
+					<xar:mlstring>Add Contact</xar:mlstring>
+				</a>
+			</dd>
+		</xar:sec>
+		
+		<xar:sec id="menu_phonebook" mask="PublicDossierAccess" catch="false">
+			<xar:if condition="$activetab eq 'view'">
+				<xar:set name="tabclass">'active'</xar:set>
+			<xar:else />
+				<xar:set name="tabclass">''</xar:set>
+			</xar:if>
+			<dd class="#$tabclass#">
+				<a href="#xarModURL('dossier','user','view')#" title="#xarML('View contact list entries')#">
+					<xar:mlstring>Contact List</xar:mlstring>
+				</a>
+			</dd>
+		</xar:sec>
+
+		<xar:sec id="menu_config" mask="AdminDossier" catch="false">
+			<xar:if condition="$activetab eq 'modifyconfig'">
+				<xar:set name="tabclass">'active'</xar:set>
+			<xar:else />
+				<xar:set name="tabclass">''</xar:set>
+			</xar:if>
+			<dd class="#$tabclass#">
+				<a href="#xarModURL('dossier','admin','modifyconfig')#">
+					<xar:mlstring>Modify Config</xar:mlstring>
+				</a>
+			</dd>
+		</xar:sec>
+	</dl>
 </div>

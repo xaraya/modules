@@ -82,7 +82,7 @@
             
         <xar:comment>Display left nav arrow</xar:comment>
         <div style="float: left; width: 26px; height: auto; padding-left: 12px; padding-top: 65px;">
-            <a href="&xar-modurl-dossier-user-dashboard;&amp;displaymonth=#$prevyear#-#$prevmonth#" onClick="return loadContent(this.href,'dashboardcalendar');">
+            <a href="&xar-modurl-dossier-user-dashboard;&amp;displaymonth=#$prevyear#-#$prevmonth#" onclick="return loadContent(this.href,'dashboardcalendar');">
                 <img src="modules/dossier/xarimages/arrow-left.gif">
             </a>
         </div>
@@ -132,7 +132,7 @@
                         <div class="weekday">
                     </xar:if>
                         <xar:if condition="isset($eventlist[$thisyear][$thismonth][$thisday])">
-                            <a href="&xar-modurl-dossier-user-dayschedule;&amp;displaydate=#$thisyear#-#$thismonth#-#$thisday#" onClick="return loadContent(this.href,'dayview');">#$j#</a>
+                            <a href="&xar-modurl-dossier-user-dayschedule;&amp;displaydate=#$thisyear#-#$thismonth#-#$thisday#" onclick="return loadContent(this.href,'dayview');">#$j#</a>
                         <xar:else />
                             #$j#
                         </xar:if>
@@ -179,7 +179,7 @@
         
         <xar:comment>display right nav arrow</xar:comment>
         <div style="float: left; width: 18px; height: 100px; padding-left: 10px; padding-top: 65px;">
-            <a href="&xar-modurl-dossier-user-dashboard;&amp;displaymonth=#$nextyear#-#$nextmonth#" onClick="return loadContent(this.href,'dashboardcalendar');">
+            <a href="&xar-modurl-dossier-user-dashboard;&amp;displaymonth=#$nextyear#-#$nextmonth#" onclick="return loadContent(this.href,'dashboardcalendar');">
                 <img src="modules/dossier/xarimages/arrow-right.gif">
             </a>
         </div>

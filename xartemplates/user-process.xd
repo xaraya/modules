@@ -7,9 +7,21 @@
 <xar:set name="dummy">xarModAPILoad('categories', 'user')</xar:set>
 <xar:set name="catlist">xarModAPIFunc('categories', 'user', 'getchildren', array('cid' => $contactcid ) )</xar:set>
 
-<xar:template type="module" file="user-menu" />
-
 <div class="xar-mod-head">
+    <span class="xar-mod-title">#xarModGetVar('dossier', 'displaytitle')#</span>
+</div>
+
+<div class="xar-mod-body">
+    <xar:set name="statusmsg">xarSessionGetVar('statusmsg')</xar:set>
+
+    <xar:template type="module" file="user-menu" />
+
+    <xar:if condition="!empty($statusmsg)">
+        <div class="xar-error">
+            #$statusmsg#
+        </div>
+        <xar:set name="dummy">xarSessionSetVar('statusmsg',"")</xar:set>
+    </xar:if>
 
     <xar:comment>Contact category, privacy and search field</xar:comment>
     <form method="post" action="#xarModURL('dossier','user','process')#" style="display: inline;">
@@ -27,11 +39,7 @@
         </div>
     </form>
     
-</div>
-
-<div class="xar-mod-body contactlist">
     <form method="post" action="#xarModURL('dossier','user','process')#" style="display: inline;">
-    
         <div style="padding: 0 5px 5px 15px;"><xar:mlstring>INSTRUCTIONS: Check the customer name against similar names listed in the database. If the customer already exists, select it and submit the new call record. If the customer does not already exist, check the 'Create New Record' box and submit or leave 'Create New Contact' checked and continue searching for a possible match.</xar:mlstring></div>
         <div style="float: left; width: 45%;">
             <fieldset>

@@ -1,39 +1,46 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Delete Contact</xar:mlstring></span></div>
-<div class="xar-mod-body">
-<h2><xar:mlstring>Confirm deleting this Contact?</xar:mlstring></h2>
-<div align="center">
-
-<form method="post" action="&xar-modurl-dossier-admin-delete;">
-    <input type="hidden" name="authid" value="#$authid#" />
-    <input type="hidden" name="confirm" value="true" />
-    <input type="hidden" name="contactid" value="#$contactid#" />
-    <input type="hidden" name="returnurl" value="#$returnurl#" />
-
-    <table border="0" cellpadding="2" cellspacing="0">
-        <tr>
-            <td align="right" width="50%">
-                <xar:mlstring>Contact ID</xar:mlstring>
-            </td>
-            <td width="50%">
-                #$contactid#
-            </td>
-        </tr>
-        <tr>
-            <td align="right" width="50%">
-                <xar:mlstring>Contact Name</xar:mlstring>
-            </td>
-            <td width="50%">
-                #$sortname#
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" align="center"><br />
-                    <input type="submit" value="#$confirmbutton#"  />
-            </td>
-        </tr>
-    </table>
-</form>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">#xarModGetVar('dossier', 'displaytitle')#</span>
 </div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+
+    <h2>
+        <xar:mlstring>Delete Contact</xar:mlstring>
+    </h2>
+    <p><xar:mlstring>Confirm deleting this Contact?</xar:mlstring></p>
+
+    <div align="center">
+
+        <form method="post" action="#xarModURL('dossier','admin','delete')#">
+            <table border="0" cellpadding="2" cellspacing="0">
+                <tr>
+                    <td align="right" width="50%">
+                        <xar:mlstring>Contact ID</xar:mlstring>
+                    </td>
+                    <td width="50%">
+                        #$contactid#
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" width="50%">
+                        <xar:mlstring>Contact Name</xar:mlstring>
+                    </td>
+                    <td width="50%">
+                        #$sortname#
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><br />
+                        <input type="hidden" name="authid" value="#$authid#" />
+                        <input type="hidden" name="confirm" value="true" />
+                        <input type="hidden" name="contactid" value="#$contactid#" />
+                        <input type="hidden" name="returnurl" value="#$returnurl#" />
+                        <input type="submit" value="#$confirmbutton#"  />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
 </div>
 

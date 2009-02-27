@@ -1,88 +1,93 @@
+<div class="xar-mod-head">
+	<span class="xar-mod-title">#xarModGetVar('dossier', 'displaytitle')#</span>
+</div>
 <div class="xar-mod-body">
-    <xar:template type="module" file="admin-menu" />
+	<xar:template type="module" file="admin-menu" />
 
-  <h2><xar:mlstring>Configuration Settings</xar:mlstring></h2>
+	<h2><xar:mlstring>Configuration Settings</xar:mlstring></h2>
 
-  <div class="xar-norm-outline" style="padding:.25em;">
-    <form method="post" action="#xarModURL('dossier','admin','updateconfig')#">
-       <fieldset>
-        <legend><xar:mlstring>General Options</xar:mlstring></legend>
-            <div class="xar-form-input-wrapper-after">
-                 <xar:if condition="$shorturls">
-                    <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
-                <xar:else />
-                    <input type="checkbox" name="shorturls" id="shorturls" value="1" />
-                </xar:if>
-              <label for="shorturls" title="#xarML('Use short URLS for contact form.')#">
-                    <xar:mlstring>Support Short URLs</xar:mlstring>
-                </label>
-    
-            </div>
-            <div class="xar-form-input-wrapper-after">
-                <xar:if condition="$useModuleAlias">
-                    <input type="checkbox" name="useModuleAlias" id="useModuleAlias" value="1" checked="checked" />
-                <xar:else />
-                    <input type="checkbox" name="useModuleAlias" id="useModuleAlias" value="1" />
-                </xar:if>
-                <label for="modulealias" title="#xarML('Use an alias instead of the module name')#">
-                    <xar:mlstring>
-                        Use a module alias
-                    </xar:mlstring>
-                </label>
-    
-            </div>
-            <div class="xar-form-input-wrapper">
-                <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
-                        <xar:mlstring>
-                            Module Alias Name
-                        </xar:mlstring>
-                </label>
-                <input type="text" name="aliasname" id="aliasname" value="#$aliasname#" size="32" maxlength="100" />
-            </div>
-       </fieldset>
-<!-- OTHER SETTINGS -->
-        
-       <fieldset>
-        <legend><xar:mlstring>Configuration Settings</xar:mlstring></legend>
-            
-            <div class="xar-form-input-wrapper">
-              <label for="displaytitle" class="xar-mod-form"><xar:mlstring>Module Display Title (eg: CRM, Contact List, etc.)</xar:mlstring></label>
-              <input type="text" name="displaytitle" id="displaytitle" value="#$displaytitle#" size="30" maxlength="60" tabindex="7" />
-            </div>
-            <div class="xar-form-input-wrapper">
-              <label for="displaytitle"><xar:mlstring>Sales Staff / CSR User Group</xar:mlstring></label>
-              <xar:data-input type="grouplist" name="csr_group" value="$csr_group" />
-            </div>
-            <div class="xar-form-input-wrapper">
-              <label for="itemsperpage" class="xar-mod-form"><xar:mlstring>Records viewed per page</xar:mlstring></label>
-              <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsperpage#" size="4" maxlength="4" tabindex="21" />
-            </div>
-          </fieldset>
-        </div>
+	<form method="post" action="#xarModURL('dossier','admin','updateconfig')#">
+		<fieldset>
+			<legend>
+				<xar:mlstring>General Options</xar:mlstring>
+			</legend>
+			<div class="xar-form-input-wrapper-after">
+				<xar:if condition="$shorturls">
+					<input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
+				<xar:else />
+					<input type="checkbox" name="shorturls" id="shorturls" value="1" />
+				</xar:if>
+				<label for="shorturls" title="#xarML('Use short URLS for Dossier.')#">
+					<xar:mlstring>Support Short URLs</xar:mlstring>
+				</label>
+			</div>
+			<div class="xar-form-input-wrapper-after">
+				<xar:if condition="$useModuleAlias">
+					<input type="checkbox" name="useModuleAlias" id="useModuleAlias" value="1" checked="checked" />
+				<xar:else />
+					<input type="checkbox" name="useModuleAlias" id="useModuleAlias" value="1" />
+				</xar:if>
+				<label for="useModuleAlias" title="#xarML('Use an alias instead of the module name')#">
+					<xar:mlstring>Use a module alias</xar:mlstring>
+				</label>
+			</div>
+			<div class="xar-form-input-wrapper">
+				<label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
+					<xar:mlstring>Module Alias Name</xar:mlstring>
+				</label>
+				<input type="text" name="aliasname" id="aliasname" value="#$aliasname#" size="32" maxlength="100" />
+			</div>
+		</fieldset>
+		<!-- OTHER SETTINGS -->
+		
+		<fieldset>
+			<legend>
+				<xar:mlstring>Configuration Settings</xar:mlstring>
+			</legend>
 
-        <xar:if condition="!empty($hooks)">
-              <fieldset>
-                <legend><xar:mlstring>Default Hooks For Contacts</xar:mlstring></legend>
-               
-                <xar:foreach in="$hooks" key="$hookmodule">
-                    #$hooks[$hookmodule]# 
-                </xar:foreach>
-              </fieldset>
-            <xar:else />
-            <p>
-                <xar:mlstring>
-                    No hooks are enabled. 
-                </xar:mlstring>
-            </p>
-        </xar:if>
-        
-        <div style="text-align:center; margin:1em;">
-                    <input name="submit" type="submit" tabindex="27" value="#xarML('Update Config')#" align="middle" />
-                    <input name="authid" type="hidden" id="authid" value="#$authid#" />
-                    <input name="formSubmit" type="hidden" id="formSubmit" value="1" />
-        </div>
-    </form>
-  </div>
+			<div class="xar-form-input-wrapper">
+				<label for="displaytitle" class="xar-form-label">
+					<xar:mlstring>Module Display Title</xar:mlstring>
+				</label>
+				<input type="text" name="displaytitle" id="displaytitle" value="#$displaytitle#" size="30" maxlength="60" tabindex="7" />
+				 (eg: CRM, Contact List, etc.)
+			</div>
+			<div class="xar-form-input-wrapper">
+				<label for="csr_group" class="xar-form-label">
+					<xar:mlstring>Sales Staff / CSR User Group</xar:mlstring>
+				</label>
+				<xar:data-input type="grouplist" name="csr_group" value="$csr_group" />
+			</div>
+			<div class="xar-form-input-wrapper">
+				<label for="itemsperpage" class="xar-form-label">
+					<xar:mlstring>Items per page</xar:mlstring>
+				</label>
+				<input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsperpage#" size="4" maxlength="4" tabindex="21" />
+			</div>
+		</fieldset>
+
+		<xar:if condition="!empty($hooks)">
+			<fieldset>
+				<legend>
+					<xar:mlstring>Hooks</xar:mlstring>
+				</legend>
+ 
+				<xar:foreach in="$hooks" key="$hookmodule">
+					#$hooks[$hookmodule]# 
+				</xar:foreach>
+			</fieldset>
+		<xar:else />
+			<p>
+				<xar:mlstring>No hooks are enabled.</xar:mlstring>
+			</p>
+		</xar:if>
+		
+		<div style="text-align:center; margin:1em;">
+			<input name="submit" type="submit" tabindex="27" value="#xarML('Update Config')#" align="middle" />
+			<input name="authid" type="hidden" id="authid" value="#$authid#" />
+			<input name="formSubmit" type="hidden" id="formSubmit" value="1" />
+		</div>
+	</form>
 </div>
 <div class="xar-mod-foot"></div>
 

@@ -6,7 +6,7 @@
 </xar:if>
 
 <dd class="#$tabclass#">
-    <a href="#$current##">
+    <a href="#$current#">
         <xar:mlstring>
             Contact Info
         </xar:mlstring>

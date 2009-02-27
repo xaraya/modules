@@ -9,14 +9,15 @@
 <xar:set name="id_list">array()</xar:set>
 <xar:set name="id_list[]">$contactid</xar:set>
 <xar:data-getitems name="$moreproperties" value="$values" module="dossier" itemtype="0" itemid="$id_list" />
-
-<xar:if condition="!isset($showmenu) or $showmenu eq 1">
-    <xar:template type="module" file="admin-menu" />
-</xar:if>
-
+<div class="xar-mod-head">
+    <span class="xar-mod-title">#xarModGetVar('dossier', 'displaytitle')#</span>
+</div>
 <div class="xar-mod-body">
-    <xar:if condition="!empty($status)">
+    <xar:if condition="!isset($showmenu) or $showmenu eq 1">
+        <xar:template type="module" file="admin-menu" />
+    </xar:if>
 
+    <xar:if condition="!empty($status)">
         <h3>#$status#</h3>
     <xar:else />
         <table width="100%" border="0" cellspacing="1" cellpadding="2" id="xproject_info" class="xar-accent">
@@ -264,5 +265,3 @@
     </xar:if>
 </div>
 <div class="xar-mod-foot"></div>
-
-

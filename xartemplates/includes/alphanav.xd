@@ -23,41 +23,39 @@
 
 <xar:set name="splitter">"|"</xar:set>
 
-<div style="margin-bottom: 20px;">
-    <div style="font-size: 10px; width: 100%; display: inline; font-weight: bold;">
+<div style="margin: 1em 0;">
         <xar:if condition="$pagetype eq 'mid' OR $pagetype eq 'last'">
             <xar:set name="prevstartnum">$startnum - $itemsperpage</xar:set>
-            <a href="#$navurl#&amp;startnum=#$prevstartnum##$pageurlparams#" style="margin: 2px; text-decoration: none;">&lt;&lt;</a>
+            <a href="#$navurl#&amp;startnum=#$prevstartnum##$pageurlparams#" style="margin: 2px;">&lt;&lt;</a>
         <xar:else />
             <span style="margin: 2px;">&lt;&lt;</span>
         </xar:if>
         &nbsp;&nbsp;
-        
+
         <xar:if condition="!empty($ltr)">
-            <a href="#$navurl##$urlparams#" style="margin: 2px; text-decoration: none;"><xar:mlstring>All</xar:mlstring></a>
+            <a href="#$navurl##$urlparams#" style="margin: 2px;"><xar:mlstring>All</xar:mlstring></a>
         <xar:else />
-                <strong style="font-size: 120%; text-decoration: underline;"><xar:mlstring>All</xar:mlstring></strong>
+                <strong><xar:mlstring>All</xar:mlstring></strong>
         </xar:if>
-            
+
         #$splitter#
         <xar:for start="$i = 65" test="$i le 90" iter="$i++">
             <xar:set name="navltr">chr($i)</xar:set>
             <xar:if condition="$ltr eq $navltr">
-                <strong style="font-size: 120%; text-decoration: underline;">#$navltr#</strong>
+                <strong>#$navltr#</strong>
             <xar:else />
-                <a href="#$navurl#&amp;ltr=#$navltr##$urlparams#" style="margin: 2px; text-decoration: none;">#$navltr#</a>
+                <a href="#$navurl#&amp;ltr=#$navltr##$urlparams#" style="margin: 2px;">#$navltr#</a>
             </xar:if>
             #$splitter#
         </xar:for>
-    
-        <a href="#$navurl#&amp;ltr=Other#$urlparams#" style="margin: 2px; text-decoration: none;"><xar:mlstring>Other</xar:mlstring></a>
-    
+
+        <a href="#$navurl#&amp;ltr=Other#$urlparams#" style="margin: 2px;"><xar:mlstring>Other</xar:mlstring></a>
+
         &nbsp;&nbsp;
         <xar:if condition="$pagetype eq 'mid' OR $pagetype eq 'first'">
             <xar:set name="nextstartnum">$startnum + $itemsperpage</xar:set>
-            <a href="#$navurl#&amp;startnum=#$nextstartnum##$pageurlparams#" style="margin: 2px; text-decoration: none;">&gt;&gt;</a>
+            <a href="#$navurl#&amp;startnum=#$nextstartnum##$pageurlparams#" style="margin: 2px;">&gt;&gt;</a>
         <xar:else />
             <span style="margin: 2px;">&gt;&gt;</span>
         </xar:if>
-    </div>
 </div>
