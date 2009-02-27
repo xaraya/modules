@@ -5,9 +5,11 @@
 - Delete item (with option to recursively remove descendants)
 
 - Various queries:
-  - Parent
-  - Siblings
-  - Ancestors
+  - Parent (done)
+  - Root
+  - Siblings (done)
+  - Ancestors (done)
   - Descendants
-  - Next sibling
+  - Previous sibling (done)
+  - Next sibling (done)
   - etc.
