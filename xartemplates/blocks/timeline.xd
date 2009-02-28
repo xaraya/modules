@@ -50,7 +50,7 @@
                 </strong>
                 #$item.text#
                 <span class="status-info">
-                    <xar:base-timesince stamp="$item['created_at']" /> <xar:mlstring>ago, via </xar:mlstring>#$item.source#
+                    <xar:base-timesince stamp="$item['created_at']" /> <xar:mlstring>ago</xar:mlstring><xar:if condition="$showsource"><xar:mlstring>, via </xar:mlstring> #$item.source#</xar:if>
                 </span>
             </span>
         </li>
