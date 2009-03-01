@@ -1,0 +1,115 @@
+<xar:data-getitem name="$properties" module="labaccounting" itemtype="1" itemid="0" />
+
+<xar:set name="recentjournals">xarModAPIFunc('labaccounting', 'journals', 'getrecent', array('numitems' => 10))</xar:set>
+<xar:set name="foo">xarErrorFree()</xar:set>
+
+<xar:comment>
+<ul class="xar-floatleft">
+    <li class="xar-title">Billing
+    <li><a href="#xarModURL('labaccounting','user','newpayment')#"><xar:mlstring>Make a Payment</xar:mlstring></a>
+    <li><a href="#xarModURL('labaccounting','user','statements')#"><xar:mlstring>Print a Statement</xar:mlstring></a>
+    <li><a href="#xarModURL('labaccounting','user','journals')#"><xar:mlstring>See All Transactions</xar:mlstring></a>
+</ul>
+
+<ul class="xar-floatleft">
+    <li class="xar-title">Quick View
+    <li><xar:mlstring>Outstanding Balance</xar:mlstring>:
+    <li><xar:mlstring>Outstanding Orders</xar:mlstring>:
+    <li><xar:mlstring>Open Cases</xar:mlstring>:
+    <li><xar:mlstring>Open Estimates</xar:mlstring>:
+</ul>
+
+<br class="xar-clearboth" />
+</xar:comment>
+
+<xar:if condition="isset($journals)">
+    <xar:foreach in="$journals" value="$journalinfo">
+        <xar:set name="journalid">$journalinfo['journalid']</xar:set>
+        <div class="account_journal_summary">
+            <span class="xar-float-left">
+                <a href="#xarModURL('labaccounting', 'user', 'account', array('journalid' => $journalid))#">
+                    <xar:data-output property="$properties['account_title']" value="$journalinfo['account_title']" />
+                </a> [<xar:data-label property="$properties['agentuid']" /> <xar:data-output property="$properties['agentuid']" value="$journalinfo['agentuid']" />]
+            </span>
+            <span class="xar-float-right">
+                #$journalinfo['balance']#
+            </span>    
+        </div>
+    </xar:foreach>
+</xar:if>
+
+<div>
+<form action="#xarModURL('labaccounting', 'user', 'usermenu', array('moduleload'=&gt;'labaccounting'))#" method="post" enctype="application/x-www-form-urlencoded">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />    
+    <input type="hidden" name="phase" id="phase" value="update" />
+    
+    <xar:set name="uid">xarUserGetVar('uid')</xar:set>
+    <xar:data-getitem name="$properties" module="roles" itemtype="706" itemid="$uid" />
+    <xar:set name="contactlist">xarModAPIFunc('dossier', 'user', 'getall', array('userid' => $uid))</xar:set>
+    <xar:if condition="isset($contactlist) and count($contactlist) gt 0">
+        <xar:set name="contactoptions">array(array('id' => '', 'name' => xarML('select one...')))</xar:set>
+        <xar:foreach in="$contactlist" value="$contactinfo">
+            <xar:set name="foo">$contactoptions[] = array('id' => $contactinfo['contactid'], 'name' => (!empty($contactinfo['company']) ? $contactinfo['company']." - " : "").$contactinfo['sortname'])</xar:set>
+        </xar:foreach>
+    </xar:if>
+    
+    <xar:sec mask="ManageJournal" catch="false">
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties['agentid']" label="id" />
+            <xar:if condition="isset($contactlist) and count($contactlist) gt 0">
+                <xar:data-input property="$properties['agentid']" name="agentid" options="$contactoptions" value="$agentid" />
+            <xar:else />
+                <xar:data-input property="$properties['agentid']" hidden="true" />
+                Click here...
+            </xar:if>   
+        </div>
+    </xar:sec>
+    <div class="xar-form-input-wrapper">
+        <xar:data-label property="$properties['contactid']" label="id" />
+        <xar:if condition="isset($contactlist) and count($contactlist) gt 0">
+            <xar:data-input property="$properties['contactid']" name="contactid" options="$contactoptions" value="$contactid" />
+        <xar:else />
+            <xar:data-input property="$properties['contactid']" hidden="true" />
+            Click here...
+        </xar:if>
+    </div>
+    <xar:if condition="$contactid gt 0">
+        <div class="xar-form-input-wrapper">
+            <xar:data-label property="$properties['addressid']" label="id" />
+            <xar:if condition="isset($addresslist) and count($addresslist) gt 0">
+                <xar:set name="addressoptions">array(array('id' => '', 'name' => xarML('select one...')))</xar:set>
+                <xar:foreach in="$addresslist" value="$addressinfo">
+                    <xar:set name="foo">$addressoptions[] = array('id' => $addressinfo['locationid'], 'name' => (!empty($addressinfo['address_1']) ? $addressinfo['address_1']." - " : "").
+                                                                                                                (!empty($addressinfo['city']) ? $addressinfo['city']." - " : "").
+                                                                                                                (!empty($addressinfo['us_state']) ? $addressinfo['us_state']." - " : "").
+                                                                                                                (!empty($addressinfo['postalcode']) ? $addressinfo['postalcode']." - " : "").
+                                                                                                                $addressinfo['country'])</xar:set>
+                </xar:foreach>
+                <xar:data-input property="$properties['addressid']" name="addressid" options="$addressoptions" value="$addressid" />
+            <xar:else />
+                <xar:data-input property="$properties['addressid']" hidden="true" />
+                <a href="#xarModURL('roles','user','account',array('moduleload'=&gt;'dossier'))#">Click here...</a>
+            </xar:if>
+        </div>
+    </xar:if>
+        
+    <input type="submit" value="#xarML('Submit')#"  tabindex="2" />
+</form>
+</div>
+
+<xar:set name="journaltype">""</xar:set>
+
+<xar:if condition="isset($recentjournals)">
+    <xar:foreach in="$recentjournals" value="$journalinfo">
+        <xar:set name="balance">xarModAPIFunc('labaccounting', 'journaltransactions', 'getbalance', array('journalid' => $journalinfo['journalid']))</xar:set>
+        <xar:set name="journalid">$journalinfo['journalid']</xar:set>
+        <div class="account_journal_summary">
+            <span class="xar-float-left">
+                <a href="#xarModURL('labaccounting', 'user', 'account', array('journalid' => $journalid))#"><xar:data-output property="$properties['account_title']" value="$journalinfo['account_title']" /></a> - <xar:data-output property="$properties['journaltype']" value="$journalinfo['journaltype']" /> [<xar:data-label property="$properties['agentuid']" /> <xar:data-output property="$properties['agentuid']" value="$journalinfo['agentuid']" />]
+            </span>
+            <span class="xar-float-right">
+                #$balance#
+            </span>    
+        </div>
+    </xar:foreach>
+</xar:if>

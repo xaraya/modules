@@ -1,0 +1,158 @@
+<xar:set name="xtasks_objectid">xarModGetVar('xtasks','xtasks_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="xtasks" itemtype="1" itemid="$xtasks_objectid" />
+
+<xar:set name="dummy">xarModAPILoad('xproject', 'user')</xar:set>
+
+<xar:template type="module" file="admin-menu" />
+
+<xar:set name="urlargs">""</xar:set>
+<xar:set name="encoded_returnurl">urlencode($returnurl)</xar:set>
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Staff Task Assignments</xar:mlstring></span></div>
+<div class="xar-mod-body">
+
+    <table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 99%;">
+        <tr>
+            <th class="xtasks-list-header"><xar:mlstring>Project / Task Name</xar:mlstring></th>
+            <th class="xtasks-list-header"><xar:mlstring>Assigned To</xar:mlstring></th>
+            <th class="xtasks-list-header"><xar:mlstring>Proj.Imp</xar:mlstring></th>
+            <th class="xtasks-list-header"><xar:mlstring>Proj.Pri</xar:mlstring></th>
+            <th class="xtasks-list-header" style="white-space: nowrap;"><xar:mlstring>Task Imp</xar:mlstring></th>
+            <th class="xtasks-list-header" style="white-space: nowrap;"><xar:mlstring>Task Pri</xar:mlstring></th>
+            <th class="xtasks-list-header"><xar:mlstring>Options</xar:mlstring></th>
+        </tr>
+        
+        <xar:set name="$currentorderby">""</xar:set>
+        
+        <xar:foreach in="$items" value="$taskinfo">
+            <xar:if condition="isset($taskinfo['taskid']) and $taskinfo['taskid'] gt 0">   
+                <tr><td class="xtasks-tasklist-data">
+                        <xar:if condition="$taskinfo['projectid'] gt 0">
+                            <h3><a href="#xarModURL('xproject','admin','display',array('projectid'=&gt;$taskinfo['projectid']))#">#$taskinfo['projectname']#</a></h3>
+                        <xar:else />
+                            <div><xar:mlstring>No Associated Projects</xar:mlstring></div>                    
+                        </xar:if>
+                    </td>
+                </tr>
+    
+                <xar:set name="project_end_planned">$taskinfo['project_end_planned']</xar:set>
+                <xar:set name="date_end_planned">$taskinfo['date_end_planned']</xar:set>
+                <tr><td class="xtasks-tasklist-data">
+                        <xar:if condition="empty($taskinfo['link'])">#$taskinfo['task_name']#<xar:else /><a href="#$taskinfo['link']#">#$taskinfo['task_name']#</a></xar:if>
+                        <div style="overflow-x: hidden; width: 350px;"><b>
+                            <xar:if condition="!empty($date_end_planned)">
+                                <xar:mlstring>Due</xar:mlstring>: <em><xar:data-output property="$properties['date_end_planned']" value="$date_end_planned" dateformat="%a, %d %B %Y" /></em>
+                            <xar:elseif condition="!empty($project_end_planned)" />
+                                <xar:mlstring>Due</xar:mlstring>: <em><xar:data-output property="$properties['date_end_planned']" value="$project_end_planned" dateformat="%a, %d %B %Y" /></em>
+                            </xar:if>
+                            </b><br />
+                            #$taskinfo['formatted_desc']#
+                        </div>
+                    </td>
+                    
+                    <td class="xtasks-tasklist-data" style="white-space: nowrap;">#$taskinfo['ownername']#</td>
+                    
+                    <td class="xtasks-tasklist-data" style="text-align: center;">
+                        <div style="border: 1px solid black; height: 20px;">
+                            <div style="float: left; width: auto;">
+                                #$taskinfo['proj_importance']#
+                            </div>
+                            <div style="width: 10px; height: 16px; float: right; margin-top: 2px;">
+                                <div style="height: 10px; vertical-align: top;">
+                                    <xar:if condition="$taskinfo.proj_importance gt 1">
+                                        <a href="&xar-modurl-xproject-admin-chngimportance;&amp;projectid=#$taskinfo.projectid#&amp;mode=decr&amp;authid=#$authid2#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/up.gif" align="top" /></a>
+                                    </xar:if>
+                                </div>
+                                <div style="height: 8px; vertical-align: top;">
+                                    <xar:if condition="$taskinfo.proj_importance lt 9">
+                                        <a href="&xar-modurl-xproject-admin-chngimportance;&amp;projectid=#$taskinfo.projectid#&amp;mode=incr&amp;authid=#$authid2#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/down.gif" align="top" /></a>
+                                    </xar:if>
+                                </div>
+                            </div>
+                            <div style="clear; both;"></div>
+                        </div>
+                    </td>
+                    
+                    <td class="xtasks-tasklist-data" style="text-align: center;">
+                        <div style="border: 1px solid black; height: 20px;">
+                            <div style="float: left; width: auto;">
+                                #$taskinfo['proj_priority']#
+                            </div>
+                            <div style="width: 10px; height: 16px; float: right; margin-top: 2px;">
+                                <div style="height: 10px; vertical-align: top;">
+                                    <xar:if condition="$taskinfo.proj_priority gt 1">
+                                        <a href="&xar-modurl-xproject-admin-chngpriority;&amp;projectid=#$taskinfo.projectid#&amp;mode=decr&amp;authid=#$authid2#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/up.gif" align="top" /></a>
+                                    </xar:if>
+                                </div>
+                                <div style="height: 8px; vertical-align: top;">
+                                    <xar:if condition="$taskinfo.proj_priority lt 9">
+                                        <a href="&xar-modurl-xproject-admin-chngpriority;&amp;projectid=#$taskinfo.projectid#&amp;mode=incr&amp;authid=#$authid2#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/down.gif" align="top" /></a>
+                                    </xar:if>
+                                </div>
+                            </div>
+                            <div style="clear; both;"></div>
+                        </div>
+                    </td>
+                    
+                    <td class="xtasks-tasklist-data" style="text-align: center;">
+                        <div style="border: 1px solid black; height: 20px;">
+                            <div style="float: left; width: auto;">
+                                #$taskinfo['importance']#
+                            </div>
+                            <div style="width: 10px; height: 16px; float: right; margin-top: 2px;">
+                                <div style="height: 10px; vertical-align: top;">
+                                    <xar:if condition="$taskinfo.importance gt 1">
+                                        <a href="&xar-modurl-xtasks-admin-chngimportance;&amp;taskid=#$taskinfo.taskid#&amp;mode=decr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/up.gif" align="top" /></a>
+                                    </xar:if>
+                                </div>
+                                <div style="height: 8px; vertical-align: top;">
+                                    <xar:if condition="$taskinfo.importance lt 9">
+                                        <a href="&xar-modurl-xtasks-admin-chngimportance;&amp;taskid=#$taskinfo.taskid#&amp;mode=incr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/down.gif" align="top" /></a>
+                                    </xar:if>
+                                </div>
+                            </div>
+                            <div style="clear; both;"></div>
+                        </div>
+                    </td>
+                    
+                    <td class="xtasks-tasklist-data" style="text-align: center;">
+                        <div style="border: 1px solid black; height: 20px;">
+                            <div style="float: left; width: auto;">
+                                #$taskinfo['priority']#
+                            </div>
+                            <div style="width: 10px; height: 16px; float: right; margin-top: 2px;">
+                                <div style="height: 10px; vertical-align: top;">
+                                    <xar:if condition="$taskinfo.priority gt 1">
+                                        <a href="&xar-modurl-xtasks-admin-chngpriority;&amp;taskid=#$taskinfo.taskid#&amp;mode=decr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/up.gif" align="top" /></a>
+                                    </xar:if>
+                                </div>
+                                <div style="height: 8px; vertical-align: top;">
+                                    <xar:if condition="$taskinfo.priority lt 9">
+                                        <a href="&xar-modurl-xtasks-admin-chngpriority;&amp;taskid=#$taskinfo.taskid#&amp;mode=incr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/down.gif" align="top" /></a>
+                                    </xar:if>
+                                </div>
+                            </div>
+                            <div style="clear; both;"></div>
+                        </div>
+                    </td>
+
+                    <td class="xtasks-tasklist-data" style="text-align: center; white-space: nowrap;"><a href="&xar-modurl-xtasks-admin-reassign;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.reassign.gif" border="0" /></a>&nbsp;<a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/button.edit.gif" border="0" /></a></td>
+                
+                </tr>
+            <xar:else />
+                <tr>
+                    <td></td>        
+                    <td class="xtasks-tasklist-data" style="white-space: nowrap;">#$taskinfo['ownername']#</td>
+                    <td colspan="5"><xar:mlstring>No assigned tasks</xar:mlstring></td>        
+                </tr>
+            </xar:if>
+    
+        </xar:foreach>
+        
+    </table>
+    
+    <br />
+
+</div>
+
+<div class="xar-mod-foot" style="text-align: center;"></div>

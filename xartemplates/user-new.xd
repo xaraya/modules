@@ -1,0 +1,151 @@
+<xar:set name="dummy">xarVarFetch('showajax',   'str::', $showajax,    NULL, XARVAR_DONT_SET)</xar:set>
+<xar:set name="dummy">xarVarFetch('inline',   'str::', $inline,    NULL, XARVAR_DONT_SET)</xar:set>
+
+<xar:set name="authid">xarSecGenAuthKey('xtasks')</xar:set>
+
+<xar:set name="parentid">0</xar:set>
+<xar:set name="priority">5</xar:set>
+<xar:set name="status">"Active"</xar:set>
+<xar:set name="private">1</xar:set>
+<xar:set name="importance">5</xar:set>
+<xar:set name="date_start_planned">time()</xar:set>
+
+<xar:set name="mymemberid">xarModGetUserVar('xproject', 'mymemberid')</xar:set>
+
+<xar:data-getitem name="$properties" module="xTasks" itemtype="1" itemid="0" />
+
+<xar:set name="ownerid">xarModGetUserVar('xproject', 'mymemberid')</xar:set>
+<xar:if condition="!isset($ownerid)"><xar:set name="ownerid">"0"</xar:set></xar:if>
+
+<xar:comment>ajax form submit not yet working, set to NULL at this point to do normal form submit</xar:comment>
+<!--<xar:set name="showajax">NULL</xar:set>-->
+
+<div class="xar-block-wrap">
+	<div class="xar-block-head">
+		<div class="xar-block-title">
+			<h3 class="xar-block-title">New Task Form</h3>
+		</div>
+	</div>
+	<div class="xar-block-body">
+		<div class="xar-block-body-inner">
+            
+            <div style="overflow: hidden;">
+            
+            <xar:if condition="isset($showajax) and false">
+                <xar:set name="action">"javascript:loadContent('".xarModURL('xtasks','admin','create')."','workspace_tasks','POST','newtaskform');"</xar:set>
+            <xar:else />
+                <xar:set name="action">xarModURL('xtasks','admin','create')</xar:set>
+            </xar:if>
+            
+            <form method="post" action="#$action#" id="newtaskform" name="newtaskform">
+            
+            <input type="hidden" name="authid" value="#$authid#" />
+            
+            <!-- <input type="hidden" name="showajax" value="#$showajax#" /> -->
+            
+            <xar:if condition="!isset($showajax)">
+                <input type="hidden" name="returnurl" value="#$returnurl#" />
+            </xar:if>
+            
+            <input type="hidden" name="itemtype" value="1" />
+            <input type="hidden" name="modid" value="#xarModGetIdFromName('xproject')#" />
+            
+            <xar:if condition="isset($parentid)">
+                <input type="hidden" name="parentid" value="#$parentid#" />
+            </xar:if>
+            <xar:if condition="isset($projectid)">
+                <input type="hidden" name="projectid" value="#$projectid#" />
+            </xar:if>
+            
+            <table width="100%" border="0" cellspacing="0" cellpadding="2">
+            
+                <xar:set name="projectlist">
+                    xarModAPIFunc('xproject',
+                                'user',
+                                'getmemberprojects',
+                                array('sortby'=>'importance',
+                                    'numitems'=>20,
+                                    'memberid'=>$mymemberid) )
+                </xar:set>
+                <tr>
+                    <td colspan="2"><xar:mlstring>Project</xar:mlstring>:  
+                        <select name="objectid">
+                        <xar:foreach in="$projectlist" value="$projectinfo">
+                            <option value="#$projectinfo.projectid#">#$projectinfo.project_name#</option>
+                        </xar:foreach>
+                        </select>
+                    </td>
+                </tr>
+            
+                <tr>
+                    <td colspan="2"><xar:data-label property="$properties['task_name']" /><br />
+                        <xar:data-input property="$properties['task_name']" name="task_name" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><xar:data-label property="$properties['description']" /><br />
+                        <xar:data-input property="$properties['description']" name="description" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><xar:data-label property="$properties['owner']" /><br />
+                        <xar:data-input property="$properties['owner']" name="owner" value="$ownerid" /></td>
+                </tr>
+                <tr>
+                    <td><xar:data-label property="$properties['status']" /></td>
+                    <td><xar:data-input property="$properties['status']" name="status" value="$status" /></td>
+                </tr>
+                <tr>
+                    <td><xar:data-label property="$properties['priority']" /></td>
+                    <td><xar:data-input property="$properties['priority']" name="priority" value="$priority" />
+                        <xar:data-input property="$properties['private']" name="private" value="$private" />
+                        <xar:data-label property="$properties['private']" /></td>
+                </tr>
+                <tr>
+                    <td><xar:data-label property="$properties['importance']" /></td>
+                    <td><xar:data-input property="$properties['importance']" name="importance" value="$importance" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><xar:mlstring>Planned Timeframe</xar:mlstring></td>
+                </tr>
+                <tr>
+                    <td>From</td>
+                    <td><xar:data-input property="$properties['date_start_planned']" name="date_start_planned" value="$date_start_planned" size="10" /></td>
+                </tr>
+                <tr>
+                    <td>To</td>
+                    <td><xar:data-input property="$properties['date_end_planned']" name="date_end_planned" size="10" /></td>
+                </tr>
+                <tr>
+                    <td><xar:mlstring>Hours</xar:mlstring></td>
+                    <td>
+                        <div>
+                            <div>
+                                <xar:data-input property="$properties['hours_planned']" name="hours_planned" size="2" />
+                                <xar:mlstring>Planned</xar:mlstring>
+                            </div>
+                            <div>
+                                <xar:data-input property="$properties['hours_spent']" name="hours_spent" />
+                                <xar:mlstring>Spent</xar:mlstring>
+                            </div>
+                            <div>
+                                <xar:data-input property="$properties['hours_remaining']" name="hours_remaining" />
+                                <xar:mlstring>Remaining</xar:mlstring>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <xar:set name="updatebtn"><xar:mlstring>Create Task</xar:mlstring></xar:set>
+                    <td colspan="2" align="center"><br /><input type="submit" name="submit" value="#$updatebtn#" /></td>
+                </tr>
+            </table>
+            
+            </form>
+            </div>
+            </div>
+            
+            <div class="xar-mod-foot"></div>
+
+
+		</div>
+	</div>
+</div>
