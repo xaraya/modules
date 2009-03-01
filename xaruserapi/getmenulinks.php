@@ -21,7 +21,7 @@ function dossier_userapi_getmenulinks()
 {
     $menulinks = array();
     
-    if (xarSecurityCheck('PublicDossierAccess',0) && xarUserIsLoggedIn()) {
+    if (xarSecurityCheck('PublicDossierAccess',0) && xarModIsHooked('dossier', 'roles') && xarUserIsLoggedIn()) {
         $menulinks[] = Array('url'   => xarModURL('roles',
                                                    'user',
                                                    'account',
@@ -44,6 +44,12 @@ function dossier_userapi_getmenulinks()
                                                    'callrotator'),
                               'title' => xarML('Call Rotator'),
                               'label' => xarML('Call Rotator'));
+                              
+        $menulinks[] = Array('url'   => xarModURL('dossier',
+                                                   'user',
+                                                   'new'),
+                              'title' => xarML('New Contact'),
+                              'label' => xarML('New Contact'));
     }
 
     if (xarSecurityCheck('PublicDossierAccess',0)) { // need a modvar to turn this on/off
