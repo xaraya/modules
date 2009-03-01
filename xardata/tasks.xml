@@ -91,7 +91,7 @@
     <property name="creator">
       <id>59</id>
       <label>Task Creator</label>
-      <type>userlist</type>
+      <type>dossiercontactlist</type>
       <default></default>
       <source>dynamic_data</source>
       <status>1</status>
@@ -101,7 +101,7 @@
     <property name="owner">
       <id>60</id>
       <label>Assigned To</label>
-      <type>contactlist</type>
+      <type>dossiercontactlist</type>
       <default></default>
       <source>dynamic_data</source>
       <status>1</status>
@@ -111,7 +111,7 @@
     <property name="assigner">
       <id>61</id>
       <label>Assigned By</label>
-      <type>userlist</type>
+      <type>dossiercontactlist</type>
       <default></default>
       <source>dynamic_data</source>
       <status>2</status>
