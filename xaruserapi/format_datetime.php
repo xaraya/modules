@@ -29,8 +29,16 @@ function ievents_userapi_format_datetime($args)
     }
 
     if (!xarVarValidate('enum:A:T', $all_day, true)) $all_day = 'A';
-    if (!xarVarValidate('int', $startdate, true)) $startdate = NULL;
-    if (!xarVarValidate('int', $enddate, true)) $enddate = NULL;
+
+    /*
+     * FIXME: if $startdate or $enddate are not set in form during creation,
+     * they are set to -900 (at least in mysql and postgres).
+     * It's not possible to use dates before 01-01-1970 in current xarLocaleGetFormattedTime implementation,
+     * so we don't have to worry about conflict with user wanting date
+     * Wed, 31 Dec 1969 23:45:00 GMT which matches -900.
+     */
+    if (!xarVarValidate('int', $startdate, true) || $startdate == -900) $startdate = NULL;
+    if (!xarVarValidate('int', $enddate, true) || $enddate == -900) $enddate = NULL;
 
     // TODO: The templates to be defined centrally.
     $ml_allday = xarML('all day');
@@ -53,8 +61,11 @@ function ievents_userapi_format_datetime($args)
     $medium_time = '';
     $long_time = '';
 
-    // Is event open-ended (no end date?)
-    if (!isset($enddate)) {
+    // NOTE: suppose we don't want use $startdate == NULL as today (as how it is in current xarLocaleGetFormattedTime)
+    // TODO: Do not allow to create event without $startdate (if it's not wanted feature)
+    if (!isset($startdate)) {
+        $short_date = $medium_date = $long_date = xarML('Date not set'); // TODO: put it in some "error" css class or don't suppress error warning during validation
+    } elseif (!isset($enddate) || date('Ymd', $startdate) > date('Ymd', $enddate)) {
         // Event is open-ended
         $short_date = xarML('#(1) to TBC', xarLocaleGetFormattedDate('short', $startdate));
         $medium_date = xarML('#(1) to TBC', xarLocaleGetFormattedDate('medium', $startdate));
@@ -77,8 +88,8 @@ function ievents_userapi_format_datetime($args)
 
         if ($all_day == 'T') {
             // Timed event - show the times.
-            if ($enddate == $startdate) {
-                // Duration is zero - don't have an effective end date
+            if ($enddate <= $startdate) {
+                // Duration is zero or negative - don't have an effective end date
                 $short_time = xarML('starts #(1)', xarLocaleGetFormattedTime('short', $startdate));
                 $medium_time = xarML('starts #(1)', xarLocaleGetFormattedTime('medium', $startdate));
                 $long_time = xarML('starts #(1)', xarLocaleGetFormattedTime('long', $startdate));
@@ -111,7 +122,7 @@ function ievents_userapi_format_datetime($args)
     }
 
     // Time is 'all day' if the flag is set.
-    if ($all_day == 'A') {
+    if ($all_day == 'A' && isset($startdate)) {
         $short_time = $medium_time = $long_time = $ml_allday;
     }
 
