@@ -213,6 +213,11 @@ Administrator
  */
 function sitecontact_upgrade($oldversion)
 {
+    $dbconn =& xarDBGetConn();
+    $xarTables =& xarDBGetTables();
+
+    $sitecontactTable = $xarTables['sitecontact'];
+    
     // Upgrade dependent on old version number
     switch ($oldversion) {
 
@@ -242,6 +247,19 @@ function sitecontact_upgrade($oldversion)
           xarModSetVar('sitecontact','admincclist','');
              
         case '1.1.1' : //current version
+            //redefine instances - no need to update the privileges themselves only instance 
+            xarRemoveInstances('sitecontact'); //remove current ones
+            //redefine
+            $query1 = "SELECT DISTINCT xar_scid, xar_sctypename FROM  $sitecontactTable";
+            $instances = array(
+                        array('header' => 'Form ID:',
+                                'query' => $query1,
+                                'limit' => 20
+                            )
+                    );
+            xarDefineInstance('sitecontact', 'ContactForm', $instances);
+            
+        case '1.1.2' : //current version
              break;
     }
     // Update successful

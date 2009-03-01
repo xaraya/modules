@@ -3,12 +3,11 @@
  * Standard main user function
  *
  * @package Xaraya 
- * @copyright (C) 2004-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://xaraya.com
  *
  * @subpackage Xarigami SiteContact Module
- * @copyright (C) 2007,2008,2009 2skies.com
+ * @copyright (C) 2004,2005,2006,2007,2008,2009 2skies.com
  * @link http://xarigami.com/project/sitecontact
  * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
@@ -224,9 +223,9 @@ function sitecontact_user_main($args)
         $item['module'] = 'sitecontact';
         $item['itemid'] = 0;
         $item['itemtype'] = $formdata['scid'];
-        //$item['antibotinvalid'] = isset($antibotinvalid)?$antibotinvalid:0;
         $hooks = xarModCallHooks('item','new','',$item);
     }
+
     if (empty($hooks)) {
         $hooks = '';
     }

@@ -127,7 +127,6 @@ function sitecontact_user_respond($args)
                  'return_url'      => $return_url,
                  'antiselect'      => $antiselect,
                  'antiword'        => $antiword,
-               //  'antibotcode'     => $antibotcode,
                  'invalid'         => $invalid,
                  'customcontact'   => $customcontact,
                  'return_url'      => $return_url,

@@ -1,13 +1,12 @@
 <?php
 /**
  * Xaraya Sitecontact module version information
- *
  * @package Xaraya 
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://xaraya.com
  *
  * @subpackage SiteContact Module
- * @copyright (C) 2004-2009 2skies.com
+ * @copyright (C) 2004,2005,2006,2007,2008,2009 2skies.com
  * @link http://xarigami.com/project/sitecontact
  * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
@@ -19,7 +18,7 @@
   */
 $modversion['name']           = 'sitecontact';
 $modversion['id']             = '890';
-$modversion['version']        = '1.1.1';
+$modversion['version']        = '1.1.2';
 $modversion['displayname']    = 'SiteContact';
 $modversion['description']    = 'Contact site admin by email';
 $modversion['credits']        = 'xardocs/credits.txt';
