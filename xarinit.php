@@ -7,7 +7,7 @@
  * @link http://xaraya.com
  *
  * @subpackage SiteContact Module
- * @copyright (C) 2004-2009 2skies.com
+ * @copyright (C) 2004,2005,2006,2007,2008,2009 2skies.com
  * @link http://xarigami.com/project/sitecontact
  * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
