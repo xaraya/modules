@@ -1,0 +1,80 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:set name="xtasks_objectid">xarModGetVar('xtasks','xtasks_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="xtasks" itemtype="1" itemid="$xtasks_objectid" />
+
+<xar:template type="module" file="admin-menu" />
+
+<div class="xar-mod-body">
+<div align="center">
+<xar:if condition="!empty($status)">
+    <div>#$status#</div>
+</xar:if>
+
+
+<table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
+    <tr>
+        <th style="width: 300px;"><xar:mlstring>Name</xar:mlstring></th>
+        <th><xar:mlstring>Project</xar:mlstring></th>
+        <th><xar:mlstring>Assigned&nbsp;To</xar:mlstring></th>
+        <th><xar:mlstring>Importance</xar:mlstring></th>
+        <th><xar:mlstring>Priority</xar:mlstring></th>
+        <th><xar:mlstring>Completed</xar:mlstring></th>
+    </tr>
+
+    <xar:foreach in="$xtasks" value="$xtaskinfo">
+    
+        <tr>
+            <td class="xar-norm">
+                <a href="#xarModURL('xtasks','user','display',array('taskid' =&gt; $xtaskinfo['taskid']))#">#$xtaskinfo['task_name']#</a>
+            </td>
+    
+            <td class="xar-norm" align="center">
+                <xar:if condition="isset($xtaskinfo['projectinfo'])">
+                    #$xtaskinfo['projectinfo']['project_name']#
+                </xar:if>
+            </td>
+    
+            <td class="xar-norm" align="center">
+                <xar:if condition="isset($properties['owner'])">
+                    <xar:data-output property="$properties['owner']" value="$xtaskinfo['owner']" />
+                </xar:if>
+            </td>
+    
+            <td class="xar-norm" align="center">
+                <xar:if condition="isset($properties['importance'])">
+                    <xar:data-output property="$properties['importance']" value="$xtaskinfo['importance']" />
+                </xar:if>
+            </td>
+    
+            <td class="xar-norm" align="center">
+                <xar:if condition="isset($properties['priority'])">
+                    <xar:data-output property="$properties['priority']" value="$xtaskinfo['priority']" />
+                </xar:if>
+            </td>
+    
+            <td class="xar-norm" align="center">
+                <xar:if condition="isset($properties['date_end_actual']) and $xtaskinfo['date_end_actual'] gt 0">
+                    <xar:data-output property="$properties['date_end_actual']" value="$xtaskinfo['date_end_actual']" dateformat="%a, %d %B %Y" />
+                </xar:if>
+            </td>
+    
+        </tr>
+
+        <xar:if condition="!empty($xtaskinfo['description'])" >
+            <tr>
+                <td class="xar-norm" colspan="6" style="margin-left: 50px;">#$xtaskinfo['description']#</td>
+            </tr>
+        </xar:if>
+    
+    </xar:foreach>
+
+
+
+</table>
+
+<br />
+
+</div>
+</div>
+<div class="xar-mod-foot"></div>

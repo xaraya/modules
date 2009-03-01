@@ -1,0 +1,20 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="current">xarServerGetCurrentURL()</xar:set>
+<xar:set name="compare">xarModURL('roles', 'user', 'account', array('moduleload' => 'xtasks'))</xar:set>
+<xar:if condition="$compare eq $current">
+    <dd class="active">
+        <a href="#xarServerGetCurrentURL()#">
+            <xar:mlstring>
+                My Tasks
+            </xar:mlstring>
+        </a>
+    </dd>    
+<xar:else />
+    <dd>
+        <a href="#$compare#">
+            <xar:mlstring>
+                My Tasks
+            </xar:mlstring>
+        </a>
+    </dd>    
+</xar:if>

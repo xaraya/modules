@@ -1,0 +1,48 @@
+<xar:set name="xtasks_objectid">xarModGetVar('xtasks','xtasks_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="xtasks" itemtype="1" itemid="$xtasks_objectid" />
+
+<xar:set name="dummy">xarModAPILoad('xproject', 'user')</xar:set>
+
+<xar:template type="module" file="admin-menu" />
+
+<xar:set name="urlargs">""</xar:set>
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Task Due Date Calendar By Owner</xar:mlstring></span></div>
+<div class="xar-mod-body">
+
+<table border="1" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 99%;">
+    
+    <xar:set name="$currentorderby">""</xar:set>
+
+    <xar:foreach in="$items" key="$month" value="$daytasks">
+        <tr>
+            <xar:foreach in="$daytasks" key="$day" value="$ownertasks">
+                <xar:set name="displaydate">date('D, M j', mktime(0,0,0,$month,$day,date('Y')))</xar:set>
+                <td><h3>#$displaydate#</h3>
+                    <xar:foreach in="$ownertasks" key="$owner" value="$tasklist">
+                        <h4><xar:data-output property="$properties['owner']" value="$owner" /></h4>
+                        <xar:foreach in="$tasklist" value="$taskinfo">
+                            <div>
+                                <xar:if condition="isset($taskinfo['projectinfo']['project_name'])">
+                                    #$taskinfo['projectinfo']['project_name']#<br />
+                                <xar:else />
+                                    No Project
+                                </xar:if>
+                                <a href="#xarModURL('xtasks', 'admin', 'display', array('taskid' =&gt; $taskinfo['taskid']))#">#$taskinfo['task_name']#</a></div>
+                        </xar:foreach>
+                    </xar:foreach>
+                </td>
+            </xar:foreach>
+        </tr>
+    </xar:foreach>
+
+
+
+</table>
+
+<br />
+
+</div>
+
+<div class="xar-mod-foot" style="text-align: center;"></div>
+

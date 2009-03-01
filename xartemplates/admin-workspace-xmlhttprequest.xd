@@ -1,0 +1,316 @@
+<xar:base-include-javascript position="head" module="base" filename="calendar.js" />
+<xar:base-include-javascript position="body" module="base" filename="xmlhttprequest.js" />
+<xar:base-include-javascript position="body" module="xtasks" filename="spinner.js" />
+<xar:base-include-javascript position="body" module="addressbook" filename="calendar.js" />
+
+<xar:style scope="module" file="xtasks" module="xtasks" />
+
+<xar:set name="xtasks_objectid">xarModGetVar('xtasks','xtasks_objectid')</xar:set>
+<xar:data-getitem name="$properties" module="xTasks" itemtype="1" itemid="$xtasks_objectid" />
+    
+<xar:set name="statusbgcolor">array()</xar:set>
+<xar:set name="dummy">$statusbgcolor['Draft'] = "#CCCCCC"</xar:set>
+<xar:set name="dummy">$statusbgcolor['Active'] = "#00FF66"</xar:set>
+<xar:set name="dummy">$statusbgcolor['Closed'] = "#999999"</xar:set>
+<xar:set name="dummy">$statusbgcolor['Pending Approval'] = "#FF9999"</xar:set>
+
+<xar:set name="encoded_returnurl">urlencode($returnurl)</xar:set>
+
+<xar:set name="dummy">xarVarFetch('mode', 'str::', $mode, '', XARVAR_NOT_REQUIRED)</xar:set>
+<xar:if condition="$mode eq 'tasks' or empty($mode) or $showajax">
+    <xar:set name="tasks_style">"display: block;"</xar:set>
+<xar:else />
+    <xar:set name="tasks_style">"display: none;"</xar:set>
+</xar:if>
+
+<xar:set name="newargs">""</xar:set>
+<xar:if condition="isset($objectid)">
+    <xar:set name="newargs">"&amp;objectid=".$objectid</xar:set>
+</xar:if>
+<xar:if condition="isset($modid)">
+    <xar:set name="newargs">$newargs."&amp;modid=".$modid</xar:set>
+</xar:if>
+<xar:if condition="isset($itemtype)">
+    <xar:set name="newargs">$newargs."&amp;itemtype=".$itemtype</xar:set>
+</xar:if>
+<xar:set name="newargs">$newargs."&amp;showajax=1&amp;inline=1"</xar:set>
+
+<div class="xar-mod-head"><span class="xar-mod-title" style="float: left;"><xar:mlstring>Sub-Tasks</xar:mlstring> [ <a href="&xar-modurl-xtasks-admin-new;#$newargs#" onclick="twist_open('workspace_tasks'); return loadContent(this.href,'newtask')"><xar:mlstring>Add Task</xar:mlstring></a> ]</span><span style="float: right;"><a href="javascript: void twist('workspace_tasks');"><img src="modules/xtasks/xarimages/rotate.gif" border="0" /></a></span></div>
+<div style="clear: both;"></div>
+    
+<div align="left" style="#$tasks_style# height: 600px; overflow: auto;" id="workspace_tasks">
+    <a name="newtask"></a>
+    <div id="newtask"></div>
+
+        
+    <form method="post" action="&xar-modurl-xtasks-admin-process;" style="display: inline;">
+        <input type="hidden" name="authid" value="#$authid#" />
+        <input type="hidden" name="returnurl" value="#$returnurl#" />
+        
+        <div style="text-align: left;">
+            <xar:if condition="isset($modid) and $modid eq 704">
+            
+                <xar:set name="taskcheckname">"taskcheck[".$objectid."]"</xar:set>
+                <div>
+                    <div style="float: left;"><input type="checkbox" DISABLED /><input type="submit" name="taskfocus[#$objectid#]" value="+" style="color: black; display: inline;" /> <xar:mlstring>Move checked sub-tasks directly under this task.</xar:mlstring></div>           
+                    <div style="float: right;"><xar:data-input property="$properties['status']" name="status" /><input type="submit" name="chngstatus" value="Go" /></div>
+                    <div style="clear: both;"></div>        
+                </div>
+            <xar:else />
+                <xar:if condition="isset($objectid)">
+                    <input type="hidden" name="newobjectid" value="#$objectid#" />
+                </xar:if>
+                <xar:if condition="isset($modid)">
+                    <input type="hidden" name="newmodid" value="#$modid#" />
+                </xar:if>
+                <xar:if condition="isset($itemtype)">
+                    <input type="hidden" name="newitemtype" value="#$itemtype#" />
+                </xar:if>
+    
+                <xar:set name="taskcheckname">"taskcheck[0]"</xar:set>
+                <xar:if condition="isset($modid) and $modid eq 665">
+                    
+                    <div>
+                        <div style="float: left;"><input type="checkbox" DISABLED /><input type="submit" name="taskfocus[0]" value="+" style="color: black; display: inline;" /> <xar:mlstring>Move checked sub-tasks directly under this project.</xar:mlstring></div>           
+                        <div style="float: right;"><xar:data-input property="$properties['status']" name="status" /><input type="submit" name="chngstatus" value="Go" onClick="return confirmSubmit()" /></div>          
+                        <div style="clear: both;"></div>        
+                    </div>
+                <xar:else />
+                    
+                    <div>
+                        <div style="float: left;"><input type="checkbox" DISABLED /><input type="submit" name="taskfocus[0]" value="+" style="color: black; display: inline;" /> <xar:mlstring>Move checked sub-tasks directly under this item.</xar:mlstring></div>           
+                        <div style="float: right;"><xar:data-input property="$properties['status']" name="status" /><input type="submit" name="chngstatus" value="Go" onClick="return confirmSubmit()" /></div>         
+                        <div style="clear: both;"></div>        
+                    </div>
+                </xar:if>
+    
+                
+            </xar:if>
+        </div>
+                
+        <table border="0" cellpadding="2" cellspacing="1" class="xar-accent" style="width: 100%;">
+            <tr>
+                <xar:set name="ttlcolumns">5</xar:set>
+                
+                <th colspan="2"><div style="min-width: 200px;"><xar:mlstring>Task Name</xar:mlstring></div></th>
+                <xar:if condition="$show_owner">
+                    <xar:set name="ttlcolumns">$ttlcolumns+1</xar:set>
+                    <th style="width: 100px;"><xar:mlstring>Assigned To</xar:mlstring></th>
+                </xar:if>
+                <xar:if condition="$show_age">
+                    <xar:set name="ttlcolumns">$ttlcolumns+1</xar:set>
+                    <th style="width: 40px;"><xar:mlstring>Age</xar:mlstring></th>
+                </xar:if>
+                <xar:if condition="$show_hours">
+                    <xar:set name="ttlcolumns">$ttlcolumns+1</xar:set>
+                    <th style="width: 40px;"><xar:mlstring>Hours</xar:mlstring></th>
+                </xar:if>
+                <xar:if condition="$show_pctcomplete">
+                    <th style="width: 40px;"><xar:mlstring>Pct.</xar:mlstring></th>
+                </xar:if>
+                <xar:if condition="$show_importance and $orderby ne 'importance'">
+                    <xar:set name="ttlcolumns">$ttlcolumns+1</xar:set>
+                    <th style="width: 80px;"><a href="&xar-modurl-xtasks-admin-workspace;&amp;#$newargs#&amp;orderby=importance&amp;returnurl=#$encoded_returnurl#" onClick="return loadContent(this.href,'workspace_tasks');"><xar:mlstring>Importance</xar:mlstring></a></th>
+                </xar:if>
+                <xar:if condition="$show_priority and $orderby ne 'priority'">
+                    <xar:set name="ttlcolumns">$ttlcolumns+1</xar:set>
+                    <th style="width: 80px;"><a href="&xar-modurl-xtasks-admin-workspace;&amp;#$newargs#&amp;orderby=priority&amp;returnurl=#$encoded_returnurl#" onClick="return loadContent(this.href,'workspace_tasks');"><xar:mlstring>Priority</xar:mlstring></a></th>
+                </xar:if>
+                <xar:if condition="$orderby ne 'status'">
+                    <th style="width: 80px;"><a href="&xar-modurl-xtasks-admin-workspace;&amp;#$newargs#&amp;orderby=status&amp;returnurl=#$encoded_returnurl#" onClick="return loadContent(this.href,'workspace_tasks');"><xar:mlstring>Status</xar:mlstring></a></th>
+                </xar:if>
+                <th style="width: 50px;"><a href="&xar-modurl-xtasks-user-settings;&amp;returnurl=#$encoded_returnurl#"><xar:mlstring>Options</xar:mlstring></a></th>
+            </tr>
+        
+            <xar:if condition="!isset($m)"><xar:set name="m">16</xar:set></xar:if>
+            <xar:set name="m">(int)($m - 1)</xar:set>
+            <xar:set name="m_hex">dechex($m)</xar:set>
+            <xar:set name="bg_color">"#".$m_hex.$m_hex.$m_hex.$m_hex.$m_hex.$m_hex</xar:set>
+        
+            <xar:set name="ttlhours">0</xar:set>
+            
+            <xar:set name="$currentorderby">""</xar:set>
+                        
+            <xar:foreach in="$items" value="$taskinfo" >
+                <xar:if condition="$taskinfo['status'] ne 'Active' and $taskinfo['status'] ne 'Closed' and $taskinfo['status'] ne 'Draft'">
+                    <xar:set name="rowcolor">$statusbgcolor['Pending Approval']</xar:set>
+                <xar:else />
+                    <xar:set name="rowcolor">$statusbgcolor[$taskinfo['status']]</xar:set>
+                </xar:if>
+                
+                <tr>
+                    <xar:if condition="$orderby eq 'importance'">
+                        <xar:if condition="$taskinfo['importance'] ne $currentorderby">
+                            <tr><td colspan="#$ttlcolumns#" class="xtasks-workspace-listsubhead"><xar:mlstring>Importance</xar:mlstring>: <xar:data-output property="$properties['importance']" value="$taskinfo['importance']" /></td></tr>
+                        </xar:if>
+                        <xar:set name="$currentorderby">$taskinfo['importance']</xar:set>
+                    <xar:elseif condition="$orderby eq 'priority'" />
+                        <xar:if condition="$taskinfo['priority'] ne $currentorderby">
+                            <tr><td colspan="#$ttlcolumns#" class="xtasks-workspace-listsubhead"><xar:mlstring>Priority</xar:mlstring>: <xar:data-output property="$properties['priority']" value="$taskinfo['priority']" /></td></tr>
+                        </xar:if>
+                        <xar:set name="$currentorderby">$taskinfo['priority']</xar:set>
+                    <xar:elseif condition="$orderby eq 'status'" />
+                        <xar:if condition="$taskinfo['status'] ne $currentorderby">
+                            <tr><td colspan="#$ttlcolumns#" class="xtasks-workspace-listsubhead"><xar:mlstring>Status</xar:mlstring>: <xar:data-output property="$properties['status']" value="$taskinfo['status']" /></td></tr>
+
+                        </xar:if>
+                        <xar:set name="$currentorderby">$taskinfo['status']</xar:set>
+                    </xar:if>
+                </tr>
+
+                
+                <xar:set name="date_start_planned">$taskinfo['date_start_planned']</xar:set>
+                <xar:set name="date_start_actual">$taskinfo['date_start_actual']</xar:set>
+                <xar:set name="date_end_planned">$taskinfo['date_end_planned']</xar:set>
+                <xar:set name="date_end_actual">$taskinfo['date_end_actual']</xar:set>
+                
+                <tr style="background-color: #$rowcolor#;">
+                    <td class="xtasks-tasklist-data" style="background-color: #$rowcolor#; width: 50px; white-space: nowrap;">
+                        <xar:set name="taskcheckname">"taskcheck[".$taskinfo['taskid']."]"</xar:set>
+                        <xar:data-input type="checkbox" name="$taskcheckname" /><input type="submit" name="taskfocus[#$taskinfo.taskid#]" value="+" style="color: black; display: inline;" />           
+                    </td>
+                        
+                    <td class="xtasks-tasklist-data" style="background-color: #$rowcolor#; width: auto; text-align: left;">
+                        <xar:if condition="empty($taskinfo['link'])">#$taskinfo['task_name']#<xar:else /><a href="#$taskinfo['link']#">#$taskinfo['task_name']#</a></xar:if>
+                    </td>
+                
+                    <xar:if condition="$show_owner">
+                        <td class="xtasks-tasklist-data" style="text-align: center; background-color: #$rowcolor#;"><xar:data-output property="$properties['owner']" value="$taskinfo['owner']" /></td>
+                    </xar:if>
+                
+                    <xar:if condition="$show_age">
+                        <td class="xtasks-tasklist-data" style="text-align: center; background-color: #$rowcolor#;">#$taskinfo['days_old']#</td>
+                    </xar:if>
+                
+                    <xar:if condition="$show_hours">
+                        <xar:set name="ttlhours">$ttlhours + $taskinfo['hours_remaining']</xar:set>
+                        <td class="xtasks-tasklist-data" style="text-align: center; background-color: #$rowcolor#;">#$taskinfo['hours_remaining']#</td>
+                    </xar:if>
+                    
+                    <xar:if condition="$show_pctcomplete">
+                        <xar:set name="pctcomplete">0</xar:set>
+                        <xar:set name="ttlhours">$taskinfo['hours_spent'] + $taskinfo['hours_remaining']</xar:set>
+                        <xar:if condition="$ttlhours gt 0">
+                            <xar:set name="pctcomplete">$taskinfo['hours_spent'] / ($taskinfo['hours_spent'] + $taskinfo['hours_remaining'])</xar:set>
+                        </xar:if>
+                        <xar:set name="pctcomplete">sprintf("%0.0f", 100 * $pctcomplete)."%"</xar:set>
+                        <td class="xtasks-tasklist-data" style="text-align: right; background-color: #$rowcolor#;">#$pctcomplete#</td>
+                    </xar:if>
+                    
+                    <xar:if condition="$show_importance and $orderby ne 'importance'">
+                        <xar:set name="importance">$taskinfo['importance']</xar:set>
+                        <td class="xtasks-tasklist-data" style="text-align: center; background-color: #$rowcolor#;">
+                            <div style="float: left; width: auto;">
+                                <xar:data-output property="$properties['importance']" value="$importance" />
+                            </div>
+                            <div style="width: 10px; height: 16px; float: right; margin-top: 2px;">
+                                <div style="height: 10px; vertical-align: top;">
+                                    <xar:if condition="$taskinfo.importance gt 1">
+                                        <a href="&xar-modurl-xtasks-admin-chngimportance;&amp;taskid=#$taskinfo.taskid#&amp;mode=decr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/up.gif" align="top" /></a>
+                                    </xar:if>
+                                </div>
+                                <div style="height: 8px; vertical-align: top;">
+                                    <xar:if condition="$taskinfo.importance lt 9">
+                                        <a href="&xar-modurl-xtasks-admin-chngimportance;&amp;taskid=#$taskinfo.taskid#&amp;mode=incr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/down.gif" align="top" /></a>
+                                    </xar:if>
+                                </div>
+                            </div>
+                            <div style="clear; both;"></div>
+                        </td>
+                    </xar:if>
+                
+                    <xar:if condition="$show_priority and $orderby ne 'priority'">
+                        <td class="xtasks-tasklist-data" style="text-align: center; background-color: #$rowcolor#;">
+                            <div style="float: left; width: auto; margin-left: 5px;">#$taskinfo['priority']#</div>
+                            <div style="width: 10px; height: 16px; float: right; margin-top: 2px;">
+                                <div style="height: 10px; vertical-align: top;">
+                                    <xar:if condition="$taskinfo.priority gt 1">
+                                        <a href="&xar-modurl-xtasks-admin-reprioritize;&amp;taskid=#$taskinfo.taskid#&amp;mode=decr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/up.gif" align="top" /></a>
+                                    </xar:if>
+                                </div>
+                                <div style="height: 8px; vertical-align: top;">
+                                    <xar:if condition="$taskinfo.priority lt 9">
+                                        <a href="&xar-modurl-xtasks-admin-reprioritize;&amp;taskid=#$taskinfo.taskid#&amp;mode=incr&amp;authid=#$authid#&amp;returnurl=#$encoded_returnurl#"><img src="modules/xtasks/xarimages/down.gif" align="top" /></a>
+                                    </xar:if>
+                                </div>
+                            </div>
+                            <div style="clear; both;"></div>
+                        </td>
+                    </xar:if>
+                
+                    <xar:if condition="$orderby ne 'status'">
+                        <td class="xtasks-tasklist-data" style="text-align: center; background-color: #$rowcolor#;">#$taskinfo['status']#</td>
+                    </xar:if>
+                    
+                    <td class="xtasks-tasklist-data" style="text-align: center; vertical-align: bottom; background-color: #$rowcolor#; white-space: pre; text-align: right;"><xar:if condition="count($taskinfo['worklog']) gt 0"><a href="javascript: void twist('worklist#$taskinfo['taskid']#');" title="View Task Update"><img src="modules/xtasks/xarimages/rotate.gif" border="0" /></a></xar:if><a href="#newtask" onClick="twist_open('worklist#$taskinfo['taskid']#'); return loadContent('&xar-modurl-xtasks-worklog-new;&amp;taskid=#$taskinfo['taskid']#&amp;inline=1&amp;returnurl=#$encoded_returnurl#','newtask');" title="Document Work Performed"><img src="modules/xtasks/xarimages/button.work.gif" border="0" /></a><a href="&xar-modurl-xtasks-admin-reassign;&amp;taskid=#$taskinfo['taskid']#&amp;inline=1&amp;returnurl=#$encoded_returnurl#" onClick="return loadContent(this.href,'newtask');" title="Reassign Task"><img src="modules/xtasks/xarimages/button.reassign.gif" border="0" /></a><a href="&xar-modurl-xtasks-admin-modify;&amp;taskid=#$taskinfo['taskid']#&amp;inline=1&amp;returnurl=#$encoded_returnurl#" onClick="return loadContent(this.href,'newtask');" title="Modify Task Details"><img src="modules/xtasks/xarimages/button.edit.gif" border="0" align="bottom" /></a><a href="&xar-modurl-xtasks-admin-delete;&amp;taskid=#$taskinfo['taskid']#&amp;returnurl=#$encoded_returnurl#" title="Close or Delete Task"><img src="modules/xtasks/xarimages/button.delete.gif" border="0" align="bottom" /></a></td>
+                
+                </tr>
+                    
+                <xar:if condition="isset($verbose)">
+                    <tr style="background-color: #$rowcolor#;">
+                        <td class="xtasks-tasklist-data" colspan="#$ttlcolumns#" style="padding-left: 25px; background-color: #$rowcolor#;"><div style="max-height: 200px; overflow: auto;">
+                            <xar:if condition="!empty($taskinfo['description'])"><div>#$taskinfo['formatted_desc']#</div></xar:if>
+                            <xar:if condition="$show_planned_dates">
+                                <xar:if condition="!empty($date_start_planned) or !empty($date_end_planned)">
+                                    <xar:mlstring>Planned Timeframe:</xar:mlstring>
+                                    <xar:if condition="!empty($date_start_planned)">
+                                        <xar:mlstring> from </xar:mlstring><em><xar:data-output property="$properties['date_start_planned']" value="$date_start_planned" dateformat="%a, %d %B %Y" /></em>
+                                    </xar:if>
+                                    <xar:if condition="!empty($date_end_planned)">
+                                        <xar:mlstring> thru </xar:mlstring><em><xar:data-output property="$properties['date_end_planned']" value="$date_end_planned" dateformat="%a, %d %B %Y" /></em>
+                                    </xar:if>
+                                </xar:if>
+                            </xar:if>
+    
+                            <xar:if condition="$show_actual_dates">
+                                <xar:if condition="!empty($date_start_actual) or !empty($date_end_actual)">
+                                    <br /><xar:mlstring>Actual Timeframe:</xar:mlstring>
+                                    <xar:if condition="!empty($date_start_actual)">
+                                        <xar:mlstring> from </xar:mlstring><em><xar:data-output property="$properties['date_start_actual']" value="$date_start_actual" dateformat="%a, %d %B %Y" /></em>
+                                    </xar:if>
+                                    <xar:if condition="!empty($date_end_actual)">
+                                        <xar:mlstring> thru </xar:mlstring><em><xar:data-output property="$properties['date_end_actual']" value="$date_end_actual" dateformat="%a, %d %B %Y" /></em>
+                                    </xar:if>
+                                </xar:if>
+                            </xar:if>
+                        </div></td>
+                    </tr>  
+                </xar:if>
+                
+                <!--<xar:if condition="count($taskinfo['worklog']) gt 0">-->
+                    <tr><td colspan="#$ttlcolumns#" class="xproject-list-data" style="padding-left: 55px;"><div id="worklist#$taskinfo['taskid']#" style="display: none;"><xar:template type="module" file="worklog" subdata="array('worklog'=&gt;$taskinfo['worklog'])" /></div></td></tr>
+                <!--</xar:if>-->
+                
+                <xar:if condition="$taskinfo['numchildren'] gt 0">
+                    <xar:set name="subtasklist">xarModAPIFunc('xtasks', 'user', 'getall', array('parentid' => $taskinfo['taskid'], 'orderby' => $orderby))</xar:set>
+                    <xar:set name="deeper">$depth + 1</xar:set>
+    
+                    <xar:template type="module" file="subtasklist-xmlhttprequest" subdata="array('m'=&gt;$m,
+                                                                                'depth'=&gt;$deeper,
+                                                                                'orderby'=&gt;$orderby,
+                                                                                'startnum'=&gt;$startnum,
+                                                                                'authid'=&gt;$authid,
+                                                                                'show_age'=&gt;$show_age,
+                                                                                'show_hours'=&gt;$show_hours,
+                                                                                'show_owner'=&gt;$show_owner,
+                                                                                'show_pctcomplete'=&gt;$show_pctcomplete,
+                                                                                'show_importance'=&gt;$show_importance,
+                                                                                'show_priority'=&gt;$show_priority,
+                                                                                'show_planned_dates'=&gt;$show_planned_dates,
+                                                                                'show_actual_dates'=&gt;$show_actual_dates,
+                                                                                'verbose'=&gt;$verbose,
+                                                                                'ttlcolumns'=&gt;$ttlcolumns,
+                                                                                'subtasklist'=&gt;$subtasklist,
+                                                                                'encoded_returnurl'=&gt;$encoded_returnurl)" />
+    
+                </xar:if>
+            </xar:foreach>
+        </table>
+    </form>
+    <xar:if condition="$show_hours">
+        <xar:mlstring>Total Hours Remaining</xar:mlstring>: #$ttlhours#
+    </xar:if>
+    <div style="text-align: center;"><em>Task importance is a measure of macro-level priority.<br />Actual priority is a measure of immediate urgency.</em></div>
+</div>
+
+    
