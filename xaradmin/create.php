@@ -114,7 +114,11 @@ function articles_admin_create()
         }
     }
 
-    $article['authorid'] = xarUserGetVar('uid');
+    // Default the authorid to the current author if either not already set, or the authorid
+    // field does not allow input when creating a new article.
+    if (empty($article['authorid']) || empty($pubtypes[$ptid]['config']['authorid']['input'])) {
+        $article['authorid'] = xarUserGetVar('uid');
+    }
     if (empty($article['authorid'])) {
         $article['authorid'] = _XAR_ID_UNREGISTERED;
     }
