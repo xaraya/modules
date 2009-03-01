@@ -93,6 +93,12 @@ function ievents_userapi_getevents($args)
         $where_arr[] = 'calendar_id in (' . implode(', ', $cids) . ')';
     }
 
+    $envent_status_validation = "enum:DRAFT:ACTIVE:INACTIVE";
+    if (xarVarValidate("strlist:,:$envent_status_validation", $status, true)) $status = explode(',', $status);
+    if (!empty($status) && xarVarValidate("list:$envent_status_validation", $status, true)) {
+        $where_arr[] = "status in ('" . implode("', '", $status) . "')";
+    }
+
     // Start and end dates.
     // There are two rules we could apply:
     // - fetch any event that starts within a given date range ('start' - the default)
