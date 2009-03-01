@@ -239,6 +239,9 @@ function xtasks_init()
     if (!xarModRegisterHook('module', 'remove', 'API', 'xtasks', 'admin', 'deleteall')) {
         return false;
     }
+    
+    xarModAPIFunc('modules','admin','enablehooks',
+                  array('callerModName' => 'xtasks', 'hookModName' => 'xtasks'));
 
     $query1 = "SELECT DISTINCT $xartable[xtasks].modid
                           FROM $xartable[xtasks]
