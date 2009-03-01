@@ -523,6 +523,9 @@ function dossier_init()
     if (!xarModRegisterHook('item', 'create', 'API', 'dossier', 'admin', 'createhook')) {
         return false;
     }
+    
+    xarModAPIFunc('modules','admin','enablehooks',
+                  array('callerModName' => 'roles', 'hookModName' => 'dossier'));
 
     xarModSetVar('dossier', 'displaytitle', 'Contact Relationship Manager');
     xarModSetVar('dossier', 'itemsperpage', 30);
