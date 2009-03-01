@@ -21,38 +21,45 @@ function dossier_userapi_getmenulinks()
 {
     $menulinks = array();
     
-    if (xarSecurityCheck('TeamDossierAccess',0)) {
-
-        $menulinks[] = Array('url'   => xarModURL('dossier',
-                                                   'user',
-                                                   'main'),
-                              'title' => xarML('Overview'),
-                              'label' => xarML('Overview'));
-
+    if (xarSecurityCheck('PublicDossierAccess',0) && xarUserIsLoggedIn()) {
         $menulinks[] = Array('url'   => xarModURL('roles',
                                                    'user',
                                                    'account',
                                                    array('moduleload' => 'dossier')),
                               'title' => xarML('My Contacts'),
                               'label' => xarML('My Contacts'));
-
+    }
+    
+    if (xarSecurityCheck('ClientDossierAccess',0)) {
         $menulinks[] = Array('url'   => xarModURL('dossier',
                                                    'user',
                                                    'view'),
                               'title' => xarML('Contact List'),
                               'label' => xarML('Contact List'));
+    }
 
+    if (xarSecurityCheck('TeamDossierAccess',0)) {
         $menulinks[] = Array('url'   => xarModURL('dossier',
                                                    'user',
                                                    'callrotator'),
                               'title' => xarML('Call Rotator'),
                               'label' => xarML('Call Rotator'));
+    }
 
+    if (xarSecurityCheck('PublicDossierAccess',0)) { // need a modvar to turn this on/off
         $menulinks[] = Array('url'   => xarModURL('dossier',
                                                    'user',
                                                    'birthdays'),
                               'title' => xarML('Upcoming birthdays of contacts'),
                               'label' => xarML('Birthdays'));
+    }
+
+    if (xarSecurityCheck('PublicDossierAccess',0)) {
+        $menulinks[] = Array('url'   => xarModURL('dossier',
+                                                   'user',
+                                                   'main'),
+                              'title' => xarML('Overview'),
+                              'label' => xarML('Overview'));
     }
     
     return $menulinks;
