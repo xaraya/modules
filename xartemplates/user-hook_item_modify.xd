@@ -1,7 +1,8 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:foreach in="$subitems" key="$objectid" value="$subobject">
     <div class="xar-form-input-wrapper">
-        <label for="keywords" class="xar-form-label" title="#$subobject.object:label#">
+        <a name="si_#$subobject.objectid#"></a>
+        <label for="si_#$subobject.objectid#" id="si_#$subobject.objectid#_label" class="xar-form-label" title="#$subobject.object:label#">
         #$subobject.object:label#
         </label>
         <table>
@@ -11,8 +12,8 @@
                         <th>
                             <xar:data-label property="$subobject['properties'][$name]" />
                         </th>
-                    </xar:foreach>                
-                    <th>&nbsp;</th>
+                    </xar:foreach>
+                    <th><xar:mlstring>Action</xar:mlstring></th>
                 </tr>
             </thead>
             <tbody>    
@@ -39,9 +40,9 @@
                     </tr>
                 </xar:foreach>
                 <tr>
-                    <xar:foreach in="$subobject.properties" key="$name">
-                        <td></td>
-                    </xar:foreach>
+                    <xar:set name="cols">count($subobject['properties'])</xar:set>
+                    <td colspan="#$cols#">
+                    </td>
                     <td>
                         <a href="&xar-modurl-subitems-admin-item_new;&amp;objectid=#$subobject.objectid#&amp;itemid=#$subobject.itemid#">
                             <xar:mlstring>Add Item</xar:mlstring>

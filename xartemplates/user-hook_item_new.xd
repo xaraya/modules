@@ -1,10 +1,10 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:foreach in="$subitems" key="$objectid" value="$subinfo">
-    <div style="clear: both; padding-top: 10px;">
-        <span style="float: left; width: 20%; text-align: right;">
+    <div class="xar-form-input-wrapper">
+        <label for="si_#$subinfo.objectid#" id="si_#$subinfo.objectid#_label" class="xar-form-label">
             #$subinfo.label#:
-        </span>
-        <span style="float: right; width: 78%; text-align: left;">
+        </label>
+        <span id="si_#$subinfo.objectid#">
             <xar:mlstring>Please create the item first, after that subitems can be created.</xar:mlstring>
         </span>
     </div>

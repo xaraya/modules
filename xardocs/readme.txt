@@ -1,46 +1,7 @@
-From ???@0x00001118 Tue Sep 02 17:19:15 2003
-Path: news.xaraya.com!not-for-mail
-From: Georg Schnattinger <gfpfe@web.de>
+From: Georg Schnattinger
 Newsgroups: xaraya.public-dev
 Subject: [Xaraya_public-dev] Special Modules
 Date: Tue, 02 Sep 2003 11:09:18 +0200
-Organization: Xaraya News Server
-Lines: 48
-Sender: gfpfe@web.de
-Message-ID: <mailman.294.1062493678.964.xaraya_public-dev@lists.xaraya.com>
-Reply-To: Xaraya Public Development <xaraya_public-dev@lists.xaraya.com>
-NNTP-Posting-Host: newton.xaraya.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Trace: newton.xaraya.com 1062493678 9847 207.44.194.106 (2 Sep 2003 09:07:58 GMT)
-X-Complaints-To: news@xaraya.com
-NNTP-Posting-Date: Tue, 2 Sep 2003 09:07:58 +0000 (UTC)
-To: Xaraya Public Development <xaraya_public-dev@lists.xaraya.com>
-Return-Path: <gfpfe@web.de>
-X-Original-To: xaraya_public-dev@lists.xaraya.com
-Delivered-To: xaraya_public-dev@lists.xaraya.com
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US;
-        rv:1.5b) Gecko/20030723 Thunderbird/0.1
-X-Accept-Language: en-us, en
-X-Spam-Status: No, hits=-5.4 required=5.0 tests=BAYES_01,USER_AGENT_MOZILLA_UA
-        version=2.55
-X-Spam-Level: 
-X-Spam-Checker-Version: SpamAssassin 2.55 (1.174.2.19-2003-05-19-exp)
-X-Sanitizer: Xaraya's Advosys mail filter
-X-BeenThere: xaraya_public-dev@lists.xaraya.com
-X-Mailman-Version: 2.1.2
-Precedence: list
-List-Id: Xaraya Public Development  <xaraya_public-dev.lists.xaraya.com>
-List-Unsubscribe: <http://lists.xaraya.com/mailman/listinfo/xaraya_public-dev>, 
-        <mailto:xaraya_public-dev-request@lists.xaraya.com?subject=unsubscribe>
-List-Archive: <http://lists.xaraya.com/pipermail/xaraya_public-dev>
-List-Post: <mailto:xaraya_public-dev@lists.xaraya.com>
-List-Help: <mailto:xaraya_public-dev-request@lists.xaraya.com?subject=help>
-List-Subscribe: <http://lists.xaraya.com/mailman/listinfo/xaraya_public-dev>, 
-        <mailto:xaraya_public-dev-request@lists.xaraya.com?subject=subscribe>
-Xref: news.xaraya.com xaraya.public-dev:6641
-Status: N
 
 Helllo!
 

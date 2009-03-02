@@ -3,7 +3,7 @@
  * Subitems initialization functions
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -71,9 +71,9 @@ function subitems_init()
     if(empty($query)) return; // no good
     $result = &$dbconn->Execute($query);
     if(!$result) return;
-    // If your module supports short URLs, the website administrator should
-    // be able to turn it on or off in your module administration
-    xarModSetVar('subitems', 'SupportShortURLs', 0);
+
+    // no Short URL support needed in this module
+    //xarModSetVar('subitems', 'SupportShortURLs', 0);
 
     if (!xarModRegisterHook('item', 'create', 'API',
             'subitems', 'user', 'hook_item_create')) {
@@ -201,7 +201,6 @@ function subitems_delete()
     $query = xarDBDropTable($xartable['subitems_ddobjects']);
     if (empty($query)) return; // throw back
 
-    // Drop the table and send exception if returns false.
     $result = &$dbconn->Execute($query);
     if (!$result) return;
 

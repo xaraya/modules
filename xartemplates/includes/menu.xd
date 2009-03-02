@@ -1,4 +1,0 @@
-<!-- common admin menu for this module - remove link to the current function -->
-<!-- the variables used in this menu come from example_admin_menu() -->
-<div class="xar-sub"><span class="xar-sub">#$status#</span></div>
-<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>

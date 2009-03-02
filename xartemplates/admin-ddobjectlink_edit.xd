@@ -13,32 +13,39 @@
 
     <fieldset>
         <legend><xar:mlstring>Link details</xar:mlstring></legend>
-
             <div class="xar-form-input-wrapper">
-                <label class="xar-form-label"><xar:mlstring>Which module contains the parent item?</xar:mlstring></label>
-                    <xar:data-input name="modid" type="module" value="$module['value']" />
+                <label for="modid" class="xar-form-label" title="#xarML('Which module contains the parent items?')#">
+                    <xar:mlstring>Parent Module</xar:mlstring>
+                </label>
+                <xar:data-input name="modid" type="module" value="$module['value']" onchange="this.form.reload.click();" />
                     <input type="submit" name="reload" value="#xarML('Reload itemtypes')#"/>
                     <xar:if condition="!empty($module['error'])">
                         <span style="color:red">#$module.error:msg#</span>
                     </xar:if>
             </div>
             <div class="xar-form-input-wrapper">
-                <label class="xar-form-label"><xar:mlstring>Which itemtype from that module?</xar:mlstring></label>
-                    <xar:data-input name="itemtype" type="itemtype" module="$module_name" value="$itemtype['value']" />
+                <label for="itemtype" class="xar-form-label" title="#xarML('Which itemtype from that module?')#">
+                    <xar:mlstring>Parent Itemtype</xar:mlstring>
+                </label>
+                    <xar:data-input name="itemtype" type="itemtype" module="$module_name" value="$itemtype['value']" onchange="this.form.reload.click();"/>
                     <xar:if condition="!empty($itemtype['error'])">
                         <span style="color:red">#$itemtype.error:msg#</span>
                     </xar:if>
             </div>
             <div class="xar-form-input-wrapper">
-                <label class="xar-form-label"><xar:mlstring>Template to use:</xar:mlstring></label>
-                <input type="text" name="template" value="#$template['value']#" />
-                <xar:if condition="!empty($template['error'])">
-                    <span style="color:red">#$template.error:msg#</span>
-                </xar:if>
+                <label for="template" class="xar-form-label" title="#xarML('Template to use')#">
+                    <xar:mlstring>Template</xar:mlstring>
+                </label>
+                    <input type="text" name="template" value="#$template['value']#" />
+                    <span class="xar-sub">(optional)</span>
+                    <xar:if condition="!empty($template['error'])">
+                         <span style="color:red">#$template.error:msg#</span>
+                    </xar:if>
             </div>
             <div class="xar-form-input-wrapper">
-                <label for="sortby" class="xar-form-label" title="#xarML('Choose the sort option. Leave empty to sort on itemid.')#"><xar:mlstring>Sort by:</xar:mlstring></label>
-                <select name="sortby">
+                <label for="sortby" class="xar-form-label" title="#xarML('Choose the sort option. Leave empty to sort on itemid.')#">
+                    <xar:mlstring>Sort by</xar:mlstring></label>
+                <select name="sortby" id="sortby">
                     <option value=""></option>
                     <xar:foreach in="$properties" key="$name" value="$property" >
                         <xar:if condition="array_key_exists($name,$sort['value'])">
@@ -50,8 +57,8 @@
                 </select>
             </div>
             <div class="xar-form-input-wrapper">
-                <label for="sortmode" class="xar-form-label" title="#xarML('Choose the sort order.')#"><xar:mlstring>Sort order (empty is itemid):</xar:mlstring></label>
-                <select name="sortmode">
+                <label for="sortmode" class="xar-form-label" title="#xarML('Choose the sort order.')#"><xar:mlstring>Sort order</xar:mlstring></label>
+                <select name="sortmode" id="sortmode">
                     <xar:if condition="in_array('ASC',$sort['value'])">
                         <option value="ASC" selected="selected"><xar:mlstring>Ascending</xar:mlstring></option>
                     <xar:else />
@@ -68,10 +75,12 @@
                 </xar:if>
             </div>
        </fieldset>
+       <fieldset>
        <div class="xar-form-input-wrapper-after">
             <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
             <input type="hidden" name="objectid" id="objectid" value="#$objectid#" />
-            <input type="submit" name="confirm" value="#xarML('Update DD Subitem Object Link')#" />
+            <input type="submit" name="confirm" value="#xarML('Update')#" />
        </div>
+       </fieldset>
     </form>
 </div>

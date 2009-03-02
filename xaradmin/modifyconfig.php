@@ -3,7 +3,7 @@
  * Subitems module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -19,17 +19,12 @@
  */
 function subitems_admin_modifyconfig()
 {
-    $data = xarModAPIFunc('subitems', 'admin', 'menu');
-
-    // Security check
     if (!xarSecurityCheck('AdminSubitems')) return;
 
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
     // Specify some labels and values for display
     $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration'));
-    $data['shorturlslabel'] = xarML('Enable short URLs?');
-    $data['shorturlschecked'] = xarModGetVar('subitems', 'SupportShortURLs') ? true : false;
 
     $hooks = xarModCallHooks('module', 'modifyconfig', 'subitems',
         array('module' => 'subitems','itemtype' => 1));

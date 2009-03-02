@@ -1,20 +1,15 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Subitems</xar:mlstring></span></div>
-<div class="xar-mod-body">
-    <xar:template type="module" module="subitems" file="admin-menu" />
     <h2><xar:mlstring>Delete Subitem</xar:mlstring></h2>
-
-<xar:if condition="!empty($preview)">
-    <table width="100%" border="1" cellspacing="0" cellpadding="4">
+<fieldset>
+    <legend>
+        <xar:mlstring>Subitem</xar:mlstring>
+    </legend>
+    <table width="100%" border="0" cellspacing="0" cellpadding="4">
         <tr>
-            <td align="center"><xar:mlstring>Preview</xar:mlstring></td>
-        </tr>
-        <tr>
-            <td align="center"><xar:data-display object="$object" /></td>
+            <td><xar:data-display object="$object" /></td>
         </tr>
     </table>
-</xar:if>
-
+</fieldset>
 <form method="post" action="#xarModURL('subitems','admin','item_delete')#">
     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
     <input type="hidden" name="confirm" value="1" />
@@ -22,18 +17,14 @@
     <input type="hidden" name="ddid" value="#$ddid#" />
     <input type="hidden" name="redirect" value="#$redirect#" />
 
-    <table  border="0" cellpadding="4" cellspacing="0">
         <xar:if condition="isset($hooks)">
             #$hooks#
         </xar:if>
-        <tr>
-            <td colspan="2" align="center">
-                <input type="submit" name="cancel" value="#xarML('Cancel')#" />
-                &nbsp;&nbsp;&nbsp;
-                <input type="submit" name="delete" value="#xarML('Delete')#" />
-            </td>
-        </tr>
-    </table>
+    <fieldset>
+        <div class="xar-form-container-after">
+            <input type="submit" name="delete" value="#xarML('Delete')#" />
+            &nbsp;&nbsp;&nbsp;
+            <input type="submit" name="cancel" value="#xarML('Cancel')#" />
+        </div>
+    </fieldset>
 </form>
-</div>
-

@@ -3,7 +3,7 @@
  * Subitems module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -18,8 +18,6 @@ function subitems_admin_ddobjectlink_delete($args)
     if(!xarVarFetch('objectid','int:1:',$objectid)) return;
     if(!xarVarFetch('confirm','str:1:',$confirm,'',XARVAR_NOT_REQUIRED)) return;
 
-    // Security check - important to do this as early as possible to avoid
-    // potential security holes or just too much wasted processing
     if (!xarSecurityCheck('AdminSubitems')) return;
 
     if ($confirm) {
@@ -31,7 +29,7 @@ function subitems_admin_ddobjectlink_delete($args)
         return true;
     }
 
-    $data = xarModAPIFunc('subitems','admin','menu');
+    $data = array();
     $item = xarModAPIFunc('subitems','user','ddobjectlink_get',array('objectid' => $objectid));
     // nothing to see here
     if (empty($item)) return xarML('This item does not exist');

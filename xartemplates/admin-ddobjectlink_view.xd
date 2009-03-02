@@ -2,18 +2,19 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Subitems</xar:mlstring></span></div>
 <div class="xar-mod-body">
     <xar:template type="module" module="subitems" file="admin-menu" />
-    <h2><xar:mlstring>View Links to Subitems</xar:mlstring></h2>
+    <h2><xar:mlstring>View Links</xar:mlstring></h2>
     <fieldset>
         <legend><xar:mlstring>List of all registered subitem links</xar:mlstring></legend>
 
         <table  class="xar-fullwidth">
             <thead>
                 <tr>
-                    <th><xar:mlstring>Module</xar:mlstring></th>
-                    <th><xar:mlstring>Itemtype</xar:mlstring></th>
+                    <th><xar:mlstring>Parent Module</xar:mlstring></th>
+                    <th><xar:mlstring>Parent Itemtype</xar:mlstring></th>
                     <th><xar:mlstring>Subitems Object</xar:mlstring></th>
                     <th><xar:mlstring>Template</xar:mlstring></th>
                     <th><xar:mlstring>Sorting</xar:mlstring></th>
+                    <th><xar:mlstring>Action</xar:mlstring></th>
                 </tr>
             </thead>
             <tbody>
@@ -45,4 +46,12 @@
             </tbody>
         </table>
     </fieldset>
+    <p class="xar-sub">
+        <xar:ml>
+        <xar:mlstring><a href="#(1)">Hooks</a> must exist from the parent modules to Subitems.</xar:mlstring>
+        <xar:mlvar>
+            #xarModURL('modules', 'admin', 'hooks', array('hook'=>'subitems'), Null, 'currenthook')#
+        </xar:mlvar>
+        </xar:ml>
+    </p>
 </div>

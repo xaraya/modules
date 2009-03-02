@@ -3,7 +3,7 @@
  * Subitems module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -19,28 +19,44 @@
  */
 function subitems_adminapi_getmenulinks()
 {
-    $menulinks = array();
+    static $menulinks = array();
 
-// TODO: distinguish between edit/add/delete/admin if necessary
+    if (isset($menulinks[0])) {
+        return $menulinks;
+    }
+
     if (xarSecurityCheck('AdminSubitems', 0)) {
         $menulinks[] = Array('url' => xarModURL('subitems',
                                                 'admin',
                                                 'ddobjectlink_new'),
                              'title' => xarML('Add Link to DD-Objects'),
-                             'label' => xarML('Add Link'));
-
+                             'label' => xarML('Add Link'),
+                             'active'=> array('ddobjectlink_new')
+        );
         $menulinks[] = Array('url' => xarModURL('subitems',
                                                 'admin',
                                                 'ddobjectlink_view'),
                              'title' => xarML('View Links to DD-Objects'),
-                             'label' => xarML('View Links'));
-
+                             'label' => xarML('View Links'),
+                             'active'=> array('ddobjectlink_view',
+                                              'ddobjectlink_edit',
+                                              'ddobjectlink_delete')
+        );
         $menulinks[] = Array('url' => xarModURL('subitems',
                                                 'admin',
                                                 'modifyconfig'),
                             'title' => xarML('Modify the configuration for the module'),
-                            'label' => xarML('Modify Config'));
+                            'label' => xarML('Modify Config'),
+                             'active'=> array('modifyconfig')
+        );
     }
+    $menulinks[] = Array('url' => xarModURL('subitems',
+                                            'admin',
+                                            'overview'),
+                         'active'=> array('overview'),
+                         'title' => xarML('Introduction on handling this module'),
+                         'label' => xarML('Overview')
+    );
 
     return $menulinks;
 }

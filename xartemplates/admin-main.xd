@@ -13,13 +13,12 @@
       </p>
       <p><xar:mlstring>As an illustration of how subitems could be used</xar:mlstring>:
          <ul>
-             <li><xar:mlstring>You may want a publication type (Articles pubtype) to hold 'cooking recipies'</xar:mlstring></li>
-             <li><xar:mlstring>This pubtype would store and display recipe details such as ingredients. Namely ingredient1, quantity 1, picture1 and for another article ingredient2, quantity2, picture2.
-             Each article or recipe would need to contain a different number of ingredients.</xar:mlstring></li>
+            <li><xar:mlstring>You may want a publication type (Articles pubtype) to hold 'cooking recipies'</xar:mlstring>
+            <xar:mlstring>This pubtype should store and display additional recipe details such as ingredients and their quantity. Each recipe can contain a different number of ingredients.</xar:mlstring>
+            <br />
+            <xar:mlstring>A disadvantage of using the Dynamic Data module alone for this is the high number of ingredient fields needed to ensure that always enough fields are present. Furthermore all these input fields are always displayed.</xar:mlstring>
+            </li>
          </ul>
-      </p>
-      <p><xar:mlstring>The disadvantage of this is the high number of ingredient fields you would need to ensure that your users always have sufficient ingredient fields for entry. Furthermore all input fields are always displayed.
-         So, the above is not a practical way to accomplish this.</xar:mlstring>
       </p>
       <p><xar:mlstring>The module author's intent was to produce a module which can be hooked from any other module and is able to both display and provide
             editing of subitems for an item. The design provides for one table which saves the subitem information with module/itemtype. A second table
@@ -31,17 +30,30 @@
       <p>
           <ol>
             <li><xar:mlstring>Install the module (done by now, as you are seeing this page)</xar:mlstring> </li>
-            <li><xar:mlstring>Go to Admin - DynamicData - View Objects</xar:mlstring> and <a href="&xar-modurl-dynamicdata-admin-new;"><xar:mlstring>create a new object</xar:mlstring></a> <xar:mlstring>(Create New)</xar:mlstring>.
+            <li>
+                <xar:ml>
+                <xar:mlstring>Go to <em>Admin - DynamicData - View Objects</em> and click <a href="#(1)">New Dynamic Object Item</a> to create a DD object.</xar:mlstring>
+                <xar:mlvar>&xar-modurl-dynamicdata-admin-new;</xar:mlvar>
+                </xar:ml>
             <xar:mlstring>This new dynamic data object will hold the subitem information.</xar:mlstring> 
             </li>
-            <li><xar:mlstring>Go to Dynamic Data - View Objects - Edit [YOUR OBJECT]. This displays the Modify Dynamic Properties screen.</xar:mlstring></li>
-            <li><xar:mlstring>Add your properties (fields) for your object. You <strong>must have</strong> at least
-            one field with a Property Type of 'ItemID', default of 0 and Status of Display Only. </xar:mlstring>
+            <li><xar:mlstring>You are now in <em>Manage - View Dynamic Objects</em>. Click Edit on [YOUR OBJECT] at the bottom of the list. This displays the <em>Modify Item [YOUR ID] in Dynamic Objects</em> screen.</xar:mlstring></li>
+            <li><xar:mlstring>Click <em>Modify Dynamic Properties</em> to add properties (fields) to the object. You <strong>must have</strong> at least one field with a Property Type of 'Item ID', Default of '0' and Status of 'Display Only'. Add further fields for the content you need.</xar:mlstring>
              </li>
-
-           <li><xar:mlstring>Go to </xar:mlstring><a href="&xar-modurl-subitems-admin-ddobjectlink_new;"><xar:mlstring>Admin - Subitems module (admin area) - Add link</xar:mlstring></a><xar:mlstring>. There, choose the object you have just created, and select the module and the itemtype that you will attach this property to.</xar:mlstring></li>
-            <li><xar:mlstring>Go to </xar:mlstring><a href="&xar-modurl-modules-admin-hooks;&amp;hook=subitems"><xar:mlstring>Modules - Configure Hooks</xar:mlstring></a>
-            <xar:mlstring> where you can choose the Subitems module. Enable  the hook for the module and itemtype combination that you just created the link for</xar:mlstring></li>
+           <li>
+                <xar:ml>
+                    <xar:mlstring>Go to <a href="#(1)">Admin - Subitems - Add Subitem Link</a>. Choose [YOUR OBJECT] and select the parent module and its itemtype that you will attach this property to.</xar:mlstring>
+                    <xar:mlvar>&xar-modurl-subitems-admin-ddobjectlink_new;</xar:mlvar>
+                </xar:ml>
+            davor</li>
+            <li>
+                <xar:ml>
+                    <xar:mlstring>Go to <a href="#(1)">Modules - Configure Hooks - Subitems</a> and enable the hook for the parent modules itemtype that you just created the link for.</xar:mlstring>
+                    <xar:mlvar>
+                        #xarModURL('modules', 'admin', 'hooks', array('hook'=>'subitems'), Null, 'currenthook')#
+                    </xar:mlvar>
+                </xar:ml>
+            </li>
           </ol>
       </p>
       <p><xar:mlstring>That should be it (it has been tested with custom pubtypes)</xar:mlstring>.</p>
@@ -71,7 +83,4 @@
     <li><xar:mlstring>Related tutorials and documentation on Subitems found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/subitems/" title="#xarML('Related documentation on Subitems')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
     </li>
   </ul>
-  <p class="xar-sub">
-    <strong>&nbsp;<xar:mlstring>Subitems Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-04-12
-  </p>
 </div>

@@ -12,44 +12,59 @@
         <form action="&xar-modurl-subitems-admin-ddobjectlink_new;" method="POST" enctype="multipart/form-data">
 
             <p calss="xar-form-input-wrapper-before xar-padding-mediumends">
-                <xar:mlstring>See the </xar:mlstring><a href="&xar-modurl-subitems-admin-overview;##subitemshow"><xar:mlstring>overview </xar:mlstring></a>
-                <xar:mlstring>for details on creating your object and attached subitems.</xar:mlstring>
+                <xar:ml>
+                <xar:mlstring>See the <a href="#(1)">overview</a> for details on creating your object and attached subitems.</xar:mlstring>
+                <xar:mlvar>
+                    #xarModURL('subitems', 'admin', 'overview', array(), Null, 'subitemshow')#
+                </xar:mlvar>
+                </xar:ml>
             </p>
 
             <div class="xar-form-input-wrapper">
-                <label class="xar-form-label"><xar:mlstring>Which object contains the subitems?</xar:mlstring></label>
+                <label for="objectid" class="xar-form-label" title="#xarML('Which object contains the subitems?')#">
+                    <xar:mlstring>Subitems Object</xar:mlstring>
+                </label>
                     <xar:data-input name="objectid" value="$objectid['value']" type="object" />
                     <xar:if condition="!empty($objectid['error'])">
                         <span style="color:red">#$objectid.error:msg#</span>
                     </xar:if>
             </div>
             <div class="xar-form-input-wrapper">
-                <label class="xar-form-label"><xar:mlstring>Which module contains the parent items?</xar:mlstring></label>
-                    <xar:data-input name="modid" type="module" value="$module['value']" />
+                <label for="modid" class="xar-form-label" title="#xarML('Which module contains the parent items?')#">
+                    <xar:mlstring>Parent Module</xar:mlstring>
+                </label>
+                <xar:data-input name="modid" type="module" value="$module['value']" onchange="this.form.reload.click();" />
                     <input type="submit" name="reload" value="#xarML('Reload itemtypes')#"/>
                     <xar:if condition="!empty($module['error'])">
                         <span style="color:red">#$module.error:msg#</span>
                     </xar:if>
             </div>
             <div class="xar-form-input-wrapper">
-                <label class="xar-form-label"><xar:mlstring>Which itemtype from that module?</xar:mlstring></label>
-                    <xar:data-input name="itemtype" type="itemtype" module="$module_name" value="$itemtype['value']" />
+                <label for="itemtype" class="xar-form-label" title="#xarML('Which itemtype from that module?')#">
+                    <xar:mlstring>Parent Itemtype</xar:mlstring>
+                </label>
+                    <xar:data-input name="itemtype" type="itemtype" module="$module_name" value="$itemtype['value']" onchange="this.form.reload.click();" />
                     <xar:if condition="!empty($itemtype['error'])">
                         <span style="color:red">#$itemtype.error:msg#</span>
                     </xar:if>
             </div>
             <div class="xar-form-input-wrapper">
-                <label class="xar-form-label"><xar:mlstring>Template to use</xar:mlstring></label>
+                <label for="template" class="xar-form-label" title="#xarML('Template to use')#">
+                    <xar:mlstring>Template</xar:mlstring>
+                </label>
                     <input type="text" name="template" value="#$template['value']#" />
+                    <span class="xar-sub">(optional)</span>
                     <xar:if condition="!empty($template['error'])">
                          <span style="color:red">#$template.error:msg#</span>
                     </xar:if>
             </div>
 
        </fieldset>
+       <fieldset>
        <div class="xar-form-input-wrapper-after">
             <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-            <input type="submit" name="confirm" value="#xarML('Create New DD Subitem Object Link')#" />
+            <input type="submit" name="confirm" value="#xarML('Create')#" />
        </div>
+       </fieldset>
     </form>
 </div>

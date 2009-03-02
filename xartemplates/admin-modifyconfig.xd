@@ -2,20 +2,14 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Subitems</xar:mlstring></span></div>
 <div class="xar-mod-body">
   <xar:template type="module" module="subitems" file="admin-menu" />
-  <h2>#$menutitle#</h2>
-
+    <h2><xar:mlstring>Modify Config</xar:mlstring></h2>
       <form method="post" action="&xar-modurl-subitems-admin-updateconfig;">
       <fieldset>
           <legend>
-              <xar:mlstring>Module options</xar:mlstring>
+              <xar:mlstring>Configuration Options</xar:mlstring>
           </legend>
           <div class="xar-form-input-wrapper-after">
-              <xar:if condition="$shorturlschecked">
-                  <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked"/>
-              <xar:else/>
-                  <input type="checkbox" name="shorturls" id="shorturls" value="1" />
-              </xar:if>
-              <label for="shorturls">#$shorturlslabel#</label>
+            <xar:mlstring>The Subitems module currently has nothing to config for itself.</xar:mlstring>
           </div>
       </fieldset>
       <fieldset>

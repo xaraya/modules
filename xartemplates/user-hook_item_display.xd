@@ -1,11 +1,11 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:foreach in="$subitems" key="$objectid" value="$object">
-    <h3 align="center">#$object.object:label#:</h3>
+    <h3>#$object.object:label#:</h3>
     <table cellpadding="4" width="100%">
         <thead>
         <tr>
             <xar:foreach in="$object.properties" key="$name">
-                <th align="center" class="xar-normal" style="text-align: center;">
+                <th align="center" class="xar-normal">
                     <xar:data-label property="$object['properties'][$name]" />
                 </th>
             </xar:foreach>

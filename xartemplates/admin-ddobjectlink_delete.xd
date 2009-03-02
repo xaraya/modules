@@ -9,19 +9,19 @@
         <legend><xar:mlstring>Link Details</xar:mlstring></legend>
 
              <div class="xar-form-input-wrapper">
-                <label class="xar-form-label"><xar:mlstring>Subitems Object:</xar:mlstring></label>
+                <label class="xar-form-label"><xar:mlstring>Subitems Object</xar:mlstring></label>
                 (#$objectid#) #$label#
             </div>
              <div class="xar-form-input-wrapper">
-                <label class="xar-form-label"><xar:mlstring>Hooked Module Name:</xar:mlstring></label>
+                <label class="xar-form-label"><xar:mlstring>Parent Module</xar:mlstring></label>
                 #$module#
             </div>
              <div class="xar-form-input-wrapper">
-                <label class="xar-form-label"><xar:mlstring>Hooked Item Type:</xar:mlstring></label>
+                <label class="xar-form-label"><xar:mlstring>Parent Itemtype</xar:mlstring></label>
                 #$itemtype#
             </div>
              <div class="xar-form-input-wrapper">
-                <label class="xar-form-label"><xar:mlstring>Template to use:</xar:mlstring></label>
+                <label class="xar-form-label"><xar:mlstring>Template</xar:mlstring></label>
                 #$template#
             </div>
        </fieldset>

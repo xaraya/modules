@@ -3,7 +3,7 @@
  * Subitems module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -18,8 +18,6 @@ function subitems_admin_ddobjectlink_new($args)
     if(!xarVarFetch('confirm','str:1',$confirm,'')) return;
     if(!xarVarFetch('reload','str:1',$reloaded,'')) return;
 
-    // Security check - important to do this as early as possible to avoid
-    // potential security holes or just too much wasted processing
     if (!xarSecurityCheck('AdminSubitems')) return;
 
     if($confirm or $reloaded)    {
@@ -29,7 +27,6 @@ function subitems_admin_ddobjectlink_new($args)
             array('itemtype','int:0:','itemtype'),
             array('template','str:0:','template')
         );
-
     } else {
         $result_array['no_errors'] = true;
         $result_array['module'] = array('value' => 182,'error' => '');
@@ -41,7 +38,6 @@ function subitems_admin_ddobjectlink_new($args)
     $modInfo = xarModGetInfo($result_array['module']['value']);
     $result_array['module_name'] = $modInfo['name'];
 
-    // if(!xarVarFetch('objectid','int:1:',$objectid)) return;
     if(($result_array['no_errors'] == true) && !empty($confirm))    {
         if (!xarSecConfirmAuthKey()) return;
 
@@ -56,9 +52,7 @@ function subitems_admin_ddobjectlink_new($args)
         return true;
     }
 
-    $data = xarModAPIFunc('subitems','admin','menu');
-    $data = array_merge($result_array,$data);
-    return $data;
+    return $result_array;
 }
 
 ?>

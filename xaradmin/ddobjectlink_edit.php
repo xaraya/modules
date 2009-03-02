@@ -3,7 +3,7 @@
  * Subitems module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -21,8 +21,6 @@ function subitems_admin_ddobjectlink_edit($args)
     if(!xarVarFetch('confirm','str:0',$confirm,'',XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('reload','str:0',$reloaded,'',XARVAR_NOT_REQUIRED)) return;
 
-    // Security check - important to do this as early as possible to avoid
-    // potential security holes or just too much wasted processing
     if (!xarSecurityCheck('AdminSubitems')) return;
 
     if(!$ddobjectlink = xarModAPIFunc('subitems','user','ddobjectlink_get',array('objectid' => $subobjectid))) return;
@@ -79,8 +77,7 @@ function subitems_admin_ddobjectlink_edit($args)
                                      'status' => 1));
     if (!isset($subobject)) return;
 
-    $data = xarModAPIFunc('subitems','admin','menu');
-    $data = array_merge($result_array,$data);
+    $data = $result_array;
     $data['properties'] =  $subobject->getProperties();
     $subobjectinfo = xarModAPIFunc('dynamicdata','user','getobjectinfo',
                                 array('objectid' => $subobjectid));
