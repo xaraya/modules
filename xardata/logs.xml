@@ -21,7 +21,7 @@
     <property name="contactid">
       <id>560</id>
       <label>Contact</label>
-      <type>hidden</type>
+      <type>dossiercontactlist</type>
       <default></default>
       <source>xar_dossier_logs.contactid</source>
       <status>1</status>
