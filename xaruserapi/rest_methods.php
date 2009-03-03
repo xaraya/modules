@@ -298,7 +298,7 @@ function twitter_userapi_rest_methods($args)
       foreach ($post as $k => $v) {
         $postargs[] = $k.'='.$v;
       }
-      $postargs = join(',', $postargs);
+      $postargs = join('&', $postargs);
     } else {
       $postargs = $post;
     }
