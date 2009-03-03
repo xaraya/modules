@@ -60,7 +60,7 @@ function twitter_init()
     xarRegisterMask('DeleteTwitter', 'All', 'twitter', 'All', 'All', 'ACCESS_DELETE');
     xarRegisterMask('AdminTwitter',  'All', 'twitter', 'All', 'All', 'ACCESS_ADMIN');
 
-    /* This init function brings our module to version 1.0, run the upgrades for the rest of the initialisation */
+    /* This init function brings our module to version 0.0.1, run the upgrades for the rest of the initialisation */
     return twitter_upgrade('0.0.1');
 }
 
@@ -98,8 +98,6 @@ function twitter_upgrade($oldversion)
         xarModSetVar('twitter', 'friends_count',0);
         xarModSetVar('twitter', 'last_status',0);
         xarRegisterMask('CommentTwitter',   'All', 'twitter', 'All', 'All', 'ACCESS_COMMENT');
-
-      case '0.0.4':
         xarModSetVar('twitter', 'main_tab', '');
         xarModSetVar('twitter', 'profile_tab', '');
         xarModSetVar('twitter', 'statuses_count', 0);
@@ -126,9 +124,10 @@ function twitter_upgrade($oldversion)
         xarModDelVar('twitter', 'showfriends');
         xarModDelVar('twitter', 'screen_name');
         xarModDelVar('twitter', 'screen_pass');
-     
-      // beta 1
+
+      // v0.1.0 - 2nd point upgrade, signifies addition of approved twitter source param
       case '0.1.0':
+        // current version
       break;
     }
     /* Update successful */

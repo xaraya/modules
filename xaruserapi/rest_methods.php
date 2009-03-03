@@ -31,7 +31,7 @@ function twitter_userapi_rest_methods($args)
 
   // no sec checks here, GUI handles module privs, request credentials handle twitter privs
   extract($args);
- 
+
   /* set some defaults for this process */
   $uri = 'http://twitter.com';  // all methods go to this uri
   $format = '.xml';              // request format, one of json|xml for post json|xml|rss for get
@@ -44,7 +44,7 @@ function twitter_userapi_rest_methods($args)
   $cachedir     = !empty($cachedir)   ? $cachedir   : 'cache';
   $extension    = !empty($extension)  ? $extension  : '.xml';
   $superrors    = !empty($superrors)  ? $superrors  : false;
- 
+
   /* set some defaults for the items to return */
   $startnum     = !empty($startnum)   ? $startnum   : 1;
   $numitems     = !empty($numitems)   ? $numitems   : 20;
@@ -180,8 +180,9 @@ function twitter_userapi_rest_methods($args)
         case 'update':
           if (empty($username) || empty($password) || empty($status)) return;
           $post['status'] = urlencode($status);
+		  $post['source'] = urlencode('xartwitter');
         break;
-        /** @replies 
+        /** @replies
          *  returns bool true on success
         **/
         case 'replies':
@@ -203,7 +204,7 @@ function twitter_userapi_rest_methods($args)
         case 'destroy':
           if (!empty($status_id)) {
             $path .= '/'.urlencode($status_id);
-          }   
+          }
           $post = (bool) true;
         break;
         /** friends and followers
@@ -318,7 +319,7 @@ function twitter_userapi_rest_methods($args)
       'username' => !empty($username) ? $username : null,
       'password' => !empty($password) ? $password : null
     ));
- 
+
   /* if the response was false we can bail here */
   if (!$response) return false;
 
@@ -343,7 +344,7 @@ function twitter_userapi_rest_methods($args)
   } else {
     return $response;
   }
- 
+
   /* if we got here, we have a return method, a response and some xml to parse */
   switch ($return_method) {
     /* the extended user information contains all user info as key = value pairs */
