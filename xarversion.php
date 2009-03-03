@@ -1,12 +1,10 @@
 <?php
 
 /**
- * File: $Id$
- *
  * Xarpages version information.
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2003-2009 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -17,21 +15,22 @@
 $modversion['name']           = 'xarpages';
 $modversion['id']             = '160';
 $modversion['version']        = '0.2.8';
-$modversion['displayname']    = xarML('Xarpages');
+$modversion['displayname']    = 'Xarpages';
 $modversion['description']    = 'Static pages administration';
-$modversion['credits']        = 'xardocs/credits.txt';
-$modversion['help']           = 'xardocs/help.txt';
-$modversion['changelog']      = 'xardocs/changelog.txt';
-$modversion['license']        = 'xardocs/license.txt';
+$modversion['help']           = 'xardocs/privileges.txt';
+$modversion['changelog']      = 'xardocs/news.txt';
 $modversion['official']       = 1;
 $modversion['author']         = 'Jason Judge';
 $modversion['contact']        = 'http://www.academe.co.uk/';
 $modversion['admin']          = 1;
 $modversion['user']           = 1;
-$modversion['securityschema'] = array(); //array('Example::Item' => 'Example item name::Example item ID');
+$modversion['securityschema'] = array();
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Content';
 // 147 = 'categories'; 182 = 'Dynamic Data';
 $modversion['dependency']     = array(147, 182);
-
+if (false) {
+    xarML('Xarpages');
+    xarML('Static pages administration');
+}
 ?>
