@@ -17,6 +17,7 @@
 
 <xar:comment>Note: NOT using the packed version, because it contains an invalid character that IE6 does not cope with</xar:comment>
 <xar:base-include-javascript filename="jquery.tablesorter.js" module="jquery" />
+<xar:style file="jquery.tablesorter" scope="module" module="jquery" />
 
 <xar:if condition="!empty($selector)">
     <xar:if condition="!empty($options)">
