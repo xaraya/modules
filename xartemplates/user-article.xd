@@ -3,61 +3,119 @@
         <xar:mlstring>Newsgroups</xar:mlstring>
     </span>
 </div>
-
 <div class="xar-mod-body">
-
-    <h2><xar:mlstring>Read Message</xar:mlstring></h2>
-    #$pager#
-    <p> <a href="#xarModUrl('newsgroups', 'user', 'group', array('group' => $group, 'startnum' => $groupstartnum))#"><xar:ml><xar:mlstring>Back to newsgroup #(1)</xar:mlstring><xar:mlvar>#$group#</xar:mlvar></xar:ml></a></p>
     <xar:if condition="isset($error_message)">
+        <h2><xar:mlstring>Read Message</xar:mlstring></h2>
         <p> <xar:mlstring>News Server Error:</xar:mlstring>
-            <span style="color: red;">
+            <span class="xar-error">
                 #$error_message#
             </span>
         </p>
     <xar:else />
-        <div style="margin: auto;">
-            <xar:sec mask="SendNewsGroups" catch="false">
-            <p>
-              <xar:if condition="!empty($deleteurl)">
-                <xar:if condition="$group eq 'xaraya.test' OR false">
-                  <xar:comment>
-                    It is not recommended to delete the condition above to enable
-                    canceling posts in others than the test group.
-                  </xar:comment>
-                  <div class="xar-floatright xar-align-right">
-                    <a href="#$deleteurl#" title="#xarML('Deleting messages destroys their continuous sequence. This may affect the navigation in this view.')#">
-                      <xar:mlstring>Delete Message</xar:mlstring>
-                    </a>
-                  </div>
+        <h2>#xarVarPrepForDisplay($headers['Subject'])#</h2>
+        <div style="float:left; padding-right:3em;">
+            #$pager#
+        </div>
+        <xar:if condition="!empty($deleteurl)">
+          <xar:comment>
+            It is not recommended to set 'true eq true' in the condition below.
+            This enables canceling posts in others than the test group.
+          </xar:comment>
+        <xar:if condition="$group eq 'xaraya.test' OR false eq true">
+          <div class="xar-floatright xar-align-right">
+            <a href="#$deleteurl#" title="#xarML('Deleting destroys the continuous message sequence. This may affect the navigation in this view.')#" title="#xarML('Cancel this message')#">
+              <xar:mlstring>Delete</xar:mlstring>
+            </a>
+          </div>
+        </xar:if>
+        </xar:if>
+        <xar:set name="title">xarML('Back to newsgroup #(1)', $group)</xar:set>
+        <a style="padding-right:3em; white-space:nowrap;" href="#xarModUrl('newsgroups', 'user', 'group', array('group' => $group, 'startnum' => $groupstartnum))#" title="#$title#">
+            #$group#
+        </a>
+        <a style="padding-right:3em; white-space:nowrap;" href="#xarModUrl('newsgroups', 'user', 'main')#" title="#xarML('Back to main list')#">
+            <xar:mlstring>Main list</xar:mlstring>
+        </a>
+        <xar:sec mask="SendNewsGroups" catch="false">
+          <a href="#xarModUrl('newsgroups', 'user', 'post', array('group' => $group, 'article' => $articlenum, 'phase' => 'reply'))#" title="#xarML('Post a reply to this message')#">
+            <xar:mlstring>Reply</xar:mlstring>
+          </a>
+        </xar:sec>
+          <div class="xar-norm" style="margin-top: 1ex;">
+            <div class="xar-accent" style="padding: 0px 1px;">
+              <table class="xar-accent">
+                <xar:comment>
+                <tr>
+                  <td class="xar-accent">
+                    <xar:mlstring>Subject</xar:mlstring>
+                  </td>
+                  <td class="xar-accent">
+                    <strong>#xarVarPrepForDisplay($headers['Subject'])#</strong>
+                  </td>
+                </tr>
+                </xar:comment>
+                <tr>
+                  <td class="xar-accent">
+                    <xar:mlstring>From</xar:mlstring>
+                  </td>
+                  <td class="xar-accent">
+                    <xar:comment>
+                      You can use $fromname instead of $headers['From'] to show
+                      only the senders name without exposing the email.
+                    </xar:comment>
+                    <strong>#xarVarPrepEmailDisplay(xarVarPrepForDisplay($headers['From']))#</strong>
+                  </td>
+                </tr>
+                <xar:if condition="!empty($headers['Organization']) and $headers['Organization'] ne 'Xaraya'">
+                <tr>
+                  <td class="xar-accent">
+                    <xar:mlstring>Organization</xar:mlstring>
+                  </td>
+                  <td class="xar-accent">
+                    <strong>#xarVarPrepForDisplay($headers['Organization'])#</strong>
+                  </td>
+                </tr>
                 </xar:if>
-              </xar:if>
-                <a href="#xarModUrl('newsgroups', 'user', 'post', array('group' => $group, 'article' => $articlenum, 'phase' => 'reply'))#"><xar:mlstring>Post a reply</xar:mlstring></a>
-            </p>
-            </xar:sec>
-            <div class="xar-norm-outline" style="margin: 0px 3px 6px 3px;padding: 3px;text-align: left;">
-                <div class="xar-norm" style="padding: 3px;">
-
-                    <xar:mlstring>Subject</xar:mlstring>:&nbsp;&nbsp;<b>#xarVarPrepForDisplay($headers['Subject'])#</b><br />
-                    <xar:mlstring>From</xar:mlstring>:&nbsp;&nbsp;<b>#xarVarPrepEmailDisplay(xarVarPrepForDisplay($headers['From']))#</b><br />
-                    <xar:mlstring>Organization</xar:mlstring>:&nbsp;&nbsp;<b><xar:if condition="!empty($headers['Organization'])">#xarVarPrepForDisplay($headers['Organization'])#<xar:else/>-</xar:if></b><br />
-                    <xar:mlstring>Date</xar:mlstring>:&nbsp;&nbsp;<b>#xarLocaleGetFormattedDate('long', strtotime(xarVarPrepForDisplay($headers['Date'])), true)#&nbsp;#xarLocaleGetFormattedTime('long', strtotime(xarVarPrepForDisplay($headers['Date'])), true)#</b><br />
-                    <xar:mlstring>Newsgroups</xar:mlstring>:&nbsp;&nbsp;<b>#xarVarPrepForDisplay($headers['Newsgroups'])#</b><br />
-                    <xar:if condition="isset($headers['References']) and is_array($headers['References'])">
-                        <xar:mlstring>References</xar:mlstring>:&nbsp;
+                <tr>
+                  <td class="xar-accent">
+                    <xar:mlstring>Date</xar:mlstring>
+                  </td>
+                  <td class="xar-accent">
+                    <strong>#xarLocaleGetFormattedDate('longdate', strtotime(xarVarPrepForDisplay($headers['Date'])), true)#</strong>
+                  </td>
+                </tr>
+                <xar:if condition="$headers['Newsgroups'] ne $group">
+                <tr>
+                  <td class="xar-accent">
+                    <xar:mlstring>Newsgroups</xar:mlstring>
+                  </td>
+                  <td class="xar-accent">
+                    <strong>#xarVarPrepForDisplay($headers['Newsgroups'])#</strong>
+                  </td>
+                </tr>
+                </xar:if>
+                <xar:if condition="isset($headers['References']) and is_array($headers['References'])">
+                <tr>
+                  <td class="xar-accent">
+                    <xar:mlstring>References</xar:mlstring>
+                  </td>
+                  <td class="xar-accent">
                         <xar:foreach in="$headers['References']" key="$key" value="$ref">
                             <xar:if condition="is_numeric($ref)">
                                 <a href="#xarModUrl('newsgroups', 'user', 'article', array('group' => $group, 'article' => $ref))#">#$ref#</a>
                             <xar:else/>
                                 <a href="#xarModUrl('newsgroups', 'user', 'article', array('group' => $group, 'messageid' => $ref))#">#$key + 1#</a>
                             </xar:if>
-                        </xar:foreach><br />
-                    </xar:if>
-                    <br />
-                    #xarVarPrepEmailDisplay($article)#
-                </div>
+                        </xar:foreach>
+                  </td>
+                </tr>
+                </xar:if>
+              </table>
             </div>
-            #$pager#
+            <pre style="color: black; font-size:116%";>
+#xarVarPrepEmailDisplay(xarVarPrepForDisplay($article))#
+            </pre>
         </div>
+        #$pager#
     </xar:if>
 </div>

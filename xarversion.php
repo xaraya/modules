@@ -15,12 +15,9 @@
 $modversion['name'] = 'NewsGroups';
 $modversion['id'] = '802';
 $modversion['version'] = '1.1.0';
-$modversion['displayname']    = xarML('Newsgroups');
+$modversion['displayname']    = 'Newsgroups';
 $modversion['description'] = 'A newsgroup reader for Xaraya';
 $modversion['credits'] = 'xardocs/credits.txt';
-$modversion['help'] = '';
-$modversion['changelog'] = 'xardocs/changelog.txt';
-$modversion['license'] = '';
 $modversion['official'] = 1;
 $modversion['author'] = 'John Cox';
 $modversion['contact'] = 'admin@dinerminor.com';
@@ -29,4 +26,9 @@ $modversion['user'] = 1;
 $modversion['securityschema'] = array();
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';
+
+if (false) {
+    xarML('Newsgroups');
+    xarML('A newsgroup reader for Xaraya');
+}
 ?>

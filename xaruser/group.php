@@ -1,8 +1,28 @@
 <?php
+/**
+ * Show a group of articles from a newsgroup
+ *
+ * @package modules
+ * @copyright (C) 2002-2009 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage newsgroups
+ * @link http://xaraya.com/index.php/release/802.html
+ * @author John Cox
+ */
+/**
+ * Retrieve several articles from a newsgroup
+ *
+ * @param string group     newsgroup
+ * @param int    startnum  message number the display starts
+ * @param string sortby    Either 'thread' or 'article' for sort order of articles
+ * @return array
+ */
+
 
 function newsgroups_user_group()
 {
-    // Security Check
     if(!xarSecurityCheck('ReadNewsGroups')) return;
 
     xarVarFetch('group', 'str:1', $group, NULL, XARVAR_DONT_REUSE, XARVAR_PREP_FOR_DISPLAY);
@@ -22,6 +42,11 @@ function newsgroups_user_group()
                                 'numitems' => $numitems,
                                 'sortby'   => $sortby));
     if (!isset($data)) return;
+
+    // Add fromname without email address and quotes
+    foreach ($data['items'] as $key => $item) {
+        $data['items'][$key]['fromname'] = preg_replace('/(^"|" (?=<)|<.*)/', '', $item['From']);
+    }
 
     if (empty($startnum)){
         $startnum = $data['counts']['last'];
@@ -45,7 +70,6 @@ function newsgroups_user_group()
                                           'blocksize' => 5)
                                     );
 
-    // Return the template variables defined in this function
     return $data;
 }
 

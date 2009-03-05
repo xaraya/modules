@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id$
- * 
  * Xaraya NewsGroups
  * 
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 - 2009 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.org
  *
@@ -23,34 +21,23 @@ function newsgroups_init()
     xarModSetVar('newsgroups', 'port', 119);
     xarModSetVar('newsgroups', 'user', '');
     xarModSetVar('newsgroups', 'pass', '');
-    xarModSetVar('newsgroups', 'numitems', 5);
+    xarModSetVar('newsgroups', 'numitems', 30);
     xarModSetVar('newsgroups', 'sortby', '');
     xarModSetVar('newsgroups', 'grouplist', '');
-
-    xarModSetVar('newsgroups', 'listexpire', 3600);
-    xarModSetVar('newsgroups', 'groupexpire', 900);
-    xarModSetVar('newsgroups', 'messageexpire', '');
-    xarModSetVar('newsgroups', 'cachesize', 500000);
 
     xarModSetVar('newsgroups', 'wildmat', 'xaraya.te*');
     xarModSetVar('newsgroups', 'SupportShortURLs', 0);
 
     // Register Masks
     xarRegisterMask('ReadNewsGroups','All','newsgroups','All','All','ACCESS_READ',
-                    xarML('Read messages in newsgroups'));
-    xarRegisterMask('SendNewsGroups','All','newsgroups','All','All','ACCESS_COMMENT',
-                    xarML('Post messages in newsgroups'));
-    xarRegisterMask('DeleteNewsGroups','All','newsgroups','All','All','ACCESS_DELETE',
-                    xarML('Delete messages in newsgroups'));
+                    xarML('Read messages in newsgroups')
+    );
     xarRegisterMask('AdminNewsGroups','All','newsgroups','All','All','ACCESS_ADMIN',
-                    xarML('Administer the Newsgroups module'));
-    // Register Block types (this *should* happen at activation/deactivation)
-    if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
-                       array('modName'   => 'newsgroups',
-                             'blockType' => 'latest'))) return;
+                    xarML('Administer the Newsgroups module')
+    );
 
-    // Initialisation successful
-    return true;
+    // Initialisation calls upgrade for reducing duplicate code
+    return newsgroups_upgrade('1.0.0');
 }
 
 function newsgroups_activate()
@@ -66,24 +53,26 @@ function newsgroups_upgrade($oldversion)
     // Upgrade dependent on old version number
     switch($oldversion) {
         case '1.0.0':
-            // Code to upgrade from version 1.0.0 goes here
-            xarRegisterMask('SendNewsGroups','All','newsgroups','All','All','ACCESS_COMMENT',
-                            xarML('Post messages in newsgroups'));
 
         case '1.0.1':
             xarModSetVar('newsgroups', 'listexpire', 3600);
             xarModSetVar('newsgroups', 'groupexpire', 900);
             xarModSetVar('newsgroups', 'messageexpire', '');
             xarModSetVar('newsgroups', 'cachesize', 500000);
+
+            // Register Block types (this *should* happen at activation/deactivation)
             if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
                                array('modName'   => 'newsgroups',
                                      'blockType' => 'latest'))) return;
 
         case '1.0.2':
-            xarRegisterMask('DeleteNewsGroups','All','newsgroups','All','All','ACCESS_DELETE',
-                            xarML('Delete messages in newsgroups'));
-        case '1.0.3':
             // Code to upgrade from current version 1.0.3 goes here
+            xarRegisterMask('SendNewsGroups','All','newsgroups','All','All','ACCESS_EDIT',
+                            xarML('Post messages in newsgroups'));
+            xarRegisterMask('DeleteNewsGroups','All','newsgroups','All','All','ACCESS_DELETE',
+                            xarML('Delete messages in newsgroups')
+            );
+        case '1.0.3':
 
         case '2.0.0':
             // Code to upgrade from version 2.0.0 goes here

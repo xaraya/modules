@@ -1,16 +1,32 @@
 <?php
+/**
+ * Show an article from a newsgroup
+ *
+ * @package modules
+ * @copyright (C) 2002-2009 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage newsgroups
+ * @link http://xaraya.com/index.php/release/802.html
+ * @author John Cox
+ */
+/**
+ * Retrieve and Show an article in a newsgroup
+ *
+ * @param string group     newsgroup
+ * @param string messageid message-id or
+ * @param int    article   message number
+ * @return array
+ */
 
-function newsgroups_user_article()
+ function newsgroups_user_article()
 {
-
-    // Security Check
     if(!xarSecurityCheck('ReadNewsGroups')) return;
 
     xarVarFetch('group', 'str:1', $group, NULL, XARVAR_DONT_REUSE, XARVAR_PREP_FOR_DISPLAY);
     xarVarFetch('article', 'int', $article, 0, XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY);
     xarVarFetch('messageid', 'str:1', $messageid, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY);
-
-    xarTplSetPageTitle($group . ' - ' . $article);
 
     if (empty($article) && empty($messageid)) {
         xarResponseRedirect(xarModURL('newsgroups', 'user', 'group',
@@ -33,9 +49,12 @@ function newsgroups_user_article()
     }
     if (!isset($data)) return;
 
-    // re-shuffle variables for the template
-    $data['articlenum']     = $data['article'];
-    $data['article']        = nl2br(xarVarPrepForDisplay($data['body']));
+    xarTplSetPageTitle($group . ' - ' . $article . ' - ' . xarVarPrepForDisplay($data['headers']['Subject'])
+    );
+    // re-shuffle variables for the template, output preparation happens there
+    $data['articlenum'] = $data['article'];
+    $data['article']    = $data['body'];
+    $data['fromname']   = preg_replace('/(^"|" (?=<)|<.*)/', '', $data['headers']['From']);
 
     if(xarSecurityCheck('DeleteNewsGroups', false)) {
         $data['deleteurl'] = xarModURL('newsgroups', 'admin', 'delete',
@@ -43,6 +62,7 @@ function newsgroups_user_article()
                                               'from'      => $data['headers']['From'],
                                               'messageid' => $data['headers']['Message-ID'],
                                               'article'   => $data['articlenum'],
+                                              'authid'    => xarSecGenAuthKey(),
                                               'phase'     => 'confirmed')); //TODO Confirm page
     } else {
         $data['deleteurl'] = '';

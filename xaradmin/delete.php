@@ -2,23 +2,23 @@
 /**
  * Delete an article in a newsgroup
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2009 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
  * @subpackage newsgroups
+ * @link http://xaraya.com/index.php/release/802.html
  * @author hb
  */
 /**
  * Delete article in a newsgroup, Redirect to previous message
  *
- * @param string $args['phase']     'confirm'
- * @param string $args['group']     newsgroup
- * @param string $args['from']      From header or email
- * @param string $args['messageid'] message-id
- * @param int    $args['article']   message number in group (optional)
- * @returns misc
+ * @param string phase     'confirm'
+ * @param string group     newsgroup
+ * @param string from      From header or email
+ * @param string messageid message-id
+ * @param int    article   message number in group (optional)
  * @return true on success, or void on failure
  */
 
@@ -46,14 +46,15 @@ function newsgroups_admin_delete()
             if (!xarVarFetch('article', 'int', $articlenum, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('from','str:1:200',$from)) return;
             if (!xarVarFetch('messageid','str:1',$messageid)) return;
-
-            // if (!xarSecConfirmAuthKey()) return; // If delete is POSTed
+            if (!xarSecConfirmAuthKey()) return;
 
             if (!xarModAPIFunc('newsgroups','admin','delete',
                                array('group'      => $group,
                                       'from'      => $from,
-                                      'messageid' => $messageid
-                                     ))) return;
+                                      'messageid' => $messageid))
+            ) {
+                return false;
+            }
 
             // Redirect to the article before the deleted one or to group
             if (is_numeric($articlenum)) {

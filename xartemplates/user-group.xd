@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Newsgroups</xar:mlstring></span></div>
 <div class="xar-mod-body">
 
@@ -9,18 +10,26 @@
 
 <xar:if condition="isset($error_message)">
     <p> <xar:mlstring>News Server Error:</xar:mlstring>
-        <span style="color: red;">
+        <span class="xar-error">
             #$error_message#
         </span>
     </p>
 <xar:else />
-#$pager#
-<p><a href="#xarModUrl('newsgroups', 'user', 'main')#"><xar:mlstring>Back to main list</xar:mlstring></a></p>
-<xar:sec mask="SendNewsGroups" catch="false">
-<p><a href="#xarModUrl('newsgroups', 'user', 'post', array('group' => $group, 'phase' => 'new'))#"><xar:mlstring>Post to this newsgroup</xar:mlstring></a></p>
-</xar:sec>
-<div class="xar-norm" style="margin: 0px 3px 6px 3px;padding: 3px;text-align: left;">
-<table>
+    <div style="float:left; padding-right:6em;">
+        #$pager#
+    </div>
+    <xar:sec mask="SendNewsGroups" catch="false">
+        <div class="xar-floatright xar-align-right">
+            <a href="#xarModUrl('newsgroups', 'user', 'post', array('group' => $group, 'phase' => 'new'))#" title="#xarML('Post to this newsgroup')#">
+                <xar:mlstring>Post Message</xar:mlstring>
+            </a>
+        </div>
+    </xar:sec>
+    <a href="#xarModUrl('newsgroups', 'user', 'main')#" title="#xarML('Back to main list')#">
+        <xar:mlstring>Main list</xar:mlstring>
+    </a>
+    <div class="xar-norm" style="margin-bottom:0.5ex;">
+<table width="100%" cellspacing="0">
     <tr>
         <th><xar:mlstring>Subject</xar:mlstring></th>
         <th><xar:mlstring>From</xar:mlstring></th>
@@ -34,8 +43,8 @@
     </xar:if>
     <tr>
         <td class="#$tdclass#"><span style="margin-left: #$loop:item['depth']*2#ex;"> <a href="#xarModUrl('newsgroups', 'user', 'article', array('group' => $group, 'article' => $loop:item['number']))#">#xarVarPrepForDisplay($loop:item['Subject'])#</a></span></td>
-        <td class="#$tdclass#">#xarVarPrepEmailDisplay(xarVarPrepForDisplay($loop:item['From']))#</td>
-        <td class="#$tdclass#">#xarLocaleGetFormattedDate('medium', strtotime(xarVarPrepForDisplay($loop:item['Date'])), true)# #xarLocaleGetFormattedTime('short', strtotime(xarVarPrepForDisplay($loop:item['Date'])), true)#</td>
+        <td class="#$tdclass#">#xarVarPrepEmailDisplay(xarVarPrepForDisplay($loop:item['fromname']))#</td>
+        <td class="#$tdclass#">#xarLocaleGetFormattedDate('shortdate', strtotime(xarVarPrepForDisplay($loop:item['Date'])), true)#</td>
     </tr>
     </xar:loop>
 </table>
