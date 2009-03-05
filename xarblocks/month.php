@@ -61,7 +61,8 @@ function ievents_monthblock_display($blockinfo)
         return;
     }
 
-    xarTplAddStyleLink('ievents','ievents');
+    // this is deprecated, use <xar:style /> tag in template instead
+    // xarTplAddStyleLink('ievents','ievents');
 
     if(!isset($vars['usecalname'])) {
         $vars['usecalname'] = false;
@@ -72,7 +73,7 @@ function ievents_monthblock_display($blockinfo)
     }
 
     extract(xarModAPIfunc('ievents', 'user', 'params',
-        array('knames' => 'html_fields,q_fields,display_formats,locale')    
+        array('knames' => 'html_fields,q_fields,display_formats,locale')
     ));
 
 

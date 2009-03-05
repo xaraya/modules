@@ -1,3 +1,4 @@
+<xar:style scope="module" module="ievents" file="ievents" />
 #$cal_output#
 <xar:if condition="$showfulllink">
     <div class="xar-align-center">
