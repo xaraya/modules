@@ -101,7 +101,7 @@
             <xar:foreach in="$catfilter" key="$cid">
                 &#160;&#160;&#160;#$catfilter[$cid]#
             </xar:foreach>
-            &#160;&#160;&#160; <input type="submit" name="go" value="Go" />
+            &#160;&#160;&#160; <input type="submit" name="go" value="#xarML('Go')#" />
         </div>
     </form>
     <br />
