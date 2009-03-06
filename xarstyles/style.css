@@ -136,6 +136,9 @@
   height: 48px;
   width: 48px;
   }
-.twitter-block .profile-image-after {
+.twitter-block span.profile-image-after {
   margin-left:50px;
+  font-weight: bold;
+  font-size: 1.2em;
+  display: block;
 }

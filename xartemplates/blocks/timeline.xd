@@ -5,9 +5,9 @@
     <span class="module">
         <xar:if condition="$showmyimage and $timeline ne 'public'">
             <span class="profile-image">
-                <img src="#$userinfo.profile_image_url#" />
+                <img src="#$userinfo.profile_image_url#" alt="#xarML('profile image')#" />
             </span>
-            <h4 class="profile-image-after">
+            <span class="profile-image-after">
                 <xar:if condition="$timeline eq 'user'">
                     <a class="url" href="#xarModURL('twitter', 'user', 'display', array('screen_name' => $userinfo['screen_name']))#">
                    #$userinfo.screen_name# <xar:mlstring>timeline</xar:mlstring>
@@ -17,9 +17,9 @@
                     </a>
                 </xar:if>
             </a>
-            </h4>
+            </span>
         <xar:else />
-            <h4>
+            <span class="profile-image-before">
             <a class="url" href="#xarModURL('twitter', 'user', 'main', array('timeline' => $timeline))#">
                 <xar:if condition="$timeline eq 'friends'">
                     #$username# <xar:mlstring>and friends</xar:mlstring>
@@ -29,7 +29,7 @@
                     <xar:mlstring>Public timeline</xar:mlstring>
                 </xar:if>
             </a>
-            </h4>
+            </span>
         </xar:if>
     </span>
 </xar:if>
@@ -50,7 +50,7 @@
                 </strong>
                 #$item.text#
                 <span class="status-info">
-                    <xar:base-timesince stamp="$item['created_at']" /> <xar:mlstring>ago</xar:mlstring><xar:if condition="$showsource"><xar:mlstring>, via </xar:mlstring> #$item.source#</xar:if>
+                    <xar:base-timesince stamp="$item['created_at']" /> <xar:mlstring>ago, via </xar:mlstring>#$item.source#
                 </span>
             </span>
         </li>
