@@ -3,7 +3,7 @@
  * Translations bulk operations
  *
  * @package modules
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2003-2009 by the Xaraya Development Team.
  * @link http://www.xaraya.com
  * 
  * @subpackage translations
@@ -20,7 +20,8 @@
 */
 function translations_admin_bulk()
 {
-    return array();
+    $data['authid'] = xarSecGenAuthKey();
+    return $data;
 }
 
 ?>

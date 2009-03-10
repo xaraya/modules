@@ -17,10 +17,9 @@
     </xar:if>
    </td>
  </tr>
- <tr>
-  <td>
-      <xar:set name="showreferences">xarModGetVar('translations', 'showcontext')</xar:set>
-      <xar:if condition="$showreferences">
+  <xar:if condition="xarModGetVar('translations', 'showcontext')">
+    <tr>
+      <td>
         <table>
           <xar:loop name="$references">
             <tr>
@@ -45,7 +44,7 @@
             </tr>
           </xar:if>
         </table>
-      </xar:if>
-  </td>
- </tr>
+      </td>
+    </tr>
+  </xar:if>
 </table>

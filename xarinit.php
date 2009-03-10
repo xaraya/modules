@@ -3,7 +3,7 @@
  * Initialisation functions for translations
  *
  * @package modules
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2003-2009 by the Xaraya Development Team.
  * @link http://www.xaraya.com
  *
  * @subpackage translations
@@ -21,14 +21,10 @@ function translations_init()
     xarModSetVar('translations', 'archiver_path', '/bin/tar');
     xarModSetVar('translations', 'archiver_flags', 'czf %f %d');
 
-    xarModSetVar('translations', 'showcontext', 0);
-    xarModSetVar('translations', 'maxreferences', 5);
-    xarModSetVar('translations', 'maxcodelines', 5);
-
-    xarRegisterMask('ReadTranslations', 'All', 'translations', 'All', 'All', 'ACCESS_READ');
     xarRegisterMask('AdminTranslations', 'All', 'translations', 'All', 'All', 'ACCESS_ADMIN');
 
-    return true;
+    // Remaining init steps are done in _upgrade() to avoid duplicate code.
+    return translations_upgrade('0.1.0');
 }
 
 /**
@@ -39,14 +35,15 @@ function translations_upgrade($oldversion)
     switch($oldversion){
         case '0.1.0':
             xarModSetVar('translations', 'showcontext', 0);
-            xarModSetVar('translations', 'maxreferences', 5);
             xarModSetVar('translations', 'maxcodelines', 5);
         case '0.1.1':
             xarRegisterMask('ReadTranslations', 'All', 'translations', 'All', 'All', 'ACCESS_READ');
-            xarModSetVar('translations', 'maxreferences', 0);
         case '0.1.2':
             xarModSetVar('translations', 'maxreferences', 0);
         case '0.1.3':
+            // Template data and templates admin-menu, admin-nav change
+            xarModSetVar('translations', 'confirmskelsgen', 1);
+        case '0.2.0':
     }
     return true;
 }
@@ -64,8 +61,8 @@ function translations_delete()
     xarModDelVar('translations', 'showcontext');
     xarModDelVar('translations', 'maxreferences');
     xarModDelVar('translations', 'maxcodelines');
+    xarModDelVar('translations', 'confirmskelsgen');
 
-    // Remove Masks and Instances
     xarRemoveMasks('translations');
     xarRemoveInstances('translations');
 

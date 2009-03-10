@@ -26,7 +26,10 @@
     <ol>
       <li><xar:mlstring>Choosing the language (locale) to work on</xar:mlstring></li>
       <li><xar:mlstring>Choosing what to translate</xar:mlstring></li>
-      <li><xar:mlstring>Generating / updating skeletons for the chosen locale and subsystem</xar:mlstring></li>
+      <li><xar:mlstring>Generating / updating skeletons for the chosen locale and subsystem</xar:mlstring>
+        <br />
+        <xar:mlstring>For starting a translation it is useful to generate skeletons with 5 references for showing some context. After finishing the skeletons should be generated again without references. This avoids unneeded data and greatly reduces the load on our version control system.</xar:mlstring>
+        </li>
       <li><xar:mlstring>Translating the terms found in the elements for the subsystem</xar:mlstring></li>
     </ol>
   </p>
@@ -48,12 +51,9 @@
          <xar:mlstring>Further information on the Translations module can be found at</xar:mlstring>
     </p>
     <ul>
-        <li><xar:mlstring>Uploads Extension page at</xar:mlstring> <a title="#xarML('Translations Module - Xaraya Extension 77')#" href="http://www.xaraya.com/index.php/release/77.html">Xaraya Extension and Releases</a>.
+        <li><xar:mlstring>Module Extension page at</xar:mlstring> <a title="#xarML('Translations Module - Xaraya Extension 77')#" href="http://www.xaraya.com/index.php/release/77.html">Xaraya Extension and Releases</a>.
             <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
         </li>
         <li><xar:mlstring>Related tutorials and documentation on Translations found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/translations/" title="#xarML('Related documentation on Translations')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a></li>
     </ul>
-    <p class="xar-sub">
-        <strong>&nbsp;<xar:mlstring>Translations Module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.0.0&nbsp; 2006-03-08
-    </p>
 </div>

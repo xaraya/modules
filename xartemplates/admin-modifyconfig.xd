@@ -9,74 +9,83 @@
    <h2><xar:mlstring>Modify Translations Configuration</xar:mlstring></h2>
    <xar:template file="admin-menu" type="module"/>
 
+<xar:comment>
+    Release backend is hardcoded to xml2php in Base module.
+    No need for a selector here any more. This may change when we
+    offer a charset different from utf-8 for site deliverly.
 
 <dl class="xar-tabs">
     <dt class="help" title="#xarML('Choose a set of configuration options')#">
         <xar:mlstring>Actions</xar:mlstring> : 
     </dt>
-    <xar:if condition="$tab eq 'display'">
-        <dd class="active">
+    <xar:set name="tabclass">$tab=='display'?'active':''</xar:set>
+        <dd class="#$tabclass#">
             <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'display'))#" class="active">
                 <xar:mlstring>Translations Display</xar:mlstring>
             </a>
         </dd>
-    <xar:else />
-        <dd>
-            <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'display'))#">    
-                <xar:mlstring>Translations Display</xar:mlstring>
-            </a>
-        </dd>    
-    </xar:if>
-    <xar:if condition="$tab eq 'release'">
-        <dd class="active">
+    <xar:set name="tabclass">$tab=='release'?'active':''</xar:set>
+        <dd class="#$tabclass#">
             <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'release'))#" class="active">
                 <xar:mlstring>Translations Release</xar:mlstring>
             </a>
         </dd>
-    <xar:else />
-        <dd>
-            <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'release'))#">    
-                <xar:mlstring>Translations Release</xar:mlstring>
-            </a>
-        </dd>    
-    </xar:if>
     </dl>
+</xar:comment>
 
-    
     <xar:comment> ----------------- Begin Display Options ------------------- </xar:comment>
-    <xar:if condition="$tab eq 'display'">
-        <form action="&xar-modurl-translations-admin-updateconfig;" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
+    <xar:if condition="$tab eq 'display' OR $tab eq ''">
+        <form action="&xar-modurl-translations-admin-updateconfig;" method="post"
+              onsubmit="return xar_base_formCheck(this);"
+              enctype="application/x-www-form-urlencoded">
             <fieldset>
                 <legend><xar:mlstring>Display during translation</xar:mlstring></legend>
-
                 <p class="xar-form-input-wrapper-before">
                     <xar:mlstring>While translating you will be confronted with a lot of information. The settings below allow you to configure if references to the English string are added to the skeleton and how they are displayed during translation.</xar:mlstring>
                 </p>
-
               <div class="xar-form-input-wrapper-after">
                     <xar:if condition="$showcontext">
                         <input id="showcontext" type="checkbox" name="showcontext" checked="checked"/>
                     <xar:else/>
                         <input id="showcontext" type="checkbox" name="showcontext" />
                     </xar:if>
-                    <label for="showcontext" title="#xarML('Show a bit of context for the translation. This could be helpfull for determining the exact translation')#">
+                    <label for="showcontext" class="help"
+                           title="#xarML('Show a bit of context for the translation. This could be helpfull for determining the exact translation')#">
                         <xar:mlstring>Show a context</xar:mlstring>
                     </label>
              </div>
+            </fieldset>
+            <fieldset>
+              <legend><xar:mlstring>Translation Skeletons</xar:mlstring></legend>
              <div class="xar-form-input-wrapper">
-                <label for="maxreferences" class="xar-form-label" title="#xarML('References per translation string')#">
+                <label for="maxreferences" class="xar-form-label help"
+                       title="#xarML('Number of references per string generated and shown')#">
                     <xar:mlstring>References per translation string</xar:mlstring>
                 </label>:
                 <input type="text" name="maxreferences" value="#$maxreferences#" size="3" maxlength="3" />
-                <xar:mlstring><small> (0 generates no references.)</small></xar:mlstring>
+                <small>
+                  <xar:mlstring>
+                    0 generates no references (recommended).
+                  </xar:mlstring>
+                </small>
             </div>
-
                 <div class="xar-form-input-wrapper">
-                <label for="maxcodelines" class="xar-form-label" title="#xarML('Number of lines to display as context')#">
+                <label for="maxcodelines" class="xar-form-label help" title="#xarML('Number of lines to display as context')#">
                     <xar:mlstring>Number of lines around each </xar:mlstring>
                 </label>:
                 <input type="text" name="maxcodelines" value="#$maxcodelines#" size="3" maxlength="3" />
             </div>
+              <div class="xar-form-input-wrapper-after">
+                <xar:if condition="$confirmskelsgen">
+                  <input id="confirmskelsgen" type="checkbox" name="confirmskelsgen" checked="checked"/>
+                <xar:else/>
+                  <input id="confirmskelsgen" type="checkbox" name="confirmskelsgen" />
+                </xar:if>
+                <label for="confirmskelsgen" class="help"
+                       title="#xarML('Show Confirm button before generating a skeleton (not recommended)?')#">
+                  <xar:mlstring>Confirm generating skeleton</xar:mlstring>
+                </label>
+             </div>
             </fieldset>
             <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
@@ -86,8 +95,11 @@
         </form>
 
     <xar:comment> ----------------- Begin Release Options ------------------- </xar:comment>
+    <xar:comment> Release Options are currently not used, see comment above.  </xar:comment>
     <xar:elseif condition="$tab eq 'release'" />
-        <form action="&xar-modurl-translations-admin-updateconfig;" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
+        <form action="&xar-modurl-translations-admin-updateconfig;" method="post"
+              onsubmit="return xar_base_formCheck(this);"
+              enctype="application/x-www-form-urlencoded">
            <fieldset>
                 <legend><xar:mlstring>Translations storage</xar:mlstring></legend>
             <p class="xar-form-input-wrapper-before">
@@ -108,7 +120,8 @@
                 </select>
                 <xar:mlstring>(only PHP allowed for now)</xar:mlstring>
             </div>
-            <div class="xar-form-input-wrapper">
+          </fieldset>
+            <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="tab" id="tab" value="#$tab#" />
                 <input type="submit" value="#$updatelabel#" />

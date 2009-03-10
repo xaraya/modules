@@ -3,7 +3,7 @@
  * Generate skels information
  *
  * @package modules
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2003-2009 by the Xaraya Development Team.
  * @link http://www.xaraya.com
  *
  * @subpackage translations
@@ -33,7 +33,13 @@ function translations_admin_generate_skels_info()
 
     $tplData['dnName'] = $dnName;
     $tplData['extid'] = $extid;
-
+    $tplData['confirmskelsgen'] = xarModGetVar('translations', 'confirmskelsgen');
+    $tplData['authid']          = xarSecGenAuthKey();
+    $tplData['redirecturl']     = xarModURL('translations', 'admin','generate_skels_result',
+                                    array('dnType' => $dnType,
+                                          'dnName' => $dnName,
+                                          'extid'  => $extid,
+                                          'authid' => $tplData['authid']));
     return $tplData;
 }
 

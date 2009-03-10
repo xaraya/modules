@@ -3,7 +3,7 @@
  * Generate skels result
  *
  * @package modules
- * @copyright (C) 2002-2008 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @link http://www.xaraya.com
  *
  * @subpackage translations
@@ -15,13 +15,15 @@
  */
 function translations_admin_generate_skels_result()
 {
-    // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
     if (!xarVarFetch('dnType','int',$dnType)) return;
     if (!xarVarFetch('dnName','str:1:',$dnName)) return;
     if (!xarVarFetch('extid','int',$extid)) return;
     if (!xarVarFetch('dnTypeAll','bool',$dnTypeAll, false, XARVAR_NOT_REQUIRED)) return;
+
+    if (!xarSecConfirmAuthKey()) return;
+
     $locale = translations_working_locale();
     $args = array('locale'=>$locale);
     switch ($dnType) {
@@ -65,6 +67,7 @@ function translations_admin_generate_skels_result()
 
     $tplData = $res;
     if ($tplData == NULL) {
+        //TODO error message needed
         xarResponseRedirect(xarModURL('translations', 'admin', 'generate_skels_info'));
     }
 
@@ -82,7 +85,15 @@ function translations_admin_generate_skels_result()
     $tplData['extid'] = $extid;
     $tplData = array_merge($tplData, $druidbar, $opbar);
 
-    return $tplData;
+    if (xarModGetVar('translations', 'confirmskelsgen')) {
+        return $tplData;
+    } else {
+        xarResponseRedirect(xarModURL('translations', 'admin','translate',
+                                      array('dnType' => $dnType,
+                                            'dnName' => $dnName,
+                                            'extid'  => $extid)));
+    }
+
 }
 
 ?>

@@ -8,19 +8,21 @@
    <p>
       <ol>
         <li><xar:mlstring>Generating / updating skeletons for core and all extensions</xar:mlstring></li>
-        <li><xar:mlstring>Generating the translation for core and all extensions</xar:mlstring>
-
-        </li>
+        <li><xar:mlstring>Generating the translation for core and all extensions</xar:mlstring></li>
         <li><xar:mlstring>Packaging the generated translations in a downloadable archives</xar:mlstring></li>
       </ol>
       <xar:mlstring>To generate all skeletons for all modules, use the button below:</xar:mlstring>
    </p>
 
-   <form method="post" name="post" id="post" action="#xarModURL('translations', 'admin', 'generate_skels_result')#">
+  <form method="post" id="post" action="#xarModURL('translations', 'admin', 'generate_skels_result')#">
     <input type="hidden" name="dnType" value="3"/>
     <input type="hidden" name="dnName" value="modules"/>
     <input type="hidden" name="extid" value="1"/>
+    <input type="hidden" name="authid" value="#$authid#"/>
     <input type="hidden" name="dnTypeAll" value="true" />
     <input type="submit" value="#xarML('Generate all module skeletons')#"/>
-</form>
+  </form>
+  <p class="xar-sub">
+    <xar:mlstring>Likely this operation will stress the <em>Maximum execution time</em> limit for PHP on the server.</xar:mlstring>
+  <p>
 </div>

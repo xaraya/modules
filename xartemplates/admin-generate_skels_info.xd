@@ -1,4 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:base-include-javascript module="base" filename="formcheck.js" />
 <div class="xar-mod-head">
   <span class="xar-mod-title"><xar:mlstring>Translations Administration</xar:mlstring></span>
 </div>
@@ -18,14 +19,25 @@
 </h4>
 
 <p>
-<xar:mlstring>Now we're going to generate skels, this operation could take several minutes. Just take a break!</xar:mlstring>
+  <xar:mlstring>Now we're going to generate skels, this operation could take a minute.</xar:mlstring>
+  <xar:if condition="$confirmskelsgen eq false">
+    <meta http-equiv="refresh" content="0;url=#$redirecturl#"/>
+    <br />
+    <xar:ml>
+      <xar:mlstring>If you are not redirected to the results page click this <a href="#(1)">link</a>.</xar:mlstring>
+      <xar:mlvar>#$redirecturl#</xar:mlvar>
+    </xar:ml>
+  <xar:else />
+    <form method="post" id="post" onsubmit="return xar_base_formCheck(this);"
+          action="#xarModURL('translations', 'admin', 'generate_skels_result')#">
+      <input type="hidden" name="dnType" value="#$dnType#"/>
+      <input type="hidden" name="dnName" value="#$dnName#"/>
+      <input type="hidden" name="extid" value="#$extid#"/>
+      <input type="hidden" name="authid" value="#$authid#"/>
+      <input type="submit" value="#xarML('GO')#"/>
+    </form>
+  </xar:if>
 </p>
-<form method="post" name="post" id="post" action="#xarModURL('translations', 'admin', 'generate_skels_result')#">
-<input type="hidden" name="dnType" value="#$dnType#"/>
-<input type="hidden" name="dnName" value="#$dnName#"/>
-<input type="hidden" name="extid" value="#$extid#"/>
-<input type="submit" value="#xarML('GO')#"/>
-</form>
 <br />
 <xar:template type="module" file="opbar" />
 </div>
