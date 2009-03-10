@@ -3,7 +3,7 @@
  * Generate skeletons for a theme
  *
  * @package modules
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2003-2009 by the Xaraya Development Team.
  * @link http://www.xaraya.com
  *
  * @subpackage translations
@@ -33,7 +33,6 @@ function translations_adminapi_generate_theme_skels($args)
     $themename = $modinfo['name'];
     $themedir = $modinfo['osdirectory'];
 
-    // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
     // {ML_dont_parse 'modules/translations/class/TPLParser.php'}
@@ -188,12 +187,13 @@ function translations_adminapi_generate_theme_skels($args)
     if (!$gen->open('themes:','fuzzy')) return;
     $fuzzyEntries = $backend->getFuzzyEntries();
     foreach ($fuzzyEntries as $ind => $fuzzyEntry) {
-        // Add entry
+        // Add entry to fuzzy file only if a translation exists
+        if (!empty($fuzzyEntry['translation']))
         $gen->addEntry($fuzzyEntry['string'], $fuzzyEntry['references'], $fuzzyEntry['translation']);
     }
     $fuzzyKeys = $backend->getFuzzyEntriesByKey();
     foreach ($fuzzyKeys as $ind => $fuzzyKey) {
-        // Add entry
+        if (!empty($fuzzyKey['translation']))
         $gen->addKeyEntry($fuzzyKey['key'], $fuzzyKey['references'], $fuzzyKey['translation']);
     }
     $gen->close();

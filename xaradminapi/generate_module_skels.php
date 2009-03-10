@@ -3,7 +3,7 @@
  * Generate skeletons for a module
  *
  * @package modules
- * @copyright (C) 2002-2008 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @link http://www.xaraya.com
  *
  * @subpackage translations
@@ -32,7 +32,6 @@ function translations_adminapi_generate_module_skels($args)
     $modname = $modinfo['name'];
     $moddir = $modinfo['osdirectory'];
 
-    // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
     // {ML_dont_parse 'modules/translations/class/PHPParser.php'}
@@ -211,12 +210,13 @@ function translations_adminapi_generate_module_skels($args)
     if (!$gen->open('modules:','fuzzy')) return;
     $fuzzyEntries = $backend->getFuzzyEntries();
     foreach ($fuzzyEntries as $ind => $fuzzyEntry) {
-        // Add entry
+        // Add entry to fuzzy file only if a translation exists
+        if (!empty($fuzzyEntry['translation']))
         $gen->addEntry($fuzzyEntry['string'], $fuzzyEntry['references'], $fuzzyEntry['translation']);
     }
     $fuzzyKeys = $backend->getFuzzyEntriesByKey();
     foreach ($fuzzyKeys as $ind => $fuzzyKey) {
-        // Add entry
+        if (!empty($fuzzyKey['translation'])) 
         $gen->addKeyEntry($fuzzyKey['key'], $fuzzyKey['references'], $fuzzyKey['translation']);
     }
     $gen->close();

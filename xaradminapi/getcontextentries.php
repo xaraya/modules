@@ -3,7 +3,7 @@
  * Get context entries
  *
  * @package modules
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2003-2009 by the Xaraya Development Team.
  * @link http://www.xaraya.com
  *
  * @subpackage translations
@@ -132,11 +132,6 @@ function translations_grab_source_code($references, $maxReferences = NULL)
 {
     $result = array();
     //static $files = array(); <-- this just takes too much memory
-    $showContext = xarModGetVar('translations','showcontext');
-    if(!$showContext) {
-        $result[] = xarML('References have been disabled');
-        return $result;
-    }
 
     $files = array();
     $result = array();

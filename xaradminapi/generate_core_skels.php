@@ -3,7 +3,7 @@
  * Generate XML skeletons admin api function
  *
  * @package modules
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2003-2009 by the Xaraya Development Team.
  * @link http://www.xaraya.com
  *
  * @subpackage translations
@@ -96,12 +96,13 @@ function translations_adminapi_generate_core_skels($args)
     if (!$gen->open('core:','fuzzy')) return;
     $fuzzyEntries = $core_backend->getFuzzyEntries();
     foreach ($fuzzyEntries as $ind => $fuzzyEntry) {
-        // Add entry
+        // Add entry to fuzzy file only if a translation exists
+        if (!empty($fuzzyEntry['translation']))
         $gen->addEntry($fuzzyEntry['string'], $fuzzyEntry['references'], $fuzzyEntry['translation']);
     }
     $fuzzyKeys = $core_backend->getFuzzyEntriesByKey();
     foreach ($fuzzyKeys as $ind => $fuzzyKey) {
-        // Add entry
+        if (!empty($fuzzyEntry['translation']))
         $gen->addKeyEntry($fuzzyKey['key'], $fuzzyKey['references'], $fuzzyKey['translation']);
     }
     $gen->close();
