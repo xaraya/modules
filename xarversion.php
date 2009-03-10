@@ -18,7 +18,7 @@ $modversion['official'] = 1;
 $modversion['author'] = 'Marco Canini';
 $modversion['contact'] = 'marco@xaraya.com';
 $modversion['admin'] = 1;
-$modversion['user'] = 1;
+$modversion['user'] = 0;
 $modversion['securityschema'] = array('translations::' => 'Locale string:Backend name:Module name');
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';

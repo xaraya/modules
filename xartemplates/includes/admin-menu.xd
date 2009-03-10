@@ -72,11 +72,15 @@
             <br/>
             <xar:mlstring>Site Display Locale</xar:mlstring>:
             <span class="xar-title">
-            <a href="#xarModURL('base','admin','modifyconfig',
-                                 array('tab' => 'locales',
-                                       'returnurl' => xarServerGetCurrentURL()))#">
+            <xar:sec mask="AdminBase" catch="false">
+                <a href="#xarModURL('base','admin','modifyconfig',
+                                     array('tab' => 'locales',
+                                           'returnurl' => xarServerGetCurrentURL()))#">
                     #xarConfigGetVar('Site.MLS.DefaultLocale')#
                 </a>
+            <xar:else />
+                #xarConfigGetVar('Site.MLS.DefaultLocale')#
+            </xar:sec>
             </span>
         </td>
     </tr>
