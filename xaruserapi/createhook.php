@@ -136,6 +136,8 @@ function twitter_userapi_createhook($args)
     } else {
         $linkurl = $itemlink[$objectid]['url'];
     }
+    $tinyurl = xarModAPIFunc('twitter', 'util', 'tinyurl', array('url' => $linkurl));
+    if (!empty($tinyurl)) $linkurl = $tinyurl;
     // length of link
     $linklen = strlen($linkurl);
     // remaining characters
