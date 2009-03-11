@@ -28,6 +28,12 @@
                     <xar:mlstring>Users</xar:mlstring>
                 </a>
              </dd>
+             <xar:set name="$activetab">$tab == 'hooks' ? 'active' : ''</xar:set>
+             <dd class="#$activetab#">
+                <a href="#xarModURL('twitter', 'admin', 'modifyconfig', array('tab' => 'hooks'))#">
+                    <xar:mlstring>Hooks</xar:mlstring>
+                </a>
+             </dd>
         </dl>
     </div>
     <xar:if condition="xarSessionGetVar('statusmsg') != ''">
@@ -294,6 +300,112 @@
                     <input type="submit" value="#xarML('Update Configuration')#" />
                 </div>
             </fieldset>
+        <xar:comment> ----------------- Begin Hooks Configuration ---------------- </xar:comment>
+        <xar:elseif condition="$tab eq 'hooks'" />
+            <xar:base-include-javascript module="base" filename="toggle.js" />
+            <xar:if condition="!empty($hookmods)">
+            <div>
+                <dl class="xar-tabs">
+                    <dt class="help" title="#xarML('Module Hook Configurations')#">
+                        <xar:mlstring>Module</xar:mlstring>:
+                    </dt>
+                    <xar:foreach in="$hookmods" value="$hooktab">
+                        <xar:set name="$tabactive">$hooktab['active'] ? 'active' : ''</xar:set>
+                        <dd class="#$tabactive#">
+                            <a href="#$hooktab['url']#" title="#$hooktab['title']#">
+                                #$hooktab.label#
+                            </a>
+                        </dd>
+                    </xar:foreach>
+                </dl>
+            </div>
+            </xar:if>
+            <xar:if condition="!empty($hooktypes)">
+            <div>
+                <dl class="xar-tabs">
+                    <dt class="help" title="#xarML('Module Hook Configurations')#">
+                        <xar:mlstring>Itemtypes</xar:mlstring>:
+                    </dt>
+                    <xar:foreach in="$hooktypes" value="$hooktab">
+                        <xar:set name="$tabactive">$hooktab['active'] ? 'active' : ''</xar:set>
+                        <dd class="#$tabactive#">
+                            <a href="#$hooktab['url']#" title="#$hooktab['title']#">
+                                #$hooktab.label#
+                            </a>
+                        </dd>
+                    </xar:foreach>
+                </dl>
+            </div>
+            </xar:if>
+            <xar:if condition="!empty($settings)">
+                <fieldset>
+                    <legend>
+                        <xar:mlstring>Create hook settings</xar:mlstring>
+                        [<a href="javascript:void(0);" title="#xarML('Click to toggle information about the create hook.')#" onclick="return toggleDisplay('createhook');"><xar:mlstring>info</xar:mlstring></a>]
+                    </legend>
+                    <div class="xar-form-input-wrapper">
+                        <xar:if condition="empty($site_account)">
+                                <p class="xar-form-container-after xar-error">
+                                    <xar:mlstring>No Site Account Configured</xar:mlstring>
+                                </p>
+                                <p class="xar-form-container-after">
+                                    <xar:mlstring>The create hook works in conjunction with the site account, add your site account details to the configuration if you want to use this functionality.</xar:mlstring>
+                                </p>
+                        </xar:if>
+                        <p id="createhook" class="xar-form-container-after xar-displaynone">
+                            <xar:mlstring>The create hook allows you to hook the Twitter module to other modules and/or itemtypes to instantly send updates to your site account containing a link and optional excerpt for the newly created item.</xar:mlstring>
+                        </p>
+                    </div>
+                    <xar:comment>
+                    <div class="xar-form-input-wrapper">
+                        <label for="urltype" class="xar-form-label help" title="#xarML('The module function type parameter to use when linking to created items')#">
+                            <xar:mlstring>URL Type Parameter</xar:mlstring>
+                        </label>
+                        <xar:data-input type="textbox" name="urltype" value="$settings['urltype']" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="urlfunc" class="xar-form-label help" title="#xarML('The module function parameter to use when linking to created items')#">
+                            <xar:mlstring>URL Function Parameter</xar:mlstring>
+                        </label>
+                        <xar:data-input type="textbox" name="urlfunc" value="$settings['urlfunc']" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="urlitemtype" class="xar-form-label help" title="#xarML('The module itemtype parameter to use when linking to created items')#">
+                            <xar:mlstring>URL Itemtype Parameter</xar:mlstring>
+                        </label>
+                        <xar:data-input type="textbox" name="urlitemtype" value="$settings['urlitemtype']" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="urlitemid" class="xar-form-label help" title="#xarML('The module item parameter to use when linking to created items')#">
+                            <xar:mlstring>URL Item Parameter</xar:mlstring>
+                        </label>
+                        <xar:data-input type="textbox" name="urlitemid" value="$settings['urlitemid']" />
+                    </div>
+                    </xar:comment>
+                    <div class="xar-form-input-wrapper">
+                        <label for="fieldname" class="xar-form-label help" title="#xarML('The fieldname to include an excerpt from')#">
+                            <xar:mlstring>Excerpt Fieldname</xar:mlstring>
+                        </label>
+                        <xar:data-input type="textbox" name="fieldname" value="$settings['fieldname']" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="sendsite" class="xar-form-label help" title="#xarML('Choose who to send status updates for')#">
+                            <xar:mlstring>Items Created By</xar:mlstring>
+                        </label>
+                        <xar:data-input type="dropdown" name="sendsite" value="$settings['sendsite']" options="$sendopts" />
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="xar-form-input-wrapper-after">
+                        <input type="hidden" name="tab" id="tab" value="hooks" />
+                        <input type="hidden" name="hookmodname" value="#$hookmodname#" />
+                        <input type="hidden" name="hookmodtype" value="#$hookmodtype#" />
+                        <input type="hidden" name="phase" id="phase" value="update" />
+                        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                        <input type="submit" value="#xarML('Update Configuration')#" />
+                    </div>
+                </fieldset>
+            </xar:if>
         </xar:if>
     </form>
 </div>

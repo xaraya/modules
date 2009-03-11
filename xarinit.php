@@ -81,14 +81,17 @@ function twitter_upgrade($oldversion)
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
     switch ($oldversion) {
       case '0.0.1':
+        // to v0.0.2
         xarModSetVar('twitter', 'deftimeline', 'public');
         xarModSetVar('twitter', 'showpublic', true);
         xarModSetVar('twitter', 'showuser', false);
         xarModSetVar('twitter', 'showfriends', false);
       case '0.0.2':
+        // to v0.0.3
         xarModSetVar('twitter', 'screen_name', '');
         xarModSetVar('twitter', 'screen_pass', '');
       case '0.0.3':
+        // to v0.0.4
         xarModSetVar('twitter', 'friends_timeline', 0);
         xarModSetVar('twitter', 'user_timeline', 0);
         xarModSetVar('twitter', 'profile_image', 0);
@@ -124,10 +127,25 @@ function twitter_upgrade($oldversion)
         xarModDelVar('twitter', 'showfriends');
         xarModDelVar('twitter', 'screen_name');
         xarModDelVar('twitter', 'screen_pass');
-
-      // v0.1.0 - 2nd point upgrade, signifies addition of approved twitter source param
+      case '0.0.4':
+        // to v0.1.0 - 2nd point upgrade, signifies addition of approved twitter source param
       case '0.1.0':
-        // current version
+        // to v0.1.1 - added createhook function
+        // these are the module defaults for the hook functions (added in v0.1.1)
+        $settings = array(
+            'urltype' => 'user',
+            'urlfunc' => 'display',
+            'urlitemtype' => 'itemtype',
+            'urlitemid' => 'itemid',
+            'senduser' => 0,
+            'sendsite' => 0,
+            'fieldname' => '',
+            'urlextra' => '',
+        );
+        xarModSetVar('twitter', 'twitter', serialize($settings));
+      case '0.1.1':
+          // current version
+
       break;
     }
     /* Update successful */

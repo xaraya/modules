@@ -27,7 +27,7 @@ function twitter_admin_modifyconfig()
     if (!xarSecurityCheck('AdminTwitter')) return;
 
     if (!xarVarFetch('phase', 'isset', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('tab', 'enum:module:site:users', $tab, 'module', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('tab', 'enum:module:site:users:hooks', $tab, 'module', XARVAR_NOT_REQUIRED)) return;
 
     $data=xarModAPIFunc('twitter', 'user', 'menu', array('modtype' => 'admin', 'modfunc' => 'modifyconfig'));
     $modname = 'twitter';
@@ -201,6 +201,127 @@ function twitter_admin_modifyconfig()
             return true;
           break;
         }
+      break;
+      case 'hooks':
+            if (!xarVarFetch('hookmodname', 'str:1:', $hookmodname, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('hookmodtype', 'int:1', $hookmodtype, 0, XARVAR_NOT_REQUIRED)) return;
+
+            $hookmods = array();
+            $hooktypes = array();
+            $hookmods[] = array(
+                'label' => xarML('Defaults'),
+                'url' => xarModURL('twitter', 'admin', 'modifyconfig', array('tab' => 'hooks')),
+                'title' => xarML('Default hook configuration settings'),
+                'active' => empty($hookmodname) ? true : false
+              );
+            $callingmods = xarModAPIFunc('modules', 'admin', 'gethookedmodules',
+                array(
+                    'hookModName' => 'twitter'
+                )
+            );
+            if (!empty($callingmods)) {
+                foreach ($callingmods as $cmodname => $cmodtypes) {
+                    $modid = xarModGetIDFromName($cmodname);
+                    if (!$modid) continue;
+                    $modinfo = xarModGetInfo($modid);
+                    if (empty($modinfo)) continue;
+                    $hookmods[] = array(
+                        'label' => $modinfo['displayname'],
+                        'url' => xarModURL('twitter', 'admin', 'modifyconfig', array('tab' => 'hooks', 'hookmodname' => $cmodname)),
+                        'title' => $modinfo['description'],
+                        'active' => $hookmodname == $cmodname ? true : false
+                    );
+                    if (!empty($cmodtypes) && !isset($cmodtypes[0]) && $hookmodname == $cmodname) {
+                        $hooktypes[] = array(
+                            'label' => xarML('Defaults'),
+                            'url' => xarModURL('twitter', 'admin', 'modifyconfig', array('tab' => 'hooks', 'hookmodname' => $cmodname)),
+                            'title' => xarML('Defaults for #(1) module items',$modinfo['displayname']),
+                            'active' => empty($hookmodtype) ? true : false
+                            );
+                        foreach ($cmodtypes as $cmodtype => $cmodval) {
+                            $mytypes = xarModAPIFunc($cmodname, 'user', 'getitemtypes', array(), 0);
+                            $label = isset($mytypes[$cmodtype]['label']) ? $mytypes[$cmodtype]['label'] : $modinfo['displayname'].' ('.$cmodtype.')';
+                            $title = isset($mytypes[$cmodtype]['title']) ? $mytypes[$cmodtype]['title'] : $modinfo['displayname'].' ('.$cmodtype.')';
+                            $hooktypes[] = array(
+                                'label' => $label,
+                                'url' => xarModURL('twitter', 'admin', 'modifyconfig', array('tab' => 'hooks', 'hookmodname' => $cmodname, 'hookmodtype' => $cmodtype)),
+                                'title' => $cmodname.' ('.$cmodtype.')',
+                                'active' => $hookmodtype == $cmodtype ? true : false
+                            );
+                        }
+                    } elseif (isset($cmodtypes[0]) && $hookmodname == $cmodname)  {
+                        $hooktypes[] = array(
+                            'label' => xarML('All Items (0)'),
+                            'url' => xarModURL('twitter', 'admin', 'modifyconfig', array('tab' => 'hooks', 'hookmodname' => $cmodname)),
+                            'title' => xarML('All #(1) module items',$modinfo['displayname']),
+                            'active' => true
+                            );
+                    }
+                }
+            }
+            switch ($phase) {
+                case 'form':
+                    // try settings for module / itemtype we're hooked to
+                    if (!empty($hookmodname) && !empty($hookmodtype)) {
+                        $string = xarModGetVar('twitter', $hookmodname . '.' . $hookmodtype);
+                    }
+                    // fall back to default settings for module (itemtype 0) we're hooked to
+                    if (!empty($hookmodname) && empty($string)) {
+                        $string = xarModGetVar('twitter', $hookmodname);
+                    }
+                    // fall back to twitter module defaults
+                    if (empty($string)) {
+                        $string = xarModGetVar('twitter', 'twitter');
+                    }
+                    // this should never be empty
+                    if (!empty($string)) {
+                        $settings = unserialize($string);
+                    }
+
+                    $sendopts = array();
+                    $sendopts[] = array('id' => 1, 'name' => xarML('All Users'));
+                    $sendopts[] = array('id' => 2, 'name' => xarML('Owner (#(1))', xarUserGetVar('name', $data['owner'])));
+                    $data['sendopts'] = $sendopts;
+
+                    $data['settings'] = $settings;
+
+                break;
+                case 'update':
+                    $settings = array();
+                    if (!xarVarFetch('urltype', 'str:1:', $settings['urltype'], 'user', XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('urlfunc', 'str:1:', $settings['urlfunc'], 'display', XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('urlitemtype', 'str', $settings['urlitemtype'], 'itemtype', XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('urlitemid', 'str:1:', $settings['urlitemid'], 'itemid', XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('fieldname', 'str:1:', $settings['fieldname'], '', XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('senduser', 'int', $settings['senduser'], 0, XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('sendsite', 'int', $settings['sendsite'], 0, XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('urlextra', 'str:1:', $settings['urlextra'], '', XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('returnurl', 'str:1:', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
+
+                    if (empty($hookmodname)) {
+                        xarModSetVar('twitter', 'twitter', serialize($settings));
+                    } elseif (empty($hookmodtype)) {
+                        xarModSetVar('twitter', $hookmodname, serialize($settings));
+                    } else {
+                        xarModSetVar('twitter', $hookmodname . '.' . $hookmodtype, serialize($settings));
+                    }
+                    if (empty($returnurl)) {
+                        $returnurl = xarModURL('twitter', 'admin', 'modifyconfig',
+                            array(
+                                'tab' => 'hooks',
+                                'hookmodname' => !empty($hookmodname) ? $hookmodname : NULL,
+                                'hookmodtype' => !empty($hookmodtype) ? $hookmodtype : NULL
+                            ));
+                    }
+                    xarSessionSetVar('statusmsg', xarML('Hooks configuration updated succesfully'));
+                    return xarResponseRedirect($returnurl);
+
+                break;
+            }
+            $data['hookmodname'] = $hookmodname;
+            $data['hookmodtype'] = $hookmodtype;
+            $data['hookmods'] = $hookmods;
+            $data['hooktypes'] = $hooktypes;
       break;
     }
 
