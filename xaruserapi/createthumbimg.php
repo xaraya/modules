@@ -3,7 +3,7 @@
  * Images Module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -19,7 +19,7 @@
         'thumbheight'- Height of thumbnail
         'newfile'    - Name of new Filer
 */
-function uploads_userapi_createthumbimg($args)
+function images_userapi_createthumbimg($args)
 {
     extract($args);
 
