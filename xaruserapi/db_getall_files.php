@@ -1,9 +1,9 @@
 <?php
 /**
- * Purpose of File
+ * Retrieve the metadata for all files
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -23,6 +23,7 @@
  * @param  string   sort         (Optional) sort order ('id','name','type','size','user','status','location',...)
  *
  * @return array   All of the metadata stored for all files
+ * TODO use db_get_file() for the work and delete the duplicate code here
  */
 
 function uploads_userapi_db_getall_files( $args )
@@ -101,8 +102,11 @@ function uploads_userapi_db_getall_files( $args )
             break;
 
         case 'id':
-        default:
             $sql .= ' ORDER BY xar_fileEntry_id';
+            break;
+
+        default:
+            $sql .= ' ORDER BY xar_fileEntry_id DESC';
             break;
     }
 

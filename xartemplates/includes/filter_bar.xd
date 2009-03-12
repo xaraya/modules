@@ -1,24 +1,6 @@
-<table width="100%" border="0" class="xar-norm xar-accent-outline">
+<table width="100%" border="0" class="xar-norm">
+    <form action="#xarModUrl('uploads','admin','view')#" method="post">
     <tr>
-        <th colspan="6">
-            <h4><xar:mlstring>Filtering Options</xar:mlstring></h4>
-        </th>
-    </tr>
-    <tr>
-        <form action="#xarModUrl('uploads','admin','view')#" method="post">
-        <td width="15%" align="center">
-            <label for="inverse">
-                <xar:mlstring>
-                    Invert Filter
-                </xar:mlstring>
-            </label>
-            <br />
-            <xar:if condition="$filters['inverse'] eq TRUE">
-                <input type="checkbox" name="inverse" id="inverse" value="invert" checked="checked" />
-            <xar:else />
-                <input type="checkbox" name="inverse" id="inverse" value="invert" />
-            </xar:if>
-        </td>
         <td width="10%" align="center">
             <label for="mimetype">
                 <xar:mlstring>
@@ -82,22 +64,38 @@
                 </xar:foreach>
             </select>
         </td>
+        <td width="15%" align="center">
+            <label for="inverse">
+                <xar:mlstring>
+                    Invert
+                </xar:mlstring>
+            </label>
+            <br />
+            <xar:if condition="$filters['inverse'] eq TRUE">
+                <input type="checkbox" name="inverse" id="inverse" value="invert" checked="checked" />
+            <xar:else />
+                <input type="checkbox" name="inverse" id="inverse" value="invert" />
+            </xar:if>
+        </td>
         <td width="25%" align="center">
-            <label for="action">
+            <label for="action" class="help" title="#xarML('This select box changes the state of all files shown under the current filtering options')#">
                 <xar:mlstring>
                     action
                 </xar:mlstring>
             </label>
-            <br />
-            <select name="action" id="action" onchange="this.form.submit();">
+        <br />
+            <select name="action" id="action" onchange="if(confirm('#xarML('Change status of all displayed files, even the not selected ones?')#')){this.form.submit()};return true;" >
                 <xar:foreach in="$filters['status']" key="$key" value="$status">
                     <xar:if condition="$key eq '0'">
                         <option value="#$status['statusId']#" selected="selected">
-                            Change View
+                            <xar:mlstring>Change View</xar:mlstring>
                         </option>
                     <xar:else />
                         <option value="#$status['statusId']#">
-                            Change all to #$status['statusName']# 
+                            <xar:ml>
+                                <xar:mlstring>Change all to #(1)</xar:mlstring>
+                                <xar:mlvar>#$status['statusName']#</xar:mlvar>
+                            </xar:ml>
                         </option>
                     </xar:if>
                 </xar:foreach>
@@ -110,8 +108,8 @@
             </xar:if>
             <input type="submit" name="do_it" value="#xarML('Refresh')#"/>
         </td>
-        </form>
     </tr>
+    </form>
     <xar:if condition="xarModIsAvailable('categories') and xarModIsHooked('categories','uploads',1)">
     <tr>
         <td colspan="6">
@@ -120,4 +118,3 @@
     </tr>
     </xar:if>
 </table>
-<br />

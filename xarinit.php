@@ -1,6 +1,6 @@
 <?php
 /**
- * Purpose of File
+ * Initialisation functions for Uploads
  *
  * @package modules
  * @copyright (C) 2002-2009 The Digital Development Foundation
@@ -11,24 +11,13 @@
  * @link http://xaraya.com/index.php/release/666.html
  * @author Uploads Module Development Team
  */
-// ----------------------------------------------------------------------
 // Original Author of file: Marie Altobelli (Ladyofdragons)
-// Current Maintainer: Michael Cortez (mcortez)
-// Purpose of file:  Initialisation functions for uploads
-// ----------------------------------------------------------------------
 
 /**
  * initialise the module
  */
 function uploads_init()
 {
-    //Not needed anymore with the dependency checks.
-    if (!xarModIsAvailable('mime')) {
-        $msg = xarML('The mime module should be activated first');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY', new SystemException($msg));
-        return;
-    }
-
     // load the predefined constants
     xarModAPILoad('uploads', 'user');
 
@@ -51,6 +40,7 @@ function uploads_init()
     xarModSetVar('uploads', 'dd.fileupload.trusted',  TRUE);
     xarModSetVar('uploads', 'file.auto-approve', _UPLOADS_APPROVE_ADMIN);
 
+    //TODO The filter options should not be set on init but dynamically on runtime
     $data['filters']['inverse']                     = FALSE;
     $data['filters']['mimetypes'][0]['typeId']      = 0;
     $data['filters']['mimetypes'][0]['typeName']    = xarML('All');
@@ -59,11 +49,11 @@ function uploads_init()
     $data['filters']['status'][0]['statusId']       = 0;
     $data['filters']['status'][0]['statusName']     = xarML('All');
     $data['filters']['status'][_UPLOADS_STATUS_SUBMITTED]['statusId']    = _UPLOADS_STATUS_SUBMITTED;
-    $data['filters']['status'][_UPLOADS_STATUS_SUBMITTED]['statusName']  = 'Submitted';
+    $data['filters']['status'][_UPLOADS_STATUS_SUBMITTED]['statusName']  = xarML('Submitted');
     $data['filters']['status'][_UPLOADS_STATUS_APPROVED]['statusId']     = _UPLOADS_STATUS_APPROVED;
-    $data['filters']['status'][_UPLOADS_STATUS_APPROVED]['statusName']   = 'Approved';
+    $data['filters']['status'][_UPLOADS_STATUS_APPROVED]['statusName']   = xarML('Approved');
     $data['filters']['status'][_UPLOADS_STATUS_REJECTED]['statusId']     = _UPLOADS_STATUS_REJECTED;
-    $data['filters']['status'][_UPLOADS_STATUS_REJECTED]['statusName']   = 'Rejected';
+    $data['filters']['status'][_UPLOADS_STATUS_REJECTED]['statusName']   = xarML('Rejected');
     $filter['fileType']     = '%';
     $filter['fileStatus']   = '';
 
@@ -101,7 +91,7 @@ function uploads_init()
     );
 
 
-    // Create the Table - the function will return the SQL is successful or
+    // Create the Table - the function will return the SQL if it is successful or
     // raise an exception if it fails, in this case $sql is empty
     $query   =  xarDBCreateTable($file_entry_table, $file_entry_fields);
     $result  =& $dbconn->Execute($query);
@@ -112,8 +102,6 @@ function uploads_init()
         'xar_fileData'     => array('type'=>'blob','size'=>'medium','null'=>FALSE)
     );
 
-    // Create the Table - the function will return the SQL is successful or
-    // raise an exception if it fails, in this case $sql is empty
     $query  =  xarDBCreateTable($file_data_table, $file_data_fields);
     $result =& $dbconn->Execute($query);
 
@@ -124,9 +112,6 @@ function uploads_init()
         'xar_objectid'       => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE, 'default'=>'0'),
     );
 
-
-    // Create the Table - the function will return the SQL is successful or
-    // raise an exception if it fails, in this case $sql is empty
     $query   =  xarDBCreateTable($file_assoc_table, $file_assoc_fields);
     $result  =& $dbconn->Execute($query);
 

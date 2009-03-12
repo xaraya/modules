@@ -24,13 +24,13 @@
     </td>
     <td>
       <xar:foreach in="$methods" key="$method" value="$checked">
-        <label for="#$id#_methods_#$method#">#$method#</label>
         <xar:if condition="!empty($checked)">
           <input type="checkbox" name="#$name#[methods][#$method#]" id="#$id#_methods_#$method#" value="1" tabindex="#$tabindex#" checked="checked" />
         <xar:else/>
           <input type="checkbox" name="#$name#[methods][#$method#]" id="#$id#_methods_#$method#" value="1" tabindex="#$tabindex#" />
         </xar:if>
-        <br/>
+        <label for="#$id#_methods_#$method#">#$method#</label>
+        &#160;&#160;&#160;
       </xar:foreach>
     </td>
   </tr>
@@ -62,6 +62,12 @@
         Note : {user} will be replaced by the current user importing the file
         - e.g. var/imports/{user} -&gt; var/imports/myusername_123
       </xar:mlstring>
+      <br/>
+      <span class="xar-sub">
+      <xar:mlstring>
+        Avoid trailing and leading slashes in directory names.
+      </xar:mlstring>
+      </span>
     </td>
   </tr>
   <tr>
@@ -70,6 +76,12 @@
     </td>
     <td>
       <input type="text" name="#$name#[other]" id="#$id#_other" value="#$other#" size="#$size#" tabindex="#$tabindex#" />
+            <br/>
+      <span class="xar-sub">
+      <xar:mlstring>
+        If set, this rule overwrites all settings above.
+      </xar:mlstring>
+      </span>
     </td>
   </tr>
 </table>

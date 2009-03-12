@@ -1,9 +1,9 @@
 <?php
 /**
- * Purpose of File
+ * Backend for Upload property
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -29,10 +29,11 @@ class Dynamic_Upload_Property extends Dynamic_Property
     var $size = 40;
     var $maxsize = 1000000;
     var $multiple = TRUE;
-    var $methods = array('trusted'  => false,
-                         'external' => false,
-                         'upload'   => false,
-                         'stored'   => false);
+    var $methods = array('upload'   => false
+                        ,'stored'   => false
+                        ,'trusted'  => false
+                        ,'external' => false
+    );
     var $basedir = null;
     var $importdir = null;
     var $style = '';
@@ -334,6 +335,7 @@ class Dynamic_Upload_Property extends Dynamic_Property
         $data['basedir'] = $this->basedir;
         $data['importdir'] = $this->importdir;
         // MichelV: This will remove the options put forward (like type of file to allow) Is this correct?
+        // Hb: Propably not, but it isn't used in showinput and validatevalue anyway
         $data['other'] = '';
 
         // allow template override by child classes

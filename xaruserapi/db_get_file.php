@@ -1,9 +1,9 @@
 <?php
 /**
- * Purpose of File
+ * Get information on files
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -173,6 +173,7 @@ function uploads_userapi_db_get_file( $args )
                    xar_mime_type,
                    xar_extrainfo
               FROM $fileEntry_table ";
+
     // Put the category id to work
     if (!empty($catid) && xarModIsAvailable('categories') && xarModIsHooked('categories','uploads',1)) {
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from categories
@@ -234,14 +235,14 @@ function uploads_userapi_db_get_file( $args )
             $sql .= ' ORDER BY xar_store_type';
             break;
 
-        case 'id':
-        case 'id_desc':
-            $sql .= ' ORDER BY xar_fileEntry_id DESC';
+        case 'id_asc':
+            $sql .= ' ORDER BY xar_fileEntry_id';
             break;
 
-        case 'id_asc':
-        default:
-            $sql .= ' ORDER BY xar_fileEntry_id';
+        case 'id':
+        case 'id_desc':
+        default:            // newest files first as default
+            $sql .= ' ORDER BY xar_fileEntry_id DESC';
             break;
     }
 

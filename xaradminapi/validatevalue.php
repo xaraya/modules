@@ -1,9 +1,9 @@
 <?php
 /**
- * Purpose of File
+ * Validate data from Upload input field
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -20,12 +20,12 @@
  * @param  $args ['format'] string format specifying 'fileupload', 'textupload' or 'upload' (future ?)
  * @param  $args ['multiple'] boolean allow multiple uploads or not
  * @param  $args ['maxsize'] integer maximum size for upload files
- * @param  $args ['methods'] array allowed methods 'trusted', 'external', 'stored' and/or 'upload'
+ * @param  $args ['methods'] array allowed methods 'upload', 'stored', 'trusted', and/or 'external'
  * @param  $args ['override'] array optional override values for import/upload path/obfuscate (cfr. process_files)
  * @param  $args ['moduleid'] integer optional module id for keeping file associations
  * @param  $args ['itemtype'] integer optional item type for keeping file associations
  * @param  $args ['itemid'] integer optional item id for keeping file associations
- * @return array
+ *
  * @return array of (result, value) with result true, false or NULL (= error)
  */
 function uploads_adminapi_validatevalue($args)

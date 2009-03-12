@@ -1,9 +1,9 @@
 <?php
 /**
- * Purpose of File
+ * Upload input field
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -17,7 +17,7 @@
  * @param  $args ['value'] string the current value(s)
  * @param  $args ['format'] string format specifying 'fileupload', 'textupload' or 'upload' (future ?)
  * @param  $args ['multiple'] boolean allow multiple uploads or not
- * @param  $args ['methods'] array of allowed methods 'trusted', 'external', 'stored' and/or 'upload'
+ * @param  $args ['methods'] array of allowed methods 'upload', 'stored', 'trusted', and/or 'external'
  * @param  $args ['override'] array optional override values for import/upload path/obfuscate (cfr. process_files)
  * @param  $args ['invalid'] string invalid error message
  * @return string
