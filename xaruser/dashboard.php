@@ -33,24 +33,26 @@ function dossier_user_dashboard($args)
     
     // get list of all events:
     // * julian    
-    if(xarModAPILoad('julian', 'user')) {
-    
-        $julian_dates = xarModAPIFunc('julian', 'user', 'getall', array('startdate' => $displaymonth."-01"));
-        if(!$julian_dates) $julian_dates = array();
+    if(xarModIsAvailable('julian')) {
+        if(xarModAPILoad('julian', 'user')) {
         
-    //    echo "<pre>";
-    //    print_r($julian_dates);
-    //    echo "</pre>";
-    //    die();
-        
-        foreach($julian_dates as $julianeventlist) {
-            foreach($julianeventlist as $eventinfo) {
-                list($month,$day,$year) = explode("-",$eventinfo['startdate']);
-                $eventlist[$year][$month][$day] = $eventinfo['summary'];
+            $julian_dates = xarModAPIFunc('julian', 'user', 'getall', array('startdate' => $displaymonth."-01"));
+            if(!$julian_dates) $julian_dates = array();
+            
+        //    echo "<pre>";
+        //    print_r($julian_dates);
+        //    echo "</pre>";
+        //    die();
+            
+            foreach($julian_dates as $julianeventlist) {
+                foreach($julianeventlist as $eventinfo) {
+                    list($month,$day,$year) = explode("-",$eventinfo['startdate']);
+                    $eventlist[$year][$month][$day] = $eventinfo['summary'];
+                }
             }
         }
     }
-        
+            
     $ownerid = xarSessionGetVar('uid');
     $reminder_dates = xarModAPIFunc('dossier', 'reminders', 'getall', array('ownerid' => $ownerid));
     if(!$reminder_dates) $reminder_dates = array();

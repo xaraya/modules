@@ -16,6 +16,9 @@ function dossier_logsapi_countitems($args)
     $sql = "SELECT COUNT(1)
             FROM $logstable";
     $whereclause = array();
+    if(!empty($contactid)) {
+        $whereclause[] = "contactid = '".$contactid."'";
+    }
     if(!empty($ownerid)) {
         $whereclause[] = "ownerid = '".$ownerid."'";
     }
@@ -35,6 +38,7 @@ function dossier_logsapi_countitems($args)
     if(count($whereclause) > 0) {
         $sql .= " WHERE ".implode(" AND ", $whereclause);
     }
+    
     $result = $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {

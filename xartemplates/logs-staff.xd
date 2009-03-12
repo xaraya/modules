@@ -1,5 +1,4 @@
-<xar:set name="log_objectid">xarModGetVar('dossier','log_objectid')</xar:set>
-<xar:data-getitem name="$logproperties" module="dossier" itemtype="4" itemid="$log_objectid" />
+<xar:data-getitem name="$logproperties" module="dossier" itemtype="4" itemid="0" />
 
 <xar:style scope="module" module="dossier" file="default" />
 

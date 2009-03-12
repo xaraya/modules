@@ -1,0 +1,82 @@
+<object name="dossier_relationships">
+  <objectid>121</objectid>
+  <label>Contact Relationships</label>
+  <moduleid>829</moduleid>
+  <itemtype>6</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="relationshipid">
+      <id>1196</id>
+      <label>relationshipid</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_dossier_relationships.relationshipid</source>
+      <status>3</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="contactid">
+      <id>1197</id>
+      <label>Contact</label>
+      <type>dossiercontactlist</type>
+      <default></default>
+      <source>xar_dossier_relationships.contactid</source>
+      <status>2</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+    <property name="connectedid">
+      <id>1198</id>
+      <label>Relationship To</label>
+      <type>dossiercontactlist</type>
+      <default></default>
+      <source>xar_dossier_relationships.connectedid</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="relationship">
+      <id>1199</id>
+      <label>Relationship</label>
+      <type>textbox</type>
+      <default></default>
+      <source>xar_dossier_relationships.relationship</source>
+      <status>1</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="dateadded">
+      <id>1200</id>
+      <label>Date Added</label>
+      <type>calendar</type>
+      <default></default>
+      <source>xar_dossier_relationships.dateadded</source>
+      <status>2</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="private">
+      <id>1201</id>
+      <label>Private</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>xar_dossier_relationships.private</source>
+      <status>1</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="notes">
+      <id>1202</id>
+      <label>Notes</label>
+      <type>textarea_small</type>
+      <default></default>
+      <source>xar_dossier_relationships.notes</source>
+      <status>1</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

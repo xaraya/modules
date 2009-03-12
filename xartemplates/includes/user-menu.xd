@@ -15,7 +15,7 @@
 			<xar:mlstring>Actions:</xar:mlstring>
 		</dt>
         
-        <xar:if condition="xarModIsHooked('dossier', 'roles')">
+        <xar:if condition="xarModIsHooked('dossier', 'roles') and xarUserIsLoggedIn()">
     		<xar:sec id="menu_view" mask="PublicDossierAccess" catch="false">
     			<dd class="">
     				<a href="#xarModURL('roles','user','account',array('moduleload' =&gt; 'dossier'))#">

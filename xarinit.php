@@ -422,6 +422,13 @@ function dossier_init()
     	if (empty($reminders_objectinfo)) return;
     }
     
+    $relationships_objectinfo = xarModAPIFunc('dynamicdata','user','getobject',array('moduleid' => $moduleid, 'itemtype' => 6));
+    if($relationships_objectinfo->objectid == false) {
+    	$relationships_objectinfo = xarModAPIFunc('dynamicdata','util','import',
+                                    array('file' => 'modules/dossier/xardata/relationships.xml'));
+    	if (empty($relationships_objectinfo)) return;
+    }
+    
     $usersettings = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => 'modules/dossier/xardata/usersettings.xml'));
     if (empty($usersettings)) return;
@@ -925,6 +932,14 @@ function dossier_upgrade($oldversion)
             if (!$result) return;
             
         case '1.4.0':
+    
+            $relationships_objectinfo = xarModAPIFunc('dynamicdata','user','getobject',array('moduleid' => $moduleid, 'itemtype' => 6));
+            if($relationships_objectinfo->objectid == false) {
+            	$relationships_objectinfo = xarModAPIFunc('dynamicdata','util','import',
+                                            array('file' => 'modules/dossier/xardata/relationships.xml'));
+            	if (empty($relationships_objectinfo)) return;
+            }
+            
             break;
     }
 

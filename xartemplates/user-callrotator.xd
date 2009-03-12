@@ -61,7 +61,7 @@
 					<xar:foreach in="$stafflist" value="$staffinfo">
 						<xar:comment>Need to also get total number of calls today for each</xar:comment>
 						<xar:set name="ttlcalls">xarModAPIFunc('dossier','logs','countitems',
-																array('agentuid' => $staffinfo['uid'],
+																array('ownerid' => $staffinfo['uid'],
 																	'mindate' => date("Y-m-d H:i:s", strtotime("yesterday"))
 																	))</xar:set>
 						<xar:set name="agentuid">xarUserGetVar('uid')</xar:set>

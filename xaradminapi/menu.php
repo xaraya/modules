@@ -20,15 +20,15 @@ function dossier_adminapi_menu()
     
     xarModAPIFunc('base','javascript','modulefile',
                   array('module' => 'jquery',
-                        'filename' => 'jquery.js'));
-    
-    xarModAPIFunc('base','javascript','modulefile',
-                  array('module' => 'jquery',
                         'filename' => 'jquery.pack.js'));
     
     xarModAPIFunc('base','javascript','modulefile',
                   array('module' => 'jquery',
                         'filename' => 'jquery.compat-1.1.js'));
+    
+    xarModAPIFunc('base','javascript','modulefile',
+                  array('module' => 'jquery',
+                        'filename' => 'thickbox-compressed.js'));
     
     xarModAPIFunc('base','javascript','modulefile',
                   array('module' => 'dossier',

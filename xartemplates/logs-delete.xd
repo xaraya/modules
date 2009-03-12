@@ -1,8 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<xar:set name="contacts_objectid">xarModGetVar('dossier','contacts_objectid')</xar:set>
-<xar:data-getitem name="$properties" module="dossier" itemtype="1" itemid="$contacts_objectid" />
-<xar:set name="log_objectid">xarModGetVar('dossier','log_objectid')</xar:set>
-<xar:data-getitem name="$logproperties" module="dossier" itemtype="4" itemid="$log_objectid" />
+<xar:data-getitem name="$properties" module="dossier" itemtype="1" itemid="0" />
+<xar:data-getitem name="$logproperties" module="dossier" itemtype="4" itemid="0" />
 
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Delete Log Record</xar:mlstring></span></div>
 <div class="xar-mod-body">
