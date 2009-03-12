@@ -1,6 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
-
 <xar:if condition="$useantibot and (xarModGetVar('formcaptcha','usecaptcha') eq true)">
    <script type="text/javascript">
     <!--
@@ -20,7 +19,6 @@
     //-->
     </script>
 </xar:if>
-
 <xar:if condition="empty($customtitle)">
     <xar:set name="contacttitle"><xar:mlstring>Contact Form</xar:mlstring></xar:set>
 <xar:else />
@@ -31,7 +29,6 @@
             <xar:var name="$contacttitle" />
     </span>
 </div>
-
 <div class="xar-mod-body">
     <xar:if id="title_condition" condition="!empty($message)">
         <p style="text-align: center; padding:20px;">
@@ -43,7 +40,7 @@
         </p>
 
         <form name="contactform" action="#xarModURL('sitecontact','user','respond')#" method="post" enctype="multipart/form-data" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
-
+            <fieldset>
             <legend>#$contacttitle#</legend>
             <div class="xar-form-input-wrapper">
                 <label for="username" class="xar-form-label" title="#xarML('Enter your name')#">
@@ -206,16 +203,18 @@
              </xar:if>
         </xar:comment>
        <xar:comment>End captcha support code</xar:comment>
-
-       <div class="xar-form-input-wrapper-after xar-padding-thicktop">
-            <input type="hidden" name="userreferer" value="#$userreferer#" />
-            <input type="hidden" name="authid" id="authid" value="#$authid#" />
-            <input type="hidden" name="scid" id="scid" value="#$scid#" />
-            <input type="hidden" name="savedata" id="savedata" value="#$savedata#" />
-            <input type="hidden" name="permissioncheck" id="permissioncheck" value="#$permissioncheck#" />
-            <input type="hidden" name="message" id="message" value="1" />
-            <input type="submit" value="#xarML('Submit')#" />
-       </div>
+        </fieldset>
+        <fieldset>
+            <div class="xar-form-input-wrapper-after xar-padding-thicktop">
+                <input type="hidden" name="userreferer" value="#$userreferer#" />
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="scid" id="scid" value="#$scid#" />
+                <input type="hidden" name="savedata" id="savedata" value="#$savedata#" />
+                <input type="hidden" name="permissioncheck" id="permissioncheck" value="#$permissioncheck#" />
+                <input type="hidden" name="message" id="message" value="1" />
+                <input type="submit" value="#xarML('Submit')#" />
+            </div>
+       </fieldset>
     </form>
 </xar:if>
 </div>
