@@ -106,14 +106,17 @@ function example_init()
     */
 
     /* If Categories API loaded and available, generate proprietary
-     * module master category if (cid) and child category ids (subcids)
+     * module master category if (cid) and child category ids (subcids).
+     * The creation of new categorys on module install is shown for
+     * demonstration only. Your module will probably rely on the existing
+     * categories in the system
      */
     if (xarModIsAvailable('categories')) {
         $examplecid = xarModAPIFunc('categories',
             'admin',
             'create',
             Array('name' => 'examples',
-                'description' => 'Example Categories',
+                'description' => xarML('Example Categories'),
                 'parent_id' => 0));
         /* Store the generated master category id and the number of possible categories
          * Note: you can have more than 1 mastercid (cfr. articles module)
@@ -122,11 +125,10 @@ function example_init()
         xarModSetVar('example', 'mastercids', $examplecid);
         $examplecategories = array();
         $examplecategories[] = array('name' => "one",
-            'description' => "description one");
+                                     'description' => xarML('description one')
+        );
         $examplecategories[] = array('name' => "two",
-            'description' => "description two");
-        $examplecategories[] = array('name' => "three",
-            'description' => "description three");
+                                     'description' => "description two");
         foreach($examplecategories as $subcat) {
             $examplesubcid = xarModAPIFunc('categories',
                 'admin',

@@ -3,7 +3,7 @@
  * Add new item
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,10 +12,11 @@
  * @author Example Module Development Team
  */
 /**
- * Add new item
+ * Add new example item
  *
- * This is a standard function that is called whenever an administrator
- * wishes to create a new module item
+ * This is a standard function that is called whenever an user
+ * wishes to create a new module item. The user needs at least
+ * Add privileges in this example.
  *
  * @author Example module development team
  * @return array
@@ -35,21 +36,23 @@ function example_admin_new($args)
      * the checking of the input variables as well as setting default
      * values if needed. Getting vars from other places such as the
      * environment is not allowed, as that makes assumptions that will
-     * not hold in future versions of Xaraya
+     * not hold in future versions of Xaraya.
+     * For E_ALL purposes the vars need to be set at least empty.
      */
-    if (!xarVarFetch('number',  'int:1:', $number,  $number,  XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('name',    'str:1:', $name,    $name,    XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid', 'array',  $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
-    /* Initialise the $data variable that will hold the data to be used in
-     * the blocklayout template, and get the common menu configuration - it
-     * helps if all of the module pages have a standard menu at the top to
-     * support easy navigation
-     */
-    $data = xarModAPIFunc('example', 'admin', 'menu');
+    if (!xarVarFetch('number',  'int:1:', $number,  '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('name',    'str:1:', $name,    '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid', 'array',  $invalid, '', XARVAR_NOT_REQUIRED)) return;
+
     /* Security check - important to do this as early as possible to avoid
      * potential security holes or just too much wasted processing
      */
     if (!xarSecurityCheck('AddExample')) return;
+
+    /* The array '$data' will hold all data used in the Blocklayout template
+     */
+    $data = array();
+    $data['name'] = $name;
+    $data['number'] = $number;
 
     /* Generate a one-time authorisation code for this operation */
     $data['authid'] = xarSecGenAuthKey();
@@ -68,20 +71,7 @@ function example_admin_new($args)
         $data['hookoutput'] = $hooks;
     }
     $data['hooks'] = '';
-    /* For E_ALL purposes, we need to check to make sure the vars are set.
-     * If they are not set, then we need to set them empty to surpress errors
-     */
-    if (empty($name)) {
-        $data['name'] = '';
-    } else {
-        $data['name'] = $name;
-    }
 
-    if (empty($number)) {
-        $data['number'] = '';
-    } else {
-        $data['number'] = $number;
-    }
     /* Return the template variables defined in this function */
     return $data;
 }

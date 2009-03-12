@@ -3,7 +3,7 @@
  * Modify module's configuration
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -24,15 +24,10 @@
 function example_admin_modifyconfig()
 { 
     /* Initialise the $data variable that will hold the data to be used in
-     * the blocklayout template, and get the common menu configuration - it
-     * helps if all of the module pages have a standard menu at the top to
-     * support easy navigation
+     * the blocklayout template.
      */
     $data = array();
 
-    /* common menu configuration */
-    $data = xarModAPIFunc('example', 'admin', 'menu');
-    
     /* Security check - important to do this as early as possible to avoid
      * potential security holes or just too much wasted processing
      */
@@ -57,17 +52,20 @@ function example_admin_modifyconfig()
     $data['useAliasName'] = xarModGetVar('example', 'useModuleAlias');
     $data['aliasname ']= xarModGetVar('example','aliasname');
 
+    $hooks = array();
     $hooks = xarModCallHooks('module', 'modifyconfig', 'example',
                        array('module' => 'example'));
+    /* You can use the output from individual hooks in your template too, e.g. with
+     * $hooks['categories'], $hooks['dynamicdata'], $hooks['keywords'] etc.
+     */
+    $data['hooks'] = $hooks;
+
+    /* The following hint is only recommended for Modify Config pages to remind
+     * the Admin that some functionallity can be added. For content delivering
+     * pages an empty array is sufficient.
+     */
     if (empty($hooks)) {
         $data['hooks'] = array('categories' => xarML('You can assign base categories by enabling the categories hooks for example module'));
-    } else {
-        $data['hooks'] = $hooks;
-    
-         /* You can use the output from individual hooks in your template too, e.g. with
-         * $hooks['categories'], $hooks['dynamicdata'], $hooks['keywords'] etc.
-         */
-        $data['hookoutput'] = $hooks;
     }
 
     /* Return the template variables defined in this function */

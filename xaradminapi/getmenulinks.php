@@ -14,7 +14,7 @@
 
 /**
  * Pass individual menu items to the admin  menu
- * This function may be called for in-page admin menu items too
+ * This function delivers the in-page admin menu items too
  *
  * @author the Example module development team
  * @return array containing the menulinks for the main and the in-page admin menus.
@@ -40,14 +40,11 @@ function example_adminapi_getmenulinks()
      *    so that it is still accessible without having to switch the overviews back on in Adminpanels
      */
 
-    /* We must return at least an empty array for minimizing checks in the
-     * templates and to avoid an ugly E_ALL error.
+    /* We must return at least an empty array for minimizing checks in the templates
+     * and to avoid an ugly E_ALL error. This function is typically called twice
+     * during a page request. So we check  if we have already the result.
      */
     static $menulinks = array();
-
-    /* This function is typically called twice during a page request. So we check 
-     * if we have already the result.
-     */
     if (isset($menulinks[0])) {
         return $menulinks;
     }
@@ -66,9 +63,13 @@ function example_adminapi_getmenulinks()
         $menulinks[] = array('url' => xarModURL('example','admin','view'),
             'title' => xarML('View example item, with options to modify and delete them.'),
             'label' => xarML('Manage Items'),
-            'active' => array('view'));
+            /* The view page is in this example the default view for the type 'admin'.
+             * We need it highlighted on 'main' and on 'view'. */
+            'active' => array('view', 'main')
+        );
     }
-    /* Security Check against a more powerful mask */
+    /* Security Check against a more powerful mask
+     */
     if (xarSecurityCheck('AddExample', 0)) {
         $menulinks[] = array('url' => xarModURL('example','admin','new'),
             /* In order to display the tool tips and label in any language,
@@ -76,25 +77,26 @@ function example_adminapi_getmenulinks()
              */
             'title'  => xarML('Adds a new item to system.'),
             'label'  => xarML('Add Item'),
-            'active' => array('new'));
+            'active' => array('new')
+        );
     }
-    /* Security Check against the mask with the most powerful privilege level */
+    /* Security Check against the mask with the most powerful privilege level.
+     * Two menuitems need only one security check here
+     */
     if (xarSecurityCheck('AdminExample', 0)) {
         $menulinks[] = array('url' => xarModURL('example','admin','modifyconfig'),
-            'title' => xarML('Modify the configuration for the module'),
-            'label' => xarML('Modify Config'),
-            'active' => array('modifyconfig'));
-        /* Two menuitems use only one security check here */
+            'title'  => xarML('Modify the configuration for the module'),
+            'label'  => xarML('Modify Config'),
+            'active' => array('modifyconfig')
+        );
         $menulinks[] = array('url' => xarModURL('example','admin','overview'),
-            'title' => xarML('Modify the configuration for the module'),
-            'label' => xarML('Overview'),
-            /* The overview page is mostly the default view for the admin type.
-             * We need it highlighted on 'main' and on 'overview'. */
-            'active' => array('main', 'overview'));
+            'title'  => xarML('Introduction on handling this module'),
+            'label'  => xarML('Overview'),
+            'active' => array('overview')
+        );
     }
 
-    /* The final thing that we need to do in this function is return the values back
-     * to the main menu for display.
+    /* Finally we return the values back to caller for display.
      */
     return $menulinks;
 }

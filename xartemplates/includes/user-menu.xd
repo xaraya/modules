@@ -2,8 +2,6 @@
 <xar:comment>In-Page Common menu</xar:comment>
 <xar:comment>
   Please see full explanation and a ajaxified sample at ./admin-menu.xd.
-  The variables used in this menu come from example_userapi_menu().
-  A menu title is seldomly used
 </xar:comment>
 
 <xar:style scope="module" module="base" file="navtabs" />
@@ -12,12 +10,11 @@
 
 <xar:if condition="xarModGetVar('themes','adminpagemenu')">
   <div>
-    <strong class="xar-margin-thickright">#$menutitle#</strong>
     <dl class="xar-tabs">
       <dt class="help" title="#xarML('Choose an action to perform')#">
         <xar:mlstring>Actions:</xar:mlstring>
       </dt>
-      <xar:loop name="$menuitems">
+      <xar:loop name="xarModAPIFunc($request.0, 'user', 'getmenulinks')">
         <xar:if condition="isset($loop:item['active'])">
           <xar:set name="tabclass">
             in_array($activetab, $loop->item['active'])?'active':''

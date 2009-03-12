@@ -2,7 +2,7 @@
  * Example Standard Style Sheet
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -16,8 +16,27 @@
  * This is the file to place your module specific CSS in...
  *
  * You call this file by adding the tag <xar:style scope="module" />
- * to your templates. This tag implies that this style sheet is called style.css
- * You can extend the tag with <xar:style scope="module" file="name" />. That will add the file 'name.css' to your template.
+ * to your templates. This implies that this style sheet is called 'style.css'
+ *
+ * You can extend the tag with a file name to <xar:style scope="module" file="form" />.
+ * That will add the file 'form.css' to your template.
+ *
+ * For calling styles from other modules you have to add the module parameter.
+ * Frequently used is <xar:style scope="module" module="base" file="navtabs" />
+ * to deliver the CSS for a horizontal navigation bar.
+ *
+ * All forementioned tags create link tags to the CSS files. The @import "..." method
+ * can be achieved with <xar:style method="import" file="exampleimport" />
+ *
+ * Tags for both methods can be extended with a 'media' parameter which
+ * will be added according to CSS rules.
+ * 
+ * For file specific CSS a third 'embed' method can deliver 'CSS source code' like
+ * <xar:style method="embed" source=".xar-pager {float:left;}" />.
+ *
+ * The <additional-styles /> tag is used by the Themes module to output all
+ * values collected with the <xar:style /> tags. Naturally it is placed in
+ * the head section of <current_theme>/pages/default.xt
  *
  * @author Example Module development team
  */

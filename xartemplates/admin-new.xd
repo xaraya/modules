@@ -1,40 +1,30 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-
 <xar:comment>
-    This tag will add the module specific style sheet to this template (empty for the moment)
-    This file is located in /xarstyles and is -as a standard- called styles.css
-    You can add other files by adding files="filename without extension" to the tag eg
-    <xar:style scope="module" file="forms" /> for forms.css in example/xarstyles
+
+  See example/xartemplates/admin-modify.xd for full comments on forms in templates
+
 </xar:comment>
+
 <xar:style scope="module" />
 
-<!-- common admin menu for this module - remove link to the current function -->
-<!-- the variables used in this menu come from example_admin_menu() -->
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
+<script type="text/javascript">
+  var alertMsg = "#xarML('Please complete the following fields:')#";
+  var fieldRequired = Array("name", "number");
+  var fieldDescription = Array("#xarML('Name')#", "#xarML('Number')#");
+</script>
+
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span>
 </div>
 <div id="notsogoodbutok" class="xar-mod-body">
- <xar:template type="module" file="admin-menu" />
+  <xar:template type="module" file="admin-menu" />
 
     <!-- the specific template for the current admin function comes here -->
 
-    <!--
-        // Start form - note we do not use xarModURL() to create the recipient URL of
-        // this form. Instead we use the entity tag equivalent. All URLs should be generated through the entity equivalent of xarModURL() to ensure
-        // compatibility with future versions of Xaraya
-    -->
-        <div id="example_edit_or_add">
-            <!-- This Javascript will check for required fields before the form is submitted. -->
-            <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
-            <script type="text/javascript">
-            <!--
-                // Enter name of mandatory fields
-                var fieldRequired = Array("name", "number");
-                // Enter field description to appear in the dialog box
-                var fieldDescription = Array("Name", "Number");
-            // -->
-            </script>
-    <form  method="post" action="&xar-modurl-example-admin-create;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+  <div id="example_edit_or_add">
+    <form method="post" action="&xar-modurl-example-admin-create;"
+          onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription, alertMsg);">
         <fieldset>
             <legend><xar:mlstring>Creating a new item</xar:mlstring></legend>
 
@@ -79,26 +69,12 @@
          <fieldset>
             <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
                 <xar:foreach in="$hookoutput" key="$hookmodule">
-              <!--
-                You can display individual hooks if you want using xar:if statements
-
-                <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
-                    #$hookoutput['categories']#
-                </xar:if>
-
-                or display them all with one command as follows
-                -->
                 #$hookoutput[$hookmodule]#
                 </xar:foreach>
         </fieldset>
         </xar:if>
         <fieldset>
             <div class="xar-form-input-wrapper-after">
-        <!--
-            // Add an authorisation ID - this adds a hidden field in the form that
-            // contains an authorisation ID. The authorisation ID is very important in
-            // preventing certain attacks on the website
-        -->
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="submit" value="#xarML('Add Example Item')#" />
             </div>

@@ -1,16 +1,24 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<!-- This Javascript will check for required fields before the form is submitted. -->
+<xar:comment>
+  This tag will add the module specific style sheet to this template (empty for the moment)
+  This file is located in /xarstyles and is -as a standard- called styles.css
+  You can add other files by adding files="filename without extension" to the tag eg
+  <xar:style scope="module" file="forms" /> for forms.css in example/xarstyles
+</xar:comment>
 
+<!--
+  This Javascript will check for required fields before the form is submitted.
+  It also allows the form to get submitted only once. You need to list the HTML
+  IDs of the required fields.
+-->
 <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
 <script type="text/javascript">
-<!--
-    // Enter name of mandatory fields
-    var fieldRequired = Array("name", "number");
-    // Enter field description to appear in the dialog box
-    var fieldDescription = Array("Name", "Number");
-//-->
+  var alertMsg = "#xarML('Please complete the following fields:')#";
+  var fieldRequired = Array("name", "nridforexamplepurpose");
+  var fieldDescription = Array("#xarML('Name')#", "#xarML('Number')");
 </script>
+
 <!-- the variables used in this menu come from example_admin_menu() -->
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span>
@@ -32,7 +40,8 @@
         // compatibility with future versions of Xaraya
     -->
         <div id = "example_edit_or_add">
-    <form method="post" action="&xar-modurl-example-admin-update;" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+    <form method="post" action="&xar-modurl-example-admin-update;"
+          onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription, alertMsg);">
         <fieldset>
             <legend>
                 <xar:mlstring>Item to Modify</xar:mlstring>
@@ -57,13 +66,14 @@
 
 
             <div class="xar-form-input-wrapper">
-                <label for="number" class="xar-form-label" title="#xarML('This is the tool tip help for this item.')#">
+                <label for="nridforexamplepurpose" class="xar-form-label"
+                       title="#xarML('This is the tool tip help for this item.')#">
                        <xar:mlstring>Example Number:</xar:mlstring>
                 </label>
                 <xar:if condition="isset($number)">
-                    <input type="text" name="number" id="number" value="#$number#" maxlength="5" class="xar-form-textshort" />
+                    <input type="text" name="number" id="nridforexamplepurpose" value="#$number#" maxlength="5" class="xar-form-textshort" />
                 <xar:else />
-                    <input type="text" name="number" id="number" value="#$item.number#" maxlength="5" class="xar-form-textshort" />
+                    <input type="text" name="number" id="nridforexamplepurpose" value="#$item.number#" maxlength="5" class="xar-form-textshort" />
                 </xar:if>
                 <xar:if condition="!empty($invalid['number'])">
                     <p class="xar-error">

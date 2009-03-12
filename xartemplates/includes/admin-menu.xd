@@ -48,17 +48,12 @@
     </dt>
 
     <xar:comment>
-      The following loop dynamically constructs the in-page menu. Modifying
-      example/xaradminapi/getmenulinks.php has the same effects on main admin
-      and in-page admin menus.
-      The menu data in the blocklayout variable $menuitems is only available if
-      xarModAPIFunc('example','admin','menu') was called in code. You can replace
-      "$menuitems" with "xarModAPIFunc('example','admin','menu')".
+      The following loop dynamically constructs the in-page menu. Changes to
+      example/xaradminapi/getmenulinks.php have the same effect on main admin
+      menu block and in-page admin menus.
+      The 'active' array is optional and may contain more than one item.
     </xar:comment>
-    <xar:loop name="$menuitems">
-      <xar:comment>
-        The 'active' array is optional and may contain more than one item.
-      </xar:comment>
+    <xar:loop name="xarModAPIFunc($request.0, 'admin', 'getmenulinks')">
       <xar:if condition="isset($loop:item['active'])">
         <xar:set name="tabclass">
           in_array($activetab, $loop->item['active'])?'active':''
@@ -72,8 +67,8 @@
     </xar:loop>
 
     <xar:comment>
-      The following static menu example constructs the in-page menu completely in
-      templates. This allows the site admin to override the coded structure.
+      The following constructs a static menu completely in this template.
+      This allows the site admin to override the coded structure.
     </xar:comment>
     <xar:comment>
     <!-- The minimal privilege needed for the manage items screen is viewing items -->

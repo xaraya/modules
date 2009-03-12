@@ -3,7 +3,7 @@
  * View a list of items
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -37,11 +37,9 @@ function example_user_view()
      */
 
     /* Initialise the $data variable that will hold the data to be used in
-     * the blocklayout template, and get the common menu configuration - it
-     * helps if all of the module pages have a standard menu at the top to
-     * support easy navigation
+     * the blocklayout template.
      */
-    $data = xarModAPIFunc('example', 'user', 'menu');
+    $data = array();
     /* Prepare the variable that will hold some status message if necessary */
     $data['status'] = '';
     /* Prepare the array variable that will hold all items for display */

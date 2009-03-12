@@ -14,8 +14,8 @@
 /**
  * Modify an item
  *
- * This is a standard function that is called whenever an administrator
- * wishes to modify a current module item
+ * This is a standard function that is called whenever an user
+ * wishes to modify an existing module item
  *
  * @author Example Module Development Team
  * @param array  $args An array containing all the arguments to this function.
@@ -29,29 +29,29 @@
  */
 function example_admin_modify($args)
 {
-    /* Admin functions of this type can be called by other modules. If this
-     * happens then the calling module will be able to pass in arguments to
+    /* Admin functions of this type can be called by other modules.
+     * The calling module can pass arguments to
      * this function through the $args parameter. Hence we extract these
-     * arguments *before* we have obtained any form-based input through
-     * xarVarFetch(), so that parameters passed by the modules can also be
-     * checked by a certain validation.
+     * arguments *before* handling any form-based input. 
+     * So that parameters will also be
+     * checked by the same validation rules in xarVarFetch().
      */
     extract($args);
 
     /* Get parameters from whatever input we need. All arguments to this
      * function should be obtained from xarVarFetch(). xarVarFetch allows
-     * the checking of the input variables as well as setting default
-     * values if needed. Getting vars from other places such as the
+     * to check the input variables as well as setting default
+     * values. Getting vars from other places such as the
      * environment is not allowed, as that makes assumptions that will
      * not hold in future versions of Xaraya
      */
     if (!xarVarFetch('exid',     'id',     $exid)) return;
     if (!xarVarFetch('objectid', 'id',     $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('invalid',  'array', $invalid, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid',  'array',  $invalid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('number',   'int',    $number, $number,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('name',     'str:1:', $name, $name, XARVAR_NOT_REQUIRED)) return;
 
-    /* At this stage we check to see if we have been passed $objectid, the
+    /* At this stage we check if we have been passed $objectid, the
      * generic item identifier. This could have been passed in by a hook or
      * through some other function calling this as part of a larger module, but
      * if it exists it overrides $exid
@@ -86,16 +86,12 @@ function example_admin_modify($args)
     if (!xarSecurityCheck('EditExample', 1, 'Item', "$item[name]:$item[name]:$exid")) {
         return;
     }
-    /* Get menu variables - it helps if all of the module pages have a standard
-     * menu at their head to aid in navigation. The example may include a
-     * menu for this function, hence the specification of 'modify'
-     */
-    $menu = xarModAPIFunc('example','admin','menu','modify');
 
     /* Call the hooks
      * This example module doesn't use itemtypes
      * We will therefor pass NULL as an itemtype. When you define itemtypes,
-     * you should pass it to the call for the hooks here
+     * you must pass it to the call for the hooks here
+     * See more on hooks at http://www.xaraya.com/documentation/rfcs/rfc0042.html
      */
     $item['module'] = 'example';
     $item['itemtype'] = NULL;
@@ -104,6 +100,7 @@ function example_admin_modify($args)
     /* Return the template variables defined in this function. The handling
      * shown here is not common. Please see delete.php for the usual way.
      */
+     // we need the default with $data here in modfiy and this abnormal crap somewhere else
     return array('authid'       => xarSecGenAuthKey(),
                  'name'         => $name,
                  'number'       => $number,

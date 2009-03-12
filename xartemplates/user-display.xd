@@ -56,9 +56,9 @@
         </xar:if>
 
     <!-- add the output from the different display hooks here -->
-    <xar:if condition="!empty($hookoutput)">
-        <xar:foreach in="$hookoutput" key="$hookmodule">
-            #$hookoutput[$hookmodule]#
+    <xar:if condition="!empty($hooks)">
+        <xar:foreach in="$hooks" key="$hookmodule">
+            #$hooks[$hookmodule]#
         </xar:foreach>
     </xar:if>
 

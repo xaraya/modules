@@ -14,25 +14,23 @@
 /**
  * Overview function that displays the standard Overview page
  *
- * This function shows the overview template, currently admin-main.xd.
- * The template contains overview and help texts
- *
  * @author the Example module development team
- * @return array xarTplModule with $data containing template data
- * @since 3 Sept 2005
+ * @return array
  */
 function example_admin_overview()
 {
    /* Security Check */
     if (!xarSecurityCheck('AdminExample',0)) return;
 
-    $data = xarModAPIFunc('example', 'admin', 'menu');
-
-    /* if there is a separate overview function return data to it
-     * else just call the admin-main template that displays the overview
+    /* The overview function doesn't need any data so we can pass an empty array.
+     * 
+     * Formerly these overviews have been in the admin-main.xd templates which is
+     * outdated since March 2009. On localized sites the file
+     * var/locales/xx_XX.utf-8/xml/modules/example/templates/admin-main.xml should
+     * be renamed to admin-overview.xml to preserve the translation.
      */
 
-    return xarTplModule('example', 'admin', 'main', $data,'main');
+    return array();
 }
 
 ?>

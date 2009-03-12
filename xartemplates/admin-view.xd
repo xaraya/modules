@@ -3,7 +3,7 @@
     <span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span>
 </div>
 <div id="notsogoodbutok" class="xar-mod-body">
-    <!-- common admin menu for this module - remove link to the current function -->
+    <!-- common admin menu for this module -->
     <xar:template type="module" file="admin-menu" />
 
       <!--
@@ -28,7 +28,7 @@
                       <xar:mlstring>Example Number</xar:mlstring>
                   </th>
                   <th>
-                      <xar:mlstring>Example Options</xar:mlstring>
+                      <xar:mlstring>Actions</xar:mlstring>
                   </th>
               </tr>
           </thead>
@@ -49,7 +49,7 @@
                      </xar:if>
                      |
                      <xar:if condition="empty($item['deleteurl'])">
-                         <xar:mlstring>Delete</xar:mlstring>
+                         <xar:mlstring>Delete</xar:mlstring> 
                      <xar:else />
                          <a href="#$item.deleteurl#" onclick="return loadContent(this.href,'example_edit_or_add');"><xar:mlstring>Delete</xar:mlstring></a>
                      </xar:if>

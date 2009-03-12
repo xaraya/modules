@@ -3,7 +3,7 @@
  * Encode module parameters for Short URL support
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -54,7 +54,11 @@
  *
  * @author the Example module development team
  * @param  $args the function and arguments passed to xarModURL
- * @return string Path to be added to index.php for a short URL, or empty if failed
+ * @return array 'path' key containing an array with pathparts to be URLencoded
+ *               and added to BaseModURL for a short URL
+ *               'get' key (optional) containing an array with unconsumed 
+ *                GET parameters as key => value pairs
+ * @return string (depraced) Path to be added to BaseModURL for a short URL
  */
 function example_userapi_encode_shorturl($args)
 {
@@ -111,7 +115,8 @@ function example_userapi_encode_shorturl($args)
     // of module.
 
     if ($func == 'main') {
-        // Consume the 'func' parameter only.
+        // Consume the 'func' parameter from the 'get' array. Otherwise it
+        // would be added again in xarModURL() as &func=main
         unset($get['func']);
     } elseif ($func == 'view') {
         $path[] = 'list';

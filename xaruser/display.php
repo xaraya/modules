@@ -3,7 +3,7 @@
  * Display an item
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -58,11 +58,9 @@ function example_user_display($args)
         $exid = $objectid;
     }
     /* Initialise the $data variable that will hold the data to be used in
-     * the blocklayout template, and get the common menu configuration - it
-     * helps if all of the module pages have a standard menu at the top to
-     * support easy navigation
+     * the blocklayout template.
      */
-    $data = xarModAPIFunc('example', 'user', 'menu');
+    $data = array();
     /* Prepare the variable that will hold some status message if necessary */
     $data['status'] = '';
     /* The API function is called. The arguments to the function are passed in
@@ -127,36 +125,21 @@ function example_user_display($args)
      * hooks will show after they have finished their own work. It is normal
      * for that URL to bring the user back to this function
      */
-    $item['returnurl'] = xarModURL('example',
-        'user',
-        'display',
-        array('exid' => $exid));
+    $hooks = array();
+    $item['returnurl'] = xarModURL('example', 'user', 'display',
+                                   array('exid' => $exid)
+    );
     $item['module'] = 'example';
-    $hooks = xarModCallHooks('item',
-        'display',
-        $exid,
-        $item);
-    if (empty($hooks)) {
-        $data['hookoutput'] = '';
-    } else {
-        /* You can use the output from individual hooks in your template too, e.g. with
-         * $hookoutput['comments'], $hookoutput['hitcount'], $hookoutput['ratings'] etc.
-         */
-        $data['hookoutput'] = $hooks;
-    }
+    
+    $hooks = xarModCallHooks('item', 'display', $exid, $item);
+    $data['hooks'] = $hooks;
+
     /* Once again, we are changing the name of the title for better
      * Search engine capability.
      */
     xarTplSetPageTitle(xarVarPrepForDisplay($item['name']));
+
     /* Return the template variables defined in this function */
     return $data;
-    /* Note : instead of using the $data variable, you could also specify
-     * the different template variables directly in your return statement :
-     *
-     * return array('menu' => ...,
-     * 'item' => ...,
-     * 'hookoutput' => ...,
-     * ... => ...);
-     */
 }
 ?>

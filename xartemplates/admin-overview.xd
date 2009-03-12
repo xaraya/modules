@@ -1,4 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="modInfo">xarModGetInfo(xarModGetIDFromName('example'))</xar:set>
 <!-- This is a standard template for the module overview  -->
 <!-- Each module should have an overview page explaining what it does and giving 
      information on the blocks and hooks that it includes or accepts. -->
@@ -57,7 +58,7 @@
     <xar:mlstring>
       In these cases, the Example module provides the hook functionality.
       To activate the hooks go to </xar:mlstring>
-    <a href="&xar-modurl-modules-admin-hooks;&amp;hook=example"><xar:mlstring>Modules - Configure Hooks - Example Module</xar:mlstring></a>.
+    <a href="&xar-modurl-modules-admin-hooks;&amp;hook=example#currenthook"><xar:mlstring>Modules - Configure Hooks - Example Module</xar:mlstring></a>.
     <xar:mlstring> From there click on the checkbox in either Roles or
       the Search module to activate the respective hooks.
     </xar:mlstring>
@@ -82,5 +83,9 @@
     <li><xar:mlstring>Related tutorials and documentation on Example found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/example/" title="#xarML('Related documentation on Example')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
     </li>
   </ul>
+  <p class="xar-sub">
+    <strong>&nbsp;<xar:mlstring>Authentication Module - Overview</xar:mlstring></strong>
+    <br />&nbsp;<xar:mlstring>Version</xar:mlstring>#$modInfo.version#
+  </p>
 </div>
 

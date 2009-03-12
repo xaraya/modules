@@ -1,7 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
-<!-- common admin menu for this module - remove link to the current function -->
-<!-- the variables used in this menu come from example_admin_menu() -->
 <div class="xar-mod-head">
   <span class="xar-mod-title"><xar:mlstring>Example Administration</xar:mlstring></span>
 </div>
@@ -22,7 +20,6 @@
     -->
 
     <form method="post" id="post" action="&xar-modurl-example-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
-
 
     <!-- Use standard xaraya classes for form elements -->
     <fieldset>
@@ -85,10 +82,11 @@
 
     <fieldset>
       <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
-      <xar:if condition="!empty($hooks)">
+      <xar:if condition="!empty($hookoutput)">
         <xar:foreach in="$hooks" key="$hookmodule">
           <!--
-              You can display individual hooks if you want using xar:if statements
+              You can display individual hooks on any position of the page
+              with using xar:if statements
 
               <xar:if condition="($hookmodule eq 'categories') and !empty($hookmodule)">
                 #$hooks['categories']#

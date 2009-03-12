@@ -28,27 +28,28 @@
  */
 function example_admin_main()
 {
-    /* Security check - important to do this as early as possible to avoid
-     * potential security holes or just too much wasted processing. For the
-     * main function we want to check that the user has at least edit privilege
+    /* Security check -  For the
+     * main function we check that the user has at least Edit privilege
      * for some item within this component, or else they won't be able to do
      * anything and so we refuse access altogether. The lowest level of access
      * for administration depends on the particular module, but it is generally
-     * either 'edit' or 'delete'
+     * either 'edit' or 'add'
      */
     if (!xarSecurityCheck('EditExample')) return;
        /* If you want to go directly to some default function, instead of
          * having a separate main function, you can simply call it here, and
-         * use the same template for admin-main.xd as for admin-view.xd
-         * return xarModFunc('example','admin','view');
+         * use the same template for admin-main.xd as for admin-view.xd:
+         * 
+         * $data = xarModFunc('example','admin','view');
+         * return $data;
          */
 
         /* You could specify some other variables to use in the blocklayout template
-         *$data['welcome'] = xarML('Welcome to the administration part of this Example module...');
+         * $data['welcome'] = xarML('Welcome to the administration part of this Example module...');
          * Return the template variables defined in this function
          */
         
-        /* If no main function as such, just return the view page,
+        /* If no main function as such, redirect to the view page,
          * or whatever function seems to be the most fitting for this module.
          */
         xarResponseRedirect(xarModURL('example', 'admin', 'view'));

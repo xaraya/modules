@@ -39,12 +39,12 @@ function example_user_main()
      * having a separate main function, you can simply call it here, and
      * use the same template for user-main.xard as for user-view.xard
      * return xarModFunc('example','user','view');
-     * Initialise the $data variable that will hold the data to be used in
-     * the blocklayout template, and get the common menu configuration - it
-     * helps if all of the module pages have a standard menu at the top to
-     * support easy navigation
      */
-    $data = xarModAPIFunc('example', 'user', 'menu');
+     
+    /* Initialise the $data variable that will hold the data to be used in
+     * the blocklayout template.
+     */
+    $data = array();
 
     /* Specify some other variables used in the blocklayout template */
     $data['welcome'] = xarML('Welcome to this Example module...');
