@@ -9,12 +9,17 @@
     <h4>
     <xar:mlstring>Summary</xar:mlstring>:</h4>
     <p>#$summary#</p>
-    <h4>
-    <xar:mlstring>Download</xar:mlstring>:</h4>
-    <xar:if condition="empty($notes)">
-        <xar:elseif condition="xarModIsHooked('uploads','articles',$pubtypeid) and substr($notes,0,1) eq ';'" />
-        <xar:comment>If you hook the uploads module to articles, then file upload fields will contain a comma-separated list of file ids, and you will need to call an API function to retrieve the file information. For dynamic extra fields, you can use [fieldname]_output directly to access the file information.</xar:comment>
-        <xar:set name="notes_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $notes, 'multiple' => true))</xar:set>
+    <xar:set name="input">array('aid' => $aid, 'mask' => 'ReadArticles')</xar:set>
+    <xar:if condition="xarModAPIFunc('articles', 'user', 'checksecurity', $input)">
+      <h4>
+      <xar:mlstring>Download</xar:mlstring>:</h4>
+      <xar:if condition="empty($notes)">
+        <xar:elseif condition="xarModIsHooked('uploads','articles',$pubtypeid)
+                               and substr($notes,0,1) eq ';'" />
+        <xar:set name="notes_output">
+          xarModAPIFunc('uploads','user','showoutput',array('value' => $notes,
+                                                            'multiple' => true))
+        </xar:set>
         <xar:foreach in="$notes_output" key="$fileid" value="$fileinfo">
             <p>
                 <a href="#$fileinfo['fileDownload']#">#$fileinfo['fileName']#</a>
@@ -26,6 +31,10 @@
         </p>
         <xar:else />
         <p>#$notes#</p>
+      </xar:if>
+    <xar:else />
+        <p><xar:mlstring>Login needed to access this download</xar:mlstring></p>
+        <p><a href="&xar-modurl-roles-user-main;"><xar:mlstring>Log In</xar:mlstring></a></p>
     </xar:if>
     <div class="xar-articles-keywords">
         <xar:if condition="!empty($keywords)">

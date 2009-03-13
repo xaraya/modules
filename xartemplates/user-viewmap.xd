@@ -1,4 +1,10 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>
+  Template has three options:
+  * Article Map by Category
+  * Article Map by Grid
+  * Article Map by Publication Type
+</xar:comment>
 <xar:if condition="count($cattree) gt 0">
     <h2>
         <xar:mlstring>
@@ -81,20 +87,13 @@
                 Filter :
             </xar:mlstring>
             <select name="ptid" onchange="javascript:this.form.submit();">
-                <option value="">
-                    <xar:mlstring>
-                        Publication
-                    </xar:mlstring>
-                </option>
+              <option value=""><xar:mlstring>Publication
+                    </xar:mlstring></option>
                 <xar:foreach in="$publinks" value="$pubtype">
                     <xar:if condition="!empty($ptid) and $pubtype['pubid'] eq $ptid">
-                        <option value="#$pubtype['pubid']#" selected="selected">
-                            - #$pubtype['pubtitle']#
-                        </option>
+              <option value="#$pubtype['pubid']#" selected="selected">- #$pubtype['pubtitle']#</option>
                         <xar:else />
-                        <option value="#$pubtype['pubid']#">
-                            - #$pubtype['pubtitle']#
-                        </option>
+              <option value="#$pubtype['pubid']#">- #$pubtype['pubtitle']#</option>
                     </xar:if>
                 </xar:foreach>
             </select>

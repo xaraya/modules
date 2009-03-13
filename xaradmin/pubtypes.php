@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -24,8 +24,6 @@ function articles_admin_pubtypes()
     if (!xarVarFetch('label',  'isset', $label,  NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('format', 'isset', $format, NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('input',  'isset', $input,  array(), XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('validation',  'isset', $validation,  NULL, XARVAR_DONT_SET)) {return;}
-
 
     // Publication types can only be managed with ADMIN rights
     if (empty($ptid)) {
@@ -41,7 +39,7 @@ function articles_admin_pubtypes()
     $data = array();
     $data['pubtypes'] = array();
 
-    // Get current publication types
+    // Get current config data for all publication types
     $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
 
     // Verify the action
@@ -52,9 +50,10 @@ function articles_admin_pubtypes()
 
     // Take action if necessary
     if ($action == 'create' || $action == 'update' || $action == 'confirm') {
-        // Confirm authorisation code
+
         if (!xarSecConfirmAuthKey()) return;
 
+        // CREATE
         if ($action == 'create') {
             $config = array();
             foreach ($label as $field => $value) {
@@ -63,9 +62,7 @@ function articles_admin_pubtypes()
             foreach ($format as $field => $value) {
                 $config[$field]['format'] = $value;
                 // some default basedirs for now...
-                if (isset($validation[$field])) {
-                    $config[$field]['validation'] = $validation[$field];
-                } elseif ($value == 'imagelist') {
+                if ($value == 'imagelist') {
                     $config[$field]['validation'] = 'modules/articles/xarimages';
                 } elseif ($value == 'webpage') {
                     $config[$field]['validation'] = 'modules/articles';
@@ -74,14 +71,12 @@ function articles_admin_pubtypes()
             foreach ($input as $field => $value) {
                 $config[$field]['input'] = 1;
             }
-            $ptid = xarModAPIFunc('articles',
-                                 'admin',
-                                 'createpubtype',
+            $ptid = xarModAPIFunc('articles', 'admin', 'createpubtype',
                                  array('name' => $name,
                                        'descr' => $descr,
                                        'config' => $config));
             if (empty($ptid)) {
-                return; // throw back
+                return; // Creation of new pubtype was not successful
             } else {
                 if (empty($config['status']['label'])) {
                     $status = 2;
@@ -114,53 +109,48 @@ function articles_admin_pubtypes()
                 xarModSetVar('articles', 'mastercids.'.$ptid, '');
 
                 // Redirect to the admin view page
-                xarSessionSetVar('statusmsg',
-                                xarML('Publication type created'));
+                xarSessionSetVar('statusmsg', xarML('Publication type created'));
                 xarResponseRedirect(xarModURL('articles', 'admin', 'pubtypes',
                                               array('action' => 'view')));
                 return true;
             }
+
+        // UPDATE
         } elseif ($action == 'update') {
             $config = array();
-            foreach ($label as $field => $value) {
-                $config[$field]['label'] = $value;
-            }
             foreach ($format as $field => $value) {
+                // Set field format
                 $config[$field]['format'] = $value;
-                // some default basedirs for now...
-                if (isset($validation[$field])) {
-                    $config[$field]['validation'] = $validation[$field];
-                } elseif ($value == 'imagelist') {
-                    $config[$field]['validation'] = 'modules/articles/xarimages';
-                } elseif ($value == 'webpage') {
-                    $config[$field]['validation'] = 'modules/articles';
+                // Set label for field, may be empty
+                $config[$field]['label'] = $label[$field];
+                // Input is not set if not checked
+                if (isset($input[$field])) {
+                    $config[$field]['input'] = 1;
+                }
+                // Preserve validation from saved settings
+                if (isset($pubtypes[$ptid]['config'][$field]['validation'])) {
+                    $config[$field]['validation'] = $pubtypes[$ptid]['config'][$field]['validation'];
                 }
             }
-            foreach ($input as $field => $value) {
-                $config[$field]['input'] = 1;
-            }
-            if (!xarModAPIFunc('articles',
-                              'admin',
-                              'updatepubtype',
+            if (!xarModAPIFunc('articles', 'admin', 'updatepubtype',
                               array('ptid' => $ptid,
-                                    'name' => $name,  
+                                    'name' => $name,
                                     'descr' => $descr,
                                     'config' => $config))) {
-                return; // throw back
+                return;
             } else {
-                // Redirect back to the admin modify page to continue editing publication type
-                xarSessionSetVar('statusmsg',
-                                xarML('Publication type updated'));
-                xarResponseRedirect(xarModURL('articles', 'admin', 'pubtypes',array('ptid'=>$ptid,'action' => 'modify')));
+                // Redirect back to the admin modify page to continue editing
+                xarSessionSetVar('statusmsg', xarML('Publication type updated'));
+                xarResponseRedirect(xarModURL('articles', 'admin', 'pubtypes', 
+                                              array('ptid'=>$ptid,'action' => 'modify')));
                 return true;
             }
+
+        // CONFIRM
         } elseif ($action == 'confirm') {
-        // TODO: clean up more stuff here, like articles etc. ?
-            if (!xarModAPIFunc('articles',
-                              'admin',
-                              'deletepubtype',
+            if (!xarModAPIFunc('articles', 'admin', 'deletepubtype',
                               array('ptid' => $ptid))) {
-                return; // throw back
+                return;
             } else {
                 xarModDelVar('articles', 'settings.'.$ptid);
                 xarModDelAlias($pubtypes[$ptid]['name'],'articles');
@@ -170,10 +160,8 @@ function articles_admin_pubtypes()
                 if ($ptid == $default) {
                     xarModSetVar('articles','defaultpubtype','');
                 }
-
                 // Redirect to the admin view page
-                xarSessionSetVar('statusmsg',
-                                xarML('Publication type deleted'));
+                xarSessionSetVar('statusmsg', xarML('Publication type deleted'));
                 xarResponseRedirect(xarModURL('articles', 'admin', 'pubtypes',
                                               array('action' => 'view')));
                 return true;
@@ -181,7 +169,8 @@ function articles_admin_pubtypes()
         }
     }
 
-    // Create Edit/Delete links
+    // Create Edit/Delete/Modify Config links for each pubtype and
+    // View/New links for articles of these pubtypes
     foreach ($pubtypes as $id => $pubtype) {
         if (!xarSecurityCheck('AdminArticles',0,'Article',"$id:All:All:All")) {
             $pubtypes[$id]['editurl'] = '';
@@ -191,33 +180,21 @@ function articles_admin_pubtypes()
             $pubtypes[$id]['addurl'] = '';
             continue;
         }
-        $pubtypes[$id]['editurl'] = xarModURL('articles',
-                                             'admin',
-                                             'pubtypes',
+        $pubtypes[$id]['editurl']   = xarModURL('articles', 'admin', 'pubtypes',
                                              array('ptid' => $id,
                                                    'action' => 'modify'));
-        $pubtypes[$id]['deleteurl'] = xarModURL('articles',
-                                               'admin',
-                                               'pubtypes',
+        $pubtypes[$id]['deleteurl'] = xarModURL('articles', 'admin', 'pubtypes',
                                                array('ptid' => $id,
                                                      'action' => 'delete'));
-        $pubtypes[$id]['configurl'] = xarModURL('articles',
-                                               'admin',
-                                               'modifyconfig',
+        $pubtypes[$id]['configurl'] = xarModURL('articles', 'admin', 'modifyconfig',
                                                array('ptid' => $id));
-        $pubtypes[$id]['viewurl'] = xarModURL('articles',
-                                               'admin',
-                                               'view',
+        $pubtypes[$id]['viewurl']   = xarModURL('articles', 'admin', 'view',
                                                array('ptid' => $id));
-        $pubtypes[$id]['addurl'] = xarModURL('articles',
-                                               'admin',
-                                               'new',
+        $pubtypes[$id]['addurl']    = xarModURL('articles', 'admin', 'new',
                                                array('ptid' => $id));
     }
     $data['pubtypes'] = $pubtypes;
-    $data['newurl'] = xarModURL('articles',
-                               'admin',
-                               'pubtypes',
+    $data['newurl'] = xarModURL('articles', 'admin', 'pubtypes',
                                array('action' => 'new'));
 
 /*
@@ -282,7 +259,6 @@ function articles_admin_pubtypes()
     $data['action'] = $action;
     $data['ptid'] = $ptid;
 
-    // Return the template variables defined in this function
     return $data;
 }
 

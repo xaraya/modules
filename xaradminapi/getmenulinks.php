@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,73 +12,58 @@
  * @author mikespub
  */
 /**
- * utility function pass individual menu items to the main menu
+ * utility function pass individual menu items to the Admin menu
  *
  * @author the Articles module development team
- * @return array containing the menulinks for the main menu items.
+ * @return array containing menulinks
  */
 function articles_adminapi_getmenulinks()
 {
-    $menulinks = array();
+    static $menulinks = array();
+    if (isset($menulinks[0])) {
+        return $menulinks;
+    }
 
-// Security Check
     if (xarSecurityCheck('EditArticles',0)) {
-
-        $menulinks[] = Array('url'   => xarModURL('articles',
-                                                   'admin',
-                                                   'view'),
-                              'title' => xarML('View and edit all articles'),
-                              'label' => xarML('View Articles'));
+        $menulinks[] = Array('url' => xarModURL('articles', 'admin', 'view')
+            ,'active'=> array('main', 'view', 'modify', 'delete')
+            ,'title' => xarML('View and edit all articles')
+            ,'label' => xarML('Manage Articles')
+        );
     }
 
-// Security Check
     if (xarSecurityCheck('SubmitArticles',0)) {
-
-        $menulinks[] = Array('url'   => xarModURL('articles',
-                                                   'admin',
-                                                   'new'),
-                              'title' => xarML('Add a new article'),
-                              'label' => xarML('Add Article'));
+        $menulinks[] = Array('url' => xarModURL('articles', 'admin', 'new')
+            ,'active'=> array('new')
+            ,'title' => xarML('Add a new article')
+            ,'label' => xarML('New Article')
+        );
     }
 
-
-// Security Check
     if (xarSecurityCheck('AdminArticles',0)) {
+        $menulinks[] = Array('url' => xarModURL('articles', 'admin', 'pubtypes')
+            ,'active'=> array('pubtypes', 'importpubtype', 'exportpubtype')
+            ,'title' => xarML('View and edit publication types')
+            ,'label' => xarML('Publication Types')
+        );
 
-        $menulinks[] = Array('url'   => xarModURL('articles',
-                                                   'admin',
-                                                   'stats'),
-                              'title' => xarML('View statistics'),
-                              'label' => xarML('View Statistics'));
+        $menulinks[] = Array('url' => xarModURL('articles', 'admin', 'stats')
+            ,'active'=> array('stats', 'importpictures', 'importpages')
+            ,'title' => xarML('View statistics, import pictures and import pages')
+            ,'label' => xarML('Utilities')
+        );
 
-        $menulinks[] = Array('url'   => xarModURL('articles',
-                                                   'admin',
-                                                   'importpictures'),
-                              'title' => xarML('Create a simple picture gallery with articles'),
-                              'label' => xarML('Import Pictures'));
+        $menulinks[] = Array('url' => xarModURL('articles', 'admin', 'modifyconfig')
+            ,'active'=> array('modifyconfig')
+            ,'title' => xarML('Modify the articles module configuration')
+            ,'label' => xarML('Modify Config')
+        );
 
-        $menulinks[] = Array('url'   => xarModURL('articles',
-                                                   'admin',
-                                                   'importpages'),
-                              'title' => xarML('Import existing HTML pages'),
-                              'label' => xarML('Import Webpages'));
-
-        $menulinks[] = Array('url'   => xarModURL('articles',
-                                                   'admin',
-                                                   'pubtypes'),
-                              'title' => xarML('View and edit publication types'),
-                              'label' => xarML('Publication Types'));
-
-    // TODO: differentiate security check according to pubtype ?
-        $menulinks[] = Array('url'   => xarModURL('articles',
-                                                  'admin',
-                                                  'modifyconfig'),
-                              'title' => xarML('Modify the articles module configuration'),
-                              'label' => xarML('Modify Config'));
-    }
-
-    if (empty($menulinks)){
-        $menulinks = '';
+        $menulinks[] = array('url' => xarModURL('articles','admin','overview')
+            ,'active' => array('overview')
+            ,'title'  => xarML('Introduction on handling this module')
+            ,'label'  => xarML('Overview')
+        );
     }
 
     return $menulinks;
