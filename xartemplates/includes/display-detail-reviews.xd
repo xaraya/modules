@@ -40,8 +40,7 @@
         Added on:
       </td>
       <td align="left">
-        #xarLocaleGetFormattedDate('long',$properties['modified']->getValue())#
-        #xarLocaleGetFormattedTime('long',$properties['modified']->getValue())#
+        <xar:data-output property="$properties['modified']" />
       </td>
     </tr>
     <tr>

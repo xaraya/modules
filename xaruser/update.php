@@ -59,12 +59,16 @@ function publications_user_update()
         // Preview or bad data: redisplay the form
         $data['properties'] = $data['object']->getProperties();
         if ($data['preview']) $data['tab'] = 'preview';
+        $data['items'] = $itemsdata;
+        // Get the settings of the publication type we are using
+        $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
+    
         return xarTplModule('publications','user','modify', $data);    
     }
     
 /*    if (empty($itemid) || !is_numeric($itemid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                     'item id', 'admin', 'update', 'Publications');
+                     'item id', 'user', 'update', 'Publications');
         throw new BadParameterException(null,$msg);
     }
 

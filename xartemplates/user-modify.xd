@@ -91,9 +91,7 @@
                 <xar:set name="index">$index + 1</xar:set>
                 <div id="page-#$index#" style="display: #$visible[2]#">
                     <fieldset class="xar-standard-box-padding xar-overflow-auto">
-                    <!--
-                        <xar:data-display object="$object" tplmodule="publications" fieldprefix=$key/>
-                        -->
+                        <xar:data-display object="$object" tplmodule="publications" fieldprefix="$key" />
                     </fieldset>
                 </div>
             </xar:foreach>
@@ -129,7 +127,7 @@
                     <xar:comment>
                         show a link to delete the article
                     </xar:comment>
-                    <xar:comment>
+                    <!--
                         <xar:sec mask="ManagePublications" catch="false">
                             <a href="#xarModURL('publications','admin','delete',array('id' => $object.itemid))#">
                                 <xar:mlstring>
@@ -137,7 +135,7 @@
                                 </xar:mlstring>
                             </a>
                         </xar:sec>
-                    </xar:comment>
+                    -->
                 </div>
             </div>
         </form>

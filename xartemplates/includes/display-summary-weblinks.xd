@@ -27,8 +27,8 @@
         
             Added on
         
-        : #xarLocaleGetFormattedDate('long',$properties['modified']->getValue())# 
-          #xarLocaleGetFormattedTime('long',$properties['modified']->getValue())#
+        : #xarLocaleGetFormattedDate('long',$properties['modified']->value)# 
+          #xarLocaleGetFormattedTime('long',$properties['modified']->value)#
         <xar:if condition="!empty($rating)">
             -
             

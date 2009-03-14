@@ -15,12 +15,9 @@
         
         : <xar:data-output property="$properties['quote']" />
     </div>
-    <div class="xar-sub">
-        
-            Added on
-        
-        : #xarLocaleGetFormattedDate('long',$properties['modified']->getValue())#
-          #xarLocaleGetFormattedTime('long',$properties['modified']->getValue())#
+    <div class="xar-sub">        
+        Added on
+        <xar:data-output property="$properties['modified']" />
     </div>
     <div class="xar-sub">
         
