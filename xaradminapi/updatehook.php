@@ -3,7 +3,7 @@
  * Keywords Module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -30,7 +30,6 @@ function keywords_adminapi_updatehook($args)
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
         return $extrainfo;
     }
     if (!isset($extrainfo) || !is_array($extrainfo)) {
@@ -38,8 +37,6 @@ function keywords_adminapi_updatehook($args)
                     'extrainfo', 'admin', 'updatehook', 'keywords');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
         return $extrainfo;
     }
 
@@ -50,8 +47,7 @@ function keywords_adminapi_updatehook($args)
         return $extrainfo;
     }
 
-    // When called via hooks, the module name may be empty, so we get it from
-    // the current module
+    // When called via hooks, the module name may be empty. Get it from current module.
     if (empty($extrainfo['module'])) {
         $modname = xarModGetName();
     } else {
@@ -64,8 +60,6 @@ function keywords_adminapi_updatehook($args)
                     'module name', 'admin', 'updatehook', 'keywords');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
         return $extrainfo;
     }
 
@@ -85,8 +79,10 @@ function keywords_adminapi_updatehook($args)
                     'item id', 'admin', 'updatehook', 'keywords');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
+        return $extrainfo;
+    }
+
+    if (!xarSecurityCheck('AddKeywords',0,'Item', "$modid:$itemtype:$itemid")) {
         return $extrainfo;
     }
 
@@ -132,6 +128,7 @@ function keywords_adminapi_updatehook($args)
     } else {
         $words = explode(' ',$keywords);
     }*/
+    // CHECK is this needed? separekeywords already trims the words
     $cleanwords = array();
     foreach ($words as $word) {
         $word = trim($word);
@@ -209,8 +206,6 @@ function keywords_adminapi_updatehook($args)
 
         $result =& $dbconn->Execute($query);
         if (!$result) {
-            // we *must* return $extrainfo for now, or the next hook will fail
-            //return false;
             return $extrainfo;
         }
     }
@@ -233,16 +228,13 @@ function keywords_adminapi_updatehook($args)
 
             $result =& $dbconn->Execute($query,array($nextId, $word, $modid, $itemtype, $objectid));
             if (!$result) {
-                // we *must* return $extrainfo for now, or the next hook will fail
-                //return false;
                 return $extrainfo;
             }
-
             //$keywordsid = $dbconn->PO_Insert_ID($keywordstable, 'xar_id');
         }
     }
     $extrainfo['keywords'] = join(' ',$cleanwords);
-    // Return the extra info
+    // Return extrainfo or the next hook will fail
     return $extrainfo;
 }
 ?>

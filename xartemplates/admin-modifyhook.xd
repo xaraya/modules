@@ -1,73 +1,77 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="$restricted eq 0">
+    <div class="xar-form-input-wrapper">
+        <xar:set name="title">xarML('Use one of the delimiters #(1) to separate multiple keywords. Use SPACE to delete the keywords for this item.', $delimiters)</xar:set>
+        <label for="keywords" class="xar-form-label" title="#$title#">
+            <xar:mlstring>Keywords</xar:mlstring>
+        </label>
+        <input type="text" name="keywords" id="keywords" value="#$keywords#" title="#$title#" size="50" maxlength="254" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="keywords" class="xar-form-label">
+            <xar:mlstring>Allowed delimiters</xar:mlstring>
+        </label>
+        #$delimiters#
+    </div>
+<xar:else />
+    <xar:base-include-javascript filename="selectbox.js"/>
+    <xar:base-include-javascript type="code" code="// Options for Keywords selectbox.js
+var opt = new OptionTransfer('list1','list2');
+opt.setAutoSort(true);
+opt.setDelimiter('$delimiter');
+opt.saveNewRightOptions('keywords');"
+    />
     <div class="xar-form-input-wrapper">
         <label for="keywords" class="xar-form-label" title="#xarML('Select the keywords for this item.')#">
             <xar:mlstring>Keywords</xar:mlstring>:
         </label>
-
-    <xar:if condition="$restricted eq 0">
-        <input type="text" name="keywords" id="keywords" value="#$keywords#" size="50" maxlength="254" />
-    </div>
-    <div class="xar-form-input-wrapper">
-        <label for="keywords" class="xar-form-label" title="#xarML('select the keywords for this item.')#">
-            <xar:mlstring>Allowed delimiters</xar:mlstring>:
-        </label>
-        #$delimiters#
-    </div>
-    <xar:else />
-        <xar:base-include-javascript filename="selectbox.js"/>
-        <script type="text/javascript">
-                var opt = new OptionTransfer("list1","list2");
-                opt.setAutoSort(true);
-                opt.setDelimiter("#$delimiter#");
-                opt.saveNewRightOptions("keywords");
-        </script>
-            <table class="xar-noborder">
-                <tr>
-                <th class="xar-align-center">
-                    <xar:mlstring>List of keywords</xar:mlstring>
-                </th>
-                <th class="xar-align-center">
-                    <img name="pix" src="#xarTplGetImage('pix.gif','keywords')#" alt="" />
-                </th>
-                <th class="xar-align-center">
-                    <xar:mlstring>Chosen keywords</xar:mlstring>
-                </th>
-                        </tr>
-                        <tr>
-                            <td align ="center">
-                                <select ondblclick="opt.transferRight()" multiple="multiple" size="10" name="list1" id="list1"> 
-                                    <xar:foreach in="$wordlist" value="$item1">
-                                        <option value="#$item1#">#$item1#</option>
-                                    </xar:foreach>
-                                </select> 
-                            </td>
-                            <td align ="center">
-                                <p>
-                                    <input onclick="opt.transferRight()" type="button" value="&gt;" name="right" />
-                                </p>
-                                <p>
-                                    <input onclick="opt.transferAllRight()" type="button" value="&gt;&gt;" name="right" />
-                                </p>
-                                <p>
-                                    <input onclick="opt.transferLeft()" type="button" value="&lt;" name="left" />
-                                </p>
-                                <p>
-                                    <input onclick="opt.transferAllLeft()" type="button" value="&lt;&lt;" name="left" />
-                                </p>
-                            </td>
-                            <td align="center">
-                                <select ondblclick="opt.transferLeft()" multiple="multiple" size="10" name="list2" id="list2"> 
-                                    <xar:foreach in="$keywords" value="$item">
-                                        <option name="keywords" value="#$item#">#$item#</option>
-                                    </xar:foreach>
-                                </select> 
-                            </td>
-                    </tr>
-            </table>
+        <table class="xar-noborder">
+            <tr>
+            <th class="xar-align-center">
+                <xar:mlstring>List of keywords</xar:mlstring>
+            </th>
+            <th class="xar-align-center">
+                <img name="pix" src="#xarTplGetImage('pix.gif','keywords')#" alt="" />
+            </th>
+            <th class="xar-align-center">
+                <xar:mlstring>Chosen keywords</xar:mlstring>
+            </th>
+            </tr>
+            <tr>
+                <td class="xar-align-center">
+                    <select class="xar-form-textlong" ondblclick="opt.transferRight()" multiple="multiple" size="10" name="list1" id="list1">
+                      <xar:foreach in="$wordlist" value="$item1">
+                        <option value="#$item1#">#$item1#</option>
+                      </xar:foreach>
+                    </select>
+                </td>
+                <td class="xar-align-center">
+                    <p>
+                        <input onclick="opt.transferRight()" type="button" value="&gt;" name="right" />
+                    </p>
+                    <p>
+                        <input onclick="opt.transferAllRight()" type="button" value="&gt;&gt;" name="rightAll" />
+                    </p>
+                    <p>
+                        <input onclick="opt.transferLeft()" type="button" value="&lt;" name="left" />
+                    </p>
+                    <p>
+                        <input onclick="opt.transferAllLeft()" type="button" value="&lt;&lt;" name="leftAll" />
+                    </p>
+                </td>
+                <td class="xar-align-center">
+                    <select class="xar-form-textlong" ondblclick="opt.transferLeft()" multiple="multiple" size="10" name="list2" id="list2">
+                      <xar:foreach in="$keywords" value="$item">
+                        <option name="keywords" value="#$item#">#$item#</option>
+                      </xar:foreach>
+                    </select>
+                </td>
+            </tr>
+        </table>
         <input type="hidden" size="70" name="keywords" id="keywords"/>
     </div>
-        <script type="text/javascript">
-            opt.init(document.forms['post']);
-        </script>
-    </xar:if>
+    <xar:base-include-javascript type="code" position="body" code="// Init for Keywords selectbox.js
+opt.init(document.forms['post']);"
+    />
+</xar:if>
 

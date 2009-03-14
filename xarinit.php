@@ -3,7 +3,7 @@
  * Keywords initialization functions
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation.
+ * @copyright (C) 2002-2009 The Digital Development Foundation.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -75,7 +75,6 @@ function keywords_init()
     $query = xarDBCreateIndex($keywordstable,$index);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-
 
     $query = xarDBCreateTable($xartable['keywords_restr'],
                              array('xar_id'         => array('type'        => 'integer',
@@ -154,12 +153,6 @@ function keywords_init()
         return;
     }
 
-/* // TODO: show items you created/edited someday ?
-    if (!xarModRegisterHook('item', 'usermenu', 'GUI',
-            'keywords', 'user', 'usermenu')) {
-        return false;
-    }
-*/
     // Register blocks
     if (!xarModAPIFunc('blocks',
                        'admin',
@@ -172,6 +165,7 @@ function keywords_init()
                        array('modName'  => 'keywords',
                              'blockType'=> 'keywordscategories'))) return;
 
+    // Defined Instances are: moduleid, itemtyp and itemid
     $instances = array(
                        array('header' => 'external', // this keyword indicates an external "wizard"
                              'query'  => xarModURL('keywords', 'admin', 'privileges'),
@@ -317,8 +311,6 @@ function keywords_delete()
 
     $query = xarDBDropTable($xartable['keywords_restr']);
     if (empty($query)) return; // throw back
-
-    // Drop the table and send exception if returns false.
     $result = &$dbconn->Execute($query);
     if (!$result) return;
 
@@ -349,7 +341,6 @@ function keywords_delete()
         return;
     }
 
-
     // when a whole module is removed, e.g. via the modules admin screen
     // (set object ID to the module name !)
     if (!xarModUnregisterHook('module', 'remove', 'API',
@@ -360,12 +351,7 @@ function keywords_delete()
                            'keywords', 'user', 'displayhook')) {
         return false;
     }
-/* // TODO: show items you created/edited someday ?
-    if (!xarModUnregisterHook('item', 'usermenu', 'GUI',
-            'keywords', 'user', 'usermenu')) {
-        return false;
-    }
-*/
+
     // Unregister blocks
     if (!xarModAPIFunc('blocks',
                        'admin',

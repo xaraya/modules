@@ -3,7 +3,7 @@
  * Keywords Module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -15,7 +15,8 @@
  * modify an entry for a module item - hook for ('item','modify','GUI')
  *
  * @param int $args['objectid'] ID of the object
- * @param array $args['extrainfo'] extra information
+ * @param array $args['extrainfo']
+ * @param string $args['extrainfo']['keywords'] or 'keywords' from input (optional)
  * @returns string
  * @return hook output in HTML
  * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
@@ -40,9 +41,7 @@ function keywords_admin_modifyhook($args)
         return $msg;
     }
 
-
-    // When called via hooks, the module name may be empty, so we get it from
-    // the current module
+    // When called via hooks, the module name may be empty. Get it from current module.
     if (empty($extrainfo['module'])) {
         $modname = xarModGetName();
     } else {
@@ -70,31 +69,29 @@ function keywords_admin_modifyhook($args)
         $itemid = $objectid;
     }
 
-    //if (!xarSecurityCheck('AdminKeywords',0,'Item', "$modid:$itemtype:All")) return '';
-    if (!xarSecurityCheck('AddKeywords',0,'Item', "$modid:$itemtype:All")) return '';
+    if (!xarSecurityCheck('AddKeywords',0,'Item', "$modid:$itemtype:$itemid")) return '';
 
-//retrieve the list of allowed delimiters.  use the first one as the default.
+    // Retrieve the list of allowed delimiters.  Use the first one as the default.
     $delimiters = xarModGetVar('keywords','delimiters');
     $delimiter = substr($delimiters,0,1);
 
-        $restricted = xarModGetVar('keywords','restricted');
-        if ($restricted == '0') {
-           $oldwords = xarModAPIFunc('keywords',
-                                     'user',
-                                     'getwords',
-                              array('modid' => $modid,
-                                    'itemtype' => $itemtype,
-                                    'itemid' => $itemid));
-
+    // Provide a $delimiter separated string of keywords for the form
+    // Get old keywords from database and join them
+    $oldwords = xarModAPIFunc('keywords', 'user', 'getwords',
+                      array('modid'    => $modid,
+                            'itemtype' => $itemtype,
+                            'itemid'   => $itemid)
+    );
     if (isset($oldwords) && count($oldwords) > 0) {
-        $keywords = join($delimiter,$oldwords);
+        $keywords = join($delimiter, $oldwords);
     }
-
+    // Check if we have some keywords from a Preview or so and use them
     if (isset($extrainfo['keywords'])) {
         $keywords = $extrainfo['keywords'];
     } else {
         xarVarFetch('keywords', 'str:1:', $newkeywords, NULL, XARVAR_NOT_REQUIRED);
         if (isset($newkeywords)) {
+            // We had a 'keywords' field in the form
             $keywords = $newkeywords;
         }
     }
@@ -102,76 +99,24 @@ function keywords_admin_modifyhook($args)
         $keywords = '';
     }
 
-
-
-/*
-    // extract individual keywords from the input string (comma, semi-column or space separated)
-    if (strstr($keywords,',')) {
-        $words = explode(',',$keywords);
-    } elseif (strstr($keywords,';')) {
-        $words = explode(';',$keywords);
-    } else {
-        $words = explode(' ',$keywords);
-    }
-    $cleanwords = array();
-    foreach ($words as $word) {
-        $word = trim($word);
-        if (empty($word)) continue;
-        $cleanwords[] = $word;
-    }
-*/
-
-    $wordlist = array();
-/* TODO: restrict to predefined keyword list
     $restricted = xarModGetVar('keywords','restricted');
-    if (!empty($restricted)) {
-        if (!empty($itemtype)) {
-            $getlist = xarModGetVar('keywords',$modname.'.'.$itemtype);
-        } else {
-            $getlist = xarModGetVar('keywords',$modname);
-        }
-        if (!isset($getlist)) {
-            $getlist = xarModGetVar('keywords','default');
-        }
-        if (!empty($getlist)) {
-            $wordlist = split(',',$getlist);
-        }
-        if (count($wordlist) > 0) {
-            $acceptedwords = array();
-            foreach ($cleanwords as $word) {
-                if (!in_array($word, $wordlist)) continue;
-                $acceptedwords[] = $word;
-            }
-            if (count($acceptedwords) < 1) {
-                return $extrainfo;
-            }
-            $cleanwords = $acceptedwords;
-        }
+    if ($restricted == '0') {
+        // $keywords is delivered as string
+        $wordlist = array();
+    } else {
+        // $keywords needs to be an array for restriced input
+        $keywords = xarModAPIFunc('keywords','admin','separekeywords'
+                                 ,array('keywords' => $keywords)
+        );
+        // Get array of predefined words
+        $keywords1 = xarModAPIFunc('keywords', 'user', 'getwordslimited',
+                                   array('moduleid' => $modid,
+                                         'itemtype' => $itemtype)
+        );print_r($keywords1);
+        $wordlist=array_diff($keywords1, $keywords);
     }
-*/
 
-        } else {
-
-                        $keywords = xarModAPIFunc('keywords','user','getwords',
-                           array('modid' => $modid,
-                                 'itemtype' => $itemtype,
-                                 'itemid' => $itemid));
-
-                $keywords1 = xarModAPIFunc('keywords',
-                                'user',
-                                'getwordslimited',
-                                 array('moduleid' => $modid,
-                 'itemtype' => $itemtype));
-
-
-                        $wordlist=array_diff($keywords1,$keywords);
-
-
-                }
-
-    return xarTplModule('keywords',
-                        'admin',
-                        'modifyhook',
+    return xarTplModule('keywords', 'admin', 'modifyhook',
                         array('keywords' => $keywords,
                               'wordlist' => $wordlist,
                               'delimiters' => $delimiters,

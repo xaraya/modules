@@ -1,12 +1,10 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<br/>
 <xar:if condition="isset($words) and count($words) gt 0">
-<b><xar:mlstring>Keywords :</xar:mlstring></b>
-<div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+<div class="xar-keywords-list">
+<span class="xar-title"><xar:mlstring>Keywords:</xar:mlstring></span>
 <xar:foreach in="$words" value="$word">
-    <li><a href="#$word['url']#">#$word['keyword']#</a></li>
+    <a href="#$word['url']#">#$word['keyword']#</a>
 </xar:foreach>
 </div>
-<br/>
 </xar:if>
 

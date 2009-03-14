@@ -3,7 +3,7 @@
  * Keywords Module
  *
  * @package modules
- * @copyright (C) 2002-2005 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,16 +12,17 @@
  * @author mikespub
 */
 /**
- * utility function pass individual menu items to the main menu
+ * utility function pass individual menu items to the Admin menu
  *
  * @author mikespub
- * @return array containing the menulinks for the main menu items.
+ * @return array containing the menulinks
  */
 function keywords_adminapi_getmenulinks()
 {
-    $menulinks = array();
-    // Security Check
-    if (xarSecurityCheck('AdminKeywords')) {
+    static $menulinks = array();
+    if (isset($menulinks[0])) {
+        return $menulinks;
+    }
         /* Removing the view function due to usuability.  Seems over complicated, since most of the editing is done via the original item.
         $menulinks[] = Array('url'   => xarModURL('keywords',
                                                   'admin',
@@ -29,11 +30,17 @@ function keywords_adminapi_getmenulinks()
                               'title' => xarML('Overview of the keyword assignments'),
                               'label' => xarML('View Keywords'));
         */
-        $menulinks[] = Array('url'   => xarModURL('keywords',
-                                                  'admin',
-                                                  'modifyconfig'),
-                              'title' => xarML('Modify the keywords configuration'),
-                              'label' => xarML('Modify Config'));
+    if (xarSecurityCheck('AdminKeywords', 0)) {
+        $menulinks[] = array( 'url'    => xarModURL('keywords','admin','modifyconfig')
+                             ,'title'  => xarML('Modify the keywords configuration')
+                             ,'label'  => xarML('Modify Config')
+                             ,'active' => array('modifyconfig')
+        );
+        $menulinks[] = array( 'url'    => xarModURL('keywords','admin','overview')
+                             ,'title'  => xarML('Introduction on handling this module')
+                             ,'label'  => xarML('Overview')
+                             ,'active' => array('overview')
+        );
     }
 
     return $menulinks;

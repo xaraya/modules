@@ -14,7 +14,7 @@
         <p><em><xar:mlstring>Keywords is a Xaraya Utility Module.</xar:mlstring></em>
         <xar:mlstring>The Keywords module allows you to assign keywords to module items (taxonomy) and to look up items by keyword.
         To use keywords in your content items you must </xar:mlstring>
-        <a href="&xar-modurl-modules-admin-hooks;&amp;hook=keywords"><xar:mlstring>hook the Keywords module</xar:mlstring></a><xar:mlstring> to any module or itemtype where where you want to use it.</xar:mlstring>
+        <a href="&xar-modurl-modules-admin-hooks;&amp;hook=keywords#currenthook"><xar:mlstring>hook the Keywords module</xar:mlstring></a><xar:mlstring> to any module or itemtype where where you want to use it.</xar:mlstring>
         </p>
         <h3>
             <xar:mlstring>How to use it?</xar:mlstring>
