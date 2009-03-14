@@ -43,7 +43,7 @@
                 <td class="xar-align-center">
                         <select ondblclick="opt.transferRight()" multiple="multiple" size="10" name="list1" id="list1">
                             <xar:foreach in="$keywords" value="$item">
-                                <option name="keywords" value="#$item#">#$item#</option>
+                                <option value="#$item#">#$item#</option>
                             </xar:foreach>
                         </select>
                     </td>

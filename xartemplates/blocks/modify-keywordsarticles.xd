@@ -1,6 +1,6 @@
 <input type="hidden" value="1" name="refreshrandom" />
-<div style="clear: both; padding-top: 10px;">
 
+<div style="clear: both; padding-top: 10px;">
     <span style="float: left; width: 20%; text-align: right;">
         <!-- block configuration options -->
         <span class="help" title="#xarML('Choose the publication type for the featured items.')#">
@@ -22,7 +22,7 @@
     </span>
 </div>
 
-<!-- TODO
+<xar:comment> TODO
                 <div style="clear: both; padding-top: 10px;">
                 <span style="float: left; width: 20%; text-align: right;">
                         <span class="help" title="#xarML('Choose the category for the featured items.')#"><label for="catfilter#$blockid#"><xar:mlstring>Category</xar:mlstring></label>:</span>
@@ -40,7 +40,7 @@
                         </select>
                 </span>
                 </div>
--->
+</xar:comment>
 
 <div style="clear: both; padding-top: 10px;">
     <span style="float: left; width: 20%; text-align: right;">

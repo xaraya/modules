@@ -62,7 +62,7 @@ opt.saveNewRightOptions('keywords');"
                 <td class="xar-align-center">
                     <select class="xar-form-textlong" ondblclick="opt.transferLeft()" multiple="multiple" size="10" name="list2" id="list2">
                       <xar:foreach in="$keywords" value="$item">
-                        <option name="keywords" value="#$item#">#$item#</option>
+                        <option value="#$item#">#$item#</option>
                       </xar:foreach>
                     </select>
                 </td>
