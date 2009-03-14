@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -89,14 +89,11 @@ function articles_user_viewmap($args)
     $data['cattree'] = array();
     $data['catgrid'] = array();
 
-    $dump = '';
-
     $publinks = array();
 
     if ($by == 'cat') {
         $data['maplink'] = xarModURL('articles','user','viewmap',array('by' => 'cat'));
-
-    // TODO: re-evaluate this after user feedback...
+        // TODO: re-evaluate this after user feedback
         // *trick* Use the 'default' categories here, instead of all rootcats
         $cidstring = xarModGetVar('articles','mastercids');
         $rootcats = explode (';', $cidstring);
@@ -107,10 +104,8 @@ function articles_user_viewmap($args)
                 $catlist[$cid] = 1;
             }
         }
-
-
         // create the category tree for each root category
-    // TODO: make sure permissions are taken into account here !
+        // TODO: make sure permissions are taken into account here !
         foreach ($catlist as $cid => $val) {
             if (empty($val)) {
                 continue;
@@ -129,7 +124,7 @@ function articles_user_viewmap($args)
                                                          // frontpage or approved
                                                    array('status' => array(3,2),
                                                          'cid' => $cid,
-                                                         'ptid' => null,
+                                                         'ptid' => $ptid,
                                                          // keep a link to the parent cid
                                                          'showcid' => true));
         }
@@ -360,14 +355,12 @@ function articles_user_viewmap($args)
     $data['archivelabel'] = xarML('View Archives');
     $data['archivelink'] = xarModURL('articles','user','archive',
                                      array('ptid' => $ptid));
-    $data['dump'] = $dump;
     if (count($data['catfilter']) == 2) {
     }
 
     if (!empty($ptid)) {
         $template = $pubtypes[$ptid]['name'];
     } else {
-// TODO: allow templates per category ?
        $template = null;
     }
 
