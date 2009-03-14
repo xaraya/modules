@@ -102,6 +102,7 @@ function publications_user_new($args)
     $pubtypeobject->getItem(array('itemid' => $data['ptid']));
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
     $data['properties'] = $data['object']->getProperties();
+    $data['items'] = array();
 
     if (!empty($data['ptid'])) {
         $template = $pubtypeobject->properties['template']->value;
@@ -110,6 +111,9 @@ function publications_user_new($args)
        $template = null;
     }
 
+    // Get the settings of the publication type we are using
+    $data['settings'] = xarModAPIFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
+    
     return xarTplModule('publications', 'user', 'new', $data, $template);
 }
 

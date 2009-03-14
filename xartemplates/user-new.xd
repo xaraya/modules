@@ -49,6 +49,7 @@
             <xar:else />
                 <xar:set name="visible">array('block','none','none')</xar:set>
             </xar:if>
+            <xar:set name="itemcount">count($items)</xar:set>
             <xar:template file="pagetabs" type="module" />
             <div id="page-1" style="display: #$visible[0]#">
                 <xar:set name="contentfile">'content-' . $object->name</xar:set>
