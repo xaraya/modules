@@ -13,10 +13,6 @@
             Manage Articles
         </xar:mlstring>
     </h2>
-      <!--
-          // display a status message to the user if an action has been
-          // taken on an item
-      -->
       <xar:if condition="xarSessionGetVar('statusmsg') != ''">
           <p>#xarSessionGetVar('statusmsg')#</p>
       </xar:if>
@@ -63,7 +59,7 @@
         </xar:if>
         <xar:categories-navigation layout="trails" showchildren="1" module="articles" type="admin" itemtype="$ptid" catid="$catid" />
         <xar:base-include-javascript module="base" filename="checkall.js" />
-            <form method="post" name="viewarticles" id="viewarticles" action="#xarModURL('articles','admin','updatestatus')#">
+            <form method="post" name="viewarticles" id="viewarticles" action="#xarModURL('articles','admin','updatestatus')#" onsubmit="if (document.getElementById('status').value == '-1') {return confirm('#xarML('Delete all selected articles?')#');}">
                 <div>
                     <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
                     <input type="hidden" name="catid" id="catid" value="#$catid#" />
@@ -93,7 +89,7 @@
                                 #$labels['status']#
                             </th>
                         </xar:if>
-                        <th>
+                        <th class="xar-align-center">
                             <xar:mlstring>
                                 Options
                             </xar:mlstring>
@@ -102,11 +98,17 @@
                     <xar:foreach in="$items" value="$item">
                         <tr>
                             <td class="xar-norm">
+                            <xar:if condition="empty($item['editurl'])">
                                 #$item['title']#
+                                <xar:else />
+                                <a href="#$item['editurl']#" title="#$item['viewtitle']#">
+                                    #$item['title']#
+                                </a>
+                            </xar:if>
                             </td>
                             <xar:if condition="$showdate">
                                 <td class="xar-norm">
-                                    #xarLocaleFormatDate('%x %X %z',$item['pubdate'])#
+                                    #xarLocaleGetFormattedDate('shortdate',$item['pubdate'])#
                                 </td>
                             </xar:if>
                             <xar:if condition="$showstatus">
@@ -127,14 +129,6 @@
                                     <xar:else />
                                     <a href="#$item['viewurl']#">
                                         #$item['viewtitle']#
-                                    </a>
-                                </xar:if>
-                                |
-                                <xar:if condition="empty($item['editurl'])">
-                                    #$item['edittitle']#
-                                    <xar:else />
-                                    <a href="#$item['editurl']#">
-                                        #$item['edittitle']#
                                     </a>
                                 </xar:if>
                                 |
@@ -196,9 +190,4 @@
         #$pager#
     </div>
 </div>
-<!--
-    // clear the status message
-    // we put this in an if tag to prevent the function from
-    // showing '1' in the page
--->
 <xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>
