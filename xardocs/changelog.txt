@@ -1,22 +1,25 @@
-Third point upgrade to v0.0.2
+v0.1.1
 
-Function changes
-+ Updated function headers
-+ Removed redundant functions and templates
-+ Added caching to get methods, requires writable var/cache
-+ Added try post via json for cases when cURL fails
+Added create hook function
 
-GUI changes to user-tweet.xd
-+ Changed text input to textarea so spellcheckers work
-+ Added characters left count to new tweet GUI
+v0.1.0
 
-GUI changes to admin-modifyconfig.xd
-+ Added config validation error messages
-+ Added options for which timelines to display
-+ Added option to specify default timeline
+Added official Twitter source parameter
+Minor bugfixes
 
-GUI changes to admin-main.xd
-+ Updated Overview
+v0.0.4
 
-GUI changes to /includes/user-menu.xd
-+ Fixed tabs
+Code and template clean up
+Minor bugfixes
+
+v0.0.3
+
+Multiple updates to handle user twitter accounts
+
+v0.0.2
+
+Basic functionality
+
+v0.0.1
+
+Limited Functionality
