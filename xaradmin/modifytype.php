@@ -100,14 +100,16 @@ function xarpages_admin_modifytype($args)
     }
 
     // Clear out any empty hooks, trim the remainder.
-    foreach($modifyhooks as $key => $modifyhook) {
-        if (trim($modifyhook) == '') {
-            unset($modifyhooks[$key]);
-        } else {
-            $modifyhooks[$key] = trim($modifyhook);
+    if (isset($modifyhooks)) {
+        foreach($modifyhooks as $key => $modifyhook) {
+            if (trim($modifyhook) == '') {
+                unset($modifyhooks[$key]);
+            } else {
+                $modifyhooks[$key] = trim($modifyhook);
+            }
         }
+        $data['modifyhooks'] =& $modifyhooks;
     }
-    $data['modifyhooks'] =& $modifyhooks;
 
     // Clear out any empty hooks, trim the remainder.
     if (isset($confighooks)) {
