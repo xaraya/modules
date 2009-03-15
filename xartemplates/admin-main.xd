@@ -51,7 +51,7 @@
     <li><xar:mlstring>timeline -- Allows you to display public or a user timeline within a block</xar:mlstring></li>
   </ul>
 
-  <h3><xar:mlstring>Included Hooks (TODO)</xar:mlstring></h3>
+  <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
   <ul>
     <li><xar:mlstring>Create -- Allows a status update to be sent from the site account when new items are created. The hook allows you to send an update for content created by all users, or just items created by the site account owner. Status will include a link to the new item. You can optionally specify a field to include an excerpt from.</xar:mlstring></li>
   </ul>
