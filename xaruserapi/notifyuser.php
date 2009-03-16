@@ -10,7 +10,7 @@
  */
 function registration_userapi_notifyuser ($args)
 {
-    $messagetitle = xarML('A new user #(1) #(2) has registered on #(3)', $args['uname'], $args['name'], xarModVars::get('themes','SiteName'));
+    $messagetitle = xarML('A new user #(1) #(2) has registered on #(3)', $args['user_name'], $args['name'], xarModVars::get('themes','SiteName'));
 
     // Make sure we remove comments from the templates
     $themecomments = xarModVars::get('themes','ShowTemplates');
