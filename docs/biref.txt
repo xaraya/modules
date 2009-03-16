@@ -1,0 +1,5 @@
+1. Designation: CKEditor module
+
+2. Purpose: to be added
+
+3. Description: to be added

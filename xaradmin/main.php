@@ -1,44 +1,19 @@
 <?php
 /**
- * crispBB Forum Module
+ * Main admin GUI function, entry point
  *
- * @package modules
- * @copyright (C) 2008-2009 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage crispBB Forum Module
- * @link http://xaraya.com/index.php/release/970.html
- * @author crisp <crisp@crispcreations.co.uk>
  */
- /**
- * The main administration function
- *
- * @author crisp <crisp@crispcreations.co.uk>
- * @access public
- * @return true on redirect
- */
-function crispbb_admin_main()
-{
-    // since the user entered here, we try and determine where to redirect them to
-    // no need for sec checks, the function we redirect to can take care of it
 
-    // try for current users last view
-    $defaultfunc = xarSessionGetVar('crispbb_adminstartpage');
+    function ckeditor_admin_main()
+    {
+        if(!xarSecurityCheck('AdminCKEditor')) return;
 
-    // fall back to module config
-    if (empty($defaultfunc)) {
-        $defaultfunc = xarModVars::get('crispbb', 'adminstartpage');
+        if (xarModVars::get('modules', 'disableoverview') == 0) {
+            return array();
+        } else {
+            xarResponseRedirect(xarModURL('ckeditor', 'admin', 'modifyconfig'));
+        }
+        // success
+        return true;
     }
-
-    // menulinks returns a keyed array of valid functions
-    $menulinks = xarMod::apiFunc('crispbb', 'admin', 'getmenulinks');
-    // if the default func is empty or isn't valid we fall back to overview
-    if (empty($defaultfunc) || !isset($menulinks[$defaultfunc])) {
-        $defaultfunc = 'overview';
-    }
-
-    xarResponse::Redirect(xarModURL('crispbb', 'admin', $defaultfunc));
-    return true;
-}
 ?>

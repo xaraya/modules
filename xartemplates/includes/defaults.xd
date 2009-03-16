@@ -1,0 +1,16 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:if condition="$tabmodule ne 'ckeditor'">
+        <xar:set name="regid">xarModGetIDFromName($tabmodule)</xar:set>
+    <xar:else />
+        <xar:set name="regid">0</xar:set>
+    </xar:if>
+    <div class="xar-form-input-wrapper">
+        <label for="bar" title="#xarML('An example of a module-specific configuration variable')#" class="xar-form-label">
+            <xar:mlstring>
+                Bar:
+            </xar:mlstring>
+        </label>
+        <xar:set name="value">xarModItemVars::get('ckeditor', 'bar', $regid)</xar:set>
+        <xar:data-input type="textbox" name="bar" value="$value" />
+    </div>
+</xar:template>

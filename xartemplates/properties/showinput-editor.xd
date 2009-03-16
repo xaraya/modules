@@ -1,0 +1,8 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:base-include-javascript filename="ckeditor/ckeditor.js" module="ckeditor" position="head" />
+    
+    <textarea class="ckeditor" rows="#$rows#" cols="#$cols#" id="#$id#" name="#$name#" tabindex="#$tabindex#">#$value#</textarea>
+
+    <xar:template file="dataproperty_additions" module="base" />
+</xar:template>
