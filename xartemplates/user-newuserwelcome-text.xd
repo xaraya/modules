@@ -3,7 +3,7 @@ Dear #$values['name']#,
 
 You or someone in your name has registered a new user at:  #$sitename# under the user name
 
-Username: #$values['uname']#
+Username: #$values['user_name']#
 
 Your account is now active and can be accessed with this user name and your password.
 
