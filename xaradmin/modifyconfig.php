@@ -25,9 +25,6 @@ function registration_admin_modifyconfig()
             switch ($data['tab']) {
                 case 'general':
                     $data['shorturlschecked'] = xarModVars::get('registration', 'SupportShortURLs') ? true : false;
-                    $data['uselockout']       =  xarModVars::get('registration', 'uselockout') ? 'checked' : '';
-                    $data['lockouttime']      = xarModVars::get('registration', 'lockouttime')? xarModVars::get('registration', 'lockouttime'): 15; //minutes
-                    $data['lockouttries']     = xarModVars::get('registration', 'lockouttries') ? xarModVars::get('registration', 'lockouttries'): 3;
                     break;
                 case 'registration':
                     // create the dropdown of groups for the template display

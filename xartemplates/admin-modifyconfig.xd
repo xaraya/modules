@@ -101,7 +101,7 @@
                 </legend>
                 <div class="xar-form-input-wrapper-after">
                     <xar:set name="checked">xarModVars::get('registration', 'showterms')</xar:set>
-                    <xar:data-input type="checkbox" name="showterms" checked="checked" />
+                    <xar:data-input type="checkbox" name="showterms" checked="$checked" />
                     <label for="showterms" title="#xarML('Show terms of service in Registration user menu')#">
                         <xar:mlstring>
                             Show Terms of Service link in the menu?

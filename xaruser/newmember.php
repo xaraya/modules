@@ -183,7 +183,7 @@
                     throw new Exception(xarML('The object #(1) has no name property',$object->name));
                     
                 // Send a welcome email
-                xarModAPIFunc('registration','user','notifyuser',$object->getFieldValues());
+                if (xarModVars::get('registration','sendnotice')) xarModAPIFunc('registration','user','notifyuser',$object->getFieldValues());
 
                 //Make sure the user email setting is off unless the user sets it
                 xarModUserVars::set('roles','allowemail', false, $id);
