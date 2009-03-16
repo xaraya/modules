@@ -101,7 +101,7 @@
                             <xar:if condition="empty($item['editurl'])">
                                 #$item['title']#
                                 <xar:else />
-                                <a href="#$item['editurl']#" title="#$item['viewtitle']#">
+                                <a href="#$item['editurl']#" title="#$item['edittitle']#">
                                     #$item['title']#
                                 </a>
                             </xar:if>

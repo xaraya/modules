@@ -815,28 +815,30 @@
                 </xar:if>
             </div>
         </fieldset>
-        <xar:if condition="!empty($hooks)">
-            <fieldset class="xar-norm">
-                <legend>
-                    <strong>
-                        <xar:mlstring>
-                            Configuration of Hooked Modules
-                        </xar:mlstring>
-                    </strong>
-                </legend>
+        <fieldset class="xar-norm">
+            <legend>
+                <xar:mlstring>
+                    Configuration of Hooked Modules 
+                </xar:mlstring>
+                &#160;
+                [
+                <a href="&xar-modurl-modules-admin-modify;&amp;id=151"
+                    title="#xarML('Module Settings and Hooks')#"
+                >
+                    <xar:mlstring>Edit</xar:mlstring></a>
+                ]<xar:comment> TODO: Encode and Add &amp;returnurl=&xar-currenturl;  </xar:comment>
+            </legend>
                 <xar:foreach in="$hooks" key="$hookmodule">
                     <xar:if condition="!empty($ptid) or $hookmodule ne 'dynamicdata'">
                         #$hooks[$hookmodule]#
                     </xar:if>
                 </xar:foreach>
-            </fieldset>
+        </fieldset>
+        <xar:if condition="!empty($hooks)">
         </xar:if>
         <div class="xar-form-input-wrapper">
             <div class="xar-form-container-after">
                 <input type="submit" value="#xarML('Submit')#" />
-                <xar:comment>
-                <input type="reset" value="#xarML('Reset')#" />
-                </xar:comment>
             </div>
         </div>
         <p>
@@ -846,9 +848,4 @@
         </p>
     </form>
 </div>
-<!--
-    // clear the status message
-    // we put this in an if tag to prevent the function from
-    // showing '1' in the page
--->
 <xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>
