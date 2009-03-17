@@ -71,9 +71,9 @@
             <xar:foreach in="$items" key="$key" value="$item">
                 <xar:set name="dummy">$object->setFieldValues($item)</xar:set>
                 <xar:set name="dummy">$object->setFieldPrefix($key)</xar:set>
-                <xar:if condition="isset($tab) AND $tab eq 'preview'">
+                <xar:if condition="$tab eq 'preview' AND $index eq 0">
                     <xar:set name="visible">array('none','none','block')</xar:set>
-                <xar:elseif condition="$index eq 0" />
+                <xar:elseif condition="$tab ne 'preview' AND $index eq 0" />
                     <xar:set name="visible">array('block','none','none')</xar:set>
                 <xar:else />
                     <xar:set name="visible">array('none','none','none')</xar:set>
