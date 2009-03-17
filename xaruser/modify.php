@@ -31,32 +31,37 @@ function publications_user_modify($args)
     if (!xarVarFetch('tab',        'str:1', $tab, '', XARVAR_NOT_REQUIRED)) {return;}
 
     // FIXME: this is too clumsy
-    $data['items'] = array();
-    $data['object'] = DataObjectMaster::getObjectList(array('name' => $name));
-    $where = "id = " . $id;
-    $items = $data['object']->getItems(array('where' => $where));
-    foreach ($items as $key => $value) $data['items'][$key] = $value;
-    $data['object'] = DataObjectMaster::getObjectList(array('name' => $name));
-    $where = "parent = " . $id;
-    $items = $data['object']->getItems(array('where' => $where));
-    foreach ($items as $key => $value) $data['items'][$key] = $value;
-
+    
+    // Get our object
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
+
+    // If creating a new translation get an empty copy
+    if ($tab == 'newtranslation') {
+        $data['object']->properties['parent']->setValue($id);
+        $data['items'][0] = $data['object']->getFieldValues();
+        $tab = '';
+    } else {
+        $data['items'] = array();
+    }
+
+    // Get the base document
+    $data['object']->getItem(array('itemid' => $id));
+    $data['items'][$id] = $data['object']->getFieldValues();
+
+    // Get any translations of the base document
+    $data['objectlist'] = DataObjectMaster::getObjectList(array('name' => $name));
+    $where = "parent = " . $id;
+    $items = $data['objectlist']->getItems(array('where' => $where));
+    foreach ($items as $key => $value) {
+        $data['object']->getItem(array('itemid' => $key));
+        $data['items'][$key] = $data['object']->getFieldValues();
+    }
     
     if (!empty($ptid)) {
         $template = $pubtypes[$ptid]['name'];
     } else {
 // TODO: allow templates per category ?
        $template = null;
-    }
-
-    $data['object'] = DataObjectMaster::getObject(array('name' => $name));
-    if ($tab == 'newtranslation') {
-        $data['object']->properties['parent']->setValue($id);
-        $data['items'][0] = $data['object']->getFieldValues();
-        $tab = '';
-    } else {
-        $data['object']->getItem(array('itemid' => $id));
     }
 
     // Send the publication type and the object properties to the tempate 

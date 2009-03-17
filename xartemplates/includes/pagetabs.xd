@@ -48,7 +48,7 @@
         </xar:foreach>
         <xar:if condition="$settings['allowtranslations'] AND !empty($properties['id']->value)">
             <dd style="float:right" id="newtranslaiton">
-                <a href="#xarServerGetCurrentURL(array('tab' => 'newtranslation'))#">
+                <a href="#xarModURL('publications','user','modify',array('itemid' => $properties['id']->value, 'name' => $object->name, 'tplmodule' => 'publications','tab' => 'newtranslation'))#">
                     New Translation
                 </a>
             </dd>
