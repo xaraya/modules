@@ -28,7 +28,7 @@ function publications_user_modify($args)
     if (!xarVarFetch('itemid',     'isset', $id, NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('return_url', 'str:1', $data['return_url'], NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('name',       'str:1', $name, NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('tab',        'str:1', $tab, '', XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('tab',        'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
 
     // FIXME: this is too clumsy
     
@@ -36,10 +36,10 @@ function publications_user_modify($args)
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
 
     // If creating a new translation get an empty copy
-    if ($tab == 'newtranslation') {
+    if ($data['tab'] == 'newtranslation') {
         $data['object']->properties['parent']->setValue($id);
         $data['items'][0] = $data['object']->getFieldValues();
-        $tab = '';
+        $data['tab'] = '';
     } else {
         $data['items'] = array();
     }

@@ -53,7 +53,6 @@ function publications_user_update()
     // Store each item for later processing
         $itemsdata[$prefix] = $data['object']->getFieldValues();
     }
-//    var_dump($itemsdata);exit;
     
     if ($data['preview'] || !$isvalid) {
         // Preview or bad data: redisplay the form
