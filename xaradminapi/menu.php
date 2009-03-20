@@ -15,6 +15,7 @@
 
 /**
  * Generate the common admin menu configuration
+ * DEPRECATED Mar 09
  * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
 function sitecontact_adminapi_menu()

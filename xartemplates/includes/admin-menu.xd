@@ -1,46 +1,28 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:comment>Common Administration menu</xar:comment>
 <xar:style scope="module" module="base" file="navtabs" />
+
 <xar:set name="request">xarRequestGetInfo()</xar:set>
 <xar:set name="activetab">#$request.2#</xar:set>
-<div>
-  <dl class="xar-tabs">
-    <dt class="help" title="#xarML('Choose an action to perform')#">
-      <xar:mlstring>Actions:</xar:mlstring>
-    </dt>
-    <xar:sec mask="EditSiteContact" catch="false">
-        <xar:set name="tabclass">$activetab=='managesctypes'?'active':''</xar:set>
-        <dd class="#$tabclass#">
-            <a href="&xar-modurl-sitecontact-admin-managesctypes;" >
-                <xar:mlstring>Manage Contact Forms</xar:mlstring>
-            </a>
-        </dd>
-    </xar:sec>
-    <xar:sec mask="EditSiteContact" catch="false">
-        <xar:if condition="$activetab eq 'view' or $activetab eq 'display' or $activetab eq 'delete'">
-            <xar:set name="tabclass">'active'</xar:set>
-        <xar:else />
-            <xar:set name="tabclass">''</xar:set>
-        </xar:if>
-        <dd class="#$tabclass#">
-          <a href="&xar-modurl-sitecontact-admin-view;">
-            <xar:mlstring>Review Responses</xar:mlstring>
-          </a>
-        </dd>
-    </xar:sec>    
-    <xar:sec mask="AdminSiteContact" catch="false">
-        <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
-        <dd class="#$tabclass#">
-          <a href="&xar-modurl-sitecontact-admin-modifyconfig;">
-            <xar:mlstring>Modify Global Config</xar:mlstring>
-          </a>
-        </dd>
-        <xar:set name="tabclass">$activetab=='overview'?'active':''</xar:set>
-        <dd class="#$tabclass#">
-            <a href="&xar-modurl-sitecontact-admin-overview;">
-                <xar:mlstring>Overview</xar:mlstring>
-            </a>
-        </dd>
-    </xar:sec>
-    </dl>
-</div>
+
+<xar:template type="module" module="base" file="admin-breadcrumb" />
+
+<xar:if condition="xarModGetVar('themes','adminpagemenu')">
+    <xar:if condition="!empty($menulinks)">
+        <div>
+            <dl class="xar-tabs">
+                <dt class="help" title="#xarML('Choose an action to perform')#">
+                    <xar:mlstring>Actions:</xar:mlstring>
+                </dt>
+                <xar:loop name="$menulinks">
+                    <xar:set name="tabclass">in_array($activetab, $loop->item['active'])?'active':''</xar:set>
+                    <dd class="#$tabclass#">
+                        <a title="#$loop:item.title#" href="#$loop:item.url#" >
+                            #$loop:item.label#
+                        </a>
+                    </dd>
+                </xar:loop>
+            </dl>
+        </div>
+    </xar:if>
+</xar:if>

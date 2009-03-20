@@ -8,7 +8,7 @@
  * @link http://xaraya.com
  *
  * @subpackage Xarigami SiteContact Module
- * @copyright (C) 2007,2008 2skies.com
+ * @copyright (C) 2007,2008,2009 2skies.com
  * @link http://xarigami.com/project/sitecontact
  * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
@@ -104,7 +104,8 @@ function sitecontact_admin_modifyconfig()
     }
 
     $data['authid'] = xarSecGenAuthKey();
-
+    //common menulink
+    $data['menulinks'] = xarModAPIFunc('sitecontact','admin','getmenulinks');
         $data['link'] = xarModURL('sitecontact','admin','updateconfig');
     /* Return the template variables defined in this function */
     return $data;

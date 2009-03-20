@@ -7,7 +7,7 @@
  * @link http://xaraya.com
  *
  * @subpackage SiteContact Module
- * @copyright (C) 2004-2008 2skies.com
+ * @copyright (C) 2004-2008,2009 2skies.com
  * @link http://xarigami.com/project/sitecontact
  * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
@@ -21,7 +21,8 @@ function sitecontact_admin_overview()
     if (!xarSecurityCheck('AdminSiteContact')) return;
 
     $data=array();
-    
+    //common menulink
+    $data['menulinks'] = xarModAPIFunc('sitecontact','admin','getmenulinks');    
     /* let's just display the main module overview */
     return xarTplModule('sitecontact', 'admin', 'main',$data,'main');
 }

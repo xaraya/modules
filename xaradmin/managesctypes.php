@@ -8,7 +8,7 @@
  * @link http://xaraya.com
  *
  * @subpackage Xarigami SiteContact Module
- * @copyright (C) 2007,2008 2skies.com
+ * @copyright (C) 2007,2008,2009 2skies.com
  * @link http://xarigami.com/project/sitecontact
  * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
@@ -49,7 +49,8 @@ function sitecontact_admin_managesctypes()
     // Initialise the template variables
     $data = array();
     $sctypes=array();
-
+    //common menulink
+    $data['menulinks'] = xarModAPIFunc('sitecontact','admin','getmenulinks');
     // Get current item types
     $sctypes = xarModAPIFunc('sitecontact','user', 'getcontacttypes',
                             array('startnum' => $startnum,

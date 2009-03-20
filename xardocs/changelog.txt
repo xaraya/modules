@@ -1,5 +1,6 @@
 Version 1.1.2 x x 2009
 - add description in instance definitions 
+- update menu links with new method
 
 Version 1.1.1 17 Jan 2009
 - Bug fix release covering logged issues:

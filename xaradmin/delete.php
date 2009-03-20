@@ -8,7 +8,7 @@
  * @link http://xaraya.com
  *
  * @subpackage Xarigami SiteContact Module
- * @copyright (C) 2007,2008 2skies.com
+ * @copyright (C) 2007,2008,2009 2skies.com
  * @link http://xarigami.com/project/sitecontact
  * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
@@ -50,6 +50,9 @@ function sitecontact_admin_delete($args)
         $data['username'] = xarVarPrepForDisplay($item['username']);
     // Create filters based on publication type
     $formfilters = array();
+    $data = array();
+    //common menulink
+    $data['menulinks'] = xarModAPIFunc('sitecontact','admin','getmenulinks');
     foreach ($scformtypes as $id => $formtype) {
         if (!xarSecurityCheck('EditSiteContact',0,'ContactForm',"$formtype[scid]:All:All")) {
             continue;
