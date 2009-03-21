@@ -1,4 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="xarigamiprojectlink">'<a href="http://xarigami.com/project/xartinymce" title="'.xarML('xarTinyMCE Project page at xarigami.com').'">'.xarML('xarTinyMCE news and resources').'</a>'</xar:set>
 <div class="xar-mod-head">
    <span class="xar-mod-title"><xar:mlstring>XarTinyMCE Administration</xar:mlstring></span>
 </div>
@@ -11,9 +12,18 @@
             XarTinyMCE is a Xaraya Module based on TinyMCE, a platform independent web based Javascript
             HTML WYSIWYG editor released as Open Source under LGPL by Moxiecode Systems AB</xar:mlstring></em>
         </p>
-        <p><xar:mlstring>xarTinyMCE module integrates the TinyMCE application by </xar:mlstring><a href="http://tinymce.moxiecode.com/" title="Moxiecode">http://tinymce.moxiecode.com</a>
-            <xar:mlstring> for use within your Xaraya web site. It has a number of nice features with&nbsp; multiple browser support for all modern browsers (currently Mozilla, MSIE, FireFox, Opera and Safari) and support for XHTML 1.0 strict markup. There are powerful
-            features for not only allowing or disallowing xhtml tags (like the Xaraya HTML module), but also what attributes, and attribute values to allow. You can enhance
+        <p> 
+            <xar:set name="moxielink">'<a href="http://tinymce.moxiecode.com/" title="Moxiecode">http://tinymce.moxiecode.com</a>'</xar:set>
+            <xar:ml>
+                <xar:mlstring>xarTinyMCE module integrates the TinyMCE application by #(1)</xar:mlstring>
+                <xar:mlvar>#$moxielink#</xar:mlvar>
+            </xar:ml>
+            <xar:mlstring> for use within your Xaraya web site. It has a number of nice features with
+                multiple browser support for all modern browsers 
+                (currently Mozilla, MSIE, FireFox, Opera and Safari) and support for XHTML 1.0 strict 
+                markup. There are powerful features for not only allowing or disallowing 
+                xhtml tags (like the Xaraya HTML module), but also what attributes, 
+                and attribute values to allow. You can enhance
             xarTinyMCE further with some of the bundled plugins and configuration settings.</xar:mlstring>
         </p>
 
@@ -38,37 +48,70 @@
                          <li><xar:mlstring>Check the Active xarTinyMCE checkbox.</xar:mlstring></li>
                     </ul>
                 </li>
-                <li style="margin-top:20px;"><xar:mlstring>Once installed you have two basic ways (with variations on these) to customize which textareas or divs are used as WYSIWYG:</xar:mlstring>
+                <li style="margin-top:20px;">
+                    <xar:mlstring>Once installed you have two basic ways (with variations on these) to customize which textareas or divs are used as WYSIWYG:</xar:mlstring>
                 <br />
                      <ol style="list-style-type:lower-alpha; ">
                          <li style="margin-top:20px;">
-                             <xar:mlstring>Choose the <strong>All Text Areas Mode</strong> and every textarea will be WYSIWYG enabled when Activation Method is set to 'Automatic'. 
-                             Not recommended as the javascript is loaded on every page even when not required, but good for testing and easy install. 
-                             With this method you can turn off WYSIWYG in a specific textarea by adding the special reserved class <strong><code>class="mceNoEditor"</code></strong> to the textarea. 
-                             This acts as a marker that tells xartinymce NOT to activate WYSIWYG for this textarea (do this in your template or a textarea validation in Articles or Dynamic Data).</xar:mlstring>
+                            <xar:set name="emphcode">'<strong><code>class="mceNoEditor"</code></strong>'</xar:set>
+                            <xar:ml>
+                                 <xar:mlstring>Choose the 'All Text Areas Mode' and every 
+                                 textarea will be WYSIWYG enabled when Activation Method is set to 'Automatic'. 
+                                 Not recommended as the javascript is loaded on every page even when not 
+                                 required, but good for testing and easy install. With this method you can 
+                                 turn off WYSIWYG in a specific textarea by adding the special reserved 
+                                 class #(1)to the textarea. 
+                                 This acts as a marker that tells xartinymce NOT to activate WYSIWYG 
+                                 for this textarea (do this in your template or a textarea validation 
+                                 in Articles or Dynamic Data).
+                                 </xar:mlstring>
+                             <xar:mlvar>#$emphcode#</xar:mlvar>
+                             </xar:ml>
                          </li>
-                         <li style="margin-top:20px;"><xar:mlstring>Choose the Mode of <strong>Special Labelled Only</strong> in the configuration options.
-                            Then add a  <strong>xarTinyMCE GUI Dynamic Data Property field</strong> to your Article pubtypes or xarPages Page Type, or anywhere else you need a WYSIWYG input area.
-                            This DD Property automatically marks the div or textarea of the field with a special class trigger of <strong><code>class="mceEditor"</code></strong> and this acts as a marker for the WYSIWYG conversion.
-                            You can also do this manually by adding the class as <strong><code>class="mceEditor"</code></strong> to any textarea or div such as the textareas in xarbb templates, 
-                            or through the textarea or xartinymce DD property validation in the GUI.
-                            You can set row height and column width in the DD validation field. eg 20:80 for 20 rows high, 80 columns wide.
-                            If you can't see the xarTinyMCE GUI DD property in your DD list then </xar:mlstring><a href="#$ddflushurl#"><xar:mlstring>flush the Property Cache</xar:mlstring></a>.
+                         <li style="margin-top:20px;">
+                            <xar:set name="flushurldesc">'<a href="'.$ddflushurl.'">'.xarML('flush the Property Cache').'</a>'</xar:set>
+                            <xar:ml>
+                                <xar:mlstring>Choose the Mode of <strong>Special Labelled Only</strong> in 
+                                the configuration options.
+                                Then add a  xarTinyMCE GUI Dynamic Data Property fieldto your Article pubtypes or xarPages Page Type, or anywhere else you need a WYSIWYG input area.
+                                This DD Property automatically marks the div or textarea of the field with a special class trigger of #(1) and this acts as a marker for the WYSIWYG conversion.
+                                You can also do this manually by adding the class as #(1)  to any textarea or div such as the textareas in xarbb templates, 
+                                or through the textarea or xartinymce DD property validation in the GUI.
+                                You can set row height and column width in the DD validation field. eg 20:80 for 20 rows high, 80 columns wide.
+                                If you can't see the xarTinyMCE GUI DD property in your DD list then #(2).
+                                </xar:mlstring>
+                                <xar:mlvar>#$emphcode#</xar:mlvar>
+                                <xar:mlvar>#$flushurldesc#</xar:mlvar>
+                            </xar:ml>
+
                         </li>
                      </ol>
                 </li>
                <li style="margin-top:20px;">
-               <xar:mlstring>Activation mode - you can activate xartinymce automatically or by using manual configuration via a xarTinymce DD property, textarea property, or in the templates.</xar:mlstring>
+                        <xar:mlstring>Activation mode - you can activate xartinymce automatically or 
+                        by using manual configuration via a xarTinymce DD property, textarea property, 
+                        or in the templates.</xar:mlstring>
 
                      <ol style="list-style-type:lower-alpha; ">
                          <li style="margin-top:20px;">
-                         <xar:mlstring>Choose <strong>Automatic</strong> to have xarTinyMce automatically activated. This is required when mode is set to "All Textareas" or you are using multiple custom configurations. </xar:mlstring></li>
-
-                         <li style="margin-top:20px;">
-                         <xar:mlstring>Choose <strong>Manual Override</strong> : 
-                         In this instance either use a tinymce Dynamic Data Property to replace your textareas. If you want to use any textarea in your site, you should also add the following specific template snippet code to your page or other specific templates.
-                         When you add the template snippet, all textareas contained or included in the template where you have the XarTinymce tags are converted to WYSIWYG according to the "All Text Area" or "Special Labelled Only" setting above.
-                         Alternatively, replace the variable "jstring" in an override template for the <code>tinymce_insert.xd</code> template with your own tinymce variables.</xar:mlstring></li>
+                             <xar:mlstring>Choose <strong>Automatic</strong> to have xarTinyMce 
+                             automatically activated. This is required when mode is set to "All Textareas" 
+                             or you are using multiple custom configurations. 
+                             </xar:mlstring>
+                         </li>
+                             <li style="margin-top:20px;">
+                             <xar:mlstring>Choose <strong>Manual Override</strong> : 
+                             In this instance either use a tinymce Dynamic Data Property 
+                             to replace your textareas. If you want to use any textarea in your site, 
+                             you should also add the following specific template snippet code to your 
+                             page or other specific templates. When you add the template snippet, all 
+                             textareas contained or included in the template where you have the XarTinymce 
+                             tags are converted to WYSIWYG according to the "All Text Area" or 
+                             "Special Labelled Only" setting above.
+                             Alternatively, replace the variable "jstring" in an override template for 
+                             the <code>tinymce_insert.xd</code> template with your own tinymce variables.
+                             </xar:mlstring>
+                         </li>
                     </ol>
                 </li>
 
@@ -78,29 +121,45 @@
             &lt;xar:template file="tinymce_insert" module="tinymce" type="module" /&gt;
         &lt;/xar:if&gt;
                 </pre>
-
+                <xar:set name="moxielinkhelp">'<a href ="http://wiki.moxiecode.com/index.php/TinyMCE:Index">'.xarML('usage instructions').'</a>'</xar:set>
                 <p>
-                    <xar:mlstring>See the detailed </xar:mlstring><a href ="http://wiki.moxiecode.com/index.php/TinyMCE:Index"><xar:mlstring>usage instructions</xar:mlstring></a><xar:mlstring> for more detail on options.</xar:mlstring>
+                    <xar:ml>
+                        <xar:mlstring>See the detailed #(1) for more detail on options.</xar:mlstring>
+                        <xar:mlvar>#$moxielinkhelp#</xar:mlvar>
+                    </xar:ml>
                 </p>
 
     <h3>
      <xar:mlstring>About the Dynamic Data Property</xar:mlstring>
     </h3>
         <p>
-            <xar:mlstring>The xarTinyMCE Dynamic Data WYSIWYG property is available and automatically activates a WYSIWYG with mode set to All Textareas or
-            Special Labelled Textareas. If you are only using the TinyMCE wysiwyg properties then set your mode to Special Labelled to ensure the javascript only loads when it is needed.</xar:mlstring>
+            <xar:mlstring>The xarTinyMCE Dynamic Data WYSIWYG property is available and automatically 
+            activates a WYSIWYG with mode set to All Textareas or
+            Special Labelled Textareas. If you are only using the TinyMCE wysiwyg properties then 
+            set your mode to Special Labelled to ensure the javascript only loads when it is needed.
+            </xar:mlstring>
         </p>
             <ol>
                 <li style="margin-top:20px;">
-                <xar:mlstring>Add a XarTinyMCE GUI Dynamic Data field to your publication type (or other module) in the usual way. For example, choose the TinyMCE property to replace your Textarea properties in your Article Publication types or xarPages page types.</xar:mlstring>.
+                <xar:mlstring>Add a XarTinyMCE GUI Dynamic Data field to your publication type 
+                (or other module) in the usual way. For example, choose the TinyMCE property to 
+                replace your Textarea properties in your Article Publication types or xarPages page types.
+                </xar:mlstring>.
                 </li>
                 <li style="margin-top:20px;">
-                    <xar:mlstring>The prompt for the Wysiwyg editor is a popup dialog box, by default. From the configuration area you can set this to an On/Off button to activate the wysiwyg area.</xar:mlstring>
+                    <xar:mlstring>The prompt for the Wysiwyg editor is a popup dialog box, by default. 
+                    From the configuration area you can set this to an On/Off button to activate the wysiwyg area.
+                    </xar:mlstring>
                 </li>
 
                 <li style="margin-top:20px;">
-                <xar:mlstring>The size of the xarTinyMCE wysiwyg field automatically takes on the size of the existing textarea. However you can adjust this in a number of ways. You can set row height and column width in the property validation field. eg 20:80 for 20 rows high, 80 columns wide.
-                You can also allow resizing of the tinyMCE wysiwyg from the config settings of the TinyMCE module, or add the <strong>FullScreen</strong> toggle plugin to your tinymce plugin and button layout.</xar:mlstring>
+                <xar:mlstring>The size of the xarTinyMCE wysiwyg field automatically takes on the 
+                size of the existing textarea. However you can adjust this in a number of ways. You 
+                can set row height and column width in the property validation field. eg 20:80 for 20 rows high, 80 columns wide.
+                You can also allow resizing of the tinyMCE wysiwyg from the config settings of the 
+                TinyMCE module, or add the <strong>FullScreen</strong> toggle plugin to your tinymce 
+                plugin and button layout.
+                </xar:mlstring>
                 </li>
             </ol>
       <h3>
@@ -140,17 +199,22 @@
                <li><xar:mlstring>bbcode - Ability to add punbb type bbcode in your wysiwyg</xar:mlstring></li> 
                <li><xar:mlstring>dphighlight- Ability to easily add code highlighting to you articles (must have dpHighlight module installed with dpHighlight active)</xar:mlstring></li>                               
             </ol>
-            <p><xar:mlstring>Further <strong>plugins that are customized and tested for xartinymce</strong> can be downloaded from the </xar:mlstring><a href="http://xarigami.com/project/xartinymce"><xar:mlstring>Xarigami website project page for xarTinyMCE</xar:mlstring></a>.
-            <xar:mlstring>These include the previously bundled IBrowser (image upload and browse), IManager (full featured image upload, browse and editing with all the features of phpthumbs, and Dictionary lookup plugin.
-            </xar:mlstring>
+            <p>
+                <xar:ml>
+                    <xar:mlstring>Further plugins that are customized and tested for xartinymce can be downloaded from the #(1)
+                    These include the previously bundled IBrowser (image upload and browse), IManager 
+                    (full featured image upload, browse and editing with all the features of phpthumbs, and Dictionary lookup plugin.
+                    </xar:mlstring>
+                <xar:mlvar>#$xarigamiprojectlink#</xar:mlvar>
+                </xar:ml>
             </p>
         <h3>
             <xar:mlstring>Custom and Multiple Configurations</xar:mlstring>
         </h3>
             <p><xar:mlstring>The Advanced Options tab in the configuration screen allows you to adjust two features:</xar:mlstring></p>
             <ol style="list-style-type:lower-alpha; ">
-                <li><xar:mlstring><strong>Multiple Configurations</strong> can now be setup allowing you to use more than one configuration on a a page.
-                Please make sure you add each new configuration with a <strong>unique</strong> text area trigger name, and specify the mode. Each configuration should be in the form:</xar:mlstring>
+                <li><xar:mlstring>Multiple Configurations can now be setup allowing you to use more than one configuration on a a page.
+                Please make sure you add each new configuration with a uniquetext area trigger name, and specify the mode. Each configuration should be in the form:</xar:mlstring>
                 <pre>
 tinyMCE.init({
     mode : "specific_textareas",
@@ -158,8 +222,12 @@ tinyMCE.init({
     theme : "default"
     });
                 </pre>
-                <xar:mlstring>To activate your custom configuration, add the textarea trigger class to a textarea eg </xar:mlstring><strong><code>class="mceEditor2"</code></strong><br />
-                <xar:mlstring><strong>DO NOT</strong> use <strong>mceEditor</strong> as the class attribute trigger as it is reserved.</xar:mlstring><br /><br /></li>
+                <xar:ml>
+                <xar:mlstring>To activate your custom configuration, add the textarea trigger class to a textarea eg #(1)
+                DO NOT use 'mceEditor' as the class attribute trigger as it is reserved.
+                </xar:mlstring>
+               <xar:mlvar>#$emphcode#</xar:mlvar>                
+                </xar:ml><br /><br /></li>
 
                 <li><xar:mlstring><strong>Custom Configuration</strong> now allows you to add your own custom configuration values to the <strong>existing</strong> default tinymce configuration. Make sure you check your resulting tinymce code in the displayed final configuration code on this page before using.</xar:mlstring></li>
             </ol>
@@ -177,14 +245,27 @@ tinyMCE.init({
         </h3>
             <p><xar:mlstring>Further information on xarTinyMCE can be found at</xar:mlstring></p>
             <ul>
-                 <li><xar:mlstring>xarTinyMCE project page at</xar:mlstring> <a title="#xarML('xarTinyMCE Project page at xarigami.com')#" href="http://xarigami.com/project/xartinymce">xarTinyMCE news and resources</a>.
-                     <xar:mlstring> Click on main Display tab to get the latest release information.</xar:mlstring>
+                 <li>
+                    <xar:ml>
+                        <xar:mlstring>The xarTinyMCE project page at #(1). Click on main Display tab to get the latest release information.</xar:mlstring>
+                        <xar:mlvar>#$xarigamiprojectlink#</xar:mlvar>
+                    </xar:ml>
                  </li>
-                 <li><xar:mlstring>Related tutorials and documentation on xarTinyMCE found at </xar:mlstring> <a href="http://xarigami.com/project/xartinymce?page=resources" title="#xarML('Related resources on XarTinyMCE')#"><xar:mlstring>Xarigami Resources for xarTinyMCE</xar:mlstring></a>
+                 <li>
+                    <xar:set name="resourcelink">'<a href="http://xarigami.com/project/xartinymce?page=resources" title="'.xarML('Related resources on XarTinyMCE').'">'.xarML('Xarigami Resources for xarTinyMCE').'</a>'</xar:set>
+                    <xar:ml>
+                        <xar:mlstring>Related tutorials and documentation on xarTinyMCE found at #(1).</xar:mlstring>
+                        <xar:mlvar>#$resourcelink#</xar:mlvar>
+                    </xar:ml>
                  </li>
-                 <li><xar:mlstring>Please post any bugs and feature requests at </xar:mlstring> <a href="http://xarigami.com/contrails/displayproject/xtm" title="#xarML('XarTinyMCE issue tracker')#"><xar:mlstring>xarTinyMCE issue tracker</xar:mlstring></a>
+                 <li>
+                    <xar:set name="resourcebugs">'<a href="http://xarigami.com/contrails/displayproject/xtm" title="'.xarML('XarTinyMCE issue tracker').'">'.xarML('xarTinyMCE issue tracker').'</a>'</xar:set>
+                    <xar:ml>
+                        <xar:mlstring>Please post any bugs and feature requests at #(1).</xar:mlstring>
+                        <xar:mlvar>#$resourcebugs#</xar:mlvar>
+                    </xar:ml>
                  </li>                 
              </ul>
-            <p style="font-size:smaller;"><strong>&nbsp;<xar:mlstring>xarTinyMCE WYSIWYG Editor Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 3.1.0&nbsp; 2008-07-06
+            <p style="font-size:smaller;"><strong>&#160;<xar:mlstring>xarTinyMCE WYSIWYG Editor Overview</xar:mlstring></strong><br />&#160;<xar:mlstring>Version</xar:mlstring> 3.1.0&#160; 2008-09-06
             </p>
    </div>
