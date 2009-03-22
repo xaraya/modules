@@ -40,7 +40,7 @@ function sitecontact_admin_delete($args)
         $lastview= unserialize($lastview);
     }
     $scformtypes = xarModAPIFunc('sitecontact','user','getcontacttypes');
-
+    $data = array();
     /* Check for confirmation. */
     if (empty($confirm)) {
         $data['scrid'] = $scrid;
@@ -49,7 +49,7 @@ function sitecontact_admin_delete($args)
         $data['username'] = xarVarPrepForDisplay($item['username']);
     // Create filters based on publication type
     $formfilters = array();
-    $data = array();
+
     //common menulink
     $data['menulinks'] = xarModAPIFunc('sitecontact','admin','getmenulinks');
     foreach ($scformtypes as $id => $formtype) {
