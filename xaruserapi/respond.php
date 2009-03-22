@@ -328,7 +328,7 @@ function sitecontact_userapi_respond($args)
                       'fieldconfig'   => $fieldconfig
                      );
 
-    if (($isvalid == FALSE) || ($antibotinvalid == TRUE) || ($badcaptcha == TRUE) || is_array($invalid)) {
+    if (($isvalid == FALSE) || ($antibotinvalid == TRUE) || ($badcaptcha == TRUE) || count($invalid)>0) {
          //now make sure our flags are set appropriately
          $data['isvalid'] = FALSE;
          $data['botreset']= TRUE; //so we do not reset referer

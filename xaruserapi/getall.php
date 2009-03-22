@@ -106,11 +106,11 @@ function sitecontact_userapi_getall($args)
         return false;
     }
 
-   if (isset($scid)) {
-     $thistype= $scid;
-   }else {
-     $thistype=xarModGetVar('sitecontact','defaultform');
-   }
+    if (isset($scid)) {
+        $thistype= $scid;
+    }else {
+        $thistype=xarModGetVar('sitecontact','defaultform');
+    }
  
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1,$bindvars );
 
