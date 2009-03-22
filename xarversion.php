@@ -18,7 +18,7 @@
   */
 $modversion['name']           = 'sitecontact';
 $modversion['id']             = '890';
-$modversion['version']        = '1.1.2';
+$modversion['version']        = '1.1.3';
 $modversion['displayname']    = 'SiteContact';
 $modversion['description']    = 'Contact site admin by email';
 $modversion['credits']        = 'xardocs/credits.txt';

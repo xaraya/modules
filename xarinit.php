@@ -259,7 +259,7 @@ function sitecontact_upgrade($oldversion)
                     );
             xarDefineInstance('sitecontact', 'ContactForm', $instances);
             
-        case '1.1.2' : //current version
+        case '1.1.3' : //current version
              break;
     }
     // Update successful
