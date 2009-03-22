@@ -269,12 +269,10 @@ function sitecontact_userapi_respond($args)
     //now check email  - doing it before may overwrite
 
     if (isset($useremail) && !empty($useremail)){ //some times we may not want a user email - check required in fieldconfig
-        $checkemail = xarModAPIFunc('roles','user','validatevar',
-                              array('var' => $useremail,
-                                    'type' => 'email'));
-        if (!empty($checkemail)) {
+        $checkemail = xarVarValidate('email', $useremail, true);
+        if ($checkemail == FALSE) {
            $isvalid = FALSE;
-           $invalid['useremail'] =$checkemail;
+           $invalid['useremail'] =xarML('You must supply a valid email address');
 
         }
     }    
