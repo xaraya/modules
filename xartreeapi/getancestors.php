@@ -41,6 +41,7 @@ function xarpages_treeapi_getancestors($args)
         while (!$result->EOF) {
             list($pid) = $result->fields;
             $ancestors[] = $pid;
+            $result->MoveNext();
         }
         if (count($ancestors) > 0) {
             return $ancestors;

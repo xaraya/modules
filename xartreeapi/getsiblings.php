@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Get the parent/left/right values for a single item.
+ * Get the sibling values for a single item.
  * Will include the virtual item '0' if necessary.
  * id: ID of the item.
  * tablename: name of table
@@ -39,6 +39,7 @@ function xarpages_treeapi_getsiblings($args)
         while (!$result->EOF) {
             list($pid) = $result->fields;
             $siblings[] = $pid;
+            $result->MoveNext();
         }
         if (count($siblings) > 0) {
             return $siblings;
