@@ -5,7 +5,7 @@
 <xar:set name="request">xarRequestGetInfo()</xar:set>
 <xar:set name="activetab">#$request.2#</xar:set>
 
-<xar:template type="module" module="base" file="admin-breadcrumb" />
+<xar:template type="module" module="sitecontact" file="admin-breadcrumb" />
 
 <xar:if condition="xarModGetVar('themes','adminpagemenu')">
     <xar:if condition="!empty($menulinks)">
