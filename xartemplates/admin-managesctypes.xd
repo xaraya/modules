@@ -209,6 +209,22 @@
          </div>
 
     </fieldset>
+    <fieldset>
+        <legend><xar:mlstring>Field configuration</xar:mlstring></legend>
+            <p><xar:mlstring>The fields below are displayed by default in all sitecontact forms.</xar:mlstring></p>
+            <div class="xar-form-input-wrapper">
+                <label for="fieldconfig" class="xar-form-label">
+                   <xar:mlstring>Check fields that require user entry:</xar:mlstring>
+                </label>  
+                <div class="xar-form-container-after">    
+                    <xar:data-input id="fieldconfig1" name="fieldconfig" type="checkboxlist" validation="$fieldarray" layout="column" value="$item['fieldconfig']" />
+                        
+                    <p><xar:mlstring>If you check a field, the user will be required to enter a value for that field before they can submit the form.</xar:mlstring></p>
+                    <p><xar:mlstring>If you define additional Dynamic Data (DD) fields for a form, you can make that field 'required' in its DD validation.</xar:mlstring></p>                 
+                </div>
+               
+            </div>
+    </fieldset>    
 <!-- Not on create - wait let's see
     <fieldset>
        <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>

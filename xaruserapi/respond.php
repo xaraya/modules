@@ -529,7 +529,7 @@ function sitecontact_userapi_respond($args)
                           'properties' => $properties,
                           'todaydate'  => $todaydate);
 
-    $userhtmlmessage= xarTplModule('sitecontact','user','usermail-html-'.$sctypename,$userhtmlarray);
+    $userhtmlmessage= xarTplModule('sitecontact','user','usermail-html',$userhtmlarray,$sctypename);
     if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
         xarErrorHandled();
         $userhtmlmessage= xarTplModule('sitecontact', 'user', 'usermail-html',$userhtmlarray);
@@ -553,7 +553,7 @@ function sitecontact_userapi_respond($args)
                           'properties' => $properties,
                           'todaydate'  => $todaydate);
                           
-    $usertextmessage= xarTplModule('sitecontact','user','usermail-text-'.$sctypename, $usertextarray);
+    $usertextmessage= xarTplModule('sitecontact','user','usermail-text', $usertextarray, $sctypename);
 
     if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
         xarErrorHandled();
