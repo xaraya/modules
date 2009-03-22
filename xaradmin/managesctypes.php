@@ -208,8 +208,7 @@ function sitecontact_admin_managesctypes()
                     );
                 }
             }
-            
-             $updatedscid=xarModAPIFunc('sitecontact','admin','updatesctype', $item);
+                $updatedscid=xarModAPIFunc('sitecontact','admin','updatesctype', $item);
 
              if (!$updatedscid) {
                   xarSessionSetVar('statusmsg',xarML('Problem updating the site contact form #(1)',$item['sctypename']));
@@ -372,6 +371,7 @@ function sitecontact_admin_managesctypes()
         } else {
             $data['hooks'] = $hooks;
         }
+  
     } elseif ($action == 'delete') {
         xarSessionSetVar('statusmsg','');
         $item = xarModAPIFunc('sitecontact','user','getcontacttypes', array('scid'=> $scid));

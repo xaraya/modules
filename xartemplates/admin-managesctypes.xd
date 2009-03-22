@@ -369,7 +369,7 @@
                 <xar:mlstring>NOTE: Please ensure you understand the potential problems of allowing
                 muliple emailings (spammer use) if you have open access on your website to this form.</xar:mlstring>
             </p>
-        <div class="xar-form-input-wrapper-after">
+        <div class="xar-form-input-wrapper-after"> 
             <xar:data-input type="checkbox"  name="savedata" id="savedata1" value="$item['savedata']" />
             <label for="savedata1" title="#xarML('Save the site contact form data')#">
                <xar:mlstring>Save form responses to the database?</xar:mlstring>

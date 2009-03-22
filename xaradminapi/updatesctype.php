@@ -5,10 +5,9 @@
  * @package Xaraya
  * @copyright (C) 2004-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://xaraya.com
  *
  * @subpackage Xarigami SiteContact Module
- * @copyright (C) 2007,2008 2skies.com
+ * @copyright (C) 2007,2008,2009 2skies.com
  * @link http://xarigami.com/project/sitecontact
  * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
@@ -76,19 +75,11 @@ function sitecontact_adminapi_updatesctype($args)
         }
     }
 
-    if (!isset($scactive)) {
-        $scactive = xarModGetVar('sitecontact', 'scactive');
-    }
+    $scactive = isset($scactive) ?$scactive: false;
+    $savedata = isset($savedata) ? $savedata :false;
+    $permissioncheck = isset($permissioncheck) ? $permissioncheck : false;
+    $termslink = isset($termslink) ? $termslink : false;
 
-    if (!$savedata || !isset($savedata)) {
-        $savedata = (int)xarModGetVar('sitecontact', 'savedata');
-    }
-     if (!isset($permissioncheck) || !$savedata) {
-        $permissioncheck = (int)xarModGetVar('sitecontact', 'permissioncheck');
-    }
-    if (!isset($termslink)) {
-        $termslink = xarModGetVar('sitecontact', 'termslink');
-    }
     if (!isset($soptions)) {
         $soptions = xarModGetVar('sitecontact', 'soptions');
     }
