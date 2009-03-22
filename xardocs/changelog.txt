@@ -1,6 +1,7 @@
-Version 1.1.2 x x 2009
+Version 1.1.3 x x 2009
 - add description in instance definitions 
 - update menu links with new method
+- provide server side validation for default fields
 
 Version 1.1.1 17 Jan 2009
 - Bug fix release covering logged issues:

@@ -96,7 +96,7 @@ function sitecontact_user_respond($args)
         $webconfirmtext   .= xarML('You should receive confirmation of your email within a few minutes.');
         xarModSetVar('sitecontact','webconfirmtext',$webconfirmtext);
     }
-  
+    if (!isset($invalid) || !is_array($invalid)) $invalid = array(); 
 
     //Put all user required data in an array for later processing
      $item=array('scid'            => $formdata['scid'],
@@ -116,7 +116,7 @@ function sitecontact_user_respond($args)
                  'return_url'      => $return_url,
                  'antiselect'      => $antiselect,
                  'antiword'        => $antiword,
-                // 'invalid'         => $invalid,
+                 'invalid'         => $invalid,
                  'customcontact'   => $customcontact,
                  'return_url'      => $return_url,
                  'blockurl'        => $blockurl,
@@ -128,6 +128,7 @@ function sitecontact_user_respond($args)
     $sctypename=$formdata['sctypename'];
 
     if ($checkdata['isvalid'] != TRUE) {
+        $checkdata['fieldconfig'] = explode(',',$checkdata['fieldconfig']);
         // we need to include this again .... we cannot assume we have all vars
         $customfunc = 'modules/sitecontact/xarworkflowapi/'.$formdata['sctypename'].'.php';
         if (file_exists($customfunc)) {
