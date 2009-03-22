@@ -95,11 +95,17 @@ function sitecontact_user_main($args)
         $soptions=unserialize($formdata['soptions']);
         if (is_array($soptions)) {
             foreach ($soptions as $k=>$v) {
-                $data[trim($k)]=trim($v);
+                //prevent array to string conversions
+                if (!is_array($v)) {
+                    $data[trim($k)]=trim($v);
+                }
             }
         }
     }
 
+    $data['fieldconfig'] =isset($data['fieldconfig'])?$data['fieldconfig']:''; 
+    $data['fieldconfig'] = explode(',',$data['fieldconfig']);   
+    
     if (!isset($data['allowbccs']))$data['allowbccs']=0;
     if (!isset($data['allowccs']))$data['allowccs']=0;
     if (!isset($data['allowanoncopy']))$data['allowanoncopy']=0;

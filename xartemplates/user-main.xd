@@ -51,7 +51,13 @@
                     <input type="hidden" name="username" id="username" class="xar-form-textxlong" value="#xarUserGetVar('name')#" />
                     #xarUserGetVar('name')#
                 <xar:else />
-                    <xar:data-input type="textbox" id="username" name="username" class="xar-form-textxlong" value="$username" />&#160;<xar:mlstring>(required)</xar:mlstring>
+                    <xar:data-input type="textbox" id="username" name="username" class="xar-form-textxlong" value="$username" />
+                    <xar:if condition="in_array('username',$fieldconfig)">
+                        &#160;<xar:mlstring>(required)</xar:mlstring>
+                    </xar:if>
+                </xar:if>
+                <xar:if condition="isset($invalid['username']) and !empty($invalid['username'])">
+                    <span class="xar-error">#$invalid['username']#</span>
                 </xar:if>
             </div>
             <div class="xar-form-input-wrapper">
@@ -63,10 +69,13 @@
                    <input type="hidden" name="useremail" id="useremail" value="#xarUserGetVar('email')#" />
                        #xarUserGetVar('email')#
                 <xar:else />
-                   <xar:data-input type="email" id="useremail" name="useremail" class="xar-form-textxlong" value="$useremail" />&#160;<xar:mlstring>(required)</xar:mlstring>
+                   <xar:data-input type="email" id="useremail" name="useremail" class="xar-form-textxlong" value="$useremail" />
+                    <xar:if condition="in_array('useremail',$fieldconfig)">
+                        &#160;<xar:mlstring>(required)</xar:mlstring>
+                    </xar:if>
                 </xar:if>
                 <xar:if condition="isset($invalid['useremail']) and !empty($invalid['useremail'])">
-                    <br /><span class="xar-error">#$invalid['useremail']#</span>
+                    <span class="xar-error">#$invalid['useremail']#</span>
                 </xar:if>
 
             </div>
@@ -88,12 +97,24 @@
                     </xar:if>
                 </xar:foreach>
                 </select>
+                    <xar:if condition="in_array('requesttext',$fieldconfig)">
+                        &#160;<xar:mlstring>(required)</xar:mlstring>
+                    </xar:if>                
+                <xar:if condition="isset($invalid['requesttext']) and !empty($invalid['requesttext'])">
+                    <span class="xar-error">#$invalid['requesttext']#</span>
+                </xar:if>                
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="company" class="xar-form-label" title="#xarML('Enter your organization')#">
                     <xar:mlstring>Organizaton:</xar:mlstring>
                 </label>
                 <xar:data-input class="xar-form-textxlong" type="textbox" name="company" id="company" value="$company"/>
+                <xar:if condition="in_array('company',$fieldconfig)">
+                        &#160;<xar:mlstring>(required)</xar:mlstring>
+                </xar:if>
+                <xar:if condition="isset($invalid['company']) and !empty($invalid['company'])">
+                       <span class="xar-error">#$invalid['company']#</span>
+                </xar:if>
             </div>
 
             <xar:if condition="$allowccs">
@@ -125,6 +146,12 @@
                     <xar:mlstring>Message</xar:mlstring>
                 </label>
                 <xar:data-input type="textarea_small" id="usermessage" name="usermessage" rows="5" value="$usermessage" />
+                <xar:if condition="in_array('usermessage',$fieldconfig)">
+                    &#160;<xar:mlstring>(required)</xar:mlstring>
+                </xar:if>                
+                <xar:if condition="isset($invalid['usermessage']) and !empty($invalid['usermessage'])">
+                    <br /><span class="xar-error">#$invalid['usermessage']#</span>
+                </xar:if>                  
             </div>
             
             <xar:comment>Dynamic Data properties input </xar:comment>

@@ -5,7 +5,6 @@
  * @package Xaraya
  * @copyright (C) 2004-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://xaraya.com
  *
  * @subpackage Xarigami SiteContact Module
  * @copyright (C) 2007,2008,2009 2skies.com
@@ -41,6 +40,8 @@ function sitecontact_admin_modifyconfig()
                 $data[$k]=$v;
             }
         }
+
+        $data['fieldconfig'] =isset($data['fieldconfig'])?$data['fieldconfig']:'';        
         if (!isset($data['allowbcc']))$data['allowbcc']=false;
         if (!isset($data['allowcc']))$data['allowcc']=false;
         if (!isset($data['adminccs']))$data['adminccs']=false;
@@ -65,7 +66,14 @@ function sitecontact_admin_modifyconfig()
           $scdefaultname=xarModGetVar('mail','adminname');
        }
        $data['scdefaultname']= $scdefaultname;
-
+        //options for checkbox list fieldconfig
+        $data['fieldarray'] = array(
+                        'useremail'     =>xarML('Email'),
+                        'username'      =>xarML('Username'),
+                        'requesttext'   =>xarML('Subject'),
+                        'company'       =>xarML('Organization'),
+                        'usermessage'   =>xarML('Message')
+                        );
 //    }
     /* global config options */
     $data['shorturls'] = xarModGetVar('sitecontact', 'SupportShortURLs') ? true : false;
@@ -77,6 +85,8 @@ function sitecontact_admin_modifyconfig()
     $data['defaultsort'] = xarModGetVar('sitecontact', 'defaultsort');
     $data['useantibot'] = xarModGetVar('sitecontact', 'useantibot')? true : false;
     $data['aliasname'] =xarModGetVar('sitecontact', 'aliasname');
+
+
     /* Get all the sitecontact forms now so we can choose a default */
     $scformdata=xarModAPIFunc('sitecontact','user','getcontacttypes');
     foreach ($scformdata as $k=>$scform) {

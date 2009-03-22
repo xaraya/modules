@@ -5,10 +5,9 @@
  * @package Xaraya
  * @copyright (C) 2004-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://xaraya.com
  *
  * @subpackage Xarigami SiteContact Module
- * @copyright (C) 2007,2008,2009 2skies.com
+ * @copyright (C) 2006,2007,2008,2009 2skies.com
  * @link http://xarigami.com/project/sitecontact
  * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
@@ -71,6 +70,7 @@ function sitecontact_userapi_respond($args)
     }
     
     $data['submit']  = xarML('Submit');
+
     $customtext      = $formdata['customtext'];
     $customtitle     = $formdata['customtitle'];
     $usehtmlemail    = $formdata['usehtmlemail'];
@@ -98,7 +98,7 @@ function sitecontact_userapi_respond($args)
     $antibotinvalid = FALSE;
     $badcaptcha = 0;
     $casmsg = '';
-
+  
     if (!xarUserIsLoggedIn()) { //we want to use captch else don't bother if user is logged in
        
         if (xarModIsAvailable('formcaptcha') && xarModGetVar('formcaptcha','usecaptcha') == true && $useantibot) {
@@ -142,6 +142,9 @@ function sitecontact_userapi_respond($args)
     
     $adminccs = isset($soptions['adminccs']) ? $soptions['adminccs']: false;
     $admincclist = isset($soptions['admincclist']) ? $soptions['admincclist']: '';
+  //get field requirements
+    $fieldconfig= isset($soptions['fieldconfig']) ? $soptions['fieldconfig'] : '';
+    $fieldconfigs    = explode(',',$fieldconfig);
 
     if (($adminccs == TRUE)  && !empty($admincclist)) {
         if (!isset($soptions['allowccs']) || $soptions['allowccs']!= 1) { //no cc list
@@ -243,6 +246,38 @@ function sitecontact_userapi_respond($args)
             $dditems = $properties; //backward compatibility
         }
     }
+    $invalid =array();
+    //options for checkbox list fieldconfig
+    $defaultfields = array(
+                        'useremail'     =>xarML('Please provide your email.'),
+                        'username'      =>xarML('Please provide your name'),
+                        'requesttext'   =>xarML('Please select a subject'),
+                        'company'       =>xarML('Please enter the name of your organization.'),
+                        'usermessage'   =>xarML('Please provide your message text.')
+                        );
+                        
+    //check the default fields
+    if (is_array($fieldconfigs) && !empty($fieldconfigs)) {
+        foreach ($fieldconfigs as $key=>$config) {
+            $value = trim($args[$config]);
+            if (empty($value)) {
+                $invalid[$config] = $defaultfields[$config];
+                $isvalid = FALSE;
+            }
+        }
+    }
+    //now check email  - doing it before may overwrite
+
+    if (isset($useremail) && !empty($useremail)){ //some times we may not want a user email - check required in fieldconfig
+        $checkemail = xarModAPIFunc('roles','user','validatevar',
+                              array('var' => $useremail,
+                                    'type' => 'email'));
+        if (!empty($checkemail)) {
+           $isvalid = FALSE;
+           $invalid['useremail'] =$checkemail;
+
+        }
+    }    
 
    $antibotinvalid =0;//initialize    
    $hookinfo = xarModCallHooks('item', 'submit', $scid, array('itemtype'=>$scid));
@@ -289,7 +324,8 @@ function sitecontact_userapi_respond($args)
                       'invalid'        => $invalid,
                       'return_url'     => $return_url,
                       'blockurl'       => $blockurl,
-                      'customcontact'  => $customcontact    
+                      'customcontact'  => $customcontact,
+                      'fieldconfig'   => $fieldconfig
                      );
 
     if (($isvalid == FALSE) || ($antibotinvalid == TRUE) || ($badcaptcha == TRUE) || is_array($invalid)) {
@@ -319,7 +355,7 @@ function sitecontact_userapi_respond($args)
             }
         }
     }
-
+        
     if ($withupload && isset($fileuploadfieldname) && is_array($items[$fileuploadfieldname]) && !empty($items[$fileuploadfieldname]['value'])) {
         $filebasepath=$items[$fileuploadfieldname]['basePath'];
         $filebasedir=$items[$fileuploadfieldname]['basedir'];

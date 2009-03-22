@@ -5,7 +5,6 @@
  * @package Xaraya
  * @copyright (C) 2004-2007 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://xaraya.com
  *
  * @subpackage Xarigami SiteContact Module
  * @copyright (C) 2007,2008,2009 2skies.com
@@ -43,7 +42,7 @@ function sitecontact_admin_managesctypes()
     if (!xarVarFetch('useantibot',    'checkbox', $useantibot,    true, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('startnum',      'int:1:', $startnum, 1, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('returnurl',      'str:0:', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
-
+    if (!xarVarFetch('fieldconfig',   'array', $fieldconfig, array(), XARVAR_NOT_REQUIRED)) return;
     if (!xarSecurityCheck('EditSiteContact')) return;
     xarVarSetCached('sitecontact.data','scid',$scid);
     // Initialise the template variables
@@ -58,6 +57,8 @@ function sitecontact_admin_managesctypes()
 
     $defaultform= xarModGetVar('sitecontact','defaultform');
     $data['defaultform']=$defaultform;
+    
+
     // Verify the action
     if (!isset($action) ){
         $action = 'view';
@@ -77,12 +78,14 @@ function sitecontact_admin_managesctypes()
     $data['managetype']=xarML('List Forms');
     $sactive = xarModGetVar('sitecontact', 'scactive') ? true : false;
     $allowanoncopy = ($allowcopy && $allowanoncopy)? true :false; //only allow anonymous if allow copy for registered too
+    $fieldconfig = implode(',',$fieldconfig);
     $soptions = array('allowccs'      => $allowccs,
                       'allowbccs'     => $allowbccs,
                       'allowanoncopy' => $allowanoncopy,
                       'useantibot'    => $useantibot,
                       'adminccs'      => $adminccs,
-                      'admincclist'   => $admincclist);
+                      'admincclist'   => $admincclist,
+                      'fieldconfig'   => $fieldconfig);
     $soptions=serialize($soptions);
 
     //Setup array with captured vars
@@ -110,9 +113,11 @@ function sitecontact_admin_managesctypes()
                 'soptions'       => $soptions,
                 'useantibot'     => $useantibot,
                 'returnurl'      => $returnurl,
+                'fieldconfig'    => $fieldconfig,
                 'sactive'        => $sactive // add this in addition to normal field value
                 );
 
+        
     // Take action if necessary
     if ($action == 'create' || $action == 'update' || $action == 'confirm'){
         // Confirm authorisation code
@@ -322,6 +327,7 @@ function sitecontact_admin_managesctypes()
                       'admincclist'    => isset($admincclist) ? $admincclist: '',
                       'allowanoncopy'  => isset($allowanoncopy)? $allowanoncopy:false,
                       'useantibot'     => isset($useantibot) ? $useantibot: false,
+                      'fieldconfig'     => isset($fieldconfig) ? $fieldconfig: '',
                       'scactive'        => (xarModGetVar('sitecontact', 'scactive') ? true : false )
                 );
         $data['item']=$item;
@@ -340,7 +346,7 @@ function sitecontact_admin_managesctypes()
                 }
             }
         }
-        
+        $data['item']['fieldconfig'] = isset($data['item']['fieldconfig'])?$data['item']['fieldconfig']:'';            
         if (!isset($data['item']['allowbccs']))      $data['item']['allowbccs']=0;
         if (!isset($data['item']['allowccs']))       $data['item']['allowccs']=0;
         if (!isset($data['item']['adminccs']))       $data['item']['adminccs']=0;
@@ -403,7 +409,7 @@ function sitecontact_admin_managesctypes()
                }
             }
         }
-
+        $data['item']['fieldconfig'] =isset($data['item']['fieldconfig'])?$data['item']['fieldconfig']:'';    
         if (!isset($data['item']['allowbccs']))      $data['item']['allowbccs']=0;
         if (!isset($data['item']['allowccs']))       $data['item']['allowccs']=0;
         if (!isset($data['item']['adminccs']))       $data['item']['adminccs']=0;
@@ -453,7 +459,14 @@ function sitecontact_admin_managesctypes()
         $data['propdata'] = $propdata;
       }
     }
-
+    //options for checkbox list fieldconfig
+    $data['fieldarray'] = array(
+                        'useremail'  =>xarML('Email'),
+                        'username'   =>xarML('Username'),
+                        'requesttext'=>xarML('Subject'),
+                        'company'    =>xarML('Organization'),
+                        'usermessage'=>xarML('Message')
+                        );
     $data['action'] = $action;
     $data['sctypes']=$sctypes;
 

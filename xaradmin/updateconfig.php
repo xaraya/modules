@@ -8,7 +8,7 @@
  * @link http://xaraya.com
  *
  * @subpackage Xarigami SiteContact Module
- * @copyright (C) 2007,2008 2skies.com
+ * @copyright (C) 2007,2008,2009 2skies.com
  * @link http://xarigami.com/project/sitecontact
  * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
@@ -45,18 +45,21 @@ function sitecontact_admin_updateconfig()
     if (!xarVarFetch('allowcc', 'checkbox', $allowcc, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('allowbcc', 'checkbox', $allowbcc, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('allowanoncopy', 'checkbox', $allowanoncopy, false, XARVAR_NOT_REQUIRED)) return;
-
+    if (!xarVarFetch('fieldconfig', 'array', $fieldconfig, array(), XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('adminccs', 'checkbox', $adminccs, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('admincclist', 'str:0:', $admincclist, '', XARVAR_NOT_REQUIRED)) return;
 
     $allowanoncopy = ($allowcopy && $allowanoncopy)? true :false; //only allow anonymous if allow copy for registered too
+    $fieldconfig = implode(',',$fieldconfig);
     $soptions=array('allowcc'=>$allowcc,
                     'allowbcc'=>$allowbcc,
                     'allowanoncopy'=>$allowanoncopy,
                     'adminccs'=>$adminccs,
-                    'admincclist' => $admincclist);
+                    'admincclist' => $admincclist,
+                    'fieldconfig'   =>$fieldconfig);
 
     $soptions=serialize($soptions);
+
     xarModSetVar('sitecontact', 'customtext', $customtext);
     xarModSetVar('sitecontact', 'customtitle', $customtitle);
     xarModSetVar('sitecontact', 'optiontext', $optiontext);

@@ -4,7 +4,6 @@
  *
  * @package Xaraya
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://xaraya.com
  *
  * @subpackage SiteContact Module
  * @copyright (C) 2004-2008,2009 2skies.com

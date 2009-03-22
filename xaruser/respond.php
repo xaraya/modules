@@ -96,18 +96,7 @@ function sitecontact_user_respond($args)
         $webconfirmtext   .= xarML('You should receive confirmation of your email within a few minutes.');
         xarModSetVar('sitecontact','webconfirmtext',$webconfirmtext);
     }
-    //check email if it is set and not empty
-    $invalid =''; // do not set array here - used as flag
-    if (isset($useremail) && !empty($useremail)){
-        $checkemail = xarModAPIFunc('roles','user','validatevar',
-                              array('var' => $useremail,
-                                    'type' => 'email'));
-        if ($checkemail == FALSE) {
-           $isvalid = FALSE;
-           $invalid['useremail'] =xarML('Please enter a valid email');
-
-        }
-    }
+  
 
     //Put all user required data in an array for later processing
      $item=array('scid'            => $formdata['scid'],
@@ -127,11 +116,11 @@ function sitecontact_user_respond($args)
                  'return_url'      => $return_url,
                  'antiselect'      => $antiselect,
                  'antiword'        => $antiword,
-                 'invalid'         => $invalid,
+                // 'invalid'         => $invalid,
                  'customcontact'   => $customcontact,
                  'return_url'      => $return_url,
                  'blockurl'        => $blockurl,
-                 'botreset'         => $botreset
+                 'botreset'        => $botreset
                 );
                 
 

@@ -19,6 +19,7 @@
  * @author Jo Dalle Nogare
  * Takes an email address, optional text  for the link text
  * If no text supplied then the email address is used for the link text and partial obfuscated for the display
+ * @ DEPRECATED in favor or core Mail module obfuemail function - left atm for xaraya compatibility
  * @$param text $email email address to be encoded
  * @$param text $text optional text string to be displayed in email link
  * @$param boolean $image optional flag to display email image, false by default
