@@ -132,79 +132,23 @@ function sitecontact_userapi_respond($args)
             }
         }
     }
-
-    if (!isset($soptions['allowbccs']) || $soptions['allowbccs']!=1) {
-        $bccrecipients='';
-        $allowbccs = false;
-    } else {
-       $allowbccs = true;
-    }
-    
-    $adminccs = isset($soptions['adminccs']) ? $soptions['adminccs']: false;
-    $admincclist = isset($soptions['admincclist']) ? $soptions['admincclist']: '';
-  //get field requirements
+   
+    //get field requirements
     $fieldconfig= isset($soptions['fieldconfig']) ? $soptions['fieldconfig'] : '';
     $fieldconfigs    = explode(',',$fieldconfig);
-
-    if (($adminccs == TRUE)  && !empty($admincclist)) {
-        if (!isset($soptions['allowccs']) || $soptions['allowccs']!= 1) { //no cc list
-            $ccrecipients = $soptions['admincclist']; //just put the admincclist in the ccrecipients list and process that
-            $adminccs = true;
-        } elseif (!empty($ccrecipients)) { //add on the admincclist to the existing cclist
-            $ccrecipients =$admincclist.';'.$ccrecipients;
-        }
-    }
-    if (!isset($soptions['allowccs']) || $soptions['allowccs']!= 1) { //if cc list is not set
-       $ccrecipients= !empty($ccrecipients) ? $ccrecipients: ''; //in case we had an admin ccs list
-       $allowccs = false;
-    } else {
-       $allowccs = true;
-    }
-    //end check for bug 5799
-    if (!isset($soptions['allowanoncopy']) || $soptions['allowanoncopy']!=1) {
-        $allowanoncopy=false;
-    } else {
-        $allowanoncopy=true;
-    }
-
+    
+    $allowbccs = (!isset($soptions['allowbccs']) || $soptions['allowbccs']!=1) ? false : true;
+    $allowccs = (!isset($soptions['allowccs']) || $soptions['allowccs']!=1) ? false : true;   
+    $allowanoncopy = (!isset($soptions['allowanoncopy']) || $soptions['allowanoncopy']!=1) ? false : true;   
+    $adminccs = isset($soptions['adminccs']) ? $soptions['adminccs']: false;
+    $admincclist = isset($soptions['admincclist']) ? $soptions['admincclist']: '';   
+     
     //set some dd property values not captured in post vars
     //this is where we actually capture the current user ipaddress
     $useripaddress = xarModAPIFunc('sitecontact','admin','getcurrentip');
     $responsetime = time();
-    
-      /* process CC Recipient list */
-    $ccrecipientarray=array();
-    $ccrec=array();
-    $cctemp=array();
-    if (!empty($ccrecipients)) { //will contain ccrecipient list and admincclist as necessary
-        $ccrecipientarray=explode(';',$ccrecipients);
-        if (is_array($ccrecipientarray)) {
-            foreach ($ccrecipientarray as $recipientkey=>$v) {
-                $cctemp[]=explode(',',$v);
-            }
-            foreach ($cctemp as $recipient=>$values) {
-                $ccrec[$values[0]]=isset($values[1])?$values[1]:'';
-            }
-       }
-    }
-    $ccrecipients=$ccrec;
+        
 
-    /* process BCC Recipient list */
-    $bccrecipientarray=array();
-    $bccrec=array();
-    $bcctemp=array();
-    if (isset($bccrecipients) && !empty($bccrecipients)) {
-        $bccrecipientarray=explode(';',$bccrecipients);
-        if (is_array($bccrecipientarray)) {
-            foreach ($bccrecipientarray as $recipientkey=>$v) {
-                $bcctemp[]=explode(',',$v);
-            }
-            foreach ($bcctemp as $recipient=>$values) {
-                $bccrec[$values[0]]=isset($values[1])?$values[1]:'';
-            }
-        }
-    }
-    $bccrecipients=$bccrec;
     //get options
     $optiontext = $formdata['optiontext'];
     $optionset  = array();
@@ -249,11 +193,13 @@ function sitecontact_userapi_respond($args)
     $invalid =array();
     //options for checkbox list fieldconfig
     $defaultfields = array(
-                        'useremail'     =>xarML('Please provide your email.'),
+                        'useremail'     =>xarML('Please provide your email'),
                         'username'      =>xarML('Please provide your name'),
                         'requesttext'   =>xarML('Please select a subject'),
-                        'company'       =>xarML('Please enter the name of your organization.'),
-                        'usermessage'   =>xarML('Please provide your message text.')
+                        'company'       =>xarML('Please enter the name of your organization'),
+                        'usermessage'   =>xarML('Please provide your message text'),
+                        'ccrecipients'  => xarML('You must provide a list of CC recipients'),
+                        'bccrecipients' => xarML('You must provide a list of BC recipients')
                         );
                         
     //check the default fields
@@ -279,6 +225,7 @@ function sitecontact_userapi_respond($args)
 
    $antibotinvalid =0;//initialize    
    $hookinfo = xarModCallHooks('item', 'submit', $scid, array('itemtype'=>$scid));
+   
    $antibotinvalid = isset($hookinfo['antibotinvalid']) ? $hookinfo['antibotinvalid'] : 0;
     //add everything to an array for easy processing later
     $data = array('authid'         => xarSecGenAuthKey('sitecontact'),
@@ -332,7 +279,58 @@ function sitecontact_userapi_respond($args)
          $data['botreset']= TRUE; //so we do not reset referer
          return $data;
     }
+ 
+    //start to process our bc and cc and admin cc list
+    $bccrecipients = $allowbccs ?$bccrecipients :'';
+    $ccrecipients = $allowccs ?$ccrecipients :'';
+    
+    //get a list of admin input cc recipients
+ 
+    if (($adminccs == TRUE)  && !empty($admincclist)) {
+        if ($ccrecipients = '') { //no cc list
+            $ccrecipients = $soptions['admincclist']; //just put the admincclist in the ccrecipients list and process that
+            $adminccs = true;
+        } elseif (!empty($ccrecipients)) { //add on the admincclist to the existing cclist
+            $ccrecipients =$admincclist.';'.$ccrecipients;
+            $adminccs = true;
+        }
+    }
+    
 
+     
+     // process CC Recipient list 
+    $ccrecipientarray=array();
+    $ccrec=array();
+    $cctemp=array();
+    if (!empty($ccrecipients)) { //will contain ccrecipient list and admincclist as necessary
+        $ccrecipientarray=explode(';',$ccrecipients);
+        if (is_array($ccrecipientarray)) {
+            foreach ($ccrecipientarray as $recipientkey=>$v) {
+                $cctemp[]=explode(',',$v);
+            }
+            foreach ($cctemp as $recipient=>$values) {
+                $ccrec[$values[0]]=isset($values[1])?$values[1]:'';
+            }
+       }
+    }
+    $ccrecipients=$ccrec;
+
+    // process BCC Recipient list 
+    $bccrecipientarray=array();
+    $bccrec=array();
+    $bcctemp=array();
+    if (isset($bccrecipients) && !empty($bccrecipients)) {
+        $bccrecipientarray=explode(';',$bccrecipients);
+        if (is_array($bccrecipientarray)) {
+            foreach ($bccrecipientarray as $recipientkey=>$v) {
+                $bcctemp[]=explode(',',$v);
+            }
+            foreach ($bcctemp as $recipient=>$values) {
+                $bccrec[$values[0]]=isset($values[1])?$values[1]:'';
+            }
+        }
+    }
+    $bccrecipients=$bccrec;
     $data['properties'] = $properties;
     //we are not assuming at this stage everything is in DD
     if (is_array($properties) && !empty($properties)) {

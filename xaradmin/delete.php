@@ -26,7 +26,7 @@ function sitecontact_admin_delete($args)
     if (!xarVarFetch('confirm',  'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!empty($objectid)) {
-        $exid = $objectid;
+        $scrid= $objectid;
     }
     $item = xarModAPIFunc('sitecontact','user','get', array('scrid' => $scrid));
     /* Check for exceptions */

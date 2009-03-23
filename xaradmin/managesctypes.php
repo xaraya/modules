@@ -465,7 +465,9 @@ function sitecontact_admin_managesctypes()
                         'username'   =>xarML('Username'),
                         'requesttext'=>xarML('Subject'),
                         'company'    =>xarML('Organization'),
-                        'usermessage'=>xarML('Message')
+                        'usermessage'=>xarML('Message'),
+                        'ccrecipients'  =>xarML('CC List'),
+                        'bccrecipients' =>xarML('BC List')
                         );
     $data['action'] = $action;
     $data['sctypes']=$sctypes;

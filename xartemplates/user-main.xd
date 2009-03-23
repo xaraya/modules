@@ -123,6 +123,9 @@
                         <xar:mlstring>CC:</xar:mlstring>
                     </label>
                     <xar:data-input class="xar-form-textxlong" type="textbox" name="ccrecipients" id="ccrecipients" size="150" value="$ccrecipients"/>
+                    <xar:if condition="in_array('ccrecipients',$fieldconfig)">
+                        &#160;<xar:mlstring>(required)</xar:mlstring>
+                    </xar:if>
                 </div>
             </xar:if>
 
@@ -132,6 +135,9 @@
                         <xar:mlstring>BCC:</xar:mlstring>
                     </label>
                     <xar:data-input class="xar-form-textxlong" type="textbox" name="bccrecipients" id="bccrecipients" size="150" value="$bccrecipients"/>
+                    <xar:if condition="in_array('bccrecipients',$fieldconfig)">
+                        &#160;<xar:mlstring>(required)</xar:mlstring>
+                    </xar:if>
                 </div>
             </xar:if>
             <xar:if condition="$allowbccs or $allowccs">

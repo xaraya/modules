@@ -72,7 +72,9 @@ function sitecontact_admin_modifyconfig()
                         'username'      =>xarML('Username'),
                         'requesttext'   =>xarML('Subject'),
                         'company'       =>xarML('Organization'),
-                        'usermessage'   =>xarML('Message')
+                        'usermessage'   =>xarML('Message'),
+                        'ccrecipients'  =>xarML('CC List'),
+                        'bccrecipients' =>xarML('BC List')
                         );
 //    }
     /* global config options */

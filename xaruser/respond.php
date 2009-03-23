@@ -37,8 +37,8 @@ function sitecontact_user_respond($args)
     if (!xarVarFetch('sctypename',    'str:0:',   $sctypename,  NULL,  XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('scform',        'str:0:',   $scform,      NULL,  XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('scid',          'int:1:',   $scid,        $defaultformid, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('bccrecipients', 'str:1',    $bccrecipients, '')) return;
-    if (!xarVarFetch('ccrecipients',  'str:1',    $ccrecipients, ''))  return;
+    if (!xarVarFetch('bccrecipients', 'str:1',    $bccrecipients, '',  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('ccrecipients',  'str:1',    $ccrecipients, '',   XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('return_url',    'isset',    $return_url,  NULL,  XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('savedata',      'checkbox', $savedata,    0,     XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('permission',    'checkbox', $permission,  false, XARVAR_NOT_REQUIRED)) return;
@@ -125,6 +125,7 @@ function sitecontact_user_respond($args)
                 
 
     $checkdata = xarModAPIFunc('sitecontact','user','respond', $item);
+    
     $sctypename=$formdata['sctypename'];
 
     if ($checkdata['isvalid'] != TRUE) {
