@@ -34,7 +34,7 @@
             If you want to configure your default contact form, or create further forms, please review the following.
             </xar:mlstring>
         </p>
-        <h3><xar:mlstring>Using and Customizing Display and Email Forms</xar:mlstring></h3>
+        <h3><a name="overrides">&#160;</a><xar:mlstring>Using and Customizing Display and Email Forms</xar:mlstring></h3>
         <ol>
             <li><xar:mlstring>
             By default, a user will be able to see the Default Form  that you have configured for your site (see ModifyConfig options below). If no sitecontact form is specified in a URL the default form is used.
@@ -48,7 +48,7 @@
     
             <li><xar:mlstring>
                 Customizing entry display page/template: All forms will use the default display template (user-main.xd) for display of the form on your site.
-                You can also create custom templates with the name of your form appended to the end (user-main-myform.xd).
+                You can also create custom override templates with the name of your form appended to the end (user-main-myform.xd).
                 Form templates can be overridden in your theme as per other Xaraya templates (eg create 'user-main-myform.xt' in
                 your themes/yourtheme/modules/sitecontact directory), and will fall back to the default template if no others exist.</xar:mlstring></li>
             <li><xar:mlstring>

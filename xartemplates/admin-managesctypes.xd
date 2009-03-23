@@ -211,20 +211,28 @@
     </fieldset>
     <fieldset>
         <legend><xar:mlstring>Field configuration</xar:mlstring></legend>
-            <p><xar:mlstring>The fields below are displayed by default in all sitecontact forms.</xar:mlstring></p>
-            <div class="xar-form-input-wrapper">
+            <p> <xar:set name="overrideinfo">'<a href="'.xarModURL('sitecontact','admin','overview',array(),FALSE,'overrides').'">'.xarML('sitecontact override template').'</a>'</xar:set>
+                <xar:ml>
+                    <xar:mlstring>The fields listed below are available by default in all sitecontact forms. 
+                    These fields can be turned on or off by using the settings above or editing a 
+                    relevant #(1).</xar:mlstring>
+                    <xar:mlvar>#$overrideinfo#</xar:mlvar>
+                </xar:ml>
+            </p>
+           <p><xar:mlstring>Checking a field will require the user to enter content in that field before they can submit the form.
+                   </xar:mlstring></p>
+               <div class="xar-form-input-wrapper">
                 <label for="fieldconfig" class="xar-form-label">
                    <xar:mlstring>Check fields that require user entry:</xar:mlstring>
                 </label>  
                 <div class="xar-form-container-after">    
-                    <xar:data-input id="fieldconfig1" name="fieldconfig" type="checkboxlist" validation="$fieldarray" layout="column" value="$item['fieldconfig']" />
+                    <xar:data-input id="fieldconfig" name="fieldconfig" type="checkboxlist" validation="$fieldarray" layout="column" value="$item['fieldconfig']" />
                         
-                    <p><xar:mlstring>If you check a field, the user will be required to enter a value for that field before they can submit the form.</xar:mlstring></p>
-                    <p><xar:mlstring>If you define additional Dynamic Data (DD) fields for a form, you can make that field 'required' in its DD validation.</xar:mlstring></p>                 
+                    <p><xar:mlstring>Note: If you define additional Dynamic Data (DD) fields for a form, you can make that field 'required' in its DD validation.</xar:mlstring></p>                 
                 </div>
                
             </div>
-    </fieldset>    
+    </fieldset>
 <!-- Not on create - wait let's see
     <fieldset>
        <legend><xar:mlstring>Enabled Hooks</xar:mlstring></legend>
@@ -450,16 +458,24 @@
     </fieldset>
     <fieldset>
         <legend><xar:mlstring>Field configuration</xar:mlstring></legend>
-            <p><xar:mlstring>The fields below are displayed by default in all sitecontact forms.</xar:mlstring></p>
-            <div class="xar-form-input-wrapper">
+            <p> <xar:set name="overrideinfo">'<a href="'.xarModURL('sitecontact','admin','overview',array(),FALSE,'overrides').'">'.xarML('sitecontact override template').'</a>'</xar:set>
+                <xar:ml>
+                    <xar:mlstring>The fields listed below are available by default in all sitecontact forms. 
+                    These fields can be turned on or off by using the settings above or editing a 
+                    relevant #(1).</xar:mlstring>
+                    <xar:mlvar>#$overrideinfo#</xar:mlvar>
+                </xar:ml>
+            </p>
+           <p><xar:mlstring>Checking a field will require the user to enter content in that field before they can submit the form.
+                   </xar:mlstring></p>
+               <div class="xar-form-input-wrapper">
                 <label for="fieldconfig" class="xar-form-label">
                    <xar:mlstring>Check fields that require user entry:</xar:mlstring>
                 </label>  
                 <div class="xar-form-container-after">    
-                    <xar:data-input id="fieldconfig" name="fieldconfig" type="checkboxlist" validation="$fieldarray" layout="column" value="$item['fieldconfig']" />
+                    <xar:data-input id="fieldconfig2" name="fieldconfig" type="checkboxlist" validation="$fieldarray" layout="column" value="$item['fieldconfig']" />
                         
-                    <p><xar:mlstring>If you check a field, the user will be required to enter a value for that field before they can submit the form.</xar:mlstring></p>
-                    <p><xar:mlstring>If you define additional Dynamic Data (DD) fields for a form, you can make that field 'required' in its DD validation.</xar:mlstring></p>                 
+                    <p><xar:mlstring>Note: If you define additional Dynamic Data (DD) fields for a form, you can make that field 'required' in its DD validation.</xar:mlstring></p>                 
                 </div>
                
             </div>

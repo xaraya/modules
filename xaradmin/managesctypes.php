@@ -306,6 +306,7 @@ function sitecontact_admin_managesctypes()
                 $k=$v;
             }
         }
+
         $item = array('sctypename'     => xarML('Unique name for new form'),
                       'sctypedesc'     => xarML('Another contact form'),
                       'customtext'     => xarModGetVar('sitecontact','customtext'),
@@ -320,13 +321,13 @@ function sitecontact_admin_managesctypes()
                       'permissioncheck'=> xarModGetVar('sitecontact','permissioncheck'),
                       'savedata'       => xarModGetVar('sitecontact','savedata'),
                       'termslink'      => xarModGetVar('sitecontact','termslink'),
-                      'allowbccs'      => isset($allowbccs)? $allowbccs:false,
-                      'allowccs'       => isset($allowccs)? $allowccs:false,
-                      'adminccs'       => isset($adminccs)? $adminccs:false,
-                      'admincclist'    => isset($admincclist) ? $admincclist: '',
-                      'allowanoncopy'  => isset($allowanoncopy)? $allowanoncopy:false,
-                      'useantibot'     => isset($useantibot) ? $useantibot: false,
-                      'fieldconfig'     => isset($fieldconfig) ? $fieldconfig: '',
+                      'allowbccs'      => isset($soptions['allowbccs'])? $soptions['allowbccs']:false,
+                      'allowccs'       => isset($soptions['allowccs'])? $soptions['allowccs']:false,
+                      'adminccs'       => isset($soptions['adminccs'])? $soptions['adminccs']:false,
+                      'admincclist'    => isset($soptions['admincclist']) ? $soptions['admincclist']: '',
+                      'allowanoncopy'  => isset($soptions['allowanoncopy'])? $soptions['allowanoncopy']:false,
+                      'useantibot'     => isset($soptions['useantibot']) ?$soptions['useantibot']: false,
+                      'fieldconfig'     => isset($soptions['fieldconfig']) ? $soptions['fieldconfig']: '',
                       'scactive'        => (xarModGetVar('sitecontact', 'scactive') ? true : false )
                 );
         $data['item']=$item;
