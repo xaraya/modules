@@ -1,12 +1,15 @@
-Version 1.1.3 x x 2009
+Version 1.1.3 24 March 2009
 - bugfix release plus some features
-  sicon-000328 Description for priv instances   
-  sicon-000333 Consistent call to xarTplModule for user and admin templates  
-  sicon-000336 Remove references to deprecated js  
-  sicon-000337 Call xarvarvalidate for email check   
-  sicon-000119 Mandatory fields validations  - feature request
-  sicon-000332 Update menulinks with new standard - feature request
-= miscellaneous other template and small fixes
+    sicon-000328 Description for priv instances
+    sicon-000333 Consistent call to xarTplModule for user and admin templates
+    sicon-000336 Remove references to deprecated js 
+    sicon-000337 Call xarvarvalidate for email check 
+    sicon-000338 Remove CC list before adding to admin cc list
+    sicon-000339 Not all values returned to form on error
+    sicon-000340 New forms do not use default options
+    sicon-000119 Improvement Mandatory fields validations
+    sicon-000332 Improvement Update menulinks with new standard
+- miscellaneous other template and small fixes
 
 Version 1.1.1 17 Jan 2009
 - Bug fix release covering logged issues:

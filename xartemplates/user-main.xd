@@ -55,10 +55,11 @@
                     <xar:if condition="in_array('username',$fieldconfig)">
                         &#160;<xar:mlstring>(required)</xar:mlstring>
                     </xar:if>
+                    <xar:if condition="isset($invalid['username']) and !empty($invalid['username'])">
+                        <br /><span class="xar-error">#$invalid['username']#</span>
+                    </xar:if>                    
                 </xar:if>
-                <xar:if condition="isset($invalid['username']) and !empty($invalid['username'])">
-                    <br /><span class="xar-error">#$invalid['username']#</span>
-                </xar:if>
+
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="useremail" class="xar-form-label" title="#xarML('Enter your email')#">
@@ -73,10 +74,11 @@
                     <xar:if condition="in_array('useremail',$fieldconfig)">
                         &#160;<xar:mlstring>(required)</xar:mlstring>
                     </xar:if>
+                    <xar:if condition="isset($invalid['useremail']) and !empty($invalid['useremail'])">
+                        <br /><span class="xar-error">#$invalid['useremail']#</span>
+                    </xar:if>                    
                 </xar:if>
-                <xar:if condition="isset($invalid['useremail']) and !empty($invalid['useremail'])">
-                    <br /><span class="xar-error">#$invalid['useremail']#</span>
-                </xar:if>
+
 
             </div>
 

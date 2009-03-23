@@ -1,17 +1,20 @@
 
-Upgrading to Sitecontact 1.1.1
+Upgrading to Sitecontact 1.1.3
 ==============================
 
 You must be on at least version 0.6.1 of Sitecontact to upgrade to this version.
 
-Version 1.1.1 is a bug fix release. There are no major template changes in this version. 
+Version 1.1.3 is a bug fix release with some improvements. 
+
+There were template changes and therefore you should update any custom templates you may have 
+with the changes listed below.
+
 If you are upgrading from a version less than 1.1.0 please read the detailed instructions below 
 or in the 1.1.0 release page at http://xarigami.com/resources/sitecontact_1.1.0
 
-* There were changes to add hooks, and some cleanups in the sitecontact block template at 
-  modules/sitecontact/xartemplates/blocks/sitecontact.xd.
-* The user main template at sitecontact/templates/user-main.xd has also been cleaned up to work 
-   with formantibot hooks, rather than hard coded into the page.
+* Changes in the user-main.xd template for required fields and 'required' text
+* Changes in the admin-modifyconfig.xd and admin-managesctypes.xd template with addition of a new
+  fieldset for 'Field configuration'
 
 If possible, test the upgrade and template changes on your local development
 copy of your site. You can prepare any new changed override templates that you may require 
@@ -49,13 +52,22 @@ Steps
     the function the form submits to.
     
     b. Important change upgrading to 1.1.x- Compare the new user-main.xd template at the point and
-    your customized template. Note where username and useremail input tags are
-    added. If you are using these fields, ensure you have the new
-    <xar:set /> and <xar:data-input /> tags and their content. For the
-    useremail, ensure you have the line with :
+    your customized template. 
     
-            <span class="xar-error">#$invalid['useremail']#</span>
-            
+    Note where username, useremail, company, requesttext, usermessage, 
+    bccrecipients and ccrecipients input tags are added. If you are using these fields, 
+    ensure you have the new <xar:set /> and <xar:data-input /> tags and their content. 
+    
+    For the each field ensure you have the two <xar:if /> lines with the equivaent :
+        <xar:if condition="in_array('username',$fieldconfig)">
+         ....
+        </xar:if>
+    
+    and also:
+         <xar:if condition="isset($invalid['username']) and !empty($invalid['username'])">
+         ...
+         </xar:if>
+             
     c. Critical change for 1.1.0 - Ensure you have all the template code in the new
     user-main.xd template between the comments "Dynamic Data properties input"
     and "Dynamic Data properties input -end" added to your template to replace
