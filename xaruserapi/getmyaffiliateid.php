@@ -42,14 +42,12 @@ function labaffiliate_userapi_getmyaffiliateid($args)
     if (!$result) return;
 
     if ($result->EOF) {
-    
-
-
+        $uplineid = xarSessionGetVar('affiliateid');
 
         $affiliateid = xarModAPIFunc('labaffiliate',
                               'affiliate',
                               'create',
-                              array('uplineid' => xarSessionGetVar('affiliateid'),
+                              array('uplineid' => (int)$uplineid,
     							'userid' => xarUserGetVar('uid'),
     							'primaryprogramid' => 0,
     							'secondaryprogramid' => 0,

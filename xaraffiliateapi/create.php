@@ -62,7 +62,7 @@ function labaffiliate_affiliateapi_create($args)
 					xar_secondaryprogramid,
                     xar_marketing_copy
 				)
-	            VALUES (?,?,?,?,?)";
+	            VALUES (?,?,?,?,?,?)";
 
     $bindvars = array($nextId,$uplineid,$userid,$primaryprogramid,$secondaryprogramid,$marketing_copy);
 
