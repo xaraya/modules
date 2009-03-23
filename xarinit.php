@@ -76,7 +76,7 @@ function labaffiliate_init()
 
     // Create indexes.
     $result = $datadict->createIndex(
-        'i_' . xarDBGetSiteTablePrefix() . '_programid',
+        'i_' . xarDBGetSiteTablePrefix() . '_programaffiliate',
         $labaffiliate_membership_table,
         array('xar_programid','xar_affiliateid'),
         'unique' // This doesn't work properly
@@ -115,7 +115,7 @@ function labaffiliate_init()
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $memberships_object->objectid));
     }
 	$memberships_object = xarModAPIFunc('dynamicdata','util','import',
-                                array('file' => 'modules/labaccounting/xardata/memberships.xml'));
+                                array('file' => 'modules/labaffiliate/xardata/memberships.xml'));
 	if (empty($memberships_object)) return;
     
     if (!xarModRegisterHook('item', 'usermenu', 'GUI','labaffiliate', 'user', 'usermenu'))
@@ -156,7 +156,7 @@ function labaffiliate_init()
 	xarRegisterMask('DeleteProgramMembership', 'All', 'program', 'Membership', 'All:All:All', 'ACCESS_DELETE');
 	xarRegisterMask('AdminProgramMembership', 'All', 'program', 'Membership', 'All:All:All', 'ACCESS_ADMIN');
 
-	return labaffiliate_upgrade('1.0.0');
+//	return labaffiliate_upgrade('1.0.0');
 
 	return true;
 }

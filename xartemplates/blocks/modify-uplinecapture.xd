@@ -1,0 +1,7 @@
+
+<div class="xar-form-input-wrapper">
+    <label for="text_content#$blockid#" title="#xarML('Enter the Affiliate that will be used as the default for visitors that are not directly referred with one.')#" class="xar-form-label">
+        <xar:mlstring>Default Upline ID:</xar:mlstring>
+    </label>
+     <input type="text" name="defaultuplineid" id="defaultuplineid#$blockid#" value="#xarVarPrepForDisplay($defaultuplineid)#" />
+</div>

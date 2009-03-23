@@ -1,0 +1,72 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>Common Administration menu</xar:comment>
+
+<xar:if condition="xarModGetVar('themes','adminpagemenu')">
+
+<xar:style scope="module" module="base" file="navtabs" />
+
+<xar:comment>
+  Set a variable that matches the template name. It does not consider template type.
+  If you wanted to look at type of template you would need to check #$request.1#
+  (eg to see if it's admin or user)
+  xarRequestInfo() returns the modulename, type and function in an array for
+  the function we want the third element (i.e. at index 2)
+</xar:comment>
+<xar:set name="request">xarRequestGetInfo()</xar:set>
+<xar:set name="activetab">#$request.2#</xar:set>
+
+<div>
+  <dl class="xar-tabs">
+    <dt class="help" title="#xarML('Choose an action to perform')#">
+      <xar:mlstring>Actions:</xar:mlstring>
+    </dt>
+
+    <!-- The minimal privilege needed for the manage items screen is viewing items -->
+    <xar:sec mask="AddProgram" catch="false">
+        <xar:set name="tabclass">($activetab=='new')?'active':''</xar:set>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-labaffiliate-admin-new;">
+                <xar:mlstring>New Program</xar:mlstring>
+            </a>
+        </dd>
+    </xar:sec>
+    <xar:sec mask="ViewProgram" catch="false">
+        <xar:set name="tabclass">($activetab=='view')?'active':''</xar:set>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-labaffiliate-admin-view;">
+                <xar:mlstring>Manage Programs</xar:mlstring>
+            </a>
+        </dd>
+    </xar:sec>
+    <xar:sec mask="ViewProgram" catch="false">
+        <xar:set name="tabclass">($activetab=='affiliates')?'active':''</xar:set>
+        <dd class="#$tabclass#">
+            <a href="&xar-modurl-labaffiliate-admin-affiliates;">
+                <xar:mlstring>Manage Affiliates</xar:mlstring>
+            </a>
+        </dd>
+    </xar:sec>
+    <xar:sec mask="AdminProgram" catch="false">
+        <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
+        <dd class="#$tabclass#">
+          <a href="&xar-modurl-labaffiliate-admin-modifyconfig;">
+            <xar:mlstring>Modify Config</xar:mlstring>
+          </a>
+        </dd>
+    </xar:sec>
+
+    <xar:comment>
+      The overview function may use the admin-main template so we test
+      to see if $activetab is equal to 'main' too and set the tab active if it matches.
+    </xar:comment>
+    <xar:sec mask="EditProgram" catch="false">
+    <xar:set name="tabclass">($activetab=='main' or $activetab=='overview')?'active':''</xar:set>
+    <dd class="#$tabclass#">
+      <a href="&xar-modurl-labaffiliate-admin-overview;">
+        <xar:mlstring>Overview</xar:mlstring>
+      </a>
+    </dd>
+    </xar:sec>
+  </dl>
+</div>
+</xar:if>
