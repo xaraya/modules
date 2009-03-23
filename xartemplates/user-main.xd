@@ -57,7 +57,7 @@
                     </xar:if>
                 </xar:if>
                 <xar:if condition="isset($invalid['username']) and !empty($invalid['username'])">
-                    <span class="xar-error">#$invalid['username']#</span>
+                    <br /><span class="xar-error">#$invalid['username']#</span>
                 </xar:if>
             </div>
             <div class="xar-form-input-wrapper">
@@ -75,7 +75,7 @@
                     </xar:if>
                 </xar:if>
                 <xar:if condition="isset($invalid['useremail']) and !empty($invalid['useremail'])">
-                    <span class="xar-error">#$invalid['useremail']#</span>
+                    <br /><span class="xar-error">#$invalid['useremail']#</span>
                 </xar:if>
 
             </div>
@@ -101,7 +101,7 @@
                         &#160;<xar:mlstring>(required)</xar:mlstring>
                     </xar:if>                
                 <xar:if condition="isset($invalid['requesttext']) and !empty($invalid['requesttext'])">
-                    <span class="xar-error">#$invalid['requesttext']#</span>
+                    <br /><span class="xar-error">#$invalid['requesttext']#</span>
                 </xar:if>                
             </div>
             <div class="xar-form-input-wrapper">
@@ -113,7 +113,7 @@
                         &#160;<xar:mlstring>(required)</xar:mlstring>
                 </xar:if>
                 <xar:if condition="isset($invalid['company']) and !empty($invalid['company'])">
-                       <span class="xar-error">#$invalid['company']#</span>
+                    <br /><span class="xar-error">#$invalid['company']#</span>
                 </xar:if>
             </div>
 
@@ -126,6 +126,9 @@
                     <xar:if condition="in_array('ccrecipients',$fieldconfig)">
                         &#160;<xar:mlstring>(required)</xar:mlstring>
                     </xar:if>
+                    <xar:if condition="isset($invalid['ccrecipients']) and !empty($invalid['ccrecipients'])">
+                           <br /><span class="xar-error">#$invalid['ccrecipients']#</span>
+                    </xar:if>                    
                 </div>
             </xar:if>
 
@@ -138,6 +141,10 @@
                     <xar:if condition="in_array('bccrecipients',$fieldconfig)">
                         &#160;<xar:mlstring>(required)</xar:mlstring>
                     </xar:if>
+                    <xar:if condition="isset($invalid['bccrecipients']) and !empty($invalid['bccrecipients'])">
+                           <br /><span class="xar-error">#$invalid['bccrecipients']#</span>
+                    </xar:if>                    
+                    
                 </div>
             </xar:if>
             <xar:if condition="$allowbccs or $allowccs">
