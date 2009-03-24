@@ -1,4 +1,16 @@
 <?php
+/**
+ * Handles user submissions
+ *
+ * @package modules
+ * @copyright (C) 2002-2009 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Netquery Module
+ * @link http://xaraya.com/index.php/release/230.html
+ */
+
 function netquery_user_submit()
 {
     $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
@@ -36,10 +48,11 @@ function netquery_user_submit()
             break;
         case 'thanks':
             $returl = xarModURL('netquery', 'user', 'main');
-            $data['thankyou']  = '<h2 align="center">Thank You</a></h2>';
-            $data['thankyou'] .= '<p>Your submission has been processed for the administrator\'s attention. ';
-            $data['thankyou'] .= 'Upon approval, it will be visible in the services and exploits listing for the port specified.</p>';
-            $data['thankyou'] .= '<p>Please click <a href="'.$returl.'">HERE</a> to return to the Netquery user interface.</p>';
+            $data['thankyou']  = '<h2 align="center">' . xarML('Thank You') . '</a></h2><p>';
+            $data['thankyou'] .= xarML('Your submission has been processed for the administrator\'s attention. Upon approval, it will be visible in the services and exploits listing for the port specified.');
+            $data['thankyou'] .= '</p><p>';
+            $data['thankyou'] .= xarML('To return to the Netquery user interface please ');
+            $data['thankyou'] .= '<a href="'.$returl.'">' . xarML('Click here') . '</a> </p>';
             break;
     }
     return $data;

@@ -1,4 +1,16 @@
 <?php
+/**
+ * Importing new Port rules
+ *
+ * @package modules
+ * @copyright (C) 2002-2009 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage Netquery Module
+ * @link http://xaraya.com/index.php/release/230.html
+ */
+
 function netquery_admin_xaports()
 {
     if (!xarSecurityCheck('EditNetquery')) return;
@@ -9,11 +21,12 @@ function netquery_admin_xaports()
     switch ($step) {
         case '1':
         default:
-            $data['body'] = '<br /><br />Creating and populating new data tables replaces any existing ports data table and related category flags table.';
-            $data['body'] .= ' Unless it has been backed up, all data contained in both tables will be lost.';
-            $data['body'] .= '<br /><br />Do you wish to proceed?:';
-            $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'xaports', array('step' => 99)).'">Yes</a>]';
-            $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'config').'">No</a>]<br /><br />';
+            $data['body'] = '<br /><br />';
+            $data['body'] .= xarML('Creating and populating new data tables replaces any existing ports data table and related category flags table. Unless it has been backed up, all data contained in both tables will be lost.');
+            $data['body'] .= '<br /><br />';
+            $data['body'] .= xarML('Do you wish to proceed?:');
+            $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'xaports', array('step' => 99)).'">' . xarML('Yes') . '</a>]';
+            $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'config').'">' . xarML('No') . '</a>]<br /><br />';
             return $data;
             break;
         case '99':
@@ -48,14 +61,14 @@ function netquery_admin_xaports()
             $result = $datadict->createTable($PortsTable, $PortsFields, $taboptarray);
             if (!$result) return;
             $FlagItems = array(
-array(1, 0, 'service', 'black', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=port+service+', ''),
-array(2, 1, 'trojan', 'red', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=trojan+', ''),
-array(3, 2, 'backdoor', 'purple', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=backdoor+', ''),
-array(4, 3, 'worm', 'brown', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=worm+', ''),
-array(5, 4, 'game', 'blue', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=game+', ''),
-array(6, 5, 'reserved1', 'yellow', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=dummy1+', ''),
-array(7, 6, 'reserved2', 'yellow', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=dummy2+', ''),
-array(8, 99, 'pending', 'green', 'white', '', ''));
+array(1, 0, xarML('service'), 'black', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=port+service+', ''),
+array(2, 1, xarML('trojan'), 'red', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=trojan+', ''),
+array(3, 2, xarML('backdoor'), 'purple', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=backdoor+', ''),
+array(4, 3, xarML('worm'), 'brown', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=worm+', ''),
+array(5, 4, xarML('game'), 'blue', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=game+', ''),
+array(6, 5, xarML('reserved1'), 'yellow', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=dummy1+', ''),
+array(7, 6, xarML('reserved2'), 'yellow', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=dummy2+', ''),
+array(8, 99, xarML('pending'), 'green', 'white', '', ''));
             foreach ($FlagItems as $FlagItem) {
                 list($flag_id,$flagnum,$keyword,$fontclr,$backclr,$lookup_1,$lookup_2) = $FlagItem;
                 $query = "INSERT INTO $FlagsTable
@@ -1819,15 +1832,19 @@ array(1740, 1024, 'tcp', 'RAT', 'Remote Administration Tool - RAT [no 2]', 1));
             return true;
             break;
         case '2':
-            $data['body'] = '<br /><br />A new ports table has been created and populated with services and exploits data up to port number 1024.';
-            $data['body'] .= '<br /><br />Do you wish to populate higher ports?:';
-            $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'xaports2', array('step' => '2')).'">Yes</a>]';
-            $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'config').'">No</a>]<br /><br />';
+            $data['body'] = '<br /><br />';
+            $data['body'] .= xarML('A new ports table has been created and populated with services and exploits data up to port number 1024.');
+            $data['body'] .= '<br /><br />';
+            $data['body'] .= xarML('Do you wish to populate higher ports?:');
+            $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'xaports2', array('step' => '2')).'">' . xarML('Yes') . '</a>]';
+            $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'config').'">' . xarML('No') . '</a>]<br /><br />';
             return $data;
             break;
         case '3':
-            $data['body'] = '<br /><br />Process completed. The new ports table has now been populated with services and exploits data up to port number 65535.';
-            $data['body'] .= '<br /><br />Please click <a href="'.xarModURL('netquery', 'admin', 'config').'">HERE</a> to return to Netquery\'s main admin panel.<br /><br />';
+            $data['body'] = '<br /><br />';
+            $data['body'] .= xarML('Process completed. The new ports table has now been populated with services and exploits data up to port number 65535.');
+            $data['body'] .= '<br /><br />';
+            $data['body'] .= xarML('Please click to return to Netquery\'s main admin panel') . '<a href="'.xarModURL('netquery', 'admin', 'config').'">' . xarML('Modify Config') . '</a><br /><br />';
             return $data;
             break;
     }
