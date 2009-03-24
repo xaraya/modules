@@ -1,16 +1,4 @@
 <?php
-/**
- * Importing new Port rules
- *
- * @package modules
- * @copyright (C) 2002-2009 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Netquery Module
- * @link http://xaraya.com/index.php/release/230.html
- */
-
 function netquery_admin_xaports()
 {
     if (!xarSecurityCheck('EditNetquery')) return;
@@ -25,8 +13,8 @@ function netquery_admin_xaports()
             $data['body'] .= xarML('Creating and populating new data tables replaces any existing ports data table and related category flags table. Unless it has been backed up, all data contained in both tables will be lost.');
             $data['body'] .= '<br /><br />';
             $data['body'] .= xarML('Do you wish to proceed?:');
-            $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'xaports', array('step' => 99)).'">' . xarML('Yes') . '</a>]';
-            $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'config').'">' . xarML('No') . '</a>]<br /><br />';
+            $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'xaports', array('step' => 99)).'">'.xarML('Yes').'</a>]';
+            $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'config').'">'.xarML('No').'</a>]<br /><br />';
             return $data;
             break;
         case '99':
@@ -1836,15 +1824,15 @@ array(1740, 1024, 'tcp', 'RAT', 'Remote Administration Tool - RAT [no 2]', 1));
             $data['body'] .= xarML('A new ports table has been created and populated with services and exploits data up to port number 1024.');
             $data['body'] .= '<br /><br />';
             $data['body'] .= xarML('Do you wish to populate higher ports?:');
-            $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'xaports2', array('step' => '2')).'">' . xarML('Yes') . '</a>]';
-            $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'config').'">' . xarML('No') . '</a>]<br /><br />';
+            $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'xaports2', array('step' => '2')).'">'.xarML('Yes').'</a>]';
+            $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'config').'">'.xarML('No').'</a>]<br /><br />';
             return $data;
             break;
         case '3':
             $data['body'] = '<br /><br />';
             $data['body'] .= xarML('Process completed. The new ports table has now been populated with services and exploits data up to port number 65535.');
             $data['body'] .= '<br /><br />';
-            $data['body'] .= xarML('Please click to return to Netquery\'s main admin panel') . '<a href="'.xarModURL('netquery', 'admin', 'config').'">' . xarML('Modify Config') . '</a><br /><br />';
+            $data['body'] .= xarML('To return to the main Netquery admin panel').', <a href="'.xarModURL('netquery', 'admin', 'config').'">'.xarML('click here').'</a>.<br /><br />';
             return $data;
             break;
     }

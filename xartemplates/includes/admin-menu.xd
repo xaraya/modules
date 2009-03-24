@@ -10,6 +10,13 @@
     </dt>
     <xar:sec mask="AdminNetquery" catch="false">
 
+      <xar:set name="tabclass">$activetab=='config'?'active':''</xar:set>
+      <dd class="#$tabclass#">
+        <a href="&xar-modurl-netquery-admin-config;" >
+          <xar:mlstring>Configure</xar:mlstring>
+        </a>
+      </dd>
+
       <xar:if condition="$activetab eq 'wiview' or $activetab eq 'winew' or $activetab eq 'wimodify' or $activetab eq 'widelete'">
           <xar:set name="tabclass">'active'</xar:set>
       <xar:else />
@@ -62,13 +69,6 @@
       <dd class="#$tabclass#">
         <a href="&xar-modurl-netquery-admin-bblogedit;">
           <xar:mlstring>Access Log</xar:mlstring>
-        </a>
-      </dd>
-
-      <xar:set name="tabclass">$activetab=='config'?'active':''</xar:set>
-      <dd class="#$tabclass#">
-        <a href="&xar-modurl-netquery-admin-config;" >
-          <xar:mlstring>Modify Config</xar:mlstring>
         </a>
       </dd>
 

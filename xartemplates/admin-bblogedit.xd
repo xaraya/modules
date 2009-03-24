@@ -149,6 +149,11 @@ Limit <input type="text" name="limit" id="limit" value="30" size="3" maxlength="
             <td colspan="7"><xar:mlstring>NO RECORDS FOUND</xar:mlstring></td>
         </tr>
     </xar:if>
+    <tr>
+      <th colspan="7">
+        &nbsp;<a href="#$cfglink.url#">#$cfglink.title#</a>
+      </th>
+    </tr>
     </table>
     </form>
 </xar:if>
@@ -159,7 +164,7 @@ Limit <input type="text" name="limit" id="limit" value="30" size="3" maxlength="
   <xar:mlvar>#$bbsettings.version#</xar:mlvar>
 </xar:ml>
   <br />
-<xar:set name="str">'http://www.homelandstupidity.us/software/bad-behavior/'</xar:set>
+<xar:set name="str">'http://www.bad-behavior.ioerror.us/'</xar:set>
 <xar:ml>
   <xar:mlstring>For more information please visit the <a href="#(1)">Bad Behavior</a> homepage.</xar:mlstring>
   <xar:mlvar>#$str#</xar:mlvar>

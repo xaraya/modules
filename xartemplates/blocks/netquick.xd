@@ -16,11 +16,11 @@
         <xar:mlstring>NOT Running</xar:mlstring>
     </xar:if>
     <br />
-  <xar:ml>
-    <xar:mlstring>Spambot blocker has denied <strong>#(1)</strong> access attempts in the last #(2) days.</xar:mlstring>
-    <xar:mlvar>#$bbstats#</xar:mlvar>
-    <xar:mlvar>#$bbsettings.log_retain#</xar:mlvar>
-  </xar:ml>
+    <xar:ml>
+      <xar:mlstring>Spambot blocker has denied <strong>#(1)</strong> access attempts in the last #(2) days.</xar:mlstring>
+      <xar:mlvar>#$bbstats#</xar:mlvar>
+      <xar:mlvar>#$bbsettings.log_retain#</xar:mlvar>
+    </xar:ml>
 <xar:elseif condition="$vars['blockquery'] eq 'clientinfo'" />
     <xar:if condition="!empty($geoip.cn)">
       <xar:if condition="!empty($geoip.geoflag)">

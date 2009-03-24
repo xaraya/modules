@@ -1,16 +1,4 @@
 <?php
-/**
- * Handles user submissions
- *
- * @package modules
- * @copyright (C) 2002-2009 The Digital Development Foundation
- * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Netquery Module
- * @link http://xaraya.com/index.php/release/230.html
- */
-
 function netquery_user_submit()
 {
     $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');

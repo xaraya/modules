@@ -9,11 +9,12 @@ function netquery_admin_xageoip()
     switch ($step) {
         case '1':
         default:
-            $data['body'] = '<br /><br />Creating and populating new data tables replaces any existing geoip and related geocc data tables.';
-            $data['body'] .= ' Unless it has been backed up, all data contained in both tables will be lost.';
-            $data['body'] .= '<br /><br />Do you wish to proceed?:';
-            $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'xageoip', array('step' => 99)).'">Yes</a>]';
-            $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'config').'">No</a>]<br /><br />';
+            $data['body'] = '<br /><br />';
+            $data['body'] .= xarML('Creating and populating new data tables replaces any existing geoip and related geocc data tables. Unless it has been backed up, all data contained in both tables will be lost.');
+            $data['body'] .= '<br /><br />';
+            $data['body'] .= xarML('Do you wish to proceed?:');
+            $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'xageoip', array('step' => 99)).'">'.xarML('Yes').'</a>]';
+            $data['body'] .= ' [<a href="'.xarModURL('netquery', 'admin', 'config').'">'.xarML('No').'</a>]<br /><br />';
             return $data;
             break;
         case '99':
@@ -327,14 +328,19 @@ array(3758096128, 3758096383, 1)); # Reserved block 223.255.255/24
             return true;
             break;
         case '2':
-            $data['body'] = '<br /><br />New geoip and geocc tables have been created and geocc has been populated with initial entries.';
-            $data['body'] .= '<br />Please click <a href="'.xarModURL('netquery', 'admin', 'xageoip2', array('step' => '2')).'">HERE</a> to continue populating the main geoip table.';
-            $data['body'] .= '<br /><br />The process (adding 70,000+ new records) may take a few minutes. Please be patient.';
+            $data['body'] = '<br /><br />';
+            $data['body'] .= xarML('New geoip and geocc tables have been created and populated with initial entries.');
+            $data['body'] .= '<br />';
+            $data['body'] .= xarML('To continue populating the geoip data table').', <a href="'.xarModURL('netquery', 'admin', 'xageoip2', array('step' => '2')).'">'.xarML('click here').'</a>.<br /><br />';
+            $data['body'] .= '<br /><br />';
+            $data['body'] .= xarML('The process (adding 80,000+ new records) may take a few minutes. Please be patient.');
             return $data;
             break;
         case '3':
-            $data['body'] = '<br /><br />Process completed. The new geoip and geocc tables have now been fully populated.';
-            $data['body'] .= '<br /><br />Please click <a href="'.xarModURL('netquery', 'admin', 'config').'">HERE</a> to return to Netquery\'s main admin panel.<br /><br />';
+            $data['body'] = '<br /><br />';
+            $data['body'] .= xarML('Process completed. The new geoip and geocc tables have now been fully populated.');
+            $data['body'] .= '<br /><br />';
+            $data['body'] .= xarML('To return to the main Netquery admin panel').', <a href="'.xarModURL('netquery', 'admin', 'config').'">'.xarML('click here').'</a>.<br /><br />';
             return $data;
             break;
     }
