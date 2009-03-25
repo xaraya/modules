@@ -41,8 +41,10 @@
         <xar:foreach in="$downlinelist" value="$downlineinfo">
             <div>
                 <span class="xar-float-left">
+                    <xar:comment>
                     [<a href="#xarModURL('roles', 'user', 'account', array('moduleload' => 'labaffiliate', 'form' => 'program', 'programid' => $programid))#"><xar:mlstring>edit</xar:mlstring></a>]
                     &nbsp;
+                    </xar:comment>
                     <xar:if condition="$downlineinfo['userid'] eq true">
                         <a href="#xarModURL('labaffiliate', 'user', 'display', array('affiliateid' => $downlineinfo['affiliateid']))#">#xarUserGetVar('name', $downlineinfo['userid'])#</a>
                     </xar:if>
@@ -53,7 +55,7 @@
             </div>
         
         
-            <pre><xar:set name="foo">print_r($programinfo)</xar:set></pre>
+            <xar:comment><pre><xar:set name="foo">print_r($programinfo)</xar:set></pre></xar:comment>
         
         
         </xar:foreach>

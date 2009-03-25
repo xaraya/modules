@@ -11,7 +11,8 @@
     <script type="text/javascript">
     <!--
         // Enter name of mandatory fields
-        var fieldRequired = Array("program_name", "programurl", "affiliateurl", "details", "marketing_copy");
+        var fieldRequired = Array("program_name");
+//        var fieldRequired = Array("program_name", "programurl", "affiliateurl", "details", "marketing_copy");
         // Enter field description to appear in the dialog box
         var fieldDescription = Array("Program name", "ProgramURL", "Affiliate URL", "Details", "Marketing Copy");
     // -->
@@ -105,7 +106,7 @@
 		    <label for="program_name" title="#xarML('Status')#" class="xar-form-label">
 		        <xar:mlstring>Status:</xar:mlstring>
 		    </label>
-            <xar:data-input property="$properties['status']" name="status" id="status" value="#$item.status#" maxlength="128" />
+            <xar:data-input type="dropdown" name="status" id="status" value="#$item.status#" maxlength="128" validation="Draft;Submitted;Active;Archived" />
 		</div>
 
 		<xar:if condition="!empty($hookoutput) and is_array($hookoutput) and count($hookoutput) gt 0">

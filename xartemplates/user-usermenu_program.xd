@@ -15,7 +15,14 @@
             <input type="text" name="program_key" id="program_key" value="#$membershipinfo['program_key']#" />
             
 		</div>
-
+        
+		<div class="xar-form-input-wrapper">
+		    <label for="program_link" class="xar-form-label">
+		        <xar:mlstring>Program Affiliate Link:</xar:mlstring>
+		    </label>
+            <textarea rows="2" cols="80">#xarModURL('labaffiliate','user','main',array('programid'=&gt;$programinfo.programid, 'affiliateid'=&gt;$affiliateid))#</textarea>
+            
+		</div>
 
 		<div class="xar-form-input-wrapper">
 		    <label for="marketing_copy" title="#xarML('Program marketing copy override')#" class="xar-form-label">

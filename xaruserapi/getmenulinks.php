@@ -13,9 +13,16 @@
  */
 function labaffiliate_userapi_getmenulinks()
 { 
-    /* First we need to do a security check to ensure that we only return menu items
-     * that we are suppose to see.
-     */
+    
+    if (xarModIsHooked('labaffiliate', 'roles') && xarUserIsLoggedIn()) {
+        $menulinks[] = Array('url'   => xarModURL('roles',
+                                                   'user',
+                                                   'account',
+                                                   array('moduleload' => 'labaffiliate')),
+                              'title' => xarML('Affiliate System'),
+                              'label' => xarML('Affiliate System'));
+    }
+    
     if (xarSecurityCheck('ViewProgram', 0)) {
         $menulinks[] = array('url' => xarModURL('labaffiliate',
                 'user',
@@ -23,20 +30,7 @@ function labaffiliate_userapi_getmenulinks()
             'title' => xarML('Displays all programs for view'),
             'label' => xarML('View Programs'));
     } 
-    if (xarSecurityCheck('ViewProgramAffiliate', 0)) {
-        $menulinks[] = array('url' => xarModURL('labaffiliate',
-                'affiliate',
-                'view'), 
-            'title' => xarML('Displays all affiliates for view'),
-            'label' => xarML('View Programs'));
-    } 
-    if (xarSecurityCheck('ViewProgramMembership', 0)) {
-        $menulinks[] = array('url' => xarModURL('labaffiliate',
-                'membership',
-                'view'), 
-            'title' => xarML('Displays all members for view'),
-            'label' => xarML('View Programs'));
-    } 
+    
     /* If we return nothing, then we need to tell PHP this, in order to avoid an ugly
      * E_ALL error.
      */

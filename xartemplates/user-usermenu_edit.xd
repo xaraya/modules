@@ -32,7 +32,13 @@
                 </xar:foreach>
             </select>
         </div>
-
+        
+        <strong><xar:mlstring>Affiliate URL</xar:mlstring></strong>
+        
+        <div>
+            <textarea name="affiliate_url" rows="2" cols="80">#xarModURL('labaffiliate','user','main',array('affiliateid'=&gt;$affiliateid))#</textarea>
+        </div>
+        
         <strong><xar:mlstring>Marketing Verbiage</xar:mlstring></strong>
         
         <div>

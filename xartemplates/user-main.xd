@@ -13,10 +13,12 @@
     <div class="labaffiliate-join">
         <xar:if condition="xarUserIsLoggedIn()">
             <a href="#xarModURL('roles','user','account',array('moduleload'=&gt;'labaffiliate'))#"><xar:mlstring>Join Now!</xar:mlstring></a>
+        <xar:else />
+            <a href="#xarModURL('roles')#"><xar:mlstring>Login</xar:mlstring></a> or <a href="#xarModURL('registration')#"><xar:mlstring>register</xar:mlstring></a> to Join Now!
         </xar:if>
     </div>
 
-    <xar:if condition="isset($programlist)">
+    <xar:if condition="isset($programlist) and count($programlist) gt 0">
         <fieldset><legend><xar:mlstring>Affiliate Programs</xar:mlstring></legend>
             <xar:foreach in="$programlist" value="$programinfo">
                 <xar:set name="programid">$programinfo['programid']</xar:set>

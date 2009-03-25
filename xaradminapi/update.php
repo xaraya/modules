@@ -26,19 +26,19 @@ function labaffiliate_adminapi_update($args)
     }
 
     if (empty($programurl) || !is_string($programurl)) {
-        $invalid[] = 'Program URL';
+//        $invalid[] = 'Program URL';
     }
 
     if (empty($affiliateurl) || !is_string($affiliateurl)) {
-        $invalid[] = 'Affiliate URL';
+//        $invalid[] = 'Affiliate URL';
     }
 
     if (empty($details) || !is_string($details)) {
-        $invalid[] = 'Details';
+//        $invalid[] = 'Details';
     }
 
     if (empty($marketing_copy) || !is_string($marketing_copy)) {
-        $invalid[] = 'Marketing Copy';
+//        $invalid[] = 'Marketing Copy';
     }
 
 	if (count($invalid) > 0) {
@@ -49,10 +49,7 @@ function labaffiliate_adminapi_update($args)
 		return;
 	}
 
-	$item = xarModAPIFunc('labaffiliate',
-		'user',
-		'get',
-		array('programid' => $programid));
+	$item = xarModAPIFunc('labaffiliate', 'user', 'get', array('programid' => $programid));
 	/*Check for exceptions */
 	if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 

@@ -15,12 +15,12 @@ function labaffiliate_admin_create($args)
 {
     extract($args);
 
-    if (!xarVarFetch('program_name', 'str:1', $program_name, $program_name, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('programurl', 'str:1', $programurl, $programurl, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('affiliateurl', 'str:1', $affiliateurl, $affiliateurl, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('details', 'str:1', $details, $details, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('marketing_copy', 'str:1', $marketing_copy, $marketing_copy, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('status', 'str::', $status, $status, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('program_name', 'str:1', $program_name, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('programurl', 'str:1', $programurl, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('affiliateurl', 'str:1', $affiliateurl, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('details', 'str:1', $details, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('marketing_copy', 'str:1', $marketing_copy, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('status', 'str::', $status, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid', 'array', $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
 
     // Argument check
@@ -30,22 +30,22 @@ function labaffiliate_admin_create($args)
         $program_name = '';
     }
     if (empty($programurl) || !is_string($programurl)) {
-        $invalid[] = 'Program URL';
+//        $invalid[] = 'Program URL';
         $programurl = '';
     }
 
     if (empty($affiliateurl) || !is_string($affiliateurl)) {
-        $invalid[] = 'Affiliate URL';
+//        $invalid[] = 'Affiliate URL';
         $affiliateurl = '';
     }
 
     if (empty($details) || !is_string($details)) {
-        $invalid[] = 'Details';
+//        $invalid[] = 'Details';
         $details = '';
     }
 
     if (empty($marketing_copy) || !is_string($marketing_copy)) {
-        $invalid[] = 'Marketing Copy';
+//        $invalid[] = 'Marketing Copy';
         $marketing_copy = '';
     }
 

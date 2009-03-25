@@ -47,11 +47,11 @@ function labaffiliate_admin_update($args)
     }
 
     if (empty($programurl) || !is_string($programurl)) {
-        $invalid[] = 'Program URL';
+//        $invalid[] = 'Program URL';
     }
 
     if (empty($affiliateurl) || !is_string($affiliateurl)) {
-        $invalid[] = 'Affiliate URL';
+//        $invalid[] = 'Affiliate URL';
     }
 
     // check if we have any errors
