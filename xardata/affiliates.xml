@@ -1,5 +1,5 @@
 <object name="labaffiliate_affiliates">
-  <objectid>104</objectid>
+  <objectid>109</objectid>
   <label>Affiliate Members</label>
   <moduleid>919</moduleid>
   <itemtype>2</itemtype>
@@ -9,7 +9,7 @@
   <isalias>1</isalias>
   <properties>
     <property name="affiliateid">
-      <id>1056</id>
+      <id>1082</id>
       <label>Affiliate ID</label>
       <type>itemid</type>
       <default></default>
@@ -19,8 +19,8 @@
       <validation></validation>
     </property>
     <property name="uplineid">
-      <id>1057</id>
-      <label>Upline ID</label>
+      <id>1083</id>
+      <label>Upline</label>
       <type>textbox</type>
       <default></default>
       <source>xar_labaffiliate_affiliates.xar_uplineid</source>
@@ -29,7 +29,7 @@
       <validation></validation>
     </property>
     <property name="userid">
-      <id>1058</id>
+      <id>1084</id>
       <label>User ID</label>
       <type>userlist</type>
       <default></default>
@@ -39,8 +39,8 @@
       <validation></validation>
     </property>
     <property name="primaryprogramid">
-      <id>1059</id>
-      <label>Primary Program ID</label>
+      <id>1085</id>
+      <label>Primary Program</label>
       <type>dropdown</type>
       <default></default>
       <source>xar_labaffiliate_affiliates.xar_primaryprogramid</source>
@@ -49,13 +49,33 @@
       <validation></validation>
     </property>
     <property name="secondaryprogramid">
-      <id>1060</id>
-      <label>Secondary Program ID</label>
+      <id>1086</id>
+      <label>Secondary Program</label>
       <type>dropdown</type>
       <default></default>
       <source>xar_labaffiliate_affiliates.xar_secondaryprogramid</source>
       <status>1</status>
       <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="status">
+      <id>1194</id>
+      <label>Status</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>xar_labaffiliate_affiliates.xar_status</source>
+      <status>1</status>
+      <order>6</order>
+      <validation>Draft;Submitted;Active;Archived</validation>
+    </property>
+    <property name="marketing_copy">
+      <id>1207</id>
+      <label>Marketing Copy</label>
+      <type>xartinymce</type>
+      <default></default>
+      <source>xar_labaffiliate_affiliates.xar_marketing_copy</source>
+      <status>1</status>
+      <order>7</order>
       <validation></validation>
     </property>
   </properties>

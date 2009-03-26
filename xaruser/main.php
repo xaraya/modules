@@ -14,6 +14,7 @@
 function labaffiliate_user_main()
 {    
     if (!xarVarFetch('affiliateid', 'id', $affiliateid, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('programid', 'id', $programid, NULL, XARVAR_NOT_REQUIRED)) return;
     
     if (!xarSecurityCheck('ViewProgram')) return;
     
@@ -31,6 +32,8 @@ function labaffiliate_user_main()
     
     $data['affiliateid'] = $affiliateid;
     
+    $default_marketing_copy = xarModGetVar('labaffiliate','default_marketing_copy');
+    
     $displaytitle = xarModGetVar('labaffiliate','displaytitle');
     
     if($displaytitle == false) {
@@ -38,8 +41,6 @@ function labaffiliate_user_main()
     }
     
     $data['displaytitle'] = $displaytitle;
-    
-    $default_marketing_copy = xarModGetVar('labaffiliate','default_marketing_copy');
         
     $affiliateinfo = array();
     $programlist = array();
@@ -66,6 +67,22 @@ function labaffiliate_user_main()
                 $programinfo['membershipinfo'] = $membershipdetails;
                 $programlist[] = $programinfo;
             }
+        }
+    }
+    
+    if($programid) {
+        $programinfo = xarModAPIFunc('labaffiliate', 'user', 'get', array('programid' => $programid));
+        
+        if($programinfo == false) return;
+        
+        $default_marketing_copy = $programinfo['marketing_copy'];
+    
+        $membershipinfo = xarModAPIFunc('labaffiliate', 'membership', 'find', array('programid' => $programid, 'affiliateid' => $affiliateid));
+        
+        if($membershipinfo == false) {
+            return;
+        } else {
+            $default_marketing_copy = $membershipinfo['marketing_copy'];
         }
     }
     

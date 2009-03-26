@@ -1,5 +1,5 @@
 <object name="labaffiliate_memberships">
-  <objectid>105</objectid>
+  <objectid>110</objectid>
   <label>Affiliate Memberships</label>
   <moduleid>919</moduleid>
   <itemtype>3</itemtype>
@@ -9,7 +9,7 @@
   <isalias>1</isalias>
   <properties>
     <property name="membershipid">
-      <id>1061</id>
+      <id>1087</id>
       <label>Membership ID</label>
       <type>itemid</type>
       <default></default>
@@ -19,7 +19,7 @@
       <validation></validation>
     </property>
     <property name="programid">
-      <id>1062</id>
+      <id>1088</id>
       <label>Program ID</label>
       <type>static</type>
       <default></default>
@@ -29,7 +29,7 @@
       <validation></validation>
     </property>
     <property name="affiliateid">
-      <id>1063</id>
+      <id>1089</id>
       <label>Affiliate ID</label>
       <type>static</type>
       <default></default>
@@ -39,13 +39,33 @@
       <validation></validation>
     </property>
     <property name="program_key">
-      <id>1064</id>
+      <id>1090</id>
       <label>Program Key</label>
       <type>textbox</type>
       <default></default>
       <source>xar_labaffiliate_membership.xar_program_key</source>
       <status>1</status>
       <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="active">
+      <id>1195</id>
+      <label>Active</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>xar_labaffiliate_membership.xar_active</source>
+      <status>1</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="marketing_copy">
+      <id>1206</id>
+      <label>Marketing Copy</label>
+      <type>xartinymce</type>
+      <default></default>
+      <source>xar_labaffiliate_membership.xar_marketing_copy</source>
+      <status>1</status>
+      <order>6</order>
       <validation></validation>
     </property>
   </properties>

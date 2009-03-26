@@ -1,5 +1,5 @@
 <object name="labaffiliate_programs">
-  <objectid>103</objectid>
+  <objectid>108</objectid>
   <label>Affiliate Programs</label>
   <moduleid>919</moduleid>
   <itemtype>1</itemtype>
@@ -9,7 +9,7 @@
   <isalias>1</isalias>
   <properties>
     <property name="programid">
-      <id>1050</id>
+      <id>1076</id>
       <label>Program ID</label>
       <type>itemid</type>
       <default></default>
@@ -19,7 +19,7 @@
       <validation></validation>
     </property>
     <property name="program_name">
-      <id>1051</id>
+      <id>1077</id>
       <label>Program Name</label>
       <type>textbox</type>
       <default></default>
@@ -29,7 +29,7 @@
       <validation></validation>
     </property>
     <property name="programurl">
-      <id>1052</id>
+      <id>1078</id>
       <label>Program URL</label>
       <type>url</type>
       <default></default>
@@ -39,7 +39,7 @@
       <validation></validation>
     </property>
     <property name="affiliateurl">
-      <id>1053</id>
+      <id>1079</id>
       <label>Affiliate URL</label>
       <type>url</type>
       <default></default>
@@ -49,7 +49,7 @@
       <validation></validation>
     </property>
     <property name="details">
-      <id>1054</id>
+      <id>1080</id>
       <label>Details</label>
       <type>textarea_medium</type>
       <default></default>
@@ -59,7 +59,7 @@
       <validation></validation>
     </property>
     <property name="marketing_copy">
-      <id>1055</id>
+      <id>1081</id>
       <label>Marketing Copy</label>
       <type>xartinymce</type>
       <default></default>
@@ -67,6 +67,16 @@
       <status>1</status>
       <order>6</order>
       <validation></validation>
+    </property>
+    <property name="status">
+      <id>1193</id>
+      <label>Status</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>xar_labaffiliate_programs.xar_status</source>
+      <status>1</status>
+      <order>7</order>
+      <validation>Draft;Submitted;Active;Archived</validation>
     </property>
   </properties>
 </object>

@@ -13,7 +13,7 @@
  */
 $modversion['name'] = 'labAffiliate';
 $modversion['id'] = '919';
-$modversion['version'] = '1.2.0';
+$modversion['version'] = '1.2.1';
 $modversion['displayname']    = xarML('labAffiliate');
 $modversion['description'] = xarML('Affiliate program creation, migration and tracking.');
 $modversion['credits'] = 'xardocs/credits.txt';

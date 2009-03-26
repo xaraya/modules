@@ -229,14 +229,14 @@ function labaffiliate_upgrade($oldversion)
         
     
         
-        case '1.1.0': // current version
+        case '1.1.0':
     
             /* Register blocks. */
             if (!xarModAPIFunc('blocks','admin','register_block_type',
                     array('modName' => 'labaffiliate',
                         'blockType' => 'uplinecapture'))) return;
         
-        case '1.1.1': // current version
+        case '1.1.1':
             
             $result = $datadict->addColumn($affiliates_table, 'xar_marketing_copy X NotNull');
             if (!$result) return;
@@ -246,7 +246,44 @@ function labaffiliate_upgrade($oldversion)
         
 			break;
         
-        case '1.2.0': // current version
+        case '1.2.0':
+    
+            $ddata_is_available = xarModIsAvailable('dynamicdata');
+            if (!isset($ddata_is_available)) return;
+            
+            xarModAPILoad('dynamicdata', 'user');
+        
+        	/* Create DD objects */
+            $moduleid = xarModGetIdFromName('labaffiliate');
+            
+            /* programs DD object */
+            $programs_object = xarModAPIFunc('dynamicdata','user','getobject',array('moduleid' => $moduleid, 'itemtype' => 1));
+            if($programs_object->objectid == true) {
+                xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $programs_object->objectid));
+            }
+        	$programs_object = xarModAPIFunc('dynamicdata','util','import',
+                                        array('file' => 'modules/labaffiliate/xardata/programs.xml'));
+        	if (empty($programs_object)) return;
+            
+            /* affiliates DD object */
+            $affiliates_object = xarModAPIFunc('dynamicdata','user','getobject',array('moduleid' => $moduleid, 'itemtype' => 2));
+            if($affiliates_object->objectid == true) {
+                xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $affiliates_object->objectid));
+            }
+        	$affiliates_object = xarModAPIFunc('dynamicdata','util','import',
+                                        array('file' => 'modules/labaffiliate/xardata/affiliates.xml'));
+        	if (empty($affiliates_object)) return;
+            
+            /* memberships DD object */
+            $memberships_object = xarModAPIFunc('dynamicdata','user','getobject',array('moduleid' => $moduleid, 'itemtype' => 3));
+            if($memberships_object->objectid == true) {
+                xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $memberships_object->objectid));
+            }
+        	$memberships_object = xarModAPIFunc('dynamicdata','util','import',
+                                        array('file' => 'modules/labaffiliate/xardata/memberships.xml'));
+        	if (empty($memberships_object)) return;
+        
+        case '1.2.1': // current version
             
 	}
 

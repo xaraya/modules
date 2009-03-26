@@ -16,6 +16,8 @@ function labaffiliate_admin_updateconfig()
     if (!xarVarFetch('itemsperpage', 'int',      $itemsperpage, 10, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('shorturls',    'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('aliasname',    'str:1:',   $aliasname, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('displaytitle',    'str::',   $displaytitle, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('default_marketing_copy',    'str::',   $default_marketing_copy, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('modulealias',  'checkbox', $modulealias,false,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('inviteonly',  'checkbox', $inviteonly,false,XARVAR_NOT_REQUIRED)) return;
 
@@ -25,6 +27,10 @@ function labaffiliate_admin_updateconfig()
 
     xarModSetVar('labaffiliate', 'inviteonly', $inviteonly);
 
+    xarModSetVar('labaffiliate', 'displaytitle', $displaytitle);
+
+    xarModSetVar('labaffiliate', 'default_marketing_copy', $default_marketing_copy);
+    
     xarModSetVar('labaffiliate', 'SupportShortURLs', $shorturls);
     if (isset($aliasname) && trim($aliasname)<>'') {
         xarModSetVar('labaffiliate', 'useModuleAlias', $modulealias);

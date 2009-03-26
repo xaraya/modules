@@ -44,7 +44,7 @@
 					<td>
 						#$item.status#
 					</td>
-					<td class="xar-align-center">
+					<td class="xar-align-center xar-nowrap">
 						<xar:if condition="empty($item['editurl'])">
 							<xar:mlstring>Edit</xar:mlstring>
 						<xar:else />

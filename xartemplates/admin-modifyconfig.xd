@@ -35,6 +35,20 @@
         </xar:if>
       </div>
 
+      <div class="xar-form-input-wrapper">
+        <label for="displaytitle" class="xar-form-label" title="#xarML('Page title displayed on main module landing page')#">
+          <xar:mlstring>Displayed Title:</xar:mlstring>
+        </label>
+        <input type="text" name="displaytitle" id="displaytitle" value="#xarModGetVar('labaffiliate', 'displaytitle')#" maxlength="255" class="xar-form-textxxlong" />
+      </div>
+
+      <div class="xar-form-input-wrapper">
+        <label for="default_marketing_copy" class="xar-form-label" title="#xarML('Shown on the labAffiliate module main page')#">
+          <xar:mlstring>Default Marketing Copy:</xar:mlstring>
+        </label>
+        <textarea name="default_marketing_copy" id="default_marketing_copy" rows="12" cols="80">#xarModGetVar('labaffiliate', 'default_marketing_copy')#</textarea>
+      </div>
+
     </fieldset>
 
     <fieldset>
