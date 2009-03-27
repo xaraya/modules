@@ -22,10 +22,10 @@
                         #$properties['author']->getValue()#
                     </xar:mlvar>
                     <xar:mlvar>
-                        #xarLocaleGetFormattedDate('long',$properties['start_date']->getValue())#
+                        #xarLocaleGetFormattedDate('long',$properties['start_date']->value)#
                     </xar:mlvar>
                     <xar:mlvar>
-                        #xarLocaleGetFormattedTime('long',$properties['start_date']->getValue())#
+                        #xarLocaleGetFormattedTime('long',$properties['start_date']->value)#
                     </xar:mlvar>
                 </xar:ml>
                 <xar:if condition="!empty($counter)">

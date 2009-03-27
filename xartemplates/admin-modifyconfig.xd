@@ -42,6 +42,7 @@
 
        <form class="xar-formwidget" action="&xar-modurl-publications-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
             <xar:if condition="$tab eq 'global'">
+                <xar:template file="display" module="base" subdata="array('modulename' => 'publications')" />
                 <fieldset class="xar-norm">
                     <legend>
                         Global Configuration
@@ -52,12 +53,6 @@
                         </label> 
                         <xar:data-input name="defaultpubtype" type="objectref" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" />
                         (for the Publications "Front Page")                    
-                    </div>
-                    <div class="xar-form-input-wrapper">
-                        <label class="help xar-form-label" for="shorturls" title="#xarML('Support short URLs ')#">
-                            Support short URLs
-                        </label>
-                        <xar:data-input type="checkbox" name="shorturls" checked="$shorturls" />
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label class="help xar-form-label" for="sortpubtypes" title="#xarML('Sort order for Publication Types in menus, publication map etc.')#">
