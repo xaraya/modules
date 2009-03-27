@@ -25,7 +25,7 @@
             <xar:data-output property="$properties['title']" />
             <xar:if condition="$canedit">
                 &#160;
-                [<a href="#xarModURL('publications', 'admin', 'modify',array('id' => $properties['id']->value))#">Edit</a>]
+                [<a href="#xarModURL('publications', 'user', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#">Edit</a>]
             </xar:if>
             <br />
           </td>
