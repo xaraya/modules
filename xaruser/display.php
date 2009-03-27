@@ -36,6 +36,7 @@ function publications_user_display($args)
     $pubtypeobject->getItem(array('itemid' => $ptid));
     $data['object'] = DataObjectMaster::getObject(array('name' => $pubtypeobject->properties['name']->value));
     $data['object']->getItem(array('itemid' => $itemid));
+    $publication = $data['object']->getFieldValues();
 
     return xarTplModule('publications', 'user', 'display', $data);
 
@@ -124,22 +125,6 @@ function publications_user_display($args)
     $data = $publication->getFieldValues();
     $data['ptid'] = $ptid; // navigation pubtype
     $data['pubtype_id'] = $pubtype_id; // publication pubtype
-
-    // Security check for EDIT access
-    if (!$preview) {
-        $input = array();
-        $input['publication'] = $publication;
-        $input['mask'] = 'EditPublications';
-        if (xarModAPIFunc('publications','user','checksecurity',$input)) {
-            $data['editurl'] = xarModURL('publications', 'admin', 'modify',
-                                         array('id' => $publication['id']));
-        // don't show unapproved publications to non-editors
-        } elseif ($publication['state'] < 2) {
-            $state = xarModAPIFunc('publications', 'user', 'getstatename',
-                                    array('state' => $publication['state']));
-            return xarML('You have no permission to view this item [Status: #(1)]', $state);
-        }
-    }
 
 // TODO: improve the case where we have several icons :)
     $data['topic_icons'] = '';

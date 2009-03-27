@@ -59,33 +59,32 @@ function publications_userapi_checksecurity($args)
     if (empty($mask)) {
         return false;
     }
-
     // Get article information
-    if (!isset($article) && !empty($id) && $mask != 'SubmitPublications') {
-        $article = xarModAPIFunc('publications',
+    if (!isset($publication) && !empty($id) && $mask != 'SubmitPublications') {
+        $publication = xarModAPIFunc('publications',
                                 'user',
                                 'get',
                                 array('id' => $id,
                                       'withcids' => true));
-        if ($article == false) {
+        if ($publication == false) {
             return false;
         }
     }
-    if (empty($id) && isset($article['id'])) {
-        $id = $article['id'];
+    if (empty($id) && isset($publication['id'])) {
+        $id = $publication['id'];
     }
     if (!isset($id)) {
         $id = '';
     }
 
     // Get author ID
-    if (isset($article['owner']) && empty($owner)) {
-        $owner = $article['owner'];
+    if (isset($publication['owner']) && empty($owner)) {
+        $owner = $publication['owner'];
     }
 
     // Get state
-    if (isset($article['state']) && !isset($state)) {
-        $state = $article['state'];
+    if (isset($publication['state']) && !isset($state)) {
+        $state = $publication['state'];
     }
     if (empty($state)) {
         $state = 0;
@@ -96,10 +95,10 @@ function publications_userapi_checksecurity($args)
     }
 
     // Get publication type ID
-    if (isset($article['pubtype_id'])) {
+    if (isset($publication['pubtype_id'])) {
         if (!isset($ptid)) {
-            $ptid = $article['pubtype_id'];
-        } elseif ($ptid != $article['pubtype_id'] && $mask != 'EditPublications') {
+            $ptid = $publication['pubtype_id'];
+        } elseif ($ptid != $publication['pubtype_id'] && $mask != 'EditPublications') {
             return false;
         }
     }
@@ -116,11 +115,11 @@ function publications_userapi_checksecurity($args)
     }
 
     // Get category information for this article
-    if (!isset($article['cids']) && !empty($id)) {
+    if (!isset($publication['cids']) && !empty($id)) {
         if (!xarModAPILoad('categories', 'user')) return;
         $info = xarMod::getBaseInfo('publications');
         $sysid = $info['systemid'];
-        $articlecids = xarModAPIFunc('categories',
+        $publicationcids = xarModAPIFunc('categories',
                                     'user',
                                     'getlinks',
                                     array('iids' => Array($id),
@@ -129,12 +128,12 @@ function publications_userapi_checksecurity($args)
                                           'reverse' => 0
                                          )
                                    );
-        if (is_array($articlecids) && count($articlecids) > 0) {
-            $article['cids'] = array_keys($articlecids);
+        if (is_array($publicationcids) && count($publicationcids) > 0) {
+            $publication['cids'] = array_keys($publicationcids);
         }
     }
-    if (!isset($article['cids'])) {
-        $article['cids'] = array();
+    if (!isset($publication['cids'])) {
+        $publication['cids'] = array();
     }
 
     if (!isset($cids)) {
@@ -147,7 +146,7 @@ function publications_userapi_checksecurity($args)
         $jointcids[$cid] = 1;
     }
 */
-    foreach ($article['cids'] as $cid) {
+    foreach ($publication['cids'] as $cid) {
         $jointcids[$cid] = 1;
     }
     // FIXME: the line within the foreach is known to give an illegal offset error, not sure how to properly

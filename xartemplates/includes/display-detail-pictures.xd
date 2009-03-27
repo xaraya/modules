@@ -6,63 +6,73 @@
     <!--
     <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" itemid="$id" cids="$cids" showcatcount="$showcatcount" showempty="0" />
     -->
-    <div id="wrap">
-        <div id="header">
-            <h1>
-                <xar:data-output property="$properties['title']" />
-            </h1>
-            <p>
-                <xar:if condition="!empty($counter)">
-                    ( #$counter#
-                    
-                        Reads
-                    )
-                </xar:if>
-                <xar:if condition="!empty($editurl)">
-                    [
-                    <a href="#$editurl#">
-                        Edit
-                    </a>
-                    ]
-                </xar:if>
-            </p>
-        </div>
-        <div id="main-content">
-            <div id="fullplate-photo">
+
+    <xar:set name="canedit">
+        xarModAPIFunc('publications','user','checksecurity',array('mask' => 'EditPublications', 'publication' => $object->getFieldValues()))
+    </xar:set>
+
+    <xar:set name="publication_state">
+        $properties['state']->value
+    </xar:set>
+
+    <xar:if condition="!$canedit AND ($publication_state lt 3)">
+        You have no permission to view this item
+    <xar:else />
+        <div id="wrap">
+            <div id="header">
+                <h1>
+                    <xar:data-output property="$properties['title']" />
+                </h1>
                 <p>
-                    <xar:data-output property="$properties['picture']" />
+                    <xar:if condition="!empty($counter)">
+                        ( #$counter#
+
+                            Reads
+                        )
+                    </xar:if>
+                    <xar:if condition="$canedit">
+                        &#160;
+                        [<a href="#xarModURL('publications', 'admin', 'modify',array('id' => $properties['id']->value))#">Edit</a>]
+                    </xar:if>
                 </p>
-                <!--
-                <div id='photoholder'>
-                    <xar:if condition="xarModIsHooked('uploads','publications',$pubtype_id) and substr($body,0,1) eq ';'">
-                        <xar:set name="img_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $body, 'multiple' => true))</xar:set>
-                        <xar:foreach in="$img_output" key="$fileId" value="$fileInfo">
-                            <a href="#$fileInfo['fileDownload']#" alt="#xarMl('View full sized image')#">
-                                <xar:if condition="xarModIsAvailable('images')">
-                                    <xar:set name="file">$fileInfo</xar:set>
-                                    <xar:template file="picture-display" type="module" />
-                                <xar:else />
-                                    <img src="#xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']))#"  width="100%" alt="#$title#" id="thephoto" />
-                                </xar:if>
-                            </a>
-                        </xar:foreach>
-                    <xar:else />
-                        <img src="#$body#" border="0" alt="#$properties['title']->getValue()#" id="thephoto" />
+            </div>
+            <div id="main-content">
+                <div id="fullplate-photo">
+                    <p>
+                        <xar:data-output property="$properties['picture']" />
+                    </p>
+                    <!--
+                    <div id='photoholder'>
+                        <xar:if condition="xarModIsHooked('uploads','publications',$pubtype_id) and substr($body,0,1) eq ';'">
+                            <xar:set name="img_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $body, 'multiple' => true))</xar:set>
+                            <xar:foreach in="$img_output" key="$fileId" value="$fileInfo">
+                                <a href="#$fileInfo['fileDownload']#" alt="#xarMl('View full sized image')#">
+                                    <xar:if condition="xarModIsAvailable('images')">
+                                        <xar:set name="file">$fileInfo</xar:set>
+                                        <xar:template file="picture-display" type="module" />
+                                    <xar:else />
+                                        <img src="#xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']))#"  width="100%" alt="#$title#" id="thephoto" />
+                                    </xar:if>
+                                </a>
+                            </xar:foreach>
+                        <xar:else />
+                            <img src="#$body#" border="0" alt="#$properties['title']->getValue()#" id="thephoto" />
+                        </xar:if>
+                    </div>
+                    -->
+                    <xar:if condition="!empty($prevart) || !empty($nextart)">
+                        <ul id="fullplate-navigation">
+                            <xar:if condition="!empty($prevart)">
+                                <li id="previous"><a href="#$prevart#">&#171;</a></li>
+                            </xar:if>
+                            <xar:if condition="!empty($nextart)">
+                                <li id="next"><a href="#$nextart#">&#187;</a></li>
+                            </xar:if>
+                        </ul>
                     </xar:if>
                 </div>
-                -->
-                <xar:if condition="!empty($prevart) || !empty($nextart)">
-                    <ul id="fullplate-navigation">
-                        <xar:if condition="!empty($prevart)">
-                            <li id="previous"><a href="#$prevart#">&#171;</a></li>
-                        </xar:if>
-                        <xar:if condition="!empty($nextart)">
-                            <li id="next"><a href="#$nextart#">&#187;</a></li>
-                        </xar:if>
-                    </ul>
-                </xar:if>
             </div>
         </div>
-    </div>
+    </xar:if>
     <xar:template file="navtabs-user" type="module" />
 </xar:template>
