@@ -245,7 +245,6 @@ function publications_admin_view($args)
             }
 
             $item['deletetitle'] = xarML('Delete');
-            $item['edittitle'] = xarML('Edit');
             $item['viewtitle'] = xarML('View');
 
             $items[] = $item;

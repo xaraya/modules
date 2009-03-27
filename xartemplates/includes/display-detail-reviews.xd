@@ -11,7 +11,7 @@
       </td>
       <td align="left">
         <xar:data-output property="$properties['title']" />
-        <xar:if condition="!empty($editurl)"> [<a href="#$editurl#">#$edittitle#</a>]
+        <xar:if condition="!empty($editurl)"> [<a href="#$editurl#">Edit</a>]
         </xar:if>
         <br />
       </td>

@@ -7,7 +7,7 @@
     <h3>
         <xar:data-output property="$properties['source']" />
     </h3>
-    <xar:if condition="!empty($editurl)"> [<a href="#$editurl#">#$edittitle#</a>]
+    <xar:if condition="!empty($editurl)"> [<a href="#$editurl#">Edit</a>]
     </xar:if>
     <div class="xar-norm">
         
