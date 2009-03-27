@@ -21,7 +21,7 @@
                 <xar:if condition="!empty($editurl)">
                     [
                     <a href="#$editurl#">
-                        #$edittitle#
+                        Edit
                     </a>
                     ]
                 </xar:if>

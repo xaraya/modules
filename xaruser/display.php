@@ -140,7 +140,6 @@ function publications_user_display($args)
             return xarML('You have no permission to view this item [Status: #(1)]', $state);
         }
     }
-    $data['edittitle'] = xarML('Edit');
 
 // TODO: improve the case where we have several icons :)
     $data['topic_icons'] = '';
