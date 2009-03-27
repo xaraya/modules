@@ -4,60 +4,75 @@
     <!--
     <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" itemtype="$ptid" itemid="$id" cids="$cids" showcatcount="$showcatcount" showempty="0" />
     -->
-    <h3>
-        <xar:data-output property="$properties['source']" />
-    </h3>
-    <xar:if condition="!empty($editurl)"> [<a href="#$editurl#">Edit</a>]
-    </xar:if>
-    <div class="xar-norm">
-        
-            Quote
-        
-        : <xar:data-output property="$properties['quote']" />
-    </div>
-    <div class="xar-sub">        
-        Added on
-        <xar:data-output property="$properties['modified']" />
-    </div>
-    <div class="xar-sub">
-        
-            By
-        
-        :
-        <xar:if condition="!empty($profile)">
-            <a href="#$profile#">
-                <xar:data-output property="$properties['author']" />
-            </a>
-        <xar:else />
-            <xar:data-output property="$properties['author']" />
-        </xar:if>
-    </div>
-    <xar:if condition="!empty($counter)">
-        <div class="xar-sub">
-            <xar:ml>
-                (#(1) Hits)
-                <xar:mlvar>#$counter#</xar:mlvar>
-            </xar:ml>
-        </div>
-    </xar:if>
 
-    <xar:if condition="!empty($prevart) || !empty($nextart)">
-        <xar:if condition="!empty($prevart)">
-            <a href="#$prevart#">
-                &lt;
-                
-                    prev
-                
-            </a>
+    <xar:set name="canedit">
+        xarModAPIFunc('publications','user','checksecurity',array('mask' => 'EditPublications', 'publication' => $object->getFieldValues()))
+    </xar:set>
+
+    <xar:set name="publication_state">
+        $properties['state']->value
+    </xar:set>
+
+    <xar:if condition="!$canedit AND ($publication_state lt 3)">
+        You have no permission to view this item
+    <xar:else />
+        <h3>
+            <xar:data-output property="$properties['source']" />
+            <xar:if condition="$canedit">
+                &#160;
+                [<a href="#xarModURL('publications', 'admin', 'modify',array('id' => $properties['id']->value))#">Edit</a>]
+            </xar:if>
+        </h3>
+        <div class="xar-norm">
+
+                Quote
+
+            : <xar:data-output property="$properties['quote']" />
+        </div>
+        <div class="xar-sub">        
+            Added on
+            <xar:data-output property="$properties['modified']" />
+        </div>
+        <div class="xar-sub">
+
+                By
+
+            :
+            <xar:if condition="!empty($profile)">
+                <a href="#$profile#">
+                    <xar:data-output property="$properties['author']" />
+                </a>
+            <xar:else />
+                <xar:data-output property="$properties['author']" />
+            </xar:if>
+        </div>
+        <xar:if condition="!empty($counter)">
+            <div class="xar-sub">
+                <xar:ml>
+                    (#(1) Hits)
+                    <xar:mlvar>#$counter#</xar:mlvar>
+                </xar:ml>
+            </div>
         </xar:if>
-        &#160;&#160;
-        <xar:if condition="!empty($nextart)">
-            <a href="#$nextart#">
-                
-                    next
-                
-                &gt;
-            </a>
+
+        <xar:if condition="!empty($prevart) || !empty($nextart)">
+            <xar:if condition="!empty($prevart)">
+                <a href="#$prevart#">
+                    &lt;
+
+                        prev
+
+                </a>
+            </xar:if>
+            &#160;&#160;
+            <xar:if condition="!empty($nextart)">
+                <a href="#$nextart#">
+
+                        next
+
+                    &gt;
+                </a>
+            </xar:if>
         </xar:if>
     </xar:if>
     <xar:template file="navtabs-user" type="module" />
