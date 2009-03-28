@@ -1,0 +1,41 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            Publications
+        </span>
+    </div>
+    <table border="0" width="100%">
+        <tr>
+            <th colspan="4" align="center">
+                #$lang_title#
+            </th>
+        </tr>
+    </table>
+    <br />
+    <div align="center">
+        <form method="post" action="#xarServerGetCurrentURL()#" enctype="application/x-www-form-urlencoded" >
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="idlist" id="idlist" value="#$idlist#" />
+            <input type="hidden" name="returnurl" id="returnurl" value="#$returnurl#" />
+            <input type="hidden" name="confirmed" id="confirmed" value="1" />
+
+            <span class="xar-title">Confirm the deletion of:</span><br />
+            <xar:if condition="isset($name)">
+                <div style="align: center; width: 50%">'#$name#'</div>
+            <xar:elseif condition="isset($items)" />
+                <div style="align: center; width: 50%">
+                    <xar:foreach in="$items" value="$item">
+                        #$item['name']# (ID #$item['id']#)
+                        <br />
+                    </xar:foreach>
+                </div>
+            </xar:if>
+            <br />
+
+            <input type="submit" value="Confirm" align="middle" tabindex="1" />
+            &#160;
+            <xar:var name="label">Cancel</xar:var>
+            <xar:button type="cancel" label="$label" />
+        </form>
+    </div>
+</xar:template>
