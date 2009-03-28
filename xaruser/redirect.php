@@ -43,7 +43,7 @@ function publications_user_redirect($args)
     $ptid = $article['pubtype_id'];
 
     // Get publication types
-    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
 
 // TODO: improve this e.g. when multiple URL fields are present
     // Find an URL field based on the pubtype configuration

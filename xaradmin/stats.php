@@ -36,7 +36,7 @@ function publications_admin_stats($args = array())
     $data['group'] = $group;
     $data['stats'] = xarModAPIFunc('publications','admin','getstats',
                                    array('group' => $group));
-    $data['pubtypes'] = xarModAPIFunc('publications','user','getpubtypes');
+    $data['pubtypes'] = xarModAPIFunc('publications','user','get_pubtypes');
     $data['statelist'] = xarModAPIFunc('publications','user','getstates');
     $data['fields'] = array('pubtype_id'     => xarML('Publication Type'),
                             'state'        => xarML('Status'),

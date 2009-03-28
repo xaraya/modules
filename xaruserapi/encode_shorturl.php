@@ -68,7 +68,7 @@ function publications_userapi_encode_shorturl($args)
     // we can't rely on xarModGetName() here (yet) !
     $module = 'publications';
 
-    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
 
     // specify some short URLs relevant to your module
     if ($func == 'main') {

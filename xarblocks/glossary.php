@@ -133,7 +133,7 @@ function publications_glossaryblock_modify($blockinfo)
     }
 
     // Pub type drop-down list values.
-    $vars['pubtypes'] = xarModAPIFunc('publications', 'user', 'getpubtypes');
+    $vars['pubtypes'] = xarModAPIFunc('publications', 'user', 'get_pubtypes');
 
     // Categories drop-down list values.
     $vars['categorylist'] = xarModAPIFunc('categories', 'user', 'getcat');

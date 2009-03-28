@@ -21,7 +21,7 @@
  
  sys::import('modules.dynamicdata.class.objects.master');
  
-function publications_userapi_getpubtypes($args)
+function publications_userapi_get_pubtypes($args)
 {
     $object = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
     $items = $object->getItems();

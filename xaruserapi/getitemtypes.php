@@ -25,7 +25,7 @@ function publications_userapi_getitemtypes($args)
                           'url'   => xarModURL('publications','user','view')
                          );
     // Get publication types
-    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
 
     foreach ($pubtypes as $id => $pubtype) {
         $itemtypes[$id] = array('label' => xarVarPrepForDisplay($pubtype['description']),

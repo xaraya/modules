@@ -25,7 +25,7 @@ function publications_admin_showpropval($args)
     if (!xarVarFetch('confirm', 'isset', $confirm, NULL, XARVAR_DONT_SET)) {return;}
 
     // Get current publication types
-    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
 
     if (empty($pubtypes[$ptid]['config'][$field])) {
         $msg = xarML('Invalid item id');

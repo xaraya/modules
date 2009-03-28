@@ -18,23 +18,23 @@
  */
     sys::import('xaraya.structures.containers.blocks.basicblock');
 
-    public $numitems           = 5;
-    public $pubtype_id         = 0;
-    public $nopublimit         = false;
-    public $linkpubtype        = true;
-    public $catfilter          = 0;
-    public $includechildren    = false;
-    public $nocatlimit         = true;
-    public $linkcat            = false;
-    public $dynamictitle       = true;
-    public $toptype            = 'hits';
-    public $showvalue          = true;
-    public $showsummary        = false;
-    public $showdynamic        = false;
-    public $state             = '2,3';
-
     class TopitemsBlock extends BasicBlock
     {
+        public $numitems           = 5;
+        public $pubtype_id         = 0;
+        public $nopublimit         = false;
+        public $linkpubtype        = true;
+        public $catfilter          = 0;
+        public $includechildren    = false;
+        public $nocatlimit         = true;
+        public $linkcat            = false;
+        public $dynamictitle       = true;
+        public $toptype            = 'hits';
+        public $showvalue          = true;
+        public $showsummary        = false;
+        public $showdynamic        = false;
+        public $state             = '2,3';
+
         public function __construct(ObjectDescriptor $descriptor)
         {
             parent::__costruct($descriptor);
@@ -45,9 +45,7 @@
             $this->show_preview = true;
         }
         
-    }
-
-        function display(Array $data=array())
+        public function display(Array $data=array())
         {
             $data = parent::display($data);
 
@@ -123,8 +121,7 @@
 
             // Get publication types
             // MarieA - moved to always get pubtypes.
-            $pubtypeobject = DataObjectMaster::getObjectList(array('name' => 'publications_types'));
-            $publication_types = $pubtypeobject->getItem(array('itemid' => $ptid));
+            $publication_types = xarModAPIFunc('publications', 'user', 'get_pubtypes');
 
             if (!empty($data['nopublimit'])) {
                 //don't limit by publication type
@@ -274,68 +271,45 @@
             }
         }    
 
-        function modify(Array $data=array())
+        public function modify(Array $data=array())
         {
             $data = parent::modify($data);
-
             if (!isset($data['linkpubtype'])) $data['linkpubtype'] = $this->linkpubtype;
-            if (!isset($vars['includechildren'])) $data['includechildren'] = $this->includechildren;
-            if (!isset($vars['linkcat'])) $data['linkcat'] = $this->linkcat;
-
-            $data['pubtypes'] = xarModAPIFunc('publications', 'user', 'getpubtypes');
-            $data['categorylist'] = xarModAPIFunc('categories', 'user', 'getcat');
-
-            $vars['sortoptions'] = array(
-                array('id' => 'hits', 'name' => xarML('Hit Count')),
-                array('id' => 'rating', 'name' => xarML('Rating')),
-                array('id' => 'date', 'name' => xarML('Date'))
-            );
-
-            $vars['stateoptions'] = array(
-                array('id' => '2,3', 'name' => xarML('All Published')),
-                array('id' => '3', 'name' => xarML('Frontpage')),
-                array('id' => '2', 'name' => xarML('Approved'))
-            );
-
-            $vars['blockid'] = $blockinfo['bid'];
-            // Return output
-            return $vars;
+            if (!isset($data['includechildren'])) $data['includechildren'] = $this->includechildren;
+            if (!isset($data['linkcat'])) $data['linkcat'] = $this->linkcat;
+            return $data;
         }
 
-/**
- * update block settings
- * @author Jim McDonald
- */
-function publications_topitemsblock_update($blockinfo)
-{
-    if (!xarVarFetch('numitems', 'int:1:200', $vars['numitems'], 5, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('pubtype_id', 'id', $vars['pubtype_id'], 0, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('linkpubtype', 'checkbox', $vars['linkpubtype'], false, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('nopublimit', 'checkbox', $vars['nopublimit'], false, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('catfilter', 'id', $vars['catfilter'], 0, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('includechildren', 'checkbox', $vars['includechildren'], false, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('nocatlimit', 'checkbox', $vars['nocatlimit'], false, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('linkcat', 'checkbox', $vars['linkcat'], false, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('dynamictitle', 'checkbox', $vars['dynamictitle'], false, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('toptype', 'enum:hits:rating:date', $vars['toptype'])) {return;}
-    if (!xarVarFetch('showsummary', 'checkbox', $vars['showsummary'], false, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('showdynamic', 'checkbox', $vars['showdynamic'], false, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('showvalue', 'checkbox', $vars['showvalue'], false, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('state', 'strlist:,:int:1:4', $vars['state'])) {return;}
+        public function update(Array $data=array())
+        {
+            $data = parent::update($data);
+            if (!xarVarFetch('numitems',        'int:1:200', $data['numitems'], 5, XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVarFetch('pubtype_id',      'id',        $data['pubtype_id'], 0, XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVarFetch('linkpubtype',     'checkbox',  $data['linkpubtype'], 0, XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVarFetch('nopublimit',      'checkbox',  $data['nopublimit'], 0, XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVarFetch('catfilter',       'id',        $data['catfilter'], 0, XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVarFetch('includechildren', 'checkbox',  $data['includechildren'], 0, XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVarFetch('nocatlimit',      'checkbox',  $data['nocatlimit'], 0, XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVarFetch('linkcat',         'checkbox',  $data['linkcat'], 0, XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVarFetch('dynamictitle',    'checkbox',  $data['dynamictitle'], 0, XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVarFetch('showsummary',     'checkbox',  $data['showsummary'], 0, XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVarFetch('showdynamic',     'checkbox',  $data['showdynamic'], 0, XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVarFetch('showvalue',       'checkbox',  $data['showvalue'], 0, XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVarFetch('state',           'strlist:,:int:1:4', $data['state'])) {return;}
+            if (!xarVarFetch('toptype',         'enum:hits:rating:date', $data['toptype'])) {return;}
 
-    if ($vars['nopublimit'] == true) {
-        $vars['pubtype_id'] = 0;
-    }
-    if ($vars['nocatlimit'] == true) {
-        $vars['catfilter'] = 0;
-        $vars['includechildren'] = false;
-    }
-    if ($vars['includechildren'] == true) {
-        $vars['linkcat'] = false;
-    }
+            if ($data['nopublimit'] == true) {
+                $data['pubtype_id'] = 0;
+            }
+            if ($data['nocatlimit']) {
+                $data['catfilter'] = 1;
+                $data['includechildren'] = 0;
+            }
+            if ($data['includechildren']) {
+                $data['linkcat'] = 0;
+            }
 
-    $blockinfo['content'] = $vars;
-
-    return $blockinfo;
+            return $data;
+        }
     }
 ?>

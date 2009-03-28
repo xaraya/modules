@@ -57,7 +57,7 @@ function publications_admin_importpages()
     $data['authid'] = xarSecGenAuthKey();
 
     // Get current publication types
-    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
 
     $data['pubtypes'] = $pubtypes;
     $data['fields'] = array();

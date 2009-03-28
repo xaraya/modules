@@ -42,7 +42,7 @@ function publications_user_new($args)
         $article['cids'] = preg_split('/[ +-]/',$catid);
     }
 
-    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
 
     if (isset($article['cids']) && count($article['cids']) > 0) {
         foreach ($article['cids'] as $cid) {

@@ -72,7 +72,7 @@ function publications_admin_modifyconfig()
     }
 
     // Module alias for short URLs
-    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
     if (!empty($id)) {
         $data['alias'] = $pubtypes[$id]['name'];
     } else {

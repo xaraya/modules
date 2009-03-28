@@ -23,7 +23,7 @@ function publications_admin_exportpubtype($args)
 
     if (!xarSecurityCheck('AdminPublications')) return;
 
-    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
 
     if (empty($ptid) || empty($pubtypes[$ptid])) {
         $msg = xarML('Invalid publication type #(1)',

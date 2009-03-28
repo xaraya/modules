@@ -179,7 +179,7 @@ function publications_admin_privileges($args)
                  );
 
     // Get publication types
-    $data['pubtypes'] = xarModAPIFunc('publications','user','getpubtypes');
+    $data['pubtypes'] = xarModAPIFunc('publications','user','get_pubtypes');
 
     $catlist = array();
     if (!empty($ptid)) {

@@ -80,7 +80,7 @@ function publications_user_display($args)
         throw new DataNotFoundException(null, $msg);
     }
     // Get publication types
-    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
 
     // Check that the publication type is valid, otherwise use the publication's pubtype
     if (!empty($ptid) && !isset($pubtypes[$ptid])) {

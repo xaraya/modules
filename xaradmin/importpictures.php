@@ -103,7 +103,7 @@ function publications_admin_importpictures()
     $data['authid'] = xarSecGenAuthKey();
 
     // Get current publication types
-    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
 
     // Set default pubtype to Pictures (if it exists)
     if (!isset($ptid) && isset($pubtypes[5])) {

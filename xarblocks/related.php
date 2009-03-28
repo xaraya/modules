@@ -76,7 +76,7 @@ function publications_relatedblock_display($blockinfo)
         return;
     }
 
-    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
 
     $links = 0;
     // Show publication type (for now)

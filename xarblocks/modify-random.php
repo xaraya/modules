@@ -41,7 +41,7 @@ function publications_randomblock_modify($blockinfo)
     if (empty($vars['showsubmit'])) {$vars['showsubmit'] = false;}
     if (empty($vars['showdynamic'])) {$vars['showdynamic'] = false;}
     if (empty($vars['linkpubtype'])) {$vars['linkpubtype'] = false;}
-    $vars['pubtypes'] = xarModAPIFunc('publications', 'user', 'getpubtypes');
+    $vars['pubtypes'] = xarModAPIFunc('publications', 'user', 'get_pubtypes');
     $vars['categorylist'] = xarModAPIFunc('categories', 'user', 'getcat');
     $vars['stateoptions'] = array(
         array('id' => '', 'name' => xarML('All Published')),
