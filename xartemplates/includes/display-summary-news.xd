@@ -14,19 +14,17 @@
         </h1>
         <div class="xar-accent xar-padding-thick">
             <span class="xar-sub">
+                <xar:if condition="!empty($profile)">
+                    <xar:set name="author_string">'
+                    <a href="'.$profile.'">' . $properties['author']->getValue() . '</a>'</xar:set>
+                <xar:else />
+                    <xar:set name="author_string">$properties['author']->getValue()</xar:set>
+                </xar:if>
                 <xar:ml>
-                    <xar:mlstring>
-                        Posted by: #(1) on #(2) #(3)
-                    </xar:mlstring>
-                    <xar:mlvar>
-                        #$properties['author']->getValue()#
-                    </xar:mlvar>
-                    <xar:mlvar>
-                        #xarLocaleGetFormattedDate('long',$properties['created']->value)#
-                    </xar:mlvar>
-                    <xar:mlvar>
-                        #xarLocaleGetFormattedTime('long',$properties['created']->value)#
-                    </xar:mlvar>
+                    <xar:mlstring>Posted by: #(1) on #(2) #(3)</xar:mlstring>
+                    <xar:mlvar>#$author_string#</xar:mlvar>
+                    <xar:mlvar>#xarLocaleGetFormattedDate('long',$properties['created']->value)#</xar:mlvar>
+                    <xar:mlvar>#xarLocaleGetFormattedTime('long',$properties['created']->value)#</xar:mlvar>
                 </xar:ml>
                 <xar:if condition="!empty($counter)">
                     <xar:if condition="$counter eq 1">
