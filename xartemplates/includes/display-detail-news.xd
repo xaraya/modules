@@ -8,6 +8,14 @@
         xarModAPIFunc('publications','user','checksecurity',array('mask' => 'EditPublications', 'publication' => $object->getFieldValues()))
     </xar:set>
 
+    <xar:if condition="$canedit">
+        <xar:set name="candelete">
+            xarModAPIFunc('publications','user','checksecurity',array('mask' => 'ManagePublications', 'publication' => $object->getFieldValues()))
+        </xar:set>
+    <xar:else />
+        <xar:set name="candelete">0</xar:set>
+    </xar:if>
+    
     <xar:set name="publication_state">
         $properties['state']->value
     </xar:set>
@@ -20,6 +28,10 @@
             <xar:if condition="$canedit">
                 &#160;
                 [<a href="#xarModURL('publications', 'user', 'modify',array('itemid' => $properties['id']->value, 'name' => $object->name))#">Edit</a>]
+            </xar:if>
+            <xar:if condition="$candelete">
+                &#160;
+                [<a href="#xarModURL('publications', 'user', 'delete',array('itemid' => $properties['id']->value, 'name' => $object->name))#">Delete</a>]
             </xar:if>
         </h1>
         <!--
