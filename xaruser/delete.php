@@ -14,7 +14,7 @@
 /**
  * delete item
  */
-function publications_admin_delete()
+function publications_user_delete()
 {
     // Get parameters
     if (!xarVarFetch('id', 'id', $id)) return;
