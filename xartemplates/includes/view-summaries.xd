@@ -89,8 +89,6 @@
         </xar:if>
 
         <div class="xar-align-center">
-            <xar:comment>$pager (combining the pager and the sort links) will be removed in later versions</xar:comment>
-            <!-- <div>#$viewpager#</div> -->
             <xar:if condition="isset($sortlinks) and count($sortlinks) gt 0">
                 Sort by
                 <xar:foreach in="$sortlinks" value="$sortitem">
