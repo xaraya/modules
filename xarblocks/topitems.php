@@ -282,8 +282,8 @@
             if (!isset($vars['includechildren'])) $data['includechildren'] = $this->includechildren;
             if (!isset($vars['linkcat'])) $data['linkcat'] = $this->linkcat;
 
-            $vars['pubtypes'] = xarModAPIFunc('publications', 'user', 'getpubtypes');
-            $vars['categorylist'] = xarModAPIFunc('categories', 'user', 'getcat');
+            $data['pubtypes'] = xarModAPIFunc('publications', 'user', 'getpubtypes');
+            $data['categorylist'] = xarModAPIFunc('categories', 'user', 'getcat');
 
             $vars['sortoptions'] = array(
                 array('id' => 'hits', 'name' => xarML('Hit Count')),
