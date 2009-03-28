@@ -423,7 +423,7 @@ function publications_navigationblock_display($blockinfo)
 
 
             # get all the pubtypes so we can digest the ids
-            $pubtypes = xarModAPIFunc('publications', 'user', 'getpubtypes', array());
+            $pubtypes = xarModAPIFunc('publications', 'user', 'get_pubtypes', array());
 
             # get immediate items in current category
             $items = xarModAPIFunc('publications', 'user', 'getall',

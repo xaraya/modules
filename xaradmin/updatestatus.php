@@ -36,7 +36,7 @@ function publications_admin_updatestate()
         throw new BadParameterException(null,$msg);
     }
 
-    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
     if (!empty($ptid)) {
         $descr = $pubtypes[$ptid]['description'];
     } else {

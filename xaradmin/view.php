@@ -30,7 +30,7 @@ function publications_admin_view($args)
 
     extract($args);
 
-    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
 
     // Default parameters
     if (!isset($ptid)) {

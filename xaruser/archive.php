@@ -27,7 +27,7 @@ function publications_user_archive($args)
     extract($args);
 
     // Get publication types
-    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
 
     // Check that the publication type is valid
     if (empty($ptid) || !isset($pubtypes[$ptid])) {

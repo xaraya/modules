@@ -29,7 +29,7 @@ function publications_adminapi_importpubtype($args)
         throw new BadParameterException(null,$msg);
     }
 
-    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
 
     $proptypes = DataPropertyMaster::getPropertyTypes();
     $name2id = array();

@@ -98,7 +98,7 @@ function publications_featureditemsblock_modify($blockinfo)
         }
     }
 
-    $vars['pubtypes'] = xarModAPIFunc('publications', 'user', 'getpubtypes');
+    $vars['pubtypes'] = xarModAPIFunc('publications', 'user', 'get_pubtypes');
     $vars['categorylist'] = xarModAPIFunc('categories', 'user', 'getcat');
     $vars['stateoptions'] = array(
         array('id' => '', 'name' => xarML('All Published')),

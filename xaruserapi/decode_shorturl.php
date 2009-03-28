@@ -32,7 +32,7 @@ function publications_userapi_decode_shorturl($params)
         $alias = xarModGetAlias($params[0]);
         if ($module == $alias) {
             // yup, looks like it
-            $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
+            $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
             foreach ($pubtypes as $id => $pubtype) {
                 if ($params[0] == $pubtype['name']) {
                     $foundalias = 1;
@@ -102,7 +102,7 @@ function publications_userapi_decode_shorturl($params)
         $catid = $matches[1];
         $args['catid'] = $catid;
         if (!empty($params[2])) {
-            $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
+            $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
             foreach ($pubtypes as $id => $pubtype) {
                 if ($params[1] == $pubtype['name']) {
                     $args['ptid'] = $id;
@@ -133,7 +133,7 @@ function publications_userapi_decode_shorturl($params)
             array_unshift($params, $module);
         }
         // Get all publication types present
-        $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
+        $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
         foreach ($pubtypes as $id => $pubtype) {
             if ($params[1] == $pubtype['name']) {
                 $args['ptid'] = $id;

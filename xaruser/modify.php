@@ -83,7 +83,7 @@ function publications_user_modify($args)
     $data['ptid'] = $ptid;
     $data['id'] = $id;
 
-    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
 
     // Security check
     $input = array();

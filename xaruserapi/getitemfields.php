@@ -23,7 +23,7 @@ function publications_userapi_getitemfields($args)
 
     $itemfields = array();
 
-    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
 
     if (!empty($itemtype) && !empty($pubtypes[$itemtype])) {
         $fields = $pubtypes[$itemtype]['config'];

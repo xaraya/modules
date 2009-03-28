@@ -34,7 +34,7 @@ function publications_topitemsblock_modify($blockinfo)
         $vars['linkcat'] = false;
     }
 
-    $vars['pubtypes'] = xarModAPIFunc('publications', 'user', 'getpubtypes');
+    $vars['pubtypes'] = xarModAPIFunc('publications', 'user', 'get_pubtypes');
     $vars['categorylist'] = xarModAPIFunc('categories', 'user', 'getcat');
 
     $vars['sortoptions'] = array(

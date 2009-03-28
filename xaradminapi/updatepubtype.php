@@ -58,7 +58,7 @@ function publications_adminapi_updatepubtype($args)
     if (!xarModAPILoad('publications', 'user')) return;
 
     // Get current publication types
-    $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
+    $pubtypes = xarModAPIFunc('publications','user','get_pubtypes');
     if (!isset($pubtypes[$ptid])) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'publication type ID', 'admin', 'updatepubtype',
