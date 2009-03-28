@@ -18,10 +18,10 @@ function publications_user_delete()
 {
     $return = xarModURL('publications', 'user','view',array('ptid' => xarModVars::get('publications', 'defaultpubtype')));
     if(!xarVarFetch('confirmed',  'int', $confirmed,  0,  XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('idlist',     'str', $idlist,     NULL,  XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('returnurl',  'str', $returnurl,  $return,  XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('idlist',     'str', $idlist,     NULL,  XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('returnurl',  'str', $data['returnurl'],  $return,  XARVAR_NOT_REQUIRED)) {return;}
 
-    if (empty($idlist)) xarResponseRedirect($returnurl);
+    if (empty($idlist)) xarResponseRedirect($data['returnurl']);
 
     $ids = explode(',',trim($idlist,','));
     $data['idlist'] = $idlist;
@@ -52,7 +52,7 @@ function publications_user_delete()
                          array('itemid' => $ids,
                                'deletetype' => 0))) 
             return;
-        xarResponseRedirect($returnurl);
+        xarResponseRedirect($data['returnurl']);
     }
 
     return true;
