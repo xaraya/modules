@@ -70,7 +70,7 @@
                     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
 
                     <div style="width: 100%">
-                    <xar:data-input type="listingslist" object="$object" conditions="$conditions" layout="publications"/>
+                    <xar:data-input type="listingslist" object="$object" conditions="$conditions" tplmodule="publications" layout="publications"/>
                     <!--
                     <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
                         <tr>
