@@ -1,4 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:style method="embed" source="table a {text-decoration:none;}" />
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>
@@ -79,15 +80,17 @@
                         <th>
                             #$labels['title']#
                         </th>
+                        <th>
                         <xar:if condition="$showdate">
-                            <th>
-                                #$labels['pubdate']#
-                            </th>
+                            #$labels['pubdate']#
+                            <xar:else />
+                            <xar:mlstring>View</xar:mlstring>
                         </xar:if>
+                        </th>
                         <xar:if condition="$showstatus">
-                            <th colspan="2">
-                                #$labels['status']#
-                            </th>
+                        <th colspan="2" class="xar-align-right">
+                            #$labels['status']#&#160;&#160;&#160;
+                        </th>
                         </xar:if>
                         <th class="xar-align-center">
                             <xar:mlstring>
@@ -101,37 +104,43 @@
                             <xar:if condition="empty($item['editurl'])">
                                 #$item['title']#
                                 <xar:else />
-                                <a href="#$item['editurl']#" title="#$item['edittitle']#">
+                                <a href="#$item['editurl']#" title="#xarML('Edit Article')#">
                                     #$item['title']#
                                 </a>
                             </xar:if>
                             </td>
-                            <xar:if condition="$showdate">
-                                <td class="xar-norm">
-                                    #xarLocaleGetFormattedDate('shortdate',$item['pubdate'])#
-                                </td>
-                            </xar:if>
+                            <td class="xar-norm">
+                                <xar:if condition="$showdate">
+                                    <xar:if condition="empty($item['viewurl'])">
+                                        #xarLocaleGetFormattedDate('shortdate',$item['pubdate'])#
+                                        <xar:else />
+                                        <a href="#$item['viewurl']#" title="#xarML('View Article')#">
+                                        #xarLocaleGetFormattedDate('shortdate',$item['pubdate'])#
+                                        </a>
+                                    </xar:if>
+                                    <xar:else />
+                                    <xar:if condition="empty($item['viewurl'])">
+                                        &#160;
+                                        <xar:else />
+                                        <a href="#$item['viewurl']#">
+                                        #$item['viewtitle']#
+                                        </a>
+                                    </xar:if>
+                                </xar:if>
+                            </td>
                             <xar:if condition="$showstatus">
-                                <td class="xar-norm">
+                                <td class="xar-norm xar-align-right">
                                     <label for="aids[#$item['aid']#]">
                                         #$item['status']#
                                     </label>
                                 </td>
-                                <td class="xar-norm">
+                                <td class="xar-norm" style="width:1em;">
                                     <xar:if condition="!empty($item['editurl'])">
                                         <input type="checkbox" name="aids[#$item['aid']#]" id="aids[#$item['aid']#]" value="1" #$item['selected']# />
                                     </xar:if>
                                 </td>
                             </xar:if>
                             <td class="xar-align-center xar-norm">
-                                <xar:if condition="empty($item['viewurl'])">
-                                    #$item['viewtitle']#
-                                    <xar:else />
-                                    <a href="#$item['viewurl']#">
-                                        #$item['viewtitle']#
-                                    </a>
-                                </xar:if>
-                                |
                                 <xar:if condition="empty($item['deleteurl'])">
                                     #$item['deletetitle']#
                                     <xar:else />
@@ -181,7 +190,7 @@
                         <input type="submit" value="#$changestatuslabel#" />
                         <script language="JavaScript" type="text/javascript">
                             document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewarticles'],true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
-                            document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewarticles'],false)\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
+                            document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewarticles'],false)\"><xar:mlstring>Uncheck</xar:mlstring></a> ]");
                         </script>
                     </p>
                 </xar:if>
