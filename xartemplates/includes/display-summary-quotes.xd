@@ -16,7 +16,7 @@
                 #$summary#
                 <br />
                 Added on:
-                <xar:data-output property="$properties['modified']" />
+                <xar:data-output property="$properties['created']" />
                 <xar:if condition="!empty($rating)">
                     - Rating: #$rating#
                 </xar:if>
@@ -28,10 +28,8 @@
                     </xar:if>
                 </xar:if>
                 <xar:if condition="xarModIsHooked('ratings','publications',6)">
-                    | <a href="#$link#">
-                        
-                            Rate / Comment
-                        
+                    | <a href="#$link#">                        
+                        Rate / Comment                        
                     </a>
                 </xar:if>
             </td>

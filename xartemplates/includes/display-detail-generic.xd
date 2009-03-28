@@ -86,10 +86,8 @@
                 <tr>
                     <td align="left">
                         <xar:if condition="!empty($prevart)">
-                            <a href="#$prevart#">&lt;
-
-                                    prev
-
+                            <a href="#$prevart#">
+                                &lt; prev
                             </a>
                         </xar:if>
                         &#160;
@@ -98,10 +96,8 @@
                         &#160;
                         <xar:if condition="!empty($nextart)">
                             <a href="#$nextart#">
-
-                                    next
-
-                                &gt;</a>
+                                next &gt;
+                            </a>
                         </xar:if>
                     </td>
                 </tr>

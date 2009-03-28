@@ -36,20 +36,15 @@
             </xar:if>
         </h3>
         <div class="xar-norm">
-
-                Quote
-
+            Quote
             : <xar:data-output property="$properties['quote']" />
         </div>
         <div class="xar-sub">        
             Added on
-            <xar:data-output property="$properties['modified']" />
+            <xar:data-output property="$properties['created']" />
         </div>
         <div class="xar-sub">
-
-                By
-
-            :
+            By            :
             <xar:if condition="!empty($profile)">
                 <a href="#$profile#">
                     <xar:data-output property="$properties['author']" />
@@ -70,19 +65,13 @@
         <xar:if condition="!empty($prevart) || !empty($nextart)">
             <xar:if condition="!empty($prevart)">
                 <a href="#$prevart#">
-                    &lt;
-
-                        prev
-
+                    &lt; prev
                 </a>
             </xar:if>
             &#160;&#160;
             <xar:if condition="!empty($nextart)">
                 <a href="#$nextart#">
-
-                        next
-
-                    &gt;
+                    next &gt;
                 </a>
             </xar:if>
         </xar:if>
