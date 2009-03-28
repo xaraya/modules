@@ -40,9 +40,9 @@
         <div class="xar-sub">
             <xar:if condition="!empty($profile)">
                 <xar:set name="author_string">'
-                <a href="'.$profile.'">' . $properties['title']->getValue() . '</a>'</xar:set>
+                <a href="'.$profile.'">' . $properties['author']->getValue() . '</a>'</xar:set>
             <xar:else />
-                <xar:set name="author_string">$properties['title']->getValue()</xar:set>
+                <xar:set name="author_string">$properties['author']->getValue()</xar:set>
             </xar:if>
             <xar:ml>
                 <xar:mlstring>Posted by: #(1) on #(2) #(3)</xar:mlstring>
