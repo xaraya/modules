@@ -92,9 +92,7 @@ function publications_user_view($args)
     // Get the template for this publication type
     if ($ishome) $data['template'] = 'frontpage';
     else $data['template'] = $data['pubtypeobject']->properties['template']->getValue();
-
-    
-    
+        
     $isdefault = 0;
     // check default view for this type of publications
     if (empty($catid) && empty($cids) && empty($owner) && empty($sort)) {
@@ -531,6 +529,7 @@ function publications_user_view($args)
     // Only show top level documents, not translations
     $q = new Query();
     $q->eq('parent_id',0);
+    $q->eq('state',3);
     $data['conditions'] = $q;
 
     // Throw all the relevant settings we are using into the cache
