@@ -1,85 +1,118 @@
 <?php
 /**
- * Delete an item
+ * Publications module
+ *
  * @package modules
  * @copyright (C) copyright-placeholder
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Dynamic Data module
- * @link http://xaraya.com/index.php/release/182.html
- * @author mikespub <mikespub@xaraya.com>
+ * @subpackage Publications Module
+ 
+ * @author mikespub
  */
 /**
  * delete item
- * @param 'itemid' the id of the item to be deleted
- * @param 'confirm' confirm that this item can be deleted
  */
-
-sys::import('modules.dynamicdata.class.objects.master');
-
-function calendar_user_delete($args)
+function publications_user_delete()
 {
-   extract($args);
+    // Get parameters
+    if (!xarVarFetch('id', 'id', $id)) return;
+    if (!xarVarFetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('return_url', 'str:1', $return_url, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
-    if(!xarVarFetch('objectid',   'isset', $objectid,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('name',       'isset', $name,       NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemid',     'id',    $itemid                          )) {return;}
-    if(!xarVarFetch('confirm',    'isset', $confirm,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('noconfirm',  'isset', $noconfirm,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('join',       'isset', $join,       NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('table',      'isset', $table,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('tplmodule',  'isset', $tplmodule,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('template',   'isset', $template,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('return_url', 'isset', $return_url, NULL, XARVAR_DONT_SET)) {return;}
+    // Get article information
+    $article = xarModAPIFunc('publications',
+                             'user',
+                             'get',
+                             array('id' => $id,
+                                   'withcids' => true));
+    if (!isset($article) || $article == false) {
+        $msg = xarML('Unable to find #(1) item #(2)',
+                     'Publication', xarVarPrepForDisplay($id));
+        throw new ForbiddenOperationException(null, $msg);
+    }
 
-    $myobject = & DataObjectMaster::getObject(array('objectid' => $objectid,
-                                         'name'       => $name,
-                                         'join'       => $join,
-                                         'table'      => $table,
-                                         'itemid'     => $itemid,
-                                         'tplmodule'  => $tplmodule,
-                                         'template'   => $template,
-                                         'extend'     => false));  //Note: this means we only delete this extension, not the parent
-    if (empty($myobject)) return;
-    $data = $myobject->toArray();
+    $ptid = $article['pubtype_id'];
 
     // Security check
-    if(!xarSecurityCheck('DeleteDynamicDataItem',1,'Item',$data['moduleid'].":".$data['itemtype'].":".$data['itemid'])) return;
+    $input = array();
+    $input['article'] = $article;
+    $input['mask'] = 'ManagePublications';
+    if (!xarModAPIFunc('publications','user','checksecurity',$input)) {
+        $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
+        $msg = xarML('You have no permission to delete #(1) item #(2)',
+                     $pubtypes[$ptid]['description'], xarVarPrepForDisplay($id));
+        throw new ForbiddenOperationException(null, $msg);
+    }
 
-    // recover any session var information and remove it from the var
-    $data = array_merge($data,xarMod::apiFunc('dynamicdata','user','getcontext',array('module' => $tplmodule)));
-    //xarSession::setVar('ddcontext.' . $tplmodule, array('tplmodule' => $tplmodule));
-    extract($data);
+    // Check for confirmation
+    if (!$confirm) {
+        $data = array();
 
-    $myobject->getItem();
+        // Specify for which item you want confirmation
+        $data['id'] = $id;
 
-    if (empty($confirm)) {
+        // Use publications user GUI function (not API) for preview
+        if (!xarModLoad('publications','user')) return;
+        $data['preview'] = xarModFunc('publications', 'user', 'display',
+                                      array('preview' => true, 'article' => $article));
+
+        // Add some other data you'll want to display in the template
+        $data['confirmtext'] = xarML('Confirm deleting this article');
+        $data['confirmlabel'] = xarML('Confirm');
+
+        // Generate a one-time authorisation code for this operation
         $data['authid'] = xarSecGenAuthKey();
-        $data['object'] = $myobject;
 
-        if (file_exists('code/modules/' . $data['tplmodule'] . '/xartemplates/user-delete.xd') ||
-            file_exists('code/modules/' . $data['tplmodule'] . '/xartemplates/admin-delete-' . $data['template'] . '.xd')) {
-            return xarTplModule($data['tplmodule'],'user','delete',$data,$data['template']);
-        } else {
-            return xarTplModule('dynamicdata','admin','delete',$data,$data['template']);
+        $data['return_url'] = $return_url;
+
+        $pubtypes = xarModAPIFunc('publications','user','getpubtypes');
+        $template = $pubtypes[$ptid]['name'];
+
+        // Return the template variables defined in this function
+        return xarTplModule('publications', 'admin', 'delete', $data, $template);
+    }
+
+    // Confirmation present
+    if (!xarSecConfirmAuthKey()) return;
+
+    // Pass to API
+    if (!xarModAPIFunc('publications',
+                     'admin',
+                     'delete',
+                     array('id' => $id,
+                           'ptid' => $ptid))) {
+        return;
+    }
+
+    // Success
+    xarSession::setVar('statusmsg', xarML('Publication Deleted'));
+
+    // Return return_url
+    if (!empty($return_url)) {
+        xarResponseRedirect($return_url);
+        return true;
+    }
+
+    // Return to the original admin view
+    $lastview = xarSession::getVar('Publications.LastView');
+    if (isset($lastview)) {
+        $lastviewarray = unserialize($lastview);
+        if (!empty($lastviewarray['ptid']) && $lastviewarray['ptid'] == $ptid) {
+            extract($lastviewarray);
+            xarResponseRedirect(xarModURL('publications', 'admin', 'view',
+                                          array('ptid' => $ptid,
+                                                'catid' => $catid,
+                                                'state' => $state,
+                                                'startnum' => $startnum)));
+            return true;
         }
     }
 
-    // If we get here it means that the user has confirmed the action
+    xarResponseRedirect(xarModURL('publications', 'admin', 'view',
+                                  array('ptid' => $ptid)));
 
-    if (!xarSecConfirmAuthKey()) return;
-
-    $itemid = $myobject->deleteItem();
-    if (!empty($return_url)) {
-        xarController::redirect($return_url);
-    } else {
-        $default = xarModVars::get('calendar','default_view');
-        xarController::redirect(xarModURL('calendar', 'user', $default,
-                                      array(
-                                      'page' => $default
-                                      )));
-    }
     return true;
 }
 
