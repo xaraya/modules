@@ -13,14 +13,12 @@
                 Publication Type
             </xar:mlstring>
         </label> 
-        <select name="pubtype_id" id="pubtype_id#$blockid#">
-            <option value="0">
-                <xar:mlstring>
-                    Default / Current 
-                </xar:mlstring>
-            </option>
+        <xar:var name="firstline">Default / Current</xar:var>
+        <xar:set name="firstline">array(0,$firstline)</xar:var>
+        <xar:data-input type="dropdown" name="pubtype_id" firstline="$firstline" options="$options" value="$pubid"/>
+        <select >
             <xar:foreach in="$pubtypes" key="$pubid" value="$pubtype">
-                <xar:if condition="!empty($pubtype_id) and $pubtype_id eq $pubid">
+                <xar:if condition="!empty($pubtype_id) and $pubtype_id eq ">
                     <option value="#$pubid#" selected="selected">
                         #$pubtype['description']# 
                     </option>
