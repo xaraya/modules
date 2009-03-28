@@ -66,7 +66,7 @@
             <div id="article-columns" style="width: 98%;">
                 <xar:foreach in="$items" key="$itemid" value="$item">
                     <div style="left: 1px; float: left; width: #$colwidth#%; vertical-align: top;">
-                        <xar:set name="dummy">$object->setFieldValues($item)</xar:set>
+                        <xar:set name="dummy">$object->setFieldValues($item,1)</xar:set>
                         <xar:data-display object="$object" itemid="$itemid" tplmodule="publications" layout="summary"/>
                     </div>
                 </xar:foreach>
