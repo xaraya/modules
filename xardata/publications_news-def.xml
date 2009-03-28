@@ -169,7 +169,7 @@
       <type>formatteddatetime</type>
       <defaultvalue>time()</defaultvalue>
       <source>publication.create_date</source>
-      <status>66</status>
+      <status>33</status>
       <seq>29</seq>
       <configuration>a:0:{}</configuration>
     </property>
