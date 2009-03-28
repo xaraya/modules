@@ -11,59 +11,42 @@
         <a class="xar-title" href="#$redirect#">
             <xar:data-output property="$properties['title']" />
         </a>
-        <br />
-        
-            Description
-        
+        <br />        
+            Description        
         : #$summary#
         <br />
-        <xar:if condition="!empty($notes)">
-            
-                Source
-            
-            : <xar:data-output property="$properties['notes']" />
+        <xar:if condition="!empty($notes)">            
+            Source            
+        : <xar:data-output property="$properties['notes']" />
             <br />
-        </xar:if>
-        
-            Added on
-        
-        : #xarLocaleGetFormattedDate('long',$properties['modified']->value)# 
-          #xarLocaleGetFormattedTime('long',$properties['modified']->value)#
+        </xar:if>        
+            Added on        
+        : #xarLocaleGetFormattedDate('long',$properties['created']->value)# 
+          #xarLocaleGetFormattedTime('long',$properties['created']->value)#
         <xar:if condition="!empty($rating)">
-            -
-            
-                Rating
-            
+            -            
+                Rating            
             : #$rating#
         </xar:if>
         <xar:if condition="!empty($counter)">
             <xar:if condition="$counter eq 1">
-                (#$counter#&#160;
-                
-                    read
-                
+                (#$counter#&#160;                
+                    read                
                 )
                 <xar:else />
-                (#$counter#&#160;
-                
-                    reads
-                
+                (#$counter#&#160;                
+                    reads                
                 )
             </xar:if>
         </xar:if>
         <xar:if condition="xarModIsHooked('ratings','publications',6)">
-            | <a href="#$link#">
-                
-                    Rate / Comment
-                
+            | <a href="#$link#">                
+                    Rate / Comment                
             </a>
         </xar:if>
         <div class="xar-publications-keywords">
-            <xar:if condition="!empty($keywords)">
-                
-                    Keywords
-                
-                :
+            <xar:if condition="!empty($keywords)">                
+                    Keywords                                :
                 <xar:loop name="$keywords">
                     <a href="#xarModUrl('keywords', 'user', 'main', array('keyword'=&gt; $loop:item['keyword']))#" title="#$loop:item['keyword']#">#$loop:item['keyword']#</a>
                 </xar:loop>

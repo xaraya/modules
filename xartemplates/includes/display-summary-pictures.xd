@@ -53,10 +53,8 @@
     </xar:if>
 
     <div class="xar-publications-keywords">
-        <xar:if condition="!empty($keywords)">
-            
-                Keywords
-            :
+        <xar:if condition="!empty($keywords)">            
+            Keywords            :
             <xar:loop name="$keywords">
                 <a href="#xarModUrl('keywords', 'user', 'main', array('keyword'=> $loop:item['keyword']))#" title="#$loop:item['keyword']#">#$loop:item['keyword']#</a>
             </xar:loop>
