@@ -35,7 +35,7 @@
                         </xar:if>
                         <xar:if condition="$candelete">
                             &#160;
-                            [<a href="#xarModURL('publications', 'user', 'delete',array('itemid' => $properties['id']->value, 'name' => $object->name))#">Delete</a>]
+                            [<a href="#xarModURL('publications', 'user', 'delete',array('idlist' => $properties['id']->value, 'name' => $object->name))#">Delete</a>]
                         </xar:if>
                     </span>
                     <br />
