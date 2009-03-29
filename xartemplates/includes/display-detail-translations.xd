@@ -44,9 +44,7 @@
                     <!--
                     <xar:if condition="!empty($counter)">
                         (#$counter#
-
                             Reads
-
                         )
                     </xar:if>
                     <div align="right">

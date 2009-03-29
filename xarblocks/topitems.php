@@ -37,7 +37,7 @@
 
         public function __construct(ObjectDescriptor $descriptor)
         {
-            parent::__costruct($descriptor);
+            parent::__construct($descriptor);
             $this->text_type = 'Top Items';
             $this->text_type_long = 'Show top publications';
             $this->module = 'publications';
@@ -173,7 +173,7 @@
                 array_push($fields, 'counter');
                 $sort = 'hits';
             } else {
-                array_push($fields, 'pubdate');
+                array_push($fields, 'create_date');
                 $sort = 'date';
             }
 
@@ -191,7 +191,7 @@
                     'cids' => $cidsarray,
                     'andcids' => 'false',
                     'state' => $statearray,
-                    'enddate' => time(),
+                    'create_date' => time(),
                     'fields' => $fields,
                     'sort' => $sort,
                     'numitems' => $data['numitems']
@@ -201,7 +201,6 @@
             if (!isset($publications) || !is_array($publications) || count($publications) == 0) {
                return;
             }
-
             $items = array();
             foreach ($publications as $article) {
                 $article['title'] = xarVarPrepHTMLDisplay($article['title']);
@@ -210,8 +209,7 @@
                     $article['link'] = xarModURL(
                         'publications', 'user', 'display',
                         array(
-                            'id' => $article['id'],
-                            'ptid' => (!empty($data['linkpubtype']) ? $article['pubtype_id'] : NULL),
+                            'itemid' => $article['id'],
                             'catid' => ((!empty($data['linkcat']) && !empty($data['catfilter'])) ? $data['catfilter'] : NULL)
                         )
                     );
@@ -234,9 +232,9 @@
                         }
                     } else {
                         // TODO: make user-dependent
-                        if (!empty($article['pubdate'])) {
-                            //$article['value'] = strftime("%Y-%m-%d", $article['pubdate']);
-                              $article['value'] = xarLocaleGetFormattedDate('short',$article['pubdate']);
+                        if (!empty($article['create_date'])) {
+                            //$article['value'] = strftime("%Y-%m-%d", $article['create_date']);
+                              $article['value'] = xarLocaleGetFormattedDate('short',$article['create_date']);
                         } else {
                             $article['value'] = 0;
                         }
@@ -263,26 +261,31 @@
                 // this will also pass any dynamic data fields (if any)
                 $items[] = $article;
             }
-
-            // Populate block info and pass to theme
-            if (count($items) > 0) {
-                $blockinfo['content'] = array('items' => $items);
-                return $blockinfo;
-            }
+            $data['items'] =$items;
+            return $data;
         }    
 
         public function modify(Array $data=array())
         {
             $data = parent::modify($data);
+            if (!isset($data['numitems'])) $data['numitems'] = $this->numitems;
             if (!isset($data['linkpubtype'])) $data['linkpubtype'] = $this->linkpubtype;
             if (!isset($data['includechildren'])) $data['includechildren'] = $this->includechildren;
             if (!isset($data['linkcat'])) $data['linkcat'] = $this->linkcat;
+            if (!isset($data['pubtype_id'])) $data['pubtype_id'] = $this->pubtype_id;
+            if (!isset($data['nopublimit'])) $data['nopublimit'] = $this->nopublimit;
+            if (!isset($data['catfilter'])) $data['catfilter'] = $this->catfilter;
+            if (!isset($data['nocatlimit'])) $data['nocatlimit'] = $this->nocatlimit;
+            if (!isset($data['dynamictitle'])) $data['dynamictitle'] = $this->dynamictitle;
+            if (!isset($data['toptype'])) $data['toptype'] = $this->toptype;
+            if (!isset($data['showvalue'])) $data['showvalue'] = $this->showvalue;
+            if (!isset($data['showsummary'])) $data['showsummary'] = $this->showsummary;
+            if (!isset($data['state'])) $data['state'] = $this->state;
             return $data;
         }
 
         public function update(Array $data=array())
         {
-            $data = parent::update($data);
             if (!xarVarFetch('numitems',        'int:1:200', $data['numitems'], 5, XARVAR_NOT_REQUIRED)) {return;}
             if (!xarVarFetch('pubtype_id',      'id',        $data['pubtype_id'], 0, XARVAR_NOT_REQUIRED)) {return;}
             if (!xarVarFetch('linkpubtype',     'checkbox',  $data['linkpubtype'], 0, XARVAR_NOT_REQUIRED)) {return;}
@@ -295,8 +298,8 @@
             if (!xarVarFetch('showsummary',     'checkbox',  $data['showsummary'], 0, XARVAR_NOT_REQUIRED)) {return;}
             if (!xarVarFetch('showdynamic',     'checkbox',  $data['showdynamic'], 0, XARVAR_NOT_REQUIRED)) {return;}
             if (!xarVarFetch('showvalue',       'checkbox',  $data['showvalue'], 0, XARVAR_NOT_REQUIRED)) {return;}
-            if (!xarVarFetch('state',           'strlist:,:int:1:4', $data['state'])) {return;}
-            if (!xarVarFetch('toptype',         'enum:hits:rating:date', $data['toptype'])) {return;}
+            if (!xarVarFetch('state',           'strlist:,:int:1:4', $data['state'], '3', XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVarFetch('toptype',         'enum:hits:rating:date', $data['toptype'], 'date', XARVAR_NOT_REQUIRED)) {return;}
 
             if ($data['nopublimit'] == true) {
                 $data['pubtype_id'] = 0;
@@ -309,7 +312,7 @@
                 $data['linkcat'] = 0;
             }
 
-            return $data;
+            return parent::update($data);
         }
     }
 ?>

@@ -9,14 +9,12 @@
     <xar:if condition="empty($nopublimit)">
         <div class="xar-form-input-wrapper">
             <label class="xar-form-label help" title="#xarML('Choose the publication type you want to display with top items.')#" for="pubtype_id#$blockid#"> 
-                <xar:mlstring>
-                    Publication Type
-                </xar:mlstring>
+                Publication Type
             </label> 
             <xar:var name="firstline">Default / Current</xar:var>
-            <xar:set name="firstline">array(0,$firstline)</xar:var>
-            <xar:set name="options">xarModAPIFunc('publications', 'user', 'get_pubtypes')</xar:var>        
-            <xar:data-input type="dropdown" name="pubtype_id" firstline="$firstline" options="$options" value="$pubid"/>
+            <xar:set name="firstline">array('id' => 0, 'name' => $firstline)</xar:set>
+            <xar:set name="options">xarModAPIFunc('publications', 'user', 'get_pubtypes')</xar:set>        
+            <xar:data-input type="dropdown" name="pubtype_id" firstline="$firstline" options="$options" value="$pubtype_id"/>
         </div>
     </xar:if>
     <div class="xar-form-input-wrapper-after">
@@ -34,14 +32,12 @@
     <xar:if condition="empty($nocatlimit)">
         <div class="xar-form-input-wrapper">
             <label class="xar-form-label help" title="#xarML('Choose the category that you want to display with top items.')#" for="catfilter#$blockid#"> 
-                <xar:mlstring>
-                    Category 
-                </xar:mlstring>
+                Category 
             </label>
             <xar:var name="firstline">All / Current</xar:var>
-            <xar:set name="firstline">array(0,$firstline)</xar:var>
-            <xar:set name="options">xarModAPIFunc('categories', 'user', 'getcat')</xar:var>        
-            <xar:data-input type="dropdown" name="catfilter" firstline="$firstline" options="$options" value="$pubid"/>
+            <xar:set name="firstline">array('id' => 0, 'name' => $firstline)</xar:set>
+            <xar:set name="options">xarModAPIFunc('categories', 'user', 'getcat')</xar:set>        
+            <xar:data-input type="dropdown" name="catfilter" firstline="$firstline" options="$options" value="$catfilter"/>
         </div>
         <xar:if condition="empty($includechildren) and $catfilter gt 0">
             <div class="xar-form-input-wrapper-after">
@@ -80,9 +76,9 @@
                 array('id' => 'rating', 'name' => xarML('Rating')),
                 array('id' => 'date', 'name' => xarML('Date'))
             )
-        </xar:var>        
+        </xar:set>        
         <xar:data-input type="dropdown" name="sortoptions" options="$options" value="$toptype"/>
-        &#¦60;Hook Hitcount or Ratings to Publications to use these sort types
+        &#160;Hook Hitcount or Ratings to Publications to use these sort types
     </div>
     <div class="xar-form-input-wrapper-after">
         <xar:data-input type="checkbox" name="showvalue" checked="$showvalue"/>
@@ -109,7 +105,7 @@
                 array('id' => '3', 'name' => xarML('Frontpage')),
                 array('id' => '2', 'name' => xarML('Approved'))
             )
-        </xar:var>        
+        </xar:set>        
         <xar:data-input type="dropdown" name="stateoptions" options="$options" value="$state"/>
     </div>
 </xar:template>
