@@ -97,8 +97,8 @@ function publications_userapi_getall($args)
     // + 'dynamicdata' = dynamic data fields for this article (dynamicdata)
     // + 'relevance' = relevance for this article (MySQL full-text search only)
     // $optional = array('cids','author','counter','rating','dynamicdata','relevance');
-
     if (!isset($fields)) $fields = $columns;
+var_dump($fields);exit;
 
     if (isset($extra) && is_array($extra) && count($extra) > 0) {
         $fields = array_merge($fields,$extra);
