@@ -71,7 +71,7 @@ function publications_userapi_leftjoin($args)
 
     // Add available columns in the publications table (for now)
     $columns = array('id','title','summary','owner','pubtype_id',
-                     'notes','state','body','locale');
+                     'notes','state','body','locale','create_date');
     foreach ($columns as $column) {
         $leftjoin[$column] = $publicationstable . '.' . $column;
     }
@@ -140,16 +140,16 @@ function publications_userapi_leftjoin($args)
         // published at a certain timestamp
         } elseif (preg_match('/^(\d+)$/',$pubdate,$matches)) {
             if ($pubdate <= time()) {
-                $whereclauses[] = $leftjoin['pubdate'] . ' = ' . $pubdate;
+                $whereclauses[] = $leftjoin['create_date'] . ' = ' . $pubdate;
             }
         }
     }
     if (!empty($startdate) && is_numeric($startdate)) {
-        $whereclauses[] = $leftjoin['pubdate'] . ' >= ' . $startdate;
+        $whereclauses[] = $leftjoin['create_date'] . ' >= ' . $startdate;
     }
     /*
     if (!empty($enddate) && is_numeric($enddate)) {
-        $whereclauses[] = $leftjoin['pubdate'] . ' < ' . $enddate;
+        $whereclauses[] = $leftjoin['create_date'] . ' < ' . $enddate;
     }
     */
 /* Example: automatically filter by the current locale - cfr. bug 3454
@@ -329,7 +329,6 @@ function publications_userapi_leftjoin($args)
     } else {
         $leftjoin['where'] = '';
     }
-
     return $leftjoin;
 }
 

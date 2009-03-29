@@ -16,7 +16,7 @@
  * Note : the following parameters are all optional
  *
  * @param $args['numitems'] number of publications to get
- * @param $args['sort'] sort order ('pubdate','title','hits','rating','author','id','summary','notes',...)
+ * @param $args['sort'] sort order ('create_date','title','hits','rating','author','id','summary','notes',...)
  * @param $args['startnum'] starting article number
  * @param $args['ids'] array of article ids to get
  * @param $args['owner'] the ID of the author
@@ -28,14 +28,14 @@
  * @param $args['cids'] array of category IDs for which to get publications (OR/AND)
  *                      (for all categories don?t set it)
  * @param $args['andcids'] true means AND-ing categories listed in cids
- * @param $args['pubdate'] publications published in a certain year (YYYY), month (YYYY-MM) or day (YYYY-MM-DD)
+ * @param $args['create_date'] publications published in a certain year (YYYY), month (YYYY-MM) or day (YYYY-MM-DD)
  * @param $args['startdate'] publications published at startdate or later
  *                           (unix timestamp format)
  * @param $args['enddate'] publications published before enddate
  *                         (unix timestamp format)
  * @param $args['fields'] array with all the fields to return per article
  *                        Default list is : 'id','title','summary','owner',
- *                        'pubdate','pubtype_id','notes','state','body'
+ *                        'create_date','pubtype_id','notes','state','body'
  *                        Optional fields : 'cids','author','counter','rating','dynamicdata'
  * @param $args['extra'] array with extra fields to return per article (in addition
  *                       to the default list). So you can EITHER specify *all* the
@@ -83,9 +83,7 @@ function publications_userapi_getall($args)
     if (!isset($andcids)) {
         $andcids = false;
     }
-    if (empty($ptid)) {
-        $ptid = null;
-    }
+    if (empty($ptid)) $ptid = null;
 
     // Default fields in publications (for now)
     $columns = array('id','title','summary','owner','pubtype_id',
@@ -100,9 +98,8 @@ function publications_userapi_getall($args)
     // + 'relevance' = relevance for this article (MySQL full-text search only)
     // $optional = array('cids','author','counter','rating','dynamicdata','relevance');
 
-    if (!isset($fields)) {
-        $fields = $columns;
-    }
+    if (!isset($fields)) $fields = $columns;
+
     if (isset($extra) && is_array($extra) && count($extra) > 0) {
         $fields = array_merge($fields,$extra);
     }
@@ -116,8 +113,8 @@ function publications_userapi_getall($args)
             // let the database sort by relevance (= default for fulltext)
             $sortlist = array();
         } else {
-            // default sort by pubdate
-//            $sortlist = array('pubdate');
+            // default sort by create_date
+            $sortlist = array('create_date');
         }
     } elseif (is_array($sort)) {
         $sortlist = $sort;
@@ -139,7 +136,7 @@ function publications_userapi_getall($args)
     $required['id'] = 1;
     $required['title'] = 1;
     $required['pubtype_id'] = 1;
-//    $required['pubdate'] = 1;
+    $required['create_date'] = 1;
     $required['owner'] = 1; // not to be confused with author (name) :-)
     // force cids as required when categories are given
     if (count($cids) > 0) {
@@ -158,7 +155,7 @@ function publications_userapi_getall($args)
 
 // TODO : how to handle the case where name is empty, but uname isn't
 
-    if (!empty($required['author'])) {
+    if (!empty($required['owner'])) {
         // Load API
         if (!xarModAPILoad('roles', 'user')) return;
 
@@ -210,7 +207,7 @@ function publications_userapi_getall($args)
             continue;
         } elseif ($field == 'dynamicdata') {
             continue;
-        } elseif ($field == 'author') {
+        } elseif ($field == 'owner') {
             $select[] = $usersdef['name'];
         } elseif ($field == 'counter') {
             if (!empty($hitcountdef['hits'])) {
@@ -224,12 +221,13 @@ function publications_userapi_getall($args)
             $select[] = $publicationsdef[$field];
         }
     }
+
     // FIXME: <rabbitt> PostgreSQL requires that all fields in an 'Order By' be in the SELECT
     //        this has been added to remove the error that not having it creates
     // FIXME: <mikespub> Oracle doesn't allow having the same field in a query twice if you
     //        don't specify an alias (at least in sub-queries, which is what SelectLimit uses)
-//    if (!in_array($publicationsdef['pubdate'], $select)) {
-//        $select[] = $publicationsdef['pubdate'];
+//    if (!in_array($publicationsdef['create_date'], $select)) {
+//        $select[] = $publicationsdef['create_date'];
 //    }
 
     // we need distinct for multi-category OR selects where publications fit in more than 1 category
@@ -239,10 +237,11 @@ function publications_userapi_getall($args)
         $query = 'SELECT ' . join(', ', $select);
     }
 
+//    var_dump($required);exit;
     // Create the FROM ... [LEFT JOIN ... ON ...] part
     $from = $publicationsdef['table'];
     $addme = 0;
-    if (!empty($required['author'])) {
+    if (!empty($required['owner'])) {
         // Add the LEFT JOIN ... ON ... parts from users
         $from .= ' LEFT JOIN ' . $usersdef['table'];
         $from .= ' ON ' . $usersdef['field'] . ' = ' . $publicationsdef['owner'];
@@ -325,13 +324,13 @@ function publications_userapi_getall($args)
             }
             if ($criteria == 'title') {
                 $sortparts[] = $publicationsdef['title'] . ' ' . (!empty($sortorder) ? $sortorder : 'ASC');
-//            } elseif ($criteria == 'pubdate' || $criteria == 'date') {
-//                $sortparts[] = $publicationsdef['pubdate'] . ' ' . (!empty($sortorder) ? $sortorder : 'DESC');
+//            } elseif ($criteria == 'create_date' || $criteria == 'date') {
+//                $sortparts[] = $publicationsdef['create_date'] . ' ' . (!empty($sortorder) ? $sortorder : 'DESC');
             } elseif ($criteria == 'hits' && !empty($hitcountdef['hits'])) {
                 $sortparts[] = $hitcountdef['hits'] . ' ' . (!empty($sortorder) ? $sortorder : 'DESC');
             } elseif ($criteria == 'rating' && !empty($ratingsdef['rating'])) {
                 $sortparts[] = $ratingsdef['rating'] . ' ' . (!empty($sortorder) ? $sortorder : 'DESC');
-            } elseif ($criteria == 'author' && !empty($usersdef['name'])) {
+            } elseif ($criteria == 'owner' && !empty($usersdef['name'])) {
                 $sortparts[] = $usersdef['name'] . ' ' . (!empty($sortorder) ? $sortorder : 'ASC');
             } elseif ($criteria == 'relevance' && !empty($publicationsdef['relevance'])) {
                 $sortparts[] = 'relevance' . ' ' . (!empty($sortorder) ? $sortorder : 'DESC');
@@ -356,11 +355,11 @@ function publications_userapi_getall($args)
 
         // For fulltext in boolean mode, add MATCH () ... AS relevance ... ORDER BY relevance DESC (cfr. leftjoin)
         if (!empty($required['relevance']) && $searchtype == 'fulltext boolean') {
-            $query .= ' ORDER BY relevance DESC, ' . $publicationsdef['pubdate'] . ' DESC, ' . $publicationsdef['id'] . ' DESC';
+            $query .= ' ORDER BY relevance DESC, ' . $publicationsdef['create_date'] . ' DESC, ' . $publicationsdef['id'] . ' DESC';
         }
 
-    } else { // default is 'pubdate'
-        $query .= ' ORDER BY ' . $publicationsdef['pubdate'] . ' DESC, ' . $publicationsdef['id'] . ' DESC';
+    } else { // default is 'create_date'
+        $query .= ' ORDER BY ' . $publicationsdef['create_date'] . ' DESC, ' . $publicationsdef['id'] . ' DESC';
     }
 
     // Run the query - finally :-)

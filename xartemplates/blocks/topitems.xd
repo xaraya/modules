@@ -7,12 +7,12 @@
                 #$item['title']#
             <xar:else />
                 <a href="#$item['link']#">#$item['title']#</a>
-            </xar:if>
+            </xar:if>&#160;
             <xar:if condition="!empty($item['value'])">
                 (#$item['value']#)
-            </xar:if>
+            </xar:if>&#160;
             <xar:if condition="!empty($item['summary'])">
-            #$item['summary']#
+                #$item['summary']#
             </xar:if>
           </li>      
         </xar:foreach>
