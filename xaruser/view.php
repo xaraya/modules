@@ -197,7 +197,7 @@ function publications_user_view($args)
 
     // every field you always wanted to know about but were afraid to ask for :)
     $extra = array();
-    $extra[] = 'author';
+//    $extra[] = 'author';
 
     // Note: we always include cids for security checks now (= performance impact if showcategories was 0)
     $extra[] = 'cids';
