@@ -29,7 +29,10 @@
         $data['coremodules'] = array();
         $data['modules'] = array();
         foreach ($installed as $module) {
-            if (substr($module['class'],0,4) == 'Core' || $module['name'] == 'authsystem') {
+            if (!isset($module['class'])) {
+//                if (file_exists('modules/'. $module['name'] . '/xartest.php')) 
+                    $data['modules']['modules.test'.$module['name']] = $module;
+            } elseif (substr($module['class'],0,4) == 'Core' || $module['name'] == 'authsystem') {
                 $data['coremodules']['coremodules.test'.$module['name']] = $module;
             } else {
                 if (file_exists('modules/'. $module['name'] . '/xartest.php')) 
