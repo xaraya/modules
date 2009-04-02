@@ -35,25 +35,29 @@
   <xar:set name="numcats">count($categories)</xar:set>
   <xar:set name="miditem">round(($numcats - 0.5) / 2)</xar:set>
   <xar:if condition="$numcats gt 7">
+  <!--  TODO: Review this
     <table border="0"><tr><td valign="top">
-  </xar:if>
   <ul>
   <xar:foreach in="$categories" key="$id" value="$category">
     <li> <a href="#$category['link']#">#$category['name']#</a> </li>
-    <xar:if condition="$numcats gt 7 and $id eq $miditem">
       </ul></td>
       <td valign="top"><ul>
-    </xar:if>
   </xar:foreach>
   </ul>
-  <xar:if condition="$numcats gt 7">
-    </td></tr></table>
+    </tr></table>
+    -->
+  <xar:else />
+  <ul>
+  <xar:foreach in="$categories" key="$id" value="$category">
+    <li> <a href="#$category['link']#">#$category['name']#</a> </li>
+  </xar:foreach>
+  </ul>
   </xar:if>
 </xar:if>
 
 <xar:if condition="!empty($moditems) and count($moditems) gt 0">
   <xar:foreach in="$moditems" value="$moditem">
-    &bull; <a href="#$moditem['link']#">#$moditem['name']#</a> (#$moditem['numitems']#)
+    &#x2022; <a href="#$moditem['link']#">#$moditem['name']#</a> (#$moditem['numitems']#)
     <ul>
     <xar:if condition="!empty($moditem['items'])">
     <xar:foreach in="$moditem['items']" value="$item">

@@ -239,6 +239,7 @@ function categories_userapi_getcat($args)
             $categories[$index] = Array(
                 'indentation' => $indentation,
                 'cid'         => $cid,
+                'id'         => $cid,
                 'name'        => $name,
                 'description' => $description,
                 'image'       => $image,
