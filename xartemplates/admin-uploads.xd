@@ -141,11 +141,11 @@
 
 
 
-            <p><a href="&xar-modurl-uploads-admin-get_files;"><xar:mlstring>Add Image</xar:mlstring></a></p>
+            <p><a href="#xarModURL('uploads','admin','get_files')#"><xar:mlstring>Add Image</xar:mlstring></a></p>
 
             <xar:base-include-javascript module="base" filename="checkall.js" />
 
-            <form id="viewuploads" method="post" action="&xar-modurl-images-admin-uploads;">
+            <form id="viewuploads" method="post" action="#xarModURL('images','admin','uploads')#">
             <table class="xar-accent">
                 <tr>
                     <th>
