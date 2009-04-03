@@ -8,7 +8,7 @@
    <h2><xar:mlstring>Start Translate</xar:mlstring></h2>
    <xar:template file="admin-menu" type="module"/>
 
-<form name="workingLocaleForm" id="workingLocaleForm" action="&xar-modurl-translations-admin-update_working_locale;" method="post">
+<form name="workingLocaleForm" id="workingLocaleForm" action="#xarModURL('translations','admin','update_working_locale')#" method="post">
   <fieldset>
       <legend><xar:mlstring>Choose locale to work on</xar:mlstring></legend>
 
@@ -49,17 +49,17 @@
 
  <ul>
     <li>
-      <a href="&xar-modurl-translations-admin-update_info;&amp;dntype=core">
+      <a href="#xarModURL('translations','admin','update_info')#&amp;dntype=core">
         <xar:mlstring>Translate the core</xar:mlstring>
       </a>
     </li>
     <li>
-      <a href="&xar-modurl-translations-admin-update_info;&amp;dntype=module">
+      <a href="#xarModURL('translations','admin','update_info')#&amp;dntype=module">
         <xar:mlstring>Translate a module</xar:mlstring>
       </a>
     </li>
     <li>
-      <a href="&xar-modurl-translations-admin-update_info;&amp;dntype=theme">
+      <a href="#xarModURL('translations','admin','update_info')#&amp;dntype=theme">
         <xar:mlstring>Translate a theme</xar:mlstring>
       </a>
     </li>
