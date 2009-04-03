@@ -14,6 +14,7 @@
 /**
  * utility function to determine if current user has voted
  * @param $args['pid'] id of poll to vote on
+ * @param $args['poll'] existing poll, can be passed in if available
  * @return bool
  * @return user vote status for a poll
  *          true user can vote
@@ -23,71 +24,91 @@ function polls_userapi_usercanvote($args)
 {
     extract($args);
 
-    // Check args
-    if (!isset($pid)) {
-        $msg = xarML('Missing poll ID in checkvote');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
-        return false;
-    }
-    if(xarUserIsLoggedIn()){
-        $votes = xarModGetUserVar('polls', 'uservotes');
-    }
-    else{
-        $votes = xarSessionGetVar("uservotes");
-    }
-    if(!is_string($votes)){
-        return true;
-    }
-    $uservotes = unserialize($votes);
-    if(!isset($uservotes[$pid])){
-        return true;
-    }
-    else{
-        $vote = $uservotes[$pid];
-    }
-    $poll = xarModAPIFunc('polls',
-                           'user',
-                           'get',
-                           array('pid' => $pid));
-    if(!$poll['open']){
-        return false;
-    }
-    $now = time();
-    $reset = $poll['reset'];
+    // If a poll is passed in, then get the pid from it.
+    if (!isset($pid) && isset($poll['pid'])) $pid = $poll['pid'];
 
-    $interval = xarModGetVar('polls', 'voteinterval');
+    // Check args
+    if (!isset($pid) && !isset($poll['pid'])) {
+        $msg = xarML('Missing poll ID in checkvote');
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA', new DefaultUserException($msg));
+        return false;
+    }
+
+    // Get the current voting status from the user settings or the session.
+    if (xarUserIsLoggedIn()) {
+        $votes = xarModGetUserVar('polls', 'uservotes');
+    } else{
+        $votes = xarSessionGetVar('uservotes');
+    }
+
+    // Get the vote time, if it is available.
+    if (!is_string($votes)){
+        $votetime = 0;
+    } else {
+        $uservotes = @unserialize($votes);
+        if (!isset($uservotes[$pid])){
+            $votetime = 0;
+        } else{
+            $votetime = $uservotes[$pid];
+        }
+    }
+
+    // Fetch the poll, if we don't already have it.
+    if (!isset($poll)) $poll = xarModAPIFunc('polls', 'user', 'get', array('pid' => $pid));
+
+    // Nobody can vote on a closed poll.
+    if (empty($poll['open'])) {
+        return false;
+    }
+
+    // Everything past here involves a check against the voting time.
+    // If there is no voting time, then the user ahs not voted, and
+    // so is allowed to.
+    if ($votetime == 0) {
+        return true;
+    }
 
     // Allow voting on a poll reset since vote, regardless of vote interval
-    if($vote < $reset){
+    if ($votetime < $poll['reset']) {
         return true;
     }
+
+    $now = time();
+    $interval = xarModGetVar('polls', 'voteinterval');
+
+    // FIXME: hard-coded durations could cause problems if they are extended at source.
+    // Do we need a switch statement at all? Just a numeric check ought to be enough.
     switch($interval){
         case -1:
-            if(isset($uservotes[$pid])){
-                return false;
-            }
-            break;
+            // Only one vote ever permitted.
+            // No further checks required.
+            return false;
+
+        // 24 hours.
         case 86400:
+        // 7 days
         case 604800:
-            if($now < ($vote + $interval)){
+            if ($now < ($votetime + $interval)) {
                 return false;
             }
             break;
+
+        // 30 days (1 month)
+        // CHECKME: the check just prevents voting within the same calendar month. Is that right?
         case 2592000:
-            $votetime = getdate($vote);
-            $nowtime = getdate($now);
-            if(($nowtime['mon'] == $votetime['mon']) && ($nowtime['year'] == $votetime['year'])){
+            if (date('Y-m', $now) == date('Y-m', $votetime)) {
                 return false;
             }
+            break;
+
         default:
+            // CHECKME: should we just say 'no'?
             $msg = xarML('Cannot determine vote status');
-            xarErrorSet(XAR_USER_EXCEPTION,
-                        'BAD_DATA',
-                        new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA', new DefaultUserException($msg));
             return false;
     }
+
+    // Passed all the tests; yes we can vote.
     return true;
 }
 
