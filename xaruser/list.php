@@ -18,19 +18,17 @@ function polls_user_list($args)
 {
     extract($args);
 
-    if (!xarVarFetch('catid','str',$catid,0,XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('catid', 'str', $catid, 0, XARVAR_DONT_SET)) return;
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
-    if(!xarSecurityCheck('ListPolls', 1)){
+    if (!xarSecurityCheck('ListPolls', 1)) {
         return;
     }
 
-    $items = xarModAPIFunc('polls',
-                          'user',
-                          'getall',
-                          array('modid' => xarModGetIDFromName('polls'),
-                                'catid' => $catid));
+    $items = xarModAPIFunc('polls', 'user', 'getall',
+        array('modid' => xarModGetIDFromName('polls'), 'catid' => $catid)
+    );
     $data = array();
     $data['catid'] = $catid;
 
@@ -46,6 +44,7 @@ function polls_user_list($args)
     $data['previewresults'] = xarModGetVar('polls', 'previewresults');
     $data['showtotalvotes'] = xarModGetVar('polls', 'showtotalvotes');
     $data['polls'] = array();
+
     // TODO - loop through each item and display it
     foreach ($items as $item) {
         $poll = array();
@@ -62,22 +61,29 @@ function polls_user_list($args)
             $poll['open'] = 0;
         }
 
-        if (xarSecurityCheck('VotePolls',0,'Polls',"$item[title]:$item[type]")) {
-
-
-            $poll['canvote'] = xarModAPIFunc('polls',
-                                             'user',
-                                             'usercanvote',
-                                             array('pid' => $item['pid']));
+        if (xarSecurityCheck('VotePolls', 0, 'Polls', "$item[title]:$item[type]")) {
+            $poll['canvote'] = xarModAPIFunc('polls', 'user', 'usercanvote',
+                array('pid' => $item['pid'])
+            );
 
             $poll['action_vote'] = xarModURL('polls', 'user', 'display',
-                                             array('pid' => $item['pid']));
+                array('pid' => $item['pid'])
+            );
         } else {
+            // We have no privilege to vote on this poll.
             $poll['canvote'] = 0;
+
+            // If the poll is still open, and a preview of results is
+            // not allowed, then we actually have nothing to view on this
+            // poll at all.
+            if (empty($data['previewresults']) && $poll['open']) {
+                continue;
+            }
         }
 
         $poll['action_results'] = xarModURL('polls', 'user', 'results',
-                                  array('pid' => $item['pid']));
+            array('pid' => $item['pid'])
+        );
 
         $data['polls'][] = $poll;
     }
