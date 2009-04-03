@@ -51,32 +51,20 @@
                 <xar:set name="level">$node->getLevel()</xar:set>
                 <xar:if condition="empty($nodeid) or $nodeid ne $nodename">
                     <xar:if condition="in_array($nodeid,$value)" >
-                        <option value="#$nodeid#" selected="selected">
-                            <xar:for start="$i = 1" test="$i le $level" iter="$i++">
-                                -
-                            </xar:for>
-                            #$nodename#
-                        </option>
+                    <option style="padding-left: #$level#em;" value="#$nodeid#" selected="selected">
+                        #$nodename#
+                    </option>
                     <xar:else />
-                        <option value="#$nodeid#">
-                            <xar:for start="$i = 1" test="$i le $level" iter="$i++">
-                                -
-                            </xar:for>
+                        <option style="padding-left: #$level#em;" value="#$nodeid#">
                             #$nodename#
                         </option>
                     </xar:if>
                 <xar:elseif condition="in_array($nodeid,$value)" />
-                    <option selected="selected">
-                        <xar:for start="$i = 1" test="$i le $level" iter="$i++">
-                            -
-                        </xar:for>
+                    <option style="padding-left: #$level#em;" selected="selected">
                         #$nodename#
                     </option>
                 <xar:else />
-                    <option>
-                        <xar:for start="$i = 1" test="$i le $level" iter="$i++">
-                            -
-                        </xar:for>
+                    <option style="padding-left: #$level#em;">
                         #$nodename#
                     </option>
                 </xar:if>
@@ -86,10 +74,8 @@
                     <xar:foreach in="$childitems" value="$childitem">
                         <xar:set name="fulllink">$nodeid . "." . $childitem['id']</xar:set>
                         <xar:if condition="in_array($fulllink,$value)" >
-                            <option value="#$fulllink#" selected="selected">
-                                <xar:for start="$i = 1" test="$i le $level+1" iter="$i++">
-                                    -
-                                </xar:for>
+                            <xar:set name="level">$level + 1</xar:set>
+                            <option style="padding-left: #$level#em;" value="#$fulllink#" selected="selected">
                                 <!-- assume we might not have a name field for the moment -->
                                 <xar:if condition="!empty($childitem.name)"> 
                                     #$childitem.name#
@@ -98,10 +84,8 @@
                                 </xar:if>
                             </option>
                         <xar:else />
-                            <option value="#$fulllink#">
-                                <xar:for start="$i = 1" test="$i le $level+1" iter="$i++">
-                                    -
-                                </xar:for>
+                            <xar:set name="level">$level + 1</xar:set>
+                            <option style="padding-left: #$level#em;" value="#$fulllink#">
                                 <!-- assume we might not have a name field for the moment -->
                                 <xar:if condition="!empty($childitem.name)"> 
                                     #$childitem.name#
