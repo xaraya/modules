@@ -46,7 +46,7 @@
         </xar:if>
     </div>
 </xar:if>
-</xar:template>
+
 <!-- Individual item -->
 <xar:if condition="!empty($extra.aid)">
     <xar:if condition="!empty($article)">
@@ -80,3 +80,4 @@
         </xar:if>
     </xar:foreach>
 </xar:if>
+</xar:template>
