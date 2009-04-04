@@ -7,7 +7,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage xartinymce module
- * @copyright (C) 2002-2008 2skies.com
+ * @copyright (C) 2002-2008,2009 2skies.com
  * @link http://xarigami.com/projects/xartinymce
  * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
@@ -104,9 +104,9 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinybuttons3','str:1:',$tinybuttons3,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinybuttonsremove','str:1:',$tinybuttonsremove,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyexstyle','str:1:',$tinyexstyle,'heading 1=head1,heading 2=head2,heading 3=head3,heading 4=head4',XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('tinybuild1','str:1:',$tinybuild1,'',XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('tinybuild2','str:1:',$tinybuild2,'',XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('tinybuild3','str:1:',$tinybuild3,'',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinybuild1','str:0:',$tinybuild1,'',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinybuild2','str:0:',$tinybuild2,'',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinybuild3','str:0:',$tinybuild3,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyadvformat','str:1:',$tinyadvformat,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyshowpath','str:1:',$tinyshowpath,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyadvresize','checkbox',$tinyadvresize,true,XARVAR_NOT_REQUIRED)) return;
@@ -295,21 +295,21 @@ function tinymce_admin_updateconfig()
         /* Do not trim these build vars - a space will render the line blank */
         /* ver 1.5.2 - noted that the behaviour is changed. We need an empty string - not a space else errors */
         $build1 = xarModGetVar('tinymce','tinybuild1');
-        if ($build1 <> '') {
+        if (trim($build1) <> '') {
           $jstext .='theme_advanced_buttons1 : "'.$build1.'", ';
           //check for whitespace only - means we want to get rid of the row
         } elseif (trim($build1) =='' && strlen($build1)>0) {
             $jstext .='theme_advanced_buttons1 : "", ';
         }
         $build2 = xarModGetVar('tinymce','tinybuild2');
-        if ($build2 <> '') {
+        if (trim($build2) <> '') {
           $jstext .='theme_advanced_buttons2 : "'.$build2.'", ';
           //check for whitespace only - means we want to get rid of the row
         } elseif (trim($build2) =='' && strlen($build2)>0) {
             $jstext .='theme_advanced_buttons2 : "", ';
         }
         $build3 = xarModGetVar('tinymce','tinybuild3');
-        if ($build3 <> '') {
+        if (trim($build3) <> '') {
           $jstext .='theme_advanced_buttons3 : "'.$build3.'", ';
           //check for whitespace only - means we want to get rid of the row
         } elseif (trim($build3) =='' && strlen($build3)>0) {
