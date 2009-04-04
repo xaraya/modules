@@ -7,7 +7,7 @@
  * @link http://www.xaraya.com
  *
  * @subpackage xartinymce module
- * @copyright (C) 2002-2008 2skies.com
+ * @copyright (C) 2003-2009 2skies.com
  * @link http://xarigami.com/projects/xartinymce
  * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
@@ -144,7 +144,9 @@ function tinymce_upgrade($oldversion)
         xarModSetVar('tinymce',  'usebutton',true);                
     case '1.5.0': 
     case '1.5.1':    
-    case '1.5.2'://current version
+    case '1.5.2':
+    case '1.5.3':
+    case '1.5.4': //current version
        break;
     }
     return true;
