@@ -109,6 +109,5 @@ var LoremIpsumDialog = {
 	}
 };
 
-tinyMCEPopup.requireLangPack();
 tinyMCEPopup.onInit.add(LoremIpsumDialog.init, LoremIpsumDialog);
 

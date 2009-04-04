@@ -1,7 +1,7 @@
 // UK lang variables
 tinyMCE.addI18n('en.dphighlight_dlg',{
-    desc : "dpHighlight",
-    title : "Code Highlighting",
+    desc: "Code Highlighting",
+    title:"Code Highlighting",
     languagepicker : "Choose the language",
     pagecode : "Paste your code here",
     button_desc: "Insert code",

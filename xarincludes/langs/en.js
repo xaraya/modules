@@ -151,4 +151,12 @@ no_mpell:"No misspellings found."
 },
 pagebreak:{
 desc:"Insert page break."
-}}});
+},
+loremipsum:{
+desc:"Lorem Ipsum"
+},
+dphighlight:{
+desc:"Code Highlighting"
+}
+
+}});

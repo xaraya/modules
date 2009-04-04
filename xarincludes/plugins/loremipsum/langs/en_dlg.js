@@ -10,12 +10,13 @@
  */
 
 tinyMCE.addI18n('en.loremipsum_dlg',{
-    desc : "Lorem Ipsum",
-	sentences : "Source text",
-	amount : "Generated amount",
-	formating : "Formating",
-	unformated : "Unformated sentences",
-	paragraphs : "Paragraphs &lt;p&gt;",
-	list : "List &lt;ul&gt;",
+    desc:"Insert Lorem Ipsum text",
+    title:"Lorem Ipsum",
+	sentences:"Source text",
+	amount:"Generated amount",
+	formating: "Formating",
+	unformated: "Unformated sentences",
+	paragraphs: "Paragraphs &lt;p&gt;",
+	list: "List &lt;ul&gt;",
 	orderedlist : "Ordered List &lt;ol&gt;"
 });

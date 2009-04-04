@@ -35,7 +35,7 @@
 				});
 			});
 
-			// Register example button
+			// Register lorem impsum button
 			ed.addButton('loremipsum', {
 				title : 'loremipsum.desc',
 				cmd : 'mceLoremIpsum',
