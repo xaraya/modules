@@ -74,8 +74,8 @@
                     <xar:foreach in="$childitems" value="$childitem">
                         <xar:set name="fulllink">$nodeid . "." . $childitem['id']</xar:set>
                         <xar:if condition="in_array($fulllink,$value)" >
-                            <xar:set name="level">$level + 1</xar:set>
-                            <option style="padding-left: #$level#em;" value="#$fulllink#" selected="selected">
+                            <xar:set name="level1">$level + 1</xar:set>
+                            <option style="padding-left: #$level1#em;" value="#$fulllink#" selected="selected">
                                 <!-- assume we might not have a name field for the moment -->
                                 <xar:if condition="!empty($childitem.name)"> 
                                     #$childitem.name#
@@ -84,8 +84,8 @@
                                 </xar:if>
                             </option>
                         <xar:else />
-                            <xar:set name="level">$level + 1</xar:set>
-                            <option style="padding-left: #$level#em;" value="#$fulllink#">
+                            <xar:set name="level1">$level + 1</xar:set>
+                            <option style="padding-left: #$level1#em;" value="#$fulllink#">
                                 <!-- assume we might not have a name field for the moment -->
                                 <xar:if condition="!empty($childitem.name)"> 
                                     #$childitem.name#
