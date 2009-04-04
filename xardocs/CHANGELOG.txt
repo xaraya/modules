@@ -1,3 +1,9 @@
+* Version 1.5.4  4 April 2009
+- Upgrade to latest upstream Revision 1075 including 3.2.2.3 release code
+  Fixes a number of key bugs for IE8, regression bug with getPos.
+  See the upstream tinymce changelog for full details.
+  .
+
 * Version 1.5.3  9 Jan 2009
 - Upgrade to latest upstream 3.2.1.1 code to revision 984
 - Updated with latest fixes to compressor php file

@@ -1,6 +1,6 @@
-INSTALLATION AND USE - XarTinyMCE Version 1.5.3
+INSTALLATION AND USE - XarTinyMCE Version 1.5.4
 
-UPGRADES to 1.5.3:
+UPGRADES to 1.5.4:
 PLEASE SEE UPGRADE CONSIDERATIONS AT THE END OF THIS DOCUMENT
 
 XarTinyMCE is a configurable, lightweight WYSIWYG editor.
@@ -50,7 +50,7 @@ Please read the Overview Documentation in the TinyMCE administration area for mo
 
 ******************************
 
-To UPGRADE to Version 1.5.3:
+To UPGRADE to Version 1.5.4:
 
 There has been a number of major changes in tinymce that could BREAK COMPTIBILITY.
 Please check the following to ensure xartinymce continues to work for you.
