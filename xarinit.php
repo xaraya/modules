@@ -41,7 +41,7 @@ function tinymce_init()
    xarModSetVar('tinymce', 'tinyentity_encoding','raw');
    xarModSetVar('tinymce', 'tinyinlinestyle',1);
    xarModSetVar('tinymce', 'tinyundolevel',10);
-   xarModSetVar('tinymce', 'tinyplugins', 'searchreplace,print,advimage,advlink,table,paste,pagebreak,loremipsum,spellchecker,fullscreen,emotions,liststyle');
+   xarModSetVar('tinymce', 'tinyplugins', 'searchreplace,print,advimage,advlink,table,paste,pagebreak,loremipsum,spellchecker,fullscreen,emotions,blockquote');
    xarModSetVar('tinymce', 'tinybuttons', 'search,replace,pastetext,pasteword,spellchecker');
    xarModSetVar('tinymce', 'tinybuttons2','print,fullscreen,emotions,pagebreak');
    xarModSetVar('tinymce', 'tinybuttons3','liststyle,tablecontrols,loremipsum');
@@ -53,7 +53,7 @@ function tinymce_init()
     xarModSetVar('tinymce', 'tinybr', 0);
     xarModSetVar('tinymce', 'tinypara', 1);
     xarModSetVar('tinymce', 'tinyinvalid', '');
-    xarModSetVar('tinymce', 'tinyadvformat', 'p,address,pre,h1,h2,h3,h4,h5,h6,div,blockquote,dt,dd,code,samp');
+    xarModSetVar('tinymce', 'tinyadvformat', 'p,address,pre,h1,h2,h3,h4,h5,h6,div,dt,dd,code,samp');
     xarModSetVar('tinymce', 'tinyeditorcss','');
     xarModSetVar('tinymce', 'tinyloadmode','manual');
     xarModSetVar('tinymce', 'multiconfig','');
@@ -121,7 +121,7 @@ function tinymce_upgrade($oldversion)
             xarModSetVar('tinymce', 'tinycleanup',1);
             xarModDelVar('tinymce', 'useibrowser');
             xarModDelVar('tinymce', 'tinynowrap');
-            return tinymce_upgrade('1.0.1');
+
     case '1.0.1':
 
     case '1.0.2':
@@ -133,7 +133,7 @@ function tinymce_upgrade($oldversion)
         xarModSetVar('tinymce',  'usefilebrowser',0);
 
     case '1.0.4':
-    xarModSetVar('tinymce', 'tinyadvformat', 'p,address,pre,h1,h2,h3,h4,h5,h6,div,blockquote,dt,dd,code,samp');
+    xarModSetVar('tinymce', 'tinyadvformat', 'p,address,pre,h1,h2,h3,h4,h5,h6,div,dt,dd,code,samp');
 
     case '1.1.0': 
     case '1.1.1':
