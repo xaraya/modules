@@ -6,7 +6,7 @@
 
 // Use this version of the modifyconfig file when creating utility modules
 
-    function foo_admin_modifyconfig()
+    function foo_admin_modifyconfig_utility()
     {
         // Security Check
         if (!xarSecurityCheck('AdminFoo')) return;
