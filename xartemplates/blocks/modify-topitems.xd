@@ -72,9 +72,11 @@
         </label>
         <xar:set name="options">
             array(
+                array('id' => 'author', 'name' => xarML('Author')),
+                array('id' => 'date', 'name' => xarML('Date')),
                 array('id' => 'hits', 'name' => xarML('Hit Count')),
                 array('id' => 'rating', 'name' => xarML('Rating')),
-                array('id' => 'date', 'name' => xarML('Date'))
+                array('id' => 'title', 'name' => xarML('Title'))
             )
         </xar:set>        
         <xar:data-input type="dropdown" name="sortoptions" options="$options" value="$toptype"/>
@@ -98,7 +100,6 @@
                 Status 
             </xar:mlstring>
         </label>
-
         <xar:set name="options">
             array(
                 array('id' => '2,3', 'name' => xarML('All Published')),

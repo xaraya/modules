@@ -18,61 +18,32 @@
  * @author Jonn Beams (based on code from TopItems block)
  *
  */
+    sys::import('modules.publications.xarblocks.topitems');
 
-function publications_featureditemsblock_init()
-{
-    return array(
-        'featuredid'       => 0,
-        'alttitle'          => '',
-        'altsummary'        => '',
-        'moreitems'         => array(),
-        'toptype'           => 'date',
-        'showvalue'         => true,
-        'pubtype_id'         => '',
-        'catfilter'         => '',
-        'state'            => array(3, 2),
-        'itemlimit'         => 10,
-        'showfeaturedsum'   => false,
-        'showfeaturedbod'   => false,
-        'moreitems'         => array(),
-        'showsummary'       => false,
-        'linkpubtype'       => false,
-        'linkcat'           => false
-    );
-}
+    class FeatureditemsBlock extends TopitemsBlock
+    {
+        public $featuredid          = 0;
+        public $alttitle            = '';
+        public $altsummary          = '';
+        public $moreitems           = array();
+        public $showfeaturedsum     = false;
+        public $showfeaturedbod     = false;
+        public $numitems            = 5;
 
-/**
- * get information on block
- */
-function publications_featureditemsblock_info()
-{
-    // Details of block.
-    return array(
-        'text_type'         => 'Featured Items',
-        'module'            => 'publications',
-        'text_type_long'    => 'Show featured publications',
-        'allow_multiple'    => true,
-        'form_content'      => false,
-        'form_refresh'      => false,
-        'show_preview'      => true
-    );
-}
+        public function __construct(ObjectDescriptor $descriptor)
+        {
+            parent::__construct($descriptor);
+            $this->text_type = 'Featured Items';
+            $this->text_type_long = 'Show featured publications';
+            $this->allow_multiple = true;
+            $this->show_preview = true;
 
-/**
- * display block
- */
-function publications_featureditemsblock_display(& $blockinfo)
-{
-    // Security check
-    // TODO: can be removed when handled centrally.
-    if (!xarSecurityCheck('ReadPublicationsBlock', 0, 'Block', $blockinfo['title'])) {return;}
+            $this->toptype = 'ratings';
+        }
 
-    // Get variables from content block
-    if (is_string($blockinfo['content'])) {
-        $vars = @unserialize($blockinfo['content']);
-    } else {
-        $vars =& $blockinfo['content'];
-    }
+        public function display(Array $data=array())
+        {
+            $data = parent::display($data);
 
     // Defaults
     if (empty($vars['featuredid'])) {$vars['featuredid'] = 0;}
@@ -261,13 +232,75 @@ function publications_featureditemsblock_display(& $blockinfo)
     return $blockinfo;
 }
 
-/**
- * built-in block help/information system.
- */
-function publications_featureditemsblock_help()
-{
-    // No information yet.
-    return '';
-}
+        public function modify(Array $data=array())
+        {
+            $data = parent::modify($data);
+
+            // Defaults
+            if (empty($data['featuredid'])) {$data['featuredid'] = $this->featuredid;}
+            if (empty($data['alttitle'])) {$data['alttitle'] = $this->alttitle;}
+            if (empty($data['altsummary'])) {$data['altsummary'] = $this->altsummary;}
+            if (empty($data['showfeaturedsum'])) {$data['showfeaturedsum'] = $this->showfeaturedsum;}
+            if (empty($data['showfeaturedbod'])) {$data['showfeaturedbod'] = $this->showfeaturedbod;}
+            if (empty($data['moreitems'])) {$data['moreitems'] = $this->moreitems;}
+
+            $data['fields'] = array('id', 'title');
+
+            if (!is_array($data['state'])) $statearray = array($data['state']);
+            else $statearray = $data['state'];
+
+            if(!empty($data['catfilter'])) $cidsarray = array($data['catfilter']);
+            else $cidsarray = array();
+
+            // Create array based on modifications
+            $article_args = array();
+
+            // Only include pubtype if a specific pubtype is selected
+            if (!empty($data['pubtype_id'])) $article_args['ptid'] = $data['pubtype_id'];
+
+            // Add the rest of the arguments
+            $article_args['cids'] = $cidsarray;
+            $article_args['enddate'] = time();
+            $article_args['state'] = $statearray;
+            $article_args['fields'] = $data['fields'];
+            $article_args['sort'] = $data['toptype'];
+
+            $data['filtereditems'] = xarModAPIFunc(
+                'publications', 'user', 'getall', $article_args );
+
+            // Try to keep the additional headlines select list width less than 50 characters
+            for ($idx = 0; $idx < count($data['filtereditems']); $idx++) {
+                if (strlen($data['filtereditems'][$idx]['title']) > 50) {
+                    $data['filtereditems'][$idx]['title'] = substr($data['filtereditems'][$idx]['title'], 0, 47) . '...';
+                }
+                $data['filtereditems'][$idx]['name'] = $data['filtereditems'][$idx]['title'];
+            }
+
+            //Put together the additional featured publications list
+            for($idx=0; $idx < count($data['filtereditems']); ++$idx) {
+                $data['filtereditems'][$idx]['selected'] = '';
+                for($mx=0; $mx < count($data['moreitems']); ++$mx) {
+                    if (($data['moreitems'][$mx]) == ($data['filtereditems'][$idx]['id'])) {
+                        $data['filtereditems'][$idx]['selected'] = 'selected';
+                    }
+                }
+            }
+            $data['morepublications'] = $data['filtereditems'];
+
+            return $data;
+        }
+
+        public function update(Array $data=array())
+        {
+            xarVarFetch('featuredid', 'id', $vars['featuredid'], 0, XARVAR_NOT_REQUIRED);
+            xarVarFetch('alttitle', 'str', $vars['alttitle'], '', XARVAR_NOT_REQUIRED);
+            xarVarFetch('altsummary', 'str', $vars['altsummary'], '', XARVAR_NOT_REQUIRED);
+            xarVarFetch('moreitems', 'list:id', $vars['moreitems'], NULL, XARVAR_NOT_REQUIRED);
+            xarVarFetch('showfeaturedbod', 'checkbox', $vars['showfeaturedbod'], false, XARVAR_NOT_REQUIRED);
+            xarVarFetch('showfeaturedsum', 'checkbox', $vars['showfeaturedsum'], false, XARVAR_NOT_REQUIRED);
+
+            return parent::update($data);
+        }
+    }
 
 ?>
