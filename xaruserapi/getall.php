@@ -360,7 +360,7 @@ function publications_userapi_getall($args)
     } else { // default is 'create_date'
         $query .= ' ORDER BY ' . $publicationsdef['create_date'] . ' DESC, ' . $publicationsdef['id'] . ' DESC';
     }
-
+//echo $query;
     // Run the query - finally :-)
     if (isset($numitems) && is_numeric($numitems)) {
         $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);

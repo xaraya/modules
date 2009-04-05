@@ -299,7 +299,7 @@
             if (!xarVarFetch('showdynamic',     'checkbox',  $data['showdynamic'], 0, XARVAR_NOT_REQUIRED)) {return;}
             if (!xarVarFetch('showvalue',       'checkbox',  $data['showvalue'], 0, XARVAR_NOT_REQUIRED)) {return;}
             if (!xarVarFetch('state',           'strlist:,:int:1:4', $data['state'], '3', XARVAR_NOT_REQUIRED)) {return;}
-            if (!xarVarFetch('toptype',         'enum:hits:rating:date', $data['toptype'], 'date', XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVarFetch('toptype',         'enum:author:date:hits:rating:title', $data['toptype'], 'date', XARVAR_NOT_REQUIRED)) {return;}
 
             if ($data['nopublimit'] == true) {
                 $data['pubtype_id'] = 0;

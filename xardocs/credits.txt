@@ -5,4 +5,4 @@ Various contributors to the code, especially blocks:
     Jim McDonald
     Marie Altobello (LadyOfDragons)
     Michael Cortez (mcortez)
-    Jonn Beame
+    Jonn Beams

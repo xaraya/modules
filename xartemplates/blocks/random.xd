@@ -1,41 +1,40 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:if condition="!empty($altsummary)">
-    <p>
-        #$altsummary#
-    </p>
-</xar:if>
+    <xar:if condition="!empty($altsummary)">
+        <p>
+            #$altsummary#
+        </p>
+    </xar:if>
 
-<xar:foreach in="$items" value="$item">
-    <xar:if condition="!empty($showtitle)">
-        <xar:if condition="isset($linkpubtype)">
-            <a href="#xarModURL('publications', 'user', 'display', array('id' => $item['id'], 'itemtype' => $item['pubtype_id']))#">#$item['title']#</a>
-        <xar:else />
-            <a href="#xarModURL('publications', 'user', 'display', array('id' => $item['id']))#">#$item['title']#</a>
+    <xar:foreach in="$items" value="$item">
+        <xar:if condition="!empty($showtitle)">
+            <xar:if condition="isset($linkpubtype)">
+                <a href="#xarModURL('publications', 'user', 'display', array('id' => $item['id'], 'itemtype' => $item['pubtype_id']))#">#$item['title']#</a>
+            <xar:else />
+                <a href="#xarModURL('publications', 'user', 'display', array('id' => $item['id']))#">#$item['title']#</a>
+            </xar:if>
         </xar:if>
-    </xar:if>
-    <xar:if condition="!empty($showsummary) and !empty($item['summary'])">
-        <p>
-            #$item['summary']#
-        </p>
-    </xar:if>
-    <xar:if condition="!empty($showauthor)">
-        <p>
-            #$item['authorname']#
-        </p>
-    </xar:if>
-    <xar:if condition="!empty($showpubdate)">
-        <p>
-            #xarLocaleGetFormattedDate('medium',$item['pubdate'])#
-        </p>
-    </xar:if>
-</xar:foreach>
+        <xar:if condition="!empty($showsummary) and !empty($item['summary'])">
+            <p>
+                #$item['summary']#
+            </p>
+        </xar:if>
+        <xar:if condition="!empty($showauthor)">
+            <p>
+                #$item['authorname']#
+            </p>
+        </xar:if>
+        <xar:if condition="!empty($showpubdate)">
+            <p>
+                #xarLocaleGetFormattedDate('medium',$item['pubdate'])#
+            </p>
+        </xar:if>
+    </xar:foreach>
 
-<xar:if condition="!empty($showsubmit)">
-    <div>
-        <a href="#xarModURL('publications', 'admin', 'new', array('ptid' => $pubtype_id))#"><xar:mlstring>Submit new</xar:mlstring></a>
-    </div>
-</xar:if>
+    <xar:if condition="!empty($showsubmit)">
+        <div>
+            <a href="#xarModURL('publications', 'admin', 'new', array('ptid' => $pubtype_id))#"><xar:mlstring>Submit new</xar:mlstring></a>
+        </div>
+    </xar:if>
 
-<xar:comment> DD are configurable in block configuration</xar:comment>
+    <xar:comment> DD are configurable in block configuration</xar:comment>
 </xar:template>
-
