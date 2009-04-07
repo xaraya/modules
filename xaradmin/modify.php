@@ -1,6 +1,6 @@
 <?php
 /**
- * Create a new item of the mailer object
+ * Modify an item of the mailer object
  *
  */
     sys::import('modules.dynamicdata.class.objects.master');
@@ -21,7 +21,7 @@
         
             // Check for a valid confirmation key
             if(!xarSecConfirmAuthKey()) return;
-            echo "X";
+
             // Get the data from the form
             $isvalid = $data['object']->checkInput();
             
