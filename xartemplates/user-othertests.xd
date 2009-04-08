@@ -1,0 +1,25 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            <xar:if condition="xarModVars::get('xarayatesting','useModuleAlias')">
+                <xar:var scope="module" module="xarayatesting" name="aliasname" />
+            <xar:else />
+                <xar:mlstring>Xarayatesting Module</xar:mlstring>
+            </xar:if>
+        </span>
+    </div>
+    <div class="xar-mod-body">
+        <xar:if condition="!empty($tests)">
+            <ul>
+                <xar:foreach in="$tests" value="$test" >
+                    <li>
+                        <a href="#xarModURL('xarayatesting','scans',$test['name'])#">#$test['name']#</a>
+                    </li>
+                </xar:foreach>
+            </ul>
+        <xar:else />
+            No tests found
+        </xar:if>
+    </div>
+</xar:template>
