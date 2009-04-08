@@ -1,6 +1,6 @@
 <?php
 
-class testxarUser extends xarTestCase {
+class testxarUser1 extends xarTestCase {
     var $myBLC;
     
     function testEmptyUserVar() {

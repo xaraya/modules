@@ -1,6 +1,6 @@
 <?php
 
-class testBLCompilerTextNodes extends xarTestCase {
+class testBLCompilerTextNodes1 extends xarTestCase {
     var $myBLC;
     
     function setup() {

@@ -1,6 +1,6 @@
 <?php
 
-class testXmlMisc extends xarTestCase {
+class testXmlMisc1 extends xarTestCase {
     var $xarXml;
     var $savedir;
 
@@ -23,7 +23,7 @@ class testXmlMisc extends xarTestCase {
     }
 }    
 
-class testW3TestSuite extends xarTestCase {
+class testW3TestSuite1 extends xarTestCase {
     var $xmlconf;
     var $xmltest;
     var $savedir;

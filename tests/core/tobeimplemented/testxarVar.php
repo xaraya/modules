@@ -1,6 +1,6 @@
 <?php
 
-class testxarVar extends xarTestCase {
+class testxarVar1 extends xarTestCase {
     
     function testCleanUntrusted() {
         // TODO: define more input and make them all pass

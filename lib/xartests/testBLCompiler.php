@@ -2,7 +2,7 @@
 
 sys::import('modules.xarayatesting.class.xarUnitTest');
 
-class testBLCompiler extends xarTestCase {
+class testBLCompiler1 extends xarTestCase {
     var $myBLC;
     
     function setup() {

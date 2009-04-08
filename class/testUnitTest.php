@@ -5,6 +5,7 @@
  *
  */
 
+sys::import('modules.xarayatesting.class.xarUnitTest');
 $tmp=new xarTestSuite('Unit testing framework');
 
 /**

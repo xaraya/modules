@@ -1,6 +1,6 @@
 <?php
 
-class testEvt extends xarTestCase {
+class testEvt1 extends xarTestCase {
     
     function setup() {
         $GLOBALS['xarDebug'] = false;
