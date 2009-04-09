@@ -181,7 +181,13 @@
                 <xar:mlstring>Do not use ambiguous characters</xar:mlstring>
             </label>
             <xar:data-input type="checkbox" name="removeambichars" id="removeambichars" checked="$settings['removeambichars']" />
-        </div>               
+        </div>
+        <div class="xar-form-input-wrapper">
+            <label for="caseinsensitive" class="xar-form-label" title="#xarML('Allow case insensitive user input rather than upper and lower case checking')#">
+                <xar:mlstring>Use case insensitive checking</xar:mlstring>
+            </label>
+            <xar:data-input type="checkbox" name="caseinsensitive" id="caseinsensitive" checked="$settings['caseinsensitive']" />
+        </div>                         
     </fieldset>
 
 

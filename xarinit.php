@@ -183,6 +183,7 @@ function formantibot_upgrade($oldversion)
             $settingstring = xarModGetVar('formantibot','settings');
             $settings = unserialize($settingstring);
             $settings['removeambichars']  = false;
+            $settings['caseinsensitive']  = false;            
             xarModSetVar('formantibot','settings',serialize($settings));
         case '0.6.2': //current version
             break;

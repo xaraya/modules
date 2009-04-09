@@ -43,6 +43,7 @@ function formantibot_admin_updateconfig()
     if (!xarVarFetch('textcolor',     'str',    $textcolor,'#8080FF', XARVAR_NOT_REQUIRED)) return; 
     if (!xarVarFetch('linecolor',     'str',    $linecolor, '#CCCCFF', XARVAR_NOT_REQUIRED)) return; 
     if (!xarVarFetch('removeambichars','checkbox',    $settings['removeambichars'], FALSE, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('caseinsensitive','checkbox',    $settings['caseinsensitive'], FALSE, XARVAR_NOT_REQUIRED)) return;    
     if (!xarVarFetch('captchatype',    'int', $captchatype, 1, XARVAR_NOT_REQUIRED)) return; 
                       
     if (!xarSecConfirmAuthKey()) return;
@@ -50,7 +51,7 @@ function formantibot_admin_updateconfig()
     xarModSetVar('formantibot', 'registered', $registered);
     xarModSetVar('formantibot', 'captchatype', $captchatype);    
     //handle booleans that are going to be serialized
-    $booleans = array('shadow_text','use_transparent_text','draw_lines_over_text','draw_lines','draw_angled_lines','removeambichars');
+    $booleans = array('shadow_text','use_transparent_text','draw_lines_over_text','draw_lines','draw_angled_lines','removeambichars','caseinsensitive');
     foreach ($booleans as $k) {
         $settings[$k] = isset($settings[$k])?$settings[$k] : 0;
     }

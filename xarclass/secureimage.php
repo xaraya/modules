@@ -298,12 +298,20 @@ class securimage
 
     function saveData()
     {
-
-        xarModSetVar('formantibot', $this->userCodeKey, md5($this->hash_salt . $this->code));
+        if ($this->caseinsensitive) {
+            $code = strtolower($this->code);
+        } else {
+            $code = $this->code;
+        }    
+        xarModSetVar('formantibot', $this->userCodeKey, md5($this->hash_salt . $code));
     }
 
     function validate($userCode)
     {
+        if ($this->caseinsensitive) {
+            $userCode  = strtolower($userCode);
+        } 
+        
         $userInput = md5($this->hash_salt . $userCode);
         $original  = xarModGetVar('formantibot', $this->userCodeKey);
 
