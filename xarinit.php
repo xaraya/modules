@@ -8,7 +8,7 @@
  * @link http://xaraya.com
  *
  * @subpackage Formantibot
- * @copyright (C) 2008 2skies.com
+ * @copyright (C) 2008,2009 2skies.com
  * @link http://xarigami.com/project/formantibot
  * @author Carl P. Corliss <carl.corliss@xaraya.com>
  * @author Jo Dalle Nogare <icedlava@2skies.com>
@@ -180,6 +180,11 @@ function formantibot_upgrade($oldversion)
             $settings['ttf_file']  = $settings['ttf_file_path'].'/'.$settings['ttf_file_name'];            
             xarModSetVar('formantibot','settings',serialize($settings));
         case '0.6.1': //current version
+            $settingstring = xarModGetVar('formantibot','settings');
+            $settings = unserialize($settingstring);
+            $settings['removeambichars']  = false;
+            xarModSetVar('formantibot','settings',serialize($settings));
+        case '0.6.2': //current version
             break;
     }
     return TRUE;

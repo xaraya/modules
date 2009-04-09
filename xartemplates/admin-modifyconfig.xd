@@ -175,26 +175,14 @@
                 <xar:mlstring>Line colour</xar:mlstring>
             </label>
             <xar:data-input type="tcolorpicker" name="linecolor" id="linecolor" value="$settings['linecolorhex']" /> 
-        </div>       
+        </div>  
+        <div class="xar-form-input-wrapper">
+            <label for="removeambichars" class="xar-form-label" title="#xarML('Do not use ambigous characters such as nought(0) and letter O, or one (1) and letter L (l)')#">
+                <xar:mlstring>Do not use ambiguous characters</xar:mlstring>
+            </label>
+            <xar:data-input type="checkbox" name="removeambichars" id="removeambichars" checked="$settings['removeambichars']" />
+        </div>               
     </fieldset>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
    <xar:if condition="!empty($hooks)">

@@ -8,7 +8,7 @@
  * @link http://xaraya.com
  *
  * @subpackage Formantibot
- * @copyright (C) 2008 2skies.com
+ * @copyright (C) 2008,2009 2skies.com
  * @link http://xarigami.com/project/formantibot
  * @author Carl P. Corliss <carl.corliss@xaraya.com>
  * @author Jo Dalle Nogare <icedlava@2skies.com>
@@ -17,7 +17,7 @@
 $modversion['name'] = 'formantibot';
 $modversion['directory'] = 'formantibot';
 $modversion['id'] = '761';
-$modversion['version'] = '0.6.1';
+$modversion['version'] = '0.6.2';
 $modversion['displayname']    = 'Formantibot';
 $modversion['description'] = 'Captcha image input for securing forms';
 $modversion['credits'] = 'xardocs/credits.txt';

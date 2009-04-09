@@ -12,13 +12,15 @@ Copyright 2005 Drew Phillips
 Modified Extensively By:
 ------------------------
 Carl P. Corliss
-the Digital Development Foundation
-www.ddfoundation.org
-www.xaraya.com
+ the Digital Development Foundation
+ www.ddfoundation.org
+ www.xaraya.com
 copyright 2006 the Digital Development Foundation
+ Jo Dalle Nogare
+ http://xarigami.com
+ http://2skies.com
+ Copyright 2008, 2009 2skies.com
 ------------------------
-
-TODO: CLEANUP all this crap.... <rabbitt>
 
 If you found this script useful, please take a quick moment to
 rate it.  http://www.hotscripts.com/rate/49400.html  Thanks.
@@ -113,6 +115,7 @@ class securimage
     var $hash_salt = "fg7hg3yg3fd90oi4i";
     //set this to a unique string, this prevents users guessing filenames and make data more secure
 
+    var $removeambichars = FALSE;
 
     //END USER CONFIGURATION
     //There should be no need to edit below unless you really know what you are doing
@@ -253,18 +256,31 @@ class securimage
 
     function generateCode($len = 6)
     {
-        $code = '';
-        $chars = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
-                       'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
-                       'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a',
-                       'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
-                       'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
-                       't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1',
-                       '2', '3', '4', '5', '6', '7', '8', '9');
 
+        $code = '';
+        $counter = 0;
+        if ($this->removeambichars == TRUE) { //remove letters O,o and l, and numbers 0 and 1
+            $chars = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
+                           'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R',
+                           'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a',
+                           'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+                           'k', 'm', 'n', 'p', 'q', 'r', 's',
+                           't', 'u', 'v', 'w', 'x', 'y', 'z',  
+                           '2', '3', '4', '5', '6', '7', '8', '9');   
+            $counter =  56;                   
+        } else {
+            $chars = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
+                           'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
+                           'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a',
+                           'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+                           'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
+                           't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1',
+                           '2', '3', '4', '5', '6', '7', '8', '9');
+            $counter = 61;
+        }
 
         for($i = 1; $i <= $len; ++$i) {
-          $code .= $chars[rand(0, 61)];
+          $code .= $chars[rand(0, $counter)];
         }
 
         return $code;

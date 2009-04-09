@@ -7,7 +7,7 @@
  * @link http://xaraya.com
  *
  * @subpackage Formantibot
- * @copyright (C) 2008 2skies.com
+ * @copyright (C) 2008,2009 2skies.com
  * @link http://xarigami.com/project/formantibot
  * @author Jo Dalle Nogare <icedlava@2skies.com>
  */
