@@ -4,9 +4,7 @@
     <div>
         <dl class="xar-tabs">
             <dt class="help">
-                <xar:mlstring>
-                    Core:
-                </xar:mlstring>
+                Core:
             </dt>
             <xar:set name="core">
                 array(
