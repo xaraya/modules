@@ -10,22 +10,35 @@
         </span>
     </div>
     <div class="xar-mod-body">
-        <fieldset>
-            <xar:if condition="!empty($items)">
-                Checked templates of the following themes:
-                <ul>
-                    <xar:foreach in="$items" value="$item" >
-                        <li>
-                            #$item['name']#
-                        </li>
-                    </xar:foreach>
-                </ul>
-            <xar:else />
-                No theme templates were checked
-            </xar:if>
-        </fieldset>
-        <fieldset>
-            <xar:button type="cancel" label="Back"/>
-        </fieldset>
+        <xar:if condition="empty($confirm)">
+            <form action="#xarServerGetCurrentURL()#" method="post">
+                <fieldset>
+                    Choose a theme to check:&#160;
+                    <xar:data-input type="dropdown" name="item" options="$items" firstline="0,All" />
+                </fieldset>
+                <fieldset>
+                    <input type="hidden" name="confirm" value="1" />
+                    <xar:button type="submit" label="Go"/>
+                </fieldset>
+            </form>
+        <xar:else />
+            <fieldset>
+                <xar:if condition="!empty($items)">
+                    Checked templates of the following themes:
+                    <ul>
+                        <xar:foreach in="$items" value="$item" >
+                            <li>
+                                #$item['name']#
+                            </li>
+                        </xar:foreach>
+                    </ul>
+                <xar:else />
+                    No theme templates were checked
+                </xar:if>
+            </fieldset>
+            <fieldset>
+                <a href="#xarModURL('xarayatesting','admin','othertests')#" >Back to Scans</a>
+            </fieldset>
+        </xar:if>
     </div>
 </xar:template>

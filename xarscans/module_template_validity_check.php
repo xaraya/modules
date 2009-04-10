@@ -2,19 +2,29 @@
 
     function xarayatesting_scans_module_template_validity_check()
     {
+        if (!xarVarFetch('item','str',$item,0,XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('confirm','int',$data['confirm'],0,XARVAR_NOT_REQUIRED)) return;
+        
         $items = xarModAPIFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_ACTIVE)));
-        $reader = new XMLReader();
-        $checked_modules = array();
-        foreach ($items as $item) {
-            $basedir = 'modules/' . $item['name'] . '/xartemplates';
-            $files = get_module_files($basedir,'xd');
-            foreach ($files as $file) {
-                parse_module_template($file,$reader);
+        if (!$data['confirm']) {
+            $data['items'] = $items;
+        } else {
+            if ($item != 0) {
+                $items = array(xarMod::getInfo($item, $type = 'module'));
             }
-            $checked_modules[] = $item;
+            $reader = new XMLReader();
+            $checked_modules = array();
+            foreach ($items as $item) {
+                $basedir = 'modules/' . $item['name'] . '/xartemplates';
+                $files = get_module_files($basedir,'xd');
+                foreach ($files as $file) {
+                    parse_module_template($file,$reader);
+                }
+                $checked_modules[] = $item;
+            }
+            $reader->close();
+            $data['items'] = $checked_modules;
         }
-        $reader->close();
-        $data['items'] = $checked_modules;
         return $data; 
     }
 

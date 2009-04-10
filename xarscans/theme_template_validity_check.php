@@ -2,19 +2,29 @@
 
     function xarayatesting_scans_theme_template_validity_check()
     {
+        if (!xarVarFetch('item','str',$item,0,XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('confirm','int',$data['confirm'],0,XARVAR_NOT_REQUIRED)) return;
+
         $items = xarModAPIFunc('themes', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_ACTIVE)));
-        $reader = new XMLReader();
-        $checked_themes = array();
-        foreach ($items as $item) {
-            $basedir = 'themes/' . $item['name'];
-            $files = get_theme_files($basedir,'xd');
-            foreach ($files as $file) {
-                parse_theme_template($file,$reader);
+        if (!$data['confirm']) {
+            $data['items'] = $items;
+        } else {
+            if ($item != 0) {
+                $items = array(xarThemeGetInfo($item));
             }
-            $checked_themes[] = $item;
+            $reader = new XMLReader();
+            $checked_themes = array();
+            foreach ($items as $item) {
+                $basedir = 'themes/' . $item['name'];
+                $files = get_theme_files($basedir,'xd');
+                foreach ($files as $file) {
+                    parse_theme_template($file,$reader);
+                }
+                $checked_themes[] = $item;
+            }
+            $reader->close();
+            $data['items'] = $checked_themes;
         }
-        $reader->close();
-        $data['items'] = $checked_themes;
         return $data; 
     }
 
