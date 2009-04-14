@@ -16,7 +16,7 @@
             $checked_modules = array();
             foreach ($items as $item) {
                 $basedir = 'modules/' . $item['name'] . '/xartemplates';
-                $files = get_module_files($basedir,'xd');
+                $files = get_module_files($basedir,'xt');
                 foreach ($files as $file) {
                     parse_module_template($file,$reader);
                 }
