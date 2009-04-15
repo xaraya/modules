@@ -91,60 +91,60 @@ class securlogic
     
     function getcurrentip()
     {      
-        $proxyip=''; //proxy ip if it exists
-        $trueip=''; //true ip if it exists
-        $isanip=0; //is this an ip
+    $proxyip=''; //proxy ip if it exists
+    $trueip=''; //true ip if it exists
+    $isanip=0; //is this an ip
+
+    $remote_addr = xarServerGetVar('REMOTE_ADDR');
+    $x_forwarded_for= xarServerGetVar('HTTP_X_FORWARDED_FOR');
+    $x_forwarded= xarServerGetVar('HTTP_X_FORWARDED');
+    $forwarded_for= xarServerGetVar('HTTP_FORWARDED_FOR');
+    $forwarded= xarServerGetVar('HTTP_FORWARDED');
+    $x_comingfrom=xarServerGetVar('HTTP_X_COMING_FROM');
+    $comingfrom=xarServerGetVar('HTTP_COMING_FROM');
+    $httpvia=xarServerGetVar('HTTP_VIA');
+    /* Gets the ip sent by the user */
+    if (!empty($remote_addr )) {
+        $trueip = $remote_addr;
+    }
     
-        $remote_addr = xarServerGetVar('REMOTE_ADDR');
-        $x_forwarded_for= xarServerGetVar('HTTP_X_FORWARDED_FOR');
-        $x_forwarded= xarServerGetVar('HTTP_X_FORWARDED');
-        $forwarded_for= xarServerGetVar('HTTP_FORWARDED_FOR');
-        $forwarded= xarServerGetVar('HTTP_FORWARDED');
-        $x_comingfrom=xarServerGetVar('HTTP_X_COMING_FROM');
-        $comingfrom=xarServerGetVar('HTTP_COMING_FROM');
-        $httpvia=xarServerGetVar('HTTP_VIA');
-        /* Gets the ip sent by the user */
-        if (!empty($remote_addr )) {
-            $trueip = $remote_addr;
-        }
-        
-        /* Gets the proxy ip if it exists and  sent */
-    
-        if (!empty($x_forwarded_for)){
-            $proxyip = $x_forwarded_for;
-        } elseif (!empty($x_forwarded)) {
-            $proxyip = $x_forwarded;
-        } elseif (!empty($forwarded_for)) {
-            $proxyip = $forwarded_for;
-        } elseif (!empty($forwarded)) {
-            $proxyip = $forwarded;
-        }elseif (!empty($httpvia)) {
-            $proxyip = $httpvia;
-        } elseif (!empty($x_comingfrom)) {
-            $proxyip = $x_comingfrom;
-        } elseif (!empty($comingfrom)) {
-            $proxyip = $comingfrom;
-        }
-        /* watch out for  more than one ... */
-        $multi_proxyip = explode(";", $proxyip);
-        $proxyip = $multi_proxyip[0]; //take the first
-    
-        if (empty($proxyip)) {
-           $ipAddress= $trueip;
-        } else {
-            /* check the ip */
-            $results=0;
-            $isanip = ereg('^([0-9]{1,3}.){3,3}[0-9]{1,3}', $proxyip, $results);
-    
-                 if ($isanip && (count($results) > 0)) {
-                     $ipAddress=$results[0];
-                 } else {
-                     // hmm not much we can do?
-                     $ipAddress='';
-                 }
-        }
-        return $ipAddress;
-        }
+    /* Gets the proxy ip if it exists and  sent */
+
+    if (!empty($x_forwarded_for)){
+        $proxyip = $x_forwarded_for;
+    } elseif (!empty($x_forwarded)) {
+        $proxyip = $x_forwarded;
+    } elseif (!empty($forwarded_for)) {
+        $proxyip = $forwarded_for;
+    } elseif (!empty($forwarded)) {
+        $proxyip = $forwarded;
+    }elseif (!empty($httpvia)) {
+        $proxyip = $httpvia;
+    } elseif (!empty($x_comingfrom)) {
+        $proxyip = $x_comingfrom;
+    } elseif (!empty($comingfrom)) {
+        $proxyip = $comingfrom;
+    }
+    /* watch out for  more than one ... */
+    $multi_proxyip = explode(";", $proxyip);
+    $proxyip = $multi_proxyip[0]; //take the first
+
+    if (empty($proxyip)) {
+       $ipAddress= $trueip;
+    } else {
+        /* check the ip */
+        $results=0;
+        $isanip = ereg('^([0-9]{1,3}.){3,3}[0-9]{1,3}', $proxyip, $results);
+
+             if ($isanip && (count($results) > 0)) {
+                 $ipAddress=$results[0];
+             } else {
+                 // hmm not much we can do?
+                 $ipAddress='';
+             }
+    }
+    return $ipAddress;
+    }
 
 } //end class
 
