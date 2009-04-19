@@ -30,7 +30,7 @@
                     Please note, if you do not want linebreaks, do not hook this module to another.  The transform hook only affects linebreaks and not the allowed HTML of the module.
                 </strong>
             </xar:mlstring>
-            <p />
+            </p>
         <h3><xar:mlstring>TODO:</xar:mlstring></h3>
         <p>
             <xar:mlstring>The core tag registration needs to be completely re-thought to allow this module to act as a transform rather than just a matter of setting a configuration variable.</xar:mlstring>

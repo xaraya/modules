@@ -19,7 +19,7 @@
                 <label for="tagdelete" class="xar-form-label" title="#xarML('Delete this tag?')#">
                     <xar:mlstring>Confirm deletion of the tag</xar:mlstring>
                 </label>
-            &#160;<strong>#$tag#</strong></p>
+            &#160;<strong>#$tag#</strong>
             </div>
         </fieldset>
         <div class="xar-form-input-wrapper">
