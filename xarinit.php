@@ -75,6 +75,9 @@ function registration_init()
     xarModVars::set('registration', 'explicitapproval', true);
     xarModVars::set('registration', 'showdynamic', false);
     xarModVars::set('registration', 'sendwelcomeemail', false);
+    xarModVars::set('registration', 'usermessage', 'RegistrationUserMessage');
+    xarModVars::set('registration', 'adminmessage', 'RegistrationAdminMessage');
+    xarModVars::set('registration', 'notificationmodule', 'mailer');
 
     // Make the default group of this module that of Roles for starters
     $defaultgroup = xarModVars::get('roles','defaultgroup');

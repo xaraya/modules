@@ -6,13 +6,13 @@
         <p>
             <input type="hidden" name="redirecturl" id="returnurl#$blockid#" value="#$return_url#" />
             <label for="uname#$blockid#" title="#xarML('Enter your user name')#">
-                <xar:mlstring>Username:</xar:mlstring>
+                Username:
             </label>
             <input class="xar-fullwidth" type="text" name="uname" id="uname#$blockid#" maxlength="64" />
         </p>
         <p>
             <label for="pass#$blockid#" title="#xarML('Enter your password')#">
-                <xar:mlstring>Password:</xar:mlstring>
+                Password:
             </label>
             <input class="xar-fullwidth" type="password" name="pass" id="pass#$blockid#" maxlength="64" />
         </p>
@@ -20,7 +20,7 @@
             <xar:if condition="xarConfigVars::get(null,'Site.Session.SecurityLevel') ne 'High'">
                 <label class="xar-displayblock" for="rememberme#$blockid#">
                     <input type="checkbox" name="rememberme" id="rememberme#$blockid#" value="1" />
-                    <xar:mlstring>Don't ask for password</xar:mlstring>
+                    Don't ask for password
                 </label>
             </xar:if>
         </p>
@@ -31,14 +31,14 @@
         <xar:if condition="xarModVars::get('registration', 'allowregistration')">
             <p>
                 <a href="&xar-modurl-registration-user-main;">
-                        <xar:mlstring>Register new account</xar:mlstring>
+                        Register new account
                 </a>
             </p>
         </xar:if>
 
         <p>
             <a href="&xar-modurl-roles-user-lostpassword;">
-                <xar:mlstring>Request new password</xar:mlstring>
+                Request new password
             </a>
         </p>
     </form>

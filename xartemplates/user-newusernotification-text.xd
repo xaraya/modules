@@ -1,24 +1,24 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:mlstring>Dear</xar:mlstring> #$adminname#,
+Dear #$adminname#,
 
 
-<xar:mlstring>A user registered with the following details at: </xar:mlstring> #$sitename#
+A user registered with the following details at:  #$sitename#
 
 
-<xar:mlstring>Status: </xar:mlstring>#$values['state']#
+Status: #$values['state']#
 
-<xar:mlstring>User ID: </xar:mlstring>#$values['id']#
+User ID: #$values['id']#
 
-<xar:mlstring>User Display Name: </xar:mlstring>#$values['name']#
+User Display Name: #$values['name']#
 
-<xar:mlstring>Username: </xar:mlstring>#$values['user_name']#
+Username: #$values['user_name']#
 
-<xar:mlstring>User email: </xar:mlstring>#$values['email']#
+User email: #$values['email']#
 
 #$terms#
 
 
-<xar:mlstring>When logged in, you can access this user account at </xar:mlstring>#$rolelink#
+When logged in, you can access this user account at #$rolelink#
 
 -------------------------------------------------------------
 </xar:template>

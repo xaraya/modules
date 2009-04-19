@@ -1,11 +1,11 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Review User Account</xar:mlstring></span>
+    <span class="xar-mod-title">Review User Account</span>
 </div>
 
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Registration</xar:mlstring></h2>
+    <h2>Registration</h2>
 
     <xar:set name="isupload">#$object:upload#</xar:set>
     <xar:if condition="!empty($isupload)">
@@ -16,12 +16,12 @@
 
     <form method="post" action="&xar-modurl-dynamicdata-admin-update;" enctype="#$enc_type#">
         <fieldset>
-        <legend><xar:mlstring>Review Registration Profile</xar:mlstring></legend>
+        <legend>Review Registration Profile</legend>
             <xar:data-form object="$object" tplmodule="registration" />
         </fieldset>
         <xar:if condition="!empty($hookoutput)">
             <fieldset>
-                <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                <legend>Hooked content</legend>
                 <xar:foreach in="$hookoutput" key="$hookmodule">
                     <!--
                     You can display individual hooks if you want using xar:if statements

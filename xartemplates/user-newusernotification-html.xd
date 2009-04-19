@@ -6,14 +6,14 @@
 </xar:ml>
 </p>
 <p>
-    <xar:mlstring>A user with the following details has registered at: </xar:mlstring> #$sitename#
+    A user with the following details has registered at:  #$sitename#
 </p>
 <p>
-    <xar:mlstring>Status: </xar:mlstring>#$values['state']#<br />
-    <xar:mlstring>User ID: </xar:mlstring>#$values['id']#<br />
-    <xar:mlstring>Display Name: </xar:mlstring>#$values['name']#<br />
-    <xar:mlstring>User Name: </xar:mlstring>#$values['user_name']#<br />
-    <xar:mlstring>User Email: </xar:mlstring>#$values['email']#<br />
+    Status: #$values['state']#<br />
+    User ID: #$values['id']#<br />
+    Display Name: #$values['name']#<br />
+    User Name: #$values['user_name']#<br />
+    User Email: #$values['email']#<br />
 </p>
 
 <xar:if condition="!empty($terms)">
@@ -21,6 +21,6 @@
 </xar:if>
 
 <p>
-    <xar:mlstring>When logged in, you can access this user account at </xar:mlstring> <a href="#$rolelink#">#$rolelink#</a>
+    When logged in, you can access this user account at  <a href="#$rolelink#">#$rolelink#</a>
 </p>
 </xar:template>

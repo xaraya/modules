@@ -2,24 +2,24 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:set name="adminemail">xarModVars::get('mail','adminmail')</xar:set>
     <div class="xar-mod-head">
-        <span class="xar-mod-title"><xar:mlstring>Account Activated</xar:mlstring></span>
+        <span class="xar-mod-title">Account Activated</span>
     </div>
 
     <div class="xar-mod-body">
         <xar:if condition="$state eq xarRoles::ROLES_STATE_ACTIVE">
-            <h2><xar:mlstring>Your account is active</xar:mlstring></h2>
+            <h2>Your account is active</h2>
             <p>
-                <xar:mlstring>Use the login block to log in</xar:mlstring>
+                Use the login block to log in
             </p>
         <xar:elseif condition="$state eq xarRoles::ROLES_STATE_PENDING" />
-            <h2><xar:mlstring>Your account is pending activation</xar:mlstring></h2>
+            <h2>Your account is pending activation</h2>
             <p>
-                <xar:mlstring>The site administrator needs to activate your account.</xar:mlstring>
+                The site administrator needs to activate your account.
             </p>
         <xar:elseif condition="$state eq xarRoles::ROLES_STATE_NOTVALIDATED" />
-            <h2><xar:mlstring>Your account needs to be validated</xar:mlstring></h2>
+            <h2>Your account needs to be validated</h2>
             <p>
-                <xar:mlstring>You need to follow the validation instructions you should have received when you registered.</xar:mlstring>
+                You need to follow the validation instructions you should have received when you registered.
             </p>
         </xar:if>
     </div>

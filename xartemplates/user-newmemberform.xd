@@ -1,11 +1,11 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Create User Account</xar:mlstring></span>
+    <span class="xar-mod-title">Create User Account</span>
 </div>
 
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Registration</xar:mlstring></h2>
+    <h2>Registration</h2>
     <xar:if condition="$object:upload">
         <xar:set name="enc_type">'multipart/form-data'</xar:set>
     <xar:else/>
@@ -14,13 +14,13 @@
 
     <form method="post" id="post" action="&xar-modurl-registration-user-newmember;" enctype="#$enc_type#">
         <fieldset>
-        <legend><xar:mlstring>Registration Requirements</xar:mlstring></legend>
+        <legend>Registration Requirements</legend>
 
             <xar:data-form object="$object" />
         </fieldset>
         <xar:if condition="!empty($hookoutput)">
             <fieldset>
-                <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                <legend>Hooked content</legend>
                 <xar:foreach in="$hookoutput" key="$hookmodule">
                     <!--
                     You can display individual hooks if you want using xar:if statements

@@ -8,20 +8,20 @@
     <div>
       <dl class="xar-tabs">
         <dt class="help" title="#xarML('Choose an action to perform')#">
-          <xar:mlstring>Actions:</xar:mlstring>
+          Actions:
         </dt>
         <xar:sec mask="AdminRegistration" catch="false">
             <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
             <dd class="#$tabclass#">
               <a href="&xar-modurl-registration-admin-modifyconfig;">
-                <xar:mlstring>Modify Configuration</xar:mlstring>
+                Modify Configuration
               </a>
             </dd>
 
             <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
             <dd class="#$tabclass#">
                 <a href="&xar-modurl-registration-admin-overview;" >
-                    <xar:mlstring>Overview</xar:mlstring>
+                    Overview
                 </a>
             </dd>
         </xar:sec>

@@ -1,0 +1,38 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">
+            Registration Administration
+        </span>
+    </div>
+    <div class="xar-mod-body">
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <xar:if condition="!$result">
+                    <xar:if condition="$for eq 'admin'">
+                        A message was successfully sent to the administrator
+                    <xar:elseif condition="$for eq 'user'" />
+                        A message was successfully sent your email address
+                    </xar:if>
+                <xar:else />
+                    No message was sent. An error code #$result#&#160;;was registered.
+                    Error codes are:
+                    <ul>
+                         <li>1 no recipient address available</li>
+                         <li>2 no message available</li>
+                         <li>3 default redirect checked, but no redirect address available</li>
+                         <li>4 message redirect checked, but no redirect address available</li>
+                         <li>5 sending message failed</li>
+                         <li>6 BL compilation failed</li>
+                         <li>7 no correct user object available</li>
+                     </ul>
+                </xar:if>
+            </div>
+        </fieldset>
+        <fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <xar:button type="cancel" value="Return" />
+            </div>
+        </fieldset>
+    </div>
+</xar:template>

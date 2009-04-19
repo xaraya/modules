@@ -1,11 +1,11 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-head">
-    <span class="xar-mod-title"><xar:mlstring>Create User Account</xar:mlstring></span>
+    <span class="xar-mod-title">Create User Account</span>
 </div>
 
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Registration</xar:mlstring></h2>
+    <h2>Registration</h2>
     <xar:if condition="$object:upload">
         <xar:set name="enc_type">'multipart/form-data'</xar:set>
     <xar:else/>
@@ -14,7 +14,7 @@
 
     <form method="post" id="post" action="&xar-modurl-registration-user-register;" enctype="#$enc_type#">
         <fieldset>
-        <legend><xar:mlstring>Registration Requirements</xar:mlstring></legend>
+        <legend>Registration Requirements</legend>
 
             <xar:data-form object="$object" />
             <xar:if condition="xarModVars::get('registration','showterms') eq 0 and xarModVars::get('registration','showprivacy') eq 1">
@@ -23,8 +23,8 @@
                     <input type="checkbox" name="agreetoterms" id="agreetoterms" value="1" />
                 </span>
                 <label for="agreetoterms"  title="#xarML('Please check to agree to the website requirements')#">
-                    <xar:mlstring>I agree to be bound by this website's </xar:mlstring>
-                    <a href="&xar-modurl-registration-user-privacy;"><xar:mlstring>Privacy Policy</xar:mlstring></a>.
+                    I agree to be bound by this website's 
+                    <a href="&xar-modurl-registration-user-privacy;">Privacy Policy</a>.
                 </label>
                     <xar:if condition="!empty($invalid['agreetoterms'])">
                         <span class="xar-error">#$invalid['agreetoterms']#</span>
@@ -36,8 +36,8 @@
                     <input type="checkbox" name="agreetoterms" id="agreetoterms" value="1" />
                 </span>
                 <label for="agreetoterms" title="#xarML('Please check to agree to the website requirements')#">
-                    <xar:mlstring>I agree to be bound by this website's </xar:mlstring>
-                    <a href="&xar-modurl-registration-user-terms;" target="_blank"><xar:mlstring>Terms of Use</xar:mlstring></a>.
+                    I agree to be bound by this website's 
+                    <a href="&xar-modurl-registration-user-terms;" target="_blank">Terms of Use</a>.
                 </label>
                 <xar:if condition="isset($termsmsg)">
                     <span class="xar-error">Please agree to the terms</span>
@@ -49,8 +49,8 @@
                     <input type="checkbox" name="agreetoterms" id="agreetoterms" value="1" />
                 </span>
                 <label for="agreetoterms"  title="#xarML('Please check to agree to the website requirements')#">
-                    <xar:mlstring>I agree to be bound by this website's&#160;</xar:mlstring>
-                    <a href="&xar-modurl-registration-user-terms;" target="_blank"><xar:mlstring>Terms of Use</xar:mlstring></a>&#160;<xar:mlstring>and</xar:mlstring>&#160;<a href="&xar-modurl-registration-user-privacy;"><xar:mlstring>Privacy Policy</xar:mlstring></a>.
+                    I agree to be bound by this website's&#160;
+                    <a href="&xar-modurl-registration-user-terms;" target="_blank">Terms of Use</a>&#160;and&#160;<a href="&xar-modurl-registration-user-privacy;">Privacy Policy</a>.
                  </label>
             </div>
                 <xar:if condition="isset($termsmsg)">
@@ -63,7 +63,7 @@
         </fieldset>
         <xar:if condition="!empty($hookoutput)">
             <fieldset>
-                <legend><xar:mlstring>Hooked content</xar:mlstring></legend>
+                <legend>Hooked content</legend>
                 <xar:foreach in="$hookoutput" key="$hookmodule">
                     <!--
                     You can display individual hooks if you want using xar:if statements

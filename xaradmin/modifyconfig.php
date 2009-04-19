@@ -94,6 +94,9 @@ function registration_admin_modifyconfig()
                     if (!xarVarFetch('regobjectname',     'str',      $regobjectname,     xarModVars::get('registration', 'registrationobject'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
                     if (!xarVarFetch('allowreview',       'checkbox', $allowreview,       false, XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('reviewobjectname',  'str',      $reviewobjectname,  xarModVars::get('registration', 'registrationobject'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+                    if (!xarVarFetch('usermessage',       'str',      $usermessage,  xarModVars::get('registration', 'usermessage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+                    if (!xarVarFetch('adminmessage',      'str',      $adminmessage,  xarModVars::get('registration', 'adminmessage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+                    if (!xarVarFetch('notificationmodule','str',      $notificationmodule,  xarModVars::get('registration', 'notificationmodule'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
 
                     xarModVars::set('registration', 'chooseownpassword', $chooseownpassword);
                     xarModVars::set('registration', 'defaultgroup', $defaultgroup);
@@ -108,6 +111,9 @@ function registration_admin_modifyconfig()
                     xarModVars::set('registration', 'registrationobject', $regobjectname);
                     xarModVars::set('registration', 'allowreview', $allowreview);
                     xarModVars::set('registration', 'reviewobject', $reviewobjectname);
+                    xarModVars::set('registration', 'usermessage', $usermessage);
+                    xarModVars::set('registration', 'adminmessage', $adminmessage);
+                    xarModVars::set('registration', 'notificationmodule', $notificationmodule);
                     break;
                 case 'filtering':
                     if (!xarVarFetch('disallowednames',  'str:1', $disallowednames,  '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;

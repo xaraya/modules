@@ -2,74 +2,56 @@
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:style scope="module" module="base" file="navtabs" />
 <div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>
-            User Registration Administration
-        </xar:mlstring>
+    <span class="xar-mod-title">        
+        User Registration Administration        
     </span>
 </div>
 <div class="xar-mod-body">
      <xar:template type="module" file="admin-menu" />
-    <h2>
-        <xar:mlstring>
-            Modify Configuration
-        </xar:mlstring>
+    <h2>        
+        Modify Configuration        
     </h2>
     <div>
         <dl class="xar-tabs">
-            <dt class="help">
-                <xar:mlstring>
-                    Configure:
-                </xar:mlstring>
+            <dt class="help">                
+                Configure:                
             </dt>
             <xar:if condition="$tab eq 'general'">
                 <dd class="active">
-                    <a href="&xar-modurl-registration-admin-modifyconfig;&amp;tab=general">
-                        <xar:mlstring>
-                            General
-                        </xar:mlstring>
+                    <a href="&xar-modurl-registration-admin-modifyconfig;&amp;tab=general">                        
+                        General                        
                     </a>
                 </dd>
                 <xar:else />
                 <dd>
-                    <a href="&xar-modurl-registration-admin-modifyconfig;&amp;tab=general">
-                        <xar:mlstring>
-                            General
-                        </xar:mlstring>
+                    <a href="&xar-modurl-registration-admin-modifyconfig;&amp;tab=general">                        
+                        General                        
                     </a>
                 </dd>
             </xar:if>
             <xar:if condition="$tab eq 'registration'">
                 <dd class="active">
-                    <a href="&xar-modurl-registration-admin-modifyconfig;&amp;tab=registration">
-                        <xar:mlstring>
-                            Registration
-                        </xar:mlstring>
+                    <a href="&xar-modurl-registration-admin-modifyconfig;&amp;tab=registration">                        
+                        Registration                        
                     </a>
                 </dd>
                 <xar:else />
                 <dd>
-                    <a href="&xar-modurl-registration-admin-modifyconfig;&amp;tab=registration">
-                        <xar:mlstring>
-                            Registration
-                        </xar:mlstring>
+                    <a href="&xar-modurl-registration-admin-modifyconfig;&amp;tab=registration">                        
+                        Registration                        
                     </a>
                 </dd>
             </xar:if>
             <xar:if condition="$tab eq 'filtering'">
                 <dd class="active">
-                    <a href="&xar-modurl-registration-admin-modifyconfig;&amp;tab=filtering">
-                        <xar:mlstring>
-                            Filtering
-                        </xar:mlstring>
+                    <a href="&xar-modurl-registration-admin-modifyconfig;&amp;tab=filtering">                        
+                        Filtering                        
                     </a>
                 </dd>
                 <xar:else />
                 <dd>
-                    <a href="&xar-modurl-registration-admin-modifyconfig;&amp;tab=filtering">
-                        <xar:mlstring>
-                            Filtering
-                        </xar:mlstring>
+                    <a href="&xar-modurl-registration-admin-modifyconfig;&amp;tab=filtering">                        
+                        Filtering                        
                     </a>
                 </dd>
             </xar:if>
@@ -80,59 +62,47 @@
     <xar:if condition="$tab eq 'general'">
         <form method="post" action="&xar-modurl-registration-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
         <fieldset>
-            <legend>
-                <xar:mlstring>
-                    General Options
-                </xar:mlstring>
+            <legend>                
+                General Options                
             </legend>
             <div class="xar-form-input-wrapper-after">
                 <xar:data-input type="checkbox" name="shorturls" checked="$shorturlschecked" />
                 <label for="shorturls" title="#xarML('Enable short URLS?')#">
-                    <xar:mlstring>Enable short URLs?</xar:mlstring>
+                    Enable short URLs?
                 </label>
 
              </div>
         </fieldset>
         <fieldset>
-                <legend>
-                    <xar:mlstring>
-                        Service/Privacy
-                    </xar:mlstring>
+                <legend>                    
+                    Service/Privacy                    
                 </legend>
                 <div class="xar-form-input-wrapper-after">
                     <xar:set name="checked">xarModVars::get('registration', 'showterms')</xar:set>
                     <xar:data-input type="checkbox" name="showterms" checked="$checked" />
-                    <label for="showterms" title="#xarML('Show terms of service in Registration user menu')#">
-                        <xar:mlstring>
-                            Show Terms of Service link in the menu?
-                        </xar:mlstring>
+                    <label for="showterms" title="#xarML('Show terms of service in Registration user menu')#">                        
+                        Show Terms of Service link in the menu?                        
                     </label>
                 </div>
 
                 <div class="xar-form-input-wrapper-after">
                     <xar:set name="checked">xarModVars::get('registration', 'showprivacy')</xar:set>
                     <xar:data-input type="checkbox" name="showprivacy" checked="$checked" />
-                    <label for="showprivacy" title="#xarML('Show privacy policy in Registration user menu')#">
-                        <xar:mlstring>
-                            Show Privacy Policy link in the menu?
-                        </xar:mlstring>
+                    <label for="showprivacy" title="#xarML('Show privacy policy in Registration user menu')#">                        
+                        Show Privacy Policy link in the menu?                        
                     </label>
                 </div>
                 <div class="xar-form-input-wrapper">
                     <xar:set name="value">xarModVars::get('registration', 'termslink')</xar:set>
-                    <label for="showprivacy" title="#xarML('Where to display a custom terms of use statement from')#">
-                        <xar:mlstring>
-                            Terms Link
-                        </xar:mlstring>
+                    <label for="showprivacy" title="#xarML('Where to display a custom terms of use statement from')#">                        
+                        Terms Link                        
                     </label>
                     <xar:data-input type="textbox" name="termslink" value="$value" />
                 </div>
                 <div class="xar-form-input-wrapper">
                     <xar:set name="value">xarModVars::get('registration', 'privacylink')</xar:set>
-                    <label for="showprivacy" title="#xarML('Where to display a custom privacy statement from')#">
-                        <xar:mlstring>
-                            Privacy Link
-                        </xar:mlstring>
+                    <label for="showprivacy" title="#xarML('Where to display a custom privacy statement from')#">                        
+                        Privacy Link                        
                     </label>
                     <xar:data-input type="textbox" name="privacylink" value="$value" />
                 </div>
@@ -152,16 +122,12 @@
         <xar:elseif condition="$tab eq 'registration'" />
         <form method="post" action="&xar-modurl-registration-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
             <fieldset>
-                <legend>
-                    <xar:mlstring>
-                        Basic Configuration
-                    </xar:mlstring>
+                <legend>                    
+                    Basic Configuration                    
                 </legend>
                 <div class="xar-form-input-wrapper">
-                    <label for="allowregistration" title="#xarML('Allow anonymous users to create accounts')#" class="xar-form-label">
-                        <xar:mlstring>
-                            Allow Registration
-                        </xar:mlstring>
+                    <label for="allowregistration" title="#xarML('Allow anonymous users to create accounts')#" class="xar-form-label">                        
+                        Allow Registration                        
                     </label>
                     <xar:set name="options">
                         array(
@@ -174,28 +140,22 @@
                     This setting controls all the others
                 </div>
                 <div class="xar-form-input-wrapper">
-                    <label for="defaultregmodule" title="#xarML('Select the DD object used for registration')#" class="xar-form-label">
-                        <xar:mlstring>
-                            Registration Object:
-                        </xar:mlstring>
+                    <label for="defaultregmodule" title="#xarML('Select the DD object used for registration')#" class="xar-form-label">                        
+                        Registration Object:                        
                     </label>
                     <xar:set name="value">xarModVars::get('registration', 'registrationobject')</xar:set>
                     <xar:data-input type="object" name="regobjectname" store_prop="name" value="$value" />
                 </div>
                 <div class="xar-form-input-wrapper">
-                    <label for="defaultgroup" title="#xarML('New Users automatically get assigned to this Group')#" class="xar-form-label">
-                        <xar:mlstring>
-                            Default Group For New Users:
-                        </xar:mlstring>
+                    <label for="defaultgroup" title="#xarML('New Users automatically get assigned to this Group')#" class="xar-form-label">                        
+                        Default Group For New Users:                        
                     </label>
                     <xar:set name="checked">xarModVars::get('registration', 'defaultgroup')</xar:set>
                     <xar:data-input type="grouplist" name="defaultgroup" id="defaultgroup" value="$checked" />
                 </div>
                 <div class="xar-form-input-wrapper">
-                    <label for="defaultgroup" title="#xarML('New Users automatically get assigned this state')#" class="xar-form-label">
-                        <xar:mlstring>
-                            Default State For New Users:
-                        </xar:mlstring>
+                    <label for="defaultgroup" title="#xarML('New Users automatically get assigned this state')#" class="xar-form-label">                        
+                        Default State For New Users:                        
                     </label>
                     <xar:set name="value">xarModVars::get('registration', 'defaultuserstate')</xar:set>
                     <xar:set name="options">
@@ -210,16 +170,12 @@
                 </div>
             </fieldset>
             <fieldset>
-                <legend>
-                    <xar:mlstring>
-                        User Settings
-                    </xar:mlstring>
+                <legend>                    
+                    User Settings                    
                 </legend>
                 <div class="xar-form-input-wrapper">
-                    <label for="minage" title="#xarML('Users need to be this age or older to register')#" class="xar-form-label">
-                        <xar:mlstring>
-                            Minimum Age To Be A User:
-                        </xar:mlstring>
+                    <label for="minage" title="#xarML('Users need to be this age or older to register')#" class="xar-form-label">                        
+                        Minimum Age To Be A User:                        
                     </label>
                     <xar:set name="value"><xar:var scope="module" module="registration" name="minage" /></xar:set>
                     <input type="text" name="minage" id="minage" value="#$value#" maxlength="3" class="xar-form-textshort" />
@@ -228,92 +184,114 @@
                 <div class="xar-form-input-wrapper-after">
                     <xar:set name="checked">xarModVars::get('registration', 'chooseownpassword')</xar:set>
                     <xar:data-input type="checkbox" name="chooseownpassword" checked="$checked" />
-                    <label for="chooseownpassword" title="#xarML('Allow users to choose their own password when registering')#">
-                        <xar:mlstring>
-                            Users May Choose Their Own Password
-                        </xar:mlstring>
+                    <label for="chooseownpassword" title="#xarML('Allow users to choose their own password when registering')#">                        
+                        Users May Choose Their Own Password                        
                     </label>
                 </div>
             </fieldset>
             <fieldset>
-                <legend>
-                    <xar:mlstring>
-                        Process Settings
-                    </xar:mlstring>
+                <legend>                    
+                    Process Settings                    
                 </legend>
                 <div class="xar-form-input-wrapper-after">
                     <xar:set name="checked">xarModVars::get('registration', 'explicitapproval')</xar:set>
                     <xar:data-input type="checkbox" name="explicitapproval" checked="$checked" />
-                    <label for="explicitapproval" title="#xarML('Administrator must approve and activate new user accounts')#">
-                        <xar:mlstring>
-                            User Activation Requires Administrator Approval
-                        </xar:mlstring>
+                    <label for="explicitapproval" title="#xarML('Administrator must approve and activate new user accounts')#">                        
+                        User Activation Requires Administrator Approval                        
                     </label>
                 </div>
                 <div class="xar-form-input-wrapper-after">
                     <xar:set name="checked">xarModVars::get('registration', 'requirevalidation')</xar:set>
                     <xar:data-input type="checkbox" name="requirevalidation" checked="$checked" />
-                    <label for="requirevalidation" title="#xarML('Users must confirm their accounts via confirmation code')#">
-                        <xar:mlstring>
-                            Require Validation Of New Users
-                        </xar:mlstring>
+                    <label for="requirevalidation" title="#xarML('Users must confirm their accounts via confirmation code')#">                        
+                        Require Validation Of New Users                        
                     </label>
                 </div>
                 <div class="xar-form-input-wrapper-after">
                     <xar:set name="checked">xarModVars::get('registration', 'allowreview')</xar:set>
                     <xar:data-input type="checkbox" name="allowreview" checked="$checked" />
-                    <label for="allowreview" title="#xarML('Users can review and modify their registration information')#">
-                        <xar:mlstring>
-                            Allow review of profile
-                        </xar:mlstring>
+                    <label for="allowreview" title="#xarML('Users can review and modify their registration information')#">                        
+                        Allow review of profile                        
                     </label>
                 </div>
                 <div class="xar-form-input-wrapper">
-                    <label for="reviewobject" title="#xarML('Select the DD object used for reviews (if allowed)')#" class="xar-form-label">
-                        <xar:mlstring>
-                            Review Object:
-                        </xar:mlstring>
+                    <label for="reviewobject" title="#xarML('Select the DD object used for reviews (if allowed)')#" class="xar-form-label">                        
+                        Review Object:                        
                     </label>
                     <xar:set name="value">xarModVars::get('registration', 'reviewobject')</xar:set>
                     <xar:data-input type="object" name="reviewobjectname" store_prop="name" value="$value" />
                 </div>
             </fieldset>
             <fieldset>
-                <legend>
-                    <xar:mlstring>
-                        Notification
-                    </xar:mlstring>
+                <legend>                    
+                    Notification                    
                 </legend>
                 <div class="xar-form-input-wrapper">
-                    <label for="sendnotice" class="xar-form-label" title="#xarML('Email address for admin notification')#">
-                        <xar:mlstring>
-                            Email for notification to Admin
-                        </xar:mlstring>
+                    <label for="usermessage" class="xar-form-label" title="#xarML('The module to use for sending notifications')#">                        
+                        Send notifications with                        
+                    </label>
+                    <xar:set name="options">
+                        array(
+                            array('id' => 'mail', 'name' => 'Mail'),
+                            array('id' => 'mailer', 'name' => 'Mailer'),
+                        )
+                    </xar:set>
+                    <xar:set name="value">xarModVars::get('registration', 'notificationmodule')</xar:set>
+                    <xar:data-input type="dropdown" name="notificationmodule" id="notificationmodule" options="$options" value="$value" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="sendnotice" class="xar-form-label" title="#xarML('Email address for admin notification')#">                        
+                        Email for notification to Admin                        
                     </label>
                     <input type="text" name="notifyemail" id="notifyemail" value="#$notifyemail#" size="40" maxlength="150" />
-
                 </div>
 
-                <div class="xar-form-input-wrapper-after">
-                    <xar:set name="checked">xarModVars::get('registration', 'sendnotice')</xar:set>
-                    <xar:data-input type="checkbox" name="sendnotice" checked="$checked" />
-                    <label for="sendnotice" title="#xarML('Notify Admin when users create an account')#">
-                        <xar:mlstring>
-                            Send Notice To Admin Upon User Registration
-                        </xar:mlstring>
+                <div class="xar-form-input-wrapper">
+                    <label for="sendwelcomeemail" title="#xarML('Users can be notified when their account has been created')#" class="xar-form-label">                        
+                        Send Welcome Email                       
                     </label>
-                </div>
-                
-                <div class="xar-form-input-wrapper-after">
                     <xar:set name="checked">xarModVars::get('registration', 'sendwelcomeemail')</xar:set>
                     <xar:data-input type="checkbox" name="sendwelcomeemail" checked="$checked" />
-                    <label for="sendwelcomeemail" title="#xarML('Users can be notified when their account has been created')#">
-                        <xar:mlstring>
-                            Send Welcome Email On Successful Registration Of User
-                        </xar:mlstring>
-                    </label>
                 </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="usermessage" class="xar-form-label" title="#xarML('The name of the meail message to send the user')#">                        
+                        User Message Name                        
+                    </label>
+                    <xar:set name="value">xarModVars::get('registration', 'usermessage')</xar:set>
+                    <input type="text" name="usermessage" id="usermessage" value="#$value#" size="40" maxlength="150" />
+                    &#160;(only for Mailer module notifications)
+                </div>
+                <xar:if condition="$checked">
+                    <div class="xar-form-input-wrapper-after">
+                        <a href="#xarModURL('registration','admin','sendtest',array('for' => 'user'))#">
+                            Send me a test message
+                        </a>
+                    </div>
+                </xar:if>
 
+                <div class="xar-form-input-wrapper">
+                    <label for="sendnotice" title="#xarML('Notify Admin when users create an account')#" class="xar-form-label">                        
+                        Send Notice To Admin                        
+                    </label>
+                    <xar:set name="checked">xarModVars::get('registration', 'sendnotice')</xar:set>
+                    <xar:data-input type="checkbox" name="sendnotice" checked="$checked" />
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="adminmessage" class="xar-form-label" title="#xarML('The name of the meail message to send the administrator')#">                        
+                        Admin Message Name                        
+                    </label>
+                    <xar:set name="value">xarModVars::get('registration', 'adminmessage')</xar:set>
+                    <input type="text" name="adminmessage" id="adminmessage" value="#$value#" size="40" maxlength="150" />
+                    &#160;(only for Mailer module notifications)
+                </div>
+                <xar:if condition="$checked">
+                    <div class="xar-form-input-wrapper-after">
+                        <a href="#xarModURL('registration','admin','sendtest',array('for' => 'admin'))#">
+                            Send the administrator a test message
+                        </a>
+                    </div>
+                </xar:if>
+                
                 <div class="xar-form-input-wrapper-after xar-padding-thick">
                     <input type="hidden" name="authid" id="authid" value="#$authid#" />
                     <input type="hidden" name="phase" id="phase" value="update" />
@@ -343,39 +321,29 @@
         <xar:if condition="xarModVars::get('registration', 'allowregistration')">
             <form method="post" action="&xar-modurl-registration-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
                 <fieldset>
-                    <legend>
-                        <xar:mlstring>
-                            Filtering Options
-                        </xar:mlstring>
+                    <legend>                        
+                        Filtering Options                        
                     </legend>
                     <div class="xar-form-input-wrapper">
-                        <label for="disallowednames" title="#xarML('User names to which cannot be used')#" class="xar-form-label">
-                            <xar:mlstring>
-                                Disallowed User Names:
-                            </xar:mlstring>
+                        <label for="disallowednames" title="#xarML('User names to which cannot be used')#" class="xar-form-label">                            
+                            Disallowed User Names:                            
                         </label>
                         <div class="xar-form-container-after">
                             <textarea name="disallowednames" id="disallowednames" class="xar-form-textarealarge">#$names# </textarea>
                         </div>
-                        <p>
-                            <xar:mlstring>
-                                Note: Enter each name on a single line. Do not separate with comma, etc
-                            </xar:mlstring>
+                        <p>                            
+                            Note: Enter each name on a single line. Do not separate with comma, etc                            
                         </p>
                     </div>
                     <div class="xar-form-input-wrapper">
-                        <label for="disallowedips" title="#xarML('Deny access the site from these IP addresses')#" class="xar-form-label">
-                            <xar:mlstring>
-                                Disallowed IP Addresses:
-                            </xar:mlstring>
+                        <label for="disallowedips" title="#xarML('Deny access the site from these IP addresses')#" class="xar-form-label">                            
+                            Disallowed IP Addresses:                            
                         </label>
                         <div class="xar-form-container-after">
                             <textarea name="disallowedips" id="disallowedips" class="xar-form-textarealarge">#$ips# </textarea>
                         </div>
-                        <p class="xar-clearboth">
-                            <xar:mlstring>
-                                Note: Enter each name on a single line. Do not separate with comma, etc
-                            </xar:mlstring>
+                        <p class="xar-clearboth">                            
+                            Note: Enter each name on a single line. Do not separate with comma, etc                            
                         </p>
                     </div>
                 </fieldset>
@@ -389,10 +357,8 @@
                 </fieldset>
             </form>
             <xar:else />
-            <p>
-                <xar:mlstring>
-                    User Registration must be enabled.
-                </xar:mlstring>
+            <p>                
+                User Registration must be enabled.                
             </p>
         </xar:if>
     </xar:if>
