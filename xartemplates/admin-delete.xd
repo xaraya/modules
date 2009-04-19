@@ -14,15 +14,14 @@
                 <xar:mlstring>Confirm Hitcount Deletion</xar:mlstring>
             </legend>
             <div class="xar-form-input-wrapper">
-            <p>
-        <xar:if condition="empty($modname)">
-            <xar:mlstring>Are you sure you want to delete all hitcounts ?</xar:mlstring>
-        <xar:elseif condition="empty($itemid)"/>
-            <xar:ml><xar:mlstring>Are you sure you want to delete all hitcounts for module <b>#(1)</b> ?</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar></xar:ml>
-        <xar:else/>
-            <xar:ml><xar:mlstring>Are you sure you want to delete all hitcounts for module <b>#(1)</b> item <b>#(2)</b> ?</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar><xar:mlvar>#$itemid#</xar:mlvar></xar:ml>
-        </xar:if>
-             </p>
+                <xar:if condition="empty($modname)">
+                    <xar:mlstring>Are you sure you want to delete all hitcounts ?</xar:mlstring>
+                <xar:elseif condition="empty($itemid)"/>
+                    <xar:ml><xar:mlstring>Are you sure you want to delete all hitcounts for module <b>#(1)</b> ?</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar></xar:ml>
+                <xar:else/>
+                    <xar:ml><xar:mlstring>Are you sure you want to delete all hitcounts for module <b>#(1)</b> item <b>#(2)</b> ?</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar><xar:mlvar>#$itemid#</xar:mlvar></xar:ml>
+                </xar:if>
+             </div>
         </fieldset>
         <div class="xar-form-input-wrapper-after">
            <input type="hidden" name="authid" id="authid" value="#$authid#" />
