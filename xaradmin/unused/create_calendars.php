@@ -49,7 +49,7 @@ function calendar_admin_create_calendars()
     if (!$calid) return;
     
     // Go on and edit the new instance
-    xarResponseRedirect(
+    xarResponse::Redirect(
             xarModURL('calendar', 'admin', 'add_calendars',array('calid'=>$calid,'calname'=>$calname) )
             );
     

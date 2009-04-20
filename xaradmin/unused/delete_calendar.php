@@ -75,12 +75,12 @@ function calendar_admin_delete_calendar()
         $lastviewarray = unserialize($lastview);
         if (!empty($lastviewarray['ptid']) && $lastviewarray['ptid'] == $ptid) {
             extract($lastviewarray);
-            xarResponseRedirect(xarModURL('calendar', 'admin', 'view_calendars'));
+            xarResponse::Redirect(xarModURL('calendar', 'admin', 'view_calendars'));
             return true;
         }
     }
 
-    xarResponseRedirect(xarModURL('calendar', 'admin', 'view_calendars'));
+    xarResponse::Redirect(xarModURL('calendar', 'admin', 'view_calendars'));
 
     return true;
 }

@@ -64,7 +64,7 @@ function calendar_admin_modifyconfig()
                 xarModVars::set('calendar', 'day_start', $day_start);
                 xarModVars::set('calendar', 'day_end', $day_end);
             }
-            $regid = xarModGetIDFromName($tabmodule);
+            $regid = xarMod::getRegID($tabmodule);
             xarModItemVars::set('calendar', 'windowwidth', $windowwidth, $regid);
             xarModItemVars::set('calendar', 'minutesperunit', $minutesperunit, $regid);
             xarModItemVars::set('calendar', 'unitheight', $unitheight, $regid);
@@ -74,7 +74,7 @@ function calendar_admin_modifyconfig()
             xarModItemVars::set('calendar', 'day_start', $day_start, $regid);
             xarModItemVars::set('calendar', 'day_end', $day_end, $regid);
 
-            xarResponseRedirect(xarModURL('calendar', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
+            xarResponse::Redirect(xarModURL('calendar', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
             return true;
             break;
 

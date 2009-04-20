@@ -52,10 +52,10 @@ function calendar_calnavblock_display($blockinfo)
 
     if (xarServerGetVar('REQUEST_METHOD') == 'GET') {
         // URL of this page
-        $tplData['return_url'] = xarServerGetCurrentURL();
+        $tplData['return_url'] = xarServer::getCurrentURL();
     } else {
         // Base URL of the site
-        $tplData['return_url'] = xarServerGetBaseURL();
+        $tplData['return_url'] = xarServer::getBaseURL();
     }
 
     $blockinfo['content'] = $tplData;

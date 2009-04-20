@@ -26,7 +26,7 @@ function calendar_adminapi_create_calendars($args)
     // admin/create_calendars.php? --amoro
     if (!isset($mod_id)) {
         $module = xarRequestGetInfo();
-        $mod_id = xarModGetIDFromName($module[0]);
+        $mod_id = xarMod::getRegID($module[0]);
     }
     if (!isset($role_id)) {
         $role_id = xarSession::getVar('role_id');

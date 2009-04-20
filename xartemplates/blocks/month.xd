@@ -29,11 +29,11 @@
                             <tr>
                                 <xar:while condition="1">                        
                                     <xar:if condition="$Day:isSelected()">
-                                        <td class="selected"><a href="#xarServerGetCurrentURL(array('cal_date'=>$WeekDate))#">#$Day:thisDay()#</a></td>
+                                        <td class="selected"><a href="#xarServer::getCurrentURL(array('cal_date'=>$WeekDate))#">#$Day:thisDay()#</a></td>
                                     <xar:elseif condition="$Day:isEmpty()" />
                                         <td>&#160;</td>
                                     <xar:else />
-                                        <td class="xar-accent"><a href="#xarServerGetCurrentURL(array('cal_date'=>$WeekDate))#">#$Day:thisDay()#</a></td>
+                                        <td class="xar-accent"><a href="#xarServer::getCurrentURL(array('cal_date'=>$WeekDate))#">#$Day:thisDay()#</a></td>
                                     </xar:if>
                                     <xar:if condition="$Day:isLast()">
                                         <xar:break />

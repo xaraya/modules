@@ -6,7 +6,7 @@
                 <xar:continue />
             </xar:if>
             <th>
-                <xar:set name="url">xarServerGetCurrentURL(array('letter' => $letter, 'search' => $search, 'order' => $column, 'op' => 'column'))</xar:set>
+                <xar:set name="url">xarServer::getCurrentURL(array('letter' => $letter, 'search' => $search, 'order' => $column, 'op' => 'column'))</xar:set>
                 <a href="#$url#" alt="Click to order by this field" title="Order by #$field#">
                     #$field#
                 </a>

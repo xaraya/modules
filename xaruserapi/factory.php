@@ -16,7 +16,7 @@ function &calendar_userapi_factory($class)
     static $modinfo;
 
     if(!isset($modinfo)) {
-        $modInfo =& xarModGetInfo(xarModGetIDFromName('calendar'));
+        $modInfo =& xarModGetInfo(xarMod::getRegID('calendar'));
     }
 
     switch(strtolower($class)) {
