@@ -352,7 +352,7 @@ class testxarModgetFileInfo extends xarTestCase {
     }
     function testgetFileInfoWithTypeParam2() {
         $this->expected = '[array]';
-        $this->actual   = xarMod::GetFileInfo('mallow','theme');
+        $this->actual   = xarMod::GetFileInfo('default','theme');
         $res = $this->assertTrue(is_array($this->actual) && (count($this->actual) == 26),"Call with theme name param and type = 'theme' returns an array of 30 elements");
         return $res;
     }
@@ -493,7 +493,7 @@ class testxarModisAvailable extends xarTestCase {
     }
     function testisAvailableWithTypeParam2() {
         $this->expected = true;
-        $this->actual   = xarMod::isAvailable('mallow','theme');
+        $this->actual   = xarMod::isAvailable('default','theme');
         $res = $this->assertSame($this->actual,$this->expected,"Call with theme name param and type = 'theme' returns returns a boolean");
         return $res;
     }
