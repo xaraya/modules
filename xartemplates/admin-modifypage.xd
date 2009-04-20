@@ -246,7 +246,9 @@
                             <strong><xar:mlstring>Hooks</xar:mlstring></strong>
                         </legend>
                         <xar:loop name="$hooks">
-                            #$loop:item#
+                            <div class="xar-xarpages-updatepage-hook">
+                                #$loop:item#
+                            </div>
                         </xar:loop>
                     </fieldset>
                 </xar:if>

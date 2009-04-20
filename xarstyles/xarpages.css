@@ -147,3 +147,9 @@ img.xar-xarpages-tree {
     background-position: left;
     padding-left: 20px;
 }
+
+/* Wrapper for each hook in the update page form */
+.xar-xarpages-updatepage-hook {
+    clear: both;
+    margin: 1em 0;
+}
