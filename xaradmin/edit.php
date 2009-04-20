@@ -80,7 +80,7 @@ function html_admin_edit()
     xarSession::setVar('statusmsg', xarML('HTML Tag Updated'));
 
     // Redirect
-    xarResponseRedirect(xarModURL('html', 'admin', 'set'));
+    xarResponse::Redirect(xarModURL('html', 'admin', 'set'));
 
     // Return
     return true;

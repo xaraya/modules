@@ -51,7 +51,7 @@ function html_admin_create($args)
                                'type' => $tagtype,
                                'allowed' => $allowed));
 
-    xarResponseRedirect(xarModURL('html', 'admin', 'set'));
+    xarResponse::Redirect(xarModURL('html', 'admin', 'set'));
 
     // Return
     return true;

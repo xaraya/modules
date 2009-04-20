@@ -22,7 +22,7 @@ function html_admin_main()
 {
     // Security Check
     if(!xarSecurityCheck('EditHTML')) return;
-    xarResponseRedirect(xarModURL('html', 'admin', 'set'));
+    xarResponse::Redirect(xarModURL('html', 'admin', 'set'));
     // Return the template variables defined in this function
     return true;
 }

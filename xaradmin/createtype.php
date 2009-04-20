@@ -48,7 +48,7 @@ function html_admin_createtype($args)
         return false; //throw back
     }
 
-    xarResponseRedirect(xarModURL('html', 'admin', 'viewtypes'));
+    xarResponse::Redirect(xarModURL('html', 'admin', 'viewtypes'));
 
     // Return
     return true;

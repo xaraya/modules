@@ -78,7 +78,7 @@ function html_admin_delete()
     xarSession::setVar('statusmsg', xarML('HTML Tag Deleted'));
 
     // Redirect
-    xarResponseRedirect(xarModURL('html', 'admin', 'set'));
+    xarResponse::Redirect(xarModURL('html', 'admin', 'set'));
 
     // Return
     return true;

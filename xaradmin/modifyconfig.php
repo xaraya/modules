@@ -59,7 +59,7 @@ function html_admin_modifyconfig()
                             array('module'      => 'html',
                                   'itemtype'    => 0));
 
-            xarResponseRedirect(xarModURL('html', 'admin', 'modifyconfig'));
+            xarResponse::Redirect(xarModURL('html', 'admin', 'modifyconfig'));
             // Return
             return true;
             break;
