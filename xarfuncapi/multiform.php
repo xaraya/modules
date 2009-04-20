@@ -164,10 +164,10 @@ function xarpages_funcapi_multiform($args)
             // key is not added to the redirect.
             $redirect_url = xarModURL('xarpages', 'user', 'display', array('pid' => $current_page['pid']), false);
         } else {
-        // Set this to be the last page, then go to the master page.
-        $redirect_pid = $master_page['pid'];
-        $redirect_reason = 'timeout';
-    }
+            // Set this to be the last page, then go to the master page.
+            $redirect_pid = $master_page['pid'];
+            $redirect_reason = 'timeout';
+        }
     }
 
     //
@@ -244,9 +244,8 @@ function xarpages_funcapi_multiform($args)
                 xarModAPIfunc(
                     'xarpages', 'multiform', 'passdata',
                     array(
-                        'reason_detail' => xarML(
-                            'This session has already been completed or cancelled.'
-                        )
+                        'reason_detail' => xarML('This session has already been 
+                            completed or cancelled.')
                     )
                 );
             } else {
@@ -297,9 +296,9 @@ function xarpages_funcapi_multiform($args)
                         xarModAPIfunc(
                             'xarpages', 'multiform', 'passdata',
                             array(
-                                'reason_detail' => xarML(
-                                    'To prevent multiple submission of data, you cannot return to this page once it has been submitted.'
-                                )
+                                'reason_detail' => xarML('To prevent multiple 
+                                    submission of data, you cannot return to  
+                                    this page once it has been submitted.')
                             )
                         );
                     }
@@ -355,7 +354,7 @@ function xarpages_funcapi_multiform($args)
                                 if ($init_result) $formobject = $init_object->compact_formobject();
 
                                 // Write any work data back to the session.
-                                // This allows us to set work data at the start of a page, e.g. set set state.
+                                // This allows us to set work data at the start of a page, e.g. set the state.
                                 if (!empty($init_object->workdata)) {
                                     $session_vars['workdata'] = $init_object->workdata;
                                 }
@@ -479,9 +478,8 @@ function xarpages_funcapi_multiform($args)
                                         xarModAPIfunc(
                                             'xarpages', 'multiform', 'passdata',
                                             array(
-                                                'reason_detail' => xarML(
-                                                    'Unexpected error: ' . $processing_object->reason_detail
-                                                )
+                                                'reason_detail' => xarML('Unexpected error: #(1)', 
+                                                    $processing_object->reason_detail)
                                             )
                                         );
                                     }
@@ -560,8 +558,9 @@ function xarpages_funcapi_multiform($args)
                     // Allow a jump to the next or previous pages, depending on what button the user pressed.
                     if ($form_isvalid) {
                         if ($user_action_requested == 'next' && !empty($next_page_pid)) $redirect_pid = $next_page_pid;
-                        if ($user_action_requested == 'prev' && !empty($prev_page_pid)) $redirect_pid = $prev_page_pid;
                     }
+                    // Allow user to go back a stage even if the current form items are invalid.
+                    if ($user_action_requested == 'prev' && !empty($prev_page_pid)) $redirect_pid = $prev_page_pid;
                 }
             }
         } elseif (empty($multiform_cancel)) {

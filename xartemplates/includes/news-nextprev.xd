@@ -4,19 +4,29 @@
         <tr>
             <td class="prev">
                 <xar:if condition="!empty($prev_url)">
-                    <a href="#$prev_url#" title="#xarVarPrepForDisplay($prev_article.title)#">&#171; Previous article</a>
+                    <a href="#$prev_url#" title="#xarVarPrepForDisplay($prev_article.title)#">
+                        &#171; <xar:mlstring>Previous article</xar:mlstring>
+                    </a>
                 <xar:else />
-                    <span>&#171; Previous article</span>
+                    <span>
+                        &#171; <xar:mlstring>Previous article</xar:mlstring>
+                    </span>
                 </xar:if>
             </td>
             <td class="back">
-                <a href="#xarServerGetCurrentURL(array('aid'=&gt;NULL))#" title="Return to the list">[Back to List]</a>
+                <a href="#xarServerGetCurrentURL(array('aid'=&gt;NULL))#" title="#xarML('Return to the list')#">
+                    <xar:mlstring>[Back to List]</xar:mlstring>
+                </a>
             </td>
             <td class="next">
                 <xar:if condition="!empty($next_url)">
-                    <a href="#$next_url#" title="#xarVarPrepForDisplay($next_article.title)#">Next article &#187;</a>
+                    <a href="#$next_url#" title="#xarVarPrepForDisplay($next_article.title)#">
+                        <xar:mlstring>Next article</xar:mlstring> &#187;
+                    </a>
                 <xar:else />
-                    <span>Next article &#187;</span>
+                    <span>
+                        <xar:mlstring>Next article</xar:mlstring> &#187;
+                    </span>
                 </xar:if>
             </td>
         </tr>

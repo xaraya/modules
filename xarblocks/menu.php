@@ -1,11 +1,9 @@
 <?php
 /**
- * File: $Id$
- *
  * Displays a menu block
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2004 by the Xaraya Development Team.
+ * @copyright (C) 2004-2009 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *

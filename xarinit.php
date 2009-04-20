@@ -3,7 +3,7 @@
  * Initialise the xarpages module.
  *
  * @package modules
- * @copyright (C) 2004 by the Xaraya Development Team.
+ * @copyright (C) 2004 - 2009 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -113,7 +113,7 @@ function xarpages_init()
     $instances = array (
         array (
             'header' => 'Page Name',
-            'query' => 'SELECT DISTINCT xar_name FROM ' . $pagestable . ' ORDER BY xar_left',
+            'query' => 'SELECT xar_name FROM (SELECT DISTINCT xar_name, xar_left FROM ' . $pagestable . ' ORDER BY xar_left) AS temp',
             'limit' => 50
         ),
         array (
@@ -176,12 +176,7 @@ function xarpages_init()
         xarML('Security component for xarpages page type')
     );
 
-    // Masks for the component 'Page'.
-    // Each mask defines something the user is able to do.
-    // The masks are linked to the instances at runtime when security checks
-    // are made:
-    // xarSecurityCheck($mask, $showException, $component, $instance, $module, ...)
-    // xarRegisterMask($name, $realm, $module, $component, $instance, $level, $description='')
+    // Masks for the component 'Pagetype'.
 
     // Allow the user to view the page types that are available.
     xarRegisterMask(
