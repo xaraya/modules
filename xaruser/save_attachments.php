@@ -36,7 +36,7 @@ function uploads_user_save_attachments($args)
                                     'objectid'   => $objectid,
                                     'rating'     => $rating));
 
-    xarResponseRedirect($returnurl);
+    xarResponse::Redirect($returnurl);
 
     return true;
 }

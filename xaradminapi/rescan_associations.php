@@ -47,7 +47,7 @@ function uploads_adminapi_rescan_associations( $args )
     // 3. get the list of dynamic objects we're interesting in
     if (!empty($modid)) {
         $objectinfolist = array();
-        $objectinfolist[] = xarModAPIFunc('dynamicdata','user','getobjectinfo',
+        $objectinfolist[] = DataObjectMaster::getObjectInfo(
                                    array('modid' => $modid,
                                          'itemtype' => isset($itemtype) ? $itemtype : null));
     } else {
@@ -131,7 +131,7 @@ function uploads_adminapi_rescan_associations( $args )
 
     // let's try some articles fields too
     if (!xarModIsAvailable('articles')) return TRUE;
-    $artmodid = xarModGetIDFromName('articles');
+    $artmodid = xarMod::getRegID('articles');
     if (!empty($args['modid']) && $args['modid'] != $artmodid) return TRUE;
 
     $pubtypes = xarModAPIFunc('articles','user','getpubtypes');

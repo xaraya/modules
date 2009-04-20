@@ -28,7 +28,7 @@ function uploads_user_upload()
     if (is_array($list) && count($list)) {
         return array('fileList' => $list);
     } else {
-        xarResponseRedirect(xarModURL('uploads', 'user', 'uploadform'));
+        xarResponse::Redirect(xarModURL('uploads', 'user', 'uploadform'));
     }
 }
 

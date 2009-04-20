@@ -50,7 +50,7 @@ function uploads_userapi_db_getall_files( $args )
     if (!empty($catid) && xarModIsAvailable('categories') && xarModIsHooked('categories','uploads',1)) {
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from categories
         $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
-                                      array('modid' => xarModGetIDFromName('uploads'),
+                                      array('modid' => xarMod::getRegID('uploads'),
                                             'itemtype' => 1,
                                             'catid' => $catid));
         if (empty($categoriesdef)) return;

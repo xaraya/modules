@@ -69,7 +69,7 @@ function uploads_user_file_properties( $args )
                                   $fileInfo['fileName'], $fileInfo['fileId']);
                     throw new Exception($msg);             
                 }
-                xarResponseRedirect(xarModURL('uploads', 'user', 'file_properties', array('fileId' => $fileId)));
+                xarResponse::Redirect(xarModURL('uploads', 'user', 'file_properties', array('fileId' => $fileId)));
                 return;
             } else {
                 xarErrorHandled();
