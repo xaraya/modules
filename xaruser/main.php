@@ -9,7 +9,7 @@
         // Security Check
         if (!xarSecurityCheck('ReadFoo')) return;
 
-//        xarResponseRedirect(xarModURL('foo', 'user', 'view'));
+//        xarResponse::Redirect(xarModURL('foo', 'user', 'view'));
         // success
         return array(); //true;
     }

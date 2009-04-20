@@ -25,7 +25,7 @@
             $hooks['tabs'] = array();
         }
 
-        $regid = xarModGetIDFromName($tabmodule);
+        $regid = xarMod::getRegID($tabmodule);
         switch (strtolower($phase)) {
             case 'modify':
             default:
@@ -66,7 +66,7 @@
                 }
                 foreach ($modvars as $var) if (isset($$var)) xarModItemVars::set('foo', $var, $$var, $regid);
 
-                xarResponseRedirect(xarModURL('foo', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
+                xarResponse::Redirect(xarModURL('foo', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
                 // Return
                 return true;
                 break;

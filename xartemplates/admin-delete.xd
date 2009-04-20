@@ -23,7 +23,7 @@
 
         <xar:data-display object="$object" />
 
-        <form method="post" action="#xarServerGetCurrentURL()#">
+        <form method="post" action="#xarServer::getCurrentURL()#">
             <div class="xar-align-center">
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="objectid" id="objectid" value="#$object:objectid#" />

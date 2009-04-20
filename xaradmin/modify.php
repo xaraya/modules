@@ -34,7 +34,7 @@
                 $item = $data['object']->updateItem();
                 
                 // Jump to the next page
-                xarResponseRedirect(xarModURL('foo','admin','view'));
+                xarResponse::Redirect(xarModURL('foo','admin','view'));
                 return true;
             }
         } else {
