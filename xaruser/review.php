@@ -22,13 +22,13 @@ function registration_user_review()
                                    
     // Check if this is allowed
     if (!xarUserIsLoggedIn() || !xarModVars::get('registration','allowreview') || count($responses) == 0) {
-        xarResponseRedirect(xarModURL('roles', 'user', 'account'));
+        xarResponse::Redirect(xarModURL('roles', 'user', 'account'));
         return true;
     }
 
     // Set a return url
     $modulename = 'registration';
-    xarSession::setVar('ddcontext.' . $modulename, array('return_url' => xarServerGetCurrentURL()));
+    xarSession::setVar('ddcontext.' . $modulename, array('return_url' => xarServer::getCurrentURL()));
 
     xarTplSetPageTitle(xarML('Review Profile'));
 

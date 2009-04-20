@@ -130,7 +130,7 @@ function registration_admin_modifyconfig()
                     break;
             }
 
-            xarResponseRedirect(xarModURL('registration', 'admin', 'modifyconfig', array('tab' => $data['tab'])));
+            xarResponse::Redirect(xarModURL('registration', 'admin', 'modifyconfig', array('tab' => $data['tab'])));
             return true;
             break;
     }

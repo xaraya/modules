@@ -39,7 +39,7 @@ function registration_user_register()
     //If a user is already logged in, no reason to see this.
     //We are going to send them to their account.
     if (xarUserIsLoggedIn()) {
-        xarResponseRedirect(xarModURL('roles', 'user', 'account'));
+        xarResponse::Redirect(xarModURL('roles', 'user', 'account'));
        return true;
     }
     $allowregistration = xarModVars::get('registration', 'allowregistration');
