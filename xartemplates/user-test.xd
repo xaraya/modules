@@ -10,7 +10,7 @@
     </span>
 </div>
 <div class="xar-mod-body">
-    <form method="post" action="#xarServerGetCurrentURL()#">
+    <form method="post" action="#xarServer::getCurrentURL()#">
         <fieldset>
             <legend>
                 Sending a test email

@@ -32,7 +32,7 @@
                 $item = $data['object']->createItem();
                 
                 // Jump to the next page
-                xarResponseRedirect(xarModURL('mailer','admin','view'));
+                xarResponse::Redirect(xarModURL('mailer','admin','view'));
                 return true;
             }
         }

@@ -14,7 +14,7 @@
         if (!empty($objectname)) xarModUserVars::set($modulename,'defaultmastertable', $objectname);
 
         // Set a return url
-        xarSession::setVar('ddcontext.' . $modulename, array('return_url' => xarServerGetCurrentURL()));
+        xarSession::setVar('ddcontext.' . $modulename, array('return_url' => xarServer::getCurrentURL()));
 
         // Get the available dropdown options
         $object = DataObjectMaster::getObjectList(array('objectid' => 1));

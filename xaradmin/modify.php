@@ -33,7 +33,7 @@
                 $item = $data['object']->updateItem();
                 
                 // Jump to the next page
-                xarResponseRedirect(xarModURL('mailer','admin','view'));
+                xarResponse::Redirect(xarModURL('mailer','admin','view'));
                 return true;
             }
         } else {
