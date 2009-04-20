@@ -168,7 +168,7 @@ $sameurl_elements = array(
 
 $data['mid'] =  'tiki-g-monitor_activities.tpl';
 
-    $url = xarServerGetCurrentURL(array('offset' => '%%'));
+    $url = xarServer::getCurrentURL(array('offset' => '%%'));
     $data['pager'] = xarTplGetPager($data['offset'],
                                        $items['cant'],
                                        $url,

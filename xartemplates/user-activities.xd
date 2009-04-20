@@ -55,17 +55,17 @@
             <tr>
               <th>
                 <xar:if condition="$sort_mode eq 'procname_desc'">
-                  <a href="#xarServerGetCurrentURL(array('sort_mode' => 'procname_asc'))#"><xar:mlstring>Process</xar:mlstring></a>
+                  <a href="#xarServer::getCurrentURL(array('sort_mode' => 'procname_asc'))#"><xar:mlstring>Process</xar:mlstring></a>
                   <xar:else/>
-                  <a href="#xarServerGetCurrentURL(array('sort_mode' => 'procname_desc'))#"><xar:mlstring>Process</xar:mlstring></a>
+                  <a href="#xarServer::getCurrentURL(array('sort_mode' => 'procname_desc'))#"><xar:mlstring>Process</xar:mlstring></a>
                 </xar:if>
               </th>
               <th><xar:mlstring>Version</xar:mlstring></th>
               <th>
                 <xar:if condition="$sort_mode eq 'name_desc'">
-                  <a href="#xarServerGetCurrentURL(array('sort_mode' => 'name_asc'))#"><xar:mlstring>Activity</xar:mlstring></a>
+                  <a href="#xarServer::getCurrentURL(array('sort_mode' => 'name_asc'))#"><xar:mlstring>Activity</xar:mlstring></a>
                   <xar:else/>
-                  <a href="#xarServerGetCurrentURL(array('sort_mode' => 'name_desc'))#"><xar:mlstring>Activity</xar:mlstring></a>
+                  <a href="#xarServer::getCurrentURL(array('sort_mode' => 'name_desc'))#"><xar:mlstring>Activity</xar:mlstring></a>
                 </xar:if>
               </th>
               <th><xar:mlstring>Instances</xar:mlstring></th>

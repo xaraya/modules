@@ -99,7 +99,7 @@ function workflow_userapi_showinstances($args)
     }
 
     // URL to return to if some action is taken
-    $tplData['return_url'] = xarServerGetCurrentURL();
+    $tplData['return_url'] = xarServer::getCurrentURL();
 
     if (!empty($args['template'])) {
         return xarTplModule('workflow', 'user', 'showinstances', $tplData, $args['template']);

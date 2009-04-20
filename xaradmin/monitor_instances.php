@@ -245,7 +245,7 @@ $tplData['filter_act_status'] = isset($_REQUEST['filter_act_status']) ? $_REQUES
 $tplData['filter_user'] = isset($_REQUEST['filter_user']) ? $_REQUEST['filter_user'] : '';
 $tplData['filter_owner'] = isset($_REQUEST['filter_owner']) ? $_REQUEST['filter_owner'] : '';
 
-    $url = xarServerGetCurrentURL(array('offset' => '%%'));
+    $url = xarServer::getCurrentURL(array('offset' => '%%'));
     $tplData['pager'] = xarTplGetPager($tplData['offset'],
                                        $items['cant'],
                                        $url,

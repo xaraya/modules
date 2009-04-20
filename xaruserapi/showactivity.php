@@ -105,7 +105,7 @@ function workflow_userapi_showactivity($args)
     $tplData['iid'] = $instance->getInstanceId();
 
     // URL to return to if some action is taken
-    $tplData['return_url'] = xarServerGetCurrentURL();
+    $tplData['return_url'] = xarServer::getCurrentURL();
 
     if ($activity->isInteractive()) {
         $template = $activity->getNormalizedName(). '.tpl';

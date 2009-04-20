@@ -83,10 +83,10 @@
           <table style="border-collapse: separate; width: 99%;">
             <xar:if condition="!empty($items) and count($items) gt 0">
               <tr>
-                <th><a class="tableheading" href="#xarServerGetCurrentURL(array('sort_mode' => 'name_asc'))#"><xar:mlstring>Process</xar:mlstring></a></th>
+                <th><a class="tableheading" href="#xarServer::getCurrentURL(array('sort_mode' => 'name_asc'))#"><xar:mlstring>Process</xar:mlstring></a></th>
                 <th><xar:mlstring>Activities</xar:mlstring></th>
-                <th><a class="tableheading" href="#xarServerGetCurrentURL(array('sort_mode' => 'isActive_asc'))#"><xar:mlstring>Active</xar:mlstring></a></th>
-                <th><a class="tableheading" href="#xarServerGetCurrentURL(array('sort_mode' => 'isValid_asc'))#"><xar:mlstring>Valid</xar:mlstring></a></th>
+                <th><a class="tableheading" href="#xarServer::getCurrentURL(array('sort_mode' => 'isActive_asc'))#"><xar:mlstring>Active</xar:mlstring></a></th>
+                <th><a class="tableheading" href="#xarServer::getCurrentURL(array('sort_mode' => 'isValid_asc'))#"><xar:mlstring>Valid</xar:mlstring></a></th>
                 <th><xar:mlstring>Instances</xar:mlstring></th>
                 <th><xar:mlstring>Duration of completed processes - min/avg/max</xar:mlstring></th>
               </tr>

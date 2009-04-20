@@ -118,10 +118,10 @@
             <xar:if condition="!empty($items) and count($items) gt 0">
               <tr>
                 <th><xar:mlstring>Process</xar:mlstring></th>
-                <th><a href="#xarServerGetCurrentURL(array('sort_mode' => 'name_asc'))#"><xar:mlstring>Activity</xar:mlstring></a></th>
-                <th><a href="#xarServerGetCurrentURL(array('sort_mode' => 'type_asc'))#"><xar:mlstring>Type</xar:mlstring></a></th>
-                <th><a href="#xarServerGetCurrentURL(array('sort_mode' => 'isInteractive_asc'))#"><xar:mlstring>Interact</xar:mlstring></a></th>
-                <th><a href="#xarServerGetCurrentURL(array('sort_mode' => 'isAutoRouted_asc'))#"><xar:mlstring>Route</xar:mlstring></a></th>
+                <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'name_asc'))#"><xar:mlstring>Activity</xar:mlstring></a></th>
+                <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'type_asc'))#"><xar:mlstring>Type</xar:mlstring></a></th>
+                <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'isInteractive_asc'))#"><xar:mlstring>Interact</xar:mlstring></a></th>
+                <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'isAutoRouted_asc'))#"><xar:mlstring>Route</xar:mlstring></a></th>
                 <th><xar:mlstring>Status</xar:mlstring></th>
                 <th><xar:mlstring>Duration of completed activities - min/avg/max</xar:mlstring></th>
               </tr>

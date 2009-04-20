@@ -137,7 +137,7 @@ function workflow_admin_monitor_processes()
 
     $data['mid'] =  'tiki-g-monitor_processes.tpl';
 
-        $url = xarServerGetCurrentURL(array('offset' => '%%'));
+        $url = xarServer::getCurrentURL(array('offset' => '%%'));
         $data['pager'] = xarTplGetPager($data['offset'],
                                            $items['cant'],
                                            $url,

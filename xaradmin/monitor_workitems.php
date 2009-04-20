@@ -162,7 +162,7 @@ $data['mid'] =  'tiki-g-monitor_workitems.tpl';
 
 
 
-    $url = xarServerGetCurrentURL(array('offset' => '%%'));
+    $url = xarServer::getCurrentURL(array('offset' => '%%'));
     $data['pager'] = xarTplGetPager($data['offset'],
                                        $items['cant'],
                                        $url,

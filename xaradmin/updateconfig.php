@@ -74,7 +74,7 @@ function workflow_admin_updateconfig()
         }
     }
 
-    xarResponseRedirect(xarModURL('workflow', 'admin', 'modifyconfig'));
+    xarResponse::Redirect(xarModURL('workflow', 'admin', 'modifyconfig'));
 
     return true;
 }

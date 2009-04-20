@@ -171,7 +171,7 @@ $maxRecords = xarModVars::get('workflow','itemsperpage');
 
     $tplData['mid'] =  'tiki-g-admin_processes.tpl';
 
-    $url = xarServerGetCurrentURL(array('offset' => '%%'));
+    $url = xarServer::getCurrentURL(array('offset' => '%%'));
     $tplData['pager'] = xarTplGetPager($tplData['offset'],
                                        $items['cant'],
                                        $url,

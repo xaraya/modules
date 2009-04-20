@@ -130,13 +130,13 @@
           <table style="border-collapse: separate; width: 99%">
             <xar:if condition="!empty($items) and count($items) gt 0">
               <tr>
-                <th><a href="#xarServerGetCurrentURL(array('sort_mode' => 'procname_asc'))#"><xar:mlstring>Process</xar:mlstring></a></th>
-                <th><a href="#xarServerGetCurrentURL(array('sort_mode' => 'instanceId_asc'))#"><xar:mlstring>Ins</xar:mlstring></a></th>
-                <th><a href="#xarServerGetCurrentURL(array('sort_mode' => 'owner_asc'))#"><xar:mlstring>Owner</xar:mlstring></a></th>
-                <th><a href="#xarServerGetCurrentURL(array('sort_mode' => 'status_asc'))#"><xar:mlstring>Status</xar:mlstring></a></th>
-                <th><a href="#xarServerGetCurrentURL(array('sort_mode' => 'name_asc'))#"><xar:mlstring>Current Activity</xar:mlstring></a></th>
-                <th><a href="#xarServerGetCurrentURL(array('sort_mode' => 'user_asc'))#"><xar:mlstring>User</xar:mlstring></a></th>
-                <th><a href="#xarServerGetCurrentURL(array('sort_mode' => 'started_asc'))#"><xar:mlstring>Start</xar:mlstring></a></th>
+                <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'procname_asc'))#"><xar:mlstring>Process</xar:mlstring></a></th>
+                <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'instanceId_asc'))#"><xar:mlstring>Ins</xar:mlstring></a></th>
+                <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'owner_asc'))#"><xar:mlstring>Owner</xar:mlstring></a></th>
+                <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'status_asc'))#"><xar:mlstring>Status</xar:mlstring></a></th>
+                <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'name_asc'))#"><xar:mlstring>Current Activity</xar:mlstring></a></th>
+                <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'user_asc'))#"><xar:mlstring>User</xar:mlstring></a></th>
+                <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'started_asc'))#"><xar:mlstring>Start</xar:mlstring></a></th>
                 <th><xar:mlstring>Duration of this instance</xar:mlstring></th>
               </tr>
               <xar:foreach in="$items" key="$ix">

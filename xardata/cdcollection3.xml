@@ -36,7 +36,7 @@
       <code><![CDATA[<?php
 
 // Retrieve the object information for the CD collection
-$object = xarModAPIFunc('dynamicdata','user','getobjectinfo',
+$object = DataObjectMaster::getObjectInfo(
                                       array('name' => 'cdcollection'));
 
 // Check if the current user has the 'admin' role

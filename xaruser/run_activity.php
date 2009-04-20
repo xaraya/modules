@@ -142,15 +142,15 @@ function workflow_user_run_activity()
 
     if (!isset($_REQUEST['auto']) && $activity->isInteractive() && $__activity_completed) {
         if (!empty($_REQUEST['return_url'])) {
-            xarResponseRedirect($_REQUEST['return_url']);
+            xarResponse::Redirect($_REQUEST['return_url']);
         } elseif (empty($instance->instanceId)) {
-            xarResponseRedirect(xarModURL('workflow', 'user', 'activities'));
+            xarResponse::Redirect(xarModURL('workflow', 'user', 'activities'));
         } else {
-            xarResponseRedirect(xarModURL('workflow', 'user', 'instances'));
+            xarResponse::Redirect(xarModURL('workflow', 'user', 'instances'));
         }
         return true;
     } elseif (!isset($_REQUEST['auto']) && $activity->isInteractive() && $activity->getType() == 'standalone' && !empty($_REQUEST['return_url'])) {
-        xarResponseRedirect($_REQUEST['return_url']);
+        xarResponse::Redirect($_REQUEST['return_url']);
         return true;
     } else {
         if (!isset($_REQUEST['auto']) && $activity->isInteractive()) {

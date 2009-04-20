@@ -99,14 +99,14 @@
         <table style="border-collapse: separate; width: 99%">
           <xar:if condition="!empty($items) and count($items) gt 0">
             <tr>
-              <th><a href="#xarServerGetCurrentURL(array('sort_mode' => 'itemId_asc'))#"><xar:mlstring>Id</xar:mlstring></a></th>
-              <th><a href="#xarServerGetCurrentURL(array('sort_mode' => 'procname_asc'))#"><xar:mlstring>Process</xar:mlstring></a></th>
-              <th><a href="#xarServerGetCurrentURL(array('sort_mode' => 'instanceId_asc'))#"><xar:mlstring>Ins</xar:mlstring></a></th>
-              <th><a href="#xarServerGetCurrentURL(array('sort_mode' => 'orderId_asc'))#">#</a></th>
-              <th><a href="#xarServerGetCurrentURL(array('sort_mode' => 'actname_asc'))#"><xar:mlstring>Activity</xar:mlstring></a></th>
-              <th><a href="#xarServerGetCurrentURL(array('sort_mode' => 'user_asc'))#"><xar:mlstring>User</xar:mlstring></a></th>
-              <th><a href="#xarServerGetCurrentURL(array('sort_mode' => 'started_asc'))#"><xar:mlstring>Start</xar:mlstring></a></th>
-              <th><a href="#xarServerGetCurrentURL(array('sort_mode' => 'duration_asc'))#"><xar:mlstring>Duration of this workitem</xar:mlstring></a></th>
+              <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'itemId_asc'))#"><xar:mlstring>Id</xar:mlstring></a></th>
+              <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'procname_asc'))#"><xar:mlstring>Process</xar:mlstring></a></th>
+              <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'instanceId_asc'))#"><xar:mlstring>Ins</xar:mlstring></a></th>
+              <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'orderId_asc'))#">#</a></th>
+              <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'actname_asc'))#"><xar:mlstring>Activity</xar:mlstring></a></th>
+              <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'user_asc'))#"><xar:mlstring>User</xar:mlstring></a></th>
+              <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'started_asc'))#"><xar:mlstring>Start</xar:mlstring></a></th>
+              <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'duration_asc'))#"><xar:mlstring>Duration of this workitem</xar:mlstring></a></th>
             </tr>
             <xar:foreach in="$items" key="$ix">
               <tr>

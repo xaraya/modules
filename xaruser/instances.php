@@ -51,7 +51,7 @@ function workflow_user_instances()
                 }
             }
             if (!empty($return_url)) {
-                xarResponseRedirect($return_url);
+                xarResponse::Redirect($return_url);
                 return true;
             }
         }
@@ -92,7 +92,7 @@ if (isset($_REQUEST['send']) || isset($_REQUEST['send_x'])) {
 }
 
 if ($action && !empty($_REQUEST['return_url'])) {
-    xarResponseRedirect($_REQUEST['return_url']);
+    xarResponse::Redirect($_REQUEST['return_url']);
     return true;
 }
 
@@ -225,7 +225,7 @@ $tplData['filter_user'] = isset($_REQUEST['filter_user']) ? $_REQUEST['filter_us
 $tplData['userId'] = $user;
 $tplData['user'] = xarUserGetVar('name', $user);
 
-    $url = xarServerGetCurrentURL(array('offset' => '%%'));
+    $url = xarServer::getCurrentURL(array('offset' => '%%'));
     $tplData['pager'] = xarTplGetPager($tplData['offset'],
                                        $items['cant'],
                                        $url,
