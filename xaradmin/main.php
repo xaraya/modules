@@ -19,7 +19,7 @@ function hitcount_admin_main()
 {
     // Security Check
     if(!xarSecurityCheck('AdminHitcount')) return;
-    xarResponseRedirect(xarModURL('hitcount', 'admin', 'modifyconfig'));
+    xarResponse::Redirect(xarModURL('hitcount', 'admin', 'modifyconfig'));
     // success
     return true;
 }

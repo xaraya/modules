@@ -198,9 +198,9 @@ function hitcount_upgrade($oldversion)
 
         case '1.2.0':
             // delete invalid hitcount entries for articles itemtype 0
-            if (xarModIsAvailable('articles') && xarModGetIDFromName('articles') != 0) {
+            if (xarModIsAvailable('articles') && xarMod::getRegID('articles') != 0) {
                 xarModAPIFunc('hitcount','admin','delete',
-                              array('modid' => xarModGetIDFromName('articles'),
+                              array('modid' => xarMod::getRegID('articles'),
                                     'itemtype' => 0,
                                     'confirm' => true));
             }

@@ -55,7 +55,7 @@ function hitcount_admin_modifyconfig()
             xarModVars::set('hitcount', 'numitems', $numitems);
             xarModVars::set('hitcount', 'numstats', $numstats);
             xarModVars::set('hitcount', 'showtitle', $showtitle);
-            xarResponseRedirect(xarModURL('hitcount', 'admin', 'modifyconfig'));
+            xarResponse::Redirect(xarModURL('hitcount', 'admin', 'modifyconfig'));
             // Return
             return true;
 
