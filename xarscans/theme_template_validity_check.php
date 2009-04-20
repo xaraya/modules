@@ -16,7 +16,7 @@
             $checked_themes = array();
             foreach ($items as $item) {
                 $basedir = 'themes/' . $item['name'];
-                $files = get_theme_files($basedir,'xd');
+                $files = get_theme_files($basedir,'xt');
                 foreach ($files as $file) {
                     parse_theme_template($file,$reader);
                 }
