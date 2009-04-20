@@ -82,7 +82,7 @@ function categories_admin_privileges($args)
             }
 
             // redirect to the privilege
-            xarResponseRedirect(xarModURL('privileges', 'admin', 'modifyprivilege',
+            xarResponse::Redirect(xarModURL('privileges', 'admin', 'modifyprivilege',
                                           array('pid' => $pid)));
             return true;
         }
@@ -199,7 +199,7 @@ function categories_admin_privileges($args)
         }
 
         // redirect to the privilege
-        xarResponseRedirect(xarModURL('privileges', 'admin', 'modifyprivilege',
+        xarResponse::Redirect(xarModURL('privileges', 'admin', 'modifyprivilege',
                                       array('pid' => $pid)));
         return true;
     }

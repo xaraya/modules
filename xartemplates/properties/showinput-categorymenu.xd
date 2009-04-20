@@ -14,7 +14,7 @@
                         <xar:set name="tabclass">''</xar:set>
                     </xar:if>
                         <dd class="#$tabclass#">
-                            <a href="#xarServerGetCurrentURL(array('activetab' => $tab['id']))#">
+                            <a href="#xarServer::getCurrentURL(array('activetab' => $tab['id']))#">
                                 #$tab['name']#
                             </a>
                         </dd>
@@ -49,7 +49,7 @@
                         </xar:if>
                         <dd class="#$tabclass#">
                             <xar:set name="name">$currentcategory->name</xar:set>
-                            <xar:set name="url">isset($currentcategory->url) ? $currentcategory->url : xarServerGetCurrentURL(array('activetab' => $id))</xar:set>
+                            <xar:set name="url">isset($currentcategory->url) ? $currentcategory->url : xarServer::getCurrentURL(array('activetab' => $id))</xar:set>
                             <a href="#$url#">
                                 #$name#
                             </a>

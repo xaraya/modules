@@ -150,7 +150,7 @@ function categories_admin_checklinks()
                                      'cids' => array_keys($seencid)))) {
                 return;
             }
-            xarResponseRedirect(xarModURL('categories', 'admin', 'checklinks'));
+            xarResponse::Redirect(xarModURL('categories', 'admin', 'checklinks'));
             return true;
         }
 

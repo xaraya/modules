@@ -24,28 +24,24 @@
         </span>
         <span style="float: right; width: 78%; text-align: left;">
           <xar:set name="optgroup">0</xar:set>
-          <!--
           <select name="startmodule" id="startmodule#$blockid#">
-            <xar:loop name="$modules">
-                <xar:if condition="!empty($loop:item.label)">
-                    <xar:if condition="!empty($optgroup)">
-                        </optgroup>
-                    </xar:if>
-                    <optgroup label="Module: #$loop:item.label#">
-                    <xar:set name="optgroup">1</xar:set>
-                <xar:else/>
-                    <xar:if condition="$startmodule eq $loop:item.id">
-                        <option value="#$loop:item.id#" selected="selected">#$loop:item.name#</option>
-                    <xar:else />
-                        <option value="#$loop:item.id#">#$loop:item.name#</option>
-                    </xar:if>
-                </xar:if>
-            </xar:loop>
-            <xar:if condition="!empty($optgroup)">
+            <xar:for start="$i = 0" test="$i le count($modules)" iter="$i++">
+                <xar:set name="optgroup">1</xar:set>
+                <optgroup label="Module: #$modules[$i]label#">
+                    <xar:while condition="1">
+                        <xar:if condition="$startmodule eq $modules[$i]['id']">
+                            <option value="#$modules[$i]['id']#" selected="selected">#$modules[$i]['name']#</option>
+                        <xar:else />
+                            <option value="#$modules[$i]['id']#">#$modules[$i]['name']#</option>
+                        </xar:if>
+                        <xar:if condition="!empty($optgroup)">
+                            <xar:break />
+                        </xar:if>
+                    </xar:while>
                 </optgroup>
-            </xar:if>
+            </xar:for>
+
             </select>
-            -->
         </span>
     </div>
 

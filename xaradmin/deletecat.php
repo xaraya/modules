@@ -67,7 +67,7 @@ function categories_admin_deletecat()
                        'deletecat',
                        array('cid' => $cid))) return;
 
-    xarResponseRedirect(xarModURL('categories','admin','viewcats', array()));
+    xarResponse::Redirect(xarModURL('categories','admin','viewcats', array()));
 
     return true;
 }

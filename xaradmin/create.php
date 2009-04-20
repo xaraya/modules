@@ -13,7 +13,7 @@ function categories_admin_create()
     if (!xarVarFetch('reassign', 'checkbox',  $reassign, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('repeat',   'int:1:100', $data['repeat'],   1,     XARVAR_NOT_REQUIRED)) return;
     if ($reassign) {
-        xarResponseRedirect(xarModURL('categories','admin','new',array('repeat' => $data['repeat'])));
+        xarResponse::Redirect(xarModURL('categories','admin','new',array('repeat' => $data['repeat'])));
         return true;
     }
 
@@ -32,7 +32,7 @@ function categories_admin_create()
         $data['objects'][$i]->createItem();
     }
 
-    xarResponseRedirect(xarModURL('categories','admin','new',array('repeat' => $data['repeat'])));
+    xarResponse::Redirect(xarModURL('categories','admin','new',array('repeat' => $data['repeat'])));
     return true;
 }
 ?>

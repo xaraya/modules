@@ -22,7 +22,7 @@
             $hooks['tabs'] = array();
         }
 
-        $regid = xarModGetIDFromName($tabmodule);
+        $regid = xarMod::getRegID($tabmodule);
         switch (strtolower($phase)) {
             case 'modify':
             default:
@@ -69,7 +69,7 @@
                 }
                 foreach ($modvars as $var) if (isset($$var)) xarModItemVars::set('categories', $var, $$var, $regid);
 
-                xarResponseRedirect(xarModURL('categories', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
+                xarResponse::Redirect(xarModURL('categories', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
                 // Return
                 return true;
                 break;

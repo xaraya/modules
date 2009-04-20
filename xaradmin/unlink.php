@@ -52,7 +52,7 @@ function categories_admin_unlink()
                              'confirm' => $confirm))) {
         return;
     }
-    xarResponseRedirect(xarModURL('categories', 'admin', 'stats'));
+    xarResponse::Redirect(xarModURL('categories', 'admin', 'stats'));
     return true;
 }
 

@@ -46,25 +46,26 @@
     </xar:if>
 
     <xar:if condition="!empty($caticons) and count($caticons) gt 0">
-    <br />
-    <table border="0" cellpadding="2" cellspacing="0" width="100%">
-    <tr>
-        <xar:loop id="icons" name="$caticons">
-            <td align="center" valign="middle">
-                <a href="#$loop:icons:item['catlink']#"><img src="#$loop:icons:item['catimage']#" border="0" alt="#$loop:icons:item['catlabel']#" /><br />#$loop:icons:item['catlabel']#</a>
-                <xar:if condition="!empty($loop:icons:item['catcount'])">
-                    (#$loop:icons:item['catcount']#)
-                </xar:if>
-            </td>
-            <!--
-            <xar:if condition="$loop:icons:item['catnum'] % 2 eq 0">
-        </tr>
-        <tr>
-            </xar:if>
-            -->
-        </xar:loop>
-    </tr>
-    </table>
+        <br />
+        <table border="0" cellpadding="2" cellspacing="0" width="100%">
+            <xar:for start="$i = 0" test="$i le count($caticons)" iter="$i++">
+                <xar:set name="j">0</xar:set>
+                <xar:while condition="1">
+                    <tr>
+                        <td align="center" valign="middle">
+                            <a href="#$caticons[$i]['catlink']#"><img src="#$caticons[$i]['catimage']#" border="0" alt="#$caticons[$i]['catlabel']#" /><br />#$caticons[$i]['catlabel']#</a>
+                            <xar:if condition="!empty($caticons[$i]['catcount'])">
+                                (#$caticons[$i]['catcount']#)
+                            </xar:if>
+                        </td>
+                        <xar:set name="j">$j + 1</xar:set>
+                        <xar:if condition="$i % 2 eq 0">
+                            <xar:break />
+                        </xar:if>
+                    </tr>
+                </xar:while>
+            </xar:for>
+        </table>
     </xar:if>
 
     <xar:if condition="!empty($catlines) and count($catlines) gt 0">

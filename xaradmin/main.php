@@ -26,7 +26,7 @@ function categories_admin_main()
         // Return the output
         return array();
     } else {
-        xarResponseRedirect(xarModURL('categories', 'admin', 'viewcats'));
+        xarResponse::Redirect(xarModURL('categories', 'admin', 'viewcats'));
     }
 
     return true;
