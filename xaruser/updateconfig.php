@@ -38,6 +38,6 @@ function weather_user_updateconfig()
         xarModUserVars::set('weather','extdays',$extdays);
     }
     
-    xarResponseRedirect(xarModURL('weather','user','modifyconfig'));
+    xarResponse::Redirect(xarModURL('weather','user','modifyconfig'));
 }
 ?>

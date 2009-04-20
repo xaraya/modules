@@ -49,9 +49,9 @@ function weather_user_search()
 // Ignore the match search because we used dropdowns, so the choice is valid
 
 //    if(count($matches) == 1) {
-//        xarResponseRedirect(xarModURL('weather','user','main',array('xwloc'=>$matches[0]['zip'])));
+//        xarResponse::Redirect(xarModURL('weather','user','main',array('xwloc'=>$matches[0]['zip'])));
     if(isset($loc) && !empty($loc)) {;
-        xarResponseRedirect(xarModURL('weather','user','main',array('xwloc'=>$loc)));
+        xarResponse::Redirect(xarModURL('weather','user','main',array('xwloc'=>$loc)));
     } else {
         $data['default_location'] = null;
         $data['loc'] = $loc;
