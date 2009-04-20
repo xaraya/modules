@@ -8,9 +8,11 @@
     {
         if(!xarSecurityCheck('AdminXarayatesting')) return;
 
-        if (!xarModVars::get('modules', 'disableoverview') == 0) {
-            xarResponseRedirect(xarModURL('xarayatesting', 'admin', 'mastertables'));
+        if (xarModVars::get('modules', 'disableoverview') == 0){
+            return xarTplModule('xarayatesting','admin','overview');
+        } else {
+            xarResponse::Redirect(xarModURL('xarayatesting', 'admin', 'view'));
+            return true;
         }
-        return array();
     }
 ?>

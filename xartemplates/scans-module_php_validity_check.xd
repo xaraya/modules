@@ -10,22 +10,35 @@
         </span>
     </div>
     <div class="xar-mod-body">
-        <fieldset>
-            <xar:if condition="!empty($items)">
-                The following modules were checked for PHP validity:
-                <ul>
-                    <xar:foreach in="$items" value="$item" >
-                        <li>
-                            #$item['name']#
-                        </li>
-                    </xar:foreach>
-                </ul>
-            <xar:else />
-                No modules were checked
-            </xar:if>
-        </fieldset>
-        <fieldset>
-            <xar:button type="cancel" label="Back"/>
-        </fieldset>
+        <xar:if condition="empty($confirm)">   
+            <form action="#xarServer::getCurrentURL()#" method="post">
+                <fieldset>
+                    Choose a module to check:&#160;
+                    <xar:data-input type="dropdown" name="item" options="$items" firstline="0,All" />
+                </fieldset>
+                <fieldset>
+                    <input type="hidden" name="confirm" value="1" />
+                    <xar:button type="submit" label="Go"/>
+                </fieldset>
+            </form>
+        <xar:else />
+            <fieldset>
+                <xar:if condition="!empty($items)">
+                    The following modules were checked for PHP validity:
+                    <ul>
+                        <xar:foreach in="$items" value="$item" >
+                            <li>
+                                #$item['name']#
+                            </li>
+                        </xar:foreach>
+                    </ul>
+                <xar:else />
+                    No modules were checked
+                </xar:if>
+            </fieldset>
+            <fieldset>
+                <a href="#xarModURL('xarayatesting','admin','othertests')#" >Back to Scans</a>
+            </fieldset>
+        </xar:if>
     </div>
 </xar:template>

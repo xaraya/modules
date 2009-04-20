@@ -10,7 +10,7 @@
         if (!xarSecurityCheck('ReadXarayatesting')) return;
 
         if (!xarModVars::get('modules', 'disableoverview') == 0) {
-            xarResponseRedirect(xarModURL('xarayatesting', 'user', 'testpage'));
+            xarResponse::Redirect(xarModURL('xarayatesting', 'user', 'testpage'));
         }
         return array();
     }
