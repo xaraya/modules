@@ -303,7 +303,7 @@ class testxarModgetBaseInfo extends xarTestCase {
     }
     function testgetBaseInfoWithTypeParam2() {
         $this->expected = '[array]';
-        $this->actual   = xarMod::getBaseInfo('Xaraya_Classic','theme');
+        $this->actual   = xarMod::getBaseInfo('mallow','theme');
         $res = $this->assertTrue(is_array($this->actual) && (count($this->actual) == 8),"Call with theme name param and type = 'theme' returns an array of 8 elements");
         return $res;
     }
@@ -352,7 +352,7 @@ class testxarModgetFileInfo extends xarTestCase {
     }
     function testgetFileInfoWithTypeParam2() {
         $this->expected = '[array]';
-        $this->actual   = xarMod::GetFileInfo('Xaraya_Classic','theme');
+        $this->actual   = xarMod::GetFileInfo('mallow','theme');
         $res = $this->assertTrue(is_array($this->actual) && (count($this->actual) == 26),"Call with theme name param and type = 'theme' returns an array of 30 elements");
         return $res;
     }
@@ -493,7 +493,7 @@ class testxarModisAvailable extends xarTestCase {
     }
     function testisAvailableWithTypeParam2() {
         $this->expected = true;
-        $this->actual   = xarMod::isAvailable('Xaraya_Classic','theme');
+        $this->actual   = xarMod::isAvailable('mallow','theme');
         $res = $this->assertSame($this->actual,$this->expected,"Call with theme name param and type = 'theme' returns returns a boolean");
         return $res;
     }

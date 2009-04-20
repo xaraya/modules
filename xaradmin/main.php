@@ -6,7 +6,7 @@
 
     function xarayatesting_admin_main()
     {
-        if(!xarSecurityCheck('AdminXarayatesting')) return;
+        if(!xarSecurityCheck('EditXarayatesting')) return;
 
         if (xarModVars::get('modules', 'disableoverview') == 0){
             return xarTplModule('xarayatesting','admin','overview');

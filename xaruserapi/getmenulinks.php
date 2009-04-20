@@ -11,7 +11,7 @@ function xarayatesting_userapi_getmenulinks()
     if (xarSecurityCheck('ViewXarayatesting',0)) {
         $menulinks[] = array('url'   => xarModURL('xarayatesting',
                                                   'user',
-                                                  'overview'),
+                                                  'main'),
                               'title' => xarML('An overview page for this module'),
                               'label' => xarML('Overview'));
         $menulinks[] = array('url'   => xarModURL('xarayatesting',

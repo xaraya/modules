@@ -1,7 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <xar:set name="compare">xarServer::getCurrentURL()</xar:set>
-    <xar:set name="stub">basename(xarServer::getCurrentURL())</xar:set>
+    <xar:set name="compare">xarServerGetCurrentURL()</xar:set>
+    <xar:set name="stub">basename(xarServerGetCurrentURL())</xar:set>
 
     <xar:if condition="$stub eq 'tab1'">
         <xar:set name="displayclass">"active"</xar:set>
