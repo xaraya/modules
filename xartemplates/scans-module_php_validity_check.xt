@@ -11,7 +11,7 @@
     </div>
     <div class="xar-mod-body">
         <xar:if condition="empty($confirm)">   
-            <form action="#xarServerGetCurrentURL()#" method="post">
+            <form action="#xarServer::getCurrentURL()#" method="post">
                 <fieldset>
                     Choose a module to check:&#160;
                     <xar:data-input type="dropdown" name="item" options="$items" firstline="0,All" />
