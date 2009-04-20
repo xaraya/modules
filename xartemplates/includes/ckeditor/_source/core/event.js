@@ -18,12 +18,18 @@ if ( !CKEDITOR.event )
 	 */
 	CKEDITOR.event = function()
 	{
-		( this._ || ( this._ = {} ) ).events = {};
+		//In case of preserving existed events
+		var preExistedEvents = this._	&& this._.events;
+		if( !preExistedEvents )
+			( this._ || ( this._ = {} ) ).events = {};
 	};
 
 	/**
 	 * Implements the {@link CKEDITOR.event} features in an object.
 	 * @param {Object} targetObject The object in which implement the features.
+	 * @param {Boolean} isTargetPrototype If the target is a prototype of
+	 *            constructor, the internal 'events' object will not be copied,
+	 *            which should be composed by the constructor itself.
 	 * @example
 	 * var myObject = { message : 'Example' };
 	 * <b>CKEDITOR.event.implementOn( myObject }</b>;
@@ -33,14 +39,30 @@ if ( !CKEDITOR.event )
 	 *     });
 	 * myObject.fire( 'testEvent' );
 	 */
-	CKEDITOR.event.implementOn = function( targetObject )
+	CKEDITOR.event.implementOn = function( targetObject , isTargetPrototype)
 	{
-		CKEDITOR.event.call( targetObject );
+		if( !isTargetPrototype )
+			CKEDITOR.event.call( targetObject );
 
 		for ( var prop in CKEDITOR.event.prototype )
 		{
-			if ( targetObject[ prop ] == undefined )
-				targetObject[ prop ] = CKEDITOR.event.prototype[ prop ];
+			(function(){
+
+				var property = prop;
+
+				if ( targetObject[ property ] == undefined )
+					targetObject[ property ] = isTargetPrototype?
+					function()
+					{
+						//pre-setup events model
+						if( ! ( this._ && this._.events ) )
+							CKEDITOR.event.call( this );
+
+						( this[ property ] = CKEDITOR.event.prototype[ property ] )
+							.apply( this, arguments );
+					} :
+					CKEDITOR.event.prototype[ property ];
+			})();
 		}
 	};
 
@@ -121,6 +143,8 @@ if ( !CKEDITOR.event )
 					if ( isNaN( priority ) )
 						priority = 10;
 
+					var me = this;
+
 					// Create the function to be fired for this listener.
 					var listenerFirer = function( editor, publisherData, stopFn, cancelFn )
 					{
@@ -132,7 +156,11 @@ if ( !CKEDITOR.event )
 							data : publisherData,
 							listenerData : listenerData,
 							stop : stopFn,
-							cancel : cancelFn
+							cancel : cancelFn,
+							removeListener : function()
+							{
+								me.removeListener( eventName, listenerFunction );
+							}
 						};
 
 						listenerFunction.call( scopeObj, ev );
@@ -216,18 +244,29 @@ if ( !CKEDITOR.event )
 
 					if ( event )
 					{
-						// Loop through all listeners.
-						for ( var i = 0, listeners = event.listeners ; i < listeners.length ; i++ )
+						var listeners = event.listeners;
+
+						if ( listeners.length )
 						{
-							// Call the listener, passing the event data.
-							var retData = listeners[i].call( this, editor, data, stopEvent, cancelEvent );
+							// As some listeners may remove themselves from the
+							// event, the original array length is dinamic. So,
+							// let's make a copy of all listeners, so we are
+							// sure we'll call all of them.
+							listeners = listeners.slice( 0 );
 
-							if ( typeof retData != 'undefined' )
-								data = retData;
+							// Loop through all listeners.
+							for ( var i = 0 ; i < listeners.length ; i++ )
+							{
+								// Call the listener, passing the event data.
+								var retData = listeners[i].call( this, editor, data, stopEvent, cancelEvent );
 
-							// No further calls is stopped or canceled.
-							if ( stopped || canceled )
-								break;
+								if ( typeof retData != 'undefined' )
+									data = retData;
+
+								// No further calls is stopped or canceled.
+								if ( stopped || canceled )
+									break;
+							}
 						}
 					}
 

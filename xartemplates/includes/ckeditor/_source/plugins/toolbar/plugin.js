@@ -13,6 +13,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	var toolbox = function()
 	{
 		this.toolbars = [];
+		this.focusCommandExecuted = false;
 	};
 
 	toolbox.prototype.focus = function()
@@ -37,14 +38,17 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			exec : function( editor )
 			{
 				if ( editor.toolbox )
+				{
+					editor.toolbox.focusCommandExecuted = true;
 					editor.toolbox.focus();
+				}
 			}
 		}
 	};
 
 	CKEDITOR.plugins.add( 'toolbar',
 	{
-		init : function( editor, pluginPath )
+		init : function( editor )
 		{
 			var itemKeystroke = function( item, keystroke )
 			{
@@ -112,6 +116,12 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 								toolbarId = 'cke_' + CKEDITOR.tools.getNextNumber(),
 								toolbarObj = { id : toolbarId, items : [] };
 
+							if ( row === '/' )
+							{
+								output.push( '<div class="cke_break"></div>' );
+								continue;
+							}
+
 							output.push( '<div id="', toolbarId, '" class="cke_toolbar">' );
 
 							// Add the toolbar to the "editor.toolbox.toolbars"
@@ -134,7 +144,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 								if ( itemName == '-' )
 									item = CKEDITOR.ui.separator;
 								else
-									item = editor.ui.get( itemName );
+									item = editor.ui.create( itemName );
 
 								if ( item )
 								{
@@ -149,6 +159,16 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 									itemObj.toolbar = toolbarObj;
 									itemObj.onkey = itemKeystroke;
+
+									/*
+									 * Fix for #3052:
+									 * Prevent JAWS from focusing the toolbar after document load.
+									 */
+									itemObj.onfocus = function()
+									{
+										if ( !editor.toolbox.focusCommandExecuted )
+											editor.focus();
+									};
 								}
 							}
 
@@ -205,12 +225,17 @@ CKEDITOR.config.toolbarLocation = 'top';
  */
 CKEDITOR.config.toolbar =
 [
-	[
-		'Source', '-',
-		'NewPage', '-',
-		'Bold', 'Italic', 'Underline', 'Strike', '-',
-		'Subscript', 'Superscript', '-',
-		'SelectAll', 'RemoveFormat', '-',
-		'Smiley', 'HorizontalRule', 'SpecialChar'
-	]
+	['Source','-','Save','NewPage','Preview','-','Templates'],
+	['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print', 'SpellChecker'],
+	['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
+	['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField'],
+	'/',
+	['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
+	['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
+	['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+	['Link','Unlink','Anchor'],	['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
+	'/',
+	['Styles','Format','Font','FontSize'],
+	['TextColor','BGColor'],
+	['ShowBlocks']
 ];

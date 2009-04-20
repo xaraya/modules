@@ -804,6 +804,24 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont">CKEDITOR.dom.element.<b><a href="../symbols/CKEDITOR.dom.element.html#.clearAllMarkers">clearAllMarkers</a></b>(database)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">CKEDITOR.dom.element.<b><a href="../symbols/CKEDITOR.dom.element.html#.clearMarkers">clearMarkers</a></b>(database, element, removeFromDatabase)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont">CKEDITOR.dom.element.<b><a href="../symbols/CKEDITOR.dom.element.html#.createFromHtml">createFromHtml</a></b>(html, ownerDocument)
 								</div>
 								<div class="description">Creates an instance of the <a href="../symbols/CKEDITOR.dom.element.html#constructor">CKEDITOR.dom.element</a> class based on the
@@ -817,6 +835,15 @@ HTML representation of an element.</div>
 								<div class="fixedFont">CKEDITOR.dom.element.<b><a href="../symbols/CKEDITOR.dom.element.html#.get">get</a></b>(element)
 								</div>
 								<div class="description">The the <a href="../symbols/CKEDITOR.dom.element.html#constructor">CKEDITOR.dom.element</a> representing and element.</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">CKEDITOR.dom.element.<b><a href="../symbols/CKEDITOR.dom.element.html#.setMarker">setMarker</a></b>(database, element, name, value)
+								</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 
@@ -835,6 +862,24 @@ HTML representation of an element.</div>
 								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#append">append</a></b>(node, toStart)
 								</div>
 								<div class="description">Append a node as a child of this element.</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#appendBogus">appendBogus</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#appendHtml">appendHtml</a></b>(html)
+								</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 
@@ -860,6 +905,15 @@ this element between the broken parts.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#copyAttributes">copyAttributes</a></b>(target, skip)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#focus">focus</a></b>()
 								</div>
 								<div class="description">Moves the selection focus to this element.</div>
@@ -869,7 +923,7 @@ this element between the broken parts.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#focusNext">focusNext</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#focusNext">focusNext</a></b>(ignoreChildren)
 								</div>
 								<div class="description">Moves the UI focus to the element following this element in the tabindex
 order.</div>
@@ -879,7 +933,7 @@ order.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#focusPrevious">focusPrevious</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#focusPrevious">focusPrevious</a></b>(ignoreChildren)
 								</div>
 								<div class="description">Moves the UI focus to the element before this element in the tabindex order.</div>
 							</td>
@@ -916,6 +970,15 @@ properties.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#getDocumentPosition">getDocumentPosition</a></b>(refDocument)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#getDtd">getDtd</a></b>()
 								</div>
 								<div class="description">Gets the DTD entries for this element.</div>
@@ -925,7 +988,7 @@ properties.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#getElementsByTag">getElementsByTag</a></b>(tagName)
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#getElementsByTag">getElementsByTag</a></b>(tagName, namespace)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -997,6 +1060,33 @@ properties.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#getOuterHtml">getOuterHtml</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#getPositionedAncestor">getPositionedAncestor</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#getStyle">getStyle</a></b>(name)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#getTabIndex">getTabIndex</a></b>()
 								</div>
 								<div class="description">Gets the computed tabindex for this element.</div>
@@ -1033,6 +1123,15 @@ properties.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#hasClass">hasClass</a></b>(className)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#hide">hide</a></b>()
 								</div>
 								<div class="description">Hides this element (display:none).</div>
@@ -1045,6 +1144,42 @@ properties.</div>
 								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#is">is</a></b>()
 								</div>
 								<div class="description">Checks if the element name matches one or more names.</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#isBlockBoundary">isBlockBoundary</a></b>(customNodeNames)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#isEditable">isEditable</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#isIdentical">isIdentical</a></b>(otherElement)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#isVisible">isVisible</a></b>()
+								</div>
+								<div class="description">Checks if this element is visible.</div>
 							</td>
 						</tr>
 
@@ -1096,6 +1231,15 @@ properties.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#scrollIntoView">scrollIntoView</a></b>(alignTop)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#setAttribute">setAttribute</a></b>(name, value)
 								</div>
 								<div class="description">Sets the value of an element attribute.</div>
@@ -1126,6 +1270,15 @@ properties.</div>
 								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#setOpacity">setOpacity</a></b>(opacity)
 								</div>
 								<div class="description">Sets the opacity of an element.</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dom.element.html#setState">setState</a></b>(state)
+								</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 
@@ -1189,7 +1342,7 @@ properties.</div>
 
 
 				<dl class="inheritsList">
-				<dt>Methods borrowed from class <a href="../symbols/CKEDITOR.dom.node.html#constructor">CKEDITOR.dom.node</a>: </dt><dd><a href="../symbols/CKEDITOR.dom.node.html#appendTo">appendTo</a>, <a href="../symbols/CKEDITOR.dom.node.html#clone">clone</a>, <a href="../symbols/CKEDITOR.dom.node.html#getAscendant">getAscendant</a>, <a href="../symbols/CKEDITOR.dom.node.html#getChild">getChild</a>, <a href="../symbols/CKEDITOR.dom.node.html#getChildCount">getChildCount</a>, <a href="../symbols/CKEDITOR.dom.node.html#getDocument">getDocument</a>, <a href="../symbols/CKEDITOR.dom.node.html#getIndex">getIndex</a>, <a href="../symbols/CKEDITOR.dom.node.html#getNextSourceNode">getNextSourceNode</a>, <a href="../symbols/CKEDITOR.dom.node.html#getParent">getParent</a>, <a href="../symbols/CKEDITOR.dom.node.html#getParents">getParents</a>, <a href="../symbols/CKEDITOR.dom.node.html#getPosition">getPosition</a>, <a href="../symbols/CKEDITOR.dom.node.html#getPrevious">getPrevious</a>, <a href="../symbols/CKEDITOR.dom.node.html#getPreviousSourceNode">getPreviousSourceNode</a>, <a href="../symbols/CKEDITOR.dom.node.html#hasNext">hasNext</a>, <a href="../symbols/CKEDITOR.dom.node.html#hasPrevious">hasPrevious</a>, <a href="../symbols/CKEDITOR.dom.node.html#insertAfter">insertAfter</a>, <a href="../symbols/CKEDITOR.dom.node.html#insertBefore">insertBefore</a>, <a href="../symbols/CKEDITOR.dom.node.html#insertBeforeMe">insertBeforeMe</a>, <a href="../symbols/CKEDITOR.dom.node.html#move">move</a>, <a href="../symbols/CKEDITOR.dom.node.html#remove">remove</a></dd><dt>Methods borrowed from class <a href="../symbols/CKEDITOR.dom.domObject.html#constructor">CKEDITOR.dom.domObject</a>: </dt><dd><a href="../symbols/CKEDITOR.dom.domObject.html#equals">equals</a>, <a href="../symbols/CKEDITOR.dom.domObject.html#getCustomData">getCustomData</a>, <a href="../symbols/CKEDITOR.dom.domObject.html#setCustomData">setCustomData</a></dd><dt>Methods borrowed from class <a href="../symbols/CKEDITOR.event.html#constructor">CKEDITOR.event</a>: </dt><dd><a href="../symbols/CKEDITOR.event.html#fire">fire</a>, <a href="../symbols/CKEDITOR.event.html#fireOnce">fireOnce</a>, <a href="../symbols/CKEDITOR.event.html#hasListeners">hasListeners</a>, <a href="../symbols/CKEDITOR.event.html#.implementOn">implementOn</a>, <a href="../symbols/CKEDITOR.event.html#on">on</a>, <a href="../symbols/CKEDITOR.event.html#removeListener">removeListener</a></dd>
+				<dt>Methods borrowed from class <a href="../symbols/CKEDITOR.dom.node.html#constructor">CKEDITOR.dom.node</a>: </dt><dd><a href="../symbols/CKEDITOR.dom.node.html#appendTo">appendTo</a>, <a href="../symbols/CKEDITOR.dom.node.html#clone">clone</a>, <a href="../symbols/CKEDITOR.dom.node.html#getAddress">getAddress</a>, <a href="../symbols/CKEDITOR.dom.node.html#getAscendant">getAscendant</a>, <a href="../symbols/CKEDITOR.dom.node.html#getChild">getChild</a>, <a href="../symbols/CKEDITOR.dom.node.html#getChildCount">getChildCount</a>, <a href="../symbols/CKEDITOR.dom.node.html#getCommonAncestor">getCommonAncestor</a>, <a href="../symbols/CKEDITOR.dom.node.html#getDocument">getDocument</a>, <a href="../symbols/CKEDITOR.dom.node.html#getIndex">getIndex</a>, <a href="../symbols/CKEDITOR.dom.node.html#getNextSourceNode">getNextSourceNode</a>, <a href="../symbols/CKEDITOR.dom.node.html#getParent">getParent</a>, <a href="../symbols/CKEDITOR.dom.node.html#getParents">getParents</a>, <a href="../symbols/CKEDITOR.dom.node.html#getPosition">getPosition</a>, <a href="../symbols/CKEDITOR.dom.node.html#getPrevious">getPrevious</a>, <a href="../symbols/CKEDITOR.dom.node.html#getPreviousSourceNode">getPreviousSourceNode</a>, <a href="../symbols/CKEDITOR.dom.node.html#hasAscendant">hasAscendant</a>, <a href="../symbols/CKEDITOR.dom.node.html#hasNext">hasNext</a>, <a href="../symbols/CKEDITOR.dom.node.html#hasPrevious">hasPrevious</a>, <a href="../symbols/CKEDITOR.dom.node.html#insertAfter">insertAfter</a>, <a href="../symbols/CKEDITOR.dom.node.html#insertBefore">insertBefore</a>, <a href="../symbols/CKEDITOR.dom.node.html#insertBeforeMe">insertBeforeMe</a>, <a href="../symbols/CKEDITOR.dom.node.html#ltrim">ltrim</a>, <a href="../symbols/CKEDITOR.dom.node.html#move">move</a>, <a href="../symbols/CKEDITOR.dom.node.html#remove">remove</a>, <a href="../symbols/CKEDITOR.dom.node.html#replace">replace</a>, <a href="../symbols/CKEDITOR.dom.node.html#rtrim">rtrim</a>, <a href="../symbols/CKEDITOR.dom.node.html#trim">trim</a></dd><dt>Methods borrowed from class <a href="../symbols/CKEDITOR.dom.domObject.html#constructor">CKEDITOR.dom.domObject</a>: </dt><dd><a href="../symbols/CKEDITOR.dom.domObject.html#equals">equals</a>, <a href="../symbols/CKEDITOR.dom.domObject.html#getCustomData">getCustomData</a>, <a href="../symbols/CKEDITOR.dom.domObject.html#setCustomData">setCustomData</a></dd><dt>Methods borrowed from class <a href="../symbols/CKEDITOR.event.html#constructor">CKEDITOR.event</a>: </dt><dd><a href="../symbols/CKEDITOR.event.html#fire">fire</a>, <a href="../symbols/CKEDITOR.event.html#fireOnce">fireOnce</a>, <a href="../symbols/CKEDITOR.event.html#hasListeners">hasListeners</a>, <a href="../symbols/CKEDITOR.event.html#.implementOn">implementOn</a>, <a href="../symbols/CKEDITOR.event.html#on">on</a>, <a href="../symbols/CKEDITOR.event.html#removeListener">removeListener</a></dd>
 				</dl>
 
 
@@ -1349,6 +1502,106 @@ alert( <b>element.hasAttributes()</b> );  "false"</pre>
 					Method Detail
 				</div>
 
+					<a name=".clearAllMarkers"> </a>
+					<div class="fixedFont" style="float:left">&lt;static&gt;
+
+					<span class="light">{Undefined}</span>
+					<span class="light">CKEDITOR.dom.element.</span><b>clearAllMarkers</b>(database)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>database</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
+					<a name=".clearMarkers"> </a>
+					<div class="fixedFont" style="float:left">&lt;static&gt;
+
+					<span class="light">{Undefined}</span>
+					<span class="light">CKEDITOR.dom.element.</span><b>clearMarkers</b>(database, element, removeFromDatabase)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>database</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>element</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>removeFromDatabase</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
 					<a name=".createFromHtml"> </a>
 					<div class="fixedFont" style="float:left">&lt;static&gt;
 
@@ -1477,6 +1730,68 @@ alert( <b>CKEDITOR.dom.element.get( element )</b>.getName() );  e.g. "p"</pre>
 
 					<hr />
 
+					<a name=".setMarker"> </a>
+					<div class="fixedFont" style="float:left">&lt;static&gt;
+
+					<span class="light">{Undefined}</span>
+					<span class="light">CKEDITOR.dom.element.</span><b>setMarker</b>(database, element, name, value)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>database</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>element</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>name</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>value</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
 					<a name="addClass"> </a>
 					<div class="fixedFont" style="float:left">
 
@@ -1593,6 +1908,83 @@ var em = <b>p.append( 'em' );</b>
 								<dd><span class="light fixedFont">{<a href="../symbols/CKEDITOR.dom.node.html#constructor">CKEDITOR.dom.node</a>}</span> The appended node.</dd>
 
 							</dl>
+
+
+
+
+					<hr />
+
+					<a name="appendBogus"> </a>
+					<div class="fixedFont" style="float:left">
+
+					<span class="light">{Undefined}</span>
+					<b>appendBogus</b>()
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+
+
+
+
+
+
+					<hr />
+
+					<a name="appendHtml"> </a>
+					<div class="fixedFont" style="float:left">
+
+					<span class="light">{Undefined}</span>
+					<b>appendHtml</b>(html)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>html</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
+
+
+
 
 
 
@@ -1719,6 +2111,56 @@ element.breakParent( parent );</pre>
 
 					<hr />
 
+					<a name="copyAttributes"> </a>
+					<div class="fixedFont" style="float:left">
+
+					<span class="light">{Undefined}</span>
+					<b>copyAttributes</b>(target, skip)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>target</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>skip</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
 					<a name="focus"> </a>
 					<div class="fixedFont" style="float:left">
 
@@ -1761,7 +2203,7 @@ element.breakParent( parent );</pre>
 					<div class="fixedFont" style="float:left">
 
 					<span class="light">{Undefined}</span>
-					<b>focusNext</b>()
+					<b>focusNext</b>(ignoreChildren)
 
 					</div>
 					<div style="float:right">
@@ -1791,6 +2233,17 @@ element.focusNext();</pre>
 
 
 
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>ignoreChildren</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
+
 
 
 
@@ -1803,7 +2256,7 @@ element.focusNext();</pre>
 					<div class="fixedFont" style="float:left">
 
 					<span class="light">{Undefined}</span>
-					<b>focusPrevious</b>()
+					<b>focusPrevious</b>(ignoreChildren)
 
 					</div>
 					<div style="float:right">
@@ -1831,6 +2284,17 @@ element.focusPrevious();</pre>
 
 
 
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>ignoreChildren</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
 
 
 
@@ -1986,6 +2450,50 @@ alert( <b>element.getComputedStyle( 'display' )</b> );  // "inline"</pre>
 
 					<hr />
 
+					<a name="getDocumentPosition"> </a>
+					<div class="fixedFont" style="float:left">
+
+					<span class="light">{Undefined}</span>
+					<b>getDocumentPosition</b>(refDocument)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>refDocument</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
 					<a name="getDtd"> </a>
 					<div class="fixedFont" style="float:left">
 
@@ -2031,7 +2539,7 @@ alert( <b>element.getComputedStyle( 'display' )</b> );  // "inline"</pre>
 					<div class="fixedFont" style="float:left">
 
 					<span class="light">{Undefined}</span>
-					<b>getElementsByTag</b>(tagName)
+					<b>getElementsByTag</b>(tagName, namespace)
 
 					</div>
 					<div style="float:right">
@@ -2057,6 +2565,12 @@ alert( <b>element.getComputedStyle( 'display' )</b> );  // "inline"</pre>
 
 								<dt>
 									<span class="light fixedFont">{Undefined}</span> <b>tagName</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>namespace</b>
 
 								</dt>
 								<dd></dd>
@@ -2379,6 +2893,116 @@ alert( first.getName() );  // "i"</pre>
 
 					<hr />
 
+					<a name="getOuterHtml"> </a>
+					<div class="fixedFont" style="float:left">
+
+					<span class="light">{Undefined}</span>
+					<b>getOuterHtml</b>()
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+
+
+
+
+
+
+					<hr />
+
+					<a name="getPositionedAncestor"> </a>
+					<div class="fixedFont" style="float:left">
+
+					<span class="light">{Undefined}</span>
+					<b>getPositionedAncestor</b>()
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+
+
+
+
+
+
+					<hr />
+
+					<a name="getStyle"> </a>
+					<div class="fixedFont" style="float:left">
+
+					<span class="light">{Undefined}</span>
+					<b>getStyle</b>(name)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>name</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
 					<a name="getTabIndex"> </a>
 					<div class="fixedFont" style="float:left">
 
@@ -2557,6 +3181,50 @@ for form field elements.
 
 					<hr />
 
+					<a name="hasClass"> </a>
+					<div class="fixedFont" style="float:left">
+
+					<span class="light">{Undefined}</span>
+					<b>hasClass</b>(className)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>className</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
 					<a name="hide"> </a>
 					<div class="fixedFont" style="float:left">
 
@@ -2646,6 +3314,172 @@ alert( <b>element.is( 'p', 'div' )</b> );  "false"</pre>
 							<dt class="heading">Returns:</dt>
 
 								<dd><span class="light fixedFont">{Boolean}</span> true if the element name matches any of the names.</dd>
+
+							</dl>
+
+
+
+
+					<hr />
+
+					<a name="isBlockBoundary"> </a>
+					<div class="fixedFont" style="float:left">
+
+					<span class="light">{Undefined}</span>
+					<b>isBlockBoundary</b>(customNodeNames)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/core_dom_domwalker.js.html">core/dom/domwalker.js</a>.
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>customNodeNames</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
+					<a name="isEditable"> </a>
+					<div class="fixedFont" style="float:left">
+
+					<span class="light">{Undefined}</span>
+					<b>isEditable</b>()
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+
+
+
+
+
+
+					<hr />
+
+					<a name="isIdentical"> </a>
+					<div class="fixedFont" style="float:left">
+
+					<span class="light">{Undefined}</span>
+					<b>isIdentical</b>(otherElement)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>otherElement</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
+					<a name="isVisible"> </a>
+					<div class="fixedFont" style="float:left">
+
+					<span class="light">{Boolean}</span>
+					<b>isVisible</b>()
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+						Checks if this element is visible. May not work if the element is
+child of an element with visibility set to "hidden", but works well
+on the great majority of cases.
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+
+								<dd><span class="light fixedFont">{Boolean}</span> True if the element is visible.</dd>
 
 							</dl>
 
@@ -2899,6 +3733,50 @@ element.removeStyle( 'display' );</pre>
 
 					<hr />
 
+					<a name="scrollIntoView"> </a>
+					<div class="fixedFont" style="float:left">
+
+					<span class="light">{Undefined}</span>
+					<b>scrollIntoView</b>(alignTop)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>alignTop</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
 					<a name="setAttribute"> </a>
 					<div class="fixedFont" style="float:left">
 
@@ -3117,6 +3995,50 @@ element.removeStyle( 'display' );</pre>
 
 								</dt>
 								<dd>A number within the range [0.0, 1.0].</dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
+					<a name="setState"> </a>
+					<div class="fixedFont" style="float:left">
+
+					<span class="light">{Undefined}</span>
+					<b>setState</b>(state)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>state</b>
+
+								</dt>
+								<dd></dd>
 
 							</dl>
 

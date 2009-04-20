@@ -51,7 +51,7 @@
                         break;
                 }
 
-                xarResponseRedirect(xarModURL('ckeditor', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
+                xarResponse::Redirect(xarModURL('ckeditor', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
                 // Return
                 return true;
                 break;

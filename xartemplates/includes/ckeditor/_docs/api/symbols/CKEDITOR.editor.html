@@ -893,6 +893,15 @@ instance.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.editor.html#addCss">addCss</a></b>(css)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.editor.html#addMode">addMode</a></b>(mode, modeEditor)
 								</div>
 								<div class="description">Registers an editing mode.</div>
@@ -913,6 +922,24 @@ editing area.</div>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.editor.html#checkDirty">checkDirty</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.editor.html#createFakeElement">createFakeElement</a></b>(realElement, className, realElementType, isResizable)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.editor.html#createFakeParserElement">createFakeParserElement</a></b>(realElement, className, realElementType, isResizable)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -942,6 +969,15 @@ editing area.</div>
 								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.editor.html#focus">focus</a></b>()
 								</div>
 								<div class="description">Moves the selection focus to the editing are space in the editor.</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.editor.html#forceNextSelectionCheck">forceNextSelectionCheck</a></b>()
+								</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 
@@ -1003,6 +1039,24 @@ editor.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.editor.html#insertText">insertText</a></b>(text)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.editor.html#loadSnapshot">loadSnapshot</a></b>(snapshot)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.editor.html#openDialog">openDialog</a></b>(dialogName)
 								</div>
 								<div class="description">Loads and opens a registered dialog.</div>
@@ -1013,6 +1067,15 @@ editor.</div>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.editor.html#resetDirty">resetDirty</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.editor.html#restoreRealElement">restoreRealElement</a></b>(fakeElement)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -1640,6 +1703,53 @@ this function can be later executed with <a href="#execCommand">#execCommand</a>
 
 					<hr />
 
+					<a name="addCss"> </a>
+					<div class="fixedFont" style="float:left">
+
+					<span class="light">{Undefined}</span>
+					<b>addCss</b>(css)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/core_editor.js.html">core/editor.js</a>.
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>css</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
 					<a name="addMode"> </a>
 					<div class="fixedFont" style="float:left">
 
@@ -1723,7 +1833,7 @@ states are <a href="../symbols/CKEDITOR.html#.TRISTATE_ON">CKEDITOR.TRISTATE_ON<
 
 
 
-							<pre class="code">// Create a style object for the <b> element.
+							<pre class="code">// Create a style object for the &lt;b&gt; element.
 var style = new CKEDITOR.style( { element : 'b' } );
 var editor = CKEDITOR.instances.editor1;
 editor.attachStyleStateChange( style, function( state )
@@ -1790,6 +1900,136 @@ editor.attachStyleStateChange( style, function( state )
 						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
 
 
+
+
+
+
+
+
+
+					<hr />
+
+					<a name="createFakeElement"> </a>
+					<div class="fixedFont" style="float:left">
+
+					<span class="light">{Undefined}</span>
+					<b>createFakeElement</b>(realElement, className, realElementType, isResizable)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/plugins_fakeobjects_plugin.js.html">plugins/fakeobjects/plugin.js</a>.
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>realElement</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>className</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>realElementType</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>isResizable</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
+					<a name="createFakeParserElement"> </a>
+					<div class="fixedFont" style="float:left">
+
+					<span class="light">{Undefined}</span>
+					<b>createFakeParserElement</b>(realElement, className, realElementType, isResizable)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/plugins_fakeobjects_plugin.js.html">plugins/fakeobjects/plugin.js</a>.
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>realElement</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>className</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>realElementType</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>isResizable</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
 
 
 
@@ -1939,6 +2179,42 @@ alert( CKEDITOR.instances.editor1 );  "undefined"</pre>
 
 							<br />
 							<i>Defined in: </i> <a href="../symbols/src/plugins_editingblock_plugin.js.html">plugins/editingblock/plugin.js</a>.
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+
+
+
+
+
+
+					<hr />
+
+					<a name="forceNextSelectionCheck"> </a>
+					<div class="fixedFont" style="float:left">
+
+					<span class="light">{Undefined}</span>
+					<b>forceNextSelectionCheck</b>()
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/plugins_selection_plugin.js.html">plugins/selection/plugin.js</a>.
 
 
 					</div>
@@ -2254,6 +2530,100 @@ CKEDITOR.instances.editor1.<b>insertElement( element )</b>;</pre>
 
 					<hr />
 
+					<a name="insertText"> </a>
+					<div class="fixedFont" style="float:left">
+
+					<span class="light">{Undefined}</span>
+					<b>insertText</b>(text)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/plugins_pastetext_plugin.js.html">plugins/pastetext/plugin.js</a>.
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>text</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
+					<a name="loadSnapshot"> </a>
+					<div class="fixedFont" style="float:left">
+
+					<span class="light">{Undefined}</span>
+					<b>loadSnapshot</b>(snapshot)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/core_editor.js.html">core/editor.js</a>.
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>snapshot</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
 					<a name="openDialog"> </a>
 					<div class="fixedFont" style="float:left">
 
@@ -2346,6 +2716,53 @@ CKEDITOR.instances.editor1.<b>insertElement( element )</b>;</pre>
 						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
 
 
+
+
+
+
+
+
+
+					<hr />
+
+					<a name="restoreRealElement"> </a>
+					<div class="fixedFont" style="float:left">
+
+					<span class="light">{Undefined}</span>
+					<b>restoreRealElement</b>(fakeElement)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/plugins_fakeobjects_plugin.js.html">plugins/fakeobjects/plugin.js</a>.
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>fakeElement</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
 
 
 

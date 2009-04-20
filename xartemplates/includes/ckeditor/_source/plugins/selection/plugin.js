@@ -81,7 +81,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 	CKEDITOR.plugins.add( 'selection',
 	{
-		init : function( editor, pluginPath )
+		init : function( editor )
 		{
 			editor.on( 'contentDom', function()
 				{
@@ -108,94 +108,99 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					label : editor.lang.selectAll,
 					command : 'selectAll'
 				});
+
+			editor.selectionChange = checkSelectionChangeTimeout;
 		}
 	});
-})();
-
-/**
- * Gets the current selection from the editing area when in WYSIWYG mode.
- * @returns {CKEDITOR.dom.selection} A selection object or null if not on
- *		WYSIWYG mode or no selection is available.
- * @example
- * var selection = CKEDITOR.instances.editor1.<b>getSelection()</b>;
- * alert( selection.getType() );
- */
-CKEDITOR.editor.prototype.getSelection = function()
-{
-	var retval = this.document ? this.document.getSelection() : null;
 
 	/**
-	 * IE BUG: The selection's document may be a different document than the
-	 * editor document. Return null if that's the case.
+	 * Gets the current selection from the editing area when in WYSIWYG mode.
+	 * @returns {CKEDITOR.dom.selection} A selection object or null if not on
+	 *		WYSIWYG mode or no selection is available.
+	 * @example
+	 * var selection = CKEDITOR.instances.editor1.<b>getSelection()</b>;
+	 * alert( selection.getType() );
 	 */
-	if ( retval && CKEDITOR.env.ie )
+	CKEDITOR.editor.prototype.getSelection = function()
 	{
-		var range = retval.getNative().createRange();
-		if ( !range )
-			return null;
-		else if ( range.item )
-			return range.item(0).ownerDocument == this.document.$ ? retval : null;
-		else
-			return range.parentElement().ownerDocument == this.document.$ ? retval : null;
-	}
-	return retval;
-};
+		var retval = this.document ? this.document.getSelection() : null;
 
-/**
- * Gets the current selection from the document.
- * @returns {CKEDITOR.dom.selection} A selection object.
- * @example
- * var selection = CKEDITOR.instances.editor1.document.<b>getSelection()</b>;
- * alert( selection.getType() );
- */
-CKEDITOR.dom.document.prototype.getSelection = function()
-{
-	return new CKEDITOR.dom.selection( this );
-};
+		/**
+		 * IE BUG: The selection's document may be a different document than the
+		 * editor document. Return null if that's the case.
+		 */
+		if ( retval && CKEDITOR.env.ie )
+		{
+			var range = retval.getNative().createRange();
+			if ( !range )
+				return null;
+			else if ( range.item )
+				return range.item(0).ownerDocument == this.document.$ ? retval : null;
+			else
+				return range.parentElement().ownerDocument == this.document.$ ? retval : null;
+		}
 
-/**
- * No selection.
- * @constant
- * @example
- * if ( editor.getSelection().getType() == CKEDITOR.SELECTION_NONE )
- *     alert( 'Nothing is selected' );
- */
-CKEDITOR.SELECTION_NONE		= 1;
-
-/**
- * Text or collapsed selection.
- * @constant
- * @example
- * if ( editor.getSelection().getType() == CKEDITOR.SELECTION_TEXT )
- *     alert( 'Text is selected' );
- */
-CKEDITOR.SELECTION_TEXT		= 2;
-
-/**
- * Element selection.
- * @constant
- * @example
- * if ( editor.getSelection().getType() == CKEDITOR.SELECTION_ELEMENT )
- *     alert( 'An element is selected' );
- */
-CKEDITOR.SELECTION_ELEMENT	= 3;
-
-/**
- * Manipulates the selection in a DOM document.
- * @constructor
- * @example
- */
-CKEDITOR.dom.selection = function( document )
-{
-	this.document = document;
-	this._ =
-	{
-		cache : {}
+		return retval;
 	};
-};
 
-(function()
-{
+	CKEDITOR.editor.prototype.forceNextSelectionCheck = function()
+	{
+		delete this._.selectionPreviousPath;
+	};
+
+	/**
+	 * Gets the current selection from the document.
+	 * @returns {CKEDITOR.dom.selection} A selection object.
+	 * @example
+	 * var selection = CKEDITOR.instances.editor1.document.<b>getSelection()</b>;
+	 * alert( selection.getType() );
+	 */
+	CKEDITOR.dom.document.prototype.getSelection = function()
+	{
+		return new CKEDITOR.dom.selection( this );
+	};
+
+	/**
+	 * No selection.
+	 * @constant
+	 * @example
+	 * if ( editor.getSelection().getType() == CKEDITOR.SELECTION_NONE )
+	 *     alert( 'Nothing is selected' );
+	 */
+	CKEDITOR.SELECTION_NONE		= 1;
+
+	/**
+	 * Text or collapsed selection.
+	 * @constant
+	 * @example
+	 * if ( editor.getSelection().getType() == CKEDITOR.SELECTION_TEXT )
+	 *     alert( 'Text is selected' );
+	 */
+	CKEDITOR.SELECTION_TEXT		= 2;
+
+	/**
+	 * Element selection.
+	 * @constant
+	 * @example
+	 * if ( editor.getSelection().getType() == CKEDITOR.SELECTION_ELEMENT )
+	 *     alert( 'An element is selected' );
+	 */
+	CKEDITOR.SELECTION_ELEMENT	= 3;
+
+	/**
+	 * Manipulates the selection in a DOM document.
+	 * @constructor
+	 * @example
+	 */
+	CKEDITOR.dom.selection = function( document )
+	{
+		this.document = document;
+		this._ =
+		{
+			cache : {}
+		};
+	};
+
 	var styleObjectElements = { img:1,hr:1,li:1,table:1,tr:1,td:1,embed:1,object:1,ol:1,ul:1 };
 
 	CKEDITOR.dom.selection.prototype =
@@ -619,13 +624,24 @@ CKEDITOR.dom.selection = function( document )
 					}
 				},
 
-		createBookmarks : function()
+		createBookmarks : function( serializable )
 		{
 			var retval = [],
 				ranges = this.getRanges();
 			for ( var i = 0 ; i < ranges.length ; i++ )
-				retval.push( ranges[i].createBookmark() );
+				retval.push( ranges[i].createBookmark( serializable ) );
 			return retval;
+		},
+
+		createBookmarks2 : function( normalized )
+		{
+			var bookmarks = [],
+				ranges = this.getRanges();
+
+			for ( var i = 0 ; i < ranges.length ; i++ )
+				bookmarks.push( ranges[i].createBookmark2( normalized ) );
+
+			return bookmarks;
 		},
 
 		selectBookmarks : function( bookmarks )
@@ -682,8 +698,19 @@ CKEDITOR.dom.range.prototype.select =
 			}
 			else
 			{
-				isStartMakerAlone = ( !startNode.hasPrevious() || ( startNode.getPrevious().is && startNode.getPrevious().is( 'br' ) ) )
-					&& !startNode.hasNext();
+// The isStartMakerAlone logic comes from V2. It guarantees that the lines
+// will expand and that the cursor will be blinking on the right place.
+// Actually, we are using this flag just to avoid using this hack in all
+// situations, but just on those needed.
+
+// But, in V3, somehow it is not interested on working whe hitting SHIFT+ENTER
+// inside text. So, let's jsut leave the hack happen always.
+
+// I'm still leaving the code here just in case. We may find some other IE
+// weirdness and uncommenting this stuff may be useful.
+
+//				isStartMakerAlone = ( !startNode.hasPrevious() || ( startNode.getPrevious().is && startNode.getPrevious().is( 'br' ) ) )
+//					&& !startNode.hasNext();
 
 				// Append a temporary <span>&#65279;</span> before the selection.
 				// This is needed to avoid IE destroying selections inside empty
@@ -694,14 +721,14 @@ CKEDITOR.dom.range.prototype.select =
 				dummySpan.setHtml( '&#65279;' );	// Zero Width No-Break Space (U+FEFF). See #1359.
 				dummySpan.insertBefore( startNode );
 
-				if ( isStartMakerAlone )
-				{
+//				if ( isStartMakerAlone )
+//				{
 					// To expand empty blocks or line spaces after <br>, we need
 					// instead to have any char, which will be later deleted using the
 					// selection.
-					// \ufeff = Zero Width No-Break Space (U+FEFF). See #1359.
+					// \ufeff = Zero Width No-Break Space (U+FEFF). (#1359)
 					this.document.createText( '\ufeff' ).insertBefore( startNode );
-				}
+//				}
 			}
 
 			// Remove the markers (reset the position, because of the changes in the DOM tree).
@@ -710,18 +737,18 @@ CKEDITOR.dom.range.prototype.select =
 
 			if ( collapsed )
 			{
-				if ( isStartMakerAlone )
-				{
-					// Move the selection start to include the temporary &#65279;.
-					//ieRange.moveStart( 'character', -1 );
+//				if ( isStartMakerAlone )
+//				{
+					// Move the selection start to include the temporary \ufeff.
+					ieRange.moveStart( 'character', -1 );
 
 					ieRange.select();
 
 					// Remove our temporary stuff.
-//					this.document.$.selection.clear();
-				}
-				else
-					ieRange.select();
+					this.document.$.selection.clear();
+//				}
+//				else
+//					ieRange.select();
 
 				dummySpan.remove();
 			}

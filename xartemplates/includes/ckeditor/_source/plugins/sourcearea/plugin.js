@@ -12,7 +12,7 @@ CKEDITOR.plugins.add( 'sourcearea',
 {
 	requires : [ 'editingblock' ],
 
-	init : function( editor, pluginPath )
+	init : function( editor )
 	{
 		var sourcearea = CKEDITOR.plugins.sourcearea;
 
@@ -26,7 +26,11 @@ CKEDITOR.plugins.add( 'sourcearea',
 						{
 							// Create the source area <textarea>.
 							textarea = new CKEDITOR.dom.element( 'textarea' );
-							textarea.setAttribute( 'dir', 'ltr' );
+							textarea.setAttributes(
+								{
+									dir : 'ltr',
+									tabIndex : -1
+								});
 							textarea.addClass( 'cke_source' );
 							textarea.setStyles({
 								width	: '100%',
@@ -68,6 +72,10 @@ CKEDITOR.plugins.add( 'sourcearea',
 
 							// Set the <textarea> value.
 							this.loadData( data );
+
+							var keystrokeHandler = editor.keystrokeHandler;
+							if ( keystrokeHandler )
+								keystrokeHandler.attach( textarea );
 
 							editor.mode = 'source';
 							editor.fire( 'mode' );
@@ -113,9 +121,10 @@ CKEDITOR.plugins.add( 'sourcearea',
 
 		editor.on( 'mode', function()
 			{
-				var command = editor.getCommand( 'source' );
-				command.state = ( editor.mode == 'source' ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF );
-				command.fire( 'state' );
+				editor.getCommand( 'source' ).setState(
+					editor.mode == 'source' ?
+						CKEDITOR.TRISTATE_ON :
+						CKEDITOR.TRISTATE_OFF );
 			});
 	}
 });
@@ -131,8 +140,11 @@ CKEDITOR.plugins.sourcearea =
 	{
 		source :
 		{
+			modes : { wysiwyg:1, source:1 },
+
 			exec : function( editor )
 			{
+				editor.getCommand( 'source' ).setState( CKEDITOR.TRISTATE_DISABLED );
 				editor.setMode( editor.mode == 'source' ? 'wysiwyg' : 'source' );
 			}
 		}

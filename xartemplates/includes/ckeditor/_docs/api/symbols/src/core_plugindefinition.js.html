@@ -46,31 +46,29 @@
 <span class='line'> 39</span>  * @name CKEDITOR.pluginDefinition.prototype.beforeInit
 <span class='line'> 40</span>  * @function
 <span class='line'> 41</span>  * @param {CKEDITOR.editor} editor The editor instance being initialized.
-<span class='line'> 42</span>  * @param {String} pluginPath The URL path for the plugin installation folder.
-<span class='line'> 43</span>  * @example
-<span class='line'> 44</span>  * CKEDITOR.plugins.add( 'sample',
-<span class='line'> 45</span>  * {
-<span class='line'> 46</span>  *     beforeInit : function( editor, pluginPath )
-<span class='line'> 47</span>  *     {
-<span class='line'> 48</span>  *         alert( 'Editor "' + editor.name + '" is to be initialized!' );
-<span class='line'> 49</span>  *     }
-<span class='line'> 50</span>  * });
-<span class='line'> 51</span>  */</span><span class="WHIT">
-<span class='line'> 52</span>
-<span class='line'> 53</span> </span><span class="WHIT"> </span><span class="COMM">/**
-<span class='line'> 54</span>  * Function called on initialization of every editor instance created in the
-<span class='line'> 55</span>  * page.
-<span class='line'> 56</span>  * @name CKEDITOR.pluginDefinition.prototype.init
-<span class='line'> 57</span>  * @function
-<span class='line'> 58</span>  * @param {CKEDITOR.editor} editor The editor instance being initialized.
-<span class='line'> 59</span>  * @param {String} pluginPath The URL path for the plugin installation folder.
-<span class='line'> 60</span>  * @example
-<span class='line'> 61</span>  * CKEDITOR.plugins.add( 'sample',
-<span class='line'> 62</span>  * {
-<span class='line'> 63</span>  *     init : function( editor, pluginPath )
-<span class='line'> 64</span>  *     {
-<span class='line'> 65</span>  *         alert( 'Editor "' + editor.name + '" is being initialized!' );
-<span class='line'> 66</span>  *     }
-<span class='line'> 67</span>  * });
-<span class='line'> 68</span>  */</span><span class="WHIT">
-<span class='line'> 69</span> </span></pre></body></html>
+<span class='line'> 42</span>  * @example
+<span class='line'> 43</span>  * CKEDITOR.plugins.add( 'sample',
+<span class='line'> 44</span>  * {
+<span class='line'> 45</span>  *     beforeInit : function( editor )
+<span class='line'> 46</span>  *     {
+<span class='line'> 47</span>  *         alert( 'Editor "' + editor.name + '" is to be initialized!' );
+<span class='line'> 48</span>  *     }
+<span class='line'> 49</span>  * });
+<span class='line'> 50</span>  */</span><span class="WHIT">
+<span class='line'> 51</span>
+<span class='line'> 52</span> </span><span class="WHIT"> </span><span class="COMM">/**
+<span class='line'> 53</span>  * Function called on initialization of every editor instance created in the
+<span class='line'> 54</span>  * page.
+<span class='line'> 55</span>  * @name CKEDITOR.pluginDefinition.prototype.init
+<span class='line'> 56</span>  * @function
+<span class='line'> 57</span>  * @param {CKEDITOR.editor} editor The editor instance being initialized.
+<span class='line'> 58</span>  * @example
+<span class='line'> 59</span>  * CKEDITOR.plugins.add( 'sample',
+<span class='line'> 60</span>  * {
+<span class='line'> 61</span>  *     init : function( editor )
+<span class='line'> 62</span>  *     {
+<span class='line'> 63</span>  *         alert( 'Editor "' + editor.name + '" is being initialized!' );
+<span class='line'> 64</span>  *     }
+<span class='line'> 65</span>  * });
+<span class='line'> 66</span>  */</span><span class="WHIT">
+<span class='line'> 67</span> </span></pre></body></html>

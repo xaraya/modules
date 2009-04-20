@@ -788,7 +788,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.pluginDefinition.html#beforeInit">beforeInit</a></b>(editor, pluginPath)
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.pluginDefinition.html#beforeInit">beforeInit</a></b>(editor)
 								</div>
 								<div class="description">Function called on initialization of every editor instance created in the
 page before the init() call task.</div>
@@ -798,7 +798,7 @@ page before the init() call task.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.pluginDefinition.html#init">init</a></b>(editor, pluginPath)
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.pluginDefinition.html#init">init</a></b>(editor)
 								</div>
 								<div class="description">Function called on initialization of every editor instance created in the
 page.</div>
@@ -911,7 +911,7 @@ doesn't guarantee the loading order of the plugins.
 					<div class="fixedFont" style="float:left">
 
 					<span class="light">{Undefined}</span>
-					<b>beforeInit</b>(editor, pluginPath)
+					<b>beforeInit</b>(editor)
 
 					</div>
 					<div style="float:right">
@@ -936,7 +936,7 @@ init function of other plugins.
 
 							<pre class="code">CKEDITOR.plugins.add( 'sample',
 {
-    beforeInit : function( editor, pluginPath )
+    beforeInit : function( editor )
     {
         alert( 'Editor "' + editor.name + '" is to be initialized!' );
     }
@@ -955,12 +955,6 @@ init function of other plugins.
 								</dt>
 								<dd>The editor instance being initialized.</dd>
 
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>pluginPath</b>
-
-								</dt>
-								<dd>The URL path for the plugin installation folder.</dd>
-
 							</dl>
 
 
@@ -975,7 +969,7 @@ init function of other plugins.
 					<div class="fixedFont" style="float:left">
 
 					<span class="light">{Undefined}</span>
-					<b>init</b>(editor, pluginPath)
+					<b>init</b>(editor)
 
 					</div>
 					<div style="float:right">
@@ -997,7 +991,7 @@ page.
 
 							<pre class="code">CKEDITOR.plugins.add( 'sample',
 {
-    init : function( editor, pluginPath )
+    init : function( editor )
     {
         alert( 'Editor "' + editor.name + '" is being initialized!' );
     }
@@ -1015,12 +1009,6 @@ page.
 
 								</dt>
 								<dd>The editor instance being initialized.</dd>
-
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>pluginPath</b>
-
-								</dt>
-								<dd>The URL path for the plugin installation folder.</dd>
 
 							</dl>
 

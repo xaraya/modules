@@ -842,9 +842,10 @@ with <a href="#add">#add</a>.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.resourceManager.html#addExternal">addExternal</a></b>(name, path)
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.resourceManager.html#addExternal">addExternal</a></b>(names, path, fileName)
 								</div>
-								<div class="description">Registers a resource to be loaded from an external path instead of the core base path.</div>
+								<div class="description">Registers one or more resources to be loaded from an external path
+instead of the core base path.</div>
 							</td>
 						</tr>
 
@@ -860,9 +861,18 @@ with <a href="#add">#add</a>.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.resourceManager.html#getFilePath">getFilePath</a></b>(name)
+								</div>
+								<div class="description">Get the file path for a specific loaded resource.</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.resourceManager.html#getPath">getPath</a></b>(name)
 								</div>
-								<div class="description">Get the full path for a specific loaded resource.</div>
+								<div class="description">Get the folder path for a specific loaded resource.</div>
 							</td>
 						</tr>
 
@@ -1183,7 +1193,7 @@ with <a href="#add">#add</a>.
 					<div class="fixedFont" style="float:left">
 
 					<span class="light">{Undefined}</span>
-					<b>addExternal</b>(name, path)
+					<b>addExternal</b>(names, path, fileName)
 
 					</div>
 					<div style="float:right">
@@ -1194,7 +1204,8 @@ with <a href="#add">#add</a>.
 					</div>
 					<div style="clear:both"></div>
 					<div class="description">
-						Registers a resource to be loaded from an external path instead of the core base path.
+						Registers one or more resources to be loaded from an external path
+instead of the core base path.
 
 
 					</div>
@@ -1207,22 +1218,34 @@ CKEDITOR.plugins.addExternal( 'sample', '/myplugins/sample/' );</pre>
 
 
 
+							<pre class="code">// Loads a plugin from '/myplugin/samples/my_plugin.js'.
+CKEDITOR.plugins.addExternal( 'sample', '/myplugins/sample/', 'my_plugin.js' );</pre>
+
+
+
 
 
 							<dl class="detailList">
 							<dt class="heading">Parameters:</dt>
 
 								<dt>
-									<span class="light fixedFont">{String}</span> <b>name</b>
+									<span class="light fixedFont">{String}</span> <b>names</b>
 
 								</dt>
-								<dd>The resource name.</dd>
+								<dd>The resource names, separated by commas.</dd>
 
 								<dt>
 									<span class="light fixedFont">{String}</span> <b>path</b>
 
 								</dt>
-								<dd>The resource external path.</dd>
+								<dd>The path of the folder containing the resource.</dd>
+
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>fileName</b>
+									<i>Optional</i>
+								</dt>
+								<dd>The resource file name. If not provided, the
+		default name is used.</dd>
 
 							</dl>
 
@@ -1282,6 +1305,54 @@ CKEDITOR.plugins.addExternal( 'sample', '/myplugins/sample/' );</pre>
 
 					<hr />
 
+					<a name="getFilePath"> </a>
+					<div class="fixedFont" style="float:left">
+
+					<span class="light">{String}</span>
+					<b>getFilePath</b>(name)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+						Get the file path for a specific loaded resource.
+
+
+					</div>
+
+
+
+
+							<pre class="code">alert( <b>CKEDITOR.plugins.getFilePath( 'sample' )</b> );  // "&lt;editor path&gt;/plugins/sample/plugin.js"</pre>
+
+
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>name</b>
+
+								</dt>
+								<dd>The resource name.</dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
 					<a name="getPath"> </a>
 					<div class="fixedFont" style="float:left">
 
@@ -1297,7 +1368,7 @@ CKEDITOR.plugins.addExternal( 'sample', '/myplugins/sample/' );</pre>
 					</div>
 					<div style="clear:both"></div>
 					<div class="description">
-						Get the full path for a specific loaded resource.
+						Get the folder path for a specific loaded resource.
 
 
 					</div>

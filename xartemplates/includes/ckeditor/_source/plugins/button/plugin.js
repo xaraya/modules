@@ -55,6 +55,9 @@ CKEDITOR.ui.button = function( definition )
 
 	this.className = definition.className || ( definition.command && 'cke_button_' + definition.command ) || '';
 
+	this.icon = definition.icon;
+	this.iconOffset = definition.iconOffset;
+
 	/**
 	 * The function to be called when the user clicks the button. If not
 	 * defined, the "command" property is required, and the command gets
@@ -116,6 +119,10 @@ CKEDITOR.ui.button.prototype =
 			}
 		};
 
+		var index = CKEDITOR.ui.button._.instances.push( instance ) - 1;
+
+		var classes = '';
+
 		// Get the command name.
 		var command = this.command;
 
@@ -130,14 +137,21 @@ CKEDITOR.ui.button.prototype =
 					{
 						this.setState( command.state );
 					}, this);
+
+				classes += ' cke_' + (
+					command.state == CKEDITOR.TRISTATE_ON ? 'on' :
+					command.state == CKEDITOR.TRISTATE_DISABLED ? 'disabled' :
+					'off' );
 			}
 		}
 
-		var index = CKEDITOR.ui.button._.instances.push( instance ) - 1;
+		if ( this.className )
+			classes += ' ' + this.className;
 
 		output.push(
+			'<span class="cke_button">',
 			'<a id="', id, '"' +
-				' class="cke_button ', this.className, '" href="javascript:void(\'', ( this.label || '' ).replace( "'", '' ), '\')"' +
+				' class="', classes, '" href="javascript:void(\'', ( this.title || '' ).replace( "'", '' ), '\')"' +
 				' title="', this.title, '"' +
 				' tabindex="-1"' +
 				' hidefocus="true"' );
@@ -161,36 +175,33 @@ CKEDITOR.ui.button.prototype =
 
 		output.push(
 				' onkeydown="return CKEDITOR.ui.button._.keydown(', index, ', event);"' +
+				' onfocus="return CKEDITOR.ui.button._.focus(', index, ', event);"' +
 				' onclick="return CKEDITOR.ui.button._.click(', index, ', event);">' +
-					'<span class="cke_icon"></span>' +
+					'<span class="cke_icon"' );
+
+		if ( this.icon )
+		{
+			var offset = ( this.iconOffset || 0 ) * -16;
+			output.push( ' style="background-image:url(', CKEDITOR.getUrl( this.icon ), ');background-position:0 ' + offset + 'px;"' );
+		}
+
+		output.push(
+					'></span>' +
 					'<span class="cke_label">', this.label, '</span>' +
-			'</a>' );
+			'</a>',
+			'</span>' );
 
 		return instance;
 	},
 
 	setState : function( state )
 	{
-		var element = CKEDITOR.document.getById( this._.id );
+		if ( this._.state == state )
+			return;
 
-		switch ( state )
-		{
-			case CKEDITOR.TRISTATE_ON :
-				element.addClass( 'cke_on' );
-				element.removeClass( 'cke_off' );
-				element.removeClass( 'cke_disabled' );
-				break;
-			case CKEDITOR.TRISTATE_DISABLED :
-				element.addClass( 'cke_disabled' );
-				element.removeClass( 'cke_off' );
-				element.removeClass( 'cke_on' );
-				break;
-			default :
-				element.addClass( 'cke_off' );
-				element.removeClass( 'cke_on' );
-				element.removeClass( 'cke_disabled' );
-				break;
-		}
+		CKEDITOR.document.getById( this._.id ).setState( state );
+
+		this._.state = state;
 	}
 };
 
@@ -217,6 +228,14 @@ CKEDITOR.ui.button._ =
 			ev = new CKEDITOR.dom.event( ev );
 			return ( instance.onkey( instance, ev.getKeystroke() ) !== false );
 		}
+	},
+
+	focus : function( index, ev )
+	{
+		var instance = CKEDITOR.ui.button._.instances[ index ];
+
+		if ( instance.onfocus )
+			return ( instance.onfocus( instance, new CKEDITOR.dom.event( ev ) ) !== false );
 	}
 };
 

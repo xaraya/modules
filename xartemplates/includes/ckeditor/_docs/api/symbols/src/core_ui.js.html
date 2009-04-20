@@ -55,55 +55,60 @@
 <span class='line'> 48</span> 	 */</span><span class="WHIT">
 <span class='line'> 49</span> </span><span class="WHIT">	</span><span class="NAME">add</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">definition</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT">
 <span class='line'> 50</span> </span><span class="WHIT">	</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 51</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">item</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._.handlers</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NAME">type</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">create</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">definition</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 52</span> </span><span class="WHIT">		</span><span class="NAME">item.name</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 53</span> </span><span class="WHIT">		</span><span class="NAME">this._.items</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NAME">name</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">item</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 54</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 55</span>
-<span class='line'> 56</span> </span><span class="WHIT">	</span><span class="COMM">/**
-<span class='line'> 57</span> 	 * Gets a UI object.
-<span class='line'> 58</span> 	 * @param {String} name The UI item hame.
-<span class='line'> 59</span> 	 * @example
-<span class='line'> 60</span> 	 */</span><span class="WHIT">
-<span class='line'> 61</span> </span><span class="WHIT">	</span><span class="NAME">get</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">name</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT">
-<span class='line'> 62</span> </span><span class="WHIT">	</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 63</span> </span><span class="WHIT">		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._.items</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NAME">name</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 64</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 65</span>
-<span class='line'> 66</span> </span><span class="WHIT">	</span><span class="COMM">/**
-<span class='line'> 67</span> 	 * Adds a handler for a UI item type. The handler is responsible for
-<span class='line'> 68</span> 	 * transforming UI item definitions in UI objects.
-<span class='line'> 69</span> 	 * @param {Object} type The item type.
-<span class='line'> 70</span> 	 * @param {Object} handler The handler definition.
-<span class='line'> 71</span> 	 * @example
-<span class='line'> 72</span> 	 */</span><span class="WHIT">
-<span class='line'> 73</span> </span><span class="WHIT">	</span><span class="NAME">addHandler</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">handler</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT">
-<span class='line'> 74</span> </span><span class="WHIT">	</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 75</span> </span><span class="WHIT">		</span><span class="NAME">this._.handlers</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NAME">type</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">handler</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 76</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'> 77</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 78</span>
-<span class='line'> 79</span> </span><span class="COMM">/**
-<span class='line'> 80</span>  * (Virtual Class) Do not call this constructor. This class is not really part
-<span class='line'> 81</span>  *		of the API. It just illustrates the features of hanlder objects to be
-<span class='line'> 82</span>  *		passed to the {@link CKEDITOR.ui.prototype.addHandler} function.
-<span class='line'> 83</span>  * @name CKEDITOR.ui.handlerDefinition
-<span class='line'> 84</span>  * @constructor
-<span class='line'> 85</span>  * @example
-<span class='line'> 86</span>  */</span><span class="WHIT">
-<span class='line'> 87</span>
-<span class='line'> 88</span> </span><span class="WHIT"> </span><span class="COMM">/**
-<span class='line'> 89</span>  * Transforms an item definition into an UI item object.
-<span class='line'> 90</span>  * @name CKEDITOR.handlerDefinition.prototype.create
-<span class='line'> 91</span>  * @function
-<span class='line'> 92</span>  * @param {Object} definition The item definition.
-<span class='line'> 93</span>  * @example
-<span class='line'> 94</span>  * editorInstance.ui.addHandler( CKEDITOR.UI_BUTTON,
-<span class='line'> 95</span>  *     {
-<span class='line'> 96</span>  *         create : function( definition )
-<span class='line'> 97</span>  *         {
-<span class='line'> 98</span>  *             return new CKEDITOR.ui.button( definition );
-<span class='line'> 99</span>  *         }
-<span class='line'>100</span>  *     });
-<span class='line'>101</span>  */</span><span class="WHIT">
-<span class='line'>102</span> </span></pre></body></html>
+<span class='line'> 51</span> </span><span class="WHIT">		</span><span class="NAME">this._.items</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NAME">name</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">
+<span class='line'> 52</span> </span><span class="WHIT">		</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 53</span> </span><span class="WHIT">			</span><span class="NAME">type</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 54</span> </span><span class="WHIT">			</span><span class="NAME">args</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Array.prototype.slice.call</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">arguments</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">2</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'> 55</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 56</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 57</span>
+<span class='line'> 58</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'> 59</span> 	 * Gets a UI object.
+<span class='line'> 60</span> 	 * @param {String} name The UI item hame.
+<span class='line'> 61</span> 	 * @example
+<span class='line'> 62</span> 	 */</span><span class="WHIT">
+<span class='line'> 63</span> </span><span class="WHIT">	</span><span class="NAME">create</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">name</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'> 64</span> </span><span class="WHIT">	</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 65</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">item</span><span class="WHIT">	</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._.items</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NAME">name</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 66</span> </span><span class="WHIT">			</span><span class="NAME">handler</span><span class="WHIT">	</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">item</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">this._.handlers</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NAME">item.type</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 67</span>
+<span class='line'> 68</span> </span><span class="WHIT">		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">handler</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">handler.create.apply</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">item.args</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 69</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 70</span>
+<span class='line'> 71</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'> 72</span> 	 * Adds a handler for a UI item type. The handler is responsible for
+<span class='line'> 73</span> 	 * transforming UI item definitions in UI objects.
+<span class='line'> 74</span> 	 * @param {Object} type The item type.
+<span class='line'> 75</span> 	 * @param {Object} handler The handler definition.
+<span class='line'> 76</span> 	 * @example
+<span class='line'> 77</span> 	 */</span><span class="WHIT">
+<span class='line'> 78</span> </span><span class="WHIT">	</span><span class="NAME">addHandler</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">handler</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'> 79</span> </span><span class="WHIT">	</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 80</span> </span><span class="WHIT">		</span><span class="NAME">this._.handlers</span><span class="PUNC">[</span><span class="WHIT"> </span><span class="NAME">type</span><span class="WHIT"> </span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">handler</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 81</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 82</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 83</span>
+<span class='line'> 84</span> </span><span class="COMM">/**
+<span class='line'> 85</span>  * (Virtual Class) Do not call this constructor. This class is not really part
+<span class='line'> 86</span>  *		of the API. It just illustrates the features of hanlder objects to be
+<span class='line'> 87</span>  *		passed to the {@link CKEDITOR.ui.prototype.addHandler} function.
+<span class='line'> 88</span>  * @name CKEDITOR.ui.handlerDefinition
+<span class='line'> 89</span>  * @constructor
+<span class='line'> 90</span>  * @example
+<span class='line'> 91</span>  */</span><span class="WHIT">
+<span class='line'> 92</span>
+<span class='line'> 93</span> </span><span class="WHIT"> </span><span class="COMM">/**
+<span class='line'> 94</span>  * Transforms an item definition into an UI item object.
+<span class='line'> 95</span>  * @name CKEDITOR.handlerDefinition.prototype.create
+<span class='line'> 96</span>  * @function
+<span class='line'> 97</span>  * @param {Object} definition The item definition.
+<span class='line'> 98</span>  * @example
+<span class='line'> 99</span>  * editorInstance.ui.addHandler( CKEDITOR.UI_BUTTON,
+<span class='line'>100</span>  *     {
+<span class='line'>101</span>  *         create : function( definition )
+<span class='line'>102</span>  *         {
+<span class='line'>103</span>  *             return new CKEDITOR.ui.button( definition );
+<span class='line'>104</span>  *         }
+<span class='line'>105</span>  *     });
+<span class='line'>106</span>  */</span><span class="WHIT">
+<span class='line'>107</span> </span></pre></body></html>

@@ -365,20 +365,22 @@ body .cke_dialog
 .cke_skin_default.cke_ltr .cke_dialog_ui_hbox_child
 {
 	padding-right: 10px;
+	vertical-align: top;
 }
 
 .cke_skin_default.cke_rtl .cke_dialog_ui_hbox_first,
 .cke_skin_default.cke_rtl .cke_dialog_ui_hbox_child
 {
 	padding-left: 10px;
+	vertical-align: top;
 }
 
-.cke_skin_default .cke_dialog_ui_button
+.cke_skin_default .cke_dialog_ui_button table
 {
 	border: #737357 1px solid;
 }
 
-.cke_skin_default .cke_dialog_ui_button.disabled
+.cke_skin_default .cke_dialog_ui_button.disabled table
 {
 	border: #898980 1px solid;
 }
@@ -397,7 +399,8 @@ body .cke_dialog
 	background-color: #c5c5b3;
 }
 
-.cke_skin_default .cke_dialog_ui_button.active .cke_dialog_ui_button_txt
+.cke_skin_default a:focus.cke_dialog_ui_button .cke_dialog_ui_button_txt,
+.cke_skin_default a:active.cke_dialog_ui_button .cke_dialog_ui_button_txt
 {
 	background-color: #e3e3c7;
 }
@@ -666,7 +669,7 @@ body .cke_dialog
 {
 	white-space : normal;
 	border : 2px ridge black;
-	overflow : scroll;
+	overflow : auto;
 	height : 160px;
 	width : 390px;
 	padding : 2px;

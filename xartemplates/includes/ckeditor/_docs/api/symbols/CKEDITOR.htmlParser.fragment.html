@@ -798,7 +798,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">CKEDITOR.htmlParser.fragment.<b><a href="../symbols/CKEDITOR.htmlParser.fragment.html#.fromHtml">fromHtml</a></b>(fragmentHtml)
+								<div class="fixedFont">CKEDITOR.htmlParser.fragment.<b><a href="../symbols/CKEDITOR.htmlParser.fragment.html#.fromHtml">fromHtml</a></b>(fragmentHtml, fixForBody)
 								</div>
 								<div class="description">Creates a <a href="../symbols/CKEDITOR.htmlParser.fragment.html#constructor">CKEDITOR.htmlParser.fragment</a> from an HTML string.</div>
 							</td>
@@ -816,7 +816,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.htmlParser.fragment.html#writeHtml">writeHtml</a></b>(writer)
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.htmlParser.fragment.html#writeHtml">writeHtml</a></b>(writer, filter)
 								</div>
 								<div class="description">Writes the fragment HTML to a CKEDITOR.htmlWriter.</div>
 							</td>
@@ -962,7 +962,7 @@ alert( fragment.children.length );  "2"</pre>
 					<div class="fixedFont" style="float:left">&lt;static&gt;
 
 					<span class="light">{Undefined}</span>
-					<span class="light">CKEDITOR.htmlParser.fragment.</span><b>fromHtml</b>(fragmentHtml)
+					<span class="light">CKEDITOR.htmlParser.fragment.</span><b>fromHtml</b>(fragmentHtml, fixForBody)
 
 					</div>
 					<div style="float:right">
@@ -997,6 +997,12 @@ alert( fragment.children[1].value );  " Text"</pre>
 
 								</dt>
 								<dd>The HTML to be parsed, filling the fragment.</dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>fixForBody</b>
+
+								</dt>
+								<dd></dd>
 
 							</dl>
 
@@ -1068,7 +1074,7 @@ alert( fragment.children[1].value );  " Text"</pre>
 					<div class="fixedFont" style="float:left">
 
 					<span class="light">{Undefined}</span>
-					<b>writeHtml</b>(writer)
+					<b>writeHtml</b>(writer, filter)
 
 					</div>
 					<div style="float:right">
@@ -1104,6 +1110,12 @@ alert( writer.getHtml() );  "&lt;p&gt;&lt;b&gt;Example&lt;/b&gt;&lt;/p&gt;"</pre
 
 								</dt>
 								<dd>The writer to which write the HTML.</dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>filter</b>
+
+								</dt>
+								<dd></dd>
 
 							</dl>
 

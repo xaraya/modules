@@ -259,55 +259,6 @@ CKEDITOR.dom.range = function( document )
 
 	var inlineChildReqElements = { abbr:1,acronym:1,b:1,bdo:1,big:1,cite:1,code:1,del:1,dfn:1,em:1,font:1,i:1,ins:1,label:1,kbd:1,q:1,samp:1,small:1,span:1,strike:1,strong:1,sub:1,sup:1,tt:1,u:1,'var':1 };
 
-	var getBoundaryNodes = function()
-	{
-		var startNode = this.startContainer,
-			endNode = this.endContainer,
-			startOffset = this.startOffset,
-			endOffset = this.endOffset,
-			childCount;
-
-		if ( startNode.type == CKEDITOR.NODE_ELEMENT )
-		{
-			childCount = startNode.getChildCount();
-			if ( childCount > startOffset )
-				startNode = startNode.getChild( startOffset );
-			else if ( childCount < 1 )
-				startNode = startNode.getPreviousSourceNode();
-			else		// startOffset > childCount but childCount is not 0
-			{
-				// Try to take the node just after the current position.
-				startNode = startNode.$;
-				while ( startNode.lastChild )
-					startNode = startNode.lastChild;
-				startNode = new CKEDITOR.dom.node( startNode );
-
-				// Normally we should take the next node in DFS order. But it
-				// is also possible that we've already reached the end of
-				// document.
-				startNode = startNode.getNextSourceNode() || startNode;
-			}
-		}
-		if ( endNode.type == CKEDITOR.NODE_ELEMENT )
-		{
-			childCount = endNode.getChildCount();
-			if ( childCount > endOffset )
-				endNode = endNode.getChild( endOffset ).getPreviousSourceNode();
-			else if ( childCount < 1 )
-				endNode = endNode.getPreviousSourceNode();
-			else		// endOffset > childCount but childCount is not 0
-			{
-				// Try to take the node just before the current position.
-				endNode = endNode.$;
-				while ( endNode.lastChild )
-					endNode = endNode.lastChild;
-				endNode = new CKEDITOR.dom.node( endNode );
-			}
-		}
-
-		return { startNode : startNode, endNode : endNode };
-	};
-
 	// Check every node between the block boundary and the startNode or endNode.
 	var getCheckStartEndBlockFunction = function( isStart )
 	{
@@ -409,15 +360,25 @@ CKEDITOR.dom.range = function( document )
 			return docFrag;
 		},
 
-		// This is an "intrusive" way to create a bookmark. It includes <span> tags
-		// in the range boundaries. The advantage of it is that it is possible to
-		// handle DOM mutations when moving back to the bookmark.
-		// Attention: the inclusion of nodes in the DOM is a design choice and
-		// should not be changed as there are other points in the code that may be
-		// using those nodes to perform operations. See GetBookmarkNode.
-		createBookmark : function()
+		/**
+		 * Creates a bookmark object, which can be later used to restore the
+		 * range by using the moveToBookmark function.
+		 * This is an "intrusive" way to create a bookmark. It includes <span> tags
+		 * in the range boundaries. The advantage of it is that it is possible to
+		 * handle DOM mutations when moving back to the bookmark.
+		 * Attention: the inclusion of nodes in the DOM is a design choice and
+		 * should not be changed as there are other points in the code that may be
+		 * using those nodes to perform operations. See GetBookmarkNode.
+		 * @param {Boolean} [serializable] Indicates that the bookmark nodes
+		 *		must contain ids, which can be used to restore the range even
+		 *		when these nodes suffer mutations (like a clonation or innerHTML
+		 *		change).
+		 * @returns {Object} And object representing a bookmark.
+		 */
+		createBookmark : function( serializable )
 		{
 			var startNode, endNode;
+			var baseId;
 			var clone;
 
 			startNode = this.document.createElement( 'span' );
@@ -428,11 +389,20 @@ CKEDITOR.dom.range = function( document )
 			// removed during DOM operations.
 			startNode.setHtml( '&nbsp;' );
 
+			if ( serializable )
+			{
+				baseId = 'cke_bm_' + CKEDITOR.tools.getNextNumber();
+				startNode.setAttribute( 'id', baseId + 'S' );
+			}
+
 			// If collapsed, the endNode will not be created.
 			if ( !this.collapsed )
 			{
 				endNode = startNode.clone();
 				endNode.setHtml( '&nbsp;' );
+
+				if ( serializable )
+					endNode.setAttribute( 'id', baseId + 'E' );
 
 				clone = this.clone();
 				clone.collapse();
@@ -453,29 +423,198 @@ CKEDITOR.dom.range = function( document )
 				this.moveToPosition( startNode, CKEDITOR.POSITION_AFTER_END );
 
 			return {
-				startNode : startNode,
-				endNode : endNode
+				startNode : serializable ? baseId + 'S' : startNode,
+				endNode : serializable ? baseId + 'E' : endNode,
+				serializable : serializable
+			};
+		},
+
+		/**
+		 * Creates a "non intrusive" and "mutation sensible" bookmark. This
+		 * kind of bookmark should be used only when the DOM is supposed to
+		 * remain stable after its creation.
+		 * @param {Boolean} [normalized] Indicates that the bookmark must
+		 *		normalized. When normalized, the successive text nodes are
+		 *		considered a single node. To sucessful load a normalized
+		 *		bookmark, the DOM tree must be also normalized before calling
+		 *		moveToBookmark.
+		 * @returns {Object} An object representing the bookmark.
+		 */
+		createBookmark2 : function( normalized )
+		{
+			var startContainer	= this.startContainer,
+				endContainer	= this.endContainer;
+
+			var startOffset	= this.startOffset,
+				endOffset	= this.endOffset;
+
+			var child, previous;
+
+			// If there is no range then get out of here.
+			// It happens on initial load in Safari #962 and if the editor it's
+			// hidden also in Firefox
+			if ( !startContainer || !endContainer )
+				return { start : 0, end : 0 };
+
+			if ( normalized )
+			{
+				// Find out if the start is pointing to a text node that will
+				// be normalized.
+				if ( startContainer.type == CKEDITOR.NODE_ELEMENT )
+				{
+					var child = startContainer.getChild( startOffset );
+
+					// In this case, move the start information to that text
+					// node.
+					if ( child && child.type == CKEDITOR.NODE_TEXT
+							&& startOffset > 0 && child.getPrevious().type == CKEDITOR.NODE_TEXT )
+					{
+						startContainer = child;
+						startOffset = 0;
+					}
+				}
+
+				// Normalize the start.
+				while ( startContainer.type == CKEDITOR.NODE_TEXT
+						&& ( previous = startContainer.getPrevious() )
+						&& previous.type == CKEDITOR.NODE_TEXT )
+				{
+					startContainer = previous;
+					startOffset += previous.getLength();
+				}
+
+				// Process the end only if not normalized.
+				if ( !this.isCollapsed )
+				{
+					// Find out if the start is pointing to a text node that
+					// will be normalized.
+					if ( endContainer.type == CKEDITOR.NODE_ELEMENT )
+					{
+						child = endContainer.getChild( endOffset );
+
+						// In this case, move the start information to that
+						// text node.
+						if ( child && child.type == CKEDITOR.NODE_TEXT
+								&& endOffset > 0 && child.getPrevious().type == CKEDITOR.NODE_TEXT )
+						{
+							endContainer = child;
+							endOffset = 0;
+						}
+					}
+
+					// Normalize the end.
+					while ( endContainer.type == CKEDITOR.NODE_TEXT
+							&& ( previous = endContainer.getPrevious() )
+							&& previous.type == CKEDITOR.NODE_TEXT )
+					{
+						endContainer = previous;
+						endOffset += previous.getLength();
+					}
+				}
+			}
+
+			return {
+				start		: startContainer.getAddress( normalized ),
+				end			: this.isCollapsed ? null : endContainer.getAddress( normalized ),
+				startOffset	: startOffset,
+				endOffset	: endOffset,
+				normalized	: normalized,
+				is2			: true		// It's a createBookmark2 bookmark.
 			};
 		},
 
 		moveToBookmark : function( bookmark )
 		{
-			// Set the range start at the bookmark start node position.
-			this.setStartBefore( bookmark.startNode );
-
-			// Remove it, because it may interfere in the setEndBefore call.
-			bookmark.startNode.remove();
-
-			// Set the range end at the bookmark end node position, or simply
-			// collapse it if it is not available.
-			var endNode = bookmark.endNode;
-			if ( endNode )
+			if ( bookmark.is2 )		// Created with createBookmark2().
 			{
-				this.setEndBefore( endNode );
-				endNode.remove();
+				// Get the start information.
+				var startContainer	= this.document.getByAddress( bookmark.start, bookmark.normalized ),
+					startOffset	= bookmark.startOffset;
+
+				// Get the end information.
+				var endContainer	= bookmark.end && this.document.getByAddress( bookmark.end, bookmark.normalized ),
+					endOffset	= bookmark.endOffset;
+
+				// Set the start boundary.
+				this.setStart( startContainer, startOffset );
+
+				// Set the end boundary. If not available, collapse it.
+				if ( endContainer )
+					this.setEnd( endContainer, endOffset );
+				else
+					this.collapse( true );
 			}
-			else
-				this.collapse( true );
+			else					// Created with createBookmark().
+			{
+				var serializable = bookmark.serializable,
+					startNode	= serializable ? this.document.getById( bookmark.startNode ) : bookmark.startNode,
+					endNode		= serializable ? this.document.getById( bookmark.endNode ) : bookmark.endNode;
+
+				// Set the range start at the bookmark start node position.
+				this.setStartBefore( startNode );
+
+				// Remove it, because it may interfere in the setEndBefore call.
+				startNode.remove();
+
+				// Set the range end at the bookmark end node position, or simply
+				// collapse it if it is not available.
+				if ( endNode )
+				{
+					this.setEndBefore( endNode );
+					endNode.remove();
+				}
+				else
+					this.collapse( true );
+			}
+		},
+
+		getBoundaryNodes : function()
+		{
+			var startNode = this.startContainer,
+				endNode = this.endContainer,
+				startOffset = this.startOffset,
+				endOffset = this.endOffset,
+				childCount;
+
+			if ( startNode.type == CKEDITOR.NODE_ELEMENT )
+			{
+				childCount = startNode.getChildCount();
+				if ( childCount > startOffset )
+					startNode = startNode.getChild( startOffset );
+				else if ( childCount < 1 )
+					startNode = startNode.getPreviousSourceNode();
+				else		// startOffset > childCount but childCount is not 0
+				{
+					// Try to take the node just after the current position.
+					startNode = startNode.$;
+					while ( startNode.lastChild )
+						startNode = startNode.lastChild;
+					startNode = new CKEDITOR.dom.node( startNode );
+
+					// Normally we should take the next node in DFS order. But it
+					// is also possible that we've already reached the end of
+					// document.
+					startNode = startNode.getNextSourceNode() || startNode;
+				}
+			}
+			if ( endNode.type == CKEDITOR.NODE_ELEMENT )
+			{
+				childCount = endNode.getChildCount();
+				if ( childCount > endOffset )
+					endNode = endNode.getChild( endOffset ).getPreviousSourceNode();
+				else if ( childCount < 1 )
+					endNode = endNode.getPreviousSourceNode();
+				else		// endOffset > childCount but childCount is not 0
+				{
+					// Try to take the node just before the current position.
+					endNode = endNode.$;
+					while ( endNode.lastChild )
+						endNode = endNode.lastChild;
+					endNode = new CKEDITOR.dom.node( endNode );
+				}
+			}
+
+			return { startNode : startNode, endNode : endNode };
 		},
 
 		getCommonAncestor : function( includeSelf )
@@ -490,20 +629,7 @@ CKEDITOR.dom.range = function( document )
 				return start;
 			}
 
-			if ( end.type == CKEDITOR.NODE_ELEMENT && end.contains( start ) )
-				return end;
-
-			if ( start.type != CKEDITOR.NODE_ELEMENT )
-				start = start.getParent();
-
-			do
-			{
-				if ( start.contains( end ) )
-					return start;
-			}
-			while( ( start = start.getParent() ) )
-
-			return null;
+			return start.getCommonAncestor( end );
 		},
 
 		/**
@@ -969,27 +1095,52 @@ CKEDITOR.dom.range = function( document )
 				case CKEDITOR.ENLARGE_BLOCK_CONTENTS:
 				case CKEDITOR.ENLARGE_LIST_ITEM_CONTENTS:
 					// DFS backward to get the block/list item boundary at or before the start.
-					var boundaryNodes = getBoundaryNodes.apply( this ),
-						startNode = boundaryNodes.startNode,
-						endNode = boundaryNodes.endNode,
-						guardFunction = ( unit == CKEDITOR.ENLARGE_BLOCK_CONTENTS ?
-							CKEDITOR.dom.domWalker.blockBoundary() :
-							CKEDITOR.dom.domWalker.listItemBoundary() ),
-						walker = new CKEDITOR.dom.domWalker( startNode ),
-						data = walker.reverse( guardFunction ),
+
+					// Get the boundaries nodes.
+					var startNode = this.getTouchedStartNode(),
+						endNode = this.getTouchedEndNode();
+
+					if ( startNode.type == CKEDITOR.NODE_ELEMENT && startNode.isBlockBoundary() )
+					{
+						this.setStartAt( startNode,
+							CKEDITOR.dtd.$empty[ startNode.getName() ] ?
+								CKEDITOR.POSITION_AFTER_END :
+								CKEDITOR.POSITION_AFTER_START );
+					}
+					else
+					{
+						// Get the function used to check the enlaarging limits.
+						var guardFunction = ( unit == CKEDITOR.ENLARGE_BLOCK_CONTENTS ?
+								CKEDITOR.dom.domWalker.blockBoundary() :
+								CKEDITOR.dom.domWalker.listItemBoundary() );
+
+						// Create the DOM walker, which will traverse the DOM.
+						var walker = new CKEDITOR.dom.domWalker( startNode );
+
+						// Go walk in reverse sense.
+						var data = walker.reverse( guardFunction );
+
+						var boundaryEvent = data.events.shift();
+
+						this.setStartBefore( boundaryEvent.from );
+					}
+
+					if ( endNode.type == CKEDITOR.NODE_ELEMENT && endNode.isBlockBoundary() )
+					{
+						this.setEndAt( endNode,
+							CKEDITOR.dtd.$empty[ endNode.getName() ] ?
+								CKEDITOR.POSITION_BEFORE_START :
+								CKEDITOR.POSITION_BEFORE_END );
+					}
+					else
+					{
+						// DFS forward to get the block/list item boundary at or before the end.
+						walker.setNode( endNode );
+						data = walker.forward( guardFunction );
 						boundaryEvent = data.events.shift();
 
-					this.setStartBefore( boundaryEvent.from );
-
-					// DFS forward to get the block/list item boundary at or before the end.
-					walker.setNode( endNode );
-					data = walker.forward( guardFunction );
-					boundaryEvent = data.events.shift();
-
-					this.setEndAfter( boundaryEvent.from );
-					break;
-
-				default:
+						this.setEndAfter( boundaryEvent.from );
+					}
 			}
 		},
 
@@ -1155,30 +1306,42 @@ CKEDITOR.dom.range = function( document )
 			updateCollapsed( this );
 		},
 
-		// TODO: The fixed block isn't trimmed, does not work for <pre>.
-		// TODO: Does not add bogus <br> to empty fixed blocks.
 		fixBlock : function( isStart, blockTag )
 		{
 			var bookmark = this.createBookmark(),
-				fixedBlock = new CKEDITOR.dom.element( blockTag, this.document );
+				fixedBlock = this.document.createElement( blockTag );
+
 			this.collapse( isStart );
+
 			this.enlarge( CKEDITOR.ENLARGE_BLOCK_CONTENTS );
+
 			this.extractContents().appendTo( fixedBlock );
+			fixedBlock.trim();
+
+			if ( !CKEDITOR.env.ie )
+				fixedBlock.appendBogus();
+
 			this.insertNode( fixedBlock );
+
 			this.moveToBookmark( bookmark );
+
 			return fixedBlock;
 		},
 
 		splitBlock : function( blockTag )
 		{
-			var startPath = new CKEDITOR.dom.elementPath( this.startContainer ),
-				endPath = new CKEDITOR.dom.elementPath( this.endContainer ),
-				startBlockLimit = startPath.blockLimit,
-				endBlockLimit = endPath.blockLimit,
-				startBlock = startPath.block,
-				endBlock = endPath.block,
-				elementPath = null;
+			var startPath	= new CKEDITOR.dom.elementPath( this.startContainer ),
+				endPath		= new CKEDITOR.dom.elementPath( this.endContainer );
 
+			var startBlockLimit	= startPath.blockLimit,
+				endBlockLimit	= endPath.blockLimit;
+
+			var startBlock	= startPath.block,
+				endBlock	= endPath.block;
+
+			var elementPath = null;
+
+			// Do nothing if the boundaries are in different block limits.
 			if ( !startBlockLimit.equals( endBlockLimit ) )
 				return null;
 
@@ -1188,7 +1351,7 @@ CKEDITOR.dom.range = function( document )
 				if ( !startBlock )
 				{
 					startBlock = this.fixBlock( true, blockTag );
-					endBlock = new CKEDITOR.dom.elementPath( this.endContainer );
+					endBlock = new CKEDITOR.dom.elementPath( this.endContainer ).block;
 				}
 
 				if ( !endBlock )
@@ -1226,14 +1389,17 @@ CKEDITOR.dom.range = function( document )
 
 					// Duplicate the block element after it.
 					endBlock = startBlock.clone( false );
-					endBlock.removeAttribute( 'id' );
 
 					// Place the extracted contents into the duplicated block.
 					documentFragment.appendTo( endBlock );
 					endBlock.insertAfter( startBlock );
 					this.moveToPosition( startBlock, CKEDITOR.POSITION_AFTER_END );
 
-					// TODO: Append bogus br to startBlock for Gecko
+					// In Gecko, the last child node must be a bogus <br>.
+					// Note: bogus <br> added under <ul> or <ol> would cause
+					// lists to be incorrectly rendered.
+					if ( !CKEDITOR.env.ie && !startBlock.is( 'ul', 'ol') )
+						startBlock.appendBogus() ;
 				}
 			}
 
@@ -1260,7 +1426,7 @@ CKEDITOR.dom.range = function( document )
 					return false;
 			}
 
-			var startNode = getBoundaryNodes.apply( this ).startNode,
+			var startNode = this.getBoundaryNodes().startNode,
 				walker = new CKEDITOR.dom.domWalker( startNode );
 
 			// DFS backwards until the block boundary, with the checker function.
@@ -1284,7 +1450,7 @@ CKEDITOR.dom.range = function( document )
 					return false;
 			}
 
-			var endNode = getBoundaryNodes.apply( this ).endNode,
+			var endNode = this.getBoundaryNodes().endNode,
 				walker = new CKEDITOR.dom.domWalker( endNode );
 
 			// DFS forward until the block boundary, with the checker function.
@@ -1292,6 +1458,52 @@ CKEDITOR.dom.range = function( document )
 			walker.forward( CKEDITOR.dom.domWalker.blockBoundary() );
 
 			return !walker.checkFailed;
+		},
+
+		/**
+		 * Moves the range boundaries to the first editing point inside an
+		 * element. For example, in an element tree like
+		 * "&lt;p&gt;&lt;b&gt;&lt;i&gt;&lt;/i&gt;&lt;/b&gt; Text&lt;/p&gt;", the start editing point is
+		 * "&lt;p&gt;&lt;b&gt;&lt;i&gt;^&lt;/i&gt;&lt;/b&gt; Text&lt;/p&gt;" (inside &lt;i&gt;).
+		 * @param {CKEDITOR.dom.element} targetElement The element into which
+		 *		look for the editing spot.
+		 */
+		moveToElementEditStart : function( targetElement )
+		{
+			var editableElement;
+
+			while ( targetElement && targetElement.type == CKEDITOR.NODE_ELEMENT )
+			{
+				if ( targetElement.isEditable() )
+					editableElement = targetElement;
+				else if ( editableElement )
+					break ;		// If we already found an editable element, stop the loop.
+
+				targetElement = targetElement.getFirst();
+			}
+
+			if ( editableElement )
+				this.moveToPosition( editableElement, CKEDITOR.POSITION_AFTER_START );
+		},
+
+		getTouchedStartNode : function()
+		{
+			var container = this.startContainer ;
+
+			if ( this.collapsed || container.type != CKEDITOR.NODE_ELEMENT )
+				return container ;
+
+			return container.getChild( this.startOffset ) || container ;
+		},
+
+		getTouchedEndNode : function()
+		{
+			var container = this.endContainer ;
+
+			if ( this.collapsed || container.type != CKEDITOR.NODE_ELEMENT )
+				return container ;
+
+			return container.getChild[ this.endOffset - 1 ] || container ;
 		}
 	};
 })();

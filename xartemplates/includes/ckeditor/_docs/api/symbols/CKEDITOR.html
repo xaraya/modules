@@ -942,6 +942,36 @@ This is the API entry point. The entire CKEditor code runs under this object.
 							</td>
 						</tr>
 
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								CKEDITOR.<b><a href="../symbols/CKEDITOR.html#.UI_PANEL">UI_PANEL</a></b>
+								</div>
+								<div class="description">Panel UI element.</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								CKEDITOR.<b><a href="../symbols/CKEDITOR.html#.UI_PANELBUTTON">UI_PANELBUTTON</a></b>
+								</div>
+								<div class="description">Button UI element.</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								CKEDITOR.<b><a href="../symbols/CKEDITOR.html#.UI_RICHCOMBO">UI_RICHCOMBO</a></b>
+								</div>
+								<div class="description">Button UI element.</div>
+							</td>
+						</tr>
+
 					</tbody>
 				</table>
 
@@ -1074,6 +1104,24 @@ by CKEditor instances.</div>
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont">CKEDITOR.<b><a href="../symbols/CKEDITOR.html#.addStylesSet">addStylesSet</a></b>(name, styles)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">CKEDITOR.<b><a href="../symbols/CKEDITOR.html#.addTemplates">addTemplates</a></b>(name, definition)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont">CKEDITOR.<b><a href="../symbols/CKEDITOR.html#.appendTo">appendTo</a></b>(elementOrId, config)
 								</div>
 								<div class="description">Creates a new editor instance inside a specific DOM element.</div>
@@ -1092,7 +1140,25 @@ by CKEditor instances.</div>
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">CKEDITOR.<b><a href="../symbols/CKEDITOR.html#.exec">exec</a></b>()
+								<div class="fixedFont">CKEDITOR.<b><a href="../symbols/CKEDITOR.html#.exec">exec</a></b>(data)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">CKEDITOR.<b><a href="../symbols/CKEDITOR.html#.getClipboardData">getClipboardData</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">CKEDITOR.<b><a href="../symbols/CKEDITOR.html#.getTemplates">getTemplates</a></b>(name)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -1129,6 +1195,24 @@ loaded (ckeditor_basic.js).</div>
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont">CKEDITOR.<b><a href="../symbols/CKEDITOR.html#.loadStylesSet">loadStylesSet</a></b>(name, url, callback)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">CKEDITOR.<b><a href="../symbols/CKEDITOR.html#.loadTemplates">loadTemplates</a></b>(templateFiles, callback)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont">CKEDITOR.<b><a href="../symbols/CKEDITOR.html#.remove">remove</a></b>(editor)
 								</div>
 								<div class="description">Removes and editor instance from the global <a href="../symbols/CKEDITOR.html#constructor">CKEDITOR</a> object.</div>
@@ -1158,7 +1242,7 @@ editor instances.</div>
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">CKEDITOR.<b><a href="../symbols/CKEDITOR.html#.style">style</a></b>(styleDefinition)
+								<div class="fixedFont">CKEDITOR.<b><a href="../symbols/CKEDITOR.html#.style">style</a></b>(styleDefinition, variablesValues)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -1168,6 +1252,15 @@ editor instances.</div>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">CKEDITOR.<b><a href="../symbols/CKEDITOR.html#.styleCommand">styleCommand</a></b>(style)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">CKEDITOR.<b><a href="../symbols/CKEDITOR.html#.unlinkCommand">unlinkCommand</a></b>()
 								</div>
 								<div class="description"></div>
 							</td>
@@ -1243,6 +1336,9 @@ editor instances.</div>
 					<div style="clear:both"></div>
 					<div class="description">
 						Contains the full URL for the CKEditor installation directory.
+It's possible to manually provide the base path by setting a
+global variable named CKEDITOR_BASEPATH. This global variable
+must be set "before" the editor script loading.
 
 
 					</div>
@@ -1616,6 +1712,112 @@ is available for internal use mainly.
 
 					<hr />
 
+					<a name=".addStylesSet"> </a>
+					<div class="fixedFont" style="float:left">&lt;static&gt;
+
+					<span class="light">{Undefined}</span>
+					<span class="light">CKEDITOR.</span><b>addStylesSet</b>(name, styles)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/plugins_stylescombo_plugin.js.html">plugins/stylescombo/plugin.js</a>.
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>name</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>styles</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
+					<a name=".addTemplates"> </a>
+					<div class="fixedFont" style="float:left">&lt;static&gt;
+
+					<span class="light">{Undefined}</span>
+					<span class="light">CKEDITOR.</span><b>addTemplates</b>(name, definition)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/plugins_templates_plugin.js.html">plugins/templates/plugin.js</a>.
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>name</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>definition</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
 					<a name=".appendTo"> </a>
 					<div class="fixedFont" style="float:left">&lt;static&gt;
 
@@ -1741,7 +1943,7 @@ is available for internal use mainly.
 					<div class="fixedFont" style="float:left">&lt;static&gt;
 
 					<span class="light">{Undefined}</span>
-					<span class="light">CKEDITOR.</span><b>exec</b>()
+					<span class="light">CKEDITOR.</span><b>exec</b>(data)
 
 					</div>
 					<div style="float:right">
@@ -1764,6 +1966,100 @@ is available for internal use mainly.
 						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
 
 
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>data</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
+					<a name=".getClipboardData"> </a>
+					<div class="fixedFont" style="float:left">&lt;static&gt;
+
+					<span class="light">{Undefined}</span>
+					<span class="light">CKEDITOR.</span><b>getClipboardData</b>()
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/plugins_pastetext_plugin.js.html">plugins/pastetext/plugin.js</a>.
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+
+
+
+
+
+
+					<hr />
+
+					<a name=".getTemplates"> </a>
+					<div class="fixedFont" style="float:left">&lt;static&gt;
+
+					<span class="light">{Undefined}</span>
+					<span class="light">CKEDITOR.</span><b>getTemplates</b>(name)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/plugins_templates_plugin.js.html">plugins/templates/plugin.js</a>.
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>name</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
 
 
 
@@ -1791,6 +2087,11 @@ is available for internal use mainly.
 						Gets the full URL for CKEditor resources. By default, URLs
 returned by this function contains a querystring parameter ("t")
 set to the <a href="../symbols/CKEDITOR.html#.timestamp">CKEDITOR.timestamp</a> value.
+It's possible to provide a custom implementation to this
+function by setting a global variable named CKEDITOR_GETURL.
+This global variable must be set "before" the editor script
+loading. If the custom implementation returns nothing, the
+default implementation is used.
 
 
 					</div>
@@ -1912,6 +2213,118 @@ if ( CKEDITOR.loadFullCore )
 
 
 
+
+
+
+
+
+
+
+					<hr />
+
+					<a name=".loadStylesSet"> </a>
+					<div class="fixedFont" style="float:left">&lt;static&gt;
+
+					<span class="light">{Undefined}</span>
+					<span class="light">CKEDITOR.</span><b>loadStylesSet</b>(name, url, callback)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/plugins_stylescombo_plugin.js.html">plugins/stylescombo/plugin.js</a>.
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>name</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>url</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>callback</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
+					<a name=".loadTemplates"> </a>
+					<div class="fixedFont" style="float:left">&lt;static&gt;
+
+					<span class="light">{Undefined}</span>
+					<span class="light">CKEDITOR.</span><b>loadTemplates</b>(templateFiles, callback)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/plugins_templates_plugin.js.html">plugins/templates/plugin.js</a>.
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>templateFiles</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>callback</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
 
 
 
@@ -2110,7 +2523,7 @@ CKEDITOR.replaceAll( function( textarea, config )
 					<div class="fixedFont" style="float:left">&lt;static&gt;
 
 					<span class="light">{Undefined}</span>
-					<span class="light">CKEDITOR.</span><b>style</b>(styleDefinition)
+					<span class="light">CKEDITOR.</span><b>style</b>(styleDefinition, variablesValues)
 
 					</div>
 					<div style="float:right">
@@ -2139,6 +2552,12 @@ CKEDITOR.replaceAll( function( textarea, config )
 
 								<dt>
 									<span class="light fixedFont">{Undefined}</span> <b>styleDefinition</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>variablesValues</b>
 
 								</dt>
 								<dd></dd>
@@ -2191,6 +2610,42 @@ CKEDITOR.replaceAll( function( textarea, config )
 								<dd></dd>
 
 							</dl>
+
+
+
+
+
+
+
+					<hr />
+
+					<a name=".unlinkCommand"> </a>
+					<div class="fixedFont" style="float:left">&lt;static&gt;
+
+					<span class="light">{Undefined}</span>
+					<span class="light">CKEDITOR.</span><b>unlinkCommand</b>()
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/plugins_link_plugin.js.html">plugins/link/plugin.js</a>.
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
 
 
 

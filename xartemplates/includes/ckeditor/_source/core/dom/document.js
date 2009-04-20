@@ -70,7 +70,7 @@ CKEDITOR.tools.extend( CKEDITOR.dom.document.prototype,
 
 		createText : function( text )
 		{
-			return new CKEDITOR.dom.text( '', this );
+			return new CKEDITOR.dom.text( text, this );
 		},
 
 		/**
@@ -85,6 +85,47 @@ CKEDITOR.tools.extend( CKEDITOR.dom.document.prototype,
 		{
 			var $ = this.$.getElementById( elementId );
 			return $ ? new CKEDITOR.dom.element( $ ) : null;
+		},
+
+		getByAddress : function( address, normalized )
+		{
+			var $ = this.$.documentElement;
+
+			for ( var i = 0 ; $ && i < address.length ; i++ )
+			{
+				var target = address[ i ];
+
+				if ( !normalized )
+				{
+					$ = $.childNodes[ target ];
+					continue;
+				}
+
+				var currentIndex = -1;
+
+				for (var j = 0 ; j < $.childNodes.length ; j++ )
+				{
+					var candidate = $.childNodes[ j ];
+
+					if ( normalized === true &&
+							candidate.nodeType == 3 &&
+							candidate.previousSibling &&
+							candidate.previousSibling.nodeType == 3 )
+					{
+						continue;
+					}
+
+					currentIndex++;
+
+					if ( currentIndex == target )
+					{
+						$ = candidate;
+						break;
+					}
+				}
+			}
+
+			return $ ? new CKEDITOR.dom.node( $ ) : null;
 		},
 
 		/**
@@ -123,6 +164,18 @@ CKEDITOR.tools.extend( CKEDITOR.dom.document.prototype,
 			this.getBody = function()
 				{
 					return body;
+				})();
+		},
+
+		getDocumentElement : function()
+		{
+			var documentElement = new CKEDITOR.dom.element( this.$.documentElement );
+
+			return (
+			/** @ignore */
+			this.getDocumentElement = function()
+				{
+					return documentElement;
 				})();
 		},
 

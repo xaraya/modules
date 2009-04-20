@@ -740,6 +740,38 @@ Utility functions.
 <!-- ============================== properties summary ===================== -->
 
 
+
+
+
+
+
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class CKEDITOR.tools.">
+					<caption>Field Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Field Attributes</th>
+							<th scope="col">Field Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								CKEDITOR.tools.<b><a href="../symbols/CKEDITOR.tools.html#.indexOf">indexOf</a></b>
+								</div>
+								<div class="description">Returns the index of an element in an array.</div>
+							</td>
+						</tr>
+
+					</tbody>
+				</table>
+
+
+
+
+
 <!-- ============================== methods summary ======================== -->
 
 
@@ -757,6 +789,67 @@ Utility functions.
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont">CKEDITOR.tools.<b><a href="../symbols/CKEDITOR.tools.html#.addFunction">addFunction</a></b>(fn, scope)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">CKEDITOR.tools.<b><a href="../symbols/CKEDITOR.tools.html#.arrayCompare">arrayCompare</a></b>(arrayA, arrayB)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">CKEDITOR.tools.<b><a href="../symbols/CKEDITOR.tools.html#.bind">bind</a></b>(func, obj)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">CKEDITOR.tools.<b><a href="../symbols/CKEDITOR.tools.html#.callFunction">callFunction</a></b>(index)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">CKEDITOR.tools.<b><a href="../symbols/CKEDITOR.tools.html#.clone">clone</a></b>(object)
+								</div>
+								<div class="description">Creates a deep copy of an object.</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">CKEDITOR.tools.<b><a href="../symbols/CKEDITOR.tools.html#.createClass">createClass</a></b>(definiton)
+								</div>
+								<div class="description">Class creation based on prototype inheritance, with supports of the
+following features:
+<ul>
+<li> Static fields </li>
+<li> Private fields </li>
+<li> Public(prototype) fields </li>
+<li> Chainable base class constructor </li>
+</ul></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont">CKEDITOR.tools.<b><a href="../symbols/CKEDITOR.tools.html#.cssStyleToDomStyle">cssStyleToDomStyle</a></b>(cssName)
 								</div>
 								<div class="description">Transforms a CSS property name to its relative DOM style name.</div>
@@ -766,7 +859,7 @@ Utility functions.
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">CKEDITOR.tools.<b><a href="../symbols/CKEDITOR.tools.html#.extend">extend</a></b>(target, source[,souce(n)], overwrite)
+								<div class="fixedFont">CKEDITOR.tools.<b><a href="../symbols/CKEDITOR.tools.html#.extend">extend</a></b>(target, source[,souce(n)], overwrite, properties)
 								</div>
 								<div class="description">Copy the properties from one object to another.</div>
 							</td>
@@ -788,15 +881,6 @@ Utility functions.
 								</div>
 								<div class="description">Replace special HTML characters in a string with their relative HTML
 entity values.</div>
-							</td>
-						</tr>
-
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">CKEDITOR.tools.<b><a href="../symbols/CKEDITOR.tools.html#.indexOf">indexOf</a></b>(array, entry)
-								</div>
-								<div class="description">Returns the index of an element in an array.</div>
 							</td>
 						</tr>
 
@@ -914,12 +998,370 @@ predefined object.</div>
 
 <!-- ============================== field details ========================== -->
 
+				<div class="sectionTitle">
+					Field Detail
+				</div>
+
+					<a name=".indexOf"> </a>
+					<div class="fixedFont" style="float:left">&lt;static&gt;
+
+					<span class="light">{Number}</span>
+					<span class="light">CKEDITOR.tools.</span><b>indexOf</b>
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+						Returns the index of an element in an array.
+
+
+					</div>
+
+
+
+
+							<pre class="code">var letters = [ 'a', 'b', 0, 'c', false ];
+alert( CKEDITOR.tools.indexOf( letters, '0' ) );  "-1" because 0 !== '0'
+alert( CKEDITOR.tools.indexOf( letters, false ) );  "4" because 0 !== false</pre>
+
+
+
+
+
+
+
+
+
+
+
 
 <!-- ============================== method details ========================= -->
 
 				<div class="sectionTitle">
 					Method Detail
 				</div>
+
+					<a name=".addFunction"> </a>
+					<div class="fixedFont" style="float:left">&lt;static&gt;
+
+					<span class="light">{Undefined}</span>
+					<span class="light">CKEDITOR.tools.</span><b>addFunction</b>(fn, scope)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>fn</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>scope</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
+					<a name=".arrayCompare"> </a>
+					<div class="fixedFont" style="float:left">&lt;static&gt;
+
+					<span class="light">{Undefined}</span>
+					<span class="light">CKEDITOR.tools.</span><b>arrayCompare</b>(arrayA, arrayB)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>arrayA</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>arrayB</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
+					<a name=".bind"> </a>
+					<div class="fixedFont" style="float:left">&lt;static&gt;
+
+					<span class="light">{Undefined}</span>
+					<span class="light">CKEDITOR.tools.</span><b>bind</b>(func, obj)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>func</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>obj</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
+					<a name=".callFunction"> </a>
+					<div class="fixedFont" style="float:left">&lt;static&gt;
+
+					<span class="light">{Undefined}</span>
+					<span class="light">CKEDITOR.tools.</span><b>callFunction</b>(index)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>index</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
+					<a name=".clone"> </a>
+					<div class="fixedFont" style="float:left">&lt;static&gt;
+
+					<span class="light">{Object}</span>
+					<span class="light">CKEDITOR.tools.</span><b>clone</b>(object)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+						Creates a deep copy of an object.
+Attention: there is no support for deep copy of Array properties and
+for recursive references.
+
+
+					</div>
+
+
+
+
+							<pre class="code">var obj =
+    {
+        name : 'John',
+        cars :
+            {
+                Mercedes : { color : 'blue' },
+                Porsche : { color : 'red' }
+            }
+    };
+var clone = CKEDITOR.tools.clone( obj );
+clone.name = 'Paul';
+clone.cars.Porsche.color = 'silver';
+alert( obj.name );	// John
+alert( clone.name );	// Paul
+alert( obj.cars.Porsche.color );	// red
+alert( clone.cars.Porsche.color );	// silver</pre>
+
+
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Object}</span> <b>object</b>
+
+								</dt>
+								<dd>The object to be cloned.</dd>
+
+							</dl>
+
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+
+								<dd><span class="light fixedFont">{Object}</span> The object clone.</dd>
+
+							</dl>
+
+
+
+
+					<hr />
+
+					<a name=".createClass"> </a>
+					<div class="fixedFont" style="float:left">&lt;static&gt;
+
+					<span class="light">{Undefined}</span>
+					<span class="light">CKEDITOR.tools.</span><b>createClass</b>(definiton)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+						Class creation based on prototype inheritance, with supports of the
+following features:
+<ul>
+<li> Static fields </li>
+<li> Private fields </li>
+<li> Public(prototype) fields </li>
+<li> Chainable base class constructor </li>
+</ul>
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Object}</span> <b>definiton</b>
+
+								</dt>
+								<dd>(Optional)The class definiton object.</dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
 
 					<a name=".cssStyleToDomStyle"> </a>
 					<div class="fixedFont" style="float:left">&lt;static&gt;
@@ -981,7 +1423,7 @@ alert( CKEDITOR.tools.cssStyleToDomStyle( 'float' ) );             // "cssFloat"
 					<div class="fixedFont" style="float:left">&lt;static&gt;
 
 					<span class="light">{Object}</span>
-					<span class="light">CKEDITOR.tools.</span><b>extend</b>(target, source[,souce(n)], overwrite)
+					<span class="light">CKEDITOR.tools.</span><b>extend</b>(target, source[,souce(n)], overwrite, properties)
 
 					</div>
 					<div style="float:right">
@@ -1042,9 +1484,16 @@ for ( var p in myObject )
 									<span class="light fixedFont">{Boolean}</span> <b>overwrite</b>
 									<i>Optional</i>
 								</dt>
-								<dd>Indicates that properties already present
-		in the target object must be overwritten. This must be the last
-		parameter in the function call.</dd>
+								<dd>If 'true' is specified it indicates that
+           properties already present in the target object could be
+           overwritten by subsequent objects.</dd>
+
+								<dt>
+									<span class="light fixedFont">{Object}</span> <b>properties</b>
+									<i>Optional</i>
+								</dt>
+								<dd>Only properties within the specified names
+           list will be received from the source object.</dd>
 
 							</dl>
 
@@ -1157,69 +1606,6 @@ entity values.
 							<dt class="heading">Returns:</dt>
 
 								<dd><span class="light fixedFont">{String}</span> The encode string.</dd>
-
-							</dl>
-
-
-
-
-					<hr />
-
-					<a name=".indexOf"> </a>
-					<div class="fixedFont" style="float:left">&lt;static&gt;
-
-					<span class="light">{Number}</span>
-					<span class="light">CKEDITOR.tools.</span><b>indexOf</b>(array, entry)
-
-					</div>
-					<div style="float:right">
-						<span class="heading">Since:</span>
-
-								3.0
-
-					</div>
-					<div style="clear:both"></div>
-					<div class="description">
-						Returns the index of an element in an array.
-
-
-					</div>
-
-
-
-
-							<pre class="code">var letters = [ 'a', 'b', 'c' ];
-alert( CKEDITOR.tools.indexOf( letters, 'b' ) );  "1"</pre>
-
-
-
-
-
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-
-								<dt>
-									<span class="light fixedFont">{Array}</span> <b>array</b>
-
-								</dt>
-								<dd>The array to be searched.</dd>
-
-								<dt>
-									<span class="light fixedFont">{Object}</span> <b>entry</b>
-
-								</dt>
-								<dd>The element to be found.</dd>
-
-							</dl>
-
-
-
-
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-
-								<dd><span class="light fixedFont">{Number}</span> The (zero based) index of the first entry that matches
-		the entry, or -1 if not found.</dd>
 
 							</dl>
 

@@ -759,7 +759,7 @@ DOM manipulation objects and function.<br /><br />
 							<td class="nameDescription">
 								<div class="fixedFont">CKEDITOR.dom.<b><a href="../symbols/CKEDITOR.dom.html#.documentFragment">documentFragment</a></b>(ownerDocument)
 								</div>
-								<div class="description"></div>
+								<div class="description">DocumentFragment is a "lightweight" or "minimal" Document object.</div>
 							</td>
 						</tr>
 
@@ -880,7 +880,11 @@ DOM manipulation objects and function.<br /><br />
 					</div>
 					<div style="clear:both"></div>
 					<div class="description">
-
+						DocumentFragment is a "lightweight" or "minimal" Document object. It is
+commonly used to extract a portion of a document's tree or to create a new
+fragment of a document. Various operations may take DocumentFragment objects
+as arguments and results in all the child nodes of the DocumentFragment being
+moved to the child list of this node.
 
 							<br />
 							<i>Defined in: </i> <a href="../symbols/src/core_dom_documentFragment.js.html">core/dom/documentFragment.js</a>.
@@ -897,7 +901,7 @@ DOM manipulation objects and function.<br /><br />
 							<dt class="heading">Parameters:</dt>
 
 								<dt>
-									<span class="light fixedFont">{Undefined}</span> <b>ownerDocument</b>
+									<span class="light fixedFont">{Object}</span> <b>ownerDocument</b>
 
 								</dt>
 								<dd></dd>

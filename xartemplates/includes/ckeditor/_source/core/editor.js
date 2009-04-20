@@ -78,10 +78,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				if ( instanceConfig )
 					CKEDITOR.tools.extend( editor.config, instanceConfig, true );
 
-				// Fire the "configLoaded" event.
-				editor.fireOnce( 'configLoaded' );
-
-				loadLang( editor );
+				onConfigLoaded( editor );
 			});
 
 		// The instance config may override the customConfig setting to avoid
@@ -95,6 +92,24 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	};
 
 	// ##### END: Config Privates
+
+	var onConfigLoaded = function( editor )
+	{
+		// Set config related properties.
+
+		var skin = editor.config.skin;
+
+		editor.skinPath = CKEDITOR.getUrl(
+			'skins/' + skin + '/' );
+
+		editor.skinClass = 'cke_skin_' + skin;
+
+		// Fire the "configLoaded" event.
+		editor.fireOnce( 'configLoaded' );
+
+		// Load language file.
+		loadLang( editor );
+	};
 
 	var loadLang = function( editor )
 	{
@@ -172,7 +187,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				CKEDITOR.scriptLoader.load( languageFiles, function()
 					{
 						// Initialize all plugins that have the "beforeInit" and "init" methods defined.
-						var methods = [ 'beforeInit', 'init' ];
+						var methods = [ 'beforeInit', 'init', 'afterInit' ];
 						for ( var m = 0 ; m < methods.length ; m++ )
 						{
 							for ( var i = 0 ; i < pluginsArray.length ; i++ )
@@ -225,7 +240,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		// If are replacing a textarea, we must
 		if ( editor.elementMode == CKEDITOR.ELEMENT_MODE_REPLACE && element.is( 'textarea' ) )
 		{
-			var form = new CKEDITOR.dom.element( element.$.form );
+			var form = element.$.form && new CKEDITOR.dom.element( element.$.form );
 			if ( form )
 			{
 				form.on( 'submit', function()
@@ -233,21 +248,42 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						editor.updateElement();
 					});
 
-				// If we have a submit function, override it also, because it doesn't fire the "submit" event.
-				if ( form.submit && form.submit.call )
+				// Setup the submit function because it doesn't fire the
+				// "submit" event.
+				if ( !form.$.submit.nodeName )
 				{
-					CKEDITOR.tools.override( form.submit, function( originalSubmit )
+					form.$.submit = CKEDITOR.tools.override( form.$.submit, function( originalSubmit )
 						{
 							return function()
 								{
 									editor.updateElement();
-									originalSubmit.apply( this, arguments );
+
+									// For IE, the DOM submit function is not a
+									// function, so we need thid check.
+									if ( originalSubmit.apply )
+										originalSubmit.apply( this, arguments );
+									else
+										originalSubmit();
 								};
 						});
 				}
 			}
 		}
 	};
+
+	function updateCommandsMode()
+	{
+		var command,
+			commands = this._.commands,
+			mode = this.mode;
+
+		for ( var name in commands )
+		{
+			command = commands[ name ];
+
+			command.setState( command.modes[ mode ] ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED );
+		}
+	}
 
 	/**
 	 * Initializes the editor instance. This function is called by the editor
@@ -264,6 +300,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			delete this._.instanceConfig;
 
 			this._.commands = {};
+			this._.styles = [];
 
 			/**
 			 * The DOM element that has been replaced by this editor instance. This
@@ -322,6 +359,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 			CKEDITOR.fire( 'instanceCreated', null, this );
 
+			this.on( 'mode', updateCommandsMode );
+
 			initConfig( this, instanceConfig );
 		};
 })();
@@ -345,7 +384,12 @@ CKEDITOR.tools.extend( CKEDITOR.editor.prototype,
 		 */
 		addCommand : function( commandName, commandDefinition )
 		{
-			this._.commands[ commandName ] = new CKEDITOR.command( this, commandDefinition );
+			return this._.commands[ commandName ] = new CKEDITOR.command( this, commandDefinition );
+		},
+
+		addCss : function( css )
+		{
+			this._.styles.push( css );
 		},
 
 		/**
@@ -380,8 +424,24 @@ CKEDITOR.tools.extend( CKEDITOR.editor.prototype,
 		execCommand : function( commandName, data )
 		{
 			var command = this.getCommand( commandName );
+
+			var eventData =
+			{
+				name: commandName,
+				commandData: data,
+				command: command
+			};
+
 			if ( command && command.state != CKEDITOR.TRISTATE_DISABLED )
-				return command.exec( this, data );
+			{
+				if ( this.fire( 'beforeCommandExec', eventData ) !== true )
+				{
+					eventData.returnValue = command.exec( eventData.commandData );
+
+					if ( this.fire( 'afterCommandExec', eventData ) !== true )
+						return eventData.returnValue;
+				}
+			}
 
 			// throw 'Unknown command name "' + commandName + '"';
 			return false;
@@ -446,6 +506,11 @@ CKEDITOR.tools.extend( CKEDITOR.editor.prototype,
 			}
 
 			return data;
+		},
+
+		loadSnapshot : function( snapshot )
+		{
+			this.fire( 'loadSnapshot', snapshot );
 		},
 
 		/**

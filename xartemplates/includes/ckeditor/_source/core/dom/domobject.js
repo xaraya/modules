@@ -50,7 +50,11 @@ CKEDITOR.dom.domObject.prototype = (function()
 	{
 		return function( domEvent )
 		{
-			domObject.fire( eventName, new CKEDITOR.dom.event( domEvent ) );
+			// In FF, when reloading the page with the editor focused, it may
+			// throw an error because the CKEDITOR global is not anymore
+			// available. So, we check it here first. (#2923)
+			if ( typeof CKEDITOR != 'undefined' )
+				domObject.fire( eventName, new CKEDITOR.dom.event( domEvent ) );
 		};
 	};
 
@@ -64,7 +68,13 @@ CKEDITOR.dom.domObject.prototype = (function()
 			// set to the event.
 
 			// Get the listeners holder object.
-			var nativeListeners = this.getCustomData( '_cke_nativeListeners' ) || this.setCustomData( '_cke_nativeListeners', {} );
+			var nativeListeners = this.getCustomData( '_cke_nativeListeners' );
+
+			if ( !nativeListeners )
+			{
+				nativeListeners = {};
+				this.setCustomData( '_cke_nativeListeners', nativeListeners );
+			}
 
 			// Check if we have a listener for that event.
 			if ( !nativeListeners[ eventName ] )
@@ -97,7 +107,7 @@ CKEDITOR.dom.domObject.prototype = (function()
 					if ( this.$.removeEventListener )
 						this.$.removeEventListener( eventName, listener, false );
 					else if ( this.$.detachEvent )
-						this.$.detachEvent( eventName, listener );
+						this.$.detachEvent( 'on' + eventName, listener );
 
 					delete nativeListeners[ eventName ];
 				}
@@ -141,7 +151,7 @@ CKEDITOR.dom.domObject.prototype = (function()
 	 */
 	domObjectProto.setCustomData = function( key, value )
 	{
-		var expandoNumber = this.$._cke_expando || ( this.$._cke_expando = CKEDITOR.tools.getNextNumber() ),
+		var expandoNumber = this.getUniqueId(),
 			dataSlot = customData[ expandoNumber ] || ( customData[ expandoNumber ] = {} );
 
 		dataSlot[ key ] = value;
@@ -165,10 +175,27 @@ CKEDITOR.dom.domObject.prototype = (function()
 		var expandoNumber = this.$._cke_expando,
 			dataSlot = expandoNumber && customData[ expandoNumber ];
 
-		return ( dataSlot && dataSlot[ key ] ) || null;
+		if ( dataSlot && dataSlot[ key ] !== undefined )
+			return dataSlot[ key ];
+		return null;
+	};
+
+	domObjectProto.removeCustomData = function( key )
+	{
+		var expandoNumber = this.$._cke_expando,
+			dataSlot = expandoNumber && customData[ expandoNumber ],
+			retval = dataSlot[ key ];
+
+		delete dataSlot[ key ];
+		return retval || null;
+	};
+
+	domObjectProto.getUniqueId = function()
+	{
+		return this.$._cke_expando || ( this.$._cke_expando = CKEDITOR.tools.getNextNumber() );
 	};
 
 	// Implement CKEDITOR.event.
-	CKEDITOR.event.implementOn( domObjectProto );
+	CKEDITOR.event.implementOn( domObjectProto, true );
 
 })( CKEDITOR.dom.domObject.prototype );

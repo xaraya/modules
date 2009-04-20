@@ -92,9 +92,18 @@ CKEDITOR.tools.extend( CKEDITOR.dom.node.prototype,
 			return element;
 		},
 
-		clone : function( includeChildren )
+		clone : function( includeChildren, cloneId )
 		{
-			return new CKEDITOR.dom.node( this.$.cloneNode( includeChildren ) );
+			var $clone = this.$.cloneNode( includeChildren );
+
+			if ( this.type == CKEDITOR.NODE_ELEMENT && !cloneId )
+			{
+				// The "id" attribute should never be cloned to avoid duplication.
+				$clone.removeAttribute( 'id', false ) ;
+				$clone.removeAttribute( '_cke_expando', false ) ;
+			}
+
+			return new CKEDITOR.dom.node( $clone );
 		},
 
 		hasPrevious : function()
@@ -146,6 +155,57 @@ CKEDITOR.tools.extend( CKEDITOR.dom.node.prototype,
 		{
 			this.$.parentNode.insertBefore( node.$, this.$ );
 			return node;
+		},
+
+		/**
+		 * Retrieves a uniquely identifiable tree address for this node.
+		 * The tree address returns is an array of integers, with each integer
+		 * indicating a child index of a DOM node, starting from
+		 * document.documentElement.
+		 *
+		 * For example, assuming <body> is the second child from <html> (<head>
+		 * being the first), and we'd like to address the third child under the
+		 * fourth child of body, the tree address returned would be:
+		 * [1, 3, 2]
+		 *
+		 * The tree address cannot be used for finding back the DOM tree node once
+		 * the DOM tree structure has been modified.
+		 */
+		getAddress : function( normalized )
+		{
+			var address = [];
+			var $documentElement = this.getDocument().$.documentElement;
+			var node = this.$;
+
+			while ( node && node != $documentElement )
+			{
+				var parentNode = node.parentNode;
+				var currentIndex = -1;
+
+				for ( var i = 0 ; i < parentNode.childNodes.length ; i++ )
+				{
+					var candidate = parentNode.childNodes[i];
+
+					if ( normalized &&
+							candidate.nodeType == 3 &&
+							candidate.previousSibling &&
+							candidate.previousSibling.nodeType == 3 )
+					{
+						continue;
+					}
+
+					currentIndex++;
+
+					if ( candidate == node )
+						break;
+				}
+
+				address.unshift( currentIndex );
+
+				node = node.parentNode;
+			}
+
+			return address;
 		},
 
 		/**
@@ -248,25 +308,22 @@ CKEDITOR.tools.extend( CKEDITOR.dom.node.prototype,
 
 		getPreviousSourceNode : function( startFromSibling, nodeType )
 		{
-			var $ = startFromSibling ? this.$.previousSibling : this.$,
-				node = null;
+			var $ = this.$;
 
-			if ( !$ )
-				return null;
+			var node = ( !startFromSibling && $.lastChild ) ?
+				$.lastChild :
+				$.previousSibling;
 
-			if ( ( node = $.previousSibling ) )
-			{
-				while ( node.lastChild )
-					node = node.lastChild;
-			}
-			else
-				node = $.parentNode;
+			var parent;
+
+			while ( !node && ( parent = ( parent || $ ).parentNode ) )
+				node = parent.previousSibling;
 
 			if ( !node )
 				return null;
 
 			if ( nodeType && node.nodeType != nodeType )
-				return arguments.callee.apply( { $ : node }, false, nodeType );
+				return arguments.callee.call( { $ : node }, false, nodeType );
 
 			return new CKEDITOR.dom.node( node );
 		},
@@ -303,6 +360,26 @@ CKEDITOR.tools.extend( CKEDITOR.dom.node.prototype,
 			while ( ( node = node.getParent() ) )
 
 			return parents;
+		},
+
+		getCommonAncestor : function( node )
+		{
+			if ( node.equals( this ) )
+				return this;
+
+			if ( node.contains && node.contains( this ) )
+				return node;
+
+			var start = this.contains ? this : this.getParent();
+
+			do
+			{
+				if ( start.contains( node ) )
+					return start;
+			}
+			while ( ( start = start.getParent() ) );
+
+			return null;
 		},
 
 		getPosition : function( otherNode )
@@ -371,15 +448,36 @@ CKEDITOR.tools.extend( CKEDITOR.dom.node.prototype,
 		 */
 		getAscendant : function( name, includeSelf )
 		{
-			var node = this.$;
-			if ( includeSelf && node.nodeName.toLowerCase() == name )
-				return this;
-			while ( ( node = node.parentNode ) )
+			var $ = this.$;
+
+			if ( !includeSelf )
+				$ = $.parentNode;
+
+			while ( $ )
 			{
-				if ( node.nodeName && node.nodeName.toLowerCase() == name )
-					return new CKEDITOR.dom.node( node );
+				if ( $.nodeName && $.nodeName.toLowerCase() == name )
+					return new CKEDITOR.dom.node( $ );
+
+				$ = $.parentNode;
 			}
 			return null;
+		},
+
+		hasAscendant : function( name, includeSelf )
+		{
+			var $ = this.$;
+
+			if ( !includeSelf )
+				$ = $.parentNode;
+
+			while ( $ )
+			{
+				if ( $.nodeName && $.nodeName.toLowerCase() == name )
+					return true;
+
+				$ = $.parentNode;
+			}
+			return false;
 		},
 
 		move : function( target, toStart )
@@ -416,6 +514,84 @@ CKEDITOR.tools.extend( CKEDITOR.dom.node.prototype,
 			}
 
 			return this;
+		},
+
+		replace : function( nodeToReplace )
+		{
+			this.insertBefore( nodeToReplace );
+			nodeToReplace.remove();
+		},
+
+		trim : function()
+		{
+			this.ltrim();
+			this.rtrim();
+		},
+
+		ltrim : function()
+		{
+			var child;
+			while ( this.getFirst && ( child = this.getFirst() ) )
+			{
+				if ( child.type == CKEDITOR.NODE_TEXT )
+				{
+					var trimmed = CKEDITOR.tools.ltrim( child.getText() ),
+						originalLength = child.getLength();
+
+					if ( trimmed.length == 0 )
+					{
+						child.remove();
+						continue;
+					}
+					else if ( trimmed.length < originalLength )
+					{
+						child.split( originalLength - trimmed.length );
+
+						// IE BUG: child.remove() may raise JavaScript errors here. (#81)
+						this.$.removeChild( this.$.firstChild );
+					}
+				}
+				break;
+			}
+		},
+
+		rtrim : function()
+		{
+			var child;
+			while ( this.getLast && ( child = this.getLast() ) )
+			{
+				if ( child.type == CKEDITOR.NODE_TEXT )
+				{
+					var trimmed = CKEDITOR.tools.rtrim( child.getText() ),
+						originalLength = child.getLength();
+
+					if ( trimmed.length == 0 )
+					{
+						child.remove();
+						continue;
+					}
+					else if ( trimmed.length < originalLength )
+					{
+						child.split( trimmed.length );
+
+						// IE BUG: child.getNext().remove() may raise JavaScript errors here.
+						// (#81)
+						this.$.lastChild.parentNode.removeChild( this.$.lastChild );
+					}
+				}
+				break;
+			}
+
+			if ( !CKEDITOR.env.ie && !CKEDITOR.env.opera )
+			{
+				child = this.$.lastChild;
+
+				if ( child && child.type == 1 && child.nodeName.toLowerCase() == 'br' )
+				{
+					// Use "eChildNode.parentNode" instead of "node" to avoid IE bug (#324).
+					child.parentNode.removeChild( child ) ;
+				}
+			}
 		}
 	}
 );

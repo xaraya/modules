@@ -45,9 +45,14 @@
 <span class='line'> 38</span> 	 * @param {CKEDITOR.htmlWriter} writer The writer to which write the HTML.
 <span class='line'> 39</span> 	 * @example
 <span class='line'> 40</span> 	 */</span><span class="WHIT">
-<span class='line'> 41</span> </span><span class="WHIT">	</span><span class="NAME">writeHtml</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">writer</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'> 41</span> </span><span class="WHIT">	</span><span class="NAME">writeHtml</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">writer</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">filter</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT">
 <span class='line'> 42</span> </span><span class="WHIT">	</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 43</span> </span><span class="WHIT">		</span><span class="NAME">writer.comment</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">this.value</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 44</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'> 45</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 46</span> </span></pre></body></html>
+<span class='line'> 43</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">comment</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.value</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 44</span>
+<span class='line'> 45</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">filter</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">comment</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">filter.onComment</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">comment</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'> 46</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 47</span>
+<span class='line'> 48</span> </span><span class="WHIT">		</span><span class="NAME">writer.comment</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">comment</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 49</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 50</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 51</span> </span></pre></body></html>

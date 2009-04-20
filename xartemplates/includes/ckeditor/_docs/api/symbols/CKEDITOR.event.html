@@ -757,7 +757,7 @@ features.</div>
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">CKEDITOR.event.<b><a href="../symbols/CKEDITOR.event.html#.implementOn">implementOn</a></b>(targetObject)
+								<div class="fixedFont">CKEDITOR.event.<b><a href="../symbols/CKEDITOR.event.html#.implementOn">implementOn</a></b>(targetObject, isTargetPrototype)
 								</div>
 								<div class="description">Implements the <a href="../symbols/CKEDITOR.event.html#constructor">CKEDITOR.event</a> features in an object.</div>
 							</td>
@@ -872,7 +872,7 @@ features.
 					<div class="fixedFont" style="float:left">&lt;static&gt;
 
 					<span class="light">{Undefined}</span>
-					<span class="light">CKEDITOR.event.</span><b>implementOn</b>(targetObject)
+					<span class="light">CKEDITOR.event.</span><b>implementOn</b>(targetObject, isTargetPrototype)
 
 					</div>
 					<div style="float:right">
@@ -911,6 +911,14 @@ myObject.fire( 'testEvent' );</pre>
 
 								</dt>
 								<dd>The object in which implement the features.</dd>
+
+								<dt>
+									<span class="light fixedFont">{Boolean}</span> <b>isTargetPrototype</b>
+
+								</dt>
+								<dd>If the target is a prototype of
+           constructor, the internal 'events' object will not be copied,
+           which should be composed by the constructor itself.</dd>
 
 							</dl>
 

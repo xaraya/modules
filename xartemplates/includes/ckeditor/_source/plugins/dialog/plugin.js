@@ -38,6 +38,41 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 
 (function()
 {
+	function isTabVisible( tabId )
+	{
+		return !!this._.tabs[ tabId ][ 0 ].$.offsetHeight;
+	}
+
+	function getPreviousVisibleTab()
+	{
+		var tabId = this._.currentTabId,
+			length = this._.tabIdList.length,
+			tabIndex = CKEDITOR.tools.indexOf( this._.tabIdList, tabId ) + length;
+
+		for ( var i = tabIndex - 1 ; i > tabIndex - length ; i-- )
+		{
+			if ( isTabVisible.call( this, this._.tabIdList[ i % length ] ) )
+				return this._.tabIdList[ i % length ];
+		}
+
+		return null;
+	}
+
+	function getNextVisibleTab()
+	{
+		var tabId = this._.currentTabId,
+			length = this._.tabIdList.length,
+			tabIndex = CKEDITOR.tools.indexOf( this._.tabIdList, tabId );
+
+		for ( var i = tabIndex + 1 ; i < tabIndex + length ; i++ )
+		{
+			if ( isTabVisible.call( this, this._.tabIdList[ i % length ] ) )
+				return this._.tabIdList[ i % length ];
+		}
+
+		return null;
+	}
+
 	/**
 	 * This is the base class for runtime dialog objects. An instance of this
 	 * class represents a single named dialog for a single editor instance.
@@ -88,8 +123,17 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 
 			// Initialize the tab and page map.
 			tabs : {},
+			tabIdList : [],
+			currentTabId : null,
+			currentTabIndex : null,
 			pageCount : 0,
-			lastTab : null
+			lastTab : null,
+			tabBarMode : false,
+
+			// Initialize the tab order array for input widgets.
+			focusList : [],
+			currentFocusIndex : 0,
+			hasFocus : false
 		};
 
 		/**
@@ -251,6 +295,99 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 						this.hide();
 				}, this );
 
+		function changeFocus( forward )
+		{
+			var focusList = me._.focusList,
+				offset = forward ? 1 : -1;
+			if ( focusList.length < 1 )
+				return;
+
+			var currentIndex = ( me._.currentFocusIndex + offset + focusList.length ) % focusList.length;
+			while ( !focusList[ currentIndex ].isFocusable() )
+			{
+				currentIndex = ( currentIndex + offset + focusList.length ) % focusList.length;
+				if ( currentIndex == me._.currentFocusIndex )
+					break;
+			}
+			focusList[ currentIndex ].focus();
+		}
+
+		function focusKeydownHandler( evt )
+		{
+			// If I'm not the top dialog, ignore.
+			if ( me != CKEDITOR.dialog._.currentTop )
+				return;
+
+			var keystroke = evt.data.getKeystroke(),
+				processed = false;
+			if ( keystroke == 9 || keystroke == CKEDITOR.SHIFT + 9 )
+			{
+				var shiftPressed = ( keystroke == CKEDITOR.SHIFT + 9 );
+
+				// Handling Tab and Shift-Tab.
+				if ( me._.tabBarMode )
+				{
+					// Change tabs.
+					var nextId = shiftPressed ? getPreviousVisibleTab.call( me ) : getNextVisibleTab.call( me );
+					me.selectPage( nextId );
+					me._.tabs[ nextId ][ 0 ].getFirst().focus();
+				}
+				else
+				{
+					// Change the focus of inputs.
+					changeFocus( !shiftPressed );
+				}
+
+				processed = true;
+			}
+			else if ( keystroke == CKEDITOR.ALT + 121 && !me._.tabBarMode )
+			{
+				// Alt-F10 puts focus into the current tab item in the tab bar.
+				me._.tabBarMode = true;
+				me._.tabs[ me._.currentTabId ][ 0 ].getFirst().focus();
+				processed = true;
+			}
+			else if ( ( keystroke == 37 || keystroke == 39 ) && me._.tabBarMode )
+			{
+				// Arrow keys - used for changing tabs.
+				var nextId = ( keystroke == 37 ? getPreviousVisibleTab.call( me ) : getNextVisibleTab.call( me ) );
+				me.selectPage( nextId );
+				me._.tabs[ nextId ][ 0 ].getFirst().focus();
+				processed = true;
+			}
+
+			if ( processed )
+			{
+				evt.stop();
+				evt.data.preventDefault();
+			}
+		}
+
+		// Add the dialog keyboard handlers.
+		this.on( 'show', function()
+			{
+				CKEDITOR.document.on( 'keydown', focusKeydownHandler, this, null, 0 );
+				if ( CKEDITOR.env.ie6Compat )
+				{
+					var coverDoc = new CKEDITOR.dom.document( frames( 'cke_dialog_background_iframe' ).document );
+					coverDoc.on( 'keydown', focusKeydownHandler, this, null, 0 );
+				}
+			} );
+		this.on( 'hide', function()
+			{
+				CKEDITOR.document.removeListener( 'keydown', focusKeydownHandler );
+			} );
+
+		// Auto-focus logic in dialog.
+		this.on( 'show', function()
+			{
+				if ( !this._.hasFocus )
+				{
+					this._.currentFocusIndex = -1;
+					changeFocus( true );
+				}
+			}, this, null, 0xffffffff );
+
 		// IE6 BUG: Text fields and text areas are only half-rendered the first time the dialog appears in IE6 (#2661).
 		// This is still needed after [2708] and [2709] because text fields in hidden TR tags are still broken.
 		if ( CKEDITOR.env.ie6Compat )
@@ -281,7 +418,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 					var target = evt.data.getTarget(), firstNode = target, id, page;
 
 					// If we aren't inside a tab, bail out.
-					if ( !tabRegex.test( target.$.className ) )
+					if ( !( tabRegex.test( target.$.className ) || target.getName() == 'a' ) )
 						return;
 
 					// Find the outer <td> container of the tab.
@@ -291,6 +428,13 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 					}
 					id = target.$.id.substr( 0, target.$.id.lastIndexOf( '_' ) );
 					this.selectPage( id );
+
+					if ( this._.tabBarMode )
+					{
+						this._.tabBarMode = false;
+						this._.currentFocusIndex = -1;
+						changeFocus( true );
+					}
 				}, this );
 
 		// Insert buttons.
@@ -466,9 +610,15 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 			this._.dummyText.focus();
 			this._.dummyText.$.select();
 
+			// Reset the hasFocus state.
+			this._.hasFocus = false;
+
 			// Execute onLoad for the first show.
 			this.fireOnce( 'load', {} );
 			this.fire( 'show', {} );
+
+			// Save the initial values of the dialog.
+			this.foreach( function( contentObj ) { contentObj.setInitValue && contentObj.setInitValue(); } );
 		},
 
 		/**
@@ -495,30 +645,6 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 		reset : (function()
 		{
 			var fn = function( widget ){ if ( widget.reset ) widget.reset(); };
-			return function(){ this.foreach( fn ); return this; };
-		})(),
-
-		/**
-		 * Pushes the current values of all inputs in the dialog into the default stack.
-		 * @example
-		 * dialogObj.pushDefault();
-		 * @returns {CKEDITOR.dialog} The current dialog object.
-		 */
-		pushDefault : (function()
-		{
-			var fn = function( widget ){ if ( widget.pushDefault ) widget.pushDefault(); };
-			return function(){ this.foreach( fn ); return this; };
-		})(),
-
-		/**
-		 * Pops the current default values of all inputs in the dialog.
-		 * @example
-		 * dialogObj.popDefault();
-		 * @returns {CKEDITOR.dialog} The current dialog object.
-		 */
-		popDefault : (function()
-		{
-			var fn = function( widget ){ if ( widget.popDefault ) widget.popDefault(); };
 			return function(){ this.foreach( fn ); return this; };
 		})(),
 
@@ -585,6 +711,9 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 				CKEDITOR.dialog._.currentZIndex -= 10;
 
 			this.fire( 'hide', {} );
+
+			// Reset the initial values of the dialog.
+			this.foreach( function( contentObj ) { contentObj.resetInitValue && contentObj.resetInitValue(); } );
 		},
 
 		/**
@@ -595,7 +724,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 		addPage : function( contents )
 		{
 			var pageHtml = [],
-				titleHtml = contents.title ? 'title="' + CKEDITOR.tools.htmlEncode( contents.title ) + '" ' : '',
+				titleHtml = contents.label ? ' title="' + CKEDITOR.tools.htmlEncode( contents.label ) + '"' : '',
 				elements = contents.elements,
 				vbox = CKEDITOR.dialog._.uiElementBuilders.vbox.build( this,
 						{
@@ -608,14 +737,15 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 			// Create the HTML for the tab and the content block.
 			var page = CKEDITOR.dom.element.createFromHtml( pageHtml.join( '' ) );
 			var tab = CKEDITOR.dom.element.createFromHtml( [
-					'<table><tbody><tr><td class="cke_dialog_tab" ', titleHtml, '>',
+					'<table><tbody><tr><td class="cke_dialog_tab">',
+					'<a href="javascript: void(0)"', titleHtml, ' style="display: block; outline: none;" hidefocus="true">',
 					'<table border="0" cellspacing="0" cellpadding="0"><tbody><tr>',
 						'<td class="cke_dialog_tab_left"></td>',
 						'<td class="cke_dialog_tab_center">',
 							CKEDITOR.tools.htmlEncode( contents.label.replace( / /g, '\xa0' ) ),
 						'</td>',
 						'<td class="cke_dialog_tab_right"></td>',
-					'</tr></tbody></table></td></tr></tbody></table>'
+					'</tr></tbody></table></a></td></tr></tbody></table>'
 				].join( '' ) );
 			tab = tab.getChild( [0,0,0] );
 
@@ -632,6 +762,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 
 			// Take records for the tabs and elements created.
 			this._.tabs[ contents.id ] = [ tab, page ];
+			this._.tabIdList.push( contents.id );
 			this._.pageCount++;
 			this._.lastTab = tab;
 			var contentMap = this._.contents[ contents.id ] = {},
@@ -683,7 +814,8 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 			var selected = this._.tabs[id];
 			selected[0].addClass( 'cke_dialog_tab_selected' );
 			selected[1].show();
-			var me = this;
+			this._.currentTabId = id;
+			this._.currentTabIndex = CKEDITOR.tools.indexOf( this._.tabIdList, id );
 		},
 
 		/**
@@ -832,8 +964,11 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 		{
 			if ( this._.editor.mode )
 			{
+				this._.editor.focus();
+
 				var selection = new CKEDITOR.dom.selection( this._.editor.document );
 				this._.selectedRanges = selection.getRanges();
+				this._.selectedElement = selection.getSelectedElement();
 			}
 		},
 
@@ -846,6 +981,19 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 		clearSavedSelection : function()
 		{
 			delete this._.selectedRanges;
+			delete this._.selectedElement;
+		},
+
+		/**
+		 * Gets the saved control selection. Control selections should be retrieved
+		 * with this function instead of from restoreSelection() because
+		 * restoreSelection() does not properly restore control selections.
+		 * @returns {CKEDITOR.dom.element} The element that was selected.
+		 * @example
+		 */
+		getSelectedElement : function()
+		{
+			return this._.selectedElement;
 		},
 
 		/**
@@ -879,12 +1027,20 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 			 */
 			add : function( name, dialogDefinition )
 			{
-				this._.dialogDefinitions[name] = dialogDefinition;
+				// Avoid path registration from multiple instances override definition.
+				if ( !this._.dialogDefinitions[name]
+					|| typeof  dialogDefinition == 'function' )
+					this._.dialogDefinitions[name] = dialogDefinition;
 			},
 
 			exists : function( name )
 			{
 				return !!this._.dialogDefinitions[ name ];
+			},
+
+			getCurrent : function()
+			{
+				return CKEDITOR.dialog._.currentTop;
 			},
 
 			/**
@@ -998,7 +1154,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 
 	// "Inherit" (copy actually) from CKEDITOR.event.
 	CKEDITOR.event.implementOn( CKEDITOR.dialog );
-	CKEDITOR.event.implementOn( CKEDITOR.dialog.prototype );
+	CKEDITOR.event.implementOn( CKEDITOR.dialog.prototype, true );
 
 	var defaultDialogDefinition =
 	{
@@ -1619,12 +1775,6 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 
 	(function()
 	{
-		var decimalRegex = /^\d+(?:\.\d+)?$/,
-			fixLength = function( length )
-			{
-				return length + ( decimalRegex.test( length ) ? 'px' : '' );
-			};
-
 		CKEDITOR.ui.dialog =
 		{
 			/**
@@ -1674,7 +1824,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 			 */
 			uiElement : function( dialog, elementDefinition, htmlList, nodeNameArg, stylesArg, attributesArg, contentsArg )
 			{
-				if (arguments.length < 4 )
+				if ( arguments.length < 4 )
 					return;
 
 				var nodeName = ( nodeNameArg.call ? nodeNameArg( elementDefinition ) : nodeNameArg ) || 'div',
@@ -1747,6 +1897,30 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 				if ( this.accessKeyUp && this.accessKeyDown && elementDefinition.accessKey )
 					registerAccessKey( this, dialog, 'CTRL+' + elementDefinition.accessKey );
 
+				var me = this;
+				dialog.on( 'load', function()
+					{
+						if ( me.getInputElement() )
+						{
+							me.getInputElement().on( 'focus', function()
+								{
+									dialog._.tabBarMode = false;
+									dialog._.hasFocus = true;
+									me.fire( 'focus' );
+								}, me );
+						}
+					} );
+
+				// Register the object as a tab focus if it can be included.
+				if ( this.keyboardFocusable )
+				{
+					this.focusIndex = dialog._.focusList.push( this ) - 1;
+					this.on( 'focus', function()
+						{
+							dialog._.currentFocusIndex = me.focusIndex;
+						} );
+				}
+
 				// Completes this object with everything we have in the
 				// definition.
 				CKEDITOR.tools.extend( this, elementDefinition );
@@ -1806,14 +1980,14 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 						if ( widths )
 						{
 							if ( widths[i] )
-								styles.push( 'width:' + fixLength( widths[i] ) );
+								styles.push( 'width:' + CKEDITOR.tools.cssLength( widths[i] ) );
 						}
 						else
 							styles.push( 'width:' + Math.floor( 100 / childHtmlList.length ) + '%' );
 						if ( height )
-							styles.push( 'height:' + fixLength( height ) );
+							styles.push( 'height:' + CKEDITOR.tools.cssLength( height ) );
 						if ( elementDefinition && elementDefinition.padding != undefined )
-							styles.push( 'padding:' + fixLength( elementDefinition.padding ) );
+							styles.push( 'padding:' + CKEDITOR.tools.cssLength( elementDefinition.padding ) );
 						if ( styles.length > 0 )
 							html.push( 'style="' + styles.join('; ') + '" ' );
 						html.push( '>', childHtmlList[i], '</td>' );
@@ -1872,7 +2046,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 					html.push( 'style="' );
 					if ( elementDefinition && elementDefinition.expand )
 						html.push( 'height:100%;' );
-					html.push( 'width:' + fixLength( width || '100%' ), ';' );
+					html.push( 'width:' + CKEDITOR.tools.cssLength( width || '100%' ), ';' );
 					html.push( '"' );
 					html.push( 'align="', CKEDITOR.tools.htmlEncode(
 						( elementDefinition && elementDefinition.align ) || ( dialog.getParentEditor().lang.dir == 'ltr' ? 'left' : 'right' ) ), '" ' );
@@ -1883,13 +2057,13 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 						var styles = [];
 						html.push( '<tr><td ' );
 						if ( width )
-							styles.push( 'width:' + fixLength( width || '100%' ) );
+							styles.push( 'width:' + CKEDITOR.tools.cssLength( width || '100%' ) );
 						if ( heights )
-							styles.push( 'height:' + fixLength( heights[i] ) );
+							styles.push( 'height:' + CKEDITOR.tools.cssLength( heights[i] ) );
 						else if ( elementDefinition && elementDefinition.expand )
 							styles.push( 'height:' + Math.floor( 100 / childHtmlList.length ) + '%' );
 						if ( elementDefinition && elementDefinition.padding != undefined )
-							styles.push( 'padding:' + fixLength( elementDefinition.padding ) );
+							styles.push( 'padding:' + CKEDITOR.tools.cssLength( elementDefinition.padding ) );
 						if ( styles.length > 0 )
 							html.push( 'style="', styles.join( '; ' ), '" ' );
 						html.push( ' class="cke_dialog_ui_vbox_child">', childHtmlList[i], '</td></tr>' );
@@ -1996,6 +2170,10 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 			while ( ( cursor = cursor.getParent() ) && cursor.$.className.search( 'cke_dialog_page_contents' ) == -1 )
 			{ /*jsl:pass*/ }
 
+			// Some widgets don't have parent tabs (e.g. OK and Cancel buttons).
+			if ( !cursor )
+				return this;
+
 			tabId = cursor.getAttribute( 'name' );
 
 			this._.dialog.selectPage( tabId );
@@ -2087,17 +2265,17 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 		{
 			onLoad : function( dialog, func )
 			{
-				dialog.on( 'load', func );
+				dialog.on( 'load', func, this );
 			},
 
 			onShow : function( dialog, func )
 			{
-				dialog.on( 'show', func );
+				dialog.on( 'show', func, this );
 			},
 
 			onHide : function( dialog, func )
 			{
-				dialog.on( 'hide', func );
+				dialog.on( 'hide', func, this );
 			}
 		},
 
@@ -2150,6 +2328,39 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 			var element = this.getInputElement();
 			element.removeAttribute( 'disabled' );
 			element.removeClass( 'cke_disabled' );
+		},
+
+		/**
+		 * Determines whether an UI element is enabled or not.
+		 * @returns {Boolean} Whether the UI element is enabled.
+		 * @example
+		 */
+		isEnabled : function()
+		{
+			return !this.getInputElement().getAttribute( 'disabled' );
+		},
+
+		/**
+		 * Determines whether an UI element is visible or not.
+		 * @returns {Boolean} Whether the UI element is visible.
+		 * @example
+		 */
+		isVisible : function()
+		{
+			return !!this.getInputElement().$.offsetHeight;
+		},
+
+		/**
+		 * Determines whether an UI element is focus-able or not.
+		 * Focus-able is defined as being both visible and enabled.
+		 * @returns {Boolean} Whether the UI element can be focused.
+		 * @example
+		 */
+		isFocusable : function()
+		{
+			if ( !this.isEnabled() || !this.isVisible() )
+				return false;
+			return true;
 		}
 	};
 

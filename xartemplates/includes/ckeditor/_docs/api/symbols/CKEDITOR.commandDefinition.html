@@ -739,6 +739,38 @@ ul.inheritsList
 <!-- ============================== properties summary ===================== -->
 
 
+
+
+
+
+
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class CKEDITOR.commandDefinition.">
+					<caption>Field Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Field Attributes</th>
+							<th scope="col">Field Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								CKEDITOR.commandDefinition.<b><a href="../symbols/CKEDITOR.commandDefinition.html#.canUndo">canUndo</a></b>
+								</div>
+								<div class="description">Whether the command need to be hooked into the redo/undo system.</div>
+							</td>
+						</tr>
+
+					</tbody>
+				</table>
+
+
+
+
+
 <!-- ============================== methods summary ======================== -->
 
 
@@ -814,6 +846,53 @@ ul.inheritsList
 
 <!-- ============================== field details ========================== -->
 
+				<div class="sectionTitle">
+					Field Detail
+				</div>
+
+					<a name=".canUndo"> </a>
+					<div class="fixedFont" style="float:left">&lt;static&gt;
+
+					<span class="light">{If not defined or 'true' both hook into undo system, set it
+		to 'false' explicitly  keep it out.}</span>
+					<span class="light">CKEDITOR.commandDefinition.</span><b>canUndo</b>
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+						Whether the command need to be hooked into the redo/undo system.
+
+
+					</div>
+
+
+
+
+							<pre class="code">editorInstance.addCommand( 'alertName',
+{
+    exec : function( editor )
+    {
+        alert( editor.name );
+    },
+    canUndo : false    // No support for undo/redo
+});</pre>
+
+
+
+
+
+
+
+
+
+
+
 
 <!-- ============================== method details ========================= -->
 
@@ -824,7 +903,7 @@ ul.inheritsList
 					<a name="exec"> </a>
 					<div class="fixedFont" style="float:left">
 
-					<span class="light">{Undefined}</span>
+					<span class="light">{Boolean}</span>
 					<b>exec</b>(editor, data)
 
 					</div>
@@ -875,6 +954,14 @@ ul.inheritsList
 
 
 
+
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+
+								<dd><span class="light fixedFont">{Boolean}</span> Whether the command has been successfully executed.
+		Defaults to "true", if nothing is returned.</dd>
+
+							</dl>
 
 
 

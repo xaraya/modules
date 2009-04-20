@@ -31,13 +31,32 @@
 <span class='line'> 24</span>  * @function
 <span class='line'> 25</span>  * @param {CKEDITOR.editor} editor The editor within which run the command.
 <span class='line'> 26</span>  * @param {Object} [data] Additional data to be used to execute the command.
-<span class='line'> 27</span>  * @example
-<span class='line'> 28</span>  * editorInstance.addCommand( 'sample',
-<span class='line'> 29</span>  * {
-<span class='line'> 30</span>  *     exec : function( editor )
-<span class='line'> 31</span>  *     {
-<span class='line'> 32</span>  *         alert( 'Executing a command for the editor name "' + editor.name + '"!' );
-<span class='line'> 33</span>  *     }
-<span class='line'> 34</span>  * });
-<span class='line'> 35</span>  */</span><span class="WHIT">
-<span class='line'> 36</span> </span></pre></body></html>
+<span class='line'> 27</span>  * @returns {Boolean} Whether the command has been successfully executed.
+<span class='line'> 28</span>  *		Defaults to "true", if nothing is returned.
+<span class='line'> 29</span>  * @example
+<span class='line'> 30</span>  * editorInstance.addCommand( 'sample',
+<span class='line'> 31</span>  * {
+<span class='line'> 32</span>  *     exec : function( editor )
+<span class='line'> 33</span>  *     {
+<span class='line'> 34</span>  *         alert( 'Executing a command for the editor name "' + editor.name + '"!' );
+<span class='line'> 35</span>  *     }
+<span class='line'> 36</span>  * });
+<span class='line'> 37</span>  */</span><span class="WHIT">
+<span class='line'> 38</span>
+<span class='line'> 39</span> </span><span class="COMM">/**
+<span class='line'> 40</span>  * Whether the command need to be hooked into the redo/undo system.
+<span class='line'> 41</span>  * @name  CKEDITOR.commandDefinition.canUndo
+<span class='line'> 42</span>  * @type {Boolean} If not defined or 'true' both hook into undo system, set it
+<span class='line'> 43</span>  *		to 'false' explicitly  keep it out.
+<span class='line'> 44</span>  * @field
+<span class='line'> 45</span>  * @example
+<span class='line'> 46</span>  * editorInstance.addCommand( 'alertName',
+<span class='line'> 47</span>  * {
+<span class='line'> 48</span>  *     exec : function( editor )
+<span class='line'> 49</span>  *     {
+<span class='line'> 50</span>  *         alert( editor.name );
+<span class='line'> 51</span>  *     },
+<span class='line'> 52</span>  *     canUndo : false    // No support for undo/redo
+<span class='line'> 53</span>  * });
+<span class='line'> 54</span>  */</span><span class="WHIT">
+<span class='line'> 55</span> </span></pre></body></html>

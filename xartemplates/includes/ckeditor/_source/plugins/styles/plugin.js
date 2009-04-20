@@ -15,7 +15,7 @@ CKEDITOR.plugins.add( 'styles',
  * @param {CKEDITOR.style} The style to be watched.
  * @param {Function} The function to be called when the style state changes.
  * @example
- * // Create a style object for the <b> element.
+ * // Create a style object for the &lt;b&gt; element.
  * var style = new CKEDITOR.style( { element : 'b' } );
  * var editor = CKEDITOR.instances.editor1;
  * editor.attachStyleStateChange( style, function( state )
@@ -80,8 +80,18 @@ CKEDITOR.STYLE_OBJECT = 3;
 	var blockElements	= { address:1,div:1,h1:1,h2:1,h3:1,h4:1,h5:1,h6:1,p:1,pre:1 };
 	var objectElements	= { a:1,embed:1,hr:1,img:1,li:1,object:1,ol:1,table:1,td:1,tr:1,ul:1 };
 
-	CKEDITOR.style = function( styleDefinition )
+	var semicolonFixRegex = /\s*(?:;\s*|$)/;
+
+	CKEDITOR.style = function( styleDefinition, variablesValues )
 	{
+		if ( variablesValues )
+		{
+			styleDefinition = CKEDITOR.tools.clone( styleDefinition );
+
+			replaceVariables( styleDefinition.attributes, variablesValues );
+			replaceVariables( styleDefinition.styles, variablesValues );
+		}
+
 		var element = this.element = ( styleDefinition.element || '*' ).toLowerCase();
 
 		this.type =
@@ -102,16 +112,12 @@ CKEDITOR.STYLE_OBJECT = 3;
 	{
 		apply : function( document )
 		{
-			// Get all ranges from the selection.
-			var selection = document.getSelection();
-			var ranges = selection.getRanges();
+			applyStyle.call( this, document, false );
+		},
 
-			// Apply the style to the ranges.
-			for ( var i = 0 ; i < ranges.length ; i++ )
-				this.applyToRange( ranges[ i ] );
-
-			// Select the ranges again.
-			selection.selectRanges( ranges );
+		remove : function( document )
+		{
+			applyStyle.call( this, document, true );
 		},
 
 		applyToRange : function( range )
@@ -122,6 +128,19 @@ CKEDITOR.STYLE_OBJECT = 3;
 						: this.type == CKEDITOR.STYLE_BLOCK ?
 							applyBlockStyle
 						: null ).call( this, range );
+		},
+
+		removeFromRange : function( range )
+		{
+			return ( this.removeFromRange =
+						this.type == CKEDITOR.STYLE_INLINE ?
+							removeInlineStyle
+						: null ).call( this, range );
+		},
+
+		applyToObject : function( element )
+		{
+			setupElement( element, this );
 		},
 
 		/**
@@ -158,43 +177,73 @@ CKEDITOR.STYLE_OBJECT = 3;
 		checkElementRemovable : function( element, fullMatch )
 		{
 			if ( !element || element.getName() != this.element )
-				return false ;
+				return false;
 
-			var def = this._.definition;
-			var attribs = def.attributes;
-			var styles = def.styles;
+			var def = this._.definition,
+				attribs;
 
 			// If no attributes are defined in the element.
 			if ( !fullMatch && !element.hasAttributes() )
-				return true ;
+				return true;
 
-			for ( var attName in attribs )
+			attribs = getAttributesForComparison( def );
+
+			if ( attribs._length )
 			{
-				if ( element.getAttribute( attName ) == attribs[ attName ] )
+				for ( var attName in attribs )
 				{
-					if ( !fullMatch )
-						return true;
+					if ( attName == '_length' )
+						continue;
+
+					if ( compareAttributeValues( attName, attribs[ attName ], element.getAttribute( attName ) ) )
+					{
+						if ( !fullMatch )
+							return true;
+					}
+					else if ( fullMatch )
+						return false;
 				}
-				else if ( fullMatch )
-					return false;
 			}
 
 			return true;
-		},
-
-		/**
-		 * Sets the value of a variable attribute or style, to be used when
-		 * appliying the style. This function must be called before using any
-		 * other function in this object.
-		 */
-		setVariable : function( name, value )
-		{
-			var variables = this._.variables || ( this._variables = {} );
-			variables[ name ] = value;
 		}
 	};
 
-	var applyInlineStyle = function( range )
+	// Build the cssText based on the styles definition.
+	CKEDITOR.style.getStyleText = function( styleDefinition )
+	{
+		// If we have already computed it, just return it.
+		var stylesDef = styleDefinition._ST;
+		if ( stylesDef )
+			return stylesDef;
+
+		stylesDef = styleDefinition.styles;
+
+		// Builds the StyleText.
+
+		var stylesText = ( styleDefinition.attributes && styleDefinition.attributes[ 'style' ] ) || '';
+
+		if ( stylesText.length )
+			stylesText = stylesText.replace( semicolonFixRegex, ';' );
+
+		for ( var style in stylesDef )
+			stylesText += style + ':' + stylesDef[ style ] + ';';
+
+		// Browsers make some changes to the style when applying them. So, here
+		// we normalize it to the browser format.
+		if ( stylesText.length )
+		{
+			stylesText = normalizeCssText( stylesText );
+
+			if ( stylesText.length )
+				stylesText = stylesText.replace( semicolonFixRegex, ';' );
+		}
+
+		// Return it, saving it to the next request.
+		return ( styleDefinition._ST = stylesText );
+	};
+
+	function applyInlineStyle( range )
 	{
 		var document = range.document;
 
@@ -230,6 +279,23 @@ CKEDITOR.STYLE_OBJECT = 3;
 		// processing.
 		var firstNode = range.startContainer.getChild( range.startOffset ) || range.startContainer.getNextSourceNode();
 		var lastNode = range.endContainer.getChild( range.endOffset ) || ( range.endOffset ? range.endContainer.getNextSourceNode() : range.endContainer );
+
+		if ( lastNode.equals( firstNode ) )
+		{
+			// If the last node is the same as the the first one, we must move
+			// it to the next one, otherwise the first one will not be
+			// processed.
+			lastNode = lastNode.getNextSourceNode( true );
+
+			// It may happen that there are no more nodes after it (the end of
+			// the document), so we must add something there to make our code
+			// simpler.
+			if ( !lastNode )
+			{
+				lastNode = document.createText( '' );
+				lastNode.insertAfter( firstNode );
+			}
+		}
 
 		var currentNode = firstNode;
 
@@ -324,8 +390,11 @@ CKEDITOR.STYLE_OBJECT = 3;
 				// Build the style element, based on the style object definition.
 				var styleNode = getElement( this, document );
 
+				// Get the element that holds the entire range.
 				var parent = styleRange.getCommonAncestor();
 
+				// Loop through the parents, removing the redundant attributes
+				// from the element to be applied.
 				while ( styleNode && parent )
 				{
 					if ( parent.getName() == elementName )
@@ -359,7 +428,7 @@ CKEDITOR.STYLE_OBJECT = 3;
 
 					// Here we do some cleanup, removing all duplicated
 					// elements from the style element.
-					removeFromElement( this, styleNode );
+					removeFromInsideElement( this, styleNode );
 
 					// Insert it into the range position (it is collapsed after
 					// extractContents.
@@ -387,14 +456,196 @@ CKEDITOR.STYLE_OBJECT = 3;
 //		this._FixBookmarkStart( startNode );
 
 		range.moveToBookmark( bookmark );
-	};
+	}
 
-	var applyBlockStyle = function( range )
+	function removeInlineStyle( range )
 	{
-	};
+		/*
+		 * Make sure our range has included all "collpased" parent inline nodes so
+		 * that our operation logic can be simpler.
+		 */
+		range.enlarge( CKEDITOR.ENLARGE_ELEMENT );
+
+		var bookmark = range.createBookmark( true ),
+			startNode = range.document.getById( bookmark.startNode );
+
+		if ( range.collapsed )
+		{
+			/*
+			 * If the range is collapsed, try to remove the style from all ancestor
+			 * elements, until a block boundary is reached.
+			 */
+			var startPath = new CKEDITOR.dom.elementPath( startNode.getParent() );
+			for ( var i = 0, element ; i < startPath.elements.length && ( element = startPath.elements[i] )  ; i++ )
+			{
+				if ( element == startPath.block || element == startPath.blockLimit )
+					break;
+
+				if ( this.checkElementRemovable( element ) )
+				{
+					/*
+					 * Before removing the style node, there may be a sibling to the style node
+					 * that's exactly the same to the one to be removed. To the user, it makes
+					 * no difference that they're separate entities in the DOM tree. So, merge
+					 * them before removal.
+					 */
+					mergeSiblings( element );
+					removeFromElement( this, element );
+				}
+			}
+		}
+		else
+		{
+			/*
+			 * Now our range isn't collapsed. Lets walk from the start node to the end
+			 * node via DFS and remove the styles one-by-one.
+			 */
+			var endNode = range.document.getById( bookmark.endNode ),
+				me = this;
+
+			/*
+			 * Find out the style ancestor that needs to be broken down at startNode
+			 * and endNode.
+			 */
+			function breakNodes()
+			{
+				var startPath = new CKEDITOR.dom.elementPath( startNode.getParent() ),
+					endPath = new CKEDITOR.dom.elementPath( endNode.getParent() ),
+					breakStart = null,
+					breakEnd = null;
+				for ( var i = 0 ; i < startPath.elements.length ; i++ )
+				{
+					var element = startPath.elements[ i ];
+
+					if ( element == startPath.block || element == startPath.blockLimit )
+						break;
+
+					if ( me.checkElementRemovable( element ) )
+						breakStart = element;
+				}
+				for ( var i = 0 ; i < endPath.elements.length ; i++ )
+				{
+					var element = endPath.elements[ i ];
+
+					if ( element == endPath.block || element == endPath.blockLimit )
+						break;
+
+					if ( me.checkElementRemovable( element ) )
+						breakEnd = element;
+				}
+
+				if ( breakEnd )
+					endNode.breakParent( breakEnd );
+				if ( breakStart )
+					startNode.breakParent( breakStart );
+			}
+			breakNodes();
+
+			// Now, do the DFS walk.
+			var currentNode = startNode.getNext();
+			while ( !currentNode.equals( endNode ) )
+			{
+				/*
+				 * Need to get the next node first because removeFromElement() can remove
+				 * the current node from DOM tree.
+				 */
+				var nextNode = currentNode.getNextSourceNode();
+				if ( currentNode.type == CKEDITOR.NODE_ELEMENT && this.checkElementRemovable( currentNode ) )
+				{
+					removeFromElement( this, currentNode );
+
+					/*
+					 * removeFromElement() may have merged the next node with something before
+					 * the startNode via mergeSiblings(). In that case, the nextNode would
+					 * contain startNode and we'll have to call breakNodes() again and also
+					 * reassign the nextNode to something after startNode.
+					 */
+					if ( nextNode.type == CKEDITOR.NODE_ELEMENT && nextNode.contains( startNode ) )
+					{
+						breakNodes();
+						nextNode = startNode.getNext();
+					}
+				}
+				currentNode = nextNode;
+			}
+		}
+
+		range.moveToBookmark( bookmark );
+	}
+
+	function applyBlockStyle( range )
+	{
+		// Bookmark the range so we can re-select it after processing.
+		var bookmark = range.createBookmark();
+
+		var iterator = range.createIterator();
+		iterator.enforceRealBlocks = true;
+
+		var block;
+		var doc = range.document;
+		var previousPreBlock;
+
+		while( ( block = iterator.getNextParagraph() ) )		// Only one =
+		{
+			// Create the new node right before the current one.
+			var newBlock = getElement( this, doc );
+
+			// Check if we are changing from/to <pre>.
+//			var newBlockIsPre	= newBlock.nodeName.IEquals( 'pre' );
+//			var blockIsPre		= block.nodeName.IEquals( 'pre' );
+
+//			var toPre	= newBlockIsPre && !blockIsPre;
+//			var fromPre	= !newBlockIsPre && blockIsPre;
+
+			// Move everything from the current node to the new one.
+//			if ( toPre )
+//				newBlock = this._ToPre( doc, block, newBlock );
+//			else if ( fromPre )
+//				newBlock = this._FromPre( doc, block, newBlock );
+//			else	// Convering from a regular block to another regular block.
+				block.moveChildren( newBlock );
+
+			// Replace the current block.
+			newBlock.insertBefore( block );
+			block.remove();
+
+			// Complete other tasks after inserting the node in the DOM.
+//			if ( newBlockIsPre )
+//			{
+//				if ( previousPreBlock )
+//					this._CheckAndMergePre( previousPreBlock, newBlock ) ;	// Merge successive <pre> blocks.
+//				previousPreBlock = newBlock;
+//			}
+//			else if ( fromPre )
+//				this._CheckAndSplitPre( newBlock ) ;	// Split <br><br> in successive <pre>s.
+		}
+
+		range.moveToBookmark( bookmark );
+	}
+
+	// Removes a style from an element itself, don't care about its subtree.
+	function removeFromElement( style, element )
+	{
+		var def = style._.definition,
+			attributes = def.attributes,
+			styles = def.styles;
+
+		for ( var attName in attributes )
+		{
+			// The 'class' element value must match (#1318).
+			if ( attName == 'class' && element.getAttribute( attName ) != attributes[ attName ] )
+				continue;
+			element.removeAttribute( attName );
+		}
+
+		for ( var styleName in styles )
+			element.removeStyle( styleName );
+
+		removeNoAttribsElement( element );
+	}
 
 	// Removes a style from inside an element.
-	var removeFromElement = function( style, element )
+	function removeFromInsideElement( style, element )
 	{
 		var def = style._.definition;
 		var attribs = def.attributes;
@@ -403,29 +654,11 @@ CKEDITOR.STYLE_OBJECT = 3;
 		var innerElements = element.getElementsByTag( style.element );
 
 		for ( var i = innerElements.count() ; --i >= 0 ; )
-		{
-			var innerElement = innerElements.getItem( i );
-
-			for ( var attName in attribs )
-			{
-				// The 'class' element value must match (#1318).
-				if ( attName == 'class' && innerElement.getAttribute( 'class' ) != attribs[ attName ] )
-					continue;
-
-				innerElement.removeAttribute( attName );
-			}
-
-			for ( var styleName in styles )
-			{
-				innerElement.removeStyle( styleName );
-			}
-
-			removeNoAttribsElement( innerElement );
-		}
-	};
+			removeFromElement( style, innerElements.getItem( i ) );
+	}
 
 	// If the element has no more attributes, remove it.
-	var removeNoAttribsElement = function( element )
+	function removeNoAttribsElement( element )
 	{
 		// If no more attributes remained in the element, remove it,
 		// leaving its children.
@@ -447,55 +680,18 @@ CKEDITOR.STYLE_OBJECT = 3;
 					mergeSiblings( lastChild );
 			}
 		}
-	};
+	}
 
-	// Get the the collection used to compare the attributes defined in this
-	// style with attributes in an element. All information in it is lowercased.
-	// V2
-//	var getAttribsForComparison = function( style )
-//	{
-//		// If we have already computed it, just return it.
-//		var attribs = style._.attribsForComparison;
-//		if ( attribs )
-//			return attribs;
-
-//		attribs = {};
-
-//		var def = style._.definition;
-
-//		// Loop through all defined attributes.
-//		var styleAttribs = def.attributes;
-//		if ( styleAttribs )
-//		{
-//			for ( var styleAtt in styleAttribs )
-//			{
-//				attribs[ styleAtt.toLowerCase() ] = styleAttribs[ styleAtt ].toLowerCase();
-//			}
-//		}
-
-//		// Includes the style definitions.
-//		if ( this._GetStyleText().length > 0 )
-//		{
-//			attribs['style'] = this._GetStyleText().toLowerCase();
-//		}
-
-//		// Appends the "length" information to the object.
-//		FCKTools.AppendLengthProperty( attribs, '_length' );
-
-//		// Return it, saving it to the next request.
-//		return ( this._GetAttribsForComparison_$ = attribs );
-//	},
-
-	var mergeSiblings = function( element )
+	function mergeSiblings( element )
 	{
 		if ( !element || element.type != CKEDITOR.NODE_ELEMENT || !CKEDITOR.dtd.$removeEmpty[ element.getName() ] )
 			return;
 
 		mergeElements( element, element.getNext(), true );
 		mergeElements( element, element.getPrevious() );
-	};
+	}
 
-	var mergeElements = function( element, sibling, isNext )
+	function mergeElements( element, sibling, isNext )
 	{
 		if ( sibling && sibling.type == CKEDITOR.NODE_ELEMENT )
 		{
@@ -504,7 +700,7 @@ CKEDITOR.STYLE_OBJECT = 3;
 			if ( hasBookmark )
 				sibling = isNext ? sibling.getNext() : sibling.getPrevious();
 
-			if ( sibling && sibling.type == CKEDITOR.NODE_ELEMENT && sibling.getName() == element.getName() )
+			if ( sibling && sibling.type == CKEDITOR.NODE_ELEMENT && element.isIdentical( sibling ) )
 			{
 				// Save the last child to be checked too, to merge things like
 				// <b><i></i></b><b><i></i></b> => <b><i></i></b>
@@ -521,25 +717,15 @@ CKEDITOR.STYLE_OBJECT = 3;
 					mergeSiblings( innerSibling );
 			}
 		}
-	};
+	}
 
-	// Regex used to match all variables defined in an attribute or style
-	// value. The variable name is returned with $2.
-	var styleVariableAttNameRegex = /#\(\s*("|')(.+?)\1[^\)]*\s*\)/g;
-
-	var getElement = function( style, targetDocument )
+	function getElement( style, targetDocument )
 	{
-		var el = style._.element;
-
-		if ( el )
-			return el.clone();
+		var el;
 
 		var def = style._.definition;
-		var variables = style._.variables;
 
 		var elementName = style.element;
-		var attributes = def.attributes;
-		var styles = def.styles;
 
 		// The "*" element name will always be a span for this function.
 		if ( elementName == '*' )
@@ -548,44 +734,132 @@ CKEDITOR.STYLE_OBJECT = 3;
 		// Create the element.
 		el = new CKEDITOR.dom.element( elementName, targetDocument );
 
+		return setupElement( el, style );
+	}
+
+	function setupElement( el, style )
+	{
+		var def = style._.definition;
+		var attributes = def.attributes;
+		var styles = CKEDITOR.style.getStyleText( def );
+
 		// Assign all defined attributes.
 		if ( attributes )
 		{
 			for ( var att in attributes )
 			{
-				var attValue = attributes[ att ];
-				if ( attValue && variables )
-				{
-					attValue = attValue.replace( styleVariableAttNameRegex, function()
-						{
-							// The second group in the regex is the variable name.
-							return variables[ arguments[2] ] || arguments[0];
-						});
-				}
-				el.setAttribute( att, attValue );
+				el.setAttribute( att, attributes[ att ] );
 			}
 		}
 
 		// Assign all defined styles.
 		if ( styles )
-		{
-			for ( var styleName in styles )
-				el.setStyle( styleName, styles[ styleName ] );
+			el.setAttribute( 'style', styles );
 
-			if ( variables )
+		return el;
+	}
+
+	var varRegex = /#\((.+?)\)/g;
+	function replaceVariables( list, variablesValues )
+	{
+		for ( var item in list )
+		{
+			list[ item ] = list[ item ].replace( varRegex, function( match, varName )
+				{
+					return variablesValues[ varName ];
+				});
+		}
+	}
+
+	var spacesRegex = /\s+/g;
+
+	// Returns an object that can be used for style matching comparison.
+	// Attributes names and values are all lowercased, and the styles get
+	// merged with the style attribute.
+	function getAttributesForComparison( styleDefinition )
+	{
+		// If we have already computed it, just return it.
+		var attribs = styleDefinition._AC;
+		if ( attribs )
+			return attribs;
+
+		attribs = {};
+
+		var length = 0;
+
+		// Loop through all defined attributes.
+		var styleAttribs = styleDefinition.attributes;
+		if ( styleAttribs )
+		{
+			for ( var styleAtt in styleAttribs )
 			{
-				attValue = el.getAttribute( 'style' ).replace( styleVariableAttNameRegex, function()
-					{
-						// The second group in the regex is the variable name.
-						return variables[ arguments[2] ] || arguments[0];
-					});
-				el.setAttribute( 'style', attValue );
+				length++;
+				attribs[ styleAtt.toLowerCase() ] = styleAttribs[ styleAtt ].toLowerCase();
 			}
 		}
 
-		// Save the created element. It will be reused on future calls.
-		return ( style._.element = el );
-	};
+		// Includes the style definitions.
+		var styleText = CKEDITOR.style.getStyleText( styleDefinition );
+		if ( styleText.length > 0 )
+		{
+			if ( !attribs[ 'style' ] )
+				length++;
+
+			attribs['style'] = styleText.replace( spacesRegex, '' ).toLowerCase();
+		}
+
+		// Appends the "length" information to the object.
+		attribs._length = length;
+
+		// Return it, saving it to the next request.
+		return ( styleDefinition._AC = attribs );
+	}
+
+	function normalizeCssText( unparsedCssText )
+	{
+		// Injects the style in a temporary span object, so the browser parses it,
+		// retrieving its final format.
+		var tempSpan = document.createElement( 'span' );
+		tempSpan.style.cssText = unparsedCssText;
+		return tempSpan.style.cssText;
+	}
+
+	// valueA is our internal "for comparison" value.
+	// valueB is the value retrieved from the element.
+	function compareAttributeValues( attName, valueA, valueB )
+	{
+		if ( valueA == valueB || ( !valueA && !valueB ) )
+			return true;
+		else if ( !valueA || !valueB )
+			return false;
+
+		valueB = valueB.toLowerCase();
+
+		if ( attName == 'style' )
+		{
+			valueB = valueB.replace( spacesRegex, '' );
+			if ( valueB.charAt( valueB.length - 1 ) != ';' )
+				valueB += ';';
+		}
+
+		// Return true if they match or if valueA is null and valueB is an empty string
+		return ( valueA == valueB );
+	}
+
+	function applyStyle( document, remove )
+	{
+		// Get all ranges from the selection.
+		var selection = document.getSelection();
+		var ranges = selection.getRanges();
+		var func = remove ? this.removeFromRange : this.applyToRange;
+
+		// Apply the style to the ranges.
+		for ( var i = 0 ; i < ranges.length ; i++ )
+			func.call( this, ranges[ i ] );
+
+		// Select the ranges again.
+		selection.selectRanges( ranges );
+	}
 })();
 
 CKEDITOR.styleCommand = function( style )
@@ -600,7 +874,12 @@ CKEDITOR.styleCommand.prototype.exec = function( editor )
 	var doc = editor.document;
 
 	if ( doc )
-		this.style.apply( doc );
+	{
+		if ( this.state == CKEDITOR.TRISTATE_OFF )
+			this.style.apply( doc );
+		else if ( this.state == CKEDITOR.TRISTATE_ON )
+			this.style.remove( doc );
+	}
 
 	return !!doc;
 };

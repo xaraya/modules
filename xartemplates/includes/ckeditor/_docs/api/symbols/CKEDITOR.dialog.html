@@ -788,26 +788,6 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/CKEDITOR.dialog.html#popDefault">popDefault</a></b>
-								</div>
-								<div class="description">Pops the current default values of all inputs in the dialog.</div>
-							</td>
-						</tr>
-
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/CKEDITOR.dialog.html#pushDefault">pushDefault</a></b>
-								</div>
-								<div class="description">Pushes the current values of all inputs in the dialog into the default stack.</div>
-							</td>
-						</tr>
-
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
 								<b><a href="../symbols/CKEDITOR.dialog.html#reset">reset</a></b>
 								</div>
 								<div class="description">Resets all input values in the dialog.</div>
@@ -847,6 +827,15 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont">CKEDITOR.dialog.<b><a href="../symbols/CKEDITOR.dialog.html#.addIframe">addIframe</a></b>(name, title, src, width, height, onContentLoad)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont">CKEDITOR.dialog.<b><a href="../symbols/CKEDITOR.dialog.html#.addUIElement">addUIElement</a></b>(typeName, builder)
 								</div>
 								<div class="description">Registers a dialog UI element.</div>
@@ -865,9 +854,36 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont">CKEDITOR.dialog.<b><a href="../symbols/CKEDITOR.dialog.html#.getCurrent">getCurrent</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont">CKEDITOR.dialog.<b><a href="../symbols/CKEDITOR.dialog.html#.setMargins">setMargins</a></b>(top, right, bottom, left)
 								</div>
 								<div class="description">Sets the width of margins of dialogs, which is used for the dialog moving and resizing logic.</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&lt;inner&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dialog.html#-changeFocus">changeFocus</a></b>(forward)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&lt;inner&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dialog.html#-focusKeydownHandler">focusKeydownHandler</a></b>(evt)
+								</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 
@@ -994,6 +1010,15 @@ ul.inheritsList
 								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dialog.html#getPosition">getPosition</a></b>()
 								</div>
 								<div class="description">Gets the dialog's position in the window.</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/CKEDITOR.dialog.html#getSelectedElement">getSelectedElement</a></b>()
+								</div>
+								<div class="description">Gets the saved control selection.</div>
 							</td>
 						</tr>
 
@@ -1307,74 +1332,6 @@ class represents a single named dialog for a single editor instance.
 
 					<hr />
 
-					<a name="popDefault"> </a>
-					<div class="fixedFont" style="float:left">
-
-					<span class="light">{<a href="../symbols/CKEDITOR.dialog.html#constructor">CKEDITOR.dialog</a>}</span>
-					<b>popDefault</b>
-
-					</div>
-					<div style="float:right">
-						<span class="heading">Since:</span>
-
-								3.0
-
-					</div>
-					<div style="clear:both"></div>
-					<div class="description">
-						Pops the current default values of all inputs in the dialog.
-
-
-					</div>
-
-
-
-
-							<pre class="code">dialogObj.popDefault();</pre>
-
-
-
-
-
-
-
-
-					<hr />
-
-					<a name="pushDefault"> </a>
-					<div class="fixedFont" style="float:left">
-
-					<span class="light">{<a href="../symbols/CKEDITOR.dialog.html#constructor">CKEDITOR.dialog</a>}</span>
-					<b>pushDefault</b>
-
-					</div>
-					<div style="float:right">
-						<span class="heading">Since:</span>
-
-								3.0
-
-					</div>
-					<div style="clear:both"></div>
-					<div class="description">
-						Pushes the current values of all inputs in the dialog into the default stack.
-
-
-					</div>
-
-
-
-
-							<pre class="code">dialogObj.pushDefault();</pre>
-
-
-
-
-
-
-
-
-					<hr />
-
 					<a name="reset"> </a>
 					<div class="fixedFont" style="float:left">
 
@@ -1478,6 +1435,83 @@ return an object conforming to <a href="../symbols/CKEDITOR.dialog.dialogDefinit
 
 					<hr />
 
+					<a name=".addIframe"> </a>
+					<div class="fixedFont" style="float:left">&lt;static&gt;
+
+					<span class="light">{Undefined}</span>
+					<span class="light">CKEDITOR.dialog.</span><b>addIframe</b>(name, title, src, width, height, onContentLoad)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/plugins_iframedialog_plugin.js.html">plugins/iframedialog/plugin.js</a>.
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>name</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>title</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>src</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>width</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>height</b>
+
+								</dt>
+								<dd></dd>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>onContentLoad</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
 					<a name=".addUIElement"> </a>
 					<div class="fixedFont" style="float:left">&lt;static&gt;
 
@@ -1574,6 +1608,39 @@ return an object conforming to <a href="../symbols/CKEDITOR.dialog.dialogDefinit
 
 					<hr />
 
+					<a name=".getCurrent"> </a>
+					<div class="fixedFont" style="float:left">&lt;static&gt;
+
+					<span class="light">{Undefined}</span>
+					<span class="light">CKEDITOR.dialog.</span><b>getCurrent</b>()
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+
+
+
+
+
+
+					<hr />
+
 					<a name=".setMargins"> </a>
 					<div class="fixedFont" style="float:left">&lt;static&gt;
 
@@ -1630,6 +1697,94 @@ This function is typically called in a skin's JavaScript files.
 
 								</dt>
 								<dd>The left margin in pixels.</dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
+					<a name="-changeFocus"> </a>
+					<div class="fixedFont" style="float:left">&lt;inner&gt;
+
+					<span class="light">{Undefined}</span>
+					<b>changeFocus</b>(forward)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>forward</b>
+
+								</dt>
+								<dd></dd>
+
+							</dl>
+
+
+
+
+
+
+
+					<hr />
+
+					<a name="-focusKeydownHandler"> </a>
+					<div class="fixedFont" style="float:left">&lt;inner&gt;
+
+					<span class="light">{Undefined}</span>
+					<b>focusKeydownHandler</b>(evt)
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+
+
+
+					</div>
+
+
+						<pre class="code"><span style="color:red">NO EXAMPLE AVAILABLE</span></pre>
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+
+								<dt>
+									<span class="light fixedFont">{Undefined}</span> <b>evt</b>
+
+								</dt>
+								<dd></dd>
 
 							</dl>
 
@@ -2270,6 +2425,50 @@ dialogElement.setStyle( 'padding', '5px' );</pre>
 							<dt class="heading">Returns:</dt>
 
 								<dd><span class="light fixedFont">{Object}</span> An object with "x" and "y" properties.</dd>
+
+							</dl>
+
+
+
+
+					<hr />
+
+					<a name="getSelectedElement"> </a>
+					<div class="fixedFont" style="float:left">
+
+					<span class="light">{<a href="../symbols/CKEDITOR.dom.element.html#constructor">CKEDITOR.dom.element</a>}</span>
+					<b>getSelectedElement</b>()
+
+					</div>
+					<div style="float:right">
+						<span class="heading">Since:</span>
+
+								3.0
+
+					</div>
+					<div style="clear:both"></div>
+					<div class="description">
+						Gets the saved control selection. Control selections should be retrieved
+with this function instead of from restoreSelection() because
+restoreSelection() does not properly restore control selections.
+
+
+					</div>
+
+
+
+
+
+
+
+
+
+
+
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+
+								<dd><span class="light fixedFont">{<a href="../symbols/CKEDITOR.dom.element.html#constructor">CKEDITOR.dom.element</a>}</span> The element that was selected.</dd>
 
 							</dl>
 

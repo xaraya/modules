@@ -10,81 +10,30 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 (function()
 {
-	// Matches all self-closing tags that are not defined as empty elements in
-	// the DTD (like &lt;span/&gt;).
-	var invalidSelfCloseTagsRegex = /(<(?!br|hr|base|meta|link|param|img|area|input|col)([a-zA-Z0-9:]+)[^>]*)\/>/gi;
-
-	// #### protectEvents - START
-
-	// Matches all tags that have event attributes (onXYZ).
-	var tagsWithEventRegex = /<[^\>]+ on\w+\s*=[\s\S]+?\>/g;
-
-	// Matches all event attributes.
-	var eventAttributesRegex = /\s(on\w+)(?=\s*=\s*?('|")[\s\S]*?\2)/g;
-
-	// Matches the protected attribute prefix.
-	var protectedEventsRegex = /_cke_pa_/g;
-
-	var protectEvents = function( html )
-	{
-		return html.replace( tagsWithEventRegex, protectEvents_ReplaceTags );
-	};
-
-	var protectEvents_ReplaceTags = function( tagMatch )
-	{
-		// Appends the "_cke_pa_" prefix to the event name.
-		return tagMatch.replace( eventAttributesRegex, ' _cke_pa_$1' );
-	};
-
-	var protectEventsRestore = function( html )
-	{
-		return html.replace( protectedEventsRegex, '' ) ;
-	};
-
-	// #### protectEvents - END
-
-	// #### protectAttributes - START
-	var protectUrlTagRegex = /<(?:a|area|img)(?=\s).*?\s(?:href|src)=((?:(?:\s*)("|').*?\2)|(?:[^"'][^ >]+))/gi,
-		protectUrlAttributeRegex = /\s(href|src)(\s*=\s*?('|")[\s\S]*?\3)/gi,
-		protectedUrlTagRegex = /<(?:a|area|img)(?=\s)(?:"[^"]*"|'[^']*'|[^<])*>/gi,
-		protectedAttributeRegex = /_cke_saved_/gi,
-		protectUrls = function( html )
-		{
-			return html.replace( protectUrlTagRegex, protectUrls_ReplaceTags );
-		},
-		protectUrls_ReplaceTags = function( tagMatch )
-		{
-			return tagMatch.replace( protectUrlAttributeRegex, '$& _cke_saved_$1$2');
-		},
-		protectUrlsRestore = function( html )
-		{
-			return html.replace( protectedUrlTagRegex, protectUrlsRestore_ReplaceTags );
-		},
-		protectUrlsRestore_ReplaceTags = function( tagMatch )
-		{
-			return tagMatch.replace( protectUrlAttributeRegex, '' ).replace( protectedAttributeRegex, '' );
-		};
-	// #### protectAttributes - END
-
-	var onInsertHtml = function( evt )
+	function onInsertHtml( evt )
 	{
 		if ( this.mode == 'wysiwyg' )
 		{
-			var $doc = this.document.$;
+			var $doc = this.document.$,
+				data = evt.data;
+
+			if ( this.dataProcessor )
+				data = this.dataProcessor.toHtml( data );
 
 			if ( CKEDITOR.env.ie )
-				$doc.selection.createRange().pasteHTML( evt.data );
+				$doc.selection.createRange().pasteHTML( data );
 			else
-				$doc.execCommand( 'inserthtml', false, evt.data );
+				$doc.execCommand( 'inserthtml', false, data );
 		}
-	};
+	}
 
-	var onInsertElement = function( evt )
+	function onInsertElement( evt )
 	{
 		if ( this.mode == 'wysiwyg' )
 		{
 			var element = evt.data,
-				isBlock = CKEDITOR.dtd.$block[ element.getName() ];
+				elementName = element.getName(),
+				isBlock = CKEDITOR.dtd.$block[ elementName ];
 
 			var selection = this.getSelection(),
 				ranges = selection.getRanges();
@@ -98,14 +47,32 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				// Remove the original contents.
 				range.deleteContents();
 
-				clone = element.clone( true );
+				clone = !i && element || element.clone( true );
 
-				// If the new node is a block element, split the current block.
-				if ( this.config.enterMode != 'br' && isBlock )
-					range.splitBlock();
+				var toSplit;
+
+				// If the new node is a block element, split the current block (if any).
+				if ( this.config.enterMode != CKEDITOR.ENTER_BR && isBlock )
+				{
+					var startPath = new CKEDITOR.dom.elementPath( range.startContainer ),
+						j = 0,
+						parent;
+
+					while( ( parent = startPath.elements[ j++ ] ) && parent != startPath.blockLimit )
+					{
+						var parentName = parent.getName(),
+							parentDtd = CKEDITOR.dtd[ parentName ];
+
+						if ( parentDtd && !parentDtd[ elementName ] )
+							toSplit = parent;
+					}
+				}
 
 				// Insert the new node.
 				range.insertNode( clone );
+
+				if ( toSplit )
+					clone.breakParent( toSplit );
 
 				// Save the last element reference so we can make the
 				// selection later.
@@ -114,15 +81,20 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			}
 
 			range.moveToPosition( lastElement, CKEDITOR.POSITION_AFTER_END );
+
+			var next = lastElement.getNextSourceNode( true );
+			if ( next && next.type == CKEDITOR.NODE_ELEMENT )
+				range.moveToElementEditStart( next );
+
 			selection.selectRanges( [ range ] );
 		}
-	};
+	}
 
 	CKEDITOR.plugins.add( 'wysiwygarea',
 	{
 		requires : [ 'editingblock' ],
 
-		init : function( editor, pluginPath )
+		init : function( editor )
 		{
 			editor.on( 'editingBlockReady', function()
 				{
@@ -144,6 +116,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						iframe = new CKEDITOR.dom.element( 'iframe' )
 							.setAttributes({
 								frameBorder : 0,
+								tabIndex : -1,
 								allowTransparency : true })
 							.setStyles({
 								width : '100%',
@@ -173,6 +146,34 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						// must be done after setting the "src", to avoid the
 						// "secure/unsecure" message under HTTPS.
 						mainElement.append( iframe );
+
+
+						if ( CKEDITOR.env.gecko )
+						{
+							// Accessibility attributes for Firefox.
+							mainElement.setAttributes(
+								{
+									role : 'region',
+									title : 'CKEditor ' + editor.name + '. Type in text.'
+								} );
+							iframe.setAttributes(
+								{
+									role : 'region',
+									title : ' '
+								} );
+						}
+						else if ( CKEDITOR.env.ie )
+						{
+							// Accessibility label for IE.
+							var label = CKEDITOR.document.createElement( 'label' );
+							label.setStyles( {
+								position : 'absolute',
+								'top' : '-1000000px',
+								left : '-1000000px'
+							} );
+							label.append( CKEDITOR.document.createText( 'CKEditor ' + editor.name ) );
+							label.insertBefore( iframe );
+						}
 					};
 
 					// The script that is appended to the data being loaded. It
@@ -240,19 +241,30 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						if ( keystrokeHandler )
 							keystrokeHandler.attach( domDocument );
 
-						editor.fire( 'contentDom' );
+						// Adds the document body as a context menu target.
+						if ( editor.contextMenu )
+							editor.contextMenu.addTarget( domDocument );
 
-						if ( fireMode )
-						{
-							editor.mode = 'wysiwyg';
-							editor.fire( 'mode' );
-							fireMode = false;
-						}
+						setTimeout( function()
+							{
+								editor.fire( 'contentDom' );
 
-						isLoadingData = false;
+								if ( fireMode )
+								{
+									editor.mode = 'wysiwyg';
+									editor.fire( 'mode' );
+									fireMode = false;
+								}
 
-						if ( isPendingFocus )
-							editor.focus();
+								isLoadingData = false;
+
+								if ( isPendingFocus )
+								{
+									editor.focus();
+									isPendingFocus = false;
+								}
+							},
+							0 );
 					};
 
 					editor.addMode( 'wysiwyg',
@@ -284,31 +296,16 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 								// Get the HTML version of the data.
 								if ( editor.dataProcessor )
-									data = editor.dataProcessor.toHtml( data );
-
-								// Fix for invalid self-closing tags (see #152).
-								// TODO: Check if this fix is really needed as
-								// soon as we have the XHTML generator.
-								if ( CKEDITOR.env.ie )
-									data = data.replace( invalidSelfCloseTagsRegex, '$1></$2>' );
-
-								// Prevent event attributes (like "onclick") to
-								// execute while editing.
-								if ( CKEDITOR.env.ie || CKEDITOR.env.webkit )
-									data = protectEvents( data );
-
-								// Protect src or href attributes.
-								data = protectUrls( data );
-
-								// Replace tags with fake elements.
-								if ( editor.fakeobjects )
-									data = editor.fakeobjects.protectHtml( data );
+									data = editor.dataProcessor.toHtml( data, ( editor.config.enterMode != CKEDITOR.ENTER_BR ) );
 
 								data =
 									editor.config.docType +
 									'<html dir="' + editor.config.contentsLangDirection + '">' +
 									'<head>' +
 										'<link href="' + editor.config.contentsCss + '" type="text/css" rel="stylesheet" _fcktemp="true"/>' +
+										'<style type="text/css" _fcktemp="true">' +
+											editor._.styles.join( '\n' ) +
+										'</style>'+
 									'</head>' +
 									'<body>' +
 										data +
@@ -346,22 +343,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 							getData : function()
 							{
-								var data = iframe.$.contentWindow.document.body;
+								var data = iframe.$.contentWindow.document.body.innerHTML;
 
 								if ( editor.dataProcessor )
-									data = editor.dataProcessor.toDataFormat( new CKEDITOR.dom.element( data ) );
-								else
-									data = data.innerHTML;
-
-								// Restore protected attributes.
-								data = protectEventsRestore( data );
-
-								// Restore protected URLs.
-								data = protectUrlsRestore( data );
-
-								// Restore fake elements.
-								if ( editor.fakeobjects )
-									data = editor.fakeobjects.restoreHtml( data );
+									data = editor.dataProcessor.toDataFormat( data, ( editor.config.enterMode != CKEDITOR.ENTER_BR ) );
 
 								return data;
 							},
@@ -388,7 +373,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 								if ( isLoadingData )
 									isPendingFocus = true;
 								else if ( editor.window )
+								{
 									editor.window.focus();
+									editor.selectionChange();
+								}
 							}
 						});
 
