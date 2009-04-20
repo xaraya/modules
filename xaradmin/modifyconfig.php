@@ -52,24 +52,24 @@ function query_admin_modifyconfig()
                 xarModVars::set('query', 'aliasname', $aliasname);
                 foreach ($modvars as $var)  xarModVars::set('query', $var, $$var);
             }
-            $regid = xarModGetIDFromName($tabmodule);
+            $regid = xarMod::getRegID($tabmodule);
             foreach ($modvars as $var)  xarModItemVars::set('query', $var, $$var, $regid);
 
-			// Get the users to be shown the debug messages
-			if (!xarVarFetch('debugusers', 'str', $candidates, '', XARVAR_NOT_REQUIRED)) return;
-			if (empty($candidates)) {
-				$candidates = array();
-			} else {
-				$candidates = explode(',',$candidates);
-			}
-			$newusers = array();
-			foreach ($candidates as $candidate) {
-				$user = xarModAPIFunc('roles','user','get',array('uname' => trim($candidate)));
-				if(!empty($user)) $newusers[$user['uname']] = array('id' => $user['id']);
-			}
-			xarModVars::set('query', 'debugusers', serialize($newusers));
+            // Get the users to be shown the debug messages
+            if (!xarVarFetch('debugusers', 'str', $candidates, '', XARVAR_NOT_REQUIRED)) return;
+            if (empty($candidates)) {
+                $candidates = array();
+            } else {
+                $candidates = explode(',',$candidates);
+            }
+            $newusers = array();
+            foreach ($candidates as $candidate) {
+                $user = xarModAPIFunc('roles','user','get',array('uname' => trim($candidate)));
+                if(!empty($user)) $newusers[$user['uname']] = array('id' => $user['id']);
+            }
+            xarModVars::set('query', 'debugusers', serialize($newusers));
 
-            xarResponseRedirect(xarModURL('query', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
+            xarResponse::Redirect(xarModURL('query', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
             // Return
             return true;
             break;

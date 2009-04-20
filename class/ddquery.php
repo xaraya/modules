@@ -36,7 +36,7 @@ class DDQuery extends Query
         if(empty($object)) return false;
         // TODO: introduce array notation to make this more robust?
         if (!is_numeric($object)) {
-            $objectInfo = xarModApiFunc('dynamicdata','user','getobjectinfo', array('name' => $object));
+            $objectInfo = DataObjectMaster::getObjectInfo(array('name' => $object));
             $object = $objectInfo['objectid'];
             if(empty($object)) return false;
         }

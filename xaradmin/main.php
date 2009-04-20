@@ -7,7 +7,7 @@ function query_admin_main()
     if (xarModVars::get('modules', 'disableoverview') == 0) {
         return array();
     } else {
-        xarResponseRedirect(xarModURL('query', 'admin', 'modifyconfig'));
+        xarResponse::Redirect(xarModURL('query', 'admin', 'modifyconfig'));
     }
     // success
     return true;
