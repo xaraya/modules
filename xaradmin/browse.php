@@ -78,7 +78,7 @@ function images_admin_browse()
         if ((!empty($getnext) || !empty($getprev)) &&
             !empty($data['images']) && count($data['images']) == 1) {
             $image = array_pop($data['images']);
-            xarResponseRedirect(xarModURL('images','admin','browse',
+            xarResponse::Redirect(xarModURL('images','admin','browse',
                                           array('action' => empty($action) ? 'view' : $action,
                                                 'bid' => $baseId,
                                                 'fid' => $image['fileId'])));
@@ -162,7 +162,7 @@ function images_admin_browse()
                                                         'height' => (!empty($height) ? $height . 'px' : NULL)));
                         if (!$location) return;
                         // Redirect to viewing the original image here (for now)
-                        xarResponseRedirect(xarModURL('images', 'admin', 'browse',
+                        xarResponse::Redirect(xarModURL('images', 'admin', 'browse',
                                                       array('action' => 'view',
                                                             'bid' => $baseId,
                                                             'fid' => $found['fileId'])));
@@ -173,7 +173,7 @@ function images_admin_browse()
                                                         'height' => (!empty($height) ? $height . 'px' : NULL)));
                         if (!$location) return;
                         // Redirect to viewing the derivative image here (for now)
-                        xarResponseRedirect(xarModURL('images', 'admin', 'derivatives',
+                        xarResponse::Redirect(xarModURL('images', 'admin', 'derivatives',
                                                       array('action' => 'view',
                                                             'fileId' => md5($location))));
                     }
@@ -202,7 +202,7 @@ function images_admin_browse()
                     if (!xarSecConfirmAuthKey()) return;
                     // delete the server image now
                     @unlink($found['fileLocation']);
-                    xarResponseRedirect(xarModURL('images', 'admin', 'browse'));
+                    xarResponse::Redirect(xarModURL('images', 'admin', 'browse'));
                     return true;
                 }
                 $data['selimage'] = $found;
@@ -246,7 +246,7 @@ function images_admin_browse()
                         if (!$location) return;
                     }
                     // Redirect to viewing the server images here (for now)
-                    xarResponseRedirect(xarModURL('images', 'admin', 'browse',
+                    xarResponse::Redirect(xarModURL('images', 'admin', 'browse',
                                                   array('bid'     => $baseId,
                                                         'sort'    => 'time',
                                                         // we need to refresh the cache here
@@ -261,7 +261,7 @@ function images_admin_browse()
                         if (!$location) return;
                     }
                     // Redirect to viewing the derivative images here (for now)
-                    xarResponseRedirect(xarModURL('images', 'admin', 'derivatives',
+                    xarResponse::Redirect(xarModURL('images', 'admin', 'derivatives',
                                                   array('sort'    => 'time',
                                                         // we need to refresh the cache here
                                                         'refresh' => 1)));
@@ -305,7 +305,7 @@ function images_admin_browse()
                 switch ($saveas) {
                     case 1: // [image]_new.[ext]
                         // Redirect to viewing the server images here (for now)
-                        xarResponseRedirect(xarModURL('images', 'admin', 'browse',
+                        xarResponse::Redirect(xarModURL('images', 'admin', 'browse',
                                                       array('bid'     => $baseId,
                                                             'sort'    => 'time',
                                                             // we need to refresh the cache here
@@ -314,7 +314,7 @@ function images_admin_browse()
 
                     case 2: // replace
                         // Redirect to viewing the server images here (for now)
-                        xarResponseRedirect(xarModURL('images', 'admin', 'browse',
+                        xarResponse::Redirect(xarModURL('images', 'admin', 'browse',
                                                       array('bid'     => $baseId,
                                                             'sort'    => 'time',
                                                             // we need to refresh the cache here
@@ -324,7 +324,7 @@ function images_admin_browse()
                     case 0: // derivative
                     default:
                         // Redirect to viewing the derivative images here (for now)
-                        xarResponseRedirect(xarModURL('images', 'admin', 'derivatives',
+                        xarResponse::Redirect(xarModURL('images', 'admin', 'derivatives',
                                                       array('sort'    => 'time',
                                                             // we need to refresh the cache here
                                                             'refresh' => 1)));

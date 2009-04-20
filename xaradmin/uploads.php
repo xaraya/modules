@@ -57,7 +57,7 @@ function images_admin_uploads($args)
                                         array('getnext'  => $getnext));
         if (!empty($data['images']) && count($data['images']) == 1) {
             $image = array_pop($data['images']);
-            xarResponseRedirect(xarModURL('images','admin','uploads',
+            xarResponse::Redirect(xarModURL('images','admin','uploads',
                                           array('action' => empty($action) ? 'view' : $action,
                                                 'fileId' => $image['fileId'])));
             return true;
@@ -67,7 +67,7 @@ function images_admin_uploads($args)
                                         array('getprev'  => $getprev));
         if (!empty($data['images']) && count($data['images']) == 1) {
             $image = array_pop($data['images']);
-            xarResponseRedirect(xarModURL('images','admin','uploads',
+            xarResponse::Redirect(xarModURL('images','admin','uploads',
                                           array('action' => empty($action) ? 'view' : $action,
                                                 'fileId' => $image['fileId'])));
             return true;
@@ -227,7 +227,7 @@ function images_admin_uploads($args)
                                                         'height' => (!empty($height) ? $height . 'px' : NULL)));
                         if (!$location) return;
                         // Redirect to viewing the original image here (for now)
-                        xarResponseRedirect(xarModURL('images', 'admin', 'uploads',
+                        xarResponse::Redirect(xarModURL('images', 'admin', 'uploads',
                                                       array('action' => 'view',
                                                             'fileId' => $found['fileId'])));
                     } else {
@@ -237,7 +237,7 @@ function images_admin_uploads($args)
                                                         'height' => (!empty($height) ? $height . 'px' : NULL)));
                         if (!$location) return;
                         // Redirect to viewing the derivative image here (for now)
-                        xarResponseRedirect(xarModURL('images', 'admin', 'derivatives',
+                        xarResponse::Redirect(xarModURL('images', 'admin', 'derivatives',
                                                       array('action' => 'view',
                                                             'fileId' => md5($location))));
                     }
@@ -268,7 +268,7 @@ function images_admin_uploads($args)
                     $fileList = array($fileId => $found);
                     $result = xarModAPIFunc('uploads', 'user', 'purge_files', array('fileList' => $fileList));
                     if (!$result) return;
-                    xarResponseRedirect(xarModURL('images', 'admin', 'uploads'));
+                    xarResponse::Redirect(xarModURL('images', 'admin', 'uploads'));
                     return true;
                 }
                 $data['selimage'] = $found;
@@ -311,7 +311,7 @@ function images_admin_uploads($args)
                         if (!$location) return;
                     }
                     // Redirect to viewing the uploaded images here (for now)
-                    xarResponseRedirect(xarModURL('images', 'admin', 'uploads',
+                    xarResponse::Redirect(xarModURL('images', 'admin', 'uploads',
                                                   array('sort' => 'time')));
                 } else {
                     foreach ($found as $id) {
@@ -322,7 +322,7 @@ function images_admin_uploads($args)
                         if (!$location) return;
                     }
                     // Redirect to viewing the derivative images here (for now)
-                    xarResponseRedirect(xarModURL('images', 'admin', 'derivatives',
+                    xarResponse::Redirect(xarModURL('images', 'admin', 'derivatives',
                                                   array('sort'    => 'time',
                                                         // we need to refresh the cache here
                                                         'refresh' => 1)));
@@ -366,20 +366,20 @@ function images_admin_uploads($args)
                 switch ($saveas) {
                     case 1: // [image]_new.[ext]
                         // Redirect to viewing the uploaded images here (for now)
-                        xarResponseRedirect(xarModURL('images', 'admin', 'uploads',
+                        xarResponse::Redirect(xarModURL('images', 'admin', 'uploads',
                                                       array('sort' => 'time')));
                         break;
 
                     case 2: // replace
                         // Redirect to viewing the uploaded images here (for now)
-                        xarResponseRedirect(xarModURL('images', 'admin', 'uploads',
+                        xarResponse::Redirect(xarModURL('images', 'admin', 'uploads',
                                                       array('sort' => 'time')));
                         break;
 
                     case 0: // derivative
                     default:
                         // Redirect to viewing the derivative images here (for now)
-                        xarResponseRedirect(xarModURL('images', 'admin', 'derivatives',
+                        xarResponse::Redirect(xarModURL('images', 'admin', 'derivatives',
                                                       array('sort'    => 'time',
                                                             // we need to refresh the cache here
                                                             'refresh' => 1)));

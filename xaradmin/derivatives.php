@@ -100,7 +100,7 @@ function images_admin_derivatives()
                     if (!xarSecConfirmAuthKey()) return;
                     // delete the derivative image now
                     @unlink($found['fileLocation']);
-                    xarResponseRedirect(xarModURL('images', 'admin', 'derivatives'));
+                    xarResponse::Redirect(xarModURL('images', 'admin', 'derivatives'));
                     return true;
                 }
                 $data['selimage'] = $found;

@@ -246,21 +246,21 @@ function images_admin_phpthumb($args)
                                 }
                             }
                             // Redirect to viewing the updated image here (for now)
-                            xarResponseRedirect(xarModURL('images', 'admin', 'uploads',
+                            xarResponse::Redirect(xarModURL('images', 'admin', 'uploads',
                                                           array('action' => 'view',
                                                                 'fileId' => $fileId)));
                             return true;
 
                         } elseif (preg_match('/^[0-9a-f]{32}$/i',$fileId)) {
                             // Redirect to viewing the updated image here (for now)
-                            xarResponseRedirect(xarModURL('images', 'admin', 'derivatives',
+                            xarResponse::Redirect(xarModURL('images', 'admin', 'derivatives',
                                                           array('action' => 'view',
                                                                 'fileId' => $fileId)));
                             return true;
 
                         } else {
                             // Redirect to viewing the updated image here (for now)
-                            xarResponseRedirect(xarModURL('images', 'admin', 'browse',
+                            xarResponse::Redirect(xarModURL('images', 'admin', 'browse',
                                                           array('action' => 'view',
                                                                 'bid'    => $baseId,
                                                                 'fid'    => $fileId)));

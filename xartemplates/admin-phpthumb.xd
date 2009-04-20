@@ -26,11 +26,11 @@
             <strong><xar:mlstring>Configure</xar:mlstring></strong>
             <xar:if condition="!empty($selimage['filePreview'])">
             |
-            <a href="#xarServerGetCurrentURL()##preview"><xar:mlstring>Preview Image</xar:mlstring></a>
+            <a href="#xarServer::getCurrentURL()##preview"><xar:mlstring>Preview Image</xar:mlstring></a>
             </xar:if>
             <xar:if condition="!empty($selimage['fileDownload'])">
             |
-            <a href="#xarServerGetCurrentURL()##original"><xar:mlstring>Original Image</xar:mlstring></a>
+            <a href="#xarServer::getCurrentURL()##original"><xar:mlstring>Original Image</xar:mlstring></a>
             </xar:if>
             </div>
         </fieldset>
@@ -562,12 +562,12 @@
 
         <hr/>
         <p>
-            <a href="#xarServerGetCurrentURL()##config"><xar:mlstring>Configure</xar:mlstring></a>
+            <a href="#xarServer::getCurrentURL()##config"><xar:mlstring>Configure</xar:mlstring></a>
             |
             <strong><xar:mlstring>Preview Image</xar:mlstring></strong>
             <xar:if condition="!empty($selimage['fileDownload'])">
             |
-            <a href="#xarServerGetCurrentURL()##original"><xar:mlstring>Original Image</xar:mlstring></a>
+            <a href="#xarServer::getCurrentURL()##original"><xar:mlstring>Original Image</xar:mlstring></a>
             </xar:if>
         </p>
         <p><img src="#$selimage['filePreview']#" border="0" /></p>
@@ -578,10 +578,10 @@
 
         <hr/>
         <p>
-            <a href="#xarServerGetCurrentURL()##config"><xar:mlstring>Configure</xar:mlstring></a>
+            <a href="#xarServer::getCurrentURL()##config"><xar:mlstring>Configure</xar:mlstring></a>
             <xar:if condition="!empty($selimage['filePreview'])">
             |
-            <a href="#xarServerGetCurrentURL()##preview"><xar:mlstring>Preview Image</xar:mlstring></a>
+            <a href="#xarServer::getCurrentURL()##preview"><xar:mlstring>Preview Image</xar:mlstring></a>
             </xar:if>
             |
             <strong><xar:mlstring>Original Image</xar:mlstring></strong>
