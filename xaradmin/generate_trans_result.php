@@ -39,7 +39,7 @@ function translations_admin_generate_trans_result()
     if (!isset($res)) return;
     $tplData = $res;
     if ($tplData == NULL) {
-        xarResponseRedirect(xarModURL('translations', 'admin', 'generate_trans_info'));
+        xarResponse::Redirect(xarModURL('translations', 'admin', 'generate_trans_info'));
     }
 
     $druidbar = translations_create_druidbar(GENTRANS, $dnType, $dnName, $extid);

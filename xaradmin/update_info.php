@@ -30,7 +30,7 @@ function translations_admin_update_info()
         $url = xarModURL('translations', 'admin', 'choose_a_theme');
         break;
     }
-    xarResponseRedirect($url);
+    xarResponse::Redirect($url);
 }
 
 ?>

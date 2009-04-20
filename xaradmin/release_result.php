@@ -39,10 +39,10 @@ function translations_admin_release_result()
 
     $filename = $res;
     if ($filename == NULL) {
-        xarResponseRedirect(xarModURL('translations', 'admin', 'release_info'));
+        xarResponse::Redirect(xarModURL('translations', 'admin', 'release_info'));
     }
 
-    $tplData['url'] = xarServerGetBaseURL().sys::varpath().'/cache/'.$filename;
+    $tplData['url'] = xarServer::getBaseURL().sys::varpath().'/cache/'.$filename;
 
     $druidbar = translations_create_druidbar(REL, $dnType, $dnName, $extid);
     $opbar = translations_create_opbar(RELEASE, $dnType, $dnName, $extid);

@@ -19,7 +19,7 @@ function translations_admin_update_working_locale()
     if (!xarVarFetch('locale', 'str:1:', $locale)) return;
     translations_working_locale($locale);
     translations_release_locale($locale);
-    xarResponseRedirect(xarModURL('translations', 'admin','start'));
+    xarResponse::Redirect(xarModURL('translations', 'admin','start'));
 }
 
 ?>

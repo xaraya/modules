@@ -76,7 +76,7 @@ function translations_admin_updateconfig()
         xarModCallHooks('module','updateconfig','translations', array('module' => 'translations'));
     }
 
-    xarResponseRedirect(xarModURL('translations', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
+    xarResponse::Redirect(xarModURL('translations', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
 
     return true;
 }
