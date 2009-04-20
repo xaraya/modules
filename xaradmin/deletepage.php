@@ -61,9 +61,9 @@ function xarpages_admin_deletepage($args)
     ) return;
 
     if (!empty($return_url)) {
-        xarResponseRedirect($return_url);
+        xarResponse::Redirect($return_url);
     } else {
-        xarResponseRedirect(xarModURL('xarpages', 'admin', 'viewpages'));
+        xarResponse::Redirect(xarModURL('xarpages', 'admin', 'viewpages'));
     }
 
     return true;

@@ -11,7 +11,7 @@
 function xarpages_funcapi_enforce_ssl($args)
 {
     // Only do this if 'Allow SSL' option is set, because if not set,
-    // then xarServerGetCurrentURL() tends to lie (it returns 'http'
+    // then xarServer::getCurrentURL() tends to lie (it returns 'http'
     // even if the current page is 'https').
     if (xarConfigVars::get(null,'Site.Core.EnableSecureServer') != true) {
         // Bail out if secure server is not enabled.
@@ -19,7 +19,7 @@ function xarpages_funcapi_enforce_ssl($args)
     }
 
     // Get the current URL.
-    $url = xarServerGetCurrentURL(array(), false);
+    $url = xarServer::getCurrentURL(array(), false);
 
     // If we are on a non-SSL page then redirect.
     // Note: this only works with non-shared certificates, where the
@@ -31,7 +31,7 @@ function xarpages_funcapi_enforce_ssl($args)
         $url = preg_replace('/^http:/i', 'https:', $url);
 
         // Set the redirect URL.
-        xarResponseRedirect($url);
+        xarResponse::Redirect($url);
 
         // Tell the caller we want to redirect.
         return false;

@@ -23,7 +23,7 @@
 
     <!-- Only display the detail link is there is further detail (assumed to be HTML) -->
     <xar:if condition="!empty($body)">
-        <div class="news-footer"><a href="#xarServerGetCurrentURL(array('aid'=&gt;$aid))#" class="readmore">Read more...</a></div>
+        <div class="news-footer"><a href="#xarServer::getCurrentURL(array('aid'=&gt;$aid))#" class="readmore">Read more...</a></div>
     </xar:if>
 </div>
 </xar:template>

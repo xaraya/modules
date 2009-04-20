@@ -60,7 +60,7 @@ function xarpages_admin_deletetype($args)
         array('ptid' => $ptid))
     ) return;
 
-    xarResponseRedirect(xarModURL('xarpages', 'admin', 'viewtypes'));
+    xarResponse::Redirect(xarModURL('xarpages', 'admin', 'viewtypes'));
 
     return true;
 }

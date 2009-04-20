@@ -14,7 +14,7 @@
                 </xar:if>
             </td>
             <td class="back">
-                <a href="#xarServerGetCurrentURL(array('aid'=&gt;NULL))#" title="#xarML('Return to the list')#">
+                <a href="#xarServer::getCurrentURL(array('aid'=&gt;NULL))#" title="#xarML('Return to the list')#">
                     <xar:mlstring>[Back to List]</xar:mlstring>
                 </a>
             </td>

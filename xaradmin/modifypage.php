@@ -185,7 +185,7 @@ function xarpages_admin_modifypage($args)
     }
     $data['pages'] = $pages['pages'];
 
-    $modinfo = xarModGetInfo(xarModGetIDFromName('xarpages'));
+    $modinfo = xarModGetInfo(xarMod::getRegID('xarpages'));
 
     // Get lists of files in the various custom APIs.
     // Dynamicdata is a prerequisite for this module, so no need to check

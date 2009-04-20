@@ -45,20 +45,20 @@ function xarpages_funcapi_pageaction($args)
     if (!empty($nav['nextform_pid'])) {
     $nextform_pid = $nav['nextform_pid'];
     }
-	// make reference key
-	if (empty($pf)) {
-		if (isset($dd['unique_key']) && $dd['unique_key'])
-			$pf = _pageform_newkey();
-		else
-			$pf = xarUserGetVar('uid');
-	}    
+    // make reference key
+    if (empty($pf)) {
+        if (isset($dd['unique_key']) && $dd['unique_key'])
+            $pf = _pageform_newkey();
+        else
+            $pf = xarUserGetVar('uid');
+    }    
     // reuse (append) existing object if one
-	$in_object = _pageform_getobject( $pf, $pages[$form_pid]['name'] );
+    $in_object = _pageform_getobject( $pf, $pages[$form_pid]['name'] );
 
     if (empty($in_object)) {
         // create empty one
         $objectid = $pages[$form_pid]['dd']['data'];
-		$in_object = xarModApiFunc('dynamicdata','user','getobject', array('objectid'=>$objectid ));
+        $in_object = xarModApiFunc('dynamicdata','user','getobject', array('objectid'=>$objectid ));
     }
     else {
         // clear invalids, we'll be checking them again now
@@ -128,33 +128,33 @@ function xarpages_funcapi_pageaction($args)
         // save and redirect back to previous page
         _pageform_setobject( $pf, $pages[$form_pid]['name'], $in_object );
         if ($dd['debug'] != 1) {
-            xarResponseRedirect( $nav['form_url'] );
+            xarResponse::Redirect( $nav['form_url'] );
         }
         // else return
     }
     
     if ($isvalid) { // only not-valid if debugging so we can drop to bottom
         // start an object for next form (if one)
-		if (!empty($nextform_pid) && !empty($pages[$nextform_pid])) {
-	        // reuse (append) existing object if one 
-	        if (!empty($pf)) {
-	            $out_object = _pageform_getobject( $pf, $pages[$nextform_pid]['name'] );
-	        }
-	        if (empty($out_object)) {
-	            // create empty one
-	            $objectid = $pages[$nextform_pid]['dd']['data'];
-	            //$out_object = xarModApiFunc('dynamicdata','user','getobject', array('module'=>'dynamicdata', 'itemtype'=>$itemtype ));
-				$out_object = xarModApiFunc('dynamicdata','user','getobject', array('objectid'=>$objectid ));
-	        }   
+        if (!empty($nextform_pid) && !empty($pages[$nextform_pid])) {
+            // reuse (append) existing object if one 
+            if (!empty($pf)) {
+                $out_object = _pageform_getobject( $pf, $pages[$nextform_pid]['name'] );
+            }
+            if (empty($out_object)) {
+                // create empty one
+                $objectid = $pages[$nextform_pid]['dd']['data'];
+                //$out_object = xarModApiFunc('dynamicdata','user','getobject', array('module'=>'dynamicdata', 'itemtype'=>$itemtype ));
+                $out_object = xarModApiFunc('dynamicdata','user','getobject', array('objectid'=>$objectid ));
+            }   
     
-	        // copy any common named values from in to out (especially if they're the same object ids!)
-	        foreach ($in_object->properties as $prop) {
-	            if (isset($out_object->properties[$prop->name])) {
-	                $out_object->properties[$prop->name]->value = $prop->value;
-	            }
-	        }
-			_pageform_resetinvalids( & $out_object );
-		}
+            // copy any common named values from in to out (especially if they're the same object ids!)
+            foreach ($in_object->properties as $prop) {
+                if (isset($out_object->properties[$prop->name])) {
+                    $out_object->properties[$prop->name]->value = $prop->value;
+                }
+            }
+            _pageform_resetinvalids( & $out_object );
+        }
 
         // PROCESSING
         // now call user processing
@@ -188,7 +188,7 @@ function xarpages_funcapi_pageaction($args)
             // save input and redirect back to previous page (current form)
             _pageform_setobject( $pf, $pages[$form_pid]['name'], $in_object );
             if ($dd['debug'] != 1) {
-                xarResponseRedirect( $nav['form_url'] );
+                xarResponse::Redirect( $nav['form_url'] );
             }
             // else return
         }
@@ -204,12 +204,12 @@ function xarpages_funcapi_pageaction($args)
         // CONTINUE TO PAGE (next form)
         // if not debugging, redirect
         if ($dd['debug'] != 1) {
-			if (!empty($dd['redirect_nav'])) {
-				xarResponseRedirect( $nav[$dd['redirect_nav']] );
-			}
-			else {
-            	xarResponseRedirect( $nav['nextform_url'] );
-			}
+            if (!empty($dd['redirect_nav'])) {
+                xarResponse::Redirect( $nav[$dd['redirect_nav']] );
+            }
+            else {
+                xarResponse::Redirect( $nav['nextform_url'] );
+            }
         }
     }
     // if debugging display this dumy page
@@ -219,8 +219,8 @@ function xarpages_funcapi_pageaction($args)
     if (!empty($validation_func)) $args['pageaction']['validation_func'] = $validation_func;
     if (!empty($processing_func)) $args['pageaction']['processing_func'] = $processing_func;
     $args['pageaction']['isvalid'] = $isvalid;
-	$args['pageaction']['nav'] = $nav;
-	
+    $args['pageaction']['nav'] = $nav;
+    
     return $args;
 }
         
@@ -248,7 +248,7 @@ function _pageform_processing( &$inobj, &$outobj, $php )
 {
     // values available to script
     pageform_obj2arrays( $inobj, $values, $invalids );
-   	pageform_obj2arrays( $outobj, $outvalues, $outinvalids );
+    pageform_obj2arrays( $outobj, $outvalues, $outinvalids );
 
     // execute the snippet
     $isvalid = eval( $php );
@@ -257,7 +257,7 @@ function _pageform_processing( &$inobj, &$outobj, $php )
     }
     // return reslults and double check validation
     $isvalid = $isvalid && pageform_arrays2obj( $values, $invalids, $inobj );
-   	pageform_arrays2obj( $outvalues, $outinvalids, $outobj );
+    pageform_arrays2obj( $outvalues, $outinvalids, $outobj );
 
     return $isvalid;
 }

@@ -52,7 +52,7 @@ function xarpages_admin_updatetype($args)
         if (!$ptid) {return;}
     }
 
-    xarResponseRedirect(xarModUrl('xarpages', 'admin', 'viewtypes'));
+    xarResponse::Redirect(xarModUrl('xarpages', 'admin', 'viewtypes'));
 
     return true;
 }

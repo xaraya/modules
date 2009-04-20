@@ -119,7 +119,7 @@ function xarpages_admin_updatepage($args)
     if ($creating) {
         if ($batch) {
             // If there are more to create, then go to the create page.
-            xarResponseRedirect(
+            xarResponse::Redirect(
                 xarModUrl(
                     'xarpages', 'admin', 'modifypage',
                     array(
@@ -132,13 +132,13 @@ function xarpages_admin_updatepage($args)
                 )
             );
         } else {
-            xarResponseRedirect(xarModURL('xarpages', 'admin', 'modifypage', array('pid' => $pid)));
+            xarResponse::Redirect(xarModURL('xarpages', 'admin', 'modifypage', array('pid' => $pid)));
         }
     } else {
         if (!empty($return_url)) {
-            xarResponseRedirect($return_url);
+            xarResponse::Redirect($return_url);
         } else {
-            xarResponseRedirect(xarModURL('xarpages', 'admin', 'viewpages'));
+            xarResponse::Redirect(xarModURL('xarpages', 'admin', 'viewpages'));
         }
     }
 

@@ -10,7 +10,7 @@
 <!-- Add an edit link if required. -->
 <xar:if condition="xarSecurityCheck('EditXarpagesPage', 0, 'Page', $current_page.name . ':' . $current_page.pagetype.name)">
     <xar:if condition="!empty($multiform.formobject-&gt;objectid)">
-        [<a href="#xarModURL('dynamicdata', 'admin', 'modifyprop', array('itemid'=&gt;$multiform.formobject-&gt;objectid,'return_url'=>xarServerGetCurrentURL(array(),false)))#">edit form</a>]
+        [<a href="#xarModURL('dynamicdata', 'admin', 'modifyprop', array('itemid'=&gt;$multiform.formobject-&gt;objectid,'return_url'=>xarServer::getCurrentURL(array(),false)))#">edit form</a>]
     </xar:if>
 </xar:if>
 

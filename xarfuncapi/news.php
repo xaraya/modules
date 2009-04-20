@@ -242,7 +242,7 @@ function xarpages_funcapi_news($args)
             if (xarModIsHooked('keywords', 'articles', $ptids)) {
                 $keyword_words = xarModAPIfunc(
                     'keywords', 'user', 'getwords',
-                    array('itemid' => $aid, 'modid' => xarModGetIDFromName('articles'), 'itemtype' => $ptids)
+                    array('itemid' => $aid, 'modid' => xarMod::getRegID('articles'), 'itemtype' => $ptids)
                 );
                 //var_dump($keyword_words);
 
@@ -256,7 +256,7 @@ function xarpages_funcapi_news($args)
                         // Get the item IDs that share this module's keywords
                         $keyword_items = xarModAPIfunc(
                             'keywords', 'user', 'getitems',
-                            array('keyword' => $keyword_word, 'modid' => xarModGetIDFromName('articles'), 'itemtype' => $ptids)
+                            array('keyword' => $keyword_word, 'modid' => xarMod::getRegID('articles'), 'itemtype' => $ptids)
                         );
                         if (!empty($keyword_items)) {
                             $keywords[$keyword_word] = $keyword_items;
@@ -305,7 +305,7 @@ function xarpages_funcapi_news($args)
                         'itemtype' => $article['pubtypeid'],
                         'itemid' => $aid,
                         'title' => $article['title'],
-                        'returnurl' => xarServerGetCurrentURL() //xarModURL('articles', 'user', 'display', array('ptid' => $ptid, 'aid' => $aid))
+                        'returnurl' => xarServer::getCurrentURL() //xarModURL('articles', 'user', 'display', array('ptid' => $ptid, 'aid' => $aid))
                     ), 'articles'
                 );
             }
@@ -354,7 +354,7 @@ function xarpages_funcapi_news($args)
                             $next_startnum = $startnum;
                             if (($i + 1) == $numitems) $next_startnum = $startnum + $numitems;
                             $next_article = array_pop($range_articles);
-                            $next_url = xarServerGetCurrentURL(array('aid'=>$next_article['aid'], 'startnum' => $next_startnum));
+                            $next_url = xarServer::getCurrentURL(array('aid'=>$next_article['aid'], 'startnum' => $next_startnum));
                             $prev_article = array();
                             $prev_url = '';
                         } else {
@@ -364,7 +364,7 @@ function xarpages_funcapi_news($args)
                             $prev_startnum = $startnum;
                             if ($i == 0) $prev_startnum = $startnum - $numitems;
                             $prev_article = array_shift($range_articles);
-                            $prev_url = xarServerGetCurrentURL(array('aid'=>$prev_article['aid'], 'startnum' => $prev_startnum));
+                            $prev_url = xarServer::getCurrentURL(array('aid'=>$prev_article['aid'], 'startnum' => $prev_startnum));
                         }
                     } elseif (count($range_articles) >= 3) {
                         // Both next and previous
@@ -373,9 +373,9 @@ function xarpages_funcapi_news($args)
                         if (($i + 1) == $numitems) $next_startnum = $startnum + $numitems;
                         if ($i == 0) $prev_startnum = $startnum - $numitems;
                         $next_article = array_pop($range_articles);
-                        $next_url = xarServerGetCurrentURL(array('aid'=>$next_article['aid'], 'startnum' => $next_startnum));
+                        $next_url = xarServer::getCurrentURL(array('aid'=>$next_article['aid'], 'startnum' => $next_startnum));
                         $prev_article = array_shift($range_articles);
-                        $prev_url = xarServerGetCurrentURL(array('aid'=>$prev_article['aid'], 'startnum' => $prev_startnum));
+                        $prev_url = xarServer::getCurrentURL(array('aid'=>$prev_article['aid'], 'startnum' => $prev_startnum));
                     }
 
                     $article['next_article'] = $next_article;

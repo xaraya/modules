@@ -102,7 +102,7 @@ function xarpages_adminapi_createtype($args)
                 xarModAPIFunc('dynamicdata', 'admin', 'syncprops',
                     array(
                         'objectid' => $objectid,
-                        'moduleid' => xarModGetIDFromName('xarpages'),
+                        'moduleid' => xarMod::getRegID('xarpages'),
                         'itemtype' => $ptid
                     )
                 );

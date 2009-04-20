@@ -46,6 +46,6 @@
 
 <!-- Add an edit link if required. The crumbtrails block may also provide an edit link. -->
 <xar:if condition="xarSecurityCheck('EditXarpagesPage', 0, 'Page', $current_page.name . ':' . $current_page.pagetype.name)">
-    [<a href="#xarModURL('xarpages','admin','modifypage',array('pid'=>$pid,'return_url'=>xarServerGetCurrentURL(array(),false)))#">edit</a>]
+    [<a href="#xarModURL('xarpages','admin','modifypage',array('pid'=>$pid,'return_url'=>xarServer::getCurrentURL(array(),false)))#">edit</a>]
 </xar:if>
 </xar:template>
