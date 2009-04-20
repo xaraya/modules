@@ -1,35 +1,22 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div>
     <div>
-        <xar:if condition="!empty($multi_homed)">
-            <input name="multi_homed" type="checkbox" value="true" id="multi_homed_#$bid#" checked="checked" />
-        <xar:else />
-            <input name="multi_homed" type="checkbox" value="true" id="multi_homed_#$bid#" />
-        </xar:if>
+        <xar:set name="id">'multi_homed_' . $bid</xar:set>
+        <xar:data-input type="checkbox" name="multi_homed" id="$id" checked="$multi_homed" />
         <label for="multi_homed_#$bid#"><xar:mlstring>Hide the root page</xar:mlstring></label>
     </div>
 
     <div>
         <label for="current_source_#$bid#"><xar:mlstring>Source of the current page</xar:mlstring></label>
-        <select name="current_source" id="current_source_#$bid#">
-            <xar:if condition="$current_source eq 'AUTO'">
-                <option value="AUTO" selected="selected"><xar:mlstring>Automatic - set by the current module</xar:mlstring></option>
-            <xar:else />
-                <option value="AUTO"><xar:mlstring>Automatic - set by the current module</xar:mlstring></option>
-            </xar:if>
-
-        <xar:if condition="$current_source eq 'AUTODEFAULT'">
-                <option value="AUTODEFAULT" selected="selected"><xar:mlstring>Automatic - use default outside roots</xar:mlstring></option>
-            <xar:else />
-                <option value="AUTODEFAULT"><xar:mlstring>Automatic - use default outside roots</xar:mlstring></option>
-            </xar:if>
-
-        <xar:if condition="$current_source eq 'DEFAULT'">
-                <option value="DEFAULT" selected="selected"><xar:mlstring>Default - force use of the default page</xar:mlstring></option>
-            <xar:else />
-                <option value="DEFAULT"><xar:mlstring>Default - force use of the default page</xar:mlstring></option>
-            </xar:if>
-        </select>
+        <xar:set name="options">
+            array(
+                array('id' => 'AUTO', 'name' => xarML('Automatic - set by the current module')),
+                array('id' => 'AUTODEFAULT', 'name' => xarML('Automatic - use default outside roots')),
+                array('id' => 'DEFAULT', 'name' => xarML('Default - force use of the default page')),
+            )
+        </xar:set>
+        <xar:set name="id">'current_source_' . $bid</xar:set>
+        <xar:data-input type="dropdown" name="current_source" id="$id" value="$current_source" options="$options"/>
     </div>
 
     <div>

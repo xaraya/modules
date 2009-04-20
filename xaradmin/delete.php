@@ -13,7 +13,7 @@
  * @subpackage xarpages
  */
 
-function xarpages_admin_modify($args)
+function xarpages_admin_delete($args)
 {
     return xarModfunc('xarpages', 'admin', 'deletepage', $args);
 }
