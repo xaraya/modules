@@ -24,7 +24,7 @@ function messages_admin_config( $args )
 
         // This function generated no output, and so now it is complete we redirect
         // the user to an appropriate page for them to carry on their work
-        xarResponseRedirect(
+        xarResponse::Redirect(
             xarModURL('messages','admin','config',array('itemtype' => $itemtype )));
         }
 
@@ -67,7 +67,7 @@ function messages_adminpriv_config( $args )
         /*
          * Finished. Back to the sender!
          */
-        xarResponseRedirect(
+        xarResponse::Redirect(
             xarModURL('messages','admin','config', array('itemtype' => $itemtype )));
 
     } // Save the changes

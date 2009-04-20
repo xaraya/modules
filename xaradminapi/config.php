@@ -41,7 +41,7 @@ function messages_adminapi_config( $args )
         /*
          * Finished. Back to the sender!
          */
-        xarResponseRedirect(
+        xarResponse::Redirect(
             xarModURL('messages', 'admin', 'config', array('itemtype' => $itemtype )));
 
     } // Save the changes

@@ -31,7 +31,7 @@ function messages_admin_reply( $args )
 
         // This function generated no output, and so now it is complete we redirect
         // the user to an appropriate page for them to carry on their work
-        xarResponseRedirect(
+        xarResponse::Redirect(
             xarModURL('messages', 'admin', 'view', array('itemtype' => $itemtype )));
     }
 
@@ -50,7 +50,7 @@ function messages_admin_reply( $args )
 
                 default:
                     // TODO // Add statusmessage
-                    xarResponseRedirect(
+                    xarResponse::Redirect(
                         xarModURL('messages', 'admin', 'view' ));
             }
         }
@@ -63,7 +63,7 @@ function messages_admin_reply( $args )
 
         default:
             // TODO // Add statusmessage
-            xarResponseRedirect(
+            xarResponse::Redirect(
                 xarModURL('messages', 'admin', 'view' ));
     }
 

@@ -51,7 +51,7 @@ function messages_adminapi_create( $args )
 
         // This function generated no output, and so now it is complete we redirect
         // the user to an appropriate page for them to carry on their work
-        xarResponseRedirect(
+        xarResponse::Redirect(
             xarModURL('messages', 'admin', 'new',array('itemtype' => 1 )));
 
     } else {

@@ -1,7 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:if condition="!isset($error)">
         <div style="width: 100%; text-align: center;">
-            <form action="#xarServerGetCurrentURL()#" method="post" enctype="application/x-www-form-urlencoded" >
+            <form action="#xarServer::getCurrentURL()#" method="post" enctype="application/x-www-form-urlencoded" >
                <xar:mlstring>Are you sure you want to delete this message?</xar:mlstring>
                 <br />
                 <xar:comment>Psspl:Added the code for folder type</xar:comment>
