@@ -92,7 +92,7 @@ function xarpages_menublock_update($blockinfo)
     // Reference to content array.
     $vars =& $blockinfo['content'];
 
-    if (xarVarFetch('multi_homed', 'bool', $multi_homed, true, XARVAR_NOT_REQUIRED)) {
+    if (xarVarFetch('multi_homed', 'checkbox', $multi_homed, 1, XARVAR_NOT_REQUIRED)) {
         $vars['multi_homed'] = $multi_homed;
     }
 
