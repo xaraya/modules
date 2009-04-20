@@ -68,6 +68,9 @@
         // Grab the first one that fits
                 $mailitem = current($mailitems);
                 $args['id'] = $mailitem['id'];
+            } else {
+        // If no name available, need an id
+                if (!isset($args['id'])) return 2;
             }
             
             // FIXME: sholdn't need to instantiate the object again
