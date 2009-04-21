@@ -45,11 +45,11 @@ function xarpages_userapi_getpages($args)
     if (isset($status)) {
         // If a list of statuses have been provided, then select for any of them.
         if (strpos($status, ',') === false) {
-            $where[] = 'tpages.xar_status = ?';
+            $where[] = "tpages.xar_status = '?'";
             $bind[] = strtoupper($status);
         } else {
             $statuses = explode(',', strtoupper($status));
-            $where[] = 'tpages.xar_status IN (?' . str_repeat(',?', count($statuses)-1) . ')';
+            $where[] = "tpages.xar_status IN ('?'" . str_repeat(",'?'", count($statuses)-1) . ')';            
             $bind = array_merge($bind, $statuses);
         }
     }
