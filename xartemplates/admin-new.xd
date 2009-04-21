@@ -1,163 +1,163 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+    <!-- License:GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-head">
-	<span class="xar-mod-title">
-		<xar:mlstring>Scheduler Administration</xar:mlstring>
-	</span>
+    <span class="xar-mod-title">
+        <xar:mlstring>Scheduler Administration</xar:mlstring>
+    </span>
 </div>
 <div class="xar-mod-body">
-	<xar:template type="module" module="scheduler" file="admin-menu" />
-	<h2>
-		<xar:mlstring>Create Scheduler Job</xar:mlstring>
-	</h2>
+    <xar:template type="module" module="scheduler" file="admin-menu" />
+    <h2>
+        <xar:mlstring>Create Scheduler Job</xar:mlstring>
+    </h2>
 
-	<form method="post" action="&xar-modurl-scheduler-admin-create;">
-			<div class="xar-form-input-wrapper">
-				<label for="job_module" class="xar-form-label">
-					<xar:mlstring>Module</xar:mlstring>
-				</label>
-				<select name="job_module" id="job_module">
-					<xar:foreach in="$modules" key="$name" value="$display">
-    					<option value="#$name#">#$display#</option>
-					</xar:foreach>
-				</select>
-			</div>
-			<div class="xar-form-input-wrapper">
-				<label for="functype" class="xar-form-label">
-					<xar:mlstring>Type</xar:mlstring>
-				</label>
-				<select name="functype">
-					<xar:foreach in="$types" key="$name" value="$display">
-						<option value="#$name#">#$display#</option>
-					</xar:foreach>
-				</select>
-			</div>
-			<div class="xar-form-input-wrapper">
-				<label for="job_func" class="xar-form-label">
-					<xar:mlstring>API Function</xar:mlstring>
-				</label>
-				<input type="text" name="job_func" id="job_func" value="" size="10" />
-			</div>
-			<div class="xar-form-input-wrapper">
-				<label for="config_params" class="xar-form-label">
-					<xar:mlstring>Parameters</xar:mlstring>
-				</label>
-				<input type="text" name="config[params]" id="config_params" value="" />
-				<xar:mlstring>example: array('ptid' => 1)</xar:mlstring>
-			</div>
-			<div class="xar-form-input-wrapper">
-				<label for="job_interval" class="xar-form-label">
-					<xar:mlstring>Interval</xar:mlstring>
-				</label>
-				<select name="job_interval" id="job_interval">
-					<xar:foreach in="$intervals" key="$name" value="$display">
-						<option value="#$name#">#$display#</option>
-					</xar:foreach>
-				</select>
-			</div>
+    <form method="post" action="&xar-modurl-scheduler-admin-create;">
+            <div class="xar-form-input-wrapper">
+                <label for="job_module" class="xar-form-label">
+                    <xar:mlstring>Module</xar:mlstring>
+                </label>
+                <select name="job_module" id="job_module">
+                    <xar:foreach in="$modules" key="$name" value="$display">
+                        <option value="#$name#">#$display#</option>
+                    </xar:foreach>
+                </select>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="functype" class="xar-form-label">
+                    <xar:mlstring>Type</xar:mlstring>
+                </label>
+                <select name="functype">
+                    <xar:foreach in="$types" key="$name" value="$display">
+                        <option value="#$name#">#$display#</option>
+                    </xar:foreach>
+                </select>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="job_func" class="xar-form-label">
+                    <xar:mlstring>API Function</xar:mlstring>
+                </label>
+                <input type="text" name="job_func" id="job_func" value="" size="10" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="config_params" class="xar-form-label">
+                    <xar:mlstring>Parameters</xar:mlstring>
+                </label>
+                <input type="text" name="config[params]" id="config_params" value="" />
+                <xar:mlstring>example: array('ptid' => 1)</xar:mlstring>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="job_interval" class="xar-form-label">
+                    <xar:mlstring>Interval</xar:mlstring>
+                </label>
+                <select name="job_interval" id="job_interval">
+                    <xar:foreach in="$intervals" key="$name" value="$display">
+                        <option value="#$name#">#$display#</option>
+                    </xar:foreach>
+                </select>
+            </div>
 
-			<div class="xar-form-input-wrapper">
-				<label for="config_startdate" class="xar-form-label">
-					<xar:mlstring>Start Date</xar:mlstring>
-				</label>
-				<xar:data-input type="calendar" name="config[startdate]" id="config_startdate" value="" />
-			</div>
-			<div class="xar-form-input-wrapper">
-				<label for="config_enddate" class="xar-form-label">
-					<xar:mlstring>End Date</xar:mlstring>
-				</label>
-				<xar:data-input type="calendar" name="config[enddate]" id="config_enddate" value="" />
-			</div>
+            <div class="xar-form-input-wrapper">
+                <label for="config_startdate" class="xar-form-label">
+                    <xar:mlstring>Start Date</xar:mlstring>
+                </label>
+                <xar:data-input type="calendar" name="config[startdate]" id="config_startdate" value="" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="config_enddate" class="xar-form-label">
+                    <xar:mlstring>End Date</xar:mlstring>
+                </label>
+                <xar:data-input type="calendar" name="config[enddate]" id="config_enddate" value="" />
+            </div>
 
-		<fieldset>
-			<legend>
-				<xar:mlstring>Trigger Settings</xar:mlstring>
-			</legend>
+        <fieldset>
+            <legend>
+                <xar:mlstring>Trigger Settings</xar:mlstring>
+            </legend>
 
-			<div class="xar-form-input-wrapper">
-				<label for="job_trigger" class="xar-form-label">
-					<xar:mlstring>Trigger Type</xar:mlstring>
-				</label>
-				<select name="job_trigger" id="job_trigger">
-					<xar:foreach in="$triggers" key="$triggerid" value="$triggername">
-						<option value="#$triggerid#">#$triggername#</option>
-					</xar:foreach>
-				</select>
-			</div>
+            <div class="xar-form-input-wrapper">
+                <label for="job_trigger" class="xar-form-label">
+                    <xar:mlstring>Trigger Type</xar:mlstring>
+                </label>
+                <select name="job_trigger" id="job_trigger">
+                    <xar:foreach in="$triggers" key="$triggerid" value="$triggername">
+                        <option value="#$triggerid#">#$triggername#</option>
+                    </xar:foreach>
+                </select>
+            </div>
 
-			<p>
-				<xar:mlstring>The following settings are used to limit external access to the scheduler.</xar:mlstring>
-			</p>
+            <p>
+                <xar:mlstring>The following settings are used to limit external access to the scheduler.</xar:mlstring>
+            </p>
 
-			<div class="xar-form-input-wrapper">
-				<label for="checktype" class="xar-form-label">
-					<xar:mlstring>Source Type</xar:mlstring>
-				</label>
-				<select name="checktype" id="job_trigger">
-					<xar:foreach in="$sources" key="$sourceid" value="$sourcename">
-						<option value="#$sourceid#">#$sourcename#</option>
-					</xar:foreach>
-				</select>
-			</div>
-			<div class="xar-form-input-wrapper">
-				<label for="checkvalue" class="xar-form-label">
-					<xar:mlstring>Source</xar:mlstring>
-				</label>
-				<input type="text" name="checkvalue" id="checkvalue" value="" />
-			</div>
+            <div class="xar-form-input-wrapper">
+                <label for="checktype" class="xar-form-label">
+                    <xar:mlstring>Source Type</xar:mlstring>
+                </label>
+                <select name="checktype" id="job_trigger">
+                    <xar:foreach in="$sources" key="$sourceid" value="$sourcename">
+                        <option value="#$sourceid#">#$sourcename#</option>
+                    </xar:foreach>
+                </select>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="checkvalue" class="xar-form-label">
+                    <xar:mlstring>Source</xar:mlstring>
+                </label>
+                <input type="text" name="checkvalue" id="checkvalue" value="" />
+            </div>
 
 
-		</fieldset>
+        </fieldset>
 
-		<fieldset>
-			<legend>
-				<xar:mlstring>Crontab</xar:mlstring>
-			</legend>
+        <fieldset>
+            <legend>
+                <xar:mlstring>Crontab</xar:mlstring>
+            </legend>
 
-			<div class="xar-form-input-wrapper">
-				<label for="config_crontab_minute" class="xar-form-label">
-					<xar:mlstring>Minutes (0-59)</xar:mlstring>
-				</label>
-				<input type="text" name="config[crontab][minute]" id="config_crontab_minute" value="" />
-				<xar:mlstring>example: 0,15,30,45 = every 15 minutes</xar:mlstring>
-			</div>
-			<div class="xar-form-input-wrapper">
-				<label for="config_crontab_hour" class="xar-form-label">
-					<xar:mlstring>Hours (0-23)</xar:mlstring>
-				</label>
-				<input type="text" name="config[crontab][hour]" id="config_crontab_hour" value="" />
-				<xar:mlstring>example: 8-18 = during business hours</xar:mlstring>
-			</div>
-			<div class="xar-form-input-wrapper">
-				<label for="config_crontab_day" class="xar-form-label">
-					<xar:mlstring>Days (1-31)</xar:mlstring>
-				</label>
-				<input type="text" name="config[crontab][day]" id="config_crontab_day" value="" />
-			</div>
-			<div class="xar-form-input-wrapper">
-				<label for="config_crontab_month" class="xar-form-label">
-					<xar:mlstring>Months (1-12)</xar:mlstring>
-				</label>
-				<input type="text" name="config[crontab][month]" id="config_crontab_month" value="" />
-			</div>
-			<div class="xar-form-input-wrapper">
-				<label for="config_crontab_weekday" class="xar-form-label">
-					<xar:mlstring>Week Days (0-6)</xar:mlstring>
-				</label>
-				<input type="text" name="config[crontab][weekday]" id="config_crontab_weekday" value="" />
-				<xar:mlstring>example: 1-5 = from Monday to Friday</xar:mlstring>
-			</div>
-		</fieldset>
-		<div class="xar-form-input-wrapper-after">
-			<input type="hidden" name="authid" id="authid" value="#$authid#" />
-			<input type="submit" name="confirm" value="#xarML('Create Scheduler Job')#" />
-		</div>
-	</form>
-	<p>
-		<xar:mlstring>
-			Please note that the scheduler module still needs to be triggered by some external mechanism, and that any crontab interval will apply at the first trigger after the next scheduled run
-			(i.e. if the crontab specifies each Monday at 8:15 and the next trigger comes on Tuesday at 10:45, the job will run then).
-		</xar:mlstring>
-	</p>
+            <div class="xar-form-input-wrapper">
+                <label for="config_crontab_minute" class="xar-form-label">
+                    <xar:mlstring>Minutes (0-59)</xar:mlstring>
+                </label>
+                <input type="text" name="config[crontab][minute]" id="config_crontab_minute" value="" />
+                <xar:mlstring>example: 0,15,30,45 = every 15 minutes</xar:mlstring>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="config_crontab_hour" class="xar-form-label">
+                    <xar:mlstring>Hours (0-23)</xar:mlstring>
+                </label>
+                <input type="text" name="config[crontab][hour]" id="config_crontab_hour" value="" />
+                <xar:mlstring>example: 8-18 = during business hours</xar:mlstring>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="config_crontab_day" class="xar-form-label">
+                    <xar:mlstring>Days (1-31)</xar:mlstring>
+                </label>
+                <input type="text" name="config[crontab][day]" id="config_crontab_day" value="" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="config_crontab_month" class="xar-form-label">
+                    <xar:mlstring>Months (1-12)</xar:mlstring>
+                </label>
+                <input type="text" name="config[crontab][month]" id="config_crontab_month" value="" />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="config_crontab_weekday" class="xar-form-label">
+                    <xar:mlstring>Week Days (0-6)</xar:mlstring>
+                </label>
+                <input type="text" name="config[crontab][weekday]" id="config_crontab_weekday" value="" />
+                <xar:mlstring>example: 1-5 = from Monday to Friday</xar:mlstring>
+            </div>
+        </fieldset>
+        <div class="xar-form-input-wrapper-after">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="submit" name="confirm" value="#xarML('Create Scheduler Job')#" />
+        </div>
+    </form>
+    <p>
+        <xar:mlstring>
+            Please note that the scheduler module still needs to be triggered by some external mechanism, and that any crontab interval will apply at the first trigger after the next scheduled run
+            (i.e. if the crontab specifies each Monday at 8:15 and the next trigger comes on Tuesday at 10:45, the job will run then).
+        </xar:mlstring>
+    </p>
 </div>
 </xar:template>

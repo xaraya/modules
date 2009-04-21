@@ -1,86 +1,86 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+    <!-- License:GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-head">
-	<span class="xar-mod-title">
-		<xar:mlstring>Scheduler Administration</xar:mlstring>
-	</span>
+    <span class="xar-mod-title">
+        <xar:mlstring>Scheduler Administration</xar:mlstring>
+    </span>
 </div>
 <div class="xar-mod-body">
-	<xar:template type="module" module="scheduler" file="admin-menu" />
-	<h2>
-		<xar:mlstring>Modify Configuration</xar:mlstring>
-	</h2>
+    <xar:template type="module" module="scheduler" file="admin-menu" />
+    <h2>
+        <xar:mlstring>Modify Configuration</xar:mlstring>
+    </h2>
 
-	<p>
-		<a href="#xarModURL('scheduler','admin','new')#"><xar:mlstring>Create Job</xar:mlstring></a>
-	</p>
+    <p>
+        <a href="#xarModURL('scheduler','admin','new')#"><xar:mlstring>Create Job</xar:mlstring></a>
+    </p>
 
-	<h3>
-		<xar:mlstring>Existing Jobs</xar:mlstring>
-	</h3>
+    <h3>
+        <xar:mlstring>Existing Jobs</xar:mlstring>
+    </h3>
 
-	<p>
-		<xar:mlstring>Click the job ID to edit the job.</xar:mlstring>
-	</p>
+    <p>
+        <xar:mlstring>Click the job ID to edit the job.</xar:mlstring>
+    </p>
 
-	<table class="xar-fullwidth">	
-		<tr>
-			<th><xar:mlstring>ID</xar:mlstring></th>
-			<th><xar:mlstring>Module</xar:mlstring></th>
-			<th><xar:mlstring>Type</xar:mlstring></th>
-			<th><xar:mlstring>API Function</xar:mlstring></th>
-			<th><xar:mlstring>Interval</xar:mlstring></th>
-			<th><xar:mlstring>Last Run</xar:mlstring></th>
-			<th><xar:mlstring>Result</xar:mlstring></th>
-			<th><xar:mlstring>Actions</xar:mlstring></th>
-		</tr>
-		<xar:foreach in="$jobs" key="$id" value="$job">
-			<tr>
-				<td class="xar-align-right">
-					<xar:if condition="!empty($id)">
-						<a href="#xarModURL('scheduler','admin','modify',array('itemid' => $id))#" title="#xarML('Edit Configuration')#">
-							#$id#
-						</a>
-					</xar:if>
-				</td>
-				<td>
-					<xar:if condition="$jobs[$id]['module'] eq ''">
-						<xar:mlstring>[ not set ]</xar:mlstring>
-					<xar:else />
-						#$jobs.$id.module#
-					</xar:if>
-				</td>
-				<td>
-					#$jobs.$id.functype#
-				</td>
-				<td>
-					#$jobs.$id.func#
-				</td>
-				<td>
-					<xar:set name="interval">$intervals[$jobs[$id]['job_interval']]</xar:set>
-					#$interval#
+    <table class="xar-fullwidth">   
+        <tr>
+            <th><xar:mlstring>ID</xar:mlstring></th>
+            <th><xar:mlstring>Module</xar:mlstring></th>
+            <th><xar:mlstring>Type</xar:mlstring></th>
+            <th><xar:mlstring>API Function</xar:mlstring></th>
+            <th><xar:mlstring>Interval</xar:mlstring></th>
+            <th><xar:mlstring>Last Run</xar:mlstring></th>
+            <th><xar:mlstring>Result</xar:mlstring></th>
+            <th><xar:mlstring>Actions</xar:mlstring></th>
+        </tr>
+        <xar:foreach in="$jobs" key="$id" value="$job">
+            <tr>
+                <td class="xar-align-right">
+                    <xar:if condition="!empty($id)">
+                        <a href="#xarModURL('scheduler','admin','modify',array('itemid' => $id))#" title="#xarML('Edit Configuration')#">
+                            #$id#
+                        </a>
+                    </xar:if>
+                </td>
+                <td>
+                    <xar:if condition="$jobs[$id]['module'] eq ''">
+                        <xar:mlstring>[ not set ]</xar:mlstring>
+                    <xar:else />
+                        #$jobs.$id.module#
+                    </xar:if>
+                </td>
+                <td>
+                    #$jobs.$id.functype#
+                </td>
+                <td>
+                    #$jobs.$id.func#
+                </td>
+                <td>
+                    <xar:set name="interval">$intervals[$jobs[$id]['job_interval']]</xar:set>
+                    #$interval#
 
-				</td>
-				<td>
-					<input type="hidden" name="jobs[#$id#][lastrun]" value="#$job['lastrun']#" />
-					<xar:if condition="!empty($job['lastrun'])">
-						#xarLocaleGetFormattedDate('short',$job['lastrun'])# - #xarLocaleGetFormattedTime('short',$job['lastrun'])#
-					</xar:if>
-				</td>
-				<td>
-					<input type="hidden" name="jobs[#$id#][result]" value="#$job['result']#" />
-					#$job['result']#
-				</td>
-				<td class="xar-align-center">
-					<a href="#xarModURL('scheduler','admin','delete',array('itemid'=>$job['id']))#"><xar:mlstring>Delete</xar:mlstring></a>
-				</td>
-			</tr>
-		</xar:foreach>
-	</table>
+                </td>
+                <td>
+                    <input type="hidden" name="jobs[#$id#][lastrun]" value="#$job['lastrun']#" />
+                    <xar:if condition="!empty($job['lastrun'])">
+                        #xarLocaleGetFormattedDate('short',$job['lastrun'])# - #xarLocaleGetFormattedTime('short',$job['lastrun'])#
+                    </xar:if>
+                </td>
+                <td>
+                    <input type="hidden" name="jobs[#$id#][result]" value="#$job['result']#" />
+                    #$job['result']#
+                </td>
+                <td class="xar-align-center">
+                    <a href="#xarModURL('scheduler','admin','delete',array('itemid'=>$job['id']))#"><xar:mlstring>Delete</xar:mlstring></a>
+                </td>
+            </tr>
+        </xar:foreach>
+    </table>
 
-	<div>
-		#$hooks#
-	</div>
+    <div>
+        #$hooks#
+    </div>
 
 </div>
 </xar:template>
