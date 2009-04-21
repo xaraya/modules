@@ -40,7 +40,8 @@ function xarpages_userapi_getpagedd($args)
             'dynamicdata', 'user', 'getitems',
             array('module' => 'xarpages', 'itemtype' => $itemtype, 'itemids' => array_keys($items))
         );
-
+        if (empty($dd_data)) $dd_data = array();
+        
         // Copy the dd records into the result array, using the
         // same keys as the original items.
         foreach($dd_data as $dd_key => $dd_items) {
