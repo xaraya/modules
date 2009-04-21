@@ -24,93 +24,71 @@ function polls_user_results($args)
      if (!xarVarFetch('pid', 'id', $pid, XARVAR_DONT_SET)) return;
 
     extract($args);
-    // TODO: implement check on this specific poll?
+
     if(!xarSecurityCheck('ViewPolls')){
         return;
     }
 
     if (!isset($pid)) {
         $msg = xarML('Missing poll ID');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA', new DefaultUserException($msg));
         return;
     }
-    $canvote = xarModAPIFunc('polls', 'user', 'usercanvote', array('pid' => $pid));
-    if(!xarModGetVar('polls', 'previewresults') && $canvote){
-        xarResponseRedirect(xarModURL('polls', 'user', 'display',
-                               array('pid' => $pid)));
-    }
-
-    $data = array();
 
     // Get item
-    $poll = xarModAPIFunc('polls',
-                           'user',
-                           'get',
-                           array('pid' => $pid));
+    $poll = xarModAPIFunc('polls', 'user', 'get', array('pid' => $pid));
 
-    if (!$poll) {
+    if (empty($poll)) {
         $msg = xarML('Error retrieving Poll data');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA', new DefaultUserException($msg));
         return;
     }
 
+    // Check if user can vote on this poll.
+    // Pass the poll in to avoid another database query.
+    $canvote = xarModAPIFunc('polls', 'user', 'usercanvote', array('poll' => $poll));
+
+    // If results can be previewed before voting, then just display the results immediately.
+    if (!xarModGetVar('polls', 'previewresults') && $canvote){
+        xarResponseRedirect(xarModURL('polls', 'user', 'display', array('pid' => $pid)));
+    }
+
+    // FIXME: should this check not be in the usercanvote() API?
     if ($canvote && !xarSecurityCheck('VotePolls',0,'Polls',"$poll[title]:$poll[type]")) {
         $canvote = 0;
     }
 
-    $data['pid'] = $poll['pid'];
-    $data['title'] = $poll['title'];
-    $data['private'] = $poll['private'];
-    $data['open'] = $poll['open'];
+    $data = $poll;
 
     // Number of participants
     $data['totalvotes'] = $poll['votes'];
-    $data['options'] = array();
-    $data['voteurl'] = xarModURL('polls', 'user', 'display',
-                               array('pid' => $pid));
-    $data['listurl'] = xarModURL('polls', 'user', 'list',
-                               array('pid' => $pid));
 
-    $data['canvote'] = $canvote;
-    $barscale = xarModGetVar('polls', 'barscale');
-    $imggraph = xarModGetVar('polls', 'imggraph');
-    $data['imggraph'] = ($imggraph >= 2)?1:0;
+    $data['voteurl'] = xarModURL('polls', 'user', 'display', array('pid' => $pid));
+    $data['listurl'] = xarModURL('polls', 'user', 'list', array('pid' => $pid));
+
     $data['showtotalvotes'] = xarModGetVar('polls', 'showtotalvotes');
     $voteinterval = xarModGetVar('polls', 'voteinterval');
 
+    $data['canvote'] = $canvote;
+
     if($voteinterval == 86400){
         $data['votelimit'] = xarML('per day');
-    }
-    elseif($voteinterval == 604800){
+    } elseif($voteinterval == 604800){
         $data['votelimit'] = xarML('per week');
-    }
-    elseif($voteinterval == 2592000){
+    } elseif($voteinterval == 2592000){
         $data['votelimit'] = xarML('per month');
-    }
-    else{
+    } else{
         $data['votelimit'] = xarML('per user');
     }
 
-    // Poll information
-    for ($i=1; $i<=$poll['opts']; $i++) {
-        if ($poll['votes'] == 0) {
-            $percentage = 0;
-        } else {
-            $percentage = (int)($poll['options'][$i]['votes']*1000/$poll['votes']);
-            $percentage /= 10;
-        }
+    // Add the bar widths to the list of results.
+    // TODO: this can go into the getall() API to avoid duplication.
 
-        $row = array();
-        $row['name'] = $poll['options'][$i]['name'];
-        $row['votes'] = $poll['options'][$i]['votes'];
-        $row['percentage'] = $percentage;
-        $row['barwidth'] = (int)$percentage * $barscale;
-        $data['options'][$i] = $row;
-    }
+    // 0=never; 1=blocks; 2=module; 3=blocks and modules
+    // TODO: this check could be moved to the templates
+    $imggraph = xarModGetVar('polls', 'imggraph');
+    $data['imggraph'] = ($imggraph >= 2 ? 1 : 0);
+
 
     if ($poll['modid'] == xarModGetIDFromName('polls')) {
         // Let hooks know we're displaying a poll, so they can provide us with related stuff
@@ -119,12 +97,14 @@ function polls_user_results($args)
         $item['returnurl'] = xarModURL('polls','user', 'results', array('pid' => $poll['pid']));
         $hooks = xarModCallHooks('item','display', $poll['pid'], $item);
 
-        $data['hookoutput'] = join('',$hooks);
+        // Return hook data as both a string and an array.
+        $data['hookoutput'] = trim(join('', $hooks));
+        $data['hooks'] = $hooks;
     } else {
         $data['hookoutput'] = '';
     }
 
-    // Return output
+    // Return data to the template.
     return $data;
 }
 

@@ -19,54 +19,44 @@
 function polls_user_resultshook($args)
 {
     // Get parameters
-    if (!xarVarFetch('pid', 'id', $pid, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('pid', 'id', $pid, NULL, XARVAR_NOT_REQUIRED)) return;
 
     // override with arguments here
     extract($args);
 
     if (!isset($pid)) {
         $msg = xarML('Missing poll ID');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA', new DefaultUserException($msg));
         return;
     }
-    $canvote = xarModAPIFunc('polls', 'user', 'usercanvote', array('pid' => $pid));
-
-    $data = array();
 
     // Get item
-    $poll = xarModAPIFunc('polls',
-                           'user',
-                           'get',
-                           array('pid' => $pid));
+    $poll = xarModAPIFunc('polls', 'user', 'get', array('pid' => $pid));
 
     if (!$poll) {
         $msg = xarML('Error retrieving Poll data');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA', new DefaultUserException($msg));
         return;
     }
 
-    $data['pid'] = $poll['pid'];
-    $data['title'] = $poll['title'];
-    $data['private'] = $poll['private'];
-    $data['open'] = $poll['open'];
+    $canvote = xarModAPIFunc('polls', 'user', 'usercanvote', array('poll' => $poll));
+
+    $data = $poll;
 
     // Number of participants
     $data['totalvotes'] = $poll['votes'];
-    $data['options'] = array();
+
     if (!empty($returnurl)) {
         $data['voteurl'] = $returnurl;
     } elseif ($poll['modid'] != xarModGetIDFromName('polls') && !empty($poll['itemid'])) {
         $modinfo = xarModGetInfo($poll['modid']);
         if (!empty($modinfo)) {
-            $itemlinks = xarModAPIFunc($modinfo['name'],'user','getitemlinks',
-                                       array('itemtype' => $poll['itemtype'],
-                                             'itemids' => array($poll['itemid'])),
                                        // don't throw an exception if this function doesn't exist
-                                       0);
+            $itemlinks = xarModAPIFunc(
+                $modinfo['name'], 'user', 'getitemlinks',
+                array('itemtype' => $poll['itemtype'], 'itemids' => array($poll['itemid'])), 0
+            );
+
             if (!empty($itemlinks) && !empty($itemlinks[$poll['itemid']])) {
                 $data['voteurl'] = $itemlinks[$poll['itemid']]['url'];
                 $data['itemtitle'] = $itemlinks[$poll['itemid']]['label'];
@@ -75,14 +65,14 @@ function polls_user_resultshook($args)
     }
     if (empty($data['voteurl'])) {
         // fall back to standard display if necessary
-        $data['voteurl'] = xarModURL('polls', 'user', 'display',
-                                     array('pid' => $pid));
+        $data['voteurl'] = xarModURL('polls', 'user', 'display', array('pid' => $pid));
     }
 
     $data['canvote'] = $canvote;
-    $barscale = xarModGetVar('polls', 'barscale');
+
     $imggraph = xarModGetVar('polls', 'imggraph');
     $data['imggraph'] = ($imggraph >= 2)?1:0;
+
     $data['showtotalvotes'] = xarModGetVar('polls', 'showtotalvotes');
     $voteinterval = xarModGetVar('polls', 'voteinterval');
 
@@ -99,26 +89,10 @@ function polls_user_resultshook($args)
         $data['votelimit'] = xarML('per user');
     }
 
-    // Poll information
-    for ($i=1; $i<=$poll['opts']; $i++) {
-        if ($poll['votes'] == 0) {
-            $percentage = 0;
-        } else {
-            $percentage = (int)($poll['options'][$i]['votes']*1000/$poll['votes']);
-            $percentage /= 10;
-        }
 
-        $row = array();
-        $row['name'] = $poll['options'][$i]['name'];
-        $row['votes'] = $poll['options'][$i]['votes'];
-        $row['percentage'] = $percentage;
-        $row['barwidth'] = (int)$percentage * $barscale;
-        $data['options'][$i] = $row;
-    }
+    // no hook calls inside hook calls :-)
 
-/* no hook calls inside hook calls :-) */
-
-    // Return output
+    // Return data to template.
     return $data;
 }
 

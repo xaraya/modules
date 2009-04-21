@@ -42,21 +42,17 @@ function polls_user_displayhook($args)
         $data['returnurl'] = $extrainfo;
     }
 
-    if (empty($modname)) {
-        $modname = xarModGetName();
-    }
+    if (empty($modname)) $modname = xarModGetName();
     $args['modname'] = $modname;
     $args['itemtype'] = $itemtype;
 
     // Run API function
-    $poll = xarModAPIFunc('polls',
-                          'user',
-                          'gethooked',
-                          $args);
+    $poll = xarModAPIFunc('polls', 'user', 'gethooked', $args);
 
-    if (!$poll) {
+    if (empty($poll)) {
         return '';
     }
+
     $pid = $poll['pid'];
 
     $data['title'] = $poll['title'];
@@ -69,10 +65,7 @@ function polls_user_displayhook($args)
             $data['canvote'] = 1;
             $data['type'] = $poll['type'];
             $data['private'] = $poll['private'];
-            $data['resultsurl'] = xarModURL('polls',
-                                  'user',
-                                  'resultshook',
-                                  array('pid' => $poll['pid']));
+            $data['resultsurl'] = xarModURL('polls', 'user', 'resultshook', array('pid' => $poll['pid']));
             $data['previewresults'] = xarModGetVar('polls', 'previewresults');
             $data['authid'] = xarSecGenAuthKey('polls');
             $data['pid'] =  $poll['pid'];
@@ -80,28 +73,26 @@ function polls_user_displayhook($args)
             $data['callingmod'] = $modname;
         } else {
             if (xarSecurityCheck('ViewPolls',0,'Polls',"$poll[title]:$poll[type]")) {
-            return xarModFunc('polls',
-                              'user',
-                              'resultshook',
-                              array('pid' => $pid,
-                                    'returnurl' => $data['returnurl']));
+                return xarModFunc('polls', 'user', 'resultshook',
+                    array('pid' => $pid, 'returnurl' => $data['returnurl'])
+                );
             } else {
                 $data['canvote'] = 0;
         }
     }
     } else {
-        // Security check to see this poll
+        // Security check to see this poll.
+        // FIXME: move this check to the usercanvote() API.
         if (xarSecurityCheck('ViewPolls',0,'Polls',"$poll[title]:$poll[type]")) {
-            return xarModFunc('polls',
-                              'user',
-                              'resultshook',
-                               array('pid' => $pid,
-                                     'returnurl' => $data['returnurl']));
+            return xarModFunc('polls', 'user', 'resultshook',
+                array('pid' => $pid, 'returnurl' => $data['returnurl'])
+            );
         } else {
         $data['canvote'] = 0;
     }
     }
-/* no hook calls inside hook calls :-) */
+
+    // no hook calls inside hook calls :-)
 
     // Return output
     return $data;

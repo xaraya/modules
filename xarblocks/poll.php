@@ -26,13 +26,15 @@ function polls_pollblock_init()
 function polls_pollblock_info()
 {
     // Values
-    return array('text_type' => 'Poll',
-                 'module' => 'polls',
-                 'text_type_long' => 'Display poll',
-                 'allow_multiple' => true,
-                 'form_content' => false,
-                 'form_refresh' => false,
-                 'show_preview' => true);
+    return array(
+        'text_type' => 'Poll',
+        'module' => 'polls',
+        'text_type_long' => 'Display poll',
+        'allow_multiple' => true,
+        'form_content' => false,
+        'form_refresh' => false,
+        'show_preview' => true
+    );
 }
 
 /**
@@ -40,7 +42,7 @@ function polls_pollblock_info()
  */
 function polls_pollblock_display($blockinfo)
 {
-    // Security check
+    // Security check (on the block, not the poll).
 
     if (!xarSecurityCheck('ViewPollBlock',0,'Pollblock',"$blockinfo[title]:$blockinfo[type]")) return;
 
@@ -54,70 +56,40 @@ function polls_pollblock_display($blockinfo)
         $poll = xarModAPIFunc('polls', 'user', 'get', array('act' => 1));
     }
 
-    if (!$poll) {
+    if (empty($poll)) {
         // Poll didn't exist, or something.  We're only a block so
         // let's not worry about it too much
         return;
     }
 
-    // Permissions check
+    // Permissions check (on the poll)
     if (!xarSecurityCheck('ListPolls',0,'Polls',"$poll[title]:$poll[type]")) return;
 
     // Create output object
-    $data = array();
+    $data = $poll;
 
     // Block content
-    $data['title'] = $poll['title'];
-    $data['type'] = $poll['type'];
-    $data['open'] = $poll['open'];
-    $data['start_date'] = $poll['start_date'];
     $data['buttonlabel'] = xarML('Vote');
     $data['previewresults'] = xarModGetVar('polls', 'previewresults');
     $data['showtotalvotes'] = xarModGetVar('polls', 'showtotalvotes');
     $data['canvote'] = xarModAPIFunc('polls', 'user', 'usercanvote', array('pid' => $poll['pid']));
     $data['bid'] = $blockinfo['bid'];
-    //initialize our array to hold poll options, if any
-    $data['options']=array();
+
     // See if user is allowed to vote
-    if ((xarSecurityCheck('VotePolls',0,'Polls',"$poll[title]:$poll[type]")) &&
-                         ($data['canvote'])){
+    if (xarSecurityCheck('VotePolls',0,'Polls',"$poll[title]:$poll[type]") && $data['canvote']){
         // They have not voted yet, display voting options
 
         $data['authid'] = xarSecGenAuthKey('polls');
-        $data['pid'] =  $poll['pid'];
         $data['returnurl'] = xarServerGetCurrentURL();
-        $data['options'] = $poll['options'];
         $data['canvote'] = 1;
     } else {
         // They have voted, display current results
-        $barscale = xarModGetVar('polls', 'barscale');
         $imggraph = xarModGetVar('polls', 'imggraph');
         $data['imggraph'] = ($imggraph == 1 || $imggraph == 3)?1:0;
+
         $data['canvote'] = 0;
-
-        for ($i=1; $i<=$poll['opts']; $i++) {
-            $row = array();
-            if ($poll['votes'] == 0) {
-                $percentage = 0;
-            } else {
-                $percentage = (int)($poll['options'][$i]['votes']*1000/$poll['votes']);
-                $percentage /= 10;
-            }
-
-            $row = array();
-            $row['name'] = $poll['options'][$i]['name'];
-            $row['votes'] = $poll['options'][$i]['votes'];
-            $row['percentage'] = $percentage;
-            $row['barwidth'] = (int)($percentage);
-
-            $data['options'][$i] = $row;
-
-        }
     }
-    $data['resultsurl'] = xarModURL('polls',
-                          'user',
-                          'results',
-                          array('pid' => $poll['pid']));
+    $data['resultsurl'] = xarModURL('polls', 'user', 'results', array('pid' => $poll['pid']));
     $data['resultslabel'] = xarML('Results');
 
     // Return content
@@ -144,16 +116,18 @@ function polls_pollblock_modify($blockinfo)
     // Row
     $data['polls'] = array();
     $polls = xarModAPIFunc('polls', 'user', 'getall',
-                           array('modid' => xarModGetIDFromName('polls')));
+        array('modid' => xarModGetIDFromName('polls'))
+    );
     $vars['polls'] = array();
     $vars['sel_pid'] = $vars['pid'];
-    $vars['polls'][] = array('pid' => -1,
-                             'name' => xarML('Latest Poll'));
+    $vars['polls'][] = array('pid' => -1, 'name' => xarML('Latest Poll'));
 
     foreach ($polls as $poll) {
-        $vars['polls'][] = array('pid' => $poll['pid'],
+        $vars['polls'][] = array(
+            'pid' => $poll['pid'],
                               //  'name' => xarVarPrepHTMLDisplay($poll['title']));
-                                'name' => $poll['title']);
+            'name' => $poll['title']
+        );
     }
 
     $vars['blockid'] = $blockinfo['bid'];
@@ -170,12 +144,6 @@ function polls_pollblock_modify($blockinfo)
 function polls_pollblock_update($blockinfo)
 {
     xarVarFetch('pid', 'id', $vars['pid'], -1, XARVAR_DONT_SET);
-
-    // Defaults
-    /* if (empty($vars['pid'])) {
-        $vars['pid'] = -1;
-    }
-*/
 
     $blockinfo['content'] = serialize($vars);
 
