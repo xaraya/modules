@@ -13,10 +13,10 @@
  */
 
 /**
- * close a poll
+ * reopen a poll
  * @param $args['pid'] ID of poll
  */
-function polls_adminapi_close($args)
+function polls_adminapi_open($args)
 {
     // Get arguments from argument array
     extract($args);
@@ -45,7 +45,7 @@ function polls_adminapi_close($args)
             SET xar_end_date = ?,
             xar_open = ?
             WHERE xar_pid = ?";
-    $result = $dbconn->Execute($sql, array(time(), 0, (int)$pid));
+    $result = $dbconn->Execute($sql, array(strtotime('now +1 day'), 1, (int)$pid));
 
     if (!$result) {
         return;

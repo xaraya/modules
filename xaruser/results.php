@@ -21,11 +21,11 @@
 function polls_user_results($args)
 {
     // Get parameters
-     if (!xarVarFetch('pid', 'id', $pid, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('pid', 'id', $pid, XARVAR_DONT_SET)) return;
 
     extract($args);
 
-    if(!xarSecurityCheck('ViewPolls')){
+    if (!xarSecurityCheck('ViewPolls')){
         return;
     }
 
@@ -49,12 +49,12 @@ function polls_user_results($args)
     $canvote = xarModAPIFunc('polls', 'user', 'usercanvote', array('poll' => $poll));
 
     // If results can be previewed before voting, then just display the results immediately.
-    if (!xarModGetVar('polls', 'previewresults') && $canvote){
+    if (!xarModGetVar('polls', 'previewresults') && $canvote && $poll['state'] == 'open'){
         xarResponseRedirect(xarModURL('polls', 'user', 'display', array('pid' => $pid)));
     }
 
-    // FIXME: should this check not be in the usercanvote() API?
-    if ($canvote && !xarSecurityCheck('VotePolls',0,'Polls',"$poll[title]:$poll[type]")) {
+    // Check voting permission.
+    if ($canvote && !xarSecurityCheck('VotePolls', 0, 'Polls', "$poll[title]:$poll[type]")) {
         $canvote = 0;
     }
 
@@ -71,7 +71,7 @@ function polls_user_results($args)
 
     $data['canvote'] = $canvote;
 
-    if($voteinterval == 86400){
+    if ($voteinterval == 86400){
         $data['votelimit'] = xarML('per day');
     } elseif($voteinterval == 604800){
         $data['votelimit'] = xarML('per week');
@@ -95,7 +95,7 @@ function polls_user_results($args)
         $item = $poll;
         $item['module'] = 'polls';
         $item['returnurl'] = xarModURL('polls','user', 'results', array('pid' => $poll['pid']));
-        $hooks = xarModCallHooks('item','display', $poll['pid'], $item);
+        $hooks = xarModCallHooks('item', 'display', $poll['pid'], $item);
 
         // Return hook data as both a string and an array.
         $data['hookoutput'] = trim(join('', $hooks));

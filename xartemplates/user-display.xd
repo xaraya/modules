@@ -48,7 +48,7 @@
                     <a href="#$resultsurl#">
                         <xar:mlstring>View Results</xar:mlstring>
                     </a>
-                    &nbsp; &nbsp;
+                    |
                 </xar:if>
                 <a href="#xarModUrl('polls', 'user', 'list')#">
                     <xar:mlstring>Main List</xar:mlstring>

@@ -9,6 +9,7 @@
  *
  * @subpackage polls
  * @author Jim McDonalds, dracos, mikespub et al.
+ * @todo We could pass the bulk of this to getall() and expand the status options for getall().
  */
 
 /**

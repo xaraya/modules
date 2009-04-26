@@ -14,38 +14,32 @@
 /**
  * Display poll
  *
- * This is a standard function to provide detailed information on a single poll
- * When a user is allowed to vote, a vote link is presented
- * When a user is allowed to see the results, a result link is presented
+ * This is a standard function to provide detailed information on a single poll.
+ * However, it does not display the results of a single poll, but it does display
+ * the voting form for a poll (it's a bit mixed up).
+ * When a user is allowed to vote, a vote link is presented.
+ * When a user is allowed to see the results, a result link is presented.
  *
  * @param id $pid Poll id
  */
 function polls_user_display($args)
 {
-
     if (!xarVarFetch('pid', 'id', $pid)) return;
 
     extract($args);
 
     if (!isset($pid)) {
         $msg = xarML('Missing poll id');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA', new DefaultUserException($msg));
         return;
     }
 
     // Get item
-    $poll = xarModAPIFunc('polls',
-                           'user',
-                           'get',
-                           array('pid' => $pid));
+    $poll = xarModAPIFunc('polls', 'user', 'get', array('pid' => $pid));
 
-    if (!$poll) {
+    if (empty($poll)) {
         $msg = xarML('Error retrieving Poll data');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -54,33 +48,25 @@ function polls_user_display($args)
     $data['returnurl'] =  xarServerGetCurrentURL();
 
     // See if user is allowed to vote
-    if (xarSecurityCheck('VotePolls',0,'Polls',"$poll[title]:$poll[type]")){
-
-        if ((xarModAPIFunc('polls', 'user', 'usercanvote', array('pid' => $pid)))) {
+    if (xarSecurityCheck('VotePolls', 0, 'Polls', "$poll[title]:$poll[type]")) {
+        if (xarModAPIFunc('polls', 'user', 'usercanvote', array('pid' => $pid)) && $poll['state'] == 'open') {
             // They have not voted yet, display voting options
             $data['canvote'] = 1;
             $data['type'] = $poll['type'];
             $data['private'] = $poll['private'];
-            $data['resultsurl'] = xarModURL('polls',
-                                  'user',
-                                  'results',
-                                  array('pid' => $poll['pid']));
+            $data['resultsurl'] = xarModURL(
+                'polls', 'user', 'results',
+                array('pid' => $poll['pid'])
+            );
             $data['previewresults'] = xarModGetVar('polls', 'previewresults');
-
             $data['authid'] = xarSecGenAuthKey('polls');
             $data['pid'] =  $poll['pid'];
             $data['options'] = $poll['options'];
+        } else {
+            // They have just voted, display current results of that poll.
+            return xarModFunc('polls', 'user', 'results', array('pid' => $pid));
         }
-        else {
-            // They have voted, display current results
-            xarResponseRedirect(xarModURL('polls',
-                                                 'user',
-                                                 'results',
-                                                 array('pid' => $pid)));
-            return;
-        }
-    }
-    else {
+    } else {
         $data['canvote'] = 0;
     }
 
@@ -97,7 +83,8 @@ function polls_user_display($args)
     }
 
     $data['buttonlabel'] = xarML('Vote');
-    // Return output
+
+    // Return data to template.
     return $data;
 }
 

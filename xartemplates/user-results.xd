@@ -45,19 +45,23 @@
     </div>
     <div class="xar-standard-box-padding xar-align-center">
         <xar:if condition="$showtotalvotes eq 1">
-            <b>
-                <xar:mlstring>Total votes</xar:mlstring>
-                : #$totalvotes#
-            </b>
+            <strong>
+                <xar:ml>
+                    <xar:mlstring>Total votes: #(1)</xar:mlstring>
+                    <xar:mlvar>#$totalvotes#</xar:mlvar>
+                </xar:ml>
+            </strong>
         </xar:if>
     </div>    
     <div class="xar-standard-box-padding xar-align-center">  
-        <xar:if condition="$open == 1">
-            <div>
-                <xar:mlstring>We allow just one vote</xar:mlstring>
-                    #$votelimit# 
-            </div>
-            <xar:if condition="$canvote">                                         
+        <xar:if condition="$open == 1 and $state eq 'open'">
+            <p>
+                <xar:ml>
+                    <xar:mlstring>We allow just one vote #(1)</xar:mlstring>
+                    <xar:mlvar>#$votelimit#</xar:mlvar>
+                </xar:ml>
+            </p>
+            <xar:if condition="$canvote">
                 <a href="#$voteurl#">
                     <xar:mlstring>Vote</xar:mlstring>
                 </a>

@@ -177,6 +177,14 @@
                 </a>
                 |
               </xar:if>
+              <xar:if condition="isset($loop:item['action_open'])">
+                <a href="#$loop:item['action_open']#" onclick="return xar_base_confirmLink(this, '#xarVarPrepForDisplay($loop:item['open_confirm'])#')">
+                  <xar:mlstring>
+                    Reopen
+                  </xar:mlstring>
+                </a>
+                |
+              </xar:if>
               <xar:if condition="isset($loop:item['action_modify'])">
                 <a href="#$loop:item['action_modify']#">
                   <xar:mlstring>

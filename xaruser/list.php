@@ -47,23 +47,11 @@ function polls_user_list($args)
 
     // TODO - loop through each item and display it
     foreach ($items as $item) {
-        $poll = array();
-
-        $poll['title'] = $item['title'];
-        $poll['type'] = $item['type'];
-        $poll['private'] = $item['private'];
-        $poll['votes'] = $item['votes'];
-        $poll['start_date'] = $item['start_date'];
-        $poll['end_date'] = $item['end_date'];
-        if($item['open'] == '1'){
-            $poll['open'] = 1;
-        } else {
-            $poll['open'] = 0;
-        }
+        $poll = $item;
 
         if (xarSecurityCheck('VotePolls', 0, 'Polls', "$item[title]:$item[type]")) {
             $poll['canvote'] = xarModAPIFunc('polls', 'user', 'usercanvote',
-                array('pid' => $item['pid'])
+                array('poll' => $item)
             );
 
             $poll['action_vote'] = xarModURL('polls', 'user', 'display',

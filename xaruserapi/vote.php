@@ -23,34 +23,27 @@ function polls_userapi_vote($args)
     extract($args);
 
     // Check args
-    if (!isset($pid) || !isset($options)) {
+    if ((!isset($pid) && !isset($poll)) || !isset($options)) {
         $msg = xarML('Missing poll ID or option');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA', new DefaultUserException($msg));
         return;
     }
 
-    // Confirm that the user has not already voted
-    if (!xarModAPIFunc('polls',
-                     'user',
-                     'usercanvote',
-                     array('pid' => $pid))) {
-        $msg = xarML('You have already voted on this poll');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_USER',
-                     new DefaultUserException($msg));
-        return;
-    }
-
-    // Get information
-    $poll = xarModAPIFunc('polls', 'user', 'get', array('pid' => $pid));
+    // Get poll info, if not already passed in.
+    if (!isset($poll)) $poll = xarModAPIFunc('polls', 'user', 'get', array('pid' => $pid));
 
     if (!$poll) {
         $msg = xarML('Error retrieving Poll data');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA', new DefaultUserException($msg));
+        return;
+    }
+
+    if (empty($pid)) $pid = $poll['pid'];
+
+    // Confirm that the user has not already voted
+    if (!xarModAPIFunc('polls', 'user', 'usercanvote', array('pid' => $pid))) {
+        $msg = xarML('You have already voted on this poll');
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_USER', new DefaultUserException($msg));
         return;
     }
 
@@ -59,8 +52,8 @@ function polls_userapi_vote($args)
         return;
     }
 
-    // Ensure poll is still open
-    if (!$poll['open']) {
+    // Ensure poll is still open. Take into account the 'open' flag as well as the date ranges.
+    if (!$poll['open'] || $poll['state'] == 'closed') {
         $msg = xarML('Poll is closed.');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_USER', new DefaultUserException($msg));
         return;
@@ -73,14 +66,12 @@ function polls_userapi_vote($args)
 
     $voteinc = 0;
 
-    if(!is_array($options)){
+    if (!is_array($options)){
         $msg = xarML('Data type mismatch: array expected for $options');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA', new DefaultUserException($msg));
         return;
     }
-    if(count($options) == 0){
+    if (count($options) == 0){
         $msg = xarML('No vote received');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
@@ -97,18 +88,15 @@ function polls_userapi_vote($args)
 
         if(!is_int($option)){
             $msg = xarML('Data type mismatch: integer expected for option ID');
-            xarErrorSet(XAR_USER_EXCEPTION,
-                         'BAD_DATA',
-                         new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA', new DefaultUserException($msg));
             return;
         }
         if($option > $poll['opts'] || $option < 1){
             $msg = xarML('Invalid Vote');
-            xarErrorSet(XAR_USER_EXCEPTION,
-                         'BAD_DATA',
-                         new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA', new DefaultUserException($msg));
             return;
         }
+
         $sql = "UPDATE $pollsinfotable
                 SET xar_votes = xar_votes + 1
                 WHERE xar_pid = ?
@@ -119,24 +107,20 @@ function polls_userapi_vote($args)
         }
 
         $voteinc++;
-    }
-    elseif ($poll['type'] == 'multi') {
+    } elseif ($poll['type'] == 'multi') {
         foreach($options as $option) {
             $option = $option * 1;
             if($option > $poll['opts'] || $option < 1){
                 $msg = xarML('Invalid Vote');
-                xarErrorSet(XAR_USER_EXCEPTION,
-                             'BAD_DATA',
-                             new DefaultUserException($msg));
+                xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA', new DefaultUserException($msg));
                 return;
             }
             if(!is_int($option)){
                 $msg = xarML('Data type mismatch: integer expected for option ID');
-                xarErrorSet(XAR_USER_EXCEPTION,
-                             'BAD_DATA',
-                             new DefaultUserException($msg));
+                xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA', new DefaultUserException($msg));
                 return;
             }
+
             $sql = "UPDATE $pollsinfotable
                     SET xar_votes = xar_votes + 1
                     WHERE xar_pid = ?
@@ -147,12 +131,9 @@ function polls_userapi_vote($args)
             }
             $voteinc++;
         }
-    }
-    else {
+    } else {
         $msg = xarML('Poll type/vote mismatch');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -168,42 +149,43 @@ function polls_userapi_vote($args)
         return;
     }
 
-    if(xarUserIsLoggedIn()){
+    if (xarUserIsLoggedIn()){
         $votes = xarModGetUserVar('polls', 'uservotes');
+
         if (!$votes) {
             $msg = xarML('Error retrieving vote status');
-            xarErrorSet(XAR_USER_EXCEPTION,
-                        'BAD_DATA',
-                         new DefaultUserException($msg));
-            return;
-        }
-        $uservotes = unserialize($votes);
-        $uservotes[$pid] = time();
-        $voteupdate = xarModSetUserVar('polls', 'uservotes', serialize($uservotes));
-        if (!$voteupdate) {
-            $msg = xarML('Error updating vote status');
-            xarErrorSet(XAR_USER_EXCEPTION,
-                        'BAD_DATA',
-                         new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA', new DefaultUserException($msg));
             return;
         }
 
-    }
-    else{
-        $votes = xarSessionGetVar('uservotes');
-        if (is_string($votes)) {
-            $uservotes = unserialize($votes);
-        }
-        else {
-            $uservotes = array();
-        }
+        $uservotes = @unserialize($votes);
+        if (!is_array($uservotes)) $uservotes = array();
+
         $uservotes[$pid] = time();
-        $voteupdate = xarSessionSetVar('uservotes', serialize($uservotes));
+        $voteupdate = xarModSetUserVar('polls', 'uservotes', serialize($uservotes));
+
         if (!$voteupdate) {
             $msg = xarML('Error updating vote status');
-            xarErrorSet(XAR_USER_EXCEPTION,
-                        'BAD_DATA',
-                         new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA', new DefaultUserException($msg));
+            return;
+        }
+
+    } else{
+        $votes = xarSessionGetVar('uservotes');
+
+        if (is_string($votes)) {
+            $uservotes = @unserialize($votes);
+            if (!is_array($uservotes)) $uservotes = array();
+        } else {
+            $uservotes = array();
+        }
+
+        $uservotes[$pid] = time();
+        $voteupdate = xarSessionSetVar('uservotes', serialize($uservotes));
+
+        if (!$voteupdate) {
+            $msg = xarML('Error updating vote status');
+            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA', new DefaultUserException($msg));
             return;
         }
     }

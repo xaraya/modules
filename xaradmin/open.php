@@ -12,9 +12,9 @@
  * @author Jim McDonalds, dracos, mikespub et al.
  */
 /**
- * close a poll
+ * reopen a poll
  */
-function polls_admin_close()
+function polls_admin_open()
 {
     // Get parameters
     if (!xarVarFetch('pid', 'id', $pid)) return;
@@ -24,7 +24,7 @@ function polls_admin_close()
     if (!xarSecConfirmAuthKey()) return;
 
     // Pass to API
-    if (!xarModAPIFunc('polls', 'admin', 'close', array('pid' => $pid))) return;
+    if (!xarModAPIFunc('polls', 'admin', 'open', array('pid' => $pid))) return;
 
     xarResponseRedirect(xarModURL('polls', 'admin', 'list', array('status' => $status)));
 

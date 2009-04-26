@@ -43,7 +43,6 @@ function polls_pollblock_info()
 function polls_pollblock_display($blockinfo)
 {
     // Security check (on the block, not the poll).
-
     if (!xarSecurityCheck('ViewPollBlock',0,'Pollblock',"$blockinfo[title]:$blockinfo[type]")) return;
 
     // Get variables from content block
@@ -85,7 +84,7 @@ function polls_pollblock_display($blockinfo)
     } else {
         // They have voted, display current results
         $imggraph = xarModGetVar('polls', 'imggraph');
-        $data['imggraph'] = ($imggraph == 1 || $imggraph == 3)?1:0;
+        $data['imggraph'] = ($imggraph == 1 || $imggraph == 3) ? 1 : 0;
 
         $data['canvote'] = 0;
     }
@@ -125,7 +124,7 @@ function polls_pollblock_modify($blockinfo)
     foreach ($polls as $poll) {
         $vars['polls'][] = array(
             'pid' => $poll['pid'],
-                              //  'name' => xarVarPrepHTMLDisplay($poll['title']));
+            //  'name' => xarVarPrepHTMLDisplay($poll['title']));
             'name' => $poll['title']
         );
     }

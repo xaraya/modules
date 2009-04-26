@@ -60,7 +60,7 @@ function polls_user_displayhook($args)
         $data['returnurl'] = xarServerGetCurrentURL();
     }
 
-        if ((xarModAPIFunc('polls', 'user', 'usercanvote', array('pid' => $pid)))) {
+    if ((xarModAPIFunc('polls', 'user', 'usercanvote', array('pid' => $pid)))) {
         if (xarSecurityCheck('VotePolls',0,'Polls',"$poll[title]:$poll[type]")) {
             $data['canvote'] = 1;
             $data['type'] = $poll['type'];
@@ -78,8 +78,8 @@ function polls_user_displayhook($args)
                 );
             } else {
                 $data['canvote'] = 0;
+            }
         }
-    }
     } else {
         // Security check to see this poll.
         // FIXME: move this check to the usercanvote() API.
@@ -88,8 +88,8 @@ function polls_user_displayhook($args)
                 array('pid' => $pid, 'returnurl' => $data['returnurl'])
             );
         } else {
-        $data['canvote'] = 0;
-    }
+            $data['canvote'] = 0;
+        }
     }
 
     // no hook calls inside hook calls :-)

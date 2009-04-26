@@ -24,11 +24,11 @@
                     </th>
                 </tr>
                 <xar:loop name="$polls">
-                    <xar:if condition="$loop:item['start_date'] le time() or $loop:item['start_date'] eq time()">
+                    <xar:if condition="$loop:item.state eq 'open' or $loop:item.state eq 'closed'">
                         <tr>
                             <td class="xar-align-left">
                                 #$loop:item['title']# (#$loop:item['type']#  -
-                                    <xar:if condition="$loop:item['open']">
+                                    <xar:if condition="$loop:item.open and $loop:item.state eq 'open'">
                                         <xar:mlstring>
                                             Open
                                         </xar:mlstring>
@@ -38,34 +38,25 @@
                                         </xar:mlstring>
                                     </xar:if>)
                                 <xar:if condition="$showtotalvotes eq 1">
-                                    #$loop:item['votes']#
-                                    <xar:mlstring>
-                                        Votes
-                                    </xar:mlstring>
-                                </xar:if>
-                                <xar:if condition="$loop:item['private']">
-                                    [
-                                    <span class="xar-error">
-                                        <xar:mlstring>
-                                            Private
-                                        </xar:mlstring>
-                                    </span>
-                                    ]
+                                    <xar:ml>
+                                        <xar:mlstring>#(1) Votes</xar:mlstring>
+                                        <xar:mlvar>#$loop:item.votes#</xar:mlvar>
+                                    </xar:ml>
                                 </xar:if>
                             </td>
                             <td class="xar-align-center">
-                                <xar:if condition="$previewresults or !$loop:item['canvote']">
-                                    <a href="#$loop:item['action_results']#">
-                                        <xar:mlstring>
-                                            Results
-                                        </xar:mlstring>
-                                    </a>
+                                <xar:if condition="$previewresults or !$loop:item.canvote or $loop:item.state eq 'closed'">
+                                    <xar:if condition="$loop:item['private']">
+                                        <span class="xar-error"><xar:mlstring>Private</xar:mlstring></span>
+                                    <xar:else />
+                                        <a href="#$loop:item.action_results#"><xar:mlstring>Results</xar:mlstring></a>
+                                    </xar:if>
                                 </xar:if>
-                                <xar:if condition="$previewresults and ($loop:item['canvote'] and $loop:item['open'])">
-                                |
+                                <xar:if condition="$previewresults and $loop:item.canvote and $loop:item.open and $loop:item.state eq 'open'">
+                                    |
                                 </xar:if>
-                                <xar:if condition="$loop:item['canvote'] and $loop:item['open']">
-                                    <a href="#$loop:item['action_vote']#">
+                                <xar:if condition="$loop:item.canvote and $loop:item.open and $loop:item.state eq 'open'">
+                                    <a href="#$loop:item.action_vote#">
                                         <xar:mlstring>
                                             Vote
                                         </xar:mlstring>

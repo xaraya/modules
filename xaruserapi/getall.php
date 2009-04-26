@@ -32,7 +32,7 @@ function polls_userapi_getall($args)
     $polls = array();
 
     // Security check
-    if(!xarSecurityCheck('ListPolls')){
+    if (!xarSecurityCheck('ListPolls')){
         return;
     }
 
@@ -76,9 +76,9 @@ function polls_userapi_getall($args)
 
         // ?
         if ($status >= 1) {
-        if (isset($hook) && is_numeric($hook)) {
+            if (isset($hook) && is_numeric($hook)) {
                 $where[] = "$pollstable.xar_itemid = ?";
-            $bindvars[]= (int) $hook;
+                $bindvars[]= (int)$hook;
             }
         }
     }
@@ -86,9 +86,9 @@ function polls_userapi_getall($args)
     // Other selection criteria.
 
     // These next three are used by hooks.
-        if (isset($modid) && is_numeric($modid)) {
+    if (isset($modid) && is_numeric($modid)) {
         $where[] = "$pollstable.xar_modid = ?";
-        $bindvars[]= (int) $modid;
+        $bindvars[]= (int)$modid;
     }
 
     if (isset($itemtype) && is_numeric($itemtype)) {
@@ -107,9 +107,9 @@ function polls_userapi_getall($args)
     }
 
     // Join to categories if hooked (for selection).
-    if (!empty($catid) && xarModIsHooked('categories','polls')) {
+    if (!empty($catid) && xarModIsHooked('categories', 'polls')) {
         // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
-        $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
+        $categoriesdef = xarModAPIFunc('categories', 'user', 'leftjoin',
             array('modid' => xarModGetIDFromName('polls'), 'catid' => $catid)
         );
 
@@ -119,8 +119,8 @@ function polls_userapi_getall($args)
                 . " $categoriesdef[more]";
 
             $where[] = "$categoriesdef[where]";
-            }
         }
+    }
 
     // Flatten out the where clauses and joins.
     if (!empty($where)) {
@@ -134,18 +134,18 @@ function polls_userapi_getall($args)
     $sql = "
         SELECT
             $pollstable.xar_pid,
-                   $pollstable.xar_title,
-                   $pollstable.xar_type,
-                   $pollstable.xar_open,
-                   $pollstable.xar_private,
-                   $pollstable.xar_modid,
-                   $pollstable.xar_itemtype,
-                   $pollstable.xar_itemid,
+            $pollstable.xar_title,
+            $pollstable.xar_type,
+            $pollstable.xar_open,
+            $pollstable.xar_private,
+            $pollstable.xar_modid,
+            $pollstable.xar_itemtype,
+            $pollstable.xar_itemid,
             $pollstable.xar_opts,
-                   $pollstable.xar_votes,
-                   $pollstable.xar_start_date,
-                   $pollstable.xar_end_date,
-                   $pollstable.xar_reset
+            $pollstable.xar_votes,
+            $pollstable.xar_start_date,
+            $pollstable.xar_end_date,
+            $pollstable.xar_reset
         FROM
             $pollstable
             $join
@@ -158,7 +158,7 @@ function polls_userapi_getall($args)
     if (!empty($numitems)) {
         $result = $dbconn->SelectLimit($sql, $numitems, $startnum-1, $bindvars);
     } else {
-    $result = $dbconn->execute($sql, $bindvars);
+        $result = $dbconn->execute($sql, $bindvars);
     }
 
     if (!$result) {
@@ -169,7 +169,7 @@ function polls_userapi_getall($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($pid, $title, $type, $open, $private, $modid, $itemtype, $itemid, $opts, $votes, $start_date, $end_date, $reset) = $result->fields;
 
-        if (xarSecurityCheck('ViewPolls',0,'Polls',"$title:$type")) {
+        if (xarSecurityCheck('ViewPolls', 0, 'Polls', "$title:$type")) {
             // Get the options if we need them.
             // Also calcultate the bar scales.
 
@@ -187,7 +187,7 @@ function polls_userapi_getall($args)
                     if ($votes == 0) {
                         $percentage = 0;
                     } else {
-                        $percentage = ($optvotes / $votes) * 100;
+                        $percentage = round(($optvotes / $votes) * 100, 1);
                     }
 
                     $options[$optnum] = array(
@@ -200,21 +200,34 @@ function polls_userapi_getall($args)
                 $result_options->Close();
             }
 
+            // Determine the state of the poll wrt its time periodperiod.
+            // The poll will be 'open', 'closed' or 'upcoming'.
+            if (!empty($start_date) && $start_date > $now) {
+                $state = 'upcoming';
+            } else {
+                if (empty($end_date) || $end_date > $now) {
+                    $state = 'open';
+                } else {
+                    $state = 'closed';
+                }
+            }
+
             $polls[] = array(
                 'pid' => $pid,
-                             'title' => $title,
-                             'type' => $type,
-                             'open' => $open,
-                             'private' => $private,
-                             'modid' => $modid,
-                             'itemtype' => $itemtype,
-                             'itemid' => $itemid,
+                'title' => $title,
+                'type' => $type,
+                'open' => $open,
+                'private' => $private,
+                'modid' => $modid,
+                'itemtype' => $itemtype,
+                'itemid' => $itemid,
                 'opts' => $opts,
-                             'votes' => $votes,
-                             'start_date' => $start_date,
-                             'end_date' => $end_date,
+                'votes' => $votes,
+                'start_date' => $start_date,
+                'end_date' => $end_date,
                 'reset' => $reset,
                 'options' => $options,
+                'state' => $state,
             );
 
             // Break out of the loop if we want to stop after the first poll found.

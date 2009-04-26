@@ -19,6 +19,7 @@
  * @return user vote status for a poll
  *          true user can vote
  *          false user cannot vote
+ * Note this does not check the privileges; it only checks the voting history.
  */
 function polls_userapi_usercanvote($args)
 {

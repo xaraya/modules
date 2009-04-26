@@ -51,7 +51,7 @@ function polls_user_resultshook($args)
     } elseif ($poll['modid'] != xarModGetIDFromName('polls') && !empty($poll['itemid'])) {
         $modinfo = xarModGetInfo($poll['modid']);
         if (!empty($modinfo)) {
-                                       // don't throw an exception if this function doesn't exist
+            // don't throw an exception if this function doesn't exist
             $itemlinks = xarModAPIFunc(
                 $modinfo['name'], 'user', 'getitemlinks',
                 array('itemtype' => $poll['itemtype'], 'itemids' => array($poll['itemid'])), 0
