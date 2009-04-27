@@ -1,15 +1,16 @@
 <xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
+<xar:style module="polls" file="default" scope="module" />
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>Poll Results</xar:mlstring>
     </span>
 </div>
-<div class="xar-mod-body">
+<div class="xar-mod-body xar-polls-result">
     <xar:if condition="xarModIsHooked('categories','polls')">
         <xar:template file="catnavigation"/>
     </xar:if>
     <h2>
-        #$title#
+        #xarVarPrepForDisplay($title)#
     </h2>
     <div class="xar-center xar-standard-box-padding">
         <xar:if condition="$private">
@@ -21,21 +22,19 @@
             <xar:loop name="$options">
                     <tr>
                         <td class="xar-align-left xar-valign-middle">
-                            <b>#$loop:item['name']#</b>
-                            [ #$loop:item['percentage']#%
+                            <strong>#$loop:item['name']#</strong>
+                            [#$loop:item['percentage']#%
                             <xar:if condition="$showtotalvotes eq 1">
                                 &nbsp;(#$loop:item['votes']#)
-                            </xar:if>    
-                            ]<br />
+                            </xar:if>]<br />
                             <xar:if condition="$imggraph eq 1">
                                 <xar:if condition="$loop:item['barwidth'] le 1">
-                                    <img src="#xarTplGetImage('bar.png','polls')#" style="width: 1px;height: 10px;" alt="vote bar" />
+                                    <img src="#xarTplGetImage('bar.png','polls')#" class="xar-polls-image-bar" style="width: 1px;" alt="vote bar" />
                                 <xar:else />
-                                    <img src="#xarTplGetImage('bar.png', 'polls')#" style="width: #$loop:item['barwidth']#%;height: 10px;" alt="vote bar" />
+                                    <img src="#xarTplGetImage('bar.png', 'polls')#" class="xar-polls-image-bar" style="width: #$loop:item['barwidth']#%" alt="vote bar" />
                                 </xar:if>
                             <xar:else/>
-                                <div class="xar-alt" style="width:#$loop:item['barwidth']#%; height: 1em;min-width:1px; float:left; display:inline;">
-                                </div>
+                                <div class="xar-alt" class="xar-polls-css-bar" style="width: #$loop:item.barwidth#%;">&nbsp;</div>
                             </xar:if>
                         </td>
                     </tr>
@@ -54,7 +53,7 @@
         </xar:if>
     </div>    
     <div class="xar-standard-box-padding xar-align-center">  
-        <xar:if condition="$open == 1 and $state eq 'open'">
+        <xar:if condition="$open eq 1 and $state eq 'open'">
             <p>
                 <xar:ml>
                     <xar:mlstring>We allow just one vote #(1)</xar:mlstring>

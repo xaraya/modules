@@ -37,3 +37,30 @@
 .xar-polls-block .xar-poll-vote-wrapper {
     margin: 0.25em 0;
 }
+
+/* The vote screen (misnamed the 'display' template) */
+
+.xar-polls-vote {
+    padding: 1em 0;
+}
+.xar-polls-vote ul {
+    padding: 0;
+    margin: 0.25em 0 !important;
+    list-style: none;
+}
+.xar-polls-vote li {
+    padding: 0;
+    margin: 0;
+}
+
+/* Single poll result */
+.xar-polls-result .xar-polls-image-bar {
+    /* Height of the image - keeps the height constant while the width is adjusted. */
+    height: 13px;
+}
+.xar-polls-result xar-polls-css-bar {
+    height: 1em;
+    min-width: 1px;
+    float: left;
+    display: inline;
+}

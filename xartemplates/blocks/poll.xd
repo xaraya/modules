@@ -48,11 +48,11 @@
                             </div>
                         <xar:else />
                             <div class="xar-margin-noneends xar-clearboth">
-                                <img src="#xarTplGetImage('bar.png', 'polls')#" width="#$loop:item['barwidth']#%" height="10" alt="" />
+                                <img src="#xarTplGetImage('bar.png', 'polls')#" class="xar-polls-image-bar" width="#$loop:item.barwidth#%;" alt="" />
                             </div>
                         </xar:if>
                     <xar:else/>
-                        <div class="xar-alt xar-polls-css-bar" style="width:#$loop:item['barwidth']#%;">
+                        <div class="xar-alt xar-polls-css-bar" style="width:#$loop:item.barwidth#%;">
                         </div>
                     </xar:if>
                 </li>

@@ -1,23 +1,26 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:style module="polls" file="default" scope="module" />
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>Vote</xar:mlstring>
     </span>
 </div>
-<div class="xar-mod-body">
+<div class="xar-mod-body xar-polls-vote">
     <xar:if condition="xarModIsHooked('categories','polls')">
         <xar:template file="catnavigation"/>
     </xar:if>
     <xar:if condition="!$canvote">
         <div class="xar-standard-box-padding">
-            <xar:mlstring>You are not allowed to vote on poll </xar:mlstring>
-            #$title#
+            <xar:ml>
+                <xar:mlstring>You are not allowed to vote on poll '#(1)'</xar:mlstring>
+                <xar:mlvar>#xarVarPrepForDisplay($title)#</xar:mlvar>
+            </xar:ml>
         </div>
     <xar:else />
         <form method="post" action="&xar-modurl-polls-user-vote;" enctype="application/x-www-form-urlencoded">
             <fieldset>
                 <legend>
-                    #$title#
+                    #xarVarPrepForDisplay($title)#
                 </legend>
                 <input type="hidden" name="authid" value="#$authid#" />
                 <input type="hidden" name="pid" value="#$pid#" />
@@ -27,23 +30,25 @@
                         <xar:mlstring>This Poll is currently private.  Results will not be shown.</xar:mlstring>
                     </div>
                 </xar:if>
-                <xar:for start="$i = 1" test="$i le count($options)" iter="$i++">
-                    <div class="xar-form-input-wrapper">
-                        <label for="polloption_#$i#" class="xar-form-label">
-                            #$options[$i]['name']#
-                        </label>
-                        <xar:if condition="$type eq 'single'">
-                            <input type="radio" name="option" id="polloption_#$i#" value="#$i#" />
-                        <xar:elseif condition="$type eq 'multi'" />
-                            <input type="checkbox" name="option_#$i#" id="polloption_#$i#" value="#$i#" />
-                        </xar:if>
-                    </div>
+                <ul>
+                    <xar:for start="$i = 1" test="$i le count($options)" iter="$i++">
+                        <li class="xar-form-input-wrapper">
+                            <xar:if condition="$type eq 'single'">
+                                <input type="radio" name="option" id="polloption_#$i#" value="#$i#" />
+                            <xar:elseif condition="$type eq 'multi'" />
+                                <input type="checkbox" name="option_#$i#" id="polloption_#$i#" value="#$i#" />
+                            </xar:if>
+                            <label for="polloption_#$i#" class="xar-form-label">
+                                #xarVarPrepForDisplay($options[$i]['name'])#
+                            </label>
+                        </li>
                     </xar:for>
+                </ul>
             </fieldset>
-            <div class="xar-form-input-wrapper-after">
+            <p class="xar-form-input-wrapper-after xar-poll-vote-wrapper">
                 <input type="submit" value="#$buttonlabel#" />
-            </div>
-            <div class="xar-form-input-wrapper-after">
+            </p>
+            <p class="xar-form-input-wrapper-after">
                 <xar:if condition="$previewresults">
                     <a href="#$resultsurl#">
                         <xar:mlstring>View Results</xar:mlstring>
@@ -53,12 +58,12 @@
                 <a href="#xarModUrl('polls', 'user', 'list')#">
                     <xar:mlstring>Main List</xar:mlstring>
                 </a>
-            </div>
+            </p>
         </form>
     </xar:if>
     <xar:comment>
-    <div class="xar-mod-foot">
-        #$hookoutput#
-    </div>
+        <div class="xar-mod-foot">
+            #$hookoutput#
+        </div>
     </xar:comment>
 </div>
