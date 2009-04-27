@@ -1,66 +1,69 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div>
+<xar:style module="polls" file="default" scope="block" />
+<div class="xar-polls-block">
     <xar:if condition="$canvote">
         <form method="post" action="&xar-modurl-polls-user-vote;">
             <input type="hidden" name="authid" value="#$authid#" />
             <input type="hidden" name="pid" value="#$pid#" />
             <input type="hidden" name="returnurl" value="#$returnurl#" />
-            <div style="text-align: center; font-weight: bold; text-transform: capitalize;">
-                #$title#
-            </div>
-            <xar:for start="$i = 1" test="$i le count($options)" iter="$i++">
-                <div class="xar-form-input-wrapper">
-                    <xar:if condition="$type eq 'single'">
-                        <input type="radio" name="option" id="option_#$bid#_#$i#" value="#$i#" />
-                    <xar:elseif  condition="$type eq 'multi'" />
-                        <input type="checkbox" name="option_#$i#" id="option_#$bid#_#$i#" value="#$i#" />
-                    </xar:if>
-                    <label for="option_#$bid#_#$i#">
-                        #$options[$i]['name']#
-                    </label>
-                </div>
-            </xar:for>
-            <div class="xar-align-center">
+            <p class="title">#xarVarPrepForDisplay($title)#</p>
+
+            <ul>
+                <xar:for start="$i = 1" test="$i le count($options)" iter="$i++">
+                    <li class="xar-form-input-wrapper">
+                        <xar:if condition="$type eq 'single'">
+                            <input type="radio" name="option" id="option_#$bid#_#$i#" value="#$i#" />
+                        <xar:elseif  condition="$type eq 'multi'" />
+                            <input type="checkbox" name="option_#$i#" id="option_#$bid#_#$i#" value="#$i#" />
+                        </xar:if>
+                        <label for="option_#$bid#_#$i#">
+                            #xarVarPrepForDisplay($options[$i]['name'])#
+                        </label>
+                    </li>
+                </xar:for>
+            </ul>
+
+            <p class="xar-align-center xar-poll-vote-wrapper">
                 <input type="submit" value="#$buttonlabel#" />
-            </div>
+            </p>
         </form>
     <xar:else />
-        <div style="text-align: center; font-weight: bold; text-transform: capitalize; ">
-          <!-- div class="xar-block-title-right"> -->
-            #$title#
-        </div>
-        <xar:loop name="$options">
-            <div class="xar-margin-noneends xar-clearboth">
-                <b>
-                    #$loop:item['name']#
-                </b>
-                [ #$loop:item['percentage']#%
-                <xar:if condition="$showtotalvotes eq 1">
-                    &nbsp;(#$loop:item['votes']#)
-                </xar:if>
-                ]
-            </div>
-            <xar:if condition="$imggraph eq 1">
-                <xar:if condition="$loop:item['barwidth'] le 1">
-                    <div class="xar-margin-noneends xar-clearboth">
-                        <img src="#xarTplGetImage('bar.png', 'polls')#" width="2" height="10" alt="" />
-                    </div>
-                <xar:else />
-                    <div class="xar-margin-noneends xar-clearboth">
-                        <img src="#xarTplGetImage('bar.png', 'polls')#" width="#$loop:item['barwidth']#%" height="10" alt="" />
-                    </div>
-                </xar:if>
-            <xar:else/>
-                <div class="xar-alt" style="margin-top: 0pt; margin-bottom: 5pt; width:#$loop:item['barwidth']#%; height: 1em;min-width:1px; float:left; display:inline;">
-                </div>
-            </xar:if>
-        </xar:loop>
+        <p class="title">
+            #xarVarPrepForDisplay($title)#
+        </p>
+        <ul>
+            <xar:loop name="$options">
+                <li class="xar-margin-noneends xar-clearboth">
+                    <strong>
+                        #$loop:item.name#
+                    </strong>
+                    [#$loop:item.percentage#%
+                    <xar:if condition="$showtotalvotes eq 1">
+                        &nbsp;(#$loop:item.votes#)
+                    </xar:if>]
+                    <xar:if condition="$imggraph eq 1">
+                        <xar:if condition="$loop:item.barwidth le 1">
+                            <div class="xar-margin-noneends xar-clearboth">
+                                <img src="#xarTplGetImage('bar.png', 'polls')#" width="2" height="10" alt="" />
+                            </div>
+                        <xar:else />
+                            <div class="xar-margin-noneends xar-clearboth">
+                                <img src="#xarTplGetImage('bar.png', 'polls')#" width="#$loop:item['barwidth']#%" height="10" alt="" />
+                            </div>
+                        </xar:if>
+                    <xar:else/>
+                        <div class="xar-alt xar-polls-css-bar" style="width:#$loop:item['barwidth']#%;">
+                        </div>
+                    </xar:if>
+                </li>
+            </xar:loop>
+        </ul>
     </xar:if>
     <xar:if condition="$previewresults or empty($canvote)">
-        <div class="xar-align-center xar-clearboth">
+        <p class="xar-align-center xar-clearboth">
             <a href="#$resultsurl#">
-                <xar:mlstring>Results</xar:mlstring>
+                <xar:mlstring>View results</xar:mlstring>
             </a>
-        </div>
+        </p>
     </xar:if>
 </div>
