@@ -6,71 +6,55 @@
             <xar:if condition="xarModVars::get('foo','useModuleAlias')">
                 <xar:var scope="module" module="foo" name="aliasname" />
             <xar:else />
-                <xar:mlstring>Foo Administration</xar:mlstring>
+                Foo Administration
             </xar:if>
         </span>
     </div>
     <div class="xar-mod-body">
         <h2>
-            <xar:mlstring>
-                Modify Configuration
-            </xar:mlstring>
+            Modify Configuration
         </h2>
         <div>
             <dl class="xar-tabs">
                 <dt class="help">
-                    <xar:mlstring>
-                        Actions:
-                    </xar:mlstring>
+                    Actions:
                 </dt>
                 <xar:if condition="$tab eq 'general'">
                     <dd class="active">
                         <a href="&xar-modurl-foo-admin-modifyconfig;&amp;tab=general">
-                            <xar:mlstring>
-                                General
-                            </xar:mlstring>
+                            General
                         </a>
                     </dd>
                     <xar:else />
                     <dd>
                         <a href="&xar-modurl-foo-admin-modifyconfig;&amp;tab=general">
-                            <xar:mlstring>
-                                General
-                            </xar:mlstring>
+                            General
                         </a>
                     </dd>
                 </xar:if>
                 <xar:if condition="$tab eq 'tab2'">
                     <dd class="active">
                         <a href="&xar-modurl-foo-admin-modifyconfig;&amp;tab=tab2">
-                            <xar:mlstring>
-                                Tab2
-                            </xar:mlstring>
+                            Tab2
                         </a>
                     </dd>
                     <xar:else />
                     <dd>
                         <a href="&xar-modurl-foo-admin-modifyconfig;&amp;tab=tab2">
-                            <xar:mlstring>
-                                Tab2
-                            </xar:mlstring>
+                            Tab2
                         </a>
                     </dd>
                 </xar:if>
                 <xar:if condition="$tab eq 'tab3'">
                     <dd class="active">
                         <a href="&xar-modurl-foo-admin-modifyconfig;&amp;tab=tab3">
-                            <xar:mlstring>
-                                Tab3
-                            </xar:mlstring>
+                            Tab3
                         </a>
                     </dd>
                     <xar:else />
                     <dd>
                         <a href="&xar-modurl-foo-admin-modifyconfig;&amp;tab=tab3">
-                            <xar:mlstring>
-                                Tab3
-                            </xar:mlstring>
+                            Tab3
                         </a>
                     </dd>
                 </xar:if>
@@ -82,21 +66,15 @@
         <xar:if condition="$tab eq 'general'">
             <form method="post" action="&xar-modurl-foo-admin-modifyconfig;" enctype="application/x-www-form-urlencoded">
                 <h3>
-                    <xar:mlstring>
-                        General Options
-                    </xar:mlstring>
+                    General Options
                 </h3>
                 <fieldset>
                     <legend>
-                        <xar:mlstring>
-                            Page Layout
-                        </xar:mlstring>
+                        Page Layout
                     </legend>
                     <div class="xar-form-input-wrapper">
                         <label for="itemsperpage" title="#xarML('Number of items to show on each page.')#" class="xar-form-label">
-                            <xar:mlstring>
-                                Items Per Page:
-                            </xar:mlstring>
+                            Items Per Page:
                         </label>
                         <xar:set name="value"><xar:var scope="module" module="foo" name="itemsperpage" /></xar:set>
                         <xar:data-input type="textbox" name="itemsperpage" value="$value" class="xar-form-textshort" />
@@ -105,24 +83,18 @@
                         <xar:set name="checked">xarModVars::get('foo','SupportShortURLs')</xar:set>
                         <xar:data-input type="checkbox" name="shorturls" id="shorturls" checked="$checked" />
                         <label for="shorturls" title="#xarML('Enable short URLs for Foo module')#">
-                            <xar:mlstring>
-                                Enable Short URLs
-                            </xar:mlstring>
+                            Enable Short URLs
                         </label>
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for = "modulealias" class="xar-form-label" title="#xarML('Use an alias instead of the module name')#">
-                            <xar:mlstring>
-                                Use a module alias
-                            </xar:mlstring>
+                            Use a module alias
                         </label>
                         <xar:data-input type="checkbox" name="modulealias" id="modulealias" checked="$checked" />
                     </div>
                     <div class="xar-form-input-wrapper">
                         <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
-                                <xar:mlstring>
-                                    Module Alias Name
-                                </xar:mlstring>
+                            Module Alias Name
                         </label>
                         <xar:set name="value"><xar:var scope="module" module="foo" name="aliasname" /></xar:set>
                         <xar:data-input type="textbox" name="aliasname" value="$value" size="32" maxlength="100" />

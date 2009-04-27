@@ -2,10 +2,8 @@
 <xar:style scope="module" module="base" file="navtabs" />
 <br />
 <dl class="xar-tabs">
-    <dt class="help">
-        <xar:mlstring>
-            Applies to:
-        </xar:mlstring>
+    <dt class="help">        
+        Applies to:        
     </dt>
     <xar:if condition="$tab eq 'foo_general'">
         <xar:set name="class">"active"</xar:set>
@@ -14,7 +12,8 @@
     </xar:if>
     <dd class="#$class#">
         <a href="#xarModURL('foo', 'admin', 'modifyconfig', array('tabmodule' => 'foo', 'tab' => 'foo_general'))#">
-        <xar:mlstring>General</xar:mlstring></a>
+            General
+        </a>
     </dd>
     <xar:set name="tabs">$hooks['tabs']</xar:set>
     <xar:foreach in="$tabs" value="$thistab">

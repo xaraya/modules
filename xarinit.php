@@ -155,7 +155,6 @@
     #
         $module = 'foo';
         $objects = array(
-                         'foo_tags',
                          );
 
         if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;

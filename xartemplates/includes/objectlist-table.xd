@@ -10,7 +10,7 @@
                 <th class="xar-align-left" colspan="#$colspan#">
                     <a href="#$newlink#">
                         <strong>
-                            <xar:mlstring>Create New</xar:mlstring>
+                            Create New
                         </strong>
                     </a>
                 </th>
