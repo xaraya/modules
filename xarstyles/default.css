@@ -68,3 +68,10 @@
     float: left;
     display: inline;
 }
+
+/* Main list of available polls */
+.xar-polls-list-wrapper {
+}
+.xar-polls-list-wrapper table td, .xar-polls-list-wrapper table th {
+    padding: 0.5em;
+}
