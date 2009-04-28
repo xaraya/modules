@@ -56,7 +56,7 @@ function stats_init()
                                                                'primary_key'=> true),
                                     'xar_sta_hour'    => array('type' => 'integer', 'size' => 'tiny',
                                                                'null' => false, 'default' => '0', 'primary_key'=> true),
-                                    'xar_ua_id'       => array('type' => 'integer', 'size' => 'small',
+                                    'xar_ua_id'       => array('type' => 'integer', 'size' => 'medium',
                                                                'unsigned' => true, 'null' => false,
                                                                'default' => '0', 'primary_key'=> true),
                                     'xar_sta_hits'    => array('type' => 'integer', 'size' => 'medium',
@@ -98,11 +98,13 @@ function stats_init()
 function stats_upgrade($oldversion)
 {
     // Get database setup
-//    $dbconn =& xarDBGetConn();
-//    $xartable =& xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // load the table maintenance API
-//    xarDBLoadTableMaintenanceAPI();
+    xarDBLoadTableMaintenanceAPI();
+
+    $statstable   = $xartable['stats'];
 
     // Upgrade dependent on old version number
     switch($oldversion) {
@@ -118,6 +120,14 @@ function stats_upgrade($oldversion)
         case '2.0.3':
             break;
         case '2.0.4':
+            break;
+        case '2.0.5':
+            
+            $query = "ALTER TABLE $statstable MODIFY xar_ua_id INT(8)";
+            $result = &$dbconn->Execute($query);
+            if (!$result) return false;
+            
+        case '2.0.6':
             break;
     }
     return true;

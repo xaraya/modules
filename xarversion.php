@@ -15,7 +15,7 @@ $modversion = array(
 
 'name'            => 'stats',
 'id'              => '34',
-'version'         => '2.0.5',
+'version'         => '2.0.6',
 'displayname'     => xarML('Statistics'),
 'description'     => 'Site statistics',
 'credits'         => 'xardocs/credits.txt',
