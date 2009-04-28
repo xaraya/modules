@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Polls Module
  *
@@ -46,16 +47,19 @@ function polls_user_results($args)
 
     // Check if user can vote on this poll.
     // Pass the poll in to avoid another database query.
+    // This actually means "has the user applied a vote?"
     $canvote = xarModAPIFunc('polls', 'user', 'usercanvote', array('poll' => $poll));
-
-    // If results can be previewed before voting, then just display the results immediately.
-    if (!xarModGetVar('polls', 'previewresults') && $canvote && $poll['state'] == 'open'){
-        xarResponseRedirect(xarModURL('polls', 'user', 'display', array('pid' => $pid)));
-    }
 
     // Check voting permission.
     if ($canvote && !xarSecurityCheck('VotePolls', 0, 'Polls', "$poll[title]:$poll[type]")) {
         $canvote = 0;
+    }
+
+    // If results can be previewed before voting, then just display the results immediately.
+    // Actually 'display' means 'show the voting form'. It's a bit confusing.
+    if (!xarModGetVar('polls', 'previewresults') && $canvote && $poll['state'] == 'open'){
+        return xarModfunc('polls', 'user', 'display', array('pid' => $pid));
+        //xarResponseRedirect(xarModURL('polls', 'user', 'display', array('pid' => $pid)));
     }
 
     $data = $poll;

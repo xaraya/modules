@@ -43,7 +43,7 @@ function polls_pollblock_info()
 function polls_pollblock_display($blockinfo)
 {
     // Security check (on the block, not the poll).
-    if (!xarSecurityCheck('ViewPollBlock',0,'Pollblock',"$blockinfo[title]:$blockinfo[type]")) return;
+    if (!xarSecurityCheck('ViewPollBlock',0,'Pollblock',"$blockinfo[title]:$blockinfo[type]", 0)) return;
 
     // Get variables from content block
     $vars = @unserialize($blockinfo['content']);
@@ -62,7 +62,7 @@ function polls_pollblock_display($blockinfo)
     }
 
     // Permissions check (on the poll)
-    if (!xarSecurityCheck('ListPolls',0,'Polls',"$poll[title]:$poll[type]")) return;
+    if (!xarSecurityCheck('ListPolls',0,'Polls',"$poll[title]:$poll[type]", 0)) return;
 
     // Create output object
     $data = $poll;
@@ -75,7 +75,7 @@ function polls_pollblock_display($blockinfo)
     $data['bid'] = $blockinfo['bid'];
 
     // See if user is allowed to vote
-    if (xarSecurityCheck('VotePolls',0,'Polls',"$poll[title]:$poll[type]") && $data['canvote']){
+    if (xarSecurityCheck('VotePolls',0,'Polls',"$poll[title]:$poll[type]", 0) && $data['canvote']){
         // They have not voted yet, display voting options
 
         $data['authid'] = xarSecGenAuthKey('polls');
