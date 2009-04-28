@@ -47,11 +47,22 @@ function sniffer_userapi_sniffbasic($args)
         $uaid = $result->fields[0];
     } else {
         $nextID = $dbconn->GenId($sniffertable);
-        $insarr = array($nextID, (string) $client->get_property('ua'),
+        $insarr = array($nextID, 
                         (string) $client->property('platform'), (string) $client->property('os'),
-                        (string) $client->getname('browser'), (string) $client->property('version'));
+                        (string) $client->getname('browser'), (string) $client->property('version'),  (string) $client->get_property('ua'));
 
-        $query = "INSERT INTO $sniffertable
+        $query = "INSERT INTO $sniffertable (
+                        xar_ua_id,
+                        xar_ua_osnam,
+                        xar_ua_osver,
+                        
+                        xar_ua_agnam,
+                        xar_ua_agver,
+                        xar_ua_agent,
+                        
+                        xar_ua_cap,
+                        xar_ua_quirk
+                  )
                   VALUES (?, ?, ?, ?, ?, ?, '', '')";
 //      last 2 are reserved for caps and quirks, supported by the sniffers cvs-version
         $result =& $dbconn->Execute($query, $insarr);

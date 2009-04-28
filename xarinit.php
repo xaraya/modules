@@ -36,7 +36,7 @@ function sniffer_init()
                 'unsigned' => true, 'null' => false,
                 'default' => '0', 'increment' => true,
                 'primary_key' => true),
-            'xar_ua_agent' => array('type' => 'varchar', 'size' => 254,
+            'xar_ua_agent' => array('type' => 'text',
                 'null' => false),
             'xar_ua_osnam' => array('type' => 'varchar', 'size' => 40,
                 'null' => false),
@@ -101,7 +101,25 @@ function sniffer_upgrade($oldversion)
     xarDBLoadTableMaintenanceAPI();
     // Upgrade dependent on old version number
     switch ($oldversion) {
-        case 0.01:
+        case '1.0.0':
+    
+            $query = "ALTER TABLE xar_sniffer DROP INDEX i_xar_sniff_ag";
+            $result = &$dbconn->Execute($query);
+            if (!$result) return false;
+            
+            $query = "ALTER TABLE xar_sniffer MODIFY xar_ua_agent TEXT after xar_ua_agver";
+            $result = &$dbconn->Execute($query);
+            if (!$result) return false;
+            
+            $query = "ALTER TABLE xar_sniffer ADD UNIQUE i_xar_sniff_ag ( xar_ua_agent ( 384 ) ) ";
+            $result = &$dbconn->Execute($query);
+            if (!$result) return false;
+            
+            $query = "ANALYZE TABLE xar_sniffer";
+            $result = &$dbconn->Execute($query);
+            if (!$result) return false;
+
+        case '1.0.1':
             break;
             // case '0.0.1':
             // break;
