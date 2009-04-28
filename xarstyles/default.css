@@ -22,6 +22,10 @@
     float:left;
     display: inline;
 }
+.xar-polls-block .xar-polls-image-bar {
+    /* Height of the image - keeps the height constant while the width is adjusted. */
+    height: 13px;
+}
 
 /* Block options and results are formatted in a list - take off the list decoration */
 .xar-polls-block ul {
@@ -34,7 +38,7 @@
     margin: 0;
 }
 
-.xar-polls-block .xar-poll-vote-wrapper {
+.xar-polls-block .xar-polls-vote-wrapper {
     margin: 0.25em 0;
 }
 

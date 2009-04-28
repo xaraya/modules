@@ -45,10 +45,10 @@
                     </xar:for>
                 </ul>
             </fieldset>
-            <p class="xar-form-input-wrapper-after xar-poll-vote-wrapper">
+            <p class="xar-form-input-wrapper-after xar-polls-vote-wrapper">
                 <input type="submit" value="#$buttonlabel#" />
             </p>
-            <p class="xar-form-input-wrapper-after">
+            <p class="xar-form-input-wrapper-after xar-polls-vote-wrapper">
                 <xar:if condition="$previewresults">
                     <a href="#$resultsurl#">
                         <xar:mlstring>View Results</xar:mlstring>

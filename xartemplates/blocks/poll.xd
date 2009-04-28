@@ -44,15 +44,15 @@
                     <xar:if condition="$imggraph eq 1">
                         <xar:if condition="$loop:item.barwidth le 1">
                             <div class="xar-margin-noneends xar-clearboth">
-                                <img src="#xarTplGetImage('bar.png', 'polls')#" width="2" height="10" alt="" />
+                                <img src="#xarTplGetImage('bar.png', 'polls')#" class="xar-polls-image-bar" style="width: 2px;" alt="" />
                             </div>
                         <xar:else />
                             <div class="xar-margin-noneends xar-clearboth">
-                                <img src="#xarTplGetImage('bar.png', 'polls')#" class="xar-polls-image-bar" width="#$loop:item.barwidth#%;" alt="" />
+                                <img src="#xarTplGetImage('bar.png', 'polls')#" class="xar-polls-image-bar" style="width: #$loop:item.barwidth#%;" alt="" />
                             </div>
                         </xar:if>
                     <xar:else/>
-                        <div class="xar-alt xar-polls-css-bar" style="width:#$loop:item.barwidth#%;">
+                        <div class="xar-alt xar-polls-css-bar" style="width: #$loop:item.barwidth#%;">
                         </div>
                     </xar:if>
                 </li>
@@ -60,7 +60,7 @@
         </ul>
     </xar:if>
     <xar:if condition="$previewresults or empty($canvote)">
-        <p class="xar-align-center xar-clearboth">
+        <p class="xar-align-center xar-clearboth xar-polls-vote-wrapper">
             <a href="#$resultsurl#">
                 <xar:mlstring>View results</xar:mlstring>
             </a>
