@@ -120,7 +120,7 @@ function xarpages_userapi_getpages($args)
         $query = 'SELECT DISTINCT tpages.xar_pid, tpages.xar_name, tpages.xar_desc,'
             . ' tpages.xar_itemtype, tpages.xar_parent, tpages.xar_left, tpages.xar_right,'
             . ' tpages.xar_template, tpages.xar_status, tpages.xar_encode_url, tpages.xar_decode_url,'
-            . ' tpages.xar_theme, tpages.xar_function, tpages.xar_page_template';
+            . ' tpages.xar_theme, tpages.xar_function, tpages.xar_page_template, tpages.info';
     }
 
     $query .= ' FROM ' . $xartable['xarpages_pages'] . ' AS tpages';
@@ -187,7 +187,7 @@ function xarpages_userapi_getpages($args)
                 $parent_pid, $left, $right,
                 $template, $status,
                 $encode_url, $decode_url,
-                $theme, $function, $page_template
+                $theme, $function, $page_template, $info
             ) = $result->fields;
 
             // Fetch the next record as soon as we have the value, so
@@ -256,7 +256,6 @@ function xarpages_userapi_getpages($args)
                     $parent_key = 0;
                 }
             }
-
             $pages[$$key] = array(
                 'pid' => $pid,
                 'key' => $$key,
@@ -272,6 +271,7 @@ function xarpages_userapi_getpages($args)
                 'page_template' => $page_template,
                 'theme' => $theme,
                 'status' => $status,
+                'info' => unserialize($info),
                 'encode_url' => $encode_url,
                 'decode_url' => $decode_url,
                 'function' => $function,

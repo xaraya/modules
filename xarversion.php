@@ -14,7 +14,7 @@
 
 $modversion['name']           = 'xarpages';
 $modversion['id']             = '160';
-$modversion['version']        = '0.2.8';
+$modversion['version']        = '2.0.0';
 $modversion['displayname']    = 'Xarpages';
 $modversion['description']    = 'Static pages administration';
 $modversion['help']           = 'xardocs/privileges.txt';

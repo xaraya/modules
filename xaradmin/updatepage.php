@@ -68,6 +68,16 @@ function xarpages_admin_updatepage($args)
     if (!xarVarFetch('refpid', 'pre:field:refpid:int:0', $refpid, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('position', 'enum:before:after:firstchild:lastchild', $position, 'before', XARVAR_NOT_REQUIRED)) return;
 
+    sys::import('modules.dynamicdata.class.properties.master');
+    $accessproperty = DataPropertyMaster::getProperty(array('name' => 'access'));
+    $isvalid = $accessproperty->checkInput($name . '_display');
+    $info['display_access'] = $accessproperty->value;
+    $isvalid = $accessproperty->checkInput($name . '_modify');
+    $info['modify_access'] = $accessproperty->value;
+    $isvalid = $accessproperty->checkInput($name . '_delete');
+    $info['delete_access'] = $accessproperty->value;
+    $info = serialize($info);
+
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
 
@@ -89,6 +99,8 @@ function xarpages_admin_updatepage($args)
                 'insertpoint'   => $refpid,
                 'offset'        => $position,
                 'alias'         => $alias,
+                'alias'         => $alias,
+                'info'          => $info,
                 'status'        => $status,
                 'status_recurse' => $status_recurse
             )
@@ -110,6 +122,7 @@ function xarpages_admin_updatepage($args)
                 'insertpoint'   => $refpid,
                 'offset'        => $position,
                 'alias'         => $alias,
+                'info'          => $info,
                 'status'        => $status
             )
         );

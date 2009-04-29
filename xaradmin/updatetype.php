@@ -27,6 +27,11 @@ function xarpages_admin_updatetype($args)
 
     if (!xarVarFetch('desc', 'str:0:200', $desc)) return;
 
+    sys::import('modules.dynamicdata.class.properties.master');
+    $accessproperty = DataPropertyMaster::getProperty(array('name' => 'access'));
+    $isvalid = $accessproperty->checkInput('type_add_access');
+    $info = serialize(array('add_access' => $accessproperty->value));
+
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) {return;}
 
@@ -37,7 +42,8 @@ function xarpages_admin_updatetype($args)
             array(
                 'ptid'  => $ptid,
                 'name'  => $name,
-                'desc'  => $desc
+                'desc'  => $desc,
+                'info'  => $info,
             )
         )) {return;}
     } else {
@@ -46,7 +52,8 @@ function xarpages_admin_updatetype($args)
             'xarpages', 'admin', 'createtype',
             array(
                 'name'  => $name,
-                'desc'  => $desc
+                'desc'  => $desc,
+                'info'  => $info,
             )
         );
         if (!$ptid) {return;}

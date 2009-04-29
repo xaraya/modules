@@ -31,6 +31,12 @@ function xarpages_admin_modifypage($args)
     // TODO: move this.
     $data['batch'] = 0;
 
+    // Bring in the access property for security checks
+    sys::import('modules.dynamicdata.class.properties.master');
+    $accessproperty = DataPropertyMaster::getProperty(array('name' => 'access'));
+    $accessproperty->module = 'xarpages';
+    $accessproperty->component = 'Page';
+
     if (!empty($pid)) {
         // Editing an existing page.
 
@@ -41,15 +47,13 @@ function xarpages_admin_modifypage($args)
             array('pid' => $pid)
         );
 
-        // Check we have minimum privs to edit this page.
-        if (!xarSecurityCheck('EditXarpagesPage', 1, 'Page', $data['page']['name'] . ':' . $data['page']['pagetype']['name'])) {
-            return;
-        }
-
-        // Check the level of access we have. Are we allowed to rename or delete this page?
-        if (xarSecurityCheck('DeleteXarpagesPage', 0, 'Page', $data['page']['name'] . ':' . $data['page']['pagetype']['name'])) {
-            $data['delete_allowed'] = true;
-        }
+        // Decide whether this page can be modified by the current user
+        $args = array(
+            'instance' => $data['page']['name'] . ':' . $data['page']['pagetype']['name'],
+            'group' => $data['page']['info']['modify_access']['group'],
+            'level' => $data['page']['info']['modify_access']['level'],
+        );
+        $data['allowaccess'] = $accessproperty->check($args);
 
         $data['ptid'] = $data['page']['pagetype']['ptid'];
 
@@ -71,11 +75,6 @@ function xarpages_admin_modifypage($args)
         );
     } else {
         // Adding a new page
-
-        // Check we are allowed to create pages.
-        if (!xarSecurityCheck('AddXarpagesPage', 1, 'Page', 'All')) {
-            return;
-        }
 
         if (!xarVarFetch('ptid', 'id', $ptid, 0, XARVAR_DONT_SET)) {return;}
         if (!xarVarFetch('insertpoint', 'id', $insertpoint, 0, XARVAR_DONT_SET)) {return;}
@@ -106,9 +105,13 @@ function xarpages_admin_modifypage($args)
             // pages for each type? We may actually end up with no page types
             // but that depends on the permissions.
             foreach($pagetypes as $key => $pagetype) {
-                if (!xarSecurityCheck('AddXarpagesPage', 0, 'Page', 'All' . ':' . $pagetype['name'])) {
-                    unset($pagetypes[$key]);
-                }
+                // Decide whether this block can be modified by the current user
+                $args = array(
+                    'instance' => 'All' . ':' . $pagetype['name'],
+                    'group' => $pagetype['info']['add_access']['group'],
+                    'level' => $pagetype['info']['add_access']['level'],
+                );
+                if(!$accessproperty->check($args)) unset($pagetypes[$key]);                
             }
 
             $data['pagetypes'] = $pagetypes;
@@ -150,6 +153,7 @@ function xarpages_admin_modifypage($args)
                 'alias' => 0,
                 'template' => '',
                 'page_template' => '',
+                'info' => serialize(array()),
                 'pagetype' => xarModAPIfunc('xarpages', 'user', 'gettype', array('ptid' => $ptid))
             );
 
@@ -163,6 +167,7 @@ function xarpages_admin_modifypage($args)
                 $data['page']['theme'] = $template['theme'];
                 $data['page']['template'] = $template['template'];
                 $data['page']['page_template'] = $template['page_template'];
+                $data['page']['info'] = $template['info'];
             }
         }
     }

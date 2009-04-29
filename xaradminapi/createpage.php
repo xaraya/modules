@@ -108,6 +108,9 @@ function xarpages_adminapi_createpage($args)
     $bind[] = $name;
     $cols[] = 'xar_name';
 
+    $bind[] = $info;
+    $cols[] = 'info';
+
     if (!empty($gap)) {
         // Insert the page
         $nextID = $dbconn->GenId($tablename);

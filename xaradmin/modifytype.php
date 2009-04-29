@@ -78,9 +78,7 @@ function xarpages_admin_modifytype($args)
         $data['files'] = $files;
 
         // Security: allowed to create page types?
-        if (!xarSecurityCheck('AdminXarpagesPagetype', 1, 'Pagetype', 'All')) {
-            return;
-        }
+        if (!xarSecurityCheck('AdminXarpagesPagetype', 1, 'Pagetype', 'All')) return;
 
         // Default data for the page type form.
         $type = array(
@@ -88,6 +86,11 @@ function xarpages_admin_modifytype($args)
             'name' => '',
             'desc' => ''
         );
+
+        // Default values for access
+        sys::import('modules.dynamicdata.class.properties.master');
+        $accessproperty = DataPropertyMaster::getProperty(array('name' => 'access'));
+        $type['info']['add_access'] = $accessproperty->value;
 
         $data['func'] = 'create';
         $data['ptid'] = NULL;

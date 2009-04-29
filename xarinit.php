@@ -41,7 +41,8 @@ function xarpages_init()
         'xar_decode_url'    => array('type' => 'varchar', 'size' => 100,'default' => null),
         'xar_function'    => array('type' => 'varchar', 'size' => 100,'default' => null),
         'xar_status'    => array('type' => 'varchar', 'size' => 20,'null'=>false, 'default'=>'ACTIVE'),
-        'xar_alias'    => array('type' => 'integer', 'size' => 4,'null'=>false, 'default'=>'0')
+        'xar_alias'    => array('type' => 'integer', 'size' => 4,'null'=>false, 'default'=>'0'),
+        'info'     => array('type' => 'text')
     );
     $query = xarDBCreateTable($pagestable, $fields);
     $result = $dbconn->Execute($query);
@@ -70,7 +71,8 @@ function xarpages_init()
     $fields = array(
         'xar_ptid' => array('type' => 'integer','null'=>false,'increment'=>true,'primary_key'=>true),
         'xar_name' => array('type' => 'varchar','null'=>false,'size'=>100,'default'=>''),
-        'xar_desc' => array('type' => 'varchar','default'=>null,'size'=>200)
+        'xar_desc' => array('type' => 'varchar','default'=>null,'size'=>200),
+        'info'     => array('type' => 'text')
         );
     $query = xarDBCreateTable($typestable, $fields);
     $result = $dbconn->Execute($query);
@@ -249,7 +251,7 @@ function xarpages_upgrade($oldversion)
     $typestable = $xartable['xarpages_types'];
 
     // Get a data dictionary object with item create methods.
-    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+//    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
     // Upgrade dependent on old version number.
     switch ($oldversion) {
@@ -377,6 +379,12 @@ function xarpages_upgrade($oldversion)
                 xarML('See that a page exists')
             );
 
+        case '0.2.8':
+            $dbconn = xarDB::getConn();
+            $query = 'ALTER TABLE ' . $pagestable . ' ADD COLUMN info text';
+            $result = $dbconn->Execute($query);
+            $query = 'ALTER TABLE ' . $typestable . ' ADD COLUMN info text';
+            $result = $dbconn->Execute($query);
         break;
     }
 

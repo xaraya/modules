@@ -61,6 +61,12 @@
                 </fieldset>
             </xar:if>
 
+            <fieldset>
+                <legend>
+                    Page Add Access
+                </legend>
+                <xar:data-input type="access" name="type_add_access" value="$type['info']['add_access']" />
+            </fieldset>
             <div>
                 <xar:if condition="$func eq 'modify'">
                     <input type="submit" value="#xarML('Modify')#" />

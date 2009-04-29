@@ -106,6 +106,9 @@ function xarpages_adminapi_updatepage($args)
         }
     }
 
+    $bind[] = $info;
+    $cols[] = 'info = ?';
+
     $bind[] = (int)$pid;
 
     // Update name and description etc.

@@ -51,6 +51,9 @@ function xarpages_adminapi_updatetype($args)
         }
     }
 
+    $bind[] = $info;
+    $cols[] = 'info' . ' = ?';
+
     $bind[] = (int)$ptid;
 
     // Update name and description etc.

@@ -52,6 +52,9 @@ function xarpages_adminapi_createtype($args)
     $bind[] = $name;
     $cols[] = 'xar_name';
 
+    $bind[] = $info;
+    $cols[] = 'info';
+
     // Insert the page
     $nextID = $dbconn->GenId($tablename);
     $bind[] = $nextID;

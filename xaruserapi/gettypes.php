@@ -49,7 +49,7 @@ function xarpages_userapi_gettypes($args)
     }
 
     // Always select the system page types - those starting with '@'.
-    $query = 'SELECT xar_ptid, xar_name, xar_desc'
+    $query = 'SELECT xar_ptid, xar_name, xar_desc, info'
         . ' FROM ' . $xartable['xarpages_types']
         . (!empty($where) ? ' WHERE (' . implode(' AND ', $where) . ') OR xar_name LIKE \'@%\'' : '')
         . ' ORDER BY xar_name ASC';
@@ -62,14 +62,15 @@ function xarpages_userapi_gettypes($args)
     $index = 0;
 
     while (!$result->EOF) {
-        list($ptid, $name, $desc) = $result->fields;
+        list($ptid, $name, $desc, $info) = $result->fields;
 
         // Only return the system page types if specifically requested.
         if ($name[0] != '@' || !empty($include_system)) {
             $types[$$key] = array(
                 'ptid' => (int)$ptid,
                 'name' => $name,
-                'desc' => $desc
+                'desc' => $desc,
+                'info' => unserialize($info)
             );
         }
 
