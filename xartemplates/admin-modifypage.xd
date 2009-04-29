@@ -135,6 +135,7 @@
                         <p class="param">
                             <label for="page_template"><xar:mlstring>Page Template</xar:mlstring></label>
                             <input type="text" name="page_template" id="page_template" maxlength="100" value="#xarVarPrepForDisplay($page.page_template)#" />
+                            &#160; (inherits if left empty)
                         </p>
 
                         <p class="param">
