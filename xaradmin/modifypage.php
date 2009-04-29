@@ -47,14 +47,24 @@ function xarpages_admin_modifypage($args)
             array('pid' => $pid)
         );
 
+        $thisinstance = $data['page']['name'] . ':' . $data['page']['pagetype']['name'];
+
         // Decide whether this page can be modified by the current user
         $args = array(
-            'instance' => $data['page']['name'] . ':' . $data['page']['pagetype']['name'],
+            'instance' => $thisinstance,
             'group' => $data['page']['info']['modify_access']['group'],
             'level' => $data['page']['info']['modify_access']['level'],
         );
         $data['allowaccess'] = $accessproperty->check($args);
 
+        // Decide whether this page can be deleted by the current user
+        $args = array(
+            'instance' => $thisinstance,
+            'group' => $data['page']['info']['delete_access']['group'],
+            'level' => $data['page']['info']['delete_access']['level'],
+        );
+        $data['delete_allowed'] = $accessproperty->check($args);
+        
         $data['ptid'] = $data['page']['pagetype']['ptid'];
 
         // We need all pages, but with the current page tree pruned.
