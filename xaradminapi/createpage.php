@@ -36,7 +36,7 @@ function xarpages_adminapi_createpage($args)
     // Name is mandatory, but does not have to be unique.
     if (trim($name) == '') {
         $msg = xarML('Missing page name');
-        throw new BadParemeterException(null,$msg);
+        throw new BadParameterException(null,$msg);
     }
 
     // Get the itemtype.
@@ -48,7 +48,7 @@ function xarpages_adminapi_createpage($args)
     if (empty($pagetype)) {
         // Error - invalid page type.
         $msg = xarML('Invalid page type ID "#(1)"', $itemtype);
-        throw new BadParemeterException(null,$msg);
+        throw new BadParameterException(null,$msg);
     }
 
     // Security check - can we create pages of this type?

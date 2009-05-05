@@ -29,7 +29,7 @@ function xarpages_admin_deletepage($args)
 
     if (empty($page)) {
         $msg = xarML('The page #(1) to be deleted does not exist', $pid);
-        throw new BadParemeterException(null,$msg);
+        throw new BadParameterException(null,$msg);
     }
 
     // Security check

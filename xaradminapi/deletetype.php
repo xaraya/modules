@@ -14,7 +14,7 @@ function xarpages_adminapi_deletetype($args)
     // Argument check
     if (empty($id)) {
         $msg = xarML('Invalid page type ID #(1)', $id);
-        throw new BadParemeterException(null,$msg);
+        throw new BadParameterException(null,$msg);
     }
 
     // Get the page type.
@@ -22,7 +22,7 @@ function xarpages_adminapi_deletetype($args)
 
     if (empty($type)) {
         $msg = xarML('Page type does not exist.');
-        throw new BadParemeterException(null,$msg);
+        throw new BadParameterException(null,$msg);
     }
 
     // Security check

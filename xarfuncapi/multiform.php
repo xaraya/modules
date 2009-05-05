@@ -42,7 +42,7 @@ function xarpages_funcapi_multiform($args)
     if (empty($master_page)) {
         // Without a master page, things get very difficult, so raise an error.
         $msg = xarML('No master page. A multiform sequence must sit under a type multiform_master page.');
-        throw new BadParemeterException(null,$msg);
+        throw new BadParameterException(null,$msg);
     }
 
     // Tell xarCache not to cache this page.
@@ -201,7 +201,7 @@ function xarpages_funcapi_multiform($args)
 
             if (empty($formobject)) {
                 $msg = xarML('Could not fetch object with id "#(1)"', $formobjectid);
-                throw new BadParemeterException(null,$msg);
+                throw new BadParameterException(null,$msg);
             }
         } else {
             $formobject = NULL;

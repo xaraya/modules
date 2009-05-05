@@ -29,7 +29,7 @@ function xarpages_treeapi_moveitem($args)
 
     if ($result->EOF) {
         $msg = xarML('Reference item "#(1)" does not exist', $refid);
-        throw new BadParemeterException(null,$msg);
+        throw new BadParameterException(null,$msg);
     }
     list($ref_left, $ref_right, $ref_parent) = $result->fields;
 
@@ -39,14 +39,14 @@ function xarpages_treeapi_moveitem($args)
 
     if ($result->EOF) {
         $msg = xarML('Moving item "#(1)" does not exist', $itemid);
-        throw new BadParemeterException(null,$msg);
+        throw new BadParameterException(null,$msg);
     }
     list($item_left, $item_right, $item_parent) = $result->fields;
 
     // Checking if the reference ID is of a child or itself
     if ($ref_left >= $item_left && $ref_left <= $item_right) {
         $msg = xarML('Group references siblings');
-        throw new BadParemeterException(null,$msg);
+        throw new BadParameterException(null,$msg);
     }
 
     // Find the point of insertion.
@@ -65,7 +65,7 @@ function xarpages_treeapi_moveitem($args)
             break;
         default:
             $msg = xarML('Offset not "#(1)" valid', $offset);
-            throw new BadParemeterException(null,$msg);
+            throw new BadParameterException(null,$msg);
     };
 
     $size = $item_right - $item_left + 1;

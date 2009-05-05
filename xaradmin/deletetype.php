@@ -33,7 +33,7 @@ function xarpages_admin_deletetype($args)
 
     if (empty($type)) {
         $msg = xarML('The page type "#(1)" to be deleted does not exist', $id);
-        throw new BadParemeterException(null,$msg);
+        throw new BadParameterException(null,$msg);
     }
 
     // Check for confirmation

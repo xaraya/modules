@@ -14,7 +14,7 @@ function xarpages_adminapi_deletepage($args)
     // Argument check
     if (empty($pid)) {
         $msg = xarML('Invalid page ID #(1)', $pid);
-        throw new BadParemeterException(null,$msg);
+        throw new BadParameterException(null,$msg);
     }
 
     // Obtain current information on the page we are going to delete.
@@ -25,7 +25,7 @@ function xarpages_adminapi_deletepage($args)
     if (empty($page)) {
         // No need to raise an error, as the page may already have been deleted.
         //$msg = xarML('Page does not exist.');
-        //throw new BadParemeterException(null,$msg);
+        //throw new BadParameterException(null,$msg);
         return true;
     }
 

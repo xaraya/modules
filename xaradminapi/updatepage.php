@@ -29,7 +29,7 @@ function xarpages_adminapi_updatepage($args)
     if (!isset($pid) || ($moving == 1 && (!isset($insertpoint) || !isset($offset)))
     ) {
         $msg = xarML('Bad Parameters');
-        throw new BadParemeterException(null,$msg);
+        throw new BadParameterException(null,$msg);
     }
 
     // Get current information on the page
@@ -37,7 +37,7 @@ function xarpages_adminapi_updatepage($args)
 
     if (empty($page)) {
         $msg = xarML('The page does not exist');
-        throw new BadParemeterException(null,$msg);
+        throw new BadParameterException(null,$msg);
     }
 
     // Check we have minimum privs to edit this page.

@@ -17,7 +17,7 @@ function xarpages_adminapi_updatetype($args)
     // Argument check
     if (!isset($id)) {
         $msg = xarML('Bad Parameters');
-        throw new BadParemeterException(null,$msg);
+        throw new BadParameterException(null,$msg);
     }
 
     // Get current information on the page type
@@ -25,7 +25,7 @@ function xarpages_adminapi_updatetype($args)
 
     if (empty($type)) {
         $msg = xarML('The page type "#(1)" does not exist', $id);
-        throw new BadParemeterException(null,$msg);
+        throw new BadParameterException(null,$msg);
     }
 
     // Security: allowed to create page types?
