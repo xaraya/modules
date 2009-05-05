@@ -105,10 +105,10 @@ function xarpages_adminapi_createpage($args)
     $bind[] = (int)$itemtype;
     $cols[] = 'xar_itemtype';
 
-    $bind[] = serialize($name);
+    $bind[] = $name;
     $cols[] = 'xar_name';
 
-    $bind[] = $info;
+    $bind[] = serialize($info);
     $cols[] = 'info';
 
     if (!empty($gap)) {

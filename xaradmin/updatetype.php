@@ -25,7 +25,7 @@ function xarpages_admin_updatetype($args)
 
     if (!xarVarFetch('name', 'pre:lower:ftoken:str:1:100', $name)) return;
 
-    if (!xarVarFetch('desc', 'str:0:200', $desc)) return;
+    if (!xarVarFetch('description', 'str:0:200', $description)) return;
 
     sys::import('modules.dynamicdata.class.properties.master');
     $accessproperty = DataPropertyMaster::getProperty(array('name' => 'access'));
@@ -42,7 +42,7 @@ function xarpages_admin_updatetype($args)
             array(
                 'id'           => $id,
                 'name'         => $name,
-                'description'  => $desc,
+                'description'  => $description,
                 'info'         => $info,
             )
         )) {return;}
@@ -52,7 +52,7 @@ function xarpages_admin_updatetype($args)
             'xarpages', 'admin', 'createtype',
             array(
                 'name'         => $name,
-                'description'  => $desc,
+                'description'  => $description,
                 'info'         => $info,
             )
         );

@@ -61,7 +61,7 @@
                             #$loop:item.xar_map#
                             #xarVarPrepForDisplay($loop:item.name)#
                         </td>
-                        <td class="#$row_class#" title="#xarML('Status: ')# #$loop:item.status#"><span class="xar-xarpages-status-#$loop:item.status#">#xarVarPrepForDisplay($loop:item.pagetype.name)#: #xarVarPrepForDisplay($loop:item.desc)#</span></td>
+                        <td class="#$row_class#" title="#xarML('Status: ')# #$loop:item.status#"><span class="xar-xarpages-status-#$loop:item.status#">#xarVarPrepForDisplay($loop:item.pagetype.name)#: #xarVarPrepForDisplay($loop:item.description)#</span></td>
                         <td class="#$row_class#" style="text-align: center;">
                             <xar:if condition="!empty($loop:item.edit_allowed)">
                                 <a href="#xarModURL('xarpages', 'admin', 'modifypage', array('pid' =&gt; $loop:item.pid))#">

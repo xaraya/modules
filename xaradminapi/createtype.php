@@ -42,18 +42,12 @@ function xarpages_adminapi_createtype($args)
     $cols = array();
 
     // Include the optional parameters.
-    foreach(array('desc') as $colname) {
+    foreach(array('name','description','info') as $colname) {
         if (isset($$colname)) {
             $bind[] = (string)$$colname;
             $cols[] = $colname;
         }
     }
-
-    $bind[] = $name;
-    $cols[] = 'name';
-
-    $bind[] = $info;
-    $cols[] = 'info';
 
     // Insert the page
     $nextID = $dbconn->GenId($tablename);

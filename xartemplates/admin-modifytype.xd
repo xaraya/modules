@@ -34,8 +34,8 @@
                     </p>
 
                     <p class="param">
-                        <label for="desc"><xar:mlstring>Description</xar:mlstring></label>
-                        <textarea name="desc" id="desc" cols="40" rows="6" maxlength="255" style="width: 80%;">#xarVarPrepForDisplay($type['desc'])#</textarea>
+                        <label for="description"><xar:mlstring>Description</xar:mlstring></label>
+                        <textarea name="description" id="description" cols="40" rows="6" maxlength="255" style="width: 80%;">#xarVarPrepForDisplay($type['description'])#</textarea>
                     </p>
                 </fieldset>
 

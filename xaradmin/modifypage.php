@@ -20,7 +20,7 @@ function xarpages_admin_modifypage($args)
     if (!xarVarFetch('creating', 'bool', $creating, true, XARVAR_NOT_REQUIRED)) {return;}
 
     if (!xarVarFetch('pid', 'id', $pid, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('ptid', 'id', $ptid, 0, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('ptid', 'id', $type_id, 0, XARVAR_DONT_SET)) {return;}
 
     if (!xarVarFetch('return_url', 'str:0:200', $return_url, '', XARVAR_DONT_SET)) {return;}
 
@@ -65,7 +65,7 @@ function xarpages_admin_modifypage($args)
         );
         $data['delete_allowed'] = $accessproperty->check($args);
         
-        $data['ptid'] = $data['page']['pagetype']['id'];
+        $data['type_id'] = $data['page']['pagetype']['id'];
 
         // We need all pages, but with the current page tree pruned.
         $pages = xarModAPIFunc(
@@ -86,7 +86,7 @@ function xarpages_admin_modifypage($args)
     } else {
         // Adding a new page
 
-        if (!xarVarFetch('ptid', 'id', $ptid, 0, XARVAR_DONT_SET)) {return;}
+        if (!xarVarFetch('ptid', 'id', $type_id, 0, XARVAR_DONT_SET)) {return;}
         if (!xarVarFetch('insertpoint', 'id', $insertpoint, 0, XARVAR_DONT_SET)) {return;}
         if (!xarVarFetch('position', 'str', $position, 'after', XARVAR_DONT_SET)) {return;}
 
@@ -101,9 +101,9 @@ function xarpages_admin_modifypage($args)
 
         $data['func'] = 'create';
         $data['pid'] = NULL;
-        $data['ptid'] = $ptid;
+        $data['type_id'] = $type_id;
 
-        if (empty($ptid)) {
+        if (empty($type_id)) {
             // The page type has not yet been chosen.
             // Get a list of page types.
             $pagetypes = xarModAPIfunc(
@@ -135,7 +135,7 @@ function xarpages_admin_modifypage($args)
             // the first template (if any) available.
             $templates = xarModAPIfunc(
                 'xarpages', 'user', 'getpages',
-                array('itemtype' => $ptid, 'status' => 'TEMPLATE')
+                array('itemtype' => $type_id, 'status' => 'TEMPLATE')
             );
             if (count($templates) > 0) {
                 $template = reset($templates);
@@ -146,7 +146,7 @@ function xarpages_admin_modifypage($args)
 
             $hooks = xarModCallHooks(
                 'item', 'new', '',
-                array('module' => 'xarpages', 'itemtype' => $ptid, 'itemid' => 0)
+                array('module' => 'xarpages', 'itemtype' => $type_id, 'itemid' => 0)
             );
 
             // Default data for the page form.
@@ -164,7 +164,7 @@ function xarpages_admin_modifypage($args)
                 'template' => '',
                 'page_template' => '',
                 'info' => serialize(array()),
-                'pagetype' => xarModAPIfunc('xarpages', 'user', 'get_type', array('ptid' => $ptid))
+                'pagetype' => xarModAPIfunc('xarpages', 'user', 'get_type', array('id' => $type_id))
             );
 
             // If we have a template, then set a few values up to initialise the new page form.

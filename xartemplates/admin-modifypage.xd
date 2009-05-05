@@ -26,7 +26,7 @@
 
         <div style="margin: auto;">
             <!-- Creating a page, but we don't yet have a page type -->
-            <xar:if condition="$func eq 'create' and empty($ptid)">
+            <xar:if condition="$func eq 'create' and empty($type_id)">
                 <form class="xar-xarpages-admin" action="#xarModURL('xarpages','admin','modifypage')#" method="post">
                     <fieldset class="formelements xar-norm">
                         <xar:if condition="!empty($pagetypes)">
@@ -37,10 +37,10 @@
                             <div>
                                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                                 <input type="hidden" name="return_url" id="return_url" value="#xarVarPrepForDisplay($return_url)#" />
-                                <label for="ptid"><xar:mlstring>Page type</xar:mlstring></label>
-                                <select name="ptid" id="ptid">
+                                <label for="type_id"><xar:mlstring>Page type</xar:mlstring></label>
+                                <select name="type_id" id="type_id">
                                     <xar:loop name="$pagetypes">
-                                        <option value="#$loop:item.ptid#">#$loop:item.name#</option>
+                                        <option value="#$loop:item.type_id#">#$loop:item.name#</option>
                                     </xar:loop>
                                 </select>
                             </div>
@@ -53,12 +53,12 @@
             </xar:if>
 
             <!-- Either modifying a page, or we have a page type -->
-            <xar:if condition="$func eq 'modify' or !empty($ptid)">
+            <xar:if condition="$func eq 'modify' or !empty($type_id)">
                 <p>
                     <a href="#xarModURL('xarpages','admin','viewpages')#"><xar:mlstring>View pages</xar:mlstring></a>
-                    | <a href="#xarModURL('xarpages','admin','modifypage',array('ptid'=&gt;$ptid))#" title="#xarML('Create a new page of this type')# (#xarVarPrepForDisplay($page.pagetype.name)#)"><xar:mlstring>New page</xar:mlstring></a>
+                    | <a href="#xarModURL('xarpages','admin','modifypage',array('ptid'=&gt;$type_id))#" title="#xarML('Create a new page of this type')# (#xarVarPrepForDisplay($page.pagetype.name)#)"><xar:mlstring>New page</xar:mlstring></a>
                     <xar:if condition="!empty($pid)">
-                        | <a href="#xarModURL('xarpages','admin','modifypage',array('ptid'=&gt;$ptid,'insertpoint'=&gt;$pid))#" title="#xarML('Create a new page of this type')# (#xarVarPrepForDisplay($page.pagetype.name)#)"><xar:mlstring>New page after</xar:mlstring></a>
+                        | <a href="#xarModURL('xarpages','admin','modifypage',array('ptid'=&gt;$type_id,'insertpoint'=&gt;$pid))#" title="#xarML('Create a new page of this type')# (#xarVarPrepForDisplay($page.pagetype.name)#)"><xar:mlstring>New page after</xar:mlstring></a>
                     </xar:if>
                 </p>
                 <form class="xar-xarpages-admin" action="#xarModURL('xarpages','admin','updatepage')#" method="post">
@@ -70,7 +70,7 @@
                         <p class="param">
                             <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                             <input type="hidden" name="pid" id="pid" value="#$pid#" />
-                            <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
+                            <input type="hidden" name="type_id" id="type_id" value="#$type_id#" />
                             <input type="hidden" name="return_url" id="return_url" value="#xarVarPrepForDisplay($return_url)#" />
                             <label for="pagetype_name" title="#xarVarPrepForDisplay($page.pagetype.desc)#"><xar:mlstring>Page Type</xar:mlstring></label>
                             <input type="text" name="pagetype_name" id="pagetype_name" value="#xarVarPrepForDisplay($page.pagetype.name)#" size="32" maxlength="64" disabled="disabled" />

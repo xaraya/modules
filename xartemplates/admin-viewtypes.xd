@@ -30,13 +30,13 @@
                         <td align="left" class="#$row_class#">
                             #xarVarPrepForDisplay($loop:item['name'])#
                         </td>
-                        <td class="#$row_class#">#xarVarPrepForDisplay($loop:item['desc'])#</td>
+                        <td class="#$row_class#">#xarVarPrepForDisplay($loop:item['description'])#</td>
                         <td class="#$row_class#" style="text-align: center;">
-                            <a href="#xarModURL('xarpages', 'admin', 'modifytype', array('ptid' => $loop:item['id']))#">
+                            <a href="#xarModURL('xarpages', 'admin', 'modifytype', array('id' => $loop:item['id']))#">
                                 <xar:mlstring>Modify</xar:mlstring>
                             </a>
                             &#160;|&#160;
-                            <a href="#xarModURL('xarpages', 'admin', 'deletetype', array('ptid' => $loop:item['id']))#">
+                            <a href="#xarModURL('xarpages', 'admin', 'deletetype', array('id' => $loop:item['id']))#">
                                 <xar:mlstring>Delete</xar:mlstring>
                             </a>
                         </td>

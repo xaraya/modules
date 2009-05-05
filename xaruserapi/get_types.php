@@ -36,9 +36,9 @@ function xarpages_userapi_get_types($args)
         $bind[] = (string)$name;
     }
 
-    if (isset($ptid)) {
+    if (isset($id)) {
         $where[] = 'id = ?';
-        $bind[] = (int)$ptid;
+        $bind[] = (int)$id;
     }
 
     // Check the cache if suitable. Returned cached details if we can.
@@ -62,14 +62,14 @@ function xarpages_userapi_get_types($args)
     $index = 0;
 
     while (!$result->EOF) {
-        list($id, $name, $desc, $info) = $result->fields;
+        list($id, $name, $description, $info) = $result->fields;
 
         // Only return the system page types if specifically requested.
         if ($name[0] != '@' || !empty($include_system)) {
             $types[$$key] = array(
                 'id' => (int)$id,
                 'name' => $name,
-                'desc' => $desc,
+                'description' => $description,
                 'info' => unserialize($info)
             );
         }

@@ -6,7 +6,7 @@
  *  -- INPUT --
  * @param $args['id'] the ID of the page type
  * @param $args['name'] the modified name of the page
- * @param $args['desc'] the modified description of the page
+ * @param $args['description'] the modified description of the page
  *
  */
 function xarpages_adminapi_updatetype($args)
@@ -44,7 +44,7 @@ function xarpages_adminapi_updatetype($args)
     $cols = array();
 
     // Include the optional parameters.
-    foreach(array('name', 'desccription', 'info') as $colname) {
+    foreach(array('name', 'description', 'info') as $colname) {
         if (isset($$colname) && is_string($$colname)) {
             $bind[] = $$colname;
             $cols[] = $colname . ' = ?';
