@@ -27,7 +27,7 @@ function xarpages_admin_deletetype($args)
 
     // Get page type information
     $type = xarModAPIFunc(
-        'xarpages', 'user', 'gettype',
+        'xarpages', 'user', 'get_type',
         array('ptid' => $ptid)
     );
 

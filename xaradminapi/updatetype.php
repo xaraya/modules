@@ -21,7 +21,7 @@ function xarpages_adminapi_updatetype($args)
     }
 
     // Get current information on the page type
-    $type = xarModAPIfunc('xarpages', 'user', 'gettype', array('ptid' => $ptid));
+    $type = xarModAPIfunc('xarpages', 'user', 'get_type', array('ptid' => $ptid));
 
     if (empty($type)) {
         $msg = xarML('The page type "#(1)" does not exist', $ptid);
@@ -47,7 +47,7 @@ function xarpages_adminapi_updatetype($args)
     foreach(array('name', 'desc') as $colname) {
         if (isset($$colname) && is_string($$colname)) {
             $bind[] = $$colname;
-            $cols[] = 'xar_' . $colname . ' = ?';
+            $cols[] = $colname . ' = ?';
         }
     }
 
@@ -59,7 +59,7 @@ function xarpages_adminapi_updatetype($args)
     // Update name and description etc.
     $query = 'UPDATE ' . $tablename
         . ' SET ' . implode(', ', $cols)
-        . ' WHERE xar_ptid = ?';
+        . ' WHERE id = ?';
 
     $result = $dbconn->execute($query, $bind);
     if (!$result) return;

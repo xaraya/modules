@@ -69,9 +69,9 @@ function xarpages_init()
     if (!$result) {return;}
 
     $fields = array(
-        'xar_ptid' => array('type' => 'integer','null'=>false,'increment'=>true,'primary_key'=>true),
-        'xar_name' => array('type' => 'varchar','null'=>false,'size'=>100,'default'=>''),
-        'xar_desc' => array('type' => 'varchar','default'=>null,'size'=>200),
+        'id' => array('type' => 'integer','null'=>false,'increment'=>true,'primary_key'=>true),
+        'name' => array('type' => 'varchar','null'=>false,'size'=>60,'default'=>''),
+        'description' => array('type' => 'varchar','default'=>null,'size'=>255),
         'info'     => array('type' => 'text')
         );
     $query = xarDBCreateTable($typestable, $fields);
@@ -79,7 +79,7 @@ function xarpages_init()
     
 
     $index = array('name' => 'i_' . $prefix . '_xarpages_type_name',
-                   'fields' => array('xar_name'),
+                   'fields' => array('name'),
                    'unique' => true
                    );
     $query = xarDBCreateIndex($typestable, $index);
@@ -224,6 +224,18 @@ function xarpages_init()
             )
         )) return;
     }
+
+# --------------------------------------------------------
+#
+# Create objects
+#
+
+    $module = 'xarpages';
+    $objects = array(
+                    'xarpages_pagetypes',
+                    );
+
+    if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
 
     // Set up module hooks
     if (!xarModRegisterHook(
@@ -385,7 +397,15 @@ function xarpages_upgrade($oldversion)
             $result = $dbconn->Execute($query);
             $query = 'ALTER TABLE ' . $typestable . ' ADD COLUMN info text';
             $result = $dbconn->Execute($query);
-        break;
+
+        case '2.0.1':
+            $query = 'ALTER TABLE ' . $typestable . ' CHANGE `xar_ptid` `id` integer unsigned autoincrement NOT NULL;
+            $result = $dbconn->Execute($query);
+            $query = 'ALTER TABLE ' . $typestable . ' CHANGE `xar_name` `name` varchar(60) NOT NULL default '';
+            $result = $dbconn->Execute($query);
+            $query = 'ALTER TABLE ' . $typestable . ' CHANGE `xar_desc` `description` varchar(255) NOT NULL default '';
+            $result = $dbconn->Execute($query);
+            break;
     }
 
     // Update successful.

@@ -40,10 +40,10 @@ function xarpages_admin_updatetype($args)
         if (!xarModAPIFunc(
             'xarpages', 'admin', 'updatetype',
             array(
-                'ptid'  => $ptid,
-                'name'  => $name,
-                'desc'  => $desc,
-                'info'  => $info,
+                'id'           => $ptid,
+                'name'         => $name,
+                'description'  => $desc,
+                'info'         => $info,
             )
         )) {return;}
     } else {
@@ -51,9 +51,9 @@ function xarpages_admin_updatetype($args)
         $ptid = xarModAPIFunc(
             'xarpages', 'admin', 'createtype',
             array(
-                'name'  => $name,
-                'desc'  => $desc,
-                'info'  => $info,
+                'name'         => $name,
+                'description'  => $desc,
+                'info'         => $info,
             )
         );
         if (!$ptid) {return;}

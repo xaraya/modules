@@ -107,7 +107,7 @@ function xarpages_admin_modifypage($args)
             // The page type has not yet been chosen.
             // Get a list of page types.
             $pagetypes = xarModAPIfunc(
-                'xarpages', 'user', 'gettypes',
+                'xarpages', 'user', 'get_types',
                 array('key' => 'ptid')
             );
 
@@ -164,7 +164,7 @@ function xarpages_admin_modifypage($args)
                 'template' => '',
                 'page_template' => '',
                 'info' => serialize(array()),
-                'pagetype' => xarModAPIfunc('xarpages', 'user', 'gettype', array('ptid' => $ptid))
+                'pagetype' => xarModAPIfunc('xarpages', 'user', 'get_type', array('ptid' => $ptid))
             );
 
             // If we have a template, then set a few values up to initialise the new page form.

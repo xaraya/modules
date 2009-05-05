@@ -9,14 +9,14 @@
 // DD is always fetched if hooked
 // Results are cached if all page types are selected
 
-function xarpages_userapi_gettypes($args)
+function xarpages_userapi_get_types($args)
 {
     static $static_all_pagetypes = NULL;
 
     extract($args);
 
     // Possible values for the array key. Defaults to 'index' (count incrementing from zero)
-    if (!xarVarValidate('enum:ptid:index:name', $key, true)) {
+    if (!xarVarValidate('enum:id:index:name', $key, true)) {
         $key = 'index';
     }
 
@@ -32,12 +32,12 @@ function xarpages_userapi_gettypes($args)
     }
 
     if (isset($name)) {
-        $where[] = 'xar_name = ?';
+        $where[] = 'name = ?';
         $bind[] = (string)$name;
     }
 
     if (isset($ptid)) {
-        $where[] = 'xar_ptid = ?';
+        $where[] = 'id = ?';
         $bind[] = (int)$ptid;
     }
 
@@ -49,10 +49,10 @@ function xarpages_userapi_gettypes($args)
     }
 
     // Always select the system page types - those starting with '@'.
-    $query = 'SELECT xar_ptid, xar_name, xar_desc, info'
+    $query = 'SELECT id, name, description, info'
         . ' FROM ' . $xartable['xarpages_types']
-        . (!empty($where) ? ' WHERE (' . implode(' AND ', $where) . ') OR xar_name LIKE \'@%\'' : '')
-        . ' ORDER BY xar_name ASC';
+        . (!empty($where) ? ' WHERE (' . implode(' AND ', $where) . ') OR name LIKE \'@%\'' : '')
+        . ' ORDER BY name ASC';
 
     $result = $dbconn->execute($query, $bind);
     if (!$result) return;

@@ -21,7 +21,7 @@ function xarpages_admin_viewtypes($args)
     if (!xarSecurityCheck('EditXarpagesPage', 1)) {return false;}
 
     $types = xarModAPIFunc(
-        'xarpages', 'user', 'gettypes',
+        'xarpages', 'user', 'get_types',
         array('key' => 'index', 'dd_flag' => false)
     );
 

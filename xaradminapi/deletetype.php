@@ -18,7 +18,7 @@ function xarpages_adminapi_deletetype($args)
     }
 
     // Get the page type.
-    $type = xarModAPIfunc('xarpages', 'user', 'gettype', $args);
+    $type = xarModAPIfunc('xarpages', 'user', 'get_type', $args);
 
     if (empty($type)) {
         $msg = xarML('Page type does not exist.');
@@ -49,7 +49,7 @@ function xarpages_adminapi_deletetype($args)
     $dbconn = xarDB::getConn();
     $xartable = xarDB::getTables();
 
-    $query = 'DELETE FROM ' . $xartable['xarpages_types'] . ' WHERE xar_ptid = ?';
+    $query = 'DELETE FROM ' . $xartable['xarpages_types'] . ' WHERE id = ?';
 
     $result = $dbconn->Execute($query, array((int)$ptid));
     if (!$result) return;

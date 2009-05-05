@@ -14,7 +14,7 @@ function xarpages_userapi_gettypeitemtype($args)
 
     // Get the itemtype of the page type.
     $pagetype = xarModAPIfunc(
-        'xarpages', 'user', 'gettype',
+        'xarpages', 'user', 'get_type',
         array('name' => '@pagetype', 'dd_flag' => false, 'include_system' => true)
     );
 
@@ -24,7 +24,7 @@ function xarpages_userapi_gettypeitemtype($args)
         // If it does not exist, then create it now.
         $type_itemtype = xarModAPIfunc(
             'xarpages', 'admin', 'createtype',
-            array('name' => '@pagetype', 'desc' => 'System generated \'pagetype\' type')
+            array('name' => '@pagetype', 'description' => 'System generated \'pagetype\' type','info' => array())
         );
     }
 

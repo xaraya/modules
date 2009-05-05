@@ -32,7 +32,7 @@ function xarpages_admin_modifytype($args)
 
         // We need all pages, but with the current page tree pruned.
         $type = xarModAPIFunc(
-            'xarpages', 'user', 'gettype',
+            'xarpages', 'user', 'get_type',
             array('ptid' => $ptid, 'dd_flag' => false)
         );
 

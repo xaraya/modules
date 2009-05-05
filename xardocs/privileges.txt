@@ -10,15 +10,15 @@ pagetype        A page itemtype, identified by a unique ID and a unique name.
 The instances for the page component are (in order):
 
 page_name       SELECT DISTINCT xar_name FROM [xar_]xarpages_pages
-type_name       SELECT xar_name FROM [xar_]xarpages_types
-page_id         ** SELECT xar_pid FROM [xar_]xarpages_pages
-type_id         ** SELECT xar_ptid FROM [xar_]xarpages_types
+type_name       SELECT ame FROM [xar_]xarpages_types
+page_id         ** SELECT id FROM [xar_]xarpages_pages
+type_id         ** SELECT id FROM [xar_]xarpages_types
 ** not implemented
 
 The instances for the pagetype component are (in order):
 
 type_name       SELECT xar_name FROM [xar_]xarpages_types
-type_id         ** SELECT xar_ptid FROM [xar_]xarpages_types
+type_id         ** SELECT id FROM [xar_]xarpages_types
 ** not implemented
 
 The masks (with explicit user functions) for the page component are:

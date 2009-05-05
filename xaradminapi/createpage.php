@@ -41,7 +41,7 @@ function xarpages_adminapi_createpage($args)
 
     // Get the itemtype.
     $pagetype = xarModAPIfunc(
-        'xarpages', 'user', 'gettype',
+        'xarpages', 'user', 'get_type',
         array('ptid' => $itemtype)
     );
 
@@ -105,8 +105,8 @@ function xarpages_adminapi_createpage($args)
     $bind[] = (int)$itemtype;
     $cols[] = 'xar_itemtype';
 
-    $bind[] = $name;
-    $cols[] = 'xar_name';
+    $bind[] = serialize($name);
+    $cols[] = 'name';
 
     $bind[] = $info;
     $cols[] = 'info';

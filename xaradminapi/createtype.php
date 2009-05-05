@@ -45,12 +45,12 @@ function xarpages_adminapi_createtype($args)
     foreach(array('desc') as $colname) {
         if (isset($$colname)) {
             $bind[] = (string)$$colname;
-            $cols[] = 'xar_' . $colname;
+            $cols[] = $colname;
         }
     }
 
     $bind[] = $name;
-    $cols[] = 'xar_name';
+    $cols[] = 'name';
 
     $bind[] = $info;
     $cols[] = 'info';
@@ -58,7 +58,7 @@ function xarpages_adminapi_createtype($args)
     // Insert the page
     $nextID = $dbconn->GenId($tablename);
     $bind[] = $nextID;
-    $cols[] = 'xar_ptid';
+    $cols[] = 'id';
 
     $query = 'INSERT INTO ' . $tablename
         . '(' .implode(', ', $cols). ')'
@@ -67,7 +67,7 @@ function xarpages_adminapi_createtype($args)
     $result = $dbconn->execute($query, $bind);
     if (!$result) {return;}
 
-    $ptid = $dbconn->PO_Insert_ID($tablename, 'xar_ptid');
+    $ptid = $dbconn->PO_Insert_ID($tablename, 'id');
 
     // If there is a suitable XML definition file available, then
     // use it to create the DD hook object.
