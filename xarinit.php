@@ -398,7 +398,7 @@ function xarpages_upgrade($oldversion)
             $query = 'ALTER TABLE ' . $typestable . ' ADD COLUMN info text';
             $result = $dbconn->Execute($query);
 
-        case '2.0.1':
+        case '2.0.0':
             $query = 'ALTER TABLE ' . $typestable . ' CHANGE `xar_ptid` `id` integer unsigned autoincrement NOT NULL;
             $result = $dbconn->Execute($query);
             $query = 'ALTER TABLE ' . $typestable . ' CHANGE `xar_name` `name` varchar(60) NOT NULL default '';
