@@ -19,7 +19,7 @@ function xarpages_userapi_gettypeitemtype($args)
     );
 
     if (!empty($pagetype)) {
-        $type_itemtype = $pagetype['ptid'];
+        $type_itemtype = $pagetype['id'];
     } else {
         // If it does not exist, then create it now.
         $type_itemtype = xarModAPIfunc(

@@ -1,82 +1,82 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:style scope="module" module="xarpages" file="xarpages" />
+    <xar:style scope="module" module="xarpages" file="xarpages" />
 
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Page Administration</xar:mlstring></span></div>
+    <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Page Administration</xar:mlstring></span></div>
 
-<div class="xar-mod-body">
-    <xar:template type="module" file="admin-menu" />
-    <h2>
-        <xar:if condition="$func eq 'modify'">
-            <xar:mlstring>Modify Page Type</xar:mlstring>
-        <xar:else />
-            <xar:mlstring>Create New Page Type</xar:mlstring>
-        </xar:if>
-    </h2>
+    <div class="xar-mod-body">
+        <xar:template type="module" file="admin-menu" />
+        <h2>
+            <xar:if condition="$func eq 'modify'">
+                <xar:mlstring>Modify Page Type</xar:mlstring>
+            <xar:else />
+                <xar:mlstring>Create New Page Type</xar:mlstring>
+            </xar:if>
+        </h2>
 
-    <div style="margin: auto;">
-        <!-- Either modifying a page, or we have a page type -->
-        <form class="xar-xarpages-admin" action="#xarModURL('xarpages','admin','updatetype')#" method="post">
-            <fieldset class="formelements xar-norm">
-                <legend>
-                    <strong><xar:mlstring>Page Type Attributes</xar:mlstring></strong>
-                </legend>
-
-                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-                <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
-
-                <p class="param">
-                    <label for="name"><xar:mlstring>Name</xar:mlstring></label>
-                    <input type="text" name="name" id="name" value="#xarVarPrepForDisplay($type['name'])#" size="32" maxlength="64" />
-
-                    <xar:if condition="empty($ptid) and !empty($files)">
-                        <xar:data-input name="name_list" id="name_list" type="6" options="$files" firstline="-- Predefined --" value="" />
-                    </xar:if>
-                </p>
-
-                <p class="param">
-                    <label for="desc"><xar:mlstring>Description</xar:mlstring></label>
-                    <textarea name="desc" id="desc" cols="40" rows="6" maxlength="255" style="width: 80%;">#xarVarPrepForDisplay($type['desc'])#</textarea>
-                </p>
-            </fieldset>
-
-            <xar:if condition="!empty($modifyhooks)">
+        <div style="margin: auto;">
+            <!-- Either modifying a page, or we have a page type -->
+            <form class="xar-xarpages-admin" action="#xarModURL('xarpages','admin','updatetype')#" method="post">
                 <fieldset class="formelements xar-norm">
                     <legend>
-                        <strong><xar:mlstring>Modify Hooks (applies to all page types)</xar:mlstring></strong>
+                        <strong><xar:mlstring>Page Type Attributes</xar:mlstring></strong>
                     </legend>
-                    <xar:loop name="$modifyhooks">
-                        #$loop:item#
-                    </xar:loop>
-                </fieldset>
-            </xar:if>
 
-            <xar:if condition="!empty($confighooks)">
-                <fieldset class="formelements xar-norm">
-                    <legend>
-                        <strong><xar:mlstring>Config Hooks (applies to all pages of this type)</xar:mlstring></strong>
-                    </legend>
-                    <xar:loop name="$confighooks">
-                        #$loop:item#
-                    </xar:loop>
-                </fieldset>
-            </xar:if>
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                    <input type="hidden" name="id" id="id" value="#$id#" />
 
-            <fieldset>
-                <legend>
-                    Page Add Access
-                </legend>
-                <xar:data-input type="access" name="type_add_access" value="$type['info']['add_access']" />
-            </fieldset>
-            <div>
-                <xar:if condition="$func eq 'modify'">
-                    <input type="submit" value="#xarML('Modify')#" />
-                    <input type="hidden" name="creating" id="creating" value="false"/>
-                <xar:else />
-                    <input type="submit" value="#xarML('Add')#" />
-                    <input type="hidden" name="creating" id="creating" value="true"/>
+                    <p class="param">
+                        <label for="name"><xar:mlstring>Name</xar:mlstring></label>
+                        <input type="text" name="name" id="name" value="#xarVarPrepForDisplay($type['name'])#" size="32" maxlength="64" />
+
+                        <xar:if condition="empty($id) and !empty($files)">
+                            <xar:data-input name="name_list" id="name_list" type="6" options="$files" firstline="-- Predefined --" value="" />
+                        </xar:if>
+                    </p>
+
+                    <p class="param">
+                        <label for="desc"><xar:mlstring>Description</xar:mlstring></label>
+                        <textarea name="desc" id="desc" cols="40" rows="6" maxlength="255" style="width: 80%;">#xarVarPrepForDisplay($type['desc'])#</textarea>
+                    </p>
+                </fieldset>
+
+                <xar:if condition="!empty($modifyhooks)">
+                    <fieldset class="formelements xar-norm">
+                        <legend>
+                            <strong><xar:mlstring>Modify Hooks (applies to all page types)</xar:mlstring></strong>
+                        </legend>
+                        <xar:loop name="$modifyhooks">
+                            #$loop:item#
+                        </xar:loop>
+                    </fieldset>
                 </xar:if>
-            </div>
-        </form>
+
+                <xar:if condition="!empty($confighooks)">
+                    <fieldset class="formelements xar-norm">
+                        <legend>
+                            <strong><xar:mlstring>Config Hooks (applies to all pages of this type)</xar:mlstring></strong>
+                        </legend>
+                        <xar:loop name="$confighooks">
+                            #$loop:item#
+                        </xar:loop>
+                    </fieldset>
+                </xar:if>
+
+                <fieldset>
+                    <legend>
+                        Page Add Access
+                    </legend>
+                    <xar:data-input type="access" name="type_add_access" value="$type['info']['add_access']" />
+                </fieldset>
+                <div>
+                    <xar:if condition="$func eq 'modify'">
+                        <input type="submit" value="#xarML('Modify')#" />
+                        <input type="hidden" name="creating" id="creating" value="false"/>
+                    <xar:else />
+                        <input type="submit" value="#xarML('Add')#" />
+                        <input type="hidden" name="creating" id="creating" value="true"/>
+                    </xar:if>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 </xar:template>

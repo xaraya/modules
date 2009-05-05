@@ -399,11 +399,11 @@ function xarpages_upgrade($oldversion)
             $result = $dbconn->Execute($query);
 
         case '2.0.0':
-            $query = 'ALTER TABLE ' . $typestable . ' CHANGE `xar_ptid` `id` integer unsigned autoincrement NOT NULL;
+            $query = 'ALTER TABLE ' . $typestable . " CHANGE xar_ptid id integer unsigned autoincrement NOT NULL";
             $result = $dbconn->Execute($query);
-            $query = 'ALTER TABLE ' . $typestable . ' CHANGE `xar_name` `name` varchar(60) NOT NULL default '';
+            $query = 'ALTER TABLE ' . $typestable . " CHANGE `xar_name` `name` varchar(60) NOT NULL default ''";
             $result = $dbconn->Execute($query);
-            $query = 'ALTER TABLE ' . $typestable . ' CHANGE `xar_desc` `description` varchar(255) NOT NULL default '';
+            $query = 'ALTER TABLE ' . $typestable . " CHANGE `xar_desc` `description` varchar(255) NOT NULL default ''";
             $result = $dbconn->Execute($query);
             break;
     }

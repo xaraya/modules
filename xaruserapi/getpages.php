@@ -178,7 +178,7 @@ function xarpages_userapi_getpages($args)
         // Get all the page type details.
         $pagetypes = xarModAPIfunc(
             'xarpages', 'user', 'get_types',
-            array('key' => 'ptid', 'dd_flag' => $dd_flag)
+            array('key' => 'id', 'dd_flag' => $dd_flag)
         );
 
         while (!$result->EOF) {

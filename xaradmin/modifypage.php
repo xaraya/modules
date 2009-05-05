@@ -65,7 +65,7 @@ function xarpages_admin_modifypage($args)
         );
         $data['delete_allowed'] = $accessproperty->check($args);
         
-        $data['ptid'] = $data['page']['pagetype']['ptid'];
+        $data['ptid'] = $data['page']['pagetype']['id'];
 
         // We need all pages, but with the current page tree pruned.
         $pages = xarModAPIFunc(
@@ -108,7 +108,7 @@ function xarpages_admin_modifypage($args)
             // Get a list of page types.
             $pagetypes = xarModAPIfunc(
                 'xarpages', 'user', 'get_types',
-                array('key' => 'ptid')
+                array('key' => 'id')
             );
 
             // Check privileges of each page type: are we allowed to create

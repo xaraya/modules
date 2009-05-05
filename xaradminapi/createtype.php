@@ -67,7 +67,7 @@ function xarpages_adminapi_createtype($args)
     $result = $dbconn->execute($query, $bind);
     if (!$result) {return;}
 
-    $ptid = $dbconn->PO_Insert_ID($tablename, 'id');
+    $id = $dbconn->PO_Insert_ID($tablename, 'id');
 
     // If there is a suitable XML definition file available, then
     // use it to create the DD hook object.
@@ -94,7 +94,7 @@ function xarpages_adminapi_createtype($args)
             // We also need to change the itemtype of all its properties.
             if (!empty($objectid)) {
                 DataObjectMaster::updateObject(
-                    array('objectid' => $objectid, 'itemtype' => $ptid)
+                    array('objectid' => $objectid, 'itemtype' => $id)
                 );
 
                 // Synchronise the object properties with the change in itemtype.
@@ -106,7 +106,7 @@ function xarpages_adminapi_createtype($args)
                     array(
                         'objectid' => $objectid,
                         'moduleid' => xarMod::getRegID('xarpages'),
-                        'itemtype' => $ptid
+                        'itemtype' => $id
                     )
                 );
                 */
@@ -124,16 +124,16 @@ function xarpages_adminapi_createtype($args)
     if (!empty($type_itemtype)) {
         // Create hooks.
         xarModCallHooks(
-            'item', 'create', $ptid,
+            'item', 'create', $id,
             array(
                 'itemtype' => $type_itemtype,
                 'module' => 'xarpages',
-                'urlparam' => 'ptid'
+                'urlparam' => 'id'
             )
         );
     }
 
-    return $ptid;
+    return $id;
 }
 
 ?>

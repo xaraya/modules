@@ -20,25 +20,25 @@ function xarpages_admin_modifytype($args)
     extract($args);
 
     if (!xarVarFetch('creating', 'bool', $creating, true, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('ptid', 'id', $ptid, 0, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('id', 'id', $id, 0, XARVAR_DONT_SET)) {return;}
 
     $data = array();
 
     // Get the itemtype of the page type.
     $type_itemtype = xarModAPIfunc('xarpages', 'user', 'gettypeitemtype');
 
-    if (!empty($ptid)) {
+    if (!empty($id)) {
         // Editing an existing page type
 
         // We need all pages, but with the current page tree pruned.
         $type = xarModAPIFunc(
             'xarpages', 'user', 'get_type',
-            array('ptid' => $ptid, 'dd_flag' => false)
+            array('id' => $id, 'dd_flag' => false)
         );
 
         if (empty($type)) {
             // TODO: raise an error message.
-            $msg = xarML('Page type "#(1)" not found.', $ptid);
+            $msg = xarML('Page type "#(1)" not found.', $id);
             throw new BadParemeterException(null,$msg);
         }
 
@@ -51,14 +51,14 @@ function xarpages_admin_modifytype($args)
 
         // The modify hooks for the page type as an item.
         $modifyhooks = xarModCallHooks(
-            'item', 'modify', $type['ptid'],
+            'item', 'modify', $type['id'],
             array('module' => 'xarpages', 'itemtype' => $type_itemtype)
         );
 
         // Do config hooks for the page type as an item type.
         $confighooks = xarModCallHooks(
             'module', 'modifyconfig', 'xarpages',
-            array('module' => 'xarpages', 'itemtype' => $type['ptid'])
+            array('module' => 'xarpages', 'itemtype' => $type['id'])
         );
     } else {
         // Adding a new page type.
@@ -82,9 +82,9 @@ function xarpages_admin_modifytype($args)
 
         // Default data for the page type form.
         $type = array(
-            'ptid' => NULL,
+            'id' => NULL,
             'name' => '',
-            'desc' => ''
+            'description' => ''
         );
 
         // Default values for access
@@ -93,7 +93,7 @@ function xarpages_admin_modifytype($args)
         $type['info']['add_access'] = $accessproperty->value;
 
         $data['func'] = 'create';
-        $data['ptid'] = NULL;
+        $data['id'] = NULL;
 
         // The 'new' modify hooks for the page type as an item.
         $modifyhooks = xarModCallHooks(
@@ -128,7 +128,7 @@ function xarpages_admin_modifytype($args)
 
     // Pass the page type to the template.
     $data['type'] = $type;
-    $data['ptid'] = $type['ptid'];
+    $data['id'] = $type['id'];
 
     // Return output
     return $data;

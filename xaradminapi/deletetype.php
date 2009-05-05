@@ -2,7 +2,7 @@
 
 /**
  * Delete a page type.
- * @param $args['ptid'] the ID of the page
+ * @param $args['id'] the ID of the page
  * @returns bool
  * @return true on success, false on failure
  */
@@ -12,8 +12,8 @@ function xarpages_adminapi_deletetype($args)
     extract($args);
 
     // Argument check
-    if (empty($ptid)) {
-        $msg = xarML('Invalid page type ID #(1)', $ptid);
+    if (empty($id)) {
+        $msg = xarML('Invalid page type ID #(1)', $id);
         throw new BadParemeterException(null,$msg);
     }
 
@@ -31,7 +31,7 @@ function xarpages_adminapi_deletetype($args)
     // Get the [optional] pages for deleting.
     $pages = xarModAPIFunc(
         'xarpages', 'user', 'getpages',
-        array('dd_flag' => false, 'itemtype' => $ptid)
+        array('dd_flag' => false, 'itemtype' => $id)
     );
 
     if (is_array($pages)) {
@@ -51,14 +51,14 @@ function xarpages_adminapi_deletetype($args)
 
     $query = 'DELETE FROM ' . $xartable['xarpages_types'] . ' WHERE id = ?';
 
-    $result = $dbconn->Execute($query, array((int)$ptid));
+    $result = $dbconn->Execute($query, array((int)$id));
     if (!$result) return;
 
     $type_itemtype = xarModAPIfunc('xarpages', 'user', 'gettypeitemtype');
 
     // Delete the page type as an item.
     xarModCallHooks(
-        'item', 'delete', $type['ptid'],
+        'item', 'delete', $type['id'],
         array('module' => 'xarpages', 'itemtype' => $type_itemtype)
     );
 

@@ -17,7 +17,7 @@ function xarpages_admin_updatetype($args)
 {
     extract($args);
 
-    if (!xarVarFetch('ptid', 'id', $ptid, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('id', 'id', $id, 0, XARVAR_NOT_REQUIRED)) return;
 
     // Allow the optional pre-selected drop-downs to take precedence.
     xarVarFetch('name_list', 'pre:lower:ftoken:str:1:100', $name, '', XARVAR_NOT_REQUIRED);
@@ -36,11 +36,11 @@ function xarpages_admin_updatetype($args)
     if (!xarSecConfirmAuthKey()) {return;}
 
     // Pass to API
-    if (!empty($ptid)) {
+    if (!empty($id)) {
         if (!xarModAPIFunc(
             'xarpages', 'admin', 'updatetype',
             array(
-                'id'           => $ptid,
+                'id'           => $id,
                 'name'         => $name,
                 'description'  => $desc,
                 'info'         => $info,
@@ -48,7 +48,7 @@ function xarpages_admin_updatetype($args)
         )) {return;}
     } else {
         // Pass to API
-        $ptid = xarModAPIFunc(
+        $id = xarModAPIFunc(
             'xarpages', 'admin', 'createtype',
             array(
                 'name'         => $name,
@@ -56,7 +56,7 @@ function xarpages_admin_updatetype($args)
                 'info'         => $info,
             )
         );
-        if (!$ptid) {return;}
+        if (!$id) {return;}
     }
 
     xarResponse::Redirect(xarModUrl('xarpages', 'admin', 'viewtypes'));

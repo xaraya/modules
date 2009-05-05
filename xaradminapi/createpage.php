@@ -106,7 +106,7 @@ function xarpages_adminapi_createpage($args)
     $cols[] = 'xar_itemtype';
 
     $bind[] = serialize($name);
-    $cols[] = 'name';
+    $cols[] = 'xar_name';
 
     $bind[] = $info;
     $cols[] = 'info';

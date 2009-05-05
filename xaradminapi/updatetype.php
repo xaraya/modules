@@ -4,7 +4,7 @@
  * Update a page type.
  *
  *  -- INPUT --
- * @param $args['ptid'] the ID of the page type
+ * @param $args['id'] the ID of the page type
  * @param $args['name'] the modified name of the page
  * @param $args['desc'] the modified description of the page
  *
@@ -15,16 +15,16 @@ function xarpages_adminapi_updatetype($args)
     extract($args);
 
     // Argument check
-    if (!isset($ptid)) {
+    if (!isset($id)) {
         $msg = xarML('Bad Parameters');
         throw new BadParemeterException(null,$msg);
     }
 
     // Get current information on the page type
-    $type = xarModAPIfunc('xarpages', 'user', 'get_type', array('ptid' => $ptid));
+    $type = xarModAPIfunc('xarpages', 'user', 'get_type', array('id' => $id));
 
     if (empty($type)) {
-        $msg = xarML('The page type "#(1)" does not exist', $ptid);
+        $msg = xarML('The page type "#(1)" does not exist', $id);
         throw new BadParemeterException(null,$msg);
     }
 
@@ -44,17 +44,14 @@ function xarpages_adminapi_updatetype($args)
     $cols = array();
 
     // Include the optional parameters.
-    foreach(array('name', 'desc') as $colname) {
+    foreach(array('name', 'desccription', 'info') as $colname) {
         if (isset($$colname) && is_string($$colname)) {
             $bind[] = $$colname;
             $cols[] = $colname . ' = ?';
         }
     }
 
-    $bind[] = $info;
-    $cols[] = 'info' . ' = ?';
-
-    $bind[] = (int)$ptid;
+    $bind[] = (int)$id;
 
     // Update name and description etc.
     $query = 'UPDATE ' . $tablename
@@ -68,14 +65,14 @@ function xarpages_adminapi_updatetype($args)
 
     // Call update hooks (for page type as a type).
     xarModCallHooks(
-        'item', 'update', $ptid,
+        'item', 'update', $id,
         array('module' => 'xarpages', 'itemtype' => $type_itemtype)
     );
 
     // Call config hooks (for page type as an itemtype)
     xarModCallHooks(
         'module', 'updateconfig', 'xarpages',
-        array('itemtype' => $ptid, 'module' => 'xarpages')
+        array('itemtype' => $id, 'module' => 'xarpages')
     );
 
 

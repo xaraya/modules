@@ -24,10 +24,10 @@ function xarpages_userapi_getitemtypes($args)
             $desc_line1 = $pagetype['name'];
         }
 
-        $itemtypes[$pagetype['ptid']] = array(
+        $itemtypes[$pagetype['id']] = array(
             'label' => xarVarPrepForDisplay($desc_line1),
             'title' => xarVarPrepForDisplay(xarML('Display #(1)', $desc_line1)),
-            'url'   => xarModURL('xarpages', 'user', 'display', array('ptid' => $pagetype['ptid']))
+            'url'   => xarModURL('xarpages', 'user', 'display', array('ptid' => $pagetype['id']))
         );
     }
     return $itemtypes;

@@ -3,7 +3,7 @@
 // Get page types.
 // include_system: return system page types (those whose name starts with '@')
 // name: select just 'name' page type
-// ptid: select just 'ptid' page type
+// ptid: select just 'id' page type
 // no_cache: do not retrieve from the cache; still writes to the cache though
 // dd_flag: boolean indicates whether dd should be retrived (default true)
 // DD is always fetched if hooked
@@ -62,12 +62,12 @@ function xarpages_userapi_get_types($args)
     $index = 0;
 
     while (!$result->EOF) {
-        list($ptid, $name, $desc, $info) = $result->fields;
+        list($id, $name, $desc, $info) = $result->fields;
 
         // Only return the system page types if specifically requested.
         if ($name[0] != '@' || !empty($include_system)) {
             $types[$$key] = array(
-                'ptid' => (int)$ptid,
+                'id' => (int)$id,
                 'name' => $name,
                 'desc' => $desc,
                 'info' => unserialize($info)
@@ -78,7 +78,7 @@ function xarpages_userapi_get_types($args)
         // This allows DD to be added to all page types for extending
         // their functionality.
         if ($name == '@pagetype') {
-            $itemtype = $ptid;
+            $itemtype = $id;
         }
 
         // Get the next page type.
@@ -93,7 +93,7 @@ function xarpages_userapi_get_types($args)
         $item_ids = array();
         foreach($types as $type_key => $type) {
             if ($type['name'][0] != '@') {
-                $item_ids[$type['ptid']] = $type_key;
+                $item_ids[$type['id']] = $type_key;
             }
         }
 

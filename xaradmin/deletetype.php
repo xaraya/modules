@@ -17,7 +17,7 @@ function xarpages_admin_deletetype($args)
 {
     extract($args);
 
-    if (!xarVarFetch('ptid', 'id', $ptid)) return;
+    if (!xarVarFetch('id', 'id', $id)) return;
     if (!xarVarFetch('confirm', 'str:1', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
     // Security check
@@ -28,11 +28,11 @@ function xarpages_admin_deletetype($args)
     // Get page type information
     $type = xarModAPIFunc(
         'xarpages', 'user', 'get_type',
-        array('ptid' => $ptid)
+        array('id' => $id)
     );
 
     if (empty($type)) {
-        $msg = xarML('The page type "#(1)" to be deleted does not exist', $ptid);
+        $msg = xarML('The page type "#(1)" to be deleted does not exist', $id);
         throw new BadParemeterException(null,$msg);
     }
 
@@ -44,7 +44,7 @@ function xarpages_admin_deletetype($args)
         // Get a count of pages that will also be deleted.
         $data['count'] = xarModAPIfunc(
             'xarpages', 'user', 'getpages',
-            array('count' => true, 'itemtype' => $type['ptid'])
+            array('count' => true, 'itemtype' => $type['id'])
         );
 
         // Return output
@@ -57,7 +57,7 @@ function xarpages_admin_deletetype($args)
     // Pass to API
     if (!xarModAPIFunc(
         'xarpages', 'admin', 'deletetype',
-        array('ptid' => $ptid))
+        array('id' => $id))
     ) return;
 
     xarResponse::Redirect(xarModURL('xarpages', 'admin', 'viewtypes'));
