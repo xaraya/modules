@@ -13,7 +13,7 @@
  */
 $modversion['name']             = 'Sniffer';
 $modversion['id']               = '775';
-$modversion['version']          = '1.0.1';
+$modversion['version']          = '1.0.2';
 $modversion['displayname']      = xarML('Sniffer');
 $modversion['description']      = 'Used for browser detection';
 $modversion['credits']          = 'xardocs/credits.txt';

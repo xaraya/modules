@@ -120,6 +120,12 @@ function sniffer_upgrade($oldversion)
             if (!$result) return false;
 
         case '1.0.1':
+            
+            $query = "ALTER TABLE xar_sniffer MODIFY xar_ua_id INT(8)";
+            $result = &$dbconn->Execute($query);
+            if (!$result) return false;
+
+        case '1.0.2':
             break;
             // case '0.0.1':
             // break;
