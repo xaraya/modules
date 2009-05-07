@@ -56,6 +56,5 @@
 		    <td colspan="#$offset#" class="ievents-spacer">&nbsp;</td>
 		</xar:if>
 
-		</tr>
 	</table>
 </div>
