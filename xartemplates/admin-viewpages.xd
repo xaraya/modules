@@ -36,7 +36,7 @@
     </xar:if>
 
     <xar:if condition="empty($pages)">
-         <xar:mlstring>NO PAGES DEFINED</xar:mlstring>
+         <xar:mlstring>No pages defined</xar:mlstring>
     <xar:else />
         <xar:if condition="!empty($add_allowed)">
             <div><a href="#xarModURL('xarpages','admin','modifypage')#"><xar:mlstring>Add Page</xar:mlstring></a></div>
