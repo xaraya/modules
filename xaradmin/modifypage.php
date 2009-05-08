@@ -20,7 +20,7 @@ function xarpages_admin_modifypage($args)
     if (!xarVarFetch('creating', 'bool', $creating, true, XARVAR_NOT_REQUIRED)) {return;}
 
     if (!xarVarFetch('pid', 'id', $pid, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('ptid', 'id', $type_id, 0, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('type_id', 'id', $type_id, 0, XARVAR_DONT_SET)) {return;}
 
     if (!xarVarFetch('return_url', 'str:0:200', $return_url, '', XARVAR_DONT_SET)) {return;}
 
@@ -277,7 +277,6 @@ function xarpages_admin_modifypage($args)
     } else {
         $pagetype = NULL;
     }
-
     return xarTplModule('xarpages', 'admin', 'modifypage', $data, $pagetype);
 }
 

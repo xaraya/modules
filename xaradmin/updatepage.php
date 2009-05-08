@@ -23,7 +23,7 @@ function xarpages_admin_updatepage($args)
     if (!xarVarFetch('creating', 'bool', $creating)) return;
 
     if ($creating) {
-        xarVarFetch('ptid', 'id', $ptid, 0, XARVAR_NOT_REQUIRED);
+        xarVarFetch('type_id', 'id', $type_id, 0, XARVAR_NOT_REQUIRED);
     } else {
         if (!xarVarFetch('pid', 'id', $pid)) return;
     }
@@ -118,7 +118,7 @@ function xarpages_admin_updatepage($args)
                 'function'      => $function,
                 'encode_url'    => $encode_url,
                 'decode_url'    => $decode_url,
-                'itemtype'      => $ptid,
+                'itemtype'      => $type_id,
                 'insertpoint'   => $refpid,
                 'offset'        => $position,
                 'alias'         => $alias,
@@ -138,7 +138,7 @@ function xarpages_admin_updatepage($args)
                     array(
                         'batch' => 1,
                         'creating' => 1,
-                        'ptid' => $ptid,
+                        'type_id' => $type_id,
                         'insertpoint' => $refpid,
                         'position' => $position
                     )

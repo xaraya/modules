@@ -42,7 +42,7 @@ function xarpages_adminapi_createpage($args)
     // Get the itemtype.
     $pagetype = xarModAPIfunc(
         'xarpages', 'user', 'get_type',
-        array('ptid' => $itemtype)
+        array('id' => $itemtype)
     );
 
     if (empty($pagetype)) {
