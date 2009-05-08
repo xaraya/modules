@@ -149,6 +149,11 @@ function xarpages_admin_modifypage($args)
                 array('module' => 'xarpages', 'itemtype' => $type_id, 'itemid' => 0)
             );
 
+            // New page: create default access values
+            sys::import('modules.dynamicdata.class.properties.master');
+            $accessproperty = DataPropertyMaster::getProperty(array('name' => 'access'));
+            $defaultaccess = $accessproperty->getValue();
+
             // Default data for the page form.
             $data['page'] = array(
                 'left' => 0,
@@ -163,7 +168,11 @@ function xarpages_admin_modifypage($args)
                 'alias' => 0,
                 'template' => '',
                 'page_template' => '',
-                'info' => serialize(array()),
+                'info' => array(
+                                'display_access' => $defaultaccess,
+                                'modify_access' => $defaultaccess,
+                                'delete_access' => $defaultaccess,
+                                ),
                 'pagetype' => xarModAPIfunc('xarpages', 'user', 'get_type', array('id' => $type_id))
             );
 

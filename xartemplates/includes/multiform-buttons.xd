@@ -1,24 +1,24 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:base-include-javascript module="base" filename="confirmlink.js" />
+    <xar:base-include-javascript module="base" filename="confirmlink.js" />
 
-<!-- Display the form buttons -->
-<div class="xarpages-multiform-buttons">
-    <xar:if condition="!empty($multiform.multiform_key)">
-        <input type="hidden" name="#$multiform.multiform_key_name#" value="#$multiform.multiform_key#" />
-    </xar:if>
-    <xar:if condition="!empty($multiform.prev_page_pid) and $multiform.submit_labels.prev ne ''">
-        <input type="submit" id="multiform_submit_prev" name="multiform_submit_prev" value="#xarVarPrepForDisplay($multiform.submit_labels.prev)#" />
-    </xar:if>
-    <xar:if condition="empty($multiform.readonly) and $multiform.submit_labels.save ne ''">
-        <input type="submit" id="multiform_submit_cont" name="multiform_submit_cont" value="#xarVarPrepForDisplay($multiform.submit_labels.save)#" />
-    </xar:if>
-    <xar:if condition="$multiform.submit_labels.next ne ''">
-    <input type="submit" id="multiform_submit_next" name="multiform_submit_next" value="#xarVarPrepForDisplay($multiform.submit_labels.next)#" />
-    </xar:if>
-    <span style="margin-left: 5em;">
-        <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$current_page.pid,'multiform_cancel'=&gt;'true'))#" onclick="return xar_base_confirmLink(this, '#xarML('Cancel the form completely?')#')">
-            <xar:mlstring>Cancel</xar:mlstring>
-        </a>
-    </span>
-</div>
+    <!-- Display the form buttons -->
+    <div class="xarpages-multiform-buttons">
+        <xar:if condition="!empty($multiform.multiform_key)">
+            <input type="hidden" name="#$multiform.multiform_key_name#" value="#$multiform.multiform_key#" />
+        </xar:if>
+        <xar:if condition="!empty($multiform.prev_page_pid) and $multiform.submit_labels.prev ne ''">
+            <input type="submit" id="multiform_submit_prev" name="multiform_submit_prev" value="#xarVarPrepForDisplay($multiform.submit_labels.prev)#" />
+        </xar:if>
+        <xar:if condition="empty($multiform.readonly) and $multiform.submit_labels.save ne ''">
+            <input type="submit" id="multiform_submit_cont" name="multiform_submit_cont" value="#xarVarPrepForDisplay($multiform.submit_labels.save)#" />
+        </xar:if>
+        <xar:if condition="$multiform.submit_labels.next ne ''">
+        <input type="submit" id="multiform_submit_next" name="multiform_submit_next" value="#xarVarPrepForDisplay($multiform.submit_labels.next)#" />
+        </xar:if>
+        <span style="margin-left: 5em;">
+            <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$current_page.pid,'multiform_cancel'=&gt;'true'))#" onclick="return xar_base_confirmLink(this, '#xarML('Cancel the form completely?')#')">
+                <xar:mlstring>Cancel</xar:mlstring>
+            </a>
+        </span>
+    </div>
 </xar:template>

@@ -1,35 +1,35 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:if condition="isset($prev_url) or isset($next_url)">
-    <table class="nextprev">
-        <tr>
-            <td class="prev">
-                <xar:if condition="!empty($prev_url)">
-                    <a href="#$prev_url#" title="#xarVarPrepForDisplay($prev_article.title)#">
-                        &#171; <xar:mlstring>Previous article</xar:mlstring>
+    <xar:if condition="isset($prev_url) or isset($next_url)">
+        <table class="nextprev">
+            <tr>
+                <td class="prev">
+                    <xar:if condition="!empty($prev_url)">
+                        <a href="#$prev_url#" title="#xarVarPrepForDisplay($prev_article.title)#">
+                            &#171; <xar:mlstring>Previous article</xar:mlstring>
+                        </a>
+                    <xar:else />
+                        <span>
+                            &#171; <xar:mlstring>Previous article</xar:mlstring>
+                        </span>
+                    </xar:if>
+                </td>
+                <td class="back">
+                    <a href="#xarServer::getCurrentURL(array('aid'=&gt;NULL))#" title="#xarML('Return to the list')#">
+                        <xar:mlstring>[Back to List]</xar:mlstring>
                     </a>
-                <xar:else />
-                    <span>
-                        &#171; <xar:mlstring>Previous article</xar:mlstring>
-                    </span>
-                </xar:if>
-            </td>
-            <td class="back">
-                <a href="#xarServer::getCurrentURL(array('aid'=&gt;NULL))#" title="#xarML('Return to the list')#">
-                    <xar:mlstring>[Back to List]</xar:mlstring>
-                </a>
-            </td>
-            <td class="next">
-                <xar:if condition="!empty($next_url)">
-                    <a href="#$next_url#" title="#xarVarPrepForDisplay($next_article.title)#">
-                        <xar:mlstring>Next article</xar:mlstring> &#187;
-                    </a>
-                <xar:else />
-                    <span>
-                        <xar:mlstring>Next article</xar:mlstring> &#187;
-                    </span>
-                </xar:if>
-            </td>
-        </tr>
-    </table>
-</xar:if>
+                </td>
+                <td class="next">
+                    <xar:if condition="!empty($next_url)">
+                        <a href="#$next_url#" title="#xarVarPrepForDisplay($next_article.title)#">
+                            <xar:mlstring>Next article</xar:mlstring> &#187;
+                        </a>
+                    <xar:else />
+                        <span>
+                            <xar:mlstring>Next article</xar:mlstring> &#187;
+                        </span>
+                    </xar:if>
+                </td>
+            </tr>
+        </table>
+    </xar:if>
 </xar:template>
