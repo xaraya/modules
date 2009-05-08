@@ -1,4 +1,5 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:style scope="module" module="base" file="navtabs" />
     <xar:style scope="module" module="xarpages" file="xarpages" />
 
     <![CDATA[
@@ -76,16 +77,18 @@
                     </xar:if>
                 </p>
                 <form class="xar-xarpages-admin" action="#xarModURL('xarpages','admin','updatepage')#" method="post">
-                    <dd class="active" id="tab-1">
-                        <a href="javascript:showtab(1,2)">
-                            Configuration
-                        </a>
-                    </dd>
-                    <dd id="tab-2">
-                        <a href="javascript:showtab(2,2)">
-                            Access
-                        </a>
-                    </dd>
+                    <dl class="xar-tabs">
+                        <dd class="active" id="tab-1">
+                            <a href="javascript:showtab(1,2)">
+                                Configuration
+                            </a>
+                        </dd>
+                        <dd id="tab-2">
+                            <a href="javascript:showtab(2,2)">
+                                Access
+                            </a>
+                        </dd>
+                    </dl>
 
                     <div id="page-1">
                         <fieldset class="formelements xar-norm">
