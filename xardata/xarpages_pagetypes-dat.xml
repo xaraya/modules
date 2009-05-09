@@ -1,0 +1,8 @@
+<items>
+  <xarpages_pagetypes itemid="1">
+    <id>1</id>
+    <name>@pagetype</name>
+    <description>System generated 'pagetype' type</description>
+    <information>a:3:{s:5:"group";i:0;s:5:"level";i:100;s:7:"failure";i:0;}</information>
+  </xarpages_pagetypes>
+</items>

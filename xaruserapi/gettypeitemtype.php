@@ -8,9 +8,7 @@ function xarpages_userapi_gettypeitemtype($args)
 {
     static $type_itemtype = NULL;
 
-    if (isset($type_itemtype)) {
-        return $type_itemtype;
-    }
+    if (isset($type_itemtype)) return $type_itemtype;
 
     // Get the itemtype of the page type.
     $pagetype = xarModAPIfunc(
@@ -27,7 +25,6 @@ function xarpages_userapi_gettypeitemtype($args)
             array('name' => '@pagetype', 'description' => 'System generated \'pagetype\' type','info' => array())
         );
     }
-
     return $type_itemtype;
 }
 
