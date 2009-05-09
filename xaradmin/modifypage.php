@@ -50,7 +50,6 @@ function xarpages_admin_modifypage($args)
         $thisinstance = $data['page']['name'] . ':' . $data['page']['pagetype']['name'];
 
         // Decide whether this page can be modified by the current user
-        var_dump($data['page']);exit;
         $args = array(
             'instance' => $thisinstance,
             'group' => $data['page']['info']['modify_access']['group'],
