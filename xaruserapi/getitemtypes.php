@@ -17,7 +17,7 @@ function xarpages_userapi_getitemtypes($args)
 
     foreach ($pagetypes as $pagetype) {
         // The description is multi-line, so only take the first line as the title.
-        $desc_line1 = preg_replace('/[\n\r].*/', '', $pagetype['desc']);
+        $desc_line1 = preg_replace('/[\n\r].*/', '', $pagetype['description']);
 
         // The description is optional, so use the name as a fallback.
         if (empty($desc_line1)) {
