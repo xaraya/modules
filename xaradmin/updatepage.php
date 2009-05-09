@@ -71,12 +71,11 @@ function xarpages_admin_updatepage($args)
     sys::import('modules.dynamicdata.class.properties.master');
     $accessproperty = DataPropertyMaster::getProperty(array('name' => 'access'));
     $isvalid = $accessproperty->checkInput($name . '_display');
-    $info['display_access'] = $accessproperty->value;
+    $info['display_access'] = $accessproperty->getValue();
     $isvalid = $accessproperty->checkInput($name . '_modify');
-    $info['modify_access'] = $accessproperty->value;
+    $info['modify_access'] = $accessproperty->getValue();
     $isvalid = $accessproperty->checkInput($name . '_delete');
-    $info['delete_access'] = $accessproperty->value;
-    $info = serialize($info);
+    $info['delete_access'] = $accessproperty->getValue();
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
