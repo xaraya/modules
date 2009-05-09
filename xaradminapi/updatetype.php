@@ -50,6 +50,8 @@ function xarpages_adminapi_updatetype($args)
             $cols[] = $colname . ' = ?';
         }
     }
+    $bind[] = serialize($info);
+    $cols[] = 'info = ?';
 
     $bind[] = (int)$id;
 

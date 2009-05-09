@@ -106,7 +106,7 @@ function xarpages_adminapi_updatepage($args)
         }
     }
 
-    $bind[] = $info;
+    $bind[] = serialize($info);
     $cols[] = 'info = ?';
 
     $bind[] = (int)$pid;

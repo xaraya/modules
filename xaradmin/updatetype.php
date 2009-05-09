@@ -30,7 +30,7 @@ function xarpages_admin_updatetype($args)
     sys::import('modules.dynamicdata.class.properties.master');
     $accessproperty = DataPropertyMaster::getProperty(array('name' => 'access'));
     $isvalid = $accessproperty->checkInput('type_add_access');
-    $info = serialize(array('add_access' => $accessproperty->getValue()));
+    $info = array('add_access' => $accessproperty->getValue());
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) {return;}
