@@ -1,5 +1,5 @@
 <object name="xarpages_pagetypes">
-  <objectid>156</objectid>
+  <objectid>161</objectid>
   <label>Xarpages PageTypes</label>
   <parent>objects</parent>
   <module_id>182</module_id>
@@ -12,7 +12,7 @@
   <isalias>1</isalias>
   <properties>
     <property name="id">
-      <id>1730</id>
+      <id>1750</id>
       <label>ID</label>
       <type>itemid</type>
       <defaultvalue></defaultvalue>
@@ -22,7 +22,7 @@
       <configuration></configuration>
     </property>
     <property name="name">
-      <id>1731</id>
+      <id>1751</id>
       <label>Name</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -32,7 +32,7 @@
       <configuration></configuration>
     </property>
     <property name="description">
-      <id>1732</id>
+      <id>1752</id>
       <label>Description</label>
       <type>textbox</type>
       <defaultvalue></defaultvalue>
@@ -42,7 +42,7 @@
       <configuration></configuration>
     </property>
     <property name="information">
-      <id>1733</id>
+      <id>1753</id>
       <label>Information</label>
       <type>textarea_medium</type>
       <defaultvalue></defaultvalue>

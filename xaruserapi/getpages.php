@@ -221,20 +221,49 @@ function xarpages_userapi_getpages($args)
             // show the 'no privs' page.
 
             $typename = $pagetypes[$itemtype]['name'];
-            if (!xarSecurityCheck('ViewXarpagesPage', 0, 'Page', $name . ':' . $typename, 'xarpages')) {
-                // Save the right value. We need to skip all subsequent
-                // pages until we get to a page to the right of this one.
-                // The pages will be in 'left' order, so the descendants
-                // will be contiguous and will immediately follow this page.
-                $prune_left = $right;
-
-                // Skip to the next page.
-                continue;
+            $info = unserialize($info);
+            if (!empty($info['view_access'])) {
+                // Decide whether the current user can create blocks of this type
+                $args = array(
+                    'module' => 'xarpages',
+                    'component' => 'Page',
+                    'instance' => $name . ":" . $typename,
+                    'group' => $info['view_access']['group'],
+                    'level' => $info['view_access']['level'],
+                );
+                sys::import('modules.dynamicdata.class.properties.master');
+                $accessproperty = DataPropertyMaster::getProperty(array('name' => 'access'));
+                if (!$accessproperty->check($args)) {
+                    // Save the right value. We need to skip all subsequent
+                    // pages until we get to a page to the right of this one.
+                    // The pages will be in 'left' order, so the descendants
+                    // will be contiguous and will immediately follow this page.
+                    $prune_left = $right;
+                    continue;
+                }
             }
 
             if (!empty($overview_only_left) && $left <= $overview_only_left) {
                 // We have got past the overview-only page, so can reset the flag.
                 $overview_only_left = 0;
+            }
+
+            if (!empty($info['display_access'])) {
+                $args = array(
+                    'module' => 'xarpages',
+                    'component' => 'Page',
+                    'instance' => $name . ":" . $typename,
+                    'group' => $info['display_access']['group'],
+                    'level' => $info['display_access']['level'],
+                );
+                sys::import('modules.dynamicdata.class.properties.master');
+                $accessproperty = DataPropertyMaster::getProperty(array('name' => 'access'));
+                if (!$accessproperty->check($args)) {
+                    // We have reached a page that allows only overview access.
+                    // Flag all pages with the restricted view until we get past this page.
+                    $overview_only_left = $right;
+                    continue;
+                }
             }
 
             if (!xarSecurityCheck('ReadXarpagesPage', 0, 'Page', $name . ':' . $typename, 'xarpages')) {
@@ -271,7 +300,7 @@ function xarpages_userapi_getpages($args)
                 'page_template' => $page_template,
                 'theme' => $theme,
                 'status' => $status,
-                'info' => unserialize($info),
+                'info' => $info,
                 'encode_url' => $encode_url,
                 'decode_url' => $decode_url,
                 'function' => $function,
