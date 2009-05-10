@@ -97,6 +97,7 @@ function xarpages_user_display($args)
         // Return the dafault display template.
         return array();
     }
+    if (empty($show_usernavbar)) $show_usernavbar = false;
 
     // TODO: allow relevent privileges to over-ride the status,
     // i.e. don't assume the site owner only wants to display ACTIVE
