@@ -97,7 +97,6 @@ function xarpages_user_display($args)
         // Return the dafault display template.
         return array();
     }
-    if (empty($show_usernavbar)) $show_usernavbar = false;
 
     // TODO: allow relevent privileges to over-ride the status,
     // i.e. don't assume the site owner only wants to display ACTIVE
@@ -203,6 +202,7 @@ function xarpages_user_display($args)
 
     // Add remaining values to the tree.
     $data['pid'] = $pid;
+    $data['show_usernavbar'] = xarModVars::get('xarpages','show_usernavbar');
 
     // Set the theme.
     // Set it *before* calling up any custom functions, since those custom
