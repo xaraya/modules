@@ -55,10 +55,10 @@ class RegisteredUser extends DataObject
 
         $emailargs = $this->getFieldValues();
         $emailargs['password'] = xarModVars::get('registration', 'chooseownpassword') ? '' : $this->properties['password']->value;
-        $emailargs['emailvalues'] = $emailargs;
+        $emailvalues = $emailargs; 
+        $emailargs['emailvalues'] = $emailvalues;
         $ret = xarModAPIFunc('registration','user','createnotify',$emailargs);
         if (!$ret) return;
-
 
         // Let any hooks know that we have created a new user.
         $item['module'] = 'roles';
