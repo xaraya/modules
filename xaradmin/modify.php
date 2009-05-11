@@ -15,7 +15,7 @@
 
         $data['object'] = DataObjectMaster::getObject(array('name' => $name));
         $data['tplmodule'] = 'mailer';
-        $data['authid'] = xarSecGenAuthKey('mailer');
+        $data['authid'] = xarSecGenAuthKey();
 
         if ($data['confirm']) {
         
