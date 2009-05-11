@@ -26,7 +26,7 @@
             
             if (!$isvalid) {
                 // Bad data: redisplay the form with error messages
-                return xarTplModule('mailer','user','new', $data);        
+                return xarTplModule('mailer','admin','new', $data);        
             } else {
                 // Good data: create the item
                 $item = $data['object']->createItem();
