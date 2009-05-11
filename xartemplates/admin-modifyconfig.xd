@@ -227,7 +227,7 @@
                     Notification                    
                 </legend>
                 <div class="xar-form-input-wrapper">
-                    <label for="usermessage" class="xar-form-label" title="#xarML('The module to use for sending notifications')#">                        
+                    <label for="notificationmodule" class="xar-form-label" title="#xarML('The module to use for sending notifications')#">                        
                         Send notifications with                        
                     </label>
                     <xar:set name="options">
