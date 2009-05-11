@@ -240,7 +240,7 @@
                     <xar:data-input type="dropdown" name="notificationmodule" id="notificationmodule" options="$options" value="$value" />
                 </div>
                 <div class="xar-form-input-wrapper">
-                    <label for="sendnotice" class="xar-form-label" title="#xarML('Email address for admin notification')#">                        
+                    <label for="notifyemail" class="xar-form-label" title="#xarML('Email address for admin notification')#">                        
                         Email for notification to Admin                        
                     </label>
                     <input type="text" name="notifyemail" id="notifyemail" value="#$notifyemail#" size="40" maxlength="150" />
@@ -254,7 +254,7 @@
                     <xar:data-input type="checkbox" name="sendwelcomeemail" checked="$checked" />
                 </div>
                 <div class="xar-form-input-wrapper">
-                    <label for="usermessage" class="xar-form-label" title="#xarML('The name of the meail message to send the user')#">                        
+                    <label for="usermessage" class="xar-form-label" title="#xarML('The name of the email message to send the user')#">                        
                         User Message Name                        
                     </label>
                     <xar:set name="value">xarModVars::get('registration', 'usermessage')</xar:set>
@@ -277,7 +277,7 @@
                     <xar:data-input type="checkbox" name="sendnotice" checked="$checked" />
                 </div>
                 <div class="xar-form-input-wrapper">
-                    <label for="adminmessage" class="xar-form-label" title="#xarML('The name of the meail message to send the administrator')#">                        
+                    <label for="adminmessage" class="xar-form-label" title="#xarML('The name of the email message to send the administrator')#">                        
                         Admin Message Name                        
                     </label>
                     <xar:set name="value">xarModVars::get('registration', 'adminmessage')</xar:set>
