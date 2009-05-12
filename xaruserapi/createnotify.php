@@ -86,8 +86,8 @@ function registration_userapi_createnotify($args)
                 $result = xarModAPIFunc('mailer','user','send',
                                 array(
                                     'name'               => xarModVars::get('registration','usermessage'),
-                                    'recipientname'      => $args('realname'),
-                                    'recipientaddress'   => $args('email'),
+                                    'recipientname'      => $args['name'],
+                                    'recipientaddress'   => $args['email'],
                                     'data'               => $args,
                                 )
                             );
