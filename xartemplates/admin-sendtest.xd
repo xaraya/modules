@@ -23,7 +23,7 @@
                          <li>3 default redirect checked, but no redirect address available</li>
                          <li>4 message redirect checked, but no redirect address available</li>
                          <li>5 sending message failed</li>
-                         <li>6 BL compilation failed</li>
+                         <li>6 message compilation failed</li>
                          <li>7 no correct user object available</li>
                      </ul>
                 </xar:if>
