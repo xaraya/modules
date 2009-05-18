@@ -128,7 +128,7 @@ targetSelectById = function(el, config) {
   var id;
   var selector;
   if (id = el.getAttribute('id')) {
-    selector = '*[@'+config.attribute+'=\''+id+'\']';
+    selector = '*['+config.attribute+'=\''+id+'\']';
     return $(selector);
   }
 };

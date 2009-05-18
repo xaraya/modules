@@ -25,7 +25,7 @@ jQuery.fn.pngFix = function() {
 
 	if (jQuery.browser.msie && (ie55 || ie6)) {
 
-		jQuery(this).find("img[@src$=.png]").each(function() {
+		jQuery(this).find("img[src$=.png]").each(function() {
 			var base = jQuery('base').attr('href').replace(/\/[^\/]+$/,'/');
 			var imageSrc = jQuery(this).attr('src');
 			imageSrc = (base && imageSrc.search(/^(\/|http:)/i)) ? base + imageSrc : imageSrc;

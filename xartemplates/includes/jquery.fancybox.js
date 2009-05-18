@@ -70,7 +70,7 @@
 				opts.itemArray.push(item);
 
 			} else {
-				var arr	= $("a[@rel=" + el.rel + "]").get();
+				var arr	= $("a[rel=" + el.rel + "]").get();
 
 				for (var i = 0; i < arr.length; i++) {
 					var tmp		= $.metadata ? $.extend({}, o, $(arr[i]).metadata()) : o;

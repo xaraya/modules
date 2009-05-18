@@ -323,7 +323,7 @@
 
     <p><xar:mlstring>Fixes transparency of PNGs in IE5.5 and IE6</xar:mlstring></p>
 
-    <xar:template file="jquery.ifixpng" module="jquery" subdata="array('selector'=&gt;'#ifixpngwrapper img[@src$=.png], #ifixpngwrapper div')" />
+    <xar:template file="jquery.ifixpng" module="jquery" subdata="array('selector'=&gt;'#ifixpngwrapper img[src$=.png], #ifixpngwrapper div')" />
 
     <div style="background: url('modules/jquery/xarimages/ps-back.gif') repeat;" id="ifixpngwrapper">
         <div style="background: url('modules/jquery/xarimages/pngtest-alpha.png'); width: 173px; height: 173px; float: left; display: block;">As a background image</div>

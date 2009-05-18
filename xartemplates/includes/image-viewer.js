@@ -7,7 +7,7 @@ $.fn.ImageViewer = function()
 		var t = $(this);
 
 		// Get all links pointing to images in the scope
-		t.find('a[@href$="jpg"], a[@href$="bmp"], a[@href$="gif"], a[@href$="png"]').each(function(i)
+		t.find('a[href$="jpg"], a[href$="bmp"], a[href$="gif"], a[href$="png"]').each(function(i)
 		{
 			// Show ImageViewer onclick
 			$(this).click(function()
@@ -27,7 +27,7 @@ $.fn.ImageViewerDisplay = function(currentImgNum)
 		// Get all links that point to images in this scope
 		currentImgNum	= parseInt(currentImgNum);
 		var t			= $(this);
-		var imgs		= t.find('a[@href$="jpg"], a[@href$="bmp"], a[@href$="gif"], a[@href$="png"]');
+		var imgs		= t.find('a[href$="jpg"], a[href$="bmp"], a[href$="gif"], a[href$="png"]');
 		var numImgs		= imgs.length;
 
 		if(numImgs < 1)	return false;

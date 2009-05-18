@@ -32,5 +32,5 @@
 <xar:if condition="!empty($selector)">
     <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').ifixpng();});" />
 <xar:else />
-    <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('img[@src$=.png]').ifixpng();});" />
+    <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('img[src$=.png]').ifixpng();});" />
 </xar:if>

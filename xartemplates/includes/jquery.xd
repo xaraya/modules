@@ -1,4 +1,4 @@
-<xar:base-include-javascript filename="jquery.pack.js" module="jquery" />
+<xar:base-include-javascript filename="jquery.min.js" module="jquery" />
 
 <xar:comment>
     Enable these plugins if you want compatibility with some older plugins.
