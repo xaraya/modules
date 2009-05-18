@@ -1,6 +1,6 @@
 /**
  * jCarouselLite - jQuery plugin to navigate images/any content in a carousel style widget.
- * @requires jQuery v1.1.3.1 or above
+ * @requires jQuery v1.2 or above
  *
  * http://gmarwaha.com/jquery/jcarousellite/
  *
@@ -9,7 +9,8 @@
  * http://www.opensource.org/licenses/mit-license.php
  * http://www.gnu.org/licenses/gpl.html
  *
- * Version: 1.0
+ * Version: 1.0.1
+ * Note: Requires jquery 1.2 or above from version 1.0.1
  */
 
 /**
@@ -81,7 +82,7 @@
  * $(".carousel").jCarouselLite({
  *      mouseWheel: true
  * });
- * @desc The carousel can also be navigated using the mouse wheel interface of a scroll mouse instead of using buttons. 
+ * @desc The carousel can also be navigated using the mouse wheel interface of a scroll mouse instead of using buttons.
  * To get this feature working, you have to do 2 things. First, you have to include the mouse-wheel plugin from brandon.
  * Second, you will have to set the option "mouseWheel" to true. That's it, now you will be able to navigate your carousel
  * using the mouse wheel. Using buttons and mouseWheel or not mutually exclusive. You can still have buttons for navigation
@@ -99,9 +100,9 @@
  *      auto: 800,
  *      speed: 500
  * });
- * @desc You can make your carousel auto-navigate itself by specfying a millisecond value in this option. 
+ * @desc You can make your carousel auto-navigate itself by specfying a millisecond value in this option.
  * The value you specify is the amount of time between 2 slides. The default is null, and that disables auto scrolling.
- * Specify this value and magically your carousel will start auto scrolling. 
+ * Specify this value and magically your carousel will start auto scrolling.
  *
  * @option speed : number - 200 is default
  * @example
@@ -112,16 +113,16 @@
  * });
  * @desc Specifying a speed will slow-down or speed-up the sliding speed of your carousel. Try it out with
  * different speeds like 800, 600, 1500 etc. Providing 0, will remove the slide effect.
- * 
+ *
  * @option easing : string - no easing effects by default.
  * @example
  * $(".carousel").jCarouselLite({
  *      btnNext: ".next",
  *      btnPrev: ".prev",
  *      easing: "bounceout"
- * }); 
+ * });
  * @desc You can specify any easing effect. Note: You need easing plugin for that. Once specified,
- * the carousel will slide based on the provided easing effect. 
+ * the carousel will slide based on the provided easing effect.
  *
  * @option vertical : boolean - default is false
  * @example
@@ -133,7 +134,7 @@
  * @desc Determines the direction of the carousel. true, means the carousel will display vertically. The next and
  * prev buttons will slide the items vertically as well. The default is false, which means that the carousel will
  * display horizontally. The next and prev items will slide the items from left-right in this case.
- * 
+ *
  * @option circular : boolean - default is true
  * @example
  * $(".carousel").jCarouselLite({
@@ -145,7 +146,7 @@
  * element, you will automatically slide to the first element and vice versa. If you set circular to false, then
  * if you click on the "next" button after you reach the last element, you will stay in the last element itself
  * and similarly for "previous" button and first element.
- * 
+ *
  * @option visible : number - default is 3
  * @example
  * $(".carousel").jCarouselLite({
@@ -165,7 +166,7 @@
  *      start: 2
  * });
  * @desc You can specify from which item the carousel should start. Remember, the first item in the carousel
- * has a start of 0, and so on. 
+ * has a start of 0, and so on.
  *
  * @option scrool : number - default is 1
  * @example
@@ -174,11 +175,11 @@
  *      btnPrev: ".prev",
  *      scroll: 2
  * });
- * @desc The number of items that should scroll/slide when you click the next/prev navigation buttons. By 
- * default, only one item is scrolled, but you may set it to any number. Eg: setting it to "2" will scroll 
+ * @desc The number of items that should scroll/slide when you click the next/prev navigation buttons. By
+ * default, only one item is scrolled, but you may set it to any number. Eg: setting it to "2" will scroll
  * 2 items when you click the next or previous buttons.
  *
- * @option beforeStart, afterEnd : function - callbacks  
+ * @option beforeStart, afterEnd : function - callbacks
  * @example
  * $(".carousel").jCarouselLite({
  *      btnNext: ".next",
@@ -192,7 +193,7 @@
  * });
  * @desc If you wanted to do some logic in your page before the slide starts and after the slide ends, you can
  * register these 2 callbacks. The functions will be passed an argument that represents an array of elements that
- * are visible at the time of callback. 
+ * are visible at the time of callback.
  *
  *
  * @cat Plugins/Image Gallery
@@ -200,7 +201,7 @@
  */
 
 (function($) {                                          // Compliant with jquery.noConflict()
-$.fn.jCarouselLite = function(o) {   
+$.fn.jCarouselLite = function(o) {
     o = $.extend({
         btnPrev: null,
         btnNext: null,
@@ -222,53 +223,40 @@ $.fn.jCarouselLite = function(o) {
     }, o || {});
 
     return this.each(function() {                           // Returns the element collection. Chainable.
-            
+
         var running = false, animCss=o.vertical?"top":"left", sizeCss=o.vertical?"height":"width";
         var div = $(this), ul = $("ul", div), tLi = $("li", ul), tl = tLi.size(), v = o.visible;
 
         if(o.circular) {
-            ul.prepend(tLi.slice(tl-v-1).clone()).append(tLi.slice(0,v-1).clone());
-            o.start += v + 1;
+            ul.prepend(tLi.slice(tl-v-1+1).clone())
+              .append(tLi.slice(0,v).clone());
+            o.start += v;
         }
-        
-        var li = $("li", ul), itemLength = li.size(), curr = o.start;                       
+
+        var li = $("li", ul), itemLength = li.size(), curr = o.start;
         div.css("visibility", "visible");
 
-        li.css("overflow", "hidden")                        // If the list item size is bigger than required
-            .css("float", o.vertical ? "none" : "left")     // Horizontal list
-            .children().css("overflow", "hidden");          // If the item within li overflows its size, hide'em
+        li.css({overflow: "hidden", float: o.vertical ? "none" : "left"});
+        ul.css({margin: "0", padding: "0", position: "relative", "list-style-type": "none", "z-index": "1"});
+        div.css({overflow: "hidden", position: "relative", "z-index": "2", left: "0px"});
 
-        ul.css("margin", "0")                               // Browsers apply default margin 
-            .css("padding", "0")                            // and padding. It is reset here.
-            .css("position", "relative")                    // IE BUG - width as min-width
-            .css("list-style-type", "none")                 // We dont need any icons representing each list item.
-            .css("z-index", "1");                           // IE doesnt respect width. So z-index smaller than div
-
-        div.css("overflow", "hidden")                       // Overflows - works in FF
-            .css("position", "relative")                    // position relative and z-index for IE
-            .css("z-index", "2")                            // more than ul so that div displays on top of ul
-            .css("left", "0px");                            // after creating carousel show it on screen
-                
         var liSize = o.vertical ? height(li) : width(li);   // Full li size(incl margin)-Used for animation
         var ulSize = liSize * itemLength;                   // size of full ul(total length, not just for the visible items)
         var divSize = liSize * v;                           // size of entire div(total length for just the visible items)
 
-        li.css("width", li.width())                         // inner li width. this is the box model width
-            .css("height", li.height());                    // inner li height. this is the box model height
-
-        ul.css(sizeCss, ulSize+"px")                        // Width of the UL is the full length for all the images
-            .css(animCss, -(curr*liSize));                  // Set the starting item
+        li.css({width: li.width(), height: li.height()});
+        ul.css(sizeCss, ulSize+"px").css(animCss, -(curr*liSize));
 
         div.css(sizeCss, divSize+"px");                     // Width of the DIV. length of visible images
 
-        if(o.btnPrev)                 
-            $(o.btnPrev).click(function() { 
-                return go(curr-o.scroll); 
+        if(o.btnPrev)
+            $(o.btnPrev).click(function() {
+                return go(curr-o.scroll);
             });
-        
+
         if(o.btnNext)
-            $(o.btnNext).click(function() { 
-                return go(curr+o.scroll); 
+            $(o.btnNext).click(function() {
+                return go(curr+o.scroll);
             });
 
         if(o.btnGo)
@@ -279,18 +267,18 @@ $.fn.jCarouselLite = function(o) {
             });
 
         if(o.mouseWheel && div.mousewheel)
-            div.mousewheel(function(e, d) { 
+            div.mousewheel(function(e, d) {
                 return d>0 ? go(curr-o.scroll) : go(curr+o.scroll);
             });
 
         if(o.auto)
-            setInterval(function() { 
-                go(curr+o.scroll); 
+            setInterval(function() {
+                go(curr+o.scroll);
             }, o.auto+o.speed);
 
         function vis() {
-            return li.slice(curr-1).slice(0,v-1);
-        };  
+            return li.slice(curr).slice(0,v);
+        };
 
         function go(to) {
             if(!running) {
@@ -300,12 +288,12 @@ $.fn.jCarouselLite = function(o) {
 
                 if(o.circular) {            // If circular we are in first or last, then goto the other end
                     if(to<=o.start-v-1) {           // If first, then goto last
-                        ul.css(animCss, -((itemLength-(v*2))*liSize)+"px");  
-                        // If "scroll" > 1, then the "to" might not be equal to the condition; it can be lesser depending on the number of elements. 
+                        ul.css(animCss, -((itemLength-(v*2))*liSize)+"px");
+                        // If "scroll" > 1, then the "to" might not be equal to the condition; it can be lesser depending on the number of elements.
                         curr = to==o.start-v-1 ? itemLength-(v*2)-1 : itemLength-(v*2)-o.scroll;
                     } else if(to>=itemLength-v+1) { // If last, then goto first
                         ul.css(animCss, -( (v) * liSize ) + "px" );
-                        // If "scroll" > 1, then the "to" might not be equal to the condition; it can be greater depending on the number of elements. 
+                        // If "scroll" > 1, then the "to" might not be equal to the condition; it can be greater depending on the number of elements.
                         curr = to==itemLength-v+1 ? v+1 : v+o.scroll;
                     } else curr = to;
                 } else {                    // If non-circular and to points to first or last, we just return.
@@ -326,8 +314,8 @@ $.fn.jCarouselLite = function(o) {
                 // Disable buttons when the carousel reaches the last/first, and enable when not
                 if(!o.circular) {
                     $(o.btnPrev + "," + o.btnNext).removeClass("disabled");
-                    $( (curr-o.scroll<0 && o.btnPrev) 
-                        || 
+                    $( (curr-o.scroll<0 && o.btnPrev)
+                        ||
                        (curr+o.scroll > itemLength-v && o.btnNext)
                         ||
                        []
