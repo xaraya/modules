@@ -66,7 +66,7 @@ jQuery(document).ready(function() {
 			
 			// IE Fix
 			if(this.currentStyle!=null && this.currentStyle.hasLayout!=null && this.currentStyle.hasLayout==false)
-				jQuery(this).css("display","inline-block");
+				jQuery(this).css("display","inline-block").css("width","100%");
 
 			if(top!="") {
 				//add top
