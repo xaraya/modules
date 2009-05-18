@@ -43,8 +43,7 @@ function polls_user_display($args)
         return;
     }
 
-    $data = array();
-    $data['title'] = $poll['title'];
+    $data = $poll;
     $data['returnurl'] =  xarServerGetCurrentURL();
 
     // See if user is allowed to vote
@@ -52,16 +51,12 @@ function polls_user_display($args)
         if (xarModAPIFunc('polls', 'user', 'usercanvote', array('pid' => $pid)) && $poll['state'] == 'open') {
             // They have not voted yet, display voting options
             $data['canvote'] = 1;
-            $data['type'] = $poll['type'];
-            $data['private'] = $poll['private'];
             $data['resultsurl'] = xarModURL(
                 'polls', 'user', 'results',
                 array('pid' => $poll['pid'])
             );
             $data['previewresults'] = xarModGetVar('polls', 'previewresults');
             $data['authid'] = xarSecGenAuthKey('polls');
-            $data['pid'] =  $poll['pid'];
-            $data['options'] = $poll['options'];
         } else {
             // They have just voted, display current results of that poll.
             return xarModFunc('polls', 'user', 'results', array('pid' => $pid));
@@ -77,7 +72,8 @@ function polls_user_display($args)
         $item['returnurl'] = xarModURL('polls','user', 'display', array('pid' => $poll['pid']));
         $hooks = xarModCallHooks('item','display', $poll['pid'], $item);
 
-        $data['hookoutput'] = join('',$hooks);
+        $data['hookoutput'] = trim(join('', $hooks));
+        $data['hooks'] = $hooks;
     } else {
         $data['hookoutput'] = '';
     }

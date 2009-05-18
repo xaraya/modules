@@ -12,6 +12,10 @@
     <h2>
         #xarVarPrepForDisplay($title)#
     </h2>
+
+    <xar:comment>Create an 'introduction' DD text area to have it displayed at the top of the poll result.</xar:comment>
+    <xar:if condition="!empty($dynamicdata.introduction)">#$dynamicdata.introduction#</xar:if>
+    
     <div class="xar-center xar-standard-box-padding">
         <xar:if condition="$private">
             <div>
@@ -42,6 +46,7 @@
             </table>
         </xar:if>
     </div>
+
     <div class="xar-standard-box-padding xar-align-center">
         <xar:if condition="$showtotalvotes eq 1">
             <strong>
@@ -52,6 +57,7 @@
             </strong>
         </xar:if>
     </div>    
+
     <div class="xar-standard-box-padding xar-align-center">  
         <xar:if condition="$open eq 1 and $state eq 'open'">
             <p>
@@ -71,7 +77,11 @@
             <xar:mlstring>Main List</xar:mlstring>
         </a>
     </div>
+
+    <xar:comment>Create a 'footer' DD text area to have it displayed underneath the poll result.</xar:comment>
+    <xar:if condition="!empty($dynamicdata.footer)">#$dynamicdata.footer#</xar:if>
 </div>
 <div class="xar-standard-box-padding xar-align-center">
 #$hookoutput#
 </div>
+<xar:comment><xar:set name="dummy">var_dump($hooks)</xar:set></xar:comment>

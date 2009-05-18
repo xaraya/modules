@@ -166,7 +166,8 @@ function polls_userapi_getall($args)
     }
 
     // Put polls into result array.
-    for (; !$result->EOF; $result->MoveNext()) {
+    $index = array();
+    for ($i=0; !$result->EOF; $i+=1, $result->MoveNext()) {
         list($pid, $title, $type, $open, $private, $modid, $itemtype, $itemid, $opts, $votes, $start_date, $end_date, $reset) = $result->fields;
 
         if (xarSecurityCheck('ViewPolls', 0, 'Polls', "$title:$type")) {
@@ -212,7 +213,10 @@ function polls_userapi_getall($args)
                 }
             }
 
-            $polls[] = array(
+            // Maintain index so we can add in the dynamic data info.
+            $index[$pid] = $i;
+
+            $polls[$i] = array(
                 'pid' => $pid,
                 'title' => $title,
                 'type' => $type,
@@ -232,6 +236,21 @@ function polls_userapi_getall($args)
 
             // Break out of the loop if we want to stop after the first poll found.
             if (!empty($fetchone)) break;
+        }
+    }
+
+    // Get dynamicdata field values. if hooked.
+    if (xarModIsHooked('dynamicdata', 'polls', 0)) {
+        $dd_data = xarModAPIfunc(
+            'dynamicdata', 'user', 'getitems',
+            array('module' => 'polls', 'itemtype' => 0, 'itemids' => array_keys($index))
+        );
+
+        // Copy the values to a convenient keyed array.
+        if (!empty($dd_data)) {
+            foreach($dd_data as $dd_key => $dd_items) {
+                if (isset($index[$dd_key]) && isset($polls[$index[$dd_key]])) $polls[$index[$dd_key]]['dynamicdata'] = $dd_items;
+            }
         }
     }
 

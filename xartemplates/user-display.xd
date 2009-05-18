@@ -22,6 +22,10 @@
                 <legend>
                     #xarVarPrepForDisplay($title)#
                 </legend>
+
+                <xar:comment>Create an 'introduction' DD text area to have it displayed at the top of the poll form.</xar:comment>
+                <xar:if condition="!empty($dynamicdata.introduction)">#$dynamicdata.introduction#</xar:if>
+                
                 <input type="hidden" name="authid" value="#$authid#" />
                 <input type="hidden" name="pid" value="#$pid#" />
                 <input type="hidden" name="returnurl" value="#$returnurl#" />
@@ -44,6 +48,8 @@
                         </li>
                     </xar:for>
                 </ul>
+                <xar:comment>Create a 'footer' DD text area to have it displayed underneath the poll form.</xar:comment>
+                <xar:if condition="!empty($dynamicdata.footer)">#$dynamicdata.footer#</xar:if>
             </fieldset>
             <p class="xar-form-input-wrapper-after xar-polls-vote-wrapper">
                 <input type="submit" value="#$buttonlabel#" />
