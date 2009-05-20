@@ -53,12 +53,14 @@ function soapserver_userapi_initsoapserver()
     $server->configureWSDL('xaraya', 'urn:xar', xarServerGetBaseURL() . '/ws.php?type=soap');
 
     // Two functions to register.
-    $server->register('wsModAPISimpleFunc',
+    $server->register(
+        // Method name.
+        'wsModAPISimpleFunc',
         // input parameters - args is a polymorphic struct
         array(
             'module' => 'xsd:string',
-            'func' => 'xsd:string',
             'type' => 'xsd:string',
+            'func' => 'xsd:string',
             'username' => 'xsd:string',
             'password' => 'xsd:string',
             'args' => 'xsd:struct'
@@ -74,12 +76,14 @@ function soapserver_userapi_initsoapserver()
         'Simple API function'
     );
 
-    $server->register('wsModAPIFunc',
+    $server->register(
+        // Method name.
+        'wsModAPIFunc',
         // input parameters - args is a polymorphic struct
         array(
             'module' => 'xsd:string',
-            'func' => 'xsd:string',
             'type' => 'xsd:string',
+            'func' => 'xsd:string',
             'username' => 'xsd:string',
             'password' => 'xsd:string',
             'args' => 'xsd:struct'
@@ -88,10 +92,15 @@ function soapserver_userapi_initsoapserver()
         array(
             'output' => 'xsd:any'
         ),
+        // namespace
         'urn:xar',
-        false, // soapaction
+        // soapaction
+        false, // 'urn:xar#wsModAPIFunc'
+        // style
         'rpc',
+        // use
         'encoded',
+        // Documentation
         'API function'
     );
 

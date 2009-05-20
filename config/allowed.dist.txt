@@ -1,0 +1,22 @@
+# Allowed APIs
+#
+# This config file defines which APIs can be served through
+# the soap server.
+# 
+# To customise, copy this file (allowed.dist.txt) to 'allowed.txt'
+#
+# Format:
+# module:type:func group[,group]
+#
+# Wildcard '*' matches any parameter
+
+# Examples:
+#authxml:user:login *
+#articles:user:getall *
+
+# Allow everything
+#*:*:* *
+
+# Allow only the test 'hello' API by default
+soapserver:user:hello *
+

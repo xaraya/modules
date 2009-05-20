@@ -28,9 +28,10 @@
 * @param $params['args'] the arguments for the function to call
 * @returns resultarray
 */
-function wsModAPIFunc(&$request_data)
+function wsModAPIFunc($module, $type = '', $func = '', $username = '', $password = '', $args = array())
 {
-    extract($request_data);
+    // If all the parameters come in as a single struct, then extract them.
+    if (is_array($module)) extract($module);
 
 /*
 $data = print_r($request_data, true);
@@ -40,6 +41,8 @@ fclose($fd);
 */
 
     // If the soap client sent an extra layer in the array, then strip it out.
+    // For legacy reasons, the arguments may be passed over SOAP as straight arguments,
+    // or wrapped in a single polymorphic struct - we need to be able to cater for both.
     if (isset($wsModApiFuncRequest) && is_array($wsModApiFuncRequest)) { 
         extract($wsModApiFuncRequest);
     }
@@ -48,32 +51,32 @@ fclose($fd);
     }
     
 
-    if (empty($module)) {
-        $error = new nusoap_fault('Client', 'Xaraya', 'Must supply a module name', ''); 
+    if (empty($module) || !xarVarValidate('pre:vtoken:str:1', $module)) {
+        $error = new nusoap_fault('Client', 'Xaraya', 'Missing module name', ''); 
         return $error;
     }
     
-    if (empty($type)) {
-        $error = new nusoap_fault('Client', 'Xaraya', 'Must supply a type', ''); 
+    if (empty($type) || !xarVarValidate('pre:vtoken:str:1', $type)) {
+        $error = new nusoap_fault('Client', 'Xaraya', 'Missing API type', ''); 
         return $error;
     }
     
-    if (empty($func)) {
-        $error = new nusoap_fault('Client', 'Xaraya', 'Must supply a function', ''); 
+    if (empty($func) || !xarVarValidate('pre:vtoken:str:1', $func)) {
+        $error = new nusoap_fault('Client', 'Xaraya', 'Missing API function', ''); 
         return $error;
     }
     
     if (empty($username)) {
-        $error = new nusoap_fault('Client', 'Xaraya', 'Must supply a user name', ''); 
+        $error = new nusoap_fault('Client', 'Xaraya', 'Missing user name', ''); 
         return $error;
     }
     
     if (empty($password)) {
-        $error = new nusoap_fault('Client', 'Xaraya', 'Must supply a password', ''); 
+        $error = new nusoap_fault('Client', 'Xaraya', 'Missing password', ''); 
         return $error;
     }
 
-    if(!isset($args) || !is_array($args)) { 
+    if (!isset($args) || !is_array($args)) { 
         $args = array();
     }
     
@@ -89,7 +92,12 @@ fclose($fd);
     // A mapping of role groups against module/type/functions, with wildcard support, may be a way to go.
 
     // Get a list of matching rows from the 'allowed.txt' list of APIs
-    $allowed_file = realpath('modules/soapserver/config/allowed.txt');
+    $allowed_file_path = 'modules/soapserver/config/allowed.txt';
+    if (!is_file($allowed_file_path) || !is_readable($allowed_file_path)) {
+        $allowed_file_path = 'modules/soapserver/config/allowed.dist.txt';
+    }
+
+    $allowed_file = realpath($allowed_file_path);
     $lines = @file($allowed_file);
     if (!empty($lines)) {
         $preg_pattern = "/^($module|\*):($type|\*):($func|\*)(\s|$)/";
@@ -140,9 +148,9 @@ fclose($fd);
     }
 }
 
-function wsModApiSimpleFunc(&$request_data) 
+function wsModApiSimpleFunc($module, $type = '', $func = '', $username = '', $password = '', $args = array()) 
 { 
-    return wsModAPIFunc($request_data);
+    return wsModAPIFunc($module, $type, $func, $username, $password, $args);
 }
 
 function webservices_userapi_getmenulinks()
