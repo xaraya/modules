@@ -44,12 +44,17 @@ class TPLParser
         $reader->xml($filestring);
         $nodes = array();
         $i = 0;
-        // Ignore xar:set nodes and take all other text nodes
+
         while ($reader->read()) {
             $i++;
-            if ($reader->name == "xar:set") {
-                continue;
-            } elseif ($reader->nodeType == XMLReader::TEXT) {
+            
+        // Ignore certain nodes            
+            if ($reader->name == "xar:set" || $reader->name == "xar:comment") {
+                if (!$reader->next()) break;
+                $i++;
+            }
+            
+            if ($reader->nodeType == XMLReader::TEXT) {
                $string = $reader->value;
             }
             else if ($reader->name == "xar:mlstring") {
@@ -60,6 +65,10 @@ class TPLParser
             $string = trim($string);
             $string = preg_replace('/[\t ]+/',' ',$string);
             $string = preg_replace('/\s*\n\s*/',"\n",$string);
+
+           // Ignore stuff enclosed by hashes
+           if (substr$string,0,1) == '#') continue;
+               
             $this->transEntries[$string][] = array('line' => $i, 'file' => $this->filename);
         }
         $reader->close();
