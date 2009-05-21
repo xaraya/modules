@@ -1,0 +1,11 @@
+<xar:comment>
+    Load the ui core.
+    This is provied for some other plugins that need this core, and is not intended to
+    be a full ui implementation at this time.
+    Ultimately ui would have its own loading framework, where whatever components (effects
+    and widgets) of ui that are required can be loaded in one go, and in a consistent and
+    easy way.
+</xar:comment>
+
+<xar:template file="jquery" module="jquery" />
+<xar:base-include-javascript filename="ui/ui.core.js" module="jquery" />

@@ -533,6 +533,22 @@
         <div style="clear: both;"></div>
     </div>
 
+    <h2><xar:mlstring>scrollFollow</xar:mlstring></h2>
+    <p><xar:mlstring>Keep an object visible within the viewport.</xar:mlstring></p>
+    <xar:set name="bottom">"'bottom'"</xar:set>
+    <xar:template file="jquery.scrollfollow" module="jquery" subdata="array('selector'=&gt;'#followme1','options'=&gt;'')" />
+    <xar:template file="jquery.scrollfollow" module="jquery" subdata="array('selector'=&gt;'#followme2','options'=&gt;'relativeTo: '.$bottom)" />
+
+    <div>
+        <div style="border: 1px solid #33ff33; height: 200px; width: 45%; margin-right: 4px; float: left;">
+            <div id="followme1" style="position: relative; border: 2px solid #3333ff; height: 2em; text-align: center; font-weight: bold;">Follow me (sticks to top)</div>
+        </div>
+        <div style="border: 1px solid #33ff33; height: 200px; width: 45%; float: left;">
+            <div id="followme2" style="position: relative; border: 2px solid #3333ff; height: 2em; text-align: center; font-weight: bold;">Follow me (sticks to bottom)</div>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+
     <h2 id=""><xar:mlstring>FAQ List</xar:mlstring></h2>
     <p><xar:mlstring>Display a FAQ using a definition list, as pairs of question/answers</xar:mlstring></p>
 

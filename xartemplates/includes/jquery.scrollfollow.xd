@@ -1,0 +1,17 @@
+<xar:comment>
+    scrollFollow plugin.
+</xar:comment>
+
+<xar:template file="jquery" module="jquery" />
+<xar:template file="ui.core" module="jquery" />
+
+<xar:base-include-javascript filename="jquery.scrollfollow.js" module="jquery" />
+
+<xar:if condition="!empty($selector)">
+    <xar:if condition="!empty($options)">
+        <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').scrollFollow({ $options });});" />
+    <xar:else />
+        <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery('$selector').scrollFollow();});" />
+    </xar:if>
+</xar:if>
+
