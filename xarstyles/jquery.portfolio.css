@@ -1,0 +1,27 @@
+
+/* Required class for removing an item after it has been faded. */
+
+div#portfolio-filtered img.hidden {
+    display: none;
+}
+
+/* Styling */
+
+div#portfolio-filter {
+    margin: 1em 0;
+}
+
+div#portfolio-filter a {
+    border: 1px solid #ffffff;
+    margin: 0 1em;
+    padding: 3px;
+}
+
+div#portfolio-filter a.current {
+    border-color: #ff3333;
+}
+
+div#portfolio-filtered img.hidden {
+    float: left;
+    margin-right: 4px;
+}

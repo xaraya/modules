@@ -10,6 +10,24 @@
     <p><xar:mlstring>Note: the Xaraya_Classic theme causes most of these plugins to fail one way or another.
     We don't know where the fault lies, but it is something to bear in mind when trying this demo out.</xar:mlstring></p>
 
+    <h2><xar:mlstring>portfolio - filter a list of items</xar:mlstring></h2>
+
+    <xar:set name="portfolio_options">"filterSelector: 'div#portfolio-filter a', itemSelector: 'div#portfolio-filtered img', filterStyledWrapper: 'a', fadeOutSpeed: 'slow', fadeInSpeed: 'slow'"</xar:set>
+    <xar:template file="jquery.portfolio" module="jquery" subdata="array('options'=&gt;$portfolio_options)" />
+    <xar:style file='jquery.portfolio' scope="module" module="jquery" />
+
+    <div id="portfolio-filter">
+        <a href="#" class="current">All</a> | <a href="#">Day</a> | <a href="#">Night</a> | <a href="#">Blue</a> | <a href="#">Green</a>
+    </div>
+
+    <div id="portfolio-filtered">
+        <img src="modules/jquery/xarimages/gallery/image1.thumbnail.jpg" class="day blue" />
+        <img src="modules/jquery/xarimages/gallery/image2.thumbnail.jpg" class="night blue" />
+        <img src="modules/jquery/xarimages/gallery/image3.thumbnail.jpg" class="day green" />
+        <img src="modules/jquery/xarimages/gallery/image4.thumbnail.jpg" class="night blue" />
+        <div style="clear: both;"></div>
+    </div>
+
     <h2><xar:mlstring>fancybox - animated pop-up images</xar:mlstring></h2>
 
     <xar:template file="jquery.fancybox" module="jquery" subdata="array('selector'=&gt;'a.fancybox')" />

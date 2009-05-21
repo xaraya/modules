@@ -1,0 +1,16 @@
+<xar:comment>
+    portfolio plugin.
+</xar:comment>
+
+<xar:template file="jquery" module="jquery" />
+
+<xar:base-include-javascript filename="jquery.portfolio.js" module="jquery" />
+
+<xar:comment>
+    This plugin does not accept a selector, since it rquires two separate selectors to function correctly.
+</xar:comment>
+<xar:if condition="!empty($options)">
+    <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery().portfolio({ $options });});" />
+<xar:else />
+    <xar:base-include-javascript type="code" code="jQuery(document).ready(function(){jQuery().portfolio();});" />
+</xar:if>
