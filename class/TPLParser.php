@@ -67,7 +67,7 @@ class TPLParser
             $string = preg_replace('/\s*\n\s*/',"\n",$string);
 
            // Ignore stuff enclosed by hashes
-           if (substr$string,0,1) == '#') continue;
+           if (substr($string,0,1) == '#') continue;
                
             $this->transEntries[$string][] = array('line' => $i, 'file' => $this->filename);
         }
