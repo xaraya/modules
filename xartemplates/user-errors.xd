@@ -1,0 +1,27 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head"><span class="xar-mod-title">Foo Error</span></div>
+    <div class="xar-mod-body">
+        <fieldset>
+        <legend>Problem Logging In</legend>
+            <img src="#xarTplGetImage('sysmessage.jpg','base')#" alt="#xarML('System Message')#" width="96" height="96" class="xar-module-icon" />
+            <xar:if condition="!isset($layout)">
+                <div style="margin-top: 20px; margin-left: 20px">
+                    No error message is available.
+                    <br />
+                    Please contact the system administrator.
+                </div>                    
+            <xar:elseif condition="$layout eq 'foo_error'" />
+                <div style="margin-top: 20px; margin-left: 20px">
+                    This is an error
+                </div>
+            <xar:else />
+                <div style="margin-top: 20px; margin-left: 20px">
+                    No error message is available.
+                    <br />
+                    Please contact the system administrator.
+                </div>                    
+            </xar:if>                
+        </fieldset>
+    </div>
+</xar:template>
