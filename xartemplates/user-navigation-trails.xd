@@ -18,6 +18,7 @@ The 'baseflag' variable allows you to skip certain categories in the trail :
   #$loop:catitems:item['baseflag']# = 2 : base category
   #$loop:catitems:item['baseflag']# = 3 : below the base category
   #$loop:catitems:item['baseflag']# = 4 : current category
+  #$loop:catitems:item['baseflag']# = 5 : any of these/all of these categories links (bug #6229)
 </xar:comment>
                 #$loop:catitems:item['catjoin']#
                 <xar:if condition="empty($loop:catitems:item['catlink'])">
