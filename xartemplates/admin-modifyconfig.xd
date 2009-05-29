@@ -20,6 +20,8 @@
 
     <div style="margin: auto;">
         <form class="xar-xarpages-admin" action="#xarModUrl('xarpages', 'admin', 'modifyconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" >
+            <xar:set name="subdata">array('modulename' => 'xarpages')</xar:set>
+            <xar:template file="display" module="base" subdata="$subdata" />
             <fieldset class="formelements xar-norm">
                 <legend>
                     <strong><xar:mlstring>Properties</xar:mlstring></strong>

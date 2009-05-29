@@ -64,22 +64,52 @@
                         <td class="#$row_class#" title="#xarML('Status: ')# #$loop:item.status#"><span class="xar-xarpages-status-#$loop:item.status#">#xarVarPrepForDisplay($loop:item.pagetype.name)#: #xarVarPrepForDisplay($loop:item.desc)#</span></td>
                         <td class="#$row_class#" style="text-align: center;">
                             <xar:if condition="!empty($loop:item.edit_allowed)">
-                                <a href="#xarModURL('xarpages', 'admin', 'modifypage', array('pid' =&gt; $loop:item.pid))#">
-                                    <xar:mlstring>Modify</xar:mlstring>
-                                </a>
+                                <xar:set name="link">
+                                    xarModURL('xarpages', 'admin', 'modifypage', array('pid' => $loop->item['pid']))
+                                </xar:set>
+                                <xar:if condition="xarModVars::get('xarpages', 'useicons')">
+                                    <xar:set name="icon">
+                                        xarTplImage('icons/modify.png', 'base')
+                                    </xar:set>
+                                    <xar:data-output type="urlicon" link="$link" icon="$icon" />
+                                <xar:else />
+                                    <a href="#$link#">
+                                        <xar:mlstring>Modify</xar:mlstring>
+                                    </a>
+                                </xar:if>
                                 &#160;|&#160;
                             </xar:if>
 
+                            <xar:set name="link">
+                                xarModURL('xarpages', 'admin', 'deletepage', array('pid' => $loop->item['pid']))
+                            </xar:set>
                             <xar:if condition="!empty($loop:item.delete_allowed)">
-                                <a href="#xarModURL('xarpages', 'admin', 'deletepage', array('pid' =&gt; $loop:item.pid))#">
-                                    <xar:mlstring>Delete</xar:mlstring>
-                                </a>
+                                <xar:if condition="xarModVars::get('xarpages', 'useicons')">
+                                    <xar:set name="icon">
+                                        xarTplImage('icons/delete.png', 'base')
+                                    </xar:set>
+                                    <xar:data-output type="urlicon" link="$link" icon="$icon" />
+                                <xar:else />
+                                    <a href="#$link#">
+                                        <xar:mlstring>Delete</xar:mlstring>
+                                    </a>
+                                </xar:if>
                                 &#160;|&#160;
                             </xar:if>
 
-                            <a href="#xarModURL('xarpages', 'user', 'display', array('pid' =&gt; $loop:item.pid))#">
-                                <xar:mlstring>Display</xar:mlstring>
-                            </a>
+                            <xar:set name="link">
+                                xarModURL('xarpages', 'user', 'display', array('pid' => $loop->item['pid']))
+                            </xar:set>
+                            <xar:if condition="xarModVars::get('xarpages', 'useicons')">
+                                <xar:set name="icon">
+                                    xarTplImage('icons/display.png', 'base')
+                                </xar:set>
+                                <xar:data-output type="urlicon" link="$link" icon="$icon" />
+                            <xar:else />
+                                <a href="#$link#">
+                                    <xar:mlstring>Display</xar:mlstring>
+                                </a>
+                            </xar:if>
                         </td>
                     </tr>
                 </xar:if>

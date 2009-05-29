@@ -84,6 +84,10 @@ function xarpages_admin_modifyconfig($args)
         xarVarFetch('transformfields', 'strlist: ,;|:pre:trim:vtoken', $transformfields, '', XARVAR_NOT_REQUIRED);
         xarModVars::set('xarpages', 'transformfields', $transformfields);
         $data['transformfields'] = $transformfields;
+
+        // Use icons in hte UI
+        xarVarFetch('useicons', 'checkbox', $useicons, 0, XARVAR_NOT_REQUIRED);
+        xarModVars::set('xarpages', 'useicons', $useicons);
     }
 
     // Check any problem aliases

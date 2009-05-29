@@ -96,6 +96,7 @@ function xarpages_init()
     xarModVars::set('xarpages', 'transformref', 1);
     xarModVars::set('xarpages', 'transformfields', 'body');
     xarModVars::set('xarpages', 'show_usernavbar', true);
+    xarModVars::set('xarpages', 'useicons', false);
     
     // Switch short URL support on by default, as that is largely
     // the purpose of this module.
