@@ -261,7 +261,8 @@
                 // this will also pass any dynamic data fields (if any)
                 $items[] = $article;
             }
-            $data['content']['items'] = $items;
+            $data['items'] = $items;
+            $data['content'] = $data;
             return $data;
         }    
 
