@@ -40,12 +40,8 @@ class EditorProperty extends TextAreaProperty
         if ($this->version == 'fckeditor') {
             sys::import('modules.ckeditor.xartemplates.includes.fckeditor.fckeditor');
             $editorpath = 'modules/ckeditor/xartemplates/includes/fckeditor/';
-            if(!isset($data['name'])) $data['name'] = $this->name;
-            if(!empty($this->_fieldprefix) || $this->_fieldprefix === 0)  $prefix = $this->_fieldprefix . '_';
-            // A field prefix added here can override the previous one
-            if(isset($data['fieldprefix']))  $prefix = $data['fieldprefix'] . '_';
-            if(!empty($prefix)) $data['name'] = $prefix . $data['name'];
-            $this->editor = new FCKeditor($data['name']) ;
+            $name = $this->getCanonicalName($data);
+            $this->editor = new FCKeditor($name) ;
             $this->editor->BasePath = $editorpath;
             $this->editor->Value = $this->value;
             $data['editor'] = $this->editor;
