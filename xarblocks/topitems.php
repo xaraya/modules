@@ -47,7 +47,7 @@
         
         public function display(Array $data=array())
         {
-            $data = parent::display($data);
+            $data['content'] = parent::display($data);
 
             // see if we're currently displaying an article
             if (xarVarIsCached('Blocks.publications', 'id')) {
@@ -261,8 +261,7 @@
                 // this will also pass any dynamic data fields (if any)
                 $items[] = $article;
             }
-            $data['items'] = $items;
-            $data['content'] = $data;
+            $data['content']['items'] = $items;
             return $data;
         }    
 
