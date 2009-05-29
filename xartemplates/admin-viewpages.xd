@@ -69,7 +69,7 @@
                                 </xar:set>
                                 <xar:if condition="xarModVars::get('xarpages', 'useicons')">
                                     <xar:set name="icon">
-                                        xarTplImage('icons/modify.png', 'base')
+                                        xarTplGetImage('icons/modify.png', 'base')
                                     </xar:set>
                                     <xar:data-output type="urlicon" link="$link" icon="$icon" />
                                 <xar:else />
@@ -86,7 +86,7 @@
                             <xar:if condition="!empty($loop:item.delete_allowed)">
                                 <xar:if condition="xarModVars::get('xarpages', 'useicons')">
                                     <xar:set name="icon">
-                                        xarTplImage('icons/delete.png', 'base')
+                                        xarTplGetImage('icons/delete.png', 'base')
                                     </xar:set>
                                     <xar:data-output type="urlicon" link="$link" icon="$icon" />
                                 <xar:else />
@@ -102,7 +102,7 @@
                             </xar:set>
                             <xar:if condition="xarModVars::get('xarpages', 'useicons')">
                                 <xar:set name="icon">
-                                    xarTplImage('icons/display.png', 'base')
+                                    xarTplGetImage('icons/display.png', 'base')
                                 </xar:set>
                                 <xar:data-output type="urlicon" link="$link" icon="$icon" />
                             <xar:else />
