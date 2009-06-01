@@ -86,7 +86,8 @@
                     <input type="hidden" name="phase" id="phase" value="update" />
                     <input type="hidden" name="tab" id="tab" value="#$tab#" />
                     <input type="hidden" name="tabmodule" id="tabmodule" value="#$tabmodule#" />
-                    <input type="submit" value="#xarML('Update Configuration')#" />
+                    <xar:var name="label">Update</xar:var>
+                    <input type="submit" value="#$label#" />
                 </div>
             </fieldset>
         </form>
