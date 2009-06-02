@@ -16,7 +16,9 @@
 			    <th>#$daysofweek.$i#</th>
 			</xar:for>
 		</tr>
-		<tr>
+        <xar:if condition="$startday ne 0">
+            <tr>
+        </xar:if>
 			<xar:for start="$i = 1" test="$i le $days" iter="$i++">
 			    <xar:if condition="$startday eq 0">
 			        <tr>
