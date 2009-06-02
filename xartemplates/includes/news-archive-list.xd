@@ -10,14 +10,14 @@
             (#$extra.archive.year#)
         </xar:if>
         <xar:if condition="!empty($extra.archive.year)and !empty($extra.archive.month)">
-            (#xarLocaleFormatDate('%B',strtotime('2000-'. $extra.archive.month .'-01'))# #$extra.archive.year#)
+            (#xarLocaleFormatDate('%B',strtotime('2000-'. $extra.archive.month .'-02'))# #$extra.archive.year#)
         </xar:if>
     </h2>
     <table>
         <xar:comment>Create column headings</xar:comment>
         <th scope="col"><a href="#xarServerGetCurrentURL(array('archive'=&gt;NULL,'startnum'=&gt;NULL,'aid'=&gt;NULL))#" title="#xarML('View latest')#"><xar:mlstring>Year</xar:mlstring></a></th>
         <xar:for start="$i=1" test="$i<=12" iter="$i=$i+1">
-            <th scope="col">#xarLocaleFormatDate('%b',strtotime('2000-'.$i.'-01'))#</th>
+            <th scope="col">#xarLocaleFormatDate('%b',strtotime('2000-'.$i.'-02'))#</th>
         </xar:for>
 
         <xar:loop name="$extra.archive.years" id="years">
