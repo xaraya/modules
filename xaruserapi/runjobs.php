@@ -55,7 +55,7 @@ function scheduler_userapi_runjobs($args)
     $hasrun = array();
     foreach ($jobs as $id => $job) {
         $now = time() + 60; // add some margin here
-        $log .= "\n" . $job[$id] . ': ' . $job['module'] . ' ' . $job['functype'] . ' ' . $job['func'] . ' ';
+        $log .= "\n" . $job['id'] . ': ' . $job['module'] . ' ' . $job['functype'] . ' ' . $job['func'] . ' ';
         $lastrun = $job['lastrun'];
         if (!empty($job['config'])) {
             $config = $job['config'];
