@@ -24,7 +24,7 @@ function scheduler_userapi_runjobs($args)
     
     $triggers = xarModAPIFunc('scheduler','user','triggers');
 
-    if(!isset($trigger) || isset($triggers[$trigger])) {
+    if(!isset($trigger) || !isset($triggers[$trigger])) {
         return xarML('Trigger not specified');
     }
     if($trigger == 0) {
