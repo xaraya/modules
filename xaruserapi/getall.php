@@ -29,7 +29,7 @@ function scheduler_userapi_getall($args)
     $bindvars = array();
 
     if (isset($trigger) && in_array($trigger, array(0,1,2,3))) {
-        $where[] = " trigger = ?";
+        $where[] = "job_trigger = ?";
         $bindvars = $trigger;
     } elseif (isset($module) && isset($functype) && isset($func)) {
         $where[] = " module = ?";
