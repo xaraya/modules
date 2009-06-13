@@ -24,7 +24,6 @@
 function scheduler_userapi_get($args)
 {
     extract($args);
-
     $invalid = array();
     if (isset($itemid)) {
         if (!is_numeric($itemid)) {
@@ -34,13 +33,15 @@ function scheduler_userapi_get($args)
         if (empty($module) || !is_string($module)) {
             $invalid[] = 'module';
         }
-        if (empty($functype) || !is_string($functype)) {
+        // CHECKME: why can't we use type instead of functype here?
+        if ((empty($type) || !is_string($type)) && (empty($functype) || !is_string($functype))) {
             $invalid[] = 'type';
         }
         if (empty($func) || !is_string($func)) {
             $invalid[] = 'func';
         }
     }
+
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      join(', ', $invalid), 'user', 'get', 'scheduler');
@@ -106,7 +107,7 @@ function scheduler_userapi_get($args)
     }
 
     // Return the job information
-    return $jobs[$itemid];
+    return $jobs;
 }
 
 ?>
