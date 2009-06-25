@@ -28,19 +28,11 @@ function ievents_user_view($args)
 
     // Get module parameters
     $module = 'ievents';
-    $default_numitems = xarModGetVar('ievents', 'default_numitems');
-    $max_numitems = xarModGetVar('ievents','max_numitems');
-    $default_startdate = xarModGetVar('ievents','default_startdate');
-    $default_enddate = xarModGetVar('ievents','default_enddate');
-    $startdayofweek = xarModGetVar('ievents','startdayofweek');
-    $itemtype_events = xarModGetVar('ievents','itemtype_events');
-    $year_range_min = xarModGetVar('ievents','year_range_min');
-    $year_range_max = xarModGetVar('ievents','year_range_max');
-    $default_group = xarModGetVar('ievents','default_group');
-    $default_display_format = xarModGetVar('ievents','default_display_format');
 
     extract(xarModAPIfunc('ievents', 'user', 'params',
-        array('knames' => 'html_fields,q_fields,display_formats,locale')
+        array('knames' => 'html_fields,q_fields,display_formats,locale,default_numitems,max_numitems,'
+        . 'default_startdate,default_enddate,startdayofweek,itemtype_events,year_range_min,year_range_max,'
+        . 'default_group,default_display_format')
     ));
 
     // Get the user parameters.
@@ -182,6 +174,8 @@ function ievents_user_view($args)
     //
 
     // Textual ranges override any other values.
+    // TODO: pass the date range around with all URLs. A value 'custom' should also be supported.
+    // Only include the start and end dates in URLs if the 'range' value is 'custom'.
     xarVarFetch('range', 'str', $range, '', XARVAR_NOT_REQUIRED);
     if (!empty($range)) {
         $urange = xarModAPIfunc('ievents', 'user', 'daterange2dates', array('range' => $range));

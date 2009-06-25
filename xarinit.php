@@ -312,20 +312,6 @@ function ievents_init()
         );
     }
 
-
-    // Register block types.
-    if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'register_block_type',
-                       array('modName'  => 'ievents',
-                             'blockType'=> 'month'))) return;
-/*
-    if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'register_block_type',
-                       array('modName'  => 'ievents',
-                             'blockType'=> 'day'))) return;
-*/
     // Set up module hooks
     // None.
 
@@ -366,23 +352,27 @@ function ievents_upgrade($oldversion)
     switch ($oldversion) {
         case '0.1.0':
             // Upgrading from 0.1.0
-			// Locks moved to their own property, and requires a table column added in ievents
-			// Consistent with init, use tablemaintenance api
-			
-		   xarDBLoadTableMaintenanceAPI();
-            // Update the topics table with a first post date tfpost field
-           $query = xarDBAlterTable($eventstable,
-                              array('command' => 'add',
-                                    'field'   => 'locks',
-                                    'type'    => 'varchar',
-                                    'null'    => false,
-                                    'size'    => '10',
-                                    'default' => ''));
-                                    
+            // Locks moved to their own property, and requires a table column added in ievents
+            // Consistent with init, use tablemaintenance api
+
+            xarDBLoadTableMaintenanceAPI();
+
+            // Update the events table with 'locks' column.
+            $query = xarDBAlterTable($eventstable,
+                array(
+                    'command' => 'add',
+                    'field'   => 'locks',
+                    'type'    => 'varchar',
+                    'null'    => false,
+                    'size'    => '10',
+                    'default' => ''
+                )
+            );
+
             // Pass to ADODB, and send exception if the result isn't valid.
             $result = &$dbconn->Execute($query);
-            if (!$result) return;      
-            
+            if (!$result) return;
+
             xarModSetVar('ievents', 'itemtype_events', 1);
             xarModSetVar('ievents', 'itemtype_calendars', 2);
             xarModSetVar('ievents', 'startdayofweek', 1);
@@ -404,6 +394,17 @@ function ievents_upgrade($oldversion)
             xarModSetVar('ievents', 'max_cat_depth', 2);
             xarModSetVar('ievents', 'default_display_format', 'list');
             xarModSetVar('ievents', 'category_tree_search', 1);
+
+            // Register block types.
+            if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
+                array('modName' => 'ievents', 'blockType'=> 'month')
+            )) return;
+
+/*
+            if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
+                array('modName'  => 'ievents', 'blockType'=> 'day')
+            )) return;
+*/
 
         case '0.1.1':
             // Upgrading from 0.1.1

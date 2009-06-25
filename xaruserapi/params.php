@@ -7,6 +7,9 @@
  * @param knames string or array List of paremeters to return as a name keyed array
  *
  * @todo Some of these parameters may have user overrides, and may
+ * @todo Select some of these on-demand from xarVarGetVar(); if a variable being requested
+ *       does not exist in the static array, then check the mod[user]vars and then add it
+ *       into the array at that point.
  * ultimately be stored as module variables.
  * - Use 'names' with list() to assign values to variables.
  * - Use 'knames' with extract() to create variables.
@@ -22,28 +25,28 @@ function ievents_userapi_params($args)
         // Initialise the parameter list.
         $params = array();
 
+        $module = 'ievents';
+
         // First day of the week.
         // 0=Sunday; 1=Monday
-        $startdayofweek = xarModGetVar('ievents','startdayofweek');
+        $startdayofweek = xarModGetVar($module,'startdayofweek');
 
         // Time quanta.
         // The smallest chunk of time dealt with (minutes).
         // Make sure it is divisible into 60 by a whole number.
         // Range is 0 to 60 (e.g. 5, 10, 15, 20, 30), where '0' disables the quantisation feature.
-//        $params['quanta'] = 15;
+        $params['quanta'] = xarModGetVar($module,'quanta');
         $params['quantas'] = array(0, 5, 10, 15, 20, 30);
 
         // The maximum number of categories that can be added to an event.
-//        $params['maxcats'] = 10;
+        $params['maxcats'] = xarModGetVar($module, 'maxcats');
 
         // Standard itemtypes.
-//        $params['itemtype_events'] = 1;
-//        $params['itemtype_calendars'] = 2;
+        $params['itemtype_events'] = xarModGetVar($module,'itemtype_events');
+        $params['itemtype_calendars'] = xarModGetVar($module,'itemtype_calendars');
 
-//        $module = 'ievents';
-
-//        $params['module'] = $module;
-//        $params['modid'] = xarModGetIDFromName($module);
+        $params['module'] = $module;
+        $params['modid'] = xarModGetIDFromName($module);
 
         // The number of days that an event is flagged as 'new' from when it was created.
 //        $params['days_new'] = 5;
@@ -52,13 +55,13 @@ function ievents_userapi_params($args)
 //        $params['days_updated'] = 3;
 
         // Default events per page in listing.
-//        $params['default_numitems'] = 20;
-//        $params['max_numitems'] = 200;
+         $params['default_numitems'] = xarModGetVar($module, 'default_numitems');
+         $params['max_numitems'] = xarModGetVar($module,'max_numitems');
 
         // Default start and end dates, in 'strtotime' format.
         // TODO: allow a default 'daterange' name instead.
-//        $params['default_startdate'] = 'now';
-//        $params['default_enddate'] = '+6 months';
+        $params['default_startdate'] = xarModGetVar($module,'default_startdate');
+        $params['default_enddate'] = xarModGetVar($module,'default_enddate');
 //        $params['default_daterange'] = 'next6months';
 
         // Output transform fields.
@@ -82,15 +85,15 @@ function ievents_userapi_params($args)
 
         // Default year range in drop-downs
         // TODO: the year ranges should come from actual dates
-//        $params['year_range_min'] = -3;
-//        $params['year_range_max'] = +5;
+        $params['year_range_min'] = xarModGetVar($module,'year_range_min');
+        $params['year_range_max'] = xarModGetVar($module,'year_range_max');
 
         // Fields included in query-text searches
         $params['q_fields'] = 'title,summary,location_venue,location_postcode,external_ref';
 
         // Default group type.
         // Options are: none or '', day, week, month, year
-//        $params['default_group'] = 'week';
+        $params['default_group'] = xarModGetVar('ievents','default_group');
 
         // The complete list of options for grouping.
         $params['grouplist'] = array(
@@ -150,7 +153,7 @@ function ievents_userapi_params($args)
 
         // The various display formats.
         // Each of these maps to different summary and display templates.
-//        $params['default_display_format'] = 'list';
+        $params['default_display_format'] = xarModGetVar('ievents','default_display_format');
         $params['display_formats'] = array(
             'list' => xarML('Listings'),
             'cal' => xarML('Calendar'),
