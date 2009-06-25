@@ -30,6 +30,7 @@ function ievents_userapi_params($args)
         // First day of the week.
         // 0=Sunday; 1=Monday
         $startdayofweek = xarModGetVar($module,'startdayofweek');
+        $params['startdayofweek'] = $startdayofweek;
 
         // Time quanta.
         // The smallest chunk of time dealt with (minutes).
@@ -49,10 +50,10 @@ function ievents_userapi_params($args)
         $params['modid'] = xarModGetIDFromName($module);
 
         // The number of days that an event is flagged as 'new' from when it was created.
-//        $params['days_new'] = 5;
+        $params['days_new'] = xarModGetVar($module,'days_new');
 
         // The number of days an avent is flagged as 'updated' from when it was last updated.
-//        $params['days_updated'] = 3;
+        $params['days_updated'] = xarModGetVar($module,'days_updated');
 
         // Default events per page in listing.
          $params['default_numitems'] = xarModGetVar($module, 'default_numitems');
@@ -62,7 +63,7 @@ function ievents_userapi_params($args)
         // TODO: allow a default 'daterange' name instead.
         $params['default_startdate'] = xarModGetVar($module,'default_startdate');
         $params['default_enddate'] = xarModGetVar($module,'default_enddate');
-//        $params['default_daterange'] = 'next6months';
+        $params['default_daterange'] = xarModGetVar($module,'default_daterange');
 
         // Output transform fields.
         // Only these fields will be passed through the output transform.
@@ -72,7 +73,7 @@ function ievents_userapi_params($args)
         // passed through the output transforms. The 'html' filter should happen *before* the
         // transform and not afterwards in the template.
         // TODO: depracate
-        //$params['output_transform'] = 'address,description';
+        $params['output_transform'] = 'address,description';
 
         // See notes above. We are probably going to go with this one.
         $params['html_fields'] = 'description,contact_details';
@@ -81,7 +82,7 @@ function ievents_userapi_params($args)
         // Summary max words (for text fields in summary mode).
         // This is really a display thing, and deserves to live in the templates.
         // TODO: it may not actually be used yet.
-//        $params['summary_max_words'] = 100;
+        $params['summary_max_words'] = xarModGetVar($module,'summary_max_words');
 
         // Default year range in drop-downs
         // TODO: the year ranges should come from actual dates
@@ -106,8 +107,8 @@ function ievents_userapi_params($args)
         );
 
         // Default date range for calendar subscriptions.
-//        $params['cal_subscribe_range'] = 'window4months';
-//        $params['cal_subscribe_numitems'] = 100;
+        $params['cal_subscribe_range'] = xarModGetVar('ievents','cal_subscribe_range');
+        $params['cal_subscribe_numitems'] = xarModGetVar('ievents','cal_subscribe_numitem');
 
         // Format of the full address.
         // Fields are surrounded by {curly brackets} with contents matching the DD property names.
@@ -149,7 +150,7 @@ function ievents_userapi_params($args)
 
         // Maximum category depth shown in the jump menu.
         // 1 is just a single level (the root cat, shown as an option group, and one level below that)
-//        $params['max_cat_depth'] = 2;
+        $params['max_cat_depth'] = xarModGetVar('ievents','max_cat_depth');
 
         // The various display formats.
         // Each of these maps to different summary and display templates.
@@ -161,7 +162,7 @@ function ievents_userapi_params($args)
 
         // If true, then all category searches are performed
         // as a tree search (i.e. selected category and all descendants).
-//        $params['category_tree_search'] = true;
+        $params['category_tree_search'] = xarModGetVar('ievents','category_tree_search');
 
         // Get locale data, so we can get month and day names.
         $localeData = xarMLSLoadLocaleData();
@@ -212,9 +213,7 @@ function ievents_userapi_params($args)
 
         // Determine whether fulltext search is supported.
         // The mode can be 'TRUE', 'FALSE' or 'AUTO'.
-/*
         $fulltext_mode = xarModGetVar($module, 'fulltext_search');
-*/
         $params['fulltext_mode'] = (empty($fulltext_mode) ? false : true);
     }
 
