@@ -16,13 +16,15 @@
  */
 function ievents_monthblock_init()
 {
-    return array('cid' => 0,
-                 'usecalname' => 0,
-                 'showfulllink' => 1,
-                 'nocache' => 1, // don't cache by default
-                 'pageshared' => 1, // but if you do, share across pages
-                 'usershared' => 1, // and for group members
-                 'cacheexpire' => null);
+    return array(
+        'cid' => 0,
+        'usecalname' => 0,
+        'showfulllink' => 1,
+        'nocache' => 1, // don't cache by default
+        'pageshared' => 1, // but if you do, share across pages
+        'usershared' => 1, // and for group members
+        'cacheexpire' => null
+    );
 }
 
 /**
@@ -30,15 +32,16 @@ function ievents_monthblock_init()
  */
 function ievents_monthblock_info()
 {
-    return array('text_type' => 'Month',
-         'text_type_long' => 'IEvents Month',
-         'module' => 'ievents',
-         'func_update' => 'ievents_monthblock_update',
-         'allow_multiple' => true,
-         'form_content' => false,
-         'form_refresh' => false,
-         'show_preview' => true);
-
+    return array(
+        'text_type' => 'Month',
+        'text_type_long' => 'IEvents Month',
+        'module' => 'ievents',
+        'func_update' => 'ievents_monthblock_update',
+        'allow_multiple' => true,
+        'form_content' => false,
+        'form_refresh' => false,
+        'show_preview' => true
+    );
 }
 
 /**
@@ -169,8 +172,8 @@ function ievents_monthblock_display($blockinfo)
         );
     }
     if($vars['usecalname']) {
-        $calendars = xarModAPIFunc('ievents','user','getcalendars',array('cid' => $cid));
-        $blockinfo['title'] = $calendars[$cid]['short_name'];
+        $calendars = xarModAPIFunc('ievents','user','getcalendars',array('cid' => $vars['cid']));
+        $blockinfo['title'] = $calendars[$vars['cid']]['short_name'];
         $cal->showTitle = false;
     }
 
