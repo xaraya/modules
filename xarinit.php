@@ -260,18 +260,6 @@ function ievents_init()
 
     // Masks for the component 'IEventCal'.
     xarRegisterMask(
-        'View' . $comp, 'All', $module, $comp, 'All', 'ACCESS_OVERVIEW',
-        xarML('Edit details for a calendar')
-    );
-    xarRegisterMask(
-        'Read' . $comp, 'All', $module, $comp, 'All', 'ACCESS_READ',
-        xarML('Edit details for a calendar')
-    );
-    xarRegisterMask(
-        'Comment' . $comp, 'All', $module, $comp, 'All', 'ACCESS_COMMENT',
-        xarML('Edit details for a calendar')
-    );
-    xarRegisterMask(
         'Edit' . $comp, 'All', $module, $comp, 'All', 'ACCESS_EDIT',
         xarML('Edit details for a calendar')
     );
@@ -405,6 +393,21 @@ function ievents_upgrade($oldversion)
                 array('modName'  => 'ievents', 'blockType'=> 'day')
             )) return;
 */
+
+            // Additional masks for the component 'IEventCal'.
+            $comp = 'IEventCal';
+            xarRegisterMask(
+                'View' . $comp, 'All', $module, $comp, 'All', 'ACCESS_OVERVIEW',
+                xarML('Edit details for a calendar')
+            );
+            xarRegisterMask(
+                'Read' . $comp, 'All', $module, $comp, 'All', 'ACCESS_READ',
+                xarML('Edit details for a calendar')
+            );
+            xarRegisterMask(
+                'Comment' . $comp, 'All', $module, $comp, 'All', 'ACCESS_COMMENT',
+                xarML('Edit details for a calendar')
+            );
 
         case '0.1.1':
             // Upgrading from 0.1.1

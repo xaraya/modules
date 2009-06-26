@@ -304,8 +304,8 @@ function ievents_userapi_getevents($args)
         // - Add a reference to the calendar details
         if (!empty($events)) {
             $position = 1;
-            $days_new = xarModGetVar('ievnets','days_new');
-            $days_updated = xarModGetVar('ievnets','days_updated');
+            $days_new = xarModGetVar('ievents','days_new');
+            $days_updated = xarModGetVar('ievents','days_updated');
             foreach ($events as $event) {
                 // Security check.
                 // We are not doing checks on category here, as we only want to use categories

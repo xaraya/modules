@@ -94,6 +94,23 @@ function ievents_userapi_transform($args)
     return $text_in;
 }
 
+
+/**
+ * Checks if text contains HTML
+ *
+ * @param text string Text to check
+ * @return boolean Whether the text contains HTML or now
+ */
+function ievents_userapi_transform_is_html($text)
+{
+    if (strlen(strip_tags($text)) == strlen($text)) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+
 /*
  * Do smart conversion to HTML.
  * This should be a core function. It is copied from the
@@ -106,6 +123,10 @@ function ievents_userapi_transform($args)
 function ievents_userapi_transform_smart_html($text)
 {
     if (strlen(trim($text)) == 0) return '';
+
+    // Check if the input is already HTML
+    $ishtml = ievents_userapi_transform_is_html($text);
+    if ($ishtml) return $text;
 
     $dobreak = 1;
 

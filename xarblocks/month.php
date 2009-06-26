@@ -57,18 +57,19 @@ function ievents_monthblock_display($blockinfo)
         $vars = $blockinfo['content'];
     }
 
-    if(!isset($vars['cid']) || (int)$vars['cid'] < 1) {
+    // FIXME: this should actually be allowed, i.e. all available calendars.
+    if (!isset($vars['cid']) || (int)$vars['cid'] < 1) {
         return;
     }
 
     // this is deprecated, use <xar:style /> tag in template instead
     // xarTplAddStyleLink('ievents','ievents');
 
-    if(!isset($vars['usecalname'])) {
+    if (!isset($vars['usecalname'])) {
         $vars['usecalname'] = false;
     }
 
-    if(!isset($vars['showfulllink'])) {
+    if (!isset($vars['showfulllink'])) {
         $vars['showfulllink'] = true;
     }
 
@@ -142,6 +143,7 @@ function ievents_monthblock_display($blockinfo)
         'numitems' => $numitems,
         'startdate' => $ustartdate,
         'enddate' => $uenddate,
+        'cid' => $vars['cid'],
     );
     $events = xarModAPIfunc('ievents', 'user', 'getevents', $event_params);
 

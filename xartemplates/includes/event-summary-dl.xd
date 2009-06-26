@@ -56,10 +56,12 @@
     <span>
         <xar:comment><xar:mlstring>Categories:</xar:mlstring></xar:comment>
         <xar:loop name="$event.catids">
+            <xar:if condition="!empty($categories['flatlist'][$loop:item])">
             <xar:if condition="$loop:index gt 0"> | </xar:if>
             <a href="#xarServerGetCurrentURL(array('cats'=&gt;$loop:item,'eid'=&gt;NULL,'startnum'=&gt;NULL))#">
                 #xarVarPrepForDisplay($categories['flatlist'][$loop:item]['name'])#
             </a>
+            </xar:if>
         </xar:loop>
     </span>
     </dd>
