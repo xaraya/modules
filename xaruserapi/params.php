@@ -57,13 +57,13 @@ function ievents_userapi_params($args)
 
         // Default events per page in listing.
          $params['default_numitems'] = xarModGetVar($module, 'default_numitems');
-         $params['max_numitems'] = xarModGetVar($module,'max_numitems');
+         $params['max_numitems'] = xarModGetVar($module, 'max_numitems');
 
         // Default start and end dates, in 'strtotime' format.
         // TODO: allow a default 'daterange' name instead.
-        $params['default_startdate'] = xarModGetVar($module,'default_startdate');
-        $params['default_enddate'] = xarModGetVar($module,'default_enddate');
-        $params['default_daterange'] = xarModGetVar($module,'default_daterange');
+        $params['default_startdate'] = xarModGetVar($module, 'default_startdate');
+        $params['default_enddate'] = xarModGetVar($module, 'default_enddate');
+        $params['default_daterange'] = xarModGetVar($module, 'default_daterange');
 
         // Output transform fields.
         // Only these fields will be passed through the output transform.
@@ -129,7 +129,7 @@ function ievents_userapi_params($args)
 
         // Date range list, used to provide a handy set of date ranges in various places
         $params['daterangelist'] = array(
-            '' => xarML('-- Date range --'),
+            'custom' => xarML('-- Custom dates --'),
             'last4weeks' =>  xarML('Last four weeks'),
             'next4weeks' =>  xarML('Next four weeks'),
             'last6months' =>  xarML('Last six months'),

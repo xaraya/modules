@@ -32,7 +32,7 @@ function ievents_user_view($args)
     extract(xarModAPIfunc('ievents', 'user', 'params',
         array('knames' => 'html_fields,q_fields,display_formats,locale,default_numitems,max_numitems,'
         . 'default_startdate,default_enddate,startdayofweek,itemtype_events,year_range_min,year_range_max,'
-        . 'default_group,default_display_format')
+        . 'default_group,default_display_format,default_daterange')
     ));
 
     // Get the user parameters.
@@ -69,6 +69,8 @@ function ievents_user_view($args)
     // These are the master start/end variables. Other parameters may override them, but all dates
     // ultimately come to these two.
     // These set the defaults also - events from today to one month ahead.
+    // TODO: use $default_daterange as the defaults for the range if no other dates passed in. This is
+    // actually quite hard to do, because there are so many parameters to check.
     xarVarFetch('ustartdate', 'int', $ustartdate, strtotime($default_startdate), XARVAR_NOT_REQUIRED);
     xarVarFetch('uenddate', 'int', $uenddate, strtotime($default_enddate), XARVAR_NOT_REQUIRED);
 
@@ -126,7 +128,7 @@ function ievents_user_view($args)
     // If the startdate or enddate strings are set, then convert them into unix timestamps
     if (!empty($startdate)) {
         $urange = xarModAPIfunc('ievents', 'user', 'daterange2dates', array('sstartdate' => $startdate));
-        if (!empty($urange)) {
+        if (!empty($urange['startdate'])) {
             $ustartdate = $urange['startdate'];
         } else {
             // The startdate is invalid, since it could not be converted.
@@ -136,7 +138,7 @@ function ievents_user_view($args)
 
     if (!empty($enddate)) {
         $urange = xarModAPIfunc('ievents', 'user', 'daterange2dates', array('senddate' => $enddate));
-        if (!empty($urange)) {
+        if (!empty($urange['enddate'])) {
             $uenddate = $urange['enddate'];
         } else {
             // The enddate is invalid, since it could not be converted.
@@ -176,8 +178,11 @@ function ievents_user_view($args)
     // Textual ranges override any other values.
     // TODO: pass the date range around with all URLs. A value 'custom' should also be supported.
     // Only include the start and end dates in URLs if the 'range' value is 'custom'.
-    xarVarFetch('range', 'str', $range, '', XARVAR_NOT_REQUIRED);
-    if (!empty($range)) {
+    // A date range set here should always override custom dates, so it is important to
+    // remove the 'range' from the URL when going through calendars for example.
+    // Use $default_daterange when there are no other dates passed in so far.
+    xarVarFetch('range', 'str', $range, $default_daterange, XARVAR_NOT_REQUIRED);
+    if (!empty($range) && $range != 'custom') {
         $urange = xarModAPIfunc('ievents', 'user', 'daterange2dates', array('range' => $range));
         if (!empty($urange)) {
             $ustartdate = $urange['startdate'];
@@ -367,6 +372,13 @@ function ievents_user_view($args)
     list($startyear, $startmonth, $startday) = explode('-', date('Y-m-d', $ustartdate));
     list($endyear, $endmonth, $endday) = explode('-', date('Y-m-d', $uenddate));
 
+    // Get the permalink parameters.
+    // These include a modification to the current parameters to get a shorter URL.
+    $permalink = xarModAPIfunc(
+        'ievents', 'user', 'daterange2dates',
+        array('startdate' => $ustartdate, 'enddate' => $uenddate, 'range' => $range, 'shorten_url' => true)
+    );
+
     //
     // Fetch events from the database
     //
@@ -502,9 +514,12 @@ function ievents_user_view($args)
     // The url params would be slightly different to the event params (no unix timestamps
     // for a start, and possibly different category parameter formats).
     $url_params = array(
-        'startdate' => $startdate,
-        'enddate' => $enddate,
+        'range' => $range,
     );
+    if ($range == 'custom') {
+        $url_params['startdate'] = $startdate;
+        $url_params['enddate'] = $enddate;
+    }
 
     // Include some items only if not the default (to try and keep URLs shorter).
     if ($startnum != 1) $url_params['startnum'] = $startnum;
@@ -755,6 +770,7 @@ function ievents_user_view($args)
         'startyear', 'startmonth', 'startday',
         'endyear', 'endmonth', 'endday',
         'datenumber', 'datetype',
+        'range',
 
         // Groups and grouping
         'group', 'groups',
@@ -779,7 +795,8 @@ function ievents_user_view($args)
 
         // Other
         'hooks', 'q', 'q_fields', 'export_handlers', 'format',
-        'cal_links', 'cal_links_labels', 'cal', 'cal_output', 'advanced'
+        'cal_links', 'cal_links_labels', 'cal', 'cal_output', 'advanced',
+        'permalink'
     );
 
     // RSS - switch to the RSS theme if the format is RSS

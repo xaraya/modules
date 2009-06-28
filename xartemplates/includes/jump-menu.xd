@@ -1,20 +1,21 @@
 <fieldset class="ievents-search">
     <legend><xar:mlstring>Search Events</xar:mlstring></legend>
 
-    <xar:if condition="xarThemeIsAvailable('rss') or !empty($export_handlers)">
-        <div class="xar-margin-thickbottom">
-            <xar:if condition="xarThemeIsAvailable('rss')">
-                <a href="#xarModURL('ievents','user','view',array_merge($feed_params,array('format'=&gt;'rss')))#" class="ievents-export-rss" title="#xarML('RSS feed for these events')#">RSS</a>
-            </xar:if>
+    <div class="xar-margin-thickbottom">
+        <xar:comment>FIXME: we would need to use xarModURL() once short URLs are working.</xar:comment>
+        <a href="#xarServerGetCurrentURL($permalink)#" class="ievents-export-permalink"><xar:mlstring>Permalink</xar:mlstring></a>
 
-            <xar:if condition="!empty($export_handlers)">
-                <xar:loop name="$export_handlers">
-                    <xar:if condition="$loop:index gt 0 or xarThemeIsAvailable('rss')"> | </xar:if>
-                    <a href="#xarModURL('ievents','user','view',array_merge($feed_params,array('format'=&gt;$loop:key)))#" title="#$loop:item.desc#" class="ievents-export-#$loop:item.class#">#$loop:item.short#</a>
-                </xar:loop>
-            </xar:if>
-        </div>
-    </xar:if>
+        <xar:if condition="xarThemeIsAvailable('rss')">
+            | <a href="#xarModURL('ievents','user','view',array_merge($feed_params,array('format'=&gt;'rss')))#" class="ievents-export-rss" title="#xarML('RSS feed for these events')#">RSS</a>
+        </xar:if>
+
+        <xar:if condition="!empty($export_handlers)">
+            <xar:loop name="$export_handlers">
+                <xar:if condition="$loop:index gt 0 or xarThemeIsAvailable('rss')"> | </xar:if>
+                <a href="#xarModURL('ievents','user','view',array_merge($feed_params,array('format'=&gt;$loop:key)))#" title="#$loop:item.desc#" class="ievents-export-#$loop:item.class#">#$loop:item.short#</a>
+            </xar:loop>
+        </xar:if>
+    </div>
 
     <form method="get" action="#xarModURL('ievents','user','view')#">
     
@@ -30,7 +31,7 @@
                 <td>
                     <label for="daterangelist" id="daterange_label"><xar:mlstring>Date Range:</xar:mlstring></label>
                     <xar:set name="daterangelist">#xarModAPIfunc('ievents','user','params',array('name'=&gt;'daterangelist'))#</xar:set>
-                    <xar:data-input name="range" id="daterange" type="6" validation="$daterangelist" value="" />
+                    <xar:data-input name="range" id="daterange" type="6" validation="$daterangelist" value="$range" />
                 </td>
                 <td>
                     <label for="cid" id="calendar_label"><xar:mlstring>Calendar:</xar:mlstring></label>
@@ -79,8 +80,13 @@
                         </xar:if>
                         <div class="ievents-date-parts-all">
                             <span class="ievents-date-parts">
+                                <xar:comment>
+                                    FIXME: if we are not showing advanced features, then these date ranges should be disabled,
+                                    but still present so they can be re-enabled through JavaScript on demand. There appears to be
+                                    no way to disable these items through the data-input elements.
+                                </xar:comment>
                                 <xar:data-input name="startday" id="startday" type="6" validation="$lists['daynum']" value="$startday" />
-                                <xar:data-input name="startmonth" id="startmonth" type="6" validation="$lists['monthshort']" value="$startmonth" />
+                                <xar:data-input name="startmonth" id="startmonth" type="6" validation="$lists['monthlong']" value="$startmonth" />
                                 <xar:data-input name="startyear" id="startyear" type="6" validation="$lists['yearnum']" value="$startyear" />
                             </span>
                             <xar:if condition="$format ne 'cal'">
@@ -95,8 +101,10 @@
                     </td>
                     <td class="groupby-cell">
                         <label for="group">#xarML('Group by:')#</label>
-                        <xar:set name="grouplist">#xarModAPIfunc('ievents','user','params',array('name'=&gt;'grouplist'))#</xar:set>
-                        <xar:data-input name="group" id="group" type="6" validation="$grouplist" value="$group" />
+                        <div>
+                            <xar:set name="grouplist">#xarModAPIfunc('ievents','user','params',array('name'=&gt;'grouplist'))#</xar:set>
+                            <xar:data-input name="group" id="group" type="6" validation="$grouplist" value="$group" />
+                        </div>
                     </td>
                 </tr>
             </table>

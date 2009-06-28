@@ -10,6 +10,7 @@
  * @param sstartdate string YYYY, YYYYMM or YYYYMMDD
  * @param senddate string YYYY, YYYYMM or YYYYMMDD
  * @returns array
+ * @todo handle invalid dates (e.g. 31 February) by pulling the values into range in context.
  *
  * Return elements:
  * - startdate: the start date in unix timestamp format
@@ -78,6 +79,13 @@ function ievents_userapi_daterange2dates($args)
         $datetype = rtrim(preg_replace('/^next[0-9]+/', '', $range), 's') . 's';
     }
 
+    // Last N units (days, weeks, months or years), starting today.
+    // e.g. last2months last7days last1year
+    if (isset($range) && preg_match('/^last[0-9]{1,3}(day|days|week|weeks|month|months|year|years)$/', $range)) {
+        $datenumber = (-1) * preg_replace('/[^0-9]/', '', $range);
+        $datetype = rtrim(preg_replace('/^last[0-9]+/', '', $range), 's') . 's';
+    }
+
     // Window of N units around the start date.
     // e.g. 'window2months' will be the current date plus or minus two months.
     if (isset($range) && preg_match('/^window[0-9]{1,3}(day|days|week|weeks|month|months|year|years)$/', $range)) {
@@ -90,10 +98,18 @@ function ievents_userapi_daterange2dates($args)
 
     // User requested the 'datetype' and 'datenumber' pair.
     if (isset($datenumber) && isset($datetype)) {
-        if (xarVarValidate('int:1:365', $datenumber, true)
-        && xarVarValidate('pre:lower:passthru:enum:days:weeks:months:years', $datetype, true)) {
-            if (!isset($startdate)) $startdate = $today;
-            $enddate = strtotime("+$datenumber $datetype", $startdate);
+        if (xarVarValidate('int:-365:365', $datenumber, true)
+        && xarVarValidate('pre:lower:passthru:enum:day:days:week:weeks:month:months:year:years', $datetype, true)) {
+
+            if ($datenumber >= 0) {
+                if (!isset($startdate)) $startdate = $today;
+                $enddate = strtotime("+$datenumber $datetype", $startdate);
+                if (empty($range)) $range = 'next' . $datenumber . $datetype;
+            } else {
+                if (!isset($enddate)) $enddate = $today;
+                $startdate = strtotime("$datenumber $datetype", $enddate);
+                if (empty($range)) $range = 'last' . $datenumber . $datetype;
+            }
         }
     }
 
@@ -150,9 +166,57 @@ function ievents_userapi_daterange2dates($args)
         }
     }
 
-    // Set the return values if we have them.
-    if (isset($startdate)) $return['startdate'] = $startdate;
-    if (isset($enddate)) $return['enddate'] = $enddate;
+    if (!empty($shorten_url) && (empty($range) || $range == 'custom') && isset($startdate) && isset($enddate)) {
+        $range = 'custom';
+
+        // Make the date precision as open as possible.
+        if ($startdate == strtotime(date('Y', $startdate) . '0101')) {
+            // Start of the year.
+            $sstartdate = date('Y', $startdate);
+        } elseif ($startdate == strtotime(date('Ym', $startdate) . '01')) {
+            // Start of month.
+            $sstartdate = date('Ym', $startdate);
+        } else {
+            $sstartdate = date('Ymd', $startdate);
+        }
+
+        if ($enddate == strtotime(date('Y', $enddate) . '1231')) {
+            // End of the year
+            $senddate = date('Y', $enddate);
+        } elseif ($enddate == strtotime(date('Ym', $enddate) . '01 +1 month -1 day')) {
+            // End of the month
+            $senddate = date('Ym', $enddate);
+        } else {
+            $senddate = date('Ymd', $enddate);
+        }
+    }
+
+    // Only return this stuff if '$shorten_url' is set, so it is suppressed most of the time.
+    if (!empty($shorten_url)) {
+        // This is the short version of the date for use in URLs.
+        // The aim is to provide as short a date URL as possible in all circumstances.
+        if (!empty($range)) {
+            $return = array(
+                'range' => $range,
+                'startdate' => ($range == 'custom' ? $sstartdate : NULL),
+                'enddate' => ($range == 'custom' ? $senddate : NULL),
+                'ustartdate' => NULL,
+                'uenddate' => NULL,
+                'startyear' => NULL,
+                'startmonth' => NULL,
+                'startday' => NULL,
+                'endyear' => NULL,
+                'endmonth' => NULL,
+                'endday' => NULL,
+                'datetype' => NULL,
+                'datenumber' => NULL,
+            );
+        }
+    } else {
+        // Set the return values if we have them.
+        if (isset($startdate)) $return['startdate'] = $startdate;
+        if (isset($enddate)) $return['enddate'] = $enddate;
+    }
 
     return $return;
 }
