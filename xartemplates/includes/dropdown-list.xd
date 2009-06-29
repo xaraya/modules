@@ -1,0 +1,21 @@
+<xar:if condition="!empty($state) and $state eq 'disabled'">
+    <select id="#$name#" name="#$name#" disabled="disabled">
+        <xar:loop name="#$values#">
+            <xar:if condition="$loop:key eq $default">
+                <option value="#$loop:key#" selected="selected">#$loop:item#</option>
+            <xar:else />
+                <option value="#$loop:key#">#$loop:item#</option>
+            </xar:if>
+        </xar:loop>
+    </select>
+<xar:else />
+    <select id="#$name#" name="#$name#">
+        <xar:loop name="$values">
+            <xar:if condition="$loop:key eq $default">
+                <option value="#$loop:key#" selected="selected">#$loop:item#</option>
+            <xar:else />
+                <option value="#$loop:key#">#$loop:item#</option>
+            </xar:if>
+        </xar:loop>
+    </select>
+</xar:if>

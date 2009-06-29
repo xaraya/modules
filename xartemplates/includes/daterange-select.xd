@@ -1,0 +1,68 @@
+<xar:comment>
+    What we want to achieve:
+    1. Display a date range for listings or a single date for calendar views.
+    2. Hide the block and suppress the form items if 'range' is not 'custom'.
+    3. If JS or jQuery is available, show and hide the section as the 'range' dropdown
+       is switched between 'custom' and other values.
+    Note: form items will be submitted, even if in a hidden block, so must be explicitly
+    disabled in order to prevent submission.
+    The JS is inline here, because the form items that are enabled and disabled will depend
+    upon exactly what widgets are being used to provide the date range selection.
+</xar:comment>
+
+<xar:if condition="xarModIsAvailable('jquery')">
+    <xar:template module="jquery" file="jquery" />
+    <xar:base-include-javascript type="code" code="
+        jQuery(document).ready(function(){
+            jQuery('.ievents-search-simple select#daterange').change(function(){
+                if (this.value == 'custom') {
+                    jQuery('#ievents-date-range-select')
+                        .addClass('ievents-date-range-select-enabled')
+                        .removeClass('ievents-date-range-select-disabled')
+                        .find('select').attr('disabled', false);
+                } else {
+                    jQuery('#ievents-date-range-select')
+                        .removeClass('ievents-date-range-select-enabled')
+                        .addClass('ievents-date-range-select-disabled')
+                        .find('select').attr('disabled', true);
+                }
+            });
+        });
+    " />
+</xar:if>
+
+<xar:if condition="$range eq 'custom'">
+    <xar:set name="custom_state">'enabled'</xar:set>
+<xar:else />
+    <xar:set name="custom_state">'disabled'</xar:set>
+</xar:if>
+
+<div id="ievents-date-range-select" class="ievents-date-range-select-#$custom_state#">
+    <xar:comment>If showing a calendar view, then make this a single-ended date</xar:comment>
+    <xar:if condition="$format eq 'cal'">
+        <label for="startday"><xar:mlstring>Jump to date:</xar:mlstring></label>
+    <xar:else />
+        <label for="startday"><xar:mlstring>Search over a date range:</xar:mlstring></label>
+    </xar:if>
+
+    <span class="ievents-date-parts-all">
+        <span class="ievents-date-parts">
+            <xar:comment>
+                FIXME: if we are not showing advanced features, then these date ranges should be disabled,
+                but still present so they can be re-enabled through JavaScript on demand. There appears to be
+                no way to disable these items through the data-input elements.
+            </xar:comment>
+            <xar:template module="ievents" file="dropdown-list" subdata="array('name'=&gt;'startday','values'=&gt;$lists['daynum'],'default'=&gt;$startday,'state'=&gt;$custom_state)"/>
+            <xar:template module="ievents" file="dropdown-list" subdata="array('name'=&gt;'startmonth','values'=&gt;$lists['monthlong'],'default'=&gt;$startmonth,'state'=&gt;$custom_state)"/>
+            <xar:template module="ievents" file="dropdown-list" subdata="array('name'=&gt;'startyear','values'=&gt;$lists['yearnum'],'default'=&gt;$startyear,'state'=&gt;$custom_state)"/>
+        </span>
+        <xar:if condition="$format ne 'cal'">
+            <span class="ievents-date-divider"><xar:mlstring> to </xar:mlstring></span>
+            <span class="ievents-date-parts">
+                <xar:template module="ievents" file="dropdown-list" subdata="array('name'=&gt;'endday','values'=&gt;$lists['daynum'],'default'=&gt;$endday,'state'=&gt;$custom_state)"/>
+                <xar:template module="ievents" file="dropdown-list" subdata="array('name'=&gt;'endmonth','values'=&gt;$lists['monthlong'],'default'=&gt;$endmonth,'state'=&gt;$custom_state)"/>
+                <xar:template module="ievents" file="dropdown-list" subdata="array('name'=&gt;'endyear','values'=&gt;$lists['yearnum'],'default'=&gt;$endyear,'state'=&gt;$custom_state)"/>
+            </span>
+        </xar:if>
+    </span>
+</div>

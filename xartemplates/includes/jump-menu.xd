@@ -40,11 +40,21 @@
                         <xar:data-input name="cid" id="calendar" type="6" validation="$calendarlist" value="$cid" />
                     </xar:if>
                 </td>
+                <td class="groupby-cell">
+                    <label for="group">#xarML('Group by:')#</label>
+                    <div>
+                        <xar:set name="grouplist">#xarModAPIfunc('ievents','user','params',array('name'=&gt;'grouplist'))#</xar:set>
+                        <xar:data-input name="group" id="group" type="6" validation="$grouplist" value="$group" />
+                    </div>
+                </td>
                 <td>
 					<input type="submit" value="#xarML('Find Events')#" />
 				</td>
             </tr> 
         </table>
+
+        <xar:comment>Display the custom dates selector.</xar:comment>
+        <xar:template module="ievents" file="daterange-select" />
 
 		<hr />
 
@@ -68,48 +78,6 @@
     </xar:if>
 
     <div class="#$adv_form_class#">
-        <div class="ievents-search-box-first">
-            <table>
-                <tr>
-                    <td class="daterange-cell">
-                        <xar:comment>If showing a calendar view, then make this a single-ended date</xar:comment>
-                        <xar:if condition="$format eq 'cal'">
-                            <label for="startday"><xar:mlstring>Jump to date:</xar:mlstring></label>
-                        <xar:else />
-                            <label for="startday"><xar:mlstring>Search over a date range:</xar:mlstring></label>
-                        </xar:if>
-                        <div class="ievents-date-parts-all">
-                            <span class="ievents-date-parts">
-                                <xar:comment>
-                                    FIXME: if we are not showing advanced features, then these date ranges should be disabled,
-                                    but still present so they can be re-enabled through JavaScript on demand. There appears to be
-                                    no way to disable these items through the data-input elements.
-                                </xar:comment>
-                                <xar:data-input name="startday" id="startday" type="6" validation="$lists['daynum']" value="$startday" />
-                                <xar:data-input name="startmonth" id="startmonth" type="6" validation="$lists['monthlong']" value="$startmonth" />
-                                <xar:data-input name="startyear" id="startyear" type="6" validation="$lists['yearnum']" value="$startyear" />
-                            </span>
-                            <xar:if condition="$format ne 'cal'">
-                                <span class="ievents-date-divider"><xar:mlstring> to </xar:mlstring></span>
-                                <span class="ievents-date-parts">
-                                    <xar:data-input name="endday" id="endday" type="6" validation="$lists['daynum']" value="$endday" />
-                                    <xar:data-input name="endmonth" id="endmonth" type="6" validation="$lists['monthlong']" value="$endmonth" />
-                                    <xar:data-input name="endyear" id="endyear" type="6" validation="$lists['yearnum']" value="$endyear" />
-                                </span>
-                            </xar:if>
-                        </div>
-                    </td>
-                    <td class="groupby-cell">
-                        <label for="group">#xarML('Group by:')#</label>
-                        <div>
-                            <xar:set name="grouplist">#xarModAPIfunc('ievents','user','params',array('name'=&gt;'grouplist'))#</xar:set>
-                            <xar:data-input name="group" id="group" type="6" validation="$grouplist" value="$group" />
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
         <xar:comment>TODO: only include these three hidden values if short URLs are not being used</xar:comment>
         <input type="hidden" name="module" value="ievents" />
         <input type="hidden" name="type" value="user" />

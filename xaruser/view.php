@@ -232,6 +232,8 @@ function ievents_user_view($args)
 
             case 'month':
             case 'smallmonth':
+                // FIXME: selecting 01-JAN-2010 results in being knocked back to December 2009.
+                // In fact, anything after 2010 seems to jump back to december. Could it be lack of events?
                 $ustartdate = strtotime(date('Ym', $ustartdate) . '01');
                 $uenddate = strtotime('+1 month -1 day', $ustartdate);
                 $cal_links_labels['this_view'] = $locale['months']['long'][(date('m', $ustartdate) + 11) % 12 + 1] . ' ' . date('Y', $ustartdate);

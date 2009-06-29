@@ -127,27 +127,6 @@ function ievents_userapi_params($args)
             'startdate DESC' => 'Date (latest first)',
         );
 
-        // Date range list, used to provide a handy set of date ranges in various places
-        $params['daterangelist'] = array(
-            'custom' => xarML('-- Custom dates --'),
-            'last4weeks' =>  xarML('Last four weeks'),
-            'next4weeks' =>  xarML('Next four weeks'),
-            'last6months' =>  xarML('Last six months'),
-            'next6months' =>  xarML('Next six months'),
-            'lastyear' =>  xarML('Last year (Jan-Dec)'),
-            'thisyear' =>  xarML('This year (Jan-Dec)'),
-            'nextyear' =>  xarML('Next year (Jan-Dec)'),
-            'lastmonth' =>  xarML('Last month'),
-            'thismonth' =>  xarML('This month'),
-            'nextmonth' =>  xarML('Next month'), 
-            'lastweek' =>  xarML('Last week'),
-            'thisweek' =>  xarML('This week'),
-            'nextweek' =>  xarML('Next week'),
-            'yesterday' =>  xarML('Yesterday'),
-            'today' =>  xarML('Today'),
-            'tomorrow' =>  xarML('Tomorrow')
-        );
-
         // Maximum category depth shown in the jump menu.
         // 1 is just a single level (the root cat, shown as an option group, and one level below that)
         $params['max_cat_depth'] = xarModGetVar('ievents','max_cat_depth');
@@ -202,6 +181,38 @@ function ievents_userapi_params($args)
                     $localeData["/dateSymbols/weekdays/" . (($i + $startdayofweek + 6) % 7 + 1) . "/full"];
             }
         }
+
+        // Date range list, used to provide a handy set of date ranges in various places.
+        $params['daterangelist'] = array(
+            'custom' => xarML('-- Custom dates --'),
+            'last4weeks' =>  xarML('Last four weeks'),
+            'next4weeks' =>  xarML('Next four weeks'),
+            'last6months' =>  xarML('Last six months'),
+            'next6months' =>  xarML('Next six months'),
+            'lastyear' =>  xarML('Last year (Jan-Dec)'),
+            'thisyear' =>  xarML('This year (Jan-Dec)'),
+            'nextyear' =>  xarML('Next year (Jan-Dec)'),
+            'lastmonth' =>  xarML('Last month'),
+            'thismonth' =>  xarML('This month'),
+            'nextmonth' =>  xarML('Next month'),
+            'lastweek' =>  xarML('Last week'),
+            'thisweek' =>  xarML('This week'),
+            'nextweek' =>  xarML('Next week'),
+            'yesterday' =>  xarML('Yesterday'),
+            'today' =>  xarML('Today'),
+            'tomorrow' =>  xarML('Tomorrow')
+        );
+
+        // 'Last four weeks (to #(1))', xarLocaleGetFormattedDate('short', date(strtotime('+ 4 weeks')))
+        // 'Next four weeks (from #(1))', xarLocaleGetFormattedDate('short', date(strtotime('- 4 weeks')))
+        // 'Last six months (to #(1))', xarLocaleGetFormattedDate('short', date(strtotime('+ 6 months')))
+        // 'Next six months (from #(1))', xarLocaleGetFormattedDate('short', date(strtotime('- 6 months')))
+        // 'Last year (Jan-Dec)(#(1))', date('Y', strtotime('-1 year'))
+        // 'This year (Jan-Dec)(#(1))', date('Y')
+        // 'Next year (Jan-Dec)(#(1))', date('Y', strtotime('+1 year'))
+        // 'Last month (#(1))', $params['locale']['months']['long'][(int)date('m', strtotime('-1 month'))]
+        // 'This month (#(1))', $params['locale']['months']['long'][(int)date('m')]
+        //  'Next month (#(1))', $params['locale']['months']['long'][(int)date('m', strtotime('+1 month'))]
 
         //var_dump($localeData);
         //var_dump($params['locale']['days']['long']);
