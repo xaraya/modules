@@ -1,5 +1,9 @@
 <xar:style scope="module" module="xarpages" file="xarpages" />
-
+<xar:comment>
+  We are using multipart/form-data to cater for uploads which should not be a problem for use in all cases. 
+  Alternatively you can test for the presence or not of upload properties and base enctype on that.
+</xar:comment>
+<xar:set name="enctype">'multipart/form-data'</xar:set>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Page Administration</xar:mlstring></span></div>
 
 <div class="xar-mod-body">
@@ -15,7 +19,7 @@
     <div style="margin: auto;">
         <xar:comment>Creating a page, but we don't yet have a page type</xar:comment>
         <xar:if condition="$func eq 'create' and empty($ptid)">
-            <form class="xar-xarpages-admin" action="#xarModURL('xarpages','admin','modifypage')#" method="post">
+            <form class="xar-xarpages-admin" action="#xarModURL('xarpages','admin','modifypage')#" method="post" enctype="#$enctype#">
                 <fieldset class="formelements xar-norm">
                     <xar:if condition="!empty($pagetypes)">
                         <legend>
@@ -49,7 +53,7 @@
                     | <a href="#xarModURL('xarpages','admin','modifypage',array('ptid'=&gt;$ptid,'insertpoint'=&gt;$pid))#" title="#xarML('Create a new page of this type')# (#xarVarPrepForDisplay($page.pagetype.name)#)"><xar:mlstring>New page after</xar:mlstring></a>
                 </xar:if>
             </p>
-            <form class="xar-xarpages-admin" action="#xarModURL('xarpages','admin','updatepage')#" method="post">
+            <form class="xar-xarpages-admin" action="#xarModURL('xarpages','admin','updatepage')#" method="post"  enctype="#$enctype#">
                 <fieldset class="formelements xar-norm">
                     <legend>
                         <strong><xar:mlstring>Page Attributes</xar:mlstring></strong>
