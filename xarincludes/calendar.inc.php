@@ -127,7 +127,7 @@ class ieventsCalendar {
     var $fullYearNextArrow;
 
     //Declare a variable to tell how the month is displayed.  Values are long and short.
-    var $monthFormat;
+    var $monthFormat = 'long';
     //Declare a variable that will hold the day to display.
     var $calDay;
     //Declare a variable that will hold the week to display (first day of week) .
@@ -436,9 +436,9 @@ class ieventsCalendar {
                         // Continue to show the display the event with hover titles.
                         $events .= '<a href="';
 						if ($this->cid != 0) {
-	                        $events .= xarModURL('ievents','user','view',array('cid' => $this->cid, 'startdate' => date('Ymd', $date), 'enddate' => date('Ymd', $date), 'group' => 'day')) . '" title="';
+	                        $events .= xarModURL('ievents','user','view',array('cid' => $this->cid, 'startdate' => date('Ymd', $date), 'enddate' => date('Ymd', $date), 'group' => 'day', 'range' => 'custom')) . '" title="';
 						} else {
-	                        $events .= xarModURL('ievents','user','view',array('startdate' => date('Ymd', $date), 'enddate' => date('Ymd', $date), 'group' => 'day')) . '" title="';
+	                        $events .= xarModURL('ievents','user','view',array('startdate' => date('Ymd', $date), 'enddate' => date('Ymd', $date), 'group' => 'day', 'range' => 'custom')) . '" title="';
 						}
                         if ($numEvents == 1) {
                         	$events .= xarML('#(1) Event', $numEvents);

@@ -28,13 +28,8 @@ function ievents_adminapi_modify($args)
     if (empty($cid)) $cid = 0;
 
     // Fetch all the config items we need at once.
-    $module = 'ievents';            
-    $modid = xarModGetIDFromName($module);              
-    $itemtype_events = xarModGetVar('ievents', 'itemtype_events');           
-    $itemtype_calendars = xarModGetVar('ievents', 'itemtype_calendars');           
-    $maxcats = xarModGetVar('ievents', 'maxcats');
-    $html_fields = 'description,contact_details';
-    $text_fields = 'summary,location_address';
+    list($module, $modid, $itemtype_events, $itemtype_calendars, $maxcats, $html_fields, $text_fields) =
+        xarModAPIfunc('ievents', 'user', 'params', array('names' => 'module,modid,itemtype_events,itemtype_calendars,maxcats,html_fields,text_fields'));
 
     // Set up initial data for passing to the template.
     $data = array();
@@ -191,7 +186,7 @@ function ievents_adminapi_modify($args)
         // here and set them in the args array.
         // e.g. time in 12-hour clock format, and dates as individual fields.
 
-        // Get the input from the form (or from args input) and check the values
+        // Get the input from the form (or from args input) and check the values.
         $isvalid = $object->checkInput($args);
 
         // Update the object only if it is valid.
@@ -247,8 +242,27 @@ function ievents_adminapi_modify($args)
                 $object->properties['startdate']->setValue(
                     xarModAPIfunc($module, 'user', 'quantise', array('time' => $object->properties['startdate']->getValue()))
                 );
+                // Undo the timezone correction put in by the Dynamic_Calendar property.
+                // We do not want the posted date to be adjusted according to the timezone (or DST) of the posting user.
+                // The time and date is assumed to be the time and date as at the location of the website.
+                //
+                // A more sophisticated approach would be to store the server time *and* the timezone for the event (not
+                // the timezone for the server, or the website, or the posting user, but the *event*). That way it would
+                // always be possible to display the date corrected for both the end user time and the local event time.
+                // e.g. a tele-conference in Germany (GMT+2) could be posted to an English website (GMT+0). A French
+                // visitor (GMT+1) would know that the event at 3pm in Germnay, would be 2pm their local time, and it would
+                // be posted to the site as "1pm GMT/timezone GMT+2". When the time is POSTED to the web form, it should be
+                // interpreted as local to the *event*, and adjusted back to GMT at that point. Anyway, that's for another
+                // day when this system goes truly international...
+                $object->properties['startdate']->setValue(
+                    $object->properties['startdate']->getValue() + (xarMLS_userOffset($object->properties['startdate']->getValue()) * 3600)
+                );
                 $object->properties['enddate']->setValue(
                     xarModAPIfunc($module, 'user', 'quantise', array('time' => $object->properties['enddate']->getValue()))
+                );
+                // Undo the local user timezone adjustment.
+                $object->properties['enddate']->setValue(
+                    $object->properties['enddate']->getValue() + xarMLS_userOffset($object->properties['enddate']->getValue()) * 3600
                 );
 
                 // If our maximum privilege is COMMENT then force the status to DRAFT.
@@ -283,8 +297,16 @@ function ievents_adminapi_modify($args)
                 $object->properties['startdate']->setValue(
                     xarModAPIfunc($module, 'user', 'quantise', array('time' => $object->properties['startdate']->getValue()))
                 );
+                // Undo the local user timezone adjustment.
+                $object->properties['startdate']->setValue(
+                    $object->properties['startdate']->getValue() + (xarMLS_userOffset($object->properties['startdate']->getValue()) * 3600)
+                );
                 $object->properties['enddate']->setValue(
                     xarModAPIfunc($module, 'user', 'quantise', array('time' => $object->properties['enddate']->getValue()))
+                );
+                // Undo the local user timezone adjustment.
+                $object->properties['enddate']->setValue(
+                    $object->properties['enddate']->getValue() + xarMLS_userOffset($object->properties['enddate']->getValue()) * 3600
                 );
 
                 // If our maximum privilege is COMMENT then force the status to DRAFT.

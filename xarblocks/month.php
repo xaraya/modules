@@ -61,7 +61,7 @@ function ievents_monthblock_display($blockinfo)
     }
 
     // FIXME: this should actually be allowed, i.e. all available calendars.
-    if (!isset($vars['cid']) || (int)$vars['cid'] < 1) {
+    if (!isset($vars['cid']) || (int)$vars['cid'] < 0) {
         return;
     }
 
@@ -83,7 +83,8 @@ function ievents_monthblock_display($blockinfo)
 
     $data = $vars;
 
-    $group = 'smallmonth';
+    //JDJ 2009-07-03 Not sure the significance of 'smallmonth', but it messes up the listings that we link to.
+    $group = 'month'; //'smallmonth';
     $startdayofweek = xarModGetVar('ievents','startdayofweek');
     $numitems = xarModGetVar('ievents', 'default_numitems');
 
@@ -96,25 +97,26 @@ function ievents_monthblock_display($blockinfo)
     $cal->cid = $vars['cid'];
     $cal->calFormat = 'smallMonth';
 
-    if(xarVarValidate('enum:long:short', $vars['monthformat'], true)) {
-      $cal->monthFormat = $vars['monthformat'];
+    if (xarVarValidate('enum:long:short', $vars['monthformat'], true)) {
+        $cal->monthFormat = $vars['monthformat'];
     } else {
-      $cal->monthFormat = 'short';
+        // There is more than enough room for full month names in the small calender.
+        $cal->monthFormat = 'long';
     }
 
-    if(xarVarValidate('enum:long:short:xshort:xxshort', $vars['dowformat'], true)) {
-      $cal->DOWformat = $vars['dowformat'];
+    if (xarVarValidate('enum:long:short:xshort:xxshort', $vars['dowformat'], true)) {
+        $cal->DOWformat = $vars['dowformat'];
     } else {
-      $cal->DOWformat = 'xxshort';
+        $cal->DOWformat = 'xxshort';
     }
 
-    if(!empty($vars['showtitle']) && xarVarValidate('bool', $vars['showtitle'])) {
-       $cal->showTitle = $vars['showtitle'];
+    if (!empty($vars['showtitle']) && xarVarValidate('bool', $vars['showtitle'])) {
+        $cal->showTitle = $vars['showtitle'];
     } else {
-       $cal->showTitle = true;
+        $cal->showTitle = true;
     }
 
-    if(xarVarValidate('bool', $vars['linkmonth'])) $cal->linkMonth = $vars['linkmonth'];
+    if (xarVarValidate('bool', $vars['linkmonth'])) $cal->linkMonth = $vars['linkmonth'];
 
     $cal->displayPrevNext = false;
     $cal->displayEvents = true;
@@ -148,17 +150,22 @@ function ievents_monthblock_display($blockinfo)
         'enddate' => $uenddate,
         'cid' => $vars['cid'],
     );
-    $events = xarModAPIfunc('ievents', 'user', 'getevents', $event_params);
 
+    // Get the events.
+    $events = xarModAPIfunc('ievents', 'user', 'getevents', $event_params);
+//if (xarUserGetVar('uname') == 'judgej') var_dump($events);
     $groups = array();
     foreach($events as $eventkey => $eventvalue) {
         // Add some other details to each event, that will be useful.
         // Add the detail URL, taking into account the current search criteria.
         $eventvalue['detail_url'] = xarModURL(
             'ievents', 'user', 'view',
-            array_merge($url_params, array('eid' => $eventvalue['eid']))
+            array_merge($url_params, array('eid' => $eventvalue['eid'], 'range' => 'custom'))
         );
 
+        // Add the event detail to the calendar.
+        // At the moment only a count of the events is shown on the small calendar, but the details
+        // are all there if needed.
         $cal->addEvent(
             $eventvalue['startdate'],
             $eventvalue['title'],
@@ -167,11 +174,16 @@ function ievents_monthblock_display($blockinfo)
             xarModURL('ievents','user','view',array(
                 'startdate' => date('Ymd', $eventvalue['startdate']),
                 'enddate' => date('Ymd', $eventvalue['startdate']),
-                'group' => 'day'
+                'group' => 'day',
+                'range' => 'custom',
+                'eid' => $eventvalue['eid'],
+                'title' => $eventvalue['title'],
+                'summary' => $eventvalue['summary'],
             ))
         );
     }
-    if($vars['usecalname']) {
+
+    if ($vars['usecalname'] && !empty($vars['cid'])) {
         $calendars = xarModAPIFunc('ievents','user','getcalendars',array('cid' => $vars['cid']));
         $blockinfo['title'] = $calendars[$vars['cid']]['short_name'];
         $cal->showTitle = false;
@@ -179,8 +191,13 @@ function ievents_monthblock_display($blockinfo)
 
     $data['cid'] = $vars['cid'];
     $data['group'] = $group;
+
     $data['startdate'] = date('Ym01', $ustartdate);
     $data['enddate'] = date('Ymd', strtotime('+1 month -1 day', $ustartdate));
+
+    $data['startmonth'] = date('Ym', $ustartdate);
+    $data['endmonth'] = $data['startmonth'];
+
     $data['cal_output'] = $cal->display();
     $data['showfulllink'] = $vars['showfulllink'];
 
@@ -215,6 +232,7 @@ function ievents_monthblock_modify($blockinfo)
 
     $vars['blockid'] = $blockinfo['bid'];
     $vars['calendarlist'] = xarModAPIfunc('ievents','user','list_calendars',array('readable'=>true,'mandatory'=>true));
+    $vars['calendarlist'] = array_merge(array(0 => xarML('All Calendars')), $vars['calendarlist']);
 
     return $vars;
 

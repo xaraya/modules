@@ -2,8 +2,14 @@
 #$cal_output#
 <xar:if condition="$showfulllink">
     <div class="xar-align-center">
-        <a href="#xarModURL('ievents','user','view',array('group' => $group, 'startdate' => $startdate, 'enddate' => $enddate))#">
-            <xar:mlstring>Full Month</xar:mlstring>
-        </a>
+        <xar:if condition="!empty($cid)">
+            <a href="#xarModURL('ievents','user','view',array('group' => $group, 'startdate' =&gt; $startdate, 'enddate' =&gt; $enddate, 'range' =&gt; 'custom', 'cid' =&gt; $cid))#">
+                <xar:mlstring>Full Month</xar:mlstring>
+            </a>
+        <xar:else />
+            <a href="#xarModURL('ievents','user','view',array('group' => $group, 'startdate' =&gt; $startmonth, 'enddate' =&gt; $endmonth, 'range' =&gt; 'custom'))#">
+                <xar:mlstring>Full Month</xar:mlstring>
+            </a>
+        </xar:if>
     </div>
 </xar:if>

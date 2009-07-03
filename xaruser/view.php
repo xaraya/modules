@@ -617,7 +617,8 @@ function ievents_user_view($args)
                 break;
             case 'smallmonth':
                 $cal->calFormat = 'smallMonth';
-                $cal->monthFormat = 'short'; 
+                // There is more than enough room for full month names in the small calender.
+                $cal->monthFormat = 'long';
                 $cal->DOWformat = 'xxshort';
                 break;
             case 'week':
