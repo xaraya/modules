@@ -10,9 +10,8 @@
  * actually need a way to get the next and previous events in a listing
  * even from within the display function]
  *
- * @todo Transform hooks on the HTML fields
  * @todo Support different display formats (list, calendar, etc)
- * @todo Provide next/previous day/week/month/year/group links for the template (for any view)
+ * @todo Provide next/previous day/week/month/year/group links for the template (for any view, not just calendars)
  * @todo Create a textual description of the search that has been performed
  * @todo Pass a 'feed_params' base url to the templates, containing relevant parameters to base a feed off (relative dates, no grouping etc) [half done]
  */
@@ -71,6 +70,8 @@ function ievents_user_view($args)
     // These set the defaults also - events from today to one month ahead.
     // TODO: use $default_daterange as the defaults for the range if no other dates passed in. This is
     // actually quite hard to do, because there are so many parameters to check.
+    xarVarFetch('ustartdate', 'int', $ustartdate_raw, 0, XARVAR_NOT_REQUIRED);
+    xarVarFetch('uenddate', 'int', $uenddate_raw, 0, XARVAR_NOT_REQUIRED);
     xarVarFetch('ustartdate', 'int', $ustartdate, strtotime($default_startdate), XARVAR_NOT_REQUIRED);
     xarVarFetch('uenddate', 'int', $uenddate, strtotime($default_enddate), XARVAR_NOT_REQUIRED);
 
@@ -181,7 +182,18 @@ function ievents_user_view($args)
     // A date range set here should always override custom dates, so it is important to
     // remove the 'range' from the URL when going through calendars for example.
     // Use $default_daterange when there are no other dates passed in so far.
-    xarVarFetch('range', 'str', $range, $default_daterange, XARVAR_NOT_REQUIRED);
+    xarVarFetch('range', 'str', $range, '', XARVAR_NOT_REQUIRED);
+
+    // If no range has been supplied, then either default it to the application default or set
+    // it to 'custom'. Which will depend on whether any custom dates have actually been provided.
+    if (!empty($default_daterange) && $range == '') {
+        if (empty($ustartdate_raw) && empty($uenddate_raw) && empty($startyear) && empty($endyear) && empty($startdate) && empty($enddate) && empty($datenumber) && empty($datetype)) {
+            $range = $default_daterange;
+        } else {
+            $range = 'custom';
+        }
+    }
+
     if (!empty($range) && $range != 'custom') {
         $urange = xarModAPIfunc('ievents', 'user', 'daterange2dates', array('range' => $range));
         if (!empty($urange)) {
@@ -201,8 +213,10 @@ function ievents_user_view($args)
     }
 
     // Now we have a start and end date, we should make sure they are the right way around.
-    if ($uenddate < $ustartdate) {
-        // End date is earlier, so swap them around.
+    // However, if we are grouping, then let the start date override the end date, and set the
+    // end date to the end of the group. This allows single-ended date ranges, without the default
+    // end date putting a limit on the dates the user can jump to.
+    if ($uenddate < $ustartdate && $format != 'cal') {
         list($uenddate, $ustartdate) = array($ustartdate, $uenddate);
     }
 
@@ -216,14 +230,14 @@ function ievents_user_view($args)
     if ($format == 'cal') {
         switch($group) {
             case 'year':
-                $ustartdate = strtotime(date('Y', $ustartdate) . '0101');
-                $uenddate = strtotime('+1 year -1 day', $ustartdate);
+                $ustartdate = strtotime(date('Y0101', $ustartdate));
+                $uenddate = strtotime('+1 year -1 second', $ustartdate);
                 $cal_links_labels['this_view'] = date('Y', $ustartdate);
                 break;
 
             case 'quarter':
             	$ustartdate = mktime(0, 0, 0, ((floor(((date('m', $ustartdate)) / 3) + 1) * 3) - 2), '01', date('Y', $ustartdate));
-                $uenddate = strtotime('+3 months -1 day', $ustartdate);
+                $uenddate = strtotime('+3 months -1 second', $ustartdate);
                 $cal_links_labels['this_view'] = xarML('Quarter #(1), #(2)', 
                 	floor(((date('m', $ustartdate)) / 3) + 1), 
                 	date('Y', $ustartdate)
@@ -232,10 +246,8 @@ function ievents_user_view($args)
 
             case 'month':
             case 'smallmonth':
-                // FIXME: selecting 01-JAN-2010 results in being knocked back to December 2009.
-                // In fact, anything after 2010 seems to jump back to december. Could it be lack of events?
                 $ustartdate = strtotime(date('Ym', $ustartdate) . '01');
-                $uenddate = strtotime('+1 month -1 day', $ustartdate);
+                $uenddate = strtotime('+1 month -1 second', $ustartdate);
                 $cal_links_labels['this_view'] = $locale['months']['long'][(date('m', $ustartdate) + 11) % 12 + 1] . ' ' . date('Y', $ustartdate);
                 break;
 
@@ -244,7 +256,7 @@ function ievents_user_view($args)
                 $daystostartweek = date('w', $ustartdate) - $startdayofweek;
                 if ($daystostartweek < 0) $daystostartweek += 7;
                 $ustartdate = strtotime("-$daystostartweek days", $ustartdate);
-                $uenddate = strtotime('+7 days', $ustartdate);
+                $uenddate = strtotime('+7 days -1 second', $ustartdate);
                 $cal_links_labels['this_view'] = xarML('Week Starting #(1)', xarLocaleGetFormattedDate('long', $ustartdate));
                 break;
 
@@ -403,6 +415,12 @@ function ievents_user_view($args)
         $event_params['crule'] = $crule;
     }
 
+    // If calendar view, then default to maximum number of events, starting at number 1
+    if ($format == 'cal') {
+        $event_params['startnum'] = 1;
+        $event_params['numitems'] = $max_numitems;
+    }
+    
     // Fetch the events.
     $events = xarModAPIfunc('ievents', 'user', 'getevents', $event_params);
 
@@ -535,12 +553,6 @@ function ievents_user_view($args)
     if (!empty($cid)) $url_params['cid'] = $cid;
     if (!empty($q) && !empty($q_fields)) $event_params['q'] = $q;
 
-    // If calendar view, then default to maximum number of events, starting at number 1
-    if ($format == 'cal') {
-        $event_params['startnum'] = 1;
-        $event_params['numitems'] = $max_numitems;
-    }
-    
     // Count of all matching events.
     $total_events = xarModAPIFunc('ievents', 'user', 'countevents', $event_params);
 
@@ -556,9 +568,9 @@ function ievents_user_view($args)
     if (!empty($cats)) $feed_params['cats'] = $cats;
     if (!empty($cid)) $feed_params['cid'] = $cid;
     if (!empty($q) && !empty($q_fields)) $feed_params['q'] = $q;
+
     // TODO: include some more intelligently-selected relative dates
     $feed_params['range'] = 'next6months';
-
 
     //
     // Perform grouping of events if required.
@@ -602,7 +614,6 @@ function ievents_user_view($args)
         $cal = new ieventsCalendar;
 
         // Set the format.
-        // TODO: include daily.
         switch($group) {
             case 'year':
                 $cal->calFormat = 'fullYear';
