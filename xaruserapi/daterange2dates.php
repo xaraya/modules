@@ -34,7 +34,8 @@ function ievents_userapi_daterange2dates($args)
 
     // Some handy definitions.
 
-    // Today at 00:00
+    // Today at 00:00 server time (not GMT)
+    // So, in the UK during the summer, this will give 23:00 GMT (the day before).
     $today = strtotime(date('Y-m-d'));
 
     // The first day of the current week

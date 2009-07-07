@@ -254,16 +254,16 @@ function ievents_adminapi_modify($args)
                 // be posted to the site as "1pm GMT/timezone GMT+2". When the time is POSTED to the web form, it should be
                 // interpreted as local to the *event*, and adjusted back to GMT at that point. Anyway, that's for another
                 // day when this system goes truly international...
-                $object->properties['startdate']->setValue(
-                    $object->properties['startdate']->getValue() + (xarMLS_userOffset($object->properties['startdate']->getValue()) * 3600)
-                );
+                //$object->properties['startdate']->setValue(
+                //    $object->properties['startdate']->getValue() + (xarMLS_userOffset($object->properties['startdate']->getValue()) * 3600)
+                //);
                 $object->properties['enddate']->setValue(
                     xarModAPIfunc($module, 'user', 'quantise', array('time' => $object->properties['enddate']->getValue()))
                 );
                 // Undo the local user timezone adjustment.
-                $object->properties['enddate']->setValue(
-                    $object->properties['enddate']->getValue() + xarMLS_userOffset($object->properties['enddate']->getValue()) * 3600
-                );
+                //$object->properties['enddate']->setValue(
+                //    $object->properties['enddate']->getValue() + xarMLS_userOffset($object->properties['enddate']->getValue()) * 3600
+                //);
 
                 // If our maximum privilege is COMMENT then force the status to DRAFT.
                 if (!xarSecurityCheck('ModerateIEvent', 0, 'IEvent', $cid . ':All:All')) {
@@ -298,16 +298,16 @@ function ievents_adminapi_modify($args)
                     xarModAPIfunc($module, 'user', 'quantise', array('time' => $object->properties['startdate']->getValue()))
                 );
                 // Undo the local user timezone adjustment.
-                $object->properties['startdate']->setValue(
-                    $object->properties['startdate']->getValue() + (xarMLS_userOffset($object->properties['startdate']->getValue()) * 3600)
-                );
+                //$object->properties['startdate']->setValue(
+                //    $object->properties['startdate']->getValue() + (xarMLS_userOffset($object->properties['startdate']->getValue()) * 3600)
+                //);
                 $object->properties['enddate']->setValue(
                     xarModAPIfunc($module, 'user', 'quantise', array('time' => $object->properties['enddate']->getValue()))
                 );
                 // Undo the local user timezone adjustment.
-                $object->properties['enddate']->setValue(
-                    $object->properties['enddate']->getValue() + xarMLS_userOffset($object->properties['enddate']->getValue()) * 3600
-                );
+                //$object->properties['enddate']->setValue(
+                //    $object->properties['enddate']->getValue() + xarMLS_userOffset($object->properties['enddate']->getValue()) * 3600
+                //);
 
                 // If our maximum privilege is COMMENT then force the status to DRAFT.
                 if (!xarSecurityCheck('ModerateIEvent', 0, 'IEvent', $cid . ':All:All')) {
