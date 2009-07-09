@@ -1,5 +1,12 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<p>
-    <xar:mlstring>No default page to load</xar:mlstring>
-</p>
+    <div class="xar-mod-head"><span class="xar-mod-title">Unavailable Page</span></div>
+    <div class="xar-mod-body">
+        <fieldset>
+        <legend>Unavailable Page</legend>
+            <img src="#xarTplGetImage('sysmessage.jpg','base')#" alt="#xarML('System Message')#" width="96" height="96" class="xar-module-icon" />
+                <div style="margin-top: 20px; margin-left: 20px">
+                    This page cannot currently be displayed.
+                </div>                    
+        </fieldset>
+    </div>
 </xar:template>
