@@ -1,0 +1,507 @@
+<?php
+/**
+ * crispBB Forum Module
+ *
+ * @package modules
+ * @copyright (C) 2008-2009 The Digital Development Foundation
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage crispBB Forum Module
+ * @link http://xaraya.com/index.php/release/970.html
+ * @author crisp <crisp@crispcreations.co.uk>
+ */
+ /**
+ * Get forums
+ *
+ * Standard function of a module to retrieve forums
+ *
+ * @author crisp <crisp@crispcreations.co.uk>
+ * @return mixed  item array, or false on failure
+ * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+ */
+function crispbb_userapi_getforums($args)
+{
+
+    extract($args);
+    $startnum = isset($startnum) ? $startnum : 1;
+    $numitems = isset($numitems) ? $numitems : -1;
+    if (empty($cids) && !empty($catid)) {
+        $cids = array($catid);
+    }
+    if (empty($cids)) $cids = array();
+
+    $bycat = isset($bycat) ? true : false;
+    $unkeyed = isset($unkeyed) ? true : false;
+    /* TODO
+    if (!isset($systheme)) {
+        if (!xarVarFetch('theme', 'enum:RSS:rss:atom:xml:json', $systheme, '', XARVAR_NOT_REQUIRED)) return;
+    }
+    */
+
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $forumstable = $xartable['crispbb_forums'];
+    $fields = array('fid', 'fname', 'fdesc', 'fstatus', 'fowner', 'forder', 'lasttid', 'fsettings', 'fprivileges');
+    $select = array();
+    $where = array();
+    foreach ($fields as $k => $fieldname) {
+        $select[] = $forumstable . '.xar_' . $fieldname;
+    }
+    $from = $forumstable;
+
+    $categoriesdef = xarModAPIFunc(
+         'categories','user','leftjoin',
+         array('cids' => $cids, 'modid' => xarModGetIDFromName('crispbb'))
+    );
+    $addme = 0;
+    if (!empty($categoriesdef)) {
+        $select[] = $categoriesdef['cid'];
+        $fields[] = 'catid';
+        $from .= ' LEFT JOIN ' . $categoriesdef['table'];
+        $from .= ' ON ' . $categoriesdef['field'] . ' = ' . $forumstable . '.xar_fid';
+        $addme = 1;
+        if (!empty($categoriesdef['more']) && ($dbconn->databaseType != 'sqlite')) {
+            $from = '(' . $from . ')';
+            $from .= $categoriesdef['more'];
+        }
+    }
+    if (!empty($categoriesdef['where'])) $where[] = $categoriesdef['where'];
+
+    $typefields = array('itemtype');
+    $itemtypestable = $xartable['crispbb_itemtypes'];
+    foreach ($typefields as $k => $fieldname) {
+        $select[] = $itemtypestable . '.xar_' . $fieldname;
+        $fields[] = $fieldname;
+    }
+    if ($addme && ($dbconn->databaseType != 'sqlite')) {
+        $from = '(' . $from . ')';
+    }
+    $from .= ' LEFT JOIN ' . $itemtypestable;
+    $from .= ' ON ' . $itemtypestable . '.xar_fid' . ' = ' . $forumstable . '.xar_fid';
+    $where[] = $itemtypestable . '.xar_component' . ' = "forum"';
+
+    $topicstable = $xartable['crispbb_topics'];
+    $topicsfields = array('ttitle', 'towner', 'tstatus', 'tsettings', 'topicstype', 'lastpid');
+    foreach ($topicsfields as $k => $fieldname) {
+        $select[] = $topicstable . '.xar_' . $fieldname;
+        $fields[] = $fieldname;
+    }
+    if ($addme && ($dbconn->databaseType != 'sqlite')) {
+        $from = '(' . $from . ')';
+    }
+    $from .= ' LEFT JOIN ' . $topicstable;
+    $from .= ' ON ' . $topicstable . '.xar_tid' . ' = ' . $forumstable . '.xar_lasttid';
+    // $where[] = $itemtypestable . '.xar_component' . ' = "forum"';
+    $addme = 1;
+
+    if ($addme && ($dbconn->databaseType != 'sqlite')) {
+        $from = '(' . $from . ')';
+    }
+    $from .= ' LEFT JOIN ' . $topicstable . ' AS topics';
+    $from .= ' ON topics.xar_fid' . ' = ' . $forumstable . '.xar_fid';
+    if (isset($tstatus)) {
+        if (is_numeric($tstatus)) {
+            $from .= ' AND topics.xar_tstatus = ' . $tstatus;
+        } elseif (is_array($tstatus) && count($tstatus) > 0) {
+            $seentstatus = array();
+            foreach ($tstatus as $id) {
+                if (!is_numeric($id)) continue;
+                $seentstatus[$id] = 1;
+            }
+            if (count($seentstatus) == 1) {
+                $tstatuses = array_keys($seentstatus);
+                $from .= ' AND topics.xar_tstatus = ' . $tstatuses[0];
+            } elseif (count($seentstatus) > 1) {
+                $tstatuses = join(', ', array_keys($seentstatus));
+                $from .= ' AND topics.xar_tstatus IN (' . $tstatuses . ')';
+            }
+        }
+    }
+    $select[] = 'COUNT(DISTINCT topics.xar_tid) AS numtopics';
+    $fields[] = 'numtopics';
+    $addme = 1;
+
+    $poststable = $xartable['crispbb_posts'];
+
+    if ($addme && ($dbconn->databaseType != 'sqlite')) {
+        $from = '(' . $from . ')';
+    }
+    // Add the LEFT JOIN ... ON ... posts for the reply count
+    $from .= ' LEFT JOIN ' . $poststable . ' AS posts';
+    $from .= ' ON posts.xar_tid = topics.xar_tid';
+    //$from .= ' AND ' . $topicstable . '.xar_fid = ' . $forumstable . '.xar_fid';
+    $from .= ' AND posts.xar_pstatus IN (0,1)';
+    $from .= ' AND topics.xar_firstpid != topics.xar_lastpid';
+    $from .= ' AND topics.xar_firstpid != posts.xar_pid';
+    if (isset($tstatus)) {
+        if (is_numeric($tstatus)) {
+            $from .= ' AND topics.xar_tstatus = ' . $tstatus;
+        } elseif (is_array($tstatus) && count($tstatus) > 0) {
+            $seentstatus = array();
+            foreach ($tstatus as $id) {
+                if (!is_numeric($id)) continue;
+                $seentstatus[$id] = 1;
+            }
+            if (count($seentstatus) == 1) {
+                $tstatuses = array_keys($seentstatus);
+                $from .= ' AND topics.xar_tstatus = ' . $tstatuses[0];
+            } elseif (count($seentstatus) > 1) {
+                $tstatuses = join(', ', array_keys($seentstatus));
+                $from .= ' AND topics.xar_tstatus IN (' . $tstatuses . ')';
+            }
+        }
+    }
+    $select[] = 'COUNT(DISTINCT posts.xar_pid) AS numreplies';
+    $fields[] = 'numreplies';
+    $addme = 1;
+
+    $postsfields = array('ptime', 'powner', 'poststype');
+    /* TODO
+    if (!empty($systheme)) {
+        $postsfields[] = 'ptext';
+        $postsfields[] = 'pdesc';
+        $postsfields[] = 'psettings';
+    }
+    */
+    foreach ($postsfields as $k => $fieldname) {
+        $select[] = $poststable . '.xar_' . $fieldname;
+        $fields[] = $fieldname;
+    }
+    if ($addme && ($dbconn->databaseType != 'sqlite')) {
+        $from = '(' . $from . ')';
+    }
+    $from .= ' LEFT JOIN ' . $poststable;
+    $from .= ' ON ' . $poststable . '.xar_pid' . ' = ' . $topicstable . '.xar_lastpid';
+    // $where[] = $itemtypestable . '.xar_component' . ' = "forum"';
+    $addme = 1;
+
+    if ($addme && ($dbconn->databaseType != 'sqlite')) {
+        $from = '(' . $from . ')';
+    }
+    $from .= ' LEFT JOIN ' . $poststable . ' AS firstpost';
+    $from .= ' ON firstpost.xar_pid = ' . $topicstable . '.xar_firstpid';
+    // $where[] = $itemtypestable . '.xar_component' . ' = "forum"';
+    $addme = 1;
+    $select[] = 'firstpost.xar_pdesc AS tdesc';
+    $select[] = 'firstpost.xar_ptime AS ttime';
+    $fields[] = 'tdesc';
+    $fields[] = 'ttime';
+
+    $bindvars = array();
+    if (!empty($itemtype) && is_numeric($itemtype)) {
+        $where[] = $itemtypestable.".xar_itemtype = ?";
+        $bindvars[] = $itemtype;
+    }
+    if (!empty($fid)) {
+        if (is_numeric($fid)) {
+            $where[] = $forumstable . '.xar_fid = ' . $fid;
+        } elseif (is_array($fid) && count($fid) > 0) {
+            $seenfid = array();
+            foreach ($fid as $id) {
+                if (empty($id) || !is_numeric($id)) continue;
+                $seenfid[$id] = 1;
+            }
+            if (count($seenfid) == 1) {
+                $fids = array_keys($seenfid);
+                $where[] = $forumstable . '.xar_fid = ' . $fids[0];
+            } elseif (count($seenfid) > 1) {
+                $fids = join(', ', array_keys($seenfid));
+                $where[] = $forumstable . '.xar_fid IN (' . $fids . ')';
+            }
+        }
+    }
+
+    $query = 'SELECT ' . join(', ', $select);
+    $query .= ' FROM ' . $from;
+    if (!empty($where)) {
+        $query .= ' WHERE ' . join(' AND ', $where);
+    }
+    $query .= ' GROUP BY ' . $forumstable . '.xar_fid';
+    if (!empty($sort) && $sort == 'totals') {
+        $query .= " ORDER BY numtopics DESC, numreplies DESC";
+        //$query .= " ORDER BY COUNT(DISTINCT topics.xar_tid) DESC, COUNT(DISTINCT posts.xar_pid) DESC";
+    } else {
+        $query .= " ORDER BY " . $forumstable . '.xar_forder';
+    }
+
+    $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
+    if (!$result) return;
+    $forums = array();
+    // module defaults
+    $presets = xarModAPIFunc('crispbb', 'user', 'getpresets',
+        array('preset' => 'fsettings,fprivileges,ftransfields,ttransfields,ptransfields'));
+    $loggedin = xarUserIsLoggedIn();
+    $checkfailed = false;
+    for (; !$result->EOF; $result->MoveNext()) {
+        $data = $result->fields;
+        $forum = array();
+        foreach ($fields as $key => $field) {
+            $value = array_shift($data);
+            if ($field == 'fsettings') {
+                // forum settings
+                $fsettings = unserialize($value);
+                // add in any new presets from defaults
+                foreach ($presets['fsettings'] as $p => $pv) {
+                    if (!isset($fsettings[$p])) {
+                        $fsettings[$p] = $pv;
+                    }
+                }
+                foreach ($fsettings as $k => $v) {
+                    // remove any settings not in defaults
+                    if (!isset($presets['fsettings'][$k])) {
+                        unset($fsettings[$k]);
+                        continue;
+                    }
+                    $forum[$k] = $v;
+                }
+                $forum[$field] = $fsettings;
+                unset($fsettings);
+            } elseif ($field == 'fprivileges') {
+                // forum privileges
+                $fprivileges = unserialize($value);
+                // add in any new presets from defaults
+                foreach ($presets['fprivileges'] as $level => $actions) {
+                    foreach ($actions as $action => $value) {
+                        if (!isset($fprivileges[$level][$action])) {
+                            $fprivileges[$level][$action] = $value;
+                        }
+                    }
+                }
+                // remove any settings not in defaults
+                foreach ($fprivileges as $level => $actions) {
+                    foreach ($actions as $action => $value) {
+                        if (!isset($presets['fprivileges'][$level][$action])) {
+                            unset($fprivileges[$level][$action]);
+                        }
+                    }
+                }
+                $forum[$field] = $fprivileges;
+                unset($fprivileges);
+            } elseif ($field == 'tsettings' || $field == 'psettings') {
+                $value = unserialize($value);
+                $forum[$field] = $value;
+            } else {
+                $forum[$field] = $value;
+            }
+        }
+        if (!$secLevel = xarModAPIFunc('crispbb', 'user', 'checkseclevel',
+            array('check' => $forum, 'priv' => 'viewforum'))) {
+            $checkfailed = true;
+            continue;
+        }
+
+        $forum['totalitems'] = $forum['numreplies'] + $forum['numtopics'];
+        $forum['forumLevel'] = $secLevel;
+        // add privs for current user level in this forum
+        $forum['privs'] = $forum['fprivileges'][$secLevel];
+        if (empty($nolinks)) { // allow turn off links (shorturls throws a loop without it)
+            // forum viewers
+            $forum['viewforumurl'] = xarModURL('crispbb', 'user', 'view', array('fid' => $forum['fid']));
+            // TODO: deprecate this, use viewforumurl instead
+            $forum['forumviewurl'] = xarModURL('crispbb', 'user', 'view', array('fid' => $forum['fid']));
+            if (xarModAPIFunc('crispbb', 'user', 'checkseclevel', array('check' => $forum, 'priv' => 'readforum'))) {
+                // forum readers
+                // first we check the tstatus for topics user can't see
+                if (!empty($forum['lasttid'])) {
+                    $reset = false;
+                    // this forum has a last topic
+                    if ($forum['tstatus'] == 3) {
+                        // we don't want to show a moved topic here
+                        $reset = true;
+                    } elseif ($forum['tstatus'] == 4 && !xarModAPIFunc('crispbb', 'user', 'checkseclevel', array('check' => $forum, 'priv' => 'locktopics'))) {
+                        // need locktopics priv to see locked topics
+                        $reset = true;
+                    } elseif ($forum['tstatus'] == 2 && !xarModAPIFunc('crispbb', 'user', 'checkseclevel', array('check' => $forum, 'priv' => 'approvetopics'))) {
+                        // need approvetopics priv to see submitted topics
+                        $reset = true;
+                    }
+                    if ($reset) {
+                        // get a topic this user can see
+                        $lasttopic = xarModAPIFunc('crispbb', 'user', 'gettopics', array('fid' => $forum['fid'], 'tstatus' => array(0,1,2), 'sort' => 'ptime', 'order' => 'desc', 'numitems' => 1));
+                        $lasttopic = !empty($lasttopic) ? reset($lasttopic) : array();
+                        if (!empty($lasttopic)) {
+                            // replace the last topic
+                            $forum['lasttid'] = $lasttopic['tid'];
+                            foreach ($topicsfields as $tfield) {
+                                $forum[$tfield] = $lasttopic[$tfield];
+                            }
+                            foreach ($postsfields as $pfield) {
+                                $forum[$pfield] = $lasttopic[$pfield];
+                            }
+                            $forum['numtopics'] = xarModAPIFunc('crispbb', 'user', 'counttopics',
+                                array('fid' => $forum['fid'], 'tstatus' => array(0,1,2)));
+                            $forum['numreplies'] = xarModAPIFunc('crispbb', 'user', 'countposts', array('fid' => $forum['fid'], 'tstatus' => array(0,1,2)));
+                        } else {
+                            // no topic to display
+                            $forum['lasttid'] = '';
+                            foreach ($topicsfields as $tfield) {
+                                $forum[$tfield] = '';
+                            }
+                            foreach ($postsfields as $pfield) {
+                                $forum[$pfield] = '';
+                            }
+                            $forum['numtopics'] = 0;
+                            $forum['numreplies'] = 0;
+                        }
+                        unset($lasttopic);
+                    }
+                }
+                // we have a last topic
+                if (!empty($forum['lasttid'])) {
+                    // add in the topic urls
+                    $forum['lasttopicurl'] = xarModURL('crispbb', 'user', 'display',
+                        array('tid' => $forum['lasttid']));
+                    $forum['lastreplyurl'] = xarModURL('crispbb', 'user', 'display',
+                        array('tid' => $forum['lasttid'], 'action' => 'lastreply'));
+                    $forum['townerurl'] = xarModURL('roles', 'user', 'display',
+                        array('uid' => $forum['towner']));
+                    $forum['pownerurl'] = xarModURL('roles', 'user', 'display',
+                        array('uid' => $forum['powner']));
+                    if ($loggedin) {
+                        $forum['lastunreadurl'] = xarModURL('crispbb', 'user', 'display',
+                            array('tid' => $forum['lasttid'], 'action' => 'unread'));
+                    }
+
+                }
+                if ($loggedin) {
+                    // logged in users
+                    $forum['readforumurl'] = xarModURL('crispbb', 'user', 'view',
+                        array('fid' => $forum['fid'], 'action' => 'read'));
+                    // TODO: deprecate this, use readforumurl instead
+                    $forum['forumreadurl'] = xarModURL('crispbb', 'user', 'view',
+                        array('fid' => $forum['fid'], 'action' => 'read'));
+                    // forum posters
+                    if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
+                        array('check' => $forum, 'priv' => 'newtopic'))) {
+                        $forum['newtopicurl'] = xarModURL('crispbb', 'user', 'newtopic',
+                            array('fid' => $forum['fid']));
+                    }
+                    // forum moderators
+                    if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
+                        array('check' => $forum, 'priv' => 'ismoderator'))) {
+                        $forum['modforumurl'] = xarModURL('crispbb', 'user', 'moderate',
+                            array('component' => 'topics', 'fid' => $forum['fid']));
+                        // TODO: deprecate this, use modforumurl instead
+                        $forum['admintopicsurl'] = xarModURL('crispbb', 'admin', 'topics',
+                            array('fid' => $forum['fid']));
+                    }
+                    // forum owners
+                    if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
+                        array('check' => $forum, 'priv' => 'addforum'))) {
+                        $forum['addforumurl'] = xarModURL('crispbb', 'admin', 'modify',
+                            array('fid' => $forum['fid']));
+                    }
+                    // forum config editors
+                    if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
+                        array('check' => $forum, 'priv' => 'editforum'))) {
+                        $forum['editforumurl'] = xarModURL('crispbb', 'admin', 'modify',
+                            array('fid' => $forum['fid'], 'sublink' => 'edit'));
+                        $forum['hooksforumurl'] = xarModURL('crispbb', 'admin', 'modify',
+                            array('fid' => $forum['fid'], 'sublink' => 'forumhooks'));
+                        $forum['hookstopicsurl'] = xarModURL('crispbb', 'admin', 'modify',
+                            array('fid' => $forum['fid'], 'sublink' => 'topichooks'));
+                        $forum['hookspostsurl'] = xarModURL('crispbb', 'admin', 'modify',
+                            array('fid' => $forum['fid'], 'sublink' => 'posthooks'));
+                        $forum['privsforumurl'] = xarModURL('crispbb', 'admin', 'modify',
+                            array('fid' => $forum['fid'], 'sublink' => 'privileges'));
+                    }
+                    // forum delete
+                    if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
+                        array('check' => $forum, 'priv' => 'deleteforum'))) {
+                        $forum['deleteforumurl'] = xarModURL('crispbb', 'admin', 'delete',
+                            array('fid' => $forum['fid']));
+                    }
+                }
+                // end forum readers
+            }
+            // we have a last topic
+            if (!empty($forum['lasttid'])) {
+                $forum['townerurl'] = xarModURL('roles', 'user', 'display',
+                    array('uid' => $forum['towner']));
+                $forum['pownerurl'] = xarModURL('roles', 'user', 'display',
+                    array('uid' => $forum['powner']));
+            }
+            // end links
+        }
+        foreach ($presets['ftransfields'] as $field => $option) {
+            if (!isset($forum['ftransforms'][$field]))
+                $forum['ftransforms'][$field] = array();
+        }
+        foreach ($presets['ttransfields'] as $field => $option) {
+            if (!isset($forum['ttransforms'][$field]))
+                $forum['ttransforms'][$field] = array();
+        }
+        foreach ($presets['ptransfields'] as $field => $option) {
+            if (!isset($forum['ptransforms'][$field]))
+                $forum['ptransforms'][$field] = array();
+        }
+        $transargs = array();
+        $transargs['itemtype'] = $forum['itemtype'];
+        $transargs['transforms'] = $forum['ftransforms'];
+        $transargs['fname'] = $forum['fname'];
+        $transargs['fdesc'] = $forum['fdesc'];
+        $transformed = xarModAPIFunc('crispbb', 'user', 'dotransforms', $transargs);
+        $forum['transformed_fname'] = $transformed['fname'];
+        $forum['transformed_fdesc'] = $transformed['fdesc'];
+        unset($transformed);
+        if (!empty($forum['ttitle'])) {
+            $transargs = array();
+            $transargs['itemtype'] = $forum['topicstype'];
+            $transargs['transforms'] = $forum['ttransforms'];
+            $transargs['ttitle'] = $forum['ttitle'];
+            $transargs['tdesc'] = $forum['tdesc'];
+            $ignore = array();
+            if (!empty($forum['tsettings']['htmldeny'])) $ignore['html'] = 1;
+            if (!empty($forum['tsettings']['bbcodedeny'])) $ignore['bbcode'] = 1;
+            if (!empty($forum['tsettings']['smiliesdeny'])) $ignore['smilies'] = 1;
+            $transargs['ignore'] = $ignore;
+            $transformed = xarModAPIFunc('crispbb', 'user', 'dotransforms', $transargs);
+            $forum['transformed_ttitle'] = $transformed['ttitle'];
+            $forum['transformed_tdesc'] = $transformed['tdesc'];
+        }
+        /* TODO
+        if (!empty($systheme)) {
+            $transargs = array();
+            $transargs['itemtype'] = $forum['poststype'];
+            $transargs['transforms'] = $forum['ptransforms'];
+            $transargs['pdesc'] = $forum['pdesc'];
+            $transargs['ptext'] = $forum['ptext'];
+            $ignore = array();
+            if (!empty($forum['psettings']['htmldeny'])) $ignore['html'] = 1;
+            if (!empty($forum['psettings']['bbcodedeny'])) $ignore['bbcode'] = 1;
+            if (!empty($forum['psettings']['smiliesdeny'])) $ignore['smilies'] = 1;
+            $transargs['ignore'] = $ignore;
+            $ptransformed = xarModAPIFunc('crispbb', 'user', 'dotransforms', $transargs);
+            $forum['transformed_pdesc'] = $ptransformed['pdesc'];
+            $forum['transformed_ptext'] = $ptransformed['ptext'];
+        }
+        */
+        // TODO: get dd?
+        if ($bycat) {
+            $forums[$forum['catid']][$forum['fid']] = $forum;
+        } elseif ($unkeyed) {
+            $forums[] = $forum;
+        } else {
+            $forums[$forum['fid']] = $forum;
+        }
+    }
+    $result->Close();
+
+    // we didn't find any forums
+    if ((empty($forums)) || (!empty($catid) && $bycat && empty($forums[$catid]))) {
+        // check if forums were found and subsequently removed due to privs
+        // if no forums exist the problem wasn't a lack of privs
+        // this will either mean no forums have been created
+        // or params didn't match existing forums
+        // either way, this message only gets returned when privs was an issue
+        if (!empty($privcheck) && $checkfailed) {
+            $forums['error'] = 'NO_PRIVILEGES';
+        } elseif (!empty($privcheck)) {
+            $forums['error'] = 'BAD_DATA';
+        }
+    }
+
+    return $forums;
+}
+?>

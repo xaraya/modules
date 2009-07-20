@@ -1,0 +1,92 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>crispBB Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" module="crispbb" file="admin-menu" />
+    <img src="#xarTplGetImage('crispbb.png','crispbb')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+
+    <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+    <xar:mlstring>crispBB is a full-featured forum module for Xaraya</xar:mlstring>
+
+    <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+    <ul>
+        <li><xar:mlstring>Create categories for your forums.</xar:mlstring></li>
+        <li><xar:mlstring>Create forums for your users to post in.</xar:mlstring></li>
+        <li><xar:mlstring>Assign privileges to your users</xar:mlstring></li>
+        <li><xar:mlstring>Build your community...</xar:mlstring></li>
+    </ul>
+    <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
+    <ul>
+        <li>
+            <strong><xar:mlstring>Topitems Block</xar:mlstring></strong> -
+            <xar:mlstring>The topitems block allows you to list topics from the forums. You can choose to list topics from any or all of the forums available, optionally specifiying the field to sort topics on, the direction they should be sorted and the number of topics to display.</xar:mlstring>
+        </li>
+    </ul>
+
+    <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
+    <xar:mlstring>crispBB has no included hooks at present</xar:mlstring>
+    <xar:comment>
+    <ul>
+        <li>
+            <strong><xar:mlstring>New / Create Hook</xar:mlstring></strong> -
+            <xar:mlstring>Allows a new related topic to be created when creating a new hooked module item, topic will include link to, and optional excerpt from the created item. Optionally, an existing topic can be associated with the newly created item</xar:mlstring>
+        </li>
+        <li>
+            <strong><xar:mlstring>Modify / Update Hook</xar:mlstring></strong> -
+            <xar:mlstring>Allows the associated topic to be specified or changed when editing a hooked module item</xar:mlstring>
+        </li>
+        <li>
+            <strong><xar:mlstring>Display Hook</xar:mlstring></strong> -
+            <xar:mlstring>Displays a link to topic created or associated by create hook function. If a topic was not created, offers a link to create a new topic relating to the item.</xar:mlstring>
+        </li>
+        <li>
+            <strong><xar:mlstring>Delete Hook</xar:mlstring></strong> -
+            <xar:mlstring>Deletes the associated hook entry when a hooked module item is deleted. This does not remove the related topic.</xar:mlstring>
+        </li>
+        <li>
+            <strong><xar:mlstring>Modifyconfig Hook</xar:mlstring></strong> -
+            <xar:mlstring>Shows hook configuration options in modify config screen of hooked modules. Allows you to set various options for the hook operations</xar:mlstring>
+        </li>
+        <li>
+            <strong><xar:mlstring>Remove Hook</xar:mlstring></strong> -
+            <xar:mlstring>Removes associated hook entries from the database when a hooked module is removed from the system. This does not remove related topics.</xar:mlstring>
+        </li>
+    </ul>
+    </xar:comment>
+
+  <h3><xar:mlstring>Included Dynamic Data Properties</xar:mlstring></h3>
+    <xar:mlstring>crispBB has no included properties at present</xar:mlstring>
+
+  <h3>
+    <xar:mlstring>Further Information</xar:mlstring>
+  </h3>
+
+  <ul>
+    <li><xar:mlstring>crispBB Extension page at</xar:mlstring> <a title="#xarML('crispBB Module - Xaraya Extension 970')#" href="http://www.xaraya.com/index.php/release/970.html">Xaraya Extensions and Releases</a>.
+      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    </li>
+    <li><xar:mlstring>Related tutorials and documentation on crispBB found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/crispbb/" title="#xarML('Related documentation on crispBB')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+    </li>
+    <xar:comment>
+    <li><xar:mlstring>Official crispBB home page at</xar:mlstring> <a href="http://crispcreations.co.uk/xar/mods/crispbb" title="#xarML('crispBB Module Project at CrispCreations')#"><xar:mlstring>crispBB Module Project</xar:mlstring></a>
+    </li>
+    </xar:comment>
+    <li>
+        <xar:mlstring>Most icons in modules/crispbb/xarimages/tango/ courtesy of the </xar:mlstring>
+        <a href="http://tango.freedesktop.org/Tango_Desktop_Project" rel="external">Tango Desktop Project</a><xar:mlstring> and are in the public domain.  The remaining icons created by Xaraya developers, licensed under the GPL.</xar:mlstring>
+    </li>
+    <li>
+        <xar:mlstring>Icons in modules/crispbb/xarimages/icons/ are courtesy of </xar:mlstring>
+        <a href="http://www.famfamfam.com/lab/icons/silk/" rel="external">FamFamFam Silk Icons</a><xar:mlstring> by Mark James and are licensed under <a href="http://creativecommons.org/licenses/by/3.0/" rel="external">Creative Commons Attribution 3.0 License</a>.</xar:mlstring>
+    </li>
+  </ul>
+
+</div>
+<div class="xar-mod-foot">
+    <p class="xar-sub xar-align-center">
+        <strong>&nbsp;<xar:mlstring>crispBB - Overview</xar:mlstring></strong>
+        &nbsp;<xar:mlstring>Version</xar:mlstring> - #$version#
+    </p>
+</div>
+<xar:if condition="xarSessionSetVar('crispbb_statusmsg', '')"></xar:if>

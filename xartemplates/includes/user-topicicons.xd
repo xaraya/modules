@@ -1,0 +1,24 @@
+<xar:if condition="!empty($iconlist) && !empty($iconfolder) && isset($topicicon)">
+    <xar:set name="$numopts">count($iconlist)</xar:set>
+    <xar:if condition="$numopts gt 7">
+        <xar:set name="$optsplit">(int)($numopts / 2)</xar:set>
+    <xar:else />
+        <xar:set name="$optsplit">$numopts</xar:set>
+    </xar:if>
+    <xar:set name="counter">'1'</xar:set>
+    <xar:foreach in="$iconlist" value="$option" key="$key">
+        <xar:set name="theID">'topicicon_'.$key</xar:set>
+        <xar:if condition="$option.id eq $topicicon" >
+            <input type="radio" name="topicicon" id="#$theID#" value="#$option.id#" checked="checked" />
+        <xar:else />
+            <input type="radio" name="topicicon" id="#$theID#" value="#$option.id#" />
+        </xar:if>
+        <xar:if condition="(preg_match('/(gif|jpg|png)$/', $option['id']))">
+            <label for="#$theID#" title="#$option.name#"><img src="#xarTPLGetImage($option['imagepath'],'crispbb')#" alt="#$option.name#" /></label>
+        <xar:else />
+            <label for="#$theID#" title="#$option.name#">#$option.name# </label>
+        </xar:if>
+        <xar:if condition="(($counter % 10) == 0)"><br /></xar:if>
+        <xar:set name="dummy">$counter++</xar:set>
+    </xar:foreach>
+</xar:if>

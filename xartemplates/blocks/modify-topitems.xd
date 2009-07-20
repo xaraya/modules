@@ -1,0 +1,29 @@
+<xar:if condition="!empty($forumoptions)">
+    <div class="xar-form-input-wrapper">
+        <xar:set name="fidsid">'fids'.$blockid</xar:set>
+        <label for="#$fidsid#" class="xar-form-label">
+            <xar:mlstring>Forums</xar:mlstring>:
+        </label>
+        <xar:data-input type="multiselect" name="fids" options="$forumoptions" id="$fidsid" value="$fids" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:set name="sortid">'sort'.$blockid</xar:set>
+        <label for="#$sortid#" class="xar-form-label">
+            <xar:mlstring>Topitems</xar:mlstring>:
+        </label>
+        <xar:data-input type="dropdown" name="sort" options="$sortoptions" id="$sortid" value="$sort" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <xar:set name="orderid">'order'.$blockid</xar:set>
+        <label for="#$orderid#" class="xar-form-label">
+            <xar:mlstring>Order</xar:mlstring>:
+        </label>
+        <xar:data-input type="dropdown" name="order" options="$orderoptions" id="$orderid" value="$order" />
+    </div>
+    <div class="xar-form-input-wrapper">
+        <label for="numitems#$blockid#" class="xar-form-label help" title="#xarML('Number of items to display.')#">
+            <xar:mlstring>Number of items</xar:mlstring>:
+        </label>
+        <input type="text" name="numitems" id="numitems#$blockid#" size="3" maxlength="3" value="#$numitems#" />
+    </div>
+</xar:if>

@@ -1,0 +1,29 @@
+<xar:if condition="!empty($results)">
+    <xar:if condition="$component eq 'topics'">
+        <xar:foreach in="$results" value="$topic">
+            <item>
+                <title>#xarVarTransform($topic['transformed_ttitle'], 'HTML', 'XML')#</title>
+                <link>#xarVarTransform($topic['viewtopicurl'], 'HTML', 'XML')#</link>
+                <author>#xarVarTransform($posterlist[$topic['towner']]['name'], 'HTML', 'XML')#</author>
+                <pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$topic['ptime'])#</pubDate>
+                <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
+                <content:encoded><![CDATA[ #xarVarTransform(xarVarPrepHTMLDisplay($topic['transformed_tdesc']), 'HTML', 'XML')# ]]></content:encoded>
+                <description>#xarVarTransform(xarVarPrepForDisplay($topic['transformed_tdesc']), 'HTML', 'XML')#</description>
+                <guid isPermaLink="true">#xarVarTransform($topic['viewtopicurl'], 'HTML', 'XML')#</guid>
+            </item>
+        </xar:foreach>
+    <xar:else />
+        <xar:foreach in="$results" key="$pid" value="$post">
+            <item>
+                <title>#xarVarTransform($post['transformed_ttitle'], 'HTML', 'XML')#</title>
+                <link>#xarVarTransform($post['viewreplyurl'], 'HTML', 'XML')#</link>
+                <author>#xarVarTransform($posterlist[$post['powner']]['name'], 'HTML', 'XML')#</author>
+                <pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$post['ptime'])#</pubDate>
+                <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
+                <content:encoded><![CDATA[ #xarVarTransform(xarVarPrepHTMLDisplay($post['transformed_ptext']), 'HTML', 'XML')# ]]></content:encoded>
+                <description>#xarVarTransform(xarVarPrepForDisplay($post['transformed_ptext']), 'HTML', 'XML')#</description>
+                <guid isPermaLink="true">#xarVarTransform($post['viewreplyurl'], 'HTML', 'XML')#</guid>
+            </item>
+        </xar:foreach>
+    </xar:if>
+</xar:if>

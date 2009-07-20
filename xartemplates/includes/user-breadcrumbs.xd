@@ -1,0 +1,29 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-alt-outline xar-alt xar-padding-thick xar-margin-thickbottom">
+    <xar:set name="defaultModule">xarConfigGetVar('Site.Core.DefaultModuleName')</xar:set>
+    <xar:set name="pageSeparator">xarModGetVar('themes', 'SiteTitleSeparator')</xar:set>
+    <xar:if condition="$defaultModule ne 'crispbb'">
+        <a href="&xar-baseurl;" title="#xarML('Go to site index')#"><xar:mlstring>Home</xar:mlstring></a>
+        #$pageSeparator#
+        <a href="#xarModURL('crispbb', 'user', 'main')#" title="#xarML('Go to main forum index')#"><xar:mlstring>Forum Index</xar:mlstring></a>
+    <xar:else />
+        <a href="&xar-baseurl;" title="#xarML('Go to main forum index')#"><xar:mlstring>Forum Index</xar:mlstring></a>
+    </xar:if>
+
+    <xar:if condition="!empty($catid) && isset($categories[$catid])">
+        #$pageSeparator#
+        <a href="#xarModURL('crispbb', 'user', 'main', array('catid' => $catid))#" title="#$categories[$catid]['description']#">#$categories[$catid]['name']#</a>
+    </xar:if>
+    <xar:if condition="!empty($fid) && !empty($fname) && !empty($fdesc)">
+        #$pageSeparator#
+        <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $fid))#" title="#$fdesc#">#$fname#</a>
+    </xar:if>
+    <xar:if condition="!empty($tid) && !empty($ttitle)">
+        #$pageSeparator#
+        <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid))#" title="#$ttitle#">#$ttitle#</a>
+    </xar:if>
+    <xar:if condition="!empty($q) && !empty($searchtitle)">
+        #$pageSeparator#
+        <a href="#xarModURL('crispbb', 'user', 'search', array('q' => $q))#" title="#$ttitle#">#$searchtitle#</a>
+    </xar:if>
+</div>

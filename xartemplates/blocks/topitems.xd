@@ -1,0 +1,19 @@
+<xar:comment>Place this file in /modules/@@modulename@@/xartemplates/blocks/</xar:comment>
+<xar:comment>Make sure we've got something to display</xar:comment>
+<xar:if condition="!empty($topics)">
+    <div id="crispbb_topitems_#$blockid#">
+        <ul>
+        <xar:foreach in="$topics" value="$topic">
+            <li>
+                <xar:if condition="!empty($topic['lastreplyurl'])">
+                    <a href="#$topic['lastreplyurl']#">
+                        #$topic['transformed_ttitle']#
+                    </a>
+                <xar:else />
+                    #$topic['transformed_ttitle']#
+                </xar:if>
+            </li>
+        </xar:foreach>
+        </ul>
+    </div>
+</xar:if>

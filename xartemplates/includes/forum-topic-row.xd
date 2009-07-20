@@ -1,0 +1,82 @@
+<td class="xar-align-center xar-valign-middle">
+    <xar:if condition="!empty($topic['unreadurl'])">
+    <a href="#$topic['unreadurl']#" title="#xarML('Go to the first unread reply in this topic')#">
+        <xar:template type="module" module="crispbb" file="topic-timeimage" subdata="array('timeimage' =&gt; $topic['timeimage'])" />
+    </a>
+    <xar:else />
+        <xar:template type="module" module="crispbb" file="topic-timeimage" subdata="array('timeimage' =&gt; $topic['timeimage'])" />
+    </xar:if>
+</td>
+<td class="xar-align-center xar-valign-middle">
+    <xar:if condition="!empty($topic['topicicon'])">
+        <img src="#xarTPLGetImage($topic['topicicon'],'crispbb')#" alt="#xarML('icon')#" title="" />
+    </xar:if>
+</td>
+<xar:if condition="$topic['tstatus'] == 3">
+<td colspan="3" class="xar-valign-top">
+    <xar:if condition="!empty($topic['viewtopicurl'])">
+        <a href="#$topic['viewtopicurl']#" title="#xarML('Go to the first post in this topic')#">#$topic['transformed_ttitle']#</a>
+    <xar:else />
+        <strong>#$topic['transformed_ttitle']#</strong>
+    </xar:if>
+    <xar:if condition="!empty($topic['deletetopicurl'])">
+        <span class="xar-floatright">
+        <a href="#$topic['deletetopicurl']#" title="#xarML('Delete this topic')#">
+        <img src="#xarTPLGetImage('icons/comment_delete.png', 'crispbb')#" alt="#xarML('Delete')#" />
+        </a>
+        </span>
+    </xar:if>
+    <xar:comment>
+    <p>
+    <span class="xar-sub"><xar:mlstring>By</xar:mlstring>:</span>
+    <a href="#xarModURL('roles', 'user', 'display', array('uid' => $topic['towner']))#" title="#xarML('View profile')#">#$posterlist[$topic['towner']]['name']#</a>
+    </p>
+    </xar:comment>
+</td>
+<td class="checkbox">
+    <input type="checkbox" name="tids[$topic['tid']#]" id="tids_#$topic['tid']#" value="1" />
+</td>
+<xar:else />
+<td class="xar-valign-top">
+    <xar:if condition="!empty($topic['viewtopicurl'])">
+        <a href="#$topic['viewtopicurl']#" title="#xarML('Go to the first post in this topic')#">#$topic['transformed_ttitle']#</a>
+    <xar:else />
+        <strong>#$topic['transformed_ttitle']#</strong>
+    </xar:if>
+    <p>
+    <span class="xar-sub"><xar:mlstring>By</xar:mlstring>:</span>
+    <a href="#xarModURL('roles', 'user', 'display', array('uid' => $topic['towner']))#" title="#xarML('View profile')#">#$posterlist[$topic['towner']]['name']#</a>
+    </p>
+    <xar:if condition="!empty($showforum)">
+        <p>
+        <span class="xar-sub"><xar:mlstring>In</xar:mlstring>:</span>
+        <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $topic['fid']))#" title="#xarML('View forum')#">#$topic['transformed_fname']#</a>
+        </p>
+    </xar:if>
+</td>
+<td class="xar-align-center xar-valign-middle">
+    <p class="xar-sub xar-nowrap">Views: <strong>#$topic['numviews']#</strong></p>
+    <p class="xar-sub xar-nowrap">Replies: <strong>#$topic['numreplies']#</strong></p>
+</td>
+<td class="xar-valign-top">
+    <span class="xar-sub">
+        <xar:template type="module" module="crispbb" file="user-timestamp" subdata="array('timestamp' =&gt; $topic['ptime'])" />
+        <xar:if condition="!empty($topic['lastreplyurl'])">
+        <a href="#$topic['lastreplyurl']#" title="#xarML('Go to the last post in this topic')#"><img src="#xarTPLGetImage('icons/resultset_last.png', 'crispbb')#" alt="Last Post" /></a>
+        </xar:if>
+    </span>
+    <p>
+    <span class="xar-sub"><xar:mlstring>By</xar:mlstring>:</span>
+    <a href="#xarModURL('roles', 'user', 'display', array('uid' => $topic['powner']))#" title="#xarML('View profile')#">#$posterlist[$topic['powner']]['name']#</a>
+    </p>
+</td>
+<xar:if condition="!empty($topic['modforumurl'])">
+<td class="checkbox">
+    <xar:if condition="!empty($topic['modtopicurl'])">
+    <input type="checkbox" name="tids[#$topic['tid']#]" id="tids_#$topic['tid']#" value="1" />
+    <xar:else />
+    &nbsp;
+    </xar:if>
+</td>
+</xar:if>
+</xar:if>

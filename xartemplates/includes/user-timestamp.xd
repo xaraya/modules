@@ -1,0 +1,29 @@
+<xar:if condition="empty($timestamp)">
+    <xar:set name="timestamp">time()</xar:set>
+</xar:if>
+<xar:if condition="empty($timeformat)">
+    <xar:set name="timeformat">'medium'</xar:set>
+</xar:if>
+<xar:if condition="empty($timeorder)">
+    <xar:set name="timeorder">'timedate'</xar:set>
+</xar:if>
+<xar:if condition="empty($timelayout)">
+    <xar:set name="timelayout">xarModGetUserVar('crispbb', 'timelayout')</xar:set>
+</xar:if>
+<xar:if condition="empty($timelayout) || $timelayout == 'default'">
+    <xar:if condition="$timeorder == 'timedate'">
+        <xar:ml>
+            <xar:mlstring>Posted at #(1) on #(2)</xar:mlstring>
+            <xar:mlvar>#xarLocaleGetFormattedTime($timeformat, $timestamp)#</xar:mlvar>
+            <xar:mlvar>#xarLocaleGetFormattedDate($timeformat, $timestamp)#</xar:mlvar>
+        </xar:ml>
+    <xar:elseif condition="$timeorder == 'datetime'" />
+        <xar:ml>
+            <xar:mlstring>Posted on #(1) at #(2)</xar:mlstring>
+            <xar:mlvar>#xarLocaleGetFormattedDate($timeformat, $timestamp)#</xar:mlvar>
+            <xar:mlvar>#xarLocaleGetFormattedTime($timeformat, $timestamp)#</xar:mlvar>
+        </xar:ml>
+    </xar:if>
+<xar:elseif condition="$timelayout == 'timesince'" />
+    <xar:mlstring>Posted</xar:mlstring> <xar:base-timesince stamp="$timestamp" /> <xar:mlstring>ago</xar:mlstring>
+</xar:if>

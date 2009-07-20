@@ -1,0 +1,78 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>In-Page Administration menu</xar:comment>
+<xar:style scope="module" module="base" file="navtabs" />
+<xar:if condition="xarModGetVar('themes','adminpagemenu') && !empty($menulinks)">
+    <xar:set name="activetab">''</xar:set>
+    <xar:set name="activelabel">''</xar:set>
+    <xar:set name="tabclass">''</xar:set>
+    <div>
+        <dl class="xar-tabs">
+            <dt class="help" title="#xarML('Choose an action to perform')#">
+                <xar:mlstring>Actions</xar:mlstring>:
+            </dt>
+            <xar:loop name="$menulinks">
+                <xar:set name="tabclass">
+                    $loop->item['active']?'active':''
+                </xar:set>
+                <xar:if condition="$loop:item['active'] && !empty($loop:item['sublinks'])">
+                    <xar:set name="activetab">$loop->key</xar:set>
+                    <xar:set name="activelabel">$loop->item['label']</xar:set>
+                </xar:if>
+                <dd class="#$tabclass#">
+                    <a href="#$loop:item.url#" title="#$loop:item.title#">
+                        #$loop:item.label#
+                    </a>
+                </dd>
+            </xar:loop>
+        </dl>
+    </div>
+<xar:else />
+    <xar:set name="request">xarRequestGetInfo()</xar:set>
+    <xar:set name="activetab">$request[2]</xar:set>
+</xar:if>
+<xar:if condition="!empty($activetab) && isset($menulinks[$activetab]['sublinks'])">
+    <div>
+        <dl class="xar-tabs">
+            <dt class="help" title="#xarML('Choose an action to perform')#">
+                #$activelabel#:
+            </dt>
+            <xar:loop name="$menulinks[$activetab]['sublinks']">
+                <xar:set name="tabclass">
+                    $loop->item['active']?'active':''
+                </xar:set>
+                <xar:if condition="$loop:item['active'] && !empty($loop:item['sublinks'])">
+                    <xar:set name="activesubtab">$loop->key</xar:set>
+                    <xar:set name="activesublabel">$loop->item['label']</xar:set>
+                </xar:if>
+                <dd class="#$tabclass#">
+                    <a href="#$loop:item.url#" title="#$loop:item.title#">
+                        #$loop:item.label#
+                    </a>
+                </dd>
+            </xar:loop>
+        </dl>
+    </div>
+</xar:if>
+<xar:if condition="!empty($activesubtab) && isset($menulinks[$activetab]['sublinks'][$activesubtab]['sublinks'])">
+    <div>
+        <dl class="xar-tabs">
+            <dt class="help" title="#xarML('Choose an action to perform')#">
+                #$activesublabel#:
+            </dt>
+            <xar:loop name="$menulinks[$activetab]['sublinks'][$activesubtab]['sublinks']">
+                <xar:set name="tabclass">
+                    $loop->item['active']?'active':''
+                </xar:set>
+                <xar:if condition="$loop:item['active'] && !empty($loop:item['sublinks'])">
+                    <xar:set name="activesubtab">$loop->key</xar:set>
+                    <xar:set name="activesublabel">$loop->item['label']</xar:set>
+                </xar:if>
+                <dd class="#$tabclass#">
+                    <a href="#$loop:item.url#" title="#$loop:item.title#">
+                        #$loop:item.label#
+                    </a>
+                </dd>
+            </xar:loop>
+        </dl>
+    </div>
+</xar:if>

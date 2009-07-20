@@ -1,0 +1,19 @@
+/**
+ * crispBB Forum Module - help.txt
+ *
+ * @package modules
+ * @copyright (C) 2008-2009 The Digital Development Foundation
+ * @license GPL {@link http//www.gnu.org/licenses/gpl.html}
+ * @link http//www.xaraya.com
+ *
+ * @subpackage crispBB Forum Module
+ * @link http//xaraya.com/index.php/release/970.html
+ * @author crisp <crisp@crispcreations.co.uk>
+ */
+ Please report all bugs to http://bugs.xaraya.com
+
+ Additional support can be obtained via the following channels
+
+ Support forums - http://www.xaraya.com/index.php/xarbb
+ Newsgroups - news://news.xaraya.com
+ IRC Support - irc://irc.xaraya.com#support

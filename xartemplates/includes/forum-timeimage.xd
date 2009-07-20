@@ -1,0 +1,9 @@
+<xar:if condition="empty($forum['timeimage'])">
+    <img src="#xarTPLGetImage('icons/folder.png', 'crispbb')#" alt="#xarML('No Replies')#"  />
+<xar:elseif condition="$forum['timeimage'] eq 1" />
+    <img src="#xarTPLGetImage('icons/folder_comments.png', 'crispbb')#" alt="#xarML('New Replies')#"  />
+<xar:elseif condition="$forum['timeimage'] eq 2" />
+    <img src="#xarTPLGetImage('icons/comment_lock.png', 'crispbb')#" alt="#xarML('Closed Forum')#"  />
+<xar:elseif condition="$forum['timeimage'] eq 3" />
+    <img src="#xarTPLGetImage('icons/comments_lock.png', 'crispbb')#" alt="#xarML('Closed Forum')#"  />
+</xar:if>

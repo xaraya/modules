@@ -1,0 +1,25 @@
+/*
+icon related styling (not needed for Xaraya 1.2.x)
+-------------------------------------------------------------------------[comment] */
+img.xar-icon-disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+/*
+table related styling (not needed for Xaraya 1.2.x)
+-------------------------------------------------------------------------[comment] */
+tr.xar-alt td, tr.xar-norm td {
+    background-color: inherit;
+}
+/*
+table related styling (all Xaraya versions)
+-------------------------------------------------------------------------[comment] */
+td.checkbox {
+    width: 10px;
+    padding: 0;
+}
+
+td.checkbox input {
+    margin: 0;
+    padding: 0;
+}

@@ -1,0 +1,56 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>crispBB Forums</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="user-breadcrumbs" />
+    <div class="xar-margin-thickends xar-padding-thickends">
+        <div class="xar-twothirdswidth xar-floatleft">
+            <h2>#$pageTitle#</h2>
+        </div>
+        <div class="xar-thirdwidth xar-floatright xar-alt xar-sub xar-padding-thick">
+            <xar:template type="module" module="crispbb" file="user-userpanel" />
+        </div>
+        <br class="xar-clearboth" />
+    </div>
+    <hr />
+    <xar:if condition="!empty($message)">
+    <p>#$message#</p>
+    </xar:if>
+    <xar:set name="defaultModule">xarConfigGetVar('Site.Core.DefaultModuleName')</xar:set>
+    <xar:set name="pageSeparator">xarModGetVar('themes', 'SiteTitleSeparator')</xar:set>
+    <xar:if condition="$defaultModule ne 'crispbb'">
+        <p>
+        <a href="&xar-baseurl;" title="#xarML('Go to site index')#"><xar:mlstring>Home</xar:mlstring></a>
+        </p>
+        <p>
+        <a href="#xarModURL('crispbb', 'user', 'main')#" title="#xarML('Go to main forum index')#"><xar:mlstring>Forum Index</xar:mlstring></a>
+        </p>
+    <xar:else />
+        <p>
+        <a href="&xar-baseurl;" title="#xarML('Go to main forum index')#"><xar:mlstring>Forum Index</xar:mlstring></a>
+        </p>
+    </xar:if>
+
+    <xar:if condition="!empty($catid) && isset($categories[$catid])">
+        <p>
+        <a href="#xarModURL('crispbb', 'user', 'main', array('catid' => $catid))#" title="#$categories[$catid]['description']#">#$categories[$catid]['name']#</a>
+        </p>
+    </xar:if>
+    <xar:if condition="!empty($fid) && !empty($fname) && !empty($fdesc)">
+        <p>
+        <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $fid))#" title="#$fdesc#">#$fname#</a>
+        </p>
+    </xar:if>
+    <xar:if condition="!empty($tid) && !empty($ttitle)">
+        <p>
+        <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid, 'pid' => $pid))#" title="#$ttitle#">#$ttitle#</a>
+        </p>
+    </xar:if>
+
+    <xar:template type="module" file="user-breadcrumbs" />
+</div>
+<div class="xar-mod-foot xar-align-center">
+    <div class="xar-accent-outline xar-margin-thick xar-padding-thick">
+    </div>
+</div>

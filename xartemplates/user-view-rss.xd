@@ -1,0 +1,66 @@
+<xar:if condition="!empty($categories[$catid]['catimage'])">
+   <image>
+    <url>#xarVarTransform($categories[$catid]['catimage'], 'HTML', 'XML')#</url>
+    <title>#xarVarTransform(xarModGetVar('themes', 'SiteName'), 'HTML', 'XML')#</title>
+    <link>#xarVarTransform(xarServerGetBaseURL(), 'HTML', 'XML')#</link>
+    <width>32</width>
+    <height>32</height>
+    <description>#xarVarTransform(xarModGetVar('themes', 'SiteSlogan'), 'HTML', 'XML')#</description>
+  </image>
+</xar:if>
+<xar:if condition="!empty($announcements)">
+    <xar:foreach in="$announcements" value="$announcement">
+        <item>
+            <title>#xarVarTransform($announcement['transformed_ttitle'], 'HTML', 'XML')#</title>
+            <link>#xarVarTransform($announcement['viewtopicurl'], 'HTML', 'XML')#</link>
+            <author>#xarVarTransform($posterlist[$announcement['towner']]['name'], 'HTML', 'XML')#</author>
+            <pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$announcement['ptime'])#</pubDate>
+            <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
+            <content:encoded><![CDATA[ #xarVarTransform(xarVarPrepHTMLDisplay($announcement['transformed_tdesc']), 'HTML', 'XML')# ]]></content:encoded>
+            <description>#xarVarTransform(xarVarPrepForDisplay($announcement['transformed_tdesc']), 'HTML', 'XML')#</description>
+            <guid isPermaLink="true">#xarVarTransform($announcement['viewtopicurl'], 'HTML', 'XML')#</guid>
+        </item>
+    </xar:foreach>
+</xar:if>
+<xar:if condition="!empty($stickies)">
+    <xar:foreach in="$stickies" value="$sticky">
+        <item>
+            <title>#xarVarTransform($sticky['transformed_ttitle'], 'HTML', 'XML')#</title>
+            <link>#xarVarTransform($sticky['viewtopicurl'], 'HTML', 'XML')#</link>
+            <author>#xarVarTransform($posterlist[$sticky['towner']]['name'], 'HTML', 'XML')#</author>
+            <pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$sticky['ptime'])#</pubDate>
+            <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
+            <content:encoded><![CDATA[ #xarVarTransform(xarVarPrepHTMLDisplay($sticky['transformed_tdesc']), 'HTML', 'XML')# ]]></content:encoded>
+            <description>#xarVarTransform(xarVarPrepForDisplay($sticky['transformed_tdesc']), 'HTML', 'XML')#</description>
+            <guid isPermaLink="true">#xarVarTransform($sticky['viewtopicurl'], 'HTML', 'XML')#</guid>
+        </item>
+    </xar:foreach>
+</xar:if>
+<xar:if condition="!empty($faqs)">
+    <xar:foreach in="$faqs" value="$faq">
+        <item>
+            <title>#xarVarTransform($faq['transformed_ttitle'], 'HTML', 'XML')#</title>
+            <link>#xarVarTransform($faq['viewtopicurl'], 'HTML', 'XML')#</link>
+            <author>#xarVarTransform($posterlist[$faq['towner']]['name'], 'HTML', 'XML')#</author>
+            <pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$faq['ptime'])#</pubDate>
+            <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
+            <content:encoded><![CDATA[ #xarVarTransform(xarVarPrepHTMLDisplay($faq['transformed_tdesc']), 'HTML', 'XML')# ]]></content:encoded>
+            <description>#xarVarTransform(xarVarPrepForDisplay($faq['transformed_tdesc']), 'HTML', 'XML')#</description>
+            <guid isPermaLink="true">#xarVarTransform($faq['viewtopicurl'], 'HTML', 'XML')#</guid>
+        </item>
+    </xar:foreach>
+</xar:if>
+<xar:if condition="!empty($topics)">
+    <xar:foreach in="$topics" value="$topic">
+        <item>
+            <title>#xarVarTransform($topic['transformed_ttitle'], 'HTML', 'XML')#</title>
+            <link>#xarVarTransform($topic['viewtopicurl'], 'HTML', 'XML')#</link>
+            <author>#xarVarTransform($posterlist[$topic['towner']]['name'], 'HTML', 'XML')#</author>
+            <pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$topic['ptime'])#</pubDate>
+            <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
+            <content:encoded><![CDATA[ #xarVarTransform(xarVarPrepHTMLDisplay($topic['transformed_tdesc']), 'HTML', 'XML')# ]]></content:encoded>
+            <description>#xarVarTransform(xarVarPrepForDisplay($topic['transformed_tdesc']), 'HTML', 'XML')#</description>
+            <guid isPermaLink="true">#xarVarTransform($topic['viewtopicurl'], 'HTML', 'XML')#</guid>
+        </item>
+    </xar:foreach>
+</xar:if>

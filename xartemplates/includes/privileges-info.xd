@@ -1,0 +1,188 @@
+<h4><xar:mlstring>View</xar:mlstring></h4>
+<ul>
+    <li>
+        <strong><xar:mlstring>Can View Forum(s)</xar:mlstring></strong> -
+        <xar:mlstring>Users with this privilege can see an overview of open and closed forums. That means they can see the forum(s) linked in forum listings (crispBB user main) and view a list of topics in the forum(s) (crispBB user view {fid}).</xar:mlstring>
+    </li>
+</ul>
+<h4><xar:mlstring>Read</xar:mlstring></h4>
+<ul>
+    <li><strong><xar:mlstring>Can View Forum(s)</xar:mlstring></strong></li>
+    <li>
+        <strong><xar:mlstring>Can Read Topics</xar:mlstring></strong> -
+        <xar:mlstring>Users with read privileges can read open and closed topics (crispBB user display {tid}) in open and closed forums.</xar:mlstring>
+    </li>
+</ul>
+<h4><xar:mlstring>Post</xar:mlstring></h4>
+<ul>
+    <li><strong><xar:mlstring>Can View Forum(s)</xar:mlstring></strong></li>
+    <li><strong><xar:mlstring>Can Read Topics</xar:mlstring></strong></li>
+    <li><xar:mlstring>Can optionally perform any of the following</xar:mlstring>...<em>(<xar:mlstring>options selected here are inherited by Moderate privilege</xar:mlstring>)</em>
+        <ul>
+            <li>
+                <strong><xar:mlstring>Post New Topics</xar:mlstring></strong> -
+                <xar:mlstring>User can create new open topics in open forums</xar:mlstring>
+            </li>
+            <li>
+                <strong><xar:mlstring>Post Replies</xar:mlstring></strong> -
+                <xar:mlstring>User can post replies to open topics in open forums</xar:mlstring>
+            </li>
+            <li>
+                <strong><xar:mlstring>Edit Own Topics</xar:mlstring></strong> -
+                <xar:mlstring>User can edit their own open topics in open forums</xar:mlstring>
+            </li>
+            <li>
+                <strong><xar:mlstring>Edit Own Replies</xar:mlstring></strong> -
+                <xar:mlstring>User can edit their own replies in open topics, in open forums</xar:mlstring>
+            </li>
+            <li>
+                <strong><xar:mlstring>Close Own Topics</xar:mlstring></strong> -
+                <xar:mlstring>User can close their own open topics in open forums</xar:mlstring>
+            </li>
+            <li>
+                <strong><xar:mlstring>Post Stickies</xar:mlstring></strong> -
+                <xar:mlstring>User can create new sticky topics in open forums</xar:mlstring>
+            </li>
+            <li>
+                <strong><xar:mlstring>Post Announcements</xar:mlstring></strong> -
+                <xar:mlstring>User can create new announcement topics in open forums</xar:mlstring>
+            </li>
+            <li>
+                <strong><xar:mlstring>Post BBCode</xar:mlstring></strong> -
+                <xar:mlstring>User posted BBCode will be transformed</xar:mlstring>
+            </li>
+            <li>
+                <strong><xar:mlstring>Deny BBCode</xar:mlstring></strong> -
+                <xar:mlstring>User can disable BBCode in topic and replies</xar:mlstring>
+            </li>
+
+            <li>
+                <strong><xar:mlstring>Post Smilies</xar:mlstring></strong> -
+                <xar:mlstring>User posted Smilies will be transformed</xar:mlstring>
+            </li>
+
+            <li>
+                <strong><xar:mlstring>Deny Smilies</xar:mlstring></strong> -
+                <xar:mlstring>User can disable Smilies in topic and replies</xar:mlstring>
+            </li>
+            <li>
+                <strong><xar:mlstring>Add Changelog Remark</xar:mlstring></strong> -
+                <xar:mlstring>User can add a changelog remark when editing topics and replies</xar:mlstring>
+            </li>
+            <li>
+                <strong><xar:mlstring>Post Poll</xar:mlstring></strong> -
+                <xar:mlstring>User can post a poll when creating a new topic</xar:mlstring>
+            </li>
+            <li>
+                <strong><xar:mlstring>Post HTML</xar:mlstring></strong> -
+                <xar:mlstring>User posted HTML will be transformed</xar:mlstring>
+            </li>
+
+            <li>
+                <strong><xar:mlstring>Deny HTML</xar:mlstring></strong> -
+                <xar:mlstring>User can disable HTML in topic and replies</xar:mlstring>
+            </li>
+
+
+        </ul>
+    </li>
+</ul>
+<h4><xar:mlstring>Moderate</xar:mlstring></h4>
+<ul>
+    <li><strong><xar:mlstring>Can View Forum(s)</xar:mlstring></strong></li>
+    <li><strong><xar:mlstring>Can Read Topics</xar:mlstring></strong></li>
+    <li><strong><xar:mlstring>Can Perform All Checked Options from Post Privilege</xar:mlstring></strong></li>
+    <li><xar:mlstring>Can optionally perform any of the following</xar:mlstring>...<em>(<xar:mlstring>options selected here are inherited by Add privilege</xar:mlstring>)</em>
+        <ul>
+            <li>
+                <strong><xar:mlstring>Any unchecked options from Post privilege</xar:mlstring></strong>
+            </li>
+            <li>
+                <strong><xar:mlstring>Edit Topics</xar:mlstring></strong> -
+                <xar:mlstring>User can edit topics in open forums</xar:mlstring>
+            </li>
+            <li>
+                <strong><xar:mlstring>Edit Replies</xar:mlstring></strong> -
+                <xar:mlstring>User can edit replies to topics in open forums</xar:mlstring>
+            </li>
+            <li>
+                <strong><xar:mlstring>Close Topics</xar:mlstring></strong> -
+                <xar:mlstring>User can close topics in open forums</xar:mlstring>
+            </li>
+            <li>
+                <strong><xar:mlstring>Lock Topics</xar:mlstring></strong> -
+                <xar:mlstring>User can lock topics in open forums</xar:mlstring>
+            </li>
+            <li>
+                <strong><xar:mlstring>Move Topics</xar:mlstring></strong> -
+                <xar:mlstring>User can move topics in open forums</xar:mlstring>
+            </li>
+            <li>
+                <strong><xar:mlstring>Split Topics</xar:mlstring></strong> -
+                <xar:mlstring>User can split topics in open forums</xar:mlstring>
+            </li>
+            <li>
+                <strong><xar:mlstring>Delete Topics</xar:mlstring></strong> -
+                <xar:mlstring>User can delete topics in open forums</xar:mlstring>
+            </li>
+            <li>
+                <strong><xar:mlstring>Delete Replies</xar:mlstring></strong> -
+                <xar:mlstring>User can delete replies to topics in open forums</xar:mlstring>
+            </li>
+        </ul>
+    </li>
+</ul>
+<h4><xar:mlstring>Add</xar:mlstring></h4>
+<ul>
+    <li><strong><xar:mlstring>Can View Forum(s)</xar:mlstring></strong></li>
+    <li><strong><xar:mlstring>Can Read Topics</xar:mlstring></strong></li>
+    <li><strong><xar:mlstring>Can Perform All Checked Options from Moderate Privilege</xar:mlstring></strong></li>
+    <li><xar:mlstring>Can optionally perform any of the following</xar:mlstring>...<em></em>
+        <ul>
+            <li>
+                <strong><xar:mlstring>Any unchecked options from Moderate privilege</xar:mlstring></strong>
+            </li>
+            <li>
+                <strong><xar:mlstring>Add Forum</xar:mlstring></strong> -
+                <xar:mlstring>User can add forums to the system</xar:mlstring> <em>(<xar:mlstring>this option is inherited by Edit privilege</xar:mlstring>)</em>
+            </li>
+        </ul>
+    </li>
+</ul>
+<h4><xar:mlstring>Edit</xar:mlstring></h4>
+<ul>
+    <li><strong><xar:mlstring>Can View Forum(s)</xar:mlstring></strong></li>
+    <li><strong><xar:mlstring>Can Read Topics</xar:mlstring></strong></li>
+    <li><strong><xar:mlstring>Can Perform All Options available to Post and Moderate privileges</xar:mlstring></strong></li>
+    <li><xar:mlstring>Can optionally perform any of the following</xar:mlstring>...(<xar:mlstring>options selected here are inherited by Delete privilege</xar:mlstring>)</em>
+        <ul>
+            <li>
+                <strong><xar:mlstring>Add Forum</xar:mlstring></strong> -
+                <em>(<xar:mlstring>if not already checked in Add privilege</xar:mlstring>)</em>
+            </li>
+            <li>
+                <strong><xar:mlstring>Edit Forum</xar:mlstring></strong> -
+                <xar:mlstring>User can edit forums</xar:mlstring>
+            </li>
+        </ul>
+    </li>
+</ul>
+<h4><xar:mlstring>Delete</xar:mlstring></h4>
+<ul>
+    <li><strong><xar:mlstring>Can View Forum(s)</xar:mlstring></strong></li>
+    <li><strong><xar:mlstring>Can Read Topics</xar:mlstring></strong></li>
+    <li><strong><xar:mlstring>Can Perform All Checked Options from Edit Privilege</xar:mlstring></strong></li>
+    <li><xar:mlstring>Can optionally perform any of the following</xar:mlstring>...<em></em>
+        <ul>
+            <li>
+                <strong><xar:mlstring>Any unchecked options from Edit privilege</xar:mlstring></strong>
+            </li>
+            <li>
+                <strong><xar:mlstring>Delete Forum</xar:mlstring></strong> -
+                <xar:mlstring>User can delete forums from the system</xar:mlstring>
+            </li>
+        </ul>
+    </li>
+</ul>
+<h4><xar:mlstring>Admin</xar:mlstring></h4>
+<p><xar:mlstring>Users with admin privilege have no restrictions on their actions.</xar:mlstring></p>

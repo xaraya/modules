@@ -1,0 +1,32 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>This is the error template used by crispBB. It is displayed when a user has no privileges or when flood control is in effect.</xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>crispBB Forums</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="user-breadcrumbs" />
+    <img src="#xarTplGetImage('user-error.png', 'base')#" alt="#xarML('User Error Icon')#" class="xar-module-icon" />
+    <xar:comment>The type indicates which error, either FLOOD_CONTROL or NO_PRIVILEGES. By checking the type you can display your own message depending on the error instead of using the generic messaged that the module returns.</xar:comment>
+    <xar:if condition="!empty($type)">
+    <h2>#$type#</h2>
+    </xar:if>
+    <xar:if condition="!empty($message)">
+    <h3>
+        #$message#
+    </h3>
+    </xar:if>
+    <xar:comment>Set a report link if you want you users to be able to report a problem. Best used with sitecontact module and a custom form</xar:comment>
+    <xar:if condition="!empty($report_link)">
+        <p>
+            <xar:mlstring>If you believe you shouldn't be seeing this message</xar:mlstring> <a href="#$report_link#"><xar:mlstring>please report the problem</xar:mlstring></a>
+        </p>
+    </xar:if>
+    <xar:comment>In most cases crispBB will link to an appropriate page the user has access to, if all else fails though, the main user function is linked, change this if you'd prefer them go somewhere else, eg for guests, you might prefer a link to login</xar:comment>
+    <xar:if condition="empty($return_url)">
+        <xar:set name="return_url">#xarModURL('crispbb', 'user','main')#</xar:set>
+    </xar:if>
+    <p>
+    <a href="#$return_url#"><xar:mlstring>Click here to go back</xar:mlstring></a>
+    </p>
+    <xar:template type="module" file="user-breadcrumbs" />
+</div>

@@ -1,0 +1,48 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>crispBB Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <xar:template type="module" file="admin-menu" />
+    <xar:set name="statusmsg">xarSessionGetVar('crispbb_statusmsg')</xar:set>
+    <xar:if condition="!empty($statusmsg)">
+        <p class="xar-align-center xar-error">
+            #xarVarPrepForDisplay($statusmsg)#
+        </p>
+    </xar:if>
+    <h3><xar:mlstring>Modify Module Configuration</xar:mlstring></h3>
+    <form method="post" action="#xarModURL('crispbb', 'admin', 'modifyconfig')#">
+        <fieldset>
+            <div class="xar-form-input-wrapper">
+                <label for="shorturls" class="xar-form-label" title="#xarML('Support Short URLs.')#">
+                  <xar:mlstring>Support Short URLs?</xar:mlstring>
+                </label>
+                <xar:set name="$selval">$shorturls ? 'checked="checked"' : '';</xar:set>
+                <input type="checkbox" name="shorturls" id="shorturls" value="1" #$selval# />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="usealias" class="xar-form-label" title="#xarML('Use a module alias.')#">
+                  <xar:mlstring>Use module alias?</xar:mlstring>
+                </label>
+                <xar:set name="$selval">$usealias ? 'checked="checked"' : '';</xar:set>
+                <input type="checkbox" name="usealias" id="usealias" value="1" #$selval# />
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="aliasname" class="xar-form-label" title="#xarML('Module alias name')#">
+                  <xar:mlstring>Alias Name:</xar:mlstring>
+                </label>
+                <input type="text" name="aliasname" id="aliasname" value="#$aliasname#" maxlength="60" class="xar-form-textmedium" />
+            </div>
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="phase" id="phase" value="update" />
+                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('crispbb')#" />
+                <input type="submit" value="#xarML('Update Configuration')#" />
+            </div>
+
+        </fieldset>
+    </form>
+
+
+</div>
+<xar:if condition="xarSessionSetVar('crispbb_statusmsg', '')"></xar:if>

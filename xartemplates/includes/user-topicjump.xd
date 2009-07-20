@@ -1,0 +1,41 @@
+<form method="post" action="#xarModURL('crispbb', 'user', 'redirect')#" class="xar-margin-none xar-displayinline">
+    <label for="topicjump" class="xar-margin-nonebottom xar-padding-nonebottom"><xar:mlstring>Topics</xar:mlstring>:</label>
+    <select name="topicjump" id="topicjump" onchange="this.form.submit();">
+        <optgroup label="#xarML('All forums')#">
+            <option value="0">-----------------</option>
+            <xar:if condition="!empty($lastvisit)">
+                <option value="lastvisit"><xar:mlstring>Topics since last visit</xar:mlstring></option>
+            </xar:if>
+            <option value="latest"><xar:mlstring>Latest topics</xar:mlstring></option>
+            <xar:if condition="!empty($totalunanswered)">
+            <option value="unanswered"><xar:mlstring>Unanswered topics</xar:mlstring></option>
+            </xar:if>
+            <xar:if condition="xarUserIsLoggedIn()">
+            <xar:comment>
+                <option value="unread"><xar:mlstring>Unread topics</xar:mlstring></option>
+            </xar:comment>
+                <option value="towner"><xar:mlstring>My topics</xar:mlstring></option>
+            </xar:if>
+        </optgroup>
+        <xar:if condition="!empty($fid)">
+        <optgroup label="#xarML('This forum')#">
+            <xar:if condition="!empty($lastvisit)">
+                <option value="lastvisit#$fid#"><xar:mlstring>Topics since last visit</xar:mlstring></option>
+            </xar:if>
+            <option value="latest#$fid#"><xar:mlstring>Latest topics</xar:mlstring></option>
+            <xar:if condition="!empty($unanswered)">
+            <option value="unanswered#$fid#"><xar:mlstring>Unanswered topics</xar:mlstring></option>
+            </xar:if>
+            <xar:if condition="xarUserIsLoggedIn()">
+            <xar:comment>
+               <option value="unread#$fid#"><xar:mlstring>Unread topics</xar:mlstring></option>
+            </xar:comment>
+                <option value="towner#$fid#"><xar:mlstring>My topics</xar:mlstring></option>
+            </xar:if>
+        </optgroup>
+        </xar:if>
+    </select>
+    <noscript>
+    <input type="submit" value="#xarML('Jump')#" />
+    </noscript>
+</form>
