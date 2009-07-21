@@ -349,6 +349,8 @@ function crispbb_upgrade($oldversion)
         case '0.5.0':
             // bugfix links to purge topics
         case '0.5.1':
+            // add some checks on unserialize funcs in getforums api func
+        case '0.5.2':
             /* current version */
 
         break;

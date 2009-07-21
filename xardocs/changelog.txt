@@ -92,4 +92,6 @@
 0.5.0 - 21 July 2009
 // bugfix correct links to purge topics
 0.5.1 
+// add some checks on unserialize operations in getforums api function
+0.5.2
 **** Current Version ****

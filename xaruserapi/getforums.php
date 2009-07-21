@@ -240,7 +240,7 @@ function crispbb_userapi_getforums($args)
             $value = array_shift($data);
             if ($field == 'fsettings') {
                 // forum settings
-                $fsettings = unserialize($value);
+                $fsettings = !empty($value) && is_string($value) ? unserialize($value) : array();
                 // add in any new presets from defaults
                 foreach ($presets['fsettings'] as $p => $pv) {
                     if (!isset($fsettings[$p])) {
@@ -259,7 +259,7 @@ function crispbb_userapi_getforums($args)
                 unset($fsettings);
             } elseif ($field == 'fprivileges') {
                 // forum privileges
-                $fprivileges = unserialize($value);
+                $fprivileges = !empty($value) && is_string($value) ? unserialize($value) : array();
                 // add in any new presets from defaults
                 foreach ($presets['fprivileges'] as $level => $actions) {
                     foreach ($actions as $action => $value) {
@@ -279,7 +279,7 @@ function crispbb_userapi_getforums($args)
                 $forum[$field] = $fprivileges;
                 unset($fprivileges);
             } elseif ($field == 'tsettings' || $field == 'psettings') {
-                $value = unserialize($value);
+                $value = !empty($value) && is_string($value) ? unserialize($value) : array();
                 $forum[$field] = $value;
             } else {
                 $forum[$field] = $value;
