@@ -3,7 +3,7 @@
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -79,11 +79,23 @@ function uploads_userapi_db_modify_file( $args )
     }
 
     if (isset($extrainfo)) {
+
+
         $update_fields[] = "xar_extrainfo = ?";
         if (empty($extrainfo)) {
             $update_args[] = '';
         } elseif (is_array($extrainfo)) {
-            $update_args[] = serialize($extrainfo);
+            foreach(array_keys($extrainfo) as $key) {
+                if(empty($extrainfo[$key])) {
+                    unset($extrainfo[$key]);
+                }
+            }
+            if(empty($extrainfo)) {
+                unset($extrainfo);
+                $update_args[] = '';
+            } else {
+                $update_args[] = serialize($extrainfo);
+            }
         } else {
             $update_args[] = $extrainfo;
         }

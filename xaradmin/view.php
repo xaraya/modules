@@ -3,7 +3,7 @@
  * Manage uploaded files
  *
  * @package modules
- * @copyright (C) 2002-2008 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -46,7 +46,7 @@ function uploads_admin_view( )
     if (!xarVarFetch('action',      'int:0:',     $action,           NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('startnum',    'int:0:',     $startnum,         NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('numitems',    'int:0:',     $numitems,         NULL, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('sort', 'enum:id:name:size:user:status', $sort,      NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('sort', 'enum:id:name:size:user:status:description', $sort,      NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('catid',       'str:1:',     $catid,            NULL, XARVAR_DONT_SET)) return;
 
     /**

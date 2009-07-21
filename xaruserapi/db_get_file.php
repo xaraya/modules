@@ -346,6 +346,9 @@ function uploads_userapi_db_get_file( $args )
         if (!empty($row['xar_extrainfo'])) {
             $fileInfo['extrainfo'] = @unserialize($row['xar_extrainfo']);
         }
+        else {
+            $fileInfo['extrainfo'] = NULL;
+        }
 
         $instance = array();
         $instance[0] = $fileInfo['fileTypeInfo']['typeId'];
@@ -362,7 +365,51 @@ function uploads_userapi_db_get_file( $args )
         $result->MoveNext();
     }
 
+    if($sort == 'description') {
+        #uasort($fileList, "cmp"); # also possible to use
+        usort($fileList, "cmp");
+
+        if ($inverse)  {
+            $fileList = array_reverse($fileList, true);
+        }
+    }
+
     return $fileList;
 }
 
+function cmp($a, $b)
+{
+    /*
+    # FIXME: fix sorting by current locale, this is not working:
+    $locale = xarMLSGetCurrentLocale();
+    setlocale(LC_COLLATE, $locale);
+    */
+
+    // TODO: implement inverse
+
+    if(isset($a['extrainfo']) && is_array($a['extrainfo']) && !empty($a['extrainfo']['description']) ) {
+        $comp_a = $a['extrainfo']['description'];
+    }
+    else $comp_a = "";
+
+    if(isset($b['extrainfo']) && is_array($b['extrainfo']) && !empty($b['extrainfo']['description']) ) {
+        $comp_b = $b['extrainfo']['description'];
+    }
+    else $comp_b = "";
+
+    if($comp_a == "" && $comp_b == "") {
+        $comp_a = $a['fileName'];
+        $comp_b = $b['fileName'];
+    }
+
+    if($comp_b == "") {
+        return -1; # a b
+    }
+    elseif($comp_a == "") {
+        return 1; # b a
+    }
+    else {
+        return strcasecmp($comp_a, $comp_b);
+    }
+}
 ?>

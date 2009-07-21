@@ -3,7 +3,7 @@
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -44,6 +44,10 @@ function uploads_userapi_process_files( $args )
     if (!isset($storeType)) {
         // this is the same as _UPLOADS_STORE_DB_ENTRY OR'd with _UPLOADS_STORE_FILESYSTEM
         $storeType = _UPLOADS_STORE_FSDB;
+    }
+
+    if (empty($extrainfo)) {
+        $extrainfo = '';
     }
 
     // If there is an override['upload']['path'], try to use that
@@ -215,6 +219,7 @@ function uploads_userapi_process_files( $args )
 
     }
 
+    $i = 0;
     foreach ($fileList as $fileInfo) {
 
         // If the file has errors, add the file to the storeList (with it's errors intact),
@@ -224,9 +229,19 @@ function uploads_userapi_process_files( $args )
             $storeList[] = $fileInfo;
             continue;
         }
-        $storeList[] = xarModAPIFunc('uploads', 'user', 'file_store',
-                                      array('fileInfo'  => $fileInfo,
-                                            'storeType' => $storeType));
+
+        if(isset($extrainfo[$i]) && !empty($extrainfo[$i])) {
+            $storeList[] = xarModAPIFunc('uploads', 'user', 'file_store',
+                                          array('fileInfo'  => $fileInfo,
+                                                'extrainfo' => $extrainfo[$i],
+                                                'storeType' => $storeType));
+        } else {
+            $storeList[] = xarModAPIFunc('uploads', 'user', 'file_store',
+                                          array('fileInfo'  => $fileInfo,
+                                                'storeType' => $storeType));
+        }
+
+        $i++;
     }
 
     return $storeList;

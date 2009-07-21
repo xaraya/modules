@@ -49,6 +49,7 @@
                     <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'id'))#"><xar:mlstring>File Date</xar:mlstring></a></th>
                     <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'user'))#"><xar:mlstring>Uploaded By</xar:mlstring></a></th>
                     <th colspan="2"><a href="#xarModURL('uploads','admin','view',array('sort' => 'status'))#"><xar:mlstring>Status</xar:mlstring></a></th>
+                    <th><a href="#xarModURL('uploads','admin','view',array('sort' => 'description'))#"><xar:mlstring>Description</xar:mlstring></a></th>
           </tr>
           <xar:if condition="count($items)">
             <form id="viewfiles" action="#xarModUrl('uploads','admin','view')#" method="post">
@@ -77,17 +78,18 @@
                     <td class="#$tdclass# xar-align-center">
                         <input type="checkbox" name="fileId[]" id="fileId_#$loop:item['fileId']#" value="#$loop:item['fileId']#"/>
                     </td>
+                    <td class="#$tdclass# xar-align-center"><xar:if condition="!empty($loop:item['extrainfo']['description'])">#$loop:item['extrainfo']['description']#</xar:if></td>
                 </tr>
               </xar:loop>
                 <xar:if condition="$pager ne ''">
                 <tr>
-                    <td colspan="7" class="xar-norm xar-align-center" >
+                    <td colspan="8" class="xar-norm xar-align-center">
                         #$pager#
                     </td>
                 </tr>
                 </xar:if>
                 <tr>
-                    <td colspan="7" >
+                    <td colspan="8">
                         <table summary="Commands" width="100%" border="0" cellpadding="0" cellspacing="0" class="xar-norm">
                         <tr>
                             <td>
@@ -123,7 +125,7 @@
             </form>
             <xar:sec mask="DeleteUploads" catch="false">
               <tr>
-                <td colspan="7" style="text-align:right;">
+                <td colspan="8" style="text-align:right;">
                     <xar:if condition="!xarModGetVar('uploads','file.auto-purge')">
                     <form action="#xarModUrl('uploads','admin','purge_rejected')#" method="post">
                         <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
@@ -137,7 +139,7 @@
             </xar:sec>
           <xar:else />
             <tr>
-                <td class="xar-norm" colspan="7" align="center">
+                <td class="xar-norm" colspan="8" align="center">
                     <p>
                         <xar:mlstring>
                             There are currently no files to view with the filter you have chosen.

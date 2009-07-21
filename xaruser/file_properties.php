@@ -3,7 +3,7 @@
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -28,6 +28,7 @@ function uploads_user_file_properties( $args )
     if (!xarSecurityCheck('ViewUploads')) return;
     if (!xarVarFetch('fileId',   'int:1', $fileId)) return;
     if (!xarVarFetch('fileName', 'str:1:64', $fileName, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('description', 'str', $description, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!isset($fileId)) {
         $msg = xarML('Missing paramater [#(1)] for GUI function [#(2)] in module [#(3)].',
@@ -64,6 +65,7 @@ function uploads_user_file_properties( $args )
             if ($data['allowedit']) {
                 $args['fileId'] = $fileId;
                 $args['fileName'] = trim($fileName);
+                $args['extrainfo']['description'] = $description;
 
                 if (!xarModAPIFunc('uploads', 'user', 'db_modify_file', $args)) {
                     $msg = xarML('Unable to change filename for file: #(1) with file Id #(2)',
@@ -150,6 +152,7 @@ function uploads_user_file_properties( $args )
 
             $fileInfo['numassoc'] = xarModAPIFunc('uploads','user','db_count_associations',
                                                    array('fileId' => $fileId));
+
 
             $data['fileInfo'] = $fileInfo;
 

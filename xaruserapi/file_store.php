@@ -3,7 +3,7 @@
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -23,6 +23,7 @@
  *  @param   string     fileInfo.fileSrc        The source location for the file
  *  @param   string     fileInfo.fileDest       The (potential) destination for the file (filled in even if stored in the db and not filesystem)
  *  @param   integer    fileInfo.fileSize       The filesize of the file
+ *  @param   array      fileInfo.extrainfo      Extra info for the file
  *  @return array      returns the array passed into it modified with the extra attributes received through the storage
  *                      process. If the file wasn't added successfully, fileInfo.errors is set appropriately
  */
@@ -40,6 +41,12 @@ function uploads_userapi_file_store( $args )
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
+
+    if (empty($extrainfo)) {
+        $extrainfo = '';
+    }
+    $fileInfo['extrainfo'] = $extrainfo;
+
 
     $typeInfo = xarModAPIFunc('mime', 'user', 'get_rev_mimetype', array('mimeType' => $fileInfo['fileType']));
     $instance = array();

@@ -14,21 +14,21 @@
 
 .xar-uploads-icon
 {
-    float:       left;
-    width:       30px;
+    width:       auto;
     border:      0px solid #999;
     margin:      0 15px 15px 0;
     font-size:   8pt;
-    text-align:  center;
     padding:     5px;
     word-break:  normal;
 }
 
+
 .xar-uploads-icon img
 {
-    float:       left;
-    width:       36px;
-    height:      39px;
+    float:        left;
+    width:        36px;
+    height:       39px;
+    margin-right: 5px;
 }
 
 .xar-uploads-action:hover

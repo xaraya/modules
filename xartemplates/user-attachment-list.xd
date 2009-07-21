@@ -1,15 +1,22 @@
 <xar:if condition="isset($Attachments) AND is_array($Attachments) AND count($Attachments)">
+    <div class="xar-form-container-after">
     <xar:if condition="!empty($format) and $format eq 'textupload'">
         <xar:loop name="$Attachments">#file:#$loop:item['fileId']## </xar:loop>
     <xar:else/>
         <xar:style module="uploads" scope="module" file="uploads" />
         <xar:loop name="$Attachments">
+            <xar:if condition="!empty($loop:item['extrainfo']['description'])">
+                <xar:set name="description">" &ndash; ".$loop->item['extrainfo']['description']</xar:set>
+            <xar:else />
+                <xar:set name="description">""</xar:set>
+            </xar:if>
             <xar:if condition="isset($style) AND $style eq 'icon'">
                 <div class="xar-uploads-icon">
                     <a href="#$loop:item['fileDownload']#" alt="#$loop:item['fileName']#" title="#$loop:item['DownloadLabel']#">
                             <img src="#$loop:item['mimeImage']#" alt="#$loop:item['fileType']#" />
                             #$loop:item['fileName']#
                     </a>
+                    #$description#
                 </div>
             <xar:elseif condition="isset($style) AND $style eq 'transform'"/>
                 <xar:comment>do something special when working through transform hooks, e.g. show images directly</xar:comment>
@@ -21,14 +28,17 @@
                     #$loop:item['fileName']#
                     </a>
                 </xar:if>
+                #$description#
                 <br />
             <xar:else />
                 <a href="#$loop:item['fileDownload']#" alt="#$loop:item['fileName']#" title="#$loop:item['DownloadLabel']#">
                     #$loop:item['fileName']#
                 </a>
+                #$description#
                 <br />
             </xar:if>
         </xar:loop>
         <div class="xar-uploads-clearer">&nbsp;</div>
     </xar:if>
+    </div>
 </xar:if>

@@ -27,11 +27,13 @@
                     <form action="#xarModUrl('uploads','user','file_properties')#" method="post">
                     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="xar-norm">
                         <tr>
-                            <td width="20%">
+                            <td width="10%">
                                 <img src="#$fileInfo['mimeImage']#" height="48" width="48" alt="FileType: #$fileInfo['fileType']#" />
                             </td>
-                            <td width="80%">
+                            <td width="90%">
                                 <input type="textbox" name="fileName" maxlength="128" size="30" value="#$fileInfo['fileName']#" />
+                                <xar:if condition="isset($fileInfo['extrainfo']['description'])"><xar:set name="value_description">$fileInfo['extrainfo']['description']</xar:set><xar:else /><xar:set name="value_description">""</xar:set></xar:if>
+                                <input type="textbox" name="description" size="60" value="#$value_description#" />
                                 <input type="hidden"  name="fileId"   value="#$fileInfo['fileId']#"/>
                                 <input type="submit"  value="#xarML('Update')#"/>
                             </td>

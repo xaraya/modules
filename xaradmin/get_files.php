@@ -3,7 +3,7 @@
  * Purpose of File
  *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -19,7 +19,6 @@ xarModAPILoad('uploads', 'user');
 
 function uploads_admin_get_files()
 {
-
     if (!xarSecurityCheck('AddUploads')) return;
 
     $actionList[] = _UPLOADS_GET_UPLOAD;
@@ -34,6 +33,8 @@ function uploads_admin_get_files()
     $storeTypes = _UPLOADS_STORE_FSDB . ':' . _UPLOADS_STORE_DB_FULL;
     if (!xarVarFetch('storeType',     "enum:$storeTypes", $storeType, '', XARVAR_NOT_REQUIRED)) return;
 
+    #if (!xarVarFetch('description', 'str', $description, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('description', 'array:1', $description, '', XARVAR_NOT_REQUIRED)) return;
 
     // now make sure someone hasn't tried to change our maxsize on us ;-)
     $file_maxsize = xarModGetVar('uploads', 'file.maxsize');
@@ -111,7 +112,15 @@ function uploads_admin_get_files()
     if (isset($storeType)) {
         $args['storeType'] = $storeType;
     }
+
+    if (is_array($description) && count($description)) {
+        foreach ($description as $desc) {
+            $args['extrainfo'][]['description'] = $desc;
+        }
+    }
+
     $list = xarModAPIFunc('uploads','user','process_files', $args);
+
     if (is_array($list) && count($list)) {
         return xarTplModule('uploads','admin', 'addfile-status', array('fileList' => $list), NULL);
     } else {

@@ -6,7 +6,7 @@
             <th class="xar-align-center"><xar:mlstring>Browse for File:</xar:mlstring></th>
         </tr>
         <tr>
-            <td class="xar-norm xar-align-left" width="45%">
+            <td class="xar-norm xar-align-left" width="35%">
                 <input type="file" name="upload" />
             </td>
         </tr>
@@ -14,16 +14,24 @@
             <th class="xar-align-center"><xar:mlstring>Save Location<br />DB / FS</xar:mlstring></th>
         </tr>
         <tr>
-            <td class="xar-norm xar-align-center" width="28%">
+            <td class="xar-norm xar-align-center" width="10%">
                 <input type="radio" name="storeType" id="storeType" value="#$storeType['DB_FULL']#"  /> 
                 <input type="radio" name="storeType" id="storeType" value="#$storeType['FSDB']#" checked="checked"  />
+            </td>
+        </tr>
+        <tr>
+            <th align="center"><xar:mlstring>Description</xar:mlstring></th>
+        </tr>
+        <tr>
+            <td class="xar-norm xar-align-center" width="45%">
+                <input type="text" name="description" value="" size="50" id="description" />
             </td>
         </tr>
         <tr>
             <th align="center"><xar:mlstring>Action</xar:mlstring></th>
         </tr>
         <tr>
-            <td class="xar-norm xar-align-center" width="27%">
+            <td class="xar-norm xar-align-center" width="10%">
                 <input type="submit" name="button" id="button" value="#xarML('Upload')#" />
                 <input type="hidden" name="action" id="action" value="1" />
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
@@ -34,17 +42,21 @@
         <tr>
             <th class="xar-align-center"><xar:mlstring>Browse for File:</xar:mlstring></th>
             <th class="xar-align-center"><xar:mlstring>Save Location<br />DB / FS</xar:mlstring></th>
+            <th class="xar-align-center"><xar:mlstring>Description</xar:mlstring></th>
             <th class="xar-align-center"><xar:mlstring>Action</xar:mlstring></th>
         </tr>
         <tr>
-            <td class="xar-norm xar-align-left" width="45%">
+            <td class="xar-norm xar-align-left" width="35%">
                 <input type="file" name="upload" size="28" />
             </td>
-            <td class="xar-norm xar-align-center" width="28%">
+            <td class="xar-norm xar-align-center" width="10%">
                 <input type="radio" name="storeType" id="storeType" value="#$storeType['DB_FULL']#"  /> 
                 <input type="radio" name="storeType" id="storeType" value="#$storeType['FSDB']#" checked="checked"  />
             </td>
-            <td class="xar-norm xar-align-center" width="27%">
+            <td class="xar-norm xar-align-center" width="45%">
+                <input type="text" name="description" value="" size="50" id="description" />
+            </td>
+            <td class="xar-norm xar-align-center" width="10%">
                 <input type="submit" name="button" id="button" value="#xarML('Upload')#" />
                 <input type="hidden" name="action" id="action" value="1" />
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
