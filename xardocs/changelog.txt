@@ -90,4 +90,6 @@
 0.4.9
 // Final code clean up for commit to repository
 0.5.0 - 21 July 2009
+// bugfix correct links to purge topics
+0.5.1 
 **** Current Version ****

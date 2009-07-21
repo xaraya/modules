@@ -347,6 +347,8 @@ function crispbb_upgrade($oldversion)
     switch ($oldversion) {
         // module pushed to repo's
         case '0.5.0':
+            // bugfix links to purge topics
+        case '0.5.1':
             /* current version */
 
         break;

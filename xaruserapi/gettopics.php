@@ -641,7 +641,7 @@ function crispbb_userapi_gettopics($args)
                         // forum editors
                         if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
                             array('check' => $topic, 'priv' => 'editforum'))) {
-                            $topic['purgetopicurl'] = xarModURL('crispbb', 'admin', 'moderate',
+                            $topic['purgetopicurl'] = xarModURL('crispbb', 'user', 'moderate',
                                     array(
                                         'component' => 'topics',
                                         'fid' => $topic['fid'],
@@ -680,7 +680,7 @@ function crispbb_userapi_gettopics($args)
                         // forum editors
                         if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
                             array('check' => $topic, 'priv' => 'editforum'))) {
-                            $topic['purgetopicurl'] = xarModURL('crispbb', 'admin', 'moderate',
+                            $topic['purgetopicurl'] = xarModURL('crispbb', 'user', 'moderate',
                                     array(
                                         'component' => 'topics',
                                         'fid' => $topic['fid'],

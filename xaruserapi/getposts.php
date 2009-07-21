@@ -560,7 +560,7 @@ function crispbb_userapi_getposts($args)
                     // forum editors
                     if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
                         array('check' => $post, 'priv' => 'editforum'))) {
-                        $post['purgetopicurl'] = xarModURL('crispbb', 'admin', 'moderate',
+                        $post['purgetopicurl'] = xarModURL('crispbb', 'user', 'moderate',
                                 array(
                                     'component' => 'topics',
                                     'fid' => $post['fid'],
