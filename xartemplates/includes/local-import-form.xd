@@ -78,10 +78,10 @@
             <xar:else/>
             <xar:set name="rowclass">'xar-accent'</xar:set>
           </xar:if>
-          <td class="#$rowclass#" align="center">
+          <td #$width1# class="#$rowclass#" align="center">
             <input type="checkbox" name="fileList[]" id="file_#$loop:index#" value="#$loop:item['fileName']#" />
           </td>
-          <td class="#$rowclass#" align="left">&nbsp;
+          <td #$width2# class="#$rowclass#" align="left">&nbsp;
             <xar:if condition="$loop:item['inodeType'] eq $inodeType['DIRECTORY']">
               <a href="#$local_import_post_url#&amp;inode=#$loop:item['fileName']#&amp;action=#$getAction['REFRESH']#"
                  alt="#xarML('Open Folder')#"
@@ -96,15 +96,16 @@
             </xar:if>
           </td>
 
-          <td class="#$rowclass# xar-align-center">
+          <td #$width3# class="#$rowclass# xar-align-center">
               <input type="text" name="description[]" value="" size="55" id="description#$loop:index#" />
           </td>
 
           <xar:if condition="is_array($loop:item['fileSize'])">
-            <td class="#$rowclass#" align="right">&nbsp;#$loop:item['fileSize']['long']#</td>
+              <xar:set name="value">$loop->item['fileSize']['long']</xar:set>
             <xar:else />
-            <td class="#$rowclass#" align="right">&nbsp;#$loop:item['fileSize']#</td>
+              <xar:set name="value">$loop->item['fileSize']</xar:set>
           </xar:if>
+          <td #$width4# class="#$rowclass#" align="right">&nbsp;#$value#</td>
         </tr>
       </xar:loop>
       <tr>
