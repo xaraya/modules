@@ -18,6 +18,7 @@
             <xar:template type="module" module="crispbb" file="user-userpanel" />
         </div>
         <div class="xar-align-right xar-padding-thicktop xar-clearboth">
+            <xar:set name="formid">'1'</xar:set>
             <xar:template type="module" module="crispbb" file="user-searchbox" />
             <xar:template type="module" module="crispbb" file="user-forumjump" />
             <xar:template type="module" module="crispbb" file="user-topicjump" />
@@ -116,13 +117,13 @@
     </xar:if>
     <table class="xar-fullwidth xar-alt-outline xar-margin-none">
         <caption class="xar-alt-outline xar-padding-thick xar-align-left xar-margin-thicktop">
-            <div class="xar-halfwidth xar-floatleft">
+            <span class="xar-halfwidth xar-floatleft">
             <a href="#$viewtopicurl#">#$transformed_ttitle#</a>
-            </div>
+            </span>
             <xar:if condition="!empty($pager)">
-                <div class="xar-align-right xar-floatright xar-halfwidth">
+                <span class="xar-align-right xar-floatright xar-halfwidth">
                     #$pager#
-                </div>
+                </span>
             </xar:if>
             <br class="xar-clearboth" />
         </caption>
@@ -365,6 +366,7 @@
     </xar:if>
     <hr />
     <div class="xar-align-right xar-padding-thicktop">
+        <xar:set name="formid">'2'</xar:set>
         <xar:template type="module" module="crispbb" file="user-forumjump" />
         <xar:template type="module" module="crispbb" file="user-topicjump" />
     </div>

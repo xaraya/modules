@@ -12,18 +12,18 @@
 
     <xar:if condition="!empty($catid) && isset($categories[$catid])">
         #$pageSeparator#
-        <a href="#xarModURL('crispbb', 'user', 'main', array('catid' => $catid))#" title="#$categories[$catid]['description']#">#$categories[$catid]['name']#</a>
+        <a href="#xarModURL('crispbb', 'user', 'main', array('catid' => $catid))#" title="#xarVarPrepForDisplay($categories[$catid]['description'])#">#xarVarPrepForDisplay($categories[$catid]['name'])#</a>
     </xar:if>
     <xar:if condition="!empty($fid) && !empty($fname) && !empty($fdesc)">
         #$pageSeparator#
-        <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $fid))#" title="#$fdesc#">#$fname#</a>
+        <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $fid))#" title="#$transformed_fdesc#">#$transformed_fname#</a>
     </xar:if>
     <xar:if condition="!empty($tid) && !empty($ttitle)">
         #$pageSeparator#
-        <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid))#" title="#$ttitle#">#$ttitle#</a>
+        <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid))#" title="#$transformed_ttitle#">#$transformed_ttitle#</a>
     </xar:if>
     <xar:if condition="!empty($q) && !empty($searchtitle)">
         #$pageSeparator#
-        <a href="#xarModURL('crispbb', 'user', 'search', array('q' => $q))#" title="#$ttitle#">#$searchtitle#</a>
+        <a href="#xarModURL('crispbb', 'user', 'search', array('q' => $q))#" title="#$searchtitle#">#$searchtitle#</a>
     </xar:if>
 </div>

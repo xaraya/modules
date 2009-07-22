@@ -13,9 +13,10 @@
             <xar:template type="module" module="crispbb" file="user-userpanel" />
         </div>
         <div class="xar-align-right xar-padding-thicktop xar-clearboth">
+            <xar:set name="formid">'1'</xar:set>
             <xar:template type="module" module="crispbb" file="user-searchbox" />
-            <xar:template type="module" module="crispbb" file="user-forumjump" />
-            <xar:template type="module" module="crispbb" file="user-topicjump" />
+            <xar:template type="module" module="crispbb" file="user-forumjump"  />
+            <xar:template type="module" module="crispbb" file="user-topicjump"  />
         </div>
     </div>
     <hr />
@@ -24,9 +25,9 @@
         <table class="xar-fullwidth xar-alt-outline xar-margin-nonetop">
             <caption class="xar-padding-thick xar-alt-outline xar-align-left">
                 <xar:if condition="!empty($catinfo['viewurl'])">
-                    <a href="#$catinfo['viewurl']#" title="#$catinfo['description']#">#$catinfo['name']#</a>
+                    <a href="#$catinfo['viewurl']#" title="#xarVarPrepForDisplay($catinfo['description'])#">#xarVarPrepForDisplay($catinfo['name'])#</a>
                 <xar:else />
-                    <strong>#$catinfo['name']#</strong>
+                    <strong>#xarVarPrepForDisplay($catinfo['name'])#</strong>
                 </xar:if>
             </caption>
             <thead>
@@ -46,7 +47,7 @@
                                 <xar:mlstring>Showing #(1) #(2) in category #(3)</xar:mlstring>
                                 <xar:mlvar>#$catinfo['numforums']#</xar:mlvar>
                                 <xar:mlvar>#$grammar#</xar:mlvar>
-                                <xar:mlvar>#$catinfo['name']#</xar:mlvar>
+                                <xar:mlvar>#xarVarPrepForDisplay($catinfo['name'])#</xar:mlvar>
                             </xar:ml>
                         </span>
                     </td>
@@ -66,7 +67,7 @@
                     </td>
                     <td class="xar-valign-top">
                         <xar:if condition="!empty($forum['forumviewurl'])">
-                            <a href="#$forum['forumviewurl']#" title="#$forum['transformed_fdesc']#">#$forum['transformed_fname']#</a>
+                            <a href="#$forum['forumviewurl']#" title="#xarML('View forum')#">#$forum['transformed_fname']#</a>
                         <xar:else />
                             <strong>#$forum['transformed_fname']#</strong>
                         </xar:if>
@@ -117,6 +118,7 @@
     </xar:if>
     <hr />
     <div class="xar-align-right xar-padding-thicktop xar-clearboth">
+        <xar:set name="formid">'2'</xar:set>
         <xar:template type="module" module="crispbb" file="user-forumjump" />
         <xar:template type="module" module="crispbb" file="user-topicjump" />
     </div>

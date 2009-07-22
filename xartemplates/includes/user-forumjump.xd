@@ -1,18 +1,18 @@
 <xar:if condition="!empty($forumoptions)">
 <xar:if condition="empty($fid)"><xar:set name="fid">0</xar:set></xar:if>
+<xar:if condition="empty($formid)"><xar:set name="formid">'1'</xar:set></xar:if>
 <form method="post" action="#xarModURL('crispbb', 'user', 'redirect')#" class="xar-margin-none xar-displayinline">
-    <label for="forumjump" class="xar-margin-nonebottom xar-padding-nonebottom"><xar:mlstring>Forums</xar:mlstring>:</label>
-    <select name="forumjump" id="forumjump_userpanel" onchange="this.form.submit();">
+    <div class="xar-nowrap xar-displayinline">
+    <label for="forumjump_userpanel#$formid#" class="xar-margin-nonebottom xar-padding-nonebottom"><xar:mlstring>Forums</xar:mlstring>:</label>
+    <select name="forumjump" id="forumjump_userpanel#$formid#" onchange="this.form.submit();">
         <optgroup label="#xarML('Jump to ...')#">
             <option value="0">-----------------</option>
             <xar:foreach in="$forumoptions" key="$optid" value="$foption">
-                <option value="#$optid#">#$foption['name']#</option>
+                <option value="#$optid#">#xarVarPrepForDisplay($foption['name'])#</option>
             </xar:foreach>
         </optgroup>
     </select>
-    <input type="hidden" name="fid" id="fid" value="#$fid#" />
-    <noscript>
-    <input type="submit" value="#xarML('Jump')#" />
-    </noscript>
+    <input type="hidden" name="fid" id="fid#$formid#" value="#$fid#" />
+    </div>
 </form>
 </xar:if>

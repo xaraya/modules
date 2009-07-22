@@ -1,6 +1,8 @@
 <form method="post" action="#xarModURL('crispbb', 'user', 'redirect')#" class="xar-margin-none xar-displayinline">
-    <label for="topicjump" class="xar-margin-nonebottom xar-padding-nonebottom"><xar:mlstring>Topics</xar:mlstring>:</label>
-    <select name="topicjump" id="topicjump" onchange="this.form.submit();">
+    <xar:if condition="empty($formid)"><xar:set name="$formid">'1'</xar:set></xar:if>
+    <div class="xar-nowrap xar-displayinline">
+    <label for="topicjump#$formid#" class="xar-margin-nonebottom xar-padding-nonebottom"><xar:mlstring>Topics</xar:mlstring>:</label>
+    <select name="topicjump" id="topicjump#$formid#" onchange="this.form.submit();">
         <optgroup label="#xarML('All forums')#">
             <option value="0">-----------------</option>
             <xar:if condition="!empty($lastvisit)">
@@ -35,7 +37,5 @@
         </optgroup>
         </xar:if>
     </select>
-    <noscript>
-    <input type="submit" value="#xarML('Jump')#" />
-    </noscript>
+    </div>
 </form>
