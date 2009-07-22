@@ -504,6 +504,10 @@ function crispbb_userapi_gettopics($args)
                 // topic readers
                 $topic['viewtopicurl'] = xarModURL('crispbb', 'user', 'display',
                     array('tid' => !empty($moved['tid']) ? $moved['tid'] : $topic['tid']));
+                if (empty($moved)) {
+                    $topic['lastreplyurl'] = xarModURL('crispbb', 'user', 'display',
+                        array('tid' => $topic['tid'], 'action' => 'lastreply'));
+                }
                 if ($loggedin) {
                     // topic starters
                     if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
@@ -515,8 +519,6 @@ function crispbb_userapi_gettopics($args)
                     $tids[$topic['tid']] = 1;
                     // only provide these links if the topic wasn't moved
                     if (empty($moved)) {
-                        $topic['lastreplyurl'] = xarModURL('crispbb', 'user', 'display',
-                            array('tid' => $topic['tid'], 'action' => 'lastreply'));
                         // topic repliers
                         if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
                             array('check' => $topic, 'priv' => 'newreply'))) {
