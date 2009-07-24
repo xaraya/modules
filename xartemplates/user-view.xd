@@ -53,7 +53,7 @@
     <table class="xar-fullwidth xar-alt-outline xar-margin-none">
         <caption class="xar-alt-outline xar-padding-thick xar-align-left xar-margin-thicktop">
             <span class="xar-floatleft">
-            <a href="#$forumviewurl#" title="#$transformed_fdesc#">#$transformed_fname#</a>
+            <a href="#$forumviewurl#" title="#$transformed_fname#">#$transformed_fname#</a>
             </span>
             <xar:if condition="!empty($pager)">
                 <span class="xar-align-right xar-floatright">
@@ -64,10 +64,10 @@
         </caption>
         <thead>
             <tr>
-                <th scope="col" style="width:24px;"></th>
-                <th scope="col" style="width:24px;"></th>
-                <th scope="col"><xar:mlstring>Topic</xar:mlstring></th>
-                <th scope="col" style="width:72px;"><xar:mlstring>Info</xar:mlstring></th>
+                <th scope="col" class="timeimage"></th>
+                <th scope="col" class="topicicon"></th>
+                <th scope="col" class="topicinfo"><xar:mlstring>Topic</xar:mlstring></th>
+                <th scope="col" class="postinfo"><xar:mlstring>Info</xar:mlstring></th>
                 <th scope="col" class="xar-thirdwidth"><xar:mlstring>Last Post</xar:mlstring></th>
                 <xar:if condition="!empty($modforumurl)">
                 <th scope="col" id="checkall#$fid#">&nbsp;</th>
@@ -108,10 +108,10 @@
                 <xar:if condition="!empty($stickies) || !empty($announcements)|| !empty($faqs)">
                     <tr><td colspan="#$numcols#"><hr /></td></tr>
                     <tr>
-                        <th scope="col" style="width:24px;"></th>
-                        <th scope="col" style="width:24px;"></th>
+                        <th scope="col" class="timeimage"></th>
+                        <th scope="col" class="topicicon"></th>
                         <th scope="col"><xar:mlstring>Topic</xar:mlstring></th>
-                        <th scope="col" style="width:72px;"><xar:mlstring>Info</xar:mlstring></th>
+                        <th scope="col" class="postinfo"><xar:mlstring>Info</xar:mlstring></th>
                         <th scope="col" class="xar-thirdwidth"><xar:mlstring>Last Post</xar:mlstring></th>
                         <xar:if condition="!empty($modforumurl)">
                         <th scope="col" id="checkall#$fid#">&nbsp;</th>
@@ -247,31 +247,31 @@
 </div>
 <div class="xar-mod-foot">
     <div class="xar-accent-outline xar-align-center xar-margin-thick xar-padding-thick">
-        <xar:if condition="!empty($readurl)">
+        <xar:if condition="!empty($forumreadurl)">
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('icons/comment.png', 'crispbb')#" alt="#xarML('No Replies')#" title="#xarML('Topic with no new replies')#" />
+            <img src="#xarTPLGetImage('timeimages/comment.png', 'crispbb')#" alt="#xarML('No Replies')#" title="#xarML('Topic with no new replies')#" />
             No Replies
         </span>
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('icons/comments.png', 'crispbb')#" alt="#xarML('New Replies')#" title="#xarML('Topic with new replies')#" />
+            <img src="#xarTPLGetImage('timeimages/comments.png', 'crispbb')#" alt="#xarML('New Replies')#" title="#xarML('Topic with new replies')#" />
             New Replies
         </span>
         <xar:else />
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('icons/comment.png', 'crispbb')#" alt="#xarML('Topic')#" title="#xarML('Forum topic')#" />
+            <img src="#xarTPLGetImage('timeimages/comment.png', 'crispbb')#" alt="#xarML('Topic')#" title="#xarML('Forum topic')#" />
             Topic
         </span>
         </xar:if>
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('icons/comment_red.png', 'crispbb')#" alt="#xarML('Hot Topic')#" title="#xarML('Hot topic')#" />
+            <img src="#xarTPLGetImage('timeimages/comment_red.png', 'crispbb')#" alt="#xarML('Hot Topic')#" title="#xarML('Hot topic')#" />
             Hot Topic
         </span>
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('icons/comment_go.png', 'crispbb')#" alt="#xarML('Moved')#" title="#xarML('Moved topic')#" />
+            <img src="#xarTPLGetImage('timeimages/comment_go.png', 'crispbb')#" alt="#xarML('Moved')#" title="#xarML('Moved topic')#" />
             Moved
         </span>
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('icons/comment_lock.png', 'crispbb')#" alt="#xarML('Closed')#" title="#xarML('Closed topic')#" />
+            <img src="#xarTPLGetImage('timeimages/comment_lock.png', 'crispbb')#" alt="#xarML('Closed')#" title="#xarML('Closed topic')#" />
             Closed
         </span>
         <xar:if condition="!empty($privs['locktopics'])">

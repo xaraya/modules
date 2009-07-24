@@ -14,9 +14,9 @@
         #$pageSeparator#
         <a href="#xarModURL('crispbb', 'user', 'main', array('catid' => $catid))#" title="#xarVarPrepForDisplay($categories[$catid]['description'])#">#xarVarPrepForDisplay($categories[$catid]['name'])#</a>
     </xar:if>
-    <xar:if condition="!empty($fid) && !empty($fname) && !empty($fdesc)">
+    <xar:if condition="!empty($fid) && !empty($fname)">
         #$pageSeparator#
-        <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $fid))#" title="#$transformed_fdesc#">#$transformed_fname#</a>
+        <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $fid))#" title="#$transformed_fname#">#$transformed_fname#</a>
     </xar:if>
     <xar:if condition="!empty($tid) && !empty($ttitle)">
         #$pageSeparator#

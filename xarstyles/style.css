@@ -23,3 +23,23 @@ td.checkbox input {
     margin: 0;
     padding: 0;
 }
+
+td.timeimage, td.topicicon {
+    width: 24px;
+}
+
+td.foruminfo {}
+
+td.topicinfo {}
+
+td.postinfo {
+    width: 72px;
+}
+
+td.lastpost {}
+
+td.posterinfo {
+    width: 15em;
+}
+
+td.replyinfo {}

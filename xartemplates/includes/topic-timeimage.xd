@@ -1,23 +1,23 @@
 <xar:if condition="empty($timeimage)">
-    <img src="#xarTPLGetImage('icons/comment.png', 'crispbb')#" alt="#xarML('No Replies')#"  />
+    <img src="#xarTPLGetImage('timeimages/comment.png', 'crispbb')#" alt="#xarML('No Replies')#"  />
 <xar:elseif condition="$timeimage eq 1" />
-    <img src="#xarTPLGetImage('icons/comment_red.png', 'crispbb')#" alt="#xarML('Hot Topic')#"  />
+    <img src="#xarTPLGetImage('timeimages/comment_red.png', 'crispbb')#" alt="#xarML('Hot Topic')#"  />
 <xar:elseif condition="$timeimage eq 2" />
-    <img src="#xarTPLGetImage('icons/comments.png', 'crispbb')#" alt="#xarML('New Replies')#"  />
+    <img src="#xarTPLGetImage('timeimages/comments.png', 'crispbb')#" alt="#xarML('New Replies')#"  />
 <xar:elseif condition="$timeimage eq 3" />
-    <img src="#xarTPLGetImage('icons/comments_red.png', 'crispbb')#" alt="#xarML('Hot Topic')#"  />
+    <img src="#xarTPLGetImage('timeimages/comments_red.png', 'crispbb')#" alt="#xarML('Hot Topic')#"  />
 <xar:elseif condition="$timeimage eq 4" />
-    <img src="#xarTPLGetImage('icons/comment_lock.png', 'crispbb')#" alt="#xarML('Closed Topic')#"  />
+    <img src="#xarTPLGetImage('timeimages/comment_lock.png', 'crispbb')#" alt="#xarML('Closed Topic')#"  />
 <xar:elseif condition="$timeimage eq 5" />
-    <img src="#xarTPLGetImage('icons/comment_lock_red.png', 'crispbb')#" alt="#xarML('Closed Topic')#"  />
+    <img src="#xarTPLGetImage('timeimages/comment_lock_red.png', 'crispbb')#" alt="#xarML('Closed Topic')#"  />
 <xar:elseif condition="$timeimage eq 6" />
-    <img src="#xarTPLGetImage('icons/comments_lock.png', 'crispbb')#" alt="#xarML('Closed Topic')#"  />
+    <img src="#xarTPLGetImage('timeimages/comments_lock.png', 'crispbb')#" alt="#xarML('Closed Topic')#"  />
 <xar:elseif condition="$timeimage eq 7" />
-    <img src="#xarTPLGetImage('icons/comments_lock_red.png', 'crispbb')#" alt="#xarML('Closed Topic')#"  />
+    <img src="#xarTPLGetImage('timeimages/comments_lock_red.png', 'crispbb')#" alt="#xarML('Closed Topic')#"  />
 <xar:elseif condition="$timeimage eq 8" />
     <img src="#xarTPLGetImage('tango/lock.png', 'crispbb')#" alt="#xarML('Locked')#" />
 <xar:elseif condition="$timeimage eq 9" />
-    <img src="#xarTPLGetImage('icons/comment_go.png', 'crispbb')#" alt="#xarML('Moved')#" />
+    <img src="#xarTPLGetImage('timeimages/comment_go.png', 'crispbb')#" alt="#xarML('Moved')#" />
 <xar:else />
-    <img src="#xarTPLGetImage('icons/comment.png', 'crispbb')#" alt="#xarML('No Replies')#"  />
+    <img src="#xarTPLGetImage('timeimages/comment.png', 'crispbb')#" alt="#xarML('No Replies')#"  />
 </xar:if>

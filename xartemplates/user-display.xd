@@ -1,4 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:style scope="module" module="crispbb" />
 <xar:comment>If you want to display some roles dd items for your users, you can use the list of uids contained in $uidlist to get all the dd for the users back at once, like so...</xar:comment>
 <xar:data-getitems name="$userprops" value="$userdd" module="roles" itemids="$uidlist" fieldlist="website,avatar,location,signature,icq,msnm,yim,aim" />
 <div class="xar-mod-head">
@@ -129,10 +130,10 @@
         </caption>
         <thead>
             <tr>
-                <th style="width:16em;" scope="col">
+                <th class="posterinfo" scope="col">
                     <xar:mlstring>Poster</xar:mlstring>
                 </th>
-                <th scope="col">
+                <th class="replyinfo" scope="col">
                     <xar:mlstring>Post</xar:mlstring>
                 </th>
             </tr>
@@ -140,7 +141,7 @@
         <xar:comment>Accessible tables like the footer before the body</xar:comment>
         <xar:comment>Footer shows a summary of the items displayed</xar:comment>
         <tfoot>
-            <tr><td colspan="5" class="xar-sub xar-align-center">
+            <tr><td colspan="2" class="xar-sub xar-align-center">
                 <xar:set name="numposts">count($posts)+$startnum-1</xar:set>
                 <xar:ml>
                     <xar:mlstring>Showing posts #(1) to #(2) of #(3) in #(4)</xar:mlstring>
@@ -159,7 +160,7 @@
             <xar:set name="rownumber">!empty($startnum) ? $startnum : 1</xar:set>
             <xar:foreach in="$posts" key="$pid" value="$post">
             <tr>
-                <td class="xar-valign-top #$rowclass#">
+                <td class="posterinfo xar-valign-top #$rowclass#">
                     <xar:comment>This function return a list of info for all the users who appear on this page in the $posterlist array. This contains data from roles userapi getall. </xar:comment>
                     <xar:comment>Show posters name, linking to their profile</xar:comment>
                     <a href="#xarModURL('roles', 'user', 'display', array('uid' => $post['powner']))#" title="#xarML('View Profile')#">#$posterlist[$post['powner']]['name']#</a>
@@ -179,7 +180,7 @@
                         <xar:mlstring>Other Topics</xar:mlstring>
                     </a>
                 </td>
-                <td class="xar-padding-none">
+                <td class="replyinfo xar-padding-none">
                     <xar:comment>The actual post is in this cell</xar:comment>
                     <xar:comment>First we display the permalink to this post</xar:comment>
                     <div class="#$rowclass# xar-sub xar-padding-thick">

@@ -354,6 +354,8 @@ function crispbb_upgrade($oldversion)
         case '0.5.2':
             // bugfixes, template clean-up and add check for updates function
         case '0.5.6':
+            // more template clean up, move timeimages folder
+        case '0.5.7':
             /* current version */
 
         break;

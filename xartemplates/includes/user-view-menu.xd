@@ -12,12 +12,12 @@
     </a>
 </xar:if>
 <xar:if condition="$fstatus eq 1">
-    <img src="#xarTPLGetImage('icons/lock.png', 'crispbb')#" alt="#xarML('Forum Closed')#" />
+    <img src="#xarTPLGetImage('timeimages/forum_lock.png', 'crispbb')#" alt="#xarML('Forum Closed')#" />
     <xar:mlstring>Forum Closed</xar:mlstring>
 <xar:elseif condition="!empty($tstatus) && $tstatus eq 1" />
-    <img src="#xarTPLGetImage('icons/comment_lock.png', 'crispbb')#" alt="#xarML('Topic Closed')#" />
+    <img src="#xarTPLGetImage('timeimages/comment_lock.png', 'crispbb')#" alt="#xarML('Topic Closed')#" />
     <xar:mlstring>Topic Closed</xar:mlstring>
 <xar:elseif condition="!empty($tstatus) && $tstatus eq 4" />
-    <img src="#xarTPLGetImage('icons/lock.png', 'crispbb')#" alt="#xarML('Topic Locked')#" />
+    <img src="#xarTPLGetImage('tango/lock.png', 'crispbb')#" alt="#xarML('Topic Locked')#" />
     <xar:mlstring>Topic Locked</xar:mlstring>
 </xar:if>
