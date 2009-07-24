@@ -68,7 +68,7 @@
                 <th scope="col" class="topicicon"></th>
                 <th scope="col" class="topicinfo"><xar:mlstring>Topic</xar:mlstring></th>
                 <th scope="col" class="postinfo"><xar:mlstring>Info</xar:mlstring></th>
-                <th scope="col" class="xar-thirdwidth"><xar:mlstring>Last Post</xar:mlstring></th>
+                <th scope="col" class="replyinfo xar-thirdwidth"><xar:mlstring>Last Post</xar:mlstring></th>
                 <xar:if condition="!empty($modforumurl)">
                 <th scope="col" id="checkall#$fid#">&nbsp;</th>
                 <xar:set name="numcols">'6'</xar:set>
@@ -110,9 +110,9 @@
                     <tr>
                         <th scope="col" class="timeimage"></th>
                         <th scope="col" class="topicicon"></th>
-                        <th scope="col"><xar:mlstring>Topic</xar:mlstring></th>
+                        <th scope="col" class="topicinfo"><xar:mlstring>Topic</xar:mlstring></th>
                         <th scope="col" class="postinfo"><xar:mlstring>Info</xar:mlstring></th>
-                        <th scope="col" class="xar-thirdwidth"><xar:mlstring>Last Post</xar:mlstring></th>
+                        <th scope="col" class="replyinfo xar-thirdwidth"><xar:mlstring>Last Post</xar:mlstring></th>
                         <xar:if condition="!empty($modforumurl)">
                         <th scope="col" id="checkall#$fid#">&nbsp;</th>
                         <xar:set name="numcols">'5'</xar:set>
@@ -132,7 +132,7 @@
                 <tr>
                     <td class="xar-align-center xar-valign-middle"></td>
                     <td class="xar-align-center xar-valign-middle"></td>
-                    <td colspan="3"><xar:mlstring>No topics found</xar:mlstring></td>
+                    <td colspan="#$numcols#"><xar:mlstring>No topics found</xar:mlstring></td>
                 </tr>
             </xar:if>
         </tbody>

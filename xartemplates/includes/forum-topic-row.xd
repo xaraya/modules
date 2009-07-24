@@ -1,4 +1,4 @@
-<td class="xar-align-center xar-valign-middle">
+<td class="timeimage xar-align-center xar-valign-middle">
     <xar:if condition="!empty($topic['unreadurl'])">
     <a href="#$topic['unreadurl']#" title="#xarML('Go to the first unread reply in this topic')#">
         <xar:template type="module" module="crispbb" file="topic-timeimage" subdata="array('timeimage' =&gt; $topic['timeimage'])" />
@@ -7,7 +7,7 @@
         <xar:template type="module" module="crispbb" file="topic-timeimage" subdata="array('timeimage' =&gt; $topic['timeimage'])" />
     </xar:if>
 </td>
-<td class="xar-align-center xar-valign-middle">
+<td class="topicicon xar-align-center xar-valign-middle">
     <xar:if condition="!empty($topic['topicicon'])">
         <img src="#xarTPLGetImage($topic['topicicon'],'crispbb')#" alt="#xarML('icon')#" title="" />
     </xar:if>
@@ -37,7 +37,7 @@
     <input type="checkbox" name="tids[$topic['tid']#]" id="tids_#$topic['tid']#" value="1" />
 </td>
 <xar:else />
-<td class="xar-valign-top">
+<td class="topicinfo xar-valign-top">
     <xar:if condition="!empty($topic['viewtopicurl'])">
         <a href="#$topic['viewtopicurl']#" title="#xarML('Go to the first post in this topic')#">#$topic['transformed_ttitle']#</a>
     <xar:else />
@@ -54,11 +54,11 @@
         </p>
     </xar:if>
 </td>
-<td class="xar-align-center xar-valign-middle">
+<td class="postinfo xar-align-center xar-valign-middle">
     <p class="xar-sub xar-nowrap">Views: <strong>#$topic['numviews']#</strong></p>
     <p class="xar-sub xar-nowrap">Replies: <strong>#$topic['numreplies']#</strong></p>
 </td>
-<td class="xar-valign-top">
+<td class="replyinfo xar-valign-top">
     <span class="xar-sub">
         <xar:template type="module" module="crispbb" file="user-timestamp" subdata="array('timestamp' =&gt; $topic['ptime'])" />
         <xar:if condition="!empty($topic['lastreplyurl'])">
