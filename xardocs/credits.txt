@@ -21,3 +21,5 @@
  FamFamFam Silk Icons by Mark James (see http://www.famfamfam.com/lab/icons/silk/) 
  and are licensed under Creative Commons Attribution 3.0 License. 
  (see http://creativecommons.org/licenses/by/3.0/)
+
+ Special thanks to Marty Vance (Dracos) for the crispBB logo.

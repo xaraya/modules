@@ -276,7 +276,7 @@
         </span>
         <xar:if condition="!empty($privs['locktopics'])">
         <span class="xar-nowrap">
-            <img src="#xarTPLGetImage('icons/lock.png', 'crispbb')#" alt="#xarML('Locked')#" title="#xarML('Locked topic')#" />
+            <img src="#xarTPLGetImage('tango/lock.png', 'crispbb')#" alt="#xarML('Locked')#" title="#xarML('Locked topic')#" />
             Locked
         </span>
         </xar:if>

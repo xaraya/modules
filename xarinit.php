@@ -345,12 +345,15 @@ function crispbb_upgrade($oldversion)
 
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
     switch ($oldversion) {
+        // see xardocs/changelog.txt for details
         // module pushed to repo's
         case '0.5.0':
             // bugfix links to purge topics
         case '0.5.1':
             // add some checks on unserialize funcs in getforums api func
         case '0.5.2':
+            // bugfixes, template clean-up and add check for updates function
+        case '0.5.6':
             /* current version */
 
         break;

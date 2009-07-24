@@ -15,7 +15,7 @@
 <xar:elseif condition="$timeimage eq 7" />
     <img src="#xarTPLGetImage('icons/comments_lock_red.png', 'crispbb')#" alt="#xarML('Closed Topic')#"  />
 <xar:elseif condition="$timeimage eq 8" />
-    <img src="#xarTPLGetImage('icons/lock.png', 'crispbb')#" alt="#xarML('Locked')#" />
+    <img src="#xarTPLGetImage('tango/lock.png', 'crispbb')#" alt="#xarML('Locked')#" />
 <xar:elseif condition="$timeimage eq 9" />
     <img src="#xarTPLGetImage('icons/comment_go.png', 'crispbb')#" alt="#xarML('Moved')#" />
 <xar:else />

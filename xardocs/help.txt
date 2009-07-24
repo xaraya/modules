@@ -14,6 +14,8 @@
 
  Additional support can be obtained via the following channels
 
- Support forums - http://www.xaraya.com/index.php/xarbb
- Newsgroups - news://news.xaraya.com
- IRC Support - irc://irc.xaraya.com#support
+ crispBB website - http://www.crispbb.com
+ Latest release - http://www.crispbb.com/forums/crispbb-releases/t3?action=lastreply
+ Xaraya Support forums - http://www.xaraya.com/index.php/xarbb
+ Xaraya Newsgroups - news://news.xaraya.com
+ Xaraya IRC Support - irc://irc.xaraya.com#support

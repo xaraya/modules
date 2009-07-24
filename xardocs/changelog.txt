@@ -88,10 +88,16 @@
 0.4.8
 // Added BBCode quote button
 0.4.9
-// Final code clean up for commit to repository
+// Final code clean up for commit to repository as 0.5.0
 0.5.0 - 21 July 2009
 // bugfix correct links to purge topics
 0.5.1 
 // add some checks on unserialize operations in getforums api function
-0.5.2
+0.5.2 - 22 July 2009
+// updated user main, view and display templates (and includes) to validate xhtml strict
+// fixed a bug preventing last reply url displaying to guests
+// updated admin overview
+------- 23 July 2009
+// added check for updates to admin modifyconfig
+0.5.6 - 24 July 2009
 **** Current Version ****

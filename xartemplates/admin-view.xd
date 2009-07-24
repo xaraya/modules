@@ -11,8 +11,8 @@
     </xar:if>
     <xar:if condition="!empty($categories)">
         <xar:foreach in="$categories" key="$cid" value="$catinfo">
-            <table class="xar-fullwidth">
-                <caption class="xar-align-left xar-padding-thick">
+            <table class="xar-fullwidth xar-alt-outline xar-margin-nonetop">
+                <caption class="xar-padding-thick xar-alt-outline xar-align-left">
                     <span class="xar-floatleft">
                     <a href="#xarModURL('crispbb', 'admin', 'view', array('catid' => $cid))#" title="#$catinfo['description']#">
                         <xar:mlstring>All forums in</xar:mlstring> #$catinfo['name']#

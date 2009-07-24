@@ -12,21 +12,21 @@
     <h3>#$pageTitle#</h3>
     <xar:if condition="!empty($hooksettings)">
         <p>
-            <img src="#xarTPLGetImage('icons/information.png', 'crispbb')#" alt="#xarML('info')#" />
+            <img src="#xarTPLGetImage('tango/info.png', 'crispbb')#" alt="#xarML('info')#" />
             <xar:if condition="$sublink eq 'posthooks'">
                 <xar:mlstring>The following settings apply to modules which are hooked to all items in crispbb, or hooked to all posts in crispbb</xar:mlstring>
                 <br />
-                <img src="#xarTPLGetImage('icons/dialog-warning.png', 'base')#" alt="#xarML('dialog-warning')#" />
+                <img src="#xarTPLGetImage('tango/dialog-warning.png', 'crispbb')#" alt="#xarML('dialog-warning')#" />
                 <xar:mlstring>Hooks apply to Transform, Display, New, Modify and Delete posts functions</xar:mlstring>
             <xar:elseif condition="$sublink eq 'topichooks'" />
                 <xar:mlstring>The following settings apply to modules which are hooked to all items in crispBB, or hooked to all topics in crispBB</xar:mlstring>
                 <br />
-                <img src="#xarTPLGetImage('icons/dialog-warning.png', 'base')#" alt="#xarML('dialog-warning')#" />
+                <img src="#xarTPLGetImage('tango/dialog-warning.png', 'crispbb')#" alt="#xarML('dialog-warning')#" />
                 <xar:mlstring>Hooks apply to Transform, Display, New, Modify and Delete topic functions</xar:mlstring>
             <xar:else />
                 <xar:mlstring>The following settings apply to modules which are hooked to all items in crispBB, or hooked to all forums in crispBB</xar:mlstring>
                 <br />
-                <img src="#xarTPLGetImage('icons/dialog-warning.png', 'base')#" alt="#xarML('dialog-warning')#" />
+                <img src="#xarTPLGetImage('tango/dialog-warning.png', 'crispbb')#" alt="#xarML('dialog-warning')#" />
                 <xar:mlstring>Hooks apply to Transform, Display, New, Modify and Delete forum functions</xar:mlstring>
             </xar:if>
         </p>
@@ -70,7 +70,7 @@
         </form>
     <xar:elseif condition="$sublink eq 'privileges'" />
         <p>
-            <img src="#xarTPLGetImage('icons/information.png', 'crispbb')#" alt="#xarML('Information')#" />
+            <img src="#xarTPLGetImage('tango/info.png', 'crispbb')#" alt="#xarML('Information')#" />
             <xar:mlstring>The following settings will be applied to privileges for new forums added to the system.</xar:mlstring>
         </p>
         <form method="post" action="#xarModURL('crispbb', 'admin', 'forumconfig')#">
@@ -143,7 +143,7 @@
         <xar:template type="module" module="crispbb" file="privileges-info" />
     <xar:else />
         <p>
-            <img src="#xarTPLGetImage('icons/information.png', 'crispbb')#" alt="#xarML('info')#" /> <xar:mlstring>These settings will be used when a new forum is added to the system.</xar:mlstring>
+            <img src="#xarTPLGetImage('tango/info.png', 'crispbb')#" alt="#xarML('info')#" /> <xar:mlstring>These settings will be used when a new forum is added to the system.</xar:mlstring>
         </p>
         <form method="post" action="#xarModURL('crispbb', 'admin', 'forumconfig')#">
             <fieldset>

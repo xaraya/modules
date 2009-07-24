@@ -29,12 +29,21 @@ function crispbb_admin_modifyconfig()
     if (!xarVarFetch('phase', 'enum:form:update', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
     // allow return url to be over-ridden
     if (!xarVarFetch('returnurl', 'str:1:', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('checkupdate', 'checkbox', $checkupdate, false, XARVAR_NOT_REQUIRED)) return;
 
     $now = time();
     $tracking = xarModAPIFunc('crispbb', 'user', 'tracking', array('now' => $now));
     // End Tracking
     if (!empty($tracking)) {
         xarModSetUserVar('crispbb', 'tracking', serialize($tracking));
+    }
+
+    $modid = xarModGetIDFromName('crispbb');
+    $modinfo = xarModGetInfo($modid);
+    if ($checkupdate) {
+        $phase = 'form';
+        $hasupdate = xarModAPIFunc('crispbb', 'user', 'checkupdate',
+            array('version' => $modinfo['version']));
     }
 
     $invalid = array();
@@ -102,6 +111,9 @@ function crispbb_admin_modifyconfig()
     $data['shorturls'] = xarModGetVar('crispbb', 'SupportShortURLs');
     $data['usealias'] = xarModGetVar('crispbb', 'useModuleAlias');
     $data['aliasname'] = xarModGetVar('crispbb', 'aliasname');
+    $data['version'] = $modinfo['version'];
+    $data['newversion'] = !empty($hasupdate) ? $hasupdate : NULL;
+    $data['checkupdate'] = $checkupdate;
 
 
     // store function name for use by admin-main as an entry point

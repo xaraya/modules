@@ -15,6 +15,23 @@
     <form method="post" action="#xarModURL('crispbb', 'admin', 'modifyconfig')#">
         <fieldset>
             <div class="xar-form-input-wrapper">
+                <label for="checkupdate" class="xar-form-label help" title="#xarML('Check now for updates to crispbb')#"><xar:mlstring>crispBB v.</xar:mlstring>#$version#</label>
+                <input type="submit" name="checkupdate" id="checkupdate" value="#xarML('Check for Updates')#" />
+            </div>
+            <xar:if condition="!empty($newversion)">
+                <div class="xar-form-input-wrapper-after">
+                    <img src="#xarTPLGetImage('tango/software-update-available.png', 'crispbb')#" title="#xarML('Update Available')#" />
+                    <xar:mlstring>crispBB v.</xar:mlstring>#$newversion# <xar:mlstring> is now </xar:mlstring><a href="http://www.crispbb.com/forums/crispbb-releases/t3?action=lastreply" title="#xarML('Latest release')#">available for download</a>
+                </div>
+            <xar:elseif condition="!empty($checkupdate)" />
+                <div class="xar-form-input-wrapper-after">
+                     <img src="#xarTPLGetImage('tango/activate.png', 'crispbb')#" title="#xarML('Up to date')#" alt="active" />
+                    <span><xar:mlstring>You are using the latest version of crispBB. Please check again later.</xar:mlstring></span>
+                </div>
+            </xar:if>
+        </fieldset>
+        <fieldset>
+            <div class="xar-form-input-wrapper">
                 <label for="shorturls" class="xar-form-label" title="#xarML('Support Short URLs.')#">
                   <xar:mlstring>Support Short URLs?</xar:mlstring>
                 </label>

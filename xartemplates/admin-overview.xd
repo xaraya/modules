@@ -25,7 +25,7 @@
     </ul>
 
     <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
-    <xar:mlstring>crispBB has no included hooks at present</xar:mlstring>
+    <em><xar:mlstring>crispBB has no included hooks at present</xar:mlstring></em>
     <xar:comment>
     <ul>
         <li>
@@ -56,22 +56,26 @@
     </xar:comment>
 
   <h3><xar:mlstring>Included Dynamic Data Properties</xar:mlstring></h3>
-    <xar:mlstring>crispBB has no included properties at present</xar:mlstring>
+    <em><xar:mlstring>crispBB has no included properties at present</xar:mlstring></em>
 
   <h3>
     <xar:mlstring>Further Information</xar:mlstring>
   </h3>
 
   <ul>
-    <li><xar:mlstring>crispBB Extension page at</xar:mlstring> <a title="#xarML('crispBB Module - Xaraya Extension 970')#" href="http://www.xaraya.com/index.php/release/970.html">Xaraya Extensions and Releases</a>.
-      <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+    <li><xar:mlstring>Official crispBB home page at</xar:mlstring> <a href="http://www.crispbb.com" title="#xarML('crispBB website')#">http://www.crispbb.com</a>
+    </li>
+    <li><xar:mlstring>Latest release can always be found at</xar:mlstring> <a href="http://www.crispbb.com/forums/crispbb-releases/t3?action=lastreply" title="#xarML('crispBB Releases')#"><xar:mlstring>crispBB Releases</xar:mlstring></a>
+    </li>
+    <li><xar:mlstring>crispBB Extension page at</xar:mlstring> <a title="#xarML('crispBB Module - Xaraya Extension 970')#" href="http://www.xaraya.com/index.php/release/970.html"><xar:mlstring>Xaraya Extensions and Releases</xar:mlstring></a>.
     </li>
     <li><xar:mlstring>Related tutorials and documentation on crispBB found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/crispbb/" title="#xarML('Related documentation on crispBB')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
     </li>
-    <xar:comment>
-    <li><xar:mlstring>Official crispBB home page at</xar:mlstring> <a href="http://crispcreations.co.uk/xar/mods/crispbb" title="#xarML('crispBB Module Project at CrispCreations')#"><xar:mlstring>crispBB Module Project</xar:mlstring></a>
-    </li>
-    </xar:comment>
+  </ul>
+  <h3>
+    <xar:mlstring>Additional credits</xar:mlstring>
+  </h3>
+  <ul>
     <li>
         <xar:mlstring>Most icons in modules/crispbb/xarimages/tango/ courtesy of the </xar:mlstring>
         <a href="http://tango.freedesktop.org/Tango_Desktop_Project" rel="external">Tango Desktop Project</a><xar:mlstring> and are in the public domain.  The remaining icons created by Xaraya developers, licensed under the GPL.</xar:mlstring>
