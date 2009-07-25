@@ -1,4 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:style scope="module" module="crispbb" />
 <xar:if condition="!empty($withupload)">
     <xar:set name="enctype">
         'multipart/form-data'

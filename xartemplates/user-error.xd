@@ -1,4 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:style scope="module" module="crispbb" />
 <xar:comment>This is the error template used by crispBB. It is displayed when a user has no privileges or when flood control is in effect.</xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title"><xar:mlstring>crispBB Forums</xar:mlstring></span>
