@@ -139,7 +139,7 @@
     </table>
     <div class="xar-alt-outline xar-align-left xar-padding-thick xar-margin-thickbottom">
         <div class="xar-halfwidth xar-floatleft">
-        <a href="#$forumviewurl#" title="#$fdesc#">#$transformed_fname#</a>
+        <a href="#$forumviewurl#" title="#$transformed_fname#">#$transformed_fname#</a>
         </div>
         <xar:if condition="!empty($pager)">
             <div class="xar-align-right xar-floatright xar-halfwidth">
@@ -174,7 +174,7 @@
     <hr />
     <xar:comment>If you hooked dynamic data to forums, you may want to retrieve it, below is an example of how. NOTE: this is the same data that will be shown in the first topic post, but, like the other hooks, you may have occasion to show some dd here instead of in the post itself (eg, when not displaying the first page).</xar:comment>
     <xar:if condition="xarModIsHooked('dynamicdata','crispbb',$itemtype)">
-        <xar:data-getitem name="$forumprops" module="crispbb" itemtype="$itemtype" itemid="$tid" />
+        <xar:data-getitem name="$forumprops" module="crispbb" itemtype="$itemtype" itemid="$fid" />
         <xar:if condition="!empty($forumprops)">
             <div>
                 <xar:foreach in="$forumprops" key="$propname">

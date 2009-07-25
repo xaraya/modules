@@ -160,7 +160,7 @@ function crispbb_userapi_getpresets($args)
                     $items['showstickies'] = 0;
                     $items['showannouncements'] = 0;
                     $items['showfaqs'] = 0;
-                    $items['iconfolder'] = 'topicicons';
+                    $items['iconfolder'] = 'topicicons-crispbb';
                     $items['floodcontrol'] = 0;
                     $items['postbuffer'] = 0;
                     $items['topicview'] = 'flat';
