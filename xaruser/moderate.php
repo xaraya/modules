@@ -59,7 +59,9 @@ function crispbb_user_moderate($args)
     $presets = xarModAPIFunc('crispbb', 'user', 'getpresets',
         array('preset' => 'tstatusoptions'));
     $tracking = xarModAPIFunc('crispbb', 'user', 'tracking', array('now' => $now));
-
+    if (!empty($tracking)) {
+        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
+    }
     switch ($component) {
         case 'topics':
             if (!xarVarFetch('fid', 'id', $fid, NULL, XARVAR_NOT_REQUIRED)) return;

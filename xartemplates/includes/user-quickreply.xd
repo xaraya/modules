@@ -1,3 +1,4 @@
+<xar:if condition="xarModGetVar('crispbb', 'showquickreply')">
 <form method="post" action="#xarModURL('crispbb', 'user', 'newreply')#">
         <xar:comment>
         <xar:if condition="!empty($topicdescmax)">
@@ -19,3 +20,4 @@
             <input type="submit" value="#xarML('Post Reply')#">&nbsp;&nbsp;<input type="submit" id="preview" name="preview" value="#xarML('Preview')#" />
         </div>
 </form>
+</xar:if>

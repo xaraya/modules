@@ -31,32 +31,53 @@
             </xar:if>
         </fieldset>
         <fieldset>
-            <div class="xar-form-input-wrapper">
-                <label for="shorturls" class="xar-form-label" title="#xarML('Support Short URLs.')#">
-                  <xar:mlstring>Support Short URLs?</xar:mlstring>
-                </label>
+            <div class="xar-form-input-wrapper-after">
                 <xar:set name="$selval">$shorturls ? 'checked="checked"' : '';</xar:set>
                 <input type="checkbox" name="shorturls" id="shorturls" value="1" #$selval# />
-            </div>
-            <div class="xar-form-input-wrapper">
-                <label for="usealias" class="xar-form-label" title="#xarML('Use a module alias.')#">
-                  <xar:mlstring>Use module alias?</xar:mlstring>
+                <label for="shorturls" title="#xarML('Support Short URLs.')#">
+                  <xar:mlstring>Support Short URLs?</xar:mlstring>
                 </label>
-                <xar:set name="$selval">$usealias ? 'checked="checked"' : '';</xar:set>
-                <input type="checkbox" name="usealias" id="usealias" value="1" #$selval# />
             </div>
             <div class="xar-form-input-wrapper">
                 <label for="aliasname" class="xar-form-label" title="#xarML('Module alias name')#">
                   <xar:mlstring>Alias Name:</xar:mlstring>
                 </label>
                 <input type="text" name="aliasname" id="aliasname" value="#$aliasname#" maxlength="60" class="xar-form-textmedium" />
+                 <xar:set name="$selval">$usealias ? 'checked="checked"' : '';</xar:set>
+                <input type="checkbox" name="usealias" id="usealias" value="1" #$selval# />
+                <label for="usealias" title="#xarML('Use a module alias.')#">
+                  <xar:mlstring>Use module alias?</xar:mlstring>
+                </label>
+            </div>
+            <div class="xar-form-input-wrapper-after">
+                <xar:data-input type="checkbox" name="showuserpanel" id="showuserpanel" value="$showuserpanel" />
+                <label for="showuserpanel" title="#xarML('Show the user information panel in user displays')#"><xar:mlstring>Show user panel?</xar:mlstring></label>
+            </div>
+            <div class="xar-form-input-wrapper-after">
+                <xar:data-input type="checkbox" name="showsearchbox" id="showsearchbox" value="$showsearchbox" />
+                <label for="showsearchbox" title="#xarML('Show the search box in user displays')#"><xar:mlstring>Show search box?</xar:mlstring></label>
+            </div>
+            <div class="xar-form-input-wrapper-after">
+                <xar:data-input type="checkbox" name="showforumjump" id="showforumjump" value="$showforumjump" />
+                <label for="showforumjump" title="#xarML('Show the forum jump dropdown in user displays')#"><xar:mlstring>Show forum jump?</xar:mlstring></label>
+            </div>
+            <div class="xar-form-input-wrapper-after">
+                <xar:data-input type="checkbox" name="showtopicjump" id="showtopicjump" value="$showtopicjump" />
+                <label for="showtopicjump" title="#xarML('Show the topic jump dropdown in user displays')#"><xar:mlstring>Show topic jump?</xar:mlstring></label>
+            </div>
+            <div class="xar-form-input-wrapper-after">
+                <xar:data-input type="checkbox" name="showquickreply" id="showquickreply" value="$showquickreply" />
+                <label for="showquickreply" title="#xarML('Show the quick reply input in user displays')#"><xar:mlstring>Show quickreply?</xar:mlstring></label>
+            </div>
+            <div class="xar-form-input-wrapper-after">
+                <xar:data-input type="checkbox" name="showpermissions" id="showpermissions" value="$showpermissions" />
+                <label for="showpermissions" title="#xarML('Show the current users permissions in user displays')#"><xar:mlstring>Show user permissions?</xar:mlstring></label>
             </div>
             <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="phase" id="phase" value="update" />
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('crispbb')#" />
                 <input type="submit" value="#xarML('Update Configuration')#" />
             </div>
-
         </fieldset>
     </form>
 

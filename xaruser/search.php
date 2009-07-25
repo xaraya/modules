@@ -458,6 +458,7 @@ function crispbb_user_search()
         $data['lastvisit'] = $tracking[0]['lastvisit'];
         $data['visitstart'] = $tracking[0]['visitstart'];
         $data['totalvisit'] = $tracking[0]['totalvisit'];
+        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
         xarModSetUserVar('crispbb', 'tracking', serialize($tracking));
     }
     if ($data['searchactive']) {

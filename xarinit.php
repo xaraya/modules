@@ -356,6 +356,15 @@ function crispbb_upgrade($oldversion)
         case '0.5.6':
             // more template clean up, move timeimages folder
         case '0.5.7':
+            // add topicicons-crispbb and make default for new installs
+            // admin configurable display settings
+            xarModSetVar('crispbb', 'showuserpanel', 1);
+            xarModSetVar('crispbb', 'showsearchbox', 1);
+            xarModSetVar('crispbb', 'showforumjump', 1);
+            xarModSetVar('crispbb', 'showtopicjump', 1);
+            xarModSetVar('crispbb', 'showquickreply', 1);
+            xarModSetVar('crispbb', 'showpermissions', 1);
+        case '0.5.9':
             /* current version */
 
         break;

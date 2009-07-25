@@ -371,9 +371,7 @@
         <xar:template type="module" module="crispbb" file="user-forumjump" />
         <xar:template type="module" module="crispbb" file="user-topicjump" />
     </div>
-    <xar:if condition="!empty($showquickreply)">
-        <xar:template type="module" module="crispbb" file="user-quickreply" />
-    </xar:if>
+    <xar:template type="module" module="crispbb" file="user-quickreply" />
     <div class="xar-margin-thickends xar-padding-thickends xar-sub">
         <xar:if condition="empty($showtopicstats)">
         <h4 class="xar-margin-none"><xar:mlstring>Topic Statistics</xar:mlstring></h4>

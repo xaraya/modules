@@ -1,3 +1,4 @@
+<xar:if condition="xarModGetVar('crispbb', 'showtopicjump')">
 <form method="post" action="#xarModURL('crispbb', 'user', 'redirect')#" class="xar-margin-none xar-displayinline">
     <xar:if condition="empty($formid)"><xar:set name="$formid">'1'</xar:set></xar:if>
     <div class="xar-nowrap xar-displayinline">
@@ -39,3 +40,4 @@
     </select>
     </div>
 </form>
+</xar:if>

@@ -167,6 +167,7 @@ function crispbb_user_main()
         $data['visitstart'] = $tracking[0]['visitstart'];
         $data['totalvisit'] = $tracking[0]['totalvisit'];
         // xarModDelUserVar('crispbb', 'tracking', $uid); // TODO: Bug in moduservars
+        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
         xarModSetUserVar('crispbb', 'tracking', serialize($tracking));
     }
     $data['viewstatsurl'] = !empty($seenLevels[$minLevel]['readforum']) ? xarModURL('crispbb', 'user', 'stats') : '';

@@ -159,6 +159,7 @@ function crispbb_user_display($args)
         $data['lastvisit'] = $tracking[0]['lastvisit'];
         $data['visitstart'] = $tracking[0]['visitstart'];
         $data['totalvisit'] = $tracking[0]['totalvisit'];
+        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
         xarModSetUserVar('crispbb', 'tracking', serialize($tracking));
     }
 
@@ -183,6 +184,7 @@ function crispbb_user_display($args)
         $data['topicicon'] = '';
     }
 
+    xarVarSetCached('Blocks.crispbb', 'current_tid', $tid);
     $item = array();
     $item['module'] = 'crispbb';
     $item['itemtype'] = $data['topicstype'];
@@ -286,7 +288,6 @@ function crispbb_user_display($args)
     $data['forumoptions'] = xarModAPIFunc('crispbb', 'user', 'getitemlinks');
     xarTplSetPageTitle(xarVarPrepForDisplay($pageTitle));
 
-    $data['showquickreply'] = !empty($data['newreplyurl']) ? true : false;
     $data['viewstatsurl'] = xarModURL('crispbb', 'user', 'stats');
 
     if (!empty($data['modtopicurl'])) {

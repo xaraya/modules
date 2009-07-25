@@ -27,6 +27,7 @@ function crispbb_admin_reordercats($args)
     $tracking = xarModAPIFunc('crispbb', 'user', 'tracking', array('now' => $now));
     // End Tracking
     if (!empty($tracking)) {
+        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
         xarModSetUserVar('crispbb', 'tracking', serialize($tracking));
     }
     $cids = array($catid);

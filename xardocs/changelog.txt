@@ -106,4 +106,9 @@
 // replaced inline styles with module specific classes
 // some updates to fix minor display issues
 0.5.7
+------- 25 July 2009
+// added xarimages/topicicons-crispbb folder
+// made folder default for new installs
+// add admin configurable display settings
+0.5.9
 **** Current Version ****

@@ -369,6 +369,7 @@ function crispbb_user_newtopic($args)
         $tracking[$fid][0]['lastview'] = $now;
         $data['visitstart'] = $tracking[0]['visitstart'];
         $data['totalvisit'] = $tracking[0]['totalvisit'];
+        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
         xarModSetUserVar('crispbb', 'tracking', serialize($tracking));
     }
 

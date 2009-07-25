@@ -55,6 +55,7 @@ function crispbb_admin_modify($args)
     $tracking = xarModAPIFunc('crispbb', 'user', 'tracking', array('now' => $now));
     // End Tracking
     if (!empty($tracking)) {
+        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
         xarModSetUserVar('crispbb', 'tracking', serialize($tracking));
     }
     switch($sublink) {

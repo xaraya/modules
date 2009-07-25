@@ -29,6 +29,7 @@ function crispbb_admin_privileges($args)
     $tracking = xarModAPIFunc('crispbb', 'user', 'tracking', array('now' => $now));
     // End Tracking
     if (!empty($tracking)) {
+        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
         xarModSetUserVar('crispbb', 'tracking', serialize($tracking));
     }
     if (!xarVarFetch('catid', 'str', $catid, 0, XARVAR_NOT_REQUIRED)) return; // empty, 'All', numeric or modulename

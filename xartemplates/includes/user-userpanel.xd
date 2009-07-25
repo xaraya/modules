@@ -1,3 +1,4 @@
+<xar:if condition="xarModGetVar('crispbb', 'showuserpanel')">
 <xar:if condition="xarUserIsLoggedIn()">
     <xar:set name="userid">xarUserGetVar('uid')</xar:set>
     <xar:set name="username">xarUserGetVar('name')</xar:set>
@@ -41,3 +42,4 @@
     </li>
     </xar:if>
 </ul>
+</xar:if>

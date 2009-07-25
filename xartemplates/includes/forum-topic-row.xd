@@ -43,6 +43,9 @@
     <xar:else />
         <strong>#$topic['transformed_ttitle']#</strong>
     </xar:if>
+    <xar:if condition="!empty($topic['transformed_tdesc'])">
+    <p><em>#$topic['transformed_tdesc']#</em></p>
+    </xar:if>
     <p>
     <span class="xar-sub"><xar:mlstring>By</xar:mlstring>:</span>
     <a href="#xarModURL('roles', 'user', 'display', array('uid' => $topic['towner']))#" title="#xarML('View profile')#">#$posterlist[$topic['towner']]['name']#</a>

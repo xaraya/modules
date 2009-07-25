@@ -1,3 +1,4 @@
+<xar:if condition="xarModGetVar('crispbb','showsearchbox')">
 <xar:if condition="!empty($forumoptions)">
 <form class="xar-margin-none xar-displayinline" action="index.php" method="get">
     <div class="xar-nowrap xar-displayinline">
@@ -14,4 +15,5 @@
     <label for="q"><xar:mlstring>Search</xar:mlstring>:</label> <input type="text" name="q" id="q" size="20" value="" />&nbsp;&nbsp;&nbsp; <input type="submit" value="#xarML('Search')#" />
     </div>
 </form>
+</xar:if>
 </xar:if>

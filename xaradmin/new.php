@@ -66,6 +66,7 @@ function crispbb_admin_new($args)
     $tracking = xarModAPIFunc('crispbb', 'user', 'tracking', array('now' => $now));
     // End Tracking
     if (!empty($tracking)) {
+        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
         xarModSetUserVar('crispbb', 'tracking', serialize($tracking));
     }
     if ($phase == 'update') {

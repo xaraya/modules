@@ -1,3 +1,4 @@
+<xar:if condition="xarModGetVar('crispbb', 'showpermissions')">
 <xar:if condition="!empty($fprivileges) && !empty($actions) && !empty($forumLevel)">
     <h4><xar:mlstring>You have the following permissions in this forum</xar:mlstring></h4>
     <xar:set name="counter">'1'</xar:set>
@@ -19,4 +20,5 @@
     </xar:foreach>
     </ul>
     <br class="xar-clearboth" />
+</xar:if>
 </xar:if>

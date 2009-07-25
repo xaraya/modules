@@ -35,6 +35,7 @@ function crispbb_admin_modifyconfig()
     $tracking = xarModAPIFunc('crispbb', 'user', 'tracking', array('now' => $now));
     // End Tracking
     if (!empty($tracking)) {
+        xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
         xarModSetUserVar('crispbb', 'tracking', serialize($tracking));
     }
 
@@ -51,6 +52,13 @@ function crispbb_admin_modifyconfig()
         if (!xarVarFetch('shorturls',    'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('aliasname',    'str:1:',   $aliasname, '', XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('usealias',  'checkbox', $usealias,false,XARVAR_NOT_REQUIRED)) return;
+
+        if (!xarVarFetch('showuserpanel', 'checkbox', $showuserpanel, false, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('showsearchbox', 'checkbox', $showsearchbox, false, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('showforumjump', 'checkbox', $showforumjump, false, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('showtopicjump', 'checkbox', $showtopicjump, false, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('showquickreply', 'checkbox', $showquickreply, false, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('showpermissions', 'checkbox', $showpermissions, false, XARVAR_NOT_REQUIRED)) return;
 
         // input validated, update settings
         if (empty($invalid)) {
@@ -86,6 +94,12 @@ function crispbb_admin_modifyconfig()
             xarModCallHooks('module','updateconfig','crispbb',
                            array('module' => 'crispbb'));
 
+            xarModSetVar('crispbb', 'showuserpanel', $showuserpanel);
+            xarModSetVar('crispbb', 'showsearchbox', $showsearchbox);
+            xarModSetVar('crispbb', 'showforumjump', $showforumjump);
+            xarModSetVar('crispbb', 'showtopicjump', $showtopicjump);
+            xarModSetVar('crispbb', 'showquickreply', $showquickreply);
+            xarModSetVar('crispbb', 'showpermissions', $showpermissions);
 
             // update the status message
             xarSessionSetVar('crispbb_statusmsg', xarML('Module configuration updated'));
@@ -111,6 +125,14 @@ function crispbb_admin_modifyconfig()
     $data['shorturls'] = xarModGetVar('crispbb', 'SupportShortURLs');
     $data['usealias'] = xarModGetVar('crispbb', 'useModuleAlias');
     $data['aliasname'] = xarModGetVar('crispbb', 'aliasname');
+    // display controls
+    $data['showuserpanel'] = xarModGetVar('crispbb', 'showuserpanel');
+    $data['showsearchbox'] = xarModGetVar('crispbb', 'showsearchbox');
+    $data['showforumjump'] = xarModGetVar('crispbb', 'showforumjump');
+    $data['showtopicjump'] = xarModGetVar('crispbb', 'showtopicjump');
+    $data['showquickreply'] = xarModGetVar('crispbb', 'showquickreply');
+    $data['showpermissions'] = xarModGetVar('crispbb', 'showpermissions');
+    // update check
     $data['version'] = $modinfo['version'];
     $data['newversion'] = !empty($hasupdate) ? $hasupdate : NULL;
     $data['checkupdate'] = $checkupdate;
