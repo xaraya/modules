@@ -365,6 +365,14 @@ function crispbb_upgrade($oldversion)
             xarModSetVar('crispbb', 'showquickreply', 1);
             xarModSetVar('crispbb', 'showpermissions', 1);
         case '0.5.9':
+            // add topic-reply-row.xd include
+            // register userpanel block
+            if (!xarModAPIFunc('blocks',
+                    'admin',
+                    'register_block_type',
+                    array('modName' => 'crispbb',
+                        'blockType' => 'userpanel'))) return;
+        case '0.6.0':
             /* current version */
 
         break;

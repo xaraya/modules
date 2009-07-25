@@ -110,5 +110,10 @@
 // added xarimages/topicicons-crispbb folder
 // made folder default for new installs
 // add admin configurable display settings
+// micro version update to...
 0.5.9
+// added topic-reply-row.xd
+// added userpanel block
+// minor version update to...
+0.6.0 
 **** Current Version ****
