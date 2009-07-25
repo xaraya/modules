@@ -146,119 +146,13 @@
                 <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
                 </xar:foreach>
             <xar:else />
-            <xar:set name="rowclass">'xar-accent'</xar:set>
-            <xar:set name="rownumber">!empty($startnum) ? $startnum : 1</xar:set>
-            <xar:foreach in="$results" key="$pid" value="$post">
-            <tr>
-                <td class="xar-valign-top #$rowclass#">
-                    <a href="#xarModURL('roles', 'user', 'display', array('uid' => $post['powner']))#" title="#xarML('View Profile')#">#$posterlist[$post['powner']]['name']#</a>
-                </td>
-                <td class="xar-padding-none">
-                    <div class="#$rowclass# xar-padding-thick">
-                        <a name="post#$post['pid']#" href="#$post['viewreplyurl']#" title="#xarML('permalink')#">#$post['transformed_ttitle']#</a>
-                        <xar:comment><em>#(#$rownumber#)</em></xar:comment>
-                    </div>
-                    <div class="xar-border-thinbottom xar-padding-thick">
-                        <xar:if condition="!empty($post['topicicon'])">
-                            <img src="#xarTPLGetImage($post['topicicon'],'crispbb')#" alt="topic icon" />
-                        </xar:if>
-                        <em>#$post['transformed_pdesc']#</em>
-                    </div>
-                    <div class="xar-sub xar-align-right xar-padding-thicksides">
-                        <xar:template type="module" module="crispbb" file="user-timestamp" subdata="array('timestamp' =&gt; $post['ptime'])" />
-                    </div>
-                    <div class="xar-standard-box-padding xar-margin-thicktop xar-padding-thicktop">#$post['transformed_ptext']#</div>
-                    <xar:if condition="!empty($post['hookoutput'])">
-                        <xar:foreach in="$post['hookoutput']" key="$hookmod" value="$hookoutput">
-                            <xar:if condition="$hookmod eq 'polls' || $hookmod eq 'ratings'">
-                                <xar:continue />
-                            </xar:if>
-                            #$hookoutput#
-                        </xar:foreach>
-                    </xar:if>
-                    <div class="xar-align-right xar-padding-thicksides">
-                        <xar:if condition="!empty($post['edittopicurl'])">
-                            <a href="#$post['edittopicurl']#">
-                            <img src="#xarTPLGetImage('icons/comment_edit.png', 'crispbb')#" alt="Edit" title="#xarML('Edit this topic')#" />
-                            </a>
-                        </xar:if>
-                        <xar:if condition="!empty($post['closetopicurl'])">
-                            <a href="#$post['closetopicurl']#">
-                            <img src="#xarTPLGetImage('icons/comment_lock.png', 'crispbb')#" alt="Close" title="#xarML('Close this topic')#" />
-                            </a>
-                        </xar:if>
-                        <xar:if condition="!empty($post['opentopicurl'])">
-                            <a href="#$post['opentopicurl']#">
-                            <img src="#xarTPLGetImage('icons/comment_lock_break.png', 'crispbb')#" alt="Open" title="#xarML('Re-open this topic')#" />
-                            </a>
-                        </xar:if>
-                        <xar:if condition="!empty($post['locktopicurl'])">
-                            <a href="#$post['locktopicurl']#">
-                            <img src="#xarTPLGetImage('icons/lock.png', 'crispbb')#" alt="Lock" title="#xarML('Lock this topic')#" />
-                            </a>
-                        </xar:if>
-                        <xar:if condition="!empty($post['unlocktopicurl'])">
-                            <a href="#$post['unlocktopicurl']#">
-                            <img src="#xarTPLGetImage('icons/lock_open.png', 'crispbb')#" alt="Unlock" title="#xarML('Unlock this topic')#" />
-                            </a>
-                        </xar:if>
-                        <xar:if condition="!empty($post['movetopicurl'])">
-                            <a href="#$post['movetopicurl']#">
-                            <img src="#xarTPLGetImage('icons/comments_go.png', 'crispbb')#" alt="Move" title="#xarML('Move this topic')#" />
-                            </a>
-                        </xar:if>
-                        <xar:comment>
-                        <xar:if condition="!empty($post['splittopicurl'])">
-                            <a href="#$post['splittopicurl']#">
-                            <img src="#xarTPLGetImage('icons/comments_disconnect.png', 'crispbb')#" alt="Split" title="#xarML('Split this topic')#" />
-                            </a>
-                        </xar:if>
-                        </xar:comment>
-                        <xar:if condition="!empty($post['modtopicurl']) && $post['pid'] == $post['firstpid']">
-                            <a href="#$post['modtopicurl']#">
-                            <img src="#xarTPLGetImage('icons/comments_wrench_orange.png', 'crispbb')#" alt="Moderate" title="#xarML('Moderate this topic')#" />
-                            </a>
-                        </xar:if>
-                        <xar:if condition="!empty($post['deletetopicurl'])">
-                            <a href="#$post['deletetopicurl']#">
-                            <img src="#xarTPLGetImage('icons/comments_delete.png', 'crispbb')#" alt="Delete" title="#xarML('Delete this topic')#" />
-                            </a>
-                        </xar:if>
-                        <xar:if condition="!empty($post['purgetopicurl'])">
-                            <a href="#$post['purgetopicurl']#">
-                            <img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="Purge" title="#xarML('Purge this topic')#" />
-                            </a>
-                        </xar:if>
-                        <xar:if condition="!empty($post['editreplyurl'])">
-                            <a href="#$post['editreplyurl']#">
-                            <img src="#xarTPLGetImage('icons/comment_edit.png', 'crispbb')#" alt="Edit" title="#xarML('Edit this reply')#" />
-                            </a>
-                        </xar:if>
-                        <xar:if condition="!empty($post['splitreplyurl'])">
-                            <a href="#$post['splitreplyurl']#">
-                            <img src="#xarTPLGetImage('icons/comment_disconnect.png', 'crispbb')#" alt="Split" title="#xarML('Split from this post')#" />
-                            </a>
-                        </xar:if>
-                        <xar:if condition="!empty($post['deletereplyurl'])">
-                            <a href="#$post['deletereplyurl']#">
-                            <img src="#xarTPLGetImage('icons/comment_delete.png', 'crispbb')#" alt="Delete" title="#xarML('Delete this post')#" />
-                            </a>
-                        </xar:if>
-                        <xar:if condition="!empty($post['purgereplyurl'])">
-                            <a href="#$post['purgereplyurl']#">
-                            <img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="Purge" title="#xarML('Purge this reply')#" />
-                            </a>
-                        </xar:if>
-                        <xar:if condition="!empty($post['reporturl'])">
-                            <a href="#$post['reporturl']#">
-                            <img src="#xarTPLGetImage('icons/lightning_add.png', 'crispbb')#" alt="Report" title="#xarML('Report this post')#" />
-                            </a>
-                        </xar:if>
-                    </div>
-                </td>
-            </tr>
-            <xar:set name="rowclass">$rowclass == 'xar-accent' ? 'xar-alt' : 'xar-accent'</xar:set>
-            <xar:set name="rownumber">$rownumber+1</xar:set>
+                <xar:data-getitems name="$userprops" value="$userdd" module="roles" itemids="$uidlist" fieldlist="website,avatar,location,signature,icq,msnm,yim,aim" />
+                <xar:set name="rowclass">'xar-norm'</xar:set>
+                <xar:foreach in="$results" key="$pid" value="$post">
+                <tr class="#$rowclass#">
+                    <xar:template type="module" module="crispbb" file="topic-reply-row" subdata="array('posterlist' =&gt; $posterlist, 'userprops' =&gt; $userprops, 'post' =&gt; $post, 'noform' =&gt; true)" />
+                </tr>
+                <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
             </xar:foreach>
             </xar:if>
         </tbody>

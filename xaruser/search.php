@@ -346,6 +346,7 @@ function crispbb_user_search()
                     $results[$item['tid']] = $item;
                 }
                 $posteruids = !empty($seenposters) ? array_keys($seenposters) : array();
+                $data['uidlist'] = $posteruids;
                 $data['posterlist'] = xarModAPIFunc('roles', 'user', 'getall', array('uidlist' => $posteruids));
                 $data['showforum'] = true;
             } else {
@@ -404,6 +405,7 @@ function crispbb_user_search()
                 }
 
                 $uidlist = !empty($seenposters) ? array_keys($seenposters) : array();
+                $data['uidlist'] = $uidlist;
                 $data['posterlist'] = xarModAPIFunc('roles', 'user', 'getall', array('uidlist' => $uidlist));
             }
         }
