@@ -15,7 +15,7 @@
             </xar:if>
             <em>#$transformed_tdesc#</em>
         </div>
-        <div class="xar-thirdwidth xar-floatright xar-alt xar-sub xar-padding-thick">
+        <div class="xar-thirdwidth xar-floatright xar-sub xar-padding-thick">
             <xar:template type="module" module="crispbb" file="user-userpanel" />
         </div>
         <div class="xar-align-right xar-padding-thicktop xar-clearboth">

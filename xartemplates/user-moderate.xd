@@ -9,7 +9,7 @@
         <span class="xar-twothirdswidth xar-floatleft">
             <h2>#$pageTitle#</h2>
         </span>
-        <span class="xar-thirdwidth xar-floatright xar-alt xar-sub xar-padding-thick">
+        <span class="xar-thirdwidth xar-floatright xar-sub xar-padding-thick">
             <xar:template type="module" module="crispbb" file="user-userpanel" />
         </span>
         <br class="xar-clearboth" />
