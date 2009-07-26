@@ -8,14 +8,14 @@ img.xar-icon-disabled {
 /*
 table related styling (not needed for Xaraya 1.2.x)
 -------------------------------------------------------------------------[comment] */
-tr.xar-alt td, tr.xar-norm td {
+tr td {
     background-color: inherit;
 }
 /*
 table related styling (all Xaraya versions)
 -------------------------------------------------------------------------[comment] */
 td.checkbox {
-    width: 10px;
+    width: 13px;
     padding: 0;
 }
 

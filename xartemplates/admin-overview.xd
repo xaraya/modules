@@ -4,16 +4,16 @@
 </div>
 <div class="xar-mod-body">
     <xar:template type="module" module="crispbb" file="admin-menu" />
-    <img src="#xarTplGetImage('crispbb.png','crispbb')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
+    <img src="#xarTplGetImage('crispbb.png','crispbb')#" class="xar-module-icon" alt="official icon" width="96" height="96" title="crispBB" />
 
     <h3><xar:mlstring>What is it?</xar:mlstring></h3>
-    <xar:mlstring>crispBB is a full-featured forum module for Xaraya</xar:mlstring>
+    <xar:mlstring>crispBB is a feature-rich forum module for Xaraya</xar:mlstring>
 
     <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
     <ul>
         <li><xar:mlstring>Create categories for your forums.</xar:mlstring></li>
         <li><xar:mlstring>Create forums for your users to post in.</xar:mlstring></li>
-        <li><xar:mlstring>Assign privileges to your users</xar:mlstring></li>
+        <li><xar:mlstring>Assign privileges to your users.</xar:mlstring></li>
         <li><xar:mlstring>Build your community...</xar:mlstring></li>
     </ul>
     <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>
@@ -21,6 +21,10 @@
         <li>
             <strong><xar:mlstring>Topitems Block</xar:mlstring></strong> -
             <xar:mlstring>The topitems block allows you to list topics from the forums. You can choose to list topics from any or all of the forums available, optionally specifiying the field to sort topics on, the direction they should be sorted and the number of topics to display.</xar:mlstring>
+        </li>
+        <li>
+            <strong><xar:mlstring>Userpanel Block</xar:mlstring></strong> -
+            <xar:mlstring>The userpanel block displays any combination of the data contained in the user info panel.</xar:mlstring> <em><xar:mlstring>NOTE: if you choose to display any of the time options in the block it's recommended that you don't cache the block.</xar:mlstring></em>
         </li>
     </ul>
 

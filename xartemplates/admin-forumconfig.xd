@@ -15,20 +15,14 @@
             <img src="#xarTPLGetImage('tango/info.png', 'crispbb')#" alt="#xarML('info')#" />
             <xar:if condition="$sublink eq 'posthooks'">
                 <xar:mlstring>The following settings apply to modules which are hooked to all items in crispbb, or hooked to all posts in crispbb</xar:mlstring>
-                <br />
-                <img src="#xarTPLGetImage('tango/dialog-warning.png', 'crispbb')#" alt="#xarML('dialog-warning')#" />
-                <xar:mlstring>Hooks apply to Transform, Display, New, Modify and Delete posts functions</xar:mlstring>
             <xar:elseif condition="$sublink eq 'topichooks'" />
                 <xar:mlstring>The following settings apply to modules which are hooked to all items in crispBB, or hooked to all topics in crispBB</xar:mlstring>
-                <br />
-                <img src="#xarTPLGetImage('tango/dialog-warning.png', 'crispbb')#" alt="#xarML('dialog-warning')#" />
-                <xar:mlstring>Hooks apply to Transform, Display, New, Modify and Delete topic functions</xar:mlstring>
             <xar:else />
                 <xar:mlstring>The following settings apply to modules which are hooked to all items in crispBB, or hooked to all forums in crispBB</xar:mlstring>
-                <br />
-                <img src="#xarTPLGetImage('tango/dialog-warning.png', 'crispbb')#" alt="#xarML('dialog-warning')#" />
-                <xar:mlstring>Hooks apply to Transform, Display, New, Modify and Delete forum functions</xar:mlstring>
             </xar:if>
+            <br />
+            <img src="#xarTPLGetImage('tango/dialog-warning.png', 'crispbb')#" alt="#xarML('dialog-warning')#" />
+            <xar:mlstring>Hooks apply to Transform, Display, New, Modify and Delete posts functions</xar:mlstring>
         </p>
         <form method="post" action="#xarModURL('crispbb', 'admin', 'forumconfig')#">
             <xar:foreach in="$hooksettings" key="$hookmodname" value="$hookconfig">
@@ -147,115 +141,7 @@
         </p>
         <form method="post" action="#xarModURL('crispbb', 'admin', 'forumconfig')#">
             <fieldset>
-                <div class="xar-form-input-wrapper">
-                    <label for="topicsperpage" class="xar-form-label" title="#xarML('Number of topics to display per forum page')#">
-                        <xar:mlstring>Forum Topics per page</xar:mlstring>:
-                    </label>
-                    <input type="text" name="topicsperpage" id="topicsperpage" value="#$topicsperpage#" maxlength="3" class="xar-form-textshort" />
-                    <label for="topicsortorder" title="#xarML('Direction to sort topics in')#">
-                        <strong><xar:mlstring>Sort order</xar:mlstring>:</strong>
-                    </label>
-                    <xar:data-input type="dropdown" name="topicsortorder" id="topicsortorder" value="$topicsortorder" options="$orderoptions" />
-                    <label for="topicsortfield" title="#xarML('Field to sort topics on')#">
-                        <strong><xar:mlstring>Sort field</xar:mlstring>:</strong>
-                    </label>
-                    <xar:data-input type="dropdown" id="topicsortfield" name="topicsortfield" value="$topicsortfield" options="$topicfields" />
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="postsperpage" class="xar-form-label" title="#xarML('Number of posts to display per topic page')#">
-                        <xar:mlstring>Topic Posts per page</xar:mlstring>:
-                    </label>
-                    <input type="text" name="postsperpage" id="postsperpage" value="#$postsperpage#" maxlength="3" class="xar-form-textshort" />
-                    <label for="postsortorder" title="#xarML('Direction to sort posts in')#">
-                        <strong><xar:mlstring>Sort order</xar:mlstring>:</strong>
-                    </label>
-                    <xar:data-input type="dropdown" id="postsortorder" name="postsortorder" value="$postsortorder" options="$orderoptions" />
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="hottopicposts" class="xar-form-label" title="#xarML('The number of replies required for a topic to be hot')#">
-                        <xar:mlstring>Hot Topic Replies</xar:mlstring>:
-                    </label>
-                    <input type="text" name="hottopicposts" id="hottopicposts" value="#$hottopicposts#" maxlength="3" class="xar-form-textshort" />
-                    <label for="hottopichits" title="#xarML('The number of hits required for a topic to be hot')#">
-                        <strong><xar:mlstring>Views</xar:mlstring>:</strong>
-                    </label>
-                    <input type="text" name="hottopichits" id="hottopichits" value="#$hottopichits#" maxlength="3" class="xar-form-textshort" />
-                    <label for="hottopicratings" title="#xarML('The rating required for a topic to be hot')#">
-                        <strong><xar:mlstring>Rating</xar:mlstring>:</strong>
-                    </label>
-                    <input type="text" name="hottopicratings" id="hottopicratings" value="#$hottopicratings#" maxlength="3" class="xar-form-textshort" />
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="topictitlemin" class="xar-form-label help" title="#xarML('The minimum length of the topic title in characters')#">
-                        <xar:mlstring>Title Length Min</xar:mlstring>:
-                    </label>
-                    <input type="text" name="topictitlemin" id="topictitlemin" value="#$topictitlemin#" maxlength="3" class="xar-form-textshort" />
-                    <label for="topictitlemax" title="#xarML('The maximum length of the topic title in characters')#">
-                        <strong><xar:mlstring>Max</xar:mlstring>:</strong>
-                    </label>
-                    <input type="text" name="topictitlemax" id="topictitlemax" value="#$topictitlemax#" maxlength="3" class="xar-form-textshort" />
-                    <strong><xar:mlstring>characters</xar:mlstring></strong>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="topicdescmin" class="xar-form-label help" title="#xarML('The minimum length of the topic desc in characters')#">
-                        <xar:mlstring>Description Length Min</xar:mlstring>:
-                    </label>
-                    <input type="text" name="topicdescmin" id="topicdescmin" value="#$topicdescmin#" maxlength="3" class="xar-form-textshort" />
-                    <label for="topicdescmax" title="#xarML('The maximum length of the topic description in characters')#">
-                        <strong><xar:mlstring>Max</xar:mlstring>:</strong>
-                    </label>
-                    <input type="text" name="topicdescmax" id="topicdescmax" value="#$topicdescmax#" maxlength="3" class="xar-form-textshort" />
-                    <strong><xar:mlstring>characters</xar:mlstring></strong>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="topicpostmin" class="xar-form-label help" title="#xarML('The minimum length of the topic post in characters')#">
-                        <xar:mlstring>Post Length Min</xar:mlstring>:
-                    </label>
-                    <input type="text" name="topicpostmin" id="topicpostmin" value="#$topicpostmin#" maxlength="5" class="xar-form-textshort" />
-                    <label for="topicpostmax" title="#xarML('The maximum length of the topic post in characters')#">
-                        <strong><xar:mlstring>Max</xar:mlstring>:</strong>
-                    </label>
-                    <input type="text" name="topicpostmax" id="topicpostmax" value="#$topicpostmax#" maxlength="5" class="xar-form-textshort" />
-                    <strong><xar:mlstring>characters</xar:mlstring></strong>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="showstickies" class="xar-form-label" title="#xarML('Stickies can be shown on every page of forum listings, or just on the first page')#">
-                        <xar:mlstring>Show Stickies</xar:mlstring>:
-                    </label>
-                    <xar:data-input type="dropdown" id="showstickies" name="showstickies" value="$showstickies" options="$pageoptions" />
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="showannouncements" class="xar-form-label" title="#xarML('Announcements can be shown on every page of forum listings, or just on the first page')#">
-                        <xar:mlstring>Show Announcements</xar:mlstring>:
-                    </label>
-                    <xar:data-input type="dropdown" id="showannouncements" name="showannouncements" value="$showannouncements" options="$pageoptions" />
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="showfaqs" class="xar-form-label" title="#xarML('FAQs can be shown on every page of forum listings, or just on the first page')#">
-                        <xar:mlstring>Show FAQs</xar:mlstring>:
-                    </label>
-                    <xar:data-input type="dropdown" id="showfaqs" name="showfaqs" value="$showfaqs" options="$pageoptions" />
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="iconfolder" class="xar-form-label help" title="#xarML('Folder to serve topic and post icons from')#">
-                        <xar:mlstring>Icon Folder</xar:mlstring>:
-                    </label>
-                    <input type="text" name="iconfolder" id="iconfolder" value="#$iconfolder#" class="xar-form-textmedium" />
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="floodcontrol" class="xar-form-label help" title="#xarML('The minimum length of time users must wait between posts')#">
-                        <xar:mlstring>Flood Control:</xar:mlstring>
-                    </label>
-                    <input type="text" name="floodcontrol" id="floodcontrol" value="#$floodcontrol#" maxlength="3" class="xar-form-textshort" />
-                    <strong><xar:mlstring>seconds (0 = disabled)</xar:mlstring></strong>
-                </div>
-                <div class="xar-form-input-wrapper">
-                    <label for="postbuffer" class="xar-form-label help" title="#xarML('The length of time buffer displays for before redirecting')#">
-                        <xar:mlstring>Post Return Buffer:</xar:mlstring>
-                    </label>
-                    <input type="text" name="postbuffer" id="postbuffer" value="#$postbuffer#" maxlength="3" class="xar-form-textshort" />
-                    <strong><xar:mlstring>seconds (0 = disabled)</xar:mlstring></strong>
-                </div>
+                <xar:template type="module" module="crispbb" file="admin-forumconfig" />
                 <xar:comment>
                 <div class="xar-form-input-wrapper-after">
                     <xar:data-input type="checkbox" name="resetdefaults" id="resetdefaults" />
@@ -277,8 +163,6 @@
                 </div>
             </fieldset>
         </form>
-
-
     </xar:if>
 </div>
 <xar:if condition="xarSessionSetVar('crispbb_statusmsg', '')"></xar:if>

@@ -1,5 +1,5 @@
 <xar:if condition="$showusername">
-<xar:mlstring>Welcome back,</xar:mlstring>
+<xar:mlstring>Welcome back, </xar:mlstring>
 <xar:if condition="$showaccount">
 <a href="#xarModURL('roles', 'user', 'display', array('uid' => $uid))#">#$name#</a>
 <xar:else />

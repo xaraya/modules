@@ -89,6 +89,7 @@ function crispbb_admin_new($args)
         if (!xarVarFetch('topicpostmax', 'int:0:65535', $settings['topicpostmax'], $defaults['topicpostmax'], XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('showstickies', 'int:0:1', $settings['showstickies'], $defaults['showstickies'], XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('showannouncements', 'int:0:1', $settings['showannouncements'], $defaults['showannouncements'], XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('showfaqs', 'int:0:1', $settings['showfaqs'], $data['showfaqs'], XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('iconfolder', 'str:0', $settings['iconfolder'], $defaults['iconfolder'], XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('floodcontrol', 'int:0:3600', $settings['floodcontrol'], $defaults['floodcontrol'], XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('postbuffer', 'int:0:60', $settings['postbuffer'], $defaults['postbuffer'], XARVAR_NOT_REQUIRED)) return;
