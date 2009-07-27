@@ -4,27 +4,44 @@
     </label>
     <xar:if condition="!empty($calendarlist) and count($calendarlist) gt 0">
         <xar:data-input name="cid" id="cid" type="6" validation="$calendarlist" value="$cid" />
-	<xar:else />
-		<xar:mlstring>No calendars available.</xar:mlstring>
-		<input type="hidden" name="cid" id="cid" value="0" />
+    <xar:else />
+        <xar:mlstring>No calendars available.</xar:mlstring>
+        <input type="hidden" name="cid" id="cid" value="0" />
     </xar:if>
 </div>
+
 <div class="xar-form-input-wrapper-after">
-	<xar:if condition="$usecalname">
-		<input type="checkbox" name="usecalname" id="usecalname" checked="checked" />
-	<xar:else />
-		<input type="checkbox" name="usecalname" id="usecalname" />
-	</xar:if>
+    <xar:if condition="$usecalname">
+        <input type="checkbox" name="usecalname" id="usecalname" checked="checked" />
+    <xar:else />
+        <input type="checkbox" name="usecalname" id="usecalname" />
+    </xar:if>
     <label class="help" title="#xarML('Replace the block title with calendar name.')#" for="usecalname">
         <xar:mlstring>Use Calendar name as block title</xar:mlstring>
     </label>
 </div>
+<div class="xar-form-input-wrapper">
+    <label class="xar-form-label help" title="#xarML('How many months to show?')#" for="cid">
+        <xar:mlstring>Number of months</xar:mlstring>
+    </label>
+    <xar:data-input name="numberofmonths" id="numberofmonths" type="integerbox" value="$numberofmonths" />
+</div>
 <div class="xar-form-input-wrapper-after">
-	<xar:if condition="$showfulllink">
-		<input type="checkbox" name="showfulllink" id="showfulllink" checked="checked" />
-	<xar:else />
-		<input type="checkbox" name="showfulllink" id="showfulllink" />
-	</xar:if>
+    <xar:if condition="$showprevious">
+        <input type="checkbox" name="showprevious" id="showprevious" checked="checked" />
+    <xar:else />
+        <input type="checkbox" name="showprevious" id="showprevious" />
+    </xar:if>
+    <label class="help" title="#xarML('Show the previous month?')#" for="showprevious">
+        <xar:mlstring>Show previous month?</xar:mlstring>
+    </label>
+</div>
+<div class="xar-form-input-wrapper-after">
+    <xar:if condition="$showfulllink">
+        <input type="checkbox" name="showfulllink" id="showfulllink" checked="checked" />
+    <xar:else />
+        <input type="checkbox" name="showfulllink" id="showfulllink" />
+    </xar:if>
     <label class="help" title="#xarML('Display a link to the full calendar view.')#" for="showfulllink">
         <xar:mlstring>Show link to full month calendar view</xar:mlstring>
     </label>

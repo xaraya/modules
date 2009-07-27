@@ -1,7 +1,17 @@
 <xar:style scope="module" module="ievents" file="ievents" />
-#$cal_output#
+
+<xar:if condition="$numberofmonths eq 1">
+    #$cal_output#
+
+<xar:else />
+    <xar:foreach in="$cals" key="$k" value="$v" >
+        <div style="display:block;float:left;"> #$v['cal_output']# 
+        </div>
+    </xar:foreach>        
+</xar:if>
+
 <xar:if condition="$showfulllink">
-    <div class="xar-align-center">
+    <div class="xar-clearleft xar-align-center">
         <xar:if condition="!empty($cid)">
             <a href="#xarModURL('ievents','user','view',array('group' => $group, 'startdate' =&gt; $startdate, 'enddate' =&gt; $enddate, 'range' =&gt; 'custom', 'cid' =&gt; $cid))#">
                 <xar:mlstring>Full Month</xar:mlstring>

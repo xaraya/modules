@@ -65,9 +65,6 @@ function ievents_monthblock_display($blockinfo)
         return;
     }
 
-    // this is deprecated, use <xar:style /> tag in template instead
-    // xarTplAddStyleLink('ievents','ievents');
-
     if (!isset($vars['usecalname'])) {
         $vars['usecalname'] = false;
     }
@@ -75,7 +72,12 @@ function ievents_monthblock_display($blockinfo)
     if (!isset($vars['showfulllink'])) {
         $vars['showfulllink'] = true;
     }
-
+    if (!isset($vars['showprevious'])) {
+        $vars['showprevious'] = false;
+    }
+    if (!isset($vars['numberofmonths']) || empty($vars['numberofmonths'])) {
+        $vars['numberofmonths'] = 1;
+    }    
     extract(xarModAPIfunc('ievents', 'user', 'params',
         array('knames' => 'html_fields,q_fields,display_formats,locale')
     ));
@@ -88,121 +90,158 @@ function ievents_monthblock_display($blockinfo)
     $startdayofweek = xarModGetVar('ievents','startdayofweek');
     $numitems = xarModGetVar('ievents', 'default_numitems');
 
-    $ustartdate = strtotime(date('Ym') . '01');
-    $uenddate = strtotime('+1 month -1 day', $ustartdate);
+    $callist = array();
 
-    include_once(dirname(__FILE__) . '/../xarincludes/calendar.inc.php');
-    $cal = new ieventsCalendar;
-
-    $cal->cid = $vars['cid'];
-    $cal->calFormat = 'smallMonth';
-
-    if (xarVarValidate('enum:long:short', $vars['monthformat'], true)) {
-        $cal->monthFormat = $vars['monthformat'];
-    } else {
-        // There is more than enough room for full month names in the small calender.
-        $cal->monthFormat = 'long';
+    $months = $vars['numberofmonths'];
+    $prior = array();
+    if ($vars['showprevious'] == 1) {
+        $prior= strtotime("-1 month ".date('Ym') . '01');
+        $months = $months -1;
     }
 
-    if (xarVarValidate('enum:long:short:xshort:xxshort', $vars['dowformat'], true)) {
-        $cal->DOWformat = $vars['dowformat'];
-    } else {
-        $cal->DOWformat = 'xxshort';
+    if ($months > 0) {
+        for ($i = 0; $i<= $months-1; $i++) { 
+           if ($i ==0) {
+                $callist[] = strtotime(date('Ym') . '01');
+            } else {
+                $callist[] = strtotime("+".$i." month ".date('Ym') . '01');
+            }
+        }
     }
 
-    if (!empty($vars['showtitle']) && xarVarValidate('bool', $vars['showtitle'])) {
-        $cal->showTitle = $vars['showtitle'];
-    } else {
-        $cal->showTitle = true;
-    }
+    $calarray = array();
+    foreach ($callist as $k=>$calitem) {
 
-    if (xarVarValidate('bool', $vars['linkmonth'])) $cal->linkMonth = $vars['linkmonth'];
-
-    $cal->displayPrevNext = false;
-    $cal->displayEvents = true;
-    $cal->startingDOW = $startdayofweek;
-    $cal->showWeek = false;
-    $cal->calDay = strtotime(date('Ymd', $ustartdate));
-    $cal->calWeek = $ustartdate;
-    $cal->calMonth = date('m', $ustartdate);
-    $cal->calQuarter = floor(((date('m', $ustartdate) - 1) / 3) + 1);
-    $cal->calYear = date('Y', $ustartdate);
-    $cal->quanta = xarModGetVar('ievents', 'quanta');
-
-    // Pass the locale data in.
-    $cal->dayNames = $locale['days']['long'];
-    $cal->dayNamesShort = $locale['days']['short'];
-    $cal->dayNamesXShort = $locale['days']['xshort'];
-    $cal->dayNamesXXShort = $locale['days']['xxshort'];
-
-    $cal->monthNames = $locale['months']['long'];
-    $cal->monthNamesShort = $locale['months']['short'];
-
-    $url_params = array(
-        'startdate' => $ustartdate,
-        'enddate' => $uenddate,
-    );
-
-    $event_params = array(
-        'startnum' => 1,
-        'numitems' => $numitems,
-        'startdate' => $ustartdate,
-        'enddate' => $uenddate,
-        'cid' => $vars['cid'],
-    );
-
-    // Get the events.
-    $events = xarModAPIfunc('ievents', 'user', 'getevents', $event_params);
-//if (xarUserGetVar('uname') == 'judgej') var_dump($events);
-    $groups = array();
-    foreach($events as $eventkey => $eventvalue) {
-        // Add some other details to each event, that will be useful.
-        // Add the detail URL, taking into account the current search criteria.
-        $eventvalue['detail_url'] = xarModURL(
-            'ievents', 'user', 'view',
-            array_merge($url_params, array('eid' => $eventvalue['eid'], 'range' => 'custom'))
+    //$ustartdate = strtotime("+1 month ".date('Ym') . '01');
+        $ustartdate = $calitem;
+        $uenddate = strtotime('+1 month -1 day', $ustartdate);
+    
+        include_once(dirname(__FILE__) . '/../xarincludes/calendar.inc.php');
+        $cal = new ieventsCalendar;
+    
+        $cal->cid = $vars['cid'];
+        $cal->calFormat = 'smallMonth';
+    
+        if (xarVarValidate('enum:long:short', $vars['monthformat'], true)) {
+            $cal->monthFormat = $vars['monthformat'];
+        } else {
+            // There is more than enough room for full month names in the small calender.
+            $cal->monthFormat = 'long';
+        }
+    
+        if (xarVarValidate('enum:long:short:xshort:xxshort', $vars['dowformat'], true)) {
+            $cal->DOWformat = $vars['dowformat'];
+        } else {
+            $cal->DOWformat = 'xxshort';
+        }
+    
+        if (!empty($vars['showtitle']) && xarVarValidate('bool', $vars['showtitle'])) {
+            $cal->showTitle = $vars['showtitle'];
+        } else {
+            $cal->showTitle = true;
+        }
+    
+        if (xarVarValidate('bool', $vars['linkmonth'])) $cal->linkMonth = $vars['linkmonth'];
+    
+        $cal->displayPrevNext = true;
+        $cal->displayEvents = true;
+        $cal->startingDOW = $startdayofweek;
+        $cal->showWeek = false;
+        $cal->calDay = strtotime(date('Ymd', $ustartdate));
+        $cal->calWeek = $ustartdate;
+        $cal->calMonth = date('m', $ustartdate);
+        $cal->calQuarter = floor(((date('m', $ustartdate) - 1) / 3) + 1);
+        $cal->calYear = date('Y', $ustartdate);
+        $cal->quanta = xarModGetVar('ievents', 'quanta');
+    
+        // Pass the locale data in.
+        $cal->dayNames = $locale['days']['long'];
+        $cal->dayNamesShort = $locale['days']['short'];
+        $cal->dayNamesXShort = $locale['days']['xshort'];
+        $cal->dayNamesXXShort = $locale['days']['xxshort'];
+    
+        $cal->monthNames = $locale['months']['long'];
+        $cal->monthNamesShort = $locale['months']['short'];
+    
+        $url_params = array(
+            'startdate' => $ustartdate,
+            'enddate' => $uenddate,
         );
-
-        // Add the event detail to the calendar.
-        // At the moment only a count of the events is shown on the small calendar, but the details
-        // are all there if needed.
-        $cal->addEvent(
-            $eventvalue['startdate'],
-            $eventvalue['title'],
-            $eventvalue['detail_url'],
-            $eventvalue['all_day'],
-            xarModURL('ievents','user','view',array(
-                'startdate' => date('Ymd', $eventvalue['startdate']),
-                'enddate' => date('Ymd', $eventvalue['startdate']),
-                'group' => 'day',
-                'range' => 'custom',
-                'eid' => $eventvalue['eid'],
-                'title' => $eventvalue['title'],
-                'summary' => $eventvalue['summary'],
-            ))
+    
+        $event_params = array(
+            'startnum' => 1,
+            'numitems' => $numitems,
+            'startdate' => $ustartdate,
+            'enddate' => $uenddate,
+            'cid' => $vars['cid'],
         );
+    
+        // Get the events.
+        $events = xarModAPIfunc('ievents', 'user', 'getevents', $event_params);
+    //if (xarUserGetVar('uname') == 'judgej') var_dump($events);
+        $groups = array();
+        foreach($events as $eventkey => $eventvalue) {
+            // Add some other details to each event, that will be useful.
+            // Add the detail URL, taking into account the current search criteria.
+            $eventvalue['detail_url'] = xarModURL(
+                'ievents', 'user', 'view',
+                array_merge($url_params, array('eid' => $eventvalue['eid'], 'range' => 'custom'))
+            );
+    
+            // Add the event detail to the calendar.
+            // At the moment only a count of the events is shown on the small calendar, but the details
+            // are all there if needed.
+            $cal->addEvent(
+                $eventvalue['startdate'],
+                $eventvalue['title'],
+                $eventvalue['detail_url'],
+                $eventvalue['all_day'],
+                xarModURL('ievents','user','view',array(
+                    'startdate' => date('Ymd', $eventvalue['startdate']),
+                    'enddate' => date('Ymd', $eventvalue['startdate']),
+                    'group' => 'day',
+                    'range' => 'custom',
+                    'eid' => $eventvalue['eid'],
+                    'title' => $eventvalue['title'],
+                    'summary' => $eventvalue['summary'],
+                ))
+            );
+        }
+
+    
+        if ($vars['usecalname'] && !empty($vars['cid'])) {
+            $calendars = xarModAPIFunc('ievents','user','getcalendars',array('cid' => $vars['cid']));
+            $blockinfo['title'] = $calendars[$vars['cid']]['short_name'];
+            $cal->showTitle = false;
+        }
+    
+        $calarray[$k]['cid'] = $vars['cid'];
+        $calarray[$k]['group'] = $group;
+    
+        $calarray[$k]['startdate'] = date('Ym01', $ustartdate);
+        $calarray[$k]['enddate'] = date('Ymd', strtotime('+1 month -1 day', $ustartdate));
+    
+        $calarray[$k]['startmonth'] = date('Ym', $ustartdate);
+        $calarray[$k]['endmonth'] =  $calarray[$k]['startmonth'];
+    
+        $calarray[$k]['cal_output'] = $cal->display();
+        $calarray[$k]['showfulllink'] = $vars['showfulllink'];
+        $calarray[$k]['cal'] = $cal;
+
+    } //end foreach cal  
+    
+    if ($vars['numberofmonths'] == 1) {
+        $data = current($calarray);
+    } else {
+        $data['cals'] = $calarray;
+        $temp =current($calarray);
+        $data['group']= $temp['group'];
+        $data['startdate']= $temp['startdate'];
+        $data['enddate']= $temp['enddate'];
+        $data['cid']=isset($temp['cid']) ?$temp['cid']:'';
     }
-
-    if ($vars['usecalname'] && !empty($vars['cid'])) {
-        $calendars = xarModAPIFunc('ievents','user','getcalendars',array('cid' => $vars['cid']));
-        $blockinfo['title'] = $calendars[$vars['cid']]['short_name'];
-        $cal->showTitle = false;
-    }
-
-    $data['cid'] = $vars['cid'];
-    $data['group'] = $group;
-
-    $data['startdate'] = date('Ym01', $ustartdate);
-    $data['enddate'] = date('Ymd', strtotime('+1 month -1 day', $ustartdate));
-
-    $data['startmonth'] = date('Ym', $ustartdate);
-    $data['endmonth'] = $data['startmonth'];
-
-    $data['cal_output'] = $cal->display();
-    $data['showfulllink'] = $vars['showfulllink'];
-
+    $data['numberofmonths'] = $vars['numberofmonths'] ;
     $blockinfo['content'] = $data;
-
     return $blockinfo;
 }
 
@@ -226,6 +265,12 @@ function ievents_monthblock_modify($blockinfo)
     if (empty($vars['usecalname'])) {
         $vars['usecalname'] = 0;
     }
+    if (empty($vars['numberofmonths'])) {
+        $vars['numberofmonths'] = 1;
+    }
+    if (empty($vars['showprevious'])) {
+        $vars['showprevious'] = 0;
+    }         
     if (!empty($vars['showfulllink']) && $vars['showfulllink'] != 0) {
         $vars['showfulllink'] = 1;
     }
@@ -247,7 +292,8 @@ function ievents_monthblock_update($blockinfo)
    if (!xarVarFetch('cid', 'int', $vars['cid'], 0, XARVAR_NOT_REQUIRED)) {return;}
    if (!xarVarFetch('usecalname', 'checkbox', $vars['usecalname'], 0, XARVAR_NOT_REQUIRED)) {return;}
    if (!xarVarFetch('showfulllink', 'checkbox', $vars['showfulllink'], 0, XARVAR_NOT_REQUIRED)) {return;}
-
+   if (!xarVarFetch('numberofmonths', 'int:1', $vars['numberofmonths'], 1, XARVAR_NOT_REQUIRED)) {return;}
+   if (!xarVarFetch('showprevious', 'checkbox', $vars['showprevious'], false, XARVAR_NOT_REQUIRED)) {return;}   
     $blockinfo['content'] = $vars;
 
     return $blockinfo;
