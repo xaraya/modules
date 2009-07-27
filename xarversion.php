@@ -16,7 +16,7 @@
 
 $modversion['name']           = 'ievents';
 $modversion['id']             = '9995'; // TODO: register new ID
-$modversion['version']        = '0.2.0';
+$modversion['version']        = '0.2.1';
 $modversion['displayname']    = xarML('IEvents');
 $modversion['description']    = 'Events module';
 $modversion['credits']        = 'xardocs/credits.txt';
