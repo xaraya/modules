@@ -95,7 +95,7 @@ function ievents_monthblock_display($blockinfo)
     $months = $vars['numberofmonths'];
     $prior = array();
     if ($vars['showprevious'] == 1) {
-        $prior= strtotime("-1 month ".date('Ym') . '01');
+        $callist[]= strtotime("-1 month ".date('Ym') . '01');
         $months = $months -1;
     }
 
