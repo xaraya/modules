@@ -42,12 +42,20 @@
                     #$invalid['fdesc']#
                 </div>
             </xar:if>
-            <xar:if condition="count($statusoptions) gt 1">
+            <xar:if condition="count($statusoptions) gt 1 and $ftype eq 0">
             <div class="xar-form-input-wrapper">
                 <label for="fstatus" class="xar-form-label" title="#xarML('Set the status for this forum')#">
                     <xar:mlstring>Status:</xar:mlstring>
                 </label>
                 <xar:data-input type="dropdown" name="fstatus" id="fstatus" value="$fstatus" options="$statusoptions" />
+            </div>
+            </xar:if>
+            <xar:if condition="!empty($ftypeoptions) and count($ftypeoptions) gt 1">
+            <div class="xar-form-input-wrapper">
+                <label for="ftype" class="xar-form-label" title="#xarML('Select the type of forum')#">
+                    <xar:mlstring>Forum Type:</xar:mlstring>
+                </label>
+                <xar:data-input type="dropdown" name="ftype" id="ftype" value="$ftype" options="$ftypeoptions" onchange="this.form.submit();"/>
             </div>
             </xar:if>
             <xar:if condition="xarModGetVar('crispbb', 'hasuserforums')">
@@ -63,12 +71,32 @@
                     #$hookoutput[$hookmodule]#
                 </xar:foreach>
             </xar:if>
-            <xar:template type="module" module="crispbb" file="admin-forumconfig" />
+            <xar:if condition="$ftype eq 0">
+                <xar:template type="module" module="crispbb" file="admin-forumconfig" />
+            <xar:elseif condition="$ftype eq 1" />
+                <div class="xar-form-input-wrapper">
+                    <p class="xar-form-container-after">
+                        <xar:mlstring>A redirected forum allows you to list a link to somewhere else as if it was a forum, so it will show in the forum index. Enter the url you'd like the forum to point to below. The forum name is used as the link title. Users clicking the link will be taken to the url you entered.</xar:mlstring>
+                    </p>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="redirecturl" class="xar-form-label">
+                        <xar:mlstring>Redirect URL</xar:mlstring>:
+                    </label>
+                    <input type="text" name="redirecturl" id="redirecturl" value="#$redirecturl#" maxlength="255" class="xar-form-textlong" />
+                </div>
+                <xar:if condition="!empty($invalid['redirecturl'])">
+                    <div class="xar-form-input-wrapper-after xar-error">
+                        #$invalid['redirecturl']#
+                    </div>
+                </xar:if>
+            <xar:else />
 
+            </xar:if>
             <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthkey()#" />
                 <input type="hidden" name="phase" id="phase" value="update" />
-                <input type="submit" value="#xarML('Add Forum')#" />
+                <input type="submit" id="confirm" name="confirm" value="#xarML('Add Forum')#" />
             </div>
         </fieldset>
     </form>

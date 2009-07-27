@@ -44,6 +44,11 @@ function crispbb_user_view($args)
         return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
     }
 
+    if ($forum['ftype'] == 1) {
+        $redirecturl = $forum['redirected']['redirecturl'];
+        xarResponseRedirect($redirecturl);
+    }
+
     $data = $forums[$fid];
 
     $data['tstatus'] = NULL;

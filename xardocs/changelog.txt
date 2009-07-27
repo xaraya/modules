@@ -114,6 +114,13 @@
 0.5.9
 // added topic-reply-row.xd
 // added userpanel block
+// fixed display when userpanel not selected
 // minor version update to...
 0.6.0 
+------- 26 July 2009
+// cleaned up some admin templates
+------- 27 July 2009
+// added redirected forum type
+// micro version update to...
+0.6.1
 **** Current Version ****

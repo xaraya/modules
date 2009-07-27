@@ -42,7 +42,7 @@ function crispbb_userapi_getforums($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $forumstable = $xartable['crispbb_forums'];
-    $fields = array('fid', 'fname', 'fdesc', 'fstatus', 'fowner', 'forder', 'lasttid', 'fsettings', 'fprivileges');
+    $fields = array('fid', 'fname', 'fdesc', 'fstatus', 'ftype', 'fowner', 'forder', 'lasttid', 'fsettings', 'fprivileges');
     $select = array();
     $where = array();
     foreach ($fields as $k => $fieldname) {
@@ -297,94 +297,109 @@ function crispbb_userapi_getforums($args)
         $forum['privs'] = $forum['fprivileges'][$secLevel];
         if (empty($nolinks)) { // allow turn off links (shorturls throws a loop without it)
             // forum viewers
-            $forum['viewforumurl'] = xarModURL('crispbb', 'user', 'view', array('fid' => $forum['fid']));
-            // TODO: deprecate this, use viewforumurl instead
-            $forum['forumviewurl'] = xarModURL('crispbb', 'user', 'view', array('fid' => $forum['fid']));
+            if ($forum['ftype'] != 1) {
+                $forum['viewforumurl'] = xarModURL('crispbb', 'user', 'view', array('fid' => $forum['fid']));
+                // TODO: deprecate this, use viewforumurl instead
+                $forum['forumviewurl'] = xarModURL('crispbb', 'user', 'view', array('fid' => $forum['fid']));
+            } else {
+                $redirecturl = !empty($forum['redirected']['redirecturl']) ? $forum['redirected']['redirecturl'] : '';
+                if (!empty($redirecturl)) {
+                    $forum['viewforumurl'] = $redirecturl;
+                    $forum['forumviewurl'] = $redirecturl;
+                }
+            }
             if (xarModAPIFunc('crispbb', 'user', 'checkseclevel', array('check' => $forum, 'priv' => 'readforum'))) {
                 // forum readers
-                // first we check the tstatus for topics user can't see
-                if (!empty($forum['lasttid'])) {
-                    $reset = false;
-                    // this forum has a last topic
-                    if ($forum['tstatus'] == 3) {
-                        // we don't want to show a moved topic here
-                        $reset = true;
-                    } elseif ($forum['tstatus'] == 4 && !xarModAPIFunc('crispbb', 'user', 'checkseclevel', array('check' => $forum, 'priv' => 'locktopics'))) {
-                        // need locktopics priv to see locked topics
-                        $reset = true;
-                    } elseif ($forum['tstatus'] == 2 && !xarModAPIFunc('crispbb', 'user', 'checkseclevel', array('check' => $forum, 'priv' => 'approvetopics'))) {
-                        // need approvetopics priv to see submitted topics
-                        $reset = true;
-                    }
-                    if ($reset) {
-                        // get a topic this user can see
-                        $lasttopic = xarModAPIFunc('crispbb', 'user', 'gettopics', array('fid' => $forum['fid'], 'tstatus' => array(0,1,2), 'sort' => 'ptime', 'order' => 'desc', 'numitems' => 1));
-                        $lasttopic = !empty($lasttopic) ? reset($lasttopic) : array();
-                        if (!empty($lasttopic)) {
-                            // replace the last topic
-                            $forum['lasttid'] = $lasttopic['tid'];
-                            foreach ($topicsfields as $tfield) {
-                                $forum[$tfield] = $lasttopic[$tfield];
-                            }
-                            foreach ($postsfields as $pfield) {
-                                $forum[$pfield] = $lasttopic[$pfield];
-                            }
-                            $forum['numtopics'] = xarModAPIFunc('crispbb', 'user', 'counttopics',
-                                array('fid' => $forum['fid'], 'tstatus' => array(0,1,2)));
-                            $forum['numreplies'] = xarModAPIFunc('crispbb', 'user', 'countposts', array('fid' => $forum['fid'], 'tstatus' => array(0,1,2)));
-                        } else {
-                            // no topic to display
-                            $forum['lasttid'] = '';
-                            foreach ($topicsfields as $tfield) {
-                                $forum[$tfield] = '';
-                            }
-                            foreach ($postsfields as $pfield) {
-                                $forum[$pfield] = '';
-                            }
-                            $forum['numtopics'] = 0;
-                            $forum['numreplies'] = 0;
+                if ($forum['ftype'] != 1) {
+                    // first we check the tstatus for topics user can't see
+                    if (!empty($forum['lasttid'])) {
+                        $reset = false;
+                        // this forum has a last topic
+                        if ($forum['tstatus'] == 3) {
+                            // we don't want to show a moved topic here
+                            $reset = true;
+                        } elseif ($forum['tstatus'] == 4 && !xarModAPIFunc('crispbb', 'user', 'checkseclevel', array('check' => $forum, 'priv' => 'locktopics'))) {
+                            // need locktopics priv to see locked topics
+                            $reset = true;
+                        } elseif ($forum['tstatus'] == 2 && !xarModAPIFunc('crispbb', 'user', 'checkseclevel', array('check' => $forum, 'priv' => 'approvetopics'))) {
+                            // need approvetopics priv to see submitted topics
+                            $reset = true;
                         }
-                        unset($lasttopic);
+                        if ($reset) {
+                            // get a topic this user can see
+                            $lasttopic = xarModAPIFunc('crispbb', 'user', 'gettopics', array('fid' => $forum['fid'], 'tstatus' => array(0,1,2), 'sort' => 'ptime', 'order' => 'desc', 'numitems' => 1));
+                            $lasttopic = !empty($lasttopic) ? reset($lasttopic) : array();
+                            if (!empty($lasttopic)) {
+                                // replace the last topic
+                                $forum['lasttid'] = $lasttopic['tid'];
+                                foreach ($topicsfields as $tfield) {
+                                    $forum[$tfield] = $lasttopic[$tfield];
+                                }
+                                foreach ($postsfields as $pfield) {
+                                    $forum[$pfield] = $lasttopic[$pfield];
+                                }
+                                $forum['numtopics'] = xarModAPIFunc('crispbb', 'user', 'counttopics',
+                                    array('fid' => $forum['fid'], 'tstatus' => array(0,1,2)));
+                                $forum['numreplies'] = xarModAPIFunc('crispbb', 'user', 'countposts', array('fid' => $forum['fid'], 'tstatus' => array(0,1,2)));
+                            } else {
+                                // no topic to display
+                                $forum['lasttid'] = '';
+                                foreach ($topicsfields as $tfield) {
+                                    $forum[$tfield] = '';
+                                }
+                                foreach ($postsfields as $pfield) {
+                                    $forum[$pfield] = '';
+                                }
+                                $forum['numtopics'] = 0;
+                                $forum['numreplies'] = 0;
+                            }
+                            unset($lasttopic);
+                        }
                     }
-                }
-                // we have a last topic
-                if (!empty($forum['lasttid'])) {
-                    // add in the topic urls
-                    $forum['lasttopicurl'] = xarModURL('crispbb', 'user', 'display',
-                        array('tid' => $forum['lasttid']));
-                    $forum['lastreplyurl'] = xarModURL('crispbb', 'user', 'display',
-                        array('tid' => $forum['lasttid'], 'action' => 'lastreply'));
-                    $forum['townerurl'] = xarModURL('roles', 'user', 'display',
-                        array('uid' => $forum['towner']));
-                    $forum['pownerurl'] = xarModURL('roles', 'user', 'display',
-                        array('uid' => $forum['powner']));
-                    if ($loggedin) {
-                        $forum['lastunreadurl'] = xarModURL('crispbb', 'user', 'display',
-                            array('tid' => $forum['lasttid'], 'action' => 'unread'));
+                    // we have a last topic
+                    if (!empty($forum['lasttid'])) {
+                        // add in the topic urls
+                        $forum['lasttopicurl'] = xarModURL('crispbb', 'user', 'display',
+                            array('tid' => $forum['lasttid']));
+                        $forum['lastreplyurl'] = xarModURL('crispbb', 'user', 'display',
+                            array('tid' => $forum['lasttid'], 'action' => 'lastreply'));
+                        $forum['townerurl'] = xarModURL('roles', 'user', 'display',
+                            array('uid' => $forum['towner']));
+                        $forum['pownerurl'] = xarModURL('roles', 'user', 'display',
+                            array('uid' => $forum['powner']));
+                        if ($loggedin) {
+                            $forum['lastunreadurl'] = xarModURL('crispbb', 'user', 'display',
+                                array('tid' => $forum['lasttid'], 'action' => 'unread'));
+                        }
+                        $forum['townerurl'] = xarModURL('roles', 'user', 'display',
+                            array('uid' => $forum['towner']));
+                        $forum['pownerurl'] = xarModURL('roles', 'user', 'display',
+                            array('uid' => $forum['powner']));
                     }
-
                 }
                 if ($loggedin) {
-                    // logged in users
-                    $forum['readforumurl'] = xarModURL('crispbb', 'user', 'view',
-                        array('fid' => $forum['fid'], 'action' => 'read'));
-                    // TODO: deprecate this, use readforumurl instead
-                    $forum['forumreadurl'] = xarModURL('crispbb', 'user', 'view',
-                        array('fid' => $forum['fid'], 'action' => 'read'));
-                    // forum posters
-                    if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
-                        array('check' => $forum, 'priv' => 'newtopic'))) {
-                        $forum['newtopicurl'] = xarModURL('crispbb', 'user', 'newtopic',
-                            array('fid' => $forum['fid']));
-                    }
-                    // forum moderators
-                    if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
-                        array('check' => $forum, 'priv' => 'ismoderator'))) {
-                        $forum['modforumurl'] = xarModURL('crispbb', 'user', 'moderate',
-                            array('component' => 'topics', 'fid' => $forum['fid']));
-                        // TODO: deprecate this, use modforumurl instead
-                        $forum['admintopicsurl'] = xarModURL('crispbb', 'admin', 'topics',
-                            array('fid' => $forum['fid']));
+                    if ($forum['ftype'] != 1) {
+                        // logged in users
+                        $forum['readforumurl'] = xarModURL('crispbb', 'user', 'view',
+                            array('fid' => $forum['fid'], 'action' => 'read'));
+                        // TODO: deprecate this, use readforumurl instead
+                        $forum['forumreadurl'] = xarModURL('crispbb', 'user', 'view',
+                            array('fid' => $forum['fid'], 'action' => 'read'));
+                        // forum posters
+                        if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
+                            array('check' => $forum, 'priv' => 'newtopic'))) {
+                            $forum['newtopicurl'] = xarModURL('crispbb', 'user', 'newtopic',
+                                array('fid' => $forum['fid']));
+                        }
+                        // forum moderators
+                        if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
+                            array('check' => $forum, 'priv' => 'ismoderator'))) {
+                            $forum['modforumurl'] = xarModURL('crispbb', 'user', 'moderate',
+                                array('component' => 'topics', 'fid' => $forum['fid']));
+                            // TODO: deprecate this, use modforumurl instead
+                            $forum['admintopicsurl'] = xarModURL('crispbb', 'admin', 'topics',
+                                array('fid' => $forum['fid']));
+                        }
                     }
                     // forum owners
                     if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
@@ -397,14 +412,16 @@ function crispbb_userapi_getforums($args)
                         array('check' => $forum, 'priv' => 'editforum'))) {
                         $forum['editforumurl'] = xarModURL('crispbb', 'admin', 'modify',
                             array('fid' => $forum['fid'], 'sublink' => 'edit'));
-                        $forum['hooksforumurl'] = xarModURL('crispbb', 'admin', 'modify',
-                            array('fid' => $forum['fid'], 'sublink' => 'forumhooks'));
-                        $forum['hookstopicsurl'] = xarModURL('crispbb', 'admin', 'modify',
-                            array('fid' => $forum['fid'], 'sublink' => 'topichooks'));
-                        $forum['hookspostsurl'] = xarModURL('crispbb', 'admin', 'modify',
-                            array('fid' => $forum['fid'], 'sublink' => 'posthooks'));
-                        $forum['privsforumurl'] = xarModURL('crispbb', 'admin', 'modify',
-                            array('fid' => $forum['fid'], 'sublink' => 'privileges'));
+                        if ($forum['ftype'] != 1) {
+                            $forum['hooksforumurl'] = xarModURL('crispbb', 'admin', 'modify',
+                                array('fid' => $forum['fid'], 'sublink' => 'forumhooks'));
+                            $forum['hookstopicsurl'] = xarModURL('crispbb', 'admin', 'modify',
+                                array('fid' => $forum['fid'], 'sublink' => 'topichooks'));
+                            $forum['hookspostsurl'] = xarModURL('crispbb', 'admin', 'modify',
+                                array('fid' => $forum['fid'], 'sublink' => 'posthooks'));
+                            $forum['privsforumurl'] = xarModURL('crispbb', 'admin', 'modify',
+                                array('fid' => $forum['fid'], 'sublink' => 'privileges'));
+                        }
                     }
                     // forum delete
                     if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',

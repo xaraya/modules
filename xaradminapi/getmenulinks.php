@@ -137,6 +137,7 @@ function crispbb_adminapi_getmenulinks($args)
             $activelinks = array('modify', 'delete');
             if (in_array($modfunc, $activelinks)) {
                 $tablinks = array();
+                if (!empty($fid)) $forum = xarModAPIFunc('crispbb', 'user', 'getforum', array('fid' => $fid));
                 if (!empty($secLevels[$userLevel]['addforum'])) {
                 $tablinks['view'] = array(
                     'url' => xarModURL('crispbb', 'admin', 'modify', array('fid' => $fid)),
@@ -152,30 +153,32 @@ function crispbb_adminapi_getmenulinks($args)
                     'label' => xarML('Edit'),
                     'active' => $current_sublink == 'edit' ? true : false
                 );
-                $tablinks['forumhooks'] = array(
-                    'url' => xarModURL('crispbb', 'admin', 'modify', array('fid' => $fid, 'sublink' => 'forumhooks')),
-                    'title' => xarML('Set forum hooks configuration'),
-                    'label' => xarML('Forum Hooks'),
-                    'active' => $current_sublink == 'forumhooks' ? true : false
-                );
-                $tablinks['topichooks'] = array(
-                    'url' => xarModURL('crispbb', 'admin', 'modify', array('fid' => $fid, 'sublink' => 'topichooks')),
-                    'title' => xarML('Set forum topic hooks configuration'),
-                    'label' => xarML('Topic Hooks'),
-                    'active' => $current_sublink == 'topichooks' ? true : false
-                );
-                $tablinks['posthooks'] = array(
-                    'url' => xarModURL('crispbb', 'admin', 'modify', array('fid' => $fid, 'sublink' => 'posthooks')),
-                    'title' => xarML('Set forum post hooks configuration'),
-                    'label' => xarML('Post Hooks'),
-                    'active' => $current_sublink == 'posthooks' ? true : false
-                );
-                $tablinks['privileges'] = array(
-                    'url' => xarModURL('crispbb', 'admin', 'modify', array('fid' => $fid, 'sublink' => 'privileges')),
-                    'title' => xarML('Modify privileges for this forum'),
-                    'label' => xarML('Privileges'),
-                    'active' => $current_sublink == 'privileges' ? true : false
-                );
+                if ($forum['ftype'] != 1) {
+                    $tablinks['forumhooks'] = array(
+                        'url' => xarModURL('crispbb', 'admin', 'modify', array('fid' => $fid, 'sublink' => 'forumhooks')),
+                        'title' => xarML('Set forum hooks configuration'),
+                        'label' => xarML('Forum Hooks'),
+                        'active' => $current_sublink == 'forumhooks' ? true : false
+                    );
+                    $tablinks['topichooks'] = array(
+                        'url' => xarModURL('crispbb', 'admin', 'modify', array('fid' => $fid, 'sublink' => 'topichooks')),
+                        'title' => xarML('Set forum topic hooks configuration'),
+                        'label' => xarML('Topic Hooks'),
+                        'active' => $current_sublink == 'topichooks' ? true : false
+                    );
+                    $tablinks['posthooks'] = array(
+                        'url' => xarModURL('crispbb', 'admin', 'modify', array('fid' => $fid, 'sublink' => 'posthooks')),
+                        'title' => xarML('Set forum post hooks configuration'),
+                        'label' => xarML('Post Hooks'),
+                        'active' => $current_sublink == 'posthooks' ? true : false
+                    );
+                    $tablinks['privileges'] = array(
+                        'url' => xarModURL('crispbb', 'admin', 'modify', array('fid' => $fid, 'sublink' => 'privileges')),
+                        'title' => xarML('Modify privileges for this forum'),
+                        'label' => xarML('Privileges'),
+                        'active' => $current_sublink == 'privileges' ? true : false
+                    );
+                    }
                 }
                 if (!empty($secLevels[$userLevel]['deleteforum'])) {
                 $tablinks['delete'] = array(

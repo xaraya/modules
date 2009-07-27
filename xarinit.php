@@ -373,6 +373,9 @@ function crispbb_upgrade($oldversion)
                     array('modName' => 'crispbb',
                         'blockType' => 'userpanel'))) return;
         case '0.6.0':
+            // admin template clean up
+            // added redirect forum type
+        case '0.6.1':
             /* current version */
 
         break;

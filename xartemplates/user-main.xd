@@ -57,6 +57,7 @@
             <xar:set name="rowclass">'xar-norm'</xar:set>
             <xar:if condition="isset($forums[$cid]) && !empty($forums[$cid])">
                 <xar:foreach in="$forums[$cid]" key="$fid" value="$forum">
+                <xar:if condition="$forum['ftype'] eq 0">
                 <tr class="#$rowclass#">
                     <td class="timeimage xar-align-center xar-valign-middle">
                         <xar:if condition="!empty($forum['forumreadurl'])">
@@ -67,7 +68,7 @@
                     </td>
                     <td class="foruminfo xar-valign-top">
                         <xar:if condition="!empty($forum['forumviewurl'])">
-                            <a href="#$forum['forumviewurl']#" title="#xarML('View forum')#">#$forum['transformed_fname']#</a>
+                            <a href="#$forum['forumviewurl']#" title="#$forum['transformed_fname']#">#$forum['transformed_fname']#</a>
                         <xar:else />
                             <strong>#$forum['transformed_fname']#</strong>
                         </xar:if>
@@ -102,6 +103,24 @@
                         </xar:if>
                     </td>
                 </tr>
+                <xar:elseif condition="$forum['ftype'] eq 1" />
+                <tr class="#$rowclass#">
+                    <td class="timeimage xar-align-center xar-valign-middle">
+                        <xar:template type="module" module="crispbb" file="forum-timeimage" subdata="array('forum' =&gt; $forum)" />
+                    </td>
+                    <td class="foruminfo xar-valign-top">
+                        <xar:if condition="!empty($forum['forumviewurl'])">
+                            <a href="#$forum['forumviewurl']#" title="#$forum['transformed_fname']#">#$forum['transformed_fname']#</a>
+                        <xar:else />
+                            <strong>#$forum['transformed_fname']#</strong>
+                        </xar:if>
+                        <p>#$forum['transformed_fdesc']#</p>
+                    </td>
+                    <td colspan="3">
+                        &nbsp;
+                    </td>
+                </tr>
+                </xar:if>
                 <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
                 </xar:foreach>
             <xar:else />

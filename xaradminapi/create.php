@@ -52,6 +52,10 @@ function crispbb_adminapi_create($args)
         $fstatus = 0;
     }
 
+    if (!isset($ftype) || !is_numeric($ftype)) {
+        $ftype = 0;
+    }
+
     $presets = xarModAPIFunc('crispbb', 'user', 'getpresets',
         array('preset' => 'fsettings,fprivileges'));
     if (empty($fsettings) || !is_array($fsettings)) {
@@ -79,18 +83,20 @@ function crispbb_adminapi_create($args)
               xar_fname,
               xar_fdesc,
               xar_fstatus,
+              xar_ftype,
               xar_fowner,
               xar_forder,
               xar_fsettings,
               xar_fprivileges
               )
-            VALUES (?,?,?,?,?,?,?,?)";
+            VALUES (?,?,?,?,?,?,?,?,?)";
 
     $bindvars = array();
     $bindvars[] = $nextId;
     $bindvars[] = $fname;
     $bindvars[] = $fdesc;
     $bindvars[] = $fstatus;
+    $bindvars[] = $ftype;
     $bindvars[] = $fowner;
     $bindvars[] = 0;
     $bindvars[] = serialize($fsettings);

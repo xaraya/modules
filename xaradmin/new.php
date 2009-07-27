@@ -37,6 +37,9 @@ function crispbb_admin_new($args)
     if (!xarVarFetch('catid', 'id', $catid, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('cids', 'array', $cids, NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('new_cids', 'array', $cids, NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('ftype', 'int:0:', $ftype, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('redirecturl', 'str:1:255', $redirecturl, '', XARVAR_NOT_REQUIRED)) return;
 
     // fetch default settings for a new forum
     $defaults = xarModAPIFunc('crispbb', 'user', 'getsettings', array('setting' => 'fsettings'));
@@ -59,7 +62,7 @@ function crispbb_admin_new($args)
         return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
     }
     $presets = xarModAPIFunc('crispbb', 'user', 'getpresets',
-        array('preset' => 'forumstatusoptions,topicsortoptions,sortorderoptions,pagedisplayoptions,ftransfields,ttransfields,ptransfields'));
+        array('preset' => 'forumstatusoptions,topicsortoptions,sortorderoptions,pagedisplayoptions,ftransfields,ttransfields,ptransfields,ftypeoptions'));
 
     $invalid = array();
     $now = time();
@@ -69,9 +72,12 @@ function crispbb_admin_new($args)
         xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
         xarModSetUserVar('crispbb', 'tracking', serialize($tracking));
     }
+
+    if (!$confirm) {
+        $phase = 'form';
+    }
+
     if ($phase == 'update') {
-
-
         $settings = array();
         if (!xarVarFetch('topicsperpage', 'int:1:100', $settings['topicsperpage'], $defaults['topicsperpage'], XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('topicsortorder', 'enum:ASC:DESC', $settings['topicsortorder'], $defaults['topicsortorder'], XARVAR_NOT_REQUIRED)) return;
@@ -89,7 +95,7 @@ function crispbb_admin_new($args)
         if (!xarVarFetch('topicpostmax', 'int:0:65535', $settings['topicpostmax'], $defaults['topicpostmax'], XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('showstickies', 'int:0:1', $settings['showstickies'], $defaults['showstickies'], XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('showannouncements', 'int:0:1', $settings['showannouncements'], $defaults['showannouncements'], XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('showfaqs', 'int:0:1', $settings['showfaqs'], $data['showfaqs'], XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('showfaqs', 'int:0:1', $settings['showfaqs'], $defaults['showfaqs'], XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('iconfolder', 'str:0', $settings['iconfolder'], $defaults['iconfolder'], XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('floodcontrol', 'int:0:3600', $settings['floodcontrol'], $defaults['floodcontrol'], XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('postbuffer', 'int:0:60', $settings['postbuffer'], $defaults['postbuffer'], XARVAR_NOT_REQUIRED)) return;
@@ -104,6 +110,30 @@ function crispbb_admin_new($args)
             $invalid['fdesc'] = xarML('Description must be 255 characters or less');
         }
         if (empty($fowner)) $fowner = xarModGetVar('roles', 'admin');
+        switch ($ftype) {
+            case '0': // regular forum type
+            default:
+            break;
+            case '1': // redirected forum
+                if (strlen($redirecturl) < 1 || strlen($redirecturl) > 100) {
+                    $invalid['redirecturl'] = xarML('URL must be 255 characters or less');
+                }
+                if (empty($invalid)) {
+                    if (strstr($redirecturl,'://')) {
+                        if (!ereg("^http://|https://|ftp://", $redirecturl)) {
+                            $invalid['redirecturl'] = 'URLs of this type are not allowed';
+                        }
+                    } elseif (substr($redirecturl,0,1) == '/') {
+                        $server = xarServerGetHost();
+                        $protocol = xarServerGetProtocol();
+                        $redirecturl = $protocol . '://' . $server . $redirecturl;
+                    } else {
+                        $baseurl = xarServerGetBaseURL();
+                        $redirecturl = $baseurl . $redirecturl;
+                    }
+                }
+            break;
+        }
 
         // form validated ok, go ahead and create the forum
         if (empty($invalid)) {
@@ -121,11 +151,14 @@ function crispbb_admin_new($args)
                     $settings['ptransforms'][$field] = array();
             }
             $fprivileges = xarModAPIFunc('crispbb', 'user', 'getsettings', array('setting' => 'fprivileges'));
+            $settings['redirected'] = array('redirecturl' => $redirecturl);
+
             $fid = xarModAPIFunc('crispbb', 'admin', 'create',
                 array(
                     'fname' => $fname,
                     'fdesc' => $fdesc,
                     'fstatus' => $fstatus,
+                    'ftype' => $ftype,
                     'fowner' => $fowner,
                     'fsettings' => $settings,
                     'fprivileges' => $fprivileges,
@@ -145,6 +178,7 @@ function crispbb_admin_new($args)
         }
         // failed validation, pass back the settings fetched from input
         $defaults = $settings;
+
     }
     $pageTitle = xarML('Add New Forum');
     // if we got here, either the phase is form, or input failed validation
@@ -153,10 +187,15 @@ function crispbb_admin_new($args)
     $data['fname'] = $fname;
     $data['fdesc'] = $fdesc;
     $data['fstatus'] = $fstatus;
+    $data['ftype'] = $ftype;
     $data['fowner'] = $fowner;
+    $data['redirecturl'] = $redirecturl;
     $data['invalid'] = $invalid;
 
-
+    $ftypes = array();
+    $ftypes[0] = array('id' => 0, 'name' => xarML('Normal Forum'));
+    $ftypes[1] = array('id' => 1, 'name' => xarML('Redirected Forum'));
+    $data['ftypeoptions'] = $ftypes; // $presets['ftypeoptions'];
     $data['statusoptions'] = $presets['forumstatusoptions'];
     $data['topicfields'] = $presets['topicsortoptions'];
     $data['orderoptions'] = $presets['sortorderoptions'];

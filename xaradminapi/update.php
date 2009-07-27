@@ -21,6 +21,7 @@
  * @param  string   $args['fname']      forum name
  * @param  string   $args['fdesc']      forum description
  * @param  int      $args['fstatus']    forum status id
+ * @param  int      $args['ftype']      forum type id
  * @param  int      $args['fowner']     forum owner id
  * @param  int      $args['forder']     forum order
  * @param  array    $args['fsettings']  forum settings
@@ -51,6 +52,12 @@ function crispbb_adminapi_update($args)
     if (isset($fstatus)) {
         if (!is_numeric($fstatus)) {
             $invalid[] = 'fstatus';
+        }
+    }
+
+    if (isset($ftype)) {
+        if (!is_numeric($ftype)) {
+            $invalid[] = 'ftype';
         }
     }
 
@@ -153,6 +160,10 @@ function crispbb_adminapi_update($args)
     if (isset($fstatus)) {
         $set[] = 'xar_fstatus = ?';
         $bindvars[] = $fstatus;
+    }
+    if (isset($ftype)) {
+        $set[] = 'xar_ftype = ?';
+        $bindvars[] = $ftype;
     }
     if (isset($fowner)) {
         $set[] = 'xar_fowner = ?';

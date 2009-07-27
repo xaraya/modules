@@ -19,13 +19,6 @@
  *
  * @author crisp <crisp@crispcreations.co.uk>
  * @param array  $args An array containing all the arguments to this function.
- * @param int    $exid The id of the item to be modified
- * @param int    $objectid The id of the unified object, for use with other modules
- * @param array  $invalid This array is initialised in the beginning of the function
-                          to hold all the errors caught in admin-update
- * @param int    $number A number for the item, used as an example
- * @param string $name A name for the item, used as an example
- * @return array $item containing all elements and variables for the template
  */
 function crispbb_admin_modify($args)
 {
@@ -33,7 +26,7 @@ function crispbb_admin_modify($args)
     if (!xarVarFetch('sublink', 'str:1:', $sublink, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('phase', 'enum:form:update', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
     // allow return url to be over-ridden
-    if (!xarVarFetch('returnurl', 'str:1:', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('return_url', 'str:1:', $return_url, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('fid', 'id', $fid, NULL, XARVAR_NOT_REQUIRED)) return;
     $data = xarModAPIFunc('crispbb', 'user', 'getforum', array('fid' => $fid, 'privcheck' => true));
@@ -60,6 +53,16 @@ function crispbb_admin_modify($args)
     }
     switch($sublink) {
         case 'edit':
+            if (!xarVarFetch('fname', 'str:1:', $fname, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('fdesc', 'str:1:', $fdesc, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('fstatus', 'int:0:', $fstatus, 0, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('ftype', 'int:0:', $ftype, 0, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('fowner', 'id', $fowner, NULL, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('catid', 'id', $catid, NULL, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('cids', 'list:id', $cids, NULL, XARVAR_DONT_SET)) return;
+            if (!xarVarFetch('modify_cids', 'list:id', $cids, NULL, XARVAR_DONT_SET)) return;
+            if (!xarVarFetch('redirecturl', 'str:1:255', $redirecturl, '', XARVAR_NOT_REQUIRED)) return;
             if (empty($data['editforumurl'])) {
                 $errorMsg['message'] = xarML('You do not have the privileges required for this action');
                 $errorMsg['return_url'] = xarModURL('crispbb', 'user', 'main');
@@ -69,16 +72,16 @@ function crispbb_admin_modify($args)
                 return xarTPLModule('crispbb', 'user', 'error', $errorMsg);
             }
             $presets = xarModAPIFunc('crispbb', 'user', 'getpresets',
-                array('preset' => 'forumstatusoptions,topicsortoptions,sortorderoptions,pagedisplayoptions,ftransfields,ttransfields,ptransfields'));
+                array('preset' => 'forumstatusoptions,topicsortoptions,sortorderoptions,pagedisplayoptions,ftransfields,ttransfields,ptransfields,ftypeoptions'));
+            if (!$confirm) {
+                if ($phase == 'update') {
+                    $data['ftype'] = $ftype;
+                }
+                $phase = 'form';
+            }
+
             // handle update
             if ($phase == 'update') {
-                if (!xarVarFetch('fname', 'str:1:', $fname, '', XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('fdesc', 'str:1:', $fdesc, '', XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('fstatus', 'int:0:', $fstatus, 0, XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('fowner', 'id', $fowner, NULL, XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('catid', 'id', $catid, NULL, XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('cids', 'list:id', $cids, NULL, XARVAR_DONT_SET)) return;
-                if (!xarVarFetch('modify_cids', 'list:id', $cids, NULL, XARVAR_DONT_SET)) return;
                 if (!empty($cids) && count($cids) > 0) {
                     $cids = array_values(preg_grep('/\d+/',$cids));
                 } elseif (!empty($catid) && is_numeric($catid)) {
@@ -134,8 +137,38 @@ function crispbb_admin_modify($args)
                 }
                 if (empty($fowner)) $fowner = $data['fowner']; //xarModGetVar('roles', 'admin');
 
+                switch ($ftype) {
+                    case '0': // regular forum type
+                    default:
+                    break;
+                    case '1': // redirected forum
+                        if (strlen($redirecturl) < 1 || strlen($redirecturl) > 100) {
+                            $invalid['redirecturl'] = xarML('URL must be 255 characters or less');
+                        }
+                        if (empty($invalid)) {
+                            if (strstr($redirecturl,'://')) {
+                                if (!ereg("^http://|https://|ftp://", $redirecturl)) {
+                                    $invalid['redirecturl'] = 'URLs of this type are not allowed';
+                                }
+                            } elseif (substr($redirecturl,0,1) == '/') {
+                                $server = xarServerGetHost();
+                                $protocol = xarServerGetProtocol();
+                                $redirecturl = $protocol . '://' . $server . $redirecturl;
+                            } else {
+                                $baseurl = xarServerGetBaseURL();
+                                $redirecturl = $baseurl . $redirecturl;
+                            }
+                        }
+                    break;
+                }
                 if (empty($invalid)) {
                     if (!xarSecConfirmAuthKey()) return;
+                    $redirected = !empty($data['redirected']['redirecturl']) ? $data['redirected']['redirecturl'] : '';
+                    if ($redirected != $redirecturl) {
+                        $settings['redirected'] = array('redirecturl' => $redirecturl);
+                    } else {
+                        $settings['redirected'] = $data['redirected'];
+                    }
                     if (!xarModAPIFunc('crispbb', 'admin', 'update',
                         array(
                             'fid' => $fid,
@@ -143,16 +176,17 @@ function crispbb_admin_modify($args)
                             'fdesc' => $fdesc,
                             'fowner' => $fowner,
                             'fstatus' => $fstatus,
+                            'ftype' => $ftype,
                             'fsettings' => $settings,
                             'cids' => $cids
                         ))) return;
                     xarSessionSetVar('crispbb_statusmsg', xarML('#(1) settings updated', $fname));
-                    if (empty($returnurl)) {
-                        $returnurl = xarModURL('crispbb', 'admin', 'modify',
+                    if (empty($return_url)) {
+                        $return_url = xarModURL('crispbb', 'admin', 'modify',
                             array('fid' => $fid, 'sublink' => 'edit'));
                     }
                     xarModAPIFunc('crispbb', 'user', 'getitemtypes');
-                    xarResponseRedirect($returnurl);
+                    xarResponseRedirect($return_url);
                 }
                 // failed validation, pass back the input
                 $data['fname'] = $fname;
@@ -217,6 +251,22 @@ function crispbb_admin_modify($args)
                                          'numcats' => 1,
                                          'items' => $items));
             }
+
+            switch ($data['ftype']) {
+                case '0':
+                default:
+                break;
+                case '1':
+                    if (empty($redirecturl)) {
+                        $redirecturl = !empty($data['redirected']['redirecturl']) ? $data['redirected']['redirecturl'] : '';
+                    }
+                break;
+            }
+            $ftypes = array();
+            $ftypes[0] = array('id' => 0, 'name' => xarML('Normal Forum'));
+            $ftypes[1] = array('id' => 1, 'name' => xarML('Redirected Forum'));
+            $data['ftypeoptions'] = $ftypes; // $presets['ftypeoptions'];
+            $data['redirecturl'] = !empty($redirecturl) ? $redirecturl : '';
 
             $forumtype = $data['itemtype'];
             $topicstype = xarModAPIFunc('crispbb', 'user', 'getitemtype',
@@ -377,11 +427,11 @@ function crispbb_admin_modify($args)
                     // update the status message
                     xarSessionSetVar('crispbb_statusmsg', xarML('#(1) hooks for #(2) updated', ucfirst($component), $data['fname']));
                     // if no returnurl specified, return to forumconfig, this sublink
-                    if (empty($returnurl)) {
-                        $returnurl = xarModURL('crispbb', 'admin', 'modify',
+                    if (empty($return_url)) {
+                        $return_url = xarModURL('crispbb', 'admin', 'modify',
                             array('fid' => $fid, 'sublink' => $sublink));
                     }
-                    xarResponseRedirect($returnurl);
+                    xarResponseRedirect($return_url);
                     return true;
                 }
             }
@@ -439,10 +489,10 @@ function crispbb_admin_modify($args)
                     // update the status message
                     xarSessionSetVar('crispbb_statusmsg', xarML('Forum privileges updated'));
                     // if no returnurl specified, return to forumconfig
-                    if (empty($returnurl)) {
-                        $returnurl = xarModURL('crispbb', 'admin', 'modify', array('fid' => $fid, 'sublink' => 'privileges'));
+                    if (empty($return_url)) {
+                        $return_url = xarModURL('crispbb', 'admin', 'modify', array('fid' => $fid, 'sublink' => 'privileges'));
                     }
-                    xarResponseRedirect($returnurl);
+                    xarResponseRedirect($return_url);
                     return true;
                 }
             }

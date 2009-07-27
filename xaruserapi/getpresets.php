@@ -170,6 +170,9 @@ function crispbb_userapi_getpresets($args)
                     $items['ptransforms'] = array();
                     $items['topicapproval'] = 0;
                     $items['replyapproval'] = 0;
+                    $items['redirected'] = array();
+                    $items['newsgroup'] = array();
+                    $items['members'] = array();
                 break;
 
                 case 'fprivileges':

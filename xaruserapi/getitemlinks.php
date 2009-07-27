@@ -51,6 +51,7 @@ function crispbb_userapi_getitemlinks($args)
             if (!empty($forums)) {
                 if (empty($bycat)) {
                     foreach($forums as $foundfid => $forum) {
+                        if ($forum['ftype'] == 1) continue;
                         if (empty($forum['forumviewurl'])) continue;
                         $itemlinks[$foundfid] = array(
                             'url' => $forum['forumviewurl'],
@@ -74,6 +75,7 @@ function crispbb_userapi_getitemlinks($args)
                         if (empty($secLevel)) continue;
                         if (!empty($forums[$cid])) {
                         foreach($forums[$cid] as $foundfid => $forum) {
+                            if ($forum['ftype'] == 1) continue;
                             if (empty($forum['forumviewurl'])) continue;
                             $itemlinks[$foundfid] = array(
                                 'url' => $forum['forumviewurl'],
