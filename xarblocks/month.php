@@ -239,7 +239,9 @@ function ievents_monthblock_display($blockinfo)
         $temp =current($calarray);
         $data['group']= $temp['group'];
         $data['startdate']= $temp['startdate'];
+        $data['startmonth']= $temp['startmonth'];
         $data['enddate']= $temp['enddate'];
+        $data['endmonth']= $temp['endmonth'];                
         $data['cid']=isset($temp['cid']) ?$temp['cid']:'';
     }
     $data['numberofmonths'] = $vars['numberofmonths'] ;
