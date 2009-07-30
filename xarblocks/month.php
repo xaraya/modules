@@ -20,6 +20,8 @@ function ievents_monthblock_init()
         'cid' => 0,
         'usecalname' => 0,
         'showfulllink' => 1,
+        'showprevious' => false,
+        'numberofmonths' => 1,
         'nocache' => 1, // don't cache by default
         'pageshared' => 1, // but if you do, share across pages
         'usershared' => 1, // and for group members
