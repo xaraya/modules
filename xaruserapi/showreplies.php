@@ -81,8 +81,8 @@ function crispbb_userapi_showreplies($args)
         if (!empty($post['towner'])) $seenposters[$post['towner']] = 1;
         if (!empty($post['powner'])) $seenposters[$post['powner']] = 1;
         if ($post['firstpid'] == $pid) {
-            if (!empty($data['topicicon'])) {
-                $item['topicicon'] = $data['topicicon'];
+            if (!empty($data['topicicon']) && isset($iconlist[$data['topicicon']])) {
+                $item['topicicon'] = $iconlist[$data['topicicon']]['imagepath'];
             } else {
                 $item['topicicon'] = '';
             }
