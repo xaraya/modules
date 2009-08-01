@@ -65,7 +65,7 @@ function crispbb_userapi_createtopic($args)
     }
 
     if (!isset($tstatus) || !is_numeric($tstatus)) {
-        $fstatus = 0;
+        $tstatus = 0;
     }
 
     if (!isset($ttype) || !is_numeric($ttype)) {
@@ -131,7 +131,7 @@ function crispbb_userapi_createtopic($args)
 
         $powner = $towner;
 
-        $pstatus = 0;
+        $pstatus = !isset($pstatus) || !is_numeric($pstatus) ? 0 : $pstatus;
 
         $ptime = empty($ptime) || !is_numeric($ptime) ? time() : $ptime;
 
@@ -152,7 +152,8 @@ function crispbb_userapi_createtopic($args)
                 'pdesc' => $pdesc,
                 'ptext' => $ptext,
                 'psettings' => $psettings,
-                'fid' => $fid
+                'fid' => $fid,
+                'tstatus' => $tstatus
             ))) return;
     } else {
         $pid = $firstpid;

@@ -77,10 +77,17 @@ function crispbb_user_modifytopic($args)
     if (!empty($privs['closeowntopic']) || !empty($privs['closetopics'])) {
         $tstatusoptions[1] = $presets['tstatusoptions'][1];
     }
+    if (!empty($privs['approvetopics'])) {
+        $tstatusoptions[2] = $presets['tstatusoptions'][2];
+    }
     if (!empty($privs['locktopics'])) {
         $tstatusoptions[4] = $presets['tstatusoptions'][4];
     }
     $data['tstatusoptions'] = $tstatusoptions;
+
+    if (!isset($data['approvereplies'])) {
+        $data['approvereplies'] = $data['replyapproval'];
+    }
 
     if (!empty($data['iconfolder'])) {
         $iconlist = array();
@@ -109,6 +116,7 @@ function crispbb_user_modifytopic($args)
         if (!xarVarFetch('htmldeny', 'checkbox', $htmldeny, false, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('bbcodedeny', 'checkbox', $bbcodedeny, false, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('smiliesdeny', 'checkbox', $smiliesdeny, false, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVarFetch('approvereplies', 'checkbox', $approvereplies, false, XARVAR_NOT_REQUIRED)) return;
 
         if (empty($privs['stickies']) && $ttype == 1) {
             $invalid['ttype'] = xarML('You can not post sticky topics');
@@ -237,6 +245,7 @@ function crispbb_user_modifytopic($args)
         $tsettings['htmldeny'] = empty($privs['html']) || $htmldeny ? true : false;
         $tsettings['bbcodedeny'] = empty($privs['bbcode']) || $bbcodedeny ? true : false;
         $tsettings['smiliesdeny'] = empty($privs['smilies']) || $smiliesdeny ? true : false;
+        $tsettings['approvereplies'] = $approvereplies;
         $psettings = array();
         $psettings = $tsettings;
         if (empty($invalid) && !$preview) {

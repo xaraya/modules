@@ -70,6 +70,7 @@ function crispbb_user_newreply($args)
 
     if (!xarVarFetch('pdesc', 'str', $pdesc, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('ptext', 'str', $ptext, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('pstatus', 'int:0:5', $pstatus, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('topicicon', 'str', $topicicon, 'none',XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('phase', 'enum:form:update:quickreply:quotereply', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
@@ -95,10 +96,16 @@ function crispbb_user_newreply($args)
         xarModSetUserVar('crispbb', 'tracking', serialize($tracking));
     }
     $presets = xarModAPIFunc('crispbb', 'user', 'getpresets',
-        array('preset' => 'privactionlabels,privleveloptions,tstatusoptions,ttypeoptions'));
+        array('preset' => 'privactionlabels,privleveloptions,tstatusoptions,ttypeoptions,pstatusoptions'));
     $poststype = xarModAPIFunc('crispbb', 'user', 'getitemtype',
         array('fid' => $data['fid'], 'component' => 'posts'));
 
+    if (!isset($data['approvereplies'])) {
+        $data['approvereplies'] = $data['replyapproval'];
+    }
+    if ($data['approvereplies'] && empty($privs['approvereplies'])) {
+        $pstatus = 2;
+    }
     // transforms
     $hasbbcode = xarModIsHooked('bbcode', 'crispbb', $poststype);
     $hassmilies = xarModIsHooked('smilies', 'crispbb', $poststype);
@@ -232,6 +239,10 @@ function crispbb_user_newreply($args)
             }
         }
 
+        if ($data['approvereplies'] && $pstatus != 2 && empty($privs['approvereplies'])) {
+            $pstatus = 2;
+        }
+
         $ptlen = strlen(strip_tags($transformed['ptext']));
         if ($ptlen < $data['topicpostmin']) {
             $invalid['ptext'] = xarML('Post must be at least #(1) characters', $data['topicpostmin']);
@@ -257,7 +268,6 @@ function crispbb_user_newreply($args)
                 }
             }
             $powner = $uid;
-            $pstatus = 0;
             $ptime = $now;
             if (!$pid = xarModAPIFunc('crispbb', 'user', 'createpost',
                 array(
@@ -296,20 +306,30 @@ function crispbb_user_newreply($args)
                 $tracking[$data['fid']][0]['lastview'] = $now;
                 xarModSetUserVar('crispbb', 'tracking', serialize($tracking));
             }
-            if (!empty($data['postbuffer'])) {
-                $return_url = xarModURL('crispbb', 'user', 'display',
-                    array('tid' => $tid, 'pid' => $pid));
+
+            if (!empty($data['postbuffer']) || $pstatus == 2) {
+                if ($pstatus == 2) {
+                    $return_url = xarModURL('crispbb', 'user', 'display',
+                        array('tid' => $tid, 'action' => 'lastreply'));
+                    $data['postbuffer'] = 5;
+                    $pageTitle = xarML('Reply Submitted');
+                    $message = xarML('Thank you. Your reply has been submitted, and will be displayed once approved.');
+                    $data['pid'] = NULL;
+                } else {
+                    $message = xarML('Your reply to #(1) was posted successfully', $data['ttitle']);
+                    $return_url = xarModURL('crispbb', 'user', 'display',
+                        array('tid' => $tid, 'pid' => $pid));
+                    $pageTitle = xarML('Reply Posted');
+                    $data['tid'] = $tid;
+                    $data['pid'] = $pid;
+                }
                 xarVarSetCached('Meta.refresh','url', $return_url);
                 xarVarSetCached('Meta.refresh','time', $data['postbuffer']);
-                $pageTitle = xarML('Reply Posted');
                 xarTPLSetPageTitle(xarVarPrepForDisplay($pageTitle));
                 $data['pageTitle'] = $pageTitle;
-                $data['tid'] = $tid;
-                $data['pid'] = $pid;
-                $data['message'] = xarML('Your reply to #(1) was posted successfully', $data['ttitle']);
+                $data['message'] = $message;
                 return xarTPLModule('crispbb', 'user', 'return', $data);
             }
-
             return xarResponseRedirect(xarModURL('crispbb', 'user', 'display', array('tid' => $tid,  'action' => 'lastreply')));
         }
         $data['preview'] = $transformed;
@@ -324,6 +344,7 @@ function crispbb_user_newreply($args)
     $privs['smilies'] = ($hassmilies && !$smiliesdeny) || (!$hassmilies && $smiliesdeny) ? true : false;
     $data['pdesc'] = $pdesc;
     $data['ptext'] = $ptext;
+    $data['pstatus'] = $pstatus;
     $data['topicicon'] = $topicicon;
     $data['invalid'] = $invalid;
     $data['pageTitle'] = $pageTitle;
@@ -342,6 +363,13 @@ function crispbb_user_newreply($args)
     $formdisplay = xarModCallHooks('item', 'formdisplay','', array(), 'crispbb', $poststype);
     $data['formaction'] = !empty($formaction) && is_array($formaction) ? join('',$formaction) : '';
     $data['formdisplay'] = !empty($formdisplay) && is_array($formdisplay) ? join('',$formdisplay) : '';
+
+    $pstatusoptions = $presets['pstatusoptions'];
+    if (empty($privs['approvereplies'])) {
+        unset($pstatusoptions[2]);
+    }
+    unset($pstatusoptions[5]);
+    $data['pstatusoptions'] = $pstatusoptions;
 
     if (xarVarIsCached('Hooks.dynamicdata','withupload') || xarModIsHooked('uploads', 'crispbb', $poststype)) {
         $data['withupload'] = 1;

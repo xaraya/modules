@@ -45,6 +45,10 @@ function crispbb_admin_modifyconfig()
         $phase = 'form';
         $hasupdate = xarModAPIFunc('crispbb', 'user', 'checkupdate',
             array('version' => $modinfo['version']));
+        // set for waiting content
+        if ($hasupdate) {
+            xarModSetVar('crispbb', 'latestversion', $hasupdate);
+        }
     }
 
     $invalid = array();

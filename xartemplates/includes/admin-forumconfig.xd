@@ -1,5 +1,13 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:comment>Forum config</xar:comment>
+<div class="xar-form-input-wrapper-after">
+    <xar:data-input type="checkbox" name="topicapproval" id="topicapproval" value="$topicapproval" />
+    <label for="topicapproval" class="help" title="#xarML('When checked all new topics in the forum require approval')#"><strong><xar:mlstring>New topics require approval</xar:mlstring>?</strong></label>
+</div>
+<div class="xar-form-input-wrapper-after">
+    <xar:data-input type="checkbox" name="replyapproval" id="replyapproval" value="$replyapproval" />
+    <label for="replyapproval" class="help" title="#xarML('When checked all new replies in the forum require approval')#"><strong><xar:mlstring>New replies require approval</xar:mlstring>?</strong></label>
+</div>
 <div class="xar-form-input-wrapper">
     <label for="topicsperpage" class="xar-form-label" title="#xarML('Number of topics to display per forum page')#">
         <xar:mlstring>Forum Topics per page</xar:mlstring>:

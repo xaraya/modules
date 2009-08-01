@@ -86,6 +86,8 @@ function crispbb_admin_forumconfig($args)
                     if (!xarVarFetch('iconfolder', 'str:0', $settings['iconfolder'], $defaults['iconfolder'], XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('floodcontrol', 'int:0:3600', $settings['floodcontrol'], $defaults['floodcontrol'], XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('postbuffer', 'int:0:60', $settings['postbuffer'], $defaults['postbuffer'], XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('topicapproval', 'checkbox', $settings['topicapproval'], false, XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('replyapproval', 'checkbox', $settings['replyapproval'], false, XARVAR_NOT_REQUIRED)) return;
                     // perform any validations here
                     // TODO: check icon folder
                     // TODO: check available hooks (hits, ratings)

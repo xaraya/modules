@@ -26,7 +26,6 @@ function crispbb_userapi_getposts($args)
         $cids = array($catid);
     }
     if (empty($cids)) $cids = array();
-    if (empty($pstatus)) $pstatus = array(0,1);
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -115,7 +114,7 @@ function crispbb_userapi_getposts($args)
         }
     }
 
-    if (!empty($pstatus)) {
+    if (isset($pstatus)) {
         if (is_numeric($pstatus)) {
             $where[] = $poststable . '.xar_pstatus = ' . $pstatus;
         } elseif (is_array($pstatus) && count($pstatus) > 0) {
@@ -171,6 +170,24 @@ function crispbb_userapi_getposts($args)
             }
         }
     }
+    if (isset($ttype)) {
+        if (is_numeric($ttype)) {
+            $where[] = $topicstable . '.xar_ttype = ' . $ttype;
+        } elseif (is_array($ttype) && count($ttype) > 0) {
+            $seenttype = array();
+            foreach ($ttype as $id) {
+                if (!is_numeric($id)) continue;
+                $seenttype[$id] = 1;
+            }
+            if (count($seenttype) == 1) {
+                $ttypes = array_keys($seenttype);
+                $where[] = $topicstable . '.xar_ttype = ' . $ttypes[0];
+            } elseif (count($seenttype) > 1) {
+                $ttypes = join(', ', array_keys($seenttype));
+                $where[] = $topicstable . '.xar_ttype = IN (' . $ttypes . ')';
+            }
+        }
+    }
 
     if (!empty($fid)) {
         if (is_numeric($fid)) {
@@ -190,6 +207,54 @@ function crispbb_userapi_getposts($args)
             }
         }
     }
+    if (isset($fstatus)) {
+        if (is_numeric($fstatus)) {
+            $where[] = $forumstable . '.xar_fstatus = ' . $fstatus;
+        } elseif (is_array($fstatus) && count($fstatus) > 0) {
+            $seenfstatus = array();
+            foreach ($fstatus as $id) {
+                if (empty($id) || !is_numeric($id)) continue;
+                $seenfstatus[$id] = 1;
+            }
+            if (count($seenfstatus) == 1) {
+                $fstatuses = array_keys($seenfstatus);
+                $where[] = $forumstable . '.xar_fstatus = ' . $fstatuses[0];
+            } elseif (count($seenfstatus) > 1) {
+                $fstatuses = join(', ', array_keys($seenfstatus));
+                $where[] = $forumstable . '.xar_fstatus IN (' . $fstatuses . ')';
+            }
+        }
+    }
+    if (isset($ftype)) {
+        if (is_numeric($ftype)) {
+            $where[] = $forumstable . '.xar_ftype = ' . $ftype;
+        } elseif (is_array($ftype) && count($ftype) > 0) {
+            $seenftype = array();
+            foreach ($ftype as $id) {
+                if (empty($id) || !is_numeric($id)) continue;
+                $seenftype[$id] = 1;
+            }
+            if (count($seenftype) == 1) {
+                $ftypes = array_keys($seenftype);
+                $where[] = $forumstable . '.xar_ftype = ' . $ftypes[0];
+            } elseif (count($seenftype) > 1) {
+                $ftypes = join(', ', array_keys($seenftype));
+                $where[] = $forumstable . '.xar_ftype IN (' . $ftypes . ')';
+            }
+        }
+    }
+    $rolesdef = xarModAPIFunc('roles', 'user', 'leftjoin');
+    $rolesfields = array('name','uname','uid');
+    foreach ($rolesfields as $rfield) {
+        $select[] = $rolesdef['table'] . '.xar_' . $rfield;
+        $fields[] = 'powner'.$rfield;
+    }
+    if (($dbconn->databaseType != 'sqlite')) {
+        $from = '(' . $from . ')';
+    }
+    // Add the LEFT JOIN ... ON ... roles for the towner info
+    $from .= ' LEFT JOIN ' . $rolesdef['table'];
+    $from .= ' ON ' . $rolesdef['table'] . '.xar_uid' . ' = ' . $poststable . '.xar_powner';
 
     if (!empty($powner) && is_numeric($powner)) {
         $where[] = $poststable . '.xar_powner = ?';
@@ -220,7 +285,11 @@ function crispbb_userapi_getposts($args)
         if (in_array($sort, $topicfields)) {
             $myorder = $topicstable . '.xar_' . $sort;
         } elseif (in_array($sort, $postsfields)) {
-            $myorder = $poststable . '.xar_' . $sort;
+            if ($sort == 'powner') {
+                $myorder = $rolesdef['table'] . '.xar_name';
+            } else {
+                $myorder = $poststable . '.xar_' . $sort;
+            }
         } elseif (in_array($sort, $forumfields)) {
             $myorder = $forumstable . '.xar_' . $sort;
         }
@@ -476,6 +545,21 @@ function crispbb_userapi_getposts($args)
                             ));
                         }
                     }
+                    // topic approvers
+                    if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
+                        array('check' => $post, 'priv' => 'approvetopics'))) {
+                        if ($post['tstatus'] == 2) {
+                            $post['approvetopicurl'] = xarModURL('crispbb', 'user', 'moderate',
+                                array(
+                                    'component' => 'topics',
+                                    'fid' => $post['fid'],
+                                    'tstatus' => $post['tstatus'],
+                                    'modaction' => 'approve',
+                                    'phase' => 'update',
+                                    'tids' => $tids,
+                            ));
+                        }
+                    }
                     // topic movers
                     if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
                         array('check' => $post, 'priv' => 'movetopics'))) {
@@ -577,6 +661,19 @@ function crispbb_userapi_getposts($args)
                             $post['editreplyurl'] = xarModURL('crispbb', 'user', 'modifyreply',
                                 array('pid' => $post['pid']));
                     }
+                    // post approvers
+                    if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
+                        array('check' => $post, 'priv' => 'approvereplies')) && $post['pstatus'] == 2) {
+                            $post['approvereplyurl'] = xarModURL('crispbb', 'user', 'moderate',
+                                array(
+                                    'component' => 'posts',
+                                    'tid' => $post['tid'],
+                                    'pstatus' => $post['pstatus'],
+                                    'modaction' => 'approve',
+                                    'phase' => 'update',
+                                    'pids' => array($post['pid'] => 1),
+                                ));
+                    }
                     // topic splitters
                     if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
                         array('check' => $post, 'priv' => 'splittopics'))) {
@@ -593,6 +690,17 @@ function crispbb_userapi_getposts($args)
                     // post deleters
                     if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
                         array('check' => $post, 'priv' => 'deletereplies'))) {
+                            if ($post['pstatus'] == 5) {
+                            $post['undeletereplyurl'] = xarModURL('crispbb', 'user', 'moderate',
+                                    array(
+                                        'component' => 'posts',
+                                        'tid' => $post['tid'],
+                                        'pstatus' => $post['pstatus'],
+                                        'modaction' => 'undelete',
+                                        'phase' => 'update',
+                                        'pids' => array($post['pid'] => 1)
+                                ));
+                            } else {
                             $post['deletereplyurl'] = xarModURL('crispbb', 'user', 'moderate',
                                     array(
                                         'component' => 'posts',
@@ -602,6 +710,7 @@ function crispbb_userapi_getposts($args)
                                         'phase' => 'update',
                                         'pids' => array($post['pid'] => 1)
                                 ));
+                            }
                     }
                     // forum moderators
                     if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',

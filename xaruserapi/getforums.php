@@ -211,6 +211,42 @@ function crispbb_userapi_getforums($args)
             }
         }
     }
+    if (isset($fstatus)) {
+        if (is_numeric($fstatus)) {
+            $where[] = $forumstable . '.xar_fstatus = ' . $fstatus;
+        } elseif (is_array($fstatus) && count($fstatus) > 0) {
+            $seenfstatus = array();
+            foreach ($fstatus as $id) {
+                if (empty($id) || !is_numeric($id)) continue;
+                $seenfstatus[$id] = 1;
+            }
+            if (count($seenfstatus) == 1) {
+                $fstatuses = array_keys($seenfstatus);
+                $where[] = $forumstable . '.xar_fstatus = ' . $fstatuses[0];
+            } elseif (count($seenfstatus) > 1) {
+                $fstatuses = join(', ', array_keys($seenfstatus));
+                $where[] = $forumstable . '.xar_fstatus IN (' . $fstatuses . ')';
+            }
+        }
+    }
+    if (isset($ftype)) {
+        if (is_numeric($ftype)) {
+            $where[] = $forumstable . '.xar_ftype = ' . $ftype;
+        } elseif (is_array($ftype) && count($ftype) > 0) {
+            $seenftype = array();
+            foreach ($ftype as $id) {
+                if (empty($id) || !is_numeric($id)) continue;
+                $seenftype[$id] = 1;
+            }
+            if (count($seenftype) == 1) {
+                $ftypes = array_keys($seenftype);
+                $where[] = $forumstable . '.xar_ftype = ' . $ftypes[0];
+            } elseif (count($seenftype) > 1) {
+                $ftypes = join(', ', array_keys($seenftype));
+                $where[] = $forumstable . '.xar_ftype IN (' . $ftypes . ')';
+            }
+        }
+    }
 
     $query = 'SELECT ' . join(', ', $select);
     $query .= ' FROM ' . $from;
@@ -310,7 +346,7 @@ function crispbb_userapi_getforums($args)
             }
             if (xarModAPIFunc('crispbb', 'user', 'checkseclevel', array('check' => $forum, 'priv' => 'readforum'))) {
                 // forum readers
-                if ($forum['ftype'] != 1) {
+                if ($forum['ftype'] != 1) { // forum not redirected
                     // first we check the tstatus for topics user can't see
                     if (!empty($forum['lasttid'])) {
                         $reset = false;
@@ -326,8 +362,15 @@ function crispbb_userapi_getforums($args)
                             $reset = true;
                         }
                         if ($reset) {
+                            $tstatuses = array(0,1);
+                            if (xarModAPIFunc('crispbb', 'user', 'checkseclevel', array('check' => $forum, 'priv' => 'approvetopics'))) {
+                                $tstatuses[] = 2;
+                            }
+                            if (xarModAPIFunc('crispbb', 'user', 'checkseclevel', array('check' => $forum, 'priv' => 'locktopics'))) {
+                                $tstatuses[] = 4;
+                            }
                             // get a topic this user can see
-                            $lasttopic = xarModAPIFunc('crispbb', 'user', 'gettopics', array('fid' => $forum['fid'], 'tstatus' => array(0,1,2), 'sort' => 'ptime', 'order' => 'desc', 'numitems' => 1));
+                            $lasttopic = xarModAPIFunc('crispbb', 'user', 'gettopics', array('fid' => $forum['fid'], 'tstatus' => $tstatuses, 'sort' => 'ptime', 'order' => 'desc', 'numitems' => 1));
                             $lasttopic = !empty($lasttopic) ? reset($lasttopic) : array();
                             if (!empty($lasttopic)) {
                                 // replace the last topic
@@ -339,8 +382,8 @@ function crispbb_userapi_getforums($args)
                                     $forum[$pfield] = $lasttopic[$pfield];
                                 }
                                 $forum['numtopics'] = xarModAPIFunc('crispbb', 'user', 'counttopics',
-                                    array('fid' => $forum['fid'], 'tstatus' => array(0,1,2)));
-                                $forum['numreplies'] = xarModAPIFunc('crispbb', 'user', 'countposts', array('fid' => $forum['fid'], 'tstatus' => array(0,1,2)));
+                                    array('fid' => $forum['fid'], 'tstatus' => $tstatuses));
+                                $forum['numreplies'] = xarModAPIFunc('crispbb', 'user', 'countposts', array('fid' => $forum['fid'], 'tstatus' => $tstatuses));
                             } else {
                                 // no topic to display
                                 $forum['lasttid'] = '';

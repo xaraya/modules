@@ -110,7 +110,8 @@ function crispbb_admin_modify($args)
                 if (!xarVarFetch('iconfolder', 'str:0', $settings['iconfolder'], $data['iconfolder'], XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('floodcontrol', 'int:0:3600', $settings['floodcontrol'], $data['floodcontrol'], XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('postbuffer', 'int:0:60', $settings['postbuffer'], $data['postbuffer'], XARVAR_NOT_REQUIRED)) return;
-
+                if (!xarVarFetch('topicapproval', 'checkbox', $settings['topicapproval'], $data['topicapproval'], XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('replyapproval', 'checkbox', $settings['replyapproval'], $data['replyapproval'], XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('ftransforms', 'list', $settings['ftransforms'], array(), XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('ttransforms', 'list', $settings['ttransforms'], array(), XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('ptransforms', 'list', $settings['ptransforms'], array(), XARVAR_NOT_REQUIRED)) return;

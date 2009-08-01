@@ -71,7 +71,9 @@ function crispbb_userapi_createpost($args)
         $powner = xarUserGetVar('uid');
     }
 
-    $pstatus = 0;
+    if (!isset($pstatus) || !is_numeric($pstatus)) {
+        $pstatus = 0;
+    }
 
     if (!isset($ptime) || empty($ptime) || !is_numeric($ptime)) {
         $ptime = time();
@@ -128,6 +130,9 @@ function crispbb_userapi_createpost($args)
     $item['itemid'] = $pid;
     xarModCallHooks('item', 'create', $pid, $item);
 
+    // if this is a submitted post, we don't update the topic or forum just yet
+    if ($pstatus == 2) return $pid;
+
     // update the topic
     if (!xarModAPIFunc('crispbb', 'user', 'updatetopic',
         array(
@@ -135,6 +140,9 @@ function crispbb_userapi_createpost($args)
             'lastpid' => $pid,
             'nohooks' => true
         ))) return;
+
+    // if this is a submitted topic, we don't update the forum just yet
+    if (isset($tstatus) && $tstatus == 2) return $pid;
 
     // update the forum
     if (empty($fid)) {
@@ -154,7 +162,6 @@ function crispbb_userapi_createpost($args)
     $ftracking = (!empty($fstring)) ? unserialize($fstring) : array();
     $ftracking[$fid] = $ptime;
     xarModSetVar('crispbb', 'ftracking', serialize($ftracking));
-
     // return the new forum id
     return $pid;
 }

@@ -1,5 +1,52 @@
 <xar:if condition="empty($rowclass)"><xar:set name="rowclass">''</xar:set></xar:if>
-<td class="posterinfo xar-valign-top #$rowclass#">
+<xar:if condition="$post['pstatus'] eq 5 and empty($showdeleted)">
+<td class="posterinfo xar-valign-top">
+    <xar:comment>Show posters name, linking to their profile</xar:comment>
+    <a href="#xarModURL('roles', 'user', 'display', array('uid' => $post['powner']))#" title="#xarML('View Profile')#">#$posterlist[$post['powner']]['name']#</a>
+</td>
+<td class="replyinfo xar-padding-none">
+    <xar:comment>First we display the permalink to this post</xar:comment>
+    <div class="xar-sub xar-padding-thick">
+        <a name="post#$post['pid']#" href="#$post['viewreplyurl']#" title="#xarML('permalink')#">#$post['transformed_ttitle']#</a>
+        <xar:if condition="!empty($rownumber)">
+        <em>#(#$rownumber#)</em>
+        </xar:if>
+        <img src="#xarTPLGetImage('icons/comment_delete.png', 'crispbb')#" alt="#xarML('Deleted')#" />
+         -- <xar:mlstring>Reply Deleted</xar:mlstring> --
+    </div>
+    <div class="xar-align-right xar-padding-thicksides">
+        <xar:if condition="!empty($post['editreplyurl'])">
+            <a href="#$post['editreplyurl']#">
+            <img src="#xarTPLGetImage('icons/comment_edit.png', 'crispbb')#" alt="Edit" title="#xarML('Edit this reply')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($post['splitreplyurl'])">
+            <a href="#$post['splitreplyurl']#">
+            <img src="#xarTPLGetImage('icons/comment_disconnect.png', 'crispbb')#" alt="Split" title="#xarML('Split from this post')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($post['deletereplyurl'])">
+            <a href="#$post['deletereplyurl']#">
+            <img src="#xarTPLGetImage('icons/comment_delete.png', 'crispbb')#" alt="Delete" title="#xarML('Delete this reply')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($post['undeletereplyurl'])">
+            <a href="#$post['undeletereplyurl']#">
+            <img src="#xarTPLGetImage('icons/delete_arrow_undo.png', 'crispbb')#" alt="Undelete" title="#xarML('Un-delete this reply')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($post['purgereplyurl'])">
+            <a href="#$post['purgereplyurl']#">
+            <img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="Purge" title="#xarML('Purge this reply')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($post['modtopicurl']) && $post['pid'] != $post['firstpid'] && empty($noform)">
+            <input type="checkbox" name="pids[#$post['pid']#]" id="pids_#$post['pid']#" value="1" />
+        </xar:if>
+    </div>
+</td>
+<xar:else />
+<td class="posterinfo xar-valign-top">
     <xar:comment>This function returns a list of info for all the users who appear on this page in the $posterlist array. This contains data from roles userapi getall. </xar:comment>
     <xar:comment>Show posters name, linking to their profile</xar:comment>
     <a href="#xarModURL('roles', 'user', 'display', array('uid' => $post['powner']))#" title="#xarML('View Profile')#">#$posterlist[$post['powner']]['name']#</a>
@@ -86,6 +133,16 @@
     </xar:if>
     <xar:comment>Display available options for this post</xar:comment>
     <div class="xar-align-right xar-padding-thicksides">
+        <xar:if condition="!empty($post['approvetopicurl'])">
+             <a href="#$post['approvetopicurl']#">
+            <img src="#xarTPLGetImage('icons/comment_tick.png', 'crispbb')#" alt="Approve" title="#xarML('Approve this topic')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($post['approvereplyurl'])">
+             <a href="#$post['approvereplyurl']#">
+            <img src="#xarTPLGetImage('icons/comment_tick.png', 'crispbb')#" alt="Approve" title="#xarML('Approve this reply')#" />
+            </a>
+        </xar:if>
         <xar:if condition="!empty($post['edittopicurl'])">
             <a href="#$post['edittopicurl']#">
             <img src="#xarTPLGetImage('icons/comment_edit.png', 'crispbb')#" alt="Edit" title="#xarML('Edit this topic')#" />
@@ -150,17 +207,17 @@
         </xar:if>
         <xar:if condition="!empty($post['deletereplyurl'])">
             <a href="#$post['deletereplyurl']#">
-            <img src="#xarTPLGetImage('icons/comment_delete.png', 'crispbb')#" alt="Delete" title="#xarML('Delete this post')#" />
+            <img src="#xarTPLGetImage('icons/comment_delete.png', 'crispbb')#" alt="Delete" title="#xarML('Delete this reply')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($post['undeletereplyurl'])">
+            <a href="#$post['undeletereplyurl']#">
+            <img src="#xarTPLGetImage('icons/delete_arrow_undo.png', 'crispbb')#" alt="Undelete" title="#xarML('Un-delete this reply')#" />
             </a>
         </xar:if>
         <xar:if condition="!empty($post['purgereplyurl'])">
             <a href="#$post['purgereplyurl']#">
             <img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="Purge" title="#xarML('Purge this reply')#" />
-            </a>
-        </xar:if>
-        <xar:if condition="!empty($post['reporturl'])">
-            <a href="#$post['reporturl']#">
-            <img src="#xarTPLGetImage('icons/lightning_add.png', 'crispbb')#" alt="Report" title="#xarML('Report this post')#" />
             </a>
         </xar:if>
 
@@ -169,3 +226,4 @@
         </xar:if>
     </div>
 </td>
+</xar:if>

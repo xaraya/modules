@@ -36,7 +36,7 @@ function crispbb_userapi_gettopics($args)
     if (empty($topicfields) || !is_array($topicfields)) {
         $topicfields = array('tid', 'fid', 'tstatus', 'towner', 'ttype', 'ttitle', 'lastpid', 'tsettings', 'topicstype', 'firstpid');
     }
-    $forumfields = array('fname','fdesc','fstatus','fsettings','fprivileges');
+    $forumfields = array('fname','fdesc','fstatus','ftype','fsettings','fprivileges');
     $postsfields = array('powner','ptime','pstatus','psettings','poststype', 'pdesc','ptext');
 
     foreach ($trequired as $reqfield) {
@@ -58,17 +58,26 @@ function crispbb_userapi_gettopics($args)
         $select[] = $poststable . '.xar_' . $fieldname;
         $fields[] = $fieldname;
     }
-    $from .= ' LEFT JOIN ' . $poststable;
-    $from .= ' ON ' . $poststable . '.xar_pid' . ' = ' . $topicstable . '.xar_lastpid';
-    $addme = 1;
+    if (!empty($submitted)) {
+        $from .= ' LEFT JOIN ' . $poststable;
+        $from .= ' ON ' . $poststable . '.xar_tid' . ' = ' . $topicstable . '.xar_tid';
+        $from .= ' AND ' . $poststable . '.xar_pstatus = 2';
+        $addme = 1;
+        $where[] = $poststable . '.xar_pstatus = 2';
+    } else {
+        $from .= ' LEFT JOIN ' . $poststable;
+        $from .= ' ON ' . $poststable . '.xar_pid' . ' = ' . $topicstable . '.xar_lastpid';
+        $addme = 1;
+    }
     if (empty($numreplies)) {
+        // count total replies for this topic
         if ($addme && ($dbconn->databaseType != 'sqlite')) {
             $from = '(' . $from . ')';
         }
         // Add the LEFT JOIN ... ON ... posts for the reply count
         $from .= ' LEFT JOIN ' . $poststable . ' AS replies';
         $from .= ' ON replies.xar_tid = ' . $topicstable . '.xar_tid';
-        $from .= ' AND replies.xar_pstatus IN (0,1)';
+        $from .= ' AND replies.xar_pstatus = 0';
         $from .= ' AND ' . $topicstable . ".xar_firstpid != replies.xar_pid";
         $from .= ' AND ' . $topicstable . ".xar_firstpid != " . $topicstable . ".xar_lastpid";
         if (!empty($fid)) {
@@ -93,6 +102,39 @@ function crispbb_userapi_gettopics($args)
         $fields[] = 'numreplies';
         $addme = 1;
     }
+    if (!empty($numsubs)) {
+        if ($addme && ($dbconn->databaseType != 'sqlite')) {
+            $from = '(' . $from . ')';
+        }
+        // Add the LEFT JOIN ... ON ... posts for the reply count
+        $from .= ' LEFT JOIN ' . $poststable . ' AS subs';
+        $from .= ' ON subs.xar_tid = ' . $topicstable . '.xar_tid';
+        $from .= ' AND subs.xar_pstatus = 2';
+        $from .= ' AND ' . $topicstable . ".xar_firstpid != subs.xar_pid";
+        $from .= ' AND ' . $topicstable . ".xar_firstpid != " . $topicstable . ".xar_lastpid";
+        if (!empty($fid)) {
+            if (is_numeric($fid)) {
+                $from .= ' AND ' . $topicstable . '.xar_fid = ' . $fid;
+            } elseif (is_array($fid) && count($fid) > 0) {
+                $seenfid = array();
+                foreach ($fid as $id) {
+                    if (empty($id) || !is_numeric($id)) continue;
+                    $seenfid[$id] = 1;
+                }
+                if (count($seenfid) == 1) {
+                    $fids = array_keys($seenfid);
+                    $from .= ' AND ' . $topicstable . '.xar_fid = ' . $fids[0];
+                } elseif (count($seenfid) > 1) {
+                    $fids = join(', ', array_keys($seenfid));
+                    $from .= ' AND ' . $topicstable . '.xar_fid IN (' . $fids . ')';
+                }
+            }
+        }
+        $select[] = 'COUNT(DISTINCT subs.xar_pid) AS numsubs';
+        $fields[] = 'numsubs';
+        $addme = 1;
+    }
+
     if ($addme && ($dbconn->databaseType != 'sqlite')) {
         $from = '(' . $from . ')';
     }
@@ -145,6 +187,42 @@ function crispbb_userapi_gettopics($args)
             } elseif (count($seenfid) > 1) {
                 $fids = join(', ', array_keys($seenfid));
                 $where[] = $forumstable . '.xar_fid IN (' . $fids . ')';
+            }
+        }
+    }
+    if (isset($fstatus)) {
+        if (is_numeric($fstatus)) {
+            $where[] = $forumstable . '.xar_fstatus = ' . $fstatus;
+        } elseif (is_array($fstatus) && count($fstatus) > 0) {
+            $seenfstatus = array();
+            foreach ($fstatus as $id) {
+                if (empty($id) || !is_numeric($id)) continue;
+                $seenfstatus[$id] = 1;
+            }
+            if (count($seenfstatus) == 1) {
+                $fstatuses = array_keys($seenfstatus);
+                $where[] = $forumstable . '.xar_fstatus = ' . $fstatuses[0];
+            } elseif (count($seenfstatus) > 1) {
+                $fstatuses = join(', ', array_keys($seenfstatus));
+                $where[] = $forumstable . '.xar_fstatus IN (' . $fstatuses . ')';
+            }
+        }
+    }
+    if (isset($ftype)) {
+        if (is_numeric($ftype)) {
+            $where[] = $forumstable . '.xar_ftype = ' . $ftype;
+        } elseif (is_array($ftype) && count($ftype) > 0) {
+            $seenftype = array();
+            foreach ($ftype as $id) {
+                if (empty($id) || !is_numeric($id)) continue;
+                $seenftype[$id] = 1;
+            }
+            if (count($seenftype) == 1) {
+                $ftypes = array_keys($seenftype);
+                $where[] = $forumstable . '.xar_ftype = ' . $ftypes[0];
+            } elseif (count($seenftype) > 1) {
+                $ftypes = join(', ', array_keys($seenftype));
+                $where[] = $forumstable . '.xar_ftype IN (' . $ftypes . ')';
             }
         }
     }
@@ -413,7 +491,11 @@ function crispbb_userapi_gettopics($args)
     if (!empty($where)) {
         $query .= ' WHERE ' . join(' AND ', $where);
     }
-    $query .= ' GROUP BY ' . $topicstable . '.xar_tid';
+    if (!empty($groupby)) {
+        $query .= ' GROUP BY ' . join(',', $groupby);
+    } else {
+        $query .= ' GROUP BY ' . $topicstable . '.xar_tid';
+    }
     if (!empty($orderby)) {
         $query .= ' ORDER BY ' . join(',', $orderby);
     }else {
@@ -491,6 +573,12 @@ function crispbb_userapi_gettopics($args)
                     unset($topic); unset($moved); $checkfailed = true; continue;
                 }
             }
+        } elseif ($topic['tstatus'] == 2) {
+            if (!xarModAPIFunc('crispbb', 'user', 'checkseclevel',
+                array('check' => $topic, 'priv' => 'approvetopics'))) {
+                    $checkfailed = true;
+                    continue;
+            }
         }
         $topic['forumLevel'] = $secLevel;
         // add privs for current user level in this forum
@@ -531,6 +619,31 @@ function crispbb_userapi_gettopics($args)
                             $topic['edittopicurl'] = xarModURL('crispbb', 'user', 'modifytopic',
                                 array('tid' => $topic['tid']));
                         }
+                        // topic approvers
+                        if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
+                            array('check' => $topic, 'priv' => 'approvetopics'))) {
+                            if ($topic['tstatus'] == 2) {
+                                $topic['approvetopicurl'] = xarModURL('crispbb', 'user', 'moderate',
+                                    array(
+                                        'component' => 'topics',
+                                        'fid' => $topic['fid'],
+                                        'tstatus' => $topic['tstatus'],
+                                        'modaction' => 'approve',
+                                        'phase' => 'update',
+                                        'tids' => $tids,
+                                ));
+                            }
+                        }
+                        if (!empty($topic['numsubs']) && xarModAPIFunc('crispbb', 'user','checkseclevel',
+                            array('check' => $topic, 'priv' => 'approvereplies'))) {
+                                $topic['modrepliesurl'] = xarModURL('crispbb', 'user', 'moderate',
+                                    array(
+                                        'component' => 'posts',
+                                        'tid' => $topic['tid'],
+                                        'pstatus' => 2
+                                ));
+                        }
+
                         // topic closers
                         if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
                             array('check' => $topic, 'priv' => 'closetopics'))) {

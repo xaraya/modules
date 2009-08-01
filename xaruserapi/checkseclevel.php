@@ -327,6 +327,49 @@ function crispbb_userapi_checkseclevel($args)
                         }
                     }
                 break;
+                case 'approvetopics':
+                    if (!$loggedin) return false;
+                    if ($check['fstatus'] == 0 || !empty($privs['editforum'])) {
+                        if (!empty($privs['approvetopics'])) {
+                            if ($check['tstatus'] == 0) {
+                                return $userLevel;
+                            } elseif ($check['tstatus'] == 1) {
+                                if (!empty($privs['closetopics'])) return $userLevel;
+                            } elseif ($check['tstatus'] == 2) {
+                                return $userLevel;
+                            } elseif ($check['tstatus'] == 3) {
+                                return false;
+                            } elseif ($check['tstatus'] == 4) {
+                                if (!empty($privs['locktopics'])) return $userLevel;
+                            } elseif ($check['tstatus'] == 5) {
+                                return false;
+                            }
+                        }
+                    }
+                break;
+                case 'approvereplies':
+                    if (!$loggedin) return false;
+                    if ($check['fstatus'] == 0 || !empty($privs['editforum'])) {
+                        if (!empty($privs['approvereplies'])) {
+                            if ($check['pstatus'] == 5) {
+                                if (empty($privs['deletereplies'])) return false;
+                            }
+                            if ($check['tstatus'] == 0) {
+                                return $userLevel;
+                            } elseif ($check['tstatus'] == 1) {
+                                if (!empty($privs['closetopics'])) return $userLevel;
+                            } elseif ($check['tstatus'] == 2) {
+                                if (!empty($privs['approvetopics'])) return $userLevel;
+                            } elseif ($check['tstatus'] == 3) {
+                                return false;
+                            } elseif ($check['tstatus'] == 4) {
+                                if (!empty($privs['locktopics'])) return $userLevel;
+                            } elseif ($check['tstatus'] == 5) {
+                                return false;
+                            }
+                        }
+                    }
+                break;
                 case 'deletetopics':
                     if (!$loggedin) return false;
                     if ($check['fstatus'] == 0 || !empty($privs['editforum'])) {

@@ -66,7 +66,7 @@
             <div class="xar-form-input-wrapper">
                 <xar:set name="ttitlelabel">xarML('Enter a topic title between #(1) and #(2) characters', $topictitlemin, $topictitlemax)</xar:set>
                 <label for="ttitle" class="xar-form-label help" title="#$ttitlelabel#"><xar:mlstring>Topic Title</xar:mlstring>:</label>
-                <input type="text" name="ttitle" id="ttitle" value="#$ttitle#" maxlength="255" class="xar-form-textxxlong" />
+                <input type="text" name="ttitle" id="ttitle" value="#$ttitle#" maxlength="255" class="xar-form-textxxlong" tabindex="1" />
             </div>
             <xar:if condition="!empty($invalid['ttitle'])">
             <div class="xar-form-input-wrapper-after">
@@ -77,7 +77,7 @@
             <div class="xar-form-input-wrapper">
                 <xar:set name="pdesclabel">xarML('Enter a description between #(1) and #(2) characters', $topicdescmin, $topicdescmax)</xar:set>
                 <label for="pdesc" class="xar-form-label help" title="#$pdesclabel#"><xar:mlstring>Description</xar:mlstring>:</label>
-                <input type="text" name="pdesc" id="pdesc" value="#$pdesc#" maxlength="100" class="xar-form-textxxlong" />
+                <input type="text" name="pdesc" id="pdesc" value="#$pdesc#" maxlength="100" class="xar-form-textxxlong" tabindex="2" />
             </div>
             <xar:if condition="!empty($invalid['pdesc'])">
             <div class="xar-form-input-wrapper-after">
@@ -93,7 +93,7 @@
                     <xar:if condition="$privs['htmldeny']">
                         <li>
                         <label for="htmldeny" class="help" title="#xarML('Disable HTML in this topic and all replies')#"><xar:mlstring>Disable HTML</xar:mlstring></label>
-                        <xar:data-input type="checkbox" name="htmldeny" id="htmldeny" value="$htmldeny" />
+                        <xar:data-input type="checkbox" name="htmldeny" id="htmldeny" value="$htmldeny" tabindex="7" />
                         </li>
                     </xar:if>
                 <xar:else />
@@ -104,7 +104,7 @@
                     <xar:if condition="$privs['bbcodedeny']">
                         <li>
                         <label for="bbcodedeny" class="help" title="#xarML('Disable BBCode in this topic and all replies')#"><xar:mlstring>Disable BBCode</xar:mlstring></label>
-                        <xar:data-input type="checkbox" name="bbcodedeny" id="bbcodedeny" value="$bbcodedeny" />
+                        <xar:data-input type="checkbox" name="bbcodedeny" id="bbcodedeny" value="$bbcodedeny" tabindex="8" />
                         </li>
                     </xar:if>
                 <xar:else />
@@ -115,7 +115,7 @@
                     <xar:if condition="$privs['smiliesdeny']">
                         <li>
                         <label for="smiliesdeny" class="help" title="#xarML('Disable Smilies in this topic and all replies')#"><xar:mlstring>Disable Smilies</xar:mlstring></label>
-                        <xar:data-input type="checkbox" name="smiliesdeny" id="smiliesdeny" value="$smiliesdeny" />
+                        <xar:data-input type="checkbox" name="smiliesdeny" id="smiliesdeny" value="$smiliesdeny" tabindex="9" />
                         </li>
                     </xar:if>
                 <xar:else />
@@ -125,7 +125,7 @@
                 <div class="xar-form-container-after">
                     #$formdisplay#
                 </div>
-                <textarea name="ptext" id="ptext" style="width:35em;height:60ex;">#$ptext#</textarea>
+                <textarea name="ptext" id="ptext" cols="60" rows="15" tabindex="3">#$ptext#</textarea>
             </div>
             <xar:if condition="!empty($invalid['ptext'])">
             <div class="xar-form-input-wrapper-after">
@@ -143,14 +143,26 @@
             <xar:if condition="count($ttypeoptions) gt 1">
             <div class="xar-form-input-wrapper">
                 <label for="ttype" class="xar-form-label help" title="#xarML('Set the type of topic to create')#"><xar:mlstring>Topic Type</xar:mlstring>:</label>
-                <xar:data-input type="dropdown" name="ttype" id="ttype" value="$ttype" options="$ttypeoptions" />
+                <xar:data-input type="dropdown" name="ttype" id="ttype" value="$ttype" options="$ttypeoptions" tabindex="4" />
             </div>
+            <xar:else />
+                <input type="hidden" name="ttype" id="ttype" value="#$ttype#" />
             </xar:if>
             <xar:if condition="count($tstatusoptions) gt 1">
             <div class="xar-form-input-wrapper">
                 <label for="tstatus" class="xar-form-label help" title="#xarML('Set the status for this topic')#"><xar:mlstring>Topic Status</xar:mlstring>:</label>
-                <xar:data-input type="dropdown" name="tstatus" id="tstatus" value="$tstatus" options="$tstatusoptions" />
+                <xar:data-input type="dropdown" name="tstatus" id="tstatus" value="$tstatus" options="$tstatusoptions" tabindex="5" />
             </div>
+            <xar:else />
+                <input type="hidden" name="tstatus" id="tstatus" value="#$tstatus#" />
+            </xar:if>
+            <xar:if condition="!empty($privs['approvereplies'])">
+                <div class="xar-form-input-wrapper-after">
+                <xar:data-input type="checkbox" name="approvereplies" id="approvereplies" value="$approvereplies" tabindex="6" />
+                <label for="approvereplies" class="help" title="#xarML('When checked, all replies to this topic will require approval')#"><xar:mlstring>All replies to this topic require approval?</xar:mlstring></label>
+                </div>
+            <xar:else />
+                <input type="hidden" name="approvereplies" id="approvereplies" value="#$approvereplies#" />
             </xar:if>
             <xar:if condition="!empty($hookoutput)">
                 <xar:foreach in="$hookoutput" key="$hookmod">
@@ -161,7 +173,7 @@
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                 <input type="hidden" name="tid" id="tid" value="#$tid#" />
                 <input type="hidden" name="phase" id="phase" value="update" />
-                <input type="submit" value="#xarML('Update Topic')#">&nbsp;&nbsp;<input type="submit" id="preview" name="preview" value="#xarML('Preview')#" />
+                <input type="submit" value="#xarML('Update Topic')#" tabindex="10">&nbsp;&nbsp;<input type="submit" id="preview" name="preview" value="#xarML('Preview')#" tabindex="11" />
             </div>
         </fieldset>
     </form>

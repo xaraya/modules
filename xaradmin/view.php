@@ -150,6 +150,17 @@ function crispbb_admin_view($args)
                     unset($forums[$cid][$fid]);
                     continue;
                 }
+                if (!empty($item['privs']['approvetopics'])) {
+                    $unnapproved = xarModAPIFunc('crispbb', 'user', 'counttopics', array('tstatus' => 2, 'fid' => $item['fid']));
+                    if (!empty($unnapproved)) {
+                        $item['modtopicsurl'] = xarModURL('crispbb', 'user', 'moderate',
+                            array(
+                                'component' => 'topics',
+                                'fid' => $item['fid'],
+                                'tstatus' => 2
+                            ));
+                    }
+                }
                 if ($item['forumLevel'] <= $minLevel) {
                     $minLevel = $item['forumLevel'];
                     $secLevels = $item['fprivileges'];

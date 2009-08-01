@@ -66,14 +66,13 @@ function crispbb_userapi_getpresets($args)
                 case 'ftypeoptions':
                     $items[0] = array('id' => '0', 'name' => xarML('Default'));
                     $items[1] = array('id' => '1', 'name' => xarML('Redirected'));
-                    $items[2] = array('id' => '2', 'name' => xarML('Members Only'));
-                    $items[3] = array('id' => '3', 'name' => xarML('Newsgroup'));
-                    $items[4] = array('id' => '4', 'name' => xarML('Imported'));
+                    //$items[2] = array('id' => '2', 'name' => xarML('Members Only'));
+                    //$items[3] = array('id' => '3', 'name' => xarML('Newsgroup'));
+                    //$items[4] = array('id' => '4', 'name' => xarML('Imported'));
                 break;
 
                 case 'pstatusoptions':
                     $items[0] = array('id' => '0', 'name' => xarML('Open'));
-                    $items[1] = array('id' => '1', 'name' => xarML('Reported'));
                     $items[2] = array('id' => '2', 'name' => xarML('Submitted'));
                     $items[5] = array('id' => '5', 'name' => xarML('Deleted'));
                 break;
@@ -121,8 +120,8 @@ function crispbb_userapi_getpresets($args)
                     $items['splittopics'] = xarML('Split Topics');
                     $items['deletetopics'] = xarML('Delete Topics');
                     $items['deletereplies'] = xarML('Delete Replies');
-                    //$items['approvetopics'] = xarML('Approve Topics');
-                    //$items['approvereplies'] = xarML('Approve Replies');
+                    $items['approvetopics'] = xarML('Approve Topics');
+                    $items['approvereplies'] = xarML('Approve Replies');
                     $items['addforum'] = xarML('Add Forum');
                     $items['editforum'] = xarML('Edit Forum');
                     $items['deleteforum'] = xarML('Delete Forum');
@@ -220,8 +219,8 @@ function crispbb_userapi_getpresets($args)
                     $moderator['splittopics'] = 1;
                     $moderator['deletetopics'] = 1;
                     $moderator['deletereplies'] = 1;
-                    //$moderator['approvetopics'] = 1;
-                    //$moderator['approvereplies'] = 1;
+                    $moderator['approvetopics'] = 1;
+                    $moderator['approvereplies'] = 1;
                     $items[400] = $moderator;
 
                     // Add options

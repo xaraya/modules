@@ -28,7 +28,7 @@ function crispbb_user_main()
     $data = array();
     $now = time();
     $uid = xarUserGetVar('uid');
-    $tstatus = array(0,1,2,3,4); // open, closed, submitted, moved, locked topics
+    $tstatus = array(0,1,3,4); // open, closed, submitted, moved, locked topics
 
     //get forums
     $forums = xarModAPIFunc('crispbb', 'user', 'getforums',
@@ -132,6 +132,17 @@ function crispbb_user_main()
                         $seenposters[$finfo['towner']] = 1;
                         $seenposters[$finfo['powner']] = 1;
                     }
+                    if (!empty($finfo['privs']['approvetopics'])) {
+                        $unnapproved = xarModAPIFunc('crispbb', 'user', 'counttopics', array('tstatus' => 2, 'fid' => $fid));
+                        if (!empty($unnapproved)) {
+                            $finfo['modtopicsurl'] = xarModURL('crispbb', 'user', 'moderate',
+                                array(
+                                    'component' => 'topics',
+                                    'fid' => $finfo['fid'],
+                                    'tstatus' => 2
+                                ));
+                        }
+                    }
                     $forums[$cid][$fid] = $finfo;
                     $totaltopics = $totaltopics + $finfo['numtopics'];
                     $totalreplies = $totalreplies + $finfo['numreplies'];
@@ -153,7 +164,7 @@ function crispbb_user_main()
     $data['catid'] = $catid;
     $data['totaltopics'] = $totaltopics;
     $data['totalreplies'] = $totalreplies;
-    if (empty($minLevel) || empty($seenLevels[$minLevel]['locktopics'])) $tstatus = array(0,1,2,3);
+    if (empty($minLevel) || empty($seenLevels[$minLevel]['locktopics'])) $tstatus = array(0,1,3);
     $data['totalunanswered'] = xarModAPIFunc('crispbb', 'user', 'counttopics', array('tstatus' => $tstatus, 'noreplies' => true));
 
     $data['forumoptions'] = xarModAPIFunc('crispbb', 'user', 'getitemlinks');

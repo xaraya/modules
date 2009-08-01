@@ -30,7 +30,7 @@ function crispbb_user_view($args)
 
 
     // select status of topics to include in topic count
-    $tstatus = array(0,1,2,3,4); // open, closed, reported, moved and locked topics
+    $tstatus = array(0,1,2,3,4); // open, closed, submitted, moved and locked topics
 
     $forums = xarModAPIFunc('crispbb', 'user', 'getforums', array('tstatus' => $tstatus));
 
@@ -94,7 +94,7 @@ function crispbb_user_view($args)
             array('cid' => $data['catid']));
     $sort = !empty($sortfield) ? $sortfield : $data['topicsortfield'];
     $order = !empty($sortorder) ? $sortorder : $data['topicsortorder'];
-    $tstatus = array(0,1,2,3); // default open, closed, moved
+    $tstatus = array(0,1,3); // default open, closed, moved
     if (!empty($privs['locktopics'])) {
         $tstatus[] = 4; // if you can lock topics, you can see them too
         // adjust numreplies for forumLevel less than 600
@@ -106,7 +106,17 @@ function crispbb_user_view($args)
                 ));
         }
     }
-
+    if (!empty($privs['approvetopics'])) {
+        $tstatus[] = 2; // if you can approve topics, you can see submitted topics
+        // adjust numreplies for forumLevel less than 600
+        if ($data['forumLevel'] < 600) {
+            $data['numreplies'] = xarModAPIFunc('crispbb', 'user', 'countposts',
+                array(
+                    'fid' => $fid,
+                    'tstatus' => $tstatus
+                ));
+        }
+    }
     $todo = array();
 
     $topics = xarModAPIFunc('crispbb', 'user', 'gettopics',
@@ -118,6 +128,7 @@ function crispbb_user_view($args)
             'ttype' => 0,
             'sort' => $sort,
             'order' => $order,
+            'numsubs' => !empty($privs['approvetopics']) ? true : false
         ));
 
     $todo['topics'] = $topics;
@@ -229,6 +240,9 @@ function crispbb_user_view($args)
                         $timeimage = 7;
                     }
                 break;
+                case '2': // requires approval
+                    $timeimage = 10;
+                break;
                 case '3':
                     $timeimage = 9; // moved topic
                 break;
@@ -316,7 +330,15 @@ function crispbb_user_view($args)
         if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
             array('check' => $check, 'priv' => 'approvetopics'))) {
                 $modactions[] = array('id' => 'approve', 'name' => xarML('Approve'));
-                $modactions[] = array('id' => 'disapprove', 'name' => xarML('Disapprove'));
+                $unnapproved = xarModAPIFunc('crispbb', 'user', 'counttopics', array('tstatus' => 2, 'fid' => $fid));
+                if (!empty($unnapproved)) {
+                    $data['modtopicsurl'] = xarModURL('crispbb', 'user', 'moderate',
+                        array(
+                            'component' => 'topics',
+                            'fid' => $fid,
+                            'tstatus' => 2
+                        ));
+                }
         } else {
             unset($tstatusoptions[2]);
         }

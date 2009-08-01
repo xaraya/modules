@@ -40,7 +40,7 @@
     </xar:if>
     <xar:if condition="!empty($fid) && !empty($fname) && !empty($fdesc)">
         <div class="xar-form-input-wrapper-after">
-        <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $fid))#" title="#$fdesc#">#$fname#</a>
+        <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $fid))#" title="#$fname#">#$fname#</a>
         </div>
     </xar:if>
     <xar:if condition="!empty($tid) && !empty($ttitle)">

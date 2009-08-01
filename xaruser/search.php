@@ -194,7 +194,8 @@ function crispbb_user_search()
         if (!empty($searchfields)) {
             $search['searchfields'] = array_keys($searchfields);
         }
-        $search['tstatus'] = array(0,1,2,4);
+        $search['tstatus'] = array(0,1);
+        $search['pstatus'] = 0;
         switch ($component) {
             case 'topics':
                 default:

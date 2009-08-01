@@ -32,6 +32,10 @@
                 <a href="#$addforumurl#" title="#xarML('View information about this forum')#"><img src="#xarTPLGetImage('tango/info.png', 'crispbb')#" alt="#xarML('Information')#" title="#xarML('View information about this forum')#" /></a>
             </xar:if>
             </xar:comment>
+            <xar:if condition="!empty($modtopicsurl)">
+            <a href="#$modtopicsurl#" title="#xarML('Topics Awaiting Approval')#"><img src="#xarTPLGetImage('icons/comment_warning.png')#" alt="Submitted" />
+            </a>
+            </xar:if>
             <a href="#$modforumurl#" title="#xarML('Moderate topics')#"><img src="#xarTPLGetImage('icons/comments_wrench_orange.png')#" alt="Moderate" />
             </a>
             <xar:if condition="!empty($editforumurl)">
@@ -274,6 +278,12 @@
             <img src="#xarTPLGetImage('timeimages/comment_lock.png', 'crispbb')#" alt="#xarML('Closed')#" title="#xarML('Closed topic')#" />
             Closed
         </span>
+        <xar:if condition="!empty($privs['approvetopics'])">
+        <span class="xar-nowrap">
+            <img src="#xarTPLGetImage('timeimages/comment_warning.png', 'crispbb')#" alt="#xarML('Submitted')#" title="#xarML('Topic Awaiting Approval')#" />
+            <xar:mlstring>Submitted</xar:mlstring>
+        </span>
+        </xar:if>
         <xar:if condition="!empty($privs['locktopics'])">
         <span class="xar-nowrap">
             <img src="#xarTPLGetImage('tango/lock.png', 'crispbb')#" alt="#xarML('Locked')#" title="#xarML('Locked topic')#" />

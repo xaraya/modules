@@ -47,12 +47,19 @@ function crispbb_user_display($args)
     $errorMsg = array();
     $invalid = array();
     $now = time();
-
+    $pstatuses = array(0);
+    if (!empty($privs['approvereplies'])) {
+        $pstatuses[] = 2;
+    }
+    if (!empty($privs['editforum'])) {
+        $pstatuses[] = 5;
+    }
     if (!empty($action) || !empty($actionpid)) {
         $totalposts = $data['numreplies'] + 1;
         $postsperpage = $data['postsperpage'];
         $order = $data['postsortorder'];
         $lastpid = $data['lastpid'];
+
         if ($action == 'unread') {
             $tracking = xarModAPIFunc('crispbb', 'user', 'tracking', array('now' => $now));
             $lastvisit = $tracking[0]['lastvisit'];
@@ -65,7 +72,7 @@ function crispbb_user_display($args)
                         'starttime' => $lastreadtopic,
                         'sort' => 'ptime',
                         'order' => $order,
-                        'pstatus' => array(0,1)
+                        'pstatus' => $pstatuses
                     ));
                 $totalunread = count($postssince);
                 if (!empty($postssince)) {
@@ -82,7 +89,7 @@ function crispbb_user_display($args)
             }
         } elseif (!empty($actionpid)) {
             $allposts = xarModAPIFunc('crispbb', 'user', 'getposts',
-                array('tid' => $tid, 'order' => $order));
+                array('tid' => $tid, 'order' => $order, 'pstatus' => $pstatuses));
             if (!empty($allposts)) {
                 $i = 0;
                 foreach ($allposts as $foundpid => $post) {
@@ -206,7 +213,8 @@ function crispbb_user_display($args)
             'sort' => $sort,
             'order' => $order,
             'startnum' => $startnum,
-            'numitems' => $data['postsperpage']
+            'numitems' => $data['postsperpage'],
+            'pstatus' => $pstatuses
         ));
     $seenposters = array();
     foreach ($posts as $pid => $post) {
@@ -294,11 +302,11 @@ function crispbb_user_display($args)
         $modactions = array();
         $check = $data;
         $tstatusoptions = $presets['tstatusoptions'];
-        // topic approvers
+        // reply approvers
         if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
-            array('check' => $check, 'priv' => 'approvetopics'))) {
+            array('check' => $check, 'priv' => 'approvereplies'))) {
                 $modactions[] = array('id' => 'approve', 'name' => xarML('Approve'));
-                $modactions[] = array('id' => 'disapprove', 'name' => xarML('Disapprove'));
+                //$modactions[] = array('id' => 'disapprove', 'name' => xarML('Disapprove'));
         } else {
             unset($tstatusoptions[2]);
         }

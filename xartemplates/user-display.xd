@@ -58,6 +58,11 @@
     <xar:template type="module" file="user-view-menu" />
     </span>
     <span class="xar-floatright xar-nowrap">
+        <xar:if condition="!empty($approvetopicurl)">
+             <a href="#$approvetopicurl#">
+            <img src="#xarTPLGetImage('icons/comment_tick.png', 'crispbb')#" alt="Approve" title="#xarML('Approve this topic')#" />
+            </a>
+        </xar:if>
         <xar:if condition="!empty($edittopicurl)">
             <a href="#$edittopicurl#">
             <img src="#xarTPLGetImage('icons/comment_edit.png', 'crispbb')#" alt="Edit" title="#xarML('Edit this topic')#" />
@@ -184,7 +189,7 @@
         <span class="xar-floatleft">
         <xar:template type="module" file="user-view-menu" />
         </span>
-        <xar:if condition="!empty($modforumurl)">
+        <xar:if condition="!empty($modforumurl) and ($startnum ne 1 or count($posts) gt 1) ">
         <span class="xar-floatright xar-nowrap">
             <label for="modaction"><xar:mlstring>With Selected</xar:mlstring>:</label>
             <xar:data-input type="dropdown" name="modaction" id="modaction" options="$modactions" />

@@ -80,6 +80,7 @@ function crispbb_user_newtopic($args)
     if (!xarVarFetch('bbcodedeny', 'checkbox', $bbcodedeny, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('smiliesdeny', 'checkbox', $smiliesdeny, false, XARVAR_NOT_REQUIRED)) return;
 
+    if (!xarVarFetch('approvereplies', 'checkbox', $approvereplies, false, XARVAR_NOT_REQUIRED)) return;
     // Start Tracking
     $tracking = xarModAPIFunc('crispbb', 'user', 'tracking', array('now' => $now));
 
@@ -111,20 +112,50 @@ function crispbb_user_newtopic($args)
         $invalid['ttype'] = xarML('You can not post FAQs');
     }
     $data['ttypeoptions'] = $ttypeoptions;
-
     $tstatusoptions = array();
-    $tstatusoptions[0] = $presets['tstatusoptions'][0];
-    if (!empty($privs['closeowntopic']) || !empty($privs['closetopics'])) {
-        $tstatusoptions[1] = $presets['tstatusoptions'][1];
-    } elseif ($tstatus == 1) {
-        $invalid['tstatus'] = xarML('You can not post closed topics');
-    }
-    if (!empty($privs['locktopics'])) {
-        $tstatusoptions[4] = $presets['tstatusoptions'][4];
-    } elseif ($tstatus == 4) {
-        $invalid['tstatus'] = xarML('You can not post locked topics');
+    if (empty($data['topicapproval'])) {
+        $tstatusoptions[0] = $presets['tstatusoptions'][0];
+        if (!empty($privs['closetopics'])) {
+            $tstatusoptions[1] = $presets['tstatusoptions'][1];
+        } elseif ($tstatus == 1) {
+            $invalid['tstatus'] = xarML('You can not post closed topics');
+        }
+        if (!empty($privs['approvetopics'])) {
+            $tstatusoptions[2] = $presets['tstatusoptions'][2];
+        } elseif ($tstatus == 2) {
+            $invalid['tstatus'] = xarML('Topics do not require approval');
+        }
+        if (!empty($privs['locktopics'])) {
+            $tstatusoptions[4] = $presets['tstatusoptions'][4];
+        } elseif ($tstatus == 4) {
+            $invalid['tstatus'] = xarML('You can not post locked topics');
+        }
+    // topics require approval
+    } else {
+        if (!empty($privs['approvetopics'])) {
+            $tstatusoptions[0] = $presets['tstatusoptions'][0];
+            if (!empty($privs['closetopics'])) {
+                $tstatusoptions[1] = $presets['tstatusoptions'][1];
+            } elseif ($tstatus == 1) {
+                $invalid['tstatus'] = xarML('You can not post closed topics');
+            }
+            $tstatusoptions[2] = $presets['tstatusoptions'][2];
+            if (!empty($privs['locktopics'])) {
+                $tstatusoptions[4] = $presets['tstatusoptions'][4];
+            } elseif ($tstatus == 4) {
+                $invalid['tstatus'] = xarML('You can not post locked topics');
+            }
+        } else {
+            $tstatus = 2;
+        }
     }
     $data['tstatusoptions'] = $tstatusoptions;
+
+    if (!empty($privs['approvereplies'])) {
+        $data['approvereplies'] = $approvereplies;
+    } else {
+        $data['approvereplies'] = $data['replyapproval'];
+    }
 
     // transforms
     $hasbbcode = xarModIsHooked('bbcode', 'crispbb', $topicstype);
@@ -251,6 +282,7 @@ function crispbb_user_newtopic($args)
         $tsettings['htmldeny'] = empty($privs['html']) || $htmldeny ? true : false;
         $tsettings['bbcodedeny'] = empty($privs['bbcode']) || $bbcodedeny ? true : false;
         $tsettings['smiliesdeny'] = empty($privs['smilies']) || $smiliesdeny ? true : false;
+        $tsettings['approvereplies'] = $data['approvereplies'];
         $psettings = array();
         $psettings = $tsettings;
 
@@ -297,18 +329,28 @@ function crispbb_user_newtopic($args)
                 xarModSetUserVar('crispbb', 'tracking', serialize($tracking));
             }
 
-            if (!empty($data['postbuffer'])) {
-                $return_url = xarModURL('crispbb', 'user', 'display',
+            if (!empty($data['postbuffer']) || $tstatus == 2) {
+                if ($tstatus == 2) {
+                    $return_url = xarModURL('crispbb', 'user', 'view',
+                        array('fid' => $fid));
+                    $data['postbuffer'] = 5;
+                    $pageTitle = xarML('Topic Submitted');
+                    $message = xarML('Thank you. Your topic has been submitted, and will be displayed once approved.');
+                } else {
+                    $message = xarML('Topic posted. Thank you');
+                    $return_url = xarModURL('crispbb', 'user', 'display',
                     array('tid' => $tid));
+                    $pageTitle = xarML('Topic Posted');
+                    $data['tid'] = $tid;
+                    $data['ttitle'] = $ttitle;
+                    $data['pid'] = NULL;
+                }
                 xarVarSetCached('Meta.refresh','url', $return_url);
                 xarVarSetCached('Meta.refresh','time', $data['postbuffer']);
-                $pageTitle = xarML('Topic Posted');
                 xarTPLSetPageTitle(xarVarPrepForDisplay($pageTitle));
                 $data['pageTitle'] = $pageTitle;
-                $data['tid'] = $tid;
-                $data['ttitle'] = $ttitle;
-                $data['pid'] = NULL;
-                $data['message'] = xarML('Topic #(1) was posted successfully', $ttitle);
+
+                $data['message'] = $message;
                 return xarTPLModule('crispbb', 'user', 'return', $data);
             }
 

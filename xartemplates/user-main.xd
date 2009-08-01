@@ -67,6 +67,12 @@
                         </xar:if>
                     </td>
                     <td class="foruminfo xar-valign-top">
+                        <xar:if condition="!empty($forum['modtopicsurl'])">
+                            <span class="xar-floatright xar-nowrap">
+                                <a href="#$forum['modtopicsurl']#" title="#xarML('Topics Awaiting Approval')#"><img src="#xarTPLGetImage('icons/comment_warning.png')#" alt="Submitted" />
+                                </a>
+                            </span>
+                        </xar:if>
                         <xar:if condition="!empty($forum['forumviewurl'])">
                             <a href="#$forum['forumviewurl']#" title="#$forum['transformed_fname']#">#$forum['transformed_fname']#</a>
                         <xar:else />
@@ -147,6 +153,7 @@
     </div>
     </xar:if>
     <div class="xar-margin-thickends xar-padding-thickends xar-sub">
+        <div class="xar-thirdwidth xar-floatleft">
         <h4 class="xar-margin-none"><xar:mlstring>Board Statistics</xar:mlstring></h4>
         <ul>
             <li>
@@ -179,6 +186,17 @@
             </li>
             </xar:if>
         </ul>
+        </div>
+        <xar:comment>
+        <xar:set name="waitingcontent">xarModFunc('crispbb', 'admin', 'waitingcontent')</xar:set>
+        <xar:if condition="!empty($waitingcontent)">
+        <div class="xar-accent xar-accent-outline xar-floatleft xar-thirdwidth xar-padding-thick">
+            <h4><xar:mlstring>Waiting Content</xar:mlstring></h4>
+            #$waitingcontent#
+        </div>
+        </xar:if>
+        </xar:comment>
+        <br class="xar-clearboth" />
     </div>
     <xar:template type="module" file="user-breadcrumbs" />
 </div>

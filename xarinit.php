@@ -345,7 +345,7 @@ function crispbb_upgrade($oldversion)
 
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
     switch ($oldversion) {
-        // see xardocs/changelog.txt for details
+        // see xardocs/changelog.txt for full details of changes
         // module pushed to repo's
         case '0.5.0':
             // bugfix links to purge topics
@@ -374,8 +374,24 @@ function crispbb_upgrade($oldversion)
                         'blockType' => 'userpanel'))) return;
         case '0.6.0':
             // admin template clean up
-            // added redirect forum type
+            // added redirected forum type
         case '0.6.1':
+            // Fix For Bug 6393
+            // Update to quickreply template to prevent display
+            // to users with no privs and make valid xhtml
+            // Clean up user-return.xd.
+            // Fix showreplies tag so it displays topicicon for first post
+            // fix search showing locked topics
+            // add topic and reply approval functions
+            // add waiting content hook for submitted topics and posts
+            // register waiting content hook
+            if (!xarModRegisterHook('item', 'waitingcontent', 'GUI', 'crispbb', 'admin', 'waitingcontent')) {
+               return false;
+            }
+            // enable waiting content hook for base module
+            xarModAPIFunc('modules','admin','enablehooks',
+                          array('callerModName' => 'base', 'hookModName' => 'crispbb'));
+        case '0.7.0':
             /* current version */
 
         break;

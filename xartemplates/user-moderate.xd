@@ -15,7 +15,17 @@
         <br class="xar-clearboth" />
     </div>
     <hr />
-    <xar:if condition="$component eq 'topics'">
+    <xar:if condition="$component eq 'waiting'">
+        <xar:set name="waitingcontent">xarModFunc('crispbb', 'admin', 'waitingcontent')</xar:set>
+        <xar:if condition="!empty($waitingcontent)">
+        <div class="xar-accent xar-accent-outline xar-padding-thick">
+            <h4><xar:mlstring>Waiting Content</xar:mlstring></h4>
+            #$waitingcontent#
+        </div>
+        <xar:else />
+            <p><strong><xar:mlstring>No Waiting Content</xar:mlstring></strong></p>
+        </xar:if>
+    <xar:elseif condition="$component eq 'topics'" />
         <xar:if condition="$modaction ne 'move'">
             <div>
                 <form method="get" action="index.php" class="xar-align-center">
@@ -116,6 +126,18 @@
                                 #xarLocaleGetFormattedDate('short', $topic['ttime'])#
                             </td>
                             <td class="xar-align-right xar-nowrap">
+                                <xar:if condition="!empty($topic['approvetopicurl'])">
+                                     <a href="#$topic['approvetopicurl']#">
+                                    <img src="#xarTPLGetImage('icons/comment_tick.png', 'crispbb')#" alt="Approve" title="#xarML('Approve this topic')#" />
+                                    </a>
+                                </xar:if>
+                                <xar:if condition="!empty($topic['modrepliesurl'])">
+                                    <a href="#$topic['modrepliesurl']#">
+                                    <img src="#xarTPLGetImage('icons/comment_warning.png', 'crispbb')#" alt="Submitted" title="#xarML('Replies Awaiting Approval')#" />
+                                    </a>
+                                <xar:else />
+                                    <img class="xar-icon-disabled" src="#xarTPLGetImage('icons/comment_warning.png', 'crispbb')#" alt="Submitted" title="#xarML('Replies Awaiting Approval')#" />
+                                </xar:if>
                                 <xar:if condition="!empty($topic['edittopicurl'])">
                                     <a href="#$topic['edittopicurl']#">
                                     <img src="#xarTPLGetImage('icons/comment_edit.png', 'crispbb')#" alt="Edit" title="#xarML('Edit this topic')#" />
@@ -134,7 +156,6 @@
                                 <xar:else />
                                     <img class="xar-icon-disabled" src="#xarTPLGetImage('icons/comment_lock.png', 'crispbb')#" alt="Close" title="#xarML('Close this topic')#" />
                                 </xar:if>
-
                                 <xar:if condition="!empty($topic['locktopicurl'])">
                                     <a href="#$topic['locktopicurl']#">
                                     <img src="#xarTPLGetImage('icons/lock.png', 'crispbb')#" alt="Lock" title="#xarML('Lock this topic')#" />
@@ -380,6 +401,26 @@
         </xar:if>
     <xar:elseif condition="$component eq 'posts'" />
         <xar:if condition="$modaction ne 'split'">
+            <xar:data-getitems name="$userprops" value="$userdd" module="roles" itemids="$uidlist" fieldlist="website,avatar,location,signature,icq,msnm,yim,aim" />
+            <div>
+                <form method="get" action="index.php" class="xar-align-center">
+                    <div>
+                    <input type="hidden" name="module" id="module" value="crispbb" />
+                    <input type="hidden" name="type" id="type" value="user" />
+                    <input type="hidden" name="func" id="func" value="moderate" />
+                    <input type="hidden" name="component" id="component" value="posts" />
+                    <input type="hidden" name="tid" id="tid" value="#$tid#" />
+                    <label for="pstatus"><xar:mlstring>Status</xar:mlstring>:</label>
+                    <xar:data-input type="dropdown" name="pstatus" id="pstatus" onchange="this.form.submit();" value="$pstatus" options="$pstatusoptions" />
+                    <label for="layout"><xar:mlstring>Layout</xar:mlstring>:</label>
+                    <xar:data-input type="dropdown" name="layout" id="layout" onchange="this.form.submit();" value="$layout" options="$layouts" />
+                    <label for="sort"><xar:mlstring>Sort</xar:mlstring>:</label>
+                    <xar:data-input type="dropdown" name="sort" id="sort_replies" onchange="this.form.submit();" value="$sort" options="$psortfields" />
+                    <label for="order"><xar:mlstring>Order</xar:mlstring>:</label>
+                    <xar:data-input type="dropdown" name="order" id="order_replies" onchange="this.form.submit();" value="$order" options="$sortorders" />
+                    </div>
+                </form>
+            </div>
             <form method="post" action="#xarModURL('crispbb', 'user', 'moderate')#">
                 <fieldset>
                     <div class="xar-form-input-wrapper">
@@ -389,22 +430,49 @@
                         </a>
                     </div>
                     <table class="xar-fullwidth xar-margin-none xar-alt-outline">
-                        <caption class="xar-alt-outline xar-padding-thick xar-align-left xar-margin-thicktop">
-                            <xar:mlstring>Replies to</xar:mlstring>
-                            <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid))#" title="#xarML('View topic')#">#$transformed_ttitle#</a>
+                        <caption class="xar-alt-outline xar-padding-thick xar-margin-thicktop">
+                        <xar:if condition="empty($pstatus)"><xar:set name="thisstatus">'Open'</xar:set>
+                        <xar:elseif condition="$pstatus eq 2" /><xar:set name="thisstatus">'Submitted'</xar:set>
+                        <xar:elseif condition="$pstatus eq 5" /><xar:set name="thisstatus">'Deleted'</xar:set>
+                        </xar:if>
+                        <span class="xar-floatleft">
+                        <xar:ml>
+                            <xar:mlstring>#(1) Replies to </xar:mlstring>
+                            <xar:mlvar>#$thisstatus#</xar:mlvar>
+                        </xar:ml>
+                        <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid))#" title="#xarML('View topic')#">#$transformed_ttitle#</a>
+                        </span>
+                        <xar:if condition="!empty($pager)">
+                            <span class="xar-align-right xar-floatright xar-nowrap">
+                                #$pager#
+                            </span>
+                        </xar:if>
+                        <br class="xar-clearboth" />
                         </caption>
                         <thead>
-                            <tr>
+                        <xar:if condition="empty($layout) or ($layout eq 'list')">
+                           <tr>
                                 <th><xar:mlstring>Reply</xar:mlstring></th>
                                 <th><xar:mlstring>Poster</xar:mlstring></th>
                                 <th><xar:mlstring>Posted</xar:mlstring></th>
                                 <th class="xar-align-right"><xar:mlstring>Actions</xar:mlstring></th>
                             </tr>
+                        <xar:elseif condition="$layout eq 'replies'" />
+                            <tr>
+                                <th class="posterinfo" scope="col">
+                                    <xar:mlstring>Poster</xar:mlstring>
+                                </th>
+                                <th class="replyinfo" scope="col">
+                                    <xar:mlstring>Post</xar:mlstring>
+                                </th>
+                            </tr>
+                        </xar:if>
                         </thead>
                         <tbody>
                             <xar:if condition="!empty($posts)">
                                 <xar:set name="rowclass">'xar-norm'</xar:set>
                                 <xar:foreach in="$posts" value="$post">
+                                    <xar:if condition="empty($layout) or ($layout eq 'list')">
                                     <tr class="#$rowclass#">
                                         <td>
                                             <a href="#$post['viewreplyurl']#" title="#xarML('View Post')#">
@@ -421,36 +489,104 @@
                                             #xarLocaleGetFormattedDate('short', $post['ptime'])#
                                         </td>
                                         <td class="xar-align-right">
-                                            <xar:if condition="!empty($post['editreplyurl'])">
-                                                <a href="#$post['editreplyurl']#">
-                                                <img src="#xarTPLGetImage('icons/comment_edit.png', 'crispbb')#" alt="Edit" title="#xarML('Edit this post')#" />
-                                                </a>
-                                            <xar:else />
-                                                <img src="#xarTPLGetImage('icons/comment_edit.png', 'crispbb')#" alt="Edit" title="#xarML('Edit this post')#" />
-                                            </xar:if>
-                                            <xar:if condition="!empty($post['splitreplyurl'])">
-                                                <a href="#$post['splitreplyurl']#">
-                                                <img src="#xarTPLGetImage('icons/comment_disconnect.png', 'crispbb')#" alt="Split" title="#xarML('Split this post')#" />
-                                                </a>
-                                            <xar:else />
-                                                <img src="#xarTPLGetImage('icons/comment_disconnect.png', 'crispbb')#" alt="Split" title="#xarML('Split this post')#" />
-                                            </xar:if>
-                                            <xar:if condition="!empty($post['deletereplyurl'])">
-                                                <a href="#$post['deletereplyurl']#">
-                                                <img src="#xarTPLGetImage('icons/comment_delete.png', 'crispbb')#" alt="Delete" title="#xarML('Delete this post')#" />
-                                                </a>
-                                            <xar:else />
-                                                <img src="#xarTPLGetImage('icons/comment_delete.png', 'crispbb')#" alt="Delete" title="#xarML('Delete this post')#" />
-                                            </xar:if>
-                                            <xar:if condition="!empty($post['purgereplyurl'])">
-                                                <a href="#$post['purgereplyurl']#">
-                                                <img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="Delete" title="#xarML('Delete this post permanently')#" />
-                                                </a>
-                                            </xar:if>
+        <xar:if condition="!empty($post['approvetopicurl'])">
+             <a href="#$post['approvetopicurl']#">
+            <img src="#xarTPLGetImage('icons/comment_tick.png', 'crispbb')#" alt="Approve" title="#xarML('Approve this topic')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($post['approvereplyurl'])">
+             <a href="#$post['approvereplyurl']#">
+            <img src="#xarTPLGetImage('icons/comment_tick.png', 'crispbb')#" alt="Approve" title="#xarML('Approve this reply')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($post['edittopicurl'])">
+            <a href="#$post['edittopicurl']#">
+            <img src="#xarTPLGetImage('icons/comment_edit.png', 'crispbb')#" alt="Edit" title="#xarML('Edit this topic')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($post['closetopicurl'])">
+            <a href="#$post['closetopicurl']#">
+            <img src="#xarTPLGetImage('icons/comment_lock.png', 'crispbb')#" alt="Close" title="#xarML('Close this topic')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($post['opentopicurl'])">
+            <a href="#$post['opentopicurl']#">
+            <img src="#xarTPLGetImage('icons/comment_lock_break.png', 'crispbb')#" alt="Open" title="#xarML('Re-open this topic')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($post['locktopicurl'])">
+            <a href="#$post['locktopicurl']#">
+            <img src="#xarTPLGetImage('icons/lock.png', 'crispbb')#" alt="Lock" title="#xarML('Lock this topic')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($post['unlocktopicurl'])">
+            <a href="#$post['unlocktopicurl']#">
+            <img src="#xarTPLGetImage('icons/lock_open.png', 'crispbb')#" alt="Unlock" title="#xarML('Unlock this topic')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($post['movetopicurl'])">
+            <a href="#$post['movetopicurl']#">
+            <img src="#xarTPLGetImage('icons/comments_go.png', 'crispbb')#" alt="Move" title="#xarML('Move this topic')#" />
+            </a>
+        </xar:if>
+        <xar:comment>
+        <xar:if condition="!empty($post['splittopicurl'])">
+            <a href="#$post['splittopicurl']#">
+            <img src="#xarTPLGetImage('icons/comments_disconnect.png', 'crispbb')#" alt="Split" title="#xarML('Split this topic')#" />
+            </a>
+        </xar:if>
+        </xar:comment>
+        <xar:if condition="!empty($post['modtopicurl']) && $post['pid'] == $post['firstpid']">
+            <a href="#$post['modtopicurl']#">
+            <img src="#xarTPLGetImage('icons/comments_wrench_orange.png', 'crispbb')#" alt="Moderate" title="#xarML('Moderate this topic')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($post['deletetopicurl'])">
+            <a href="#$post['deletetopicurl']#">
+            <img src="#xarTPLGetImage('icons/comments_delete.png', 'crispbb')#" alt="Delete" title="#xarML('Delete this topic')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($post['purgetopicurl'])">
+            <a href="#$post['purgetopicurl']#">
+            <img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="Purge" title="#xarML('Purge this topic')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($post['editreplyurl'])">
+            <a href="#$post['editreplyurl']#">
+            <img src="#xarTPLGetImage('icons/comment_edit.png', 'crispbb')#" alt="Edit" title="#xarML('Edit this reply')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($post['splitreplyurl'])">
+            <a href="#$post['splitreplyurl']#">
+            <img src="#xarTPLGetImage('icons/comment_disconnect.png', 'crispbb')#" alt="Split" title="#xarML('Split from this post')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($post['deletereplyurl'])">
+            <a href="#$post['deletereplyurl']#">
+            <img src="#xarTPLGetImage('icons/comment_delete.png', 'crispbb')#" alt="Delete" title="#xarML('Delete this reply')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($post['undeletereplyurl'])">
+            <a href="#$post['undeletereplyurl']#">
+            <img src="#xarTPLGetImage('icons/delete_arrow_undo.png', 'crispbb')#" alt="Undelete" title="#xarML('Un-delete this reply')#" />
+            </a>
+        </xar:if>
+        <xar:if condition="!empty($post['purgereplyurl'])">
+            <a href="#$post['purgereplyurl']#">
+            <img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="Purge" title="#xarML('Purge this reply')#" />
+            </a>
+        </xar:if>
 
-                                            <input type="checkbox" name="pids[#$post['pid']#]" id="pids_#$post['pid']#" value="1" />
+        <xar:if condition="!empty($post['modtopicurl']) && $post['pid'] != $post['firstpid'] && empty($noform)">
+            <input type="checkbox" name="pids[#$post['pid']#]" id="pids_#$post['pid']#" value="1" />
+        </xar:if>
                                         </td>
                                     </tr>
+                                    <xar:else />
+                                    <tr class="#$rowclass#">
+                                    <xar:template type="module" module="crispbb" file="topic-reply-row" subdata="array('posterlist' =&gt; $posterlist, 'userprops' =&gt; $userprops, 'post' =&gt; $post, 'showdeleted' =&gt; true)" />
+                                    </tr>
+                                    </xar:if>
                                     <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
                                 </xar:foreach>
                             </xar:if>
@@ -458,8 +594,11 @@
                     </table>
                     <div class="xar-alt-outline xar-padding-thick xar-margin-thickbottom">
                         <span class="xar-floatleft">
-                            <xar:mlstring>Replies to</xar:mlstring>
-                            <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid))#" title="#xarML('View topic')#">#$transformed_ttitle#</a>
+                        <xar:ml>
+                            <xar:mlstring>#(1) Replies to </xar:mlstring>
+                            <xar:mlvar>#$thisstatus#</xar:mlvar>
+                        </xar:ml>
+                        <a href="#xarModURL('crispbb', 'user', 'display', array('tid' => $tid))#" title="#xarML('View topic')#">#$transformed_ttitle#</a>
                         </span>
                         <xar:if condition="!empty($pager)">
                             <span class="xar-align-right xar-floatright xar-nowrap">
@@ -666,62 +805,57 @@
 </div>
 <div class="xar-mod-foot xar-align-center">
     <div class="xar-accent-outline xar-margin-thick xar-padding-thick">
-        <xar:if condition="$component eq 'topics'">
+        <xar:if condition="$component eq 'topics' or $component eq 'posts'">
             <span class="xar-nowrap">
-                <img src="#xarTPLGetImage('icons/comment_edit.png', 'crispbb')#" alt="Edit" title="#xarML('Edit this topic')#" />
+                <img src="#xarTPLGetImage('icons/comment_tick.png', 'crispbb')#" alt="Approve" title="#xarML('Approve')#" />
+                <xar:mlstring>Approve</xar:mlstring>
+            </span>
+            <span class="xar-nowrap">
+                <img src="#xarTPLGetImage('icons/comment_warning.png', 'crispbb')#" alt="Waiting" title="#xarML('Waiting Content')#" />
+                <xar:mlstring>Waiting</xar:mlstring>
+            </span>
+            <span class="xar-nowrap">
+                <img src="#xarTPLGetImage('icons/comment_edit.png', 'crispbb')#" alt="Edit" title="#xarML('Edit')#" />
                 <xar:mlstring>Edit</xar:mlstring>
             </span>
             <span class="xar-nowrap">
-                <img src="#xarTPLGetImage('icons/comment_lock.png', 'crispbb')#" alt="Close" title="#xarML('Close this topic')#" />
+                <img src="#xarTPLGetImage('icons/comment_lock.png', 'crispbb')#" alt="Close" title="#xarML('Close')#" />
                 <xar:mlstring>Close</xar:mlstring>
             </span>
             <span class="xar-nowrap">
-                <img src="#xarTPLGetImage('icons/comment_lock_break.png', 'crispbb')#" alt="Open" title="#xarML('Re-open this topic')#" />
+                <img src="#xarTPLGetImage('icons/comment_lock_break.png', 'crispbb')#" alt="Open" title="#xarML('Re-open')#" />
                 <xar:mlstring>Open</xar:mlstring>
             </span>
             <span class="xar-nowrap">
-                <img src="#xarTPLGetImage('icons/lock.png', 'crispbb')#" alt="Lock" title="#xarML('Lock this topic')#" />
+                <img src="#xarTPLGetImage('icons/lock.png', 'crispbb')#" alt="Lock" title="#xarML('Lock')#" />
                 <xar:mlstring>Lock</xar:mlstring>
             </span>
             <span class="xar-nowrap">
-                <img src="#xarTPLGetImage('icons/lock_open.png', 'crispbb')#" alt="Unlock" title="#xarML('Unlock this topic')#" />
+                <img src="#xarTPLGetImage('icons/lock_open.png', 'crispbb')#" alt="Unlock" title="#xarML('Unlock')#" />
                 <xar:mlstring>Unlock</xar:mlstring>
             </span>
             <span class="xar-nowrap">
-                <img src="#xarTPLGetImage('icons/comments_go.png', 'crispbb')#" alt="Move" title="#xarML('Move this topic')#" />
+                <img src="#xarTPLGetImage('icons/comments_go.png', 'crispbb')#" alt="Move" title="#xarML('Move')#" />
                 <xar:mlstring>Move</xar:mlstring>
             </span>
             <span class="xar-nowrap">
-                <img src="#xarTPLGetImage('icons/comments_delete.png', 'crispbb')#" alt="Delete" title="#xarML('Delete this topic')#" />
-                <xar:mlstring>Delete</xar:mlstring>
-            </span>
-            <span class="xar-nowrap">
-                <img src="#xarTPLGetImage('icons/delete_arrow_undo.png', 'crispbb')#" alt="Delete" title="#xarML('Un-delete this topic')#" />
-                <xar:mlstring>Un-delete</xar:mlstring>
-            </span>
-            <span class="xar-nowrap">
-                <img src="#xarTPLGetImage('icons/comments_wrench_orange.png', 'crispbb')#" alt="Moderate" title="#xarML('Moderate posts in this topic')#" />
-                <xar:mlstring>Moderate</xar:mlstring>
-            </span>
-            <span class="xar-nowrap">
-                <img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="Delete" title="#xarML('Delete this topic permanently')#" />
-                <xar:mlstring>Purge</xar:mlstring>
-            </span>
-        <xar:else />
-            <span class="xar-nowrap">
-                <img src="#xarTPLGetImage('icons/comment_edit.png', 'crispbb')#" alt="Edit" title="#xarML('Edit this topic')#" />
-                <xar:mlstring>Edit</xar:mlstring>
-            </span>
-            <span class="xar-nowrap">
-                <img src="#xarTPLGetImage('icons/comments_disconnect.png', 'crispbb')#" alt="Split" title="#xarML('Split this topic')#" />
+                <img src="#xarTPLGetImage('icons/comments_disconnect.png', 'crispbb')#" alt="Split" title="#xarML('Split')#" />
                 <xar:mlstring>Split</xar:mlstring>
             </span>
             <span class="xar-nowrap">
-                <img src="#xarTPLGetImage('icons/comments_delete.png', 'crispbb')#" alt="Delete" title="#xarML('Delete this topic')#" />
+                <img src="#xarTPLGetImage('icons/comments_wrench_orange.png', 'crispbb')#" alt="Moderate" title="#xarML('Moderate')#" />
+                <xar:mlstring>Moderate</xar:mlstring>
+            </span>
+            <span class="xar-nowrap">
+                <img src="#xarTPLGetImage('icons/comments_delete.png', 'crispbb')#" alt="Delete" title="#xarML('Delete')#" />
                 <xar:mlstring>Delete</xar:mlstring>
             </span>
             <span class="xar-nowrap">
-                <img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="Delete" title="#xarML('Delete this topic permanently')#" />
+                <img src="#xarTPLGetImage('icons/delete_arrow_undo.png', 'crispbb')#" alt="Delete" title="#xarML('Un-delete')#" />
+                <xar:mlstring>Un-delete</xar:mlstring>
+            </span>
+            <span class="xar-nowrap">
+                <img src="#xarTPLGetImage('tango/delete.png', 'crispbb')#" alt="Delete" title="#xarML('Delete permanently')#" />
                 <xar:mlstring>Purge</xar:mlstring>
             </span>
         </xar:if>

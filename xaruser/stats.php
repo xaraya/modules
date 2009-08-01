@@ -26,7 +26,7 @@ function crispbb_user_stats($args)
     $data = array();
     $now = time();
     $uid = xarUserGetVar('uid');
-    $tstatus = array(0,1,2); // open, closed, reported
+    $tstatus = array(0,1); // open, closed
 
     //get forums
     $forums = xarModAPIFunc('crispbb', 'user', 'getforums',
@@ -35,6 +35,7 @@ function crispbb_user_stats($args)
             'privcheck' => true,
             'sort' => 'totals',
             'order' => 'DESC',
+            'ftype' => 0
             ));
     // if the error was no privs, we should have an error message
     if (!empty($forums['error'])) {
@@ -70,7 +71,7 @@ function crispbb_user_stats($args)
     $data['totalforums'] = count($forums);
     $fids = array_keys($forums);
     $data['totaltopics'] = xarModAPIFunc('crispbb', 'user','counttopics', array('fid' => $fids, 'tstatus' => $tstatus));
-    $totalposts = xarModAPIFunc('crispbb', 'user', 'countposts', array('fid' => $fids, 'tstatus' => $tstatus));
+    $totalposts = xarModAPIFunc('crispbb', 'user', 'countposts', array('fid' => $fids, 'tstatus' => $tstatus, 'pstatus' => 0));
     $data['totalposts'] = $totalposts - $data['totaltopics'];
     $data['totalunanswered'] = xarModAPIFunc('crispbb', 'user', 'counttopics', array('fid' => $fids, 'tstatus' => $tstatus, 'noreplies' => true));
     $data['totalusers'] = xarModAPIFunc('roles', 'user', 'countall', array('include_anonymous' => false, 'include_myself' => false));
@@ -100,7 +101,7 @@ function crispbb_user_stats($args)
          if ($lastuser) {$data['lastuser'] = $lastuser;}
     }
 
-    $lastpost = xarModAPIFunc('crispbb', 'user', 'getposts', array('fid' => $fids, 'tstatus' => $tstatus, 'sort' => 'ptime', 'order' => 'DESC', 'numitems' => 1));
+    $lastpost = xarModAPIFunc('crispbb', 'user', 'getposts', array('fid' => $fids, 'tstatus' => $tstatus, 'sort' => 'ptime', 'order' => 'DESC', 'numitems' => 1, 'pstatus' => 0));
     $data['lastpost'] = !empty($lastpost) ? reset($lastpost) : array();
 
     $data['topforums'] = array_slice($forums, 0, 10, true);

@@ -33,11 +33,24 @@
     </p>
     </xar:comment>
 </td>
+<xar:if condition="!empty($topic['modforumurl'])">
 <td class="checkbox">
-    <input type="checkbox" name="tids[$topic['tid']#]" id="tids_#$topic['tid']#" value="1" />
+    <xar:if condition="!empty($topic['modtopicurl'])">
+    <input type="checkbox" name="tids[#$topic['tid']#]" id="tids_#$topic['tid']#" value="1" />
+    <xar:else />
+    &nbsp;
+    </xar:if>
 </td>
+</xar:if>
 <xar:else />
 <td class="topicinfo xar-valign-top">
+    <xar:if condition="!empty($topic['modrepliesurl'])">
+        <span class="xar-floatright xar-nowrap">
+            <a href="#$topic['modrepliesurl']#">
+            <img src="#xarTPLGetImage('icons/comment_warning.png', 'crispbb')#" alt="Submitted" title="#xarML('Replies Awaiting Approval')#" />
+            </a>
+        </span>
+    </xar:if>
     <xar:if condition="!empty($topic['viewtopicurl'])">
         <a href="#$topic['viewtopicurl']#" title="#xarML('Go to the first post in this topic')#">#$topic['transformed_ttitle']#</a>
     <xar:else />

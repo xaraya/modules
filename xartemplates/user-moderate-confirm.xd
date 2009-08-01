@@ -10,6 +10,8 @@
                 <xar:set name="grammar">'opening'</xar:set>
             <xar:elseif condition="$modaction eq 'close'" />
                 <xar:set name="grammar">'closing'</xar:set>
+            <xar:elseif condition="$modaction eq 'approve'" />
+                <xar:set name="grammar">'approving'</xar:set>
             <xar:elseif condition="$modaction eq 'move'" />
                 <xar:if condition="empty($mergetid)">
                     <xar:set name="grammar">'moving'</xar:set>

@@ -29,9 +29,17 @@
     </ul>
 
     <h3><xar:mlstring>Included Hooks</xar:mlstring></h3>
-    <em><xar:mlstring>crispBB has no included hooks at present</xar:mlstring></em>
-    <xar:comment>
+    <em><xar:mlstring>crispBB has the following hooks</xar:mlstring></em>
     <ul>
+        <li>
+            <strong><xar:mlstring>Search Hook</xar:mlstring></strong> -
+            <xar:mlstring>If you have the search module activated, this hook allows crispBB's search options and results to be displayed in the search module. To use it, hook crispBB to the Search module.</xar:mlstring>
+        </li>
+        <li>
+            <strong><xar:mlstring>Waiting Content Hook</xar:mlstring></strong> -
+            <xar:mlstring>If you have the waitingcontent block of the Base module activated, this hook will display any forum topics and topic replies awaiting approval in the block. To use it, hook crispBB to the Base module.</xar:mlstring>
+        </li>
+    <xar:comment>
         <li>
             <strong><xar:mlstring>New / Create Hook</xar:mlstring></strong> -
             <xar:mlstring>Allows a new related topic to be created when creating a new hooked module item, topic will include link to, and optional excerpt from the created item. Optionally, an existing topic can be associated with the newly created item</xar:mlstring>
@@ -56,40 +64,34 @@
             <strong><xar:mlstring>Remove Hook</xar:mlstring></strong> -
             <xar:mlstring>Removes associated hook entries from the database when a hooked module is removed from the system. This does not remove related topics.</xar:mlstring>
         </li>
-    </ul>
     </xar:comment>
+    </ul>
 
-  <h3><xar:mlstring>Included Dynamic Data Properties</xar:mlstring></h3>
+    <h3><xar:mlstring>Included Dynamic Data Properties</xar:mlstring></h3>
     <em><xar:mlstring>crispBB has no included properties at present</xar:mlstring></em>
 
-  <h3>
-    <xar:mlstring>Further Information</xar:mlstring>
-  </h3>
-
-  <ul>
-    <li><xar:mlstring>Official crispBB home page at</xar:mlstring> <a href="http://www.crispbb.com" title="#xarML('crispBB website')#">http://www.crispbb.com</a>
-    </li>
-    <li><xar:mlstring>Latest release can always be found at</xar:mlstring> <a href="http://www.crispbb.com/forums/crispbb-releases/t3?action=lastreply" title="#xarML('crispBB Releases')#"><xar:mlstring>crispBB Releases</xar:mlstring></a>
-    </li>
-    <li><xar:mlstring>crispBB Extension page at</xar:mlstring> <a title="#xarML('crispBB Module - Xaraya Extension 970')#" href="http://www.xaraya.com/index.php/release/970.html"><xar:mlstring>Xaraya Extensions and Releases</xar:mlstring></a>.
-    </li>
-    <li><xar:mlstring>Related tutorials and documentation on crispBB found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/crispbb/" title="#xarML('Related documentation on crispBB')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
-    </li>
-  </ul>
-  <h3>
-    <xar:mlstring>Additional credits</xar:mlstring>
-  </h3>
-  <ul>
-    <li>
-        <xar:mlstring>Most icons in modules/crispbb/xarimages/tango/ courtesy of the </xar:mlstring>
-        <a href="http://tango.freedesktop.org/Tango_Desktop_Project" rel="external">Tango Desktop Project</a><xar:mlstring> and are in the public domain.  The remaining icons created by Xaraya developers, licensed under the GPL.</xar:mlstring>
-    </li>
-    <li>
-        <xar:mlstring>Icons in modules/crispbb/xarimages/icons/ are courtesy of </xar:mlstring>
-        <a href="http://www.famfamfam.com/lab/icons/silk/" rel="external">FamFamFam Silk Icons</a><xar:mlstring> by Mark James and are licensed under <a href="http://creativecommons.org/licenses/by/3.0/" rel="external">Creative Commons Attribution 3.0 License</a>.</xar:mlstring>
-    </li>
-  </ul>
-
+    <h3><xar:mlstring>Further Information</xar:mlstring></h3>
+    <ul>
+        <li><xar:mlstring>Official crispBB home page at</xar:mlstring> <a href="http://www.crispbb.com" title="#xarML('crispBB website')#">http://www.crispbb.com</a>
+        </li>
+        <li><xar:mlstring>Latest release can always be found at</xar:mlstring> <a href="http://www.crispbb.com/forums/crispbb-releases/t3?action=lastreply" title="#xarML('crispBB Releases')#"><xar:mlstring>crispBB Releases</xar:mlstring></a>
+        </li>
+        <li><xar:mlstring>crispBB Extension page at</xar:mlstring> <a title="#xarML('crispBB Module - Xaraya Extension 970')#" href="http://www.xaraya.com/index.php/release/970.html"><xar:mlstring>Xaraya Extensions and Releases</xar:mlstring></a>.
+        </li>
+        <li><xar:mlstring>Related tutorials and documentation on crispBB found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/crispbb/" title="#xarML('Related documentation on crispBB')#"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
+        </li>
+    </ul>
+    <h3><xar:mlstring>Additional credits</xar:mlstring></h3>
+    <ul>
+        <li>
+            <xar:mlstring>Most icons in modules/crispbb/xarimages/tango/ courtesy of the </xar:mlstring>
+            <a href="http://tango.freedesktop.org/Tango_Desktop_Project" rel="external">Tango Desktop Project</a><xar:mlstring> and are in the public domain.  The remaining icons created by Xaraya developers, licensed under the GPL.</xar:mlstring>
+        </li>
+        <li>
+            <xar:mlstring>Icons in modules/crispbb/xarimages/icons/ are courtesy of </xar:mlstring>
+            <a href="http://www.famfamfam.com/lab/icons/silk/" rel="external">FamFamFam Silk Icons</a><xar:mlstring> by Mark James and are licensed under <a href="http://creativecommons.org/licenses/by/3.0/" rel="external">Creative Commons Attribution 3.0 License</a>.</xar:mlstring>
+        </li>
+    </ul>
 </div>
 <div class="xar-mod-foot">
     <p class="xar-sub xar-align-center">

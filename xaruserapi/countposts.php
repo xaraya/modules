@@ -43,6 +43,25 @@ function crispbb_userapi_countposts($args)
         $from = '(' . $from . ')';
     }
 
+    if (isset($pstatus)) {
+        if (is_numeric($pstatus)) {
+            $where[] = $poststable . '.xar_pstatus = ' . $pstatus;
+        } elseif (is_array($pstatus) && count($pstatus) > 0) {
+            $seenpstatus = array();
+            foreach ($pstatus as $id) {
+                if (!is_numeric($id)) continue;
+                $seenpstatus[$id] = 1;
+            }
+            if (count($seenpstatus) == 1) {
+                $pstatuses = array_keys($seenpstatus);
+                $where[] = $poststable . '.xar_pstatus = ' . $pstatuses[0];
+            } elseif (count($seenpstatus) > 1) {
+                $pstatuses = join(', ', array_keys($seenpstatus));
+                $where[] = $poststable . '.xar_pstatus IN (' . $pstatuses . ')';
+            }
+        }
+    }
+
     if (isset($tstatus)) {
         if (is_numeric($tstatus)) {
             $where[] = $topicstable . '.xar_tstatus = ' . $tstatus;

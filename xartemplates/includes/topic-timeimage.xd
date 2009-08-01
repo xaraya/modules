@@ -18,6 +18,8 @@
     <img src="#xarTPLGetImage('tango/lock.png', 'crispbb')#" alt="#xarML('Locked')#" />
 <xar:elseif condition="$timeimage eq 9" />
     <img src="#xarTPLGetImage('timeimages/comment_go.png', 'crispbb')#" alt="#xarML('Moved')#" />
+<xar:elseif condition="$timeimage eq 10" />
+    <img src="#xarTPLGetImage('timeimages/comment_warning.png', 'crispbb')#" alt="#xarML('Submitted')#" title="#xarML('Topic Awaiting Approval')#" />
 <xar:else />
     <img src="#xarTPLGetImage('timeimages/comment.png', 'crispbb')#" alt="#xarML('No Replies')#"  />
 </xar:if>

@@ -22,12 +22,12 @@
 function crispbb_user_moderate($args)
 {
     extract($args);
-    if (!xarVarFetch('component', 'enum:topics:posts', $component, 'topics', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('component', 'enum:topics:posts:waiting', $component, 'topics', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('modaction', 'str', $modaction, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('phase', 'enum:update:form', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('startnum', 'int', $startnum, NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sort', 'enum:ttitle:ttime:towner:ptime:powner', $sort, 'ttime', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('sort', 'enum:ttitle:ttime:towner:ptime:powner:pid', $sort, 'ttime', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('order', 'enum:ASC:DESC:asc:desc', $order, 'DESC', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('return_url', 'str:1', $return_url, '', XARVAR_NOT_REQUIRED)) return;
 
@@ -57,12 +57,23 @@ function crispbb_user_moderate($args)
     $pageTitle = xarML('Moderate');
     $numitems = 10;
     $presets = xarModAPIFunc('crispbb', 'user', 'getpresets',
-        array('preset' => 'tstatusoptions'));
+        array('preset' => 'tstatusoptions,pstatusoptions,sortorderoptions'));
     $tracking = xarModAPIFunc('crispbb', 'user', 'tracking', array('now' => $now));
     if (!empty($tracking)) {
         xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
     }
     switch ($component) {
+        case 'waiting':
+            // End Tracking
+            if (!empty($tracking)) {
+                $data['lastvisit'] = $tracking[0]['lastvisit'];
+                $data['visitstart'] = $tracking[0]['visitstart'];
+                $data['totalvisit'] = $tracking[0]['totalvisit'];
+                // xarModDelUserVar('crispbb', 'tracking', $uid); // TODO: Bug in moduservars
+                xarModSetUserVar('crispbb', 'tracking', serialize($tracking));
+            }
+            $pageTitle = xarML('Waiting Content');
+        break;
         case 'topics':
             if (!xarVarFetch('fid', 'id', $fid, NULL, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tids', 'list', $tids, array(), XARVAR_NOT_REQUIRED)) return;
@@ -107,7 +118,7 @@ function crispbb_user_moderate($args)
                         $invalid['tids'] = xarML('No topics selected for this action');
                     }
                     $topics = xarModAPIFunc('crispbb', 'user', 'gettopics',
-                        array('tid' => $seentids, 'fid' => $fid));
+                        array('tid' => $seentids, 'fid' => $fid, 'numsubs' => true));
 
                     if (empty($topics)) {
                         $invalid['tids'] = xarML('No topics found');
@@ -208,7 +219,33 @@ function crispbb_user_moderate($args)
                                             'tstatus' => 0,
                                             'nohooks' => true
                                         ))) return;
+                                    // update the forum last topic
+                                    $lasttopic = xarModAPIFunc('crispbb', 'user', 'getposts',
+                                        array(
+                                            'numitems' => 1,
+                                            'fid' => $topic['fid'],
+                                            'sort' => 'ptime',
+                                            'order' => 'DESC',
+                                            'tstatus' => array(0,1,2,4),
+                                            'pstatus' => 0
+                                    ));
+                                    $lasttopic = !empty($lasttopic) && is_array($lasttopic) ? reset($lasttopic) : array();
+                                    if (!xarModAPIFunc('crispbb', 'admin', 'update',
+                                        array(
+                                            'fid' => $topic['fid'],
+                                            'lasttid' => $lasttopic['tid'],
+                                            'nohooks' => true
+                                        ))) return;
+                                    if ($lasttopic['tid'] == $topic['tid']) {
+                                        // update the forum tracker
+                                        $fstring = xarModGetVar('crispbb', 'ftracking');
+                                        $ftracking = (!empty($fstring)) ? unserialize($fstring) : array();
+                                        $ftracking[$topic['fid']] = $topic['ptime'];
+                                        xarModSetVar('crispbb', 'ftracking', serialize($ftracking));
+                                    }
                                 break;
+
+                                /* // don't need disapprove, just delete, or lock
                                 case 'disapprove': // status?
                                     if (!xarModAPIFunc('crispbb', 'user', 'updatetopic',
                                         array(
@@ -217,6 +254,7 @@ function crispbb_user_moderate($args)
                                             'nohooks' => true
                                         ))) return;
                                 break;
+                                */
                                 case 'unlock':
                                     if (!xarModAPIFunc('crispbb', 'user', 'updatetopic',
                                         array(
@@ -275,7 +313,7 @@ function crispbb_user_moderate($args)
                             array(
                                 'fid' => $fid,
                                 'tstatus' => array(0,1,2,4),
-                                'pstatus' => array(0,1),
+                                'pstatus' => array(0),
                                 'sort' => 'ptime',
                                 'order' => 'DESC',
                                 'numitems' => 1,
@@ -316,7 +354,8 @@ function crispbb_user_moderate($args)
                         'numitems' => $numitems,
                         'startnum' => $startnum,
                         'sort' => $sort,
-                        'order' => strtoupper($order)
+                        'order' => strtoupper($order),
+                        'numsubs' => true
                     ));
                 $data['totaltopics'] = xarModAPIFunc('crispbb', 'user', 'counttopics', array('tstatus' => $tstatus, 'fid' => $fid));
                 $data['pager'] = xarTplGetPager($startnum,
@@ -348,8 +387,6 @@ function crispbb_user_moderate($args)
                     array('check' => $check, 'priv' => 'approvetopics'))) {
                     if ($tstatus == 2) {
                         $modactions[] = array('id' => 'approve', 'name' => xarML('Approve'));
-                    } elseif ($tstatus != 5 && $tstatus != 3) {
-                        $modactions[] = array('id' => 'disapprove', 'name' => xarML('Disapprove'));
                     }
                 } else {
                     unset($tstatusoptions[2]);
@@ -718,8 +755,9 @@ function crispbb_user_moderate($args)
             if (!xarVarFetch('tid', 'id', $tid, NULL, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('pids', 'list', $pids, array(), XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('pstatus', 'int', $pstatus, 0, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('layout', 'enum:list:replies', $layout, 'list', XARVAR_NOT_REQUIRED)) return;
             $data = xarModAPIFunc('crispbb', 'user', 'gettopic',
-                array('tid' => $tid, 'privcheck' => true));
+                array('tid' => $tid, 'privcheck' => true, 'numsubs' => true));
             if (empty($data['modtopicurl'])) $data = 'NO_PRIVILEGES';
             if (!is_array($data)) {
                 if ($data == 'BAD_DATA') {
@@ -791,7 +829,7 @@ function crispbb_user_moderate($args)
                         switch ($modaction) {
                             case 'approve':
                                 if (!xarModAPIFunc('crispbb', 'user', 'checkseclevel',
-                                    array('check' => $tcheck, 'priv' => 'approvetopics'))) {
+                                    array('check' => $pcheck, 'priv' => 'approvereplies'))) {
                                     $allowed = false;
                                 }
                             break;
@@ -840,6 +878,7 @@ function crispbb_user_moderate($args)
                         foreach ($posts as $pid => $post) {
                             switch ($modaction) {
                                 case 'approve':
+                                case 'undelete':
                                     if (!xarModAPIFunc('crispbb', 'user', 'updatepost',
                                         array(
                                             'pid' => $post['pid'],
@@ -870,6 +909,7 @@ function crispbb_user_moderate($args)
                                 'sort' => 'ptime',
                                 'order' => 'desc',
                                 'tstatus' => array(0,1,2,4),
+                                'pstatus' => 0,
                                 'numitems' => 1
                         ));
                         $lastreply = !empty($lastreply) ? reset($lastreply) : array();
@@ -886,7 +926,8 @@ function crispbb_user_moderate($args)
                                 'sort' => 'ptime',
                                 'order' => 'desc',
                                 'tstatus' => array(0,1,2,4),
-                                'numitems' => 1
+                                'numitems' => 1,
+                                'pstatus' => 0
                         ));
                         $lasttopic = !empty($lasttopic) ? reset($lasttopic) : array();
                         if (!xarModAPIFunc('crispbb', 'admin', 'update',
@@ -901,47 +942,68 @@ function crispbb_user_moderate($args)
                         return xarResponseRedirect($return_url);
                     }
                 }
+                $pstatuses = array(0);
+                if (!empty($data['privs']['approvereplies'])) {
+                    $pstatuses[] = 2;
+                }
+                if (!empty($data['privs']['deletereplies'])) {
+                    $pstatuses[] = 5;
+                }
                 $posts = xarModAPIFunc('crispbb', 'user', 'getposts',
                     array(
                         'tid' => $tid,
                         'sort' => $sort,
                         'order' => $order,
-                        'pstatus' => array(0,1)
+                        'pstatus' => $pstatus,
+                        'startnum' => $startnum,
+                        'numitems' => $numitems
                     ));
-
+                $seenposters = array();
                 foreach ($posts as $apid => $apost) {
                     $item = $apost;
+                    if (!empty($apost['towner'])) $seenposters[$apost['towner']] = 1;
+                    if (!empty($apost['powner'])) $seenposters[$apost['powner']] = 1;
                     if ($apid == $apost['firstpid']) {
-                        unset($posts[$apid]);
-                        continue;
+                        //unset($posts[$apid]);
+                        //continue;
                     }
                     //$item['checked'] = (isset($pids[$apid]) || (!empty($startpid) && $startpid <= $apid && (empty($endpid) || $apid >= $endpid))) ? true : false;
                     $posts[$apid] = $item;
                 }
                 $data['posts'] = $posts;
+                $uidlist = !empty($seenposters) ? array_keys($seenposters) : array();
+                $posterlist = xarModAPIFunc('roles', 'user', 'getall', array('uidlist' => $uidlist));
+                $data['posterlist'] = $posterlist;
+                $data['uidlist'] = $uidlist;
                 $modactions = array();
                 $check = $data;
-                $tstatusoptions = $presets['tstatusoptions'];
+                $pstatusoptions = $presets['pstatusoptions'];
                 // topic approvers
                 if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
-                    array('check' => $check, 'priv' => 'approvetopics'))) {
-                        $modactions[] = array('id' => 'approve', 'name' => xarML('Approve'));
+                    array('check' => $check, 'priv' => 'approvereplies'))) {
+                        if ($pstatus == 2) {
+                            $modactions[] = array('id' => 'approve', 'name' => xarML('Approve'));
+                        }
                 } else {
-                    unset($tstatusoptions[2]);
+                    unset($pstatusoptions[2]);
                 }
                 // topic splitters
                 if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
                     array('check' => $check, 'priv' => 'splittopics'))) {
                         $modactions[] = array('id' => 'split', 'name' => xarML('Split'));
                 } else {
-                    unset($tstatusoptions[5]);
+                    unset($pstatusoptions[5]);
                 }
                 // post deleters
                 if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
                     array('check' => $check, 'priv' => 'deletetopics'))) {
-                        $modactions[] = array('id' => 'delete', 'name' => xarML('Delete'));
+                        if ($pstatus != 5) {
+                            $modactions[] = array('id' => 'delete', 'name' => xarML('Delete'));
+                        } else {
+                            $modactions[] = array('id' => 'undelete', 'name' => xarML('Un-delete'));
+                        }
                 } else {
-                    unset($tstatusoptions[5]);
+                    unset($pstatusoptions[5]);
                 }
                 // forum editors
                 if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
@@ -949,6 +1011,24 @@ function crispbb_user_moderate($args)
                         $modactions[] = array('id' => 'purge', 'name' => xarML('Purge'));
                 }
                 $data['modactions'] = $modactions;
+                $data['pstatusoptions'] = $pstatusoptions;
+                $data['pstatus'] = $pstatus;
+                $data['layout'] = $layout;
+                $data['layouts'] = array(
+                    array('id' => 'list', 'name' => xarML('List View')),
+                    array('id' => 'replies', 'name' => xarML('Show Replies'))
+                    );
+                $data['psortfields'] = array(
+                    array('id' => 'pid', 'name' => xarML('Post Id')),
+                    array('id' => 'ptime', 'name' => xarML('Post Time')),
+                    array('id' => 'powner', 'name' => xarML('Poster Name'))
+                    );
+                $data['sortorders'] = $presets['sortorderoptions'];
+                $data['totalposts'] = xarModAPIFunc('crispbb', 'user', 'countposts', array('pstatus' => $pstatus, 'tid' => $tid));
+                $data['pager'] = xarTplGetPager($startnum,
+                    $data['totalposts'],
+                    xarModURL('crispbb', 'user', 'moderate', array('component' => 'posts', 'tid' => $tid, 'pstatus' => $pstatus, 'startnum' => '%%', 'sort' => $sort, 'order' => $order)),
+                    $numitems);
             } else {
                 if (!xarVarFetch('movefid', 'id', $movefid, NULL, XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('movetid', 'id', $movetid, NULL, XARVAR_NOT_REQUIRED)) return;

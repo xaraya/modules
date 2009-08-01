@@ -123,4 +123,24 @@
 // added redirected forum type
 // micro version update to...
 0.6.1
+// Fix For Bug 6393
+// version 0.6.1 repackaged
+------- 29 July 2009
+// Update to quickreply template to prevent display to users with no privs and make valid xhtml
+------- 30 July 2009
+// Clean up user-return.xd. 
+// Fix showreplies tag so it displays topicicon for first post (no bug filed)
+------- 01 August 2009
+// fix search showing locked topics
+// Added option to make all topics in a forum require approval
+// Added option to make all replies to topics in a forum require approval
+// Added waitingcontent hook
+// Added waitingcontent moderator overview
+// Added Approve topics moderator function and permissions
+// Added Approve replies moderator function and permissions
+// Added visual cues to items awaiting approval in admin and user displays
+// Added status selection, sort and layout options to moderate replies function
+// Added tabindexes to forms
+// minor version update to...
+0.7.0
 **** Current Version ****
