@@ -32,7 +32,7 @@ function sniffer_init()
     $systemPrefix = xarDBGetSystemTablePrefix();
     $xartable['sniffer'] = $systemPrefix . '_sniffer';
     $query = xarDBCreateTable($xartable['sniffer'],
-        array('xar_ua_id' => array('type' => 'integer', 'size' => 'small',
+        array('xar_ua_id' => array('type' => 'integer', 'size' => 'big',
                 'unsigned' => true, 'null' => false,
                 'default' => '0', 'increment' => true,
                 'primary_key' => true),
@@ -54,12 +54,9 @@ function sniffer_init()
     // Pass the Table Create DDL to adodb to create the table
     $result = &$dbconn->Execute($query);
     if (!$result) return false;
-    // set index
-    $query = xarDBCreateIndex($xartable['sniffer'],
-        array('name' => 'i_' . xarDBGetSiteTablePrefix() . '_sniff_ag',
-            'fields' => array('xar_ua_agent'),
-            'unique' => true));
 
+    // set index -- can't do this on a text field via table ddl
+    $query = "ALTER TABLE xar_sniffer ADD UNIQUE i_xar_sniff_ag ( xar_ua_agent ( 328 ) ) ";
     $result = &$dbconn->Execute($query);
     if (!$result) return false;
 
@@ -111,7 +108,7 @@ function sniffer_upgrade($oldversion)
             $result = &$dbconn->Execute($query);
             if (!$result) return false;
             
-            $query = "ALTER TABLE xar_sniffer ADD UNIQUE i_xar_sniff_ag ( xar_ua_agent ( 384 ) ) ";
+            $query = "ALTER TABLE xar_sniffer ADD UNIQUE i_xar_sniff_ag ( xar_ua_agent ( 328 ) ) ";
             $result = &$dbconn->Execute($query);
             if (!$result) return false;
             
@@ -126,6 +123,20 @@ function sniffer_upgrade($oldversion)
             if (!$result) return false;
 
         case '1.0.2':
+
+            $query = "ALTER TABLE xar_sniffer MODIFY COLUMN xar_ua_id int(11) unsigned NOT NULL auto_increment";
+            $result = &$dbconn->Execute($query);
+            if (!$result) return false;
+
+            $query = "ALTER TABLE xar_sniffer DROP INDEX i_xar_sniff_ag";
+            $result = &$dbconn->Execute($query);
+            if (!$result) return false;
+            
+            $query = "ALTER TABLE xar_sniffer ADD UNIQUE i_xar_sniff_ag ( xar_ua_agent ( 328 ) ) ";
+            $result = &$dbconn->Execute($query);
+            if (!$result) return false;
+            
+        case '1.0.3':
             break;
             // case '0.0.1':
             // break;
