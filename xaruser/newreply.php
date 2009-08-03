@@ -42,8 +42,23 @@ function crispbb_user_newreply($args)
     $errorMsg = array();
     $invalid = array();
     $now = time();
-
-    if (!empty($data['floodcontrol']) && empty($errorMsg)) {
+    // when coming from the hook function, we need to skip the flood control
+    // (since this user will have just created a new topic)
+    if (!empty($data['floodcontrol'])) {
+        // the newtopic function lets us know if the hook is active
+        $hook_active = xarSessionGetVar('crispbb_hook_active');
+        // if it is, we compare against the floodcontrol threshold
+        if (!empty($hook_active)) {
+            // we keep the hook active if the threshold hasn't passed,
+            // this allows preview to work for this reply
+            if ($hook_active < $now - $data['floodcontrol']) {
+                // if the threshold has passed, we can deactivate the hook now
+                $hook_active = false;
+                xarSessionSetVar('crispbb_hook_active', false);
+            }
+        }
+    }
+    if (!empty($data['floodcontrol']) && empty($errorMsg) && !$hook_active) {
         $lastpost = xarModAPIFunc('crispbb', 'user', 'getposts',
             array(
                 'fid' => $data['fid'],

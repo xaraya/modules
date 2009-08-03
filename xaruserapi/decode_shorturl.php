@@ -190,6 +190,10 @@ function crispbb_userapi_decode_shorturl($params)
                 }
             }
             return array('display', $args);
+        } elseif (preg_match('/^p(_?[0-9 +-]+)/',$params[2],$matches1)) {
+            $pid = $matches1[1];
+            $args['pid'] = $pid;
+            return array('displayreply', $args);
         } elseif (preg_match('/^c(_?[0-9 +-]+)/',$params[2],$matches1)) {
             $catid = $matches1[1];
             $args['catid'] = $catid;

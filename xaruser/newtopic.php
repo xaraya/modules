@@ -398,6 +398,7 @@ function crispbb_user_newtopic($args)
                 // preserve the return url (links to the hooked module item)
                 $real_return_url = xarModURL('crispbb', 'user', 'newreply',
                     array('tid' => $tid, 'return_url' => $return_url));
+                xarSessionSetVar('crispbb_hook_active', $now);
                 $return_url = $real_return_url;
             } elseif (!empty($data['postbuffer']) || $tstatus == 2) {
                 if ($tstatus == 2) {

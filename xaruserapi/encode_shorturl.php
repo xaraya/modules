@@ -139,11 +139,14 @@ function crispbb_userapi_encode_shorturl($args)
             $post = xarModAPIFunc('crispbb', 'user', 'getpost', array('pid' => $pid, 'nolinks' => true, 'privcheck' => true));
             $posts[$pid] = $post;
         }
+
         if ($post != 'NO_PRIVILEGES') {
             $ttitle = crispbb_encode_shorturl_cleantitle($post['transformed_ttitle']);
             unset($get['pid']);
             $path[] = $ttitle; // ../crispbb/some-topic title
-            $path[] = 't'.$post['tid'];
+            if ($func != 'displayreply') {
+                $path[] = 't'.$post['tid'];
+            }
             $path[] = 'p'.$pid;
             unset($get['func']);
             if ($func == 'modifyreply') {

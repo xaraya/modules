@@ -6,7 +6,7 @@
         <xar:mlstring>Discuss this item in the forums</xar:mlstring> <a href="#$viewtopicurl#">#$transformed_ttitle#</a>
     </xar:if>
 </div>
-<xar:if condition="!empty($newreplyurl) && !empty($postsperpage)">
+<xar:if condition="!empty($postsperpage) and !empty($numreplies)">
     <xar:if condition="($numreplies + 1) lt $postsperpage">
     <xar:set name="showing">$numreplies+1</xar:set>
     <xar:else />

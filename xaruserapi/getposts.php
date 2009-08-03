@@ -508,6 +508,8 @@ function crispbb_userapi_getposts($args)
                 array('tid' => $post['tid']));
             $post['viewreplyurl'] = xarModURL('crispbb', 'user', 'display',
                 array('tid' => $post['tid'], 'pid' => $post['pid']));
+            $post['displayreplyurl'] = xarModURL('crispbb', 'user', 'displayreply',
+                array('pid' => $post['pid']));
             // logged in users
             if ($loggedin) {
                 // topic (first post)

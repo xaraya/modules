@@ -13,6 +13,9 @@
         </xar:if>
         <img src="#xarTPLGetImage('icons/comment_delete.png', 'crispbb')#" alt="#xarML('Deleted')#" />
          -- <xar:mlstring>Reply Deleted</xar:mlstring> --
+         <xar:if condition="!empty($post['displayreplyurl'])">
+            <a href="#$post['displayreplyurl']#" title="#xarML('View this post')#"><img src="#xarTPLGetImage('icons/bullet_go_blue.png', 'crispbb')#" alt="display" /></a>
+         </xar:if>
     </div>
     <div class="xar-align-right xar-padding-thicksides">
         <xar:if condition="!empty($post['editreplyurl'])">
@@ -74,6 +77,9 @@
         <xar:if condition="!empty($rownumber)">
         <em>#(#$rownumber#)</em>
         </xar:if>
+         <xar:if condition="!empty($post['displayreplyurl'])">
+            <a href="#$post['displayreplyurl']#" title="#xarML('View this post')#"><img src="#xarTPLGetImage('icons/bullet_go_blue.png', 'crispbb')#" alt="display" /></a>
+         </xar:if>
     </div>
     <xar:comment>Now display any topicicon and description</xar:comment>
     <div class="xar-border-thinbottom xar-padding-thick">
