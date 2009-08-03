@@ -41,6 +41,11 @@
         </strong>
     </li>
     </xar:if>
+    <xar:if condition="!empty($showwaiting)">
+    <li>
+        <a class="xar-error" href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'waiting'))#" title="#xarML('View Waiting Content')#"><xar:mlstring>Waiting Content</xar:mlstring></a>
+    </li>
+    </xar:if>
     <xar:if condition="!empty($showlogout)">
     <li>
         <a href="#xarModURL('authsystem', 'user', 'logout')#" title="#xarML('Logout')#"><xar:mlstring>Logout</xar:mlstring></a>

@@ -13,7 +13,12 @@
             <xar:if condition="!empty($topicicon)">
                 <img src="#xarTPLGetImage($topicicon,'crispbb')#" alt="#xarML('icon')#" title="" />
             </xar:if>
+            <xar:if condition="!empty($transformed_tdesc)">
             <em>#$transformed_tdesc#</em>
+            </xar:if>
+            <xar:if condition="!empty($hookitem)">
+                <p><xar:mlstring>Discussion of </xar:mlstring><a href="#$hookitem['url']#" title="#$hookitem['title']#">#$hookitem['label']#</a></p>
+            </xar:if>
         </div>
         <div class="xar-thirdwidth xar-floatright xar-sub xar-padding-thick">
             <xar:template type="module" module="crispbb" file="user-userpanel" />
@@ -25,6 +30,7 @@
             <xar:template type="module" module="crispbb" file="user-topicjump" />
         </div>
     </div>
+    <xar:template type="module" module="crispbb" file="admin-waitingcontent" />
     <hr />
     <xar:comment>FAQ topic type</xar:comment>
     <xar:if condition="$ttype eq 3">
@@ -176,7 +182,7 @@
     </table>
     <div class="xar-alt-outline xar-align-left xar-padding-thick xar-margin-thickbottom">
         <div class="xar-halfwidth xar-floatleft">
-        <a href="#">#$transformed_ttitle#</a>
+        <a href="#$viewtopicurl#">#$transformed_ttitle#</a>
         </div>
         <xar:if condition="!empty($pager)">
             <div class="xar-align-right xar-floatright xar-halfwidth">

@@ -39,6 +39,26 @@
             <strong><xar:mlstring>Waiting Content Hook</xar:mlstring></strong> -
             <xar:mlstring>If you have the waitingcontent block of the Base module activated, this hook will display any forum topics and topic replies awaiting approval in the block. To use it, hook crispBB to the Base module.</xar:mlstring>
         </li>
+        <li>
+            <strong><xar:mlstring>Modifyconfig Hook</xar:mlstring></strong> -
+            <xar:mlstring>Shows hook configuration options in modify config screen of hooked modules. Allows you to set the following options...</xar:mlstring>
+            <ul>
+                <li><xar:mlstring>Set the forum to create related topics in for current module/itemtype.</xar:mlstring></li>
+                <li><xar:mlstring>Optionally choose to display latest X replies if a topic has already been created. (see display hook)</xar:mlstring></li>
+                <li><xar:mlstring>Optionally display the quick reply if a topic has already been created. (see display hook)</xar:mlstring></li>
+            </ul>
+        </li>
+        <li>
+            <strong><xar:mlstring>Display Hook</xar:mlstring></strong> -
+            <xar:mlstring>Displays the following</xar:mlstring>
+            <ul>
+                <li><xar:mlstring>Displays a link to create a topic to discuss the current item. When clicked a new topic will be created, linking to the module item, and the user will be redirected to make a reply to the newly created topic. or...</xar:mlstring>
+                </li>
+                <li><xar:mlstring>If a topic has already been created, displays a link to the topic.</xar:mlstring></li>
+                <li><xar:mlstring>Optionally display the last X replies if a topic has already been created. (see modifyconfig hook)</xar:mlstring></li>
+                <li><xar:mlstring>Optionally display the quick reply form if a topic has already been created. (see modifyconfig hook)</xar:mlstring></li>
+            </ul>
+        </li>
     <xar:comment>
         <li>
             <strong><xar:mlstring>New / Create Hook</xar:mlstring></strong> -
@@ -49,16 +69,8 @@
             <xar:mlstring>Allows the associated topic to be specified or changed when editing a hooked module item</xar:mlstring>
         </li>
         <li>
-            <strong><xar:mlstring>Display Hook</xar:mlstring></strong> -
-            <xar:mlstring>Displays a link to topic created or associated by create hook function. If a topic was not created, offers a link to create a new topic relating to the item.</xar:mlstring>
-        </li>
-        <li>
             <strong><xar:mlstring>Delete Hook</xar:mlstring></strong> -
             <xar:mlstring>Deletes the associated hook entry when a hooked module item is deleted. This does not remove the related topic.</xar:mlstring>
-        </li>
-        <li>
-            <strong><xar:mlstring>Modifyconfig Hook</xar:mlstring></strong> -
-            <xar:mlstring>Shows hook configuration options in modify config screen of hooked modules. Allows you to set various options for the hook operations</xar:mlstring>
         </li>
         <li>
             <strong><xar:mlstring>Remove Hook</xar:mlstring></strong> -

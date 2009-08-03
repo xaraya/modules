@@ -143,4 +143,11 @@
 // Added tabindexes to forms
 // minor version update to...
 0.7.0
+------- 02 August 2009
+// fix reply count when viewing a topic with submitted or deleted replies
+// update waiting content link in GUIs
+// add option to display waitingcontent link in userpanel block
+------- 03 August 2009
+// Added modifyconfig, updateconfig, display, delete and remove hook functions
+// Added createhook function (not currently a registered hook, but used by module)
 **** Current Version ****

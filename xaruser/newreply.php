@@ -80,6 +80,8 @@ function crispbb_user_newreply($args)
     if (!xarVarFetch('bbcodedeny', 'checkbox', $bbcodedeny, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('smiliesdeny', 'checkbox', $smiliesdeny, false, XARVAR_NOT_REQUIRED)) return;
 
+    if (!xarVarFetch('return_url', 'str:1', $return_url, '', XARVAR_NOT_REQUIRED)) return;
+
     $categories[$data['catid']] = xarModAPIFunc('categories', 'user', 'getcatinfo',
             array('cid' => $data['catid']));
 
@@ -309,16 +311,20 @@ function crispbb_user_newreply($args)
 
             if (!empty($data['postbuffer']) || $pstatus == 2) {
                 if ($pstatus == 2) {
+                    if (empty($return_url)) {
                     $return_url = xarModURL('crispbb', 'user', 'display',
                         array('tid' => $tid, 'action' => 'lastreply'));
+                    }
                     $data['postbuffer'] = 5;
                     $pageTitle = xarML('Reply Submitted');
                     $message = xarML('Thank you. Your reply has been submitted, and will be displayed once approved.');
                     $data['pid'] = NULL;
                 } else {
                     $message = xarML('Your reply to #(1) was posted successfully', $data['ttitle']);
-                    $return_url = xarModURL('crispbb', 'user', 'display',
-                        array('tid' => $tid, 'pid' => $pid));
+                    if (empty($return_url)) {
+                        $return_url = xarModURL('crispbb', 'user', 'display',
+                            array('tid' => $tid, 'pid' => $pid));
+                    }
                     $pageTitle = xarML('Reply Posted');
                     $data['tid'] = $tid;
                     $data['pid'] = $pid;
@@ -330,7 +336,10 @@ function crispbb_user_newreply($args)
                 $data['message'] = $message;
                 return xarTPLModule('crispbb', 'user', 'return', $data);
             }
-            return xarResponseRedirect(xarModURL('crispbb', 'user', 'display', array('tid' => $tid,  'action' => 'lastreply')));
+            if (empty($return_url)) {
+                $return_url = xarModURL('crispbb', 'user', 'display', array('tid' => $tid,  'action' => 'lastreply'));
+            }
+            return xarResponseRedirect($return_url);
         }
         $data['preview'] = $transformed;
         $data['htmldeny'] = $htmldeny;
@@ -358,6 +367,7 @@ function crispbb_user_newreply($args)
     $item['itemtype'] = $poststype;
     $hooks = xarModCallHooks('item', 'new', '', $item);
     $data['hookoutput'] = !empty($hooks) ? $hooks : array();
+    $data['return_url'] = $return_url;
 
     $formaction =  xarModCallHooks('item', 'formaction', '', array(), 'crispbb', $poststype);
     $formdisplay = xarModCallHooks('item', 'formdisplay','', array(), 'crispbb', $poststype);

@@ -81,6 +81,12 @@ function crispbb_user_newtopic($args)
     if (!xarVarFetch('smiliesdeny', 'checkbox', $smiliesdeny, false, XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('approvereplies', 'checkbox', $approvereplies, false, XARVAR_NOT_REQUIRED)) return;
+
+    if (!xarVarFetch('return_url', 'str:1', $return_url, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('modname', 'str:1', $modname, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itemtype', 'id', $itemtype, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('itemid', 'id', $itemid, NULL, XARVAR_NOT_REQUIRED)) return;
+
     // Start Tracking
     $tracking = xarModAPIFunc('crispbb', 'user', 'tracking', array('now' => $now));
 
@@ -224,6 +230,60 @@ function crispbb_user_newtopic($args)
         }
     }
 
+    // called by hooks
+    if (!empty($modname)) {
+        $modid = xarModGetIDFromName($modname);
+        if (empty($modid)) {
+            $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'module name', 'user', 'newtopic', 'crispBB');
+            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+            return $msg;
+        }
+        if (empty($itemid)) {
+            $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'item id', 'user', 'newtopic', 'crispBB');
+            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+            return $msg;
+        }
+        $var_to_look_for = $modname;
+        if (!empty($itemtype)) {
+            $var_to_look_for .= '_' . $itemtype;
+        }
+        $var_to_look_for .= '_hooks';
+        $string = xarModGetVar('crispbb', $var_to_look_for);
+        if (empty($string) || !is_string($string)) {
+            $string = xarModGetVar('crispbb', 'crispbb_hooks');
+        }
+        $settings = !empty($string) && is_string($string) ? unserialize($string) : array();
+        if (empty($settings['fid']) || $settings['fid'] != $fid) {
+            $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'fid', 'user', 'newtopic', 'crispBB');
+            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+            return $msg;
+        }
+        $itemlinks = xarModAPIFunc($modname, 'user', 'getitemlinks', array('itemids' => array($itemid), ), 0);
+        if (!empty($itemlinks[$itemid])) {
+            $ttitle = $itemlinks[$itemid]['label'];
+            $linkurl = $itemlinks[$itemid]['url'];
+        } else {
+            $modinfo = xarModGetInfo($modid);
+            $ttitle = $modinfo['displayname'];
+            if (!empty($itemtype)) {
+                $ttitle .= ' ';
+                $mytypes = xarModAPIFunc($modname, 'user', 'getitemtypes', array(), 0);
+                $ttitle .= !empty($mytypes[$itemtype]['label']) ? $mytypes[$itemtype]['label'] : $itemtype;
+            }
+            $ttitle .= ' ' . $itemid;
+            $linkurl = xarModURL($modname, 'user', 'display', array('itemtype' => $itemtype, 'itemid' => $itemid));
+        }
+        $ptext = xarML('This topic is a discussion of');
+        if ($hasbbcode) {
+            $ptext .= ' [url=' . $linkurl . ']' . $ttitle . '[/url]';
+        } elseif ($hashtml) {
+            $ptext .= ' <a href="' . $linkurl . '">' . $ttitle . '</a>';
+        } else {
+            $ptext .= ' ' . $ttitle . ' - ' . $linkurl;
+        }
+        // set phase to update, so we can skip straight to newreply from here
+        $phase = 'update';
+    }
 
     $transargs = array();
     $transargs['itemtype'] = $topicstype;
@@ -262,7 +322,7 @@ function crispbb_user_newtopic($args)
             $invalid['ttitle'] = xarML('Title can not be more than #(1) characters', $data['topictitlemax']);
         }
 
-        if (!empty($data['topicdescmin']) || !empty($data['topicdescmax'])) {
+        if ((!empty($data['topicdescmin']) || !empty($data['topicdescmax'])) && (empty($modname))) {
             $tdlen = strlen(strip_tags($transformed['tdesc']));
             if ($tdlen < $data['topicdescmin']) {
                 $invalid['pdesc'] = xarML('Description must be at least #(1) characters', $data['topicdescmin']);
@@ -329,7 +389,17 @@ function crispbb_user_newtopic($args)
                 xarModSetUserVar('crispbb', 'tracking', serialize($tracking));
             }
 
-            if (!empty($data['postbuffer']) || $tstatus == 2) {
+            // if this topic was created via hooks, we return user to a newreply to the topic
+            if (!empty($modname) && !empty($itemtype)) {
+                // create the hook
+                if (!xarModAPIFunc('crispbb', 'user', 'createhook',
+                    array('modname' => $modname, 'itemtype' => $itemtype, 'objectid' => $itemid, 'tid' => $tid
+                    ))) return;
+                // preserve the return url (links to the hooked module item)
+                $real_return_url = xarModURL('crispbb', 'user', 'newreply',
+                    array('tid' => $tid, 'return_url' => $return_url));
+                $return_url = $real_return_url;
+            } elseif (!empty($data['postbuffer']) || $tstatus == 2) {
                 if ($tstatus == 2) {
                     $return_url = xarModURL('crispbb', 'user', 'view',
                         array('fid' => $fid));
@@ -354,7 +424,10 @@ function crispbb_user_newtopic($args)
                 return xarTPLModule('crispbb', 'user', 'return', $data);
             }
 
-            return xarResponseRedirect(xarModURL('crispbb', 'user', 'display', array('tid' => $tid)));
+            if (empty($return_url)) {
+                $return_url = xarModURL('crispbb', 'user', 'display', array('tid' => $tid));
+            }
+            return xarResponseRedirect($return_url);
 
         }
     }
@@ -390,6 +463,7 @@ function crispbb_user_newtopic($args)
     $hooks = xarModCallHooks('item', 'new', '', $item);
 
     $data['hookoutput'] = !empty($hooks) ? $hooks : array();
+    $data['return_url'] = $return_url;
     xarVarSetCached('Blocks.crispbb', 'fid', $fid);
     xarVarSetCached('Blocks.crispbb', 'catid', $data['catid']);
 

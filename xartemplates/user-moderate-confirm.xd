@@ -50,11 +50,12 @@
             </xar:ml>
             </h2>
         </div>
-        <div class="xar-thirdwidth xar-floatright xar-alt xar-sub xar-padding-thick">
+        <div class="xar-thirdwidth xar-floatright xar-sub xar-padding-thick">
             <xar:template type="module" module="crispbb" file="user-userpanel" />
         </div>
         <br class="xar-clearboth" />
     </div>
+    <xar:template type="module" module="crispbb" file="admin-waitingcontent" />
     <hr />
     <xar:if condition="$component eq 'topics'">
         <xar:if condition="$modaction ne 'move'">

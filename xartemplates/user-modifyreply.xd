@@ -23,6 +23,7 @@
         </div>
         <br class="xar-clearboth" />
     </div>
+    <xar:template type="module" module="crispbb" file="admin-waitingcontent" />
     <hr />
     <xar:if condition="!empty($preview)">
         <table class="xar-fullwidth">

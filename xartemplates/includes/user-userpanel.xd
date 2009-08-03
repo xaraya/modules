@@ -42,12 +42,14 @@
         </strong>
     </li>
     </xar:if>
+    <xar:comment>
     <xar:set name="waitingcontent">xarModFunc('crispbb', 'admin', 'waitingcontent')</xar:set>
     <xar:if condition="!empty($waitingcontent)">
         <li>
             <a class="xar-error" href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'waiting'))#" title="#xarML('View Waiting Content')#"><xar:mlstring>Waiting Content</xar:mlstring></a>
         </li>
     </xar:if>
+    </xar:comment>
 </ul>
 </div>
 </xar:if>

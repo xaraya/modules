@@ -54,6 +54,12 @@ function crispbb_user_display($args)
     if (!empty($privs['editforum'])) {
         $pstatuses[] = 5;
     }
+
+    if (count($pstatuses) > 1) {
+        $data['numreplies'] = xarModAPIFunc('crispbb', 'user', 'countposts',
+            array('tid' => $tid, 'pstatus' => $pstatuses))-1;
+    }
+
     if (!empty($action) || !empty($actionpid)) {
         $totalposts = $data['numreplies'] + 1;
         $postsperpage = $data['postsperpage'];

@@ -14,6 +14,7 @@
         </div>
         <br class="xar-clearboth" />
     </div>
+    <xar:template type="module" module="crispbb" file="admin-waitingcontent" />
     <hr />
     <div>
         <div class="xar-floatleft xar-halfwidth">

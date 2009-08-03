@@ -25,6 +25,7 @@ function crispbb_userpanelblock_init()
         'showlastvisit' => true,
         'showthisvisit' => true,
         'showtotalvisit' => true,
+        'showwaiting' => true,
         'showlogout' => true,
         /* set some defaults for block caching */
         'nocache' => 1, // cache by default, 0 = yes, 1 = no
@@ -80,6 +81,7 @@ function crispbb_userpanelblock_display($blockinfo)
     $data['showlastvisit'] = isset($vars['showlastvisit']) ? $vars['showlastvisit'] : $defaults['showlastvisit'];
     $data['showthisvisit'] = isset($vars['showthisvisit']) ? $vars['showthisvisit'] : $defaults['showthisvisit'];
     $data['showtotalvisit'] = isset($vars['showtotalvisit']) ? $vars['showtotalvisit'] : $defaults['showtotalvisit'];
+    $data['showwaiting'] = isset($vars['showwaiting']) ? $vars['showwaiting'] : $defaults['showwaiting'];
     $data['showlogout'] = isset($vars['showlogout']) ? $vars['showlogout'] : $defaults['showlogout'];
 
     $now = time();
@@ -103,6 +105,9 @@ function crispbb_userpanelblock_display($blockinfo)
     }
     if ($data['showtimenow']) {
         $data['timenow'] = $now;
+    }
+    if ($data['showwaiting']) {
+        $data['showwaiting'] = xarModFunc('crispbb', 'admin', 'waitingcontent');
     }
     $blockinfo['content'] = $data;
 
@@ -132,6 +137,7 @@ function crispbb_userpanelblock_modify($blockinfo)
     $data['showlastvisit'] = isset($vars['showlastvisit']) ? $vars['showlastvisit'] : $defaults['showlastvisit'];
     $data['showthisvisit'] = isset($vars['showthisvisit']) ? $vars['showthisvisit'] : $defaults['showthisvisit'];
     $data['showtotalvisit'] = isset($vars['showtotalvisit']) ? $vars['showtotalvisit'] : $defaults['showtotalvisit'];
+    $data['showwaiting'] = isset($vars['showwaiting']) ? $vars['showwaiting'] : $defaults['showwaiting'];
     $data['showlogout'] = isset($vars['showlogout']) ? $vars['showlogout'] : $defaults['showlogout'];
     $data['blockid'] = $blockinfo['bid'];
      // Just return the template variables.
@@ -154,6 +160,7 @@ function crispbb_userpanelblock_insert($blockinfo)
     if (!xarVarFetch('showlastvisit', 'checkbox', $vars['showlastvisit'], false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('showthisvisit', 'checkbox', $vars['showthisvisit'], false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('showtotalvisit', 'checkbox', $vars['showtotalvisit'], false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('showwaiting', 'checkbox', $vars['showwaiting'], false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('showlogout', 'checkbox', $vars['showlogout'], false, XARVAR_NOT_REQUIRED)) return;
 
     $blockinfo['content'] = $vars;

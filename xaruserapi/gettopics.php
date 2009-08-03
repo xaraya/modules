@@ -69,6 +69,20 @@ function crispbb_userapi_gettopics($args)
         $from .= ' ON ' . $poststable . '.xar_pid' . ' = ' . $topicstable . '.xar_lastpid';
         $addme = 1;
     }
+    $hookstable = $xartable['crispbb_hooks'];
+    $select[] = $hookstable . '.xar_moduleid AS hookmodid';
+    $fields[] = 'hookmodid';
+    $select[] = $hookstable . '.xar_itemtype AS hooktype';
+    $fields[] = 'hooktype';
+    $select[] = $hookstable . '.xar_itemid AS objectid';
+    $fields[] = 'objectid';
+    if ($addme && ($dbconn->databaseType != 'sqlite')) {
+        $from = '(' . $from . ')';
+    }
+    // Add the LEFT JOIN ... ON ... posts for the reply count
+    $from .= ' LEFT JOIN ' . $hookstable;
+    $from .= ' ON ' . $hookstable . '.xar_tid = ' . $topicstable . '.xar_tid';
+    $addme = 1;
     if (empty($numreplies)) {
         // count total replies for this topic
         if ($addme && ($dbconn->databaseType != 'sqlite')) {
@@ -596,6 +610,34 @@ function crispbb_userapi_gettopics($args)
                     $topic['lastreplyurl'] = xarModURL('crispbb', 'user', 'display',
                         array('tid' => $topic['tid'], 'action' => 'lastreply'));
                 }
+                // hooked module item
+                if (!empty($topic['hookmodid']) && !empty($topic['objectid'])) {
+                    $modname = xarModGetNameFromID($topic['hookmodid']);
+                    $itemlinks = xarModAPIFunc($modname, 'user', 'getitemlinks',
+                        array('itemids' => array($topic['objectid'])), 0);
+                    if (!empty($itemlinks[$topic['objectid']])) {
+                        $topic['hookitem'] = $itemlinks[$topic['objectid']];
+                    } else {
+                        $hookitem = array();
+                        $modinfo = xarModGetInfo($topic['hookmodid']);
+                        $ttitle = $modinfo['displayname'];
+                        if (!empty($topic['hooktype'])) {
+                            $ttitle .= ' ';
+                            $mytypes = xarModAPIFunc($modname, 'user', 'getitemtypes', array(), 0);
+                            $ttitle .= !empty($mytypes[$topic['hooktype']]['label']) ? $mytypes[$topic['hooktype']]['label'] : $topic['hooktype'];
+                            unset($mytypes);
+                        }
+                        $ttitle .= ' ' . $topic['objectid'];
+                        $linkurl = xarModURL($modname, 'user', 'display', array('itemtype' => $topic['hooktype'], 'itemid' => $topic['objectid']));
+                        $topic['hookitem'] = array('title' => xarVarPrepForDisplay($ttitle), 'label' => xarVarPrepForDisplay($ttitle), 'url' => $linkurl);
+                        unset($ttitle);
+                        unset($modinfo);
+                        unset($linkurl);
+                    }
+                    unset($modname);
+                    unset($itemlinks);
+                }
+
                 if ($loggedin) {
                     // topic starters
                     if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',

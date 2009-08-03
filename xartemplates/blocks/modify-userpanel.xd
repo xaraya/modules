@@ -28,6 +28,10 @@
     <label for="showtotalvisit"><xar:mlstring>Show total visits duration</xar:mlstring>?</label>
 </div>
 <div class="xar-form-input-wrapper-after">
+    <xar:data-input type="checkbox" name="showwaiting" id="showwaiting" value="$showwaiting" />
+    <label for="showwaiting"><xar:mlstring>Show waiting content link</xar:mlstring>?</label>
+</div>
+<div class="xar-form-input-wrapper-after">
     <xar:data-input type="checkbox" name="showlogout" id="showlogout" value="$showlogout" />
     <label for="showlogout"><xar:mlstring>Show logout link</xar:mlstring>?</label>
 </div>

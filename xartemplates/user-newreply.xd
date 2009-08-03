@@ -23,6 +23,7 @@
         </div>
         <br class="xar-clearboth" />
     </div>
+    <xar:template type="module" module="crispbb" file="admin-waitingcontent" />
     <hr />
     <xar:if condition="!empty($preview)">
         <table class="xar-fullwidth">
@@ -146,6 +147,7 @@
             </xar:if>
             <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
                 <input type="hidden" name="tid" id="tid" value="#$tid#" />
                 <input type="hidden" name="phase" id="phase" value="update" />
                 <input type="submit" value="#xarML('Post Reply')#" tabindex="7" />&nbsp;&nbsp;<input type="submit" id="preview" name="preview" value="#xarML('Preview')#" tabindex="8" />

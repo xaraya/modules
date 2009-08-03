@@ -392,8 +392,24 @@ function crispbb_upgrade($oldversion)
             xarModAPIFunc('modules','admin','enablehooks',
                           array('callerModName' => 'base', 'hookModName' => 'crispbb'));
         case '0.7.0':
-            /* current version */
-
+            // add hook functions
+            // Module Modify Config
+            if (!xarModRegisterHook('module', 'modifyconfig', 'GUI', 'crispbb', 'admin',
+                'modifyconfighook')) return false;
+            // Module Update Config
+            if (!xarModRegisterHook('module', 'updateconfig', 'API', 'crispbb', 'admin',
+                'updateconfighook')) return false;
+            // Module Remove
+            if (!xarModRegisterHook('module', 'remove', 'API', 'crispbb', 'admin', 'removehook'))
+                return false;
+            // Display item
+            if (!xarModRegisterHook('item', 'display', 'GUI', 'crispbb', 'user', 'displayhook'))
+                return false;
+            // Delete item
+            if (!xarModRegisterHook('item', 'delete', 'API', 'crispbb', 'user', 'deletehook'))
+                return false;
+        case '0.7.2':
+           /* current version */
         break;
     }
     /* Update successful */
@@ -438,6 +454,11 @@ function crispbb_delete()
 
     if (!xarModUnregisterHook('item', 'search', 'GUI',
                               'crispbb', 'user', 'search')) {
+        return false;
+    }
+
+    if (!xarModUnregisterHook('item', 'waitingcontent', 'GUI',
+                              'crispbb', 'admin', 'waitingcontent')) {
         return false;
     }
 

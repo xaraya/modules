@@ -1,0 +1,21 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="waitingcontent">xarModFunc('crispbb', 'admin', 'waitingcontent')</xar:set>
+<xar:if condition="!empty($waitingcontent)">
+<xar:if condition="empty($layout) or ($layout eq 'link')">
+<xar:comment>Default layout displays a link to the user moderate function</xar:comment>
+<div class="xar-align-center">
+    <a class="xar-error" href="#xarModURL('crispbb', 'user', 'moderate', array('component' => 'waiting'))#" title="#xarML('View Waiting Content')#"><xar:mlstring>Waiting Content</xar:mlstring></a>
+</div>
+<xar:elseif condition="$layout eq 'content'" />
+<!--
+<xar:comment>
+    Use the following code to call this template if you want to display
+    the actual waiting content data instead of the link
+    <xar:template type="module" module="crispbb" file="admin-waitingcontent" subdata="array('layout' =&gt; 'content')" />
+</xar:comment>
+-->
+<div>
+    #$waitingcontent#
+</div>
+</xar:if>
+</xar:if>

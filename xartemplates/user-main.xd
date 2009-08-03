@@ -19,6 +19,7 @@
             <xar:template type="module" module="crispbb" file="user-topicjump"  />
         </div>
     </div>
+    <xar:template type="module" module="crispbb" file="admin-waitingcontent" />
     <hr />
     <xar:if condition="!empty($categories)">
         <xar:foreach in="$categories" key="$cid" value="$catinfo">
