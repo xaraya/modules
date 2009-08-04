@@ -95,13 +95,18 @@ function crispbb_adminapi_getmenulinks($args)
         'active' => $menuactive && in_array($modfunc, $activefuncs) ? true : false
     );
     if ($userLevel == 800) {
+        $activefuncs = array('modifyhooks', 'unlinkhooks');
+        $menulinks['modifyhooks'] = array('url' => xarModURL('crispbb','admin','modifyhooks'),
+            'title' => xarML('View/manage module hooks configuration.'),
+            'label' => xarML('Manage Hooks'),
+            'active' => $menuactive && in_array($modfunc, $activefuncs) ? true : false
+        );
         $activefuncs = array('modifyconfig');
         $menulinks['modifyconfig'] = array('url' => xarModURL('crispbb','admin','modifyconfig'),
             'title' => xarML('View/manage module configuration.'),
             'label' => xarML('Modify Config'),
             'active' => $menuactive && in_array($modfunc, $activefuncs) ? true : false
         );
-
         $activefuncs = array('overview');
         $menulinks['overview'] = array('url' => xarModURL('crispbb','admin','overview'),
             'title' => xarML('View information about this module.'),
@@ -277,16 +282,20 @@ function crispbb_adminapi_getmenulinks($args)
                         'label' => xarML('Module'),
                         'active' => in_array($modfunc, $activelinks) ? true : false
                     );
-                    /*
-                    $activelinks = array('modifyhooks');
+                    $activefunc = 'modifyconfig';
+               }
+            break;
+            case 'modifyhooks':
+            case 'unlinkhooks':
+                if ($userLevel == 800) {
+                    $activelinks = array('modifyhooks', 'unlinkhooks');
                     $sublinks['modifyhooks'] = array(
                         'url' => xarModURL('crispbb', 'admin', 'modifyhooks'),
                         'title' => xarML('crispBB Hooks Configuration'),
                         'label' => xarML('crispBB Hooks'),
                         'active' => in_array($modfunc, $activelinks) ? true : false
                     );
-                    */
-                    $activefunc = 'modifyconfig';
+                    $activefunc = 'modifyhooks';
                 }
             break;
 

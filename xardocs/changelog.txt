@@ -150,4 +150,12 @@
 ------- 03 August 2009
 // Added modifyconfig, updateconfig, display, delete and remove hook functions
 // Added createhook function (not currently a registered hook, but used by module)
+// micro version update to...
+0.7.2
+// Minor bugfixes to previous update
+// Added displayreply function
+------- 04 August 2009
+//Added admin modifyhooks function, overview of items associated with crispBB
+// minor version update to...
+0.7.4
 **** Current Version ****

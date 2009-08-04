@@ -1,6 +1,6 @@
 <?php
 /**
- * crispBB Forum Module - license.txt
+ * crispBB Forum Module
  *
  * @package modules
  * @copyright (C) 2008-2009 The Digital Development Foundation
@@ -19,7 +19,7 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
- * @subpackage Modules module
+ * @subpackage crispBB module
  */
 /**
  * Obtain list of hooks (optionally for a particular module)

@@ -409,6 +409,10 @@ function crispbb_upgrade($oldversion)
             if (!xarModRegisterHook('item', 'delete', 'API', 'crispbb', 'user', 'deletehook'))
                 return false;
         case '0.7.2':
+            // minor bugfixes to last update
+            // add user displayreply function
+            // add admin modifyhooks function
+        case '0.7.4':
            /* current version */
         break;
     }
@@ -462,6 +466,26 @@ function crispbb_delete()
         return false;
     }
 
+    if (!xarModUnregisterHook('module', 'modifyconfig', 'GUI',
+                              'crispbb', 'admin', 'modifyconfighook')) {
+        return false;
+    }
+    if (!xarModUnregisterHook('module', 'updateconfig', 'API',
+                              'crispbb', 'admin', 'updateconfighook')) {
+        return false;
+    }
+    if (!xarModUnregisterHook('module', 'remove', 'API',
+                              'crispbb', 'admin', 'removehook')) {
+        return false;
+    }
+    if (!xarModUnregisterHook('item', 'display', 'GUI',
+                              'crispbb', 'user', 'displayhook')) {
+        return false;
+    }
+    if (!xarModUnregisterHook('item', 'delete', 'API',
+                              'crispbb', 'user', 'deletehook')) {
+        return false;
+    }
     if (!xarModAPIFunc('blocks',
             'admin',
             'unregister_block_type',

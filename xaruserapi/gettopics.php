@@ -79,6 +79,12 @@ function crispbb_userapi_gettopics($args)
     if ($addme && ($dbconn->databaseType != 'sqlite')) {
         $from = '(' . $from . ')';
     }
+    if (!empty($hookmodid)) {
+        $where[] = $hookstable . '.xar_moduleid = ' . $hookmodid;
+        if (!empty($hooktype)) {
+            $where[] = $hookstable . '.xar_itemtype = ' . $hooktype;
+        }
+    }
     // Add the LEFT JOIN ... ON ... posts for the reply count
     $from .= ' LEFT JOIN ' . $hookstable;
     $from .= ' ON ' . $hookstable . '.xar_tid = ' . $topicstable . '.xar_tid';
@@ -633,6 +639,10 @@ function crispbb_userapi_gettopics($args)
                         unset($ttitle);
                         unset($modinfo);
                         unset($linkurl);
+                    }
+                    if ($topic['forumLevel'] == 800) {
+                        $topic['unlinkhookurl'] = xarModURL('crispbb', 'admin', 'unlinkhooks',
+                            array('modid' => $topic['hookmodid'], 'itemtype' => $topic['hooktype'], 'itemid' => $topic['objectid']));
                     }
                     unset($modname);
                     unset($itemlinks);
