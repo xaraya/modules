@@ -111,6 +111,15 @@ function crispbb_userapi_counttopics($args)
         $bindvars[] = $towner;
     }
 
+    if (isset($starttime) && is_numeric($starttime)) {
+        $where[] = $poststable.".xar_ptime >= ?";
+        $bindvars[] = $starttime;
+    }
+    if (isset($endtime) && is_numeric($endtime)) {
+        $where[] = $poststable.".xar_ptime <= ?";
+        $bindvars[] = $endtime;
+    }
+
     if (isset($pstatus)) {
         if (is_numeric($pstatus)) {
             $where[] = $poststable . '.xar_pstatus = ' . $pstatus;

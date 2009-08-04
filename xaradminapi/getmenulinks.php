@@ -87,7 +87,7 @@ function crispbb_adminapi_getmenulinks($args)
 
     $menulinks = array();
 
-    $activefuncs = array('view', 'new', 'forumconfig', 'modify', 'delete', 'posters','topics', 'deletetopic');
+    $activefuncs = array('view', 'new', 'forumconfig', 'modify', 'delete', 'posters','topics', 'deletetopic', 'trashcan');
     // key menulinks by function name, then we can access them individually
     $menulinks['view'] = array('url' => xarModURL('crispbb','admin','view'),
         'title' => xarML('View/manage forum listings.'),
@@ -130,6 +130,7 @@ function crispbb_adminapi_getmenulinks($args)
             case 'posters':
             case 'topics':
             case 'deletetopic':
+            case 'trashcan':
             $activelinks = array('view', 'modify', 'delete');
             if (!empty($secLevels[$userLevel]['addforum'])) {
             $sublinks['view'] = array(
@@ -251,6 +252,15 @@ function crispbb_adminapi_getmenulinks($args)
                     'label' => xarML('Posters'),
                     'active' => in_array($modfunc, $activelinks) ? true : false
                 );
+                /*
+                $activelinks = array('trashcan');
+                $sublinks['trashcan'] = array(
+                    'url' => xarModURL('crispbb', 'admin', 'trashcan'),
+                    'title' => xarML('Overview of deleted items'),
+                    'label' => xarML('Trashcan'),
+                    'active' => in_array($modfunc, $activelinks) ? true : false
+                );
+                */
             }
             /*
             $activelinks = array('topics', 'deletetopic');
