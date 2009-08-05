@@ -144,6 +144,8 @@ function twitter_upgrade($oldversion)
         );
         xarModSetVar('twitter', 'twitter', serialize($settings));
       case '0.1.1':
+          // Bug 6397: strip html entities from urls created by hooks
+      case '0.1.2':
           // current version
 
       break;

@@ -13,7 +13,7 @@
  */
 $modversion['name']           = 'twitter';
 $modversion['id']             = '991';
-$modversion['version']        = '0.1.1';
+$modversion['version']        = '0.1.2';
 $modversion['displayname']    = 'Twitter';
 $modversion['description']    = 'Twitter module';
 $modversion['changelog']      = 'xardocs/changelog.txt';
