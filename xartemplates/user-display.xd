@@ -69,6 +69,11 @@
             <img src="#xarTPLGetImage('icons/comment_tick.png', 'crispbb')#" alt="Approve" title="#xarML('Approve this topic')#" />
             </a>
         </xar:if>
+        <xar:if condition="!empty($modtrashcanurl)">
+             <a href="#$modtrashcanurl#">
+            <img src="#xarTPLGetImage('icons/bin.png', 'crispbb')#" alt="Deleted" title="#xarML('Deleted Replies')#" />
+            </a>
+        </xar:if>
         <xar:if condition="!empty($edittopicurl)">
             <a href="#$edittopicurl#">
             <img src="#xarTPLGetImage('icons/comment_edit.png', 'crispbb')#" alt="Edit" title="#xarML('Edit this topic')#" />

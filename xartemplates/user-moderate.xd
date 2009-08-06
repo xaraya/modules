@@ -34,7 +34,7 @@
                     <input type="hidden" name="type" id="type" value="user" />
                     <input type="hidden" name="func" id="func" value="moderate" />
                     <input type="hidden" name="component" id="component" value="topics" />
-                    <label for="status"><xar:mlstring>Status</xar:mlstring>:</label>
+                    <label for="status"><xar:mlstring>Topic Status</xar:mlstring>:</label>
                     <xar:data-input type="dropdown" name="tstatus" id="tstatus" onchange="this.form.submit();" value="$tstatus" options="$tstatusoptions" />
                     <label for="fid"><xar:mlstring>Forum</xar:mlstring>:</label>
                     <xar:data-input type="dropdown" name="fid" id="fid" onchange="this.form.submit();" value="$fid" options="$forumoptions" />
@@ -138,6 +138,13 @@
                                     </a>
                                 <xar:else />
                                     <img class="xar-icon-disabled" src="#xarTPLGetImage('icons/comment_warning.png', 'crispbb')#" alt="Submitted" title="#xarML('Replies Awaiting Approval')#" />
+                                </xar:if>
+                                <xar:if condition="!empty($topic['modtrashcanurl'])">
+                                    <a href="#$topic['modtrashcanurl']#">
+                                    <img src="#xarTPLGetImage('icons/bin.png', 'crispbb')#" alt="Deleted" title="#xarML('Deleted Replies')#" />
+                                    </a>
+                                <xar:else />
+                                    <img class="xar-icon-disabled" src="#xarTPLGetImage('icons/bin_closed.png', 'crispbb')#" alt="Deleted" title="#xarML('Deleted Replies')#" />
                                 </xar:if>
                                 <xar:if condition="!empty($topic['edittopicurl'])">
                                     <a href="#$topic['edittopicurl']#">
@@ -814,6 +821,10 @@
             <span class="xar-nowrap">
                 <img src="#xarTPLGetImage('icons/comment_warning.png', 'crispbb')#" alt="Waiting" title="#xarML('Waiting Content')#" />
                 <xar:mlstring>Waiting</xar:mlstring>
+            </span>
+            <span class="xar-nowrap">
+                <img src="#xarTPLGetImage('icons/bin.png', 'crispbb')#" alt="Deleted" title="#xarML('Deleted Replies')#" />
+                <xar:mlstring>Deleted</xar:mlstring>
             </span>
             <span class="xar-nowrap">
                 <img src="#xarTPLGetImage('icons/comment_edit.png', 'crispbb')#" alt="Edit" title="#xarML('Edit')#" />

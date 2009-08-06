@@ -59,11 +59,19 @@ function crispbb_userapi_gettopics($args)
         $fields[] = $fieldname;
     }
     if (!empty($submitted)) {
+        // only get topics with submitted replies
         $from .= ' LEFT JOIN ' . $poststable;
         $from .= ' ON ' . $poststable . '.xar_tid' . ' = ' . $topicstable . '.xar_tid';
         $from .= ' AND ' . $poststable . '.xar_pstatus = 2';
         $addme = 1;
         $where[] = $poststable . '.xar_pstatus = 2';
+    } elseif (!empty($deleted)) {
+        // only get topics with deleted replies
+        $from .= ' LEFT JOIN ' . $poststable;
+        $from .= ' ON ' . $poststable . '.xar_tid' . ' = ' . $topicstable . '.xar_tid';
+        $from .= ' AND ' . $poststable . '.xar_pstatus = 5';
+        $addme = 1;
+        $where[] = $poststable . '.xar_pstatus = 5';
     } else {
         $from .= ' LEFT JOIN ' . $poststable;
         $from .= ' ON ' . $poststable . '.xar_pid' . ' = ' . $topicstable . '.xar_lastpid';
@@ -89,6 +97,7 @@ function crispbb_userapi_gettopics($args)
     $from .= ' LEFT JOIN ' . $hookstable;
     $from .= ' ON ' . $hookstable . '.xar_tid = ' . $topicstable . '.xar_tid';
     $addme = 1;
+    // count open replies for this topic
     if (empty($numreplies)) {
         // count total replies for this topic
         if ($addme && ($dbconn->databaseType != 'sqlite')) {
@@ -122,6 +131,7 @@ function crispbb_userapi_gettopics($args)
         $fields[] = 'numreplies';
         $addme = 1;
     }
+    // count submitted replies
     if (!empty($numsubs)) {
         if ($addme && ($dbconn->databaseType != 'sqlite')) {
             $from = '(' . $from . ')';
@@ -155,10 +165,44 @@ function crispbb_userapi_gettopics($args)
         $addme = 1;
     }
 
+    // count deleted replies
+    if (!empty($numdels)) {
+        if ($addme && ($dbconn->databaseType != 'sqlite')) {
+            $from = '(' . $from . ')';
+        }
+        // Add the LEFT JOIN ... ON ... posts for the reply count
+        $from .= ' LEFT JOIN ' . $poststable . ' AS dels';
+        $from .= ' ON dels.xar_tid = ' . $topicstable . '.xar_tid';
+        $from .= ' AND dels.xar_pstatus = 5';
+        $from .= ' AND ' . $topicstable . ".xar_firstpid != dels.xar_pid";
+        $from .= ' AND ' . $topicstable . ".xar_firstpid != " . $topicstable . ".xar_lastpid";
+        if (!empty($fid)) {
+            if (is_numeric($fid)) {
+                $from .= ' AND ' . $topicstable . '.xar_fid = ' . $fid;
+            } elseif (is_array($fid) && count($fid) > 0) {
+                $seenfid = array();
+                foreach ($fid as $id) {
+                    if (empty($id) || !is_numeric($id)) continue;
+                    $seenfid[$id] = 1;
+                }
+                if (count($seenfid) == 1) {
+                    $fids = array_keys($seenfid);
+                    $from .= ' AND ' . $topicstable . '.xar_fid = ' . $fids[0];
+                } elseif (count($seenfid) > 1) {
+                    $fids = join(', ', array_keys($seenfid));
+                    $from .= ' AND ' . $topicstable . '.xar_fid IN (' . $fids . ')';
+                }
+            }
+        }
+        $select[] = 'COUNT(DISTINCT dels.xar_pid) AS numdels';
+        $fields[] = 'numdels';
+        $addme = 1;
+    }
+
     if ($addme && ($dbconn->databaseType != 'sqlite')) {
         $from = '(' . $from . ')';
     }
-    // Add the LEFT JOIN ... ON ... posts for the reply count
+    // Add the LEFT JOIN ... ON ... posts for the first post data
     $from .= ' LEFT JOIN ' . $poststable . ' AS firstpost';
     $from .= ' ON firstpost.xar_pid = ' . $topicstable . '.xar_firstpid';
     $select[] = 'firstpost.xar_pdesc AS tdesc';
@@ -695,7 +739,15 @@ function crispbb_userapi_gettopics($args)
                                         'pstatus' => 2
                                 ));
                         }
-
+                        if (!empty($topic['numdels']) && xarModAPIFunc('crispbb', 'user','checkseclevel',
+                            array('check' => $topic, 'priv' => 'deletereplies'))) {
+                                $topic['modtrashcanurl'] = xarModURL('crispbb', 'user', 'moderate',
+                                    array(
+                                        'component' => 'posts',
+                                        'tid' => $topic['tid'],
+                                        'pstatus' => 5
+                                ));
+                        }
                         // topic closers
                         if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
                             array('check' => $topic, 'priv' => 'closetopics'))) {

@@ -37,6 +37,10 @@
             <a href="#$modtopicsurl#" title="#xarML('Topics Awaiting Approval')#"><img src="#xarTPLGetImage('icons/comment_warning.png')#" alt="Submitted" />
             </a>
             </xar:if>
+            <xar:if condition="!empty($modtrashcanurl)">
+            <a href="#$modtrashcanurl#" title="#xarML('Deleted Topics')#"><img src="#xarTPLGetImage('icons/bin.png')#" alt="Deleted" />
+            </a>
+            </xar:if>
             <a href="#$modforumurl#" title="#xarML('Moderate topics')#"><img src="#xarTPLGetImage('icons/comments_wrench_orange.png')#" alt="Moderate" />
             </a>
             <xar:if condition="!empty($editforumurl)">

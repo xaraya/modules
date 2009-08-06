@@ -355,7 +355,8 @@ function crispbb_user_moderate($args)
                         'startnum' => $startnum,
                         'sort' => $sort,
                         'order' => strtoupper($order),
-                        'numsubs' => true
+                        'numsubs' => true,
+                        'numdels' => true,
                     ));
                 $data['totaltopics'] = xarModAPIFunc('crispbb', 'user', 'counttopics', array('tstatus' => $tstatus, 'fid' => $fid));
                 $data['pager'] = xarTplGetPager($startnum,

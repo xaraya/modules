@@ -161,6 +161,17 @@ function crispbb_admin_view($args)
                             ));
                     }
                 }
+                if (!empty($item['privs']['deletetopics'])) {
+                    $deletedtopics = xarModAPIFunc('crispbb', 'user', 'counttopics', array('tstatus' => 5, 'fid' => $item['fid']));
+                    if (!empty($deletedtopics)) {
+                        $item['modtrashcanurl'] = xarModURL('crispbb', 'user', 'moderate',
+                            array(
+                                'component' => 'topics',
+                                'fid' => $item['fid'],
+                                'tstatus' => 5
+                            ));
+                    }
+                }
                 if ($item['forumLevel'] <= $minLevel) {
                     $minLevel = $item['forumLevel'];
                     $secLevels = $item['fprivileges'];

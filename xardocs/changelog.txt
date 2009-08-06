@@ -156,6 +156,11 @@
 // Added displayreply function
 ------- 04 August 2009
 //Added admin modifyhooks function, overview of items associated with crispBB
-// minor version update to...
+// micro version update to...
 0.7.4
+// bugfix for mismatched topic count in search (showing pager on non-paged results)
+// Add links to deleted replies in user display and moderate GUIs
+// Add links to deleted topics in user view and admin view GUIs
+// micro version update to...
+0.7.5
 **** Current Version ****

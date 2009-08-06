@@ -413,6 +413,9 @@ function crispbb_upgrade($oldversion)
             // add user displayreply function
             // add admin modifyhooks function
         case '0.7.4':
+            // bugfix mismatched topic count in searches
+            // add visual cues to deleted content in GUIs
+        case '0.7.5':
            /* current version */
         break;
     }

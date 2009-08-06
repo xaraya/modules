@@ -128,7 +128,8 @@ function crispbb_user_view($args)
             'ttype' => 0,
             'sort' => $sort,
             'order' => $order,
-            'numsubs' => !empty($privs['approvetopics']) ? true : false
+            'numsubs' => !empty($privs['approvereplies']) ? true : false,
+            'numdels' => !empty($privs['deletereplies']) ? true : false,
         ));
 
     $todo['topics'] = $topics;
@@ -361,6 +362,15 @@ function crispbb_user_view($args)
         if (xarModAPIFunc('crispbb', 'user', 'checkseclevel',
             array('check' => $check, 'priv' => 'deletetopics'))) {
                 $modactions[] = array('id' => 'delete', 'name' => xarML('Delete'));
+                $deleted = xarModAPIFunc('crispbb', 'user', 'counttopics', array('tstatus' => 5, 'fid' => $fid));
+                if (!empty($deleted)) {
+                    $data['modtrashcanurl'] = xarModURL('crispbb', 'user', 'moderate',
+                        array(
+                            'component' => 'topics',
+                            'fid' => $fid,
+                            'tstatus' => 5
+                        ));
+                }
         } else {
             unset($tstatusoptions[5]);
         }

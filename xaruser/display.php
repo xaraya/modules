@@ -28,7 +28,7 @@ function crispbb_user_display($args)
     if (!xarVarFetch('return_url', 'str:1', $return_url, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('pid', 'id', $actionpid, NULL, XARVAR_DONT_SET)) return;
 
-    $topic = xarModAPIFunc('crispbb', 'user', 'gettopic', array('tid' => $tid, 'privcheck' => true));
+    $topic = xarModAPIFunc('crispbb', 'user', 'gettopic', array('tid' => $tid, 'privcheck' => true, 'numdels' => true));
 
     if ($topic == 'NO_PRIVILEGES') {
         $errorMsg['message'] = xarML('You do not have the privileges required for this action');

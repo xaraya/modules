@@ -88,6 +88,13 @@
                                 <xar:else />
                                     <img class="xar-icon-disabled" src="#xarTPLGetImage('icons/comment_warning.png')#" alt="Submitted" title="#xarML('Topics Awaiting Approval')#" />
                                 </xar:if>
+                                <xar:if condition="!empty($forum['modtrashcanurl'])">
+                                    <a href="#$forum['modtrashcanurl']#">
+                                    <img src="#xarTPLGetImage('icons/bin.png', 'crispbb')#" alt="Deleted" title="#xarML('Deleted Topics')#" />
+                                    </a>
+                                <xar:else />
+                                    <img class="xar-icon-disabled" src="#xarTPLGetImage('icons/bin_closed.png', 'crispbb')#" alt="Deleted" title="#xarML('Deleted Topics')#" />
+                                </xar:if>
                                 <xar:if condition="!empty($forum['addforumurl'])">
                                     <a href="#$forum['addforumurl']#" title="#xarML('View information about this forum')#"><img src="#xarTPLGetImage('tango/info.png', 'crispbb')#" alt="#xarML('Information')#" title="#xarML('View information about this forum')#" /></a>
                                 <xar:else />
@@ -156,6 +163,10 @@
         <span class="xar-nowrap">
             <img src="#xarTPLGetImage('icons/comment_warning.png', 'crispbb')#" alt="Waiting" title="#xarML('Waiting Content')#" />
             <xar:mlstring>Waiting</xar:mlstring>
+        </span>
+        <span class="xar-nowrap">
+            <img src="#xarTPLGetImage('icons/bin.png', 'crispbb')#" alt="Deleted" title="#xarML('View deleted topics in this forum')#" />
+            <xar:mlstring>Deleted</xar:mlstring>
         </span>
         <span class="xar-nowrap">
             <img src="#xarTPLGetImage('tango/info.png', 'crispbb')#" alt="#xarML('Info')#" title="#xarML('View information about this forum')#" />
