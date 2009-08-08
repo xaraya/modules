@@ -94,21 +94,16 @@ function crispbb_user_display($args)
                 }
             }
         } elseif (!empty($actionpid)) {
-            $allposts = xarModAPIFunc('crispbb', 'user', 'getposts',
-                array('tid' => $tid, 'order' => $order, 'pstatus' => $pstatuses));
-            if (!empty($allposts)) {
-                $i = 0;
-                foreach ($allposts as $foundpid => $post) {
-                    $i++;
-                    if ($foundpid == $actionpid) break;
-                }
-                if (!empty($i)) {
-                    $lastpid = $foundpid;
-                    if (strtoupper($order) == 'ASC') { // last post on last page (default)
-                        $totalposts = $i;
-                    } else { // last post is on first page
-                        $totalposts = $totalposts - $i;
-                    }
+            $thepost = xarModAPIFunc('crispbb', 'user', 'getpost',
+                array('pid' => $actionpid));
+            $previous = xarModAPIFunc('crispbb', 'user', 'countposts',
+                array('tid' => $thepost['tid'], 'endtime' => $thepost['ptime'], 'pstatus' => $pstatuses));
+            if (!empty($previous)) {
+                $lastpid = $actionpid;
+                if (strtoupper($order) == 'ASC') { // last post on last page (default)
+                    $totalposts = $previous;
+                } else { // last post is on first page
+                    $totalposts = $totalposts - $previous;
                 }
             }
         } else {
@@ -135,7 +130,7 @@ function crispbb_user_display($args)
         } else {
             $return_url = xarModURL('crispbb', 'user', 'display', array('tid' => $tid), NULL, $lastpid);
         }
-        return xarResponseRedirect($return_url);
+        return xarResponseRedirect($return_url, 301);
     }
 
     $pageTitle = $data['ttitle'];
@@ -203,7 +198,7 @@ function crispbb_user_display($args)
     $item['itemtype'] = $data['topicstype'];
     $item['itemid'] = $tid;
     $item['tid'] = $tid;
-    $item['return_url'] = xarModURL('crispbb', 'user', 'display', array('tid' => $tid, 'startnum' => $startnum));
+    $item['returnurl'] = xarModURL('crispbb', 'user', 'display', array('tid' => $tid, 'startnum' => $startnum));
     xarVarSetCached('Hooks.hitcount','save', true);
     $hooks = xarModCallHooks('item', 'display', $tid, $item);
 
@@ -248,7 +243,7 @@ function crispbb_user_display($args)
             $hookitem['itemtype'] = $post['poststype'];
             $hookitem['itemid'] = $post['pid'];
             $hookitem['pid'] = $post['pid'];
-            $hookitem['return_url'] = xarModURL('crispbb', 'user', 'display', array('tid' => $tid, 'startnum' => $startnum));
+            $hookitem['returnurl'] = xarModURL('crispbb', 'user', 'display', array('tid' => $tid, 'startnum' => $startnum));
             $posthooks = xarModCallHooks('item', 'display', $post['pid'], $hookitem);
             $item['hookoutput'] = !empty($posthooks) && is_array($posthooks) ? $posthooks : array();
             unset($posthooks);
@@ -263,8 +258,8 @@ function crispbb_user_display($args)
     }
 
     $uidlist = !empty($seenposters) ? array_keys($seenposters) : array();
-    $posterlist = xarModAPIFunc('roles', 'user', 'getall', array('uidlist' => $uidlist));
-
+    $posterlist = xarModAPIFunc('crispbb', 'user', 'getposters', array('uidlist' => $uidlist, 'showstatus' => true));
+    //$posterlist = xarModAPIFunc('roles', 'user', 'getall', array('uidlist' => $uidlist));
     $data['posts'] = $posts;
     $data['categories'] = $categories;
     $data['pageTitle'] = $pageTitle;

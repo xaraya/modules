@@ -127,7 +127,7 @@ function crispbb_user_displayreply($args)
     $item['itemtype'] = $data['topicstype'];
     $item['itemid'] = $tid;
     $item['tid'] = $tid;
-    $item['return_url'] = xarServerGetCurrentURL();
+    $item['returnurl'] = xarServerGetCurrentURL();
     xarVarSetCached('Hooks.hitcount','save', true);
     $hooks = xarModCallHooks('item', 'display', $tid, $item);
 
@@ -173,7 +173,7 @@ function crispbb_user_displayreply($args)
             $hookitem['itemtype'] = $post['poststype'];
             $hookitem['itemid'] = $post['pid'];
             $hookitem['pid'] = $post['pid'];
-            $hookitem['return_url'] = xarModURL('crispbb', 'user', 'display', array('tid' => $tid, 'startnum' => $startnum));
+            $hookitem['returnurl'] = xarModURL('crispbb', 'user', 'display', array('tid' => $tid, 'startnum' => $startnum));
             $posthooks = xarModCallHooks('item', 'display', $post['pid'], $hookitem);
             $item['hookoutput'] = !empty($posthooks) && is_array($posthooks) ? $posthooks : array();
             unset($posthooks);

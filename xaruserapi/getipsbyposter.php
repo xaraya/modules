@@ -16,11 +16,10 @@
  * @author crisp <crisp@crispcreations.co.uk>
  * @return array
  */
-function crispbb_userapi_getposters($args)
+function crispbb_userapi_getipsbyposter($args)
 {
     extract($args);
 
-    $showcounts = !empty($showcounts) ? true : false;
     $sort = !empty($sort) ? $sort : '';
     $showstatus = !empty($showstatus) ? true : false;
 
@@ -36,27 +35,39 @@ function crispbb_userapi_getposters($args)
     $rolesdef = xarModAPIFunc('roles', 'user', 'leftjoin');
 
     $select = array();
-    $from = $posterstable;
+    $from = $poststable;
     $where = array();
     $groupby = array();
     $orderby = array();
     $bindvars = array();
 
-    $fields = array('uid', 'numtopics', 'numreplies');
-
-    foreach ($fields as $afield) {
-        $select[] = $posterstable . '.xar_' . $afield;
+    $fields = array('phostname','powner');
+    $select[] = 'DISTINCT ' . $poststable . '.xar_phostname';
+    $select[] = $poststable . '.xar_powner';
+    if (!empty($uid) && is_numeric($uid)) {
+        $where[] = $poststable . '.xar_powner = ?';
+        $bindvars[] = $uid;
     }
-
     // get user info from roles
-    $rolesfields = array('name','uname','date_reg');
+    $rolesfields = array('name','uname','uid','date_reg');
     foreach ($rolesfields as $rfield) {
         $select[] = $rolesdef['table'] . '.xar_' . $rfield;
         $fields[] = $rfield;
     }
     // Add the LEFT JOIN ... ON ... roles for the poster info
     $from .= ' LEFT JOIN ' . $rolesdef['table'];
-    $from .= ' ON ' . $rolesdef['table'] . '.xar_uid' . ' = ' . $posterstable . '.xar_uid';
+    $from .= ' ON ' . $rolesdef['table'] . '.xar_uid' . ' = ' . $poststable . '.xar_powner';
+
+    if ($dbconn->databaseType != 'sqlite') {
+        $from = '(' . $from . ')';
+    }
+    // Add the LEFT JOIN ... ON ... roles for the session info
+    $from .= ' LEFT JOIN ' . $posterstable . ' AS pcounts';
+    $from .= ' ON pcounts.xar_uid = ' . $rolesdef['table'] . '.xar_uid';
+    $select[] = 'pcounts.xar_numtopics';
+    $fields[] = 'numtopics';
+    $select[] = 'pcounts.xar_numreplies';
+    $fields[] = 'numreplies';
 
     // get current status for this user (online|offline)
     if ($showstatus) {
@@ -74,58 +85,6 @@ function crispbb_userapi_getposters($args)
         $select[] = 'session.xar_lastused';
         $from .= ' AND session.xar_lastused > ' . $filter;
         $fields[] = 'lastseen';
-    }
-
-    // TODO: expand sort options
-
-    if ($sort == 'numtopics') {
-        $orderby[] = $posterstable.'.xar_numtopics DESC';
-    } elseif ($sort == 'numreplies') {
-        $orderby[] = $posterstable . '.xar_numreplies DESC';
-    }
-
-    if (empty($orderby)) {
-        $orderby[] = $rolesdef['table'] . '.xar_name ASC';
-    }
-
-    if (empty($groupby)) {
-        $groupby[] = $posterstable . '.xar_uid';
-    }
-
-    // get users by ip
-    if (isset($ip) && is_string($ip)) {
-        if ($dbconn->databaseType != 'sqlite') {
-            $from = '(' . $from . ')';
-        }
-        // Add the LEFT JOIN ... ON ... roles for the session info
-        $from .= ' LEFT JOIN ' . $poststable . ' AS ipaddr';
-        $from .= ' ON ipaddr.xar_powner = ' . $rolesdef['table'] . '.xar_uid';
-        $where[] = 'ipaddr.xar_phostname LIKE ?';
-        $bindvars[] = $ip;
-    }
-
-    // get user by uid, we accept any of powner|towner|uid
-    if (isset($powner) && is_numeric($powner)) {
-        $uidlist = array($powner);
-    } elseif (isset($towner) && is_numeric($towner)) {
-        $uidlist = array($towner);
-    } elseif (isset($uid) && is_numeric($uid)) {
-        $uidlist = array($uid);
-    }
-    if (!empty($uidlist) && is_array($uidlist)) {
-        $seenuids = array();
-        foreach ($uidlist as $id) {
-            if (empty($id) || !is_numeric($id)) continue;
-            $seenuids[$id] = 1;
-        }
-        if (count($seenuids) == 1) {
-            $uids = array_keys($seenuids);
-            $where[] = $posterstable . '.xar_uid = ?';
-            $bindvars[] = $uids[0];
-        } elseif (count($seenuids) > 1) {
-            $uids = join(', ', array_keys($seenuids));
-            $where[] = $posterstable . '.xar_uid IN (' . $uids . ')';
-        }
     }
 
     $query = 'SELECT ' . join(', ', $select);
@@ -166,7 +125,7 @@ function crispbb_userapi_getposters($args)
             }
             $poster[$field] = $value;
         }
-        $posters[$poster['uid']] = $poster;
+        $posters[] = $poster;
     }
     return $posters;
 

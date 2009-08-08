@@ -31,12 +31,13 @@ function crispbb_xartables()
     $topicsTable    = xarDBGetSiteTablePrefix() . '_crispbb_topics';
     $postsTable     = xarDBGetSiteTablePrefix() . '_crispbb_posts';
     $hooksTable     = xarDBGetSiteTablePrefix() . '_crispbb_hooks';
-
+    $postersTable   = xarDBGetSiteTablePrefix() . '_crispbb_posters';
     $xarTables['crispbb_itemtypes'] = $itemtypesTable;
     $xarTables['crispbb_forums']    = $forumsTable;
     $xarTables['crispbb_topics']    = $topicsTable;
     $xarTables['crispbb_posts']     = $postsTable;
     $xarTables['crispbb_hooks']     = $hooksTable;
+    $xarTables['crispbb_posters']   = $postersTable;
 
     return $xarTables;
 }

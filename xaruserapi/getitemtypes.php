@@ -74,6 +74,8 @@ function crispbb_userapi_getitemtypes($args)
         $query .= ' WHERE ' . join(' AND ', $wheres);
     }
 
+    $query .= ' ORDER BY ' . $itemtypestable . '.xar_fid ASC, '.$itemtypestable . '.xar_component ASC';
+
     $result = &$dbconn->Execute($query,$bindvars);
     if (!$result) return;
     $itemtypes = array();

@@ -42,7 +42,7 @@ function crispbb_userapi_getforums($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $forumstable = $xartable['crispbb_forums'];
-    $fields = array('fid', 'fname', 'fdesc', 'fstatus', 'ftype', 'fowner', 'forder', 'lasttid', 'fsettings', 'fprivileges');
+    $fields = array('fid', 'fname', 'fdesc', 'fstatus', 'ftype', 'fowner', 'forder', 'lasttid', 'fsettings', 'fprivileges', 'numtopics', 'numreplies');
     $select = array();
     $where = array();
     foreach ($fields as $k => $fieldname) {
@@ -95,66 +95,7 @@ function crispbb_userapi_getforums($args)
     // $where[] = $itemtypestable . '.xar_component' . ' = "forum"';
     $addme = 1;
 
-    if ($addme && ($dbconn->databaseType != 'sqlite')) {
-        $from = '(' . $from . ')';
-    }
-    $from .= ' LEFT JOIN ' . $topicstable . ' AS topics';
-    $from .= ' ON topics.xar_fid' . ' = ' . $forumstable . '.xar_fid';
-    if (isset($tstatus)) {
-        if (is_numeric($tstatus)) {
-            $from .= ' AND topics.xar_tstatus = ' . $tstatus;
-        } elseif (is_array($tstatus) && count($tstatus) > 0) {
-            $seentstatus = array();
-            foreach ($tstatus as $id) {
-                if (!is_numeric($id)) continue;
-                $seentstatus[$id] = 1;
-            }
-            if (count($seentstatus) == 1) {
-                $tstatuses = array_keys($seentstatus);
-                $from .= ' AND topics.xar_tstatus = ' . $tstatuses[0];
-            } elseif (count($seentstatus) > 1) {
-                $tstatuses = join(', ', array_keys($seentstatus));
-                $from .= ' AND topics.xar_tstatus IN (' . $tstatuses . ')';
-            }
-        }
-    }
-    $select[] = 'COUNT(DISTINCT topics.xar_tid) AS numtopics';
-    $fields[] = 'numtopics';
-    $addme = 1;
-
     $poststable = $xartable['crispbb_posts'];
-
-    if ($addme && ($dbconn->databaseType != 'sqlite')) {
-        $from = '(' . $from . ')';
-    }
-    // Add the LEFT JOIN ... ON ... posts for the reply count
-    $from .= ' LEFT JOIN ' . $poststable . ' AS posts';
-    $from .= ' ON posts.xar_tid = topics.xar_tid';
-    //$from .= ' AND ' . $topicstable . '.xar_fid = ' . $forumstable . '.xar_fid';
-    $from .= ' AND posts.xar_pstatus IN (0,1)';
-    $from .= ' AND topics.xar_firstpid != topics.xar_lastpid';
-    $from .= ' AND topics.xar_firstpid != posts.xar_pid';
-    if (isset($tstatus)) {
-        if (is_numeric($tstatus)) {
-            $from .= ' AND topics.xar_tstatus = ' . $tstatus;
-        } elseif (is_array($tstatus) && count($tstatus) > 0) {
-            $seentstatus = array();
-            foreach ($tstatus as $id) {
-                if (!is_numeric($id)) continue;
-                $seentstatus[$id] = 1;
-            }
-            if (count($seentstatus) == 1) {
-                $tstatuses = array_keys($seentstatus);
-                $from .= ' AND topics.xar_tstatus = ' . $tstatuses[0];
-            } elseif (count($seentstatus) > 1) {
-                $tstatuses = join(', ', array_keys($seentstatus));
-                $from .= ' AND topics.xar_tstatus IN (' . $tstatuses . ')';
-            }
-        }
-    }
-    $select[] = 'COUNT(DISTINCT posts.xar_pid) AS numreplies';
-    $fields[] = 'numreplies';
-    $addme = 1;
 
     $postsfields = array('ptime', 'powner', 'poststype');
     /* TODO
@@ -255,8 +196,7 @@ function crispbb_userapi_getforums($args)
     }
     $query .= ' GROUP BY ' . $forumstable . '.xar_fid';
     if (!empty($sort) && $sort == 'totals') {
-        $query .= " ORDER BY numtopics DESC, numreplies DESC";
-        //$query .= " ORDER BY COUNT(DISTINCT topics.xar_tid) DESC, COUNT(DISTINCT posts.xar_pid) DESC";
+        $query .= " ORDER BY SUM(" . $forumstable . ".xar_numtopics+" . $forumstable . ".xar_numreplies) DESC";
     } else {
         $query .= " ORDER BY " . $forumstable . '.xar_forder';
     }

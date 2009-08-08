@@ -36,13 +36,23 @@ function crispbb_admin_posters($args)
         xarVarSetCached('Blocks.crispbb', 'tracking', $tracking);
         xarModSetUserVar('crispbb', 'tracking', serialize($tracking));
     }
-    $posters = xarModAPIFunc('crispbb', 'user', 'getposters',
-        array(
-            'ip' => $ip,
-            'startnum' => $startnum,
-            'numitems' => $numitems,
-            'powner' => $uid
-        ));
+    if (!empty($uid)) {
+        $posters = xarModAPIFunc('crispbb', 'user', 'getipsbyposter',
+            array(
+                'uid' => $uid,
+                'startnum' => $startnum,
+                'numitems' => $numitems,
+                'showstatus' => true
+            ));
+    } else {
+        $posters = xarModAPIFunc('crispbb', 'user', 'getposters',
+            array(
+                'ip' => $ip,
+                'startnum' => $startnum,
+                'numitems' => $numitems,
+                'showstatus' => true
+            ));
+    }
 
     $totalposters = xarModAPIFunc('crispbb', 'user', 'countposters',
         array(

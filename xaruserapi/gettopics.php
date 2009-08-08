@@ -34,7 +34,7 @@ function crispbb_userapi_gettopics($args)
     $topicstable = $xartable['crispbb_topics'];
     $trequired = array('tid', 'fid', 'tstatus');
     if (empty($topicfields) || !is_array($topicfields)) {
-        $topicfields = array('tid', 'fid', 'tstatus', 'towner', 'ttype', 'ttitle', 'lastpid', 'tsettings', 'topicstype', 'firstpid');
+        $topicfields = array('tid', 'fid', 'tstatus', 'towner', 'ttype', 'ttitle', 'lastpid', 'tsettings', 'topicstype', 'firstpid', 'numreplies', 'numdels', 'numsubs');
     }
     $forumfields = array('fname','fdesc','fstatus','ftype','fsettings','fprivileges');
     $postsfields = array('powner','ptime','pstatus','psettings','poststype', 'pdesc','ptext');
@@ -97,107 +97,6 @@ function crispbb_userapi_gettopics($args)
     $from .= ' LEFT JOIN ' . $hookstable;
     $from .= ' ON ' . $hookstable . '.xar_tid = ' . $topicstable . '.xar_tid';
     $addme = 1;
-    // count open replies for this topic
-    if (empty($numreplies)) {
-        // count total replies for this topic
-        if ($addme && ($dbconn->databaseType != 'sqlite')) {
-            $from = '(' . $from . ')';
-        }
-        // Add the LEFT JOIN ... ON ... posts for the reply count
-        $from .= ' LEFT JOIN ' . $poststable . ' AS replies';
-        $from .= ' ON replies.xar_tid = ' . $topicstable . '.xar_tid';
-        $from .= ' AND replies.xar_pstatus = 0';
-        $from .= ' AND ' . $topicstable . ".xar_firstpid != replies.xar_pid";
-        $from .= ' AND ' . $topicstable . ".xar_firstpid != " . $topicstable . ".xar_lastpid";
-        if (!empty($fid)) {
-            if (is_numeric($fid)) {
-                $from .= ' AND ' . $topicstable . '.xar_fid = ' . $fid;
-            } elseif (is_array($fid) && count($fid) > 0) {
-                $seenfid = array();
-                foreach ($fid as $id) {
-                    if (empty($id) || !is_numeric($id)) continue;
-                    $seenfid[$id] = 1;
-                }
-                if (count($seenfid) == 1) {
-                    $fids = array_keys($seenfid);
-                    $from .= ' AND ' . $topicstable . '.xar_fid = ' . $fids[0];
-                } elseif (count($seenfid) > 1) {
-                    $fids = join(', ', array_keys($seenfid));
-                    $from .= ' AND ' . $topicstable . '.xar_fid IN (' . $fids . ')';
-                }
-            }
-        }
-        $select[] = 'COUNT(replies.xar_pid) AS numreplies';
-        $fields[] = 'numreplies';
-        $addme = 1;
-    }
-    // count submitted replies
-    if (!empty($numsubs)) {
-        if ($addme && ($dbconn->databaseType != 'sqlite')) {
-            $from = '(' . $from . ')';
-        }
-        // Add the LEFT JOIN ... ON ... posts for the reply count
-        $from .= ' LEFT JOIN ' . $poststable . ' AS subs';
-        $from .= ' ON subs.xar_tid = ' . $topicstable . '.xar_tid';
-        $from .= ' AND subs.xar_pstatus = 2';
-        $from .= ' AND ' . $topicstable . ".xar_firstpid != subs.xar_pid";
-        $from .= ' AND ' . $topicstable . ".xar_firstpid != " . $topicstable . ".xar_lastpid";
-        if (!empty($fid)) {
-            if (is_numeric($fid)) {
-                $from .= ' AND ' . $topicstable . '.xar_fid = ' . $fid;
-            } elseif (is_array($fid) && count($fid) > 0) {
-                $seenfid = array();
-                foreach ($fid as $id) {
-                    if (empty($id) || !is_numeric($id)) continue;
-                    $seenfid[$id] = 1;
-                }
-                if (count($seenfid) == 1) {
-                    $fids = array_keys($seenfid);
-                    $from .= ' AND ' . $topicstable . '.xar_fid = ' . $fids[0];
-                } elseif (count($seenfid) > 1) {
-                    $fids = join(', ', array_keys($seenfid));
-                    $from .= ' AND ' . $topicstable . '.xar_fid IN (' . $fids . ')';
-                }
-            }
-        }
-        $select[] = 'COUNT(DISTINCT subs.xar_pid) AS numsubs';
-        $fields[] = 'numsubs';
-        $addme = 1;
-    }
-
-    // count deleted replies
-    if (!empty($numdels)) {
-        if ($addme && ($dbconn->databaseType != 'sqlite')) {
-            $from = '(' . $from . ')';
-        }
-        // Add the LEFT JOIN ... ON ... posts for the reply count
-        $from .= ' LEFT JOIN ' . $poststable . ' AS dels';
-        $from .= ' ON dels.xar_tid = ' . $topicstable . '.xar_tid';
-        $from .= ' AND dels.xar_pstatus = 5';
-        $from .= ' AND ' . $topicstable . ".xar_firstpid != dels.xar_pid";
-        $from .= ' AND ' . $topicstable . ".xar_firstpid != " . $topicstable . ".xar_lastpid";
-        if (!empty($fid)) {
-            if (is_numeric($fid)) {
-                $from .= ' AND ' . $topicstable . '.xar_fid = ' . $fid;
-            } elseif (is_array($fid) && count($fid) > 0) {
-                $seenfid = array();
-                foreach ($fid as $id) {
-                    if (empty($id) || !is_numeric($id)) continue;
-                    $seenfid[$id] = 1;
-                }
-                if (count($seenfid) == 1) {
-                    $fids = array_keys($seenfid);
-                    $from .= ' AND ' . $topicstable . '.xar_fid = ' . $fids[0];
-                } elseif (count($seenfid) > 1) {
-                    $fids = join(', ', array_keys($seenfid));
-                    $from .= ' AND ' . $topicstable . '.xar_fid IN (' . $fids . ')';
-                }
-            }
-        }
-        $select[] = 'COUNT(DISTINCT dels.xar_pid) AS numdels';
-        $fields[] = 'numdels';
-        $addme = 1;
-    }
 
     if ($addme && ($dbconn->databaseType != 'sqlite')) {
         $from = '(' . $from . ')';
@@ -425,7 +324,7 @@ function crispbb_userapi_gettopics($args)
         } elseif ($sort == 'numhits') {
             $myorder = $hitcountdef['hits'];
         } elseif ($sort == 'numreplies') {
-            $myorder = 'numreplies';//'COUNT(replies.xar_pid)';
+            $myorder = $topicstable .'xar_numreplies';//'COUNT(replies.xar_pid)';
         } elseif ($sort == 'ttime') {
             $myorder = 'firstpost.xar_ptime';
         }

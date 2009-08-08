@@ -193,6 +193,7 @@ function crispbb_user_moderate($args)
                         }
                         // finally, perform requested action
                         if (!xarSecConfirmAuthKey()) return;
+                        $seenposters = array();
                         // perform the action on each topic in turn
                         foreach ($topics as $tid => $topic) {
                             switch ($modaction) {
@@ -306,6 +307,15 @@ function crispbb_user_moderate($args)
                                         array(
                                             'tid' => $topic['tid']))) return;
                                 break;
+                            }
+                            $seenposters[$topic['towner']] = 1;
+                        }
+                        if (!empty($seenposters)) {
+                            $seenposters = array_keys($seenposters);
+                            foreach ($seenposters as $seenuid) {
+                                // update user this topic belongs to
+                                if (!xarModAPIFunc('crispbb', 'user', 'updateposter',
+                                    array('uid' => $seenuid))) return;
                             }
                         }
                         // re-synch forum
@@ -875,6 +885,7 @@ function crispbb_user_moderate($args)
                             return xarTPLModule('crispbb', 'user', 'moderate-confirm', $data);
                         }
                         if (!xarSecConfirmAuthKey()) return;
+                        $seenposters = array();
                         // perform action on each post in turn
                         foreach ($posts as $pid => $post) {
                             switch ($modaction) {
@@ -901,6 +912,15 @@ function crispbb_user_moderate($args)
                                             'pid' => $post['pid']
                                     ))) return;
                                 break;
+                            }
+                            $seenposters[$post['powner']] = 1;
+                        }
+                        if (!empty($seenposters)) {
+                            $seenposters = array_keys($seenposters);
+                            foreach ($seenposters as $seenuid) {
+                                // update user this topic belongs to
+                                if (!xarModAPIFunc('crispbb', 'user', 'updateposter',
+                                    array('uid' => $seenuid))) return;
                             }
                         }
                         // update the topic the posts came from

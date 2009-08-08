@@ -323,6 +323,8 @@ function crispbb_user_newreply($args)
                 $tracking[$data['fid']][0]['lastview'] = $now;
                 xarModSetUserVar('crispbb', 'tracking', serialize($tracking));
             }
+            if (!xarModAPIFunc('crispbb', 'user', 'updateposter',
+                array('uid' => $powner))) return;
             xarSessionSetVar('crispbb_hook_active', false);
             if (!empty($data['postbuffer']) || $pstatus == 2) {
                 if ($pstatus == 2) {

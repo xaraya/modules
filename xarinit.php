@@ -342,6 +342,7 @@ function crispbb_upgrade($oldversion)
     $topicstable = $xartable['crispbb_topics'];
     $poststable = $xartable['crispbb_posts'];
     $hookstable = $xartable['crispbb_hooks'];
+    $posterstable = $xartable['crispbb_posters'];
 
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
     switch ($oldversion) {
@@ -416,7 +417,181 @@ function crispbb_upgrade($oldversion)
             // bugfix mismatched topic count in searches
             // add visual cues to deleted content in GUIs
         case '0.7.5':
-           /* current version */
+            // some updates to include templates user-timestamp and topic-reply-row
+            // GUIs now show status (online|offline) for each poster
+            // update fixes several issues discovered which
+            // affect sites with high (1000s) topic reply counts
+
+            // add numreplies to topics table
+            $fields = "xar_numreplies I NotNull DEFAULT '0'";
+            $result = $datadict->addColumn($topicstable, $fields);
+            if (!$result) return;
+            $result = $datadict->createIndex(
+                'i_' . xarDBGetSiteTablePrefix() . '_crispbb_topics_numreplies',
+                $topicstable,
+                'xar_numreplies'
+            );
+            if (!$result) {return;}
+
+            // add numtopics to forums table
+            $fields = "xar_numtopics I NotNull DEFAULT '0'";
+            $result = $datadict->addColumn($forumstable, $fields);
+            if (!$result) return;
+            $result = $datadict->createIndex(
+                'i_' . xarDBGetSiteTablePrefix() . '_crispbb_forums_numtopics',
+                $forumstable,
+                'xar_numtopics'
+            );
+            if (!$result) {return;}
+
+            // add numreplies to forums table
+            $fields = "xar_numreplies I NotNull DEFAULT '0'";
+            $result = $datadict->addColumn($forumstable, $fields);
+            if (!$result) return;
+            $result = $datadict->createIndex(
+                'i_' . xarDBGetSiteTablePrefix() . '_crispbb_forums_numreplies',
+                $forumstable,
+                'xar_numreplies'
+            );
+            if (!$result) {return;}
+            // add numtopicsubs to forums table
+            $fields = "xar_numtopicsubs I NotNull DEFAULT '0'";
+            $result = $datadict->addColumn($forumstable, $fields);
+            if (!$result) return;
+            $result = $datadict->createIndex(
+                'i_' . xarDBGetSiteTablePrefix() . '_crispbb_forums_numtopicsubs',
+                $forumstable,
+                'xar_numtopicsubs'
+            );
+            if (!$result) {return;}
+            // add numreplysubs to forums table
+            $fields = "xar_numreplysubs I NotNull DEFAULT '0'";
+            $result = $datadict->addColumn($forumstable, $fields);
+            if (!$result) return;
+            $result = $datadict->createIndex(
+                'i_' . xarDBGetSiteTablePrefix() . '_crispbb_forums_numreplysubs',
+                $forumstable,
+                'xar_numreplysubs'
+            );
+            if (!$result) {return;}
+            // add numtopicdels to forums table
+            $fields = "xar_numtopicdels I NotNull DEFAULT '0'";
+            $result = $datadict->addColumn($forumstable, $fields);
+            if (!$result) return;
+            $result = $datadict->createIndex(
+                'i_' . xarDBGetSiteTablePrefix() . '_crispbb_forums_numtopicdels',
+                $forumstable,
+                'xar_numtopicdels'
+            );
+            if (!$result) {return;}
+            // add numreplydels to forums table
+            $fields = "xar_numreplydels I NotNull DEFAULT '0'";
+            $result = $datadict->addColumn($forumstable, $fields);
+            if (!$result) return;
+            $result = $datadict->createIndex(
+                'i_' . xarDBGetSiteTablePrefix() . '_crispbb_forums_numreplydels',
+                $forumstable,
+                'xar_numreplydels'
+            );
+            if (!$result) {return;}
+            // add numsubs to topics table
+            $fields = "xar_numsubs I NotNull DEFAULT '0'";
+            $result = $datadict->addColumn($topicstable, $fields);
+            if (!$result) return;
+            $result = $datadict->createIndex(
+                'i_' . xarDBGetSiteTablePrefix() . '_crispbb_topics_numsubs',
+                $topicstable,
+                'xar_numsubs'
+            );
+            if (!$result) {return;}
+            // add numdels to topics table
+            $fields = "xar_numdels I NotNull DEFAULT '0'";
+            $result = $datadict->addColumn($topicstable, $fields);
+            if (!$result) return;
+            $result = $datadict->createIndex(
+                'i_' . xarDBGetSiteTablePrefix() . '_crispbb_topics_numdels',
+                $topicstable,
+                'xar_numdels'
+            );
+            if (!$result) {return;}
+
+            /* posters table */
+            $fields = "xar_uid          I           NotNull    DEFAULT 0,
+                       xar_numtopics    I           NotNull    DEFAULT 0,
+                       xar_numreplies   I           NotNull    DEFAULT 0
+                       ";
+            $result = $datadict->changeTable($posterstable, $fields);
+            if (!$result) {return;}
+            $result = $datadict->createIndex(
+                'i_' . xarDBGetSiteTablePrefix() . '_crispbb_posters_uid',
+                $posterstable,
+                'xar_uid'
+            );
+            if (!$result) {return;}
+            $result = $datadict->createIndex(
+                'i_' . xarDBGetSiteTablePrefix() . '_crispbb_posters_numtopics',
+                $posterstable,
+                'xar_numtopics'
+            );
+            if (!$result) {return;}
+            $result = $datadict->createIndex(
+                'i_' . xarDBGetSiteTablePrefix() . '_crispbb_posters_numreplies',
+                $posterstable,
+                'xar_numreplies'
+            );
+            if (!$result) {return;}
+            // get all posters
+            $query = "SELECT DISTINCT xar_powner";
+            $query .= " FROM $poststable";
+            $result =& $dbconn->SelectLimit($query, -1, 0, array());
+            if (!$result) return;
+            $founduids = array();
+            for (; !$result->EOF; $result->MoveNext()) {
+                $data = $result->fields;
+                $founduid = array_shift($data);
+                $founduids[$founduid] =1;
+            }
+            $result->Close();
+            // populate the posters table
+            if (!empty($founduids)) {
+                foreach (array_keys($founduids) as $founduid) {
+                    $numreplies = xarModAPIFunc('crispbb', 'user', 'countposts',
+                        array('powner' => $founduid, 'pstatus' => 0, 'tstatus' => array(0,1)));
+                    $numtopics = xarModAPIFunc('crispbb', 'user', 'counttopics',
+                        array('towner' => $founduid, 'tstatus' => array(0,1)));
+                    $numreplies = !empty($numreplies) ? $numreplies - $numtopics : 0;
+                    $query = "INSERT INTO $posterstable (
+                              xar_uid,
+                              xar_numtopics,
+                              xar_numreplies
+                              )
+                            VALUES (?,?,?)";
+                    $bindvars = array();
+                    $bindvars[] = $founduid;
+                    $bindvars[] = $numtopics;
+                    $bindvars[] = $numreplies;
+                    $result = &$dbconn->Execute($query,$bindvars);
+                    if (!$result) return;
+                }
+            }
+            // add counts to forums
+            $forums = xarModAPIFunc('crispbb', 'user', 'getforums');
+            if (!empty($forums)) {
+                foreach ($forums as $fid => $forum) {
+                    if (!xarModAPIFunc('crispbb', 'admin', 'update',
+                        array('fid' => $fid, 'nohooks' => true))) return;
+                }
+            }
+            // add counts to topics
+            $topics = xarModAPIFunc('crispbb', 'user', 'gettopics');
+            if (!empty($topics)) {
+                foreach ($topics as $tid => $topic) {
+                    if (!xarModAPIFunc('crispbb', 'user', 'updatetopic',
+                        array('tid' => $tid, 'nohooks' => true))) return;
+                }
+            }
+        case '0.7.8':
+        /* current version */
         break;
     }
     /* Update successful */
@@ -441,6 +616,7 @@ function crispbb_delete()
     $topicstable = $xartable['crispbb_topics'];
     $poststable = $xartable['crispbb_posts'];
     $hookstable = $xartable['crispbb_hooks'];
+    $posterstable = $xartable['crispbb_posters'];
 
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
@@ -449,6 +625,7 @@ function crispbb_delete()
     $result = $datadict->dropTable($topicstable);
     $result = $datadict->dropTable($poststable);
     $result = $datadict->dropTable($hookstable);
+    $result = $datadict->dropTable($posterstable);
 
 
     $aliasname = xarModGetVar('crispbb','aliasname');

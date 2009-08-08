@@ -54,10 +54,8 @@
     <xar:comment>Show posters name, linking to their profile</xar:comment>
     <a href="#xarModURL('roles', 'user', 'display', array('uid' => $post['powner']))#" title="#xarML('View Profile')#">#$posterlist[$post['powner']]['name']#</a>
     <br />
-    <xar:ml>
-        <xar:mlstring>Joined: #(1)</xar:mlstring>
-        <xar:mlvar>#xarLocaleGetFormattedDate('medium', $posterlist[$post['powner']]['date_reg'])#</xar:mlvar>
-    </xar:ml>
+    <xar:mlstring>Joined:</xar:mlstring>
+    <xar:template type="module" module="crispbb" file="user-timestamp" subdata="array('timestamp' =&gt; $posterlist[$post['powner']]['date_reg'], 'timeorder' =&gt; 'dateonly')" />
     <xar:comment>If we found some dd for this user we can display it here</xar:comment>
     <xar:if condition="isset($userprops.location) and !empty($userdd[$post['powner']]['location'])">
         <br />
@@ -68,6 +66,17 @@
     <a href="#xarModURL('crispbb', 'user', 'search', array('towner' => $post['powner']))#">
         <xar:mlstring>Other Topics</xar:mlstring>
     </a>
+    <br />
+    <xar:mlstring>Status: </xar:mlstring>
+    <xar:if condition="!empty($posterlist[$post['powner']]['online'])">
+        <span style="color:green;"><xar:mlstring>Online Now</xar:mlstring></span>
+    <xar:else />
+        <span style="color:gray;"><xar:mlstring>Offline</xar:mlstring></span>
+        <xar:if condition="isset($posterlist[$post['powner']]['lastseen'])">
+        <br />
+        <span class="xar-sub"><em><xar:mlstring>Last seen </xar:mlstring><xar:template type="module" module="crispbb" file="user-timestamp" subdata="array('timestamp' =&gt; $posterlist[$post['powner']]['lastseen'], 'timeorder' =&gt; 'dateonly')" /></em></span>
+        </xar:if>
+    </xar:if>
 </td>
 <td class="replyinfo xar-padding-none">
     <xar:comment>The actual post is in this cell</xar:comment>
@@ -90,6 +99,7 @@
     </div>
     <xar:comment>Display the time of this post</xar:comment>
     <div class="xar-sub xar-align-right xar-padding-thicksides">
+        <xar:mlstring>Posted</xar:mlstring>
         <xar:template type="module" module="crispbb" file="user-timestamp" subdata="array('timestamp' =&gt; $post['ptime'])" />
         <xar:if condition="!empty($post['phostname'])">
             [ <a href="#xarModURL('crispbb', 'admin', 'posters', array('ip' => $post['phostname']))#" title="#xarML('Show users posting from this ip address')#">#$post['phostname']#</a> ]

@@ -348,7 +348,7 @@ function crispbb_user_search()
                 }
                 $posteruids = !empty($seenposters) ? array_keys($seenposters) : array();
                 $data['uidlist'] = $posteruids;
-                $data['posterlist'] = xarModAPIFunc('roles', 'user', 'getall', array('uidlist' => $posteruids));
+                $data['posterlist'] = xarModAPIFunc('crispbb', 'user', 'getposters', array('uidlist' => $posteruids, 'showstatus' => true));
                 $data['showforum'] = true;
             } else {
                 $seenposters = array();
@@ -363,7 +363,7 @@ function crispbb_user_search()
                         $hookitem['itemtype'] = $post['topicstype'];
                         $hookitem['itemid'] = $post['tid'];
                         $hookitem['tid'] = $post['tid'];
-                        $hookitem['return_url'] = xarModURL('crispbb', 'user', 'display', array('tid' => $item['tid'], 'startnum' => $startnum));
+                        $hookitem['returnurl'] = xarModURL('crispbb', 'user', 'display', array('tid' => $item['tid'], 'startnum' => $startnum));
                         $item['hookoutput'] = xarModCallHooks('item', 'display', $post['tid'], $hookitem);
                     }   else {
                         $hookitem = array();
@@ -371,7 +371,7 @@ function crispbb_user_search()
                         $hookitem['itemtype'] = $post['poststype'];
                         $hookitem['itemid'] = $post['pid'];
                         $hookitem['pid'] = $post['pid'];
-                        $hookitem['return_url'] = xarModURL('crispbb', 'user', 'display', array('tid' => $item['tid'], 'startnum' => $startnum));
+                        $hookitem['returnurl'] = xarModURL('crispbb', 'user', 'display', array('tid' => $item['tid'], 'startnum' => $startnum));
                         $posthooks = xarModCallHooks('item', 'display', $post['pid'], $hookitem);
                         $item['hookoutput'] = !empty($posthooks) && is_array($posthooks) ? $posthooks : array();
                         unset($posthooks);
@@ -407,7 +407,7 @@ function crispbb_user_search()
 
                 $uidlist = !empty($seenposters) ? array_keys($seenposters) : array();
                 $data['uidlist'] = $uidlist;
-                $data['posterlist'] = xarModAPIFunc('roles', 'user', 'getall', array('uidlist' => $uidlist));
+                $data['posterlist'] = xarModAPIFunc('crispbb', 'user', 'getposters', array('uidlist' => $uidlist, 'showstatus' => true));
             }
         }
     }

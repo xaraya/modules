@@ -142,11 +142,6 @@ function crispbb_userapi_updatetopic($args)
         $bindvars[] = $lastpid;
     }
 
-    if (isset($numreplies)) {
-        $set[] = 'xar_numreplies = ?';
-        $bindvars[] = $numreplies;
-    }
-
     if (isset($ttitle)) {
         $set[] = 'xar_ttitle = ?';
         $bindvars[] = $ttitle;
@@ -156,6 +151,28 @@ function crispbb_userapi_updatetopic($args)
         $set[] = 'xar_tsettings = ?';
         $bindvars[] = serialize($tsettings);
     }
+
+    $numreplies = xarModAPIFunc('crispbb', 'user', 'countposts',
+        array(
+            'tid' => $tid,
+            'pstatus' => 0
+        ));
+    $set[] = 'xar_numreplies = ?';
+    $bindvars[] = !empty($numreplies) ? $numreplies-1 : 0;
+    $numsubs = xarModAPIFunc('crispbb', 'user', 'countposts',
+        array(
+            'tid' => $tid,
+            'pstatus' => 2
+        ));
+    $set[] = 'xar_numsubs = ?';
+    $bindvars[] = $numsubs;
+    $numdels = xarModAPIFunc('crispbb', 'user', 'countposts',
+        array(
+            'tid' => $tid,
+            'pstatus' => 5
+        ));
+    $set[] = 'xar_numdels = ?';
+    $bindvars[] = $numdels;
 
     $query = "UPDATE $topicstable";
     $query .= " SET " . join(',', $set);

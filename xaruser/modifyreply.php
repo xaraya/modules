@@ -226,6 +226,8 @@ function crispbb_user_modifyreply($args)
                     'poststype' => $data['poststype'],
                     'fid' => $data['fid']
                 ))) return;
+            if (!xarModAPIFunc('crispbb', 'user', 'updateposter',
+                array('uid' => $data['powner']))) return;
             if (empty($return_url)) {
                 $return_url = xarModURL('crispbb', 'user', 'display',
                     array('tid' => $data['tid'], 'pid' => $pid));

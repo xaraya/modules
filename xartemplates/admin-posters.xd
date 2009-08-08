@@ -69,6 +69,9 @@
             <thead>
                 <tr>
                     <th scope="col"><xar:mlstring>User</xar:mlstring></th>
+                    <th scope="col"><xar:mlstring>Topics</xar:mlstring></th>
+                    <th scope="col"><xar:mlstring>Replies</xar:mlstring></th>
+                    <th scope="col"><xar:mlstring>Status</xar:mlstring></th>
                     <th scope="col"><xar:mlstring>Actions</xar:mlstring></th>
                 </tr>
             </thead>
@@ -78,6 +81,13 @@
                 <xar:foreach in="$items" value="$poster">
                     <tr>
                         <td><a href="#xarModURL('roles', 'user', 'display', array('uid' => $poster['uid']))#">#$poster['name']#</a></td>
+                        <td>#$poster['numtopics']#</td>
+                        <td>#$poster['numreplies']#</td>
+                        <td><xar:if condition="!empty($poster['online'])">
+                            <xar:mlstring>Online</xar:mlstring>
+                            <xar:else />
+                            <xar:mlstring>Offline</xar:mlstring>
+                            </xar:if></td>
                         <td><a href="#xarModURL('crispbb', 'admin', 'posters', array('uid' => $poster['uid']))#" title="#xarML('View IP Addresses this user has posted from')#">View IPs</a></td>
                     </tr>
                     <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
@@ -108,6 +118,9 @@
             <thead>
                 <tr>
                     <th scope="col"><xar:mlstring>User</xar:mlstring></th>
+                    <th scope="col"><xar:mlstring>Topics</xar:mlstring></th>
+                    <th scope="col"><xar:mlstring>Replies</xar:mlstring></th>
+                    <th scope="col"><xar:mlstring>Status</xar:mlstring></th>
                     <th scope="col"><xar:mlstring>Actions</xar:mlstring></th>
                 </tr>
             </thead>
@@ -117,6 +130,13 @@
                 <xar:foreach in="$items" value="$poster">
                     <tr class="#$rowclass#">
                         <td><a href="#xarModURL('roles', 'user', 'display', array('uid' => $poster['uid']))#">#$poster['name']#</a></td>
+                        <td>#$poster['numtopics']#</td>
+                        <td>#$poster['numreplies']#</td>
+                        <td><xar:if condition="!empty($poster['online'])">
+                            <xar:mlstring>Online</xar:mlstring>
+                            <xar:else />
+                            <xar:mlstring>Offline</xar:mlstring>
+                            </xar:if></td>
                         <td><a href="#xarModURL('crispbb', 'admin', 'posters', array('uid' => $poster['uid']))#" title="#xarML('View IP Addresses this user has posted from')#">View IPs</a></td>
                     </tr>
                     <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>

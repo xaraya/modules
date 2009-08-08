@@ -42,7 +42,7 @@ function crispbb_userapi_showreplies($args)
     $item['itemtype'] = $data['topicstype'];
     $item['itemid'] = $tid;
     $item['tid'] = $tid;
-    $item['return_url'] = xarModURL('crispbb', 'user', 'display', array('tid' => $tid, 'startnum' => $startnum));
+    $item['returnurl'] = xarModURL('crispbb', 'user', 'display', array('tid' => $tid, 'startnum' => $startnum));
     xarVarSetCached('Hooks.hitcount','save', true);
     $hooks = xarModCallHooks('item', 'display', $tid, $item);
 
@@ -98,7 +98,7 @@ function crispbb_userapi_showreplies($args)
             $hookitem['itemtype'] = $post['poststype'];
             $hookitem['itemid'] = $post['pid'];
             $hookitem['pid'] = $post['pid'];
-            $hookitem['return_url'] = xarModURL('crispbb', 'user', 'display', array('tid' => $tid, 'startnum' => $startnum));
+            $hookitem['returnurl'] = xarModURL('crispbb', 'user', 'display', array('tid' => $tid, 'startnum' => $startnum));
             $posthooks = xarModCallHooks('item', 'display', $post['pid'], $hookitem);
             $item['hookoutput'] = !empty($posthooks) && is_array($posthooks) ? $posthooks : array();
             unset($posthooks);
@@ -110,7 +110,7 @@ function crispbb_userapi_showreplies($args)
     }
 
     $uidlist = !empty($seenposters) ? array_keys($seenposters) : array();
-    $posterlist = xarModAPIFunc('roles', 'user', 'getall', array('uidlist' => $uidlist));
+    $posterlist = xarModAPIFunc('crispbb', 'user', 'getposters', array('uidlist' => $uidlist, 'showstatus' => true));
 
     $data['posts'] = $posts;
     $data['uidlist'] = $uidlist;

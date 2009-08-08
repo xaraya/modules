@@ -262,7 +262,7 @@ function crispbb_user_view($args)
     }
 
     $posteruids = !empty($seenposters) ? array_keys($seenposters) : array();
-    $posterlist = xarModAPIFunc('roles', 'user', 'getall', array('uidlist' => $posteruids));
+    $posterlist = xarModAPIFunc('crispbb', 'user', 'getposters', array('uidlist' => $posteruids, 'showstatus' => true));
 
     $data['posterlist'] = $posterlist;
     $pageTitle = $data['fname'];

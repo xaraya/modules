@@ -190,6 +190,59 @@ function crispbb_adminapi_update($args)
         $bindvars[] = $lasttid;
     }
 
+    // keep counts in synch when updating the forum
+    $numtopics = xarModAPIFunc('crispbb', 'user', 'counttopics',
+        array(
+            'fid' => $fid,
+            'tstatus' => array(0,1)
+        ));
+    $set[] = 'xar_numtopics = ?';
+    $bindvars[] = $numtopics;
+
+    $numreplies = xarModAPIFunc('crispbb', 'user', 'countposts',
+        array(
+            'fid' => $fid,
+            'tstatus' => array(0,1),
+            'pstatus' => 0
+        ));
+    $numreplies = !empty($numreplies) ? $numreplies - $numtopics : 0;
+    $set[] = 'xar_numreplies = ?';
+    $bindvars[] = $numreplies;
+
+    $numtopicsubs = xarModAPIFunc('crispbb', 'user', 'counttopics',
+        array(
+            'fid' => $fid,
+            'tstatus' => 2
+        ));
+    $set[] = 'xar_numtopicsubs = ?';
+    $bindvars[] = $numtopicsubs;
+
+    $numtopicdels = xarModAPIFunc('crispbb', 'user', 'counttopics',
+        array(
+            'fid' => $fid,
+            'tstatus' => 5
+        ));
+    $set[] = 'xar_numtopicdels = ?';
+    $bindvars[] = $numtopicdels;
+
+    $numreplysubs = xarModAPIFunc('crispbb', 'user', 'countposts',
+        array(
+            'fid' => $fid,
+            'tstatus' => array(0,1),
+            'pstatus' => 2
+        ));
+    $set[] = 'xar_numreplysubs = ?';
+    $bindvars[] = $numreplysubs;
+
+    $numreplydels = xarModAPIFunc('crispbb', 'user', 'countposts',
+        array(
+            'fid' => $fid,
+            'tstatus' => array(0,1),
+            'pstatus' => 5
+        ));
+    $set[] = 'xar_numreplydels = ?';
+    $bindvars[] = $numreplydels;
+
     $query = "UPDATE $forumstable";
     $query .= " SET " . join(',', $set);
     $query .= " WHERE xar_fid = ?";

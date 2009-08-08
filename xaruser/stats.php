@@ -106,7 +106,7 @@ function crispbb_user_stats($args)
 
     $data['topforums'] = array_slice($forums, 0, 10, true);
 
-    $data['topstarters'] = xarModAPIFunc('crispbb', 'user', 'getposters', array('sort' => 'numtopics', 'numitems' => 10, 'fids' => $fids, 'tstatus' => $tstatus));
+    $data['topstarters'] = xarModAPIFunc('crispbb', 'user', 'getposters', array('sort' => 'numtopics', 'numitems' => 10));
     $data['topposters'] = xarModAPIFunc('crispbb', 'user', 'getposters', array('sort' => 'numreplies', 'numitems' => 10, 'fids' => $fids, 'tstatus' => $tstatus));
     $data['topreplies'] = xarModAPIFunc('crispbb', 'user', 'gettopics', array('fid' => $fids, 'tstatus' => $tstatus, 'sort' => 'numreplies', 'order' => 'DESC', 'numitems' => 10));
 
