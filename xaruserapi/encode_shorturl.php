@@ -87,7 +87,7 @@ function crispbb_userapi_encode_shorturl($args)
             $topic = xarModAPIFunc('crispbb', 'user', 'gettopic', array('tid' => $tid, 'nolinks' => true, 'privcheck' => true));
             $topics[$tid] = $topic;
         }
-        if (!$topic != 'NO_PRIVILEGES') {
+        if ($topic != 'NO_PRIVILEGES' && $topic != 'BAD_DATA') {
             $ttitle = crispbb_encode_shorturl_cleantitle($topic['transformed_ttitle']);
             unset($get['tid']);
             $path[] = $ttitle; // ../crispbb/some-topic title

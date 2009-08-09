@@ -1,5 +1,6 @@
+<xar:set name="now">time()</xar:set>
 <xar:if condition="empty($timestamp)">
-    <xar:set name="timestamp">time()</xar:set>
+    <xar:set name="timestamp">#$now#</xar:set>
 </xar:if>
 <xar:if condition="empty($timeformat)">
     <xar:set name="timeformat">'medium'</xar:set>
@@ -14,7 +15,26 @@
     <xar:set name="timelayout">xarModGetUserVar('crispbb', 'timelayout')</xar:set>
 </xar:if>
 <xar:if condition="empty($timelayout) or $timelayout eq 'default'">
-    <xar:if condition="$timeorder eq 'timedate'">
+    <xar:if condition="$timestamp ne $now">
+        <xar:set name="oneday">60*60*24</xar:set>
+        <xar:set name="today">xarLocaleGetFormattedDate('long', $now)</xar:set>
+        <xar:set name="yesterday">xarLocaleGetFormattedDate('long', $now-$oneday)</xar:set>
+        <xar:set name="compare">xarLocaleGetFormattedDate('long', $timestamp)</xar:set>
+        <xar:if condition="$compare eq $today">
+            <xar:set name="when">'Today at'</xar:set>
+        <xar:elseif condition="$compare eq $yesterday" />
+            <xar:set name="when">'Yesterday at'</xar:set>
+        <xar:else />
+            <xar:set name="when">''</xar:set>
+        </xar:if>
+    </xar:if>
+    <xar:if condition="!empty($when)">
+         <xar:ml>
+            <xar:mlstring>#(1) #(2)</xar:mlstring>
+            <xar:mlvar>#$when#</xar:mlvar>
+            <xar:mlvar>#xarLocaleGetFormattedTime($timeformat, $timestamp)#</xar:mlvar>
+        </xar:ml>
+    <xar:elseif condition="$timeorder eq 'timedate'" />
         <xar:ml>
             <xar:mlstring>#(1), #(2)</xar:mlstring>
             <xar:mlvar>#xarLocaleGetFormattedTime($timeformat, $timestamp)#</xar:mlvar>

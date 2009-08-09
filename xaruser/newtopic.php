@@ -389,7 +389,7 @@ function crispbb_user_newtopic($args)
                 xarModSetUserVar('crispbb', 'tracking', serialize($tracking));
             }
             if (!xarModAPIFunc('crispbb', 'user', 'updateposter',
-                array('uid' => $towner))) return;
+                array('uid' => $uid))) return;
             // if this topic was created via hooks, we return user to a newreply to the topic
             if (!empty($modname) && !empty($itemtype)) {
                 // create the hook

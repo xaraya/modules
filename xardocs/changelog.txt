@@ -172,4 +172,8 @@ high (1000s) topic reply counts (caused by some ambitious db queries on my part 
 Fixes incorrect ordering of top 10 forums
 Fixes incorrect ordering of top 10 posters
 0.7.8
+Fix for Bug 6398: incorrect var used in last update
+Update to xartemplates/includes/user-timestamp
+Some changes missed in last update
+0.7.9
 **** Current Version ****

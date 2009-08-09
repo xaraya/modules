@@ -72,24 +72,26 @@ function crispbb_user_display($args)
             $lastreadforum = !empty($tracking[$data['fid']][0]['lastread']) ? $tracking[$data['fid']][0]['lastread'] : $lastvisit;
             $lastreadtopic = !empty($tracking[$data['fid']][$tid]) ? $tracking[$data['fid']][$tid] : $lastreadforum;
             if ($data['ptime'] > $lastreadtopic) {
-                $postssince = xarModAPIFunc('crispbb', 'user', 'getposts',
-                    array(
-                        'tid' => $tid,
-                        'starttime' => $lastreadtopic,
-                        'sort' => 'ptime',
-                        'order' => $order,
-                        'pstatus' => $pstatuses
-                    ));
-                $totalunread = count($postssince);
-                if (!empty($postssince)) {
+                $totalunread = xarModAPIFunc('crispbb', 'user', 'countposts',
+                    array('tid' => $tid, 'starttime' => $lastreadtopic, 'pstatus' => $pstatuses));
+                if (!empty($totalunread)) {
                     if (strtoupper($order) == 'ASC') { // last post on last page (default)
                         $totalposts = $totalposts - $totalunread;
                     } else { // last post is on first page
                         $totalposts = $totalunread;
                     }
-                    foreach ($postssince as $pid => $post) {
-                        $lastpid = $pid;
-                        break;
+                    $firstunread = xarModAPIFunc('crispbb', 'user', 'getposts',
+                        array(
+                            'tid' => $tid,
+                            'starttime' => $lastreadtopic,
+                            'sort' => 'ptime',
+                            'order' => $order,
+                            'numitems' => 1,
+                            'pstatus' => $pstatuses
+                        ));
+                    $firstunread = !empty($firstunread) && is_array($firstunread) ? reset($firstunread) : array();
+                    if (!empty($firstunread['pid']) && $firstunread['pid'] != $data['firstpid']) {
+                        $lastpid = $firstunread['pid'];
                     }
                 }
             }

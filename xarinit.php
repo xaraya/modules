@@ -591,6 +591,10 @@ function crispbb_upgrade($oldversion)
                 }
             }
         case '0.7.8':
+            // Fix for Bug 6398: incorrect var used in last update
+            // Update to xartemplates/includes/user-timestamp
+            // Some changes missed in last update
+        case '0.7.9':
         /* current version */
         break;
     }
@@ -671,6 +675,12 @@ function crispbb_delete()
             'unregister_block_type',
             array('modName' => 'crispbb',
                 'blockType' => 'topitems'))) return;
+
+    if (!xarModAPIFunc('blocks',
+            'admin',
+            'unregister_block_type',
+            array('modName' => 'crispbb',
+                'blockType' => 'userpanel'))) return;
 
     xarRemoveMasks('crispbb');
     xarRemoveInstances('crispbb');

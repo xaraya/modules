@@ -188,7 +188,7 @@ function crispbb_user_displayreply($args)
     }
 
     $uidlist = !empty($seenposters) ? array_keys($seenposters) : array();
-    $posterlist = xarModAPIFunc('roles', 'user', 'getall', array('uidlist' => $uidlist));
+    $posterlist = xarModAPIFunc('crispbb', 'user', 'getposters', array('uidlist' => $uidlist, 'showstatus' => true));
 
     $data['posts'] = $posts;
     $data['categories'] = $categories;
