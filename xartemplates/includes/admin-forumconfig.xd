@@ -177,6 +177,10 @@
     <strong><xar:mlstring>(empty = disabled)</xar:mlstring></strong>
 </div>
 <div class="xar-form-input-wrapper">
+    <label for="icondefault" class="xar-form-label help" title="#xarML('Pre-select an icon for new topics')#"><xar:mlstring>Default Icon</xar:mlstring>:</label>
+    <xar:data-input type="dropdown" name="icondefault" id="icondefault" value="$icondefault" options="$iconlist" />
+</div>
+<div class="xar-form-input-wrapper">
     <label for="floodcontrol" class="xar-form-label help" title="#xarML('The minimum length of time users must wait between posts')#">
         <xar:mlstring>Flood Control:</xar:mlstring>
     </label>

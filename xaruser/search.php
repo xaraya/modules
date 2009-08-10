@@ -327,15 +327,8 @@ function crispbb_user_search()
                             $iconlist = $iconlists[$item['fid']];
                         }
                         if (empty($iconlist)) {
-                            //$iconlist['none'] = array('id' => 'none', 'name' => xarML('None'));
-                            $topicicons = xarModAPIFunc('crispbb', 'user', 'browse_files', array('module' => 'crispbb', 'basedir' => 'xarimages/'.$topic['iconfolder'], 'match_re' => '/(gif|png|jpg)$/'));
-                            if (!empty($topicicons)) {
-                                foreach ($topicicons as $ticon) {
-                                    $tname =  preg_replace( "/\.\w+$/U", "", $ticon );
-                                    $imagepath = $topic['iconfolder'] . '/' . $ticon;
-                                    $iconlist[$ticon] = array('id' => $ticon, 'name' => $tname, 'imagepath' => $imagepath);
-                                }
-                            }
+                            $iconlist = xarModAPIFunc('crispbb', 'user', 'gettopicicons',
+                                array('iconfolder' => $data['iconfolder']));
                             $iconlists[$item['fid']] = $iconlist;
                         }
                         if (!empty($iconlist[$item['topicicon']])) {
@@ -382,15 +375,8 @@ function crispbb_user_search()
                             $iconlist = $iconlists[$item['fid']];
                         }
                         if (empty($iconlist)) {
-                            //$iconlist['none'] = array('id' => 'none', 'name' => xarML('None'));
-                            $topicicons = xarModAPIFunc('crispbb', 'user', 'browse_files', array('module' => 'crispbb', 'basedir' => 'xarimages/'.$post['iconfolder'], 'match_re' => '/(gif|png|jpg)$/'));
-                            if (!empty($topicicons)) {
-                                foreach ($topicicons as $ticon) {
-                                    $tname =  preg_replace( "/\.\w+$/U", "", $ticon );
-                                    $imagepath = $post['iconfolder'] . '/' . $ticon;
-                                    $iconlist[$ticon] = array('id' => $ticon, 'name' => $tname, 'imagepath' => $imagepath);
-                                }
-                            }
+                            $iconlist = xarModAPIFunc('crispbb', 'user', 'gettopicicons',
+                                array('iconfolder' => $data['iconfolder']));
                             $iconlists[$item['fid']] = $iconlist;
                         }
                         if (!empty($iconlist[$item['topicicon']])) {
@@ -398,9 +384,6 @@ function crispbb_user_search()
                         } else {
                             $item['topicicon'] = '';
                         }
-                    }
-                    if ($item['fstatus'] == 0) { // open forum
-                        //$item['reporturl'] = xarModURL('crispbb', 'user', 'reportpost', array('pid' => $post['pid']));
                     }
                     $results[$pid] = $item;
                 }

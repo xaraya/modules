@@ -108,6 +108,7 @@ function crispbb_admin_modify($args)
                 if (!xarVarFetch('showannouncements', 'int:0:1', $settings['showannouncements'], $data['showannouncements'], XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('showfaqs', 'int:0:1', $settings['showfaqs'], $data['showfaqs'], XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('iconfolder', 'str:0', $settings['iconfolder'], $data['iconfolder'], XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('icondefault', 'str:0', $settings['icondefault'], $data['icondefault'], XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('floodcontrol', 'int:0:3600', $settings['floodcontrol'], $data['floodcontrol'], XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('postbuffer', 'int:0:60', $settings['postbuffer'], $data['postbuffer'], XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('topicapproval', 'checkbox', $settings['topicapproval'], $data['topicapproval'], XARVAR_NOT_REQUIRED)) return;
@@ -268,6 +269,14 @@ function crispbb_admin_modify($args)
             $ftypes[1] = array('id' => 1, 'name' => xarML('Redirected Forum'));
             $data['ftypeoptions'] = $ftypes; // $presets['ftypeoptions'];
             $data['redirecturl'] = !empty($redirecturl) ? $redirecturl : '';
+
+            if (!empty($data['iconfolder'])) {
+                $iconlist = xarModAPIFunc('crispbb', 'user', 'gettopicicons',
+                    array('iconfolder' => $data['iconfolder'], 'shownone' => true));
+                $data['iconlist'] = $iconlist;
+            } else {
+                $data['iconlist'] = array();
+            }
 
             $forumtype = $data['itemtype'];
             $topicstype = xarModAPIFunc('crispbb', 'user', 'getitemtype',

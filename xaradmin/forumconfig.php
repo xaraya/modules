@@ -84,6 +84,7 @@ function crispbb_admin_forumconfig($args)
                     if (!xarVarFetch('showstickies', 'int:0:1', $settings['showstickies'], $defaults['showstickies'], XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('showannouncements', 'int:0:1', $settings['showannouncements'], $defaults['showannouncements'], XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('iconfolder', 'str:0', $settings['iconfolder'], $defaults['iconfolder'], XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVarFetch('icondefault', 'str:0', $settings['icondefault'], $defaults['icondefault'], XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('floodcontrol', 'int:0:3600', $settings['floodcontrol'], $defaults['floodcontrol'], XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('postbuffer', 'int:0:60', $settings['postbuffer'], $defaults['postbuffer'], XARVAR_NOT_REQUIRED)) return;
                     if (!xarVarFetch('topicapproval', 'checkbox', $settings['topicapproval'], false, XARVAR_NOT_REQUIRED)) return;
@@ -141,6 +142,14 @@ function crispbb_admin_forumconfig($args)
             }
             // get current default settings
             $data = xarModAPIFunc('crispbb', 'user', 'getsettings', array('setting' => 'fsettings'));
+
+            if (!empty($data['iconfolder'])) {
+                $iconlist = xarModAPIFunc('crispbb', 'user', 'gettopicicons',
+                    array('iconfolder' => $data['iconfolder'], 'shownone' => true));
+                $data['iconlist'] = $iconlist;
+            } else {
+                $data['iconlist'] = array();
+            }
 
             $data['topicfields'] = $presets['topicsortoptions'];
             $data['orderoptions'] = $presets['sortorderoptions'];

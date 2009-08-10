@@ -595,6 +595,7 @@ function crispbb_upgrade($oldversion)
             // Update to xartemplates/includes/user-timestamp
             // Some changes missed in last update
         case '0.7.9':
+            // Some minor updates
         /* current version */
         break;
     }

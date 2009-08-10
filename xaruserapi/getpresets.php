@@ -48,8 +48,8 @@ function crispbb_userapi_getpresets($args)
                 break;
 
                 case 'ttypeoptions':
-                    $items[0] = array('id' => '0', 'name' => xarML('Normal Topic'));
-                    $items[1] = array('id' => '1', 'name' => xarML('Sticky Topic'));
+                    $items[0] = array('id' => '0', 'name' => xarML('Normal'));
+                    $items[1] = array('id' => '1', 'name' => xarML('Sticky'));
                     $items[2] = array('id' => '2', 'name' => xarML('Announcement'));
                     $items[3] = array('id' => '3', 'name' => xarML('FAQ'));
                 break;
@@ -57,18 +57,11 @@ function crispbb_userapi_getpresets($args)
                 case 'forumstatusoptions':
                     $items[0] = array('id' => '0', 'name' => xarML('Open'));
                     $items[1] = array('id' => '1', 'name' => xarML('Closed'));
-                    //$items[2] = array('id' => '2', 'name' => xarML('Redirected'));
-                    //$items[3] = array('id' => '3', 'name' => xarML('Members'));
-                    //$items[4] = array('id' => '4', 'name' => xarML('Private'));
-                    //$items[6] = array('id' => '2', 'name' => xarML('Locked'));
                 break;
 
                 case 'ftypeoptions':
                     $items[0] = array('id' => '0', 'name' => xarML('Default'));
                     $items[1] = array('id' => '1', 'name' => xarML('Redirected'));
-                    //$items[2] = array('id' => '2', 'name' => xarML('Members Only'));
-                    //$items[3] = array('id' => '3', 'name' => xarML('Newsgroup'));
-                    //$items[4] = array('id' => '4', 'name' => xarML('Imported'));
                 break;
 
                 case 'pstatusoptions':
@@ -100,18 +93,12 @@ function crispbb_userapi_getpresets($args)
                     $items['stickies'] = xarML('Post Stickies');
                     $items['announcements'] = xarML('Post Announcements');
                     $items['faqs'] = xarML('Post FAQs');
-                    //$items['topicdescription'] = xarML('Add Topic Description');
-                    //$items['topicicons'] = xarML('Add Topic Icons');
                     $items['bbcode'] = xarML('Use BBCode');
                     $items['bbcodedeny'] = xarML('Disable BBCode');
                     $items['smilies'] = xarML('Use Smilies');
                     $items['smiliesdeny'] = xarML('Disable Smilies');
-                    //$items['changelog'] = xarML('Add Changelog Remark');
-                    //$items['polls'] = xarML('Add Polls');
                     $items['html'] = xarML('Use HTML');
                     $items['htmldeny'] = xarML('Disable HTML');
-                    //unset($items['editowntopic']); // not necessary for moderators
-                    //unset($items['closeowntopic']); // not necessary for moderators
                     $items['edittopics'] = xarML('Edit Topics');
                     $items['editreplies'] = xarML('Edit Replies');
                     $items['closetopics'] = xarML('Close Topics');
@@ -150,16 +137,16 @@ function crispbb_userapi_getpresets($args)
                     $items['hottopichits'] = 0;
                     $items['hottopicratings'] = 0;
                     $items['topictitlemin'] = 5;
-                    $items['topictitlemax'] = 254;
-                    //$items['topicdesc'] = 1;
+                    $items['topictitlemax'] = 100;
                     $items['topicdescmin'] = 0;
-                    $items['topicdescmax'] = 100;
+                    $items['topicdescmax'] = 254;
                     $items['topicpostmin'] = 5;
                     $items['topicpostmax'] = 65535;
                     $items['showstickies'] = 0;
                     $items['showannouncements'] = 0;
                     $items['showfaqs'] = 0;
                     $items['iconfolder'] = 'topicicons-crispbb';
+                    $items['icondefault'] = 'none';
                     $items['floodcontrol'] = 0;
                     $items['postbuffer'] = 0;
                     $items['topicview'] = 'flat';
@@ -195,8 +182,6 @@ function crispbb_userapi_getpresets($args)
                     $post['stickies'] = 0;
                     $post['announcements'] = 0;
                     $post['faqs'] = 0;
-                    //$post['topicdescription'] = 1;
-                    //$post['topicicons'] = 1;
                     $post['bbcode'] = 0;
                     $post['bbcodedeny'] = 0;
                     $post['smilies'] = 0;
@@ -209,8 +194,6 @@ function crispbb_userapi_getpresets($args)
 
                     // Moderator options
                     $moderator = $post; // inherit from post
-                    //unset($moderator['editowntopic']); // not necessary for moderators
-                    //unset($moderator['closeowntopic']); // not necessary for moderators
                     $moderator['edittopics'] = 1;
                     $moderator['editreplies'] = 1;
                     $moderator['closetopics'] = 1;

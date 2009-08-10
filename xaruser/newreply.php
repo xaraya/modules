@@ -224,16 +224,8 @@ function crispbb_user_newreply($args)
     $transformed = xarModAPIFunc('crispbb', 'user', 'dotransforms', $transargs);
 
     if (!empty($data['iconfolder'])) {
-        $iconlist = array();
-        $iconlist['none'] = array('id' => 'none', 'name' => xarML('None'));
-        $topicicons = xarModAPIFunc('crispbb', 'user', 'browse_files', array('module' => 'crispbb', 'basedir' => 'xarimages/'.$data['iconfolder'], 'match_re' => '/(gif|png|jpg)$/'));
-        if (!empty($topicicons)) {
-            foreach ($topicicons as $ticon) {
-                $tname =  preg_replace( "/\.\w+$/U", "", $ticon );
-                $imagepath = $data['iconfolder'] . '/' . $ticon;
-                $iconlist[$ticon] = array('id' => $ticon, 'name' => $tname, 'imagepath' => $imagepath);
-            }
-        }
+        $iconlist = xarModAPIFunc('crispbb', 'user', 'gettopicicons',
+            array('iconfolder' => $data['iconfolder'], 'shownone' => true));
         if (empty($iconlist[$topicicon])) $topicicon = 'none';
         $data['iconlist'] = $iconlist;
     }

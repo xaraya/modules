@@ -71,7 +71,7 @@ function crispbb_user_newtopic($args)
     if (!xarVarFetch('ptext', 'str', $ptext, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('tstatus', 'int:0:10', $tstatus, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('ttype', 'int:0:10', $ttype, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('topicicon', 'str', $topicicon, 'none',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('topicicon', 'str', $topicicon, NULL,XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('phase', 'enum:form:update', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('preview', 'checkbox', $preview, false, XARVAR_NOT_REQUIRED)) return;
@@ -299,21 +299,6 @@ function crispbb_user_newtopic($args)
 
     $transformed = xarModAPIFunc('crispbb', 'user', 'dotransforms', $transargs);
 
-    if (!empty($data['iconfolder'])) {
-        $iconlist = array();
-        $iconlist['none'] = array('id' => 'none', 'name' => xarML('None'));
-        $topicicons = xarModAPIFunc('crispbb', 'user', 'browse_files', array('module' => 'crispbb', 'basedir' => 'xarimages/'.$data['iconfolder'], 'match_re' => '/(gif|png|jpg)$/'));
-        if (!empty($topicicons)) {
-            foreach ($topicicons as $ticon) {
-                $tname =  preg_replace( "/\.\w+$/U", "", $ticon );
-                $imagepath = $data['iconfolder'] . '/' . $ticon;
-                $iconlist[$ticon] = array('id' => $ticon, 'name' => $tname, 'imagepath' => $imagepath);
-            }
-        }
-        if (empty($iconlist[$topicicon])) $topicicon = 'none';
-        $data['iconlist'] = $iconlist;
-    }
-
     if ($phase == 'update' || $preview) {
         $ttlen = strlen(strip_tags($transformed['ttitle']));
         if ($ttlen < $data['topictitlemin']) {
@@ -436,6 +421,14 @@ function crispbb_user_newtopic($args)
     if ($preview || !empty($invalid)) {
         $data['preview'] = $transformed;
     }
+
+    if (!empty($data['iconfolder'])) {
+        $iconlist = xarModAPIFunc('crispbb', 'user', 'gettopicicons',
+            array('iconfolder' => $data['iconfolder'], 'shownone' => true));
+        if (empty($iconlist[$topicicon])) $topicicon = $data['icondefault'];
+        $data['iconlist'] = $iconlist;
+    }
+
     $privs['html'] = ($hashtml && !$htmldeny) || (!$hashtml && $htmldeny) ? true : false;
     $privs['bbcode'] = ($hasbbcode && !$bbcodedeny) || (!$hasbbcode && $bbcodedeny) ? true : false;
     $privs['smilies'] = ($hassmilies && !$smiliesdeny) || (!$hassmilies && $smiliesdeny) ? true : false;
