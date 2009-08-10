@@ -10,10 +10,19 @@
     <xar:mlstring>crispBB is a feature-rich forum module for Xaraya</xar:mlstring>
 
     <h3><xar:mlstring>How to use it?</xar:mlstring></h3>
+    <xar:comment>
+    <xar:mlstring>If this is your first visit to this part of your Xaraya site, please take a minute to read through the following introduction, in order to explore the different possibilities offered by the crispBB module.</xar:mlstring>
+    </xar:comment>
     <ul>
         <li><xar:mlstring>Create categories for your forums.</xar:mlstring></li>
+        <xar:comment>
+        <li>
+            <h4><xar:mlstring>Categories</xar:mlstring></h4>
+            <xar:mlstring>A couple of categories will have been created for you when you installed crispBB. Before creating forums, you might want to create categories for your forums, or rename the ones already there. Unless you have particular reason to, it's not recommended that you change the base category for crispBB once you have created forums, so if you don't want to take the default, now's the time to change it. You can add, edit, re-order and remove categories from the categories administration pages at any time. You can also re-order categories used by crispBB from the crispBB module itself.</xar:mlstring>
+        </li>
+        </xar:comment>
         <li><xar:mlstring>Create forums for your users to post in.</xar:mlstring></li>
-        <li><xar:mlstring>Assign privileges to your users.</xar:mlstring></li>
+        <li><xar:mlstring>Assign privileges and permissions to your users.</xar:mlstring></li>
         <li><xar:mlstring>Build your community...</xar:mlstring></li>
     </ul>
     <h3><xar:mlstring>Included Blocks</xar:mlstring></h3>

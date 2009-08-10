@@ -119,13 +119,13 @@ function crispbb_user_modifytopic($args)
         if (!xarVarFetch('approvereplies', 'checkbox', $approvereplies, false, XARVAR_NOT_REQUIRED)) return;
 
         if (empty($privs['stickies']) && $ttype == 1) {
-            $invalid['ttype'] = xarML('You can not post sticky topics');
+            //$invalid['ttype'] = xarML('You can not post sticky topics');
         }
         if (empty($privs['announcements']) && $ttype == 2) {
-            $invalid['ttype'] = xarML('You can not post announcements');
+            //$invalid['ttype'] = xarML('You can not post announcements');
         }
         if (empty($privs['faqs']) && $ttype == 3) {
-            $invalid['ttype'] = xarML('You can not post FAQs');
+            //$invalid['ttype'] = xarML('You can not post FAQs');
         }
         if (empty($privs['closeowntopic']) && empty($privs['closetopics']) && $tstatus == 1) {
             $invalid['tstatus'] = xarML('You can not post closed topics');

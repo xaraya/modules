@@ -142,7 +142,7 @@ function crispbb_user_display($args)
     // Start Tracking
     if (!empty($tracking)) {
         $tracking[$data['fid']][$tid] = $now; // mark topic read
-        $lastreadforum = !empty($tracking[$data['fid']][0]['lastread']) ? $tracking[$data['fid']][0]['lastread'] : 1;
+        $lastreadforum = !empty($tracking[$data['fid']][0]['lastread']) ? $tracking[$data['fid']][0]['lastread'] : xarUserGetVar('date_reg');
         $lastupdate = !empty($tracking[$data['fid']][0]['lastupdate']) ? $tracking[$data['fid']][0]['lastupdate'] : $now;
         $unread = false;
         $thiststatus = array(0,1,2);

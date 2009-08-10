@@ -34,7 +34,7 @@
             <xar:if condition="!empty($items)">
                 <xar:set name="rowclass">'xar-norm'</xar:set>
                 <xar:foreach in="$items" value="$item">
-                    <tr>
+                    <tr class="#$rowclass#">
                         <td>#$item['phostname']#</td>
                         <td><a href="#xarModURL('crispbb', 'admin', 'posters', array('ip' => $item['phostname']))#" title="#xarML('View users posting from this ip address')#">View Users</td>
                     </tr>
@@ -79,7 +79,7 @@
             <xar:if condition="!empty($items)">
                 <xar:set name="rowclass">'xar-norm'</xar:set>
                 <xar:foreach in="$items" value="$poster">
-                    <tr>
+                    <tr class="#$rowclass#">
                         <td><a href="#xarModURL('roles', 'user', 'display', array('uid' => $poster['uid']))#">#$poster['name']#</a></td>
                         <td>#$poster['numtopics']#</td>
                         <td>#$poster['numreplies']#</td>

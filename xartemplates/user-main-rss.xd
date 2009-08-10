@@ -8,7 +8,6 @@
                     <link>#xarVarTransform($forum['lasttopicurl'], 'HTML', 'XML')#</link>
                     <author>#xarVarTransform($posterlist[$forum['towner']]['name'], 'HTML', 'XML')#</author>
                     <pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$forum['ptime'])#</pubDate>
-                    <category domain="#xarVarTransform($catinfo['viewurl'], 'HTML', 'XML')#">#xarVarTransform($catinfo['name'], 'HTML', 'XML')#</category>
                     <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
                     <content:encoded><![CDATA[ #xarVarTransform(xarVarPrepHTMLDisplay($forum['transformed_tdesc']), 'HTML', 'XML')# ]]></content:encoded>
                     <description>#xarVarTransform(xarVarPrepForDisplay($forum['transformed_tdesc']), 'HTML', 'XML')#</description>
