@@ -35,7 +35,15 @@ function crispbb_userapi_getpresets($args)
             switch ($key) {
                 case 'topicsortoptions':
                     // admin functions : forumconfig, new, modify
+                    $items['ttitle'] = array('id' => 'ttitle', 'name' => xarML('Topic Title'));
                     $items['ptime'] = array('id' => 'ptime', 'name' => xarML('Last Post Time'));
+                    $items['ttime'] = array('id' => 'ttitle', 'name' => xarML('Topic Start Time'));
+                    $items['numreplies'] = array('id' => 'numreplies', 'name' => xarML('Number of Replies'));
+                    $items['numhits'] = array('id' => 'numhits', 'name' => xarML('Number of Views'));
+                    $items['towner'] = array('id' => 'towner', 'name' => xarML('Topic Starter'));
+                    if (xarModIsAvailable('ratings')) {
+                        $items['numratings'] = array('id' => 'numratings', 'name' => xarML('Topic Rating'));
+                    }
                 break;
 
                 case 'tstatusoptions':

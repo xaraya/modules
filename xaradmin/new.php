@@ -207,7 +207,12 @@ function crispbb_admin_new($args)
     $ftypes[1] = array('id' => 1, 'name' => xarML('Redirected Forum'));
     $data['ftypeoptions'] = $ftypes; // $presets['ftypeoptions'];
     $data['statusoptions'] = $presets['forumstatusoptions'];
-    $data['topicfields'] = $presets['topicsortoptions'];
+    $tsortoptions = $presets['topicsortoptions'];
+    $alltopicstype = xarModAPIFunc('crispbb', 'user', 'getitemtype', array('fid' => 0, 'component' => 'topics'));
+    if (!xarModIsAvailable('ratings') || !xarModIsHooked('ratings', 'crispbb', $alltopicstype)) {
+        unset($tsortoptions['numratings']);
+    }
+    $data['topicfields'] = $tsortoptions;
     $data['orderoptions'] = $presets['sortorderoptions'];
     $data['pageoptions'] = $presets['pagedisplayoptions'];
     $secLevels = empty($secLevels) ? xarModAPIFunc('crispbb', 'user', 'getsettings', array('setting' => 'fprivileges')) : $secLevels;

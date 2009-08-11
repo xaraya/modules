@@ -287,7 +287,11 @@ function crispbb_admin_modify($args)
             $data['ttranshooks'] = xarModGetHookList('crispbb', 'item', 'transform', $topicstype);
             $data['ptranshooks'] = xarModGetHookList('crispbb', 'item', 'transform', $poststype);
             $data['statusoptions'] = $presets['forumstatusoptions'];
-            $data['topicfields'] = $presets['topicsortoptions'];
+            $tsortoptions = $presets['topicsortoptions'];
+            if (!xarModIsAvailable('ratings') || !xarModIsHooked('ratings', 'crispbb', $topicstype)) {
+                unset($tsortoptions['numratings']);
+            }
+            $data['topicfields'] = $tsortoptions;
             $data['orderoptions'] = $presets['sortorderoptions'];
             $data['pageoptions'] = $presets['pagedisplayoptions'];
             $pageTitle = 'Edit ' . $data['fname'];

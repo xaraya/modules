@@ -236,8 +236,29 @@ function crispbb_userapi_gettopics($args)
         // Add the LEFT JOIN ... ON ... hitcount for the topic counter
         $from .= ' LEFT JOIN ' . $hitcountdef['table'];
         $from .= ' ON ' . $hitcountdef['field'] . ' = ' . $topicstable.'.xar_tid';
-        $from .= ' AND ' . $hitcountdef['table'] . '.xar_itemtype' . ' = ' . $topicstable.'.xar_topicstype';
+        $from .= ' AND ' . $hitcountdef['itemtype'] . ' = ' . $topicstable.'.xar_topicstype';
         $addme = 1;
+    }
+
+    if (empty($noratings) && xarModIsAvailable('ratings')) {
+        // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from hitcount
+        $ratingsdef = xarModAPIFunc('ratings', 'user', 'leftjoin',
+            array(
+                'modid' => xarModGetIDFromName('crispbb'),
+            ));
+        if (!empty($ratingsdef)) {
+            $select[] = $ratingsdef['rating'];
+            $select[] = $ratingsdef['numratings'];
+            $fields[] = 'rating';
+            $fields[] = 'numratings';
+            if ($addme && ($dbconn->databaseType != 'sqlite')) {
+                $from = '(' . $from . ')';
+            }
+            $from .= ' LEFT JOIN ' . $ratingsdef['table'];
+            $from .= ' ON ' . $ratingsdef['field'] . ' = ' . $topicstable.'.xar_tid';
+            $from .= ' AND ' . $ratingsdef['itemtype'] . ' = ' . $topicstable . '.xar_topicstype';
+            $addme = 1;
+        }
     }
 
     $rolesdef = xarModAPIFunc('roles', 'user', 'leftjoin');
@@ -327,6 +348,10 @@ function crispbb_userapi_gettopics($args)
             $myorder = $topicstable .'xar_numreplies';//'COUNT(replies.xar_pid)';
         } elseif ($sort == 'ttime') {
             $myorder = 'firstpost.xar_ptime';
+        } elseif ($sort == 'numratings') {
+            if (isset($ratingsdef['rating'])) {
+                $myorder = $ratingsdef['rating'];
+            }
         }
         if (!empty($order)) {
             $myorder .= ' ' . strtoupper($order) . ' ';
@@ -334,6 +359,16 @@ function crispbb_userapi_gettopics($args)
         if (!empty($myorder)) {
             $orderby[] = $myorder;
         }
+    }
+
+    if (isset($topicstart) && is_numeric($topicstart)) {
+        $where[] = "firstpost.xar_ptime >= ?";
+        $bindvars[] = $starttime;
+    }
+
+    if (isset($topicend) && is_numeric($topicend)) {
+        $where[] = "firstpost.xar_ptime <= ?";
+        $bindvars[] = $endtime;
     }
 
     if (!empty($towner) && is_numeric($towner)) {

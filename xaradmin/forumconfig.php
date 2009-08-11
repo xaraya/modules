@@ -150,8 +150,12 @@ function crispbb_admin_forumconfig($args)
             } else {
                 $data['iconlist'] = array();
             }
-
-            $data['topicfields'] = $presets['topicsortoptions'];
+            $tsortoptions = $presets['topicsortoptions'];
+            $alltopicstype = xarModAPIFunc('crispbb', 'user', 'getitemtype', array('fid' => 0, 'component' => 'topics'));
+            if (!xarModIsAvailable('ratings') || !xarModIsHooked('ratings', 'crispbb', $alltopicstype)) {
+                unset($tsortoptions['numratings']);
+            }
+            $data['topicfields'] = $tsortoptions;
             $data['orderoptions'] = $presets['sortorderoptions'];
             $data['pageoptions'] = $presets['pagedisplayoptions'];
             $pageTitle = xarML('Default Forum Configuration');

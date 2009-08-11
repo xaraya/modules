@@ -176,4 +176,11 @@ Fix for Bug 6398: incorrect var used in last update
 Update to xartemplates/includes/user-timestamp
 Some changes missed in last update
 0.7.9
+Some minor updates
+add gettopicicons function.
+Make default icon selectable in admin forum options
+Add missing topic sort options to admin forum options
+Add topic sort options to user forum views
+Add admin config option to disable sort options in forum views
+0.8.0
 **** Current Version ****

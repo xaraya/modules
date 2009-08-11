@@ -63,7 +63,7 @@ function crispbb_admin_modifyconfig()
         if (!xarVarFetch('showtopicjump', 'checkbox', $showtopicjump, false, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('showquickreply', 'checkbox', $showquickreply, false, XARVAR_NOT_REQUIRED)) return;
         if (!xarVarFetch('showpermissions', 'checkbox', $showpermissions, false, XARVAR_NOT_REQUIRED)) return;
-
+        if (!xarVarFetch('showsortbox', 'checkbox', $showsortbox, false, XARVAR_NOT_REQUIRED)) return;
         // input validated, update settings
         if (empty($invalid)) {
             if (!xarSecConfirmAuthKey()) return;
@@ -104,6 +104,7 @@ function crispbb_admin_modifyconfig()
             xarModSetVar('crispbb', 'showtopicjump', $showtopicjump);
             xarModSetVar('crispbb', 'showquickreply', $showquickreply);
             xarModSetVar('crispbb', 'showpermissions', $showpermissions);
+            xarModSetVar('crispbb', 'showsortbox', $showsortbox);
 
             // update the status message
             xarSessionSetVar('crispbb_statusmsg', xarML('Module configuration updated'));
@@ -136,6 +137,7 @@ function crispbb_admin_modifyconfig()
     $data['showtopicjump'] = xarModGetVar('crispbb', 'showtopicjump');
     $data['showquickreply'] = xarModGetVar('crispbb', 'showquickreply');
     $data['showpermissions'] = xarModGetVar('crispbb', 'showpermissions');
+    $data['showsortbox'] = xarModGetVar('crispbb', 'showsortbox');
     // update check
     $data['version'] = $modinfo['version'];
     $data['newversion'] = !empty($hasupdate) ? $hasupdate : NULL;

@@ -25,9 +25,11 @@ function crispbb_user_view($args)
     if (!xarVarFetch('action', 'enum:read:unread', $action, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('return_url', 'str:1', $return_url, '', XARVAR_NOT_REQUIRED)) return;
 
-    if (!xarVarFetch('sortfield', 'str:1', $sortfield, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('sortorder', 'enum:ASC:DESC:asc:desc', $sortorder, '', XARVAR_NOT_REQUIRED)) return;
-
+    if (!xarVarFetch('sort', 'str:1', $sortfield, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('order', 'enum:ASC:DESC:asc:desc', $sortorder, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('start', 'int:1', $starttime, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('end', 'int:1', $endtime, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('period', 'enum:day:week:month:year:beginning', $period, NULL, XARVAR_NOT_REQUIRED)) return;
 
     // select status of topics to include in topic count
     $tstatus = array(0,1,2,3,4); // open, closed, submitted, moved and locked topics
@@ -57,7 +59,8 @@ function crispbb_user_view($args)
     $errorMsg = array();
     $invalid = array();
     $now = time();
-
+    $presets = xarModAPIFunc('crispbb', 'user', 'getpresets',
+        array('preset' => 'privactionlabels,privleveloptions,tstatusoptions,topicsortoptions,sortorderoptions'));
     // user links
     if (xarUserIsLoggedIn()) {
         // Start Tracking
@@ -84,8 +87,52 @@ function crispbb_user_view($args)
     $seenposters = array();
     $categories[$data['catid']] = xarModAPIFunc('categories', 'user', 'getcatinfo',
             array('cid' => $data['catid']));
-    $sort = !empty($sortfield) ? $sortfield : $data['topicsortfield'];
+    $tsortoptions = $presets['topicsortoptions'];
+    $topicstype = xarModAPIFunc('crispbb', 'user', 'getitemtype', array('fid' => $fid, 'component' => 'topics'));
+    if (!xarModIsAvailable('ratings') || !xarModIsHooked('ratings', 'crispbb', $topicstype)) {
+        unset($tsortoptions['numratings']);
+    }
+    if (empty($sort) && !empty($sortfield)) {
+        $sort = $sortfield;
+    }
+    if (empty($sort) || empty($tsortoptions[$sort])) {
+        $sort = $data['topicsortfield'];
+    }
     $order = !empty($sortorder) ? $sortorder : $data['topicsortorder'];
+
+    $data['tsortoptions'] = $tsortoptions;
+    $data['orderoptions'] = $presets['sortorderoptions'];
+    $data['sortfield'] = $sort;
+    $data['sortorder'] = $order;
+    if (!empty($period)) {
+        switch($period) {
+            case 'day':
+                $starttime = $now-(24*60*60);
+            break;
+            case 'week':
+                $starttime = $now-(7*24*60*60);
+            break;
+            case 'month':
+                $starttime = $now-(30*24*60*60);
+            break;
+            case 'year':
+                $starttime = $now-(365*24*60*60);
+            break;
+            case 'beginning':
+                default:
+                $starttime = 1;
+            break;
+        }
+    }
+    $timeoptions = array();
+    $timeoptions[] = array('id' => 'day', 'name' => xarML('Last 24 Hours'));
+    $timeoptions[] = array('id' => 'week', 'name' => xarML('Last 7 Days'));
+    $timeoptions[] = array('id' => 'month', 'name' => xarML('Last Month'));
+    $timeoptions[] = array('id' => 'year', 'name' => xarML('Last Year'));
+    $timeoptions[] = array('id' => 'beginning', 'name' => xarML('Beginning'));
+    $data['timeoptions'] = $timeoptions;
+    $data['period'] = empty($period) ? 'year' : $period;
+
     $tstatus = array(0,1,3); // default open, closed, moved
     if (!empty($privs['locktopics'])) {
         $tstatus[] = 4; // if you can lock topics, you can see them too
@@ -120,9 +167,15 @@ function crispbb_user_view($args)
             'ttype' => 0,
             'sort' => $sort,
             'order' => $order,
+            'starttime' => $starttime,
             'numsubs' => !empty($privs['approvereplies']) ? true : false,
             'numdels' => !empty($privs['deletereplies']) ? true : false,
         ));
+
+    if (!empty($starttime)) {
+        $data['numtopics'] = xarModAPIFunc('crispbb', 'user', 'counttopics',
+            array('fid' => $fid, 'tstatus' => $tstatus, 'ttype' => 0, 'starttime' => $starttime));
+    }
 
     $todo['topics'] = $topics;
 
@@ -260,8 +313,7 @@ function crispbb_user_view($args)
     $pageTitle = $data['fname'];
     $data['categories'] = $categories;
     $data['pageTitle'] = $pageTitle;
-    $presets = xarModAPIFunc('crispbb', 'user', 'getpresets',
-        array('preset' => 'privactionlabels,privleveloptions,tstatusoptions'));
+
     $data['actions'] = $presets['privactionlabels'];
     $data['levels'] = $presets['privleveloptions'];
 
@@ -289,10 +341,13 @@ function crispbb_user_view($args)
         xarModSetUserVar('crispbb', 'tracking', serialize($tracking));
     }
 
+    $pagerTpl = $data['numtopics'] > (10*$data['topicsperpage']) ? 'multipage' : 'default';
     $data['pager'] = xarTplGetPager($startnum,
         $data['numtopics'] - $numstickies - $numannouncements - $numfaqs,
-        xarModURL('crispbb', 'user', 'view', array('fid' => $fid, 'startnum' => '%%')),
-        $data['topicsperpage']);
+        xarModURL('crispbb', 'user', 'view', array('fid' => $fid, 'startnum' => '%%', 'sort' => $sort, 'order' => $order, 'period' => $period)),
+        $data['topicsperpage'],
+        array(),
+        $pagerTpl);
 
     if ($data['numtopics'] > $data['topicsperpage']) {
         $pageNumber = empty($startnum) || $startnum < 2 ? 1 : round($startnum/$data['topicsperpage'])+1;

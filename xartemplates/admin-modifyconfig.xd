@@ -74,6 +74,10 @@
                 <label for="showpermissions" title="#xarML('Show the current users permissions in user displays')#"><xar:mlstring>Show user permissions?</xar:mlstring></label>
             </div>
             <div class="xar-form-input-wrapper-after">
+                <xar:data-input type="checkbox" name="showsortbox" id="showsortbox" value="$showsortbox" />
+                <label for="showsortbox" title="#xarML('Show the topic sort options in forum views')#"><xar:mlstring>Show sort box?</xar:mlstring></label>
+            </div>
+            <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="phase" id="phase" value="update" />
                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('crispbb')#" />
                 <input type="submit" value="#xarML('Update Configuration')#" />

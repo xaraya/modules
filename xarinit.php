@@ -596,6 +596,13 @@ function crispbb_upgrade($oldversion)
             // Some changes missed in last update
         case '0.7.9':
             // Some minor updates
+            // add gettopicicons function.
+            // Make default icon selectable in admin forum options
+            // Add missing topic sort options to admin forum options
+            // Add topic sort options to user forum views
+            // Add admin config option to disable sort options in forum views
+            xarModSetVar('crispbb', 'showsortbox', true);
+        case '0.8.0':
         /* current version */
         break;
     }

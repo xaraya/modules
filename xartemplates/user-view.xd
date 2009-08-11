@@ -209,6 +209,9 @@
         <a href="#$forumreadurl#"><xar:mlstring>Mark All Topics Read</xar:mlstring></a>
     </div>
     </xar:if>
+    <div class="xar-padding-thicktop xar-clearboth">
+        <xar:template type="module" module="crispbb" file="user-sortbox" />
+    </div>
     <div class="xar-margin-thickends xar-padding-thickends xar-sub">
         <h4 class="xar-margin-none"><xar:mlstring>Forum Statistics</xar:mlstring></h4>
         <ul>
