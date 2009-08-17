@@ -72,14 +72,15 @@ function dyn_example_init()
                        'register_block_type',
                        array('modName' => 'dyn_example',
                              'blockType' => 'first'))) return;
-
 # --------------------------------------------------------
 #
 # Create privilege instances
 #
-    $xartable =& xarDBGetTables();
+    sys::import('modules.dynamicdata.class.objects.master');
+    $object = DataObjectMaster::getObject(array('name' => 'dyn_example'));
+    $objectid = $object->objectid;
 
-    $objectid = xarModVars::get('dyn_example','objectid');
+    $xartable =& xarDB::getTables();
     $dynproptable = $xartable['dynamic_properties'];
     $dyndatatable = $xartable['dynamic_data'];
     $query = "SELECT DISTINCT xar_dd_itemid
@@ -96,6 +97,7 @@ function dyn_example_init()
                             )
                     );
     xarDefineInstance('dyn_example', 'Item', $instances);
+
 # --------------------------------------------------------
 #
 # Register masks

@@ -55,7 +55,7 @@
             <xar:if condition="!empty($fields[$name])">
               <td><xar:data-output property="$properties[$name]" value="$fields[$name]" /></td>
             <xar:else />
-              <td>&nbsp;</td>
+              <td>&#160;</td>
             </xar:if>
         </xar:foreach>
         <td width="30%" class="xar-align-center">
@@ -67,7 +67,7 @@
     </xar:foreach>
     <tr>
         <xar:foreach in="$properties" key="$name">
-            <td>&nbsp;</td>
+            <td>&#160;</td>
         </xar:foreach>
         <td class="xar-align-center"><a href="&xar-modurl-dyn_example-admin-new;"><xar:mlstring>New</xar:mlstring></a></td>
     </tr>
@@ -116,7 +116,7 @@
     </xar:foreach>
     <tr>
         <xar:foreach in="$fields" key="$name">
-            <td>&nbsp;</td>
+            <td>&#160;</td>
         </xar:foreach>
         <td class="xar-align-center"><a href="&xar-modurl-dyn_example-admin-new;"><xar:mlstring>New</xar:mlstring></a></td>
     </tr>

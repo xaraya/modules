@@ -20,7 +20,7 @@
                                         <xar:data-label property="$properties[$name]" />:
                                     </td>
                                     <xar:if condition="empty($fields[$name])">
-                                        <td>&nbsp;</td>
+                                        <td>&#160;</td>
                                     <xar:elseif condition="!empty($linkfield) and $linkfield eq $name"/>
                                         <td>
                                             <a href="#$links[$itemid]['display']['olink']#"><xar:data-output property="$properties[$name]" value="$fields[$name]" /></a>
@@ -34,7 +34,7 @@
                             </xar:foreach>
                             <xar:if condition="empty($linkfield) and !empty($links[$itemid]) and count($links[$itemid]) gt 0">
                                 <tr>
-                                    <td class="xar-align-right  xar-alt xar-valign-middle">&nbsp;</td>
+                                    <td class="xar-align-right  xar-alt xar-valign-middle">&#160;</td>
                                     <td>
                                         <xar:foreach in="$links[$itemid]" value="$option">
                                             #$option['ojoin']# <a href="#$option['olink']#">#$option['otitle']#</a>
@@ -52,7 +52,7 @@
                 <xar:else />
                     &lt;&lt;
                 </xar:if>
-                &nbsp;&nbsp;&nbsp;
+                &#160;&#160;&#160;
                 <xar:if condition="!empty($nexturl)">
                     <a href="#$nexturl#">&gt;&gt;</a>
                 <xar:else />
@@ -69,7 +69,7 @@
                 </xar:foreach>
                 <xar:if condition="empty($linkfield)">
                     <th>
-                        &nbsp;
+                        &#160;
                     </th>
                 </xar:if>
             </tr>
@@ -78,7 +78,7 @@
                     <!-- we could use xar:data-display here too, instead of looping over fields ourselves -->
                     <xar:foreach in="$properties" key="$name">
                         <xar:if condition="empty($fields[$name])">
-                            <td class="xar-valign-top">&nbsp;</td>
+                            <td class="xar-valign-top">&#160;</td>
                         <xar:elseif condition="!empty($linkfield) and $linkfield eq $name"/>
                             <td class="xar-valign-top"><a href="#$links[$itemid]['display']['olink']#"><xar:data-output property="$properties[$name]" value="$fields[$name]" /></a></td>
                         <xar:else />
@@ -92,7 +92,7 @@
                                     #$option['ojoin']# <a href="#$option['olink']#">#$option['otitle']#</a>
                                 </xar:foreach>
                             <xar:else />
-                                &nbsp;
+                                &#160;
                             </xar:if>
                         </td>
                     </xar:if>
@@ -107,7 +107,7 @@
                 <xar:else />
                      &lt;&lt;
                 </xar:if>
-                &nbsp;&nbsp;&nbsp;
+                &#160;&#160;&#160;
                 <xar:if condition="!empty($nexturl)">
                      <a href="#$nexturl#">&gt;&gt;</a>
                 <xar:else />
@@ -126,7 +126,7 @@
                 </xar:foreach>
                 <xar:if condition="empty($linkfield)">
                     <th>
-                        &nbsp;
+                        &#160;
                     </th>
                 </xar:if>
             </tr>
@@ -134,7 +134,7 @@
                 <tr>
                     <xar:foreach in="$properties" key="$name">
                         <xar:if condition="empty($fields[$name])">
-                            <td valign="top">&nbsp;</td>
+                            <td valign="top">&#160;</td>
                         <xar:elseif condition="!empty($linkfield) and $linkfield eq $name"/>
                             <td valign="top"><a href="#$links[$itemid]['display']['olink']#"><xar:data-output property="$properties[$name]" value="$fields[$name]" /></a></td>
                         <xar:else />
@@ -148,7 +148,7 @@
                                     #$option['ojoin']# <a href="#$option['olink']#">#$option['otitle']#</a>
                                 </xar:foreach>
                             <xar:else />
-                                &nbsp;
+                                &#160;
                             </xar:if>
                         </td>
                     </xar:if>
@@ -163,7 +163,7 @@
                 <xar:else />
                      &lt;&lt;
                 </xar:if>
-                &nbsp;&nbsp;&nbsp;
+                &#160;&#160;&#160;
                 <xar:if condition="!empty($nexturl)">
                      <a href="#$nexturl#">&gt;&gt;</a>
                 <xar:else />
@@ -201,7 +201,7 @@
                 <xar:else />
                      &lt;&lt;
                 </xar:if>
-                &nbsp;&nbsp;&nbsp;
+                &#160;&#160;&#160;
                 <xar:if condition="!empty($nexturl)">
                      <a href="#$nexturl#">&gt;&gt;</a>
                 <xar:else />

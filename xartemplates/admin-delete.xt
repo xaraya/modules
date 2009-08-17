@@ -27,7 +27,7 @@
         <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
         <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
         <input type="submit" name="confirm" value=" #xarML('Yes')# " />
-        &nbsp;&nbsp;&nbsp;&nbsp;
+        &#160;&#160;&#160;&#160;
         <input type="submit" name="noconfirm" value="  #xarML('No')#  " />
     </div>
     </form>

@@ -36,7 +36,7 @@
        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
        <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
        <input type="submit" name="preview" value="#xarML('Preview')#" />
-        &nbsp;&nbsp;&nbsp;
+        &#160;&#160;&#160;
        <input type="submit" value="#xarML('Update')#" />
     </div>
 </form>
