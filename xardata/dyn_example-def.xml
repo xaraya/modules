@@ -1,53 +1,54 @@
 <object name="dyn_example">
-  <objectid>56</objectid>
+  <objectid>12</objectid>
   <label>Dynamic Example</label>
-  <moduleid>66</moduleid>
-  <itemtype>0</itemtype>
+  <module_id>66</module_id>
+  <itemtype>1</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
   <config>nothing yet</config>
-  <isalias>1</isalias>
+  <isalias></isalias>
   <properties>
     <property name="id">
-      <id>292</id>
+      <id>80</id>
       <label>Id</label>
-      <type>21</type>
-      <default>0</default>
+      <type>itemid</type>
+      <defaultvalue>0</defaultvalue>
       <source>dynamic_data</source>
-      <status>1</status>
-      <order>1</order>
-      <validation></validation>
+      <status>65</status>
+      <seq>0</seq>
+      <configuration></configuration>
     </property>
     <property name="name">
-      <id>293</id>
+      <id>81</id>
       <label>Name</label>
-      <type>2</type>
-      <default>your name</default>
+      <type>textbox</type>
+      <defaultvalue>Your Name</defaultvalue>
       <source>dynamic_data</source>
-      <status>1</status>
-      <order>2</order>
-      <validation>1:30</validation>
+      <status>33</status>
+      <seq>0</seq>
+      <configuration>1:30</configuration>
     </property>
     <property name="age">
-      <id>294</id>
+      <id>82</id>
       <label>Age</label>
-      <type>15</type>
-      <default></default>
+      <type>integerbox</type>
+      <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
-      <status>1</status>
-      <order>3</order>
-      <validation>0:125</validation>
+      <status>33</status>
+      <seq>0</seq>
+      <configuration>a:3:{s:12:"display_size";s:2:"10";s:17:"display_maxlength";s:2:"30";s:14:"display_layout";s:7:"default";}</configuration>
     </property>
     <property name="picture">
-      <id>295</id>
+      <id>83</id>
       <label>Picture</label>
-      <type>12</type>
-      <default></default>
+      <type>image</type>
+      <defaultvalue></defaultvalue>
       <source>dynamic_data</source>
-      <status>2</status>
-      <order>4</order>
-      <validation></validation>
+      <status>33</status>
+      <seq>0</seq>
+      <configuration></configuration>
     </property>
   </properties>
 </object>
-

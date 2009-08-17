@@ -1,8 +1,10 @@
 <object name="usersettings_dyn_example">
   <objectid>12</objectid>
   <label>User Settings For Dyn_example</label>
-  <moduleid>27</moduleid>
+  <module_id>27</module_id>
   <itemtype>66</itemtype>
+  <class>DataObject</class>
+  <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
   <config></config>
@@ -12,22 +14,21 @@
       <id>174</id>
       <label>Show name in bold</label>
       <type>14</type>
-      <default></default>
+      <defaultvalue></defaultvalue>
       <source>user settings</source>
       <status>1</status>
       <order>1</order>
-      <validation></validation>
+      <configuration></configuration>
     </property>
     <property name="itemsperpage">
       <id>175</id>
       <label>Items per page</label>
       <type>15</type>
-      <default></default>
+      <defaultvalue></defaultvalue>
       <source>user settings</source>
       <status>1</status>
       <order>2</order>
-      <validation>1:100</validation>
+      <configuration>1:100</configuration>
     </property>
   </properties>
 </object>
-

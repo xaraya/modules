@@ -13,7 +13,7 @@
  */
 $modversion['name']         = 'Dynamic Data Example';
 $modversion['id']           = '66';
-$modversion['version']      = '1.0.1';
+$modversion['version']      = '2.0.0';
 $modversion['displayname']  = xarML('DynamicData Example');
 $modversion['description']  = 'Dynamic Data Example for new modules';
 $modversion['credits']      = 'xardocs/credits.txt';
@@ -23,10 +23,8 @@ $modversion['license']      = 'xardocs/license.txt';
 $modversion['official']     = 1;
 $modversion['author']       = 'mikespub';
 $modversion['contact']      = 'http://mikespub.net/';
-$modversion['admin']        = 1;
-$modversion['user']         = 1;
+$modversion['admin']        = true;
+$modversion['user']         = true;
 $modversion['class']        = 'Complete';
 $modversion['category']     = 'Content';
-/* Add dependencies var if applicable or remove - example is HTML module using its ID */
-// $modversion['dependency']     = array(779); /* This module would depend on the html module */
 ?>
