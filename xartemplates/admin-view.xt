@@ -15,7 +15,7 @@
 
         <p class="xar-form-input-wrapper-before">
           This tag will automatically retrieve the list of items from DynamicData,
-          and present them according to its default objects/showlist.xd template.
+          and present them according to its default objects/showlist.xt template.
         </p>
 
         <xar:data-view object="$mylist" numitems="$itemsperpage" startnum="$startnum" tplmodule="dyn_example" />

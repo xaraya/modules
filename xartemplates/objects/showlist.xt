@@ -2,16 +2,12 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html< -->
     <xar:style scope="module" module="dynamicdata" file="dd" />
-    <xar:if condition="!empty($isprimary) and xarModIsHooked('categories',$modname,$itemtype)">
-        <xar:template file="catnavigation" />
-    </xar:if>
-
     <xar:if condition="empty($layout)">
         <xar:set name="layout">'default'</xar:set>
     </xar:if>
 
     <p class="xar-accent">    
-        Template : <strong>modules/dyn_example/xartemplates/objects/showlist.xd</strong><br/>
+        Template : <strong>modules/dyn_example/xartemplates/objects/showlist.xt</strong><br/>
         This is a generic admin list template for objects in the dyn_example module (if you want that)    
     </p>
 

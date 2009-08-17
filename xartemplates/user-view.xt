@@ -11,7 +11,7 @@
    <p>
         
             This tag will automatically retrieve the list of items from DynamicData,
-            and present them according to its standard <strong>objects/showview.xd</strong> template.
+            and present them according to its standard <strong>objects/showview.xt</strong> template.
         
    </p>
     <xar:data-view module="dyn_example" itemtype="0" catid="$catid" numitems="$itemsperpage" startnum="$startnum" />

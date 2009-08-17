@@ -1,49 +1,44 @@
 <?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-    <xar:if condition="!empty($isprimary) and xarModIsHooked('categories',$modname,$itemtype)">
-        <xar:template file="catnavigation"/>
-    </xar:if>
     <xar:if condition="empty($layout) or $layout eq 'default'">
-        <p class="xar-accent xar-fullwidth">
-            
-                Template : <strong>modules/dyn_example/xartemplates/objects/showview-dyn_example.xd</strong><br/>
-                This is a specific user view template for the dyn_example object (if you want this)
-                in the dyn_example module (if you want that)
-            
+        <p class="xar-accent xar-fullwidth">            
+            Template : <strong>modules/dyn_example/xartemplates/objects/showview-dyn_example.xt</strong><br/>
+            This is a specific user view template for the dyn_example object (if you want this)
+            in the dyn_example module (if you want that)            
         </p>
-            <xar:foreach in="$items" key="$itemid" value="$fields">
-                        <table class="xar-noborder xar-fullwidth" cellspacing="1" cellpadding="2" >
-                            <xar:foreach in="$properties" key="$name">
-                                <tr>
-                                    <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
-                                        <xar:data-label property="$properties[$name]" />:
-                                    </td>
-                                    <xar:if condition="empty($fields[$name])">
-                                        <td>&#160;</td>
-                                    <xar:elseif condition="!empty($linkfield) and $linkfield eq $name"/>
-                                        <td>
-                                            <a href="#$links[$itemid]['display']['olink']#"><xar:data-output property="$properties[$name]" value="$fields[$name]" /></a>
-                                        </td>
-                                    <xar:else />
-                                            <td>
-                                                <xar:data-output property="$properties[$name]" value="$fields[$name]" />
-                                            </td>
-                                    </xar:if>
-                                </tr>
+        <xar:foreach in="$items" key="$itemid" value="$fields">
+            <table class="xar-noborder xar-fullwidth" cellspacing="1" cellpadding="2" >
+                <xar:foreach in="$properties" key="$name">
+                    <tr>
+                        <td class="xar-align-right xar-alt xar-valign-middle" width="15%">
+                            <xar:data-label property="$properties[$name]" />:
+                        </td>
+                        <xar:if condition="empty($fields[$name])">
+                            <td>&#160;</td>
+                        <xar:elseif condition="!empty($linkfield) and $linkfield eq $name"/>
+                            <td>
+                                <a href="#$links[$itemid]['display']['olink']#"><xar:data-output property="$properties[$name]" value="$fields[$name]" /></a>
+                            </td>
+                        <xar:else />
+                                <td>
+                                    <xar:data-output property="$properties[$name]" value="$fields[$name]" />
+                                </td>
+                        </xar:if>
+                    </tr>
+                </xar:foreach>
+                <xar:if condition="empty($linkfield) and !empty($links[$itemid]) and count($links[$itemid]) gt 0">
+                    <tr>
+                        <td class="xar-align-right  xar-alt xar-valign-middle">&#160;</td>
+                        <td>
+                            <xar:foreach in="$links[$itemid]" value="$option">
+                                #$option['ojoin']# <a href="#$option['olink']#">#$option['otitle']#</a>
                             </xar:foreach>
-                            <xar:if condition="empty($linkfield) and !empty($links[$itemid]) and count($links[$itemid]) gt 0">
-                                <tr>
-                                    <td class="xar-align-right  xar-alt xar-valign-middle">&#160;</td>
-                                    <td>
-                                        <xar:foreach in="$links[$itemid]" value="$option">
-                                            #$option['ojoin']# <a href="#$option['olink']#">#$option['otitle']#</a>
-                                        </xar:foreach>
-                                    </td>
-                                </tr>
-                            </xar:if>
-                        </table>
-            </xar:foreach>
+                        </td>
+                    </tr>
+                </xar:if>
+            </table>
+        </xar:foreach>
 
         <xar:if condition="!empty($prevurl) or !empty($nexturl)">
             <div class="xar-align-center">

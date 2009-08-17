@@ -11,7 +11,7 @@
 
     <p>
         This tag will automatically retrieve the item from DynamicData,
-        and present it according to its standard <strong>objects/showdisplay.xd</strong> template.
+        and present it according to its standard <strong>objects/showdisplay.xt</strong> template.
      </p>
 
     <xar:data-display module="dyn_example" itemtype="0" itemid="$itemid" />
