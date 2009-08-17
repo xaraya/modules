@@ -7,15 +7,15 @@
 </div>
 <div class="xar-mod-body">
   <xar:template type="module" file="admin-menu" />
-  <h2><xar:mlstring>Delete Dynamic Example Item</xar:mlstring></h2>
+  <h2>Delete Dynamic Example Item</h2>
     <form method="post" action="#xarServer::getCurrentURL()#">
     <fieldset>
         <legend>
-            <xar:mlstring>Delete Confirmation</xar:mlstring>
+            Delete Confirmation
         </legend>
         <div class="xar-form-input-wrapper">
             <label for="confirm">
-                <xar:mlstring>Confirm deleting this item ?</xar:mlstring>
+                Confirm deleting this item ?
             </label>
 
             <xar:data-display object="$object" tplmodule="dyn_example" />

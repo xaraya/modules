@@ -61,8 +61,6 @@ function dyn_example_admin_delete($args)
     if (empty($confirm)) {
         // No confirmation yet - display a suitable form to obtain confirmation
         // of this action from the user
-        // Get the menu
-        $data = xarModAPIFunc('dyn_example','admin','menu');
 
         // Specify for which item you want confirmation
         $data['itemid'] = $itemid;

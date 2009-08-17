@@ -7,11 +7,11 @@
 </xar:if>
 <xar:if condition="empty($layout) or $layout eq 'default'">
     <p class="xar-accent xar-padding-topthick">
-            <xar:mlstring>
+            
                 Template : <strong>modules/dyn_example/xartemplates/objects/showdisplay-dyn_example.xd</strong><br/>
                 This is a specific display template for the dyn_example object (if you want this)
                 in the dyn_example module (if you want that)
-            </xar:mlstring>
+            
     </p>
     <table class="xar-noborder xar-fullwidth" cellspacing="1" cellpadding="2">
     <xar:foreach in="$properties" key="$name" value="$property">
@@ -23,13 +23,13 @@
     </table>
 <xar:else />
     <p>
-        <xar:mlstring>Specify your own layout here...</xar:mlstring>
+        Specify your own layout here...
     </p>
     <p>
-        <xar:mlstring>
+        
             You can also specify a separate template, e.g. if you want to
             handle individual fields differently for a particular module / itemtype
-        </xar:mlstring>
+        
     </p>
 </xar:if>
 </xar:template>

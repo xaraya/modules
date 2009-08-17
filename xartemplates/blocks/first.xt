@@ -13,7 +13,7 @@
             <a href="#$link#">#xarVarPrepForDisplay($item['name'])#</a><br />
         </xar:foreach>
     <xar:else/>
-        <xar:mlstring>No items to display</xar:mlstring>
+        No items to display
     </xar:if>
 </p>
 </xar:template>

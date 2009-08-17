@@ -7,17 +7,17 @@
 </div>
 <div class="xar-mod-body">
   <xar:template type="module" file="admin-menu" />
-  <h2><xar:mlstring>Modify Default Configuration</xar:mlstring></h2>
+  <h2>Modify Default Configuration</h2>
   <p class="xar-form-input-before">
-      <xar:mlstring>This uses dynamic module settings, i.e. you can add/remove settings for 
+      This uses dynamic module settings, i.e. you can add/remove settings for 
           your module dynamically too. But you could use the 'normal' hard-coded approach 
           here as well...
-      </xar:mlstring>
+      
   </p>
 
 <form method="post" action="#xarModURL('dyn_example','admin','updateconfig')#">
   <fieldset>
-    <legend><xar:mlstring>Modify Configuration</xar:mlstring></legend>
+    <legend>Modify Configuration</legend>
     <xar:data-form module="modules" itemtype="66" itemid="1" />
   </fieldset>
     #$hooks#
@@ -32,12 +32,12 @@
 </form>
 
 <p class="xar-form-input-wrapper-before">
-<em><xar:mlstring>Note : your users will only be able to override those settings that you make available as user settings</xar:mlstring></em>
+<em>Note : your users will only be able to override those settings that you make available as user settings</em>
 </p>
 <br />
-<h2><xar:mlstring>Dynamic Data Configuration</xar:mlstring></h2>
+<h2>Dynamic Data Configuration</h2>
 
-<h3><xar:mlstring>Dynamic Example</xar:mlstring></h3>
+<h3>Dynamic Example</h3>
 <xar:set name="extrainfo">array('module' => 'dyn_example', 'itemtype' => 0)</xar:set>
 <xar:module main="false" module="dynamicdata" type="admin" func="modifyconfighook" extrainfo="$extrainfo" />
 
@@ -48,11 +48,11 @@
 
 <xar:set name="modid">xarModGetIDFromName('dyn_example')</xar:set>
 
-<h3><xar:mlstring>Module Variables (optional)</xar:mlstring></h3>
+<h3>Module Variables (optional)</h3>
 <xar:set name="extrainfo">array('module' => 'modules', 'itemtype' => $modid)</xar:set>
 <xar:module main="false" module="dynamicdata" type="admin" func="modifyconfighook" extrainfo="$extrainfo" />
 
-<h3><xar:mlstring>User Settings (optional)</xar:mlstring></h3>
+<h3>User Settings (optional)</h3>
 <xar:set name="extrainfo">array('module' => 'roles', 'itemtype' => $modid)</xar:set>
 <xar:module main="false" module="dynamicdata" type="admin" func="modifyconfighook" extrainfo="$extrainfo" />
 

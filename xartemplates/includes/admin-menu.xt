@@ -9,13 +9,13 @@
 <div>
   <dl class="xar-tabs">
     <dt class="help" title="#xarML('Choose an action to perform')#">
-      <xar:mlstring>Actions:</xar:mlstring>
+      Actions:
     </dt>
     <xar:sec mask="AddDynExample" catch="false">
         <xar:set name="tabclass">$activetab=='new'?'active':''</xar:set>
         <dd class="#$tabclass#">
           <a href="#xarModURL('dyn_example','admin','new')#">
-            <xar:mlstring>Add Item</xar:mlstring>
+            Add Item
           </a>
         </dd>
     </xar:sec>
@@ -27,7 +27,7 @@
         </xar:if>
         <dd class="#$tabclass#">
           <a href="#xarModURL('dyn_example','admin','view')#">
-            <xar:mlstring>List all</xar:mlstring>
+            List all
           </a>
         </dd>
     </xar:sec>
@@ -35,7 +35,7 @@
         <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
         <dd class="#$tabclass#">
           <a href="#xarModURL('dyn_example','admin','modifyconfig')#">
-            <xar:mlstring>Modify Config</xar:mlstring>
+            Modify Config
           </a>
         </dd>
     </xar:sec>
@@ -43,7 +43,7 @@
     <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
     <dd class="#$tabclass#">
       <a href="#xarModURL('dyn_example','admin','overview')#">
-        <xar:mlstring>Overview</xar:mlstring>
+        Overview
       </a>
     </dd>
     </xar:sec>

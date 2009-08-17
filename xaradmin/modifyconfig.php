@@ -21,7 +21,6 @@ function dyn_example_admin_modifyconfig()
     // the blocklayout template, and get the common menu configuration - it
     // helps if all of the module pages have a standard menu at the top to
     // support easy navigation
-    $data = xarModAPIFunc('dyn_example','admin','menu');
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing

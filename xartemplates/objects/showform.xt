@@ -1,28 +1,24 @@
 <?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<xar:if condition="empty($layout) or $layout eq 'default'">
-    <p class="xar-accent">
-        <xar:mlstring>
-                Template : <strong>modules/dyn_example/xartemplates/objects/showform.xd</strong><br/>
-                This is a generic form template for objects in the dyn_example module (if you want that)
-        </xar:mlstring>
-    </p>
-    <xar:foreach in="$properties" key="$name" value="$property">
-        <div class="xar-form-input-wrapper">
-            <xar:data-label property="$properties[$name]" label="id" />
-            <xar:data-input property="$properties[$name]" />
-        </div>
-    </xar:foreach>
-<xar:else />
-    <p>
-        <xar:mlstring>Specify your own layout here...</xar:mlstring>
-    </p>
-    <p>
-        <xar:mlstring>
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:if condition="empty($layout) or $layout eq 'default'">
+        <p class="xar-accent">        
+            Template : <strong>modules/dyn_example/xartemplates/objects/showform.xd</strong><br/>
+            This is a generic form template for objects in the dyn_example module (if you want that)        
+        </p>
+        <xar:foreach in="$properties" key="$name" value="$property">
+            <div class="xar-form-input-wrapper">
+                <xar:data-label property="$properties[$name]" for="id" />
+                <xar:data-input property="$properties[$name]" />
+            </div>
+        </xar:foreach>
+    <xar:else />
+        <p>
+            Specify your own layout here...
+        </p>
+        <p>
             You can also specify a separate template, e.g. if you want to handle
             individual fields differently for a particular module / itemtype
-        </xar:mlstring>
-    </p>
-</xar:if>
+        </p>
+    </xar:if>
 </xar:template>

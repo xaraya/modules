@@ -16,8 +16,6 @@
  */
 function dyn_example_admin_view()
 {
-    $data = xarModAPIFunc('dyn_example','admin','menu');
-
     if(!xarVarFetch('startnum', 'isset', $data['startnum'], NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('catid',    'isset', $data['catid'],    NULL, XARVAR_DONT_SET)) {return;}
 

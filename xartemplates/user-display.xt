@@ -5,36 +5,36 @@
     <span class="xar-mod-title">Dynamic Example Administration</span>
 </div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Display a Dynamic Example</xar:mlstring></h2>
+    <h2>Display a Dynamic Example</h2>
 
-    <h3><xar:mlstring>APPROACH # 1 : the &lt;xar:data-display ...&gt; tag</xar:mlstring></h3>
+    <h3>APPROACH # 1 : the &lt;xar:data-display ...&gt; tag</h3>
 
     <p>
-        <xar:mlstring>This tag will automatically retrieve the item from DynamicData,
-        and present it according to its standard <strong>objects/showdisplay.xd</strong> template.</xar:mlstring>
+        This tag will automatically retrieve the item from DynamicData,
+        and present it according to its standard <strong>objects/showdisplay.xd</strong> template.
      </p>
 
     <xar:data-display module="dyn_example" itemtype="0" itemid="$itemid" />
 
     <p>
-        <xar:mlstring>If you want to provide your own presentation here, you can specify a
+        If you want to provide your own presentation here, you can specify a
         different <code>layout="..."</code> to use in the default template, or you can specify your
-        own <code>template="..."</code> here as well.</xar:mlstring>
+        own <code>template="..."</code> here as well.
     </p>
 
-    <h3><xar:mlstring>APPROACH # 2 : the &lt;xar:data-getitem ...&gt; tag</xar:mlstring></h3>
+    <h3>APPROACH # 2 : the &lt;xar:data-getitem ...&gt; tag</h3>
 
     <p>
-        <xar:mlstring>This tag will retrieve the properties of this item from DynamicData and
-        make them available in the 'properties' variable in your template.</xar:mlstring>
+        This tag will retrieve the properties of this item from DynamicData and
+        make them available in the 'properties' variable in your template.
     </p>
 
     <xar:data-getitem name="$properties" module="dyn_example" itemtype="0" itemid="$itemid" />
 
     <p>
-        <xar:mlstring>You can then use that variable to build your own layout. 
+        You can then use that variable to build your own layout. 
         The <code>&lt;xar:data-label ...&gt;</code> and <code>&lt;xar:data-output ...&gt;</code> tags 
-        allow you to show individual labels or value outputs in the template.</xar:mlstring>
+        allow you to show individual labels or value outputs in the template.
     </p>
 
     <table class="xar-noborder" cellspacing="1" cellpadding="2">
@@ -45,7 +45,7 @@
             </td>
             <td class="xar-align-left">
                 <xar:if condition="!empty($is_bold) and $name eq 'name'">
-                    <b><xar:data-output property="$properties[$name]" /></b> (<xar:mlstring>let's be bold now</xar:mlstring>)
+                    <b><xar:data-output property="$properties[$name]" /></b> (let's be bold now)
                 <xar:else />
                     <xar:data-output property="$properties[$name]" />
                 </xar:if>
@@ -56,18 +56,18 @@
 
 
 
-    <h3><xar:mlstring>APPROACH # 3 : getting the object via API</xar:mlstring></h3>
+    <h3>APPROACH # 3 : getting the object via API</h3>
 
     <p>
-        <xar:mlstring>After retrieving the object via API, you can pass along the whole object to
+        After retrieving the object via API, you can pass along the whole object to
         the template and use <code>&lt;xar:data-display object="$object" /&gt;</code> to let 
         DynamicData handle the display. Or you can use <code>&lt;xar:data-display object="$object" tplmodule="dyn_example" /&gt;</code>
-         if you want to provide your own display template in this module :</xar:mlstring>
+         if you want to provide your own display template in this module :
     </p>
 
     <xar:data-display object="$object" tplmodule="dyn_example" />
 
-    <p><xar:mlstring>Otherwise you can pass along the properties and work like in APPROACH # 2.</xar:mlstring></p>
+    <p>Otherwise you can pass along the properties and work like in APPROACH # 2.</p>
 
     <table class="xar-noborder" cellspacing="1" cellpadding="2">
     <xar:foreach in="$properties" key="$name">
@@ -77,7 +77,7 @@
             </td>
             <td class="xar-align-left">
                 <xar:if condition="!empty($is_bold) and $name eq 'name'">
-                    <b><xar:data-output property="$properties[$name]" /></b> (<xar:mlstring>let's be bold now</xar:mlstring>)
+                    <b><xar:data-output property="$properties[$name]" /></b> (let's be bold now)
                 <xar:else />
                     <xar:data-output property="$properties[$name]" />
                 </xar:if>
@@ -87,11 +87,11 @@
     </table>
 
 
-    <h3><xar:mlstring>APPROACH # 4 : getting the raw item values via API</xar:mlstring></h3>
+    <h3>APPROACH # 4 : getting the raw item values via API</h3>
 
     <p>
-        <xar:mlstring>Here you'll have to handle the output format of the values yourself - 
-        in the module code and/or template...</xar:mlstring>
+        Here you'll have to handle the output format of the values yourself - 
+        in the module code and/or template...
     </p>
 
     <table class="xar-fullwidth xar-noborder" cellspacing="1" cellpadding="2">
@@ -102,7 +102,7 @@
             </td>
             <td class="xar-align-left">
                 <xar:if condition="!empty($is_bold) and $name eq 'name'">
-                    <b>#$value#</b> (<xar:mlstring>let's be bold now</xar:mlstring>)
+                    <b>#$value#</b> (let's be bold now)
                 <xar:else />
                     #$value#
                 </xar:if>
@@ -112,8 +112,8 @@
     </table>
 
     <p>
-        <xar:mlstring>Notice for instance that you don't get the option to automatically display 
-        the image with <code>&lt;xar:data-output ... &gt;</code> or not here.</xar:mlstring>
+        Notice for instance that you don't get the option to automatically display 
+        the image with <code>&lt;xar:data-output ... &gt;</code> or not here.
     </p>
 
 <!-- add the output from the different display hooks here -->

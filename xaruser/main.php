@@ -23,8 +23,6 @@ function dyn_example_user_main()
 {
     if (!xarSecurityCheck('ViewDynExample')) return;
 
-    $data = xarModAPIFunc('dyn_example','user','menu');
-
     // Specify some other variables used in the blocklayout template
     $data['welcome'] = xarML('Welcome to this Dynamic Example module...');
     $data['welcome'] .= '<br /><br />';

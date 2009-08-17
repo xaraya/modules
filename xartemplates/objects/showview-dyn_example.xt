@@ -6,11 +6,11 @@
     </xar:if>
     <xar:if condition="empty($layout) or $layout eq 'default'">
         <p class="xar-accent xar-fullwidth">
-            <xar:mlstring>
+            
                 Template : <strong>modules/dyn_example/xartemplates/objects/showview-dyn_example.xd</strong><br/>
                 This is a specific user view template for the dyn_example object (if you want this)
                 in the dyn_example module (if you want that)
-            </xar:mlstring>
+            
         </p>
             <xar:foreach in="$items" key="$itemid" value="$fields">
                         <table class="xar-noborder xar-fullwidth" cellspacing="1" cellpadding="2" >
@@ -212,8 +212,8 @@
 
     <!-- TODO: multi-column output -->
     <xar:else />
-        <xar:mlstring>Specify your own layout here...</xar:mlstring>
+        Specify your own layout here...
         <br /><br />
-        <xar:mlstring>You can also specify a separate template, e.g. if you want to handle individual fields differently for a particular module / itemtype</xar:mlstring>
+        You can also specify a separate template, e.g. if you want to handle individual fields differently for a particular module / itemtype
     </xar:if>
 </xar:template>

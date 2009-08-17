@@ -41,7 +41,6 @@ function dyn_example_user_display($args)
         return $msg;
     }
     // Add the user menu to the data array
-    $data = xarModAPIFunc('dyn_example','user','menu');
 
 /* start APPROACH # 1 and # 2 : retrieve the item directly in the template */
     // Note: we don't retrieve any item here ourselves - we'll let the

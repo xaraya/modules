@@ -20,11 +20,10 @@ function dyn_example_admin_main()
 {
     // Check to see the current user has edit access to the dyn_example module
     if (!xarSecurityCheck('EditDynExample')) return;
-    // Add the admin menu
-    $data = xarModAPIFunc('dyn_example','admin','menu');
 
     // Return the template variables defined in this function
-    return $data;
+    // Nothing defined here, so just return an empty array
+    return array();
 }
 
 ?>

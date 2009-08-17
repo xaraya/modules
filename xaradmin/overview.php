@@ -23,8 +23,6 @@ function dyn_example_admin_overview()
    /* Security Check */
     if (!xarSecurityCheck('AdminDynExample',0)) return;
 
-    $data = xarModAPIFunc('dyn_example','admin','menu');
-
     /* if there is a separate overview function return data to it
      * else just call the main function that usually displays the overview
      */

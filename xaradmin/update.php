@@ -48,8 +48,6 @@ function dyn_example_admin_update($args)
 
     // if we're in preview mode, or if there is some invalid input, show the form again
     if (!empty($preview) || !$isvalid) {
-        $data = xarModAPIFunc('dyn_example','admin','menu');
-
         $data['object'] = & $object;
         $data['itemid'] = $itemid;
 

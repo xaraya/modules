@@ -53,7 +53,6 @@ function dyn_example_admin_modify($args)
     if (!xarSecurityCheck('EditDynExample',1,'Item',$itemid)) return;
 
     // Add the admin menu
-    $data = xarModAPIFunc('dyn_example','admin','menu');
     $data['itemid'] = $itemid;
     $data['object'] =& $object;
 

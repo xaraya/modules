@@ -6,13 +6,13 @@
     </div>
     <div class="xar-mod-body">
 
-      <h2><xar:mlstring>My Settings for Dynamic Example</xar:mlstring></h2>
+      <h2>My Settings for Dynamic Example</h2>
 
-      <p><xar:mlstring>This uses dynamic user settings, i.e. you can add/remove the user settings available to your users dynamically too. But you could use the 'normal' hard-coded approach here as well...</xar:mlstring></p>
+      <p>This uses dynamic user settings, i.e. you can add/remove the user settings available to your users dynamically too. But you could use the 'normal' hard-coded approach here as well...</p>
 
         <form method="post" action="&xar-modurl-dynamicdata-admin-update;">
         <fieldset>
-            <legend><xar:mlstring>User Settings</xar:mlstring></legend>
+            <legend>User Settings</legend>
            <xar:data-form module="roles" itemtype="66" itemid="$uid" />
         </fieldset>
         <div class="xar-form-input-wrapper-after">

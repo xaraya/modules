@@ -1,42 +1,40 @@
 <?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:comment>License: GPL http://www.gnu.org/copyleft/gpl.html</xar:comment>
-<xar:style scope="module" module="dynamicdata" file="dd" />
-<xar:if condition="!empty($isprimary) and xarModIsHooked('categories',$modname,$itemtype)">
-    <xar:template file="catnavigation" />
-</xar:if>
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html< -->
+    <xar:style scope="module" module="dynamicdata" file="dd" />
+    <xar:if condition="!empty($isprimary) and xarModIsHooked('categories',$modname,$itemtype)">
+        <xar:template file="catnavigation" />
+    </xar:if>
 
-<xar:if condition="empty($layout)">
-    <xar:set name="layout">'default'</xar:set>
-</xar:if>
+    <xar:if condition="empty($layout)">
+        <xar:set name="layout">'default'</xar:set>
+    </xar:if>
 
-<p class="xar-accent">
-    <xar:mlstring>
+    <p class="xar-accent">    
         Template : <strong>modules/dyn_example/xartemplates/objects/showlist.xd</strong><br/>
-        This is a generic admin list template for objects in the dyn_example module (if you want that)
-    </xar:mlstring>
-</p>
-
-<!-- Use the subtemplate for the layout specified -->
-<xar:template file="objectlist-$layout" module="dynamicdata"/>
-
-<!-- Conditionally add pager stuff -->
-<xar:if condition="!empty($prevurl) or !empty($nexturl)">
-    <p>
-        <xar:if condition="!empty($prevurl)">
-            <a href="#$prevurl#">
-                &lt;&lt; 
-            </a>
-            <xar:else />
-            --- 
-        </xar:if>
-        <xar:if condition="!empty($nexturl)">
-            <a href="#$nexturl#">
-                &gt;&gt; 
-            </a>
-            <xar:else />
-            --- 
-        </xar:if>
+        This is a generic admin list template for objects in the dyn_example module (if you want that)    
     </p>
-</xar:if>
+
+    <!-- Use the subtemplate for the layout specified -->
+    <xar:template file="objectlist-$layout" module="dynamicdata"/>
+
+    <!-- Conditionally add pager stuff -->
+    <xar:if condition="!empty($prevurl) or !empty($nexturl)">
+        <p>
+            <xar:if condition="!empty($prevurl)">
+                <a href="#$prevurl#">
+                    &lt;&lt; 
+                </a>
+                <xar:else />
+                --- 
+            </xar:if>
+            <xar:if condition="!empty($nexturl)">
+                <a href="#$nexturl#">
+                    &gt;&gt; 
+                </a>
+                <xar:else />
+                --- 
+            </xar:if>
+        </p>
+    </xar:if>
 </xar:template>
