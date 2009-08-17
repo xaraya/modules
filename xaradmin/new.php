@@ -19,26 +19,32 @@ function dyn_example_admin_new()
     // See if the current user has the privilege to add an item. We cannot pass any extra arguments here
     if (!xarSecurityCheck('AddDynExample')) return;
 
+    // Load the DD master object class. This line will likely disappear in future versions
+    sys::import('modules.dynamicdata.class.objects.master');
+    // Get the object we'll be working with
     $data['object'] = DataObjectMaster::getObject(array('name' => 'dyn_example'));
 
     // Check if we are in 'preview' mode from the input here - the rest is handled by checkInput()
+    // Here we are testing for a button clicked, so we test for a string
     if(!xarVarFetch('preview', 'str', $data['preview'],  NULL, XARVAR_DONT_SET)) {return;}
 
     // Check if we are submitting the form
+    // Here we are testing for a hidden field we define as true on the template, so we can use a boolean (true/false)
     if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
 
     if ($data['confirm']) {
 
-        // Check for a valid confirmation key
+        // Check for a valid confirmation key. The value is automatically gotten from the template
         if(!xarSecConfirmAuthKey()) return;
 
-        // Get the data from the form
+        // Get the data from the form and see if it is all valid
+        // Either way the values are now stored in the object
         $isvalid = $data['object']->checkInput();
 
         if (!$isvalid) {
-            // Bad data: redisplay the form with error messages
+            // Bad data: redisplay the form with the data we picked up and with error messages
             return xarTplModule('dyn_example','admin','new', $data);        
-        } elseif ($data['preview']) {
+        } elseif (isset($data['preview'])) {
             // Show a preview, same thing as the above essentially
             return xarTplModule('dyn_example','admin','new', $data);        
         } else {
@@ -47,6 +53,7 @@ function dyn_example_admin_new()
 
             // Jump to the next page
             xarResponse::Redirect(xarModURL('dyn_example','admin','view'));
+            // Always add the next line even if processing never reaches it
             return true;
         }
     }

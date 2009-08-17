@@ -31,33 +31,37 @@ function dyn_example_admin_view()
 /* end APPROACH # 1 and # 2 : retrieve the items directly in the template */
 
 /* start APPROACH # 3 : getting the object list via API */
-    $mylist = xarModAPIFunc('dynamicdata','user','getitems',
-                             array('module'    => 'dyn_example',
-                                   'itemtype'  => 0,
-                                   'catid'     => $data['catid'],
-                                   'numitems'  => $data['itemsperpage'],
-                                   'startnum'  => $data['startnum'],
-                                   'status'    => 1,      // only get the properties with status 1 = active
-                                   'getobject' => 1));    // get back the object list
-/* here we use a different variation than in xaruser.php */
+    // Load the DD master object class. This line will likely disappear in future versions
+    sys::import('modules.dynamicdata.class.objects.master');
+    // Get the object we'll be working with. Note this is a so called object list
+    $mylist = DataObjectMaster::getObjectList(array('name' => 'dyn_example'));
+    
+    // Load the DD master property class. This line will likely disappear in future versions
+    sys::import('modules.dynamicdata.class.properties.master');
+
+    // We have some filters for the items
+    $filters = array('numitems'  => $data['itemsperpage'],
+                     'startnum'  => $data['startnum'],
+                     'status'    => DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,
+                    );
+    
+    // Get the items 
+    $items = $mylist->getItems($filters);
+    
     // pass along the whole object list to the template
     $data['mylist'] = & $mylist;
-    // or pass along the properties and values instead of the object list (cfr. xaruser.php)
-    //$data['properties'] =& $mylist->getProperties();
-    //$data['values'] =& $mylist->items;
+    
+    // or pass along the properties and values instead of the object list (cfr. below)
+    $data['properties'] =& $mylist->getProperties();
+    $data['values'] = $items;
 /* end APPROACH # 3 : getting the object list via API */
 
 /* start APPROACH # 4 : getting only the raw item values via API */
-    $values = xarModAPIFunc('dynamicdata','user','getitems',
-                             array('module'   => 'dyn_example',
-                                   'itemtype' => 0,
-                                   'catid'    => $data['catid'],
-                                   'numitems' => $data['itemsperpage'],
-                                   'startnum' => $data['startnum'],
-                                   'status'   => 1));
+    
+    // Do the same as above, but then work on the item values
     $data['labels'] = array();
     $data['items'] = array();
-    foreach ($values as $itemid => $fields) {
+    foreach ($items as $itemid => $fields) {
         $data['items'][$itemid] = array();
         foreach ($fields as $name => $value) {
             $data['items'][$itemid][$name] = xarVarPrepForDisplay($value);
