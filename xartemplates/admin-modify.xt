@@ -3,7 +3,7 @@
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-head">
-  <span class="xar-mod-title">#$menutitle#</span>
+  <span class="xar-mod-title">Dynamic Example Administration</span>
 </div>
 <div class="xar-mod-body">
   <xar:template type="module" file="admin-menu" />
@@ -14,7 +14,7 @@
     <xar:if condition="!empty($withupload)">
        <xar:set name="enctype">'multipart/form-data'</xar:set>
     </xar:if>
-    <form method="post" action="&xar-modurl-dyn_example-admin-update;" enctype="#$enctype#">
+    <form method="post" action="#xarModURL('dyn_example','admin','update')#" enctype="#$enctype#">
     <fieldset>
         <legend>
             <xar:mlstring>Preview</xar:mlstring>

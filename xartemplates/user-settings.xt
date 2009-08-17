@@ -1,33 +1,32 @@
 <?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<div class="xar-mod-head">
-    <span class="xar-mod-title">#$menutitle#</span>
-  </tr>
-</div>
-<div class="xar-mod-body">
-
-  <h2><xar:mlstring>My Settings for Dynamic Example</xar:mlstring></h2>
-
-  <p><xar:mlstring>This uses dynamic user settings, i.e. you can add/remove the user settings available to your users dynamically too. But you could use the 'normal' hard-coded approach here as well...</xar:mlstring></p>
-
-    <form method="post" action="&xar-modurl-dynamicdata-admin-update;">
-    <fieldset>
-        <legend><xar:mlstring>User Settings</xar:mlstring></legend>
-       <xar:data-form module="roles" itemtype="66" itemid="$uid" />
-    </fieldset>
-    <div class="xar-form-input-wrapper-after">
-      <input type="hidden" name="authid" value="#xarSecGenAuthKey('dynamicdata')#" />
-      <input type="hidden" name="modid" value="#xarModGetIDFromName('roles')#" />
-      <input type="hidden" name="itemtype" value="#xarModGetIDFromName('dyn_example')#" />
-      <input type="hidden" name="itemid" value="#$uid#" />
-      <input type="hidden" name="return_url" value="#xarServerGetCurrentURL()#" />
-      <input type="submit" value="#$submitlabel#" />
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">Dynamic Example Administration</span>
     </div>
-</form>
-<p class="xar-align-center">
-<strong>This part could be made available in Your Account...</strong>
-</p>
+    <div class="xar-mod-body">
 
-</div>
+      <h2><xar:mlstring>My Settings for Dynamic Example</xar:mlstring></h2>
+
+      <p><xar:mlstring>This uses dynamic user settings, i.e. you can add/remove the user settings available to your users dynamically too. But you could use the 'normal' hard-coded approach here as well...</xar:mlstring></p>
+
+        <form method="post" action="&xar-modurl-dynamicdata-admin-update;">
+        <fieldset>
+            <legend><xar:mlstring>User Settings</xar:mlstring></legend>
+           <xar:data-form module="roles" itemtype="66" itemid="$uid" />
+        </fieldset>
+        <div class="xar-form-input-wrapper-after">
+          <input type="hidden" name="authid" value="#xarSecGenAuthKey('dynamicdata')#" />
+          <input type="hidden" name="modid" value="#xarModGetIDFromName('roles')#" />
+          <input type="hidden" name="itemtype" value="#xarModGetIDFromName('dyn_example')#" />
+          <input type="hidden" name="itemid" value="#$uid#" />
+          <input type="hidden" name="return_url" value="#xarServerGetCurrentURL()#" />
+          <input type="submit" value="#$submitlabel#" />
+        </div>
+    </form>
+    <p class="xar-align-center">
+    <strong>This part could be made available in Your Account...</strong>
+    </p>
+
+    </div>
 </xar:template>

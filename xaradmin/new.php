@@ -12,33 +12,15 @@
  * @author mikespub <mikespub@xaraya.com>
  */
 /**
- * add new item
+ * Create a new item of the dyn_example object
  */
 function dyn_example_admin_new()
 {
-    // Add the admin menu
-    $data = xarModAPIFunc('dyn_example','admin','menu');
     // See if the current user has the privilege to add an item. We cannot pass any extra arguments here
     if (!xarSecurityCheck('AddDynExample')) return;
 
-    // get the Dynamic Object defined for this module (and itemtype, if relevant)
-    $data['object'] = xarModAPIFunc('dynamicdata','user','getobject',
-                                     array('module' => 'dyn_example'));
-
-    // Set the item as an array
-    $item = array();
-
-    // Call the hooks. We tell the hooked module here that we will create a new item
-    // TODO: replace join()
-    $item['module'] = 'dyn_example';
-    $hooks = xarModCallHooks('item','new','',$item);
-    if (empty($hooks)) {
-        $data['hooks'] = '';
-    } elseif (is_array($hooks)) {
-        $data['hooks'] = join('',$hooks);
-    } else {
-        $data['hooks'] = $hooks;
-    }
+    $data['object'] = DataObjectMaster::getObject(array('name' => 'dyn_example'));
+    $data['tplmodule'] = 'foo';
 
     // Return the template variables defined in this function
     return $data;

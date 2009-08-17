@@ -65,7 +65,7 @@
         <table class="xar-noborder xar-fullwidth" cellspacing="1" cellpadding="2" >
             <tr>
                 <xar:foreach in="$properties" key="$name">
-                    <th class=xar-align-center"><xar:data-label property="$properties[$name]" /></th>
+                    <th class="xar-align-center"><xar:data-label property="$properties[$name]" /></th>
                 </xar:foreach>
                 <xar:if condition="empty($linkfield)">
                     <th>

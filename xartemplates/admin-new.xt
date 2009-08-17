@@ -1,44 +1,45 @@
 <?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<!-- common admin menu for this module - remove link to the current function -->
-<div class="xar-mod-head">
-  <span class="xar-mod-title">#$menutitle#</span>
-</div>
-<div class="xar-mod-body">
-  <xar:template type="module" file="admin-menu" />
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- common admin menu for this module - remove link to the current function -->
+    <div class="xar-mod-head">
+      <span class="xar-mod-title">Dynamic Example Administration</span>
+    </div>
+    <div class="xar-mod-body">
+      <xar:template type="module" file="admin-menu" />
 
-<h2><xar:mlstring>Add a Dynamic Example</xar:mlstring></h2>
-    <xar:set name="withupload">#$object->upload#</xar:set>
-    <xar:set name="enctype">'application/x-www-form-urlencoded'</xar:set>
-    <xar:if condition="!empty($withupload)">
-        <xar:set name="enctype">'multipart/form-data'</xar:set>
-    </xar:if>
-    <xar:if condition="!empty($preview)">
-        <fieldset>
-            <legend><xar:mlstring>Preview</xar:mlstring></legend>
+        <h2><xar:mlstring>Add a Dynamic Example</xar:mlstring></h2>
+            <xar:set name="withupload">#$object->upload#</xar:set>
+            <xar:set name="enctype">'application/x-www-form-urlencoded'</xar:set>
+            <xar:if condition="!empty($withupload)">
+                <xar:set name="enctype">'multipart/form-data'</xar:set>
+            </xar:if>
+            <xar:if condition="!empty($preview)">
+                <fieldset>
+                    <legend><xar:mlstring>Preview</xar:mlstring></legend>
 
-                <xar:data-display object="$object" tplmodule="dyn_example" />
-        </fieldset>
-    </xar:if>
+                        <xar:data-display object="$object" tplmodule="dyn_example" />
+                </fieldset>
+            </xar:if>
 
-<form method="post" action="&xar-modurl-dyn_example-admin-create;" enctype="#$enctype#">
-  <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-  <fieldset>
-      <legend>
-          <xar:mlstring>Create new</xar:mlstring>
-      </legend>
-        <!-- this does most of the hard work :) -->
-        <xar:data-form object="$object" tplmodule="dyn_example" />
+        <form method="post" action="#xarServer::getCurrentURL()#" enctype="#$enctype#">
+          <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+          <fieldset>
+              <legend>
+                  <xar:mlstring>Create new</xar:mlstring>
+              </legend>
+                <!-- this does most of the hard work :) -->
+                <xar:data-form object="$object" tplmodule="dyn_example" />
 
-       <div class="xar-form-input-wrapper">
-        #$hooks#
-        </div>
-        <div class="xar-form-input-wrapper-after">
-        <input type="submit" name="preview" value="#xarML('Preview')#" />
-        &#160;&#160;&#160;
-        <input type="submit" value="#xarML('Create')#" />
-        </div>
-</form>
-</div>
+               <div class="xar-form-input-wrapper">
+                #$hooks#
+                </div>
+                <div class="xar-form-input-wrapper-after">
+                <input type="submit" name="preview" value="#xarML('Preview')#" />
+                &#160;&#160;&#160;
+                <input type="submit" value="#xarML('Create')#" />
+                </div>
+          </fieldset>
+        </form>
+    </div>
 </xar:template>

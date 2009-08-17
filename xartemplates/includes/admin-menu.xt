@@ -14,7 +14,7 @@
     <xar:sec mask="AddDynExample" catch="false">
         <xar:set name="tabclass">$activetab=='new'?'active':''</xar:set>
         <dd class="#$tabclass#">
-          <a href="&xar-modurl-dyn_example-admin-new;">
+          <a href="#xarModURL('dyn_example','admin','new')#">
             <xar:mlstring>Add Item</xar:mlstring>
           </a>
         </dd>
@@ -26,7 +26,7 @@
             <xar:set name="tabclass">''</xar:set>
         </xar:if>
         <dd class="#$tabclass#">
-          <a href="&xar-modurl-dyn_example-admin-view;">
+          <a href="#xarModURL('dyn_example','admin','view')#">
             <xar:mlstring>List all</xar:mlstring>
           </a>
         </dd>
@@ -34,7 +34,7 @@
     <xar:sec mask="AdminDynExample" catch="false">
         <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
         <dd class="#$tabclass#">
-          <a href="&xar-modurl-dyn_example-admin-modifyconfig;">
+          <a href="#xarModURL('dyn_example','admin','modifyconfig')#">
             <xar:mlstring>Modify Config</xar:mlstring>
           </a>
         </dd>
@@ -42,7 +42,7 @@
     <xar:sec mask="EditDynExample" catch="false">
     <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
     <dd class="#$tabclass#">
-      <a href="&xar-modurl-dyn_example-admin-overview;">
+      <a href="#xarModURL('dyn_example','admin','overview')#">
         <xar:mlstring>Overview</xar:mlstring>
       </a>
     </dd>

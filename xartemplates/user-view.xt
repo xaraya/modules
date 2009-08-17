@@ -2,8 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <div class="xar-mod-head">
-    <span class="xar-mod-title">#$menutitle#</span>
-  </tr>
+    <span class="xar-mod-title">Dynamic Example Administration</span>
 </div>
 <div class="xar-mod-body">
     <h2><xar:mlstring>View Dynamic Examples</xar:mlstring></h2>
@@ -87,7 +86,7 @@
           </xar:foreach>
           <tr>
             <td class="xar-align-right xar-valign-top xar-alt">&#160;</td>
-            <td><a href="&xar-modurl-dyn_example-user-display;&amp;itemid=#$itemid#"><xar:mlstring>Display</xar:mlstring></a></td>
+            <td><a href="#xarModURL('dyn_example','user','display',array('itemid' => $itemid))#"><xar:mlstring>Display</xar:mlstring></a></td>
           </tr>
         </table>
     </xar:foreach>
@@ -106,7 +105,7 @@
           </xar:foreach>
           <tr>
             <td class="xar-align-right xar-valign-top xar-alt">&#160;</td>
-            <td><a href="&xar-modurl-dyn_example-user-display;&amp;itemid=#$itemid#"><xar:mlstring>Display</xar:mlstring></a></td>
+            <td><a href="#xarModURL('dyn_example','user','display',array('itemid' => $itemid))#"><xar:mlstring>Display</xar:mlstring></a></td>
           </tr>
         </table>
     </xar:foreach>

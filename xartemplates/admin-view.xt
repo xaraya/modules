@@ -4,7 +4,7 @@
 <!-- common admin menu for this module - remove link to the current function -->
 
 <div class="xar-mod-head">
-  <span class="xar-mod-title">#$menutitle#</span>
+  <span class="xar-mod-title">Dynamic Example Administration</span>
 </div>
 <div class="xar-mod-body">
   <xar:template type="module" file="admin-menu" />
@@ -59,9 +59,9 @@
             </xar:if>
         </xar:foreach>
         <td width="30%" class="xar-align-center">
-            <a href="&xar-modurl-dyn_example-user-display;&amp;itemid=#$itemid#"><xar:mlstring>View</xar:mlstring></a> |
-            <a href="&xar-modurl-dyn_example-user-modify;&amp;itemid=#$itemid#"><xar:mlstring>Edit</xar:mlstring></a> |
-            <a href="&xar-modurl-dyn_example-user-delete;&amp;itemid=#$itemid#"><xar:mlstring>Delete</xar:mlstring></a>
+            <a href="#xarModURL('dyn_example','user','display',array('itemid' => $itemid))#"><xar:mlstring>View</xar:mlstring></a> |
+            <a href="#xarModURL('dyn_example','user','modify',array('itemid' => $itemid))#"><xar:mlstring>Edit</xar:mlstring></a> |
+            <a href="#xarModURL('dyn_example','user','delete',array('itemid' => $itemid))#"><xar:mlstring>Delete</xar:mlstring></a>
         </td>
     </tr>
     </xar:foreach>
@@ -69,7 +69,7 @@
         <xar:foreach in="$properties" key="$name">
             <td>&#160;</td>
         </xar:foreach>
-        <td class="xar-align-center"><a href="&xar-modurl-dyn_example-admin-new;"><xar:mlstring>New</xar:mlstring></a></td>
+        <td class="xar-align-center"><a href="#xarModURL('dyn_example','admin','new')#"><xar:mlstring>New</xar:mlstring></a></td>
     </tr>
     </table>
 
@@ -108,9 +108,9 @@
             <td>#$value#</td>
         </xar:foreach>
         <td width="30%" class="xar-align-center">
-            <a href="&xar-modurl-dyn_example-user-display;&amp;itemid=#$itemid#"><xar:mlstring>View</xar:mlstring></a> |
-            <a href="&xar-modurl-dyn_example-user-modify;&amp;itemid=#$itemid#"><xar:mlstring>Edit</xar:mlstring></a> |
-            <a href="&xar-modurl-dyn_example-user-delete;&amp;itemid=#$itemid#"><xar:mlstring>Delete</xar:mlstring></a>
+            <a href="#xarModURL('dyn_example','user','display',array('itemid' => $itemid))#"><xar:mlstring>View</xar:mlstring></a> |
+            <a href="#xarModURL('dyn_example','user','modify',array('itemid' => $itemid))#"><xar:mlstring>Edit</xar:mlstring></a> |
+            <a href="#xarModURL('dyn_example','user','delete',array('itemid' => $itemid))#"><xar:mlstring>Delete</xar:mlstring></a>
         </td>
     </tr>
     </xar:foreach>
@@ -118,11 +118,11 @@
         <xar:foreach in="$fields" key="$name">
             <td>&#160;</td>
         </xar:foreach>
-        <td class="xar-align-center"><a href="&xar-modurl-dyn_example-admin-new;"><xar:mlstring>New</xar:mlstring></a></td>
+        <td class="xar-align-center"><a href="#xarModURL('dyn_example','admin','new')#"><xar:mlstring>New</xar:mlstring></a></td>
     </tr>
     </table>
 <xar:else/>
-    <a href="&xar-modurl-dyn_example-admin-new;"><xar:mlstring>New</xar:mlstring></a>
+    <a href="#xarModURL('dyn_example','admin','new')#"><xar:mlstring>New</xar:mlstring></a>
 </xar:if>
 </div>
 </xar:template>
