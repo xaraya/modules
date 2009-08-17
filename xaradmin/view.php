@@ -27,7 +27,7 @@ function dyn_example_admin_view()
 
 /* start APPROACH # 1 and # 2 : retrieve the items directly in the template */
     // Note: we don't retrieve any items here ourselves - we'll let the
-    //       <xar:data-list ... /> tag do that in the template itself
+    //       <xar:data-view ... /> tag do that in the template itself
 /* end APPROACH # 1 and # 2 : retrieve the items directly in the template */
 
 /* start APPROACH # 3 : getting the object list via API */
@@ -52,8 +52,10 @@ function dyn_example_admin_view()
     $data['mylist'] = & $mylist;
     
     // or pass along the properties and values instead of the object list (cfr. below)
-    $data['properties'] =& $mylist->getProperties();
-    $data['values'] = $items;
+    //$data['properties'] =& $mylist->getProperties();
+    //$data['values'] = $items;
+    // In this example we wont pass these vars to the template but rather get them on the template itslef
+    // using the getitems tag
 /* end APPROACH # 3 : getting the object list via API */
 
 /* start APPROACH # 4 : getting only the raw item values via API */

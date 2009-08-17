@@ -1,35 +1,37 @@
 <?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<!-- common admin menu for this module - remove link to the current function -->
-<div class="xar-mod-head">
-  <span class="xar-mod-title">Dynamic Example Administration</span>
-</div>
-<div class="xar-mod-body">
-  <xar:template type="module" file="admin-menu" />
-  <h2>Delete Dynamic Example Item</h2>
-    <form method="post" action="#xarServer::getCurrentURL()#">
-    <fieldset>
-        <legend>
-            Delete Confirmation
-        </legend>
-        <div class="xar-form-input-wrapper">
-            <label for="confirm">
-                Confirm deleting this item ?
-            </label>
-
-            <xar:data-display object="$object" tplmodule="dyn_example" />
-        </div>
-    </fieldset>
-
-    <div class="xar-form-input-wrapper-after">
-
-        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-        <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
-        <input type="submit" name="confirm" value=" #xarML('Yes')# " />
-        &#160;&#160;&#160;&#160;
-        <input type="submit" name="noconfirm" value="  #xarML('No')#  " />
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- common admin menu for this module - remove link to the current function -->
+    <div class="xar-mod-head">
+      <span class="xar-mod-title">Dynamic Example Administration</span>
     </div>
-    </form>
-</div>
+    <div class="xar-mod-body">
+      <xar:template type="module" file="admin-menu" />
+      <h2>Delete Dynamic Example Item</h2>
+        <form method="post" action="#xarServer::getCurrentURL()#">
+        <fieldset>
+            <legend>
+                Delete Confirmation
+            </legend>
+            <div class="xar-form-input-wrapper">
+                <label for="confirm">
+                    Confirm deleting this item ?
+                </label>
+
+                <xar:data-display object="$object" tplmodule="dyn_example" />
+            </div>
+        </fieldset>
+
+        <div class="xar-form-input-wrapper-after">
+            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+            <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
+            <input type="hidden" name="confirm" id="confirm" value="true" />
+            <xar:var name="label">Yes</xar:var>
+            <xar:button type="submit" label="$label" />
+            &#160;&#160;&#160;&#160;
+            <xar:var name="label">No</xar:var>
+            <xar:button type="cancel" label="$label" />
+        </div>
+        </form>
+    </div>
 </xar:template>

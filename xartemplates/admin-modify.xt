@@ -1,45 +1,41 @@
 <?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<!-- common admin menu for this module - remove link to the current function -->
-<div class="xar-mod-head">
-  <span class="xar-mod-title">Dynamic Example Administration</span>
-</div>
-<div class="xar-mod-body">
-  <xar:template type="module" file="admin-menu" />
-
-  <h2>Modify a Dynamic Example</h2>
-    <xar:set name="withupload">#$object->upload#</xar:set>
-    <xar:set name="enctype">'application/x-www-form-urlencoded'</xar:set>
-    <xar:if condition="!empty($withupload)">
-       <xar:set name="enctype">'multipart/form-data'</xar:set>
-    </xar:if>
-    <form method="post" action="#xarModURL('dyn_example','admin','update')#" enctype="#$enctype#">
-    <fieldset>
-        <legend>
-            Preview
-        </legend>
-
-      <xar:data-display object="$object" tplmodule="dyn_example" />
-    </fieldset>
-    <fieldset>
-        <legend>
-            Modify
-        </legend>
-        <!-- this does most of the hard work :) -->
-        <xar:data-form object="$object" tplmodule="dyn_example" />
-     </fieldset>
-        <div class="xar-form-input-wrapper-after">
-            #$hooks#
-        </div>
-    <div class="xar-form-input-wrapper-after">
-       <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-       <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
-       <input type="submit" name="preview" value="#xarML('Preview')#" />
-        &#160;&#160;&#160;
-       <input type="submit" value="#xarML('Update')#" />
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- common admin menu for this module - remove link to the current function -->
+    <div class="xar-mod-head">
+      <span class="xar-mod-title">Dynamic Example Administration</span>
     </div>
-</form>
+    <div class="xar-mod-body">
+      <xar:template type="module" file="admin-menu" />
 
-</div>
+      <h2>Modify a Dynamic Example</h2>
+        <xar:set name="withupload">#$object->upload#</xar:set>
+        <xar:set name="enctype">'application/x-www-form-urlencoded'</xar:set>
+        <xar:if condition="!empty($withupload)">
+           <xar:set name="enctype">'multipart/form-data'</xar:set>
+        </xar:if>
+        <form method="post" action="#xarServer::getCurrentURL()#" enctype="#$enctype#">
+            <fieldset>
+                <legend>
+                    Preview
+                </legend>
+                <xar:data-display object="$object" tplmodule="dyn_example" />
+            </fieldset>
+            <fieldset>
+                <legend>
+                    Modify
+                </legend>
+                <!-- this does most of the hard work :) -->
+                <xar:data-form object="$object" tplmodule="dyn_example" />
+             </fieldset>
+            <div class="xar-form-input-wrapper-after">
+                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
+                <input type="hidden" name="confirm" id="confirm" value="true" />
+                <input type="submit" name="preview" value="#xarML('Preview')#" />
+                &#160;&#160;&#160;
+                <input type="submit" value="#xarML('Update')#" />
+            </div>
+        </form>
+    </div>
 </xar:template>

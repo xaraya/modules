@@ -7,7 +7,7 @@
 <div class="xar-mod-body">
     <h2>Display a Dynamic Example</h2>
 
-    <h3>APPROACH # 1 : the &lt;xar:data-display ...&gt; tag</h3>
+    <h3>APPROACH # 1 : the xar:data-display ... tag</h3>
 
     <p>
         This tag will automatically retrieve the item from DynamicData,
@@ -22,14 +22,14 @@
         own <code>template="..."</code> here as well.
     </p>
 
-    <h3>APPROACH # 2 : the &lt;xar:data-getitem ...&gt; tag</h3>
+    <h3>APPROACH # 2 : the xar:data-getitem ... tag</h3>
 
     <p>
         This tag will retrieve the properties of this item from DynamicData and
         make them available in the 'properties' variable in your template.
     </p>
 
-    <xar:data-getitem name="$properties" module="dyn_example" itemtype="0" itemid="$itemid" />
+    <xar:data-getitem name="$properties" object="dyn_example" itemid="$itemid" />
 
     <p>
         You can then use that variable to build your own layout. 

@@ -18,53 +18,61 @@
  *
  * @param id itemid The id of the dynamic data item to modify
  */
-function dyn_example_admin_modify($args)
+function dyn_example_admin_modify()
 {
-    extract($args);
+    if(!xarVarFetch('itemid',       'id',    $data['itemid'],   NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('name',       'str',    $name,            'dyn_example', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
 
-    if(!xarVarFetch('itemid',   'id', $itemid,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('objectid', 'id', $objectid, NULL, XARVAR_DONT_SET)) {return;}
-
-    // See if we have to use the universal objectid
-    if (!empty($objectid)) {
-        $itemid = $objectid;
-    }
     // Check if we still have no id of the item to modify.
-    if (empty($itemid)) {
+    if (empty($data['itemid'])) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'item id', 'admin', 'modify', 'dyn_example');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return $msg;
+        throw new Exception($msg);
     }
-
-    // get the Dynamic Object defined for this module (and itemtype, if relevant)
-    $object = xarModAPIFunc('dynamicdata','user','getobject',
-                             array('module' => 'dyn_example',
-                                   'itemid' => $itemid));
-    if (!isset($object)) return;
-
-    // get the values for this item
-    $newid = $object->getItem();
-    if (!isset($newid) || $newid != $itemid) return;
 
     // Check if the user can Edit in the dyn_example module, and then specifically for this item.
     // We pass the itemid to the SecurityCheck
-    if (!xarSecurityCheck('EditDynExample',1,'Item',$itemid)) return;
+    if (!xarSecurityCheck('EditDynExample',1,'Item',$data['itemid'])) return;
 
-    // Add the admin menu
-    $data['itemid'] = $itemid;
-    $data['object'] =& $object;
+    // Load the DD master object class. This line will likely disappear in future versions
+    sys::import('modules.dynamicdata.class.objects.master');
+    // Get the object we'll be working with
+    $data['object'] = DataObjectMaster::getObject(array('name' => $name));
+    
+    // Check if we are in 'preview' mode from the input here - the rest is handled by checkInput()
+    // Here we are testing for a button clicked, so we test for a string
+    if(!xarVarFetch('preview', 'str', $data['preview'],  NULL, XARVAR_DONT_SET)) {return;}
 
-    $item = array();
-    $item['module'] = 'dyn_example';
-    $hooks = xarModCallHooks('item','modify',$itemid,$item);
-    if (empty($hooks)) {
-        $data['hooks'] = '';
-    } elseif (is_array($hooks)) {
-        $data['hooks'] = join('',$hooks);
+    // Check if we are submitting the form
+    // Here we are testing for a hidden field we define as true on the template, so we can use a boolean (true/false)
+    if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
+
+    if ($data['confirm']) {
+
+        // Check for a valid confirmation key
+        if(!xarSecConfirmAuthKey()) return;
+
+        // Get the data from the form
+        $isvalid = $data['object']->checkInput();
+
+        if (!$isvalid) {
+            // Bad data: redisplay the form with the data we picked up and with error messages
+            return xarTplModule('dyn_example','admin','modify', $data);        
+        } elseif (isset($data['preview'])) {
+            // Show a preview, same thing as the above essentially
+            return xarTplModule('dyn_example','admin','modify', $data);        
+        } else {
+            // Good data: create the item
+            $item = $data['object']->updateItem();
+
+            // Jump to the next page
+            xarResponse::Redirect(xarModURL('dyn_example','admin','view'));
+            return true;
+        }
     } else {
-        $data['hooks'] = $hooks;
+        // Get that specific item of the object
+        $data['object']->getItem(array('itemid' => $data['itemid']));
     }
 
     // Return the template variables defined in this function

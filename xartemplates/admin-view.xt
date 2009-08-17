@@ -11,7 +11,7 @@
 
         <h2>List of Dynamic Examples</h2>
 
-        <h3>APPROACH # 1 : the &lt;xar:data-list ...&gt; tag</h3>
+        <h3>APPROACH # 1 : the xar:data-view ... tag</h3>
 
         <p class="xar-form-input-wrapper-before">
           This tag will automatically retrieve the list of items from DynamicData,
@@ -26,15 +26,15 @@
 
 
 
-        <h3>APPROACH # 2 : the &lt;xar:data-getitems ...&gt; tag</h3>
+        <h3>APPROACH # 2 : the xar:data-getitems ... tag</h3>
 
         <p class="xar-form-input-wrapper-before">
           This tag will retrieve the properties and values from DynamicData and
           make them available in the 'properties' and 'values' variables in your template.
         </p>
-<!--
-        <xar:data-getitems name="$properties" value="$values" module="dyn_example" itemtype="0" catid="$catid" numitems="$itemsperpage" startnum="$startnum" />
--->
+
+        <xar:data-getitems object="$mylist" value="values" name="properties" numitems="$itemsperpage" startnum="$startnum" />
+
         <p class="xar-form-input-wrapper-before">
           You can then use those variables to build your own layout.
               The <code>&lt;xar:data-label...&gt;</code> and <code>&lt;xar:data-output...&gt;</code> tags allow
@@ -60,8 +60,8 @@
             </xar:foreach>
             <td width="30%" class="xar-align-center">
                 <a href="#xarModURL('dyn_example','user','display',array('itemid' => $itemid))#">View</a> |
-                <a href="#xarModURL('dyn_example','user','modify',array('itemid' => $itemid))#">Edit</a> |
-                <a href="#xarModURL('dyn_example','user','delete',array('itemid' => $itemid))#">Delete</a>
+                <a href="#xarModURL('dyn_example','admin','modify',array('itemid' => $itemid))#">Edit</a> |
+                <a href="#xarModURL('dyn_example','admin','delete',array('itemid' => $itemid))#">Delete</a>
             </td>
         </tr>
         </xar:foreach>
@@ -109,8 +109,8 @@
             </xar:foreach>
             <td width="30%" class="xar-align-center">
                 <a href="#xarModURL('dyn_example','user','display',array('itemid' => $itemid))#">View</a> |
-                <a href="#xarModURL('dyn_example','user','modify',array('itemid' => $itemid))#">Edit</a> |
-                <a href="#xarModURL('dyn_example','user','delete',array('itemid' => $itemid))#">Delete</a>
+                <a href="#xarModURL('dyn_example','admin','modify',array('itemid' => $itemid))#">Edit</a> |
+                <a href="#xarModURL('dyn_example','admin','delete',array('itemid' => $itemid))#">Delete</a>
             </td>
         </tr>
         </xar:foreach>
