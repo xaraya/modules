@@ -25,13 +25,14 @@
 function crispbb_xartables()
 {
     $xarTables = array();
+    $prefix = xarDBGetSiteTablePrefix();
 
-    $itemtypesTable = xarDBGetSiteTablePrefix() . '_crispbb_itemtypes';
-    $forumsTable    = xarDBGetSiteTablePrefix() . '_crispbb_forums';
-    $topicsTable    = xarDBGetSiteTablePrefix() . '_crispbb_topics';
-    $postsTable     = xarDBGetSiteTablePrefix() . '_crispbb_posts';
-    $hooksTable     = xarDBGetSiteTablePrefix() . '_crispbb_hooks';
-    $postersTable   = xarDBGetSiteTablePrefix() . '_crispbb_posters';
+    $itemtypesTable = $prefix . '_crispbb_itemtypes';
+    $forumsTable    = $prefix . '_crispbb_forums';
+    $topicsTable    = $prefix . '_crispbb_topics';
+    $postsTable     = $prefix . '_crispbb_posts';
+    $hooksTable     = $prefix . '_crispbb_hooks';
+    $postersTable   = $prefix . '_crispbb_posters';
     $xarTables['crispbb_itemtypes'] = $itemtypesTable;
     $xarTables['crispbb_forums']    = $forumsTable;
     $xarTables['crispbb_topics']    = $topicsTable;

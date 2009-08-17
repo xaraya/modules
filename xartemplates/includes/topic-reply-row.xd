@@ -117,7 +117,7 @@
     <xar:if condition="!empty($post['hookoutput'])">
         <xar:foreach in="$post['hookoutput']" key="$hookmod" value="$hookoutput">
             <xar:comment>We'll skip the hooks we already showed above</xar:comment>
-            <xar:if condition="$hookmod eq 'polls' || $hookmod eq 'ratings'">
+            <xar:if condition="$hookmod eq 'polls' || $hookmod eq 'ratings' || $hookmod eq 'crispsubs'">
                 <xar:continue />
             </xar:if>
             #$hookoutput#

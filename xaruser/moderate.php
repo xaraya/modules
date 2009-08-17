@@ -244,6 +244,17 @@ function crispbb_user_moderate($args)
                                         $ftracking[$topic['fid']] = $topic['ptime'];
                                         xarModSetVar('crispbb', 'ftracking', serialize($ftracking));
                                     }
+                                    // ok to let subscribers know about this topic now
+                                    if (xarModIsAvailable('crispsubs')) {
+                                        if (xarModIsHooked('crispsubs', 'crispbb', $topic['topicstype'])) {
+                                            xarModAPIFunc('crispsubs', 'user', 'createhook',
+                                                array(
+                                                    'modname' => 'crispbb',
+                                                    'itemtype' => $topic['topicstype'],
+                                                    'objectid' => $tid
+                                                ));
+                                        }
+                                    }
                                 break;
 
                                 /* // don't need disapprove, just delete, or lock
@@ -897,6 +908,21 @@ function crispbb_user_moderate($args)
                                             'pstatus' => 0,
                                             'nohooks' => true
                                     ))) return;
+
+                                    // ok to let subscribers know about this reply now
+                                    if (xarModIsAvailable('crispsubs') && $modaction == 'approve') {
+                                        $topicstype = xarModAPIFunc('crispbb', 'user', 'getitemtype',
+                                            array('fid' => $post['fid'], 'componenent' => 'topics'));
+                                        if (xarModIsHooked('crispsubs', 'crispbb', $topicstype)) {
+                                            xarModAPIFunc('crispsubs', 'user', 'updatehook',
+                                                array(
+                                                    'modname' => 'crispbb',
+                                                    'itemtype' => $topicstype,
+                                                    'objectid' => $post['tid'],
+                                                    'objecturl' => $post['viewreplyurl']
+                                                ));
+                                        }
+                                    }
                                 break;
                                 case 'delete':
                                     if (!xarModAPIFunc('crispbb', 'user', 'updatepost',

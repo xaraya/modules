@@ -212,26 +212,57 @@ function crispbb_userapi_getitemtypes($args)
                                         $isupdated = true;
                                     }
                                 }
+                            // else if module is crispsubs
+                            } elseif ($hookmod == 'crispsubs') {
+                                // can only be hooked to topics component
+                                if ($component != 'topics') {
+                                    if ($hookcache[$hookmod][$k]) {
+                                        // if it is, unhook it now
+                                        xarModAPIFunc('modules','admin','disablehooks',
+                                            array(
+                                                'callerModName' => 'crispbb',
+                                                'callerItemType' => $k,
+                                                'hookModName' => $hookmod
+                                            ));
+                                        $hookcache[$hookmod][$k] = false;
+                                        $isupdated = true;
+                                    }
+                                }
                             }
                         // any other fid is a regular forum itemtype
                         } else {
                             // check if this module is hooked to all items of this component
                             if ($hookcache[$hookmod][$types[$component]]) {
-                                // if it is, check the module is hooked to this itemtype
-                                if (!$hookcache[$hookmod][$k]) {
-                                    // if not, hook it now
-                                    $hookcache[$hookmod][$k] = xarModAPIFunc('modules','admin','enablehooks',
-                                        array(
-                                            'callerModName' => 'crispbb',
-                                            'callerItemType' => $k,
-                                            'hookModName' => $hookmod
-                                        ));
-                                    $isupdated = true;
+                                // crispsubs can only be hooked to topics
+                                if ($hookmod == 'crispsubs' && $component != 'topics') {
+                                    if ($hookcache[$hookmod][$k]) {
+                                        // if it is, unhook it now
+                                        xarModAPIFunc('modules','admin','disablehooks',
+                                            array(
+                                                'callerModName' => 'crispbb',
+                                                'callerItemType' => $k,
+                                                'hookModName' => $hookmod
+                                            ));
+                                        $hookcache[$hookmod][$k] = false;
+                                        $isupdated = true;
+                                    }
+                                } else {
+                                    // if it is, check the module is hooked to this itemtype
+                                    if (!$hookcache[$hookmod][$k]) {
+                                        // if not, hook it now
+                                        $hookcache[$hookmod][$k] = xarModAPIFunc('modules','admin','enablehooks',
+                                            array(
+                                                'callerModName' => 'crispbb',
+                                                'callerItemType' => $k,
+                                                'hookModName' => $hookmod
+                                            ));
+                                        $isupdated = true;
+                                    }
                                 }
                             // if it isn't hooked to all items, we need to know if it changed
                             } elseif (isset($cachedhooks[$hookmod][$types[$component]]) && $cachedhooks[$hookmod][$types[$component]]) {
                                 // it was previously hooked to all items
-                                if ($hookcache[$hookmod][$k]) {
+                                if ($hookcache[$hookmod][$k] || ($hookmod == 'crispsubs' && $component != 'topics')) {
                                     // unhook it if it's currently hooked
                                     xarModAPIFunc('modules','admin','disablehooks',
                                         array(
@@ -241,6 +272,21 @@ function crispbb_userapi_getitemtypes($args)
                                         ));
                                     $hookcache[$hookmod][$k] = false;
                                     $isupdated = true;
+                                }
+                            } else {
+                                // don't hook crispsubs to anything but topics
+                                if ($hookmod == 'crispsubs' && $component != 'topics') {
+                                    if ($hookcache[$hookmod][$k]) {
+                                        // if it is, unhook it now
+                                        xarModAPIFunc('modules','admin','disablehooks',
+                                            array(
+                                                'callerModName' => 'crispbb',
+                                                'callerItemType' => $k,
+                                                'hookModName' => $hookmod
+                                            ));
+                                        $hookcache[$hookmod][$k] = false;
+                                        $isupdated = true;
+                                    }
                                 }
                             }
                         }

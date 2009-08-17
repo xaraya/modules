@@ -217,6 +217,22 @@ function crispbb_admin_forumconfig($args)
                         $hookStatus = 2;
                         $hookMessage = xarML('Hitcount hooks are disabled for #(1) in crispBB', $label);
                     }
+                } elseif ($hookMod == 'crispsubs') {
+                    if ($component == 'topics') {
+                        if (xarModIsHooked($hookMod, 'crispbb', 0)) {
+                            $ishooked = true;
+                            $hookStatus = 0;
+                            $hookMessage = xarML('This module is hooked to all itemtypes in crispBB');
+                        } else {
+                            $ishooked = xarModIsHooked($hookMod, 'crispbb', $itemtype);
+                            $hookStatus = 1;
+                            $hookMessage = xarML('Hook this module to all #(1) in crispBB', $label);
+                        }
+                    } else {
+                        $ishooked = false;
+                        $hookStatus = 2;
+                        $hookMessage = xarML('crispSubs hooks are disabled for #(1) in crispBB', $label);
+                    }
                 } else {
                     if (xarModIsHooked($hookMod, 'crispbb', 0)) {
                         $ishooked = true;

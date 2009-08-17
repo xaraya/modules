@@ -317,6 +317,21 @@ function crispbb_user_newreply($args)
             }
             if (!xarModAPIFunc('crispbb', 'user', 'updateposter',
                 array('uid' => $powner))) return;
+            // ok to let subscribers know about this reply now
+            if (xarModIsAvailable('crispsubs') && $pstatus != 2) {
+                $topicstype = xarModAPIFunc('crispbb', 'user', 'getitemtype',
+                    array('fid' => $data['fid'], 'component' => 'topics'));
+                if (xarModIsHooked('crispsubs', 'crispbb', $topicstype)) {
+                    xarModAPIFunc('crispsubs', 'user', 'updatehook',
+                        array(
+                            'modname' => 'crispbb',
+                            'itemtype' => $topicstype,
+                            'objectid' => $data['tid'],
+                            'objecturl' => xarModURL('crispbb', 'user', 'display',
+                                array('tid' => $data['tid'], 'pid' => $pid))
+                        ));
+                }
+            }
             xarSessionSetVar('crispbb_hook_active', false);
             if (!empty($data['postbuffer']) || $pstatus == 2) {
                 if ($pstatus == 2) {
