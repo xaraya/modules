@@ -25,7 +25,7 @@ function dyn_example_admin_view()
     // potential security holes or just too much wasted processing
     if (!xarSecurityCheck('EditDynExample')) return;
 
-    $data['itemsperpage'] = xarModGetVar('dyn_example','itemsperpage');
+    $data['itemsperpage'] = xarModVars::get('dyn_example','itemsperpage');
 
 /* start APPROACH # 1 and # 2 : retrieve the items directly in the template */
     // Note: we don't retrieve any items here ourselves - we'll let the

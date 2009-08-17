@@ -41,17 +41,17 @@ function dyn_example_admin_updateconfig()
     if (!isset($bold)) {
         $bold = 0;
     }
-    xarModSetVar('dyn_example', 'bold', $bold);
+    xarModVars::set('dyn_example', 'bold', $bold);
 
     if (!isset($itemsperpage) || !is_numeric($itemsperpage)) {
         $itemsperpage = 10;
     }
-    xarModSetVar('dyn_example', 'itemsperpage', $itemsperpage);
+    xarModVars::set('dyn_example', 'itemsperpage', $itemsperpage);
 
     if (!isset($shorturls)) {
         $shorturls = 0;
     }
-    xarModSetVar('dyn_example', 'SupportShortURLs', $shorturls);
+    xarModVars::set('dyn_example', 'SupportShortURLs', $shorturls);
 */
 
 // TODO: fix xarResponseRedirect so that it doesn't exit anymore,

@@ -32,16 +32,16 @@ function dyn_example_admin_modifyconfig()
 
     // Specify some labels and values for display
     $data['boldlabel'] = xarML('Display item names in bold');
-    $data['boldchecked'] = xarModGetVar('dyn_example','bold') ? 'checked' : '';
+    $data['boldchecked'] = xarModVars::get('dyn_example','bold') ? 'checked' : '';
     $data['itemslabel'] = xarML('Items Per Page');
-    $data['itemsvalue'] = xarModGetVar('dyn_example', 'itemsperpage');
+    $data['itemsvalue'] = xarModVars::get('dyn_example', 'itemsperpage');
     $data['updatebutton'] = xarML('Update Configuration');
 
     // Note : if you don't plan on providing encode/decode functions for
     // short URLs (see xaruserapi.php), you should remove these from your
     // admin-modifyconfig.xard template !
     $data['shorturlslabel'] = xarML('Enable short URLs');
-    $data['shorturlschecked'] = xarModGetVar('dyn_example','SupportShortURLs') ?
+    $data['shorturlschecked'] = xarModVars::get('dyn_example','SupportShortURLs') ?
                                 'checked' : '';
 
     $hooks = xarModCallHooks('module', 'modifyconfig', 'dyn_example',

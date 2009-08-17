@@ -51,7 +51,7 @@ function dyn_example_init()
     $objects = array(
             'dyn_example',
             'modulesettings',
-            'usersettings',
+//            'usersettings',
             );
 
     if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
@@ -60,8 +60,8 @@ function dyn_example_init()
 #
 # Set up modvars
 #
-    xarModSetVar('dyn_example','bold',false);
-    xarModSetVar('dyn_example','itemsperpage',20);
+    xarModVars::set('dyn_example','bold',false);
+    xarModVars::set('dyn_example','itemsperpage',20);
 
 # --------------------------------------------------------
 #
@@ -79,7 +79,7 @@ function dyn_example_init()
 #
     $xartable =& xarDBGetTables();
 
-    $objectid = xarModGetVar('dyn_example','objectid');
+    $objectid = xarModVars::get('dyn_example','objectid');
     $dynproptable = $xartable['dynamic_properties'];
     $dyndatatable = $xartable['dynamic_data'];
     $query = "SELECT DISTINCT xar_dd_itemid
@@ -96,7 +96,6 @@ function dyn_example_init()
                             )
                     );
     xarDefineInstance('dyn_example', 'Item', $instances);
-
 # --------------------------------------------------------
 #
 # Register masks
