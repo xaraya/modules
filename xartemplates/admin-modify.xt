@@ -1,4 +1,6 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-head">
   <span class="xar-mod-title">#$menutitle#</span>
@@ -40,3 +42,4 @@
 </form>
 
 </div>
+</xar:template>

@@ -1,4 +1,6 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:if condition="empty($layout) or $layout eq 'default'">
     <p class="xar-accent">
         <xar:mlstring>
@@ -23,4 +25,4 @@
         </xar:mlstring>
     </p>
 </xar:if>
-
+</xar:template>

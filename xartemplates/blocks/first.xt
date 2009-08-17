@@ -1,4 +1,6 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
 <xar:comment> let's retrieve the first $numitems dynamic example items, sorted by name </xar:comment>
 
@@ -14,3 +16,4 @@
         <xar:mlstring>No items to display</xar:mlstring>
     </xar:if>
 </p>
+</xar:template>

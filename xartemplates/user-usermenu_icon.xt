@@ -1,4 +1,6 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 <xar:set name="compare">xarServerGetCurrentURL()</xar:set>
 <xar:set name="current">xarModURL('roles', 'user', 'account', array('moduleload' => 'dyn_example'))</xar:set>
 <xar:if condition="$compare eq $current">
@@ -18,3 +20,4 @@
         </a>
     </dd>    
 </xar:if>
+</xar:template>
