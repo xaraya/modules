@@ -1,60 +1,37 @@
 <?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<!-- common admin menu for this module - remove link to the current function -->
-<div class="xar-mod-head">
-  <span class="xar-mod-title">Dynamic Example Administration</span>
-</div>
-<div class="xar-mod-body">
-  <xar:template type="module" file="admin-menu" />
-  <h2>Modify Default Configuration</h2>
-  <p class="xar-form-input-before">
-      This uses dynamic module settings, i.e. you can add/remove settings for 
-          your module dynamically too. But you could use the 'normal' hard-coded approach 
-          here as well...
-      
-  </p>
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- common admin menu for this module - remove link to the current function -->
+    <div class="xar-mod-head">
+      <span class="xar-mod-title">Dynamic Example Administration</span>
+    </div>
+    <div class="xar-mod-body">
+        <xar:template type="module" file="admin-menu" />
+        <h2>Modify Default Configuration</h2>
+        <p class="xar-form-input-before">
+          This uses dynamic module settings, i.e. you can add/remove settings for 
+              your module dynamically too. But you could use the 'normal' hard-coded approach 
+              here as well...
+        </p>
 
-<form method="post" action="#xarModURL('dyn_example','admin','updateconfig')#">
-  <fieldset>
-    <legend>Modify Configuration</legend>
-    <xar:data-form module="modules" itemtype="66" itemid="1" />
-  </fieldset>
-    #$hooks#
-  <div class="xar-form-input-after">
-    <input type="hidden" name="authid" value="#xarSecGenAuthKey('dyn_example')#" />
-    <input type="hidden" name="modid" value="#xarModGetIDFromName('modules')#" />
-    <input type="hidden" name="itemtype" value="#xarModGetIDFromName('dyn_example')#" />
-    <input type="hidden" name="itemid" value="1" />
-    <input type="hidden" name="return_url" value="#xarServerGetCurrentURL()#" />
-    <input type="submit" value="#$submitlabel#" />
-  </div>
-</form>
+        <form method="post" action="#xarModURL('dyn_example','admin','updateconfig')#">
+            <fieldset>
+                <legend>Modify Configuration</legend>
+                <xar:data-form object="$object" itemid="1" /> 
+            </fieldset>
 
-<p class="xar-form-input-wrapper-before">
-<em>Note : your users will only be able to override those settings that you make available as user settings</em>
-</p>
-<br />
-<h2>Dynamic Data Configuration</h2>
+            <div class="xar-form-input-after">
+                <input type="hidden" name="authid" value="#xarSecGenAuthKey('dyn_example')#" />
+                <input type="hidden" name="objectid" value="#$object->objectid#" />
+                <input type="hidden" name="itemid" value="1" />
+                <input type="hidden" name="return_url" value="#xarServer::getCurrentURL()#" />
+                <xar:var name="label">Update Configuration</xar:var>
+                <xar:button type="submit" label="$label" />
+            </div>
+        </form>
 
-<h3>Dynamic Example</h3>
-<xar:set name="extrainfo">array('module' => 'dyn_example', 'itemtype' => 0)</xar:set>
-<xar:module main="false" module="dynamicdata" type="admin" func="modifyconfighook" extrainfo="$extrainfo" />
-
-<xar:comment>
-    The following are only useful if you also make your module variables
-    and user settings dynamic (optional)
-</xar:comment>
-
-<xar:set name="modid">xarModGetIDFromName('dyn_example')</xar:set>
-
-<h3>Module Variables (optional)</h3>
-<xar:set name="extrainfo">array('module' => 'modules', 'itemtype' => $modid)</xar:set>
-<xar:module main="false" module="dynamicdata" type="admin" func="modifyconfighook" extrainfo="$extrainfo" />
-
-<h3>User Settings (optional)</h3>
-<xar:set name="extrainfo">array('module' => 'roles', 'itemtype' => $modid)</xar:set>
-<xar:module main="false" module="dynamicdata" type="admin" func="modifyconfighook" extrainfo="$extrainfo" />
-
-</div>
+        <p class="xar-form-input-wrapper-before">
+            <em>Note : your users will only be able to override those settings that you make available as user settings</em>
+        </p>
+    </div>
 </xar:template>

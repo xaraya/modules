@@ -15,8 +15,13 @@ function dyn_example_user_settings()
 {
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('My Settings')));
 
-    $data['submitlabel'] = xarML('Submit');
-    $data['uid'] = xarUserGetVar('uid');
+    // Load the DD master object class. This line will likely disappear in future versions
+    sys::import('modules.dynamicdata.class.objects.master');
+    // Get the object we'll be working with
+    $data['object'] = DataObjectMaster::getObject(array('name' => 'usersettings_dyn_example'));
+    $data['id'] = xarUserGetVar('id');
+    $data['object']->getItem(array('itemid' => $data['id']));
+
     return $data;
 }
 

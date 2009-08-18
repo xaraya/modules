@@ -34,8 +34,7 @@ function dyn_example_init()
 #     dyn_example-dat.xml
 #
 # The first is a definition file for the object, and needs to be present if you list dyn_example
-# among the objects to be created in the array below. The actual object name nneds to correspond
-# to the first part of the definition file name, e.g. dyn_example.
+# among the objects to be created in the array below.
 #
 # The second is a defintion file for the object's items, i.e. its data. This file can be omitted.
 #
@@ -51,7 +50,7 @@ function dyn_example_init()
     $objects = array(
             'dyn_example',
             'modulesettings',
-//            'usersettings',
+            'usersettings',
             );
 
     if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
@@ -60,8 +59,13 @@ function dyn_example_init()
 #
 # Set up modvars
 #
+# Since these modvars are used as storage in a DD object dyn_example_modulesettings, 
+# we could also let Xarayadefine them, but that would mean we wouldn't have them until
+# we updated the modifyconfig page
+#
     xarModVars::set('dyn_example','bold',false);
     xarModVars::set('dyn_example','itemsperpage',20);
+    xarModVars::set('dyn_example','SupportShortURLs',true);
 
 # --------------------------------------------------------
 #

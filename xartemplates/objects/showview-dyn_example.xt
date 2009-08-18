@@ -75,9 +75,15 @@
                         <xar:if condition="empty($fields[$name])">
                             <td class="xar-valign-top">&#160;</td>
                         <xar:elseif condition="!empty($linkfield) and $linkfield eq $name"/>
-                            <td class="xar-valign-top"><a href="#$links[$itemid]['display']['olink']#"><xar:data-output property="$properties[$name]" value="$fields[$name]" /></a></td>
+                            <td class="xar-valign-top">
+                                <a href="#$links[$itemid]['view']['olink']#">
+                                    <xar:data-output property="$properties[$name]" value="$fields[$name]" />
+                                </a>
+                            </td>
                         <xar:else />
-                            <td class="xar-valign-top"><xar:data-output property="$properties[$name]" value="$fields[$name]" /></td>
+                            <td class="xar-valign-top">
+                                <xar:data-output property="$properties[$name]" value="$fields[$name]" />
+                            </td>
                         </xar:if>
                     </xar:foreach>
                     <xar:if condition="empty($linkfield)">

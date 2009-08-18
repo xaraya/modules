@@ -8,54 +8,42 @@
     <h2>View Dynamic Examples</h2>
 
     <h3>APPROACH # 1a : the &lt;xar:data-view ...&gt; tag</h3>
-   <p>
-        
-            This tag will automatically retrieve the list of items from DynamicData,
-            and present them according to its standard <strong>objects/showview.xt</strong> template.
-        
+   <p>        
+        This tag will automatically retrieve the list of items from DynamicData,
+        and present them according to its standard <strong>objects/showview.xt</strong> template.        
    </p>
-    <xar:data-view module="dyn_example" itemtype="0" catid="$catid" numitems="$itemsperpage" startnum="$startnum" />
-    <p>
-        
-            If you want to provide your own presentation here, you can specify a
-            different <code>layout="..."</code> to use in the default template, or you can specify your
-            own <code>template="..."</code> here as well.
-        
+    <xar:data-view object="$mylist" numitems="$itemsperpage" startnum="$startnum" />
+    <p>        
+        If you want to provide your own presentation here, you can specify a
+        different <code>layout="..."</code> to use in the default template, or you can specify your
+        own <code>template="..."</code> here as well.        
     </p>
 
     <h3>APPROACH # 1b : the &lt;xar:data-view ...&gt; tag with parameters</h3>
-    <p>
-        
-            Here's an example that uses the <code>layout="list"</code>, and <code>linkfield="name"</code>
-            to tell DynamicData which field should be linked to a display of the item. It also
-            uses <code>fieldlist="name,age"</code> to show only a selected list of fields.
-        
+    <p>        
+        Here's an example that uses the <code>layout="list"</code>, and <code>linkfield="name"</code>
+        to tell DynamicData which field should be linked to a display of the item. It also
+        uses <code>fieldlist="name,age"</code> to show only a selected list of fields.        
     </p>
 
-    <xar:data-view module="dyn_example" itemtype="0" catid="$catid" numitems="$itemsperpage" startnum="$startnum" layout="list" linkfield="name" fieldlist="name,age" />
+    <xar:data-view object="$mylist" numitems="$itemsperpage" startnum="$startnum" layout="list" linkfield="name" fieldlist="name,age" />
 
     <h3>APPROACH # 2 : the &lt;xar:data-getitems ...&gt; tag</h3>
 
-    <p>
-        
-            This tag will retrieve the properties and values from DynamicData and
-            make them available in the 'properties' and 'values' variables in your template.
-        
+    <p>        
+        This tag will retrieve the properties and values from DynamicData and
+        make them available in the 'properties' and 'values' variables in your template.        
     </p>
 
-    <p>
-        
-            You can then use those variables to build your own layout.
-            The <code>&lt;xar:data-label ...&gt;</code> and <code>&lt;xar:data-output ...&gt;</code> tags
-             allow you to show individual labels or value outputs in the template.
-        
+    <p>        
+        You can then use those variables to build your own layout.
+        The <code>&lt;xar:data-label ...&gt;</code> and <code>&lt;xar:data-output ...&gt;</code> tags
+         allow you to show individual labels or value outputs in the template.        
     </p>
 
-    <p>
-        
-            See the admin list for an example... We'll skip this one here, since we'll be
-            retrieving 'properties' and 'values' via the module code instead, with the next approach.
-        
+    <p>        
+        See the admin list for an example... We'll skip this one here, since we'll be
+        retrieving 'properties' and 'values' via the module code instead, with the next approach.        
     </p>
 
     <!--xar:data-getitems name="$properties" value="$values" module="dyn_example" itemtype="0" catid="$catid" numitems="$itemsperpage" startnum="$startnum" /-->

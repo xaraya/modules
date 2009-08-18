@@ -26,16 +26,12 @@ function dyn_example_admin_modifyconfig()
     // potential security holes or just too much wasted processing
     if (!xarSecurityCheck('AdminDynExample')) return;
 
-    // Generate a one-time authorisation code for this operation
-    $data['authid'] = xarSecGenAuthKey();
-
-    // Specify some labels and values for display
-    $data['boldlabel'] = xarML('Display item names in bold');
-    $data['boldchecked'] = xarModVars::get('dyn_example','bold') ? 'checked' : '';
-    $data['itemslabel'] = xarML('Items Per Page');
-    $data['itemsvalue'] = xarModVars::get('dyn_example', 'itemsperpage');
-    $data['updatebutton'] = xarML('Update Configuration');
-
+    // Load the DD master object class. This line will likely disappear in future versions
+    sys::import('modules.dynamicdata.class.objects.master');
+    // Get the object we'll be working with
+    $data['object'] = DataObjectMaster::getObject(array('name' => 'modulesettings_dyn_example'));
+    $data['object']->getItem(array('itemid' => 1));
+    
     // Note : if you don't plan on providing encode/decode functions for
     // short URLs (see xaruserapi.php), you should remove these from your
     // admin-modifyconfig.xard template !
@@ -53,7 +49,6 @@ function dyn_example_admin_modifyconfig()
         $data['hooks'] = $hooks;
     }
 
-    $data['submitlabel'] = xarML('Submit');
     // Return the template variables defined in this function
     return $data;
 }

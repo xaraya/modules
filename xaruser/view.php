@@ -23,7 +23,6 @@
 function dyn_example_user_view()
 {
     if(!xarVarFetch('startnum', 'isset', $data['startnum'], NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('catid',    'isset', $data['catid'],    NULL, XARVAR_DONT_SET)) {return;}
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
@@ -31,7 +30,7 @@ function dyn_example_user_view()
     if (!xarSecurityCheck('ViewDynExample')) return;
 
     // get user settings for 'itemsperpage'
-    $data['itemsperpage'] = xarModGetUserVar('dyn_example','itemsperpage');
+    $data['itemsperpage'] = xarModUserVars::get('dyn_example','itemsperpage');
 
 /* start APPROACH # 1 and # 2 : retrieve the items directly in the template */
     // Note: we don't retrieve any items here ourselves - we'll let the
@@ -43,16 +42,26 @@ function dyn_example_user_view()
  * Here we retreive all items via an API call to dynamic data itself
  * We need to pass all variables we need to get a correct listing
  */
-    $mylist = xarModAPIFunc('dynamicdata','user','getitems',
-                             array('module'    => 'dyn_example',
-                                   'itemtype'  => 0,
-                                   'catid'     => $data['catid'],
-                                   'numitems'  => $data['itemsperpage'],
-                                   'startnum'  => $data['startnum'],
-                                   'status'    => 1,      // only get the properties with status 1 = active
-                                   'getobject' => 1));    // get back the object list
-    // pass along the whole object list to the template (cfr. xaradmin.php)
+    // Load the DD master object class. This line will likely disappear in future versions
+    sys::import('modules.dynamicdata.class.objects.master');
+    // Get the object we'll be working with. Note this is a so called object list
+    $mylist = DataObjectMaster::getObjectList(array('name' => 'dyn_example'));
+
+    // Load the DD master property class. This line will likely disappear in future versions
+    sys::import('modules.dynamicdata.class.properties.master');
+
+    // We have some filters for the items
+    $filters = array('numitems'  => $data['itemsperpage'],
+                     'startnum'  => $data['startnum'],
+                     'status'    => DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,
+                    );
+    
+    // Get the items 
+    $items = $mylist->getItems($filters);
+
+    // pass along the whole object list to the template
     $data['mylist'] = & $mylist;
+    
 /* here we use a different variation than in xaradmin.php */
     // or pass along the properties and values instead of the object list
     $data['properties'] =& $mylist->getProperties();
@@ -61,16 +70,9 @@ function dyn_example_user_view()
 /* end APPROACH # 3 : getting the object list via API */
 
 /* start APPROACH # 4 : getting only the raw item values via API */
-    $values = xarModAPIFunc('dynamicdata','user','getitems',
-                             array('module'   => 'dyn_example',
-                                   'itemtype' => 0,
-                                   'catid'    => $data['catid'],
-                                   'numitems' => $data['itemsperpage'],
-                                   'startnum' => $data['startnum'],
-                                   'status'   => 1));
     $data['labels'] = array();
     $data['items'] = array();
-    foreach ($values as $itemid => $fields) {
+    foreach ($items as $itemid => $fields) {
         $data['items'][$itemid] = array();
         foreach ($fields as $name => $value) {
             $data['items'][$itemid][$name] = xarVarPrepForDisplay($value);

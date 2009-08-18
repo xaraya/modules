@@ -13,15 +13,15 @@
         <form method="post" action="&xar-modurl-dynamicdata-admin-update;">
         <fieldset>
             <legend>User Settings</legend>
-           <xar:data-form module="roles" itemtype="66" itemid="$uid" />
+           <xar:data-form object="$object" />
         </fieldset>
         <div class="xar-form-input-wrapper-after">
-          <input type="hidden" name="authid" value="#xarSecGenAuthKey('dynamicdata')#" />
-          <input type="hidden" name="modid" value="#xarModGetIDFromName('roles')#" />
-          <input type="hidden" name="itemtype" value="#xarModGetIDFromName('dyn_example')#" />
-          <input type="hidden" name="itemid" value="#$uid#" />
-          <input type="hidden" name="return_url" value="#xarServerGetCurrentURL()#" />
-          <input type="submit" value="#$submitlabel#" />
+            <input type="hidden" name="authid" value="#xarSecGenAuthKey('dynamicdata')#" />
+            <input type="hidden" name="objectid" value="#$object->objectid#" />
+            <input type="hidden" name="itemid" value="#$id#" />
+            <input type="hidden" name="return_url" value="#xarServer::getCurrentURL()#" />
+            <xar:var name="label">Submit</xar:var>
+            <xar:button type="submit" label="$label" />
         </div>
     </form>
     <p class="xar-align-center">

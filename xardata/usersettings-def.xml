@@ -1,33 +1,33 @@
 <object name="usersettings_dyn_example">
-  <objectid>12</objectid>
+  <objectid>14</objectid>
   <label>User Settings For Dyn_example</label>
   <module_id>27</module_id>
-  <itemtype>66</itemtype>
+  <itemtype>4</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
-  <config></config>
-  <isalias>0</isalias>
+  <config>a:0:{}</config>
+  <isalias>false</isalias>
   <properties>
-    <property name="bold">
-      <id>174</id>
+    <property name="dyn_example__bold">
+      <id>87</id>
       <label>Show name in bold</label>
-      <type>14</type>
+      <type>checkbox</type>
       <defaultvalue></defaultvalue>
-      <source>user settings</source>
+      <source>module variables</source>
       <status>1</status>
-      <order>1</order>
+      <seq>0</seq>
       <configuration></configuration>
     </property>
-    <property name="itemsperpage">
-      <id>175</id>
+    <property name="dyn_example__itemsperpage">
+      <id>88</id>
       <label>Items per page</label>
-      <type>15</type>
+      <type>integerbox</type>
       <defaultvalue></defaultvalue>
-      <source>user settings</source>
+      <source>module variables</source>
       <status>1</status>
-      <order>2</order>
+      <seq>0</seq>
       <configuration>1:100</configuration>
     </property>
   </properties>
