@@ -1,19 +1,22 @@
 <?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
 
-<xar:comment> let's retrieve the first $numitems dynamic example items, sorted by name </xar:comment>
+    <xar:comment> 
+        Let's retrieve the first $numitems dynamic example items, sorted by name 
+        Note that here we usethe object's name in the tag rather than the object itself.
+    </xar:comment>
 
-<xar:data-getitems name="$properties" value="$items" module="dyn_example" itemtype="0" numitems="$numitems" sort="name" />
+    <xar:data-getitems name="$properties" value="$items" object="dyn_example" numitems="$numitems" sort="name" />
 
-<p>
-    <xar:if condition="count($items) ge 1">
-        <xar:foreach in="$items" key="$id" value="$item">
-            <xar:set name="link">xarModURL('dyn_example','user','display',array('itemid' => $id))</xar:set>
-            <a href="#$link#">#xarVarPrepForDisplay($item['name'])#</a><br />
-        </xar:foreach>
-    <xar:else/>
-        No items to display
-    </xar:if>
-</p>
+    <p>
+        <xar:if condition="count($items) ge 1">
+            <xar:foreach in="$items" key="$id" value="$item">
+                <xar:set name="link">xarModURL('dyn_example','user','display',array('itemid' => $id))</xar:set>
+                <a href="#$link#">#xarVarPrepForDisplay($item['name'])#</a><br />
+            </xar:foreach>
+        <xar:else/>
+            No items to display
+        </xar:if>
+    </p>
 </xar:template>
