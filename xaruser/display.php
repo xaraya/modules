@@ -36,9 +36,7 @@ function dyn_example_user_display($args)
     if (empty($itemid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'item id', 'user', 'display', 'dyn_example');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return $msg;
+        throw new Exception($msg);
     }
     // Add the user menu to the data array
 
@@ -51,11 +49,10 @@ function dyn_example_user_display($args)
     if (!xarSecurityCheck('ReadDynExample',1,'Item',$itemid)) return;
 
 /* start APPROACH # 3 : getting the object via API */
-    // get the Dynamic Object defined for this module (and itemtype, if relevant)
-    $object = xarModAPIFunc('dynamicdata','user','getobject',
-                             array('module' => 'dyn_example',
-                                   'itemid' => $itemid));
-    if (!isset($object)) return;
+    // Load the DD master object class. This line will likely disappear in future versions
+    sys::import('modules.dynamicdata.class.objects.master');
+    // Get the object we'll be working with
+    $object = DataObjectMaster::getObject(array('name' => 'dyn_example', 'itemid' => $itemid));
 
     // get the values for this item
     $newid = $object->getItem();
@@ -82,9 +79,7 @@ function dyn_example_user_display($args)
 
 
 /* start APPROACH # 4 : getting only the raw item values via API */
-    $values = xarModAPIFunc('dynamicdata','user','getitem',
-                             array('module' => 'dyn_example',
-                                   'itemid' => $itemid));
+    $values = $object->getFieldValues();
     $data['labels'] = array();
     $data['values'] = array();
     foreach ($values as $name => $value) {
@@ -97,22 +92,9 @@ function dyn_example_user_display($args)
 /* end APPROACH # 4 : getting only the raw item values via API */
 
     // get user settings for 'bold'
-    $data['is_bold'] = xarModGetUserVar('dyn_example', 'bold');
+    $data['is_bold'] = xarModUserVars::get('dyn_example', 'bold');
 
     xarVarSetCached('Blocks.dyn_example', 'itemid', $itemid);
-
-    // call the display hooks for this item
-    $item = array();
-    $item['module'] = 'dyn_example';
-    $item['returnurl'] = xarModURL('dyn_example', 'user', 'display',
-                                   array('itemid' => $itemid));
-    $hooks = xarModCallHooks('item', 'display', $itemid, $item);
-    if (empty($hooks)) {
-        $data['hookoutput'] = '';
-    } else {
-        $data['hookoutput'] = $hooks;
-    }
-
 
     // Once again, we are changing the name of the title for better
     // Search engine capability.

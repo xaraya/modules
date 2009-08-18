@@ -14,7 +14,7 @@
         and present it according to its standard <strong>objects/showdisplay.xt</strong> template.
      </p>
 
-    <xar:data-display module="dyn_example" itemtype="0" itemid="$itemid" />
+    <xar:data-display object="$object" itemid="$itemid" />
 
     <p>
         If you want to provide your own presentation here, you can specify a
@@ -29,7 +29,7 @@
         make them available in the 'properties' variable in your template.
     </p>
 
-    <xar:data-getitem name="$properties" object="dyn_example" itemid="$itemid" />
+    <xar:data-getitem name="properties" object="$object" itemid="$itemid" />
 
     <p>
         You can then use that variable to build your own layout. 
