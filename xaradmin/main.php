@@ -21,9 +21,12 @@ function dyn_example_admin_main()
     // Check to see the current user has edit access to the dyn_example module
     if (!xarSecurityCheck('EditDynExample')) return;
 
-    // Return the template variables defined in this function
-    // Nothing defined here, so just return an empty array
-    return array();
+    if (xarModVars::get('modules', 'disableoverview') == 0){
+        return xarTplModule('dyn_example','admin','overview');
+    } else {
+        xarResponse::Redirect(xarModURL('dyn_example', 'admin', 'view'));
+        return true;
+    }
 }
 
 ?>
