@@ -23,56 +23,36 @@ function dyn_example_user_usermenu($args)
     extract($args);
     // Security check  - if the user has read access to the menu, show a
     // link to display the details of the item
-    if (!xarSecurityCheck('ViewDynExample',0)) {
-         $data='';
-           return $data;
-     }
+    if (!xarSecurityCheck('ViewDynExample',0)) return '';
+
     // First, lets find out where we are in our logic. If the phase
     // variable is set, we will load the correct page in the loop.
-    if(!xarVarFetch('phase','str', $phase, 'menu', XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('phase','notempty', $phase, 'menu', XARVAR_NOT_REQUIRED)) {return;}
 
     switch(strtolower($phase)) {
         case 'menu':
-
-            // We need to define the icon that will go into the page.
-            $icon = 'modules/example/xarimages/admin.gif';
-
-            // Now lets send the data to the template which name we choose here.
-            $data = xarTplModule('dyn_example','user', 'usermenu_icon', array('iconbasic'    => $icon));
-
+            $data['icon'] = xarTplGetImage('module-generic.png','base');
+            $data['link'] = xarModURL('roles', 'user', 'account', array('moduleload' => 'dyn_example'));
+            $data['label'] = xarML('Choose Settings');
+            return (serialize($data));                                                                         
             break;
 
         case 'form':
 
-            // Its good practice for the user menu to be personalized.  In order to do so, we
-            // need to get some information about the user.
-            $name = xarUserGetVar('name');
+            xarTplSetPageTitle(xarVarPrepForDisplay(xarML('My Settings')));
 
-            // We also need to set the SecAuthKey, in order to stop hackers from setting user
-            // vars off site.
-            $authid = xarSecGenAuthKey('dyn_example');
+            // Load the DD master object class. This line will likely disappear in future versions
+            sys::import('modules.dynamicdata.class.objects.master');
+            // Get the object we'll be working with
+            $data['object'] = DataObjectMaster::getObject(array('name' => 'usersettings_dyn_example'));
+            $data['id'] = xarUserGetVar('id');
+            $data['object']->getItem(array('itemid' => $data['id']));
 
-            $submitlabel = xarML('Submit');
-            // Now lets send the data to the template which name we choose here.
-            $data = xarTplModule('dyn_example','user', 'usermenu_form', array('authid'      => $authid,
-                                                                              'submitlabel' => $submitlabel,
-                                                                              'name'        => $name));
+            return serialize($data);
             break;
 
         case 'update':
-            // First we need to get the data back from the template in order to process it.
-            // The example module is not setting any user vars at this time, but an example
-            // might be the number of items to be displayed per page.
-            if(!xarVarFetch('uid','int', $uid, 0, XARVAR_NOT_REQUIRED)) {return;}
-            if(!xarVarFetch('name','str', $name, '', XARVAR_NOT_REQUIRED)) {return;}
-
-            // Confirm authorisation code.
-            if (!xarSecConfirmAuthKey()) return;
-
-            // Redirect back to the account page.  We could also redirect back to our form page as
-            // well by adding the phase variable to the array.
-            xarResponseRedirect(xarModURL('roles', 'user', 'account'));
-
+            // This is not used. The update is done by the DD update function
             break;
     }
 

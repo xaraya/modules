@@ -113,6 +113,14 @@ function dyn_example_init()
     xarRegisterMask('DeleteDynExample','All','dyn_example','Item','All','ACCESS_DELETE');
     xarRegisterMask('AdminDynExample','All','dyn_example','Item','All','ACCESS_ADMIN');
 
+# --------------------------------------------------------
+#
+# Register hooks
+#
+    if (!xarModRegisterHook('item', 'usermenu', 'GUI', 'dyn_example', 'user', 'usermenu')) {
+        return false;
+    }
+
     // Initialisation successful
     return true;
 }
