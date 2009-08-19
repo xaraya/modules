@@ -20,10 +20,6 @@
  */
 function dyn_example_init()
 {
-    /**
-     * import the object definition and properties from some XML file (exported from DD)
-     */
-
 # --------------------------------------------------------
 #
 # Create DD objects
@@ -53,8 +49,7 @@ function dyn_example_init()
             'usersettings',
             );
 
-    if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
-    
+    if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;    
 # --------------------------------------------------------
 #
 # Set up modvars
@@ -66,7 +61,6 @@ function dyn_example_init()
     xarModVars::set('dyn_example','bold',false);
     xarModVars::set('dyn_example','itemsperpage',20);
     xarModVars::set('dyn_example','SupportShortURLs',true);
-
 # --------------------------------------------------------
 #
 # Register blocks
@@ -101,7 +95,6 @@ function dyn_example_init()
                             )
                     );
     xarDefineInstance('dyn_example', 'Item', $instances);
-
 # --------------------------------------------------------
 #
 # Register masks
@@ -112,14 +105,16 @@ function dyn_example_init()
     xarRegisterMask('AddDynExample','All','dyn_example','Item','All','ACCESS_ADD');
     xarRegisterMask('DeleteDynExample','All','dyn_example','Item','All','ACCESS_DELETE');
     xarRegisterMask('AdminDynExample','All','dyn_example','Item','All','ACCESS_ADMIN');
-
 # --------------------------------------------------------
 #
 # Register hooks
 #
-    if (!xarModRegisterHook('item', 'usermenu', 'GUI', 'dyn_example', 'user', 'usermenu')) {
-        return false;
-    }
+    sys::import('xaraya.structures.hooks.observer');
+    $observer = new BasicObserver('dyn_example','user','usermenu');
+    $observer->register('item', 'usermenu', 'GUI');
+
+    $subject = new HookSubject('roles');
+    $subject->attach($observer);
 
     // Initialisation successful
     return true;

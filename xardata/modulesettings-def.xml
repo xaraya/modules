@@ -1,42 +1,42 @@
 <object name="modulesettings_dyn_example">
-  <objectid>11</objectid>
+  <objectid>16</objectid>
   <label>Module Settings for Dyn_example</label>
-  <module_id>1</module_id>
-  <itemtype>66</itemtype>
+  <module_id>182</module_id>
+  <itemtype>1</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>
-  <config></config>
+  <config>a:0:{}</config>
   <isalias>false</isalias>
   <properties>
-    <property name="bold">
-      <id>172</id>
+    <property name="dyn_example__bold">
+      <id>93</id>
       <label>Show name in bold</label>
-      <type>14</type>
+      <type>checkbox</type>
       <defaultvalue></defaultvalue>
       <source>module variables</source>
-      <status>1</status>
+      <status>33</status>
       <seq>1</seq>
       <configuration></configuration>
     </property>
-    <property name="itemsperpage">
-      <id>173</id>
+    <property name="dyn_example__itemsperpage">
+      <id>94</id>
       <label>Items per page</label>
-      <type>15</type>
+      <type>integerbox</type>
       <defaultvalue></defaultvalue>
       <source>module variables</source>
-      <status>1</status>
+      <status>33</status>
       <seq>2</seq>
       <configuration>1:100</configuration>
     </property>
-    <property name="SupportShortURLs">
-      <id>176</id>
+    <property name="dyn_example__SupportShortURLs">
+      <id>95</id>
       <label>Enable short URLs</label>
-      <type>14</type>
+      <type>checkbox</type>
       <defaultvalue></defaultvalue>
       <source>module variables</source>
-      <status>1</status>
+      <status>33</status>
       <seq>3</seq>
       <configuration></configuration>
     </property>

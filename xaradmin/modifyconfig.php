@@ -32,23 +32,6 @@ function dyn_example_admin_modifyconfig()
     $data['object'] = DataObjectMaster::getObject(array('name' => 'modulesettings_dyn_example'));
     $data['object']->getItem(array('itemid' => 1));
     
-    // Note : if you don't plan on providing encode/decode functions for
-    // short URLs (see xaruserapi.php), you should remove these from your
-    // admin-modifyconfig.xard template !
-    $data['shorturlslabel'] = xarML('Enable short URLs');
-    $data['shorturlschecked'] = xarModVars::get('dyn_example','SupportShortURLs') ?
-                                'checked' : '';
-
-    $hooks = xarModCallHooks('module', 'modifyconfig', 'dyn_example',
-                            array('module' => 'dyn_example'));
-    if (empty($hooks)) {
-        $data['hooks'] = '';
-    } elseif (is_array($hooks)) {
-        $data['hooks'] = join('',$hooks);
-    } else {
-        $data['hooks'] = $hooks;
-    }
-
     // Return the template variables defined in this function
     return $data;
 }

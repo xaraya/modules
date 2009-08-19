@@ -51,7 +51,7 @@
         </ul>
 
         <div id="page-1">
-            <h3>APPROACH # 1a : the &lt;xar:data-view ...&gt; tag</h3>
+            <h3>Approach # 1a : the &lt;xar:data-view ...&gt; tag</h3>
            <p>        
                 This tag will automatically retrieve the list of items from DynamicData,
                 and present them according to its standard <strong>objects/showview.xt</strong> template.        
@@ -65,7 +65,7 @@
         </div>
         
         <div id="page-2" style="display: none">
-            <h3>APPROACH # 1b : the &lt;xar:data-view ...&gt; tag with parameters</h3>
+            <h3>Approach # 1b : the &lt;xar:data-view ...&gt; tag with parameters</h3>
             <p>        
                 Here's an example that uses the <code>layout="list"</code>, and <code>linkfield="name"</code>
                 to tell DynamicData which field should be linked to a display of the item. It also
@@ -76,7 +76,7 @@
         </div>
         
         <div id="page-3" style="display: none">
-            <h3>APPROACH # 2 : the &lt;xar:data-getitems ...&gt; tag</h3>
+            <h3>Approach # 2 : the &lt;xar:data-getitems ...&gt; tag</h3>
 
             <p>        
                 This tag will retrieve the properties and values from DynamicData and
@@ -98,7 +98,7 @@
         </div>
         
         <div id="page-4" style="display: none">
-            <h3>APPROACH # 3 : getting the object list via API</h3>
+            <h3>Approach # 3 : getting the object list via API</h3>
 
             <p>
                 After retrieving the object list via API, you can pass along the whole
@@ -109,7 +109,7 @@
 
             <xar:data-view object="$mylist" tplmodule="dyn_example" layout="list"/>
 
-            <p>or you can pass along the properties and values and work like in APPROACH # 2.</p>
+            <p>or you can pass along the properties and values and work like in Approach # 2.</p>
 
             <xar:foreach in="$values" key="$itemid" value="$fields">
                 <table class="xar-fullwidth xar-noborder" cellspacing="1" cellpadding="2">
@@ -132,7 +132,7 @@
         </div>
         
         <div id="page-5" style="display: none">
-            <h3>APPROACH # 4 : getting the raw item values via API</h3>
+            <h3>Approach # 4 : getting the raw item values via API</h3>
 
             <p>Here you'll have to handle the output format of the values yourself - in the module code and/or template...</p>
            <xar:foreach in="$items" key="$itemid" value="$fields">

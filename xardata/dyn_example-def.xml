@@ -1,7 +1,7 @@
 <object name="dyn_example">
   <objectid>31</objectid>
   <label>Dynamic Example</label>
-  <module_id>66</module_id>
+  <module_id>182</module_id>
   <itemtype>1</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>
