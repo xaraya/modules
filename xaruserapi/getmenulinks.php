@@ -35,17 +35,6 @@ function dyn_example_userapi_getmenulinks()
                               // we must encapsulate the calls in the xarML in the API.
                               'title' => xarML('View all dynamic example items'),
                               'label' => xarML('View Items'));
-
-        // this shows a link to the user settings
-        if (xarUserIsLoggedIn()) {
-            $menulinks[] = Array('url'   => xarModURL('dyn_example',
-                                                      'user',
-                                                      'settings'),
-                                 // In order to display the tool tips and label in any language,
-                                 // we must encapsulate the calls in the xarML in the API.
-                                 'title' => xarML('Change your preferences for this module'),
-                                 'label' => xarML('Settings'));
-        }
     }
     // Return all the links to the menu
     return $menulinks;
