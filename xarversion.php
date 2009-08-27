@@ -11,8 +11,8 @@ $modversion['license'] = 'xardocs/license.txt';
 $modversion['official'] = 0;
 $modversion['author'] = 'Marc Lutolf';
 $modversion['contact'] = 'http://www.xaraya.com/';
-$modversion['admin'] = 1;
-$modversion['user'] = 0;
+$modversion['admin'] = true;
+$modversion['user'] = false;
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Utility';
 ?>
