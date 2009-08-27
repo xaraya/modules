@@ -169,71 +169,7 @@ function hitcount_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch($oldversion) {
-        case '1.0':
-            // Code to upgrade from version 1.0 goes here
-
-            // Get database information
-            $dbconn = xarDB::getConn();
-            $xartable = xarDB::getTables();
-
-            //Load Table Maintenance API
-            sys::import('xaraya.tableddl');
-
-            $query = xarDBAlterTable($xartable['hitcount'],
-                                     array('command'  => 'add',
-                                           'field'    => 'itemtype',
-                                           'type'     => 'integer',
-                                           'unsigned' => true,
-                                           'null'     => false,
-                                           'default'  => '0'));
-
-            $result =& $dbconn->Execute($query);
-            if (!$result) return;
-
-        case '1.1':
-            xarModVars::set('hitcount', 'countadmin', 0);
-            xarRegisterMask('AdminHitcount','All','hitcount','All','All','ACCESS_ADMIN');
-            $modversion['admin']          = 1;
-            // Code to upgrade from version 1.1 goes here
-
-        case '1.2.0':
-            // delete invalid hitcount entries for articles itemtype 0
-            if (xarModIsAvailable('articles') && xarMod::getRegID('articles') != 0) {
-                xarModAPIFunc('hitcount','admin','delete',
-                              array('modid' => xarMod::getRegID('articles'),
-                                    'itemtype' => 0,
-                                    'confirm' => true));
-            }
-            // fall through to next upgrade
-
-        case '1.2.1':
-            // Get database information
-            $dbconn = xarDB::getConn();
-            $xartable = xarDB::getTables();
-
-            //Load Table Maintenance API
-            sys::import('xaraya.tableddl');
-
-            $query = xarDBDropIndex(
-                $xartable['hitcount'],
-                array(
-                    'name' => 'i_' . xarDB::getPrefix() . '_hitcombo',
-                    ));
-
-            $result =& $dbconn->Execute($query);
-            if (!$result) return;
-
-            $query = xarDBCreateIndex($xartable['hitcount'],
-                array(
-                    'name'   => 'i_' . xarDB::getPrefix() . '_hitcombo',
-                    'fields' => array('module_id','itemtype', 'itemid'),
-                    'unique' => false));
-
-            $result =& $dbconn->Execute($query);
-            if (!$result) return;
-
-        case '1.2.2':
-            // Code to upgrade from version 1.2.1 goes here
+        case '2.0.0':
             break;
     }
 

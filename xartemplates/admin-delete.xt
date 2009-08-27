@@ -1,25 +1,26 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:mlstring>Hit Count Administration</xar:mlstring>
+            Hit Count Administration
         </span>
     </div>
     <div class="xar-mod-body">
         <xar:template type="module" file="admin-menu" />
-        <h2><xar:mlstring>Delete Hit Counts</xar:mlstring></h2>
+        <h2>Delete Hit Counts</h2>
         <form name="post" id="post" action="&xar-modurl-hitcount-admin-delete;" method="post" enctype="application/x-www-form-urlencoded">
         <fieldset>
             <legend>
-                <xar:mlstring>Confirm Hitcount Deletion</xar:mlstring>
+                Confirm Hitcount Deletion
             </legend>
             <div class="xar-form-input-wrapper">
                 <xar:if condition="empty($modname)">
-                    <xar:mlstring>Are you sure you want to delete all hitcounts ?</xar:mlstring>
+                    Are you sure you want to delete all hitcounts ?
                 <xar:elseif condition="empty($itemid)"/>
-                    <xar:ml><xar:mlstring>Are you sure you want to delete all hitcounts for module <b>#(1)</b> ?</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar></xar:ml>
+                    <xar:ml>Are you sure you want to delete all hitcounts for module <b>#(1)</b> ?<xar:mlvar>#$modname#</xar:mlvar></xar:ml>
                 <xar:else/>
-                    <xar:ml><xar:mlstring>Are you sure you want to delete all hitcounts for module <b>#(1)</b> item <b>#(2)</b> ?</xar:mlstring><xar:mlvar>#$modname#</xar:mlvar><xar:mlvar>#$itemid#</xar:mlvar></xar:ml>
+                    <xar:ml>Are you sure you want to delete all hitcounts for module <b>#(1)</b> item <b>#(2)</b> ?<xar:mlvar>#$modname#</xar:mlvar><xar:mlvar>#$itemid#</xar:mlvar></xar:ml>
                 </xar:if>
              </div>
         </fieldset>

@@ -1,10 +1,11 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:mlstring>
+            
                 Hit Count Administration
-            </xar:mlstring>
+            
         </span>
     </div>
     <div class="xar-mod-body">
@@ -12,9 +13,9 @@
         <form name="post" id="post" action="&xar-modurl-hitcount-admin-modifyconfig;" method="post" enctype="application/x-www-form-urlencoded">
             <fieldset>
                 <legend>
-                    <xar:mlstring>
+                    
                         Modify Configuration
-                    </xar:mlstring>
+                    
                 </legend>
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <input type="hidden" name="phase" id="phase" value="update" />
@@ -25,20 +26,20 @@
                     <input type="checkbox" name="countadmin" id="countadmin" value="1" />
                  </xar:if>
                     <label for="countadmin">
-                        <xar:mlstring>Count Administrator Hits</xar:mlstring>
+                        Count Administrator Hits
                         :
                     </label>
                 </div>
                 <div class="xar-form-input-wrapper">
                     <label for="numitems" class="xar-form-label">
-                        <xar:mlstring>Number of top items shown to users</xar:mlstring>
+                        Number of top items shown to users
                         :
                     </label>
                     <input type="text" name="numitems" id="numitems" size="4" maxlength="4" value="#$numitems#" />
                 </div>
                 <div class="xar-form-input-wrapper">
                     <label for="numstats" class="xar-form-label">
-                        <xar:mlstring>Number of items shown in statistics</xar:mlstring>
+                        Number of items shown in statistics
                         :
                     </label>
                     <input type="text" name="numstats" id="numstats" size="4" maxlength="4" value="#$numstats#" />
@@ -51,7 +52,7 @@
                       <input type="checkbox" name="showtitle" id="showtitle" value="1" />
                     </xar:if>
                     <label for="showtitle">
-                        <xar:mlstring>Show the item title in statistics</xar:mlstring>
+                        Show the item title in statistics
                         :
                     </label>
                 </div>
@@ -66,7 +67,7 @@
     <xar:comment>
       <div style="margin: auto;">
         <h2>
-          <xar:mlstring>Configure Hooks</xar:mlstring>
+          Configure Hooks
         </h2>
         <xar:set name="url">#xarModURL('hitcount','admin','modifyconfig')#</xar:set>
         <xar:module main="false" module="modules" type="admin" func="hooks" curhook="hitcount" return_url="$url" />

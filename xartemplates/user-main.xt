@@ -1,16 +1,17 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-mod-head">
       <span class="xar-mod-title">
-        <xar:mlstring>Hit Count</xar:mlstring>
+        Hit Count
       </span>
     </div>
     <div class="xar-mod-body">
-      <h2><xar:mlstring>Top Viewed Items</xar:mlstring></h2>
+      <h2>Top Viewed Items</h2>
       <xar:if condition="!xarSecurityCheck('AdminHitcount',0)">
         <xar:set name="isadmin">0</xar:set>
       <xar:else/>
-        <strong><xar:mlstring>Note: as administrator, you may also see unapproved items here</xar:mlstring></strong>
+        <strong>Note: as administrator, you may also see unapproved items here</strong>
         <xar:set name="isadmin">1</xar:set>
       </xar:if>
       <ul>
@@ -22,15 +23,15 @@
         <xar:if condition="empty($moditem['toplinks']) and !$isadmin">
           <xar:continue />
         </xar:if>
-        <li> <a href="#$moditem['link']#">#$moditem['name']#</a> =&gt; #$moditem['numitems']# <xar:mlstring>items</xar:mlstring>
+        <li> <a href="#$moditem['link']#">#$moditem['name']#</a> =&gt; #$moditem['numitems']# items
           <ul>
             <xar:if condition="!empty($moditem['toplinks'])">
               <xar:foreach in="$moditem['toplinks']" value="$toplink">
-                <li> <a href="#$toplink['url']#" title="#$toplink['title']#">#$toplink['label']#</a> #$toplink['hits']# <xar:mlstring>hits</xar:mlstring> </li>
+                <li> <a href="#$toplink['url']#" title="#$toplink['title']#">#$toplink['label']#</a> #$toplink['hits']# hits </li>
               </xar:foreach>
             <xar:else />
               <xar:foreach in="$moditem['tophits']" value="$topitem">
-                <li> item #$topitem['itemid']# =&gt; #$topitem['hits']# <xar:mlstring>hits</xar:mlstring> </li>
+                <li> item #$topitem['itemid']# =&gt; #$topitem['hits']# hits </li>
               </xar:foreach>
             </xar:if>
           </ul>
