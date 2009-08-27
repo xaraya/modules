@@ -52,7 +52,7 @@ function query_upgrade($oldversion)
 
 function query_delete()
 {
-    $module = 'activities';
+    $module = 'query';
     return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => $module));
 }
 ?>
