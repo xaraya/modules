@@ -23,8 +23,8 @@
     $modversion['official'] = 1;
     $modversion['author'] = 'Jim McDonald';
     $modversion['contact'] = 'http://www.mcdee.net/';
-    $modversion['admin'] = 1;
-    $modversion['user'] = 0;
+    $modversion['admin'] = true;
+    $modversion['user'] = false;
     $modversion['class'] = 'Utility';
     $modversion['category'] = 'Content';
     $modversion['securityschema'] = array('categories::category' => 'Category name::Category ID',
