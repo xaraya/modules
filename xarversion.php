@@ -1,4 +1,4 @@
-<?php
+<?php 
 $modversion['name'] = 'query';
 $modversion['id'] = '30049';
 $modversion['version'] = '1.0.0';
