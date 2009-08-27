@@ -97,7 +97,7 @@
                 <div class="xar-form-input-wrapper">
                     <label for="itemsperpage" title="#xarML('Number of items to show on each page.')#" class="xar-form-label">
                         <xar:mlstring>
-                            Items Per Page:
+                            List items per page:
                         </xar:mlstring>
                     </label>
                     <xar:set name="value"><xar:var scope="module" module="xarayatesting" name="itemsperpage" /></xar:set>
@@ -135,7 +135,8 @@
                     <input type="hidden" name="authid" id="authid" value="#$authid#" />
                     <input type="hidden" name="phase" id="phase" value="update" />
                     <input type="hidden" name="tab" id="tab" value="#$tab#" />
-                    <input type="submit" value="#xarML('Update Xarayatesting Configuration')#" />
+                    <xar:var name="label">Update</xar:var>
+                    <xar:button type="submit" label="$label" />
                 </div>
             </fieldset>
         </form>

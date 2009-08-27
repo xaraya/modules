@@ -15,6 +15,6 @@
             Site Tests
         </h2>
         <xar:set name="name">$object->name</xar:set>
-        <xar:data-input type="listingslist" object="$name" fields="code,name,description"/>
+<!--        <xar:data-input type="listingslist" object="$name" fields="code,name,description"/> -->
     </div>
 </xar:template>

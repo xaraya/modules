@@ -12,6 +12,6 @@
         <form method="post" action="#xarServer::getCurrentURL()#" style="margin-top: 10px; margin-bottom: 10px;">
             Choose an object:&#160;<xar:data-input type="dropdown" name="objectname" value="$objectname" options="$options" onchange="javascript:submit()" />
         </form>
-        <xar:data-input type="listingslist" object="$objectname"/>
+<!--        <xar:data-input type="listingslist" object="$objectname"/> -->
     </div>
 </xar:template>

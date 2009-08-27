@@ -3,9 +3,11 @@
     $suite = new xarTestSuite('MLS system tests');
     $suites[] = $suite;
 
-    class testMLFunction extends xarTestCase {
+    class testMLFunction extends xarTestCase 
+    {
 
-        function testEmptyMLString() {
+        function testEmptyMLString() 
+        {
             $out = xarML('');
             $expected='';
             return $this->AssertSame($out,$expected,'Return empty string on empty input for xarML');
@@ -14,16 +16,19 @@
     }
     $suite->AddTestCase('testMLFunction','xarML function tests');
 
-    class testMLSSystemTags extends xarTestCase {
+    class testMLSSystemTags extends xarTestCase 
+    {
 
-        function setup() {
+        function setup() 
+        {
             $GLOBALS['xarDebug'] = false;
             sys::import('blocklayout.compiler');
-            $xslFile = sys::root() . '/lib/blocklayout/xslt/xar2php.xsl';
+            $xslFile = 'blocklayout/xslt/xar2php.xsl';
             $this->myBLC = xarBLCompiler::instance();
         }
 
-        function testGeneralTagClosedForm() {
+        function testGeneralTagClosedForm() 
+        {
             $tplString  = '<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">';
             $tplString .= "<xar:mlstring>foo</xar:mlstring>";
             $tplString .= '</xar:template>';

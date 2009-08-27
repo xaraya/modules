@@ -82,7 +82,7 @@
     #
         $module = 'xarayatesting';
         $objects = array(
-                       'xarayatesting_tests',
+//                       'xarayatesting_tests',
                          );
 
         if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;

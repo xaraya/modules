@@ -16,18 +16,18 @@
     $modversion['official']       = 0;
     $modversion['author']         = 'Marc Lutolf';
     $modversion['contact']        = 'http://www.netspan.ch/';
-    $modversion['admin']          = 1;
-    $modversion['user']           = 1;
+    $modversion['admin']          = true;
+    $modversion['user']           = false;
     $modversion['class']          = 'Complete';
     $modversion['category']       = 'Miscellaneous';
     $modversion['dependency']     = array();
     $modversion['securityschema'] = array();
 $modversion['dependency'] = array(
-                                  14,
-                                  30046,
+//                                  14,
+//                                  30046,
                                   );
 $modversion['dependencyinfo'] = array(
-                                      14  => 'comments',
-                                      30046  => 'listings',
+//                                      14  => 'comments',
+//                                      30046  => 'listings',
                                       );
 ?>
