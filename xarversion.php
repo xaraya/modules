@@ -29,10 +29,10 @@
     $modversion['category'] = 'Content';
     $modversion['securityschema'] = array('categories::category' => 'Category name::Category ID',
                                       'categories::item' => 'Category ID:Module ID:Item ID');
-	$modversion['dependency'] = array(
-									  30049,
-									  );
-	$modversion['dependencyinfo'] = array(
-										  30049  => 'query',
-										  );
+    $modversion['dependency'] = array(
+                                      30049,
+                                      );
+    $modversion['dependencyinfo'] = array(
+                                          30049  => 'query',
+                                          );
 ?>
