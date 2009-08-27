@@ -27,7 +27,6 @@ sys::import('xaraya.tableddl');
 */
 function categories_init()
 {
-    xarTemplateTag::unregisterall('categories');
     // Get database information
     $dbconn = xarDB::getConn();
     $xartable = xarDB::getTables();

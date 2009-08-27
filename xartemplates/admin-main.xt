@@ -18,7 +18,7 @@
             </ul>
         </p>
         <h3>
-            <xar:mlstring>How to use it?</xar:mlstring>
+            <xar:mlstring>The Admin interface</xar:mlstring>
        </h3>
         <p><xar:mlstring>From the menu, you have two choices.  'Add a New Category', and 'View Categories'.</xar:mlstring>
             <ul>

@@ -22,8 +22,11 @@ function categories_admin_main()
     // Security check
     if(!xarSecurityCheck('ViewCategories')) return;
 
-    if (xarModVars::get('modules', 'disableoverview') == 0){
-        // Return the output
+    $refererinfo = xarRequest::getInfo(xarServer::getVar('HTTP_REFERER'));
+    $info = xarRequest::getInfo();
+    $samemodule = $info[0] == $refererinfo[0];
+    
+    if ((xarModVars::get('modules', 'disableoverview') == 0) || $samemodule){
         return array();
     } else {
         xarResponse::Redirect(xarModURL('categories', 'admin', 'viewcats'));

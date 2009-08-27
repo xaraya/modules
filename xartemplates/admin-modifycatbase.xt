@@ -1,5 +1,5 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:base-include-javascript module="base" filename="orderitem.js" position="head" />
+<xar:javascript module="base" filename="orderitem.js" position="head" />
 
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Categories Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
@@ -49,8 +49,8 @@
                     <label for="order"><xar:mlstring>Order</xar:mlstring></label>
                     <input type="hidden" value="" name="orderresult" id="orderresult" />
 
-                    <input type="image" src="#xarTplGetImage('up.gif','blocks')#" onclick="return xar_base_reorder('order', true);" title="#xarML('Move selected instance up')#" />
-                    <input type="image" src="#xarTplGetImage('down.gif','blocks')#" onclick="return xar_base_reorder('order', false);" title="#xarML('Move selected instance down')#" />
+                    <input type="image" src="#xarTplGetImage('up.gif','base')#" onclick="return xar_base_reorder('order', true);" title="#xarML('Move selected instance up')#" />
+                    <input type="image" src="#xarTplGetImage('down.gif','base')#" onclick="return xar_base_reorder('order', false);" title="#xarML('Move selected instance down')#" />
 
                     <select name="order" id="order" size="#$groupcount#">
                         <xar:loop name="$catbases">

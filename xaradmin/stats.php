@@ -105,6 +105,7 @@ function categories_admin_stats()
                                                     'catid' => $catid));
         }
         if ($numstats < $data['numlinks']) {
+            sys::import('xaraya.pager');
             $data['pager'] = xarTplGetPager($startnum,
                                             $data['numlinks'],
                                             xarModURL('categories','admin','stats',
