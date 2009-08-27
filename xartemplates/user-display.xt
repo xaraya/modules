@@ -1,128 +1,174 @@
 <?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<div class="xar-mod-head">
-    <span class="xar-mod-title">Dynamic Example Administration</span>
-</div>
-<div class="xar-mod-body">
-    <h2>Display a Dynamic Example</h2>
-
-    <h3>APPROACH # 1 : the xar:data-display ... tag</h3>
-
-    <p>
-        This tag will automatically retrieve the item from DynamicData,
-        and present it according to its standard <strong>objects/showdisplay.xt</strong> template.
-     </p>
-
-    <xar:data-display object="$object" itemid="$itemid" />
-
-    <p>
-        If you want to provide your own presentation here, you can specify a
-        different <code>layout="..."</code> to use in the default template, or you can specify your
-        own <code>template="..."</code> here as well.
-    </p>
-
-    <h3>APPROACH # 2 : the xar:data-getitem ... tag</h3>
-
-    <p>
-        This tag will retrieve the properties of this item from DynamicData and
-        make them available in the 'properties' variable in your template.
-    </p>
-
-    <xar:data-getitem name="properties" object="$object" itemid="$itemid" />
-
-    <p>
-        You can then use that variable to build your own layout. 
-        The <code>&lt;xar:data-label ...&gt;</code> and <code>&lt;xar:data-output ...&gt;</code> tags 
-        allow you to show individual labels or value outputs in the template.
-    </p>
-
-    <table class="xar-noborder" cellspacing="1" cellpadding="2">
-    <xar:foreach in="$properties" key="$name">
-        <tr class="xar-align-left xar-valign-middle">
-            <td class="xar-align-right">
-                <b><xar:data-label property="$properties[$name]" /> :</b>
-            </td>
-            <td class="xar-align-left">
-                <xar:if condition="!empty($is_bold) and $name eq 'name'">
-                    <b><xar:data-output property="$properties[$name]" /></b> (let's be bold now)
-                <xar:else />
-                    <xar:data-output property="$properties[$name]" />
-                </xar:if>
-            </td>
-        </tr>
-    </xar:foreach>
-    </table>
-
-
-
-    <h3>APPROACH # 3 : getting the object via API</h3>
-
-    <p>
-        After retrieving the object via API, you can pass along the whole object to
-        the template and use <code>&lt;xar:data-display object="$object" /&gt;</code> to let 
-        DynamicData handle the display. Or you can use <code>&lt;xar:data-display object="$object" tplmodule="dyn_example" /&gt;</code>
-         if you want to provide your own display template in this module :
-    </p>
-
-    <xar:data-display object="$object" tplmodule="dyn_example" />
-
-    <p>Otherwise you can pass along the properties and work like in APPROACH # 2.</p>
-
-    <table class="xar-noborder" cellspacing="1" cellpadding="2">
-    <xar:foreach in="$properties" key="$name">
-        <tr class="xar-align-left xar-valign-middle">
-            <td class="xar-align-right">
-                <b><xar:data-label property="$properties[$name]" /> :</b>
-            </td>
-            <td class="xar-align-left">
-                <xar:if condition="!empty($is_bold) and $name eq 'name'">
-                    <b><xar:data-output property="$properties[$name]" /></b> (let's be bold now)
-                <xar:else />
-                    <xar:data-output property="$properties[$name]" />
-                </xar:if>
-            </td>
-        </tr>
-    </xar:foreach>
-    </table>
-
-
-    <h3>APPROACH # 4 : getting the raw item values via API</h3>
-
-    <p>
-        Here you'll have to handle the output format of the values yourself - 
-        in the module code and/or template...
-    </p>
-
-    <table class="xar-fullwidth xar-noborder" cellspacing="1" cellpadding="2">
-    <xar:foreach in="$values" key="$name" value="$value">
-        <tr class="xar-align-left xar-valign-middle">
-            <td align="right">
-                <b>#$labels[$name]# :</b>
-            </td>
-            <td class="xar-align-left">
-                <xar:if condition="!empty($is_bold) and $name eq 'name'">
-                    <b>#$value#</b> (let's be bold now)
-                <xar:else />
-                    #$value#
-                </xar:if>
-            </td>
-        </tr>
-    </xar:foreach>
-    </table>
-
-    <p>
-        Notice for instance that you don't get the option to automatically display 
-        the image with <code>&lt;xar:data-output ... &gt;</code> or not here.
-    </p>
-
-<!-- add the output from the different display hooks here -->
-<xar:if condition="!empty($hookoutput)">
-   <div class="xar-form-input-wrapper-before">
-    <xar:foreach in="$hookoutput" key="$hookmodule">
-        #$hookoutput[$hookmodule]#
-    </xar:foreach>
+    <xar:style scope="module" module="base" file="tabs" />
+    <![CDATA[
+    <script type="text/javascript">
+        function showtab (selectedindex, items)
+        {
+            for (i=1;i<=items;i++) {
+                document.getElementById('page-' + i).style.display = "none";
+                document.getElementById('tab-' + i).className = "xar-tab";
+                document.getElementById('href-' + i).className = "xar-norm xar-norm-outline";
+            }
+            document.getElementById('page-' + selectedindex).style.display = "block";
+            document.getElementById('tab-' + selectedindex).className = "xar-tab-active";
+            document.getElementById('href-' + selectedindex).className = "xar-accent xar-accent-outline";
+        }
+    </script>
+    ]]>
+    <div class="xar-mod-head">
+        <span class="xar-mod-title">Dynamic Example Administration</span>
     </div>
-</xar:if>
-</div>
+    <div class="xar-mod-body">
+        <h2>Display a Dynamic Example</h2>
+        <ul class="xar-tabs xar-alt xar-norm-outline" style="clear:both">
+            <li id="tab-1">
+                <a id="href-1" href="javascript:showtab(1,4)">
+                    Approach 1
+                </a>
+            </li>
+            <li id="tab-2">
+                <a id="href-2" href="javascript:showtab(2,4)">
+                    Approach 2
+                </a>
+            </li>
+            <li id="tab-3">
+                <a id="href-3" href="javascript:showtab(3,4)">
+                    Approach 3
+                </a>
+            </li>
+            <li id="tab-4">
+                <a id="href-4" href="javascript:showtab(4,4)">
+                    Approach 4
+                </a>
+            </li>
+        </ul>
+
+        <div id="page-1">
+            <h3>Approach # 1 : the xar:data-display ... tag</h3>
+
+            <p>
+                This tag will automatically retrieve the item from DynamicData,
+                and present it according to its standard <strong>objects/showdisplay.xt</strong> template.
+             </p>
+
+            <xar:data-display object="$object" itemid="$itemid" />
+
+            <p>
+                If you want to provide your own presentation here, you can specify a
+                different <code>layout="..."</code> to use in the default template, or you can specify your
+                own <code>template="..."</code> here as well.
+            </p>
+        </div>
+        
+        <div id="page-2" style="display: none">
+            <h3>Approach # 2 : the xar:data-getitem ... tag</h3>
+
+            <p>
+                This tag will retrieve the properties of this item from DynamicData and
+                make them available in the 'properties' variable in your template.
+            </p>
+
+            <xar:data-getitem name="properties" object="$object" itemid="$itemid" />
+
+            <p>
+                You can then use that variable to build your own layout. 
+                The <code>&lt;xar:data-label ...&gt;</code> and <code>&lt;xar:data-output ...&gt;</code> tags 
+                allow you to show individual labels or value outputs in the template.
+            </p>
+
+            <table class="xar-noborder" cellspacing="1" cellpadding="2">
+                <xar:foreach in="$properties" key="$name">
+                    <tr class="xar-align-left xar-valign-middle">
+                        <td class="xar-align-right">
+                            <b><xar:data-label property="$properties[$name]" /> :</b>
+                        </td>
+                        <td class="xar-align-left">
+                            <xar:if condition="!empty($is_bold) and $name eq 'name'">
+                                <b><xar:data-output property="$properties[$name]" /></b> (let's be bold now)
+                            <xar:else />
+                                <xar:data-output property="$properties[$name]" />
+                            </xar:if>
+                        </td>
+                    </tr>
+                </xar:foreach>
+            </table>
+        </div>
+        
+        <div id="page-3" style="display: none">
+            <h3>Approach # 3 : getting the object via API</h3>
+
+            <p>
+                After retrieving the object via API, you can pass along the whole object to
+                the template and use <code>&lt;xar:data-display object="$object" /&gt;</code> to let 
+                DynamicData handle the display. Or you can use <code>&lt;xar:data-display object="$object" tplmodule="dyn_example" /&gt;</code>
+                 if you want to provide your own display template in this module :
+            </p>
+
+            <xar:data-display object="$object" tplmodule="dyn_example" />
+
+            <p>Otherwise you can pass along the properties and work like in Approach # 2.</p>
+
+            <table class="xar-noborder" cellspacing="1" cellpadding="2">
+                <xar:foreach in="$properties" key="$name">
+                    <tr class="xar-align-left xar-valign-middle">
+                        <td class="xar-align-right">
+                            <b><xar:data-label property="$properties[$name]" /> :</b>
+                        </td>
+                        <td class="xar-align-left">
+                            <xar:if condition="!empty($is_bold) and $name eq 'name'">
+                                <b><xar:data-output property="$properties[$name]" /></b> (let's be bold now)
+                            <xar:else />
+                                <xar:data-output property="$properties[$name]" />
+                            </xar:if>
+                        </td>
+                    </tr>
+                </xar:foreach>
+            </table>
+        </div>
+        
+        <div id="page-4" style="display: none">
+            <h3>Approach # 4 : getting the raw item values via API</h3>
+
+            <p>
+                Here you'll have to handle the output format of the values yourself - 
+                in the module code and/or template...
+            </p>
+
+            <table class="xar-fullwidth xar-noborder" cellspacing="1" cellpadding="2">
+                <xar:foreach in="$values" key="$name" value="$value">
+                    <tr class="xar-align-left xar-valign-middle">
+                        <td align="right">
+                            <b>#$labels[$name]# :</b>
+                        </td>
+                        <td class="xar-align-left">
+                            <xar:if condition="!empty($is_bold) and $name eq 'name'">
+                                <b>#$value#</b> (let's be bold now)
+                            <xar:else />
+                                #$value#
+                            </xar:if>
+                        </td>
+                    </tr>
+                </xar:foreach>
+            </table>
+
+            <p>
+                Notice for instance that you don't get the option to automatically display 
+                the image with <code>&lt;xar:data-output ... &gt;</code> or not here.
+            </p>
+
+            <!-- add the output from the different display hooks here -->
+            <xar:if condition="!empty($hookoutput)">
+               <div class="xar-form-input-wrapper-before">
+                <xar:foreach in="$hookoutput" key="$hookmodule">
+                    #$hookoutput[$hookmodule]#
+                </xar:foreach>
+                </div>
+            </xar:if>
+        </div>
+    </div>
+    <script type="text/javascript">
+        showtab (1,4)
+    </script>
 </xar:template>

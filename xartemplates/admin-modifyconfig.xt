@@ -25,7 +25,7 @@
                 <input type="hidden" name="objectid" value="#$object->objectid#" />
                 <input type="hidden" name="itemid" value="1" />
                 <input type="hidden" name="return_url" value="#xarServer::getCurrentURL()#" />
-                <xar:var name="label">Update Configuration</xar:var>
+                <xar:var name="label">Update</xar:var>
                 <xar:button type="submit" label="$label" />
             </div>
         </form>

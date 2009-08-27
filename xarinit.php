@@ -55,12 +55,12 @@ function dyn_example_init()
 # Set up modvars
 #
 # Since these modvars are used as storage in a DD object dyn_example_modulesettings, 
-# we could also let Xarayadefine them, but that would mean we wouldn't have them until
+# we could also let Xaraya define them, but that would mean we wouldn't have them until
 # we updated the modifyconfig page
 #
-    xarModVars::set('dyn_example','bold',false);
+    xarModVars::set('dyn_example','bold',true);
     xarModVars::set('dyn_example','itemsperpage',20);
-    xarModVars::set('dyn_example','SupportShortURLs',true);
+    xarModVars::set('dyn_example','SupportShortURLs',false);
 # --------------------------------------------------------
 #
 # Register blocks
