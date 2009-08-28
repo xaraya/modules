@@ -1,0 +1,63 @@
+
+<div>
+    <h3>
+        <a href="#xarServerGetCurrentURL(array('aid'=&gt;$aid))#">#$title#</a>
+        <xar:if condition="!empty($editurl)"> [<a href="#$editurl#">edit</a>]</xar:if>
+    </h3>
+
+    <div class="summary-block">
+        <table>
+            <xar:if condition="!empty($title)">
+                <tr>
+                    <th scope="row"><xar:mlstring>Title:</xar:mlstring></th>
+                    <td>#$title#</td>
+                </tr>
+            </xar:if>
+
+            <xar:if condition="!empty($cats)">
+                <tr>
+                    <th scope="row"><xar:mlstring>Categories:</xar:mlstring></th>
+                    <td>
+                        <xar:loop name="$cats">
+                            <xar:if condition="$loop:index gt 0"> | </xar:if>
+                            #xarVarPrepForDisplay($loop:item.name)#
+                        </xar:loop>
+                    </td>
+                </tr>
+            </xar:if>
+            <xar:if condition="!empty($pubdate)">
+                <tr>
+                    <th scope="row"><xar:mlstring>Issued:</xar:mlstring></th>
+                    <td>#xarLocaleGetFormattedDate('long',$pubdate)#</td>
+                </tr>
+            </xar:if>
+            <xar:if condition="!empty($summary)">
+                <tr>
+                    <th scope="row"><xar:mlstring>Summary:</xar:mlstring></th>
+                    <td>#xarModAPIfunc('xarpages','user','transform_text',array('html'=>$summary))#</td>
+                </tr>
+            </xar:if>
+       </table>
+    </div>
+
+    <div class="body-block">#$body#</div>
+</div>
+
+
+<xar:if condition="!empty($previous) and !empty($next)">
+    <div class="xar-normal">
+        <div style="float: left; width: 30%;">#$previous#</div>
+        <div style="float: right; width: 30%;">#$next#</div>
+    </div>
+</xar:if>
+
+<xar:comment>Display the download block</xar:comment>
+<xar:comment><xar:template module="sections" file="download-block" subdata="array('ptids'=&gt;'13','title'=&gt;$filegroup)" /></xar:comment>
+
+<xar:if condition="!empty($hooks)">
+    <div>
+        <xar:foreach in="$hooks" key="$hookmodule">
+            #$hooks[$hookmodule]#
+        </xar:foreach>
+    </div>
+</xar:if>

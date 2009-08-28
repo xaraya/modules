@@ -70,19 +70,21 @@ function xarpages_userapi_transform_text($args)
         $word_array = str_word_count($text_in, 2);
         $total_words = count($word_array);
 
-        // Find the word we need.
-        $keys = array_keys($word_array);
-        $pos = $keys[$maxwords];
+        if ($total_words > $maxwords) {
+            // Find the word we need.
+            $keys = array_keys($word_array);
+            $pos = $keys[$maxwords];
 
-        if ($pos > 1) {
-            $text_in = substr($text_in, 0, $pos-1);
-            // #(1) - total words
-            // #(2) - words not shown
-            // #(3) - (maximum) words display
+            if ($pos > 1) {
+                $text_in = substr($text_in, 0, $pos-1);
+                // #(1) - total words
+                // #(2) - words not shown
+                // #(3) - (maximum) words display
 
-            // Message parameter can be passed in.
-            if (!isset($maxwords_message)) $maxwords_message = '... (#(1) words total)';
-            $text_in .= xarML($maxwords_message, $total_words, $total_words - $maxwords, $maxwords);
+                // Message parameter can be passed in.
+                if (!isset($maxwords_message)) $maxwords_message = '... (#(1) words total)';
+                $text_in .= xarML($maxwords_message, $total_words, $total_words - $maxwords, $maxwords);
+            }
         }
     }
 

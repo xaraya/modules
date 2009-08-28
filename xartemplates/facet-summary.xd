@@ -1,0 +1,63 @@
+<xar:comment>
+    Fallback facet article summary.
+    Use template "facet-summary-{pubtypename}.xt" to customise different pubtypes.
+</xar:comment>
+<xar:if condition="xarTplGetThemeName() ne 'rss'">
+<div class="xar-normal">
+    <h3>
+        <a href="#xarServerGetCurrentURL(array('aid'=&gt;$aid))#">#xarVarPrepForDisplay($title)#</a><br/>
+        <xar:if condition="!empty($editurl)"> [<a href="#$editurl#">edit</a>]</xar:if>
+    </h3>
+
+    <div class="summary-block">
+        <table>
+            <xar:if condition="!empty($title)">
+                <tr>
+                    <th scope="row"><xar:mlstring>Title:</xar:mlstring></th>
+                    <td>#$title#</td>
+                </tr>
+            </xar:if>
+            <xar:if condition="!empty($cats)">
+                <tr>
+                    <th scope="row"><xar:mlstring>Categories:</xar:mlstring></th>
+                    <td>
+                        <xar:loop name="$cats">
+                            <xar:if condition="$loop:index gt 0"> | </xar:if>
+                            <a href="#xarServerGetCurrentURL(array('startnum'=&gt;NULL,'filter'=&gt;xarModAPIfunc('xarpages','func','facet',array('add'=&gt;$loop:item.cid))))#">
+                                #xarVarPrepForDisplay($loop:item.name)#
+                            </a>
+                        </xar:loop>
+                    </td>
+                </tr>
+            </xar:if>
+
+            <xar:if condition="!empty($pubdate)">
+                <tr>
+                    <th scope="row"><xar:mlstring>Issued:</xar:mlstring></th>
+                    <td>#xarLocaleGetFormattedDate('long',$pubdate)#</td>
+                </tr>
+            </xar:if>
+
+            <xar:if condition="!empty($summary)">
+                <tr>
+                    <th scope="row"><xar:mlstring>Summary:</xar:mlstring></th>
+                    <td>#xarModAPIfunc('xarpages','user','transform_text',array('text'=>$summary,'maxwords'=>50))#</td>
+                </tr>
+            </xar:if>
+       </table>
+    </div>
+</div>
+<xar:else />
+<xar:comment>RSS Feed - this avoids having to put templates into another theme</xar:comment>
+<item>
+    <title>#xarVarPrepForDisplay($title)#</title>
+    <link>#xarServerGetCurrentURL(array('aid'=&gt;$aid,'theme'=&gt;NULL))#</link>
+    <xar:if condition="!empty($pubdate)"><pubDate>#xarLocaleFormatUTCDate('%a, %d %b %Y %H:%M:%S %z',$pubdate)#</pubDate></xar:if>
+    <description>#xarVarPrepForDisplay($summary)#</description>
+    <xar:if condition="!empty($cats)">
+        <xar:loop name="$cats">
+            <category domain="#xarServerGetCurrentURL(array('startnum'=&gt;NULL,'theme'=&gt;NULL,'filter'=&gt;xarModAPIfunc('xarpages','func','facet',array('add'=&gt;$loop:item.cid))))#">#xarVarPrepForDisplay($loop:item.name)#</category>
+        </xar:loop>
+    </xar:if>
+</item>
+</xar:if>

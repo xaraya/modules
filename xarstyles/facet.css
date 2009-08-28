@@ -1,0 +1,68 @@
+
+.xarpages-page {
+}
+
+.xarpages-page-facet {
+}
+
+.xarpages-page-facet .query-box {
+    margin: 1em 0;
+    padding: 1em;
+    border: 1px solid #999999;
+}
+
+.xarpages-page-facet .filters-list {
+    margin: 1em 0;
+    padding: 0 1em 1em;
+    border: 1px solid #999999;
+}
+.xarpages-page-facet .filters-list img {
+    vertical-align: middle;
+}
+
+.xarpages-page-facet .subcategories-list {
+    margin: 1em 0;
+    padding: 0 1em 1em;
+    border: 1px solid #999999;
+}
+
+.xarpages-page-facet .articles {
+    list-style-type: none;
+    margin: 1em 0;
+    padding: 0;
+    /*border-top: 1px dashed #eeeeee;*/
+}
+.xarpages-page-facet .article {
+    margin: 0;
+    padding: 1em 0;
+    /*border-bottom: 1px dashed #eeeeee;*/
+}
+
+.xarpages-page-facet .summary-block table {
+    border-top: 1px solid #aaaaaa;
+    margin: 0 0 1em;
+}
+.xarpages-page-facet .summary-block td, .xarpages-page-facet .summary-block th {
+    padding: 4px 1em;
+    border-bottom: 1px solid #aaaaaa;
+}
+
+
+.xarpages-page-facet .summary-block .open-flag {
+    background-color: #339933;
+    color: #ffffff;
+    padding: 2px;
+    border: 1px solid #009900;
+    font-weight: bold;
+}
+.xarpages-page-facet .summary-block .closed-flag {
+    background-color: #993333;
+    color: #ffffff;
+    padding: 2px;
+    border: 1px solid #990000;
+    font-weight: bold;
+}
+
+.xarpages-page-facet h3 {
+    margin: 0.5em 0;
+}

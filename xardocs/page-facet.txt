@@ -1,0 +1,65 @@
+Multi-Faceted Searching
+========================
+
+The page type 'facet' provides multi-faceted searvhing on one or more article
+publication types.
+
+The default templates used for the article summary and bodies are:
+
+  facet-summary.xt
+  facet-display.xt
+
+You can provide overrides for publication types using the templates:
+
+  facet-summary-{pubtypename}.xt
+  facet-display-{pubtypename}.xt
+
+The main display template is:
+
+  page-facet.xt
+
+The page type requires the 'facet' custom function to be used. The template will raise an
+error message if the function is not included.
+
+To use, simply select one or more publication types when creating the page. Each publication
+type must have one or more categories hooked to it. Each orthoginal category tree should be
+set up as a separate category base in the articles publication type configuration.
+
+Due to categories restrictions, the searching is restricted to just one selected category
+(i.e. one filter) per hooked category tree. However, even when one is selected, you can still
+drill down deeper if the selected category has descendants.
+
+One important change is to add the following to the categories module. This may be included in
+the categories module when you read this, or it may not.
+
+Around about line 75 of modules/categories/xaruserapi/groupcount.php, add this:
+
+    if (!empty($iidfilter)) {
+        $where[] = $categoriesdef['iid'] . ' in (' .$iidfilter. ')';
+    }
+
+In context, it will look like this:
+
+    ...
+    if ($groupby == 'item') {
+        $field = $categoriesdef['iid'];
+    } elseif ($groupby == 'itemcategory') {
+        $field = $categoriesdef['iid'] . ',' . $categoriesdef['cid'];
+    } else {
+        $field = $categoriesdef['cid'];
+    }
+
+    // Start of filter injection code for xarpages milti-faceted search.
+    if (!empty($iidfilter)) {
+        $where[] = $categoriesdef['iid'] . ' in (' .$iidfilter. ')';
+    }
+    // End of filter injection code for xarpages milti-faceted search.
+
+    $sql = 'SELECT ' . $field . ', COUNT(*)';
+    $sql .= ' FROM ' . $categoriesdef['table'];
+    $sql .= $categoriesdef['more'];
+    if (!empty($where)) {
+        $sql .= ' WHERE ' . implode(' AND ', $where);
+    }
+    ...
+

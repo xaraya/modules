@@ -11,7 +11,7 @@
                 (#$extra.archive.year#)
             </xar:if>
             <xar:if condition="!empty($extra.archive.year)and !empty($extra.archive.month)">
-                (#xarLocaleFormatDate('%B',strtotime('2000-'. $extra.archive.month .'-01'))# #$extra.archive.year#)
+               (#xarLocaleFormatDate('%B',strtotime('2000-'. $extra.archive.month .'-02'))# #$extra.archive.year#)
             </xar:if>
         </h2>
         <table>
