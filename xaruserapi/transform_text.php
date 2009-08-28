@@ -70,6 +70,8 @@ function xarpages_userapi_transform_text($args)
         $word_array = str_word_count($text_in, 2);
         $total_words = count($word_array);
 
+        if ($total_words <= $maxwords) return $text_in;
+
         // Find the word we need.
         $keys = array_keys($word_array);
         $pos = $keys[$maxwords];
