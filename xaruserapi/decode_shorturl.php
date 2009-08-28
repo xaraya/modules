@@ -94,7 +94,11 @@ function xarpages_userapi_decode_shorturl($params)
         $decode_url = $tree['pages'][$pid]['decode_url'];
         if (!empty($decode_url)) {
             // Attempt to invoke the custom decode URL function, suppressing errors.
-            $args2 = xarModAPIfunc('xarpages', 'decode', $decode_url, $params, false);
+            try {
+                $args2 = xarModAPIfunc('xarpages', 'decode', $decode_url, $params);
+            } catch (Exception $e) {
+                $args2 = array();
+            }
 
             // If any decoding was done, merge in the results.
             if (!empty($args2) && is_array($args2)) {
