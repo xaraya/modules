@@ -2,7 +2,7 @@
     Fallback facet article summary.
     Use template "facet-summary-{pubtypename}.xt" to customise different pubtypes.
 </xar:comment>
-
+<xar:if condition="xarTplGetThemeName() ne 'rss'">
 <div class="xar-normal">
     <h3>
         <a href="#xarServerGetCurrentURL(array('aid'=&gt;$aid))#">#xarVarPrepForDisplay($title)#</a><br/>
@@ -47,3 +47,17 @@
        </table>
     </div>
 </div>
+<xar:else />
+<xar:comment>RSS Feed - this avoids having to put templates into another theme</xar:comment>
+<item>
+    <title>#xarVarPrepForDisplay($title)#</title>
+    <link>#xarServerGetCurrentURL(array('aid'=&gt;$aid,'theme'=&gt;NULL))#</link>
+    <xar:if condition="!empty($pubdate)"><pubDate>#xarLocaleFormatUTCDate('%a, %d %b %Y %H:%M:%S %z',$pubdate)#</pubDate></xar:if>
+    <description>#xarVarPrepForDisplay($summary)#</description>
+    <xar:if condition="!empty($cats)">
+        <xar:loop name="$cats">
+            <category domain="#xarServerGetCurrentURL(array('startnum'=&gt;NULL,'theme'=&gt;NULL,'filter'=&gt;xarModAPIfunc('xarpages','func','facet',array('add'=&gt;$loop:item.cid))))#">#xarVarPrepForDisplay($loop:item.name)#</category>
+        </xar:loop>
+    </xar:if>
+</item>
+</xar:if>

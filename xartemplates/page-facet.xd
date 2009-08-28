@@ -1,5 +1,5 @@
-
 <xar:template module="xarpages" file="common" />
+<xar:if condition="xarTplGetThemeName() ne 'rss'">
 <xar:style file="facet" module="xarpages" scope="module" />
 
 <xar:if condition="xarSecurityCheck('EditXarpagesPage', 0, 'Page', $current_page.name . ':' . $current_page.pagetype.name)">
@@ -45,6 +45,9 @@
             <xar:if condition="!empty($filter_facets)">
                 <div class="filters-list">
                     <h3>
+                        <xar:if condition="xarThemeIsAvailable('rss')">
+                            <a href="#xarServerGetCurrentURL(array('startnum'=&gt;NULL,'theme'=&gt;'rss'))#" title="#xarML('RSS feed for this filtered selection')#"><img src="#xarTplGetImage('rss16.png')#" /></a>&nbsp;
+                        </xar:if>
                         <xar:mlstring>Current Filters</xar:mlstring> 
                         <a href="#xarServerGetCurrentURL(array('startnum'=&gt;NULL,'filter'=&gt;NULL))#" title="#xarML('Remove all filters')#"><img src="#xarTplGetImage('emblem-unreadable.png')#" /></a>
                     </h3>
@@ -69,7 +72,12 @@
 
             <xar:if condition="!empty($subcat_facets)">
                 <div class="subcategories-list">
-                    <h3><xar:mlstring>Available filters</xar:mlstring></h3>
+                    <h3>
+                        <xar:if condition="xarThemeIsAvailable('rss')">
+                            <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$current_page.pid,'theme'=&gt;'rss'))#" title="#xarML('RSS feed for this page')#"><img src="#xarTplGetImage('rss16.png')#" /></a>&nbsp;
+                        </xar:if>
+                        <xar:mlstring>Available filters</xar:mlstring>
+                    </h3>
                     <xar:loop id="subcat_facets" name="$subcat_facets">
                         <xar:loop name="$facets[$loop:subcat_facets:item]['counts']">
                             <xar:if condition="$loop:item.level eq 0">
@@ -153,3 +161,20 @@
         </xar:if>
     </xar:if>
 </div>
+<xar:else />
+<xar:comment>RSS Feed - this avoids having to put templates into another theme</xar:comment>
+<xar:set name="dummy">#xarVarSetCached('themes','rss_channel_link',xarModURL('xarpages','user','display',array('pid'=&gt;$current_page.pid)))#</xar:set>
+<xar:if condition="!empty($error)">
+    <p>#xarVarPrepForDisplay($error)#</p>
+<xar:elseif condition="!isset($q)" />
+    <p><xar:mlstring>The custom function 'facet' must be enabled for this page.</xar:mlstring></p>
+<xar:else />
+    <xar:set name="template_prefix">'facet'</xar:set>
+    <xar:if condition="$article_count ge 1">
+        <xar:loop name="$articles">
+            <xar:set name="summary">#xarTplModule('xarpages', $template_prefix, 'summary', array_merge($loop:item, $current_page), $pubtypes[$loop:item.pubtypeid]['name'])#</xar:set>
+            #$summary#
+        </xar:loop>
+    </xar:if>
+</xar:if>
+</xar:if>
