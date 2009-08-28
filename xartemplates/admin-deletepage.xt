@@ -1,8 +1,8 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Page Administration</xar:mlstring></span></div>
+<div class="xar-mod-head"><span class="xar-mod-title">Page Administration</span></div>
 <div class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
-    <h2><xar:mlstring>Delete Page</xar:mlstring></h2><br />
+    <h2>Delete Page</h2><br />
 
         <form action="#xarModURL('xarpages','admin','deletepage')#" method="post">
             <p>
@@ -25,7 +25,10 @@
                 <input type="hidden" name="pid" id="pid" value="#$page.pid#" />
                 <input type="hidden" name="authid" id="authid" value="#$authkey#" />
                 <input type="hidden" name="return_url" id="return_url" value="#xarVarPrepForDisplay($return_url)#" />
-                <input type="submit" name="confirm" id="confirmyes" value="#xarML('Yes')#" />
+                <xar:var name="label">Yes</xar:var>
+                <xar:button type="submit" name="confirm" id="confirmyes" label="$label" />&#160;
+                <xar:var name="label">No</xar:var>
+                <xar:button type="cancel" label="$label" />
             </p>
         </form>
 

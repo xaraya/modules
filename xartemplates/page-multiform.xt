@@ -24,7 +24,7 @@
     <!-- Display overall error message if required -->
     <xar:if condition="isset($multiform.form_isvalid) and $multiform.form_isvalid eq false">
         <p class="xar-error xarpages-multiform-formerror">
-            <xar:mlstring>This form contains errors. Please correct the errors where indicated and resubmit.</xar:mlstring>
+            This form contains errors. Please correct the errors where indicated and resubmit.
         </p>
     </xar:if>
 

@@ -5,11 +5,11 @@
         <hr />
         <div class="xarpages-multiform-debug">
             <xar:if condition="!empty($multiform.formdata)">
-                <h2><xar:mlstring>Form data</xar:mlstring></h2>
+                <h2>Form data</h2>
                 <table>
                     <tr>
-                        <th scope="col"><xar:mlstring>Name</xar:mlstring></th>
-                        <th scope="col"><xar:mlstring>value</xar:mlstring></th>
+                        <th scope="col">Name</th>
+                        <th scope="col">value</th>
                     </tr>
                     <xar:loop name="$multiform.formdata">
                         <tr>
@@ -25,11 +25,11 @@
                 </table>
             </xar:if>
             <xar:if condition="!empty($multiform.workdata)">
-                <h2><xar:mlstring>Work data</xar:mlstring></h2>
+                <h2>Work data</h2>
                 <table>
                     <tr>
-                        <th scope="col"><xar:mlstring>Name</xar:mlstring></th>
-                        <th scope="col"><xar:mlstring>value</xar:mlstring></th>
+                        <th scope="col">Name</th>
+                        <th scope="col">value</th>
                     </tr>
                     <xar:loop name="$multiform.workdata">
                         <tr>

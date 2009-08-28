@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:comment>Common page setup for all xarpages pages.</xar:comment>
+
+    <xar:set name="dummy">#xarTplSetPageTitle($current_page.desc)#</xar:set>
+</xar:template>

@@ -5,27 +5,27 @@
                 <td class="prev">
                     <xar:if condition="!empty($prev_url)">
                         <a href="#$prev_url#" title="#xarVarPrepForDisplay($prev_article.title)#">
-                            &#171; <xar:mlstring>Previous article</xar:mlstring>
+                            &#171; Previous article
                         </a>
                     <xar:else />
                         <span>
-                            &#171; <xar:mlstring>Previous article</xar:mlstring>
+                            &#171; Previous article
                         </span>
                     </xar:if>
                 </td>
                 <td class="back">
                     <a href="#xarServer::getCurrentURL(array('aid'=&gt;NULL))#" title="#xarML('Return to the list')#">
-                        <xar:mlstring>[Back to List]</xar:mlstring>
+                        [Back to List]
                     </a>
                 </td>
                 <td class="next">
                     <xar:if condition="!empty($next_url)">
                         <a href="#$next_url#" title="#xarVarPrepForDisplay($next_article.title)#">
-                            <xar:mlstring>Next article</xar:mlstring> &#187;
+                            Next article &#187;
                         </a>
                     <xar:else />
                         <span>
-                            <xar:mlstring>Next article</xar:mlstring> &#187;
+                            Next article &#187;
                         </span>
                     </xar:if>
                 </td>

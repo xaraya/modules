@@ -153,7 +153,7 @@ function xarpages_funcapi_pageaction($args)
                     $out_object->properties[$prop->name]->value = $prop->value;
                 }
             }
-            _pageform_resetinvalids( & $out_object );
+            _pageform_resetinvalids( $out_object );
         }
 
         // PROCESSING

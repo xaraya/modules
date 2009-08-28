@@ -15,7 +15,7 @@
 <xar:else />
     <input type="hidden" name="moving" id="moving" value="true" />
     <p class="param">
-        <label for="refpid"><xar:mlstring>In relation to this page</xar:mlstring></label>
+        <label for="refpid">In relation to this page</label>
         <select name="refpid" id="refpid">
             <xar:loop name="$pages">
                 <xar:if condition="$loop:item.pid eq $refpid">
@@ -40,45 +40,45 @@
         all cases.
      -->
     <p class="param">
-        <label for="position"><xar:mlstring>Position</xar:mlstring></label>
+        <label for="position">Position</label>
         <select name="position" id="position">
             <xar:if condition="$position eq 'before'">
                 <option value="before" selected="selected">
-                    <xar:mlstring>Right before, in the same level</xar:mlstring>
+                    Right before, in the same level
                 </option>
             <xar:else />
                 <option value="before">
-                    <xar:mlstring>Right before, in the same level</xar:mlstring>
+                    Right before, in the same level
                 </option>
             </xar:if>
 
             <xar:if condition="$position eq 'after'">
                 <option value="after" selected="selected">
-                    <xar:mlstring>Right after, in the same level</xar:mlstring>
+                    Right after, in the same level
                 </option>
             <xar:else />
                 <option value="after">
-                    <xar:mlstring>Right after, in the same level</xar:mlstring>
+                    Right after, in the same level
                 </option>
             </xar:if>
 
             <xar:if condition="$position eq 'firstchild'">
                 <option value="firstchild" selected="selected">
-                    <xar:mlstring>The first child page</xar:mlstring>
+                    The first child page
                 </option>
             <xar:else />
                 <option value="firstchild">
-                    <xar:mlstring>The first child page</xar:mlstring>
+                    The first child page
                 </option>
             </xar:if>
 
             <xar:if condition="$position eq 'lastchild'">
                 <option value="lastchild" selected="selected">
-                    <xar:mlstring>The last child page</xar:mlstring>
+                    The last child page
                 </option>
             <xar:else />
                 <option value="lastchild">
-                    <xar:mlstring>The last child page</xar:mlstring>
+                    The last child page
                 </option>
             </xar:if>
         </select>

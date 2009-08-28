@@ -1,0 +1,98 @@
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <!-- Common Administration menu -->
+    <xar:style scope="module" module="base" file="tabs" />
+
+    <xar:set name="request">xarRequest::getInfo()</xar:set>
+    <xar:set name="activetab">#$request.2#</xar:set>
+    <xar:set name="activetype">#$request.1#</xar:set>
+    <div>
+      <ul class="xar-tabs">
+        <xar:sec mask="ModerateXarpagesPage" catch="false">
+            <xar:if condition="$activetab eq 'viewpages'">
+                <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+            <xar:else />
+                <xar:set name="tabclass">'xar-tab'</xar:set>
+                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+            </xar:if>
+            <li class="#$tabclass#">
+              <a href="&xar-modurl-xarpages-admin-viewpages;" title="#xarML('View and manage pages')#" class="#$linkclass#">
+                View Pages
+              </a>
+            </li>
+
+        </xar:sec>
+        <xar:sec mask="AddXarpagesPage" catch="false">
+            <xar:if condition="$activetab eq 'modifypage'">
+                <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+            <xar:else />
+                <xar:set name="tabclass">'xar-tab'</xar:set>
+                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+            </xar:if>
+            <li class="#$tabclass#">
+                <a href="&xar-modurl-xarpages-admin-newpage;" title="#xarML('Add a new page')#" class="#$linkclass#">
+                    Add Page
+                </a>
+            </li>
+        </xar:sec>
+        <xar:sec mask="EditXarpagesPagetype" catch="false">
+            <xar:if condition="$activetab eq 'viewtypes'">
+                <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+            <xar:else />
+                <xar:set name="tabclass">'xar-tab'</xar:set>
+                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+            </xar:if>
+            <li class="#$tabclass#">
+              <a href="&xar-modurl-xarpages-admin-viewtypes;" title="#xarML('View and manage page types')#" class="#$linkclass#">
+                View Page Types
+              </a>
+            </li>
+        </xar:sec>
+        <xar:sec mask="AdminXarpagesPagetype" catch="false">
+            <xar:if condition="$activetab eq 'modifytype'">
+                <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+            <xar:else />
+                <xar:set name="tabclass">'xar-tab'</xar:set>
+                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+            </xar:if>
+            <li class="#$tabclass#">
+              <a href="&xar-modurl-xarpages-admin-newtype;" title="#xarML('Add a new page type')#" class="#$linkclass#">
+                Add Page Type
+              </a>
+            </li>
+        </xar:sec>
+        <xar:sec mask="AdminXarpagesPage" catch="false">
+            <xar:if condition="$activetab eq 'modifyconfig'">
+                <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+            <xar:else />
+                <xar:set name="tabclass">'xar-tab'</xar:set>
+                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+            </xar:if>
+            <li class="#$tabclass#">
+              <a href="&xar-modurl-xarpages-admin-modifyconfig;" title="#xarML('Modify the xarpages configuration')#" class="#$linkclass#">
+                Modify Config
+              </a>
+            </li>
+        </xar:sec>
+        <xar:sec mask="EditXarpagesPagetype" catch="false">
+        <li class="#$tabclass#">
+            <xar:if condition="$activetab eq 'overview'">
+                <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+            <xar:else />
+                <xar:set name="tabclass">'xar-tab'</xar:set>
+                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+            </xar:if>
+            <a href="&xar-modurl-xarpages-admin-overview;" title="#xarML('View overview page for xarpages')#" class="#$linkclass#">
+                Overview
+            </a>
+        </li>
+        </xar:sec>
+      </ul>
+    </div>
+</xar:template>

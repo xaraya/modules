@@ -31,15 +31,15 @@
                           800)
     </xar:set>
 
-    <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Page Administration</xar:mlstring></span></div>
+    <div class="xar-mod-head"><span class="xar-mod-title">Page Administration</span></div>
 
     <div class="xar-mod-body">
         <xar:template type="module" file="admin-menu" />
         <h2>
             <xar:if condition="$func eq 'modify'">
-                <xar:mlstring>Modify Page</xar:mlstring>
+                Modify Page
             <xar:else />
-                <xar:mlstring>Create New Page</xar:mlstring>
+                Create New Page
             </xar:if>
         </h2>
 
@@ -50,13 +50,13 @@
                     <fieldset class="formelements xar-norm">
                         <xar:if condition="!empty($pagetypes)">
                             <legend>
-                                <strong><xar:mlstring>Page Type</xar:mlstring></strong>
+                                <strong>Page Type</strong>
                             </legend>
 
                             <div>
                                 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
                                 <input type="hidden" name="return_url" id="return_url" value="#xarVarPrepForDisplay($return_url)#" />
-                                <label for="type_id"><xar:mlstring>Page type</xar:mlstring></label>
+                                <label for="type_id">Page type</label>
                                 <select name="type_id" id="type_id">
                                     <xar:loop name="$pagetypes">
                                         <option value="#$loop:item.id#">#$loop:item.name#</option>
@@ -65,7 +65,7 @@
                             </div>
                             <input type="submit" value="#xarML('Next')#" />
                         <xar:else />
-                            <xar:mlstring>No page types defined. Please define a page type first.</xar:mlstring>
+                            No page types defined. Please define a page type first.
                         </xar:if>
                     </fieldset>
                 </form>
@@ -74,10 +74,10 @@
             <!-- Either modifying a page, or we have a page type -->
             <xar:if condition="$func eq 'modify' or !empty($type_id)">
                 <p>
-                    <a href="#xarModURL('xarpages','admin','viewpages')#"><xar:mlstring>View pages</xar:mlstring></a>
-                    | <a href="#xarModURL('xarpages','admin','modifypage',array('ptid'=&gt;$type_id))#" title="#xarML('Create a new page of this type')# (#xarVarPrepForDisplay($page.pagetype.name)#)"><xar:mlstring>New page</xar:mlstring></a>
+                    <a href="#xarModURL('xarpages','admin','viewpages')#">View pages</a>
+                    | <a href="#xarModURL('xarpages','admin','modifypage',array('ptid'=&gt;$type_id))#" title="#xarML('Create a new page of this type')# (#xarVarPrepForDisplay($page.pagetype.name)#)">New page</a>
                     <xar:if condition="!empty($pid)">
-                        | <a href="#xarModURL('xarpages','admin','modifypage',array('ptid'=&gt;$type_id,'insertpoint'=&gt;$pid))#" title="#xarML('Create a new page of this type')# (#xarVarPrepForDisplay($page.pagetype.name)#)"><xar:mlstring>New page after</xar:mlstring></a>
+                        | <a href="#xarModURL('xarpages','admin','modifypage',array('ptid'=&gt;$type_id,'insertpoint'=&gt;$pid))#" title="#xarML('Create a new page of this type')# (#xarVarPrepForDisplay($page.pagetype.name)#)">New page after</a>
                     </xar:if>
                 </p>
                 <form class="xar-xarpages-admin" action="#xarModURL('xarpages','admin','updatepage')#" method="post"  enctype="#$enctype#">
@@ -97,7 +97,7 @@
                     <div id="page-1">
                         <fieldset class="formelements xar-norm">
                             <legend>
-                                <strong><xar:mlstring>Page Attributes</xar:mlstring></strong>
+                                <strong>Page Attributes</strong>
                             </legend>
 
                             <p class="param">
@@ -105,28 +105,28 @@
                                 <input type="hidden" name="pid" id="pid" value="#$pid#" />
                                 <input type="hidden" name="type_id" id="type_id" value="#$type_id#" />
                                 <input type="hidden" name="return_url" id="return_url" value="#xarVarPrepForDisplay($return_url)#" />
-                                <label for="pagetype_name" title="#xarVarPrepForDisplay($page.pagetype.description)#"><xar:mlstring>Page Type</xar:mlstring></label>
+                                <label for="pagetype_name" title="#xarVarPrepForDisplay($page.pagetype.description)#">Page Type</label>
                                 <input type="text" name="pagetype_name" id="pagetype_name" value="#xarVarPrepForDisplay($page.pagetype.name)#" size="32" maxlength="64" disabled="disabled" />
                             </p>
 
                             <p class="param">
-                                <label for="name"><xar:mlstring>Name</xar:mlstring></label>
+                                <label for="name">Name</label>
                                 <!-- Disable this item if we do not have delete priv. -->
                                 <xar:if condition="$func eq 'modify' and empty($delete_allowed)">
                                     <input type="text" name="name" id="name" value="#xarVarPrepForDisplay($page.name)#" size="32" maxlength="64" disabled="disabled" />
-                                    <xar:mlstring>(name locked)</xar:mlstring>
+                                    (name locked)
                                 <xar:else />
                                     <input type="text" name="name" id="name" value="#xarVarPrepForDisplay($page.name)#" size="32" maxlength="64" />
                                 </xar:if>
                             </p>
 
                             <p class="param">
-                                <label for="desc"><xar:mlstring>Description</xar:mlstring></label>
+                                <label for="desc">Description</label>
                                 <textarea name="desc" id="desc" cols="40" rows="3" maxlength="255">#xarVarPrepForDisplay($page['desc'])#</textarea>
                             </p>
 
                             <p class="param">
-                                <label for="status"><xar:mlstring>Status</xar:mlstring></label>
+                                <label for="status">Status</label>
                                 <select name="status" id="status">
                                     <xar:loop name="$statuses">
                                         <xar:if condition="$loop:item.status eq $page.status">
@@ -140,23 +140,23 @@
 
                             <p class="param">
                                 <label for="status_recurse" title="#xarML('Apply status to descendants')#">
-                                    <xar:mlstring>Recursive status</xar:mlstring>
+                                    Recursive status
                                 </label>
                                 <input type="checkbox" name="status_recurse" id="status_recurse" value="true" />
                             </p>
 
                             <p class="param">
-                                <label for="template"><xar:mlstring>Item Template</xar:mlstring></label>
+                                <label for="template">Item Template</label>
                                 <input type="text" name="template" id="template" maxlength="100" value="#xarVarPrepForDisplay($page.template)#" />
 
                                 <xar:if condition="!empty($templates)">
-                                    <xar:mlstring>or</xar:mlstring>
+                                    or
                                     <select name="template_select" id="template_select">
-                                        <option value="default" style="color: gray;">[<xar:mlstring>default</xar:mlstring>]</option>
+                                        <option value="default" style="color: gray;">[default]</option>
                                         <xar:if condition="$page.template eq ''">
-                                            <option value="" selected="selected" style="color: gray;">[<xar:mlstring>inherited</xar:mlstring>]</option>
+                                            <option value="" selected="selected" style="color: gray;">[inherited]</option>
                                         <xar:else />
-                                            <option value="" selected="selected" style="color: gray;">[<xar:mlstring>As specified</xar:mlstring>]</option>
+                                            <option value="" selected="selected" style="color: gray;">[As specified]</option>
                                         </xar:if>
                                         <xar:loop name="$templates">
                                             <option value="#xarVarPrepForDisplay($loop:key)#">#xarVarPrepForDisplay($loop:item)#</option>
@@ -166,26 +166,26 @@
                             </p>
 
                             <p class="param">
-                                <label for="page_template"><xar:mlstring>Page Template</xar:mlstring></label>
+                                <label for="page_template">Page Template</label>
                                 <input type="text" name="page_template" id="page_template" maxlength="100" value="#xarVarPrepForDisplay($page.page_template)#" />
                                 &#160; (inherits if left empty)
                             </p>
 
                             <p class="param">
-                                <label for="theme"><xar:mlstring>Theme</xar:mlstring></label>
+                                <label for="theme">Theme</label>
                                 <!--
                                 <input type="text" name="theme" id="theme" maxlength="100" value="#xarVarPrepForDisplay($page.theme)#" />
                                 -->
                                 <select name="theme">
                                     <xar:if condition="$page.theme eq ''">
-                                        <option value="" selected="selected">[<xar:mlstring>Inherited</xar:mlstring>]</option>
+                                        <option value="" selected="selected">[Inherited]</option>
                                     <xar:else />
-                                        <option value="">[<xar:mlstring>Inherited</xar:mlstring>]</option>
+                                        <option value="">[Inherited]</option>
                                     </xar:if>
                                     <xar:if condition="$page.theme eq 'default'">
-                                        <option value="default" selected="selected">[<xar:mlstring>Default site theme</xar:mlstring>]</option>
+                                        <option value="default" selected="selected">[Default site theme]</option>
                                     <xar:else />
-                                        <option value="default">[<xar:mlstring>Default site theme</xar:mlstring>]</option>
+                                        <option value="default">[Default site theme]</option>
                                     </xar:if>
                                     <xar:loop name="$themes">
                                         <xar:if condition="$loop:item.name eq $page.theme or $loop:item.osdirectory eq $page.theme">
@@ -198,19 +198,19 @@
                             </p>
 
                             <p class="param">
-                                <label for="function"><xar:mlstring>Custom Page Function</xar:mlstring></label>
+                                <label for="function">Custom Page Function</label>
                                 <input type="text" name="function" id="function" maxlength="100" value="#xarVarPrepForDisplay($page.function)#" />
                                 <!--
                                 <xar:data-input name="thisname" type="filelist" value="23" validation="modules/xarpages/xarimages" />
                                 -->
 
                                 <xar:if condition="!empty($custom_apis.func)">
-                                    <xar:mlstring>or</xar:mlstring>
+                                    or
                                     <select name="function_select">
                                         <xar:if condition="$page.function eq ''">
-                                            <option value="" selected="selected" style="color: gray;">[<xar:mlstring>None</xar:mlstring>]</option>
+                                            <option value="" selected="selected" style="color: gray;">[None]</option>
                                         <xar:else />
-                                            <option value="" selected="selected" style="color: gray;">[<xar:mlstring>As specified</xar:mlstring>]</option>
+                                            <option value="" selected="selected" style="color: gray;">[As specified]</option>
                                         </xar:if>
                                         <xar:loop name="$custom_apis.func">
                                             <option value="#xarVarPrepForDisplay($loop:item)#">#$loop:item#</option>
@@ -220,16 +220,16 @@
                             </p>
 
                             <p class="param">
-                                <label for="encode_url"><xar:mlstring>Custom URL Encode</xar:mlstring></label>
+                                <label for="encode_url">Custom URL Encode</label>
                                 <input type="text" name="encode_url" id="encode_url" maxlength="100" value="#xarVarPrepForDisplay($page.encode_url)#" />
 
                                 <xar:if condition="!empty($custom_apis.encode)">
-                                    <xar:mlstring>or</xar:mlstring>
+                                    or
                                     <select name="encode_url_select">
                                         <xar:if condition="$page.encode_url eq ''">
-                                            <option value="" selected="selected" style="color: gray;">[<xar:mlstring>None</xar:mlstring>]</option>
+                                            <option value="" selected="selected" style="color: gray;">[None]</option>
                                         <xar:else />
-                                            <option value="" selected="selected" style="color: gray;">[<xar:mlstring>As specified</xar:mlstring>]</option>
+                                            <option value="" selected="selected" style="color: gray;">[As specified]</option>
                                         </xar:if>
                                         <xar:loop name="$custom_apis.encode">
                                             <option value="#xarVarPrepForDisplay($loop:item)#">#$loop:item#</option>
@@ -239,16 +239,16 @@
                             </p>
 
                             <p class="param">
-                                <label for="decode_url"><xar:mlstring>Custom URL Decode</xar:mlstring></label>
+                                <label for="decode_url">Custom URL Decode</label>
                                 <input type="text" name="decode_url" id="decode_url" maxlength="100" value="#xarVarPrepForDisplay($page.decode_url)#" />
 
                                 <xar:if condition="!empty($custom_apis.decode)">
-                                    <xar:mlstring>or</xar:mlstring>
+                                    or
                                     <select name="decode_url_select">
                                         <xar:if condition="$page.decode_url eq ''">
-                                            <option value="" selected="selected" style="color: gray;">[<xar:mlstring>None</xar:mlstring>]</option>
+                                            <option value="" selected="selected" style="color: gray;">[None]</option>
                                         <xar:else />
-                                            <option value="" selected="selected" style="color: gray;">[<xar:mlstring>As specified</xar:mlstring>]</option>
+                                            <option value="" selected="selected" style="color: gray;">[As specified]</option>
                                         </xar:if>
                                         <xar:loop name="$custom_apis.decode">
                                             <option value="#xarVarPrepForDisplay($loop:item)#">#$loop:item#</option>
@@ -258,7 +258,7 @@
                             </p>
 
                             <p class="param">
-                                <label for="alias"><xar:mlstring>Use page as module alias</xar:mlstring></label>
+                                <label for="alias">Use page as module alias</label>
                                 <xar:set name="modalias">xarModGetAlias($page['name'])</xar:set>
                                 <xar:if condition="empty($modalias) or $modalias eq $page.name">
                                     <input type="checkbox" name="alias" id="alias" value="1" />
@@ -274,13 +274,13 @@
                         <xar:if condition="$func ne 'modify' or !empty($delete_allowed)">
                             <fieldset class="formelements xar-norm">
                                 <legend>
-                                    <strong><xar:mlstring>Hierarchy Position</xar:mlstring></strong>
+                                    <strong>Hierarchy Position</strong>
                                 </legend>
 
                                 <xar:if condition="$func eq 'modify'">
                                     <p class="param">
                                         <label for="movepage" title="#xarML('Check this box to change the position of this page')#">
-                                            <xar:mlstring>Move page</xar:mlstring>
+                                            Move page
                                         </label>
                                         <input type="checkbox" name="movepage" id="movepage" value="true" />
                                     </p>
@@ -293,7 +293,7 @@
                         <xar:if condition="!empty($hooks)">
                             <fieldset class="formelements xar-norm">
                                 <legend>
-                                    <strong><xar:mlstring>Hooks</xar:mlstring></strong>
+                                    <strong>Hooks</strong>
                                 </legend>
                                 <xar:loop name="$hooks">
                             <div class="xar-xarpages-updatepage-hook">
@@ -343,14 +343,14 @@
                                     <input type="hidden" name="creating" id="creating" value="true"/>
                                 </xar:if>
                                 <xar:if condition="!empty($return_url)">
-                                    <a href="#xarVarPrepForDisplay($return_url)#"><xar:mlstring>Cancel</xar:mlstring></a>
+                                    <a href="#xarVarPrepForDisplay($return_url)#">Cancel</a>
                                 </xar:if>
                             </div>
 
                             <xar:if condition="$func eq 'create'">
                                 <div>
                                     <input type="checkbox" name="batch" id="batch" value="#$batch#" />
-                                    <label for="batch"><xar:mlstring>Create in a batch</xar:mlstring></label>
+                                    <label for="batch">Create in a batch</label>
                                 </div>
                             </xar:if>
                         </fieldset>

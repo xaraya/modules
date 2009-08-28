@@ -10,6 +10,6 @@
     <xar:if condition="isset($content)">
         #$content#
     <xar:else />
-        <p class="xar-error"><xar:mlstring>No 'content' value passed in.</xar:mlstring></p>
+        <p class="xar-error">No 'content' value passed in.</p>
     </xar:if>
 </xar:template>

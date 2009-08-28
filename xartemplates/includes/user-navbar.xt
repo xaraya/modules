@@ -13,7 +13,7 @@
         </xar:if>
 
         <div>
-            <xar:mlstring>You are here:</xar:mlstring>
+            You are here:
             <xar:loop name="$ancestors">
                 <xar:if condition="$loop:item.pid eq $pid">
                     &gt;&gt; <span title="#xarVarPrepForDisplay($loop:item.desc)#">#$loop:item.name#</span>
@@ -25,7 +25,7 @@
 
         <xar:if condition="!empty($siblings)">
             <div>
-                <xar:mlstring>Pages in this section:</xar:mlstring>
+                Pages in this section:
                 <xar:loop name="$siblings">
                     <xar:if condition="$loop:item.pid eq $pid">
                         <span title="#xarVarPrepForDisplay($loop:item.desc)#">#$loop:item.name#</span>
@@ -38,7 +38,7 @@
 
         <xar:if condition="!empty($children)">
             <div>
-                <xar:mlstring>Sub-pages:</xar:mlstring>
+                Sub-pages:
                 <xar:loop name="$children">
                     <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$loop:item.pid))#" title="#xarVarPrepForDisplay($loop:item.desc)#">#$loop:item.name#</a>
                 </xar:loop>

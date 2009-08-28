@@ -215,6 +215,7 @@ function xarpages_funcapi_news($args)
     $search_count = xarModAPIFunc('articles', 'user', 'countitems', $article_select);
     $pager_url_params = array_merge($url_params, array('pid' => $args['current_page']['pid'], 'startnum' => '%%'));
     $pager_base_url = xarModURL('xarpages', 'user', 'display', $pager_url_params);
+    sys::import('xaraya.pager');
     $pager = xarTplGetPager($startnum, $search_count, $pager_base_url, $numitems);
 
     // If an individual article has been selected, then get that separately.

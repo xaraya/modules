@@ -10,6 +10,7 @@ function xarpages_customapi_multiform_example1($args)
     return new xarpages_customapi_multiform_example1($args);
 }
 
+sys::import('modules.xarpages.xarcustomapi');
 class xarpages_customapi_multiform_example1 extends xarpages_customapi_multiform_master
 {
     // Constructor for form set 'example1'

@@ -6,7 +6,7 @@
     <xar:if condition="!empty($extra.archive)">
         <xar:style module="xarpages" file="news-archive" scope="module" />
         <h2>
-            <xar:mlstring>Monthly Archive </xar:mlstring>
+            Monthly Archive 
             <xar:if condition="!empty($extra.archive.year)and empty($extra.archive.month)">
                 (#$extra.archive.year#)
             </xar:if>
@@ -16,7 +16,7 @@
         </h2>
         <table>
             <!-- Create column headings -->
-            <th scope="col"><a href="#xarServer::getCurrentURL(array('archive'=> NULL,'startnum'=> NULL,'aid'=> NULL))#" title="#xarML('View latest')#"><xar:mlstring>Year</xar:mlstring></a></th>
+            <th scope="col"><a href="#xarServer::getCurrentURL(array('archive'=> NULL,'startnum'=> NULL,'aid'=> NULL))#" title="#xarML('View latest')#">Year</a></th>
             <xar:for start="$i=1" test="$i le 12" iter="$i=$i+1">
                 <th scope="col">#xarLocaleFormatDate('%b',strtotime('2000-'.$i.'-01'))#</th>
             </xar:for>

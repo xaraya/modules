@@ -12,7 +12,7 @@
 <xar:if condition="isset($current_page.dd.body)">
     <div style="padding: 1em; border: 1px solid #aaaaaa;">#$current_page.dd.body#</div>
 <xar:else />
-    <div class="xar-error"><xar:mlstring>Please create a Dynamic Data item 'body' to hold your HTML</xar:mlstring></div>
+    <div class="xar-error">Please create a Dynamic Data item 'body' to hold your HTML</div>
 </xar:if>
 
 <xar:if condition="!empty($hooks)">

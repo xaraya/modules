@@ -10,22 +10,22 @@
 <xar:template file="user-navbar" module="xarpages" />
 
 <xar:if condition="empty($multiform)">
-    <p class="xar-error"><xar:mlstring>Configuration error: This page is missing the 'multiform' custom page function.
-    Please add the page function and try again.</xar:mlstring></p>
+    <p class="xar-error">Configuration error: This page is missing the 'multiform' custom page function.
+    Please add the page function and try again.</p>
 <xar:else />
     <xar:if condition="$multiform.reason eq 'cancel'">
-        <h1><xar:mlstring>Cancelled</xar:mlstring></h1>
-        <p><xar:mlstring>You have chosen to cancel the process.</xar:mlstring></p>
+        <h1>Cancelled</h1>
+        <p>You have chosen to cancel the process.</p>
     <xar:elseif condition="$multiform.reason eq 'error'" />
-        <h1><xar:mlstring>Error</xar:mlstring></h1>
-        <p><xar:mlstring>An unexpected error occured.</xar:mlstring></p>
+        <h1>Error</h1>
+        <p>An unexpected error occured.</p>
         <xar:if condition="!empty($multiform.passdata.reason_detail)">
-            <h2><xar:mlstring>Reason</xar:mlstring></h2>
+            <h2>Reason</h2>
             <p>#xarVarPrepForDisplay($multiform.passdata.reason_detail)#</p>
         </xar:if>
     <xar:elseif condition="$multiform.reason eq 'timeout'" />
-        <h1><xar:mlstring>Timeout</xar:mlstring></h1>
-        <p><xar:mlstring>Due to a period of inactivity, the form entry has been cancelled.</xar:mlstring></p>
+        <h1>Timeout</h1>
+        <p>Due to a period of inactivity, the form entry has been cancelled.</p>
     <xar:else />
         <!-- Display body content for the page. -->
         <xar:if condition="isset($current_page.dd.body)">

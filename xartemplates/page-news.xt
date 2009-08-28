@@ -33,7 +33,7 @@
 
     <div class="xarpages-summary-wrapper">
         <xar:if condition="!isset($extra)">
-            <p><xar:mlstring>Configuration error: page requires the 'news' custom page function to be set.</xar:mlstring></p>
+            <p>Configuration error: page requires the 'news' custom page function to be set.</p>
         </xar:if>
         <!-- Loop through the articles to display the summary, calling up a template for format it -->
         <xar:if condition="!empty($articles) and is_array($articles)">
@@ -42,7 +42,7 @@
                 #$summary#
             </xar:loop>
         <xar:else />
-            <p><xar:mlstring>No items found.</xar:mlstring></p>
+            <p>No items found.</p>
         </xar:if>
     </div>
 </xar:if>

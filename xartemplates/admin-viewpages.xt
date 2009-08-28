@@ -1,11 +1,11 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:style scope="module" module="xarpages" file="xarpages" />
 
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Page Administration</xar:mlstring></span></div>
+<div class="xar-mod-head"><span class="xar-mod-title">Page Administration</span></div>
 
 <div class="xar-mod-body">
     <xar:template type="module" file="admin-menu" />
-    <h2><xar:mlstring>View Pages</xar:mlstring></h2>
+    <h2>View Pages</h2>
 
     <xar:set name="root_pages">#xarModAPIfunc('xarpages', 'user', 'getpages', array('parent'=&gt;0))#</xar:set>
     <xar:if condition="!empty($root_pages)">
@@ -18,10 +18,10 @@
                     <input name="func" type="hidden" value="viewpages" />
                 </xar:if>
 
-                <label for="contains"><xar:mlstring>Select tree:</xar:mlstring></label>
+                <label for="contains">Select tree:</label>
 
                 <select name="contains" id="contains">
-                    <option value="0"><xar:mlstring>-- All --</xar:mlstring></option>
+                    <option value="0">-- All --</option>
                     <xar:loop name="$root_pages">
                         <xar:if condition="$loop:item.pid eq $contains">
                             <option value="#$loop:item.pid#" selected="selected">[#$loop:item.pid#] #xarVarPrepForDisplay($loop:item.name)# (#xarVarPrepForDisplay($loop:item.pagetype.name)#)</option>
@@ -36,17 +36,17 @@
     </xar:if>
 
     <xar:if condition="empty($pages)">
-         <xar:mlstring>No pages defined</xar:mlstring>
+         No pages defined
     <xar:else />
         <xar:if condition="!empty($add_allowed)">
-            <div><a href="#xarModURL('xarpages','admin','modifypage')#"><xar:mlstring>Add Page</xar:mlstring></a></div>
+            <div><a href="#xarModURL('xarpages','admin','modifypage')#">Add Page</a></div>
         </xar:if>
 
         <table border="0" width="100%" cellspacing="0" cellpadding="0">
             <tr>
-                <th><xar:mlstring>Name</xar:mlstring></th>
-                <th><xar:mlstring>Description</xar:mlstring></th>
-                <th><xar:mlstring>Options</xar:mlstring></th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Options</th>
             </tr>
             <xar:loop name="$pages">
                 <xar:if condition="$loop:index ge 0">
@@ -74,7 +74,7 @@
                                     <xar:data-output type="urlicon" link="$link" icon="$icon" />
                                 <xar:else />
                                     <a href="#$link#">
-                                        <xar:mlstring>Modify</xar:mlstring>
+                                        Modify
                                     </a>
                                 </xar:if>
                                 &#160;|&#160;
@@ -91,7 +91,7 @@
                                     <xar:data-output type="urlicon" link="$link" icon="$icon" />
                                 <xar:else />
                                     <a href="#$link#">
-                                        <xar:mlstring>Delete</xar:mlstring>
+                                        Delete
                                     </a>
                                 </xar:if>
                                 &#160;|&#160;
@@ -107,7 +107,7 @@
                                 <xar:data-output type="urlicon" link="$link" icon="$icon" />
                             <xar:else />
                                 <a href="#$link#">
-                                    <xar:mlstring>Display</xar:mlstring>
+                                    Display
                                 </a>
                             </xar:if>
                         </td>

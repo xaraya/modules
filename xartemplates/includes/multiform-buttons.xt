@@ -17,7 +17,7 @@
         </xar:if>
         <span style="margin-left: 5em;">
             <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$current_page.pid,'multiform_cancel'=&gt;'true'))#" onclick="return xar_base_confirmLink(this, '#xarML('Cancel the form completely?')#')">
-                <xar:mlstring>Cancel</xar:mlstring>
+                Cancel
             </a>
         </span>
     </div>
