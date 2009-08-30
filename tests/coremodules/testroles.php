@@ -634,4 +634,518 @@
     }
     $suite->AddTestCase('testRolesUserGet','get (user) function tests');
 
+    class testRolesUserGetactive extends xarTestCase
+    {
+        function testGetactiveNoParams()
+        {
+            try {
+                $this->expected = '[exception]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'getactive');
+                $res = $this->assertSame($this->expected,$this->actual,"Call with no params throws exception");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with no params throws exception");
+            }
+        }
+        function testGetIdParam()
+        {
+            try {
+                $args = array('id' => xarModUserVars::get('id'));
+                $this->expected = '[array]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'getactive', $args);
+                $res = $this->assertTrue(is_array($this->actual),"Call with id param returns array");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with id param returns array");
+            }
+        }
+        function testGetBadIdParam()
+        {
+            try {
+                $args = array('id' => 'foo');
+                $this->expected = '[exception]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'getactive', $args);
+                $res = $this->assertSame($this->expected,$this->actual,"Call with bad id param throws exception");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with bad id param throws exception");
+            }
+        }
+    }
+    $suite->AddTestCase('testRolesUserGetactive','getactive (user) function tests');
+
+    class testRolesUserGetall extends xarTestCase
+    {
+        function testGetall()
+        {
+            $this->expected = '[array]';
+            $this->actual = xarModAPIFunc('roles','user','getall');
+            return $this->assertTrue(is_array($this->actual),'Call with no params returns array');
+        }
+    }
+    $suite->AddTestCase('testRolesUserGetall','getall (user) function tests');
+
+    class testRolesUserGetallactive extends xarTestCase
+    {
+        function testGetallactive()
+        {
+            $this->expected = '[array]';
+            $this->actual = xarModAPIFunc('roles','user','getallactive');
+            return $this->assertTrue(is_array($this->actual),'Call with no params returns array');
+        }
+    }
+    $suite->AddTestCase('testRolesUserGetallactive','getallactive (user) function tests');
+
+    class testRolesUserGetallgroups extends xarTestCase
+    {
+        function testGetallgroups()
+        {
+            $this->expected = '[array]';
+            $this->actual = xarModAPIFunc('roles','user','getallgroups');
+            return $this->assertTrue(is_array($this->actual),'Call with no params returns array');
+        }
+    }
+    $suite->AddTestCase('testRolesUserGetallgroups','getallgroups (user) function tests');
+
+    /*
+    class testRolesUserGetallroles extends xarTestCase
+    {
+        function testGetallroles()
+        {
+            $this->expected = '[array]';
+            $this->actual = xarModAPIFunc('roles','user','getallroles');
+            return $this->assertTrue(is_array($this->actual),'Call with no params returns array');
+        }
+    }
+    $suite->AddTestCase('testRolesUserGetallroles','getallroles (user) function tests');
+    */
+
+    class testRolesUserGetancestors extends xarTestCase
+    {
+        function testGetancestorsNoParams()
+        {
+            try {
+                $this->expected = '[exception]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'getancestors');
+                $res = $this->assertSame($this->expected,$this->actual,"Call with no params throws exception");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with no params throws exception");
+            }
+        }
+        function testGetIdParam()
+        {
+            try {
+                $args = array('id' => xarModUserVars::get('id'));
+                $this->expected = '[array]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'getancestors', $args);
+                $res = $this->assertTrue(is_array($this->actual),"Call with id param returns array");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with id param returns array");
+            }
+        }
+        function testGetBadIdParam()
+        {
+            try {
+                $args = array('id' => 'foo');
+                $this->expected = '[exception]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'getancestors', $args);
+                $res = $this->assertSame($this->expected,$this->actual,"Call with bad id param throws exception");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with bad id param throws exception");
+            }
+        }
+    }
+
+    class testRolesUserGetdefaultauthdata extends xarTestCase
+    {
+        function testGetdefaultauthdata()
+        {
+            $this->expected = '[array]';
+            $this->actual = xarModAPIFunc('roles','user','getdefaultauthdata');
+            return $this->assertTrue(is_array($this->actual),'Call with no params returns array');
+        }
+    }
+    $suite->AddTestCase('testRolesUserGetdefaultauthdata','getdefaultauthdata (user) function tests');
+
+    class testRolesUserGetdefaultregdata extends xarTestCase
+    {
+        function testGetdefaultregdata()
+        {
+            $this->expected = '[array]';
+            $this->actual = xarModAPIFunc('roles','user','getdefaultregdata');
+            return $this->assertTrue(is_array($this->actual),'Call with no params returns array');
+        }
+    }
+    $suite->AddTestCase('testRolesUserGetdefaultregdata','getdefaultregdata (user) function tests');
+
+    class testRolesUserGetdeleteduser extends xarTestCase
+    {
+        function testGetdeleteduserNoParams()
+        {
+            try {
+                $this->expected = '[exception]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'getdeleteduser');
+                $res = $this->assertSame($this->expected,$this->actual,"Call with no params throws exception");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with no params throws exception");
+            }
+        }
+        function testGetIdParam()
+        {
+            try {
+                $args = array('id' => xarModUserVars::get('id'));
+                $this->expected = '[array]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'getdeleteduser', $args);
+                $res = $this->assertTrue(is_array($this->actual),"Call with id param returns array");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with id param returns array");
+            }
+        }
+        function testGetBadIdParam()
+        {
+            try {
+                $args = array('id' => 'foo');
+                $this->expected = '[exception]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'getdeleteduser', $args);
+                $res = $this->assertSame($this->expected,$this->actual,"Call with bad id param throws exception");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with bad id param throws exception");
+            }
+        }
+    }
+    $suite->AddTestCase('testRolesUserGetdeleteduser','getdeleteduser (user) function tests');
+
+    class testRolesUserGetitemlinks extends xarTestCase
+    {
+        function testGetitemlinks()
+        {
+            try {
+                $this->expected = '[exception]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'getitemlinks');
+                $res = $this->assertSame($this->expected,$this->actual,"Call with no params throws exception");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with no params throws exception");
+            }
+        }
+        function testGetitemlinksItemidsParam()
+        {
+            try {
+                $args = array('itemids' => array(xarModUserVars::get('id')));
+                $this->expected = '[array]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'getitemlinks', $args);
+                $res = $this->assertTrue(is_array($this->actual),"Call with itemids param returns array");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with itemids param returns array");
+            }
+        }
+    }
+    $suite->AddTestCase('testRolesUserGetitemlinks','getitemlinks (user) function tests');
+
+    class testRolesUserGetitemtypes extends xarTestCase
+    {
+        function testGetitemtypes()
+        {
+            $this->expected = '[array]';
+            $this->actual = xarModAPIFunc('roles','user','getitemtypes');
+            return $this->assertTrue(is_array($this->actual),'Call with no params returns array');
+        }
+        function testGetitemtypesParams()
+        {
+            $args = array('foo' => 'bar');
+            $this->expected = xarModAPIFunc('roles','user','getitemtypes');
+            $this->actual =xarModAPIFunc('roles','user','getitemtypes', $args);
+            return $this->assertSame($this->actual,$this->expected,'Call with params returns the same array as without');
+        }
+    }
+    $suite->AddTestCase('testRolesUserGetitemtypes','getitemtypes (user) function tests');
+
+    class testRolesUserGetmenulinks extends xarTestCase
+    {
+        function testGetmenulinks()
+        {
+            $this->expected = '[array]';
+            $this->actual = xarModAPIFunc('roles','user','getmenulinks');
+            return $this->assertTrue(is_array($this->actual),'Call with no params returns array');
+        }
+        function testGetmenulinksParams()
+        {
+            $args = array('foo' => 'bar');
+            $this->expected = xarModAPIFunc('roles','user','getmenulinks');
+            $this->actual =xarModAPIFunc('roles','user','getmenulinks', $args);
+            return $this->assertSame($this->actual,$this->expected,'Call with params returns the same array as without');
+        }
+    }
+    $suite->AddTestCase('testRolesUserGetmenulinks','getmenulinks (user) function tests');
+
+    class testRolesUserGetprimaryparent extends xarTestCase
+    {
+        function testGetprimaryparent()
+        {
+            try {
+                $this->expected = '[exception]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'getprimaryparent');
+                $res = $this->assertSame($this->expected,$this->actual,"Call with no params throws exception");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with no params throws exception");
+            }
+        }
+        function testGetprimaryparentItemidParam()
+        {
+            try {
+                $args = array('itemid' => xarModUserVars::get('id'));
+                $this->expected = '[array]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'getprimaryparent', $args);
+                $res = $this->assertTrue(is_array($this->actual),"Call with itemid param returns array");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with itemid param returns array");
+            }
+        }
+        function testGetprimaryparentBadItemidParam()
+        {
+            try {
+                $args = array('itemid' => 'foo');
+                $this->expected = '[exception]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'getprimaryparent', $args);
+                $res = $this->assertSame($this->expected,$this->actual,"Call with bad itemid param throws exception");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with bad itemid param throws exception");
+            }
+        }
+    }
+    $suite->AddTestCase('testRolesUserGetprimaryparent','getprimaryparent (user) function tests');
+
+    class testRolesUserGetstates extends xarTestCase
+    {
+        function testGetstates()
+        {
+            $this->expected = '[array]';
+            $this->actual = xarModAPIFunc('roles','user','getstates');
+            return $this->assertTrue(is_array($this->actual),'Call with no params returns array');
+        }
+        function testGetstatesParams()
+        {
+            $args = array('foo' => 'bar');
+            $this->expected = xarModAPIFunc('roles','user','getstates');
+            $this->actual =xarModAPIFunc('roles','user','getstates', $args);
+            return $this->assertSame($this->actual,$this->expected,'Call with params returns the same array as without');
+        }
+    }
+    $suite->AddTestCase('testRolesUserGetstates','getstates (user) function tests');
+
+    class testRolesUserGetuserhome extends xarTestCase
+    {
+        function testGetuserhome()
+        {
+            try {
+                $this->expected = '[exception]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'getuserhome');
+                $res = $this->assertSame($this->expected,$this->actual,"Call with no params throws exception");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with no params throws exception");
+            }
+        }
+        function testGetuserhomeItemidParam()
+        {
+            try {
+                $args = array('itemid' => xarModUserVars::get('id'));
+                $this->expected = '[string]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'getuserhome', $args);
+                $res = $this->assertTrue(is_string($this->actual),"Call with itemid param returns string");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with itemid param returns string");
+            }
+        }
+        function testGetuserhomeBadItemidParam()
+        {
+            try {
+                $args = array('itemid' => 'foo');
+                $this->expected = '[exception]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'getuserhome', $args);
+                $res = $this->assertSame($this->expected,$this->actual,"Call with bad itemid param throws exception");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with bad itemid param throws exception");
+            }
+        }
+    }
+    $suite->AddTestCase('testRolesUserGetuserhome','getuserhome (user) function tests');
+
+    class testRolesUserGetusers extends xarTestCase
+    {
+        function testGetusersNoParams()
+        {
+            try {
+                $this->expected = '[exception]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'getusers');
+                $res = $this->assertSame($this->expected,$this->actual,"Call with no params throws exception");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with no params throws exception");
+            }
+        }
+        function testGetIdParam()
+        {
+            try {
+                $args = array('id' => xarModUserVars::get('id'));
+                $this->expected = '[array]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'getusers', $args);
+                $res = $this->assertTrue(is_array($this->actual),"Call with id param returns array");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with id param returns array");
+            }
+        }
+        /*
+        function testGetBadIdParam()
+        {
+            try {
+                $args = array('id' => 'foo');
+                $this->expected = '[exception]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'getusers', $args);
+                $res = $this->assertSame($this->expected,$this->actual,"Call with bad id param throws exception");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with bad id param throws exception");
+            }
+        }
+        */
+    }
+    $suite->AddTestCase('testRolesUserGetusers','getusers (user) function tests');
+
+    class testRolesUserLeftjoin extends xarTestCase
+    {
+        function testLeftjoin()
+        {
+            $this->expected = '[array]';
+            $this->actual = xarModAPIFunc('roles','user','leftjoin');
+            return $this->assertTrue(is_array($this->actual),'Call with no params returns array');
+        }
+    }
+    $suite->AddTestCase('testRolesUserLeftjoin','leftjoin (user) function tests');
+
+    class testRolesUserMakepass extends xarTestCase
+    {
+        function testMakepass()
+        {
+            $this->expected = '[array]';
+            $this->actual = xarModAPIFunc('roles','user','makepass');
+            return $this->assertTrue(is_string($this->actual),'Call with no params returns string');
+        }
+        function testMakepassParams()
+        {
+            $args = array('foo' => 'bar');
+            $this->actual =xarModAPIFunc('roles','user','makepass', $args);
+            return $this->assertTrue(is_string($this->actual),'Call with params returns string');
+        }
+    }
+    $suite->AddTestCase('testRolesUserMakepass','makepass (user) function tests');
+
+    class testRolesUserParseuserhome extends xarTestCase
+    {
+        function testParseuserhome()
+        {
+            try {
+                $this->expected = '[exception]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'parseuserhome');
+                $res = $this->assertSame($this->expected,$this->actual,"Call with no params throws exception");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with no params throws exception");
+            }
+        }
+        function testParseuserhomeUrlParam()
+        {
+            try {
+                $args = array('url' => '/');
+                $this->expected = '[array]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'parseuserhome', $args);
+                $res = $this->assertTrue(is_array($this->actual),"Call with url param returns array");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with url param returns array");
+            }
+        }
+        function testParseuserhomeTruecurrenturlParam()
+        {
+            try {
+                $args = array('truecurrenturl' => '/');
+                $this->expected = '[array]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'parseuserhome', $args);
+                $res = $this->assertTrue(is_array($this->actual),"Call with truecurrenturl param returns array");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with truecurrenturl param returns array");
+            }
+        }
+    }
+    $suite->AddTestCase('testRolesUserParseuserhome','parseuserhome (user) function tests');
+
+    class testRolesUserRemovemember extends xarTestCase
+    {
+        function testRemovememberNoParams()
+        {
+            try {
+                $this->expected = '[exception]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'removemember');
+                $res = $this->assertSame($this->expected,$this->actual,"Call with no params throws exception");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with no params throws exception");
+            }
+        }
+        function testRemovememberBadIdParam()
+        {
+            try {
+                $args = array('id' => 'foo');
+                $this->expected = '[exception]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'removemember', $args);
+                $res = $this->assertSame($this->expected,$this->actual,"Call with bad id param throws exception");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with bad id param throws exception");
+            }
+        }
+        function testRemovememberBadGidParam()
+        {
+            try {
+                $args = array('gid' => 'foo');
+                $this->expected = '[exception]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'removemember', $args);
+                $res = $this->assertSame($this->expected,$this->actual,"Call with bad gid param throws exception");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with bad gid param throws exception");
+            }
+        }
+    }
+    $suite->AddTestCase('testRolesUserRemovemember','removemember (user) function tests');
+
+    class testRolesUserUpdatestatus extends xarTestCase
+    {
+        function testUpdatestatusNoParams()
+        {
+            try {
+                $this->expected = '[exception]';
+                $this->actual = xarModAPIFunc('roles', 'user', 'updatestatus');
+                $res = $this->assertSame($this->expected,$this->actual,"Call with no params throws exception");
+                return $res;
+            } catch(Exception $e) {
+                return $this->assertTrue(true,"Call with no params throws exception");
+            }
+        }
+    }
+    $suite->AddTestCase('testRolesUserUpdatestatus','updatestatus (user) function tests');
 ?>
