@@ -57,7 +57,7 @@
               and present them according to its default objects/showlist.xt template.
             </p>
 
-            <xar:data-view object="$mylist" numitems="$itemsperpage" startnum="$startnum" />
+            <xar:data-view object="$mylist" numitems="$itemsperpage" startnum="$startnum" tplmodule="dyn_example" />
 
             <p class="xar-form-input-wrapper-before">If you want to provide your own presentation here, you can specify a
              different <code>layout="..."</code> to use in the default template, or you can specify your
