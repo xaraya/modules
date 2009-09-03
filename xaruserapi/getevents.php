@@ -93,9 +93,9 @@ function ievents_userapi_getevents($args)
         $where_arr[] = 'calendar_id in (' . implode(', ', $cids) . ')';
     }
 
-    $envent_status_validation = "enum:DRAFT:ACTIVE:INACTIVE";
-    if (xarVarValidate("strlist:,:$envent_status_validation", $status, true)) $status = explode(',', $status);
-    if (!empty($status) && xarVarValidate("list:$envent_status_validation", $status, true)) {
+    $event_status_validation = "enum:DRAFT:ACTIVE:INACTIVE";
+    if (xarVarValidate("strlist:,:$event_status_validation", $status, true)) $status = explode(',', $status);
+    if (!empty($status) && xarVarValidate("list:$event_status_validation", $status, true)) {
         $where_arr[] = "status in ('" . implode("', '", $status) . "')";
     }
 

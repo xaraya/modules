@@ -420,6 +420,20 @@ function ievents_user_view($args)
         $event_params['startnum'] = 1;
         $event_params['numitems'] = $max_numitems;
     }
+
+    // The events must be active to view.
+    $event_params['status'] = 'ACTIVE';
+
+    // If we can edit events, then show the draft and inactive events too.
+    // Ideally we would have an admin screen or admin mode that could display
+    // multiple statuses, and the user view screen would be *just* for active
+    // events.
+    // TODO: we probably need a different status check for each calendar, since
+    // there could be multiple calendars. Or perhaps only show non-active events
+    // when displaying a single calender (will do this for now).
+    if (!empty($cid) && xarSecurityCheck('DeleteIEvent', 0, 'IEvent', $cid . ':All:All')) {
+        $event_params['status'] = 'ACTIVE,INACTIVE,DRAFT';
+    }
     
     // Fetch the events.
     $events = xarModAPIfunc('ievents', 'user', 'getevents', $event_params);
@@ -742,6 +756,11 @@ function ievents_user_view($args)
         if (in_array($format, $export_formats)) {
             // Set the export handler.
             $export_object->set_handler($format);
+
+            // If the user has selected a single event for exporting, then
+            // deliver just that and not the complete page of events that
+            // there may be.
+            if (!empty($event)) $events = array($event);
 
             // Stream the export (or redirect to an error page)
             return $export_object->stream_export($events);

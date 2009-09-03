@@ -52,9 +52,9 @@ function ievents_user_modify($args)
     // or just to return the current item if not saving).
     $data = xarModAPIfunc('ievents', 'admin', 'modify', $args);
     
-    //Just in case there are no cals ensure eid is set
-	//Probably require suitable message to handle this instead of current no permission to submit
-	$data['eid'] = isset($data['eid'])?$data['eid']:0; 
+    // Just in case there are no cals ensure eid is set
+	// Probably require suitable message to handle this instead of current no permission to submit
+    if (!isset($data['eid'])) $data['eid'] = 0;
     
     // Redirect if necessary
     if ($data['result'] == 'SUCCESS' && (!empty($submit) || !empty($submitview))) {
@@ -76,14 +76,16 @@ function ievents_user_modify($args)
     // Call modify or update hooks preparation, depending on whether this is a new event or not.
     // TODO: do not do this if we do not have access to the calendar.
     if (empty($data['eid'])) {
-        $data['hooks'] = xarModCallHooks(
-            'item', 'new', '',
-            array(
-                'module' => $data['module'],
-                'itemtype' => $data['itemtype_events'],
-                'itemid' => '',
-            )
-        );
+        if ($data['result'] == 'SUCCESS') {
+            $data['hooks'] = xarModCallHooks(
+                'item', 'new', '',
+                array(
+                    'module' => $data['module'],
+                    'itemtype' => $data['itemtype_events'],
+                    'itemid' => '',
+                )
+            );
+        }
     } else {
         // Now a hack to work around another hack.
         // The modify hook will attempt to read linked categories from submitted
