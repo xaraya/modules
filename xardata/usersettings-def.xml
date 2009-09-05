@@ -20,7 +20,7 @@
       <seq>1</seq>
       <configuration></configuration>
     </property>
-    <property name="itemsperpage">
+    <property name="items_per_page">
       <id>241</id>
       <label>Items per page</label>
       <type>integerbox</type>

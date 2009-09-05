@@ -55,7 +55,7 @@ function dyn_example_adminapi_getmenulinks()
                               // In order to display the tool tips and label in any language,
                               // we must encapsulate the calls in the xarML in the API.
                               'title' => xarML('Modify the configuration for the module'),
-                              'label' => xarML('Modify Config'));
+                              'label' => xarML('Modify Configuration'));
     }
 
     return $menulinks;

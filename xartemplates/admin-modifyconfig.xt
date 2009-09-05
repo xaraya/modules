@@ -14,14 +14,16 @@
               here as well...
         </p>
 
-        <form method="post" action="#xarModURL('dyn_example','admin','updateconfig')#">
+        <form method="post" action="#xarServer::getCurrentURL()#">
             <fieldset>
                 <legend>Modify Configuration</legend>
+                <xar:data-form object="$module_settings" />
                 <xar:data-form object="$object" itemid="1" /> 
             </fieldset>
 
             <div class="xar-form-input-after">
                 <input type="hidden" name="authid" value="#xarSecGenAuthKey('dyn_example')#" />
+                <xar:data-input type="hidden" name="phase" value="update" />
                 <input type="hidden" name="objectid" value="#$object->objectid#" />
                 <input type="hidden" name="itemid" value="1" />
                 <input type="hidden" name="return_url" value="#xarServer::getCurrentURL()#" />

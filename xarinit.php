@@ -44,23 +44,34 @@ function dyn_example_init()
 #
     $module = 'dyn_example';
     $objects = array(
-            'dyn_example',
-            'modulesettings',
-            'usersettings',
-            );
+                'dyn_example',
+                'modulesettings',
+                'usersettings',
+                );
 
     if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;    
 # --------------------------------------------------------
 #
-# Set up modvars
+# Set up configuration modvars (module specific)
 #
-# Since these modvars are used as storage in a DD object dyn_example_modulesettings, 
-# we could also let Xaraya define them, but that would mean we wouldn't have them until
+# Since this modvar is used as storage in a DD object dyn_example_modulesettings, 
+# we could also let Xaraya define it, but that would mean we wouldn't have it until
 # we updated the modifyconfig page
 #
     xarModVars::set('dyn_example','bold',true);
-    xarModVars::set('dyn_example','itemsperpage',20);
-    xarModVars::set('dyn_example','SupportShortURLs',false);
+
+# --------------------------------------------------------
+#
+# Set up configuration modvars (general)
+#
+# The common settings use the module_settings dataobject. which is created when Xaraya is installed
+# These next lines initialize the appropriate modvars that object uses for dyn_example, if they don't already exist.
+# The lines below corresponding to the initializeation of the core modules are found in modules/installer/xaradmin.php.
+# The module_settings dataobject itself is defined in the dynamicdata module.
+#
+        $module_settings = xarModAPIFunc('base','admin','getmodulesettings',array('module' => 'dyn_example'));
+        $module_settings->initialize();
+
 # --------------------------------------------------------
 #
 # Register blocks
