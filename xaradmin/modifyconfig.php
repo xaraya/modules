@@ -33,6 +33,8 @@ function dyn_example_admin_modifyconfig()
     
     // Get the object we'll be working with for common configuration settings
     $data['module_settings'] = xarModAPIFunc('base','admin','getmodulesettings',array('module' => 'dyn_example'));
+    // Decide which fields are configurable in this module
+    $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_user_menu');
     // Get the appropriate item of the dataobject. Using itemid 0 (not passing an itemid parameter) is standard convention
     $data['module_settings']->getItem();
 
@@ -125,6 +127,22 @@ function dyn_example_admin_modifyconfig()
 
             # --------------------------------------------------------
             #
+            # Adjust the usermenu hook according to the setting
+            #
+            # The setting enable_user_menu is one of the common settings in the module_settings
+            # dataobject. The object stores the setting in the modvar we check below.
+
+            sys::import('xaraya.structures.hooks.observer');
+            $observer = new BasicObserver('dyn_example','user','usermenu');
+            $subject = new HookSubject('roles');
+            if (xarModVars::get('dyn_example','enable_user_menu')) {
+                $subject->attach($observer);
+            } else {
+                $subject->detach($observer);
+            }
+            
+            # --------------------------------------------------------
+            #
             # Updating the dyn_example configuration with a DD API call
             #
             # This is a special case using the dynamicdata_admin_update function.
@@ -133,7 +151,11 @@ function dyn_example_admin_modifyconfig()
             # - itemid (1 in this case)
             # - returnurl, telling us where to jump to after update
             #
+            # This needs to be the last thing happening on this page because it redirects. Code below
+            # this point will not execute
+            
                 if (!xarModFunc('dynamicdata','admin','update')) return;
+
             break;
     }
 
