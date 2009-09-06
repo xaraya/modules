@@ -19,7 +19,7 @@
  */
 $modversion['name']         = 'articles';
 $modversion['id']           = '151';
-$modversion['version']      = '1.5.2';
+$modversion['version']      = '2.0.0';
 $modversion['displayname']  = 'Articles';
 $modversion['description']  = 'Display articles';
 $modversion['credits']      = '';
