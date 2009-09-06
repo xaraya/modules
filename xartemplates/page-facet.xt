@@ -15,7 +15,7 @@
             <p class="xar-error">The custom function 'facet' must be enabled for this page.</p>
         <xar:else />
             <xar:if condition="isset($current_page.dd.body)">
-                <div style="margin: 1em;">#$current_page.dd.body#<div style="clear: both;"></div></div>
+            <div class="intro-text">#$current_page.dd.body#<div style="clear: both;"></div></div>
             </xar:if>
 
             <xar:comment>
@@ -53,6 +53,9 @@
                             Current Filters 
                             <a href="#xarServerGetCurrentURL(array('startnum'=&gt;NULL,'filter'=&gt;NULL))#" title="#xarML('Remove all filters')#"><img src="#xarTplGetImage('emblem-unreadable.png')#" /></a>
                         </h3>
+                    <p class="hint">
+                        <xar:mlstring>Remove a filter by clicking on its cross.</xar:mlstring>
+                    </p>
                         <xar:loop id="filter_facets" name="$filter_facets">
                             <p>
                                 <xar:loop name="$facets[$loop:filter_facets:item]['filter_ancestors']">
@@ -80,6 +83,9 @@
                             </xar:if>
                             Available filters
                         </h3>
+                    <p class="hint">
+                        <xar:mlstring>Click on a filter to narrow down the list of documents to those matching that filter.</xar:mlstring>
+                    </p>
                         <xar:loop id="subcat_facets" name="$subcat_facets">
                             <xar:loop name="$facets[$loop:subcat_facets:item]['counts']">
                                 <xar:if condition="$loop:item.level eq 0">
@@ -115,7 +121,7 @@
             <xar:else />
                 <div class="articles-list">
                     <xar:if condition="empty($aid)">
-                        <p>
+                    <p class="total-found">
                             <xar:ml>
                                 <xar:mlstring>Total articles found: #(1)</xar:mlstring>
                                 <xar:mlvar>#$article_count#</xar:mlvar>

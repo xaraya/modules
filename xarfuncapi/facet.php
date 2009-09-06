@@ -8,6 +8,17 @@
  * Templates for the summary and detail of the articles are facet-summary[-pubtypename].xt
  * and facet-display[-pubtypename].xt
  *
+ * TODO: now we have 'forced' categories, it is possible to display categories for articles
+ * that are outside of the new category roots. To cope with this, we do not want to allow
+ * those categories on the article details or summaries to be displayed as links, because
+ * they cannot be applied as filters.
+ * e.g. we have hooked category 123 with children 456 -> 789. If we set a forced category
+ * of 456, then category 123 can no longer be used as a filter category. Since some of the
+ * articles selected my have category 123 set for them, we should not display that category
+ * as a link. In other words, it would reside entirely outside of the tree of categories
+ * that can form our filters. I suspect the 'cids_to_facets' array may be useful here as 
+ * a lookup.
+ *
  */
 
 function xarpages_funcapi_facet($args)
@@ -75,6 +86,14 @@ function xarpages_funcapi_facet($args)
         return $args;
     }
 
+    // Forced categories, injected into the filters.
+    // TODO: use validation rule to ensure they are a CSV list of integers.
+    if (!empty($args['current_page']['dd']['forced_cids'])) {
+        $forced_cids = explode(',', $args['current_page']['dd']['forced_cids']);
+    } else {
+        $forced_cids = array();
+    }
+
     // Module ID
     $modid = xarModGetIDfromName('articles');
 
@@ -96,9 +115,28 @@ function xarpages_funcapi_facet($args)
     // These will be the facets.
     // For now assume there is no overlap.
     // TODO: deal with overlaps by removing those bases that are descendants of other bases. This will not
-    // noramally happen within a single publication type, but may happen with multiple publication types 
+    // normally happen within a single publication type, but may happen with multiple publication types 
     // when one type has a base category that happens to be lower in the tree of a base category in one
     // of the other publication types. Careful selection of hhoked categories can avoid this.
+    //
+    // If any of the forced categories are descendants of any of these root categories, then
+    // move the root up to that forced category. This allows the starting point to be a lower
+    // level than the root categories for the publications.
+
+    // Mapping of forced cids - lists cids that will get moved up to a 'forced' cid.
+    $forced_cids_map = array();
+    if (!empty($forced_cids)) {
+        foreach($forced_cids as $forced_cid) {
+            $forced_ancestors = xarModAPIfunc(
+                'categories', 'user', 'getancestors',
+                array('cid' => $forced_cid, 'return_itself' => false, 'order' => 'root')
+            );
+            foreach($forced_ancestors as $forced_ancestor) {
+                $forced_cids_map[$forced_ancestor['cid']] = $forced_cid;
+            }
+        }
+    }
+
     $global_edit_privs = NULL;
     foreach($ptids as $ptid_key => $ptid) {
         if (xarSecurityCheck('ViewArticles', 0, 'Article', "$ptid:All:All:All")) {
@@ -117,18 +155,25 @@ function xarpages_funcapi_facet($args)
 
             if ($itemtype_base_cids_count > 0) {
                 for($i = 1; $i <= $itemtype_base_cids_count; $i++) {
-                    $itemtype_base_cid = xarModAPIfunc(
+                    $itemtype_base_cat = xarModAPIfunc(
                         'categories', 'user', 'getcatbase',
                         array('modid' => $modid, 'itemtype' => $ptid, 'bid' => $i)
                     );
+                    $itemtype_base_cid = (int)$itemtype_base_cat['cid'];
+
+                    // If this root category is an ancestor of a forced cid, then discard it
+                    // and use the forced cid instead.
+                    if (isset($forced_cids_map[$itemtype_base_cid])) {
+                        $itemtype_base_cid = $forced_cids_map[$itemtype_base_cid];
+                    }
 
                     // If we already have this facet, perhaps from a different publication type, then skip it.
-                    if (isset($facets[$itemtype_base_cid['cid']])) continue;
+                    if (isset($facets[$itemtype_base_cid])) continue;
 
                     // TODO: security check here?
-                    $facets[$itemtype_base_cid['cid']] = array();
-                    $facets[$itemtype_base_cid['cid']]['root'] = (int)$itemtype_base_cid['cid'];
-                    $facets[$itemtype_base_cid['cid']]['base'] = $facets[$itemtype_base_cid['cid']]['root'];
+                    $facets[$itemtype_base_cid] = array();
+                    $facets[$itemtype_base_cid]['root'] = $itemtype_base_cid;
+                    $facets[$itemtype_base_cid]['base'] = $facets[$itemtype_base_cid]['root'];
                 }
             }
         } else {
@@ -153,7 +198,7 @@ function xarpages_funcapi_facet($args)
     // Get input parameters.
     //
 
-    // Get the filter category IDs.
+    // Get the filter category IDs from the URL.
     xarVarFetch('filter', 'strlist:,+ :id', $filter, array(), XARVAR_NOT_REQUIRED);
     if (!is_array($filter)) $filter = explode(',', $filter);
 
@@ -196,6 +241,17 @@ function xarpages_funcapi_facet($args)
             );
 
             if (!empty($ancestors)) {
+                // Just for efficiency in the queries, if any of these ancesters is one of 
+                // the 'forced' cids, then remove that forced cid as it is redundant.
+                foreach($ancestors as $ancestor) {
+                    if (in_array($ancestor['cid'], $forced_cids)) {
+                        // Remove an element by flipping it, removing by key, then flipping it back.
+                        $forced_cids_flip = array_flip($forced_cids);
+                        unset($forced_cids_flip[$ancestor['cid']]);
+                        $forced_cids = array_flip($forced_cids_flip);
+                    }
+                }
+
                 // First find the facet that this filter category refers to.
                 while(!empty($ancestors)) {
                     // Take the first ancestor.
@@ -252,9 +308,9 @@ function xarpages_funcapi_facet($args)
                 'aids' => array($aid),
                 // Restricted list for the summaries.
             );
-        } elseif (!empty($filter_cids) || !empty($q) || !empty($latest)) {
+        } elseif (!empty($filter_cids) || !empty($forced_cids) || !empty($q) || !empty($latest)) {
             $articles_fetch_array = array(
-                'cids' => (!empty($filter_cids) ? explode(',', '_' . implode(',_', $filter_cids)) : NULL),
+                'cids' => ((!empty($filter_cids) || !empty($forced_cids)) ? explode(',', '_' . implode(',_', array_merge($forced_cids, $filter_cids))) : NULL),
                 'andcids' => true,
                 'search' => $q,
             );
@@ -307,12 +363,12 @@ function xarpages_funcapi_facet($args)
         // filter too.
         // Not only that, it also must include statuses etc.
         // This will only work on MySQL 5+
-        if (!empty($filter_cids)) {
+        if (!empty($filter_cids) || !empty($forced_cids)) {
             $filter_params = array(
                 'modid' => $modid,
                 'itemtype' => $ptids,
                 'groupby' => 'category',
-                'catid' => '_' . implode('+_', $filter_cids),
+                'catid' => '_' . implode('+_', array_merge($forced_cids, $filter_cids)),
             );
 
             // Fetch the categories query parts.
