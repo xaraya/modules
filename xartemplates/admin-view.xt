@@ -57,7 +57,7 @@
               and present them according to its default objects/showlist.xt template.
             </p>
 
-            <xar:data-view object="$mylist" numitems="$itemsperpage" startnum="$startnum" tplmodule="dyn_example" />
+            <xar:data-view object="$mylist" numitems="$items_per_page" startnum="$startnum" tplmodule="dyn_example" />
 
             <p class="xar-form-input-wrapper-before">If you want to provide your own presentation here, you can specify a
              different <code>layout="..."</code> to use in the default template, or you can specify your
@@ -71,7 +71,7 @@
                 This tag will retrieve the properties and values from DynamicData and make them available in the 'properties' and 'values' variables in your template.
             </p>
 
-            <xar:data-getitems object="$mylist" value="values" name="properties" numitems="$itemsperpage" startnum="$startnum" />
+            <xar:data-getitems object="$mylist" value="values" name="properties" numitems="$items_per_page" startnum="$startnum" />
 
             <p class="xar-form-input-wrapper-before">
                 You can then use those variables to build your own layout. The <code>&lt;xar:data-label...&gt;</code> and <code>&lt;xar:data-output...&gt;</code> tags allow you to show individual labels or value outputs in the template.

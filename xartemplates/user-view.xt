@@ -56,7 +56,7 @@
                 This tag will automatically retrieve the list of items from DynamicData,
                 and present them according to its standard <strong>objects/showview.xt</strong> template.        
            </p>
-            <xar:data-view object="$mylist" numitems="$itemsperpage" startnum="$startnum" />
+            <xar:data-view object="$mylist" numitems="$items_per_page" startnum="$startnum" />
             <p>        
                 If you want to provide your own presentation here, you can specify a
                 different <code>layout="..."</code> to use in the default template, or you can specify your
@@ -72,7 +72,7 @@
                 uses <code>fieldlist="name,age"</code> to show only a selected list of fields.        
             </p>
 
-            <xar:data-view object="$mylist" numitems="$itemsperpage" startnum="$startnum" layout="list" linkfield="name" fieldlist="name,age" />
+            <xar:data-view object="$mylist" numitems="$items_per_page" startnum="$startnum" layout="list" linkfield="name" fieldlist="name,age" />
         </div>
         
         <div id="page-3" style="display: none">
@@ -94,7 +94,7 @@
                 retrieving 'properties' and 'values' via the module code instead, with the next approach.        
             </p>
 
-            <!--xar:data-getitems name="$properties" value="$values" module="dyn_example" itemtype="0" catid="$catid" numitems="$itemsperpage" startnum="$startnum" /-->
+            <!--xar:data-getitems name="$properties" value="$values" module="dyn_example" itemtype="0" catid="$catid" numitems="$items_per_page" startnum="$startnum" /-->
         </div>
         
         <div id="page-4" style="display: none">

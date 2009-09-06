@@ -29,8 +29,8 @@ function dyn_example_user_view()
     // We check here to see that the current user has the privilege to view items in the module
     if (!xarSecurityCheck('ViewDynExample')) return;
 
-    // get user settings for 'itemsperpage'
-    $data['itemsperpage'] = xarModUserVars::get('dyn_example','itemsperpage');
+    // get user settings for 'items_per_page'
+    $data['items_per_page'] = xarModUserVars::get('dyn_example','items_per_page');
 
 /* start APPROACH # 1 and # 2 : retrieve the items directly in the template */
     // Note: we don't retrieve any items here ourselves - we'll let the
@@ -51,7 +51,7 @@ function dyn_example_user_view()
     sys::import('modules.dynamicdata.class.properties.master');
 
     // We have some filters for the items
-    $filters = array('numitems'  => $data['itemsperpage'],
+    $filters = array('numitems'  => $data['items_per_page'],
                      'startnum'  => $data['startnum'],
                      'status'    => DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,
                     );

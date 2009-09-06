@@ -22,7 +22,7 @@ function dyn_example_admin_view()
     // potential security holes or just too much wasted processing
     if (!xarSecurityCheck('EditDynExample')) return;
 
-    $data['itemsperpage'] = xarModVars::get('dyn_example','itemsperpage');
+    $data['items_per_page'] = xarModVars::get('dyn_example','items_per_page');
 
 /* start APPROACH # 1 and # 2 : retrieve the items directly in the template */
     // Note: we don't retrieve any items here ourselves - we'll let the
@@ -39,7 +39,7 @@ function dyn_example_admin_view()
     sys::import('modules.dynamicdata.class.properties.master');
 
     // We have some filters for the items
-    $filters = array('numitems'  => $data['itemsperpage'],
+    $filters = array('numitems'  => $data['items_per_page'],
                      'startnum'  => $data['startnum'],
                      'status'    => DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,
                     );
