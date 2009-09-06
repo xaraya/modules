@@ -1,6 +1,6 @@
 <?php
 /**
- * Article Status Property
+ * Dynamic Data Status Property
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
@@ -14,33 +14,31 @@
  * Include the base class
  *
  */
-sys::import('modules.base.xarproperties.dropdown');
+include_once "modules/base/xarproperties/Dynamic_Select_Property.php";
 
 /**
  * handle the status property
  *
  * @package dynamicdata
  */
-class StatusProperty extends SelectProperty
+class Dynamic_Status_Property extends Dynamic_Select_Property
 {
-    public $id         = 10;
-    public $name       = 'status';
-    public $desc       = 'Article Status';
-    public $reqmodules = array('articles');
-
-    function __construct(ObjectDescriptor $descriptor)
+    function Dynamic_Status_Property($args)
     {
-        parent::__construct($descriptor);
-        $this->filepath   = 'modules/articles/xarproperties';
+        $this->Dynamic_Select_Property($args);
         if (count($this->options) == 0) {
-            $this->options = array(
-                 array('id' => 0, 'name' => xarML('Submitted')),
-                 array('id' => 1, 'name' => xarML('Rejected')),
-                 array('id' => 2, 'name' => xarML('Approved')),
-                 array('id' => 3, 'name' => xarML('Front Page')),
-             );
+            $states = xarModAPIFunc('articles','user','getstates');
+            $this->options = array();
+            foreach ($states as $id => $name) {
+                array_push($this->options, array('id' => $id, 'name' => $name));
+            }
         }
     }
+
+    // default showInput() from Dynamic_Select_Property
+
+    // default showOutput() from Dynamic_Select_Property
+
 
     /**
      * Get the base information for this property.
