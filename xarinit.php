@@ -59,12 +59,15 @@
 
     # --------------------------------------------------------
     #
+    # Set up configuration modvars (general)
+    #
+            $module_settings = xarModAPIFunc('base','admin','getmodulesettings',array('module' => 'xarayatesting'));
+            $module_settings->initialize();
+
+    # --------------------------------------------------------
+    #
     # Set up modvars
     #
-        xarModVars::set('xarayatesting', 'itemsperpage', 20);
-        xarModVars::set('xarayatesting', 'useModuleAlias',0);
-        xarModVars::set('xarayatesting', 'aliasname','Xarayatesting');
-
         xarModVars::set('xarayatesting', 'defaultmastertable', 'xarayatesting_tests');
 
     # --------------------------------------------------------
