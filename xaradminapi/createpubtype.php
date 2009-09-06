@@ -39,7 +39,9 @@ function articles_adminapi_createpubtype($args)
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     join(', ',$invalid), 'admin', 'createpubtype','Articles');
-        throw new BadParameterException(null,$msg);
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return false;
     }
 
     if (empty($descr)) {
@@ -63,8 +65,8 @@ function articles_adminapi_createpubtype($args)
     }
 
     // Get database setup
-    $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $pubtypestable = $xartable['publication_types'];
 
     // Get next ID in table

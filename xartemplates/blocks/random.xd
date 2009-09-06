@@ -1,4 +1,3 @@
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="!empty($altsummary)">
     <p>
         #$altsummary#
@@ -37,6 +36,3 @@
 </xar:if>
 
 <xar:comment> DD are configurable in block configuration</xar:comment>
-
-
-</xar:template>

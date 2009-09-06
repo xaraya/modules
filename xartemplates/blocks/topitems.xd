@@ -1,4 +1,3 @@
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="!empty($items)">
   <ul>
     <xar:foreach in="$items" value="$item">
@@ -18,6 +17,3 @@
     </xar:foreach>
   </ul>
 </xar:if>  
-
-
-</xar:template>

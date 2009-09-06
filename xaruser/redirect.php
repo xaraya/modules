@@ -37,7 +37,8 @@ function articles_user_redirect($args)
 
     if (!is_array($article)) {
         $msg = xarML('Failed to retrieve article in #(3)_#(1)_#(2).php', 'user', 'get', 'articles');
-        throw new DataNotFoundException(null, $msg);
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        return;
     }
 
     $ptid = $article['pubtypeid'];

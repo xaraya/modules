@@ -1,4 +1,3 @@
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
@@ -40,8 +39,7 @@
         </xar:set>
     </xar:if>
     <xar:if condition="!empty($ptid)">
-        <!-- mrb: removed the formhooks thing, invalid attribute and i couldnt figure out what it was -->
-        <form method="post" name="post" id="post" action="&xar-modurl-articles-admin-create;" enctype="#$enctype#"  >
+        <form method="post" name="post" id="post" action="&xar-modurl-articles-admin-create;" enctype="#$enctype#" #$formhooks['formaction']# >
             <xar:comment>Instead of looping over all fields, you can also access individual field definitions via $fields['title'], $fields['summary'] etc.</xar:comment>
             <xar:comment>If you would like to preset certain fields via GET or POST parameters, you should set $field['definition']['preset'] = 'yes' before passing it to the xar:articles-field tag. You can also set the value directly in this template via $field['definition']['value']</xar:comment>
             <xar:foreach in="$fields" value="$field">
@@ -56,14 +54,6 @@
                     <xar:mlstring>Form Controls</xar:mlstring>
                 </label>#$formhooks['formdisplay']#</div>
             </xar:if>
-            <!--
-            <div class="xar-form-input-wrapper">
-                <label class="xar-form-label help" title="#xarML('This is the allowed HTML that this website has configured.')#">
-                    <xar:mlstring>Categories</xar:mlstring>
-                </label>
-                <xar:data-input type="categories" name="categories" itemtype="$ptid" returnitself="true" />
-            </div>
-            -->
             <xar:comment>put the hooks in, each hook should be a block level element thus keeping the form valid</xar:comment>
             <xar:if condition="!empty($hooks)">
                 <xar:foreach in="$hooks" key="$hookmodule">#$hooks[$hookmodule]#</xar:foreach>
@@ -94,6 +84,3 @@
     </xar:if>
     <xar:set name="i">xarSessionSetVar('statusmsg', '')</xar:set>
 </div>
-
-
-</xar:template>

@@ -58,7 +58,7 @@ function articles_userapi_getmenulinks()
                                                           'new',
                                                           array('ptid' => $ptid)),
                                      'title' => xarML('Submit #(1)',$pubitem['pubtitle']),
-                                     'label' => '&#160;' . xarML('Submit Now'));
+                                     'label' => '&nbsp;' . xarML('Submit Now'));
             }
 
             $settings = unserialize(xarModGetVar('articles', 'settings.'.$ptid));
@@ -68,7 +68,7 @@ function articles_userapi_getmenulinks()
                                                           'archive',
                                                           array('ptid' => $ptid)),
                                      'title' => xarML('View #(1) Archive',$pubitem['pubtitle']),
-                                     'label' => '&#160;' . xarML('Archives'));
+                                     'label' => '&nbsp;' . xarML('Archives'));
             }
 
 /*
@@ -77,7 +77,7 @@ function articles_userapi_getmenulinks()
                                                       'viewmap',
                                                       array('ptid' => $ptid)),
                                  'title' => xarML('Displays a map of all published content'),
-                                 'label' => '&#160;' . xarML('Article Map'));
+                                 'label' => '&nbsp;' . xarML('Article Map'));
 */
         }
     }

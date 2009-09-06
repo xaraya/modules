@@ -1,4 +1,3 @@
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="!empty($showpublinks)">
 
 <xar:comment> show a link to all publication types </xar:comment>
@@ -26,6 +25,3 @@
 
 </xar:if>
 
-
-
-</xar:template>

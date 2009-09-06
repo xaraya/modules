@@ -92,7 +92,7 @@ function articles_navigationblock_modify($blockinfo)
             'label' => $modlabel
         );
 
-        $indent = '&#160;&#160;&#160;';
+        $indent = '&nbsp;&nbsp;&nbsp;';
 
         foreach($modulecatbases['itemtypes'] as $thisitemtype => $itemtypecatbase) {
             if (!empty($itemtypecatbase['catbases'])) {

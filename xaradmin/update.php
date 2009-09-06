@@ -48,14 +48,18 @@ function articles_admin_update()
     if (empty($aid) || !is_numeric($aid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'item id', 'admin', 'update', 'Articles');
-        throw new BadParameterException(null,$msg);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return;
     }
 
     $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
     if (empty($ptid) || !isset($pubtypes[$ptid])) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'publication type', 'admin', 'update', 'Articles');
-        throw new BadParameterException(null,$msg);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return;
     }
 
     // Get original article information
@@ -65,7 +69,9 @@ function articles_admin_update()
     if (!isset($article)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'article', 'admin', 'update', 'Articles');
-        throw new BadParameterException(null, $msg);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return;
     }
 
 // TODO: switch to DD object style
@@ -172,7 +178,7 @@ function articles_admin_update()
     unset($article);
 
     // Success
-    xarSession::setVar('statusmsg', xarML('Article Updated'));
+    xarSessionSetVar('statusmsg', xarML('Article Updated'));
 
     // Save and continue editing via feature request.
     if (isset($save) && xarSecurityCheck('EditArticles',0,'Article',$ptid.':All:All:All')) {
@@ -187,7 +193,7 @@ function articles_admin_update()
     }
 
     // Return to the original admin view
-    $lastview = xarSession::getVar('Articles.LastView');
+    $lastview = xarSessionGetVar('Articles.LastView');
     if (isset($lastview)) {
         $lastviewarray = unserialize($lastview);
         if (!empty($lastviewarray['ptid']) && $lastviewarray['ptid'] == $ptid) {

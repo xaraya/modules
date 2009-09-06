@@ -1,4 +1,3 @@
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="isset($cattrees) and is_array($cattrees)">
 <ul class="xar-menu-section">
 <xar:foreach in="$cattrees" value="$cattree">
@@ -61,5 +60,3 @@
 </xar:foreach>
 </ul>
 </xar:if>
-
-</xar:template>

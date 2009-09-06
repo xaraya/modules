@@ -1,4 +1,3 @@
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:loop name="$feature">
     <xar:if condition="!empty($loop:item.featuredlabel)">
         <h2>
@@ -46,6 +45,3 @@
     </xar:foreach>
     </ul>
 </xar:if>
-
-
-</xar:template>

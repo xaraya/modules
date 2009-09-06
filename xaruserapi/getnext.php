@@ -45,7 +45,7 @@ function articles_userapi_getnext($args)
     if (!xarSecurityCheck('ViewArticles')) return;
 
     // Database information
-    $dbconn = xarDB::getConn();
+    $dbconn =& xarDBGetConn();
 
     // Get the field names and LEFT JOIN ... ON ... parts from articles
     // By passing on the $args, we can let leftjoin() create the WHERE for

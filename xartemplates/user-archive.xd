@@ -1,4 +1,3 @@
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-body">
     <xar:template file="publinks" type="module" />
@@ -47,7 +46,7 @@
             </xar:foreach>
         </tr>
 <!-- TODO: make sure xar-alt is the right class to use here -->
-        <xar:set name="i">
+        <xar:set name="$i">
             1
         </xar:set>
         <xar:foreach in="$articles" value="$article">
@@ -88,6 +87,3 @@
     </table>
     <xar:template file="navtabs-user" type="module" />
 </div>
-
-
-</xar:template>

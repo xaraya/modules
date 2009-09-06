@@ -1,4 +1,3 @@
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <h4><xar:mlstring>Where the glossary items are held</xar:mlstring></h4>
 <div>
     <span class="help" title="#xarML('Choose the publication type for the glossary.')#"><label for="ptid_block_#$bid#"><xar:mlstring>Publication Type</xar:mlstring></label>:</span>
@@ -39,6 +38,3 @@
 <div>
     <input type="text" name="paramname" id="paramname_block_#$bid#" size="20" maxlength="20" value="#xarVarPrepForDisplay($paramname)#"/>
 </div>
-
-
-</xar:template>

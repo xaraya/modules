@@ -1,4 +1,3 @@
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <p><strong><xar:mlstring>In Articles</xar:mlstring>:</strong></p>
 <xar:if condition="empty($loop)">
@@ -22,6 +21,3 @@
       <br />
     </xar:foreach>
 </xar:if>
-
-
-</xar:template>

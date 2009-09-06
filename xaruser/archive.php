@@ -159,9 +159,15 @@ function articles_user_archive($args)
 
     // Get the list of root categories for this publication type
     if (!empty($ptid)) {
-        $rootcats = unserialize(xarModGetUserVar('articles','basecids',$ptid));
+        $cidstring = xarModGetVar('articles', 'mastercids.'.$ptid);
+        if (!empty($cidstring)) {
+            $rootcats = explode(';',$cidstring);
+        }
     } else {
-        $rootcats = unserialize(xarModVars::get('articles','basecids'));
+        $cidstring = xarModGetVar('articles', 'mastercids');
+        if (!empty($cidstring)) {
+            $rootcats = explode (';', $cidstring);
+        }
     }
     $catlist = array();
     $catinfo = array();
@@ -232,7 +238,8 @@ function articles_user_archive($args)
                                 );
         if (!is_array($articles)) {
             $msg = xarML('Failed to retrieve articles in #(3)_#(1)_#(2).php', 'user', 'getall', 'articles');
-            throw new DataNotFoundException(null, $msg);
+            xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+            return;
         }
     } else {
         $articles = array();
@@ -333,7 +340,7 @@ function articles_user_archive($args)
         $catlist[] = array('cid' => 0,
                            'name' => xarML('Date'),
                            'link' => $link);
-        $catsel[] = '&#160;';
+        $catsel[] = '&nbsp;';
     }
 
     // Save some variables to (temporary) cache for use in blocks etc.

@@ -52,7 +52,9 @@ function articles_admin_create()
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'publication type', 'admin', 'create',
                     'Articles');
-        throw new BadParameterException(null,$msg);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return;
     }
 
 // TODO: switch to DD object style
@@ -177,7 +179,7 @@ function articles_admin_create()
     }
 
     // Success
-    xarSession::setVar('statusmsg', xarML('Article Created'));
+    xarSessionSetVar('statusmsg', xarML('Article Created'));
 
     // Save and continue editing via feature request.
     if (isset($save)){

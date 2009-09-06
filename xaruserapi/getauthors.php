@@ -29,7 +29,7 @@
 function articles_userapi_getauthors($args)
 {
     // Database information
-    $dbconn = xarDB::getConn();
+    $dbconn =& xarDBGetConn();
 
     // Get the field names and LEFT JOIN ... ON ... parts from articles
     // By passing on the $args, we can let leftjoin() create the WHERE for

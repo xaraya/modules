@@ -38,12 +38,16 @@ function articles_adminapi_update($args)
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'article ID', 'admin', 'update',
                     'Articles');
-        throw new BadParameterException(null,$msg);
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return false;
     } elseif (empty($title)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'title', 'admin', 'update',
                     'Articles');
-        throw new BadParameterException(null,$msg);
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return false;
     }
 
 // Note : this will take care of checking against the current article values
@@ -56,12 +60,14 @@ function articles_adminapi_update($args)
     if (!xarModAPIFunc('articles','user','checksecurity',$args)) {
         $msg = xarML('Not authorized to update #(1) items',
                     'Article');
-        throw new ForbiddenOperationException(null, $msg);
+        xarErrorSet(XAR_USER_EXCEPTION, 'NO_PERMISSION',
+                       new SystemException($msg));
+        return false;
     }
 
     // Get database setup
-    $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $articlestable = $xartable['articles'];
     $bindvars = array();
     // Update the item
@@ -132,12 +138,6 @@ function articles_adminapi_update($args)
     if (xarVarIsCached('Hooks.all','noupdate')){
         $args['statusflag'] = true; // legacy support for old method - remove later on
     }
-
-/* ---------------------------- TODO: Remove
-    sys::import('modules.dynamicdata.class.properties.master');
-    $categories = DataPropertyMaster::getProperty(array('name' => 'categories'));
-    $categories->checkInput('categories',$aid);
-------------------------------- */
 
     $args['module'] = 'articles';
     if (isset($ptid)) {

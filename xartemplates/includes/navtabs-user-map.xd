@@ -1,4 +1,3 @@
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:style scope="module" module="base" file="navtabs" />
 <dl class="xar-tabs">
     <dt class="help" title="#xarML('Click on a tab to explore further')#">
@@ -38,6 +37,3 @@
         </xar:if>
     </xar:if>
 </dl>
-
-
-</xar:template>

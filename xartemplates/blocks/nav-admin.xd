@@ -1,50 +1,49 @@
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-form-input-wrapper">
-    <label class="xar-form-label" for="layout#$blockid#">
+    <label class="xar-form-label" for="layout#$blockid#"> 
         <xar:mlstring>
-            Category layout
+            Category layout 
         </xar:mlstring>
-    </label> <select name="layout" id="layout#$blockid#">
+    </label> <select name="layout" id="layout#$blockid#"> 
         <xar:loop name="$layouts">
             <xar:if condition="$layout eq $loop:item['id']">
                 <option value="#$loop:item['id']#" selected="selected">
-                    #$loop:item['name']#
+                    #$loop:item['name']# 
                 </option>
                 <xar:else />
                 <option value="#$loop:item['id']#">
-                    #$loop:item['name']#
+                    #$loop:item['name']# 
                 </option>
             </xar:if>
         </xar:loop>
-    </select>
+    </select> 
 </div>
 <div class="xar-form-input-wrapper">
-    <label class="xar-form-label" for="startmodule#$blockid#">
+    <label class="xar-form-label" for="startmodule#$blockid#"> 
         <xar:mlstring>
-            Show categories
+            Show categories 
         </xar:mlstring>
-    </label>
-    <xar:set name="optgroup">
-        0
+    </label> 
+    <xar:set name="$optgroup">
+        0 
     </xar:set>
-    <select name="startmodule" id="startmodule#$blockid#">
+    <select name="startmodule" id="startmodule#$blockid#"> 
         <xar:loop name="$modules">
             <xar:if condition="!empty($loop:item.label)">
                 <xar:if condition="!empty($optgroup)">
                 </optgroup>
             </xar:if>
             <optgroup label="Module: #$loop:item.label#">
-                <xar:set name="optgroup">
-                    1
+                <xar:set name="$optgroup">
+                    1 
                 </xar:set>
                 <xar:else />
                 <xar:if condition="$startmodule eq $loop:item.id">
                     <option value="#$loop:item.id#" selected="selected">
-                        #$loop:item.name#
+                        #$loop:item.name# 
                     </option>
                     <xar:else />
                     <option value="#$loop:item.id#">
-                        #$loop:item.name#
+                        #$loop:item.name# 
                     </option>
                 </xar:if>
             </xar:if>
@@ -52,69 +51,67 @@
         <xar:if condition="!empty($optgroup)">
         </optgroup>
     </xar:if>
-</select>
+</select> 
 </div>
 <div class="xar-form-input-wrapper-after">
     <xar:if condition="!empty($showempty)">
-        <input type="checkbox" name="showempty" id="showempty#$blockid#" value="1" checked="checked" />
+        <input type="checkbox" name="showempty" id="showempty#$blockid#" value="1" checked="checked" /> 
         <xar:else />
-        <input type="checkbox" name="showempty" id="showempty#$blockid#" value="1" />
+        <input type="checkbox" name="showempty" id="showempty#$blockid#" value="1" /> 
     </xar:if>
-    <label for="showempty#$blockid#">
+    <label for="showempty#$blockid#"> 
         <xar:mlstring>
-            Show empty categories
+            Show empty categories 
         </xar:mlstring>
-    </label>
+    </label> 
 </div>
 <div class="xar-form-input-wrapper-after">
     <xar:if condition="!empty($dynamictitle)">
-        <input type="checkbox" name="dynamictitle" id="dynamictitle#$blockid#" value="1" checked="checked" />
+        <input type="checkbox" name="dynamictitle" id="dynamictitle#$blockid#" value="1" checked="checked" /> 
         <xar:else />
-        <input type="checkbox" name="dynamictitle" id="dynamictitle#$blockid#" value="1" />
+        <input type="checkbox" name="dynamictitle" id="dynamictitle#$blockid#" value="1" /> 
     </xar:if>
-    <label for="dynamictitle#$blockid#">
+    <label for="dynamictitle#$blockid#"> 
         <xar:mlstring>
-            Dynamic title (linked to content)
+            Dynamic title (linked to content) 
         </xar:mlstring>
-    </label>
+    </label> 
 </div>
 <div class="xar-form-input-wrapper">
-    <label class="xar-form-label" for="showcatcount#$blockid#">
+    <label class="xar-form-label" for="showcatcount#$blockid#"> 
         <xar:mlstring>
-            Show count per category
+            Show count per category 
         </xar:mlstring>
-    </label>
+    </label> 
     <xar:loop name="$catcounts">
         <xar:if condition="$showcatcount eq $loop:item['id']">
             <option value="#$loop:item['id']#" selected="selected">
-                #$loop:item['name']#
+                #$loop:item['name']# 
             </option>
             <xar:else />
             <option value="#$loop:item['id']#">
-                #$loop:item['name']#
+                #$loop:item['name']# 
             </option>
         </xar:if>
     </xar:loop>
-</select>
+</select> 
 </div>
 <div class="xar-form-input-wrapper">
-    <label class="xar-form-label" for="showchildren#$blockid#">
+    <label class="xar-form-label" for="showchildren#$blockid#"> 
         <xar:mlstring>
-            Show children
+            Show children 
         </xar:mlstring>
-    </label><select name="showchildren" id="showchildren#$blockid#">
+    </label><select name="showchildren" id="showchildren#$blockid#"> 
         <xar:loop name="$children">
             <xar:if condition="$showchildren eq $loop:item['id']">
                 <option value="#$loop:item['id']#" selected="selected">
-                    #$loop:item['name']#
+                    #$loop:item['name']# 
                 </option>
                 <xar:else />
                 <option value="#$loop:item['id']#">
-                    #$loop:item['name']#
+                    #$loop:item['name']# 
                 </option>
             </xar:if>
         </xar:loop>
-    </select>
+    </select> 
 </div>
-
-</xar:template>

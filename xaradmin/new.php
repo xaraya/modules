@@ -59,7 +59,9 @@ function articles_admin_new($args)
         $ptid = '';
         if (!xarSecurityCheck('SubmitArticles')) {
                $msg = xarML('You have no permission to submit Articles');
-                throw new ForbiddenOperationException(null, $msg);
+                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                            new SystemException($msg));
+                return;
         }
     } else {
         if (isset($article['cids']) && count($article['cids']) > 0) {
@@ -72,14 +74,18 @@ function articles_admin_new($args)
                     }
                     $msg = xarML('You have no permission to submit #(1) in category #(2)',
                                  $pubtypes[$ptid]['descr'],$catinfo['name']);
-                    throw new ForbiddenOperationException(null, $msg);
+                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                                    new SystemException($msg));
+                    return;
                 }
             }
         } else {
             if (!xarSecurityCheck('SubmitArticles',1,'Article',"$ptid:All:All:All")) {
                 $msg = xarML('You have no permission to submit #(1)',
                              $pubtypes[$ptid]['descr']);
-                throw new ForbiddenOperationException(null, $msg);
+                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                                new SystemException($msg));
+                return;
             }
         }
     }

@@ -30,7 +30,9 @@ function articles_admin_delete()
     if (!isset($article) || $article == false) {
         $msg = xarML('Unable to find #(1) item #(2)',
                      'Article', xarVarPrepForDisplay($aid));
-        throw new ForbiddenOperationException(null, $msg);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                        new SystemException($msg));
+        return;
     }
 
     $ptid = $article['pubtypeid'];
@@ -43,7 +45,9 @@ function articles_admin_delete()
         $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
         $msg = xarML('You have no permission to delete #(1) item #(2)',
                      $pubtypes[$ptid]['descr'], xarVarPrepForDisplay($aid));
-        throw new ForbiddenOperationException(null, $msg);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                       new SystemException($msg));
+        return;
     }
 
     // Check for confirmation
@@ -87,7 +91,7 @@ function articles_admin_delete()
     }
 
     // Success
-    xarSession::setVar('statusmsg', xarML('Article Deleted'));
+    xarSessionSetVar('statusmsg', xarML('Article Deleted'));
 
     // Return return_url
     if (!empty($return_url)) {
@@ -96,7 +100,7 @@ function articles_admin_delete()
     }
 
     // Return to the original admin view
-    $lastview = xarSession::getVar('Articles.LastView');
+    $lastview = xarSessionGetVar('Articles.LastView');
     if (isset($lastview)) {
         $lastviewarray = unserialize($lastview);
         if (!empty($lastviewarray['ptid']) && $lastviewarray['ptid'] == $ptid) {

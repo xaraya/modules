@@ -391,7 +391,7 @@ function articles_navigationblock_display($blockinfo)
             }// foreach
 
             $data['cattrees'][] = array('catparents' => $catparents);
-            $data['crumbSeparator'] = '&#160;>&#160;';
+            $data['crumbSeparator'] = '&nbsp;>&nbsp;';
             break;
 
 

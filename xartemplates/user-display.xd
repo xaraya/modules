@@ -1,4 +1,3 @@
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:template file="publinks" type="module" />
 <xar:categories-navigation layout="trails" showchildren="1" module="articles" itemtype="$ptid" itemid="$aid" cids="$cids" showcatcount="$showcatcount" showempty="0" />
@@ -18,9 +17,9 @@
     </p>
 </div>
 <div class="xar-norm xar-standard-box-padding">
-    <h1><strong><xar:mlstring>Title</xar:mlstring>:</strong>&#160;#$title#</h1>
+    <h1><strong><xar:mlstring>Title</xar:mlstring>:</strong>&nbsp;#$title#</h1>
     <xar:if condition="isset($author)">
-    <p><strong><xar:mlstring>Author</xar:mlstring>:</strong>&#160;#$author#</p>
+    <p><strong><xar:mlstring>Author</xar:mlstring>:</strong>&nbsp;#$author#</p>
     </xar:if>
     <xar:if condition="isset($pubdate)">
     <p>
@@ -33,13 +32,13 @@
     </p>
     </xar:if>
     <xar:if condition="isset($summary)">
-    <p><strong><xar:mlstring>Summary</xar:mlstring>:</strong>&#160;#$summary#</p>
+    <p><strong><xar:mlstring>Summary</xar:mlstring>:</strong>&nbsp;#$summary#</p>
     </xar:if>
     <xar:if condition="isset($body)">
-    <p><strong><xar:mlstring>Body</xar:mlstring>:</strong>&#160;#$body#</p>
+    <p><strong><xar:mlstring>Body</xar:mlstring>:</strong>&nbsp;#$body#</p>
     </xar:if>
     <xar:if condition="isset($notes)">
-    <p><strong><xar:mlstring>Notes</xar:mlstring>:</strong>&#160;#$notes#</p>
+    <p><strong><xar:mlstring>Notes</xar:mlstring>:</strong>&nbsp;#$notes#</p>
     </xar:if>
     <xar:if condition="!empty($previous) and !empty($next)">
     <p>#$pager#</p>
@@ -51,6 +50,3 @@
         </xar:foreach>
     </xar:if>
 </div>
-
-
-</xar:template>

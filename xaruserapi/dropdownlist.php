@@ -32,7 +32,9 @@ function articles_userapi_dropdownlist($args)
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'publication type', 'user', 'dropdownlist',
                     'Articles');
-        throw new BadParameterException(null,$msg);
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return false;
     }
     // Add default arguments
     if (!isset($args['field'])) {

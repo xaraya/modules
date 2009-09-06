@@ -37,7 +37,9 @@ function articles_admin_modify($args)
     if (!isset($article) || $article == false) {
         $msg = xarML('Unable to find #(1) item #(2)',
                     'Article', xarVarPrepForDisplay($aid));
-        throw new ForbiddenOperationException(null, $msg);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                       new SystemException($msg));
+        return;
     }
 
     $ptid = $article['pubtypeid'];
@@ -57,7 +59,9 @@ function articles_admin_modify($args)
     if (!xarModAPIFunc('articles','user','checksecurity',$input)) {
         $msg = xarML('You have no permission to modify #(1) item #(2)',
                      $pubtypes[$ptid]['descr'], xarVarPrepForDisplay($aid));
-        throw new ForbiddenOperationException(null, $msg);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                       new SystemException($msg));
+        return;
     }
     unset($input);
 

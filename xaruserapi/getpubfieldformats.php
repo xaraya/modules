@@ -26,7 +26,7 @@ function articles_userapi_getpubfieldformats($args)
     $fieldlist=array(
         'static'          => xarML('Static Text'),
         'textbox'         => xarML('Text Box'),
-        'textarea'  => xarML('Small Text Area'),
+        'textarea_small'  => xarML('Small Text Area'),
         'textarea_medium' => xarML('Medium Text Area'),
         'textarea_large'  => xarML('Large Text Area'),
         'dropdown'        => xarML('Dropdown List'),
@@ -49,7 +49,7 @@ function articles_userapi_getpubfieldformats($args)
     // Add  'text' dd properites that are dependent on module availability
     $extrafields=array();
     if (xarModIsAvailable('tinymce')) {
-        $extrafields=array('tinymce'=> xarML('TinyMCE GUI'));
+        $extrafields=array('xartinymce'=> xarML('xarTinyMCE GUI'));
         $fieldlist=array_merge($fieldlist,$extrafields);
     }
 

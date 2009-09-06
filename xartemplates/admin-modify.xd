@@ -1,4 +1,3 @@
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
@@ -86,14 +85,6 @@
                 <xar:articles-field definition="$field['definition']" />
             </div>
         </xar:foreach>
-        <!--
-        <div class="xar-form-input-wrapper">
-            <label class="xar-form-label help" title="#xarML('This is the allowed HTML that this website has configured.')#">
-                <xar:mlstring>Categories</xar:mlstring>
-            </label>
-            <xar:data-input type="categories" name="categories" itemid="$aid" itemtype="$ptid" returnitself="true" />
-        </div>
-        -->
         <xar:if condition="!empty($formhooks['formdisplay'])">
             <div class="xar-form-input-wrapper">
                 <label class="help xar-form-label" title="#xarML('Form Controls as determined by hook selection.')#">
@@ -151,6 +142,3 @@
     -->
     <xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>
 </div>
-
-
-</xar:template>

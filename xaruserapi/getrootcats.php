@@ -31,9 +31,15 @@ function articles_userapi_getrootcats($args)
     // see which root categories we need to handle
     $rootcats = array();
     if (!empty($ptid)) {
-        $rootcats = unserialize(xarModGetUserVar('articles','basecids',$ptid));
+        $cidstring = xarModGetVar('articles','mastercids.'.$ptid);
+        if (!empty($cidstring)) {
+            $rootcats = explode(';',$cidstring);
+        }
     } elseif (empty($all)) {
-        $rootcats = unserialize(xarModVars::get('articles','basecids'));
+        $cidstring = xarModGetVar('articles','mastercids');
+        if (!empty($cidstring)) {
+            $rootcats = explode(';',$cidstring);
+        }
     } else {
         // Get publication types
         $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
@@ -45,24 +51,21 @@ function articles_userapi_getrootcats($args)
         $catlist = array();
         foreach ($publist as $pubid) {
             if (empty($pubid)) {
-                $cidstring = xarModVars::get('articles','basecids');
+                $cidstring = xarModGetVar('articles','mastercids');
             } else {
-                $cidstring = xarModGetUserVar('articles','basecids',$pubid);
+                $cidstring = xarModGetVar('articles','mastercids.'.$pubid);
             }
             if (!empty($cidstring)) {
-                $rootcats = unserialize($cidstring);
-            } else {
-                $rootcats = array();
-            }
+                $rootcats = explode(';',$cidstring);
                 foreach ($rootcats as $cid) {
                     $catlist[$cid] = 1;
                 }
+            }
         }
         if (count($catlist) > 0) {
             $rootcats = array_keys($catlist);
         }
     }
-    if (empty($rootcats)) $rootcats = array();
 
     if (count($rootcats) < 1) {
         return array();

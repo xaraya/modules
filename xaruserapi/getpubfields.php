@@ -35,7 +35,7 @@ function articles_userapi_getpubfields($args)
                             'format' => 'textarea_large',
                             'input'  => 1),
         'notes'    => array('label'  => xarML('Notes'),
-                            'format' => 'textarea',
+                            'format' => 'textarea_small',
                             'input'  => 0),
         'authorid' => array('label'  => xarML('Author'),
                             'format' => 'username',

@@ -29,7 +29,9 @@ function articles_admin_showpropval($args)
 
     if (empty($pubtypes[$ptid]['config'][$field])) {
         $msg = xarML('Invalid item id');
-        throw new BadParameterException(null,$msg);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                    new SystemException($msg));
+        return;
     }
 
     // Get current configuration

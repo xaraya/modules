@@ -25,7 +25,7 @@ function articles_userapi_getfieldformatnums($args)
     $fieldnames= array(
         'static'          => 1,
         'textbox'         => 2,
-        'textarea'        => 3,
+        'textarea_small'  => 3,
         'textarea_medium' => 4,
         'textarea_large'  => 5,
         'dropdown'        => 6,
@@ -49,7 +49,7 @@ function articles_userapi_getfieldformatnums($args)
     $fielditem=array();
 
     if (xarModIsAvailable('tinymce')) {
-        $fielditems=array('tinymce' => 205);
+        $fielditems=array('xartinymce' => 205);
         $fieldnames=array_merge($fieldnames,$fielditems);
     }
 

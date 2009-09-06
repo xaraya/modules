@@ -1,4 +1,3 @@
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-norm xar-standard-box-padding">
     <xar:if condition="!empty($categories) and count($categories) gt 0">
@@ -27,13 +26,13 @@
             </xar:ml>
             <xar:if condition="!empty($counter)">
                 <xar:if condition="$counter eq 1">
-                    (#$counter#&#160;
+                    (#$counter#&nbsp;
                     <xar:mlstring>
                         read
                     </xar:mlstring>
                     )
                     <xar:else />
-                    (#$counter#&#160;
+                    (#$counter#&nbsp;
                     <xar:mlstring>
                         reads
                     </xar:mlstring>
@@ -67,13 +66,13 @@
                 </xar:mlstring>
             </a>
             <xar:if condition="$words eq 1">
-                (#$words#&#160;
+                (#$words#&nbsp;
                 <xar:mlstring>
                     word
                 </xar:mlstring>
                 )
                 <xar:else />
-                (#$words#&#160;
+                (#$words#&nbsp;
                 <xar:mlstring>
                     words
                 </xar:mlstring>
@@ -96,6 +95,3 @@
         </div>
     </div>
 </div>
-
-
-</xar:template>

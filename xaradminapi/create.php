@@ -36,7 +36,9 @@ function articles_adminapi_create($args)
     if (empty($title)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'title', 'admin', 'create', 'Articles');
-        throw new BadParameterException(null,$msg);
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return false;
     }
 
 // Note : we use empty() here because we don't care whether it's set to ''
@@ -48,7 +50,9 @@ function articles_adminapi_create($args)
         if (empty($ptid)) {
             $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                         'ptid', 'admin', 'create', 'Articles');
-            throw new BadParameterException(null,$msg);
+            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+                           new SystemException($msg));
+            return false;
         }
         // for security check below
         $args['ptid'] = $ptid;
@@ -56,7 +60,7 @@ function articles_adminapi_create($args)
 
     // Default author ID is the current user, or Anonymous (1) otherwise
     if (empty($authorid) || !is_numeric($authorid)) {
-        $authorid = xarUserGetVar('id');
+        $authorid = xarUserGetVar('uid');
         if (empty($authorid)) {
             $authorid = _XAR_ID_UNREGISTERED;
         }
@@ -80,7 +84,9 @@ function articles_adminapi_create($args)
     if (!xarModAPIFunc('articles','user','checksecurity',$args)) {
         $msg = xarML('Not authorized to add #(1) items',
                     'Article');
-        throw new ForbiddenOperationException(null, $msg);
+        xarErrorSet(XAR_USER_EXCEPTION, 'NO_PERMISSION',
+                       new SystemException($msg));
+        return false;
     }
 
     // Default publication date is now
@@ -114,8 +120,8 @@ function articles_adminapi_create($args)
     }
 
     // Get database setup
-    $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $articlestable = $xartable['articles'];
 
     // Get next ID in table
@@ -159,12 +165,6 @@ function articles_adminapi_create($args)
     if (empty($cids)) {
         $cids = array();
     }
-
-/* ---------------------------- TODO: Remove
-    sys::import('modules.dynamicdata.class.properties.master');
-    $categories = DataPropertyMaster::getProperty(array('name' => 'categories'));
-    $categories->checkInput('categories',$aid);
-------------------------------- */
 
     // Call create hooks for categories, hitcount etc.
     $args['aid'] = $aid;

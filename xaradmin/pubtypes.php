@@ -33,7 +33,7 @@ function articles_admin_pubtypes()
         if (!xarSecurityCheck('AdminArticles',1,'Article',"$ptid:All:All:All")) return;
     }
     if (!isset($action)) {
-        xarSession::setVar('statusmsg', '');
+        xarSessionSetVar('statusmsg', '');
     }
     // Initialise the template variables
     $data = array();
@@ -109,7 +109,7 @@ function articles_admin_pubtypes()
                 xarModSetVar('articles', 'mastercids.'.$ptid, '');
 
                 // Redirect to the admin view page
-                xarSession::setVar('statusmsg',
+                xarSessionSetVar('statusmsg', xarML('Publication type created'));
                 xarResponseRedirect(xarModURL('articles', 'admin', 'pubtypes',
                                               array('action' => 'view')));
                 return true;
@@ -140,7 +140,7 @@ function articles_admin_pubtypes()
                 return;
             } else {
                 // Redirect back to the admin modify page to continue editing
-                xarSession::setVar('statusmsg',
+                xarSessionSetVar('statusmsg', xarML('Publication type updated'));
                 xarResponseRedirect(xarModURL('articles', 'admin', 'pubtypes', 
                                               array('ptid'=>$ptid,'action' => 'modify')));
                 return true;
@@ -161,7 +161,7 @@ function articles_admin_pubtypes()
                     xarModSetVar('articles','defaultpubtype','');
                 }
                 // Redirect to the admin view page
-                xarSession::setVar('statusmsg',
+                xarSessionSetVar('statusmsg', xarML('Publication type deleted'));
                 xarResponseRedirect(xarModURL('articles', 'admin', 'pubtypes',
                                               array('action' => 'view')));
                 return true;
@@ -222,7 +222,7 @@ function articles_admin_pubtypes()
                                       'format' => $value['format'],
                                       'validation' => !empty($value['validation']) ? $value['validation'] : '',
                                       'type'   => $pubfieldtypes[$field],
-                                      'input'  => !empty($value['input']) ? true : false);
+                                      'input'  => !empty($value['input']) ? 'checked="checked" ' : '');
         }
     } elseif ($action == 'modify') {
         $data['item'] = $pubtypes[$ptid];
@@ -244,7 +244,7 @@ function articles_admin_pubtypes()
                                       'format' => $value['format'],
                                       'validation' => !empty($value['validation']) ? $value['validation'] : '',
                                       'type'   => $pubfieldtypes[$field],
-                                      'input'  => !empty($value['input']) ? true : false);
+                                      'input'  => !empty($value['input']) ? 'checked="checked" ' : '');
         }
     } elseif ($action == 'delete') {
         $data['item'] = $pubtypes[$ptid];

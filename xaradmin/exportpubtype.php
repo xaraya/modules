@@ -28,7 +28,9 @@ function articles_admin_exportpubtype($args)
     if (empty($ptid) || empty($pubtypes[$ptid])) {
         $msg = xarML('Invalid publication type #(1)',
                      xarVarPrepForDisplay($ptid));
-        throw new BadParameterException(null,$msg);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return;
     }
     $pubtype = $pubtypes[$ptid];
 
@@ -135,8 +137,8 @@ function articles_admin_exportpubtype($args)
                                    'config'   => $unsettings));
 
     if (isset($object) && count($object->properties) > 0) {
-        $proptypes = DataPropertyMaster::getPropertyTypes();
-        $prefix = xarDB::getPrefix();
+        $proptypes = xarModAPIFunc('dynamicdata','user','getproptypes');
+        $prefix = xarDBGetSystemTablePrefix();
         $prefix .= '_';
         $keys = array('id','label','type','default','source','status','order','validation');
 

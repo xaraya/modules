@@ -1,4 +1,3 @@
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="isset($catimage) and !empty($catimage)">
   <img src="$catimage" />
 </xar:if>
@@ -66,5 +65,3 @@
 </xar:foreach>
 </ul>
 </xar:if>
-
-</xar:template>

@@ -28,12 +28,16 @@ function articles_admin_updatestatus()
 
     if (!isset($aids) || count($aids) == 0) {
         $msg = xarML('No articles selected');
-        throw new DataNotFoundException(null, $msg);
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA',
+                       new DefaultUserException($msg));
+        return;
     }
     $states = xarModAPIFunc('articles','user','getstates');
     if (!isset($status) || !is_numeric($status) || $status < -1 || ($status != -1 && !isset($states[$status]))) {
         $msg = xarML('Invalid status');
-        throw new BadParameterException(null,$msg);
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA',
+                       new DefaultUserException($msg));
+        return;
     }
 
     $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
@@ -62,7 +66,9 @@ function articles_admin_updatestatus()
         if (!isset($article) || !is_array($article)) {
             $msg = xarML('Unable to find #(1) item #(2)',
                          $descr, xarVarPrepForDisplay($aid));
-            throw new BadParameterException(null,$msg);
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                           new SystemException($msg));
+            return;
         }
         $article['ptid'] = $article['pubtypeid'];
         // Security check
@@ -76,7 +82,9 @@ function articles_admin_updatestatus()
         if (!xarModAPIFunc('articles','user','checksecurity',$input)) {
             $msg = xarML('You have no permission to modify #(1) item #(2)',
                          $descr, xarVarPrepForDisplay($aid));
-            throw new ForbiddenOperationException(null, $msg);
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                           new SystemException($msg));
+            return;
         }
 
         if ($status < 0) {
@@ -97,7 +105,7 @@ function articles_admin_updatestatus()
     unset($article);
 
     // Return to the original admin view
-    $lastview = xarSession::getVar('Articles.LastView');
+    $lastview = xarSessionGetVar('Articles.LastView');
     if (isset($lastview)) {
         $lastviewarray = unserialize($lastview);
         if (!empty($lastviewarray['ptid']) && $lastviewarray['ptid'] == $ptid) {

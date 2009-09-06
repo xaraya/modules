@@ -131,9 +131,10 @@ function articles_admin_importpictures()
             }
         }
 
+        $cidstring = xarModGetVar('articles', 'mastercids.'.$ptid);
         $catlist = array();
-        $rootcats = unserialize(xarModGetUserVar('articles','basecids',$ptid));
-        if(!empty($rootcats)) {
+        if (!empty($cidstring)) {
+            $rootcats = explode (';', $cidstring);
             foreach ($rootcats as $catid) {
                 $catlist[$catid] = 1;
             }
@@ -225,7 +226,7 @@ function articles_admin_importpictures()
                              'cids' => $cids,
                           // for preview
                              'pubtypeid' => $data['ptid'],
-                             'authorid' => xarUserGetVar('id'),
+                             'authorid' => xarUserGetVar('uid'),
                              'aid' => 0);
             if (!empty($data['title']) && !empty($filename)) {
                 $article[$data['title']] = $filename;

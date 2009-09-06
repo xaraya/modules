@@ -1,10 +1,9 @@
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div class="xar-form-input-wrapper">
     <label for="pubtypeid#$blockid#" class="help xar-form-label" title="#xarML('Choose the publication type for the featured items.')#">
         <xar:mlstring>
             Publication Type
         </xar:mlstring>
-    </label><select name="pubtypeid" id="pubtypeid#$blockid#" onChange="this.form.submit();">
+    </label><select name="pubtypeid" id="pubtypeid#$blockid#" onchange="this.form.submit();">
         <option value="0">
             <xar:mlstring>
                 All
@@ -71,7 +70,7 @@
         <xar:mlstring>
             Limit
         </xar:mlstring>
-        :</label> <input type="text" name="itemlimit" id="itemlimit#$blockid#" value="#$itemlimit#" size="3" maxlength="4" />&#160;&#160;
+        :</label> <input type="text" name="itemlimit" id="itemlimit#$blockid#" value="#$itemlimit#" size="3" maxlength="4" />&nbsp;&nbsp;
     <xar:mlstring>
         (0 for all articles)
     </xar:mlstring>
@@ -235,6 +234,3 @@
         </xar:if>
     </div>
 </xar:if>
-
-
-</xar:template>

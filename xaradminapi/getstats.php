@@ -102,8 +102,8 @@ function articles_adminapi_getstats($args)
     }
 
     // Database information
-    $dbconn = xarDB::getConn();
-    $xartables = xarDB::getTables();
+    $dbconn =& xarDBGetConn();
+    $xartables =& xarDBGetTables();
 
     $query = 'SELECT ' . join(', ', $newfields) . ', COUNT(*)
               FROM ' . $xartables['articles'] . '

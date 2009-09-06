@@ -814,11 +814,11 @@ function articles_user_view($args)
         }
         foreach ($sortlist as $sname => $stitle) {
             if (empty($sort) && $sname == $defaultsort) {
-                $data['pager'] .= '&#160;' . $stitle . '&#160;';
+                $data['pager'] .= '&nbsp;' . $stitle . '&nbsp;';
                 $data['sortlinks'][] = array('stitle' => $stitle, 'slink'  => '');
                 continue;
             } elseif ($sname == $sort) {
-                $data['pager'] .= '&#160;' . $stitle . '&#160;';
+                $data['pager'] .= '&nbsp;' . $stitle . '&nbsp;';
                 $data['sortlinks'][] = array('stitle' => $stitle, 'slink'  => '');
                 continue;
             }
@@ -835,8 +835,8 @@ function articles_user_view($args)
                                            'authorid' => $authorid,
                                            'sort' => $sname));
             }
-            $data['pager'] .= '&#160;<a href="' . $sortlink . '">' .
-                              $stitle . '</a>&#160;';
+            $data['pager'] .= '&nbsp;<a href="' . $sortlink . '">' .
+                              $stitle . '</a>&nbsp;';
             $data['sortlinks'][] = array('stitle' => $stitle, 'slink'  => $sortlink);
         }
     }

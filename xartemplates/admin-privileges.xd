@@ -1,4 +1,3 @@
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
@@ -45,9 +44,9 @@
                         <xar:mlstring>Category</xar:mlstring>
                     </th>
                     <td>
-                        <xar:set name="basecids">array_keys($pubtypes)</xar:set>
-                        <xar:set name="onchange">"this.form.action='" . xarServerGetCurrentURL() . "';this.form.submit();"</xar:set>
-                        <xar:data-input type="categories" name="privcategories" basecids="$basecids" value="$cids" layout="vertical" returnitself="true" onchange="$onchange" />
+                        <xar:foreach in="$cats" key="$catid">#$cats[$catid]#
+                        <br />
+                        <br /></xar:foreach>
                     </td>
                 </tr>
                 <xar:if condition="!empty($showauthor)">
@@ -61,7 +60,7 @@
                                     <xar:mlstring>All / Other --&gt;</xar:mlstring>
                                 </option>
                                 <xar:foreach in="$authorlist" key="$id">
-                                    <xar:if condition="$auth eq $id">
+                                    <xar:if condition="$id eq $uid">
                                         <option value="#$id#" selected="selected">#xarVarPrepForDisplay($authorlist[$id])#</option>
                                         <xar:else />
                                         <option value="#$id#">#xarVarPrepForDisplay($authorlist[$id])#</option>
@@ -188,6 +187,3 @@
         <br /></xar:mlstring>
         <xar:mlstring>Note: if you want to deny access to all articles in a particular category with ID 123, you can also define a privilege for module 'categories', component 'Category', category name 'All' and category ID '123'. This will remove the category from the articles map and categories navigation as well.</xar:mlstring>
 </div>
-
-
-</xar:template>

@@ -1,4 +1,3 @@
-<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div>
     <xar:if condition="!empty($definition)">
         #xarVarPrepForDisplay($definition)#
@@ -9,5 +8,3 @@
         <span class="xar-error"><xar:mlstring>No glossary entry found.</xar:mlstring></span>
     </xar:if>
 </div>
-
-</xar:template>

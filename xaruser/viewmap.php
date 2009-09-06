@@ -95,7 +95,8 @@ function articles_user_viewmap($args)
         $data['maplink'] = xarModURL('articles','user','viewmap',array('by' => 'cat'));
         // TODO: re-evaluate this after user feedback
         // *trick* Use the 'default' categories here, instead of all rootcats
-        $rootcats = unserialize(xarModVars::get('articles','basecids'));
+        $cidstring = xarModGetVar('articles','mastercids');
+        $rootcats = explode (';', $cidstring);
 
         $catlist = array();
         if (!empty($rootcats) && is_array($rootcats)) {

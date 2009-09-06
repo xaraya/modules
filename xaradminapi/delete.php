@@ -29,7 +29,9 @@ function articles_adminapi_delete($args)
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'article ID', 'admin', 'delete',
                     'Articles');
-        throw new BadParameterException(null,$msg);
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return false;
     }
 
     // Security check
@@ -39,7 +41,9 @@ function articles_adminapi_delete($args)
     if (!xarModAPIFunc('articles','user','checksecurity',$args)) {
         $msg = xarML('Not authorized to delete #(1) items',
                     'Article');
-        throw new BadParameterException(null,$msg);
+        xarErrorSet(XAR_USER_EXCEPTION, 'NO_PERMISSION',
+                       new SystemException($msg));
+        return false;
     }
 
     // Call delete hooks for categories, hitcount etc.
@@ -53,8 +57,8 @@ function articles_adminapi_delete($args)
     xarModCallHooks('item', 'delete', $aid, $args);
 
     // Get database setup
-    $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $articlestable = $xartable['articles'];
 
     // Delete item

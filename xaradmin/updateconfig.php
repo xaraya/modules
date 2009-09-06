@@ -12,7 +12,7 @@
  * @author mikespub
  */
 /**
- * Update configuration
+ * Update configuration for this module
  */
 function articles_admin_updateconfig()
 {
@@ -65,11 +65,11 @@ function articles_admin_updateconfig()
         if (xarDBGetType() == 'mysql') {
             if (!xarVarFetch('fulltext', 'isset', $fulltext, '', XARVAR_NOT_REQUIRED)) {return;}
             $oldval = xarModGetVar('articles', 'fulltextsearch');
-            $index = 'i_' . xarDB::getPrefix() . '_articles_fulltext';
+            $index = 'i_' . xarDBGetSiteTablePrefix() . '_articles_fulltext';
             if (empty($fulltext) && !empty($oldval)) {
                 // Get database setup
-                $dbconn = xarDB::getConn();
-                $xartable = xarDB::getTables();
+                $dbconn =& xarDBGetConn();
+                $xartable =& xarDBGetTables();
                 $articlestable = $xartable['articles'];
                 // Drop fulltext index on xar_articles table
                 $query = "ALTER TABLE $articlestable DROP INDEX $index";
@@ -80,8 +80,8 @@ function articles_admin_updateconfig()
                 //$searchfields = array('title','summary','body','notes');
                 $searchfields = explode(',',$fulltext);
                 // Get database setup
-                $dbconn = xarDB::getConn();
-                $xartable = xarDB::getTables();
+                $dbconn =& xarDBGetConn();
+                $xartable =& xarDBGetTables();
                 $articlestable = $xartable['articles'];
                 // Add fulltext index on xar_articles table
                 $query = "ALTER TABLE $articlestable ADD FULLTEXT $index (xar_" . join(', xar_', $searchfields) . ")";
@@ -144,7 +144,6 @@ function articles_admin_updateconfig()
         xarModCallHooks('module','updateconfig','articles',
                         array('module' => 'articles'));
     }
-
     if (empty($ptid)) {
         $ptid = null;
     }

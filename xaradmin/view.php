@@ -1,6 +1,6 @@
 <?php
 /**
- * Articles module
+ * Admin view of articles
  *
  * @package modules
  * @copyright (C) 2002-2009 The Digital Development Foundation
@@ -12,7 +12,17 @@
  * @author mikespub
  */
 /**
- * view items
+ * View articles for an administrator. This function shows a page from which articles can be managed
+ *
+ * @param int startnum Defaults to 1
+ * @param int ptid OPTIONAL
+ * @param status OPTIONAL
+ * @param int itemtype OPTIONAL
+ * @param catid OPTIONAL
+ * @param int authorid OPTIONAL
+ * @param lang OPTIONAL
+ * @param pubdate OPTIONAL
+ * @return mixed. Calls the template function to show the article listing.
  */
 function articles_admin_view($args)
 {
@@ -22,7 +32,6 @@ function articles_admin_view($args)
     if(!xarVarFetch('status',   'isset', $status,   NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('itemtype', 'isset', $itemtype, NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('catid',    'isset', $catid,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('sort', 'strlist:,:pre', $sort, NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('authorid', 'isset', $authorid, NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('lang',     'isset', $lang,     NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('pubdate',  'str:1', $pubdate,  NULL, XARVAR_NOT_REQUIRED)) {return;}
@@ -55,12 +64,8 @@ function articles_admin_view($args)
     if (empty($ptid)) {
         $ptid = null;
     }
-    if (empty($sort)) {
-        $sort = 'date';
-    }
     $data = array();
     $data['ptid'] = $ptid;
-    $data['sort'] = $sort;
     $data['authorid'] = $authorid;
     $data['language'] = $lang;
     $data['pubdate'] = $pubdate;
@@ -86,15 +91,21 @@ function articles_admin_view($args)
         if (!xarSecurityCheck('EditArticles',0,'Article',"All:All:All:All")) {
             $msg = xarML('You have no permission to edit #(1)',
                          'Articles');
-        throw new ForbiddenOperationException(null, $msg);
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                            new SystemException($msg));
+            return;
         }
     } elseif (!is_numeric($ptid) || !isset($pubtypes[$ptid])) {
         $msg = xarML('Invalid publication type');
-        throw new BadParameterException(null,$msg);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                        new SystemException($msg));
+        return;
     } elseif (!xarSecurityCheck('EditArticles',0,'Article',"$ptid:All:All:All")) {
         $msg = xarML('You have no permission to edit #(1)',
                      $pubtypes[$ptid]['descr']);
-        throw new ForbiddenOperationException(null, $msg);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                        new SystemException($msg));
+        return;
     }
 
     if (!empty($ptid)) {
@@ -122,9 +133,7 @@ function articles_admin_view($args)
                                    'language' => $lang,
                                    'pubdate'  => $pubdate,
                                    'cids'     => $cids,
-                                   'sort'     => $sort,
                                    'andcids'  => $andcids,
-                                   'extra'  => array('cids'),
                                    'status'   => $status));
 
     // Save the current admin view, so that we can return to it after update
@@ -135,7 +144,7 @@ function articles_admin_view($args)
                       'status' => $status,
                       'pubdate' => $pubdate,
                       'startnum' => $startnum > 1 ? $startnum : null);
-    xarSession::setVar('Articles.LastView',serialize($lastview));
+    xarSessionSetVar('Articles.LastView',serialize($lastview));
 
     $labels = array();
     if (!empty($ptid)) {
@@ -155,8 +164,8 @@ function articles_admin_view($args)
     $data['showdate'] = $showdate;
     // only show the status if this publication type has one
     $showstatus = !empty($labels['status']);
-                  // and if we're not selecting on it already
-                  //&& (!is_array($status) || !isset($status[0]));
+    // and if we're not selecting on it already
+    //&& (!is_array($status) || !isset($status[0]));
     $data['showstatus'] = $showstatus;
 
     $data['states'] = xarModAPIFunc('articles','user','getstates');
@@ -170,13 +179,7 @@ function articles_admin_view($args)
 // TODO: adapt according to pubtype configuration
             // Title and pubdate
             $item['title'] = $article['title'];
-            $item['summary'] = $article['summary'];
             $item['aid'] = $article['aid'];
-            if (!empty($article['cids'])) {
-                 $item['cids'] = $article['cids'];
-            } else {
-                 $item['cids'] = array();
-            }
 
             if ($showdate) {
                 $item['pubdate'] = $article['pubdate']; //strftime('%x %X %z', $article['pubdate']);
@@ -336,6 +339,7 @@ function articles_admin_view($args)
        $template = null;
        xarTplSetPageTitle(xarML('View'));
     }
+
     return xarTplModule('articles', 'admin', 'view', $data, $template);
 }
 
