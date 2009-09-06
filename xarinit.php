@@ -297,7 +297,7 @@ function categories_init()
 #
 # Set up modvars
 #
-    xarModVars::set('categories', 'itemsperpage', 20);
+    xarModVars::set('categories', 'items_per_page', 20);
     xarModVars::set('categories', 'usejsdisplay', 0);
     xarModVars::set('categories', 'numstats', 100);
     xarModVars::set('categories', 'showtitle', 1);

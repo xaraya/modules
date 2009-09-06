@@ -11,7 +11,7 @@ function categories_user_main()
     if (!xarVarFetch('catid', 'isset', $catid, NULL, XARVAR_DONT_SET)) return;
     if (empty($catid) || !is_numeric($catid)) {
         // for DMOZ-like URLs
-        // xarModVars::set('categories','SupportShortURLs',1);
+        // xarModVars::set('categories','enable_short_urls',1);
         // replace with DMOZ top cid
         $catid = 0;
     }

@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:if condition="empty($refcid)">
         <xar:set name="refcid">0</xar:set>
@@ -52,4 +53,3 @@
     </xar:if>
     </fieldset>
 </xar:template>
-

@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:if condition="$tabmodule ne 'categories'">
         <xar:set name="regid">xarMod::getRegID($tabmodule)</xar:set>
@@ -5,7 +6,7 @@
         <xar:set name="regid">0</xar:set>
     </xar:if>
     <div class="xar-form-input-wrapper">
-        <label for="itemsperpage" title="#xarML('Object to use to model a category')#" class="xar-form-label">
+        <label for="items_per_page" title="#xarML('Object to use to model a category')#" class="xar-form-label">
             <xar:mlstring>
                 Categories object:
             </xar:mlstring>

@@ -1,9 +1,10 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:if condition="xarModVars::get('categories','useModuleAlias')">
-                <xar:var scope="module" module="categories" name="aliasname" />
+            <xar:if condition="xarModVars::get('categories','use_module_alias')">
+                <xar:var scope="module" module="categories" name="module_alias_name" />
             <xar:else />
                 <xar:mlstring>Categories Administration</xar:mlstring>
             </xar:if>
@@ -36,16 +37,16 @@
                         </xar:mlstring>
                     </legend>
                     <div class="xar-form-input-wrapper">
-                        <label for="itemsperpage" title="#xarML('Number of items to show on each page.')#" class="xar-form-label">
+                        <label for="items_per_page" title="#xarML('Number of items to show on each page.')#" class="xar-form-label">
                             <xar:mlstring>
                                 List items per page:
                             </xar:mlstring>
                         </label>
-                        <xar:set name="value"><xar:var scope="module" module="categories" name="itemsperpage" /></xar:set>
-                        <input type="text" name="itemsperpage" id="itemsperpage" value="#$value#" maxlength="3" class="xar-form-textshort" />
+                        <xar:set name="value"><xar:var scope="module" module="categories" name="items_per_page" /></xar:set>
+                        <input type="text" name="items_per_page" id="items_per_page" value="#$value#" maxlength="3" class="xar-form-textshort" />
                     </div>
                     <div class="xar-form-input-wrapper-after">
-                        <xar:set name="checked">xarModVars::get('categories','SupportShortURLs')</xar:set>
+                        <xar:set name="checked">xarModVars::get('categories','enable_short_urls')</xar:set>
                         <xar:data-input type="checkbox" name="shorturls" id="shorturls" checked="$checked" />
                         <label for="shorturls" title="#xarML('Enable short URLs for Categories module')#">
                             <xar:mlstring>
@@ -59,17 +60,17 @@
                                 Use a module alias
                             </xar:mlstring>
                         </label>
-                        <xar:set name="checked">xarModVars::get('categories','useModuleAlias')</xar:set>
+                        <xar:set name="checked">xarModVars::get('categories','use_module_alias')</xar:set>
                         <xar:data-input type="checkbox" name="modulealias" id="modulealias" checked="$checked" />
                     </div>
                     <div class="xar-form-input-wrapper">
-                        <label for="aliasname" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
+                        <label for="module_alias_name" class="xar-form-label" title="#xarML('The name of module alias to be used.')#">
                                 <xar:mlstring>
                                     Module Alias Name
                                 </xar:mlstring>
                         </label>
-                        <xar:set name="value"><xar:var scope="module" module="categories" name="aliasname" /></xar:set>
-                        <input type="text" name="aliasname" id="aliasname" value="#$value#" size="32" maxlength="100" />
+                        <xar:set name="value"><xar:var scope="module" module="categories" name="module_alias_name" /></xar:set>
+                        <input type="text" name="module_alias_name" id="module_alias_name" value="#$value#" size="32" maxlength="100" />
                     </div>
                 </fieldset>
             <xar:else />

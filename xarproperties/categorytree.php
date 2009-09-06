@@ -32,7 +32,7 @@ class CategoryTreeProperty extends DataProperty
     public function showInput(Array $data = array())
     {
         if (empty($data['startnum'])) $data['startnum'] = 1;
-        if (empty($data['itemsperpage'])) $data['itemsperpage'] = xarModVars::get('categories','itemsperpage');
+        if (empty($data['items_per_page'])) $data['items_per_page'] = xarModVars::get('categories','items_per_page');
 
         if (isset($data['options'])) {
             $this->options = $data['options'];
@@ -45,7 +45,7 @@ class CategoryTreeProperty extends DataProperty
             $node = new CategoryTreeNode($entry['cid']);
 // Can't do the pager stuff here. needs to happen in the template
 //            $node->start = $data['startnum'];
-//            $node->itemstoshow = $data['itemsperpage'];
+//            $node->itemstoshow = $data['items_per_page'];
             $tree = new CategoryTree($node);
             $nodes = $node->depthfirstenumeration();
             $trees[] = $nodes;

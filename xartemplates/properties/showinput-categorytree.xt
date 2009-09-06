@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
         <tr>
@@ -16,7 +17,7 @@
                 <xar:if condition="$displayindex lt $startnum">
                     <xar:continue />
                 </xar:if>
-                <xar:if condition="$displayindex ge $startnum + $itemsperpage">
+                <xar:if condition="$displayindex ge $startnum + $items_per_page">
                     <xar:break />
                 </xar:if>
 
@@ -64,12 +65,12 @@
             <xar:if condition="$displayindex">
                 <tr>
                     <td>
-                        <xar:for start="$i = 1" test="$i le ($pagertotal - $itemsperpage)" iter="$i += $itemsperpage">
-                            <xar:set name="endrow">$i+$itemsperpage-1</xar:set>
-                            <xar:if condition="$i le $startnum  AND ($i + $itemsperpage) gt $startnum">
+                        <xar:for start="$i = 1" test="$i le ($pagertotal - $items_per_page)" iter="$i += $items_per_page">
+                            <xar:set name="endrow">$i+$items_per_page-1</xar:set>
+                            <xar:if condition="$i le $startnum  AND ($i + $items_per_page) gt $startnum">
                                 #$i#-#$endrow#
                             <xar:else />
-                                <a href="#xarModURL('categories', 'admin', 'viewcats', array('activetab' => $activetab,'startnum' => $i, 'itemsperpage' => $itemsperpage))#">
+                                <a href="#xarModURL('categories', 'admin', 'viewcats', array('activetab' => $activetab,'startnum' => $i, 'items_per_page' => $items_per_page))#">
                                     #$i#-#$endrow#
                                 </a>
                             </xar:if>
@@ -80,19 +81,19 @@
                             </xar:if>
                         </xar:for>
                         <xar:if condition="$i eq $pagertotal">
-                            <xar:if condition="$i le $startnum  AND ($i + $itemsperpage) gt $startnum">
+                            <xar:if condition="$i le $startnum  AND ($i + $items_per_page) gt $startnum">
                                 #$i#
                             <xar:else />
-                                <a href="#xarModURL('categories', 'admin', 'viewcats', array('activetab' => $activetab,'startnum' => $i, 'itemsperpage' => $itemsperpage))#">
+                                <a href="#xarModURL('categories', 'admin', 'viewcats', array('activetab' => $activetab,'startnum' => $i, 'items_per_page' => $items_per_page))#">
                                     #$i#
                                 </a>
                             </xar:if>
                         </xar:if>
                         <xar:if condition="$i lt $pagertotal">
-                            <xar:if condition="$i le $startnum  AND ($i + $itemsperpage) gt $startnum">
+                            <xar:if condition="$i le $startnum  AND ($i + $items_per_page) gt $startnum">
                                 #$i#-#$pagertotal#
                             <xar:else />
-                                <a href="#xarModURL('categories', 'admin', 'viewcats', array('activetab' => $activetab,'startnum' => $i, 'itemsperpage' => $itemsperpage))#">
+                                <a href="#xarModURL('categories', 'admin', 'viewcats', array('activetab' => $activetab,'startnum' => $i, 'items_per_page' => $items_per_page))#">
                                     #$i#-#$pagertotal#
                                 </a>
                             </xar:if>
@@ -104,7 +105,7 @@
                         <form action="#xarModURL('categories','admin','viewcats',array())#" method="post">
                             <xar:mlstring>Categories per page:</xar:mlstring>&#160;
                             <input type="hidden" name="startnum" id="startnum" value="#$startnum#" />
-                            <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsperpage#" size="5" />&#160;&#160;
+                            <input type="text" name="items_per_page" id="items_per_page" value="#$items_per_page#" size="5" />&#160;&#160;
                             <input type="hidden" name="activetab" id="activetab" value="#$activetab#" size="5" />
                             <input type="submit" value="#xarML('Reload')#" />
                         </form>
@@ -119,4 +120,3 @@
         </table>
     </xar:if>
 </xar:template>
-

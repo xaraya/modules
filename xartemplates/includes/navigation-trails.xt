@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:if condition="!empty($catdescr)">
     <div class="xar-mod-head"><span class="xar-mod-title">#$catdescr#<xar:if condition="!empty($cathooks) and !empty($cathooks['pubsub'])"> #$cathooks['pubsub']#</xar:if></span></div>

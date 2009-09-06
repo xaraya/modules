@@ -42,10 +42,10 @@
             case 'update':
                 // Confirm authorisation code
                 if (!xarSecConfirmAuthKey()) return;
-                if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, xarModVars::get('categories', 'itemsperpage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+                if (!xarVarFetch('items_per_page', 'int', $items_per_page, xarModVars::get('categories', 'items_per_page'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
                 if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('categories', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
-                if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('categories', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('modulealias', 'checkbox', $use_module_alias,  xarModVars::get('categories', 'use_module_alias'), XARVAR_NOT_REQUIRED)) return;
+                if (!xarVarFetch('module_alias_name', 'str', $module_alias_name,  xarModVars::get('categories', 'module_alias_name'), XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('usejsdisplay', 'checkbox', $usejsdisplay, xarModVars::get('categories', 'usejsdisplay'), XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('numstats', 'int', $numstats, xarModVars::get('categories', 'numstats'), XARVAR_NOT_REQUIRED)) return;
                 if (!xarVarFetch('showtitle', 'checkbox', $showtitle, xarModVars::get('categories', 'showtitle'), XARVAR_NOT_REQUIRED)) return;
@@ -61,10 +61,10 @@
                                 );
 
                 if ($data['tab'] == 'categories_general') {
-                    xarModVars::set('categories', 'itemsperpage', $itemsperpage);
-                    xarModVars::set('categories', 'supportshorturls', $shorturls);
-                    xarModVars::set('categories', 'useModuleAlias', $useModuleAlias);
-                    xarModVars::set('categories', 'aliasname', $aliasname);
+                    xarModVars::set('categories', 'items_per_page', $items_per_page);
+                    xarModVars::set('categories', 'enable_short_urls', $shorturls);
+                    xarModVars::set('categories', 'use_module_alias', $use_module_alias);
+                    xarModVars::set('categories', 'module_alias_name', $module_alias_name);
                     foreach ($modvars as $var) if (isset($$var)) xarModVars::set('categories', $var, $$var);
                 }
                 foreach ($modvars as $var) if (isset($$var)) xarModItemVars::set('categories', $var, $$var, $regid);

@@ -155,7 +155,7 @@
                                         'maximum_depth' => $node->maxdepth,
                                         'minimum_depth' => $node->mindepth,
                                         'startnum'      => $node->start,
-                                        'itemsperpage'  => $node->itemstoshow,
+                                        'items_per_page'  => $node->itemstoshow,
                                         ));
              foreach ($data as $row) {
                 $nodedata = array(
