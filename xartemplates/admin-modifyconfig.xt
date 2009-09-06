@@ -1,166 +1,155 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<xar:style scope="module" module="xarpages" file="xarpages" />
-<xar:base-include-javascript module="base" filename="formcheck.js" />
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:style scope="module" module="xarpages" file="xarpages" />
+    <xar:base-include-javascript module="base" filename="formcheck.js" />
 
-<script type="text/javascript">
-<!--
-    // Enter name of mandatory fields
-    var base_fieldRequired = Array("dummy");
-    // Enter field description to appear in the dialog box
-    var base_fieldDescription = Array("Dummy");
-//-->
-</script>
+    <script type="text/javascript">
+    <!--
+        // Enter name of mandatory fields
+        var base_fieldRequired = Array("dummy");
+        // Enter field description to appear in the dialog box
+        var base_fieldDescription = Array("Dummy");
+    //-->
+    </script>
 
-<div class="xar-mod-head"><span class="xar-mod-title">Xarpages Administration</span></div>
+    <div class="xar-mod-head"><span class="xar-mod-title">Xarpages Administration</span></div>
 
-<div class="xar-mod-body">
-    <xar:template type="module" file="admin-menu" />
-    <h2>Modify Configuration</h2>
+    <div class="xar-mod-body">
+        <xar:template type="module" file="admin-menu" />
+        <h2>Modify Configuration</h2>
 
-    <div style="margin: auto;">
-        <form class="xar-xarpages-admin" action="#xarModUrl('xarpages', 'admin', 'modifyconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" >
-            <xar:set name="subdata">array('modulename' => 'xarpages')</xar:set>
-            <xar:template file="display" module="base" subdata="$subdata" />
-            <fieldset class="formelements xar-norm">
-                <legend>
-                    <strong>Properties</strong>
-                </legend>
-
-                <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <input type="hidden" name="form" id="form" value="form" />
-
-                <p class="param">
-                    <label for="shorturl">Enable short URLs</label>
-                    <xar:if condition="$shorturl eq 1">
-                        <input type="checkbox" name="shorturl" id="shorturl" value="1" checked="checked" />
-                    <xar:else />
-                        <input type="checkbox" name="shorturl" id="shorturl" value="1" />
-                    </xar:if>
-                </p>
-
-                <p class="param">
-                    <label for="shorturl" title="#xarML('Always use module aliases in paths where possible')#">Use shortest paths</label>
-                    <xar:if condition="$shortestpath eq 1">
-                        <input type="checkbox" name="shortestpath" id="shortestpath" value="1" checked="checked" />
-                    <xar:else />
-                        <input type="checkbox" name="shortestpath" id="shortestpath" value="1" />
-                    </xar:if>
-                </p>
-
-                <p class="param">
-                    <label for="transformref" title="#xarML('Enable transform hook for all page internal references')#">Internal references hook</label>
-                    <xar:if condition="$transformref eq 1">
-                        <input type="checkbox" name="transformref" id="transformref" value="1" checked="checked" />
-                    <xar:else />
-                        <input type="checkbox" name="transformref" id="transformref" value="1" />
-                    </xar:if>
-                </p>
-
-                <p class="param">
-                    <label for="transformfields" title="#xarML('Limit dynamic data fields presented for transform hooks to a list of names')#">Transform hook fields</label>
-                    <input type="text" name="transformfields" id="transformfields" value="#xarVarPrepForDisplay($transformfields)#" maxlength="100" />
-                </p>
-            </fieldset>
-
-            <fieldset class="formelements xar-norm">
-                <legend>
-                    <strong>Special Pages</strong>
-                </legend>
-
-                <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                <input type="hidden" name="form" id="form" value="form" />
-
-                <p class="param">
-                    <label for="defaultpage">Default page</label>
-                    <select name="defaultpage" id="defaultpage">
-                        <option value="0">-- None --</option>
-                        <xar:loop name="$tree.pages">
-                            <xar:if condition="$loop:item.pid eq $defaultpage">
-                                <option value="#$loop:item.pid#" selected="selected">#$loop:item.slash_separated#</option>
-                            <xar:else />
-                                <option value="#$loop:item.pid#">#$loop:item.slash_separated#</option>
-                            </xar:if>
-                        </xar:loop>
-                    </select>
-                </p>
-
-                <p class="param">
-                    <label for="errorpage">Error page</label>
-                    <select name="errorpage" id="errorpage">
-                        <option value="0">-- None --</option>
-                        <xar:loop name="$tree.pages">
-                            <xar:if condition="$loop:item.pid eq $errorpage">
-                                <option value="#$loop:item.pid#" selected="selected">#$loop:item.slash_separated#</option>
-                            <xar:else />
-                                <option value="#$loop:item.pid#">#$loop:item.slash_separated#</option>
-                            </xar:if>
-                        </xar:loop>
-                    </select>
-                </p>
-
-                <p class="param">
-                    <label for="notfoundpage">Not found page</label>
-                    <select name="notfoundpage" id="notfoundpage">
-                        <option value="0">-- None --</option>
-                        <xar:loop name="$tree.pages">
-                            <xar:if condition="$loop:item.pid eq $notfoundpage">
-                                <option value="#$loop:item.pid#" selected="selected">#$loop:item.slash_separated#</option>
-                            <xar:else />
-                                <option value="#$loop:item.pid#">#$loop:item.slash_separated#</option>
-                            </xar:if>
-                        </xar:loop>
-                    </select>
-                </p>
-
-                <p class="param">
-                    <label for="noprivspage">No privileges page</label>
-                    <select name="noprivspage" id="noprivspage">
-                        <option value="0">-- None --</option>
-                        <xar:loop name="$tree.pages">
-                            <xar:if condition="$loop:item.pid eq $noprivspage">
-                                <option value="#$loop:item.pid#" selected="selected">#$loop:item.slash_separated#</option>
-                            <xar:else />
-                                <option value="#$loop:item.pid#">#$loop:item.slash_separated#</option>
-                            </xar:if>
-                        </xar:loop>
-                    </select>
-                </p>
-            </fieldset>
-
-            <xar:if condition="!empty($confighooks)">
+        <div style="margin: auto;">
+            <form class="xar-xarpages-admin" action="#xarServer::getCurrentURL()#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" >
+                <xar:data-form object="$module_settings" />
                 <fieldset class="formelements xar-norm">
                     <legend>
-                        <strong>Config Hooks</strong>
+                        <strong>Properties</strong>
                     </legend>
-                    <xar:loop name="$confighooks">
-                        #$loop:item#
-                    </xar:loop>
+
+                    <xar:data-input type="hidden" name="phase" id="phase" value="update" />
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                    <input type="hidden" name="form" id="form" value="form" />
+
+
+                    <p class="param">
+                        <label for="shorturl" title="#xarML('Always use module aliases in paths where possible')#">Use shortest paths</label>
+                        <xar:if condition="$shortestpath eq 1">
+                            <input type="checkbox" name="shortestpath" id="shortestpath" value="1" checked="checked" />
+                        <xar:else />
+                            <input type="checkbox" name="shortestpath" id="shortestpath" value="1" />
+                        </xar:if>
+                    </p>
+
+                    <p class="param">
+                        <label for="transformref" title="#xarML('Enable transform hook for all page internal references')#">Internal references hook</label>
+                        <xar:if condition="$transformref eq 1">
+                            <input type="checkbox" name="transformref" id="transformref" value="1" checked="checked" />
+                        <xar:else />
+                            <input type="checkbox" name="transformref" id="transformref" value="1" />
+                        </xar:if>
+                    </p>
+
+                    <p class="param">
+                        <label for="transformfields" title="#xarML('Limit dynamic data fields presented for transform hooks to a list of names')#">Transform hook fields</label>
+                        <input type="text" name="transformfields" id="transformfields" value="#xarVarPrepForDisplay($transformfields)#" maxlength="100" />
+                    </p>
                 </fieldset>
-            </xar:if>
 
-            <p>
-                <xar:var name="label">Update</xar:var>
-                <xar:button type="submit" label="$label" />
-            </p>
-        </form>
+                <fieldset class="formelements xar-norm">
+                    <legend>
+                        <strong>Special Pages</strong>
+                    </legend>
+
+                    <p class="param">
+                        <label for="defaultpage">Default page</label>
+                        <select name="defaultpage" id="defaultpage">
+                            <option value="0">-- None --</option>
+                            <xar:loop name="$tree.pages">
+                                <xar:if condition="$loop:item.pid eq $defaultpage">
+                                    <option value="#$loop:item.pid#" selected="selected">#$loop:item.slash_separated#</option>
+                                <xar:else />
+                                    <option value="#$loop:item.pid#">#$loop:item.slash_separated#</option>
+                                </xar:if>
+                            </xar:loop>
+                        </select>
+                    </p>
+
+                    <p class="param">
+                        <label for="errorpage">Error page</label>
+                        <select name="errorpage" id="errorpage">
+                            <option value="0">-- None --</option>
+                            <xar:loop name="$tree.pages">
+                                <xar:if condition="$loop:item.pid eq $errorpage">
+                                    <option value="#$loop:item.pid#" selected="selected">#$loop:item.slash_separated#</option>
+                                <xar:else />
+                                    <option value="#$loop:item.pid#">#$loop:item.slash_separated#</option>
+                                </xar:if>
+                            </xar:loop>
+                        </select>
+                    </p>
+
+                    <p class="param">
+                        <label for="notfoundpage">Not found page</label>
+                        <select name="notfoundpage" id="notfoundpage">
+                            <option value="0">-- None --</option>
+                            <xar:loop name="$tree.pages">
+                                <xar:if condition="$loop:item.pid eq $notfoundpage">
+                                    <option value="#$loop:item.pid#" selected="selected">#$loop:item.slash_separated#</option>
+                                <xar:else />
+                                    <option value="#$loop:item.pid#">#$loop:item.slash_separated#</option>
+                                </xar:if>
+                            </xar:loop>
+                        </select>
+                    </p>
+
+                    <p class="param">
+                        <label for="noprivspage">No privileges page</label>
+                        <select name="noprivspage" id="noprivspage">
+                            <option value="0">-- None --</option>
+                            <xar:loop name="$tree.pages">
+                                <xar:if condition="$loop:item.pid eq $noprivspage">
+                                    <option value="#$loop:item.pid#" selected="selected">#$loop:item.slash_separated#</option>
+                                <xar:else />
+                                    <option value="#$loop:item.pid#">#$loop:item.slash_separated#</option>
+                                </xar:if>
+                            </xar:loop>
+                        </select>
+                    </p>
+                </fieldset>
+
+                <xar:if condition="!empty($confighooks)">
+                    <fieldset class="formelements xar-norm">
+                        <legend>
+                            <strong>Config Hooks</strong>
+                        </legend>
+                        <xar:loop name="$confighooks">
+                            #$loop:item#
+                        </xar:loop>
+                    </fieldset>
+                </xar:if>
+
+                <p>
+                    <xar:var name="label">Update</xar:var>
+                    <xar:button type="submit" label="$label" />
+                </p>
+            </form>
+        </div>
+
+        <xar:if condition="!empty($problem_aliases)">
+            <h2>Problem Aliases</h2>
+            <p>The following aliases are used on pages that have duplicate names.
+            It is advisable to rename the duplicates, or reset the alias flag.</p>
+            <ul>
+                <xar:loop name="$problem_aliases">
+                    <li>
+                        <xar:ml>
+                            <xar:mlstring>'#(1)' - #(2) pages</xar:mlstring>
+                            <xar:mlvar>#$loop:key#</xar:mlvar>
+                            <xar:mlvar>#$loop:item#</xar:mlvar>
+                        </xar:ml>
+                    </li>
+                </xar:loop>
+            </ul>
+        </xar:if>
     </div>
-
-    <xar:if condition="!empty($problem_aliases)">
-        <h2>Problem Aliases</h2>
-        <p>The following aliases are used on pages that have duplicate names.
-        It is advisable to rename the duplicates, or reset the alias flag.</p>
-        <ul>
-            <xar:loop name="$problem_aliases">
-                <li>
-                    <xar:ml>
-                        <xar:mlstring>'#(1)' - #(2) pages</xar:mlstring>
-                        <xar:mlvar>#$loop:key#</xar:mlvar>
-                        <xar:mlvar>#$loop:item#</xar:mlvar>
-                    </xar:ml>
-                </li>
-            </xar:loop>
-        </ul>
-    </xar:if>
-</div>
 </xar:template>

@@ -48,9 +48,9 @@ function xarpages_funcapi_news($args)
     $max_numitems_floor = 100;
     $max_numitems_ceiling = 1000;
 
-    $max_numitems = ($settings['itemsperpage'] < ($max_numitems_floor/$max_numitems_factor) ? $max_numitems_floor : ($settings['itemsperpage'] > ($max_numitems_ceiling/$max_numitems_factor) ? $max_numitems_ceiling : $settings['itemsperpage'] * $max_numitems_factor));
+    $max_numitems = ($settings['items_per_page'] < ($max_numitems_floor/$max_numitems_factor) ? $max_numitems_floor : ($settings['items_per_page'] > ($max_numitems_ceiling/$max_numitems_factor) ? $max_numitems_ceiling : $settings['items_per_page'] * $max_numitems_factor));
     xarVarFetch('startnum', 'int:1', $startnum, 1, XARVAR_NOT_REQUIRED);
-    xarVarFetch('numitems', 'int:1:' . $max_numitems, $numitems, $settings['itemsperpage'], XARVAR_NOT_REQUIRED);
+    xarVarFetch('numitems', 'int:1:' . $max_numitems, $numitems, $settings['items_per_page'], XARVAR_NOT_REQUIRED);
 
     // An individual item has been selected
     // TODO: support selection by name, though this may not be unique enough.
@@ -110,7 +110,7 @@ function xarpages_funcapi_news($args)
 
     // Add in some (i.e. all) optional values if they are not set to their defaults.
     if ($startnum > 1) $url_params['startnum'] = $startnum;
-    if ($numitems != $settings['itemsperpage']) $url_params['numitems'] = $numitems;
+    if ($numitems != $settings['items_per_page']) $url_params['numitems'] = $numitems;
     if (!empty($q)) $url_params['q'] = $q;
     if (!empty($cids)) $url_params['cids'] = $cids;
     if (!empty($aid)) $url_params['aid'] = $aid;

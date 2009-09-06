@@ -98,9 +98,16 @@ function xarpages_init()
     xarModVars::set('xarpages', 'show_usernavbar', true);
     xarModVars::set('xarpages', 'useicons', false);
     
+    # --------------------------------------------------------
+    #
+    # Set up configuration modvars (general)
+    #
+            $module_settings = xarModAPIFunc('base','admin','getmodulesettings',array('module' => 'xarpages'));
+            $module_settings->initialize();
+
     // Switch short URL support on by default, as that is largely
     // the purpose of this module.
-    xarModVars::set('xarpages', 'SupportShortURLs', 1);
+    xarModVars::set('xarpages', 'enable_short_urls', true);
 
     // Privileges.
 

@@ -23,78 +23,82 @@ function xarpages_admin_modifyconfig($args)
 
     // Get the tree of all pages.
     $data['tree'] = xarModAPIfunc('xarpages', 'user', 'getpagestree', array('dd_flag' => false));
+    if (!xarVarFetch('phase',        'str:1:100', $phase,       'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
 
     // Implode the names for each page into a path for display.
     foreach ($data['tree']['pages'] as $key => $page) {
         $data['tree']['pages'][$key]['slash_separated'] =  '/' . implode('/', $page['namepath']);
     }
 
-    // Check if we are receiving a submitted form.
-    xarVarFetch('authid', 'str', $authid, '', XARVAR_NOT_REQUIRED);
+    // Get the current module values.
+    $data['defaultpage'] = xarModVars::get('xarpages', 'defaultpage');
+    $data['errorpage'] = xarModVars::get('xarpages', 'errorpage');
+    $data['notfoundpage'] = xarModVars::get('xarpages', 'notfoundpage');
+    $data['noprivspage'] = xarModVars::get('xarpages', 'noprivspage');
 
-    if (empty($authid)) {
-        // First visit to this form (nothing being submitted).
+    // Boolean (1/0) flags.
+    $data['transformref'] = xarModVars::get('xarpages', 'transformref');
+    $data['shortestpath'] = xarModVars::get('xarpages', 'shortestpath');
+    $data['shorturl'] = xarModVars::get('xarpages', 'enable_short_urls');
 
-        // Get the current module values.
-        $data['defaultpage'] = xarModVars::get('xarpages', 'defaultpage');
-        $data['errorpage'] = xarModVars::get('xarpages', 'errorpage');
-        $data['notfoundpage'] = xarModVars::get('xarpages', 'notfoundpage');
-        $data['noprivspage'] = xarModVars::get('xarpages', 'noprivspage');
+    // Text fields
+    $data['transformfields'] = xarModVars::get('xarpages', 'transformfields');
+        
+    $data['module_settings'] = xarModAPIFunc('base','admin','getmodulesettings',array('module' => 'xarpages'));
+    $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls');
+    $data['module_settings']->getItem();
+    switch (strtolower($phase)) {
+        case 'modify':
+        default:
+            break;
 
-        // Boolean (1/0) flags.
-        $data['transformref'] = xarModVars::get('xarpages', 'transformref');
-        $data['shortestpath'] = xarModVars::get('xarpages', 'shortestpath');
-        $data['shorturl'] = xarModVars::get('xarpages', 'SupportShortURLs');
-
-        // Text fields
-        $data['transformfields'] = xarModVars::get('xarpages', 'transformfields');
-    } else {
-        // Form has been submitted.
+        case 'update':
 
         // Confirm authorisation code.
         if (!xarSecConfirmAuthKey()) {return;}
 
-        // Get the special pages.
-        foreach(array('defaultpage', 'errorpage', 'notfoundpage', 'noprivspage') as $special_name) {
-            unset($special_id);
-            if (!xarVarFetch($special_name, 'id', $special_id, 0, XARVAR_NOT_REQUIRED)) {return;}
-            xarModVars::set('xarpages', $special_name, $special_id);
+            $isvalid = $data['module_settings']->checkInput();
+            if (!$isvalid) {
+                return xarTplModule('authsystem','admin','modifyconfig', $data);        
+            } else {
+                $itemid = $data['module_settings']->updateItem();
+            }
 
-            // Save value for redisplaying in the form.
-            $data[$special_name] = $special_id;
-        }
+            // Get the special pages.
+            foreach(array('defaultpage', 'errorpage', 'notfoundpage', 'noprivspage') as $special_name) {
+                unset($special_id);
+                if (!xarVarFetch($special_name, 'id', $special_id, 0, XARVAR_NOT_REQUIRED)) {return;}
+                xarModVars::set('xarpages', $special_name, $special_id);
 
-        // Short URL flag.
-        xarVarFetch('shorturl', 'int:0:1', $shorturl, 0, XARVAR_NOT_REQUIRED);
-        xarModVars::set('xarpages', 'SupportShortURLs', $shorturl);
-        $data['shorturl'] = $shorturl;
+                // Save value for redisplaying in the form.
+                $data[$special_name] = $special_id;
+            }
 
-        // Shortest path flag.
-        xarVarFetch('shortestpath', 'int:0:1', $shortestpath, 0, XARVAR_NOT_REQUIRED);
-        xarModVars::set('xarpages', 'shortestpath', $shortestpath);
-        $data['shortestpath'] = $shortestpath;
+            // Shortest path flag.
+            xarVarFetch('shortestpath', 'int:0:1', $shortestpath, 0, XARVAR_NOT_REQUIRED);
+            xarModVars::set('xarpages', 'shortestpath', $shortestpath);
+            $data['shortestpath'] = $shortestpath;
 
-        // Enable internal references transform flag.
-        // This transforms "#" anchors in content to an absolute URI for the page.
-        xarVarFetch('transformref', 'int:0:1', $transformref, 0, XARVAR_NOT_REQUIRED);
-        xarModVars::set('xarpages', 'transformref', $transformref);
-        $data['transformref'] = $transformref;
+            // Enable internal references transform flag.
+            // This transforms "#" anchors in content to an absolute URI for the page.
+            xarVarFetch('transformref', 'int:0:1', $transformref, 0, XARVAR_NOT_REQUIRED);
+            xarModVars::set('xarpages', 'transformref', $transformref);
+            $data['transformref'] = $transformref;
 
-        // Limit the DD fields that will be transformed.
-        xarVarFetch('transformfields', 'strlist: ,;|:pre:trim:vtoken', $transformfields, '', XARVAR_NOT_REQUIRED);
-        xarModVars::set('xarpages', 'transformfields', $transformfields);
-        $data['transformfields'] = $transformfields;
+            // Limit the DD fields that will be transformed.
+            xarVarFetch('transformfields', 'strlist: ,;|:pre:trim:vtoken', $transformfields, '', XARVAR_NOT_REQUIRED);
+            xarModVars::set('xarpages', 'transformfields', $transformfields);
+            $data['transformfields'] = $transformfields;
 
-        // Use icons in hte UI
-        xarVarFetch('useicons', 'checkbox', $useicons, 0, XARVAR_NOT_REQUIRED);
-        xarModVars::set('xarpages', 'useicons', $useicons);
+            // Use icons in hte UI
+            xarVarFetch('useicons', 'checkbox', $useicons, 0, XARVAR_NOT_REQUIRED);
+            xarModVars::set('xarpages', 'useicons', $useicons);
+        break;
     }
 
     // Check any problem aliases
     $problem_aliases = xarModAPIfunc('xarpages', 'user', 'getaliases', array('mincount' => 2));
     $data['problem_aliases'] = $problem_aliases;
-
-    $data['authid'] = xarSecGenAuthKey();
 
     // Config hooks for all page types.
 
