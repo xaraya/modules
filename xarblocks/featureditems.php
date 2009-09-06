@@ -257,6 +257,12 @@ function articles_featureditemsblock_display(& $blockinfo)
     }
 
     // Set the data to return.
+    $data['name'] = $blockinfo['name'];
+    $data['bid'] = $blockinfo['bid'];
+    $data['module'] = $blockinfo['module'];
+    $data['type'] = $blockinfo['type'];
+    $data['pubtypeid'] = $vars['pubtypeid'];
+    $data['catfilter'] = $vars['catfilter'];
     $blockinfo['content'] = $data;
     return $blockinfo;
 }

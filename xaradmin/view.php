@@ -183,6 +183,8 @@ function articles_admin_view($args)
             }
             if ($showstatus) {
                 $item['status'] = $data['states'][$article['status']];
+                $item['statusnumeric'] = $article['status'];
+                
                 // pre-select all submitted items
                 if ($article['status'] == 0) {
                     $item['selected'] = 'checked';
@@ -328,9 +330,11 @@ function articles_admin_view($args)
 
     if (!empty($ptid)) {
         $template = $pubtypes[$ptid]['name'];
+        xarTplSetPageTitle(xarML('View #(1)', $pubtypes[$ptid]['descr']));
     } else {
 // TODO: allow templates per category ?
        $template = null;
+       xarTplSetPageTitle(xarML('View'));
     }
     return xarTplModule('articles', 'admin', 'view', $data, $template);
 }

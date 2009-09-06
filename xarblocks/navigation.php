@@ -3,7 +3,7 @@
  * Articles module Categories Navigation Block
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -57,7 +57,7 @@ function articles_navigationblock_info()
 function articles_navigationblock_display($blockinfo)
 {
     // Security Check
-    if(!xarSecurityCheck('ViewBaseBlocks',0,'Block',"All:$blockinfo[title]:All")) return;
+    if(!xarSecurityCheck('ViewBaseBlocks',0,'Block',"All:$blockinfo[title]:$blockinfo[bid]")) return;
 
     // Get variables from content block
     if (!is_array($blockinfo['content'])) {

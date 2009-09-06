@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -12,12 +12,12 @@
  * @author mikespub
  */
 /**
- * add new article
+ * Prepare form for new article
  *
  * This function presents the template from which the article is created
- * @param int ptid The publication type id
- * @param string catid The category id this article will belong to
- * @param id itemtype the itemtype, if forced
+ * @param int    ptid       The publication type id, overrides an itemtype value
+ * @param string catid      The category id this article will belong to
+ * @param int    itemtype   The itemtype (optional)
  * @param string return_url The url to return to
  * @return mixed call to template with data array and name of template to use
  */
@@ -25,18 +25,22 @@ function articles_admin_new($args)
 {
     extract($args);
 
-    // Get parameters
     if (!xarVarFetch('ptid',        'id',    $ptid,       NULL,  XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('catid',       'str',   $catid,      NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('itemtype',    'id',    $itemtype,   NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('return_url',  'str:1', $return_url, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     if (!empty($preview) && isset($article)) {
+        // Use given pubtype from article
         $ptid = $article['ptid'];
     } elseif (!isset($ptid) && !empty($itemtype) && is_numeric($itemtype)) {
-        // when we use some categories filter
+        // Use itemtype parameter if given
         $ptid = $itemtype;
+    } elseif (!isset($ptid)) {
+        // Use defaultpubtype now. This var may even be NULL
+        $ptid = xarModGetVar('articles', 'defaultpubtype');
     }
+
     $data = array();
     $data['ptid'] = $ptid;
     $data['catid'] = $catid;
@@ -53,7 +57,6 @@ function articles_admin_new($args)
     // Security check
     if (empty($ptid)) {
         $ptid = '';
-    // TODO: check by category too ?
         if (!xarSecurityCheck('SubmitArticles')) {
                $msg = xarML('You have no permission to submit Articles');
                 throw new ForbiddenOperationException(null, $msg);
@@ -79,10 +82,8 @@ function articles_admin_new($args)
                 throw new ForbiddenOperationException(null, $msg);
             }
         }
-        if (xarModIsHooked('uploads', 'articles', $ptid)) {
-            xarVarSetCached('Hooks.uploads','ishooked',1);
-        }
     }
+    // Prepare preview
     if (!empty($preview)) {
         // Use articles user GUI function (not API) for preview
         if (!xarModLoad('articles','user')) return;
@@ -93,16 +94,17 @@ function articles_admin_new($args)
     }
     $data['preview'] = $preview;
 
+    $hooks = array();
     if (!empty($ptid)) {
+        // Uploads hasn't an itemnew hook so it will not appear in $hooks
+        if (xarModIsHooked('uploads', 'articles', $ptid)) {
+            xarVarSetCached('Hooks.uploads', 'ishooked', 1);
+        }
         // preset some variables for hook modules
         $article['module'] = 'articles';
         $article['itemid'] = 0;
         $article['itemtype'] = $ptid;
-
         $hooks = xarModCallHooks('item','new','',$article);
-    }
-    if (empty($hooks)) {
-        $hooks = '';
     }
     $data['hooks'] = $hooks;
 
@@ -129,6 +131,7 @@ function articles_admin_new($args)
     $data['pubfilters'] = $pubfilters;
 
     // Array containing the different values (except the article fields)
+    // Hb: See comment in template on this var
     $values = array();
 
     // TODO - language
@@ -139,6 +142,7 @@ function articles_admin_new($args)
     $data['withupload'] = 0;
     if (!empty($ptid)) {
         $settings = unserialize(xarModGetVar('articles', 'settings.'.$ptid));
+        $data['defaultstatus'] = $settings['defaultstatus'];
     // TODO: make order dependent on pubtype or not ?
     //    foreach ($pubtypes[$ptid]['config'] as $field => $value) {}
         $pubfields = xarModAPIFunc('articles','user','getpubfields');
@@ -204,9 +208,11 @@ function articles_admin_new($args)
 
     if (!empty($ptid)) {
         $template = $pubtypes[$ptid]['name'];
+        xarTplSetPageTitle(xarML('New #(1)', $pubtypes[$ptid]['descr']));
     } else {
 // TODO: allow templates per category ?
        $template = null;
+       xarTplSetPageTitle(xarML('New'));
     }
 
     return xarTplModule('articles', 'admin', 'new', $data, $template);

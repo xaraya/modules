@@ -21,16 +21,18 @@
  */
 function articles_userapi_getpubtypes($args)
 {
+    static $all_pubtypes;
+
     $bindvars = array();
+    $pubtypes = array();
 
     //if we're doing a simple retrieval, use same results as last time
     //otherwise we need to re-query the database
-    if (count($args) == 0) {
-        static $pubtypes = array();
-        if (count($pubtypes) > 0) {
-            return $pubtypes;
-        }
+    if (count($args) == 0 && isset($all_pubtypes)) {
+        return $all_pubtypes;
     }
+
+    if (!empty($args['ptid']) && isset($all_pubtypes[$args['ptid']])) return array($all_pubtypes[$args['ptid']]);
 
     if (isset($args['sort'])) {
         $sort = $args['sort'];
@@ -55,47 +57,49 @@ function articles_userapi_getpubtypes($args)
     $pubtypestable = $xartable['publication_types'];
 
     // Get item
-    $query = "SELECT xar_pubtypeid,
-                   xar_pubtypename,
-                   xar_pubtypedescr,
-                   xar_pubtypeconfig
-            FROM $pubtypestable";
+    $query = 'SELECT xar_pubtypeid, xar_pubtypename, xar_pubtypedescr, xar_pubtypeconfig'
+        . ' FROM ' . $pubtypestable;
 
     //WHERE clause begins
     if(isset($name)) {
-        $query .= " WHERE xar_pubtypename = ? ";
+        $query .= ' WHERE xar_pubtypename = ? ';
         $bindvars[] = $name;
     } else if (isset($ptid)) {
-        $query .= " WHERE xar_pubtypeid = ? ";
+        $query .= ' WHERE xar_pubtypeid = ? ';
         $bindvars[] = $ptid;
     }
 
     //different sort options
     switch ($sort) {
         case 'name':
-            $query .= " ORDER BY xar_pubtypename ASC";
+            $query .= ' ORDER BY xar_pubtypename ASC';
             break;
         case 'descr':
-            $query .= " ORDER BY xar_pubtypedescr ASC";
+            $query .= ' ORDER BY xar_pubtypedescr ASC';
             break;
         case 'id':
         default:
-            $query .= " ORDER BY xar_pubtypeid ASC";
+            $query .= ' ORDER BY xar_pubtypeid ASC';
             break;
     }
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
-    if ($result->EOF) {
-        return $pubtypes;
+    if (!$result->EOF) {
+        while (!$result->EOF) {
+            list($id, $name, $descr, $config) = $result->fields;
+            $pubtypes[$id] = array(
+                'ptid' => $id,
+                'name' => $name,
+                'descr' => $descr,
+                'config' => unserialize($config)
+            );
+            $result->MoveNext();
+        }
     }
-    while (!$result->EOF) {
-        list($id, $name, $descr, $config) = $result->fields;
-        $pubtypes[$id] = array('name' => $name,
-                               'descr' => $descr,
-                               'config' => unserialize($config));
-        $result->MoveNext();
-    }
+
+    // Cache the results if we are fetching all of them.
+    if (count($args) == 0) $all_pubtypes = $pubtypes;
 
     return $pubtypes;
 }

@@ -14,6 +14,9 @@
             Add Article
         </xar:mlstring>
     </h2>
+    <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
+        <div>#xarSessionGetVar('statusmsg')#</div>
+    </xar:if>
     <xar:if condition="!empty($preview)">
         <div class="xar-fullwidth">
             #$preview#
@@ -82,10 +85,14 @@
                         <input type="submit" name="save" id="save" value="#xarML('Save and Edit')#" />
                     </xar:if>
                     <input type="submit" value="#$addlabel#" />
+                    <xar:if condition="$defaultstatus gt 1"> 
+                      <input type="submit" name="view" id="view" value="#xarML('Save and View')#" />
+                    </xar:if>
                 </div>
             </div>
         </form>
     </xar:if>
+    <xar:set name="i">xarSessionSetVar('statusmsg', '')</xar:set>
 </div>
 
 

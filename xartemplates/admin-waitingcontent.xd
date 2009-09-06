@@ -5,8 +5,21 @@
     <xar:mlstring>No Waiting Content</xar:mlstring>
 <xar:else />
     <xar:foreach in="$loop" value="$item">
-    <a href="#$item['publink']#" title="#$item['pubtitle']#">#$item['pubtitle']#</a> : #$item['pubcount']#
-    <br />
+      <xar:comment> 
+        If the edit privilege is not explicitly give for all pubtypes the 
+        following security check fails. The waiting articles of these types
+        are not shown. So either privilege for all pubtypes separately or 
+        don't privilege a pubtype at all. Fall back to link without pubtype.
+      </xar:comment>
+      <xar:set name="inst">"$item[pubid]:All:All:All"</xar:set>
+      <xar:sec mask="EditArticles" catch="false" component="Article" instance="$inst"> 
+        <a href="#$item['publink']#&amp;status[0]=0" title="#$item['pubtitle']#">
+          #$item['pubtitle']#</a> : #$item['pubcount']#
+      <xar:else />
+        <a href="&xar-modurl-articles-admin-view;&amp;status[0]=0">
+          #$item['pubtitle']#</a> : #$item['pubcount']#
+      </xar:sec>
+      <br />
     </xar:foreach>
 </xar:if>
 

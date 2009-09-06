@@ -364,7 +364,6 @@ function articles_encodeUsingTitle( $aid, $encodeUsingTitle = 1, $ptid = '' )
     {
         $article['title'] = str_replace(' ','_',$article['title']);
     }
-
     $encodedTitle = rawurlencode($article['title']);
     // the URL encoded / (%2F) is not accepted by Apache in PATH_INFO
     $encodedTitle = str_replace('%2F','/',$encodedTitle);

@@ -28,6 +28,7 @@ function articles_admin_updateconfig()
     if(!xarVarFetch('usetitleforurl',    'isset', $usetitleforurl,    0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('defaultpubtype',    'isset', $defaultpubtype,    1,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('sortpubtypes',      'isset', $sortpubtypes,   'id',  XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('ptypenamechange',   'isset', $ptypenamechange,   0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('defaultview',       'isset', $defaultview,       1,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('showcategories',    'isset', $showcategories,    0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('showkeywords',      'isset', $showkeywords,      0,  XARVAR_NOT_REQUIRED)) {return;}
@@ -48,7 +49,7 @@ function articles_admin_updateconfig()
     if(!xarVarFetch('ptid',              'isset', $ptid,              0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('dotransform',       'isset', $dotransform,       0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('titletransform',    'isset', $titletransform,    0,  XARVAR_NOT_REQUIRED)) {return;}
-
+    if(!xarVarFetch('checkpubdate',      'isset', $checkpubdate,      0,  XARVAR_NOT_REQUIRED)) {return;}
     if (empty($ptid)) {
         $ptid = '';
         if (!xarSecurityCheck('AdminArticles')) return;
@@ -60,6 +61,7 @@ function articles_admin_updateconfig()
         xarModSetVar('articles', 'SupportShortURLs', $shorturls);
         xarModSetVar('articles', 'defaultpubtype', $defaultpubtype);
         xarModSetVar('articles', 'sortpubtypes', $sortpubtypes);
+        xarModSetVar('articles', 'ptypenamechange', $ptypenamechange);
         if (xarDBGetType() == 'mysql') {
             if (!xarVarFetch('fulltext', 'isset', $fulltext, '', XARVAR_NOT_REQUIRED)) {return;}
             $oldval = xarModGetVar('articles', 'fulltextsearch');
@@ -114,7 +116,7 @@ function articles_admin_updateconfig()
     $settings['defaultstatus']      = $defaultstatus;
     $settings['defaultsort']        = $defaultsort;
     $settings['usetitleforurl']     = $usetitleforurl;
-
+    $settings['checkpubdate']       = $checkpubdate;
     if (!empty($ptid)) {
         xarModSetVar('articles', 'settings.'.$ptid, serialize($settings));
 

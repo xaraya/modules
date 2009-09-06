@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -16,9 +16,10 @@
  *
  * @param id     ptid       The publication Type ID for this new article
  * @param array  new_cids   An array with the category ids for this new article (OPTIONAL)
- * @param string preview    Are we gonna see a preview?
- * @param string save       Call the save action
- * @param string return_url The URL to return to
+ * @param string preview    Are we gonna see a preview? (OPTIONAL) 
+ * @param string save       Call the save action, form stays open (OPTIONAL)
+ * @param string view       Call the view action, show newly created article (OPTIONAL)
+ * @param string return_url The URL to return to (OPTIONAL)
  * @throws BAD_PARAM
  * @return  bool true on success, or mixed on failure
  */
@@ -29,9 +30,22 @@ function articles_admin_create()
     if (!xarVarFetch('new_cids', 'array', $cids,    NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('preview',  'str',   $preview, NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('save',     'str',   $save, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('view',     'str',   $view,    NULL, XARVAR_NOT_REQUIRED)) {return;}    
     if (!xarVarFetch('return_url', 'str:1', $return_url, NULL, XARVAR_NOT_REQUIRED)) {return;}
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSecConfirmAuthKey()) {
+        if (xarCurrentErrorType() == XAR_USER_EXCEPTION) {
+            // Catch exception and fall back to preview
+            $msg = xarErrorRender('text') . "<br />";
+            $msg .= xarML('Article was <strong>NOT</strong> saved, please retry.');
+            xarErrorHandled();
+            // Save the error message if we are not in preview
+            if (!isset($preview)) {
+                xarSessionSetVar('statusmsg', $msg);
+            }
+            $preview = 1;
+        }
+    }
 
     $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
     if (!isset($pubtypes[$ptid])) {
@@ -98,7 +112,11 @@ function articles_admin_create()
         }
     }
 
-    $article['authorid'] = xarUserGetVar('id');
+    // Default the authorid to the current author if either not already set, or the authorid
+    // field does not allow input when creating a new article.
+    if (empty($article['authorid']) || empty($pubtypes[$ptid]['config']['authorid']['input'])) {
+        $article['authorid'] = xarUserGetVar('uid');
+    }
     if (empty($article['authorid'])) {
         $article['authorid'] = _XAR_ID_UNREGISTERED;
     }
@@ -140,6 +158,7 @@ function articles_admin_create()
     $aid = xarModAPIFunc('articles', 'admin', 'create', $article);
 
     if ($aid == false) {
+        // TODO: Avoid dataloss with falling back to preview
         // Throw back any system exceptions (e.g. database failure)
         if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION) {
             return; // throw back
@@ -169,6 +188,12 @@ function articles_admin_create()
             xarResponseRedirect(xarModURL('articles', 'user', 'view',
                                           array('ptid' => $ptid)));
         }
+    }
+    // Save and view the new article
+    if (isset($view)){
+        xarResponseRedirect(xarModURL('articles', 'user', 'display',
+                                      array('ptid' => $ptid,
+                                            'aid' => $aid)));   
     }
 
     if (!empty($return_url)) {

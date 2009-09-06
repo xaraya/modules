@@ -7,7 +7,7 @@
 <xar:set name="activetype">$_bl_module_type</xar:set>
 <div>
   <dl class="xar-tabs">
-    <dt class="help" title="Choose an action to perform">
+    <dt class="help" title="#xarML('Choose an action to perform')#">
       <xar:mlstring>Utility:</xar:mlstring>
     </dt>
     <xar:sec mask="AdminArticles" catch="false">

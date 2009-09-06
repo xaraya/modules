@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -15,8 +15,6 @@
 /**
  * Initial setup for the articles module
  */
-
-// TODO: load configuration from file(s) ?
 
     // Configuration of the different publication type fields
     // An empty label means it's (currently) not used for that type
@@ -194,9 +192,9 @@
         'summary' => array('label'  => xarML('Summary'),
                          'format' => 'textarea',
                          'input'  => 1),
-        'body' => array('label'  => '',
-                         'format' => 'static',
-                         'input'  => 0),
+        'body' => array('label'  => xarML('Description'),
+                         'format' => 'textarea_small',
+                         'input'  => 1),
         'notes' => array('label'  => xarML('Upload File'),
                          'format' => 'fileupload',
                          'input'  => 1),
@@ -210,95 +208,39 @@
                          'format' => 'status',
                          'input'  => 0),
     );
-/*
-    $config['generic'] = array(
-        'title' => array('label'  => xarML('Title'),
-                         'format' => 'textbox',
-                         'input'  => 1),
-        'summary' => array('label'  => xarML('Summary'),
-                         'format' => 'textarea_medium',
-                         'input'  => 1),
-        'body' => array('label'  => xarML('Body'),
-                         'format' => 'textarea_large',
-                         'input'  => 1),
-        'notes' => array('label'  => xarML('Notes'),
-                         'format' => 'textarea',
-                         'input'  => 0),
-        'authorid' => array('label'  => xarML('Author'),
-                         'format' => 'username',
-                         'input'  => 0),
-        'pubdate' => array('label'  => xarML('Publication Date'),
-                         'format' => 'calendar',
-                         'input'  => 0),
-        'status' => array('label'  => xarML('Status'),
-                         'format' => 'status',
-                         'input'  => 0),
-    );
-*/
+                         'format' => 'textarea_small',
 
     // The list of currently supported publication types
     $pubtypes = array(
-                    array(1, 'news', 'News Articles',
-                          serialize($config['news'])),
-                    array(2, 'docs', 'Documents',
-                          serialize($config['docs'])),
-                    array(3, 'reviews', 'Reviews',
-                          serialize($config['reviews'])),
-                    array(4, 'faqs', 'FAQs',
-                          serialize($config['faqs'])),
-                    array(5, 'pictures', 'Pictures',
-                          serialize($config['pictures'])),
-                    array(6, 'weblinks', 'Web Links',
-                          serialize($config['weblinks'])),
-                    array(7, 'quotes', 'Random Quotes',
-                          serialize($config['quotes'])),
-                    array(8, 'downloads', 'Downloads',
-                          serialize($config['downloads'])),
-              );
+        array(1, 'news', xarML('News Articles'), serialize($config['news'])),
+        array(2, 'docs', xarML('Documents'), serialize($config['docs'])),
+        array(3, 'reviews', xarML('Reviews'), serialize($config['reviews'])),
+        array(4, 'faqs', xarML('FAQs'), serialize($config['faqs'])),
+        array(5, 'pictures', xarML('Pictures'), serialize($config['pictures'])),
+        array(6, 'weblinks', xarML('Web Links'), serialize($config['weblinks'])),
+        array(7, 'quotes', xarML('Random Quotes'), serialize($config['quotes'])),
+        array(8, 'downloads', xarML('Downloads'), serialize($config['downloads'])),
+    );
 
     // Some starting categories as an example
     $categories = array();
 
-    $categories[] = array('name' => 'Generic1',
-                          'description' => 'Generic Category 1',
-                          'children' => array('Generic1 Sub1',
-                                              'Generic1 Sub2'));
-    $categories[] = array('name' => 'Generic2',
-                          'description' => 'Generic Category 2',
-                          'children' => array('Generic2 Sub1',
-                                              'Generic2 Sub2'));
-    $categories[] = array('name' => 'Topics',
-                          'description' => 'News Topics',
-                          'children' => array('Topic 1',
-                                              'Topic 2'));
-    $categories[] = array('name' => 'Categories',
-                          'description' => 'News Categories',
-                          'children' => array('Category 1',
-                                              'Category 2'));
-    $categories[] = array('name' => 'Sections',
-                          'description' => 'Document Sections',
-                          'children' => array('Section 1',
-                                              'Section 2'));
-    $categories[] = array('name' => 'FAQ',
-                          'description' => 'Frequently Asked Questions',
-                          'children' => array('FAQ Type 1',
-                                              'FAQ Type 2'));
-    $categories[] = array('name' => 'Gallery',
-                          'description' => 'Picture Gallery',
-                          'children' => array('Album 1',
-                                              'Album 2'));
-    $categories[] = array('name' => 'Web Links',
-                          'description' => 'Web Link Categories',
-                          'children' => array('Link Category 1',
-                                              'Link Category 2'));
-    $categories[] = array('name' => 'Random Quotes',
-                          'description' => 'Random Quote Categories',
-                          'children' => array('Quote Category 1',
-                                              'Quote Category 2'));
-    $categories[] = array('name' => 'Downloads',
-                          'description' => 'Download Categories',
-                          'children' => array('Download Category 1',
-                                              'Download Category 2'));
+    $categories[] = array('name' => xarML('Generic1'),
+                          'description' => xarML('Generic Category 1'),
+                          'children' => array(xarML('Generic1 Sub1'),
+                                              xarML('Generic1 Sub2')));
+    $categories[] = array('name' => xarML('Topics'),
+                          'description' => xarML('News Topics'),
+                          'children' => array(xarML('News Subtopic 1'),
+                                              xarML('News Subtopic 2')));
+    $categories[] = array('name' => xarML('FAQ'),
+                          'description' => xarML('Frequently Asked Questions'),
+                          'children' => array(xarML('FAQ Type 1'),
+                                              xarML('FAQ Type 2')));
+    $categories[] = array('name' => xarML('Downloads'),
+                          'description' => xarML('Download Categories'),
+                          'children' => array(xarML('Download Category 1'),
+                                              xarML('Download Category 2')));
 
     // articles settings for each publication type
     $settings = array();
@@ -327,15 +269,13 @@
                          'defaultstatus'        => 0,
                          'defaultsort'          => 'date',
                          // category names - will be replaced by cids in xarinit.php
-                         'categories'           => array('Topics',
-                                                         'Categories',
-                                                         'Generic1'));
+                         'categories'           => array(xarML('Topics'),
+                                                         xarML('Generic1')));
 
-    // section documents can be in old-style Sections, and in new Generic1
     $settings[2] = array('number_of_columns'    => 0,
                          'itemsperpage'         => 20,
                          // category name - will be replaced by 'c' . cid in xarinit.php
-                         'defaultview'          => 'Sections',
+                         'defaultview'          => xarML('Generic1'),
                          'showcategories'       => 0,
                          'showcatcount'         => 0,
                          'showprevnext'         => 1,
@@ -353,11 +293,8 @@
                          'page_template'        => '',
                          'defaultstatus'        => 2,
                          'defaultsort'          => 'title',
-                         // category names - will be replaced by cids in xarinit.php
-                         'categories'           => array('Sections',
-                                                         'Generic1'));
+                         'categories'           => array(xarML('Generic1')));
 
-    // reviews can be in new Generic1 (no categories in old-style reviews ?)
     $settings[3] = array('number_of_columns'    => 2,
                          'itemsperpage'         => 20,
                          'defaultview'          => 1,
@@ -378,14 +315,11 @@
                          'page_template'        => '',
                          'defaultstatus'        => 0,
                          'defaultsort'          => 'date',
-                         // category names - will be replaced by cids in xarinit.php
-                         'categories'           => array('Generic1'));
+                         'categories'           => array(xarML('Generic1')));
 
-    // faqs can be in old-style FAQs, and in new Generic1
     $settings[4] = array('number_of_columns'    => 0,
                          'itemsperpage'         => 20,
-                         // category name - will be replaced by 'c' . cid in xarinit.php
-                         'defaultview'          => 'FAQ',
+                         'defaultview'          => xarML('FAQ'),
                          'showcategories'       => 1,
                          'showcatcount'         => 0,
                          'showprevnext'         => 0,
@@ -403,11 +337,9 @@
                          'page_template'        => '',
                          'defaultstatus'        => 2,
                          'defaultsort'          => 'title',
-                         // category names - will be replaced by cids in xarinit.php
-                         'categories'           => array('FAQ',
-                                                         'Generic1'));
+                         'categories'           => array(xarML('FAQ'),
+                                                         xarML('Generic1')));
 
-    // pictures can be in Gallery and new Generic1
     $settings[5] = array('number_of_columns'    => 3,
                          'itemsperpage'         => 12,
                          'defaultview'          => 1,
@@ -428,11 +360,8 @@
                          'page_template'        => '',
                          'defaultstatus'        => 2,
                          'defaultsort'          => 'date',
-                         // category names - will be replaced by cids in xarinit.php
-                         'categories'           => array('Gallery',
-                                                         'Generic1'));
+                         'categories'           => array(xarML('Generic1')));
 
-    // weblinks can be in old-style Web Links, and in new Generic1
     $settings[6] = array('number_of_columns'    => 0,
                          'itemsperpage'         => 20,
                          'defaultview'          => 1,
@@ -453,11 +382,8 @@
                          'page_template'        => '',
                          'defaultstatus'        => 0,
                          'defaultsort'          => 'date ASC',
-                         // category names - will be replaced by cids in xarinit.php
-                         'categories'           => array('Web Links',
-                                                         'Generic1'));
+                         'categories'           => array(xarML('Generic1')));
 
-    // quotes can be in Random Quotes and in new Generic1
     $settings[7] = array('number_of_columns'    => 0,
                          'itemsperpage'         => 20,
                          'defaultview'          => 1,
@@ -478,9 +404,7 @@
                          'page_template'        => '',
                          'defaultstatus'        => 0,
                          'defaultsort'          => 'date ASC',
-                         // category names - will be replaced by cids in xarinit.php
-                         'categories'           => array('Random Quotes',
-                                                         'Generic1'));
+                         'categories'           => array(xarML('Generic1')));
 
     // downloads can be in Downloads and in new Generic1
     $settings[8] = array('number_of_columns'    => 0,
@@ -503,9 +427,8 @@
                          'page_template'        => '',
                          'defaultstatus'        => 0,
                          'defaultsort'          => 'date ASC',
-                         // category names - will be replaced by cids in xarinit.php
-                         'categories'           => array('Downloads',
-                                                         'Generic1'));
+                         'categories'           => array(xarML('Downloads'),
+                                                         xarML('Generic1')));
 
     // default settings
     $settings[0] = array('number_of_columns'    => 0,
@@ -528,11 +451,9 @@
                          'page_template'        => '',
                          'defaultstatus'        => 0,
                          'defaultsort'          => 'date',
-                         // category names - will be replaced by cids in xarinit.php
-                         'categories'           => array('Generic1',
-                                                         'Generic2'));
+                         'categories'           => array(xarML('Generic1')));
 
-    // default publication type is news articles
+    // default publication type is News Articles
     $defaultpubtype = 1;
 
 ?>

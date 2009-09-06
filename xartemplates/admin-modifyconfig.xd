@@ -14,6 +14,9 @@
             Modify Configuration
         </xar:mlstring>
     </h2>
+    <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
+        <p>#xarSessionGetVar('statusmsg')#</p>
+    </xar:if>
     <xar:template file="navtabs" type="module" />
     <form class="xar-formwidget" action="&xar-modurl-articles-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
         <xar:if condition="empty($ptid)">
@@ -123,6 +126,18 @@
                         </xar:mlstring>
                     </label>
                     [<a href="http://dev.mysql.com/doc/refman/4.1/en/fulltext-restrictions.html"><xar:mlstring>with restrictions</xar:mlstring></a>]
+                </div>
+                <div class="xar-form-input-wrapper-after">
+                    <xar:if condition="xarModGetVar('articles', 'ptypenamechange')">
+                        <input type="checkbox" name="ptypenamechange" id="ptypenamechange" value="1" checked="checked" />
+                        <xar:else />
+                        <input type="checkbox" name="ptypenamechange" id="ptypenamechange" value="1" />
+                    </xar:if>
+                    <label class="help" for="ptypenamechange" title="#xarML('Allows to change the names of the pubtypes')#">
+                        <xar:mlstring>
+                            Allow changing pubtype names (Template filenames for each publication type are based on the pubtype's name. Rename the template files accordingly.)
+                        </xar:mlstring>
+                    </label>
                 </div>
                 </xar:if>
             </fieldset>
@@ -752,6 +767,18 @@
                     </xar:mlstring>
                     <em>($prevart + $nextart)</em> </label>
             </div>
+           <div class="xar-form-input-wrapper-after">
+                <xar:if condition="$checkpubdate">
+                    <input type="checkbox" name="checkpubdate" id="checkpubdate" value="1" checked="checked" />
+                    <xar:else />
+                    <input type="checkbox" name="checkpubdate" id="checkpubdate" value="1" />
+                </xar:if>
+                <label for="checkpubdate" class="help" title="#xarML('Do not display article if pubdate is less than current date/time')#">
+                    <xar:mlstring>
+                        Display article only if current date is later than publication date (submitter level or less)
+                    </xar:mlstring>
+                </label>
+            </div>
         </fieldset>
         <fieldset class="xar-norm">
             <legend>
@@ -789,28 +816,30 @@
                 </xar:if>
             </div>
         </fieldset>
-        <xar:if condition="!empty($hooks)">
-            <fieldset class="xar-norm">
-                <legend>
-                    <strong>
-                        <xar:mlstring>
-                            Configuration of Hooked Modules
-                        </xar:mlstring>
-                    </strong>
-                </legend>
+        <fieldset class="xar-norm">
+            <legend>
+                <xar:mlstring>
+                    Configuration of Hooked Modules 
+                </xar:mlstring>
+                &#160;
+                [
+                <a href="&xar-modurl-modules-admin-modify;&amp;id=151"
+                    title="#xarML('Module Settings and Hooks')#"
+                >
+                    <xar:mlstring>Edit</xar:mlstring></a>
+                ]<xar:comment> TODO: Encode and Add &amp;returnurl=&xar-currenturl;  </xar:comment>
+            </legend>
                 <xar:foreach in="$hooks" key="$hookmodule">
                     <xar:if condition="!empty($ptid) or $hookmodule ne 'dynamicdata'">
                         #$hooks[$hookmodule]#
                     </xar:if>
                 </xar:foreach>
-            </fieldset>
+        </fieldset>
+        <xar:if condition="!empty($hooks)">
         </xar:if>
         <div class="xar-form-input-wrapper">
             <div class="xar-form-container-after">
                 <input type="submit" value="#xarML('Submit')#" />
-                <xar:comment>
-                <input type="reset" value="#xarML('Reset')#" />
-                </xar:comment>
             </div>
         </div>
         <p>

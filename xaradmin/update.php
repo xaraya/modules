@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2009 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -31,7 +31,19 @@ function articles_admin_update()
     if(!xarVarFetch('save',         'isset', $save,      NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('return_url',  'str:1', $return_url, NULL, XARVAR_NOT_REQUIRED)) {return;}
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSecConfirmAuthKey()) {
+        if (xarCurrentErrorType() == XAR_USER_EXCEPTION) {
+            // Catch exception and fall back to preview
+            $msg = xarErrorRender('text', true);
+            $msg .= xarML('Article was <strong>NOT</strong> saved, please retry.');
+            xarErrorFree();
+            // Save the error message if we are not in preview
+            if (!$preview) {
+                xarSessionSetVar('statusmsg', $msg);
+            }
+            $preview = 1;
+        }
+    }
 
     if (empty($aid) || !is_numeric($aid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -47,12 +59,9 @@ function articles_admin_update()
     }
 
     // Get original article information
-    $article = xarModAPIFunc('articles',
-                            'user',
-                            'get',
-                            array('aid' => $aid,
-                                  'withcids' => true));
-
+    $article = xarModAPIFunc('articles', 'user', 'get',
+                            array('aid' => $aid, 'withcids' => true)
+    );
     if (!isset($article)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'article', 'admin', 'update', 'Articles');
@@ -97,7 +106,7 @@ function articles_admin_update()
         if (!isset($article[$field])) {
             $article[$field] = '';
         }
-    }
+      }
 
     $article['ptid'] = $ptid;
 

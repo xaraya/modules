@@ -1,7 +1,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <xar:if condition="!empty($showpublinks)">
 
-<!-- show a link to all publication types -->
+<xar:comment> show a link to all publication types </xar:comment>
 #$publabel# : 
 <xar:foreach in="$publinks" value="$publink">
     #$publink['pubjoin']#
@@ -17,7 +17,7 @@
 
 <xar:else />
 
-<!-- show a header for the current publication type -->
+<xar:comment> show a header for the current publication type </xar:comment>
 <xar:foreach in="$publinks" value="$publink">
     <xar:if condition="$publink['pubid'] eq $ptid">
         <h2>#$publink['pubtitle']#</h2>

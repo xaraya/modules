@@ -28,7 +28,7 @@
         <xar:mlstring>
             Category
         </xar:mlstring>
-    </label><select name="catfilter" id="catfilter#$blockid#" onChange="this.form.submit();">
+    </label><select name="catfilter" id="catfilter#$blockid#" onchange="this.form.submit();">
         <option value="0">
             <xar:mlstring>
                 All
@@ -52,7 +52,7 @@
         <xar:mlstring>
             Status
         </xar:mlstring>
-    </label> <select name="status" id="status#$blockid#" size="1" onChange="this.form.submit();">
+    </label> <select name="status" id="status#$blockid#" size="1" onchange="this.form.submit();">
         <xar:foreach in="$statusoptions" value="$statusoption">
             <xar:if condition="!empty($status) and $status eq $statusoption['id']">
                 <option value="#$statusoption['id']#" selected="selected">
@@ -84,11 +84,15 @@
     </label> <select name="featuredaid" id="featuredaid#$blockid#" size="1">
         <xar:if condition="empty($featuredaid)">
             <option value="" selected="selected">
-                --- choose an article to be featured ---
+                <xar:mlstring>
+                    --- choose an article to be featured ---
+                </xar:mlstring>
             </option>
             <xar:else />
             <option value="">
-                --- choose an article to be featured ---
+                <xar:mlstring>
+                    --- choose an article to be featured ---
+                </xar:mlstring>
             </option>
         </xar:if>
         <xar:foreach in="$filtereditems" value="$filtereditem">
@@ -111,32 +115,32 @@
         </xar:mlstring>
     </label> <input type="text" name="alttitle" id="alttitle#$blockid#" value="#$alttitle#" size="24" maxlength="62" />
 </div>
-<div class="xar-form-input-wrapper-after">
+<div class="xar-form-input-wrapper">
+    <label class="help xar-form-label" title="#xarML('If you wish to show the summary for the article as teaser text select this box.')#" for="showfeaturedsum#$blockid#">
+        <xar:mlstring>
+            Show summary
+        </xar:mlstring>
+    </label>
     <xar:if condition="empty($showfeaturedsum)">
         <input type="checkbox" name="showfeaturedsum" id="showfeaturedsum#$blockid#" value="1" />
         <xar:else />
         <input type="checkbox" name="showfeaturedsum" id="showfeaturedsum#$blockid#" value="1" checked="checked" />
     </xar:if>
-    <label class="help" title="#xarML('If you wish to show the summary for the article as teaser text select this box.')#" for="showfeaturedsum#$blockid#">
+</div>
+<div class="xar-form-input-wrapper">
+    <label class="help xar-form-label"  title="#xarML('If you wish to show the whole of the body of the featured article.')#" for="showfeaturedbod#$blockid#">
         <xar:mlstring>
-            Show summary
+            Show body
         </xar:mlstring>
     </label>
-</div>
-<div class="xar-form-input-wrapper-after">
     <xar:if condition="empty($showfeaturedbod)">
         <input type="checkbox" name="showfeaturedbod" id="showfeaturedbod#$blockid#" value="1" />
         <xar:else />
         <input type="checkbox" name="showfeaturedbod" id="showfeaturedbod#$blockid#" value="1" checked="checked" />
     </xar:if>
-    <label class="help" title="#xarML('If you wish to show the whole of the body of the featured article.')#" for="showfeaturedbod#$blockid#">
-        <xar:mlstring>
-            Show body
-        </xar:mlstring>
-    </label>
 </div>
 <div class="xar-form-input-wrapper">
-    <label class="help" title="#xarML('If you wish to give the article an alternative summary to be displayed as a featured item, enter the summary here.')#" for="altsummary#$blockid#">
+    <label  class="help xar-form-label" title="#xarML('If you wish to give the article an alternative summary to be displayed as a featured item, enter the summary here.')#" for="altsummary#$blockid#">
         <xar:mlstring>
             Alternate Summary
         </xar:mlstring>
@@ -167,7 +171,7 @@
         <xar:mlstring>
             Sort by
         </xar:mlstring>
-    </label> <select name="toptype" id="toptype#$blockid#" size="1" onChange="this.form.submit();">
+    </label> <select name="toptype" id="toptype#$blockid#" size="1" onchange="this.form.submit();">
         <xar:foreach in="$sortoptions" value="$sortoption">
             <xar:if condition="$toptype eq $sortoption['id']">
                 <option value="#$sortoption['id']#" selected="selected">
@@ -181,54 +185,54 @@
         </xar:foreach>
     </select>
 </div>
-<div class="xar-form-input-wrapper-after">
+<div class="xar-form-input-wrapper">
+    <label class="help xar-form-label" title="#xarML('Select this box if you wish to display the sort options.')#" for="showvalue#$blockid#">
+        <xar:mlstring>
+            Show sort value
+        </xar:mlstring>
+    </label>
     <xar:if condition="empty($showvalue)">
         <input type="checkbox" name="showvalue" id="showvalue#$blockid#" value="1" />
         <xar:else />
         <input type="checkbox" name="showvalue" id="showvalue#$blockid#" value="1" checked="checked" />
     </xar:if>
-    <label class="help" title="#xarML('Select this box if you wish to display the sort options.')#" for="showvalue#$blockid#">
+</div>
+<div class="xar-form-input-wrapper">
+    <label class="help xar-form-label" title="#xarML('If you wish to show the summary for the block, select this box.')#" for="showsummary#$blockid#">
         <xar:mlstring>
-            Show sort value
+            Show summary
         </xar:mlstring>
     </label>
-</div>
-<div class="xar-form-input-wrapper-after">
     <xar:if condition="empty($showsummary)">
         <input type="checkbox" name="showsummary" id="showsummary#$blockid#" value="1" />
         <xar:else />
         <input type="checkbox" name="showsummary" id="showsummary#$blockid#" value="1" checked="checked" />
     </xar:if>
-    <label class="help" title="#xarML('If you wish to show the summary for the block, select this box.')#" for="showsummary#$blockid#">
+</div>
+<div class="xar-form-input-wrapper">
+    <label class="help xar-form-label" title="#xarML('Set to include the publication type in the article link.')#" for="linkpubtype#$blockid#">
         <xar:mlstring>
-            Show summary
+            Link to publication type
         </xar:mlstring>
     </label>
-</div>
-<div class="xar-form-input-wrapper-after">
     <xar:if condition="empty($linkpubtype)">
         <input type="checkbox" name="linkpubtype" id="linkpubtype#$blockid#" value="1" />
         <xar:else />
         <input type="checkbox" name="linkpubtype" id="linkpubtype#$blockid#" value="1" checked="checked" />
     </xar:if>
-    <label class="help" title="#xarML('Set to include the publication type in the article link.')#" for="linkpubtype#$blockid#">
-        <xar:mlstring>
-            Link to publication type
-        </xar:mlstring>
-    </label>
 </div>
 <xar:if condition="isset($catfilter)">
-    <div class="xar-form-input-wrapper-after">
+    <div class="xar-form-input-wrapper">
+        <label class="help xar-form-label" title="#xarML('Set to include the filter category in the article link.')#" for="linkcat#$blockid#">
+            <xar:mlstring>
+                Link to filter category
+            </xar:mlstring>
+        </label>
         <xar:if condition="empty($linkcat)">
             <input type="checkbox" name="linkcat" id="linkcat#$blockid#" value="1" />
             <xar:else />
             <input type="checkbox" name="linkcat" id="linkcat#$blockid#" value="1" checked="checked" />
         </xar:if>
-        <label class="help" title="#xarML('Set to include the filter category in the article link.')#" for="linkcat#$blockid#">
-            <xar:mlstring>
-                Link to filter category
-            </xar:mlstring>
-        </label>
     </div>
 </xar:if>
 

@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -34,6 +34,7 @@ function articles_admin_privileges($args)
     if (!xarVarFetch('extcomponent', 'isset', $extcomponent, NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('extinstance',  'isset', $extinstance,  NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('extlevel',     'isset', $extlevel,     NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('pparentid',    'isset', $pparentid,    NULL, XARVAR_DONT_SET)) {return;}
 
     sys::import('modules.dynamicdata.class.properties.master');
     $categories = DataPropertyMaster::getProperty(array('name' => 'categories'));
@@ -135,7 +136,8 @@ function articles_admin_privileges($args)
 
     if (!empty($apply)) {
         // create/update the privilege
-        $pid = xarReturnPrivilege($extpid,$extname,$extrealm,$extmodule,$extcomponent,$newinstance,$extlevel);
+        $pid = xarReturnPrivilege($extpid,$extname,$extrealm,$extmodule,$extcomponent,
+                                  $newinstance,$extlevel,$pparentid);
         if (empty($pid)) {
             return; // throw back
         }
@@ -179,6 +181,7 @@ function articles_admin_privileges($args)
                   'extcomponent' => $extcomponent,
                   'extlevel'     => $extlevel,
                   'extinstance'  => xarVarPrepForDisplay(join(':',$newinstance)),
+                  'pparentid'    => $pparentid,
                  );
 
     // Get publication types

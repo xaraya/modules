@@ -3,7 +3,7 @@
  * Articles module
  *
  * @package modules
- * @copyright (C) 2002-2006 The Digital Development Foundation
+ * @copyright (C) 2002-2008 The Digital Development Foundation
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  *
@@ -124,8 +124,10 @@ function articles_user_display($args)
         $input['article'] = $article;
         $input['mask'] = 'EditArticles';
         if (xarModAPIFunc('articles','user','checksecurity',$input)) {
+            $return_url = xarServerGetCurrentURL(array(), false);
             $data['editurl'] = xarModURL('articles', 'admin', 'modify',
-                                         array('aid' => $article['aid']));
+                                         array('aid' => $article['aid'],
+                                               'return_url' => $return_url));
         // don't show unapproved articles to non-editors
         } elseif ($article['status'] < 2) {
             $status = xarModAPIFunc('articles', 'user', 'getstatusname',
@@ -408,7 +410,7 @@ function articles_user_display($args)
     // TODO: what about transforming DDfields ?
     // <mrb> see above for a hack, needs to be a lot better.
 
-    // Summary is always included, is that handled somewhere else? (article config says i can ex/include it)
+    // Summary is always included, is that handled somewhere else? (article config says I can ex/include it)
     // <mikespub> articles config allows you to call transforms for the articles summaries in the view function
     if (!isset($titletransform)) {
         if (empty($settings['titletransform'])) {
@@ -426,9 +428,9 @@ function articles_user_display($args)
     $data = xarModCallHooks('item', 'transform', $aid, $data, 'articles');
 
     if (!empty($data['title'])) {
-        // CHECKME: <rabbit> Strip tags out of the title - the <title> tag shouldn't have any other tags in it.
         $title = strip_tags($data['title']);
-        xarTplSetPageTitle(xarVarPrepForDisplay($title), xarVarPrepForDisplay($pubtypes[$pubtypeid]['descr']));
+        $title = str_Replace('&shy;', '', $title);
+        xarTplSetPageTitle($title, xarVarPrepForDisplay($pubtypes[$pubtypeid]['descr']));
 
         // Save some variables to (temporary) cache for use in blocks etc.
         xarVarSetCached('Comments.title','title',$data['title']);
@@ -498,6 +500,7 @@ function articles_user_display($args)
         $data['hooks'] = xarModCallHooks('item', 'display', $aid,
                                          array('module'    => 'articles',
                                                'itemtype'  => $pubtypeid,
+                                               'title'     => $title,
                                                'returnurl' => xarModURL('articles',
                                                                         'user',
                                                                         'display',

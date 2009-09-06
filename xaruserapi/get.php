@@ -79,10 +79,11 @@ function articles_userapi_get($args)
         if (isset($where))
             $args['where'] = $where;
         $arts = xarModApiFunc('articles','user','getall', $args );
-        if (!empty($arts))
-            return current($arts);
-        else
+        if (!empty($arts)) {
+            return reset($arts);
+        } else {
             return false;
+        }
     }
 
 // TODO: put all this in dynamic data and retrieve everything via there (including hooked stuff)
@@ -171,17 +172,32 @@ function articles_userapi_get($args)
         }
     }
 
-    // Security check
-    if (isset($article['cids']) && count($article['cids']) > 0) {
-// TODO: do we want all-or-nothing access here, or is one access enough ?
+   // Get the article settings for this publication type
+    if (empty($pubtypeid)) {
+        $settings = unserialize(xarModGetVar('articles', 'settings'));
+    } else {
+        $settings = unserialize(xarModGetVar('articles', 'settings.'.$pubtypeid));
+    }
+    $settings['checkpubdate']=isset($settings['checkpubdate'])? $settings['checkpubdate']:0;
+    if (isset($article['cids']) && count($article['cids']) > 0) { 
+    // TODO: do we want all-or-nothing access here, or is one access enough ?
         foreach ($article['cids'] as $cid) {
-            if (!xarSecurityCheck('ReadArticles',0,'Article',"$pubtypeid:$cid:$authorid:$aid")) return;
+            // Security check
+            if (($settings['checkpubdate'] ==1) && ($article['pubdate']> time())) { //don't display article unless a person has edit level privs
+                if (!xarSecurityCheck('EditArticles',0,'Article',"$pubtypeid:$cid:$authorid:$aid")) return;
+            } elseif (!xarSecurityCheck('ReadArticles',0,'Article',"$pubtypeid:$cid:$authorid:$aid")) {
+                return;
+            }
         // TODO: combine with ViewCategoryLink check when we can combine module-specific
         // security checks with "parent" security checks transparently ?
             if (!xarSecurityCheck('ReadCategories',0,'Category',"All:$cid")) return;
         }
-    } else {
-        if (!xarSecurityCheck('ReadArticles',0,'Article',"$pubtypeid:All:$authorid:$aid")) return;
+    } else { 
+        if (($settings['checkpubdate'] ==1) && ($article['pubdate']> time())) { //don't display article unless a person has edit level privs
+                if (!xarSecurityCheck('EditArticles',0,'Article',"$pubtypeid:All:$authorid:$aid")) return;
+        }elseif (!xarSecurityCheck('ReadArticles',0,'Article',"$pubtypeid:All:$authorid:$aid")) {
+            return;
+        }
     }
 
 /*

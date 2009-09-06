@@ -147,7 +147,12 @@
                             </xar:mlstring>
                         </td>
                         <td class="xar-align-left">
-                            #$item['name']#
+                          <xar:if condition="xarModGetVar('articles', 'ptypenamechange')">
+                            <input type="text" name="name" id="name" value="#xarVarPrepForDisplay($item['name'])#" size="20" maxlength="20" />
+                            <xar:else />
+                            <input type="hidden" name="name" id="name" value="#xarVarPrepForDisplay($item['name'])#" />
+                            #xarVarPrepForDisplay($item['name'])#
+                          </xar:if>
                         </td>
                     </tr>
                     <tr>
@@ -210,7 +215,7 @@
                         <tr>
                             <td class="xar-align-left">
                             <xar:comment>Add validation link here - for those fields that already have it plus allowable textarea fields</xar:comment>
-                            <xar:if condition="$field['format'] eq 'textarea_large' or $field['format'] eq 'textarea_medium' or $field['format'] eq 'textarea' or $field['format'] eq 'dropdown' or $field['format'] eq 'imagelist' or $field['format'] eq 'webpage' or $field['format'] eq 'fileupload' or $field['format'] eq 'textupload' or $field['format'] eq 'userlist'">
+                            <xar:if condition="$field['format'] eq 'textarea_large' or $field['format'] eq 'textarea_medium' or $field['format'] eq 'textarea_small' or $field['format'] eq 'dropdown' or $field['format'] eq 'imagelist' or $field['format'] eq 'webpage' or $field['format'] eq 'fileupload' or $field['format'] eq 'textupload' or $field['format'] eq 'userlist' or $field['format'] eq 'xartinymce'">
                                 <xar:set name="editvalidation">
                                     xarML('Edit validation for property "#(1)"',$field['name'])
                                 </xar:set>
@@ -244,7 +249,7 @@
                             so move this to a link on the label name so we can do this without cluttering inteface
                             and also make it consistent.
                             Revert if the change seems inappropriate.
-                        <xar:if condition="$field['format'] eq 'dropdown' or $field['format'] eq 'imagelist' or $field['format'] eq 'webpage' or $field['format'] eq 'fileupload' or $field['format'] eq 'textupload' or $field['format'] eq 'userlist'">
+                        <xar:if condition="$field['format'] eq 'dropdown' or $field['format'] eq 'imagelist' or $field['format'] eq 'webpage' or $field['format'] eq 'fileupload' or $field['format'] eq 'textupload' or $field['format'] eq 'userlist' or $field['format'] eq 'xartinymce'">
                             <tr>
                                 <td class="xar-accent">
                                     <xar:set name="editvalidation">

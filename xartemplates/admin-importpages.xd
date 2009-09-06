@@ -29,7 +29,7 @@
                     <td class="xar-align-left">
                         <input type="text" name="basedir" id="basedir" value="#$basedir#" size="50" maxlength="250" />
                         <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                        <input type="submit" name="refresh" id="refresh" value="Refresh" />
+                        <input type="submit" name="refresh" id="refresh" value="#xarML('Refresh')#" />
                     </td>
                 </tr>
                 <tr>
@@ -188,8 +188,8 @@
                 </tr>
                 <tr>
                     <td class="xar-align-center" colspan="2">
-                    <input type="submit" name="test" id="test" value="Test Import" />&#160;&#160;&#160;&#160;
-                    <input type="submit" name="import" id="import" value="Import Webpages" /></td>
+                    <input type="submit" name="test" id="test" value="#xarML('Test Import')#" />&#160;&#160;&#160;&#160;
+                    <input type="submit" name="import" id="import" value="#xarML('Import Webpages')#" /></td>
                 </tr>
             </table>
         </form>
