@@ -5,7 +5,7 @@ function netquery_admin_wiview()
     if (!xarVarFetch('startnum', 'isset', $startnum, 1, XARVAR_NOT_REQUIRED)) {return;}
     $data['items'] = array();
     $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
-    list($data['buttondir']) = split('[._-]', $data['stylesheet']);
+    list($data['buttondir']) = preg_split('/[._-]/', $data['stylesheet']);
     if (!file_exists($data['buttondir'] = 'modules/netquery/xarimages/'.$data['buttondir'])) $data['buttondir'] = 'modules/netquery/xarimages/blbuttons';
     $data['authid'] = xarSecGenAuthKey();
     $links = xarModAPIFunc('netquery', 'user', 'getlinks', array('startnum' => $startnum));

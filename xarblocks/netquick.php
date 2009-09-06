@@ -36,7 +36,7 @@ function netquery_netquickblock_display($blockinfo)
     if (!isset($vars['blockquery'])) $vars['blockquery'] = 'clientinfo';
     $data = array();
     $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
-    $data['buttondir'] = ((list($testdir) = split('[._-]', $data['stylesheet'])) && (!empty($testdir)) && (file_exists('modules/netquery/xarimages/'.$testdir))) ? 'modules/netquery/xarimages/'.$testdir : 'modules/netquery/xarimages/blbuttons';
+    $data['buttondir'] = ((list($testdir) = preg_split('/[._-]/', $data['stylesheet'])) && (!empty($testdir)) && (file_exists('modules/netquery/xarimages/'.$testdir))) ? 'modules/netquery/xarimages/'.$testdir : 'modules/netquery/xarimages/blbuttons';
     $data['bbsettings'] = xarModAPIFunc('netquery', 'user', 'bb2_settings');
     $data['bbstats'] = xarModAPIFunc('netquery', 'user', 'bb2_stats');
     $data['browserinfo'] = new nqSniff();

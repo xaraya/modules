@@ -180,9 +180,10 @@ function netquery_upgrade($oldversion)
             xarModSetVar('netquery', 'bb_httpbl_key', '');
             xarModSetVar('netquery', 'bb_httpbl_threat', 25);
             xarModSetVar('netquery', 'bb_httpbl_maxage', 10);
-            return netquery_upgrade('4.1.4');
+            return netquery_upgrade('4.1.5');
         case '4.1.3':
         case '4.1.4':
+        case '4.1.5':
         default:
             break;
     }

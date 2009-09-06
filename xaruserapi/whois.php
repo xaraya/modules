@@ -25,19 +25,20 @@ function netquery_userapi_whois($args)
         }
         @fclose($sock);
     }
-    if (! eregi("Whois Server:", $readbuf))
+    if (! preg_match("/Whois Server:/i", $readbuf))
     {
-        if (! empty($whois_unfound) && eregi($whois_unfound, $readbuf))
+        $pattern = "/$whois_unfound/i";
+        if (! empty($whois_unfound) && preg_match($pattern, $readbuf))
         {
             $msg .= "<span class=\"nq-red\">NOT FOUND</span>: No match for $target<br />";
         }
     }
     else
     {
-        $readbuf = split("\n", $readbuf);
+        $readbuf = explode("\n", $readbuf);
         for ($i=0; $i<sizeof($readbuf); $i++)
         {
-            if (eregi("Whois Server:", $readbuf[$i])) $readbuf = $readbuf[$i];
+            if (preg_match("/Whois Server:/i", $readbuf[$i])) $readbuf = $readbuf[$i];
         }
         $nextServer = substr($readbuf, 17, (strlen($readbuf)-17));
         $nextServer = str_replace("1:Whois Server:", "", trim(rtrim($nextServer)));

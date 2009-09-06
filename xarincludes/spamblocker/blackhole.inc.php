@@ -7,11 +7,12 @@ function is_ipv6($address)
 }
 
 // Look up address on various blackhole lists.
-// These cannot be used for GET requests under any circumstances!
+// These should not be used for GET requests under any circumstances!
 function bb2_blackhole($package)
 {
     // Can't use IPv6 addresses yet
-    if (array_key_exists('REMOTE_ADDR', $package) && is_ipv6($package['REMOTE_ADDR'])) return;
+    if (@is_ipv6($package['ip'])) return false;
+
     // Only conservative lists
     $bb2_blackhole_lists = array(
         "sbl-xbl.spamhaus.org", // All around nasties
@@ -47,8 +48,10 @@ function bb2_blackhole($package)
 function bb2_httpbl($settings, $package)
 {
     // Can't use IPv6 addresses yet
-    if (array_key_exists('REMOTE_ADDR', $package) && is_ipv6($package['REMOTE_ADDR'])) return;
-    if (!array_key_exists('httpbl_key', $settings) || !$settings['httpbl_key']) return false;
+    if (@is_ipv6($package['ip'])) return;
+
+    if (@!$settings['httpbl_key']) return false;
+
     $find = implode('.', array_reverse(explode('.', $package['ip'])));
     $result = gethostbynamel($settings['httpbl_key'].".${find}.dnsbl.httpbl.org.");
     if (!empty($result)) {

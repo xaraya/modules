@@ -44,7 +44,7 @@ function netquery_user_main()
         $msg = ('<table class="nqoutput">');
         $msg .= ('<tr><th>DNS Lookup Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</th></tr><tr><td>');
         $msg .= $target.' resolved to ';
-        if (eregi("[a-zA-Z]", $target))
+        if (preg_match("/[a-zA-Z]/", $target))
         {
           $ipaddr = gethostbyname($target);
           $geoipc = xarModAPIFunc('netquery', 'user', 'getgeoip', (array('ip' => $ipaddr)));
@@ -67,17 +67,17 @@ function netquery_user_main()
         $digexec_local = $data['digexec_local'];
         $msg = ('<table class="nqoutput">');
         $msg .= ('<tr><th>DNS Query (Dig) Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</th></tr><tr><td>');
-        if (eregi("[a-zA-Z]", $target))
+        if (preg_match("/[a-zA-Z]/", $target))
           $ntarget = gethostbyname($target);
         else
           $ntarget = gethostbyaddr($target);
-        if (! eregi("[a-zA-Z]", $target) && !eregi("[a-zA-Z]", $ntarget))
+        if (!preg_match("/[a-zA-Z]/", $target) && !preg_match("/[a-zA-Z]/", $ntarget))
         {
           $msg .= 'DNS query (Dig) requires a hostname.';
         }
         else
         {
-          if (! eregi("[a-zA-Z]", $target) ) $target = $ntarget;
+          if (!preg_match("/[a-zA-Z]/", $target) ) $target = $ntarget;
           if ($data['winsys'])
           {
               if (@exec("$digexec_local -type=$digparam $target", $output, $ret))

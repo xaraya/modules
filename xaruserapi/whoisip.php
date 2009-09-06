@@ -33,11 +33,11 @@ function netquery_userapi_whoisip($args)
             }
             @fclose($sock);
         }
-        if (eregi("whois.apnic.net", $readbuf)) $nextServer = "whois.apnic.net";
-        else if (eregi("whois.ripe.net", $readbuf)) $nextServer = "whois.ripe.net";
-        else if (eregi("whois.lacnic.net", $readbuf)) $nextServer = "whois.lacnic.net";
-        else if (eregi("whois.registro.br", $readbuf)) $nextServer = "whois.registro.br";
-        else if (eregi("whois.afrinic.net", $readbuf)) $nextServer = "whois.afrinic.net";
+        if (preg_match("/whois.apnic.net/i", $readbuf)) $nextServer = "whois.apnic.net";
+        else if (preg_match("/whois.ripe.net/i", $readbuf)) $nextServer = "whois.ripe.net";
+        else if (preg_match("/whois.lacnic.net/i", $readbuf)) $nextServer = "whois.lacnic.net";
+        else if (preg_match("/whois.registro.br/i", $readbuf)) $nextServer = "whois.registro.br";
+        else if (preg_match("/whois.afrinic.net/i", $readbuf)) $nextServer = "whois.afrinic.net";
         if ($nextServer)
         {
             $readbuf = "";

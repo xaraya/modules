@@ -10,7 +10,7 @@ function netquery_userapi_validemail($args)
     }
     $msg = '';
     $query_email_server = xarModGetVar('netquery', 'query_email_server');
-    list ($username,$domain) = split ("@",$target,2);
+    list($username,$domain) = explode("@",$target,2);
     if (checkdnsrr($domain.'.', 'MX') ) $addmsg = "<br />DNS Record Check: MX record returned OK.";
     else if (checkdnsrr($domain.'.', 'A') ) $addmsg = "<br />DNS Record Check: A record returned OK.";
     else if (checkdnsrr($domain.'.', 'CNAME') ) $addmsg = "<br />DNS Record Check: CNAME record returned OK.";
@@ -34,7 +34,7 @@ function netquery_userapi_validemail($args)
       }
       else
       {
-        if (ereg("^220", $out = fgets($sock, 1024)))
+        if (preg_match("/^220/", $out = fgets($sock, 1024)))
         {
           fputs ($sock, "HELO ".$_SERVER['HTTP_HOST']."\r\n");
           $out = fgets ( $sock, 1024 );
@@ -44,7 +44,7 @@ function netquery_userapi_validemail($args)
           $to = fgets ($sock, 1024);
           fputs ($sock, "QUIT\r\n");
           fclose($sock);
-          if (!ereg ("^250", $from) || !ereg ( "^250", $to ))
+          if (!preg_match("/^250/", $from) || !preg_match("/^250/", $to ))
           {
             $addmsg = "<br />MX Server Address Check: Address rejected by ".$address;
           }
@@ -70,9 +70,10 @@ if (!function_exists('checkdnsrr'))
       $k = '';
       $line = '';
       @exec("$digexec_local -type=$type $host", $output);
+      $pattern = "/^$host/i";
       while(list($k, $line) = each($output))
       {
-        if(eregi("^$host", $line)) return true;
+        if(preg_match($pattern, $line)) return true;
       }
       return false;
     }
@@ -93,7 +94,7 @@ if (!function_exists('getmxrr'))
       @exec("$digexec_local -type=MX $hostname", $output, $ret);
       while (list($k, $line) = each($output))
       {
-        if (ereg("^$hostname\tMX preference = ([0-9]+), mail exchanger = (.*)$", $line, $parts))
+        if (preg_match("/^$hostname\tMX preference = ([0-9]+), mail exchanger = (.*)$/", $line, $parts))
         {
           $mxhosts[$parts[1]]=$parts[2];
         }

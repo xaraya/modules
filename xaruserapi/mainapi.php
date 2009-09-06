@@ -34,7 +34,7 @@ function netquery_userapi_mainapi()
     $data['querytype_default'] = xarModGetVar('netquery', 'querytype_default');
     $data['exec_timer_enabled'] = xarModGetVar('netquery', 'exec_timer_enabled');
     $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
-    $data['buttondir'] = ((list($testdir) = split('[._-]', $data['stylesheet'])) && (!empty($testdir)) && (file_exists('modules/netquery/xarimages/'.$testdir))) ? 'modules/netquery/xarimages/'.$testdir : 'modules/netquery/xarimages/blbuttons';
+    $data['buttondir'] = ((list($testdir) = preg_split('/[._-]/', $data['stylesheet'])) && (!empty($testdir)) && (file_exists('modules/netquery/xarimages/'.$testdir))) ? 'modules/netquery/xarimages/'.$testdir : 'modules/netquery/xarimages/blbuttons';
     $data['bb_enabled'] = xarModGetVar('netquery', 'bb_enabled');
     $data['bb_retention'] = xarModGetVar('netquery', 'bb_retention');
     $data['bb_verbose'] = xarModGetVar('netquery', 'bb_verbose');

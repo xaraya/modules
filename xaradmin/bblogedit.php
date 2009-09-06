@@ -7,7 +7,7 @@ function netquery_admin_bblogedit()
     if (!xarVarFetch('bbmode', 'str:1:100', $bbmode, 'select', XARVAR_NOT_REQUIRED)) return;
     $data['entries'] = array();
     $data['stylesheet'] = xarModGetVar('netquery', 'stylesheet');
-    list($data['buttondir']) = split('[._-]', $data['stylesheet']);
+    list($data['buttondir']) = preg_split('/[._-]/', $data['stylesheet']);
     if (!file_exists($data['buttondir'] = 'modules/netquery/xarimages/'.$data['buttondir'])) $data['buttondir'] = 'modules/netquery/xarimages/blbuttons';
     $data['authid'] = xarSecGenAuthKey();
     $xartable =& xarDBGetTables();
