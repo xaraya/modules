@@ -1,26 +1,27 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- Set the page title to the description of the page. -->
-<xar:set name="dummy">#xarTplSetPageTitle($current_page.desc)#</xar:set>
+    <!-- Set the page title to the description of the page. -->
+    <xar:set name="dummy">#xarTplSetPageTitle($current_page.desc)#</xar:set>
 
-<p>
-    This is the default page template, page-#$current_page.pagetype.name#.xd
-</p>
+    <p>
+        This is the default page template, page-#$current_page.pagetype.name#.xd
+    </p>
 
-<p>
-    Custom templates would be named page-#$current_page.pagetype.name#-{custom_name}.xd
-    or page-#$current_page.pagetype.name#-{custom_name}.xt
-</p>
+    <p>
+        Custom templates would be named page-#$current_page.pagetype.name#-{custom_name}.xd
+        or page-#$current_page.pagetype.name#-{custom_name}.xt
+    </p>
 
-<p>
-    This page is named "#$current_page.name#" described as "#xarVarPrepForDisplay($current_page.desc)#".
-    The page type is "#$current_page.pagetype.name#" described as "#xarVarPrepForDisplay($current_page.pagetype.desc)#".
-</p>
+    <p>
+        This page is named "#$current_page.name#" described as "#xarVarPrepForDisplay($current_page.desc)#".
+        The page type is "#$current_page.pagetype.name#" described as "#xarVarPrepForDisplay($current_page.pagetype.desc)#".
+    </p>
 
-<xar:if condition="!empty($hooks)">
-    <xar:foreach in="$hooks" key="$hookmodule">
-    <xar:if condition="trim($hooks[$hookmodule]) ne ''">
-    <div>#$hooks[$hookmodule]#</div>
+    <xar:if condition="!empty($hooks)">
+        <xar:foreach in="$hooks" key="$hookmodule">
+        <xar:if condition="trim($hooks[$hookmodule]) ne ''">
+        <div>#$hooks[$hookmodule]#</div>
+        </xar:if>
+        </xar:foreach>
     </xar:if>
-    </xar:foreach>
-</xar:if>
 </xar:template>

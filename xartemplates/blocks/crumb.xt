@@ -1,27 +1,28 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
-<div class="xarpages-crumbtrail">
-    <!-- You are here: -->
-    <xar:loop name="$ancestors">
-        <xar:if condition="$loop:index ge 1">&#187;</xar:if>
-        <xar:if condition="$loop:item.pid eq $pid">
-            <xar:if condition="!empty($loop:item.dd.menu_title)">
-                <span title="#xarVarPrepForDisplay($loop:item.desc)#"><strong>#xarVarPrepForDisplay($loop:item.dd.menu_title)#</strong></span>
+    <div class="xarpages-crumbtrail">
+        <!-- You are here: -->
+        <xar:loop name="$ancestors">
+            <xar:if condition="$loop:index ge 1">&#187;</xar:if>
+            <xar:if condition="$loop:item.pid eq $pid">
+                <xar:if condition="!empty($loop:item.dd.menu_title)">
+                    <span title="#xarVarPrepForDisplay($loop:item.desc)#"><strong>#xarVarPrepForDisplay($loop:item.dd.menu_title)#</strong></span>
+                <xar:else />
+                    <span title="#xarVarPrepForDisplay($loop:item.desc)#"><strong>#xarVarPrepForDisplay($loop:item.name)#</strong></span>
+                </xar:if>
             <xar:else />
-                <span title="#xarVarPrepForDisplay($loop:item.desc)#"><strong>#xarVarPrepForDisplay($loop:item.name)#</strong></span>
+                <xar:if condition="!empty($loop:item.dd.menu_title)">
+                    <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$loop:item.pid))#" title="#xarVarPrepForDisplay($loop:item.desc)#">#xarVarPrepForDisplay($loop:item.dd.menu_title)#</a>
+                <xar:else />
+                    <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$loop:item.pid))#" title="#xarVarPrepForDisplay($loop:item.desc)#">#xarVarPrepForDisplay($loop:item.name)#</a>
+                </xar:if>
             </xar:if>
-        <xar:else />
-            <xar:if condition="!empty($loop:item.dd.menu_title)">
-                <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$loop:item.pid))#" title="#xarVarPrepForDisplay($loop:item.desc)#">#xarVarPrepForDisplay($loop:item.dd.menu_title)#</a>
-            <xar:else />
-                <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$loop:item.pid))#" title="#xarVarPrepForDisplay($loop:item.desc)#">#xarVarPrepForDisplay($loop:item.name)#</a>
-            </xar:if>
-        </xar:if>
-    </xar:loop>
+        </xar:loop>
 
-    <!-- Provide an edit link if we have privileges -->
-    <xar:if condition="xarSecurityCheck('EditXarpagesPage', 0, 'Page', $current_page.name . ':' . $current_page.pagetype.name)">
-        [<a href="#xarModURL('xarpages','admin','modifypage',array('pid'=>$pid,'return_url'=>xarServer::getCurrentURL(array(),false)))#">edit</a>]
-    </xar:if>
-</div>
+        <!-- Provide an edit link if we have privileges -->
+        <xar:if condition="xarSecurityCheck('EditXarpagesPage', 0, 'Page', $current_page.name . ':' . $current_page.pagetype.name)">
+            [<a href="#xarModURL('xarpages','admin','modifypage',array('pid'=>$pid,'return_url'=>xarServer::getCurrentURL(array(),false)))#">edit</a>]
+        </xar:if>
+    </div>
 </xar:template>

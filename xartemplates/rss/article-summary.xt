@@ -1,27 +1,28 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<item>
-    <title>#xarVarPrepForDisplay($title)#</title>
-    <link>#xarModURL('xarpages', 'user', 'display', array('pid'=&gt;$pid, 'aid'=&gt;$aid))#</link>
-    <xar:if condition="!empty($pubdate)"><pubDate>#xarLocaleFormatUTCDate('%a, %d %b %Y %H:%M:%S %z',$pubdate)#</pubDate></xar:if>
+    <item>
+        <title>#xarVarPrepForDisplay($title)#</title>
+        <link>#xarModURL('xarpages', 'user', 'display', array('pid'=&gt;$pid, 'aid'=&gt;$aid))#</link>
+        <xar:if condition="!empty($pubdate)"><pubDate>#xarLocaleFormatUTCDate('%a, %d %b %Y %H:%M:%S %z',$pubdate)#</pubDate></xar:if>
 
-    <description>#xarVarPrepForDisplay($summary)#</description>
+        <description>#xarVarPrepForDisplay($summary)#</description>
 
-    <xar:if condition="!empty($categories)">
-    <xar:foreach in="$categories" value="$cat">
-        <category domain="#xarModURL('xarpages', 'user', 'display', array('pid'=&gt;$pid, 'cids'=&gt;array($cat.cid)))#">#xarVarPrepForDisplay($cat.name)#</category>
-    </xar:foreach>
-    </xar:if>
+        <xar:if condition="!empty($categories)">
+        <xar:foreach in="$categories" value="$cat">
+            <category domain="#xarModURL('xarpages', 'user', 'display', array('pid'=&gt;$pid, 'cids'=&gt;array($cat.cid)))#">#xarVarPrepForDisplay($cat.name)#</category>
+        </xar:foreach>
+        </xar:if>
 
-    <xar:if condition="!empty($categories)">
-        <xar:loop name="$categories">
-            <!-- Choose just one icon from the categories -->
-            <xar:if condition="!empty($loop:item.image) and empty($image_displayed)">
-                <!-- In here, choose your own path and MIME type -->
-                <enclosure url="#xarServer::getBaseURL()#modules/categories/xarimages/#$loop:item.image#" length="" type="image/JPEG" />
-                <!-- Ensure only one image is displayed (the first one we get) -->
-                <xar:set name="image_displayed">true</xar:set>
-            </xar:if>
-        </xar:loop>
-    </xar:if>
-</item>
+        <xar:if condition="!empty($categories)">
+            <xar:loop name="$categories">
+                <!-- Choose just one icon from the categories -->
+                <xar:if condition="!empty($loop:item.image) and empty($image_displayed)">
+                    <!-- In here, choose your own path and MIME type -->
+                    <enclosure url="#xarServer::getBaseURL()#modules/categories/xarimages/#$loop:item.image#" length="" type="image/JPEG" />
+                    <!-- Ensure only one image is displayed (the first one we get) -->
+                    <xar:set name="image_displayed">true</xar:set>
+                </xar:if>
+            </xar:loop>
+        </xar:if>
+    </item>
 </xar:template>

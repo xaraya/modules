@@ -1,23 +1,24 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
-<!-- 
-    This simple menu template formats the pages tree into a nested-list menu.
-    Required paramaters are:
-        $pages - the list of all pages needed to build the menu
-        $root_page - the root page (can be reference into $pages) that defines
-            the root of the menu tree
-    If the root page is 'empty' then don't display it - go straight for the next level.
-    An empty root page creates a multi-homed menu, while a non-empty root page creates
-    a single-homed menu. This can also be forced with the 'multi_homed' option.
+    <!-- 
+        This simple menu template formats the pages tree into a nested-list menu.
+        Required paramaters are:
+            $pages - the list of all pages needed to build the menu
+            $root_page - the root page (can be reference into $pages) that defines
+                the root of the menu tree
+        If the root page is 'empty' then don't display it - go straight for the next level.
+        An empty root page creates a multi-homed menu, while a non-empty root page creates
+        a single-homed menu. This can also be forced with the 'multi_homed' option.
 
-    Menu titles can be set with a DD field on each page called 'menu_title'.
-<xar:set name="dummy">var_dump($root_page)</xar:set>
- -->
+        Menu titles can be set with a DD field on each page called 'menu_title'.
+    <xar:set name="dummy">var_dump($root_page)</xar:set>
+     -->
 
-<xar:if condition="empty($max_level)">
-    <xar:set name="max_level">0</xar:set>
-</xar:if>
+    <xar:if condition="empty($max_level)">
+        <xar:set name="max_level">0</xar:set>
+    </xar:if>
 
-<xar:set name="parent">$root_page</xar:set>
-<xar:template file="menu" />
-</xar:template>
+    <xar:set name="parent">$root_page</xar:set>
+    <xar:template file="menu" />
+    </xar:template>

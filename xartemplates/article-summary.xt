@@ -1,31 +1,32 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- 
-    Fallback summary template for the 'news' page type, called up
-    for each news item displayed by the 'page-news' template, while
-    in summary mode.
- -->
+    <!-- 
+        Fallback summary template for the 'news' page type, called up
+        for each news item displayed by the 'page-news' template, while
+        in summary mode.
+     -->
 
-<div class="news-item">
-    <div class="news-header">
-        <h3>
-            <!-- Add an edit link if we have the privileges -->
-            <xar:if condition="xarSecurityCheck('EditArticles',0,'Article',$pubtypeid.'::' . $authorid . ':' . $aid)">
-                [<a href="#xarModURL('articles','admin','modify',array('aid'=&gt;$aid,'return_url'=&gt;xarServergetCurrentURL(array(),false)))#">edit</a>]
-            </xar:if>
-            <a href="#xarServer::getCurrentURL(array('aid'=&gt;$aid))#">
-                #xarvarPrepForDisplay($title)#
-            </a>
-        </h3>
+    <div class="news-item">
+        <div class="news-header">
+            <h3>
+                <!-- Add an edit link if we have the privileges -->
+                <xar:if condition="xarSecurityCheck('EditArticles',0,'Article',$pubtypeid.'::' . $authorid . ':' . $aid)">
+                    [<a href="#xarModURL('articles','admin','modify',array('aid'=&gt;$aid,'return_url'=&gt;xarServergetCurrentURL(array(),false)))#">edit</a>]
+                </xar:if>
+                <a href="#xarServer::getCurrentURL(array('aid'=&gt;$aid))#">
+                    #xarvarPrepForDisplay($title)#
+                </a>
+            </h3>
+        </div>
+
+        <!-- Only display the summary if there is one (assumed to be HTML) -->
+        <xar:if condition="!empty($summary)">
+            <div class="news-body">#$summary#</div>
+        </xar:if>
+
+        <!-- Only display the detail link is there is further detail (assumed to be HTML) -->
+        <xar:if condition="!empty($body)">
+            <div class="news-footer"><a href="#xarServer::getCurrentURL(array('aid'=&gt;$aid))#" class="readmore">Read more...</a></div>
+        </xar:if>
     </div>
-
-    <!-- Only display the summary if there is one (assumed to be HTML) -->
-    <xar:if condition="!empty($summary)">
-        <div class="news-body">#$summary#</div>
-    </xar:if>
-
-    <!-- Only display the detail link is there is further detail (assumed to be HTML) -->
-    <xar:if condition="!empty($body)">
-        <div class="news-footer"><a href="#xarServer::getCurrentURL(array('aid'=&gt;$aid))#" class="readmore">Read more...</a></div>
-    </xar:if>
-</div>
 </xar:template>

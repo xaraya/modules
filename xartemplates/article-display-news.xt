@@ -1,41 +1,42 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- 
-    Example news display template.
-    This is displayed by the 'page-news' template, for publication type 'news'.
-    Copy this template, renaming it to article-display-{itemtype_name} for other news types,
-    or let the pubtype fall back to the article-display template.
- -->
+    <!-- 
+        Example news display template.
+        This is displayed by the 'page-news' template, for publication type 'news'.
+        Copy this template, renaming it to article-display-{itemtype_name} for other news types,
+        or let the pubtype fall back to the article-display template.
+     -->
 
-<div class="news-item-news">
-    <xar:template file="news-nextprev" />
-    <div class="news-header">
-        <h1>
-            <xar:ml>
-                <xar:mlstring>News Item - #(1)</xar:mlstring>
-                <xar:mlvar>#xarLocaleGetFormattedDate('short',$pubdate)#</xar:mlvar>
-            </xar:ml>
-        </h1>
+    <div class="news-item-news">
+        <xar:template file="news-nextprev" />
+        <div class="news-header">
+            <h1>
+                <xar:ml>
+                    <xar:mlstring>News Item - #(1)</xar:mlstring>
+                    <xar:mlvar>#xarLocaleGetFormattedDate('short',$pubdate)#</xar:mlvar>
+                </xar:ml>
+            </h1>
 
-        <h3>
-            <!-- Add an edit link if we have the privileges -->
-            <xar:if condition="#xarSecurityCheck('EditArticles',0,'Article',$pubtypeid.'::' . $authorid . ':' . $aid)#">
-                [<a href="#xarModURL('articles','admin','modify',array('aid'=&gt;$aid,'return_url'=&gt;xarServergetCurrentURL(array(),false)))#">edit</a>]
-            </xar:if>
-            #xarvarPrepForDisplay($title)#
-        </h3>
+            <h3>
+                <!-- Add an edit link if we have the privileges -->
+                <xar:if condition="#xarSecurityCheck('EditArticles',0,'Article',$pubtypeid.'::' . $authorid . ':' . $aid)#">
+                    [<a href="#xarModURL('articles','admin','modify',array('aid'=&gt;$aid,'return_url'=&gt;xarServergetCurrentURL(array(),false)))#">edit</a>]
+                </xar:if>
+                #xarvarPrepForDisplay($title)#
+            </h3>
+        </div>
+
+        <!-- 
+            Only display the summary if there is one (assumed to be HTML).
+            If there is no body, then attempt to display teh summary instead. We would not normally link
+            direct to an article without a body, but next/previous links would still pass through them.
+         -->
+        <xar:if condition="!empty($body)">
+            <div class="news-body">#$body#</div>
+        <xar:elseif condition="!empty($summary)" />
+            <div class="news-body">#$summary#</div>
+        </xar:if>
     </div>
 
-    <!-- 
-        Only display the summary if there is one (assumed to be HTML).
-        If there is no body, then attempt to display teh summary instead. We would not normally link
-        direct to an article without a body, but next/previous links would still pass through them.
-     -->
-    <xar:if condition="!empty($body)">
-        <div class="news-body">#$body#</div>
-    <xar:elseif condition="!empty($summary)" />
-        <div class="news-body">#$summary#</div>
-    </xar:if>
-</div>
-
-<xar:set name="dummy">#xarTplSetPageTitle($title)#</xar:set>
+    <xar:set name="dummy">#xarTplSetPageTitle($title)#</xar:set>
 </xar:template>

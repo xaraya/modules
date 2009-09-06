@@ -1,22 +1,23 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:style scope="module" module="xarpages" file="func_page_tabs" />
+    <xar:style scope="module" module="xarpages" file="func_page_tabs" />
 
-<div class="xar-xarpages-tabs">
-  <ul>
-    <xar:loop name="$section_titles">
-      <xar:if condition="$tab eq $loop:index+1">
-        <li class="xar-xarpages-tabs-current"><a href="#xarServergetCurrentURL(array('tab'=&gt;$loop:index+1))#"><span>#$loop:item#</span></a></li>
-      <xar:else />
-        <li><a href="#xarServergetCurrentURL(array('tab'=&gt;$loop:index+1))#"><span>#$loop:item#</span></a></li>
-      </xar:if>
-    </xar:loop>
-  </ul>
-</div>
-<div style="clear: both;"></div>
+    <div class="xar-xarpages-tabs">
+      <ul>
+        <xar:loop name="$section_titles">
+          <xar:if condition="$tab eq $loop:index+1">
+            <li class="xar-xarpages-tabs-current"><a href="#xarServergetCurrentURL(array('tab'=&gt;$loop:index+1))#"><span>#$loop:item#</span></a></li>
+          <xar:else />
+            <li><a href="#xarServergetCurrentURL(array('tab'=&gt;$loop:index+1))#"><span>#$loop:item#</span></a></li>
+          </xar:if>
+        </xar:loop>
+      </ul>
+    </div>
+    <div style="clear: both;"></div>
 
-<!-- 
-   Show just the relevant section.
-   $tab is one-based, and the arrays are zero-based.
- -->
-#$sections[$tab-1]#
+    <!-- 
+       Show just the relevant section.
+       $tab is one-based, and the arrays are zero-based.
+     -->
+    #$sections[$tab-1]#
 </xar:template>

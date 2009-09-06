@@ -1,83 +1,84 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
-<!-- Common navbar stuff -->
-<xar:template file="user-navbar" module="xarpages" />
+    <!-- Common navbar stuff -->
+    <xar:template file="user-navbar" module="xarpages" />
 
-<!-- Change this from 'article' to some other prefix to use a different set of template prefixes -->
-<xar:set name="template_prefix">'article'</xar:set>
+    <!-- Change this from 'article' to some other prefix to use a different set of template prefixes -->
+    <xar:set name="template_prefix">'article'</xar:set>
 
-<!-- 
-    If no searching is being done, then display the introduction text.
-    You may also wish to suppress the listing below completely if the intro
-    text is displayed (so the user sees intro text *or* listings, but never
-    both). Adapt this template to do that.
- -->
-<xar:if condition="!empty($current_page.dd.intro_text) and (empty($extra.searching_flag) or (empty($article) and empty($articles)))">
-    <div class="xarpages-intro-text">#$current_page.dd.intro_text#</div>
-</xar:if>
-
-<!-- Include a simple search box -->
-<xar:template file="news-searchbox" type="module" module="xarpages" />
-
-<!-- List of items -->
-<xar:if condition="empty($extra.aid)">
-    <!-- Archive table - the user has elected to view an archive (only show on the overview) -->
-    <xar:if condition="!empty($extra.archive)">
-        <div class="xarpages-archive-list"><xar:template file="news-archive-list" /></div>
+    <!-- 
+        If no searching is being done, then display the introduction text.
+        You may also wish to suppress the listing below completely if the intro
+        text is displayed (so the user sees intro text *or* listings, but never
+        both). Adapt this template to do that.
+     -->
+    <xar:if condition="!empty($current_page.dd.intro_text) and (empty($extra.searching_flag) or (empty($article) and empty($articles)))">
+        <div class="xarpages-intro-text">#$current_page.dd.intro_text#</div>
     </xar:if>
 
-    <!-- Different text for the summary as for an individual item? -->
-    <xar:if condition="isset($current_page.dd.list_text)">
-        <div class="xarpages-list-text">#$current_page.dd.list_text#</div>
-    </xar:if>
+    <!-- Include a simple search box -->
+    <xar:template file="news-searchbox" type="module" module="xarpages" />
 
-    <div class="xarpages-summary-wrapper">
-        <xar:if condition="!isset($extra)">
-            <p>Configuration error: page requires the 'news' custom page function to be set.</p>
+    <!-- List of items -->
+    <xar:if condition="empty($extra.aid)">
+        <!-- Archive table - the user has elected to view an archive (only show on the overview) -->
+        <xar:if condition="!empty($extra.archive)">
+            <div class="xarpages-archive-list"><xar:template file="news-archive-list" /></div>
         </xar:if>
-        <!-- Loop through the articles to display the summary, calling up a template for format it -->
-        <xar:if condition="!empty($articles) and is_array($articles)">
-            <xar:loop name="$articles">
-                <xar:set name="summary">#xarTplModule('xarpages', $template_prefix, 'summary', $loop:item, $pubtypes[$loop:item.pubtypeid]['name'])#</xar:set>
-                #$summary#
-            </xar:loop>
-        <xar:else />
-            <p>No items found.</p>
-        </xar:if>
-    </div>
-</xar:if>
 
-<!-- Individual item -->
-<xar:if condition="!empty($extra.aid)">
-    <xar:if condition="!empty($article)">
         <!-- Different text for the summary as for an individual item? -->
-        <xar:if condition="isset($current_page.dd.item_text)">
-            <div>#$current_page.dd.item_text#</div>
+        <xar:if condition="isset($current_page.dd.list_text)">
+            <div class="xarpages-list-text">#$current_page.dd.list_text#</div>
         </xar:if>
-        <div>
-            <xar:set name="display">#xarTplModule('xarpages', $template_prefix, 'display', $article, $pubtypes[$article.pubtypeid]['name'])#</xar:set>
-            #$display#
-        </div>
-    <xar:else />
-        <div class="xar-error">
-            <xar:ml>
-                <xar:mlstring>Article #(1) does not exist or has been removed</xar:mlstring>
-                <xar:mlvar>#$extra.aid#</xar:mlvar>
-            </xar:ml>
+
+        <div class="xarpages-summary-wrapper">
+            <xar:if condition="!isset($extra)">
+                <p>Configuration error: page requires the 'news' custom page function to be set.</p>
+            </xar:if>
+            <!-- Loop through the articles to display the summary, calling up a template for format it -->
+            <xar:if condition="!empty($articles) and is_array($articles)">
+                <xar:loop name="$articles">
+                    <xar:set name="summary">#xarTplModule('xarpages', $template_prefix, 'summary', $loop:item, $pubtypes[$loop:item.pubtypeid]['name'])#</xar:set>
+                    #$summary#
+                </xar:loop>
+            <xar:else />
+                <p>No items found.</p>
+            </xar:if>
         </div>
     </xar:if>
-</xar:if>
 
-<!-- Display the view pager only if not displaying a single item -->
-<xar:if condition="!empty($extra.pager) and empty($extra.aid)">
-    <div class="pager">#$extra.pager#</div>
-</xar:if>
-
-<xar:if condition="!empty($hooks)">
-    <xar:foreach in="$hooks" key="$hookmodule">
-        <xar:if condition="trim($hooks[$hookmodule]) ne ''">
-            <div>#$hooks[$hookmodule]#</div>
+    <!-- Individual item -->
+    <xar:if condition="!empty($extra.aid)">
+        <xar:if condition="!empty($article)">
+            <!-- Different text for the summary as for an individual item? -->
+            <xar:if condition="isset($current_page.dd.item_text)">
+                <div>#$current_page.dd.item_text#</div>
+            </xar:if>
+            <div>
+                <xar:set name="display">#xarTplModule('xarpages', $template_prefix, 'display', $article, $pubtypes[$article.pubtypeid]['name'])#</xar:set>
+                #$display#
+            </div>
+        <xar:else />
+            <div class="xar-error">
+                <xar:ml>
+                    <xar:mlstring>Article #(1) does not exist or has been removed</xar:mlstring>
+                    <xar:mlvar>#$extra.aid#</xar:mlvar>
+                </xar:ml>
+            </div>
         </xar:if>
-    </xar:foreach>
-</xar:if>
+    </xar:if>
+
+    <!-- Display the view pager only if not displaying a single item -->
+    <xar:if condition="!empty($extra.pager) and empty($extra.aid)">
+        <div class="pager">#$extra.pager#</div>
+    </xar:if>
+
+    <xar:if condition="!empty($hooks)">
+        <xar:foreach in="$hooks" key="$hookmodule">
+            <xar:if condition="trim($hooks[$hookmodule]) ne ''">
+                <div>#$hooks[$hookmodule]#</div>
+            </xar:if>
+        </xar:foreach>
+    </xar:if>
 </xar:template>

@@ -1,54 +1,55 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
-<!-- 
-    This template is used to handle the starting page (though that is optional), 
-    the cancel page, the error page and the timeout page for a form sequence.
-    It is fairly simplistic, but can be customised as required.
- -->
+    <!-- 
+        This template is used to handle the starting page (though that is optional), 
+        the cancel page, the error page and the timeout page for a form sequence.
+        It is fairly simplistic, but can be customised as required.
+     -->
 
-<!-- Common navbar stuff -->
-<xar:template file="user-navbar" module="xarpages" />
+    <!-- Common navbar stuff -->
+    <xar:template file="user-navbar" module="xarpages" />
 
-<xar:if condition="empty($multiform)">
-    <p class="xar-error">Configuration error: This page is missing the 'multiform' custom page function.
-    Please add the page function and try again.</p>
-<xar:else />
-    <xar:if condition="$multiform.reason eq 'cancel'">
-        <h1>Cancelled</h1>
-        <p>You have chosen to cancel the process.</p>
-    <xar:elseif condition="$multiform.reason eq 'error'" />
-        <h1>Error</h1>
-        <p>An unexpected error occured.</p>
-        <xar:if condition="!empty($multiform.passdata.reason_detail)">
-            <h2>Reason</h2>
-            <p>#xarVarPrepForDisplay($multiform.passdata.reason_detail)#</p>
-        </xar:if>
-    <xar:elseif condition="$multiform.reason eq 'timeout'" />
-        <h1>Timeout</h1>
-        <p>Due to a period of inactivity, the form entry has been cancelled.</p>
+    <xar:if condition="empty($multiform)">
+        <p class="xar-error">Configuration error: This page is missing the 'multiform' custom page function.
+        Please add the page function and try again.</p>
     <xar:else />
-        <!-- Display body content for the page. -->
-        <xar:if condition="isset($current_page.dd.body)">
-            <div>#$current_page.dd.body#</div>
+        <xar:if condition="$multiform.reason eq 'cancel'">
+            <h1>Cancelled</h1>
+            <p>You have chosen to cancel the process.</p>
+        <xar:elseif condition="$multiform.reason eq 'error'" />
+            <h1>Error</h1>
+            <p>An unexpected error occured.</p>
+            <xar:if condition="!empty($multiform.passdata.reason_detail)">
+                <h2>Reason</h2>
+                <p>#xarVarPrepForDisplay($multiform.passdata.reason_detail)#</p>
+            </xar:if>
+        <xar:elseif condition="$multiform.reason eq 'timeout'" />
+            <h1>Timeout</h1>
+            <p>Due to a period of inactivity, the form entry has been cancelled.</p>
+        <xar:else />
+            <!-- Display body content for the page. -->
+            <xar:if condition="isset($current_page.dd.body)">
+                <div>#$current_page.dd.body#</div>
+            </xar:if>
+
+            <xar:if condition="!empty($multiform.next_page_pid)">
+                <p class="multiform-start">
+                    <xar:ml>
+                        <xar:mlstring>To start, <a href="#(1)">click here</a></xar:mlstring>
+                        <xar:mlvar>#xarModURL('xarpages','user','display',array('pid'=&gt;$multiform.next_page_pid))#</xar:mlvar>
+                    </xar:ml>
+                </p>
+            </xar:if>
         </xar:if>
 
-        <xar:if condition="!empty($multiform.next_page_pid)">
-            <p class="multiform-start">
+        <xar:if condition="!empty($multiform.next_page_pid) and !empty($multiform.reason)">
+            <p class="multiform-restart">
                 <xar:ml>
-                    <xar:mlstring>To start, <a href="#(1)">click here</a></xar:mlstring>
+                    <xar:mlstring><a href="#(1)">To try again, click here</a></xar:mlstring>
                     <xar:mlvar>#xarModURL('xarpages','user','display',array('pid'=&gt;$multiform.next_page_pid))#</xar:mlvar>
                 </xar:ml>
             </p>
         </xar:if>
     </xar:if>
-
-    <xar:if condition="!empty($multiform.next_page_pid) and !empty($multiform.reason)">
-        <p class="multiform-restart">
-            <xar:ml>
-                <xar:mlstring><a href="#(1)">To try again, click here</a></xar:mlstring>
-                <xar:mlvar>#xarModURL('xarpages','user','display',array('pid'=&gt;$multiform.next_page_pid))#</xar:mlvar>
-            </xar:ml>
-        </p>
-    </xar:if>
-</xar:if>
 </xar:template>

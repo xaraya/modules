@@ -1,49 +1,50 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:style scope="module" module="xarpages" file="xarpages" />
+    <xar:style scope="module" module="xarpages" file="xarpages" />
 
-<div class="xar-mod-head"><span class="xar-mod-title">Page Administration</span></div>
+    <div class="xar-mod-head"><span class="xar-mod-title">Page Administration</span></div>
 
-<div class="xar-mod-body">
-    <xar:template type="module" file="admin-menu" />
-    <h2>View Page Types</h2>
-    <xar:if condition="empty($types)">
-         No page types defined
-    <xar:else />
+    <div class="xar-mod-body">
+        <xar:template type="module" file="admin-menu" />
+        <h2>View Page Types</h2>
+        <xar:if condition="empty($types)">
+             No page types defined
+        <xar:else />
 
-        <div><a href="#xarModURL('xarpages','admin','newtype')#">Add Page Type</a></div>
+            <div><a href="#xarModURL('xarpages','admin','newtype')#">Add Page Type</a></div>
 
-        <table border="0" width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Options</th>
-            </tr>
-            <xar:loop name="$types">
-                <xar:if condition="$loop:index ge 0">
-                    <xar:if condition="(($loop:index + 1) % 2)">
-                        <xar:set name="row_class">''</xar:set>
-                    <xar:else />
-                        <xar:set name="row_class">'xar-accent'</xar:set>
+            <table border="0" width="100%" cellspacing="0" cellpadding="0">
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Options</th>
+                </tr>
+                <xar:loop name="$types">
+                    <xar:if condition="$loop:index ge 0">
+                        <xar:if condition="(($loop:index + 1) % 2)">
+                            <xar:set name="row_class">''</xar:set>
+                        <xar:else />
+                            <xar:set name="row_class">'xar-accent'</xar:set>
+                        </xar:if>
+
+                        <tr>
+                            <td align="left" class="#$row_class#">
+                                #xarVarPrepForDisplay($loop:item['name'])#
+                            </td>
+                            <td class="#$row_class#">#xarVarPrepForDisplay($loop:item['description'])#</td>
+                            <td class="#$row_class#" style="text-align: center;">
+                                <a href="#xarModURL('xarpages', 'admin', 'modifytype', array('id' => $loop:item['id']))#">
+                                    Modify
+                                </a>
+                                &#160;|&#160;
+                                <a href="#xarModURL('xarpages', 'admin', 'deletetype', array('id' => $loop:item['id']))#">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
                     </xar:if>
-
-                    <tr>
-                        <td align="left" class="#$row_class#">
-                            #xarVarPrepForDisplay($loop:item['name'])#
-                        </td>
-                        <td class="#$row_class#">#xarVarPrepForDisplay($loop:item['description'])#</td>
-                        <td class="#$row_class#" style="text-align: center;">
-                            <a href="#xarModURL('xarpages', 'admin', 'modifytype', array('id' => $loop:item['id']))#">
-                                Modify
-                            </a>
-                            &#160;|&#160;
-                            <a href="#xarModURL('xarpages', 'admin', 'deletetype', array('id' => $loop:item['id']))#">
-                                Delete
-                            </a>
-                        </td>
-                    </tr>
-                </xar:if>
-            </xar:loop>
-        </table>
-    </xar:if>
-</div>
+                </xar:loop>
+            </table>
+        </xar:if>
+    </div>
 </xar:template>

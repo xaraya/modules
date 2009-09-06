@@ -1,64 +1,65 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- 
-    Display the history crumbtrail/progress bar/jump menu.
-    You can use CSS to hide either or both of these div.xarpages-multiform-history-crumbs or div.xarpages-multiform-history-jump
- -->
+    <!-- 
+        Display the history crumbtrail/progress bar/jump menu.
+        You can use CSS to hide either or both of these div.xarpages-multiform-history-crumbs or div.xarpages-multiform-history-jump
+     -->
 
-<xar:if condition="!empty($multiform.history)">
-    <div class="xarpages-multiform-history-crumbs">
-        Progress:
-        <xar:loop name="$multiform.history">
-            <xar:if condition="!empty($pages[$loop:key]['dd']['menu_title'])">
-                <xar:set name="page_name">#$pages[$loop:key]['dd']['menu_title']#</xar:set>
-            <xar:elseif condition="!empty($pages[$loop:key]['name'])" />
-                <xar:set name="page_name">#$pages[$loop:key]['name']#</xar:set>
-            <xar:else />
-                <xar:set name="page_name">
-                    <xar:ml>
-                        <xar:mlstring>Page #(1)</xar:mlstring>
-                        <xar:mlvar>#$loop:index + 1#</xar:mlvar>
-                    </xar:ml>
-                </xar:set>
-            </xar:if>
-            <xar:if condition="$loop:index gt 0">&gt;</xar:if>
-            <xar:if condition="!empty($loop:item.revisit) and $loop:key ne $current_page.pid">
-                <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$loop:key,$multiform.multiform_key_name=&gt;$multiform.multiform_key))#">#xarVarPrepForDisplay($page_name)#</a>
-                <xar:set name="jump_allowed">'true'</xar:set>
-            <xar:else />
-                <span>#xarVarPrepForDisplay($page_name)#</span>
-            </xar:if>
-        </xar:loop>
-    </div>
-
-    <xar:if condition="!empty($jump_allowed)">
-        <div class="xarpages-multiform-history-jump">
-            <form method="post" action="#xarModURL('xarpages','user','display',array($multiform.multiform_key_name=&gt;$multiform.multiform_key))#">
-                <label for="pid_select">Jump back to page:</label>
-                <select name="pid" id="pid_select">
-                    <option value="#$current_page.pid#">----</option>
-                    <xar:loop name="$multiform.history">
-
-                        <xar:if condition="!empty($pages[$loop:key]['dd']['menu_title'])">
-                            <xar:set name="page_name">#$pages[$loop:key]['dd']['menu_title']#</xar:set>
-                        <xar:elseif condition="!empty($pages[$loop:key]['name'])" />
-                            <xar:set name="page_name">#$pages[$loop:key]['name']#</xar:set>
-                        <xar:else />
-                            <xar:set name="page_name">
-                                <xar:ml>
-                                    <xar:mlstring>Page #(1)</xar:mlstring>
-                                    <xar:mlvar>#$loop:index + 1#</xar:mlvar>
-                                </xar:ml>
-                            </xar:set>
-                        </xar:if>
-
-                        <xar:if condition="!empty($loop:item.revisit) and $loop:key ne $current_page.pid">
-                            <option value="#$loop:key#">#xarVarPrepForDisplay($page_name)#</option>
-                        </xar:if>
-                    </xar:loop>
-                </select>
-                <input type="submit" value="#xarML('Go')#" />
-            </form>
+    <xar:if condition="!empty($multiform.history)">
+        <div class="xarpages-multiform-history-crumbs">
+            Progress:
+            <xar:loop name="$multiform.history">
+                <xar:if condition="!empty($pages[$loop:key]['dd']['menu_title'])">
+                    <xar:set name="page_name">#$pages[$loop:key]['dd']['menu_title']#</xar:set>
+                <xar:elseif condition="!empty($pages[$loop:key]['name'])" />
+                    <xar:set name="page_name">#$pages[$loop:key]['name']#</xar:set>
+                <xar:else />
+                    <xar:set name="page_name">
+                        <xar:ml>
+                            <xar:mlstring>Page #(1)</xar:mlstring>
+                            <xar:mlvar>#$loop:index + 1#</xar:mlvar>
+                        </xar:ml>
+                    </xar:set>
+                </xar:if>
+                <xar:if condition="$loop:index gt 0">&gt;</xar:if>
+                <xar:if condition="!empty($loop:item.revisit) and $loop:key ne $current_page.pid">
+                    <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$loop:key,$multiform.multiform_key_name=&gt;$multiform.multiform_key))#">#xarVarPrepForDisplay($page_name)#</a>
+                    <xar:set name="jump_allowed">'true'</xar:set>
+                <xar:else />
+                    <span>#xarVarPrepForDisplay($page_name)#</span>
+                </xar:if>
+            </xar:loop>
         </div>
+
+        <xar:if condition="!empty($jump_allowed)">
+            <div class="xarpages-multiform-history-jump">
+                <form method="post" action="#xarModURL('xarpages','user','display',array($multiform.multiform_key_name=&gt;$multiform.multiform_key))#">
+                    <label for="pid_select">Jump back to page:</label>
+                    <select name="pid" id="pid_select">
+                        <option value="#$current_page.pid#">----</option>
+                        <xar:loop name="$multiform.history">
+
+                            <xar:if condition="!empty($pages[$loop:key]['dd']['menu_title'])">
+                                <xar:set name="page_name">#$pages[$loop:key]['dd']['menu_title']#</xar:set>
+                            <xar:elseif condition="!empty($pages[$loop:key]['name'])" />
+                                <xar:set name="page_name">#$pages[$loop:key]['name']#</xar:set>
+                            <xar:else />
+                                <xar:set name="page_name">
+                                    <xar:ml>
+                                        <xar:mlstring>Page #(1)</xar:mlstring>
+                                        <xar:mlvar>#$loop:index + 1#</xar:mlvar>
+                                    </xar:ml>
+                                </xar:set>
+                            </xar:if>
+
+                            <xar:if condition="!empty($loop:item.revisit) and $loop:key ne $current_page.pid">
+                                <option value="#$loop:key#">#xarVarPrepForDisplay($page_name)#</option>
+                            </xar:if>
+                        </xar:loop>
+                    </select>
+                    <input type="submit" value="#xarML('Go')#" />
+                </form>
+            </div>
+        </xar:if>
     </xar:if>
-</xar:if>
 </xar:template>

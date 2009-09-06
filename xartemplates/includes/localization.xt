@@ -1,87 +1,88 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:if condition="empty($refpid)">
-    <xar:set name="refpid">0</xar:set>
-    <xar:if condition="!empty($func) and $func eq 'modify'">
-        <xar:set name="position">'before'</xar:set>
-    <xar:else/>
-        <xar:set name="position">'after'</xar:set>
+    <xar:if condition="empty($refpid)">
+        <xar:set name="refpid">0</xar:set>
+        <xar:if condition="!empty($func) and $func eq 'modify'">
+            <xar:set name="position">'before'</xar:set>
+        <xar:else/>
+            <xar:set name="position">'after'</xar:set>
+        </xar:if>
     </xar:if>
-</xar:if>
 
-<xar:if condition="count($pages) eq 0">
-    <input type="hidden" name="moving" id="moving" value="false" />
-    <input type="hidden" name="refpid" id="refpid" value="#$refpid#" />
-    <input type="hidden" name="position" id="position" value="#$position#" />
-<xar:else />
-    <input type="hidden" name="moving" id="moving" value="true" />
-    <p class="param">
-        <label for="refpid">In relation to this page</label>
-        <select name="refpid" id="refpid">
-            <xar:loop name="$pages">
-                <xar:if condition="$loop:item.pid eq $refpid">
-                    <option value="#$loop:item.pid#"
-                    selected="selected">#$loop:item.slash_separated#</option>
-                <xar:elseif condition="$loop:item.left eq $page.left-1" />
-                    <option value="#$loop:item.pid#" selected="selected">#$loop:item.slash_separated#</option>
-                    <xar:set name="position">'firstchild'</xar:set>
-                <xar:elseif condition="$loop:item.right eq $page.left-1" />
-                    <option value="#$loop:item.pid#" selected="selected">#$loop:item.slash_separated#</option>
-                    <xar:set name="position">'after'</xar:set>
+    <xar:if condition="count($pages) eq 0">
+        <input type="hidden" name="moving" id="moving" value="false" />
+        <input type="hidden" name="refpid" id="refpid" value="#$refpid#" />
+        <input type="hidden" name="position" id="position" value="#$position#" />
+    <xar:else />
+        <input type="hidden" name="moving" id="moving" value="true" />
+        <p class="param">
+            <label for="refpid">In relation to this page</label>
+            <select name="refpid" id="refpid">
+                <xar:loop name="$pages">
+                    <xar:if condition="$loop:item.pid eq $refpid">
+                        <option value="#$loop:item.pid#"
+                        selected="selected">#$loop:item.slash_separated#</option>
+                    <xar:elseif condition="$loop:item.left eq $page.left-1" />
+                        <option value="#$loop:item.pid#" selected="selected">#$loop:item.slash_separated#</option>
+                        <xar:set name="position">'firstchild'</xar:set>
+                    <xar:elseif condition="$loop:item.right eq $page.left-1" />
+                        <option value="#$loop:item.pid#" selected="selected">#$loop:item.slash_separated#</option>
+                        <xar:set name="position">'after'</xar:set>
+                    <xar:else />
+                        <option value="#$loop:item.pid#">#$loop:item.slash_separated#</option>
+                    </xar:if>
+                </xar:loop>
+            </select>
+        </p>
+
+        <!-- 
+            The position needs to be set after pages select because there is
+            no position which we can have a selected page that will work in
+            all cases.
+         -->
+        <p class="param">
+            <label for="position">Position</label>
+            <select name="position" id="position">
+                <xar:if condition="$position eq 'before'">
+                    <option value="before" selected="selected">
+                        Right before, in the same level
+                    </option>
                 <xar:else />
-                    <option value="#$loop:item.pid#">#$loop:item.slash_separated#</option>
+                    <option value="before">
+                        Right before, in the same level
+                    </option>
                 </xar:if>
-            </xar:loop>
-        </select>
-    </p>
 
-    <!-- 
-        The position needs to be set after pages select because there is
-        no position which we can have a selected page that will work in
-        all cases.
-     -->
-    <p class="param">
-        <label for="position">Position</label>
-        <select name="position" id="position">
-            <xar:if condition="$position eq 'before'">
-                <option value="before" selected="selected">
-                    Right before, in the same level
-                </option>
-            <xar:else />
-                <option value="before">
-                    Right before, in the same level
-                </option>
-            </xar:if>
+                <xar:if condition="$position eq 'after'">
+                    <option value="after" selected="selected">
+                        Right after, in the same level
+                    </option>
+                <xar:else />
+                    <option value="after">
+                        Right after, in the same level
+                    </option>
+                </xar:if>
 
-            <xar:if condition="$position eq 'after'">
-                <option value="after" selected="selected">
-                    Right after, in the same level
-                </option>
-            <xar:else />
-                <option value="after">
-                    Right after, in the same level
-                </option>
-            </xar:if>
+                <xar:if condition="$position eq 'firstchild'">
+                    <option value="firstchild" selected="selected">
+                        The first child page
+                    </option>
+                <xar:else />
+                    <option value="firstchild">
+                        The first child page
+                    </option>
+                </xar:if>
 
-            <xar:if condition="$position eq 'firstchild'">
-                <option value="firstchild" selected="selected">
-                    The first child page
-                </option>
-            <xar:else />
-                <option value="firstchild">
-                    The first child page
-                </option>
-            </xar:if>
-
-            <xar:if condition="$position eq 'lastchild'">
-                <option value="lastchild" selected="selected">
-                    The last child page
-                </option>
-            <xar:else />
-                <option value="lastchild">
-                    The last child page
-                </option>
-            </xar:if>
-        </select>
-    </p>
-</xar:if>
+                <xar:if condition="$position eq 'lastchild'">
+                    <option value="lastchild" selected="selected">
+                        The last child page
+                    </option>
+                <xar:else />
+                    <option value="lastchild">
+                        The last child page
+                    </option>
+                </xar:if>
+            </select>
+        </p>
+    </xar:if>
 </xar:template>
