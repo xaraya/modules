@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+      <span class="xar-mod-title"><xar:mlstring>Translations Administration</xar:mlstring></span>
+    </div>
+    <div class="xar-mod-body">
+       <xar:template type="module" module="translations" file="admin-nav" />
+       <h2><xar:mlstring>Choose a Theme</xar:mlstring></h2>
+       <xar:template file="admin-menu" type="module"/>
+
+    <xar:template type="module" file="druidbar" />
+    <p class="xar-form-input-wrapper-before">
+      <xar:mlstring>Choose which theme you want to translate from the list below.</xar:mlstring>
+    </p>
+    <ul>
+    <xar:loop name="$themelist">
+      <li><a href="#xarModURL('translations', 'admin', 'theme_overview', array('extid' => $loop:item['regid']))#">
+        #$loop:item['displayname']#
+      </a></li>
+    </xar:loop>
+    </ul>
+    </div>
+</xar:template>
