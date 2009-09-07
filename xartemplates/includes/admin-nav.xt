@@ -2,63 +2,86 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:comment>Common Administration menu</xar:comment>
-    <xar:style scope="module" module="base" file="navtabs" />
+    <xar:style scope="module" module="base" file="tabs" />
 
     <xar:set name="request">xarRequest::getInfo()</xar:set>
     <xar:set name="activetab">#$request.2#</xar:set>
     <div>
-      <dl class="xar-tabs">
-        <dt class="help" title="#xarML('Choose an action to perform')#">
-          <xar:mlstring>Actions:</xar:mlstring>
-        </dt>
+      <ul class="xar-tabs">
         <xar:sec mask="AdminTranslations" catch="false">
           <xar:if condition="$activetab eq 'start' or $activetab eq 'core_overview' or $activetab eq 'theme_overview' or $activetab eq 'module_overview'
           or $activetab eq 'choose_a_theme' or $activetab eq 'choose_a_module' or $activetab eq 'generate_skels_info'
           or $activetab eq 'generate_skels_result' or $activetab eq 'generate_skels_info' or $activetab eq 'translate'
           or $activetab eq 'translate_subtype' or $activetab eq 'delete_fuzzy'">
-            <xar:set name="tabclass">'active'</xar:set>
+            <xar:set name="tabclass">'xar-tab-active'</xar:set>
+            <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
           <xar:else />
-            <xar:set name="tabclass">''</xar:set>
+            <xar:set name="tabclass">'xar-tab'</xar:set>
+            <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
           </xar:if>
-            <dd class="#$tabclass#">
-              <a href="#xarModURL('translations','admin','start')#">
+            <li class="#$tabclass#">
+              <a href="#xarModURL('translations','admin','start')#" class="#$linkclass#">
                 <xar:mlstring>Translate</xar:mlstring>
               </a>
-            </dd>
+            </li>
         </xar:sec>
         <xar:sec mask="AdminTranslations" catch="false">
-            <xar:set name="tabclass">$activetab=='bulk'?'active':''</xar:set>
-            <dd class="#$tabclass#">
-              <a href="#xarModURL('translations','admin','bulk')#">
+            <xar:if condition="$activetab eq 'bulk'">
+                <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+            <xar:else />
+                <xar:set name="tabclass">'xar-tab'</xar:set>
+                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+            </xar:if>
+            <li class="#$tabclass#">
+              <a href="#xarModURL('translations','admin','bulk')#" class="#$linkclass#">
                     <xar:mlstring>Batch Operations</xar:mlstring>
                 </a>
-            </dd>
+            </li>
         </xar:sec>
         <xar:sec mask="ReadTranslations" catch="false">
-            <xar:set name="tabclass">$activetab=='show_status'?'active':''</xar:set>
-            <dd class="#$tabclass#">
-              <a href="#xarModURL('translations','admin','show_status')#">
+            <xar:if condition="$activetab eq 'show_status'">
+                <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+            <xar:else />
+                <xar:set name="tabclass">'xar-tab'</xar:set>
+                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+            </xar:if>
+            <li class="#$tabclass#">
+              <a href="#xarModURL('translations','admin','show_status')#" class="#$linkclass#">
                     <xar:mlstring>Translation Status</xar:mlstring>
                 </a>
-            </dd>
+            </li>
         </xar:sec>
         <xar:sec mask="AdminTranslations" catch="false">
-            <xar:set name="tabclass">$activetab=='modifyconfig'?'active':''</xar:set>
-            <dd class="#$tabclass#">
-              <a href="#xarModURL('translations','admin','modifyconfig')#">
+            <xar:if condition="$activetab eq 'modifyconfig'">
+                <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+            <xar:else />
+                <xar:set name="tabclass">'xar-tab'</xar:set>
+                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+            </xar:if>
+            <li class="#$tabclass#">
+              <a href="#xarModURL('translations','admin','modifyconfig')#" class="#$linkclass#">
                 <xar:mlstring>Modify Config</xar:mlstring>
               </a>
-            </dd>
+            </li>
         </xar:sec>
 
         <xar:sec mask="AdminTranslations" catch="false">
-        <xar:set name="tabclass">$activetab=='main'?'active':''</xar:set>
-        <dd class="#$tabclass#">
-          <a href="#xarModURL('translations','admin','overview')#">
-            <xar:mlstring>Overview</xar:mlstring>
-          </a>
-        </dd>
+            <xar:if condition="$activetab eq 'main'">
+                <xar:set name="tabclass">'xar-tab-active'</xar:set>
+                <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+            <xar:else />
+                <xar:set name="tabclass">'xar-tab'</xar:set>
+                <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+            </xar:if>
+            <li class="#$tabclass#">
+              <a href="#xarModURL('translations','admin','overview')#" class="#$linkclass#">
+                <xar:mlstring>Overview</xar:mlstring>
+              </a>
+            </li>
         </xar:sec>
-      </dl>
+      </ul>
     </div>
 </xar:template>
