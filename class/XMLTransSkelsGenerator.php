@@ -126,7 +126,7 @@ class XMLTranslationsSkelsGenerator
         assert('!empty($this->baseDir)');
         $this->fileName = $this->baseDir;
 
-        if (!ereg("^[a-z]+:$", $ctxType)) {
+        if (!mb_ereg("^[a-z]+:$", $ctxType)) {
            list($prefix,$directory) = explode(':',$ctxType);
            if ($directory != "") $this->fileName .= $directory . "/";
         }
@@ -148,7 +148,7 @@ class XMLTranslationsSkelsGenerator
         assert('!empty($this->baseDir)');
         $this->fileName = $this->baseDir;
 
-        if (!ereg("^[a-z]+:$", $ctxType)) {
+        if (!mb_ereg("^[a-z]+:$", $ctxType)) {
            list($prefix,$directory) = explode(':',$ctxType);
            if ($directory != "") $this->fileName .= $directory . "/";
         }
@@ -188,7 +188,7 @@ class XMLTranslationsSkelsGenerator
         assert('!empty($this->baseDir)');
         $this->fileName = $this->baseDir;
 
-        if (!ereg("^[a-z]+:$", $ctxType)) {
+        if (!mb_ereg("^[a-z]+:$", $ctxType)) {
            list($prefix,$directory) = explode(':',$ctxType);
            if ($directory != "") $this->fileName .= $directory . "/";
         }

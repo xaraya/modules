@@ -20,7 +20,7 @@ function searchFiles($path, $prefix, $force=0)
 {
     global $staticNames;
 
-    $path2 = ereg_replace($prefix,"",$path);
+    $path2 = mb_ereg_replace($prefix,"",$path);
 
     if ($force) {
         $staticNames[] = $path2;

@@ -40,7 +40,7 @@ function translations_adminapi_get_module_dirs($args)
             if (!is_dir("modules/$moddir/$filename")) continue;
             if (substr($filename,0,3) != "xar") continue;
             if (in_array($filename, $dropit)) continue;
-            $names[] = ereg_replace("^xar","",$filename);
+            $names[] = mb_ereg_replace("^xar","",$filename);
         }
         closedir($dd);
     }
