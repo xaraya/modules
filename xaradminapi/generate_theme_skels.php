@@ -76,8 +76,8 @@ function translations_adminapi_generate_theme_skels($args)
         }
     }
 
-    $transEntriesCollection = translations_gather_common_entries($transEntriesCollection);
-    $transKeyEntriesCollection = translations_gather_common_entries($transKeyEntriesCollection);
+    $transEntriesCollection = theme_translations_gather_common_entries($transEntriesCollection);
+    $transKeyEntriesCollection = theme_translations_gather_common_entries($transKeyEntriesCollection);
 
     $subnames[] = 'common';
     // Load previously made translations
@@ -203,7 +203,7 @@ function translations_adminapi_generate_theme_skels($args)
 }
 
 /* PRIVATE FUNCTIONS */
-function translations_gather_common_entries($transEntriesCollection)
+function theme_translations_gather_common_entries($transEntriesCollection)
 {
     $commonEntries = array();
     $subnames = array_keys($transEntriesCollection);
