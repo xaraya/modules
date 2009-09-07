@@ -37,16 +37,7 @@ function translations_init()
 function translations_upgrade($oldversion)
 {
     switch($oldversion){
-        case '0.1.0':
-            xarModVars::set('translations', 'showcontext', 0);
-            xarModVars::set('translations', 'maxreferences', 5);
-            xarModVars::set('translations', 'maxcodelines', 5);
-        case '0.1.1':
-            xarRegisterMask('ReadTranslations', 'All', 'translations', 'All', 'All', 'ACCESS_READ');
-            xarModVars::set('translations', 'maxreferences', 0);
-        case '0.1.2':
-            xarModVars::set('translations', 'maxreferences', 0);
-        case '0.1.3':
+        case '2.0.0':
     }
     return true;
 }
