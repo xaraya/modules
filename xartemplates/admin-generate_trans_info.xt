@@ -1,45 +1,46 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<xar:template type="module" file="admin-menu"/>
+    <xar:template type="module" file="admin-menu"/>
 
-<h4><xar:mlstring>Generating a translated package</xar:mlstring></h4>
-<p>
-  <xar:mlstring>
-    When you are finished with translating all the relevant parts of xaraya (core, modules etc.)
-    you can package the translation.
-  </xar:mlstring>
-  <xar:template type="module" file="druidbar" />
-</p>
-<p>
-<form name="releaseLocaleForm" id="releaseLocaleForm" action="#xarModURL('translations', 'admin', 'update_release_locale')#" method="post">
-  <input type="hidden" name="dnType" value="#$dnType#"/>
-  <input type="hidden" name="dnName" value="#$dnName#"/>
-  <input type="hidden" name="extid" value="#$extid#"/>
-  <xar:mlstring>Choose the locale you want to generate translations for</xar:mlstring>:
-  <select name="locale" id="locale" onchange="document.releaseLocaleForm.submit();">
-    <xar:for start="$i=0" test="$i lt count($locales)" iter="$i++">
-      <xar:if condition="$locales[$i] eq $release_locale">
-        <option value="#$locales[$i]#" selected="selected">#$locales[$i]#</option>
-        <xar:else />
-        <option value="#$locales[$i]#">#$locales[$i]#</option>
-      </xar:if>
-    </xar:for>
-  </select>
-</form>
-</p>
-<p>
-<xar:mlstring>Now we're going to generate translations, this operation could take several minutes. Just take a break!</xar:mlstring>
-<br />
-<xar:ml>
-  <xar:mlstring>Then we'll create a translations package using the '#(1)' archiver command.</xar:mlstring>
-  <xar:mlvar>#$archiver_path#</xar:mlvar>
-</xar:ml>
-</p>
-<form method="post" name="post" id="post" action="#xarModURL('translations', 'admin', 'generate_trans_result')#">
-    <input type="hidden" name="dnType" value="#$dnType#"/>
-    <input type="hidden" name="dnName" value="#$dnName#"/>
-    <input type="hidden" name="extid" value="#$extid#"/>
-    <input type="submit" value="#xarML('GO')#"/>
-</form>
-<br />
-<xar:template type="module" file="opbar" />
+    <h4><xar:mlstring>Generating a translated package</xar:mlstring></h4>
+    <p>
+      <xar:mlstring>
+        When you are finished with translating all the relevant parts of xaraya (core, modules etc.)
+        you can package the translation.
+      </xar:mlstring>
+      <xar:template type="module" file="druidbar" />
+    </p>
+    <p>
+    <form name="releaseLocaleForm" id="releaseLocaleForm" action="#xarModURL('translations', 'admin', 'update_release_locale')#" method="post">
+      <input type="hidden" name="dnType" value="#$dnType#"/>
+      <input type="hidden" name="dnName" value="#$dnName#"/>
+      <input type="hidden" name="extid" value="#$extid#"/>
+      <xar:mlstring>Choose the locale you want to generate translations for</xar:mlstring>:
+      <select name="locale" id="locale" onchange="document.releaseLocaleForm.submit();">
+        <xar:for start="$i=0" test="$i lt count($locales)" iter="$i++">
+          <xar:if condition="$locales[$i] eq $release_locale">
+            <option value="#$locales[$i]#" selected="selected">#$locales[$i]#</option>
+            <xar:else />
+            <option value="#$locales[$i]#">#$locales[$i]#</option>
+          </xar:if>
+        </xar:for>
+      </select>
+    </form>
+    </p>
+    <p>
+    <xar:mlstring>Now we're going to generate translations, this operation could take several minutes. Just take a break!</xar:mlstring>
+    <br />
+    <xar:ml>
+      <xar:mlstring>Then we'll create a translations package using the '#(1)' archiver command.</xar:mlstring>
+      <xar:mlvar>#$archiver_path#</xar:mlvar>
+    </xar:ml>
+    </p>
+    <form method="post" name="post" id="post" action="#xarModURL('translations', 'admin', 'generate_trans_result')#">
+        <input type="hidden" name="dnType" value="#$dnType#"/>
+        <input type="hidden" name="dnName" value="#$dnName#"/>
+        <input type="hidden" name="extid" value="#$extid#"/>
+        <input type="submit" value="#xarML('GO')#"/>
+    </form>
+    <br />
+    <xar:template type="module" file="opbar" />
 </xar:template>

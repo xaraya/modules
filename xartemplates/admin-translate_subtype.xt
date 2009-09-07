@@ -1,65 +1,66 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
-<div class="xar-mod-head">
-  <span class="xar-mod-title"><xar:mlstring>Translations Administration</xar:mlstring></span>
-</div>
-<div class="xar-mod-body">
-   <xar:template type="module" module="translations" file="admin-nav" />
-   <h2><xar:mlstring>Translate Subtype</xar:mlstring></h2>
-   <xar:template type="module" file="admin-menu"/>
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <div class="xar-mod-head">
+      <span class="xar-mod-title"><xar:mlstring>Translations Administration</xar:mlstring></span>
+    </div>
+    <div class="xar-mod-body">
+       <xar:template type="module" module="translations" file="admin-nav" />
+       <h2><xar:mlstring>Translate Subtype</xar:mlstring></h2>
+       <xar:template type="module" file="admin-menu"/>
 
-<xar:template type="module" file="druidbar"/>
+    <xar:template type="module" file="druidbar"/>
 
-<h4>
-<xar:ml>
-  <xar:mlstring>Translating: #(1) #(2)</xar:mlstring>
-  <xar:mlvar>#$dnTypeText#</xar:mlvar>
-  <xar:mlvar>#$dnName#</xar:mlvar>
-</xar:ml>
-</h4>
+    <h4>
+    <xar:ml>
+      <xar:mlstring>Translating: #(1) #(2)</xar:mlstring>
+      <xar:mlvar>#$dnTypeText#</xar:mlvar>
+      <xar:mlvar>#$dnName#</xar:mlvar>
+    </xar:ml>
+    </h4>
 
-<xar:template type="module" file="trabar" />
-<form method="post" action="#$action#">
+    <xar:template type="module" file="trabar" />
+    <form method="post" action="#$action#">
 
-<input type="hidden" name="dnType" value="#$dnType#"/>
-<input type="hidden" name="dnName" value="#$dnName#"/>
-<input type="hidden" name="extid" value="#$extid#"/>
+    <input type="hidden" name="dnType" value="#$dnType#"/>
+    <input type="hidden" name="dnName" value="#$dnName#"/>
+    <input type="hidden" name="extid" value="#$extid#"/>
 
-<h5><xar:mlstring>Strings:</xar:mlstring></h5>
-<xar:loop id="entries" name="$entries">
-  <div>
-    <xar:template type="module" file="translate-string-item" subdata="$loop:item"/>
-  </div>
-</xar:loop>
+    <h5><xar:mlstring>Strings:</xar:mlstring></h5>
+    <xar:loop id="entries" name="$entries">
+      <div>
+        <xar:template type="module" file="translate-string-item" subdata="$loop:item"/>
+      </div>
+    </xar:loop>
 
 
-<h5><xar:mlstring>Keys:</xar:mlstring></h5>
-<xar:loop id="keyEntries" name="$keyEntries">
-  <div>
-    <xar:template type="module" file="translate-key-item" subdata="$loop:item"/>
-  </div>
-</xar:loop>
+    <h5><xar:mlstring>Keys:</xar:mlstring></h5>
+    <xar:loop id="keyEntries" name="$keyEntries">
+      <div>
+        <xar:template type="module" file="translate-key-item" subdata="$loop:item"/>
+      </div>
+    </xar:loop>
 
-<p>
-<input type="submit" name="sbt" id="sbt" value="#xarML('OK')#" />
-</p>
+    <p>
+    <input type="submit" name="sbt" id="sbt" value="#xarML('OK')#" />
+    </p>
 
-<h5><xar:mlstring>Fuzzy Strings:</xar:mlstring></h5>
-<xar:loop id="fuzzyEntries" name="$fuzzyEntries">
-  <div>
-    <xar:template type="module" file="fuzzy-string-item" subdata="$loop:item"/>
-  </div>
-</xar:loop>
+    <h5><xar:mlstring>Fuzzy Strings:</xar:mlstring></h5>
+    <xar:loop id="fuzzyEntries" name="$fuzzyEntries">
+      <div>
+        <xar:template type="module" file="fuzzy-string-item" subdata="$loop:item"/>
+      </div>
+    </xar:loop>
 
-<h5><xar:mlstring>Fuzzy Keys:</xar:mlstring></h5>
-<xar:loop id="fuzzyKeyEntries" name="$fuzzyKeyEntries">
-  <div>
-    <xar:template type="module" file="fuzzy-key-item" subdata="$loop:item"/>
-  </div>
-</xar:loop>
+    <h5><xar:mlstring>Fuzzy Keys:</xar:mlstring></h5>
+    <xar:loop id="fuzzyKeyEntries" name="$fuzzyKeyEntries">
+      <div>
+        <xar:template type="module" file="fuzzy-key-item" subdata="$loop:item"/>
+      </div>
+    </xar:loop>
 
-</form>
-<br />
-<xar:template type="module" file="opbar" />
-</div>
+    </form>
+    <br />
+    <xar:template type="module" file="opbar" />
+    </div>
 </xar:template>

@@ -1,16 +1,17 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<p>
-<xar:for start="$i=0" test="$i lt $stepCount" iter="$i++">
-  <xar:if condition="$i gt 0">
-  &gt;&gt;
-  </xar:if>
-  <xar:if condition="$i lt $currentStep">
-    <a href="#$stepURLs[$i]#">#$stepLabels[$i]#</a>
-  <xar:elseif condition="$i eq $currentStep" />
-    <b>#$stepLabels[$i]#</b>
-  <xar:else />
-    #$stepLabels[$i]#
-  </xar:if>
-</xar:for>
-</p>
+    <p>
+    <xar:for start="$i=0" test="$i lt $stepCount" iter="$i++">
+      <xar:if condition="$i gt 0">
+      &gt;&gt;
+      </xar:if>
+      <xar:if condition="$i lt $currentStep">
+        <a href="#$stepURLs[$i]#">#$stepLabels[$i]#</a>
+      <xar:elseif condition="$i eq $currentStep" />
+        <b>#$stepLabels[$i]#</b>
+      <xar:else />
+        #$stepLabels[$i]#
+      </xar:if>
+    </xar:for>
+    </p>
 </xar:template>

@@ -1,53 +1,54 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<table width="100%">
- <tr>
-  <td class="xar-alt">
-    <xar:if condition="strlen($translation) eq 0">
-      <label id="lbltid#$tid#" for="tid#$tid#"><span class="xar-error">#$string#</span></label>
-    <xar:else />
-      <label id="lbltid#$tid#" for="tid#$tid#">#$string#</label>
-    </xar:if>
-  </td>
- </tr>
- <tr>
-   <td>
-    <xar:if condition="strlen($string) gt 80">
-    <textarea name="tid#$tid#" id="tid#$tid#" rows="4" cols="60" onchange="tidchange(this);">#$translation#</textarea>
-    <xar:else />
-    <input type="text" name="tid#$tid#" id="tid#$tid#" value="#$translation#" onchange="tidchange(this);" size="80" />
-    </xar:if>
-   </td>
- </tr>
- <tr>
-  <td>
-      <xar:set name="showreferences">xarModVars::get('translations', 'showcontext')</xar:set>
-      <xar:if condition="$showreferences">
-        <table>
-          <xar:loop name="$references">
-            <tr>
-              <td class="#$loop:index % 2 ? 'xar-norm-outline':'xar-alt-outline'# xar-sub">
-                #$loop:item['file']#:#$loop:item['line']# --&gt;
-              </td>
-              <td class="#$loop:index % 2 ? 'xar-norm-outline':'xar-alt-outline'# xar-sub">
-                #$loop:item['source']['pre']#
-                <span class="xar-accent">#$loop:item['source']['code']#</span>
-                #$loop:item['source']['post']#
-              </td>
-            </tr>
-          </xar:loop>
-          <xar:if condition="$otherReferences">
-            <tr>
-              <td colspan="2" class="xar-norm-outline">
-                <xar:ml>
-                  <xar:mlstring>Other #(1) references are not shown.</xar:mlstring>
-                  <xar:mlvar>#$numOtherReferences#</xar:mlvar>
-                </xar:ml>
-              </td>
-            </tr>
+    <table width="100%">
+     <tr>
+      <td class="xar-alt">
+        <xar:if condition="strlen($translation) eq 0">
+          <label id="lbltid#$tid#" for="tid#$tid#"><span class="xar-error">#$string#</span></label>
+        <xar:else />
+          <label id="lbltid#$tid#" for="tid#$tid#">#$string#</label>
+        </xar:if>
+      </td>
+     </tr>
+     <tr>
+       <td>
+        <xar:if condition="strlen($string) gt 80">
+        <textarea name="tid#$tid#" id="tid#$tid#" rows="4" cols="60" onchange="tidchange(this);">#$translation#</textarea>
+        <xar:else />
+        <input type="text" name="tid#$tid#" id="tid#$tid#" value="#$translation#" onchange="tidchange(this);" size="80" />
+        </xar:if>
+       </td>
+     </tr>
+     <tr>
+      <td>
+          <xar:set name="showreferences">xarModVars::get('translations', 'showcontext')</xar:set>
+          <xar:if condition="$showreferences">
+            <table>
+              <xar:loop name="$references">
+                <tr>
+                  <td class="#$loop:index % 2 ? 'xar-norm-outline':'xar-alt-outline'# xar-sub">
+                    #$loop:item['file']#:#$loop:item['line']# --&gt;
+                  </td>
+                  <td class="#$loop:index % 2 ? 'xar-norm-outline':'xar-alt-outline'# xar-sub">
+                    #$loop:item['source']['pre']#
+                    <span class="xar-accent">#$loop:item['source']['code']#</span>
+                    #$loop:item['source']['post']#
+                  </td>
+                </tr>
+              </xar:loop>
+              <xar:if condition="$otherReferences">
+                <tr>
+                  <td colspan="2" class="xar-norm-outline">
+                    <xar:ml>
+                      <xar:mlstring>Other #(1) references are not shown.</xar:mlstring>
+                      <xar:mlvar>#$numOtherReferences#</xar:mlvar>
+                    </xar:ml>
+                  </td>
+                </tr>
+              </xar:if>
+            </table>
           </xar:if>
-        </table>
-      </xar:if>
-  </td>
- </tr>
-</table>
+      </td>
+     </tr>
+    </table>
 </xar:template>

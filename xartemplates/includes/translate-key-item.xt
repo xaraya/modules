@@ -1,57 +1,58 @@
+<?xml version="1.0"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-<table width="100%">
-    <tr>
-      <td class="xar-alt">
-        #$key#<br /><br />
-        <span class="xar-accent">
-          <xar:if condition="strlen($translation) eq 0">
-            <label for="key#$key#"><span class="xar-error">#$en_translation#</span></label>
-          <xar:else />
-            <label for="key#$key#">#$en_translation#</label>
+    <table width="100%">
+        <tr>
+          <td class="xar-alt">
+            #$key#<br /><br />
+            <span class="xar-accent">
+              <xar:if condition="strlen($translation) eq 0">
+                <label for="key#$key#"><span class="xar-error">#$en_translation#</span></label>
+              <xar:else />
+                <label for="key#$key#">#$en_translation#</label>
+              </xar:if>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <xar:if condition="strlen($en_translation) gt 80">
+            <textarea name="key#$key#" id="key#$key#" rows="4" cols="80">#$translation#</textarea>
+            <xar:else />
+            <input type="text" name="key#$key#" id="key#$key#" value="#$translation#" size="80" />
+            </xar:if>
+          </td>
+        </tr>
+        <tr>
+          <td>
+          <xar:set name="showreferences">xarModVars::get('translations', 'showcontext')</xar:set>
+          <xar:if condition="$showreferences">
+
+            <table>
+              <xar:loop name="$references">
+                <tr>
+                  <td class="#$loop:index % 2 ? 'xar-norm-outline':'xar-alt-outline'#">
+                    #$loop:item['file']#:#$loop:item['line']# --&gt;
+                  </td>
+                  <td class="#$loop:index % 2 ? 'xar-norm-outline':'xar-alt-outline'#">
+                    #$loop:item['source']['pre']#
+                    <span class="xar-accent">#$loop:item['source']['code']#</span>
+                    #$loop:item['source']['post']#
+                  </td>
+                </tr>
+              </xar:loop>
+              <xar:if condition="$otherReferences">
+                <tr>
+                  <td colspan="2" class="xar-norm-outline">
+                    <xar:ml>
+                      <xar:mlstring>Other #(1) references are not shown.</xar:mlstring>
+                      <xar:mlvar>#$numOtherReferences#</xar:mlvar>
+                    </xar:ml>
+                  </td>
+                </tr>
+              </xar:if>
+            </table>
           </xar:if>
-        </span>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <xar:if condition="strlen($en_translation) gt 80">
-        <textarea name="key#$key#" id="key#$key#" rows="4" cols="80">#$translation#</textarea>
-        <xar:else />
-        <input type="text" name="key#$key#" id="key#$key#" value="#$translation#" size="80" />
-        </xar:if>
-      </td>
-    </tr>
-    <tr>
-      <td>
-      <xar:set name="showreferences">xarModVars::get('translations', 'showcontext')</xar:set>
-      <xar:if condition="$showreferences">
-        
-        <table>
-          <xar:loop name="$references">
-            <tr>
-              <td class="#$loop:index % 2 ? 'xar-norm-outline':'xar-alt-outline'#">
-                #$loop:item['file']#:#$loop:item['line']# --&gt;
-              </td>
-              <td class="#$loop:index % 2 ? 'xar-norm-outline':'xar-alt-outline'#">
-                #$loop:item['source']['pre']#
-                <span class="xar-accent">#$loop:item['source']['code']#</span>
-                #$loop:item['source']['post']#
-              </td>
-            </tr>
-          </xar:loop>
-          <xar:if condition="$otherReferences">
-            <tr>
-              <td colspan="2" class="xar-norm-outline">
-                <xar:ml>
-                  <xar:mlstring>Other #(1) references are not shown.</xar:mlstring>
-                  <xar:mlvar>#$numOtherReferences#</xar:mlvar>
-                </xar:ml>
-              </td>
-            </tr>
-          </xar:if>
-        </table>
-      </xar:if>
-      </td>
-    </tr>
-</table>
+          </td>
+        </tr>
+    </table>
 </xar:template>
