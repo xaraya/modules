@@ -17,7 +17,7 @@ function translations_admin_modifyconfig()
     if(!xarSecurityCheck('AdminTranslations')) return;
     if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'locales', XARVAR_NOT_REQUIRED)) return;
 
-   $localehome = xarPreCoreGetVarDirPath().'/locales';
+   $localehome = xarServer::getBaseURL().sys::varpath().'/locales';
     if (!file_exists($localehome)) {
         throw new Exception('The locale directory was not found.');
     }
