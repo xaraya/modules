@@ -60,7 +60,7 @@
             </h3>
         </xar:if>
         <xar:categories-navigation layout="trails" showchildren="1" module="articles" type="admin" itemtype="$ptid" catid="$catid" />
-        <xar:base-include-javascript module="base" filename="checkall.js" />
+        <xar:javascript module="base" filename="checkall.js" />
             <form method="post" name="viewarticles" id="viewarticles" action="#xarModURL('articles','admin','updatestatus')#" onsubmit="if (document.getElementById('status').value == '-1') {return confirm('#xarML('Delete all selected articles?')#');}">
                 <div>
                     <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
@@ -193,12 +193,12 @@
                         </xar:foreach>
                         </select>
                         <input type="submit" value="#$changestatuslabel#" />
-                        <script language="JavaScript" type="text/javascript">
 <![CDATA[
+                        <script language="JavaScript" type="text/javascript">
                             document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewarticles'],true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
                             document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewarticles'],false)\"><xar:mlstring>Uncheck</xar:mlstring></a> ]");
-]]>
                         </script>
+]]>
                     </p>
                 </xar:if>
             </div>

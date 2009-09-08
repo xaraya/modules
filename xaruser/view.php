@@ -295,40 +295,34 @@ function articles_user_view($args)
     }
 
     // Get articles
-    $articles = xarModAPIFunc(
-        'articles', 'user', 'getall',
-        array(
-            'startnum' => $startnum,
-            'cids' => $cids,
-            'andcids' => $andcids,
-            'ptid' => (isset($ptid) ? $ptid : null),
-            'authorid' => $authorid,
-            'status' => $status,
-            'sort' => $sort,
-            'extra' => $extra,
-            'where' => $where,
-            'search' => $q,
-            'numitems' => $numitems,
-            'pubdate' => $pubdate,
-            'startdate' => $startdate,
-            'enddate' => $enddate
-        )
-    );
-
+    try {
+        $articles = xarModAPIFunc(
+            'articles', 'user', 'getall',
+            array(
+                'startnum' => $startnum,
+                'cids' => $cids,
+                'andcids' => $andcids,
+                'ptid' => (isset($ptid) ? $ptid : null),
+                'authorid' => $authorid,
+                'status' => $status,
+                'sort' => $sort,
+                'extra' => $extra,
+                'where' => $where,
+                'search' => $q,
+                'numitems' => $numitems,
+                'pubdate' => $pubdate,
+                'startdate' => $startdate,
+                'enddate' => $enddate
+            )
+        );
+    } catch (Exception $e) {
+        // Error getting articles
+        $data['output'] = xarML('Failed to retrieve articles - reason: #(1)', $e->getMessage());
+        return $data;
+    }
     if (!is_array($articles)) {
         // Error getting articles
-        if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION) {
-             return; // throw back
-        } elseif (xarCurrentErrorType() == XAR_USER_EXCEPTION) {
-            // Get back the reason in string format
-            $reason = xarCurrentError();
-        }
-
-        if (!empty($reason)) {
-            $data['output'] = xarML('Failed to retrieve articles - reason: #(2)', $reason->toString());
-        } else {
-            $data['output'] = xarML('Failed to retrieve articles');
-        }
+        $data['output'] = xarML('Failed to retrieve articles');
         return $data;
     }
 
@@ -337,9 +331,9 @@ function articles_user_view($args)
     //        selected (per category, per publication type, a combination, ...) ?
 
     if (!empty($authorid)) {
-        $data['author'] = xarUserGetVar('name', $authorid);
-        if (empty($data['author'])) {
-            xarErrorHandled();
+        try {
+            $data['author'] = xarUserGetVar('name', $authorid);
+        } catch (Exception $e) {
             $data['author'] = xarML('Unknown');
         }
     }

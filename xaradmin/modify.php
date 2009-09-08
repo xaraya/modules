@@ -67,14 +67,14 @@ function articles_admin_modify($args)
 
     // Use articles user GUI function (not API) for preview, catch exceptions
     if (!xarModLoad('articles','user')) return;
-    $data['preview'] = xarModFunc('articles', 'user', 'display',
-                                  array('preview' => true, 'article' => $article));
-    // Catch errors from generating the preview
-    if (xarCurrentErrorType() != XAR_NO_EXCEPTION) {
+    try {
+        $data['preview'] = xarModFunc('articles', 'user', 'display',
+                                      array('preview' => true, 'article' => $article));
+    } catch (Exception $e) {
+        // Catch errors from generating the preview
         $data['preview'] = xarML('An error occurred while processing your request. The details are:');
-        $data['preview'] .= xarErrorRender('text', 'ERROR', true);
-        xarErrorHandled();
-    } 
+        $data['preview'] .= $e->getMessage();
+    }
 
     // preset some variables for hook modules
     $article['module'] = 'articles';

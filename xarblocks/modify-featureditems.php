@@ -88,7 +88,8 @@ function articles_featureditemsblock_modify($blockinfo)
         'articles', 'user', 'getall', $article_args );
 
     // Check for exceptions
-    if (!isset($vars['filtereditems']) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
+//    use try {} catch (Exception $e) { ... = $e->getMessage();} here
+    if (!isset($vars['filtereditems']))
         return; // throw back
 
     // Try to keep the additional headlines select list width less than 50 characters

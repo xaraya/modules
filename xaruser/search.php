@@ -116,7 +116,7 @@ function articles_user_search($args)
     }
     $seenstatus = array();
     foreach ($status as $that) {
-        if (empty($that) || !is_numeric($that)) continue;
+        if (!is_numeric($that)) continue;
         $seenstatus[$that] = 1;
     }
     $status = array_keys($seenstatus);
@@ -196,14 +196,15 @@ function articles_user_search($args)
         $q = null;
     }
 
+// FIXME: check search by author - isn't this based on the id (or uname) ?
     // Find the id of the author we're looking for
     if (!empty($author)) {
         // Load API
         if (!xarModAPILoad('roles', 'user')) return;
         $user = xarModAPIFunc('roles','user','get',
                              array('name' => $author));
-        if (!empty($user['uid'])) {
-            $authorid = $user['uid'];
+        if (!empty($user['id'])) {
+            $authorid = $user['id'];
         } else {
             $authorid = null;
             $author = null;

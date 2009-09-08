@@ -28,35 +28,35 @@
     <xar:comment>
         retrieve the previous article in publication type ptid (with any status here)
     </xar:comment>
-    <xar:comment>
+    <!--
         <xar:set name="prevartinfo">
             #xarModAPIFunc('articles','user','getprevious',array('ptid' => $ptid, 'aid' => $aid, 'status' => array(0,1,2,3)))#
         </xar:set>
-    </xar:comment>
+    -->
     <xar:comment>
         retrieve the next article in publication type ptid (with any status here)
     </xar:comment>
-    <xar:comment>
+    <!--
         <xar:set name="nextartinfo">
             #xarModAPIFunc('articles','user','getnext',array('ptid' => $ptid, 'aid' => $aid, 'status' => array(0,1,2,3)))#
         </xar:set>
-    </xar:comment>
+    -->
     <xar:comment>
         show a link to modify the previous article with title
     </xar:comment>
-    <xar:comment>
+    <!--
         <xar:if condition="!empty($prevartinfo['aid'])">
             <a href="#xarModURL('articles','admin','modify',array('aid' => $prevartinfo['aid']))#">&lt;&lt; #xarVarPrepHTMLDisplay($prevartinfo['title'])#</a>
         </xar:if>
-    </xar:comment>
+    -->
     <xar:comment>
         show a link to modify the next article with title
     </xar:comment>
-    <xar:comment>
+    <!--
         <xar:if condition="!empty($nextartinfo['aid'])">
             <a href="#xarModURL('articles','admin','modify',array('aid' => $nextartinfo['aid']))#">#xarVarPrepHTMLDisplay($nextartinfo['title'])# &gt;&gt;</a>
         </xar:if>
-    </xar:comment>
+    -->
     <xar:if condition="!empty($withupload)">
         <xar:set name="enctype">
             'multipart/form-data'
@@ -66,7 +66,8 @@
             'application/x-www-form-urlencoded'
         </xar:set>
     </xar:if>
-    <form method="post" name="post" id="post" action="&xar-modurl-articles-admin-update;" enctype="#$enctype#" #$formhooks['formaction']# >
+    <!-- mrb: removed the formhooks['formaction'] thing, invalid attribute and i couldnt figure out what it was -->
+    <form method="post" name="post" id="post" action="&xar-modurl-articles-admin-update;" enctype="#$enctype#" >
         <div class="xar-form-input-wrapper">
             <label class="help xar-form-label" title="#xarML('This is the publication type that this article will appear in.')#">
                 <xar:mlstring>

@@ -17,14 +17,6 @@
 function articles_init()
 {
 
-    //Not needed anymore with the dependency checks.
-    if(!xarModIsAvailable('categories')) {
-        $msg=xarML('The categories module should be activated first');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',
-                        new SystemException($msg));
-        return;
-    }
-
     // Get database information
     $dbconn = xarDB::getConn();
     $xartable = xarDB::getTables();

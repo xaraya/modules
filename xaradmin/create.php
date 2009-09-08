@@ -33,18 +33,18 @@ function articles_admin_create()
     if (!xarVarFetch('view',     'str',   $view,    NULL, XARVAR_NOT_REQUIRED)) {return;}    
     if (!xarVarFetch('return_url', 'str:1', $return_url, NULL, XARVAR_NOT_REQUIRED)) {return;}
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) {
-        if (xarCurrentErrorType() == XAR_USER_EXCEPTION) {
-            // Catch exception and fall back to preview
-            $msg = xarErrorRender('text') . "<br />";
-            $msg .= xarML('Article was <strong>NOT</strong> saved, please retry.');
-            xarErrorHandled();
-            // Save the error message if we are not in preview
-            if (!isset($preview)) {
-                xarSession::setVar('statusmsg', $msg);
-            }
-            $preview = 1;
+    try {
+        $confirm = xarSecConfirmAuthKey();
+        if (!$confirm) return;
+    } catch (ForbiddenOperationException $e) {
+        // Catch exception and fall back to preview
+        $msg = $e->getMessage() . "<br />";
+        $msg .= xarML('Article was <strong>NOT</strong> saved, please retry.');
+        // Save the error message if we are not in preview
+        if (!isset($preview)) {
+            xarSession::setVar('statusmsg', $msg);
         }
+        $preview = 1;
     }
 
     $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
@@ -115,7 +115,7 @@ function articles_admin_create()
     // Default the authorid to the current author if either not already set, or the authorid
     // field does not allow input when creating a new article.
     if (empty($article['authorid']) || empty($pubtypes[$ptid]['config']['authorid']['input'])) {
-        $article['authorid'] = xarUserGetVar('uid');
+        $article['authorid'] = xarUserGetVar('id');
     }
     if (empty($article['authorid'])) {
         $article['authorid'] = _XAR_ID_UNREGISTERED;
@@ -155,24 +155,18 @@ function articles_admin_create()
                                'articles', $ptid);
 
     // Pass to API
-    $aid = xarModAPIFunc('articles', 'admin', 'create', $article);
-
-    if ($aid == false) {
+    try {
+        $aid = xarModAPIFunc('articles', 'admin', 'create', $article);
+        if (empty($aid)) return;
+    } catch (Exception $e) {
         // TODO: Avoid dataloss with falling back to preview
-        // Throw back any system exceptions (e.g. database failure)
-        if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION) {
-            return; // throw back
-        }
-        // Handle the user exceptions yourself
+        // Catch exception and fall back to preview
         $status = xarML('Creating article failed');
-        // Get the information about the exception (in HTML or string format)
-        // $reason = xarCurrentErrorHTML();
-        $reason = xarCurrentError();
-        if (!empty($reason)) {
-            $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
+        $status .= '<br /><br />'. xarML('Reason') .' : '. $e->getMessage();
+        // Save the error message if we are not in preview
+        if (!isset($preview)) {
+            xarSession::setVar('statusmsg', $status);
         }
-        // Free the exception to tell Xaraya that you handled it
-        xarErrorFree();
         return $status;
     }
 

@@ -301,11 +301,13 @@ function articles_user_display($args)
             case 'userlist':
                 $data[$field] = $article[$field];
         // TODO: replace by authorid and sync with templates
-                $data['author'] = xarUserGetVar('name', $article[$field]);
+                try {
+                    $data['author'] = xarUserGetVar('name', $article[$field]);
+                } catch (Exception $e) {
+                    // clear error retrieving non-existing author
+                }
                 if (!isset($data['author'])) {
                     $data['author'] = '';
-                    // clear error retrieving non-existing author
-                    xarErrorFree();
                 } elseif (empty($data['author'])) {
                     $data['author'] = xarUserGetVar('uname', $article[$field]);
                 }

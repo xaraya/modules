@@ -31,18 +31,18 @@ function articles_admin_update()
     if(!xarVarFetch('save',         'isset', $save,      NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('return_url',  'str:1', $return_url, NULL, XARVAR_NOT_REQUIRED)) {return;}
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) {
-        if (xarCurrentErrorType() == XAR_USER_EXCEPTION) {
-            // Catch exception and fall back to preview
-            $msg = xarErrorRender('text', true);
-            $msg .= xarML('Article was <strong>NOT</strong> saved, please retry.');
-            xarErrorFree();
-            // Save the error message if we are not in preview
-            if (!$preview) {
-                xarSession::setVar('statusmsg', $msg);
-            }
-            $preview = 1;
+    try {
+        $confirm = xarSecConfirmAuthKey();
+        if (!$confirm) return;
+    } catch (ForbiddenOperationException $e) {
+        // Catch exception and fall back to preview
+        $msg = $e->getMessage() . "<br />";
+        $msg .= xarML('Article was <strong>NOT</strong> saved, please retry.');
+        // Save the error message if we are not in preview
+        if (!isset($preview)) {
+            xarSession::setVar('statusmsg', $msg);
         }
+        $preview = 1;
     }
 
     if (empty($aid) || !is_numeric($aid)) {

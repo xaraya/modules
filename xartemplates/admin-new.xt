@@ -40,7 +40,7 @@
         </xar:set>
     </xar:if>
     <xar:if condition="!empty($ptid)">
-        <!-- mrb: removed the formhooks thing, invalid attribute and i couldnt figure out what it was -->
+        <!-- mrb: removed the formhooks['formaction'] thing, invalid attribute and i couldnt figure out what it was -->
         <form method="post" name="post" id="post" action="&xar-modurl-articles-admin-create;" enctype="#$enctype#"  >
             <xar:comment>Instead of looping over all fields, you can also access individual field definitions via $fields['title'], $fields['summary'] etc.</xar:comment>
             <xar:comment>If you would like to preset certain fields via GET or POST parameters, you should set $field['definition']['preset'] = 'yes' before passing it to the xar:articles-field tag. You can also set the value directly in this template via $field['definition']['value']</xar:comment>
