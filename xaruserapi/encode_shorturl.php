@@ -32,9 +32,9 @@ function articles_userapi_encode_shorturl($args)
     //Let's make provision for this
     $string=''; //initialize
     if (!empty($ptid)) {
-        $string = xarModGetVar('articles', 'settings.'.$ptid);
+        $string = xarModVars::get('articles', 'settings.'.$ptid);
     } else {
-        $string = xarModGetVar('articles', 'settings');
+        $string = xarModVars::get('articles', 'settings');
     }
     if (!empty($string)) {
         $settings = unserialize($string);

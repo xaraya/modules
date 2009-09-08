@@ -174,9 +174,9 @@ function articles_userapi_get($args)
 
    // Get the article settings for this publication type
     if (empty($pubtypeid)) {
-        $settings = unserialize(xarModGetVar('articles', 'settings'));
+        $settings = unserialize(xarModVars::get('articles', 'settings'));
     } else {
-        $settings = unserialize(xarModGetVar('articles', 'settings.'.$pubtypeid));
+        $settings = unserialize(xarModVars::get('articles', 'settings.'.$pubtypeid));
     }
     $settings['checkpubdate']=isset($settings['checkpubdate'])? $settings['checkpubdate']:0;
     if (isset($article['cids']) && count($article['cids']) > 0) { 

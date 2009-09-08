@@ -32,9 +32,9 @@ function articles_admin_modifyconfig()
     //Let's make provision for this
     $string=''; //initialize
     if (!empty($ptid)) {
-        $string = xarModGetVar('articles', 'settings.'.$ptid);
+        $string = xarModVars::get('articles', 'settings.'.$ptid);
     } else {
-        $string = xarModGetVar('articles', 'settings');
+        $string = xarModVars::get('articles', 'settings');
 
     }
     if (!empty($string)) {
@@ -257,17 +257,17 @@ function articles_admin_modifyconfig()
     $data['pubfilters'] = $pubfilters;
 
     if (empty($ptid)) {
-        $data['shorturls'] = xarModGetVar('articles','SupportShortURLs') ? true : false;
-        $data['ptypenamechange'] = xarModGetVar('articles','ptypenamechange') ? true : false;
+        $data['shorturls'] = xarModVars::get('articles','SupportShortURLs') ? true : false;
+        $data['ptypenamechange'] = xarModVars::get('articles','ptypenamechange') ? true : false;
 
-        $data['defaultpubtype'] = xarModGetVar('articles', 'defaultpubtype');
+        $data['defaultpubtype'] = xarModVars::get('articles', 'defaultpubtype');
         if (empty($data['defaultpubtype'])) {
             $data['defaultpubtype'] = '';
         }
-        $data['sortpubtypes'] = xarModGetVar('articles', 'sortpubtypes');
+        $data['sortpubtypes'] = xarModVars::get('articles', 'sortpubtypes');
         if (empty($data['sortpubtypes'])) {
             $data['sortpubtypes'] = 'id';
-            xarModSetVar('articles','sortpubtypes','id');
+            xarModVars::set('articles','sortpubtypes','id');
         }
     }
 

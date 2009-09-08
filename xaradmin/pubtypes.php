@@ -104,13 +104,13 @@ function articles_admin_pubtypes()
                                   'usetitleforurl'       => 0,
                                   'defaultstatus'        => $status,
                                   'defaultsort'          => 'date');
-                xarModSetVar('articles', 'settings.'.$ptid,serialize($settings));
-                xarModSetVar('articles', 'number_of_categories.'.$ptid, 0);
-                xarModSetVar('articles', 'mastercids.'.$ptid, '');
+                xarModVars::set('articles', 'settings.'.$ptid,serialize($settings));
+                xarModVars::set('articles', 'number_of_categories.'.$ptid, 0);
+                xarModVars::set('articles', 'mastercids.'.$ptid, '');
 
                 // Redirect to the admin view page
-                xarSession::setVar('statusmsg',
-                xarResponseRedirect(xarModURL('articles', 'admin', 'pubtypes',
+                xarSession::setVar('statusmsg', xarML('Publication type created'));
+                xarResponse::Redirect(xarModURL('articles', 'admin', 'pubtypes',
                                               array('action' => 'view')));
                 return true;
             }
@@ -140,8 +140,8 @@ function articles_admin_pubtypes()
                 return;
             } else {
                 // Redirect back to the admin modify page to continue editing
-                xarSession::setVar('statusmsg',
-                xarResponseRedirect(xarModURL('articles', 'admin', 'pubtypes', 
+                xarSession::setVar('statusmsg', xarML('Publication type updated'));
+                xarResponse::Redirect(xarModURL('articles', 'admin', 'pubtypes', 
                                               array('ptid'=>$ptid,'action' => 'modify')));
                 return true;
             }
@@ -152,17 +152,17 @@ function articles_admin_pubtypes()
                               array('ptid' => $ptid))) {
                 return;
             } else {
-                xarModDelVar('articles', 'settings.'.$ptid);
+                xarModVars::delete('articles', 'settings.'.$ptid);
                 xarModDelAlias($pubtypes[$ptid]['name'],'articles');
-                xarModDelVar('articles', 'number_of_categories.'.$ptid);
-                xarModDelVar('articles', 'mastercids.'.$ptid);
-                $default = xarModGetVar('articles','defaultpubtype');
+                xarModVars::delete('articles', 'number_of_categories.'.$ptid);
+                xarModVars::delete('articles', 'mastercids.'.$ptid);
+                $default = xarModVars::get('articles','defaultpubtype');
                 if ($ptid == $default) {
-                    xarModSetVar('articles','defaultpubtype','');
+                    xarModVars::set('articles','defaultpubtype','');
                 }
                 // Redirect to the admin view page
-                xarSession::setVar('statusmsg',
-                xarResponseRedirect(xarModURL('articles', 'admin', 'pubtypes',
+                xarSession::setVar('statusmsg', xarML('Publication type deleted'));
+                xarResponse::Redirect(xarModURL('articles', 'admin', 'pubtypes',
                                               array('action' => 'view')));
                 return true;
             }

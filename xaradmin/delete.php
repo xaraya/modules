@@ -91,7 +91,7 @@ function articles_admin_delete()
 
     // Return return_url
     if (!empty($return_url)) {
-        xarResponseRedirect($return_url);
+        xarResponse::Redirect($return_url);
         return true;
     }
 
@@ -101,7 +101,7 @@ function articles_admin_delete()
         $lastviewarray = unserialize($lastview);
         if (!empty($lastviewarray['ptid']) && $lastviewarray['ptid'] == $ptid) {
             extract($lastviewarray);
-            xarResponseRedirect(xarModURL('articles', 'admin', 'view',
+            xarResponse::Redirect(xarModURL('articles', 'admin', 'view',
                                           array('ptid' => $ptid,
                                                 'catid' => $catid,
                                                 'status' => $status,
@@ -110,7 +110,7 @@ function articles_admin_delete()
         }
     }
 
-    xarResponseRedirect(xarModURL('articles', 'admin', 'view',
+    xarResponse::Redirect(xarModURL('articles', 'admin', 'view',
                                   array('ptid' => $ptid)));
 
     return true;

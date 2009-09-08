@@ -32,7 +32,7 @@ function articles_adminapi_getstats($args)
             continue;
         }
         if ($field == 'pubdate_year') {
-            $dbtype = xarDBGetType();
+            $dbtype = xarDB::getType();
             switch ($dbtype) {
                 case 'mysql':
                     $newfields[] = "LEFT(FROM_UNIXTIME(xar_pubdate),4) AS myyear";
@@ -52,7 +52,7 @@ function articles_adminapi_getstats($args)
                     continue;
             }
         } elseif ($field == 'pubdate_month') {
-            $dbtype = xarDBGetType();
+            $dbtype = xarDB::getType();
             switch ($dbtype) {
                 case 'mysql':
                     $newfields[] = "LEFT(FROM_UNIXTIME(xar_pubdate),7) AS mymonth";
@@ -72,7 +72,7 @@ function articles_adminapi_getstats($args)
                     continue;
             }
         } elseif ($field == 'pubdate_day') {
-            $dbtype = xarDBGetType();
+            $dbtype = xarDB::getType();
             switch ($dbtype) {
                 case 'mysql':
                     $newfields[] = "LEFT(FROM_UNIXTIME(xar_pubdate),10) AS myday";

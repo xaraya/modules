@@ -78,7 +78,7 @@ function articles_adminapi_updatepubtype($args)
     $pubtypestable = $xartable['publication_types'];
 
     // Overwrite input with old name if change is not allowed
-    if (!xarModGetVar('articles', 'ptypenamechange')) {
+    if (!xarModVars::get('articles', 'ptypenamechange')) {
         $name = $pubtypes[$ptid]['name'];
     }
 

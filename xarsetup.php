@@ -208,7 +208,6 @@
                          'format' => 'status',
                          'input'  => 0),
     );
-                         'format' => 'textarea_small',
 
     // The list of currently supported publication types
     $pubtypes = array(

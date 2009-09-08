@@ -4,21 +4,21 @@
     <xar:style scope="module" module="articles" file="alphapager" />
 
     <div class="alphapager-wrapper">
-        <a href="#xarServerGetCurrentURL(array('letter' =&gt; null, 'startnum' =&gt; null, 'q' =&gt; null))#"><xar:mlstring>All</xar:mlstring></a>
+        <a href="#xarServer::getCurrentURL(array('letter' =&gt; null, 'startnum' =&gt; null, 'q' =&gt; null))#"><xar:mlstring>All</xar:mlstring></a>
         <xar:for start="$i = ord('A')" test="$i le ord('Z')" iter="$i++">
             <xar:set name="curletter">chr($i)</xar:set>
 
             <xar:if condition="!empty($letter) and ($letter eq strtolower($curletter))">
                 <span>#$curletter#</span>
             <xar:else />
-                <a href="#xarServerGetCurrentURL(array('letter' =&gt; $curletter, 'startnum' =&gt; null, 'q' =&gt; null))#">#$curletter#</a>
+                <a href="#xarServer::getCurrentURL(array('letter' =&gt; $curletter, 'startnum' =&gt; null, 'q' =&gt; null))#">#$curletter#</a>
             </xar:if>
 
         </xar:for>
         <xar:if condition="!empty($letter) and ($letter eq 'other')">
             <span><xar:mlstring>Other</xar:mlstring></span>
         <xar:else />
-            <a href="#xarServerGetCurrentURL(array('letter' =&gt; 'other', 'startnum' =&gt; null, 'q' =&gt; null))#"><xar:mlstring>Other</xar:mlstring></a>
+            <a href="#xarServer::getCurrentURL(array('letter' =&gt; 'other', 'startnum' =&gt; null, 'q' =&gt; null))#"><xar:mlstring>Other</xar:mlstring></a>
         </xar:if>
     </div>
 

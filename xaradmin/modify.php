@@ -138,7 +138,7 @@ function articles_admin_modify($args)
 
     // Show allowable HTML
     $data['allowedhtml'] = '';
-    foreach (xarConfigGetVar('Site.Core.AllowableHTML') as $k=>$v) {
+    foreach (xarConfigVars::get(null, 'Site.Core.AllowableHTML') as $k=>$v) {
         if ($v) {
             $data['allowedhtml'] .= '&lt;' . $k . '&gt; ';
         }

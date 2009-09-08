@@ -91,9 +91,9 @@ function articles_user_display($args)
 
     // Get the article settings for this publication type
     if (empty($ptid)) {
-        $settings = unserialize(xarModGetVar('articles', 'settings'));
+        $settings = unserialize(xarModVars::get('articles', 'settings'));
     } else {
-        $settings = unserialize(xarModGetVar('articles', 'settings.'.$ptid));
+        $settings = unserialize(xarModVars::get('articles', 'settings.'.$ptid));
     }
 
     // show the number of articles for each publication type
@@ -124,7 +124,7 @@ function articles_user_display($args)
         $input['article'] = $article;
         $input['mask'] = 'EditArticles';
         if (xarModAPIFunc('articles','user','checksecurity',$input)) {
-            $return_url = xarServerGetCurrentURL(array(), false);
+            $return_url = xarServer::getCurrentURL(array(), false);
             $data['editurl'] = xarModURL('articles', 'admin', 'modify',
                                          array('aid' => $article['aid'],
                                                'return_url' => $return_url));
@@ -189,6 +189,7 @@ function articles_user_display($args)
                 $pageBlockSize = 10;
 
                 // Get pager information: one item per page.
+                sys::import('xaraya.pager');
                 $pagerinfo = xarTplPagerInfo((empty($page) ? 1 : $page), count($pages), 1, $pageBlockSize);
 
                 // Retrieve current page and total pages from the pager info.

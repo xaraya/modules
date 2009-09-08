@@ -41,7 +41,7 @@ function articles_admin_create()
             xarErrorHandled();
             // Save the error message if we are not in preview
             if (!isset($preview)) {
-                xarSessionSetVar('statusmsg', $msg);
+                xarSession::setVar('statusmsg', $msg);
             }
             $preview = 1;
         }
@@ -102,7 +102,7 @@ function articles_admin_create()
 
 // TODO: make $status dependent on permissions ?
     if (empty($article['status'])) {
-        $settings = unserialize(xarModGetVar('articles', 'settings.'.$ptid));
+        $settings = unserialize(xarModVars::get('articles', 'settings.'.$ptid));
         if (isset($settings['defaultstatus'])) {
             $article['status'] = $settings['defaultstatus'];
         } elseif (empty($pubtypes[$ptid]['config']['status']['label'])) {
@@ -182,31 +182,31 @@ function articles_admin_create()
     // Save and continue editing via feature request.
     if (isset($save)){
         if (xarSecurityCheck('EditArticles',0,'Article',$ptid.':All:All:All')) {
-            xarResponseRedirect(xarModURL('articles', 'admin', 'modify',
+            xarResponse::Redirect(xarModURL('articles', 'admin', 'modify',
                                           array('aid' => $aid)));
         } else {
-            xarResponseRedirect(xarModURL('articles', 'user', 'view',
+            xarResponse::Redirect(xarModURL('articles', 'user', 'view',
                                           array('ptid' => $ptid)));
         }
     }
     // Save and view the new article
     if (isset($view)){
-        xarResponseRedirect(xarModURL('articles', 'user', 'display',
+        xarResponse::Redirect(xarModURL('articles', 'user', 'display',
                                       array('ptid' => $ptid,
                                             'aid' => $aid)));   
     }
 
     if (!empty($return_url)) {
-        xarResponseRedirect($return_url);
+        xarResponse::Redirect($return_url);
         return true;
     }
 
     // if we can edit articles, go to admin view, otherwise go to user view
     if (xarSecurityCheck('EditArticles',0,'Article',$ptid.':All:All:All')) {
-        xarResponseRedirect(xarModURL('articles', 'admin', 'view',
+        xarResponse::Redirect(xarModURL('articles', 'admin', 'view',
                                       array('ptid' => $ptid)));
     } else {
-        xarResponseRedirect(xarModURL('articles', 'user', 'view',
+        xarResponse::Redirect(xarModURL('articles', 'user', 'view',
                                       array('ptid' => $ptid)));
     }
 

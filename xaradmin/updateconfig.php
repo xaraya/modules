@@ -58,13 +58,13 @@ function articles_admin_updateconfig()
     }
 
     if (empty($ptid)) {
-        xarModSetVar('articles', 'SupportShortURLs', $shorturls);
-        xarModSetVar('articles', 'defaultpubtype', $defaultpubtype);
-        xarModSetVar('articles', 'sortpubtypes', $sortpubtypes);
-        xarModSetVar('articles', 'ptypenamechange', $ptypenamechange);
-        if (xarDBGetType() == 'mysql') {
+        xarModVars::set('articles', 'SupportShortURLs', $shorturls);
+        xarModVars::set('articles', 'defaultpubtype', $defaultpubtype);
+        xarModVars::set('articles', 'sortpubtypes', $sortpubtypes);
+        xarModVars::set('articles', 'ptypenamechange', $ptypenamechange);
+        if (xarDB::getType() == 'mysql') {
             if (!xarVarFetch('fulltext', 'isset', $fulltext, '', XARVAR_NOT_REQUIRED)) {return;}
-            $oldval = xarModGetVar('articles', 'fulltextsearch');
+            $oldval = xarModVars::get('articles', 'fulltextsearch');
             $index = 'i_' . xarDB::getPrefix() . '_articles_fulltext';
             if (empty($fulltext) && !empty($oldval)) {
                 // Get database setup
@@ -75,7 +75,7 @@ function articles_admin_updateconfig()
                 $query = "ALTER TABLE $articlestable DROP INDEX $index";
                 $result =& $dbconn->Execute($query);
                 if (!$result) return;
-                xarModSetVar('articles', 'fulltextsearch', '');
+                xarModVars::set('articles', 'fulltextsearch', '');
             } elseif (!empty($fulltext) && empty($oldval)) {
                 //$searchfields = array('title','summary','body','notes');
                 $searchfields = explode(',',$fulltext);
@@ -87,7 +87,7 @@ function articles_admin_updateconfig()
                 $query = "ALTER TABLE $articlestable ADD FULLTEXT $index (xar_" . join(', xar_', $searchfields) . ")";
                 $result =& $dbconn->Execute($query);
                 if (!$result) return;
-                xarModSetVar('articles', 'fulltextsearch', join(',',$searchfields));
+                xarModVars::set('articles', 'fulltextsearch', join(',',$searchfields));
             }
         }
     }
@@ -118,7 +118,7 @@ function articles_admin_updateconfig()
     $settings['usetitleforurl']     = $usetitleforurl;
     $settings['checkpubdate']       = $checkpubdate;
     if (!empty($ptid)) {
-        xarModSetVar('articles', 'settings.'.$ptid, serialize($settings));
+        xarModVars::set('articles', 'settings.'.$ptid, serialize($settings));
 
         $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
         if ($usealias) {
@@ -132,7 +132,7 @@ function articles_admin_updateconfig()
                         array('module'   => 'articles',
                               'itemtype' => $ptid));
     } else {
-        xarModSetVar('articles', 'settings', serialize($settings));
+        xarModVars::set('articles', 'settings', serialize($settings));
 
         if ($usealias) {
             xarModSetAlias('frontpage','articles');
@@ -148,7 +148,7 @@ function articles_admin_updateconfig()
     if (empty($ptid)) {
         $ptid = null;
     }
-    xarResponseRedirect(xarModURL('articles', 'admin', 'modifyconfig',
+    xarResponse::Redirect(xarModURL('articles', 'admin', 'modifyconfig',
                                   array('ptid' => $ptid)));
     return true;
 }

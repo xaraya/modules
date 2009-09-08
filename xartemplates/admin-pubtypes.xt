@@ -147,7 +147,7 @@
                             </xar:mlstring>
                         </td>
                         <td class="xar-align-left">
-                          <xar:if condition="xarModGetVar('articles', 'ptypenamechange')">
+                          <xar:if condition="xarModVars::get('articles', 'ptypenamechange')">
                             <input type="text" name="name" id="name" value="#xarVarPrepForDisplay($item['name'])#" size="20" maxlength="20" />
                             <xar:else />
                             <input type="hidden" name="name" id="name" value="#xarVarPrepForDisplay($item['name'])#" />
@@ -326,7 +326,7 @@
                         </xar:mlvar>
                     </xar:ml>
                 </p>
-                <xar:if condition="$ptid eq xarModGetVar('articles','defaultpubtype')">
+                <xar:if condition="$ptid eq xarModVars::get('articles','defaultpubtype')">
                     <p>
                         <strong>
                             <xar:mlstring>

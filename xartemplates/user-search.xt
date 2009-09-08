@@ -2,7 +2,7 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <h2><xar:mlstring>Search in Articles</xar:mlstring></h2>
 
-<xar:set name="fulltext">xarModGetVar('articles', 'fulltextsearch')</xar:set>
+<xar:set name="fulltext">xarModVars::get('articles', 'fulltextsearch')</xar:set>
 <xar:if condition="!empty($fulltext)">
     <xar:set name="fulltextfields">explode(',',$fulltext)</xar:set>
 </xar:if>

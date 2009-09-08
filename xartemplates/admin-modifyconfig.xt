@@ -14,8 +14,8 @@
             Modify Configuration
         </xar:mlstring>
     </h2>
-    <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
-        <p>#xarSessionGetVar('statusmsg')#</p>
+    <xar:if condition="xarSession::getVar('statusmsg') ne ''">
+        <p>#xarSession::getVar('statusmsg')#</p>
     </xar:if>
     <xar:template file="navtabs" type="module" />
     <form class="xar-formwidget" action="&xar-modurl-articles-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
@@ -109,9 +109,9 @@
                         </xar:if>
                     </select>
                 </div>
-                <xar:if condition="xarDBGetType() eq 'mysql'">
+                <xar:if condition="xarDB::getType() eq 'mysql'">
                 <div class="xar-form-input-wrapper-after">
-                    <xar:set name="fulltext">xarModGetVar('articles', 'fulltextsearch')</xar:set>
+                    <xar:set name="fulltext">xarModVars::get('articles', 'fulltextsearch')</xar:set>
                 <xar:comment>
                     You can adapt the field list here if you want e.g. to ignore the notes field for full-text search
                 </xar:comment>
@@ -128,7 +128,7 @@
                     [<a href="http://dev.mysql.com/doc/refman/4.1/en/fulltext-restrictions.html"><xar:mlstring>with restrictions</xar:mlstring></a>]
                 </div>
                 <div class="xar-form-input-wrapper-after">
-                    <xar:if condition="xarModGetVar('articles', 'ptypenamechange')">
+                    <xar:if condition="xarModVars::get('articles', 'ptypenamechange')">
                         <input type="checkbox" name="ptypenamechange" id="ptypenamechange" value="1" checked="checked" />
                         <xar:else />
                         <input type="checkbox" name="ptypenamechange" id="ptypenamechange" value="1" />

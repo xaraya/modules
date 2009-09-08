@@ -78,7 +78,7 @@ function articles_user_view($args)
     if (!isset($catid) && !isset($cids) && empty($ptid) && !isset($authorid)) {
         $ishome = 1;
         // default publication type
-        $ptid = xarModGetVar('articles', 'defaultpubtype');
+        $ptid = xarModVars::get('articles', 'defaultpubtype');
         // frontpage status
         $status = array(3);
     } else {
@@ -93,7 +93,7 @@ function articles_user_view($args)
 
     $isdefault = 0;
     if (!empty($ptid)) {
-        $settings = unserialize(xarModGetVar('articles', 'settings.'.$ptid));
+        $settings = unserialize(xarModVars::get('articles', 'settings.'.$ptid));
         // check default view for this type of articles
         if (empty($catid) && empty($cids) && empty($authorid) && empty($sort)) {
             if (substr($settings['defaultview'], 0, 1) == 'c') {
@@ -101,7 +101,7 @@ function articles_user_view($args)
             }
         }
     } else {
-        $string = xarModGetVar('articles', 'settings');
+        $string = xarModVars::get('articles', 'settings');
         if (!empty($string)) {
             $settings = unserialize($string);
         } else {
@@ -770,6 +770,7 @@ function articles_user_view($args)
     $data['output'] = '';
 
     // Pager
+    sys::import('xaraya.pager');
     $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('articles', 'user', 'countitems',
             array(

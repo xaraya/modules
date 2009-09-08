@@ -78,7 +78,7 @@ function articles_admin_importpages()
         }
 
         $catlist = array();
-        $rootcats = unserialize(xarModGetUserVar('articles','basecids',$ptid));
+        $rootcats = unserialize(xarModUserVars::get('articles','basecids',$ptid));
         foreach ($rootcats as $catid) {
             $catlist[$catid] = 1;
         }

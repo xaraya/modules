@@ -45,9 +45,9 @@ function articles_userapi_decode_shorturl($params)
 
     // Get the article settings for this publication type
     if (!empty($args['ptid'])) {
-        $settings = unserialize(xarModGetVar('articles', 'settings.'.$args['ptid']));
+        $settings = unserialize(xarModVars::get('articles', 'settings.'.$args['ptid']));
     } else {
-        $string = xarModGetVar('articles', 'settings');
+        $string = xarModVars::get('articles', 'settings');
         if (!empty($string)) {
             $settings = unserialize($string);
         }
@@ -174,7 +174,7 @@ function articles_userapi_decode_shorturl($params)
                         }
                     } else {
                         // Now that we find out that we're in a specific pubtype, get specific pubtype settings again
-                        $settings = unserialize(xarModGetVar('articles', 'settings.'.$args['ptid']));
+                        $settings = unserialize(xarModVars::get('articles', 'settings.'.$args['ptid']));
 
                         // check if we want to decode URLs using their titles rather then their ID
                         $decodeUsingTitle = empty($settings['usetitleforurl']) ? 0 : $settings['usetitleforurl'];
@@ -237,7 +237,7 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '', $decodeUsingTitle = 
     //
     // I've moved the following code into xarServer to fix this problem.
     //
-    //     $pathInfo = xarServerGetVar('PATH_INFO');
+    //     $pathInfo = xarServer::getVar('PATH_INFO');
     //     preg_match_all('|/([^/]+)|i', $pathInfo, $matches);
     //     $params = $matches[1];
 

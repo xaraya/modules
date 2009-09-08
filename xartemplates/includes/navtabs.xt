@@ -8,7 +8,7 @@
     <xar:foreach in="$pubfilters" value="$pubfilter">
         <xar:if condition="empty($pubfilter['plink'])">
             <dd class="active">
-                <a href="#xarServerGetCurrentURL()#" title="#$pubfilter['ptitle']#">
+                <a href="#xarServer::getCurrentURL()#" title="#$pubfilter['ptitle']#">
                     #$pubfilter['ptitle']# 
                 </a>
             </dd>

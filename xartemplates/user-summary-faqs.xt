@@ -22,7 +22,7 @@
     <p><em>#$summary#</em></p>
 </xar:if>
 <p>#$body#</p>
-<p><a href="#xarServerGetCurrentURL()##titles"><xar:mlstring>Back to top</xar:mlstring></a></p>
+<p><a href="#xarServer::getCurrentURL()##titles"><xar:mlstring>Back to top</xar:mlstring></a></p>
 
 
 </xar:template>

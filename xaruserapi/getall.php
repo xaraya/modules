@@ -198,8 +198,6 @@ function articles_userapi_getall($args)
                 'andcids' => $andcids,
                 'itemtype' => (isset($ptids) ? $ptids : null),
                                             'modid' => $sysid));
-        );
-
         if (empty($categoriesdef)) return;
     }
 
@@ -456,8 +454,6 @@ function articles_userapi_getall($args)
                 'reverse' => 1,
                 // Note : we don't need to specify the item type here for articles, since we use unique ids anyway
                                    'modid' => $sysid));
-            )
-        );
 
         // Inserting the corresponding Category ID in the Article Description
         //also check pubdate security based on all article instances as we have cid here as well
@@ -469,9 +465,9 @@ function articles_userapi_getall($args)
             $checkpubdate = xarVarGetCached('articles.checkdate',$item['pubtypeid']);
             if (!isset($checkpubdate)) {
                 if (empty($item['pubtypeid'])) {
-                    $settings = unserialize(xarModGetVar('articles', 'settings'));
+                    $settings = unserialize(xarModVars::get('articles', 'settings'));
                 } else {
-                    $settings = unserialize(xarModGetVar('articles', 'settings.'.$article['pubtypeid']));
+                    $settings = unserialize(xarModVars::get('articles', 'settings.'.$article['pubtypeid']));
                 }
                 $checkpubdate = isset($settings['checkpubdate'])?$settings['checkpubdate']:0;
                 xarVarSetCached('articles.checkdate',$article['pubtypeid'],$checkpubdate);

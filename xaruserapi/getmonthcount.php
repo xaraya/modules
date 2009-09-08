@@ -29,7 +29,7 @@ function articles_userapi_getmonthcount($args)
     $articlesdef = xarModAPIFunc('articles', 'user', 'leftjoin', $args);
 
     // Bug 1590 - Create custom query supported by each database.
-    $dbtype = xarDBGetType();
+    $dbtype = xarDB::getType();
 
     // If categories have been passed in, then join them in.
     if (!empty($args['cids'])) {

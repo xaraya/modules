@@ -32,7 +32,7 @@ function articles_schedulerapi_makedigest($args)
 
     $now = time();
     // see when we last created a digest
-    $lastdigest = xarModGetVar('articles','lastdigest');
+    $lastdigest = xarModVars::get('articles','lastdigest');
     if (empty($lastdigest)) {
         // if we haven't created a digest yet, let's skip all past articles
         $lastdigest = $now;
@@ -68,7 +68,7 @@ function articles_schedulerapi_makedigest($args)
                                    'showpublinks' => 0));
 
     // update the last digest time
-    xarModSetVar('articles','lastdigest',$now);
+    xarModVars::set('articles','lastdigest',$now);
 
     // ... do something with this digest ...
 

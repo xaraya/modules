@@ -15,8 +15,8 @@
             Manage Articles
         </xar:mlstring>
     </h2>
-      <xar:if condition="xarSessionGetVar('statusmsg') != ''">
-          <p>#xarSessionGetVar('statusmsg')#</p>
+      <xar:if condition="xarSession::getVar('statusmsg') != ''">
+          <p>#xarSession::getVar('statusmsg')#</p>
       </xar:if>
     <xar:comment>
         You can use different admin-view-[pubtype].xd templates for different pubtypes
@@ -180,7 +180,7 @@
                                 </option>
                             <xar:elseif condition="$id eq 3"/>
                                 <xar:comment>Frontpage</xar:comment>
-                                <xar:if condition="xarModGetVar('articles','defaultpubtype') eq $ptid or xarModGetVar('articles','defaultpubtype') eq ''">
+                                <xar:if condition="xarModVars::get('articles','defaultpubtype') eq $ptid or xarModVars::get('articles','defaultpubtype') eq ''">
                                     <option value="#$id#">
                                         #$name#
                                     </option>
@@ -206,6 +206,6 @@
         #$pager#
     </div>
 </div>
-<xar:if condition="xarSessionSetVar('statusmsg', '')"></xar:if>
+<xar:if condition="xarSession::setVar('statusmsg', '')"></xar:if>
 
 </xar:template>

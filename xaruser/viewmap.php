@@ -30,7 +30,7 @@ function articles_user_viewmap($args)
     // Override if needed from argument array
     extract($args);
 
-    $default = xarModGetVar('articles','defaultpubtype');
+    $default = xarModVars::get('articles','defaultpubtype');
     if (empty($by)) {
         if (empty($default) && empty($ptid)) {
             $by = 'cat';
@@ -80,7 +80,7 @@ function articles_user_viewmap($args)
             $catid = NULL;
         }
         $url = xarModURL('articles','user','view',array('ptid' => $ptid, 'catid' => $catid));
-        xarResponseRedirect($url);
+        xarResponse::Redirect($url);
         return;
     }
 
@@ -135,9 +135,9 @@ function articles_user_viewmap($args)
 
         // Get the base categories
         if (!empty($ptid)) {
-            $cidstring = xarModGetVar('articles','mastercids.'.$ptid);
+            $cidstring = xarModVars::get('articles','mastercids.'.$ptid);
         } else {
-            $cidstring = xarModGetVar('articles','mastercids');
+            $cidstring = xarModVars::get('articles','mastercids');
             $ptid = null;
         }
         if (!isset($cidstring)) {
@@ -264,7 +264,7 @@ function articles_user_viewmap($args)
         $catlist = array();
         for ($i=0;$i<count($publinks);$i++) {
             $pubid = $publinks[$i]['pubid'];
-            $cidstring = xarModGetVar('articles','mastercids.'.$pubid);
+            $cidstring = xarModVars::get('articles','mastercids.'.$pubid);
             if (!empty($cidstring)) {
                 $rootcats = explode(';',$cidstring);
                 foreach ($rootcats as $cid) {

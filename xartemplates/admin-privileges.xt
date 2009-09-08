@@ -46,7 +46,7 @@
                     </th>
                     <td>
                         <xar:set name="basecids">array_keys($pubtypes)</xar:set>
-                        <xar:set name="onchange">"this.form.action='" . xarServerGetCurrentURL() . "';this.form.submit();"</xar:set>
+                        <xar:set name="onchange">"this.form.action='" . xarServer::getCurrentURL() . "';this.form.submit();"</xar:set>
                         <xar:data-input type="categories" name="privcategories" basecids="$basecids" value="$cids" layout="vertical" returnitself="true" onchange="$onchange" />
                     </td>
                 </tr>

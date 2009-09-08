@@ -14,8 +14,8 @@
             Add Article
         </xar:mlstring>
     </h2>
-    <xar:if condition="xarSessionGetVar('statusmsg') ne ''">
-        <div>#xarSessionGetVar('statusmsg')#</div>
+    <xar:if condition="xarSession::getVar('statusmsg') ne ''">
+        <div>#xarSession::getVar('statusmsg')#</div>
     </xar:if>
     <xar:if condition="!empty($preview)">
         <div class="xar-fullwidth">
@@ -92,7 +92,7 @@
             </div>
         </form>
     </xar:if>
-    <xar:set name="i">xarSessionSetVar('statusmsg', '')</xar:set>
+    <xar:set name="i">xarSession::setVar('statusmsg', '')</xar:set>
 </div>
 
 

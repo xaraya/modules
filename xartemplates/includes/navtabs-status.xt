@@ -9,7 +9,7 @@
         <xar:foreach in="$statusfilters" value="$statusfilter">
             <xar:if condition="empty($statusfilter['slink'])">
                 <dd class="active">
-                    <a href="#xarServerGetCurrentURL()#" title="#$statusfilter['stitle']#">
+                    <a href="#xarServer::getCurrentURL()#" title="#$statusfilter['stitle']#">
                         #$statusfilter['stitle']#
                     </a>
                 </dd>
