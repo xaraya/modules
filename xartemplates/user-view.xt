@@ -2,8 +2,8 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:template file="publinks" type="module" />
 
-<xar:if condition="!empty($ptid) or !empty($catid)">xx
-    <xar:categories-navigation layout="trails" showchildren="1" module="articles" itemtype="$ptid" catid="$catid" showcatcount="$showcatcount" showempty="1" />
+<xar:if condition="!empty($ptid) or !empty($catid)">
+    <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="articles" itemtype="$ptid" catid="$catid" showcatcount="$showcatcount" showempty="1" />
 </xar:if>
 
     <xar:comment>
@@ -85,7 +85,7 @@
 </div>
 
 <xar:if condition="!empty($showprevnext)">
-    <xar:categories-navigation layout="prevnext" />
+    <xar:data-output type="categorynavigation" layout="prevnext" />
 </xar:if>
 
 
