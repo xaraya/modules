@@ -36,6 +36,10 @@ function articles_admin_privileges($args)
     if (!xarVarFetch('extlevel',     'isset', $extlevel,     NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('pparentid',    'isset', $pparentid,    NULL, XARVAR_DONT_SET)) {return;}
 
+// FIXME: privileges for articles gives error because of
+// html/modules/privileges/xaradmin/new.php(55): xarModGetNameFromID('articles')
+
+// FIXME: returnInput was commented out ?
     sys::import('modules.dynamicdata.class.properties.master');
     $categories = DataPropertyMaster::getProperty(array('name' => 'categories'));
     $cids = $categories->returnInput('privcategories');
@@ -190,7 +194,7 @@ function articles_admin_privileges($args)
     $catlist = array();
     if (!empty($ptid)) {
         $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles', 'itemtype' => $ptid));
-        foreach ($basecats as $catid) $catlist[$catid['cid']] = 1;
+        foreach ($basecats as $catid) $catlist[$catid['category_id']] = 1;
         if (empty($data['pubtypes'][$ptid]['config']['authorid']['label'])) {
             $data['showauthor'] = 0;
         } else {
@@ -200,7 +204,7 @@ function articles_admin_privileges($args)
         foreach (array_keys($data['pubtypes']) as $pubid) {
             $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => 'articles', 'itemtype' => $pubid));
             foreach ($basecats as $catid) {
-                $catlist[$catid['cid']] = 1;
+                $catlist[$catid['category_id']] = 1;
             }
         }
         $data['showauthor'] = 1;

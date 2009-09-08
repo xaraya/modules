@@ -79,6 +79,7 @@ function articles_navigationblock_modify($blockinfo)
     // 4.       itemtype [base3]
     //          itemtype [base4]
 
+// FIXME: this format is not supported anymore !?
     $allcatbases = xarModAPIfunc(
         'categories', 'user', 'getallcatbases',
         array('order'=>'module', 'format'=>'tree')

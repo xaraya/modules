@@ -158,7 +158,7 @@ function articles_navigationblock_display($blockinfo)
         }
 
         // Get master cids for this module + item type
-        $mastercids = xarModAPIfunc(
+        $mastercats = xarModAPIfunc(
             'categories', 'user', 'getallcatbases',
             array(
                 'module' => $modname,
@@ -168,11 +168,15 @@ function articles_navigationblock_display($blockinfo)
             )
         );
 
-        if (empty($mastercids)) {
+        if (empty($mastercats)) {
             // no categories to show here -> return empty output
             return;
         }
 
+        $mastercids = array();
+        foreach ($mastercats as $mastercat) {
+            $mastercids[] = $mastercat['category_id'];
+        }
         $mastercids = array_unique($mastercids);
 
         if (!empty($startmodule)) {
