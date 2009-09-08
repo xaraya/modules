@@ -57,6 +57,8 @@ class CategoryNavigationProperty extends SelectProperty
 
     public function showOutput(Array $data = array())
     {
+        // fix missing $data['...'] conversions below
+        extract($data);
 
     // TODO: for multi-module pages, we'll need some other reference point(s)
     //       (e.g. cross-module categories defined in categories admin ?)
@@ -87,6 +89,7 @@ class CategoryNavigationProperty extends SelectProperty
             }
         }
         if (empty($data['itemtype'])) $data['itemtype'] = null;
+        $itemtype = $data['itemtype'];
 
         // Get current item id (if any)
         if (!isset($data['itemid'])) {
@@ -98,6 +101,7 @@ class CategoryNavigationProperty extends SelectProperty
             }
         }
         if (empty($data['itemid'])) $data['itemid'] = null;
+        $itemid = $data['itemid'];
 
         // Get base cids for this module + item type
 // CHECKME: getallcatbases has changed result format !
@@ -144,7 +148,7 @@ class CategoryNavigationProperty extends SelectProperty
                     // We want to display only children category counts.
                     $catcount = xarModAPIFunc(
                         'categories','user', 'groupcount',
-                        array('modid' => $$modid, 'itemtype' => $data['itemtype'])
+                        array('modid' => $modid, 'itemtype' => $data['itemtype'])
                     );
                 } else {
                     // We want to display the deep counts.
