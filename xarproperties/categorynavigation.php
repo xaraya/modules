@@ -100,8 +100,13 @@ class CategoryNavigationProperty extends SelectProperty
         if (empty($data['itemid'])) $data['itemid'] = null;
 
         // Get base cids for this module + item type
-        $basecids = xarModAPIFunc('categories','user','getallcatbases',array('module' => $modname, 'itemtype' =>$data['itemtype']));
-        if (empty($basecids)) return ''; // no categories to show here -> return empty output
+// CHECKME: getallcatbases has changed result format !
+        $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => $modname, 'itemtype' =>$data['itemtype']));
+        if (empty($basecats)) return ''; // no categories to show here -> return empty output
+        $basecids = array();
+        foreach ($basecats as $tempcat) {
+            $basecids[] = $tempcat['category_id'];
+        }
 
         // See if we need to show a count per category
         if (!isset($data['showcatcount'])) $data['showcatcount'] = 0;
