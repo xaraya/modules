@@ -59,7 +59,7 @@
             </xar:if>
             </h3>
         </xar:if>
-        <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="articles" type="admin" itemtype="$ptid" catid="$catid" />
+        <xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="articles" urltype="admin" itemtype="$ptid" catid="$catid" />
         <xar:javascript module="base" filename="checkall.js" />
             <form method="post" name="viewarticles" id="viewarticles" action="#xarModURL('articles','admin','updatestatus')#" onsubmit="if (document.getElementById('status').value == '-1') {return confirm('#xarML('Delete all selected articles?')#');}">
                 <div>
