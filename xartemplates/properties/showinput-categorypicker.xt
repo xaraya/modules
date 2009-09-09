@@ -33,7 +33,8 @@
                  (#$cidindex#)
              </label>
             <xar:set name="categories">array($item['category_id'])</xar:set>
-            <xar:data-input type="categories" name="$cidname" categories="$categories" bases="single" onchange="$evt_change" style="$style" />
+<!-- FIXME: this generates a bunch of hidden fields too -->
+            <xar:data-input type="categories" name="$cidname" module="$categories_localmodule" itemtype="$item['itemtype']" categories="$categories" bases="single" onchange="$evt_change" style="$style" />
             &#160;Itemtype:
             <input type="text" name="#$name#_categories_basecatitemtype[#$item['num']#]" value="#$item['itemtype']#" style="width: 50px" />
             &#160;Name:

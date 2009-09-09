@@ -22,6 +22,21 @@ function categories_userapi_getallcatbases($args)
     extract($args);
     $xartable = xarDB::getTables();
 
+// CHECKME: what about this old 'basecids' stuff ?
+/*
+    if (empty($itemtype)) {
+        $cidstring = xarModVars::get($module,'basecids');
+    } else {
+        // FIXME: this doesn't work for itemtype == _XAR_ID_UNREGISTERED !
+        $cidstring = xarModUserVars::get($module,'basecids',$itemtype);
+    }
+    if (!empty($cidstring)) {
+        $rootcids = unserialize($cidstring);
+    } else {
+        $rootcids = array();
+    }
+*/
+
     $q = new Query('SELECT');
     $q->addtable($xartable['categories_basecategories'],'base');
     $q->addtable($xartable['categories'],'category');

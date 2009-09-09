@@ -47,9 +47,12 @@ class CategoryPickerProperty extends DataProperty
         xarMod::loadDbInfo('categories');
         $xartable = xarDB::getTables();
         
-        // Remove all the entries for this module
+        // Remove all the entries for this module and itemtype
         $q = new xarQuery('DELETE', $xartable['categories_basecategories']);
         $q->eq('module_id',xarMod::getID($localmodule));
+        if (isset($localitemtype)) {
+            $q->eq('itemtype',$localitemtype);
+        }
         if (!$q->run()) return;
 
         for($i=0;$i<$numberofbasecats;$i++) {
@@ -96,7 +99,7 @@ class CategoryPickerProperty extends DataProperty
             $item['num'] = $i;
             $item['category_id'] = isset($basecats[$i]['category_id']) ? $basecats[$i]['category_id']: 0;
             $item['name'] = isset($basecats[$i]['name']) ? $basecats[$i]['name']: xarML('Base Category #(1)',$i);
-            $item['itemtype'] = isset($basecats[$i]['itemtype']) ? $basecats[$i]['itemtype']: 0;
+            $item['itemtype'] = isset($basecats[$i]['itemtype']) ? $basecats[$i]['itemtype'] : $data['categories_localitemtype'];
             // preserve order of root categories if possible - do not use this for multi-select !
             if (isset($cleancids[$i])) $seencid = array($cleancids[$i] => 1);
             // TODO: improve memory usage
@@ -132,6 +135,7 @@ class CategoryPickerProperty extends DataProperty
             $data['itemtype'] = 0;
         }
 
+// FIXME: this doesn't work, and is replaced by getallcatbases anyway ?
         $basecidlist = unserialize(xarModVars::get($data['localmodule'],'basecids',$data['itemtype']));
         if (!isset($data['basecids'])) $data['basecids'] = $basecidlist;
         if (!isset($data['numberofbasecats'])) $data['numberofbasecats'] = count($data['basecids']);
