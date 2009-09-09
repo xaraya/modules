@@ -84,6 +84,13 @@ function articles_adminapi_createpubtype($args)
     // Don't call creation hooks here...
     //xarModCallHooks('item', 'create', $ptid, 'ptid');
 
+    if (!empty($ptid)) {
+        // Clear base categories for this publication type
+        xarModAPIFunc('articles','admin','setrootcats',
+                      array('ptid' => $ptid,
+                            'cids' => null));
+    }
+
     return $ptid;
 }
 

@@ -208,18 +208,22 @@ function articles_init()
             }
             unset($values['categories']);
             if (!empty($id)) {
-                xarModVars::set('articles', 'number_of_categories.'.$id, count($cidlist));
-                xarModVars::set('articles', 'mastercids.'.$id, join(';',$cidlist));
+                xarModAPIFunc('articles','admin','setrootcats',
+                              array('ptid' => $id,
+                                    'cids' => $cidlist));
             } else {
-                xarModVars::set('articles', 'number_of_categories', count($cidlist));
-                xarModVars::set('articles', 'mastercids', join(';',$cidlist));
+                xarModAPIFunc('articles','admin','setrootcats',
+                              array('ptid' => null,
+                                    'cids' => $cidlist));
             }
         } elseif (!empty($id)) {
-            xarModVars::set('articles', 'number_of_categories.'.$id, 0);
-            xarModVars::set('articles', 'mastercids.'.$id, '');
+            xarModAPIFunc('articles','admin','setrootcats',
+                          array('ptid' => $id,
+                                'cids' => null));
         } else {
-            xarModVars::set('articles', 'number_of_categories', 0);
-            xarModVars::set('articles', 'mastercids', '');
+            xarModAPIFunc('articles','admin','setrootcats',
+                          array('ptid' => null,
+                                'cids' => null));
         }
         if (isset($values['defaultview']) && !is_numeric($values['defaultview'])) {
             if (isset($cid[$values['defaultview']])) {
@@ -301,9 +305,9 @@ function articles_init()
     }
 
     // Enable categories hooks for articles
-/*    xarModAPIFunc('modules','admin','enablehooks',
+    xarModAPIFunc('modules','admin','enablehooks',
                   array('callerModName' => 'articles', 'hookModName' => 'categories'));
-*/
+
     // Enable comments hooks for articles
     if (xarModIsAvailable('comments')) {
         xarModAPIFunc('modules','admin','enablehooks',
@@ -450,7 +454,34 @@ function articles_upgrade($oldversion)
             xarModVars::set('articles', 'ptypenamechange', '0');
 
         case '2.0.0':
-            // Code to upgrade from version 2.0 goes here
+            // Code to upgrade from version 2.0.0 goes here
+
+            // Get current publication types
+            $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+            // get base categories for all publication types here
+            $publist = array_keys($pubtypes);
+            // add the defaults too, in case we have other base categories there
+            $publist[] = '';
+            // build the list of root categories for all required publication types
+            foreach ($publist as $pubid) {
+                if (empty($pubid)) {
+                    $cidstring = xarModVars::get('articles','mastercids');
+                } else {
+                    $cidstring = xarModVars::get('articles','mastercids'.$pubid);
+                }
+                if (!empty($cidstring)) {
+                    $rootcids = explode(';', $cidstring);
+                } else {
+                    $rootcids = array();
+                }
+                // update the base categories for each publication type
+                xarModAPIFunc('articles','admin','setrootcats',
+                              array('ptid' => $pubid,
+                                    'cids' => $rootcids));
+            }
+
+        case '2.0.1':
+            // Code to upgrade from version 2.0.1 goes here
 
         case '2.5.0':
             // Code to upgrade from version 2.5 goes here
@@ -479,6 +510,12 @@ function articles_delete()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
+    // Get current publication types if necessary
+    //$pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+    //foreach ($pubtypes as $ptid => $pubtype) {
+    //    ... do something per pubtype ...
+    //}
+
     // Generate the SQL to drop the table using the API
     $query = xarDBDropTable($xartable['publication_types']);
     if (empty($query)) return; // throw back
@@ -490,26 +527,7 @@ function articles_delete()
 // TODO: remove entries from categories_linkage !
 
     // Delete module variables
-
-    //FIXME: This is breaking the removal of the module...
-    xarModVars::delete('articles', 'itemsperpage');
-
-    xarModVars::delete('articles', 'SupportShortURLs');
-
-    xarModVars::delete('articles', 'number_of_categories');
-    xarModVars::delete('articles', 'mastercids');
-
-// TODO: remove all current pubtypes
-
-    xarModVars::delete('articles', 'settings.1');
-    xarModVars::delete('articles', 'settings.2');
-    xarModVars::delete('articles', 'settings.3');
-    xarModVars::delete('articles', 'settings.4');
-    xarModVars::delete('articles', 'settings.5');
-    xarModVars::delete('articles', 'settings.6');
-
-    xarModVars::delete('articles', 'defaultpubtype');
-    xarModVars::delete('articles', 'ptypenamechange');
+    xarModVars::delete_all('articles');
 
     // UnRegister blocks
     if (!xarModAPIFunc('blocks',
@@ -549,7 +567,6 @@ function articles_delete()
     // Remove Masks and Instances
     xarRemoveMasks('articles');
     xarRemoveInstances('articles');
-
 
     // Deletion successful
     return true;

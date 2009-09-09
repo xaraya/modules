@@ -47,6 +47,11 @@ function articles_adminapi_deletepubtype($args)
         throw new BadParameterException(null,$msg);
     }
 
+    // Clear base categories for this publication type
+    xarModAPIFunc('articles','admin','setrootcats',
+                  array('ptid' => $ptid,
+                        'cids' => null));
+
     // Get database setup
     $dbconn = xarDB::getConn();
     $xartable = xarDB::getTables();

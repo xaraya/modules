@@ -95,14 +95,13 @@ function articles_user_viewmap($args)
         $data['maplink'] = xarModURL('articles','user','viewmap',array('by' => 'cat'));
         // TODO: re-evaluate this after user feedback
         // *trick* Use the 'default' categories here, instead of all rootcats
-        $rootcats = unserialize(xarModVars::get('articles','basecids'));
-
+        $catroots = xarModAPIFunc('articles', 'user', 'getrootcats',
+                                  array('ptid' => null));
         $catlist = array();
-        if (!empty($rootcats) && is_array($rootcats)) {
-            foreach ($rootcats as $cid) {
-                $catlist[$cid] = 1;
-            }
+        foreach ($catroots as $rootcat) {
+            $catlist[$rootcat['catid']] = 1;
         }
+
         // create the category tree for each root category
         // TODO: make sure permissions are taken into account here !
         foreach ($catlist as $cid => $val) {
@@ -133,28 +132,19 @@ function articles_user_viewmap($args)
         $data['catgrid'][0] = array();
         $data['catgrid'][0][0] = '';
 
-        // Get the base categories
-        if (!empty($ptid)) {
-            $cidstring = xarModVars::get('articles','mastercids.'.$ptid);
-        } else {
-            $cidstring = xarModVars::get('articles','mastercids');
-            $ptid = null;
+        // Get the list of root categories for this publication type
+        $rootcids = array();
+        $catlist = array();
+        $catroots = xarModAPIFunc('articles', 'user', 'getrootcats',
+                                  array('ptid' => $ptid));
+        foreach ($catroots as $rootcat) {
+            $rootcids[] = $rootcat['catid'];
+            $catlist[$rootcat['catid']] = 1;
         }
-        if (!isset($cidstring)) {
-            $cidstring = '';
-        }
-        $rootcats = explode (';', $cidstring);
 
-        if (count($rootcats) != 2) {
+        if (count($rootcids) != 2) {
             $data['catgrid'][0][0] = xarML('You need 2 base categories in order to use this grid view');
         } else {
-            $catlist = array();
-            if (!empty($rootcats) && is_array($rootcats)) {
-                foreach ($rootcats as $cid) {
-                    $catlist[$cid] = 1;
-                }
-            }
-
             $cattree = array();
             // Get the category tree for each base category
             foreach ($catlist as $cid => $val) {
@@ -173,12 +163,12 @@ function articles_user_viewmap($args)
             }
 
             // Find out which category tree is the shortest
-            if (count($cattree[$rootcats[0]]) > count($cattree[$rootcats[1]])) {
-                $rowcat = $rootcats[0];
-                $colcat = $rootcats[1];
+            if (count($cattree[$rootcids[0]]) > count($cattree[$rootcids[1]])) {
+                $rowcat = $rootcids[0];
+                $colcat = $rootcids[1];
             } else {
-                $rowcat = $rootcats[1];
-                $colcat = $rootcats[0];
+                $rowcat = $rootcids[1];
+                $colcat = $rootcids[0];
             }
 
             // Fill in the column headers
@@ -264,16 +254,14 @@ function articles_user_viewmap($args)
         $catlist = array();
         for ($i=0;$i<count($publinks);$i++) {
             $pubid = $publinks[$i]['pubid'];
-            $cidstring = xarModVars::get('articles','mastercids.'.$pubid);
-            if (!empty($cidstring)) {
-                $rootcats = explode(';',$cidstring);
-                foreach ($rootcats as $cid) {
-                    $catlist[$cid] = 1;
-                }
-                $publinks[$i]['rootcats'] = $rootcats;
-            } else {
-                $publinks[$i]['rootcats'] = array();
+            // Get the list of root categories for this publication type
+            $rootcids = array();
+            $catroots = xarModAPIFunc('articles', 'user', 'getrootcats',
+                                      array('ptid' => $pubid));
+            foreach ($catroots as $rootcat) {
+                $rootcids[] = $rootcat['catid'];
             }
+            $publinks[$i]['rootcats'] = $rootcids;
         }
 
         // for all publication types

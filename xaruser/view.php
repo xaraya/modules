@@ -202,7 +202,7 @@ function articles_user_view($args)
         // TODO: figure how to let users specify their settings
         // COMMENT: if the settings were split into separate module variables,
         // then they could all be individually over-ridden by each user.
-        //$numitems = xarModUserGetVar('itemsperpage');
+        //$numitems = xarModUserVars::get('articles','itemsperpage');
     }
     if (empty($numitems)) {
         if (!empty($settings['itemsperpage'])) {

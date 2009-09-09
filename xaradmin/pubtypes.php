@@ -105,8 +105,6 @@ function articles_admin_pubtypes()
                                   'defaultstatus'        => $status,
                                   'defaultsort'          => 'date');
                 xarModVars::set('articles', 'settings.'.$ptid,serialize($settings));
-                xarModVars::set('articles', 'number_of_categories.'.$ptid, 0);
-                xarModVars::set('articles', 'mastercids.'.$ptid, '');
 
                 // Redirect to the admin view page
                 xarSession::setVar('statusmsg', xarML('Publication type created'));
@@ -154,8 +152,6 @@ function articles_admin_pubtypes()
             } else {
                 xarModVars::delete('articles', 'settings.'.$ptid);
                 xarModDelAlias($pubtypes[$ptid]['name'],'articles');
-                xarModVars::delete('articles', 'number_of_categories.'.$ptid);
-                xarModVars::delete('articles', 'mastercids.'.$ptid);
                 $default = xarModVars::get('articles','defaultpubtype');
                 if ($ptid == $default) {
                     xarModVars::set('articles','defaultpubtype','');

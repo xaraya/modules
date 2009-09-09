@@ -158,18 +158,20 @@ function articles_user_archive($args)
     if (!xarModAPILoad('categories', 'user')) return;
 
     // Get the list of root categories for this publication type
-    if (!empty($ptid)) {
-        $rootcats = unserialize(xarModUserVars::get('articles','basecids',$ptid));
-    } else {
-        $rootcats = unserialize(xarModVars::get('articles','basecids'));
+    $rootcids = array();
+    $catroots = xarModAPIFunc('articles', 'user', 'getrootcats',
+                              array('ptid' => $ptid));
+    foreach ($catroots as $rootcat) {
+        $rootcids[] = $rootcat['catid'];
     }
+
     $catlist = array();
     $catinfo = array();
     $catsel = array();
-    if (!empty($rootcats)) {
+    if (!empty($rootcids)) {
 // TODO: do this in categories API ?
         $count = 1;
-        foreach ($rootcats as $cid) {
+        foreach ($rootcids as $cid) {
             if (empty($cid)) {
                 continue;
             }

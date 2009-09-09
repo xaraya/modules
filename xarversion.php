@@ -19,9 +19,9 @@
  */
 $modversion['name']         = 'articles';
 $modversion['id']           = '151';
-$modversion['version']      = '2.0.0';
-$modversion['displayname']  = 'Articles';
-$modversion['description']  = 'Display articles';
+$modversion['version']      = '2.0.1';
+$modversion['displayname']  = xarML('Articles');
+$modversion['description']  = xarML('Display articles');
 $modversion['credits']      = '';
 $modversion['help']         = '';
 $modversion['changelog']    = '';
@@ -35,10 +35,7 @@ $modversion['class']        = 'Complete';
 $modversion['category']     = 'Content';
 // this module depends on the categories module
 $modversion['dependency']   = array(147);
-
-// Placeholder for translation skeleton, bug 6033
-if (false) { 
-  return xarML('Articles');
-  return xarML('Display articles');
-}
+$modversion['dependencyinfo'] = array(
+                                      147 => 'categories',
+                                     );
 ?>

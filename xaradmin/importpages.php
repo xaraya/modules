@@ -77,11 +77,14 @@ function articles_admin_importpages()
             }
         }
 
+        // get the base categories for this pubtype
         $catlist = array();
-        $rootcats = unserialize(xarModUserVars::get('articles','basecids',$ptid));
-        foreach ($rootcats as $catid) {
-            $catlist[$catid] = 1;
+        $catroots = xarModAPIFunc('articles', 'user', 'getrootcats',
+                                  array('ptid' => $ptid));
+        foreach ($catroots as $rootcat) {
+            $catlist[$rootcat['catid']] = 1;
         }
+        // see which categories we've selected
         $seencid = array();
         if (isset($cids) && is_array($cids)) {
             foreach ($cids as $catid) {
