@@ -141,7 +141,7 @@ function categories_userapi_leftjoin($args)
         $leftjoin['table'] = $categorieslinkagetable . ' ' . $catlinks[0];
         $leftjoin['more'] = ' ';
         $leftjoin['cids'] = array();
-        $leftjoin['cids'][] = $catlinks[0] . '.id';
+        $leftjoin['cids'][] = $catlinks[0] . '.category_id';
         for ($i = 1; $i < count($catlinks); $i++) {
             $leftjoin['more'] .= ' LEFT JOIN ' . $categorieslinkagetable .
                                      ' ' . $catlinks[$i] .
