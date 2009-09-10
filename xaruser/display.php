@@ -590,6 +590,9 @@ function articles_user_display($args)
         $data['layout'] = $layout;
     }
 
+    // If we're previewing some new/modified article
+    $data['preview'] = $preview;
+
     // return template out
     return xarTplModule('articles', 'user', 'display', $data, $template);
 }
