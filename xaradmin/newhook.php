@@ -135,6 +135,10 @@ function categories_admin_newhook($args)
                                'numcats' => $numcats,
                                'items' => $items));
 ------------------------------- */
+
+    // check if we're previewing some new item
+    if (!xarVarFetch('preview', 'isset', $data['preview'], NULL, XARVAR_DONT_SET)) {return;}
+
     return $data;
 }
 

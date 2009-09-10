@@ -154,6 +154,10 @@ function categories_admin_modifyhook($args)
                                'numcats' => $numcats,
                                'items' => $items));
 ------------------------------- */
+
+    // check if we're previewing some modified item
+    if (!xarVarFetch('preview', 'isset', $data['preview'], NULL, XARVAR_DONT_SET)) {return;}
+
     return $data;
 }
 

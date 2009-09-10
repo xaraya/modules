@@ -110,6 +110,7 @@ class CategoriesProperty extends DataProperty
             if (count($categories) > 0) {
                 $checkcats= array();
                 foreach ($categories as $category) {
+                    if (empty($category)) continue;
                     $catparts = explode('.',$category);
                     $category = $catparts[0];
                     $validcat = xarModAPIFunc('categories','user','getcatinfo',array('cid' => $category));
@@ -123,6 +124,7 @@ class CategoriesProperty extends DataProperty
         }
         
         // Check the number of base categories against the number categories we have
+        // Remark: some of the selected categories might be empty here !
         if (count($basecats) != count($categories)) {
             $this->invalid = xarML("The number of categories and their base categories is not the same");
             $this->value = null;
@@ -143,9 +145,16 @@ class CategoriesProperty extends DataProperty
                                     'modid' => xarMod::getID($this->localmodule)));
         }
 
-        if (count($this->categories) > 0) {
+        // Remark: some of the selected categories might be empty here !
+        $cleancats = array();
+        foreach ($this->categories as $category) {
+            if (empty($category)) continue;
+            $cleancats[] = $category;
+        }
+
+        if (count($cleancats) > 0) {
             $result = xarModAPIFunc('categories', 'admin', 'linkcat',
-                                  array('cids'        => $this->categories,
+                                  array('cids'        => $cleancats,
                                         'iids'        => array($itemid),
                                         'itemtype'    => $this->localitemtype,
                                         'modid'       => xarMod::getID($this->localmodule),
@@ -356,6 +365,10 @@ class CategoriesProperty extends DataProperty
         // This is the case of a standalone property
         if (!empty($data['categories'])) $selectedcategories = $data['categories'];
         
+        // This is just for backward compatibility in the template
+        if (empty($selectedcategories) && isset($data['value']))  $selectedcategories = $data['value'];
+
+        // CHECKME: are you sure you want to do that ?
         // No information passed, so just make the base categories the selected categories
         if (empty($selectedcategories))  $selectedcategories = $data['basecids'];
 
@@ -366,8 +379,10 @@ class CategoriesProperty extends DataProperty
 //            $GLOBALS['Categories_MakeSelect_Values'] =& $data['values'];
 //        }
 
+/* FIXME: where was this itemid value supposed to come from ???
         // This is just for backward compatibility in the template
         $data['categories_itemid'] = isset($data['value']) ? $data['value'] : 0;
+*/
 
         // Now make the value passed to the template the selected categories
         $data['value'] = $selectedcategories;
