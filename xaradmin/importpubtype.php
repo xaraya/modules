@@ -23,6 +23,11 @@ function articles_admin_importpubtype($args)
 
     extract($args);
 
+    if (!empty($xml)) {
+        // remove &nbsp; resp. &#160;
+        $xml = trim($xml, "\xc2\xa0");
+    }
+
     $data = array();
     $data['menutitle'] = xarML('Dynamic Data Utilities');
 
