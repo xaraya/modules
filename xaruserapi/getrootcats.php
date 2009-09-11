@@ -25,7 +25,7 @@ function articles_userapi_getrootcats($args)
     extract($args);
 
     if (empty($ptid) || !is_numeric($ptid)) {
-        $ptid = null;
+        $ptid = 0;
     }
 
     // see which root categories we need to handle
@@ -43,7 +43,7 @@ function articles_userapi_getrootcats($args)
             $item['catid'] = $info['category_id'];
             $item['cattitle'] = xarVarPrepForDisplay($info['name']);
             $item['catlink'] = xarModURL('articles','user','view',
-                                         array('ptid' => $ptid,
+                                         array('ptid' => !empty($ptid) ? $ptid : null,
                                                'catid' => $info['category_id']));
             if ($isfirst) {
                 $item['catjoin'] = '';
@@ -110,7 +110,7 @@ function articles_userapi_getrootcats($args)
         $item['catid'] = $info['cid'];
         $item['cattitle'] = xarVarPrepForDisplay($info['name']);
         $item['catlink'] = xarModURL('articles','user','view',
-                                    array('ptid' => $ptid,
+                                    array('ptid' =>  !empty($ptid) ? $ptid : null,
                                           'catid' => $info['cid']));
         if ($isfirst) {
             $item['catjoin'] = '';
