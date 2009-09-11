@@ -11,6 +11,7 @@ function categories_admin_unlink()
     if(!xarVarFetch('modid',    'isset', $modid,     NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('itemtype', 'isset', $itemtype,  NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('itemid',   'isset', $itemid,    NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('catid',    'isset', $catid,     NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return; 
 
     // Check for confirmation.
@@ -45,12 +46,17 @@ function categories_admin_unlink()
     } 
 
     if (!xarSecConfirmAuthKey()) return;
-    if (!xarModAPIFunc('categories','admin','unlink',
-                       array('modid' => $modid,
-                             'itemtype' => $itemtype,
-                             'iid' => $itemid,
-                             'confirm' => $confirm))) {
-        return;
+    // unlink API does not support deleting all category links for all modules
+    if (!empty($modid)) {
+        $modinfo = xarModGetInfo($modid);
+        if (!xarModAPIFunc('categories','admin','unlink',
+                           array('modid' => $modinfo['systemid'], // categories API uses systemid now
+                                 'itemtype' => $itemtype,
+                                 'iid' => $itemid,
+                                 'confirm' => $confirm))) {
+            return;
+        }
+        // TODO: support deleting all links for a category too (cfr. checklinks)
     }
     xarResponse::Redirect(xarModURL('categories', 'admin', 'stats'));
     return true;

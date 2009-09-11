@@ -32,9 +32,10 @@ function categories_userapi_getmodules($args)
         $bindvars = array();
         // Get links
         $sql = "SELECT c.module_id, m.regid, c.itemtype, COUNT(*)
-                FROM $categoriestable c, $modulestable m";
+                FROM $categoriestable c, $modulestable m
+                WHERE c.module_id = m.id";
         if (!empty($cid)) {
-            $sql .= " WHERE c.module_id = m.id AND id = ?";
+            $sql .= " AND category_id = ?";
             $bindvars[] = $cid;
         }
         $sql .= " GROUP BY module_id, itemtype";
@@ -55,10 +56,11 @@ function categories_userapi_getmodules($args)
 
         // Get items
         $sql = "SELECT c.module_id, m.regid, c.itemtype, COUNT(*)
-                FROM (SELECT DISTINCT c.item_id, c.module_id, m.regid, citemtype
-                      FROM $categoriestable c, $modulestable m";
+                FROM (SELECT DISTINCT c.item_id, c.module_id, m.regid, c.itemtype
+                      FROM $categoriestable c, $modulestable m
+                      WHERE c.module_id = m.id";
         if (!empty($cid)) {
-            $sql .= " WHERE c.module_id = m.id AND id = ?";
+            $sql .= " AND category_id = ?";
             $bindvars[] = $cid;
         }
         $sql .= ") GROUP BY module_id, itemtype";
@@ -75,10 +77,11 @@ function categories_userapi_getmodules($args)
 
         // Get cats
         $sql = "SELECT c.module_id, m.regid, c.itemtype, COUNT(*)
-                FROM (SELECT DISTINCT c.item_id, c.module_id, m.regid, citemtype
-                      FROM $categoriestable c, $modulestable m";
+                FROM (SELECT DISTINCT c.category_id, c.module_id, m.regid, c.itemtype
+                      FROM $categoriestable c, $modulestable m
+                      WHERE c.module_id = m.id";
         if (!empty($cid)) {
-            $sql .= " WHERE c.module_id = m.id AND category_id = ?";
+            $sql .= " AND category_id = ?";
             $bindvars[] = $cid;
         }
         $sql .= ") GROUP BY module_id, itemtype";
@@ -97,9 +100,10 @@ function categories_userapi_getmodules($args)
         $bindvars = array();
         // Get items
         $sql = "SELECT c.module_id, m.regid, c.itemtype, COUNT(*), COUNT(DISTINCT item_id), COUNT(DISTINCT category_id)
-                FROM $categoriestable c, $modulestable m";
+                FROM $categoriestable c, $modulestable m
+                WHERE c.module_id = m.id";
         if (!empty($cid)) {
-            $sql .= " WHERE c.module_id = m.id AND category_id = ?";
+            $sql .= " AND category_id = ?";
             $bindvars[] = $cid;
         }
         $sql .= " GROUP BY module_id, itemtype";

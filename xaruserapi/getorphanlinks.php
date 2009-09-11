@@ -32,7 +32,7 @@ function categories_userapi_getorphanlinks($args)
 
     $seencid = array();
     foreach ($catbases as $catbase) {
-        $seencid[$catbase['cid']] = 1;
+        $seencid[$catbase['category_id']] = 1;
     }
     if (empty($seencid)) {
         $args['reverse'] = 1;
