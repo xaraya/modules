@@ -50,8 +50,11 @@ class CategoryPickerProperty extends DataProperty
         // Remove all the entries for this module and itemtype
         $q = new xarQuery('DELETE', $xartable['categories_basecategories']);
         $q->eq('module_id',xarMod::getID($localmodule));
+    // CHECKME: if we have settings for several itemtypes, don't delete/save them all at once (0 != 1 ... N)
         if (isset($localitemtype)) {
             $q->eq('itemtype',$localitemtype);
+        } else {
+            $q->eq('itemtype',0);
         }
         if (!$q->run()) return;
 
@@ -85,11 +88,8 @@ class CategoryPickerProperty extends DataProperty
         }
 
         if (!isset($data['basecids'])) {
-            if (empty($data['categories_localitemtype'])) {
-                $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => $data['categories_localmodule']));
-            } else {
-                $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => $data['categories_localmodule'], 'itemtype' => $data['categories_localitemtype']));
-            }
+    // CHECKME: if we have settings for several itemtypes, don't show them all at once (0 != 1 ... N)
+            $basecats = xarModAPIFunc('categories','user','getallcatbases',array('module' => $data['categories_localmodule'], 'itemtype' => $data['categories_localitemtype']));
         }
         if (!isset($data['categories_numberofbasecats'])) $data['categories_numberofbasecats'] = count($basecats);
         $seencid = array();
