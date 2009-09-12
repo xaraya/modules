@@ -29,7 +29,7 @@ function hitcount_userapi_getmodules($args)
 
     // Get items
     $query = "SELECT m.regid, h.itemtype, COUNT(h.itemid), SUM(h.hits)
-            FROM $hitcounttable h INNER JOIN $modulestable m ON m.id = h.module_id
+            FROM $hitcounttable h INNER JOIN $modulestable m ON m.regid = h.module_id
             GROUP BY m.regid, h.itemtype";
 
     $result =& $dbconn->Execute($query);

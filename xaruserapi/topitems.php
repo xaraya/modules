@@ -31,7 +31,7 @@ function hitcount_userapi_topitems($args)
         xarSessionSetVar('errormsg', _MODARGSERROR);
         return;
     }
-    $modid = xarMod::getID($modname);
+    $modid = xarMod::getRegId($modname);
     if (empty($modid)) {
         xarSessionSetVar('errormsg', _MODARGSERROR);
         return;
