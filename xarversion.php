@@ -13,7 +13,7 @@
 */
     $modversion['name'] = 'categories';
     $modversion['id'] = '147';
-    $modversion['version'] = '2.5.0';
+    $modversion['version'] = '2.5.1';
     $modversion['displayname']    = xarML('Categories');
     $modversion['description'] = 'Categorised data utility';
     $modversion['credits'] = 'xardocs/credits.txt';

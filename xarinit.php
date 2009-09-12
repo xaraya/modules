@@ -341,6 +341,12 @@ function categories_upgrade($oldversion)
             // Code to upgrade from version 2.4.0 goes here
             // fall through to the next upgrade
 
+        case '2.5.0':
+            // intermediate versions from repository in jamaica 2.0.0-b2 may have wrong module id's
+            // stored in xar_categories_linkage and xar_categories_basecategories
+
+        case '2.5.1':
+
             break;
     }
 
