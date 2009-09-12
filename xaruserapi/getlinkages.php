@@ -23,7 +23,7 @@ function categories_userapi_getlinkages($args)
 
     $xartable = xarDB::getTables();
     $q = new xarQuery('SELECT', $xartable['categories_linkage']);
-    if (!empty($module)) $q->eq('module_id',xarMod::getID($module));
+    if (!empty($module)) $q->eq('module_id',xarMod::getRegId($module));
     if (!empty($itemtype)) $q->eq('itemtype',$itemtype);
 
     if (!empty($items)) {

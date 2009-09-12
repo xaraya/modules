@@ -29,7 +29,7 @@ function categories_userapi_getitemcats($args)
 
     // Get module ID if only a name provided.
     if (empty($modid) && !empty($module)) {
-        $args['modid'] = xarMod::getID($module);
+        $args['modid'] = xarMod::getRegId($module);
     }
 
     // Get the list of assigned categories for this module item.

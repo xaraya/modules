@@ -130,7 +130,7 @@ function categories_admin_privileges($args)
     $typelist = array();
     foreach ($hookedmodlist as $modname => $value) {
         if (empty($modname)) continue;
-        $modid = xarMod::getID($modname);
+        $modid = xarMod::getRegId($modname);
         if (empty($modid)) continue;
         $modinfo = xarModGetInfo($modid);
         $modlist[$modid] = $modinfo['displayname'];

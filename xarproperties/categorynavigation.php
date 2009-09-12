@@ -74,7 +74,7 @@ class CategoryNavigationProperty extends SelectProperty
         } else {
             $modname = $data['module'];
         }
-        $modid = xarMod::getID($modname);
+        $modid = xarMod::getRegId($modname);
         if (empty($modid)) {
             throw new Exception('Undefined module in categories navigation');
         }

@@ -25,7 +25,7 @@ function categories_adminapi_removehook($args)
         throw new BadParameterException(null, $msg);
     }
 
-    $modid = xarMod::getID($objectid);
+    $modid = xarMod::getRegId($objectid);
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'module ID', 'admin', 'removehook', 'categories');
         throw new BadParameterException(null, $msg);

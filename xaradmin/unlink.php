@@ -50,7 +50,7 @@ function categories_admin_unlink()
     if (!empty($modid)) {
         $modinfo = xarModGetInfo($modid);
         if (!xarModAPIFunc('categories','admin','unlink',
-                           array('modid' => $modinfo['systemid'], // categories API uses systemid now
+                           array('modid' => $modid,
                                  'itemtype' => $itemtype,
                                  'iid' => $itemid,
                                  'confirm' => $confirm))) {

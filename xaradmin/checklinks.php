@@ -105,7 +105,7 @@ function categories_admin_checklinks()
         $data['pager'] = '';
         $data['modid'] = $modid;
         $getitems = xarModAPIFunc('categories','user','getorphanlinks',
-                                  array('modid' => $modinfo['systemid'], // categories API uses systemid now
+                                  array('modid' => $modid,
                                         'itemtype' => $itemtype));
         $data['numorphans'] = count($getitems);
         $showtitle = xarModVars::get('categories','showtitle');
@@ -145,7 +145,7 @@ function categories_admin_checklinks()
         if (!empty($seencid) && !empty($confirm)) {
             if (!xarSecConfirmAuthKey()) return;
             if (!xarModAPIFunc('categories','admin','unlinkcids',
-                               array('modid' => $modinfo['systemid'], // categories API uses systemid now
+                               array('modid' => $modid,
                                      'itemtype' => $itemtype,
                                      'cids' => array_keys($seencid)))) {
                 return;

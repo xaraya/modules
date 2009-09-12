@@ -51,7 +51,7 @@ function categories_userapi_getcatinfotag($args)
         }
 
         if (!empty($args['module'])) {
-            $args['modid'] = xarMod::getID($args['module']);
+            $args['modid'] = xarMod::getRegId($args['module']);
         }
     }
 

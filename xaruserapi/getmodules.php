@@ -33,7 +33,7 @@ function categories_userapi_getmodules($args)
         // Get links
         $sql = "SELECT c.module_id, m.regid, c.itemtype, COUNT(*)
                 FROM $categoriestable c, $modulestable m
-                WHERE c.module_id = m.id";
+                WHERE c.module_id = m.regid";
         if (!empty($cid)) {
             $sql .= " AND category_id = ?";
             $bindvars[] = $cid;
@@ -58,7 +58,7 @@ function categories_userapi_getmodules($args)
         $sql = "SELECT c.module_id, m.regid, c.itemtype, COUNT(*)
                 FROM (SELECT DISTINCT c.item_id, c.module_id, m.regid, c.itemtype
                       FROM $categoriestable c, $modulestable m
-                      WHERE c.module_id = m.id";
+                      WHERE c.module_id = m.regid";
         if (!empty($cid)) {
             $sql .= " AND category_id = ?";
             $bindvars[] = $cid;
@@ -79,7 +79,7 @@ function categories_userapi_getmodules($args)
         $sql = "SELECT c.module_id, m.regid, c.itemtype, COUNT(*)
                 FROM (SELECT DISTINCT c.category_id, c.module_id, m.regid, c.itemtype
                       FROM $categoriestable c, $modulestable m
-                      WHERE c.module_id = m.id";
+                      WHERE c.module_id = m.regid";
         if (!empty($cid)) {
             $sql .= " AND category_id = ?";
             $bindvars[] = $cid;
@@ -101,7 +101,7 @@ function categories_userapi_getmodules($args)
         // Get items
         $sql = "SELECT c.module_id, m.regid, c.itemtype, COUNT(*), COUNT(DISTINCT item_id), COUNT(DISTINCT category_id)
                 FROM $categoriestable c, $modulestable m
-                WHERE c.module_id = m.id";
+                WHERE c.module_id = m.regid";
         if (!empty($cid)) {
             $sql .= " AND category_id = ?";
             $bindvars[] = $cid;

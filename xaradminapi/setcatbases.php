@@ -31,7 +31,7 @@ function categories_adminapi_setcatbases($args)
 
     // Remove all the entries for this module and itemtype
     $q = new xarQuery('DELETE', $xartable['categories_basecategories']);
-    $q->eq('module_id',xarMod::getID($module));
+    $q->eq('module_id',xarMod::getRegId($module));
     if (isset($itemtype)) {
         $q->eq('itemtype',$itemtype);
     }
@@ -60,7 +60,7 @@ function categories_adminapi_setcatbases($args)
         if (empty($catinfo[$cid])) continue;
 
         $q = new xarQuery('INSERT', $xartable['categories_basecategories']);
-        $q->addfield('module_id',xarMod::getID($module));
+        $q->addfield('module_id',xarMod::getRegId($module));
         $q->addfield('itemtype',$itemtype);
 // CHECKME: allow passing base category name too someday ?
         $q->addfield('name',$catinfo[$cid]['name']);

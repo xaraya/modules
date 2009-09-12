@@ -100,7 +100,7 @@ function categories_admin_stats()
         }
         if (!empty($catid)) {
             $data['numlinks'] = xarModAPIFunc('categories','user','countitems',
-                                              array('modid' => $modinfo['systemid'], // categories API uses systemid now
+                                              array('modid' => $modid,
                                                     'itemtype' => $itemtype,
                                                     'catid' => $catid));
         }
@@ -120,7 +120,7 @@ function categories_admin_stats()
         }
         $data['modid'] = $modid;
         $getitems = xarModAPIFunc('categories','user','getlinks',
-                                  array('modid' => $modinfo['systemid'], // categories API uses systemid now
+                                  array('modid' => $modid,
                                         'itemtype' => $itemtype,
                                         'reverse' => 1,
                                         'numitems' => $numstats,

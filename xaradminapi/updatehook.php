@@ -32,7 +32,7 @@ function categories_adminapi_updatehook($args)
         $modname = $extrainfo['module'];
     }
 
-    $modid = xarMod::getID($modname);
+    $modid = xarMod::getRegId($modname);
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)','module name', 'admin', 'createhook', 'categories');
         throw new BadParameterException(null, $msg);

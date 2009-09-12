@@ -142,7 +142,7 @@ class CategoriesProperty extends DataProperty
             $result = xarModAPIFunc('categories', 'admin', 'unlink',
                               array('iid' => $itemid,
                                     'itemtype' => $this->localitemtype,
-                                    'modid' => xarMod::getID($this->localmodule)));
+                                    'modid' => xarMod::getRegId($this->localmodule)));
         }
 
         // Remark: some of the selected categories might be empty here !
@@ -157,7 +157,7 @@ class CategoriesProperty extends DataProperty
                                   array('cids'        => $cleancats,
                                         'iids'        => array($itemid),
                                         'itemtype'    => $this->localitemtype,
-                                        'modid'       => xarMod::getID($this->localmodule),
+                                        'modid'       => xarMod::getRegId($this->localmodule),
                                         'basecids'    => $this->basecategories,
                                         'check'       => false,
                                         'clean_first' => true));
@@ -216,13 +216,13 @@ class CategoriesProperty extends DataProperty
         $result = xarModAPIFunc('categories', 'admin', 'unlink',
                           array('iid' => $itemid,
                                 'itemtype' => $itemtype,
-                                'modid' => xarMod::getID($modname)));
+                                'modid' => xarMod::getRegId($modname)));
         if (count($categories) > 0) {
             $result = xarModAPIFunc('categories', 'admin', 'linkcat',
                                 array('cids'  => $categories,
                                       'iids'  => array($itemid),
                                       'itemtype' => $itemtype,
-                                      'modid' => xarMod::getID($modname),
+                                      'modid' => xarMod::getRegId($modname),
                                       'basecids'  => $basecats,
                                       'clean_first' => true));
         }

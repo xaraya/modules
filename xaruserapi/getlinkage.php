@@ -11,7 +11,7 @@ function categories_userapi_getlinkage($args)
         $module = xarModGetName();
     }
 
-    $modid = xarMod::getID($module);
+    $modid = xarMod::getRegId($module);
 
     $tables = xarDB::getTables();
     $q = new xarQuery('SELECT');

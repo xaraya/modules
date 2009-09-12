@@ -96,7 +96,7 @@ function categories_navigationblock_display($blockinfo)
     } else {
         $modname = $module;
     }
-    $modid = xarMod::getID($modname);
+    $modid = xarMod::getRegId($modname);
     if (empty($modid)) {
         return;
     }
