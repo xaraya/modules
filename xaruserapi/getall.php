@@ -52,7 +52,7 @@ function articles_userapi_getall($args)
     extract($args);
 
     // Used lots.
-    $modid = xarModGetIDFromName('articles');
+    $modid = xarMod::getRegId('articles');
 
     // Optional argument
     if (!isset($startnum)) $startnum = 1;
@@ -185,9 +185,6 @@ function articles_userapi_getall($args)
         if (empty($usersdef)) return;
     }
 
-    $info = xarMod::getBaseInfo('articles');
-    $sysid = $info['systemid'];
-
     if (!empty($required['cids'])) {
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from categories
         // This function supports itemtype arrays, so pass in ptids.
@@ -197,7 +194,7 @@ function articles_userapi_getall($args)
                 'cids' => $cids,
                 'andcids' => $andcids,
                 'itemtype' => (isset($ptids) ? $ptids : null),
-                                            'modid' => $sysid));
+                                            'modid' => $modid));
         if (empty($categoriesdef)) return;
     }
 
@@ -209,7 +206,7 @@ function articles_userapi_getall($args)
 
             // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from hitcount
             // This function supports array itemtypes, so pass in ptids
-                                    array('modid' => $sysid,
+                                    array('modid' => $modid,
                 array(
                     'modid' => $modid,
                     'itemtype' => (isset($ptids) ? $ptids : null),
@@ -226,7 +223,7 @@ function articles_userapi_getall($args)
 
             // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from ratings
             $ratingsdef = xarModAPIFunc('ratings','user','leftjoin',
-                                    array('modid' => $sysid,
+                                    array('modid' => $modid,
 
                     'itemtype' => (isset($ptids) ? $ptids : null)
                 )
@@ -453,7 +450,7 @@ function articles_userapi_getall($args)
                 'iids' => $aids,
                 'reverse' => 1,
                 // Note : we don't need to specify the item type here for articles, since we use unique ids anyway
-                                   'modid' => $sysid));
+                                   'modid' => $modid));
 
         // Inserting the corresponding Category ID in the Article Description
         //also check pubdate security based on all article instances as we have cid here as well

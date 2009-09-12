@@ -62,7 +62,7 @@ function articles_userapi_getauthors($args)
         if (!xarModAPILoad('categories', 'user')) return;
 
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from categories
-        $args['modid'] = xarModGetIDFromName('articles');
+        $args['modid'] = xarMod::getRegId('articles');
         if (isset($args['ptid']) && !isset($args['itemtype'])) {
             $args['itemtype'] = $args['ptid'];
         }

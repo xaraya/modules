@@ -329,8 +329,6 @@ function articles_init()
     * Format is
     * xarDefineInstance(Module,Component,Querystring,ApplicationVar,LevelTable,ChildIDField,ParentIDField)
     *********************************************************************/
-    $info = xarMod::getBaseInfo('articles');
-    $sysid = $info['systemid'];
     $xartable = xarDB::getTables();
     $instances = array(
                        array('header' => 'external', // this keyword indicates an external "wizard"
@@ -340,6 +338,9 @@ function articles_init()
                     );
     xarDefineInstance('articles', 'Article', $instances);
 
+// CHECKME: are you sure you want to use the module systemid in blocks, and not the regid ?
+    $info = xarMod::getBaseInfo('articles');
+    $sysid = $info['systemid'];
     $query = "SELECT DISTINCT instances.xar_title FROM $xartable[block_instances] as instances LEFT JOIN $xartable[block_types] as btypes ON btypes.xar_id = instances.xar_type_id WHERE xar_modid = $sysid";
     $instances = array(
                         array('header' => 'Article Block Title:',

@@ -41,7 +41,7 @@ function articles_admin_exportpubtype($args)
     // Start the dynamic object definition (cfr. DD export)
     $data['xml'] = '<object name="' . $pubtype['name'] . '">
   <label>' . xarVarPrepForDisplay($pubtype['descr']) . '</label>
-  <moduleid>' . xarModGetIDFromName('articles') . '</moduleid>
+  <moduleid>' . xarMod::getRegId('articles') . '</moduleid>
   <itemtype>' . $ptid . '</itemtype>
   <urlparam>aid</urlparam>
   <maxid>0</maxid>
@@ -125,7 +125,7 @@ function articles_admin_exportpubtype($args)
     $object = xarModAPIFunc('dynamicdata','user','getobject',
                              array('name'     => $pubtype['name'],
                                    'label'    => $pubtype['descr'],
-                                   'moduleid' => xarModGetIDFromName('articles'),
+                                   'moduleid' => xarMod::getRegId('articles'),
                                    'itemtype' => $ptid,
                                    'urlparam' => 'aid',
                                    'isalias'  => $isalias,

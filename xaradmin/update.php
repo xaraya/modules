@@ -73,7 +73,7 @@ function articles_admin_update()
     if (xarModIsHooked('uploads', 'articles', $ptid)) {
         xarVarSetCached('Hooks.uploads','ishooked',1);
     }
-    $modid = xarModGetIDFromName('articles');
+    $modid = xarMod::getRegId('articles');
     $properties = array();
     foreach ($pubtypes[$ptid]['config'] as $field => $value) {
         if (!empty($value['label'])) {

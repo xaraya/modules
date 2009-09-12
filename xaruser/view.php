@@ -59,7 +59,7 @@ function articles_user_view($args)
     // Constants used throughout.
     //
     // articles module ID
-    $c_modid = xarModGetIDFromName('articles');
+    $c_modid = xarMod::getRegId('articles');
     // status: front page or approved
     $c_posted = array(3,2);
 

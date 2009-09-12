@@ -41,7 +41,7 @@ function articles_userapi_getmonthcount($args)
                 'cids' => $args['cids'],
                 'andcids' => true, //$andcids,
                 'itemtype' => (isset($args['ptid']) ? $args['ptid'] : null),
-                'modid' => xarModGetIDFromName('articles'),
+                'modid' => xarMod::getRegId('articles'),
             )
         );
 
